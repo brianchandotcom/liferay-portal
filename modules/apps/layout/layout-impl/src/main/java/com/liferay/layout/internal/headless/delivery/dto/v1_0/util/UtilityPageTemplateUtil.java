@@ -15,34 +15,13 @@
 package com.liferay.layout.internal.headless.delivery.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
-import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants;
+import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Bárbara Cabrera
  */
 public class UtilityPageTemplateUtil {
-
-	public static String convertToExternalValue(String value) {
-		Set<String> externalValues = _types.keySet();
-
-		for (String externalValue : externalValues) {
-			if (Objects.equals(value, _types.get(externalValue))) {
-				return externalValue;
-			}
-		}
-
-		return null;
-	}
-
-	public static String convertToInternalValue(String label) {
-		return _types.get(label);
-	}
 
 	public static UtilityPageTemplate toUtilityPageTemplate(
 		LayoutUtilityPageEntry layoutUtilityPageEntry) {
@@ -55,17 +34,10 @@ public class UtilityPageTemplateUtil {
 					layoutUtilityPageEntry.getExternalReferenceCode();
 				name = layoutUtilityPageEntry.getName();
 				type = Type.create(
-					convertToExternalValue(layoutUtilityPageEntry.getType()));
+					LayoutUtilityPageEntryTypeConverter.convertToExternalValue(
+						layoutUtilityPageEntry.getType()));
 			}
 		};
 	}
-
-	private static final Map<String, String> _types = HashMapBuilder.put(
-		"Error", LayoutUtilityPageEntryTypesConstants.STATUS
-	).put(
-		"ErrorCode404", LayoutUtilityPageEntryTypesConstants.LAYOUT
-	).put(
-		"TermsOfUse", LayoutUtilityPageEntryTypesConstants.TERMS_OF_USE
-	).build();
 
 }

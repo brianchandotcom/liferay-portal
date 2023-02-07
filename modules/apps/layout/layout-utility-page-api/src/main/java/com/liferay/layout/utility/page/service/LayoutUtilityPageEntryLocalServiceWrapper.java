@@ -280,6 +280,14 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String name, String type) {
+
+		return _layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+			groupId, name, type);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId) {

@@ -235,6 +235,10 @@ public interface LayoutUtilityPageEntryLocalService
 		long LayoutUtilityPageEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String name, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId);

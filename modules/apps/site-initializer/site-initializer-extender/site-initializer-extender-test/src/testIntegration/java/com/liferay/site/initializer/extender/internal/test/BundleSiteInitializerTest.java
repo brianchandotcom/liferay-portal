@@ -89,6 +89,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
@@ -934,6 +935,17 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertLayoutUtilityPageEntries(Group group) {
+		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					group.getGroupId(),
+					LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND);
+
+		Assert.assertNotNull(defaultLayoutUtilityPageEntry);
+		Assert.assertEquals(
+			"Test Default Layout Utility Page Entry",
+			defaultLayoutUtilityPageEntry.getName());
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
 				fetchLayoutUtilityPageEntryByExternalReferenceCode(
@@ -942,6 +954,11 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(layoutUtilityPageEntry);
 		Assert.assertEquals(
 			"Test Layout Utility Page Entry", layoutUtilityPageEntry.getName());
+		Assert.assertEquals(
+			LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND,
+			layoutUtilityPageEntry.getType());
+		Assert.assertFalse(
+			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
 	}
 
 	private void _assertListTypeDefinitions(ServiceContext serviceContext)

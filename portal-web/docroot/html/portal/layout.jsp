@@ -20,7 +20,7 @@
 	<c:when test="<%= Validator.isNotNull(request.getAttribute(NoSuchLayoutException.class.getName())) %>">
 
 		<%
-		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer = LayoutUtilityPageEntryViewRendererRegistryUtil.getLayoutUtilityPageEntryViewRenderer(LayoutUtilityPageEntryTypesConstants.LAYOUT);
+		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer = LayoutUtilityPageEntryViewRendererRegistryUtil.getLayoutUtilityPageEntryViewRenderer(LayoutUtilityPageEntryTypesConstants.SC_NOT_FOUND);
 		%>
 
 		<c:choose>

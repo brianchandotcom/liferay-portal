@@ -69,6 +69,8 @@ definition {
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Assignee on Select Tasks to Update step"
 	@priority = "3"
 	test CanFilterTasksByAssignee {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

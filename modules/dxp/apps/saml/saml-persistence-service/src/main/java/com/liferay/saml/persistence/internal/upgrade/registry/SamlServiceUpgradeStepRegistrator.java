@@ -144,6 +144,11 @@ public class SamlServiceUpgradeStepRegistrator
 				"SamlPeerBinding", "samlNameIdFormat", "VARCHAR(128) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"SamlPeerBinding", "samlNameIdValue", "VARCHAR(1024) null"));
+
+		registry.register(
+			"3.0.2", "3.0.3",
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "sessionIndex", "VARCHAR(200) null"));
 	}
 
 	@Reference

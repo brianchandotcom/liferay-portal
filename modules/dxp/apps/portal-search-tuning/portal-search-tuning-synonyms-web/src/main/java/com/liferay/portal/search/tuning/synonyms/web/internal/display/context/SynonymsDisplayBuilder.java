@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
@@ -169,8 +168,10 @@ public class SynonymsDisplayBuilder {
 			searchSynonymSetRequest.search();
 
 		searchContainer.setResultsAndTotal(
-			() -> _buildSynonymSetDisplayContexts(
-				searchSynonymSetResponse.getSearchHits()),
+			() -> TransformUtil.transform(
+				_documentToSynonymSetTranslator.translateAll(
+					searchSynonymSetResponse.getSearchHits()),
+				this::_buildSynonymSetDisplayContext),
 			searchSynonymSetResponse.getTotalHits());
 
 		searchContainer.setRowChecker(
@@ -201,14 +202,6 @@ public class SynonymsDisplayBuilder {
 		synonymSetDisplayContext.setSynonyms(synonyms);
 
 		return synonymSetDisplayContext;
-	}
-
-	private List<SynonymSetDisplayContext> _buildSynonymSetDisplayContexts(
-		SearchHits searchHits) {
-
-		return TransformUtil.transform(
-			_documentToSynonymSetTranslator.translateAll(searchHits),
-			this::_buildSynonymSetDisplayContext);
 	}
 
 	private List<DropdownItem> _buildSynonymSetDropdownItemList(

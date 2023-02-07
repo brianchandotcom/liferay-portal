@@ -67,8 +67,8 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -293,28 +293,30 @@ public class TaskNodeExecutorTest {
 	}
 
 	private KaleoTask _getKaleoTask(String taskName) throws Exception {
-		return Stream.of(
-			_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
-				_kaleoDefinitionVersion.getKaleoDefinitionVersionId())
-		).flatMap(
-			List::stream
-		).filter(
-			kaleoNode -> Objects.equals(kaleoNode.getName(), taskName)
-		).map(
-			kaleoNode -> {
-				try {
-					return _kaleoTaskLocalService.getKaleoNodeKaleoTask(
-						kaleoNode.getKaleoNodeId());
-				}
-				catch (PortalException portalException) {
-				}
+		for (KaleoNode kaleoNode :
+				_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
+					_kaleoDefinitionVersion.getKaleoDefinitionVersionId())) {
 
-				return null;
+			if (!Objects.equals(kaleoNode.getName(), taskName)) {
+				continue;
 			}
-		).filter(
-			Objects::nonNull
-		).findFirst(
-		).get();
+
+			KaleoTask kaleoNodeKaleoTask = null;
+
+			try {
+				kaleoNodeKaleoTask =
+					_kaleoTaskLocalService.getKaleoNodeKaleoTask(
+						kaleoNode.getKaleoNodeId());
+			}
+			catch (PortalException portalException) {
+			}
+
+			if (Objects.nonNull(kaleoNodeKaleoTask)) {
+				return kaleoNodeKaleoTask;
+			}
+		}
+
+		throw new NoSuchElementException("No kaleoNodeKaleoTask present");
 	}
 
 	private long _getKaleoTimerId(KaleoTask kaleoTask) {

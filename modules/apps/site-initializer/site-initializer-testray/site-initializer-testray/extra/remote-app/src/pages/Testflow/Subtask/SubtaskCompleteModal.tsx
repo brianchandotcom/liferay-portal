@@ -110,7 +110,8 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtaskIssues();
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

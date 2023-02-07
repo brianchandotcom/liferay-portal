@@ -81,17 +81,16 @@ public class AssetListEntryExportImportContentProcessor
 
 		_addGroupMappingsElement(portletDataContext, groupIds);
 
-		String[] classNameIds = StringUtil.split(
-			unicodeProperties.getProperty("classNameIds", null));
-
-		String[] classNames = TransformUtil.transform(
-			classNameIds,
-			classNameId -> _portal.getClassName(
-				GetterUtil.getLong(classNameId)),
-			String.class);
-
 		unicodeProperties.setProperty(
-			"classNames", StringUtil.merge(classNames, ","));
+			"classNames",
+			StringUtil.merge(
+				TransformUtil.transform(
+					StringUtil.split(
+						unicodeProperties.getProperty("classNameIds", null)),
+					classNameId -> _portal.getClassName(
+						GetterUtil.getLong(classNameId)),
+					String.class),
+				","));
 
 		long defaultClassNameId = GetterUtil.getLong(
 			unicodeProperties.getProperty("anyAssetType", null));

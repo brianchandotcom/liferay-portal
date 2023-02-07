@@ -1,0 +1,52 @@
+{
+	"browserslist": {
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		]
+	},
+	"dependencies": {
+		"@clayui/css": "^3.82.0",
+		"@clayui/pagination-bar": "^3.82.0",
+		"@liferay/npm-scripts": "^47.13.1",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^13.5.0",
+		"eslint": "^8.25.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-query": "^2.23.1",
+		"react-scripts": "5.0.1",
+		"uri-templates": "^0.2.0",
+		"web-vitals": "^2.1.4"
+	},
+	"devDependencies": {
+		"prettier": "^2.8.1"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		],
+		"globals": {
+			"Liferay": true
+		}
+	},
+	"name": "publisher-dashboard",
+	"private": true,
+	"scripts": {
+		"build": "react-scripts build",
+		"eject": "react-scripts eject",
+		"format": "eslint src --ext js --fix && yarn run prettier",
+		"prettier": "prettier --write src/**/*.js",
+		"start": "BROWSER=none WDS_SOCKET_HOST=localhost react-scripts start",
+		"test": "react-scripts test --passWithNoTests --watchAll=false"
+	},
+	"version": "0.1.0"
+}

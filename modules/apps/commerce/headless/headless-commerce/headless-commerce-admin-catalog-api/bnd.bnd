@@ -3,4 +3,6 @@ Bundle-SymbolicName: com.liferay.headless.commerce.admin.catalog.api
 Bundle-Version: 26.2.0
 Export-Package:\
 	com.liferay.headless.commerce.admin.catalog.dto.v1_0,\
-	com.liferay.headless.commerce.admin.catalog.resource.v1_0
+	com.liferay.headless.commerce.admin.catalog.dto.v2_0,\
+	com.liferay.headless.commerce.admin.catalog.resource.v1_0,\
+	com.liferay.headless.commerce.admin.catalog.resource.v2_0

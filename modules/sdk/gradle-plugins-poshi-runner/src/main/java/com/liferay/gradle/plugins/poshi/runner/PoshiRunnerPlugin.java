@@ -14,10 +14,10 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
+import com.liferay.gradle.plugins.poshi.runner.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
-import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -26,6 +26,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -623,7 +625,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private String _getChromeDriverURL(String chromeDriverVersion) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("https://chromedriver.storage.googleapis.com/");
+		sb.append(_CHROME_DRIVER_BASE_URL);
 
 		sb.append(chromeDriverVersion);
 
@@ -727,6 +729,22 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 			if (_chromeDriverVersions.containsKey(chromeMajorVersion)) {
 				return _chromeDriverVersions.get(chromeMajorVersion);
+			}
+
+			try {
+				URL url = new URL(
+					_CHROME_DRIVER_BASE_URL + "LATEST_RELEASE_" +
+						chromeMajorVersion);
+
+				String chromeDriverVersion = StringUtil.read(url.openStream());
+
+				return chromeDriverVersion.trim();
+			}
+			catch (IOException ioException) {
+				System.out.println(ioException.getMessage());
+				System.out.println(
+					"Unable to get chromedriver version for Chrome " +
+						chromeMajorVersion);
 			}
 		}
 
@@ -1110,6 +1128,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 	}
 
+	private static final String _CHROME_DRIVER_BASE_URL =
+		"https://chromedriver.storage.googleapis.com/";
+
 	private static final String _DEFAULT_CHROME_DRIVER_VERSION = "2.37";
 
 	private static final String _DEFAULT_GECKO_DRIVER_VERSION = "0.31.0";
@@ -1148,6 +1169,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put("106", "106.0.5249.61");
 				put("107", "107.0.5304.62");
 				put("108", "108.0.5359.71");
+				put("109", "109.0.5414.74");
 			}
 		};
 	private static final Map<String, String> _webDriverBrowserBinaryNames =

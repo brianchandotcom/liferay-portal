@@ -36,8 +36,6 @@ import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportCon
 import com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsConstants;
 
 import java.util.Dictionary;
-import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -185,36 +183,32 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 
 		String[] orderedLdapServerIds = orderedLdapServerIdsString.split(",");
 
-		List<Dictionary<String, Object>> dictionaries =
-			_ldapServerConfigurationProvider.getConfigurationsProperties(
-				companyId);
-
 		for (int i = 0; i < orderedLdapServerIds.length; i++) {
 			int authServerPriority = i;
 			long ldapServerId = GetterUtil.getLong(orderedLdapServerIds[i]);
 
-			Stream<Dictionary<String, Object>> stream = dictionaries.stream();
+			for (Dictionary<String, Object> dictionary :
+					_ldapServerConfigurationProvider.
+						getConfigurationsProperties(companyId)) {
 
-			stream.filter(
-				dictionary -> {
-					long dictionaryLDAPServerId = GetterUtil.getLong(
-						dictionary.get(LDAPConstants.LDAP_SERVER_ID));
+				long dictionaryLDAPServerId = GetterUtil.getLong(
+					dictionary.get(LDAPConstants.LDAP_SERVER_ID));
 
-					return dictionaryLDAPServerId == ldapServerId;
+				if (dictionaryLDAPServerId != ldapServerId) {
+					continue;
 				}
-			).findFirst(
-			).ifPresent(
-				dictionary -> {
-					dictionary.put(
-						LDAPConstants.AUTH_SERVER_PRIORITY, authServerPriority);
 
-					_ldapServerConfigurationProvider.updateProperties(
-						companyId,
-						GetterUtil.getLong(
-							dictionary.get(LDAPConstants.LDAP_SERVER_ID)),
-						dictionary);
-				}
-			);
+				dictionary.put(
+					LDAPConstants.AUTH_SERVER_PRIORITY, authServerPriority);
+
+				_ldapServerConfigurationProvider.updateProperties(
+					companyId,
+					GetterUtil.getLong(
+						dictionary.get(LDAPConstants.LDAP_SERVER_ID)),
+					dictionary);
+
+				break;
+			}
 		}
 	}
 

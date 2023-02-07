@@ -147,10 +147,19 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			groupId, sourceLayoutUtilityPageEntry.getName(),
 			sourceLayoutUtilityPageEntry.getType(), serviceContext.getLocale());
 
+		long masterLayoutPlid = 0;
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			sourceLayoutUtilityPageEntry.getPlid());
+
+		if (layout != null) {
+			masterLayoutPlid = layout.getMasterLayoutPlid();
+		}
+
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			addLayoutUtilityPageEntry(
 				null, userId, serviceContext.getScopeGroupId(), 0, 0, false,
-				name, sourceLayoutUtilityPageEntry.getType(), 0);
+				name, sourceLayoutUtilityPageEntry.getType(), masterLayoutPlid);
 
 		long previewFileEntryId = _copyPreviewFileEntryId(
 			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),

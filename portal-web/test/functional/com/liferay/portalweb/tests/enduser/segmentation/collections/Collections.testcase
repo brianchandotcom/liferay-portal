@@ -4174,6 +4174,111 @@ definition {
 		}
 	}
 
+	@description = "LPS-169312: Given a user belonging to Segment 1 and Segment 2
+	And the configuration to combine assets is enabled
+	When there's a variation of a manual collection targeting segment 1 and segment 2, and both are prioritized above the anyone variation
+	And there are some assets present in both variations**
+	Then the assets shown to the user will be ordered according to:
+	The priority of the Variation
+	The priority of the asset established in the Variation"
+	@priority = "3"
+	test ViewCombineContentOrderForMultisegmentManualCollection {
+		property test.name.skip.portal.instance = "Collections#ViewCombineContentOrderForMultisegmentManualCollection";
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var i : list "1,2,3,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC_Title_${i}");
+			}
+		}
+
+		task ("Create two segments that the user belongs to") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Last Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a manual Collection") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Configure Assets to combine all segments in asset publisher and") {
+			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Manual");
+		}
+
+		task ("Create a first variation for the collection and select web contents") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetListTitle = "Manual Collection Test",
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1,WC_Title_2,WC_Title_3,WC_Title_4");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create a second variation for the collection and select web contents") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "WC_Title_1,WC_Title_2,WC_Title_3,WC_Title_4");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Select the created manual Collection to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection Test");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert that assets appear only once in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetOrderPG(assetTitleList = "WC_Title_2,WC_Title_1,WC_Title_4,WC_Title_3");
+		}
+
+		task ("Set collections configuration to default values") {
+			AssetListsAdmin.resetCollectionsToCombineAssetsFromSegments();
+		}
+	}
+
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
 	@priority = "4"
 	test ViewContentOfAVariant {

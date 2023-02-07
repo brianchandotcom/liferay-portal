@@ -90,6 +90,7 @@ definition {
 	test OsgiClientExtensionWorkspaceLabelIsPresent {
 
 		// TODO LPS-171621 OsgiClientExtensionWorkspaceLabelIsPresent pending implementation
+
 	}
 
 }

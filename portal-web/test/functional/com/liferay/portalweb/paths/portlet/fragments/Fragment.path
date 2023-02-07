@@ -383,6 +383,14 @@
 	<td></td>
 </tr>
 
+<!--FORM_CONTAINER-->
+
+<tr>
+	<td>FORM_CONTAINER</td>
+	<td>//form[contains(@class,'lfr-layout-structure-item-form')]</td>
+	<td></td>
+</tr>
+
 <!--KNOWLEDGE_BASE_FRAGMENT-->
 
 <tr>

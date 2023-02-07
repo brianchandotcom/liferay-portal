@@ -262,10 +262,6 @@
 	}
 }
 
-.portal-popup {
-	background: #fff;
-}
-
 .dialog-with-footer {
 	.workflow-definition-content {
 		height: calc(100vh - 148px);
@@ -311,10 +307,6 @@
 	min-height: 325px;
 	min-width: 500px;
 	overflow-y: hidden !important;
-}
-
-.portal-popup .basecelleditor {
-	top: 200px !important;
 }
 
 .property-builder-disabled {
@@ -464,16 +456,4 @@
 
 #workflowTasksPanelContainer {
 	border-width: 0;
-}
-
-@media only screen and (min-height: 600px) and (max-height: 800px) {
-	.portal-popup .basecelleditor {
-		top: 60px !important;
-	}
-}
-
-@media only screen and (max-height: 599px) {
-	.portal-popup .basecelleditor {
-		top: 35px !important;
-	}
 }

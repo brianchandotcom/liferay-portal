@@ -385,4 +385,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173512. Verify that If no claim was made, the message ‘You can submit up to 2 claims’ appears"
+	@priority = "5"
+	test VerifyMessageWhenNoClaimWasMade {
+		task ("Given that a partner submit a new MDF Request") {
+			var campaignName = "Campaign Name";
+			
+			PRMMarketing.gotoAddNewMDF();
+		
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				campaignDescription = "Campaign Description",
+				campaignName = "${campaignName}",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+				followUpStrategy = "test",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetOfLeads = "test",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When a manager approves the submitted MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");	
+
+			PRMMDFRequest.changeMDFStatus(
+				campaignName = "Campaign Name",
+				key_statusButton = "Approve");
+		}
+
+		task ("Then I can see the message 'You can submit up to 2 claim(s)'") {
+			PRMMDFRequest.assertClaimMessage(key_claimMessage = "You can submit up to 2 claim(s).");
+		}
+	}
+
 }

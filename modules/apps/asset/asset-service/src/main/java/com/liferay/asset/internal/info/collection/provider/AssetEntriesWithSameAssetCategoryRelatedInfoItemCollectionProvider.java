@@ -39,6 +39,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -82,6 +83,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -254,6 +256,79 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return true;
 	}
 
+	private BooleanFilter _getAnyAssetCategoryOfTheSameVocabularyBooleanFilter(
+			AssetEntry assetEntry, SearchContext searchContext)
+		throws Exception {
+
+		Map<Long, List<Long>> assetEntryVocabulariesMap = new HashMap<>();
+
+		Map<Long, List<Long>> otherAssetCategoriesVocabulariesMap =
+			new HashMap<>();
+
+		for (long assetEntryCategoryId : assetEntry.getCategoryIds()) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(
+					assetEntryCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			List<Long> categoriesList =
+				assetEntryVocabulariesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(), key -> new ArrayList<>());
+
+			categoriesList.add(assetEntryCategoryId);
+
+			if (!otherAssetCategoriesVocabulariesMap.containsKey(
+					assetCategory.getVocabularyId())) {
+
+				otherAssetCategoriesVocabulariesMap.put(
+					assetCategory.getVocabularyId(),
+					ListUtil.filter(
+						ListUtil.toList(
+							_assetCategoryLocalService.getVocabularyCategories(
+								assetCategory.getVocabularyId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+							AssetCategory.CATEGORY_ID_ACCESSOR),
+						categoryId -> !ArrayUtil.contains(
+							assetEntry.getCategoryIds(), categoryId)));
+			}
+		}
+
+		List<BooleanFilter> booleanFilters = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry :
+				assetEntryVocabulariesMap.entrySet()) {
+
+			Long vocabularyId = entry.getKey();
+
+			List<Long> otherAssetCategoryIds =
+				otherAssetCategoriesVocabulariesMap.get(vocabularyId);
+
+			if (ListUtil.isEmpty(otherAssetCategoryIds)) {
+				continue;
+			}
+
+			for (long assetCategoryId : entry.getValue()) {
+				booleanFilters.add(
+					_getAssetSearcherPreBooleanFilter(
+						new long[] {assetCategoryId},
+						ArrayUtil.toLongArray(otherAssetCategoryIds),
+						searchContext));
+			}
+		}
+
+		BooleanFilter assetCategoryIdsBooleanFilter = new BooleanFilter();
+
+		for (BooleanFilter booleanFilter : booleanFilters) {
+			assetCategoryIdsBooleanFilter.add(
+				booleanFilter, BooleanClauseOccur.SHOULD);
+		}
+
+		return assetCategoryIdsBooleanFilter;
+	}
+
 	private BooleanFilter _getAssetCategoryIdsBooleanFilter(
 			AssetEntry assetEntry, CollectionQuery collectionQuery,
 			SearchContext searchContext)
@@ -261,6 +336,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		Tuple assetCategoryRuleTuple = _getAssetCategoryRuleTuple(
 			collectionQuery);
+
+		if ((assetCategoryRuleTuple.getSize() == 1) &&
+			Objects.equals(
+				assetCategoryRuleTuple.getObject(0),
+				"anyAssetCategoryOfTheSameVocabulary")) {
+
+			return _getAnyAssetCategoryOfTheSameVocabularyBooleanFilter(
+				assetEntry, searchContext);
+		}
 
 		if ((assetCategoryRuleTuple.getSize() == 2) &&
 			Objects.equals(

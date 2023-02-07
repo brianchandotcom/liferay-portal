@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,11 +46,15 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 	public long[] getMembershipIds(User user) throws Exception {
 		List<Group> groups = user.getSiteGroups();
 
-		Stream<Group> stream = groups.stream();
+		long[] groupIds = new long[groups.size()];
 
-		return stream.mapToLong(
-			Group::getGroupId
-		).toArray();
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		return groupIds;
 	}
 
 	@Override

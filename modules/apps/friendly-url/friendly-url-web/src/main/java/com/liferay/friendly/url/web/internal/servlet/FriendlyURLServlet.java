@@ -50,7 +50,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javax.servlet.Servlet;
@@ -259,12 +258,12 @@ public class FriendlyURLServlet extends HttpServlet {
 				InfoItemFriendlyURLProvider.class, className);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			Optional.ofNullable(
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemLanguagesProvider.class, className)
-			).orElse(
-				_defaultInfoItemLanguagesProvider
-			);
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemLanguagesProvider.class, className);
+
+		if (infoItemLanguagesProvider == null) {
+			infoItemLanguagesProvider = _defaultInfoItemLanguagesProvider;
+		}
 
 		for (String languageId :
 				infoItemLanguagesProvider.getAvailableLanguageIds(object)) {

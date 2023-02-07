@@ -49,7 +49,7 @@ public class UserBulkReindexer implements BulkReindexer {
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(User user) -> {
-				if (!user.isDefaultUser()) {
+				if (!(user.isDefaultUser() && !user.isServiceAccountUser())) {
 					try {
 						indexableActionableDynamicQuery.addDocuments(
 							indexer.getDocument(user));

@@ -1,28 +1,32 @@
 {
-	"DBType": "String",
-	"businessType": "Aggregation",
-	"indexed": true,
-	"indexedAsKeyword": false,
-	"label": {
-		"en_US": "Total Claimed Request"
-	},
-	"name": "totalClaimedRequest",
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]",
-	"objectFieldSettings": [
+	"object-fields": [
 		{
-			"name": "objectRelationshipName",
-			"value": "mdfReqToMDFClms"
-		},
-		{
-			"name": "function",
-			"value": "SUM"
-		},
-		{
-			"name": "objectFieldName",
-			"value": "amountClaimed"
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Claimed Request"
+			},
+			"name": "totalClaimedRequest",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "mdfReqToMDFClms"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "amountClaimed"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
 		}
 	],
-	"required": false,
-	"state": false,
-	"system": false
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"
 }

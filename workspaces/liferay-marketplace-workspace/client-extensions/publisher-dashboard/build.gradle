@@ -1,0 +1,24 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
+apply plugin: "com.liferay.source.formatter"
+
+createClientExtensionConfig.doLast {
+	if (project.hasProperty("react.hotload")) {
+		File file = new File("${project.buildDir}/${project.name}.client-extension-config.json")
+		def slurped = new JsonSlurper().parseText(file.text)
+		def builder = new JsonBuilder(slurped)
+		def content = builder.content["com.liferay.client.extension.type.configuration.CETConfiguration~${project.name}"];
+
+		def updatedTypeSettings = []
+		for (typeSetting in content.typeSettings) {
+			if (typeSetting.startsWith("urls")) {
+				typeSetting = "urls=http://localhost:3000/static/js/bundle.js"
+			}
+			updatedTypeSettings.push(typeSetting)
+		}
+
+		content.typeSettings = updatedTypeSettings
+		file.write(builder.toPrettyString())
+	}
+}

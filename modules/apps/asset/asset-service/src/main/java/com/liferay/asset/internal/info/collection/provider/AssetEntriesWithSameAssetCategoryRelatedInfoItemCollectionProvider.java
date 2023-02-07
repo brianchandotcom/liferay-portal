@@ -47,10 +47,12 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -69,6 +71,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.io.Serializable;
 
@@ -112,8 +115,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-			assetEntry, collectionQuery);
+		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(collectionQuery);
 
 		try {
 			SearchContext searchContext = _getSearchContext(assetEntry);
@@ -244,7 +246,15 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return true;
 	}
 
-	private BooleanClause[] _getAssetEntryIdBooleanClause(
+	private BooleanFilter _getAssetCategoryIdsBooleanFilter(
+			AssetEntry assetEntry, SearchContext searchContext)
+		throws Exception {
+
+		return _getAssetSearcherPreBooleanFilter(
+			new long[0], assetEntry.getCategoryIds(), searchContext);
+	}
+
+	private BooleanClause<Query> _getAssetEntryIdBooleanClause(
 		AssetEntry assetEntry) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
@@ -262,21 +272,18 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		booleanQueryImpl.setPreBooleanFilter(assetEntryIdBooleanFilter);
 
-		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
-		};
+		return BooleanClauseFactoryUtil.create(
+			booleanQueryImpl, BooleanClauseOccur.MUST.getName());
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
-		AssetEntry assetEntry, CollectionQuery collectionQuery) {
+		CollectionQuery collectionQuery) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		assetEntryQuery.setAnyCategoryIds(assetEntry.getCategoryIds());
 		assetEntryQuery.setClassNameIds(_getClassNameIds(collectionQuery));
 		assetEntryQuery.setEnablePermissions(true);
 
@@ -296,6 +303,26 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		}
 
 		return assetEntryQuery;
+	}
+
+	private BooleanFilter _getAssetSearcherPreBooleanFilter(
+			long[] allCategoryIds, long[] anyCategoryIds,
+			SearchContext searchContext)
+		throws Exception {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAllCategoryIds(allCategoryIds);
+		assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
+
+		AssetSearcher assetSearcher =
+			(AssetSearcher)AssetSearcher.getInstance();
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		BooleanQuery booleanQuery = assetSearcher.getFullQuery(searchContext);
+
+		return booleanQuery.getPreBooleanFilter();
 	}
 
 	private long[] _getClassNameIds(CollectionQuery collectionQuery) {
@@ -424,7 +451,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext(AssetEntry assetEntry) {
+	private SearchContext _getSearchContext(AssetEntry assetEntry)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -442,8 +471,19 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
 
+		BooleanFilter assetCategoryIdsBooleanFilter =
+			_getAssetCategoryIdsBooleanFilter(assetEntry, searchContext);
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
+
 		searchContext.setBooleanClauses(
-			_getAssetEntryIdBooleanClause(assetEntry));
+			new BooleanClause[] {
+				_getAssetEntryIdBooleanClause(assetEntry),
+				BooleanClauseFactoryUtil.create(
+					booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+			});
 
 		return searchContext;
 	}

@@ -1470,6 +1470,137 @@ definition {
 		}
 	}
 
+	@description = "LPS-156320 - Assert an Action with an Expression can be triggered after adding an entry."
+	@priority = "4"
+	test CanTriggerActionWithExpressionByAddingEntry {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object156320",
+				objectName = "CustomObject156320",
+				pluralLabelName = "Custom Objects 156320");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject156320");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156320");
+		}
+
+		task ("When an action is created with an expression") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Label",
+				actionName = "ActionName",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry Test'",
+				inputMethod = "true",
+				inputValue = "Add Entry Test",
+				objectLabel = "Custom Object156320",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("Then the action will be triggered after adding an entry.") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject156320",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156320");
+
+			ObjectPortlet.viewEntry(entry = "Add Entry Test");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "ActionName",
+				status = "Success");
+		}
+	}
+
+	@description = "LPS-173218 - Assert an Action with an Expression can be triggered after deleting an entry."
+	@priority = "4"
+	test CanTriggerActionWithExpressionByDeletingEntry {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object173218",
+				objectName = "CustomObject173218",
+				pluralLabelName = "Custom Objects 173218");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject173218");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject173218");
+		}
+
+		task ("And Given an action is created with an expression") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object173218");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Label Delete",
+				actionName = "CustomDeleteAction",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry Test'",
+				inputMethod = "true",
+				inputValue = "New Entry After Object Delete",
+				objectLabel = "Custom Object173218",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Delete");
+		}
+
+		task ("When an entry is created and then deleted") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject173218",
+				value = "Entry Test");
+
+			ObjectAdmin.deleteObjectEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject173218",
+				value = "Entry Test");
+		}
+
+		task ("Then the action will be triggered after deleting an entry.") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject173218");
+
+			ObjectPortlet.viewEntry(entry = "New Entry After Object Delete");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object173218");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "CustomDeleteAction",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-173219 - Assert an Action with an Expression can be triggered after updating an entry."
 	@priority = "4"
 	test CanTriggerActionWithExpressionByUpdatingEntry {
@@ -1536,68 +1667,6 @@ definition {
 			ObjectAdmin.assertObjectActions(
 				actionActive = "Yes",
 				actionName = "CustomUpdateAction",
-				status = "Success");
-		}
-	}
-
-	@description = "LPS-156320 - Assert an Action with an Expression can be triggered after adding an entry."
-	@priority = "4"
-	test CanTriggerActionWithExpressionByAddingEntry {
-		task ("Given an object with a field is created") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object156320",
-				objectName = "CustomObject156320",
-				pluralLabelName = "Custom Objects 156320");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				isRequired = "true",
-				objectName = "CustomObject156320");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156320");
-		}
-
-		task ("When an action is created with an expression") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.addObjectActionViaUI(
-				actionLabel = "Action Label",
-				actionName = "ActionName",
-				active = "true",
-				inputExpression = "customObjectField == 'Entry Test'",
-				inputMethod = "true",
-				inputValue = "Add Entry Test",
-				objectLabel = "Custom Object156320",
-				thenAction = "Add an Object Entry",
-				whenAction = "On After Add");
-		}
-
-		task ("Then the action will be triggered after adding an entry.") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject156320",
-				value = "Entry Test");
-
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject156320");
-
-			ObjectPortlet.viewEntry(entry = "Add Entry Test");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionName = "ActionName",
 				status = "Success");
 		}
 	}

@@ -123,9 +123,23 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
+		SearchContext searchContext = _getSearchContext();
+
 		try {
-			SearchContext searchContext = _getSearchContext(
-				assetEntry, collectionQuery);
+			BooleanFilter assetCategoryIdsBooleanFilter =
+				_getAssetCategoryIdsBooleanFilter(
+					assetEntry, collectionQuery, searchContext);
+
+			BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+			booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
+
+			searchContext.setBooleanClauses(
+				new BooleanClause[] {
+					_getAssetEntryIdBooleanClause(assetEntry),
+					BooleanClauseFactoryUtil.create(
+						booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				});
 
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 				collectionQuery);
@@ -620,16 +634,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext(
-			AssetEntry assetEntry, CollectionQuery collectionQuery)
-		throws Exception {
-
+	private SearchContext _getSearchContext() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		SearchContext searchContext = SearchContextFactory.getInstance(
+		return SearchContextFactory.getInstance(
 			new long[0], new String[0],
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
@@ -640,23 +651,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			).build(),
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
-
-		BooleanFilter assetCategoryIdsBooleanFilter =
-			_getAssetCategoryIdsBooleanFilter(
-				assetEntry, collectionQuery, searchContext);
-
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
-
-		booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
-
-		searchContext.setBooleanClauses(
-			new BooleanClause[] {
-				_getAssetEntryIdBooleanClause(assetEntry),
-				BooleanClauseFactoryUtil.create(
-					booleanQueryImpl, BooleanClauseOccur.MUST.getName())
-			});
-
-		return searchContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

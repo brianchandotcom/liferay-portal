@@ -199,7 +199,6 @@ definition {
 	@uitest
 	test ViewSiteCreationMessage {
 		property portal.acceptance = "true";
-		property portal.release = "false";
 
 		task ("Navigate to the Sites admin") {
 			Site.openSitesAdmin();

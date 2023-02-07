@@ -647,9 +647,7 @@ class Iframe extends React.Component {
 		iframeWindow.document.body.classList.add(CSS_CLASS_IFRAME_BODY);
 
 		if (iframeWindow.Liferay.SPA) {
-			this.spaNavigationHandlers = [];
-
-			this.spaNavigationHandlers.push(
+			this.spaNavigationHandlers = [
 				iframeWindow.Liferay.on('beforeScreenFlip', () => {
 					iframeWindow.document.body.classList.add(
 						CSS_CLASS_IFRAME_BODY
@@ -660,8 +658,8 @@ class Iframe extends React.Component {
 						iframeWindow,
 						processClose: this.props.processClose,
 					});
-				})
-			);
+				}),
+			];
 		}
 
 		this.props.updateLoading(false);

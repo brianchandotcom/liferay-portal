@@ -15,7 +15,6 @@
 package com.liferay.object.web.internal.notifications;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -97,11 +96,13 @@ public class ObjectUserNotificationsHandler
 
 	@Override
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
-		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext) {
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
 
-		return _getMessage(jsonObject);
+		return _getMessage(
+			JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload()));
 	}
 
 	private String _getMessage(JSONObject jsonObject) {

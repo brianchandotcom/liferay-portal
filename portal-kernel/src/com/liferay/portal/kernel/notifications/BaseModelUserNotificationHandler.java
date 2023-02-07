@@ -179,7 +179,7 @@ public abstract class BaseModelUserNotificationHandler
 	}
 
 	@Override
-	protected final String getTitle(
+	protected String getTitle(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws Exception {

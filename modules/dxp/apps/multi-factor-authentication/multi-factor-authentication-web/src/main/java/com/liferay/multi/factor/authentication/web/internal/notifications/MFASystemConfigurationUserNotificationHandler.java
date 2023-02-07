@@ -14,7 +14,6 @@
 
 package com.liferay.multi.factor.authentication.web.internal.notifications;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -72,17 +71,15 @@ public class MFASystemConfigurationUserNotificationHandler
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 			new String[] {
-				body,
-				getTitle(
-					jsonObject, null, userNotificationEvent, serviceContext)
+				body, getTitle(userNotificationEvent, serviceContext)
 			});
 	}
 
 	@Override
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
-		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext) {
+			UserNotificationEvent userNotificationEvent,
+			ServiceContext serviceContext)
+		throws Exception {
 
 		return _language.get(
 			serviceContext.getLocale(), "multi-factor-authentication");

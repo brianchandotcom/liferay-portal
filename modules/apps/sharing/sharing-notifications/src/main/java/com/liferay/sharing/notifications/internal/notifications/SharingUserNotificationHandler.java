@@ -60,12 +60,13 @@ public class SharingUserNotificationHandler
 
 	@Override
 	protected String getTitle(
-			JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return _getMessage(jsonObject, userNotificationEvent);
+		return _getMessage(
+			_jsonFactory.createJSONObject(userNotificationEvent.getPayload()),
+			userNotificationEvent);
 	}
 
 	private String _getMessage(

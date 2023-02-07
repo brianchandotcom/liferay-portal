@@ -125,7 +125,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	}
 
 	public PortletURL getEditImageURL(
-		LiferayPortletResponse liferayPortletResponse) {
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, PortletKeys.DOCUMENT_LIBRARY
@@ -158,7 +159,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public PortletURL getPortletURL(
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortletException {
+		throws PortalException, PortletException {
 
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
@@ -368,14 +369,27 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			infoItemItemSelectorCriterion.getItemSubtype());
 	}
 
-	private long _getFolderId() {
+	private long _getFolderId() throws PortalException {
 		if (_folderId != null) {
 			return _folderId;
 		}
 
+		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		long selectedFileEntryId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"_com_liferay_journal_web_portlet_JournalPortlet_" +
+				"selectedFileEntryId");
+
+		if (selectedFileEntryId != 0) {
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+				selectedFileEntryId);
+
+			_folderId = fileEntry.getFolderId();
+		}
+
 		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId",
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			_httpServletRequest, "folderId", _folderId);
 
 		return _folderId;
 	}

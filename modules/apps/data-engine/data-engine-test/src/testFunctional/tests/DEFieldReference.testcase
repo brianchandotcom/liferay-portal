@@ -132,13 +132,12 @@ definition {
 			fieldLabel = "Single Selection",
 			optionReferenceList = "");
 
-		WebContentStructures.saveCP();
+		DEBuilder.openField(fieldLabel = "Single Selection");
 
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertOptionReferences(
-			fieldLabel = "Single Selection",
-			optionReferenceList = "${originalOptionReference}");
+		AssertTextEquals.assertValue(
+			index = "1",
+			locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
+			value1 = "${originalOptionReference}");
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be the same for two fields."

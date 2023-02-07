@@ -90,7 +90,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId,
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,

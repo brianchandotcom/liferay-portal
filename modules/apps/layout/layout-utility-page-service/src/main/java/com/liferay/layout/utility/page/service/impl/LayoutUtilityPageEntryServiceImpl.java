@@ -64,7 +64,7 @@ public class LayoutUtilityPageEntryServiceImpl
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long groupId, long layoutUtilityPageEntryId,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		_groupPermission.check(
 			getPermissionChecker(), groupId,

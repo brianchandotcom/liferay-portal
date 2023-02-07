@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
 
 import javax.naming.Binding;
@@ -444,14 +443,11 @@ public class LDAPUserExporterImpl implements UserExporter {
 			return null;
 		}
 
-		Optional<Configuration> configurationOptional = Optional.of(
-			configurations[0]);
+		Configuration configuration = configurations[0];
 
-		if (!configurationOptional.isPresent()) {
+		if (configuration == null) {
 			return null;
 		}
-
-		Configuration configuration = configurationOptional.get();
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 

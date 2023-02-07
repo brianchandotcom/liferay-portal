@@ -85,4 +85,11 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
+	@priority = "3"
+	test OsgiClientExtensionWorkspaceLabelIsPresent {
+
+		// TODO LPS-171621 OsgiClientExtensionWorkspaceLabelIsPresent pending implementation
+	}
+
 }

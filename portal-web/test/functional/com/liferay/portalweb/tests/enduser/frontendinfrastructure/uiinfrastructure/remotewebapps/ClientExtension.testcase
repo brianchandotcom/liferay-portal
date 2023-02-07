@@ -790,4 +790,19 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
+	@description = "Verify that the client extension is not available on the workflow page"
+	@priority = "3"
+	test CannotConfigureWorkflowSiteLevel {
+
+		// TODO LPS-171621 CannotConfigureWorkflowSiteLevel pending implementation
+	}
+
+	@description = "Verify that the UI label is present when a client extension is not created through osgi"
+	@priority = "3"
+	test UILabelIsPresent {
+
+		// TODO LPS-171621 UILabelIsPresent pending implementation
+	}
+
+
 }

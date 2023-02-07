@@ -104,21 +104,10 @@ public class ParallelExecutor<T> {
 						result = future.get(timeoutSeconds, TimeUnit.SECONDS);
 					}
 					catch (TimeoutException timeoutException) {
-						if (future.cancel(true)) {
-							System.out.println(
-								"A callable task was cancelled.");
-						}
-						else {
-							System.out.println(
-								"Failed to cancel callable task.");
-						}
+						future.cancel(true);
 
 						result = null;
 					}
-
-					System.out.println(
-						(_futures.indexOf(future) + 1) +
-							" callables returned.");
 
 					if ((result == null) && _excludeNulls) {
 						continue;

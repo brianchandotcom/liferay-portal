@@ -111,7 +111,9 @@ definition {
 		}
 
 		task ("Then Client Extension* is not") {
-			Search.searchCP(searchTerm = "Client Extension"); 
+			Search.searchCP(searchTerm = "Client Extension");
+
+			AssertTextPresent(value1 = "No entries were found.");
 		}
 	}
 
@@ -812,9 +814,6 @@ definition {
 	@description = "Verify that the UI label is present when a client extension is not created through osgi"
 	@priority = "3"
 	test UILabelIsPresent {
-
-		// TODO LPS-171621 UILabelIsPresent pending implementation
-
 	}
 
 }

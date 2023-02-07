@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -121,6 +122,11 @@ public class ObjectActionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-171440", "true"
+			).build());
+
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
 			Arrays.asList(
@@ -138,6 +144,11 @@ public class ObjectActionLocalServiceTest {
 
 	@After
 	public void tearDown() {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-171440", "false"
+			).build());
+
 		ReflectionTestUtil.setFieldValue(
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				ObjectActionExecutorConstants.KEY_WEBHOOK),

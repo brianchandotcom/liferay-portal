@@ -31,6 +31,10 @@ public class OldValueFunction
 
 	@Override
 	public Object apply(Object fieldName) {
+		if (_ddmExpressionParameterAccessor == null) {
+			return null;
+		}
+
 		Map<String, Object> objectFieldsOldValues =
 			_ddmExpressionParameterAccessor.getObjectFieldsOldValues();
 

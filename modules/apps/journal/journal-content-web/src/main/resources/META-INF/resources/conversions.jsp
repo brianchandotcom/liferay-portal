@@ -19,7 +19,7 @@
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
-String extension = (String)request.getAttribute("extension");
+String extension = ParamUtil.getString(request, "extension");
 String viewMode = ParamUtil.getString(request, "viewMode");
 %>
 

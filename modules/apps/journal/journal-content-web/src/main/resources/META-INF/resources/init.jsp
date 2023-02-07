@@ -34,8 +34,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
-page import="com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry" %><%@
-page import="com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry" %><%@
 page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.frontend.taglib.clay.servlet.taglib.JournalArticleVerticalCard" %><%@
 page import="com.liferay.journal.content.web.internal.frontend.taglib.clay.servlet.taglib.JournalDDMTemplateVerticalCard" %><%@
@@ -60,8 +58,7 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.text.Format" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 

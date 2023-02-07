@@ -183,24 +183,31 @@ if (journalContentDisplayContext.isShowArticle()) {
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
 
 	<%
-	ContentMetadataAssetAddonEntry relatedAssetsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableRelatedAssets");
+	String viewMode = ParamUtil.getString(request, "viewMode");
 	%>
 
-	<c:if test="<%= relatedAssetsContentMetadataAssetAddonEntry != null %>">
+	<c:if test='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRelatedAssets") %>'>
 		<div class="asset-links content-metadata-asset-addon-entries mb-4">
-			<liferay-asset:asset-addon-entry-display
-				assetAddonEntries="<%= Collections.singletonList(relatedAssetsContentMetadataAssetAddonEntry) %>"
-			/>
+			<div class="content-metadata-asset-addon-entry content-metadata-asset-addon-entry-links">
+				<liferay-asset:asset-links
+					className="<%= JournalArticle.class.getName() %>"
+					classPK="<%= articleDisplay.getResourcePrimKey() %>"
+				/>
+			</div>
 		</div>
 	</c:if>
 
 	<%
-	ContentMetadataAssetAddonEntry ratingsContentMetadataAssetAddonEntry = journalContentDisplayContext.getContentMetadataAssetAddonEntry("enableRatings");
-
-	List<UserToolAssetAddonEntry> selectedUserToolAssetAddonEntries = journalContentDisplayContext.getSelectedUserToolAssetAddonEntries();
+	boolean enableDOC = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableDOC") && journalContentDisplayContext.isEnabledConversion("doc");
+	boolean enableODT = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableODT") && journalContentDisplayContext.isEnabledConversion("odt");
+	boolean enablePDF = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePDF") && journalContentDisplayContext.isEnabledConversion("pdf");
+	boolean enablePrint = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePrint");
+	boolean enableRatings = journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRatings");
+	boolean enableTXT = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableTXT") && journalContentDisplayContext.isEnabledConversion("txt");
+	boolean showAvailableLocales = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("showAvailableLocales");
 	%>
 
-	<c:if test="<%= ListUtil.isNotEmpty(selectedUserToolAssetAddonEntries) || (ratingsContentMetadataAssetAddonEntry != null) %>">
+	<c:if test="<%= enableDOC || enableODT || enablePDF || enablePrint || enableRatings || enableTXT || showAvailableLocales %>">
 		<hr class="separator" />
 
 		<clay:content-row
@@ -208,33 +215,67 @@ if (journalContentDisplayContext.isShowArticle()) {
 			floatElements=""
 			verticalAlign="center"
 		>
-			<c:if test="<%= ratingsContentMetadataAssetAddonEntry != null %>">
+			<c:if test="<%= enableRatings %>">
 				<clay:content-row>
-					<liferay-asset:asset-addon-entry-display
-						assetAddonEntries="<%= Collections.singletonList(ratingsContentMetadataAssetAddonEntry) %>"
-					/>
+					<c:if test="<%= !viewMode.equals(Constants.PRINT) %>">
+						<div class="content-metadata-asset-addon-entry content-metadata-ratings">
+							<liferay-ratings:ratings
+								className="<%= JournalArticle.class.getName() %>"
+								classPK="<%= articleDisplay.getResourcePrimKey() %>"
+							/>
+						</div>
+					</c:if>
 				</clay:content-row>
 			</c:if>
 
-			<c:if test="<%= ListUtil.isNotEmpty(selectedUserToolAssetAddonEntries) %>">
-				<liferay-asset:asset-addon-entry-display
-					assetAddonEntries="<%= selectedUserToolAssetAddonEntries %>"
-				/>
+			<c:if test="<%= showAvailableLocales %>">
+				<liferay-util:include page="/locales.jsp" servletContext="<%= application %>" />
+			</c:if>
+
+			<c:if test="<%= enablePrint %>">
+				<liferay-util:include page="/print.jsp" servletContext="<%= application %>" />
+			</c:if>
+
+			<c:if test="<%= enablePDF %>">
+				<liferay-util:include page="/conversions.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="extension" value="pdf" />
+				</liferay-util:include>
+			</c:if>
+
+			<c:if test="<%= enableDOC %>">
+				<liferay-util:include page="/conversions.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="extension" value="doc" />
+				</liferay-util:include>
+			</c:if>
+
+			<c:if test="<%= enableODT %>">
+				<liferay-util:include page="/conversions.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="extension" value="odt" />
+				</liferay-util:include>
+			</c:if>
+
+			<c:if test="<%= enableTXT %>">
+				<liferay-util:include page="/conversions.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="extension" value="txt" />
+				</liferay-util:include>
 			</c:if>
 		</clay:content-row>
 	</c:if>
 
-	<%
-	List<ContentMetadataAssetAddonEntry> commentsContentMetadataAssetAddonEntries = journalContentDisplayContext.getCommentsContentMetadataAssetAddonEntries();
-	%>
-
-	<c:if test="<%= ListUtil.isNotEmpty(commentsContentMetadataAssetAddonEntries) %>">
+	<c:if test='<%= journalContentDisplayContext.articleCommentsEnabled() && journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableComments") %>'>
 		<hr class="separator" />
 
 		<div class="asset-links content-metadata-asset-addon-entries mb-4">
-			<liferay-asset:asset-addon-entry-display
-				assetAddonEntries="<%= commentsContentMetadataAssetAddonEntries %>"
-			/>
+			<div class="content-metadata-asset-addon-entry content-metadata-comments">
+				<liferay-comment:discussion
+					className="<%= JournalArticle.class.getName() %>"
+					classPK="<%= articleDisplay.getResourcePrimKey() %>"
+					hideControls="<%= viewMode.equals(Constants.PRINT) %>"
+					ratingsEnabled='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableCommentRatings") && !viewMode.equals(Constants.PRINT) %>'
+					redirect="<%= currentURLObj.toString() %>"
+					userId="<%= articleDisplay.getUserId() %>"
+				/>
+			</div>
 		</div>
 	</c:if>
 </c:if>

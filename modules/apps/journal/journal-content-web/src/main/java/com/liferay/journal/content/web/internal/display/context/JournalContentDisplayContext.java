@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorReturnType;
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMTemplateItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -31,11 +32,10 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
-import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
-import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
@@ -45,14 +45,13 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -64,7 +63,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -72,7 +70,6 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -88,9 +85,7 @@ import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 import com.liferay.trash.model.TrashEntry;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -101,10 +96,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -151,6 +142,15 @@ public class JournalContentDisplayContext {
 	public static String getRequestAttributeName(String portletName) {
 		return JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT +
 			StringPool.POUND + portletName;
+	}
+
+	public boolean articleCommentsEnabled() throws Exception {
+		JournalServiceConfiguration journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class,
+				_themeDisplay.getCompanyId());
+
+		return journalServiceConfiguration.articleCommentsEnabled();
 	}
 
 	public JournalArticle getArticle() throws PortalException {
@@ -304,61 +304,6 @@ public class JournalContentDisplayContext {
 		return assetRendererFactory.getAssetRenderer(article, 0);
 	}
 
-	public List<ContentMetadataAssetAddonEntry>
-		getCommentsContentMetadataAssetAddonEntries() {
-
-		List<ContentMetadataAssetAddonEntry>
-			commentsContentMetadataAssetAddonEntries = new ArrayList<>();
-
-		ContentMetadataAssetAddonEntry
-			enableCommentsContentMetadataAssetAddonEntry =
-				getContentMetadataAssetAddonEntry("enableComments");
-
-		if (enableCommentsContentMetadataAssetAddonEntry != null) {
-			commentsContentMetadataAssetAddonEntries.add(
-				enableCommentsContentMetadataAssetAddonEntry);
-		}
-
-		ContentMetadataAssetAddonEntry
-			enableCommentRatingsContentMetadataAssetAddonEntry =
-				getContentMetadataAssetAddonEntry("enableCommentRatings");
-
-		if (enableCommentRatingsContentMetadataAssetAddonEntry != null) {
-			commentsContentMetadataAssetAddonEntries.add(
-				enableCommentRatingsContentMetadataAssetAddonEntry);
-		}
-
-		return commentsContentMetadataAssetAddonEntries;
-	}
-
-	public ContentMetadataAssetAddonEntry getContentMetadataAssetAddonEntry(
-		String key) {
-
-		String contentMetadataAssetAddonEntryKeysString =
-			_journalContentPortletInstanceConfiguration.
-				contentMetadataAssetAddonEntryKeys();
-
-		if (Validator.isNull(contentMetadataAssetAddonEntryKeysString)) {
-			return null;
-		}
-
-		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
-			contentMetadataAssetAddonEntryKeysString);
-
-		if (ArrayUtil.contains(contentMetadataAssetAddonEntryKeys, key)) {
-			ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry =
-				_contentMetadataAssetAddonEntryMap.getService(key);
-
-			if ((contentMetadataAssetAddonEntry != null) &&
-				contentMetadataAssetAddonEntry.isEnabled()) {
-
-				return contentMetadataAssetAddonEntry;
-			}
-		}
-
-		return null;
-	}
-
 	public DDMStructure getDDMStructure() throws PortalException {
 		JournalArticle article = getArticle();
 
@@ -462,28 +407,6 @@ public class JournalContentDisplayContext {
 		_defaultDDMTemplate = _getDDMTemplate(article.getDDMTemplateKey());
 
 		return _defaultDDMTemplate;
-	}
-
-	public List<ContentMetadataAssetAddonEntry>
-		getEnabledContentMetadataAssetAddonEntries() {
-
-		List<ContentMetadataAssetAddonEntry> contentMetadataAssetAddonEntries =
-			ListUtil.filter(
-				new ArrayList<>(_contentMetadataAssetAddonEntryMap.values()),
-				ContentMetadataAssetAddonEntry::isEnabled);
-
-		return ListUtil.sort(
-			contentMetadataAssetAddonEntries, _assetAddonEntryComparator);
-	}
-
-	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
-		List<UserToolAssetAddonEntry> userToolAssetAddonEntries =
-			ListUtil.filter(
-				new ArrayList<>(_userToolAssetAddonEntryMap.values()),
-				UserToolAssetAddonEntry::isEnabled);
-
-		return ListUtil.sort(
-			userToolAssetAddonEntries, _assetAddonEntryComparator);
 	}
 
 	public long getGroupId() {
@@ -656,75 +579,6 @@ public class JournalContentDisplayContext {
 			assetEntry.getClassPK());
 	}
 
-	public List<ContentMetadataAssetAddonEntry>
-		getSelectedContentMetadataAssetAddonEntries() {
-
-		if (_contentMetadataAssetAddonEntries != null) {
-			return _contentMetadataAssetAddonEntries;
-		}
-
-		_contentMetadataAssetAddonEntries = new ArrayList<>();
-
-		String contentMetadataAssetAddonEntryKeysKeysString =
-			_journalContentPortletInstanceConfiguration.
-				contentMetadataAssetAddonEntryKeys();
-
-		if (Validator.isNull(contentMetadataAssetAddonEntryKeysKeysString)) {
-			return _contentMetadataAssetAddonEntries;
-		}
-
-		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
-			contentMetadataAssetAddonEntryKeysKeysString);
-
-		for (String contentMetadataAssetAddonEntryKey :
-				contentMetadataAssetAddonEntryKeys) {
-
-			ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry =
-				_contentMetadataAssetAddonEntryMap.getService(
-					contentMetadataAssetAddonEntryKey);
-
-			if (contentMetadataAssetAddonEntry != null) {
-				_contentMetadataAssetAddonEntries.add(
-					contentMetadataAssetAddonEntry);
-			}
-		}
-
-		return _contentMetadataAssetAddonEntries;
-	}
-
-	public List<UserToolAssetAddonEntry>
-		getSelectedUserToolAssetAddonEntries() {
-
-		if (_userToolAssetAddonEntries != null) {
-			return _userToolAssetAddonEntries;
-		}
-
-		_userToolAssetAddonEntries = new ArrayList<>();
-
-		String userToolAssetAddonEntryKeysString =
-			_journalContentPortletInstanceConfiguration.
-				userToolAssetAddonEntryKeys();
-
-		if (Validator.isNull(userToolAssetAddonEntryKeysString)) {
-			return _userToolAssetAddonEntries;
-		}
-
-		String[] userToolAssetAddonEntryKeys = StringUtil.split(
-			userToolAssetAddonEntryKeysString);
-
-		for (String userToolAssetAddonEntryKey : userToolAssetAddonEntryKeys) {
-			UserToolAssetAddonEntry userToolAssetAddonEntry =
-				_userToolAssetAddonEntryMap.getService(
-					userToolAssetAddonEntryKey);
-
-			if (userToolAssetAddonEntry != null) {
-				_userToolAssetAddonEntries.add(userToolAssetAddonEntry);
-			}
-		}
-
-		return _userToolAssetAddonEntries;
-	}
-
 	public String getURLEdit() {
 		try {
 			AssetRendererFactory<JournalArticle> assetRendererFactory =
@@ -868,6 +722,55 @@ public class JournalContentDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isEnabledContentMetadataAssetAddonEntry(String key) {
+		String contentMetadataAssetAddonEntryKeysString =
+			_journalContentPortletInstanceConfiguration.
+				contentMetadataAssetAddonEntryKeys();
+
+		if (Validator.isNull(contentMetadataAssetAddonEntryKeysString)) {
+			return false;
+		}
+
+		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
+			contentMetadataAssetAddonEntryKeysString);
+
+		if (ArrayUtil.contains(contentMetadataAssetAddonEntryKeys, key)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isEnabledConversion(String extension) {
+		if (!DocumentConversionUtil.isEnabled() ||
+			!ArrayUtil.contains(
+				DocumentConversionUtil.getConversions("html"), extension)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isEnabledUserToolAssetAddonEntry(String key) {
+		String userToolAssetAddonEntryKeysString =
+			_journalContentPortletInstanceConfiguration.
+				userToolAssetAddonEntryKeys();
+
+		if (Validator.isNull(userToolAssetAddonEntryKeysString)) {
+			return false;
+		}
+
+		String[] userToolAssetAddonEntryKeys = StringUtil.split(
+			userToolAssetAddonEntryKeysString);
+
+		if (ArrayUtil.contains(userToolAssetAddonEntryKeys, key)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isEnableViewCountIncrement() {
@@ -1151,49 +1054,10 @@ public class JournalContentDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentDisplayContext.class);
 
-	private static final Comparator<AssetAddonEntry>
-		_assetAddonEntryComparator = Comparator.comparingDouble(
-			AssetAddonEntry::getWeight);
-	private static final ServiceTrackerMap
-		<String, ContentMetadataAssetAddonEntry>
-			_contentMetadataAssetAddonEntryMap;
-	private static final ServiceTrackerMap<String, UserToolAssetAddonEntry>
-		_userToolAssetAddonEntryMap;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			JournalContentDisplayContext.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_contentMetadataAssetAddonEntryMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ContentMetadataAssetAddonEntry.class, null,
-				(serviceReference, emitter) -> {
-					ContentMetadataAssetAddonEntry
-						contentMetadataAssetAddonEntry =
-							bundleContext.getService(serviceReference);
-
-					emitter.emit(contentMetadataAssetAddonEntry.getKey());
-				});
-
-		_userToolAssetAddonEntryMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UserToolAssetAddonEntry.class, null,
-				(serviceReference, emitter) -> {
-					UserToolAssetAddonEntry userToolAssetAddonEntry =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(userToolAssetAddonEntry.getKey());
-				});
-	}
-
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private Long _articleGroupId;
 	private String _articleId;
-	private List<ContentMetadataAssetAddonEntry>
-		_contentMetadataAssetAddonEntries;
 	private final long _ddmStructureClassNameId;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
@@ -1217,6 +1081,5 @@ public class JournalContentDisplayContext {
 	private Boolean _showSelectArticleLink;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
-	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 
 }

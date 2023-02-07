@@ -36,4 +36,10 @@ definition {
 		return "${position_y}";
 	}
 
+	macro closeToastAlert {
+		Click(
+			key_type = "${key_type}",
+			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON"
+		);
+	}
 }

@@ -29,6 +29,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.pagination.InfoPage;
@@ -167,16 +168,19 @@ public class
 			List<InfoField<?>> infoFields =
 				configurationInfoForm.getAllInfoFields();
 
-			Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
+			Assert.assertEquals(infoFields.toString(), 3, infoFields.size());
 
-			InfoField<?> infoField = infoFields.get(0);
-
-			Assert.assertTrue(
-				infoField.getInfoFieldType() instanceof SelectInfoFieldType);
-			Assert.assertEquals(
-				_language.get(LocaleUtil.US, "item-type"),
-				infoField.getLabel(LocaleUtil.US));
-			Assert.assertEquals("item_types", infoField.getName());
+			_assertInfoField(
+				infoFields.get(0), SelectInfoFieldType.class,
+				_language.get(LocaleUtil.US, "item-type"), "item_types");
+			_assertInfoField(
+				infoFields.get(1), SelectInfoFieldType.class,
+				_language.get(LocaleUtil.US, "and-contains"),
+				"assetCategoryRule");
+			_assertInfoField(
+				infoFields.get(2), CategoriesInfoFieldType.class,
+				_language.get(LocaleUtil.US, "category"),
+				"specificAssetCategoryJSONObject");
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -244,6 +248,16 @@ public class
 		return JournalTestUtil.addArticle(
 			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
+
+	private void _assertInfoField(
+		InfoField<?> infoField, Class<?> infoFieldTypeClass, String label,
+		String name) {
+
+		Assert.assertTrue(
+			infoFieldTypeClass.isInstance(infoField.getInfoFieldType()));
+		Assert.assertEquals(label, infoField.getLabel(LocaleUtil.US));
+		Assert.assertEquals(name, infoField.getName());
 	}
 
 	private AssetEntry _getAssetEntry(JournalArticle journalArticle)

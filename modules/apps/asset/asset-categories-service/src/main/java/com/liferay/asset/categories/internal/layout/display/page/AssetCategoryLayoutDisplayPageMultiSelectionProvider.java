@@ -24,12 +24,14 @@ import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 
@@ -201,10 +203,8 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 	private long _getNearestAncestorCategoryId(
 		AssetCategory assetCategory, Set<Long> availableCategoryIds) {
 
-		String treePath = assetCategory.getTreePath();
-
 		List<Long> categoryIds = TransformUtil.transformToList(
-			treePath.split("/"),
+			StringUtil.split(assetCategory.getTreePath(), StringPool.SLASH),
 			treePathPart -> {
 				if (Validator.isNull(treePathPart)) {
 					return null;

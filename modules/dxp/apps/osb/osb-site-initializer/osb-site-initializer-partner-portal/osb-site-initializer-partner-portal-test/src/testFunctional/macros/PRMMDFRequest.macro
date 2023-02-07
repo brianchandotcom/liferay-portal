@@ -37,8 +37,8 @@ definition {
 	macro createNewRequest {
 		PRMMDFRequest.fillGoalsPage(
 			accountName = "${accountName}",
-			campaignDescription = "${campaignDescription}",
 			additionalOptions = "${additionalOptions}",
+			campaignDescription = "${campaignDescription}",
 			campaignName = "${campaignName}",
 			countryName = "${countryName}",
 			goalsOptions = "${goalsOptions}",
@@ -48,8 +48,8 @@ definition {
 		Button.click(button = "Continue");
 
 		PRMMDFRequest.newActivity(
-			activityName = "${activityName}",
 			activityDescription = "${activityDescription}",
+			activityName = "${activityName}",
 			budgetList = "${budgetList}",
 			followUpStrategy = "${followUpStrategy}",
 			leadFollowUpList = "${leadFollowUpList}",

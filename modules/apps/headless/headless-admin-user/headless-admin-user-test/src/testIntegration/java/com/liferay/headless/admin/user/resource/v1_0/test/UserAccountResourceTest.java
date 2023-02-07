@@ -407,10 +407,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			"userGroupRoleNames/any(f:contains(f, 'Test group role '))",
 			userAccount2);
 		_testGetUserAccountsPage("userGroupRoleNames/any(f:f eq 'Test Role')");
-	}
 
-	@Test
-	public void testGetUserAccountsPageWithInheritedRoles() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		Group group = GroupTestUtil.addGroup();

@@ -119,7 +119,7 @@ public interface LayoutPageTemplateEntryLocalService
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
-		throws PortalException;
+		throws Exception;
 
 	/**
 	 * Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.

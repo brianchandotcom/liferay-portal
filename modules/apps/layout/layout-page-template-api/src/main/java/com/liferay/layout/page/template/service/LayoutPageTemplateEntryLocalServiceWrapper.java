@@ -124,7 +124,7 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long layoutPageTemplateEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.copyLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId,

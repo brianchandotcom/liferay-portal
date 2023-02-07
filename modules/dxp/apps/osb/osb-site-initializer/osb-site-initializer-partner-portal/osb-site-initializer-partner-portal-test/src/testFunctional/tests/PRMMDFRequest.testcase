@@ -323,61 +323,61 @@ definition {
 		var startDate = DateUtil.getFormattedDate("+1", "M/d/yyyy");
 		var endDate = DateUtil.getFormattedDate("+2", "M/d/yyyy");
 
-        task ("Given I go to add a new MDF Request") {
-            PRMMarketing.gotoAddNewMDF();
-        }
+		task ("Given I go to add a new MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
 
-        task ("When I fill all fields from MDF Request") {
-            PRMMDFRequest.fillGoalsPage(
-                accountName = "${accountName}",
-                additionalOptions = "${additionalOptions}",
-                campaignDescription = "Campaign Description",
-                campaignName = "${campaignName}",
-                countryName = "${countryName}",
-                goalsOptions = "${goalsOptions}",
-                targetMarketOptions = "${targetMarketOptions}",
-                targetRolesOptions = "${targetRolesOptions}");
+		task ("When I fill all fields from MDF Request") {
+			PRMMDFRequest.fillGoalsPage(
+				accountName = ${accountName},
+				additionalOptions = ${additionalOptions},
+				campaignDescription = "Campaign Description",
+				campaignName = ${campaignName},
+				countryName = ${countryName},
+				goalsOptions = ${goalsOptions},
+				targetMarketOptions = ${targetMarketOptions},
+				targetRolesOptions = ${targetRolesOptions});
 
-            Button.click(button = "Continue");
+			Button.click(button = "Continue");
 
-            PRMMDFRequest.newActivity(
-                activityDescription = "${activityDescription}",
-                activityName = "${activityName}",
-                budgetList = "${budgetList}",
-                followUpStrategy = "${followUpStrategy}",
-                leadFollowUpList = "${leadFollowUpList}",
-                leadList = "${leadList}",
-                tactic = "${tactic}",
-                targetOfLeads = "${targetOfLeads}",
-                typeOfActivity = "${typeOfActivity}");
+			PRMMDFRequest.newActivity(
+				activityDescription = ${activityDescription},
+				activityName = ${activityName},
+				budgetList = ${budgetList},
+				followUpStrategy = ${followUpStrategy},
+				leadFollowUpList = ${leadFollowUpList},
+				leadList = ${leadList},
+				tactic = ${tactic},
+				targetOfLeads = ${targetOfLeads},
+				typeOfActivity = ${typeOfActivity});
 
-            Button.click(button = "Continue");
+			Button.click(button = "Continue");
 
-            Button.click(button = "Continue");
-        }
+			Button.click(button = "Continue");
+		}
 
-        task ("Then all inputted information are displayed on Review Page") {
-            PRMMarketing.viewMDFGoals(
-                accountName = "${accountName}",
-                campaignDescription = "Campaign Description",
-                campaignName = "${campaignName}",
-                countryName = "${countryName}",
-                goalsOptions = "${goalsOptions}",
-                targetMarketOptions = "${targetMarketOptions}",
-                targetRolesOptions = "${targetRolesOptions}");
+		task ("Then all inputted information are displayed on Review Page") {
+			PRMMarketing.viewMDFGoals(
+				accountName = ${accountName},
+				campaignDescription = "Campaign Description",
+				campaignName = ${campaignName},
+				countryName = ${countryName},
+				goalsOptions = ${goalsOptions},
+				targetMarketOptions = ${targetMarketOptions},
+				targetRolesOptions = ${targetRolesOptions});
 
-            PRMMarketing.viewMDFActivity(
-                activityDescription = "${activityDescription}",
-                activityName = "${activityName}",
-                budget = "${budget}",
-                budgetList = "${budgetList}",
-                endDate = "${endDate}",
-                expense = "${expense}",
-                leadList = "${leadList}",
-                startDate = "${startDate}",
-                tactic = "${tactic}",
-                typeOfActivity = "${typeOfActivity}");
-        }
+			PRMMarketing.viewMDFActivity(
+				activityDescription = ${activityDescription},
+				activityName = ${activityName},
+				budget = ${budget},
+				budgetList = ${budgetList},
+				endDate = ${endDate},
+				expense = ${expense},
+				leadList = ${leadList},
+				startDate = ${startDate},
+				tactic = ${tactic},
+				typeOfActivity = ${typeOfActivity});
+		}
 	}
 
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
@@ -38,6 +39,9 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,6 +73,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.util.AssetSearcher;
@@ -80,6 +85,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,7 +122,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		}
 
 		try {
-			SearchContext searchContext = _getSearchContext(assetEntry);
+			SearchContext searchContext = _getSearchContext(
+				assetEntry, collectionQuery);
 
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 				collectionQuery);
@@ -248,11 +255,88 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	}
 
 	private BooleanFilter _getAssetCategoryIdsBooleanFilter(
-			AssetEntry assetEntry, SearchContext searchContext)
+			AssetEntry assetEntry, CollectionQuery collectionQuery,
+			SearchContext searchContext)
 		throws Exception {
+
+		Tuple assetCategoryRuleTuple = _getAssetCategoryRuleTuple(
+			collectionQuery);
+
+		if ((assetCategoryRuleTuple.getSize() == 2) &&
+			Objects.equals(
+				assetCategoryRuleTuple.getObject(0), "specificAssetCategory")) {
+
+			return _getAssetSearcherPreBooleanFilter(
+				new long[] {
+					GetterUtil.getLong(assetCategoryRuleTuple.getObject(1))
+				},
+				assetEntry.getCategoryIds(), searchContext);
+		}
 
 		return _getAssetSearcherPreBooleanFilter(
 			new long[0], assetEntry.getCategoryIds(), searchContext);
+	}
+
+	private Tuple _getAssetCategoryRuleTuple(CollectionQuery collectionQuery) {
+		Map<String, String[]> configuration =
+			collectionQuery.getConfiguration();
+
+		if ((configuration == null) ||
+			ArrayUtil.isEmpty(configuration.get("assetCategoryRule"))) {
+
+			return new Tuple();
+		}
+
+		String[] assetCategoryRules = configuration.get("assetCategoryRule");
+
+		String assetCategoryRule = assetCategoryRules[0];
+
+		if (Objects.equals(assetCategoryRule, "specificAssetCategory") &&
+			!ArrayUtil.isEmpty(
+				configuration.get("specificAssetCategoryJSONObject"))) {
+
+			String[] specificAssetCategoryJSONObjects = configuration.get(
+				"specificAssetCategoryJSONObject");
+
+			JSONObject specificAssetCategoryJSONObject;
+
+			try {
+				specificAssetCategoryJSONObject = _jsonFactory.createJSONObject(
+					specificAssetCategoryJSONObjects[0]);
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException);
+				}
+
+				return new Tuple();
+			}
+
+			long specificAssetCategoryId =
+				specificAssetCategoryJSONObject.getLong("classPK");
+
+			if (specificAssetCategoryId <= 0) {
+				return new Tuple();
+			}
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(
+					specificAssetCategoryId);
+
+			if (assetCategory == null) {
+				return new Tuple();
+			}
+
+			return new Tuple("specificAssetCategory", specificAssetCategoryId);
+		}
+
+		if (Objects.equals(
+				assetCategoryRule, "anyAssetCategoryOfTheSameVocabulary")) {
+
+			return new Tuple(assetCategoryRule);
+		}
+
+		return new Tuple();
 	}
 
 	private BooleanClause<Query> _getAssetEntryIdBooleanClause(
@@ -452,7 +536,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext(AssetEntry assetEntry)
+	private SearchContext _getSearchContext(
+			AssetEntry assetEntry, CollectionQuery collectionQuery)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -473,7 +558,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
 
 		BooleanFilter assetCategoryIdsBooleanFilter =
-			_getAssetCategoryIdsBooleanFilter(assetEntry, searchContext);
+			_getAssetCategoryIdsBooleanFilter(
+				assetEntry, collectionQuery, searchContext);
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -494,10 +580,16 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			class);
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private AssetHelper _assetHelper;
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

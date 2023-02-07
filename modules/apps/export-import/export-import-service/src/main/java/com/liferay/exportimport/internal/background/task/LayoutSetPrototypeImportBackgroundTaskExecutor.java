@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.internal.background.task;
 
+import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
@@ -275,6 +276,8 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 		@Override
 		public Void call() throws PortalException {
 			try {
+				_cleanUpPreviousBackgroundTasks();
+
 				MergeLayoutPrototypesThreadLocal.setInProgress(true);
 
 				_exportImportLocalService.importLayoutsDataDeletions(
@@ -287,6 +290,38 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 			}
 			finally {
 				MergeLayoutPrototypesThreadLocal.setInProgress(false);
+			}
+		}
+
+		private void _cleanUpPreviousBackgroundTasks() {
+			try {
+				List<BackgroundTask> backgroundTasks =
+					_backgroundTaskManager.getBackgroundTasks(
+						_exportImportConfiguration.getGroupId(),
+						BackgroundTaskExecutorNames.
+							LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR);
+
+				for (BackgroundTask backgroundTask : backgroundTasks) {
+					int status = backgroundTask.getStatus();
+
+					if ((status == BackgroundTaskConstants.STATUS_QUEUED) ||
+						(status == BackgroundTaskConstants.STATUS_NEW) ||
+						(status ==
+							BackgroundTaskConstants.STATUS_IN_PROGRESS)) {
+
+						continue;
+					}
+
+					_backgroundTaskManager.deleteBackgroundTask(
+						backgroundTask.getBackgroundTaskId());
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to clean up previous background tasks",
+						portalException);
+				}
 			}
 		}
 

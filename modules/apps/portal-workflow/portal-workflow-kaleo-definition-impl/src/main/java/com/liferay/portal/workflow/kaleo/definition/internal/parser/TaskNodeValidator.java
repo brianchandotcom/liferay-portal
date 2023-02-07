@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
@@ -25,12 +26,9 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -88,15 +86,15 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 			task.getOutgoingTransitions();
 
 		if (outgoingTransitions.size() > 1) {
-			List<Transition> defaultTransitions = Stream.of(
-				outgoingTransitions.values()
-			).flatMap(
-				Collection::stream
-			).filter(
-				Transition::isDefault
-			).collect(
-				Collectors.toList()
-			);
+			List<Transition> defaultTransitions = TransformUtil.transform(
+				outgoingTransitions.values(),
+				transition -> {
+					if (transition.isDefault()) {
+						return transition;
+					}
+
+					return null;
+				});
 
 			if (defaultTransitions.size() > 1) {
 				throw new KaleoDefinitionValidationException.

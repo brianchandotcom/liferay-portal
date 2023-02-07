@@ -247,12 +247,12 @@ definition {
 
 			AssertElementPresent(
 				key_fieldName = "Allowed Account Types",
-				key_fieldValue = "Business",
+				key_fieldValue = "Person",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			AssertElementNotPresent(
 				key_fieldName = "Allowed Account Types",
-				key_fieldValue = "Person",
+				key_fieldValue = "Business",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			OSGiConfig.assertTextNotInOSGiConfig(
@@ -344,12 +344,12 @@ definition {
 
 			AssertElementPresent(
 				key_fieldName = "Allowed Account Types",
-				key_fieldValue = "Business",
+				key_fieldValue = "Person",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			AssertElementNotPresent(
 				key_fieldName = "Allowed Account Types",
-				key_fieldValue = "Person",
+				key_fieldValue = "Business",
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			OSGiConfig.assertTextNotInOSGiConfig(

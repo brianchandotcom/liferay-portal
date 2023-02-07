@@ -96,7 +96,7 @@ public interface LayoutUtilityPageEntryLocalService
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long userId, long groupId, long layoutUtilityPageEntryId,
 			ServiceContext serviceContext)
-		throws PortalException;
+		throws Exception;
 
 	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.

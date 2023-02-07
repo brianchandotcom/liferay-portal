@@ -72,20 +72,21 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 		for (InfoItemReference infoItemReference : infoItemReferences) {
 			long classPK = _getClassPK(infoItemReference);
 
-			if (Objects.equals(
-					getClassName(), infoItemReference.getClassName()) &&
-				(classPK > 0)) {
+			if (!Objects.equals(
+					getClassName(), infoItemReference.getClassName()) ||
+				(classPK <= 0)) {
 
-				AssetCategory assetCategory =
-					_assetCategoryLocalService.fetchAssetCategory(classPK);
-
-				Map<Long, InfoItemReference> categoryIdInfoItemReferencesMap =
-					vocabularyIdInfoItemReferencesMap.computeIfAbsent(
-						assetCategory.getVocabularyId(),
-						key -> new HashMap<>());
-
-				categoryIdInfoItemReferencesMap.put(classPK, infoItemReference);
+				continue;
 			}
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(classPK);
+
+			Map<Long, InfoItemReference> categoryIdInfoItemReferencesMap =
+				vocabularyIdInfoItemReferencesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(), key -> new HashMap<>());
+
+			categoryIdInfoItemReferencesMap.put(classPK, infoItemReference);
 		}
 
 		List<InfoItemReference> hierarchicalInfoItemReferences =

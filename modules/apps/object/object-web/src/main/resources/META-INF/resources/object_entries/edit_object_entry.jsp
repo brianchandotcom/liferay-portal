@@ -31,7 +31,7 @@ ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab()
 	%>
 
 	<liferay-frontend:screen-navigation
-		key="<%= objectDefinition.getExternalReferenceCode() %>"
+		key="<%= objectDefinition.getClassName() %>"
 		portletURL="<%= currentURLObj %>"
 	/>
 </c:if>

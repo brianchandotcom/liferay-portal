@@ -18,8 +18,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 
@@ -49,10 +47,7 @@ public class ObjectLayoutTabScreenNavigationCategory
 
 	@Override
 	public String getEntryKey() {
-		return StringBundler.concat(
-			_objectDefinition.getClassName(), StringPool.POUND,
-			_objectLayoutTab.getCompanyId(), StringPool.POUND,
-			_objectLayoutTab.getObjectLayoutTabId());
+		return String.valueOf(_objectLayoutTab.getObjectLayoutTabId());
 	}
 
 	@Override
@@ -62,7 +57,7 @@ public class ObjectLayoutTabScreenNavigationCategory
 
 	@Override
 	public String getScreenNavigationKey() {
-		return _objectDefinition.getExternalReferenceCode();
+		return _objectDefinition.getClassName();
 	}
 
 	@Override

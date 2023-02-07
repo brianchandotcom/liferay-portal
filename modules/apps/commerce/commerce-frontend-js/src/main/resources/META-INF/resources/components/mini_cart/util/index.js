@@ -167,9 +167,12 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 	else if (allowedOrderQuantities.length) {
 		quantity = allowedOrderQuantities.find(
 			(quantity) =>
-				quantity > minOrderQuantity &&
+				quantity >= minOrderQuantity &&
 				quantity % multipleOrderQuantity === 0
 		);
+	}
+	else if (multipleOrderQuantity > minOrderQuantity) {
+		quantity = multipleOrderQuantity;
 	}
 
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {

@@ -121,7 +121,7 @@
 			const url = document.getElementById('<portlet:namespace />url');
 
 			if (url) {
-				url.setAttribute('disabled', false);
+				url.removeAttribute('disabled');
 			}
 
 			const message = document.getElementById(

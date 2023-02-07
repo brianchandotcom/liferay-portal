@@ -126,7 +126,7 @@
 				);
 
 				if (sampleURL) {
-					sampleURL.setAttribute('disabled', false);
+					sampleURL.removeAttribute('disabled');
 				}
 			}
 

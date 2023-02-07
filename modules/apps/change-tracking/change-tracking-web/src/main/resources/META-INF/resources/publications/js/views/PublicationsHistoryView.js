@@ -13,13 +13,12 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
-import ClayProgressBar from '@clayui/progress-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
+
+import PublicationStatus from '../components/PublicationStatus';
 
 const renderUserPortrait = (entry, userInfo) => {
 	const user = userInfo[entry.userId];
@@ -41,117 +40,6 @@ const renderUserPortrait = (entry, userInfo) => {
 			)}
 		</ClaySticker>
 	);
-};
-
-const PublicationStatus = ({
-	dataURL,
-	displayType,
-	label,
-	spritemap,
-	updateStatus,
-}) => {
-	const [percentage, setPercentage] = useState(0);
-
-	let initialStatus = null;
-
-	if (label) {
-		initialStatus = {
-			displayType,
-			label,
-		};
-	}
-
-	const [status, setStatus] = useState(initialStatus);
-
-	useEffect(() => {
-		if (label) {
-			setStatus({
-				displayType,
-				label,
-			});
-
-			return;
-		}
-
-		setStatus(null);
-
-		fetch(dataURL)
-			.then((response) => response.json())
-			.then((json) => {
-				if (json) {
-					if (json.label) {
-						setStatus({
-							displayType: json.displayType,
-							label: json.label,
-						});
-
-						if (updateStatus) {
-							updateStatus(
-								json.displayType,
-								json.label,
-								json.published
-							);
-						}
-					}
-					else if (Object.hasOwnProperty.call(json, 'percentage')) {
-						setPercentage(json.percentage);
-
-						let displayType = null;
-						let label = null;
-						let published = false;
-
-						const interval = setInterval(() => {
-							if (label) {
-								setStatus({displayType, label});
-
-								if (updateStatus) {
-									updateStatus(displayType, label, published);
-								}
-
-								clearInterval(interval);
-
-								return;
-							}
-
-							fetch(dataURL)
-								.then((response) => response.json())
-								.then((json) => {
-									if (json) {
-										if (json.label) {
-											setPercentage(100);
-
-											displayType = json.displayType;
-											label = json.label;
-											published = json.published;
-										}
-										else if (
-											Object.hasOwnProperty.call(
-												json,
-												'percentage'
-											)
-										) {
-											setPercentage(json.percentage);
-										}
-									}
-								})
-								.catch(() => {});
-						}, 1000);
-
-						return () => clearInterval(interval);
-					}
-				}
-			});
-	}, [dataURL, displayType, label, updateStatus]);
-
-	if (status) {
-		return (
-			<ClayLabel displayType={status.displayType} spritemap={spritemap}>
-				{status.label}
-			</ClayLabel>
-		);
-	}
-
-	return <ClayProgressBar spritemap={spritemap} value={percentage} />;
 };
 
 const renderPublicationInfo = (entry, published) => {

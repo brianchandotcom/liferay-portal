@@ -21,6 +21,8 @@ import ClaySticker from '@clayui/sticker';
 import {fetch, navigate, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import PublicationStatus from './PublicationStatus';
+
 export default function MoveChangesModal({
 	changes,
 	ctCollectionId,
@@ -31,6 +33,7 @@ export default function MoveChangesModal({
 	trigger,
 }) {
 	const [showModal, setShowModal] = useState(false);
+	const [status, setStatus] = useState(null);
 	const [toCTCollectionId, setToCTCollectionId] = useState(null);
 	const {observer, onClose} = useModal({
 		onClose: () => setShowModal(false),
@@ -58,11 +61,63 @@ export default function MoveChangesModal({
 			.then((response) => {
 				return response.json();
 			})
-			.then((json) => navigate(json.redirectURL));
+			.then((json) => {
+				if (json.redirect) {
+					navigate(json.redirectURL);
+				}
+				else {
+					setStatus(json);
+				}
+			});
+	};
+
+	const renderClose = (response) => {
+		let title;
+
+		if (response.displayType === 'success') {
+			title = Liferay.Language.get('the-changes-were-moved-successfully');
+		}
+		else {
+			title = Liferay.Language.get('the-changes-could-not-be-moved');
+		}
+
+		return (
+			<>
+				<ClayAlert
+					actions={
+						<ClayButton
+							alert
+							displayType="primary"
+							onClick={() => {
+								navigate(status.redirectURL);
+							}}
+						>
+							{Liferay.Language.get('close')}
+						</ClayButton>
+					}
+					displayType={response.displayType}
+					spritemap={spritemap}
+					title={title}
+					variant="inline"
+				/>
+			</>
+		);
 	};
 
 	const resetForm = () => {
 		setToCTCollectionId(null);
+	};
+
+	const renderStatus = () => {
+		return (
+			<PublicationStatus
+				dataURL={status.statusURL}
+				displayType={status.displayType}
+				label={status.label}
+				renderComplete={renderClose}
+				spritemap={spritemap}
+			/>
+		);
 	};
 
 	const renderTrigger = () => {
@@ -128,7 +183,7 @@ export default function MoveChangesModal({
 								displayType="info"
 								spritemap={spritemap}
 								title={Liferay.Language.get(
-									'select-the-target-publication-to-move-the-selected-changes-to'
+									'select-the-publication-to-move-the-selected-changes-to'
 								)}
 							/>
 
@@ -176,31 +231,36 @@ export default function MoveChangesModal({
 
 						<ClayModal.Footer
 							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={() => {
-											onClose();
-											resetForm();
-										}}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
+								status ? (
+									renderStatus()
+								) : (
+									<ClayButton.Group spaced>
+										<ClayButton
+											displayType="secondary"
+											onClick={() => {
+												onClose();
+												resetForm();
+											}}
+										>
+											{Liferay.Language.get('cancel')}
+										</ClayButton>
 
-									<ClayButton
-										disabled={!toCTCollectionId}
-										displayType="primary"
-										type="submit"
-									>
-										{Liferay.Language.get('move')}
-									</ClayButton>
-								</ClayButton.Group>
+										<ClayButton
+											disabled={
+												!toCTCollectionId ||
+												!changes.length > 0
+											}
+											displayType="primary"
+											type="submit"
+										>
+											{Liferay.Language.get('move')}
+										</ClayButton>
+									</ClayButton.Group>
+								)
 							}
 						/>
 					</ClayForm>
 				</ClayModal>
-
-				{renderTrigger()}
 			</>
 		);
 	}

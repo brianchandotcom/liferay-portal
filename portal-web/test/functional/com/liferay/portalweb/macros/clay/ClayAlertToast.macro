@@ -42,4 +42,10 @@ definition {
 			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON"
 		);
 	}
+	macro openToastAlert {
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "${key_text}"
+		);
+	}
 }

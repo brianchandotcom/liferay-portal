@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -35,6 +36,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -192,6 +195,33 @@ public class DSRecipient implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 
+	@Schema
+	@Valid
+	public Object getTabs() {
+		return tabs;
+	}
+
+	public void setTabs(Object tabs) {
+		this.tabs = tabs;
+	}
+
+	@JsonIgnore
+	public void setTabs(UnsafeSupplier<Object, Exception> tabsUnsafeSupplier) {
+		try {
+			tabs = tabsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object tabs;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -287,6 +317,26 @@ public class DSRecipient implements Serializable {
 			sb.append(_escape(status));
 
 			sb.append("\"");
+		}
+
+		if (tabs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tabs\": ");
+
+			if (tabs instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)tabs));
+			}
+			else if (tabs instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)tabs));
+				sb.append("\"");
+			}
+			else {
+				sb.append(tabs);
+			}
 		}
 
 		sb.append("}");

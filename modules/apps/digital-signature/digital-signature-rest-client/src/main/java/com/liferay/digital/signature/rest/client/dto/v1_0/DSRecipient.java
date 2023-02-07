@@ -135,6 +135,25 @@ public class DSRecipient implements Cloneable, Serializable {
 
 	protected String status;
 
+	public Object getTabs() {
+		return tabs;
+	}
+
+	public void setTabs(Object tabs) {
+		this.tabs = tabs;
+	}
+
+	public void setTabs(UnsafeSupplier<Object, Exception> tabsUnsafeSupplier) {
+		try {
+			tabs = tabsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object tabs;
+
 	@Override
 	public DSRecipient clone() throws CloneNotSupportedException {
 		return (DSRecipient)super.clone();

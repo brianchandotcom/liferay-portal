@@ -125,6 +125,23 @@ public class DSRecipientSerDes {
 			sb.append("\"");
 		}
 
+		if (dsRecipient.getTabs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tabs\": ");
+
+			if (dsRecipient.getTabs() instanceof String) {
+				sb.append("\"");
+				sb.append((String)dsRecipient.getTabs());
+				sb.append("\"");
+			}
+			else {
+				sb.append(dsRecipient.getTabs());
+			}
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -182,6 +199,13 @@ public class DSRecipientSerDes {
 			map.put("status", String.valueOf(dsRecipient.getStatus()));
 		}
 
+		if (dsRecipient.getTabs() == null) {
+			map.put("tabs", null);
+		}
+		else {
+			map.put("tabs", String.valueOf(dsRecipient.getTabs()));
+		}
+
 		return map;
 	}
 
@@ -226,6 +250,11 @@ public class DSRecipientSerDes {
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					dsRecipient.setStatus((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "tabs")) {
+				if (jsonParserFieldValue != null) {
+					dsRecipient.setTabs((Object)jsonParserFieldValue);
 				}
 			}
 		}

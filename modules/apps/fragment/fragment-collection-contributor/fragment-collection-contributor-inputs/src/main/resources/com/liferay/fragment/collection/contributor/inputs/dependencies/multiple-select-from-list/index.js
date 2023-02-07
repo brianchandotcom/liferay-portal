@@ -39,10 +39,20 @@ if (numberOfOptions < options.length) {
 
 			const input = node.querySelector('input');
 			input.value = option.value;
+			// eslint-disable-next-line no-undef
+			input.id = `${fragmentEntryLinkNamespace}-checkbox-${option.value}`;
 
 			if (layoutMode === 'edit') {
 				input.setAttribute('disabled', true);
 			}
+
+			const label = node.querySelector('label');
+
+			label.setAttribute(
+				'for',
+				// eslint-disable-next-line no-undef
+				`${fragmentEntryLinkNamespace}-checkbox-${option.value}`
+			);
 
 			const text = node.querySelector('.custom-control-label-text');
 			text.textContent = option.label;

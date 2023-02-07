@@ -23,6 +23,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -202,20 +203,23 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 		String treePath = assetCategory.getTreePath();
 
-		List<Long> categoryIds = new ArrayList<>();
+		List<Long> categoryIds = TransformUtil.transformToList(
+			treePath.split("/"),
+			treePathPart -> {
+				if (Validator.isNull(treePathPart)) {
+					return null;
+				}
 
-		for (String treePathPart : treePath.split("/")) {
-			if (Validator.isNotNull(treePathPart)) {
 				Long categoryId = Long.valueOf(treePathPart);
 
-				if (!Objects.equals(
-						categoryId, assetCategory.getCategoryId()) &&
-					availableCategoryIds.contains(categoryId)) {
+				if (Objects.equals(categoryId, assetCategory.getCategoryId()) ||
+					!availableCategoryIds.contains(categoryId)) {
 
-					categoryIds.add(categoryId);
+					return null;
 				}
-			}
-		}
+
+				return categoryId;
+			});
 
 		if (categoryIds.isEmpty()) {
 			return 0L;

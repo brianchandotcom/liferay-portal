@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.wab.generator.internal;
 
 import com.liferay.portal.file.install.FileInstaller;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -92,71 +93,79 @@ public class WabGenerator
 
 		_registerArtifactUrlTransformer(bundleContext);
 
-		final Set<String> requiredForStartupContextPaths =
-			_getRequiredForStartupContextPaths(
-				Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				Set<String> requiredForStartupContextPaths =
+					_getRequiredForStartupContextPaths(
+						Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
 
-		if (requiredForStartupContextPaths.isEmpty()) {
-			return;
-		}
-
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
-			bundleContext, Bundle.ACTIVE, null) {
-
-			@Override
-			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				String location = bundle.getLocation();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Activated bundle " + location);
+				if (requiredForStartupContextPaths.isEmpty()) {
+					return null;
 				}
 
-				if (requiredForStartupContextPaths.remove(
-						HttpComponentsUtil.getParameter(
-							location, "Web-ContextPath", false))) {
+				CountDownLatch countDownLatch = new CountDownLatch(1);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Bundle " + location + " is required for startup");
+				BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+					bundleContext, Bundle.ACTIVE, null) {
+
+					@Override
+					public Void addingBundle(
+						Bundle bundle, BundleEvent bundleEvent) {
+
+						String location = bundle.getLocation();
+
+						if (_log.isDebugEnabled()) {
+							_log.debug("Activated bundle " + location);
+						}
+
+						if (requiredForStartupContextPaths.remove(
+								HttpComponentsUtil.getParameter(
+									location, "Web-ContextPath", false))) {
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Bundle " + location +
+										" is required for startup");
+							}
+
+							if (requiredForStartupContextPaths.isEmpty()) {
+								countDownLatch.countDown();
+							}
+						}
+
+						return null;
 					}
 
-					if (requiredForStartupContextPaths.isEmpty()) {
-						countDownLatch.countDown();
+				};
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Bundles required for startup: " +
+							requiredForStartupContextPaths);
+				}
+
+				bundleTracker.open();
+
+				while (true) {
+					if (countDownLatch.await(1, TimeUnit.MINUTES)) {
+						break;
 					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Waiting on startup required bundles to " +
+								"activate: " + requiredForStartupContextPaths);
+					}
+				}
+
+				bundleTracker.close();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("All startup required bundles are active");
 				}
 
 				return null;
-			}
-
-		};
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Bundles required for startup: " +
-					requiredForStartupContextPaths);
-		}
-
-		bundleTracker.open();
-
-		while (true) {
-			if (countDownLatch.await(1, TimeUnit.MINUTES)) {
-				break;
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Waiting on startup required bundles to activate: " +
-						requiredForStartupContextPaths);
-			}
-		}
-
-		bundleTracker.close();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("All startup required bundles are active");
-		}
+			});
 	}
 
 	@Deactivate

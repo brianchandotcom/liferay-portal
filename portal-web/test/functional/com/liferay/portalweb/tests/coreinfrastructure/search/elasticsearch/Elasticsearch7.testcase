@@ -85,6 +85,12 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
+		WaitForConsoleTextPresent(value1 = "Finished reindexing company ${companyId} for class name com.liferay.blogs.model.BlogsEntry");
+
+		WaitForConsoleTextPresent(value1 = "Finished reindexing company ${companyId} for class name com.liferay.document.library.kernel.model.DLFileEntry");
+
+		WaitForConsoleTextPresent(value1 = "Finished reindexing company ${companyId} for class name com.liferay.journal.model.JournalArticle");
+
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 
 		AssertElementPresent(

@@ -110,6 +110,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 
 			<Form.Select
 				{...inputProps}
+				forceSelectOption
 				label={i18n.translate('type')}
 				name="factorCategoryId"
 				options={factorCategories.map(({id: value, name: label}) => ({

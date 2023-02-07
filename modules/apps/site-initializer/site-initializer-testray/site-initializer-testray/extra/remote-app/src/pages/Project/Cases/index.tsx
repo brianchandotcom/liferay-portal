@@ -20,7 +20,6 @@ import {TableProps} from '../../../components/Table';
 import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {filters} from '../../../schema/filter';
 import {testrayCaseRest} from '../../../services/rest';
 import {Action} from '../../../types';
 import dayjs from '../../../util/date';
@@ -54,7 +53,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create', {state: {back: pathname}}),
-				filterFields: filters.case as any,
+				filterSchema: 'cases',
 				title: i18n.translate('cases'),
 			}}
 			resource={testrayCaseRest.resource}

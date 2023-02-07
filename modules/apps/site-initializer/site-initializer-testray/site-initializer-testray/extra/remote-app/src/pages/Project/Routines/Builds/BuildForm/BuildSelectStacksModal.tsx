@@ -154,6 +154,7 @@ const BuildSelectStacksModal: React.FC<
 							defaultOption={false}
 							defaultValue={factorItem.factorOption?.id}
 							errors={errors}
+							forceSelectOption
 							key={index}
 							label={factorItem.factorCategory?.name}
 							multiple

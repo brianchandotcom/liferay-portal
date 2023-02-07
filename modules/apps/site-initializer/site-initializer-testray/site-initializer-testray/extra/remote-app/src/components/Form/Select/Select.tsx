@@ -21,6 +21,7 @@ type InputSelectProps = {
 	className?: string;
 	defaultOption?: boolean;
 	errors?: any;
+	forceSelectOption?: boolean;
 	id?: string;
 	label?: string;
 	name: string;
@@ -42,6 +43,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 	register = () => {},
 	id = name,
 	options,
+	forceSelectOption = false,
 	required = false,
 	...otherProps
 }) => {
@@ -64,7 +66,11 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				{options.map(({label, value}, index) => (
 					<option
 						key={index}
-						selected={value === defaultValue}
+						selected={
+							forceSelectOption
+								? value === defaultValue
+								: undefined
+						}
 						value={value}
 					>
 						{label}

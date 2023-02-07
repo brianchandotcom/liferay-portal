@@ -112,6 +112,7 @@ const StackList: React.FC<StackListProps> = ({
 										<Form.Select
 											defaultValue={currentFactorOptionId}
 											disabled={field.disabled}
+											forceSelectOption
 											label={
 												factorItem.factorCategory?.name
 											}

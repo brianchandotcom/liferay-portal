@@ -91,6 +91,7 @@ const FactorsToOptions: React.FC<FactorsToOptionsProps> = ({
 					<Form.Select
 						defaultOption={false}
 						defaultValue={defaultValue}
+						forceSelectOption
 						key={index}
 						label={environmentFactor.label}
 						name={`factorOptionIds.${index}`}

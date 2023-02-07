@@ -130,6 +130,12 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				_getAssetCategoryIdsBooleanFilter(
 					assetEntry, collectionQuery, searchContext);
 
+			if (!assetCategoryIdsBooleanFilter.hasClauses()) {
+				return InfoPage.of(
+					Collections.emptyList(), collectionQuery.getPagination(),
+					0);
+			}
+
 			BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 			booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);

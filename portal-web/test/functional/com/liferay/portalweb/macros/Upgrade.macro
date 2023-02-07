@@ -3951,7 +3951,7 @@ definition {
 
 		UserNavigator.gotoContact();
 
-		User.removeContactInformation(rowEntry = "1400 Montefino Ave");
+		User.removeAddress(listEntry = "1400 Montefino Ave");
 
 		Navigator.gotoNavNested(navNested = "Contact Information");
 

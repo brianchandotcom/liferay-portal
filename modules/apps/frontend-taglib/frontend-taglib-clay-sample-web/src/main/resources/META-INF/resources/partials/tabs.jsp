@@ -30,9 +30,9 @@
 			tabsItems="<%= tabsDisplayContext.getDefaultTabsItems() %>"
 		>
 			<clay:tabs-panel><p class="mt-3">Tab Content 1</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 2</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 3</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 4</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 2</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 3</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 4</p></clay:tabs-panel>
 		</clay:tabs>
 	</clay:col>
 </clay:row>
@@ -48,9 +48,9 @@
 			tabsItems="<%= tabsDisplayContext.getDefaultTabsItems() %>"
 		>
 			<clay:tabs-panel><p class="mt-3">Tab Content 1</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 2</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 3</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 4</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 2</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 3</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 4</p></clay:tabs-panel>
 		</clay:tabs>
 	</clay:col>
 </clay:row>
@@ -66,9 +66,9 @@
 			tabsItems="<%= tabsDisplayContext.getDefaultTabsItems() %>"
 		>
 			<clay:tabs-panel><p class="mt-3">Tab Content 1</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 2</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 3</p></clay:tabs-panel>
-			<clay:tabs-panel><p class="mt-3"></p>Tab Content 4</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 2</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 3</p></clay:tabs-panel>
+			<clay:tabs-panel><p class="mt-3">Tab Content 4</p></clay:tabs-panel>
 		</clay:tabs>
 	</clay:col>
 </clay:row>

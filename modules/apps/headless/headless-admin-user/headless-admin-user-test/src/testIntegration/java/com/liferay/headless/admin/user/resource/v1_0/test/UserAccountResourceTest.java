@@ -327,20 +327,20 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Group group = GroupTestUtil.addGroup();
 
-		_testGetUserAccountsPageWithInheritedRoles(
+		_testGetUserAccountWithInheritedRoles(
 			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
 			group, user);
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		_testGetUserAccountsPageWithInheritedRoles(
+		_testGetUserAccountWithInheritedRoles(
 			() -> _organizationLocalService.addUserOrganization(
 				user.getUserId(), organization),
 			organization.getGroup(), user);
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		_testGetUserAccountsPageWithInheritedRoles(
+		_testGetUserAccountWithInheritedRoles(
 			() -> _userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup),
 			userGroup.getGroup(), user);
@@ -1440,7 +1440,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
-	private void _testGetUserAccountsPageWithInheritedRoles(
+	private void _testGetUserAccountWithInheritedRoles(
 			UnsafeRunnable<Exception> associateUserUnsafeRunnable, Group group,
 			User user)
 		throws Exception {

@@ -22,6 +22,7 @@ import {
 	TestrayTeam,
 	UserAccount,
 } from '../services/rest';
+import {SearchBuilder, searchUtil} from '../util/search';
 
 export type Filters = {
 	[key: string]: RendererFields[];
@@ -31,6 +32,23 @@ type Filter = {
 	[key: string]: RendererFields;
 };
 
+export type FilterSchema = {
+	fields: RendererFields[];
+	name?: string;
+	onApply?: (data: {
+		appliedFilter: {
+			[key: string]: string;
+		};
+		defaultFilter: any;
+	}) => string;
+};
+
+export type FilterSchemas = {
+	[key: string]: FilterSchema;
+};
+
+export type FilterSchemaOption = keyof typeof filterSchema;
+
 const transformData = <T = any>(response: any): T[] => {
 	return response?.items || [];
 };
@@ -38,13 +56,12 @@ const transformData = <T = any>(response: any): T[] => {
 const dataToOptions = <T = any>(
 	entries: T[],
 	transformAction?: (entry: T) => {label: string; value: number}
-) => {
-	return entries.map((entry: any) =>
+) =>
+	entries.map((entry: any) =>
 		transformAction
 			? transformAction(entry)
 			: {label: entry.name, value: entry.id}
 	);
-};
 
 const baseFilters: Filter = {
 	assignee: {
@@ -74,7 +91,11 @@ const baseFilters: Filter = {
 	component: {
 		label: i18n.translate('Component'),
 		name: 'componentId',
-		resource: '/components?fields=id,name&sort=name:asc&pageSize=100',
+		resource: ({projectId}) =>
+			`/components?fields=id,name&sort=name:asc&pageSize=100&filter=${searchUtil.eq(
+				'projectId',
+				projectId as string
+			)}`,
 		transformData(item) {
 			return dataToOptions(transformData<TestrayComponent>(item));
 		},
@@ -108,7 +129,11 @@ const baseFilters: Filter = {
 		label: i18n.translate('team'),
 		name: 'teamId',
 		options: [{label: 'Solutions', value: 'solutions'}],
-		resource: '/teams?fields=id,name&sort=name:asc&pageSize=100',
+		resource: ({projectId}) =>
+			`/teams?fields=id,name&sort=name:asc&pageSize=100&filter=${searchUtil.eq(
+				'projectId',
+				projectId as string
+			)}`,
 		transformData(item) {
 			return dataToOptions(transformData<TestrayTeam>(item));
 		},
@@ -116,33 +141,20 @@ const baseFilters: Filter = {
 	},
 };
 
-const filters = {
-	build: {
-		caseTypes: [baseFilters.priority, baseFilters.team],
-		components: [
+const filterSchema = {
+	buildCaseTypes: {
+		fields: [baseFilters.priority, baseFilters.team] as RendererFields[],
+	},
+	buildComponents: {
+		fields: [
 			baseFilters.priority,
 			baseFilters.caseType,
 			baseFilters.team,
 			baseFilters.run,
-		],
-		index: [
-			baseFilters.priority,
-			baseFilters.productVersion,
-			baseFilters.caseType,
-			{
-				label: i18n.translate('build-name'),
-				name: 'buildName',
-				type: 'text',
-			},
-			{
-				label: i18n.translate('status'),
-				name: 'status',
-				options: ['Open', 'Abandoned', 'Complete', 'In Analysis'],
-				type: 'checkbox',
-			},
-			baseFilters.team,
-		],
-		results: [
+		] as RendererFields[],
+	},
+	buildResults: {
+		fields: [
 			baseFilters.caseType,
 			baseFilters.priority,
 			baseFilters.team,
@@ -187,126 +199,183 @@ const filters = {
 				name: 'comments',
 				type: 'textarea',
 			},
-		],
-		runs: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
-		teams: [
+		] as RendererFields[],
+	},
+	buildRuns: {
+		fields: [
+			baseFilters.priority,
+			baseFilters.caseType,
+			baseFilters.team,
+		] as RendererFields[],
+	},
+	buildTeams: {
+		fields: [
 			baseFilters.priority,
 			baseFilters.caseType,
 			baseFilters.team,
 			baseFilters.run,
-		],
+		] as RendererFields[],
 	},
-	case: [
-		baseFilters.priority,
-		baseFilters.caseType,
-		{
-			label: i18n.translate('case-name'),
-			name: 'name',
-			type: 'text',
-		},
-		baseFilters.team,
-		baseFilters.component,
-	],
-	requirement: [
-		{
-			label: i18n.translate('key'),
-			name: 'key',
-			type: 'text',
-		},
-		{
-			label: i18n.translate('link'),
-			name: 'linkURL',
-			type: 'text',
-		},
-		baseFilters.team,
-		baseFilters.component,
-		{
-			...baseFilters.component,
-			label: i18n.translate('jira-components'),
-			name: 'jira-components',
-		},
-		{
-			label: i18n.translate('summary'),
-			name: 'summary',
-			type: 'text',
-		},
-		{
-			label: i18n.translate('case'),
-			name: 'case',
-			type: 'textarea',
-		},
-	],
-	requirementCase: [
-		baseFilters.priority,
-		baseFilters.caseType,
-		{
-			label: i18n.translate('case-name'),
-			name: 'caseName',
-			type: 'text',
-		},
-		baseFilters.team,
-		{
-			label: i18n.translate('component'),
-			name: 'component',
-			type: 'text',
-		},
-	],
-	routines: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
-	subtasks: [
-		{
-			label: i18n.translate('subtask-name'),
-			name: 'subtaskName',
-			type: 'text',
-		},
-		{
-			label: i18n.translate('errors'),
-			name: 'errors',
-			type: 'text',
-		},
-		baseFilters.assignee,
-		{
-			label: i18n.translate('status'),
-			name: 'status',
-			options: ['Complete', 'In Analysis', 'Open'],
-			type: 'checkbox',
-		},
-		baseFilters.team,
-		{
-			label: i18n.translate('component'),
-			name: 'commponent',
-			type: 'text',
-		},
-	],
-	suites: [
-		{
-			label: i18n.translate('suite-name'),
-			name: 'suiteName',
-			type: 'text',
-		},
-		{
-			label: i18n.translate('description'),
-			name: 'description',
-			type: 'text',
-		},
-	],
-	team: [
-		{
-			label: i18n.translate('team-name'),
-			name: 'team',
-		},
-	],
-	template: [
-		{
-			label: i18n.translate('template-name'),
-			name: 'template-name',
-			type: 'text',
-		},
-		{
-			label: i18n.translate('status'),
-			name: 'status',
-			type: 'select',
-		},
-	],
-};
+	buildTemplates: {
+		fields: [
+			{
+				label: i18n.translate('template-name'),
+				name: 'template-name',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('status'),
+				name: 'status',
+				type: 'select',
+			},
+		] as RendererFields[],
+	},
+	builds: {
+		fields: [
+			baseFilters.priority,
+			baseFilters.productVersion,
+			baseFilters.caseType,
+			{
+				label: i18n.translate('build-name'),
+				name: 'buildName',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('status'),
+				name: 'status',
+				options: ['Open', 'Abandoned', 'Complete', 'In Analysis'],
+				type: 'checkbox',
+			},
+			baseFilters.team,
+		] as RendererFields[],
+	},
+	cases: {
+		fields: [
+			baseFilters.priority,
+			baseFilters.caseType,
+			{
+				disabled: true,
+				label: i18n.translate('case-name'),
+				name: 'name',
+				type: 'text',
+			},
+			{...baseFilters.team},
+			baseFilters.component,
+		] as RendererFields[],
+		onApply({appliedFilter, defaultFilter}: any) {
+			const filter: string = '';
 
-export {filters};
+			if (defaultFilter instanceof SearchBuilder) {
+				console.warn(appliedFilter, defaultFilter, this.fields);
+			}
+
+			return filter;
+		},
+	},
+	requirementCases: {
+		fields: [
+			baseFilters.priority,
+			baseFilters.caseType,
+			{
+				label: i18n.translate('case-name'),
+				name: 'caseName',
+				type: 'text',
+			},
+			baseFilters.team,
+			{
+				label: i18n.translate('component'),
+				name: 'component',
+				type: 'text',
+			},
+		] as RendererFields[],
+	},
+	requirements: {
+		fields: [
+			{
+				label: i18n.translate('key'),
+				name: 'key',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('link'),
+				name: 'linkURL',
+				type: 'text',
+			},
+			baseFilters.team,
+			baseFilters.component,
+			{
+				...baseFilters.component,
+				label: i18n.translate('jira-components'),
+				name: 'jira-components',
+			},
+			{
+				label: i18n.translate('summary'),
+				name: 'summary',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('case'),
+				name: 'case',
+				type: 'textarea',
+			},
+		] as RendererFields[],
+	},
+	routines: {
+		fields: [
+			baseFilters.priority,
+			baseFilters.caseType,
+			baseFilters.team,
+		] as RendererFields[],
+	},
+	subtasks: {
+		fields: [
+			{
+				label: i18n.translate('subtask-name'),
+				name: 'subtaskName',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('errors'),
+				name: 'errors',
+				type: 'text',
+			},
+			baseFilters.assignee,
+			{
+				label: i18n.translate('status'),
+				name: 'status',
+				options: ['Complete', 'In Analysis', 'Open'],
+				type: 'checkbox',
+			},
+			baseFilters.team,
+			{
+				label: i18n.translate('component'),
+				name: 'commponent',
+				type: 'text',
+			},
+		] as RendererFields[],
+	},
+	suites: {
+		fields: [
+			{
+				label: i18n.translate('suite-name'),
+				name: 'suiteName',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('description'),
+				name: 'description',
+				type: 'text',
+			},
+		] as RendererFields[],
+	},
+	teams: {
+		fields: [
+			{
+				label: i18n.translate('team-name'),
+				name: 'team',
+			},
+		] as RendererFields[],
+	},
+} as const;
+
+export {filterSchema};

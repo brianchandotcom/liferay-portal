@@ -24,7 +24,6 @@ type Filter = {
  */
 
 export const searchUtil = {
-
 	/**
 	 * @description Contains
 	 * @example contains(title,'edmon')
@@ -111,7 +110,7 @@ export class SearchBuilder {
 		return _filter;
 	}
 
-	static createFilter(filter: Filter, baseFilters?: string) {
+	static createFilter(filter: Filter, baseFilters: string = '') {
 		const _filter = [baseFilters];
 
 		for (const key in filter) {

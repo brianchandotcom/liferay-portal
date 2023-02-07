@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {openSelectionModal, sub} from 'frontend-js-web';
+import {addParams, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -45,6 +45,10 @@ const ImagePicker = ({
 		onClose: () => setModalVisible(false),
 	});
 
+	const [selectedImageId, setSelectedImageId] = useState(
+		inputValue?.fileEntryId
+	);
+
 	const dispatchValue = ({clear, value}, callback = () => {}) =>
 		setImageValues((oldValues) => {
 			let mergedValues = {...oldValues, ...value};
@@ -60,6 +64,8 @@ const ImagePicker = ({
 		if (selectedItem?.value) {
 			const selectedImage = new Image();
 			const selectedItemValue = JSON.parse(selectedItem.value);
+
+			setSelectedImageId(selectedItemValue.fileEntryId);
 
 			selectedImage.addEventListener('load', (event) => {
 				const {
@@ -99,7 +105,10 @@ const ImagePicker = ({
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('image')
 			),
-			url: itemSelectorURL,
+			url: addParams(
+				`selectedFileEntryId=${selectedImageId}`,
+				itemSelectorURL
+			),
 		});
 	};
 

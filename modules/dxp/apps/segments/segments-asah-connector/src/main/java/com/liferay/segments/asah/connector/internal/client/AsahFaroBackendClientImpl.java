@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -76,11 +77,10 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		try {
-			return _objectMapper.readValue(
-				_getResponse(
-					companyId, Http.Method.POST, new MultivaluedHashMap<>(),
-					_PATH_EXPERIMENTS, experiment),
-				Experiment.class);
+			return _post(
+				companyId, _PATH_EXPERIMENTS, experiment,
+				response -> _objectMapper.readValue(
+					response, Experiment.class));
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -94,28 +94,12 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		ExperimentSettings experimentSettings) {
 
 		try {
-			String days = _getResponse(
-				companyId, Http.Method.POST, new MultivaluedHashMap<>(),
+			return _post(
+				companyId,
 				StringUtil.replace(
 					_PATH_EXPERIMENTS_ESTIMATED_DAYS_DURATION, "{experimentId}",
 					experimentId),
-				experimentSettings);
-
-			if (Validator.isNull(days)) {
-				return null;
-			}
-
-			try {
-				return Long.valueOf(days);
-			}
-			catch (NumberFormatException numberFormatException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse " + days, numberFormatException);
-				}
-
-				return null;
-			}
+				experimentSettings, Long::valueOf);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -130,8 +114,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		try {
-			_getResponse(
-				companyId, Http.Method.DELETE, new MultivaluedHashMap<>(),
+			_delete(
+				companyId,
 				StringUtil.replace(
 					_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
 					experimentId));
@@ -162,15 +146,13 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			uriVariables.putSingle("includeAnonymousUsers", true);
 
-			Results<Individual> individualResults =
-				_individualJSONObjectMapper.mapToResults(
-					_getResponse(
-						companyId, Http.Method.GET,
-						_getParameters(
-							filterBuilder,
-							FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, 1, 1,
-							Collections.emptyList(), uriVariables),
-						_PATH_INDIVIDUALS));
+			Results<Individual> individualResults = _get(
+				companyId,
+				_getParameters(
+					filterBuilder,
+					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, 1, 1,
+					Collections.emptyList(), uriVariables),
+				_PATH_INDIVIDUALS, _individualJSONObjectMapper::mapToResults);
 
 			List<Individual> items = individualResults.getItems();
 
@@ -192,16 +174,16 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		List<OrderByField> orderByFields) {
 
 		try {
-			return _individualJSONObjectMapper.mapToResults(
-				_getResponse(
-					companyId, Http.Method.GET,
-					_getParameters(
-						new FilterBuilder(),
-						FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur,
-						delta, orderByFields),
-					StringUtil.replace(
-						_PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS, "{id}",
-						individualSegmentId)));
+			return _get(
+				companyId,
+				_getParameters(
+					new FilterBuilder(),
+					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur, delta,
+					orderByFields),
+				StringUtil.replace(
+					_PATH_INDIVIDUAL_SEGMENTS_INDIVIDUALS, "{id}",
+					individualSegmentId),
+				_individualJSONObjectMapper::mapToResults);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -232,10 +214,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 				"dataSourceId",
 				analyticsConfiguration.liferayAnalyticsDataSourceId());
 
-			return _individualSegmentJSONObjectMapper.mapToResults(
-				_getResponse(
-					companyId, Http.Method.GET, parameters,
-					_PATH_INDIVIDUAL_SEGMENTS));
+			return _get(
+				companyId, parameters, _PATH_INDIVIDUAL_SEGMENTS,
+				_individualSegmentJSONObjectMapper::mapToResults);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -248,11 +229,10 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		long companyId, String userId) {
 
 		try {
-			return _interestTermsJSONObjectMapper.mapToResults(
-				_getResponse(
-					companyId, Http.Method.GET, new MultivaluedHashMap<>(),
-					StringUtil.replace(
-						_PATH_INTERESTS_TERMS, "{userId}", userId)));
+			return _get(
+				companyId, new MultivaluedHashMap<>(),
+				StringUtil.replace(_PATH_INTERESTS_TERMS, "{userId}", userId),
+				_interestTermsJSONObjectMapper::mapToResults);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -268,8 +248,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		try {
-			_getResponse(
-				companyId, Http.Method.PATCH, new MultivaluedHashMap<>(),
+			_patch(
+				companyId,
 				StringUtil.replace(
 					_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
 					experiment.getId()),
@@ -295,8 +275,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 
 		try {
-			_getResponse(
-				companyId, Http.Method.PUT, new MultivaluedHashMap<>(),
+			_put(
+				companyId,
 				StringUtil.replace(
 					_PATH_EXPERIMENTS_DXP_VARIANTS, "{experimentId}",
 					experimentId),
@@ -309,9 +289,25 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 	}
 
-	private Map<String, String> _getHeaders(
-			AnalyticsConfiguration analyticsConfiguration)
+	private String _delete(long companyId, String path) throws Exception {
+		return _getResponse(
+			_getHttpOptions(
+				companyId, Http.Method.DELETE, new MultivaluedHashMap<>(),
+				path));
+	}
+
+	private <T> T _get(
+			long companyId, MultivaluedMap<String, Object> parameters,
+			String path, UnsafeFunction<String, T, Exception> unsafeFunction)
 		throws Exception {
+
+		return unsafeFunction.apply(
+			_getResponse(
+				_getHttpOptions(companyId, Http.Method.GET, parameters, path)));
+	}
+
+	private Map<String, String> _getHeaders(
+		AnalyticsConfiguration analyticsConfiguration) {
 
 		return HashMapBuilder.put(
 			"Accept", "application/json"
@@ -403,31 +399,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return response;
 	}
 
-	private String _getResponse(
-			long companyId, Http.Method method,
-			MultivaluedMap<String, Object> parameters, String path)
-		throws Exception {
-
-		return _getResponse(
-			_getHttpOptions(companyId, method, parameters, path));
-	}
-
-	private String _getResponse(
-			long companyId, Http.Method method,
-			MultivaluedMap<String, Object> parameters, String path,
-			Object object)
-		throws Exception {
-
-		Http.Options httpOptions = _getHttpOptions(
-			companyId, method, parameters, path);
-
-		httpOptions.setBody(
-			_objectMapper.writeValueAsString(object),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
-		return _getResponse(httpOptions);
-	}
-
 	private MultivaluedMap<String, Object> _getUriVariables(
 		int cur, int delta, List<OrderByField> orderByFields,
 		String fieldNameContext) {
@@ -466,7 +437,54 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
-	private static final String _ERROR_MSG = "Unable to handle JSON response: ";
+	private String _patch(long companyId, String path, Object object)
+		throws Exception {
+
+		Http.Options httpOptions = _getHttpOptions(
+			companyId, Http.Method.PATCH, new MultivaluedHashMap<>(), path);
+
+		httpOptions.setBody(
+			_objectMapper.writeValueAsString(object),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		return _getResponse(httpOptions);
+	}
+
+	private <T> T _post(
+			long companyId, String path, Object object,
+			UnsafeFunction<String, T, Exception> unsafeFunction)
+		throws Exception {
+
+		Http.Options httpOptions = _getHttpOptions(
+			companyId, Http.Method.POST, new MultivaluedHashMap<>(), path);
+
+		httpOptions.setBody(
+			_objectMapper.writeValueAsString(object),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String response = _getResponse(httpOptions);
+
+		if (Validator.isNull(response)) {
+			return null;
+		}
+
+		return unsafeFunction.apply(response);
+	}
+
+	private String _put(long companyId, String path, Object object)
+		throws Exception {
+
+		Http.Options httpOptions = _getHttpOptions(
+			companyId, Http.Method.PUT, new MultivaluedHashMap<>(), path);
+
+		httpOptions.setBody(
+			_objectMapper.writeValueAsString(object),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		return _getResponse(httpOptions);
+	}
+
+	private static final String _ERROR_MSG = "Unable to handle response: ";
 
 	private static final String _PATH_EXPERIMENTS = "api/1.0/experiments";
 

@@ -75,7 +75,7 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long userId, long groupId, long layoutUtilityPageEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		return getService().copyLayoutUtilityPageEntry(
 			userId, groupId, layoutUtilityPageEntryId, serviceContext);

@@ -54,7 +54,7 @@ public class LayoutUtilityPageEntryServiceWrapper
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
 			long groupId, long layoutUtilityPageEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws Exception {
 
 		return _layoutUtilityPageEntryService.copyLayoutUtilityPageEntry(
 			groupId, layoutUtilityPageEntryId, serviceContext);

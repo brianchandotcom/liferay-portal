@@ -3838,6 +3838,121 @@ definition {
 
 	@description = "LPS-169312: Given a user belonging to Segment 1 and Segment 2
 	And the configuration to combine assets is enabled
+	When there's a variation of a dynamic collection targeting segment 1 and segment 2, and both are prioritized above the anyone variation
+	And there is an asset present in both variations**
+	Then the user will see the asset only once in Collection Display Fragment"
+	@priority = "3"
+	test ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment {
+		property test.name.skip.portal.instance = "Collections#ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment";
+
+		task ("Create web content articles") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC_Title_1");
+		}
+
+		task ("Create two segments that the user belongs to") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "First Segment",
+				text = "Test");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Last Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Second Segment",
+				text = "Test");
+		}
+
+		task ("Create a dynamic Collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Configure Assets to combine all segments in asset publisher and") {
+			AssetListsAdmin.enableCollectionsToCombineAssetsFromSegments(collectionType = "Dynamic");
+		}
+
+		task ("Create a first variation for the collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "First Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "First Segment");
+		}
+
+		task ("Create a second variation for the collection") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "Second Segment");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
+		}
+
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the manual collection in the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection Test",
+				fragmentName = "Collection Display",
+				styleDisplay = "Bulleted List");
+
+			Button.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		}
+
+		task ("Assert the asset appear only once in Collection Display Fragment") {
+			AssertTextEquals(
+				index = "1",
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
+				value1 = "WC_Title_1");
+
+			AssertElementNotPresent(
+				index = "2",
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
+				value1 = "WC_Title_1");
+		}
+
+		task ("Set collections configuration to default values") {
+			AssetListsAdmin.resetCollectionsToCombineAssetsFromSegments();
+		}
+	}
+
+	@description = "LPS-169312: Given a user belonging to Segment 1 and Segment 2
+	And the configuration to combine assets is enabled
 	When there's a variation of a manual collection targeting segment 1 and segment 2, and both are prioritized above the anyone variation
 	And there is an asset present in both variations
 	Then the user will see the asset only once in Asset Publisher"
@@ -3863,7 +3978,6 @@ definition {
 				content = "WC Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
-			
 		}
 
 		task ("Create two segments that the user belongs to") {
@@ -3957,7 +4071,6 @@ definition {
 				content = "WC Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
-			
 		}
 
 		task ("Create two segments that the user belongs to") {

@@ -653,13 +653,18 @@ class Iframe extends React.Component {
 						CSS_CLASS_IFRAME_BODY
 					);
 				}),
-				iframeWindow.Liferay.on('screenFlip', () => {
-					this.props.onOpen({
-						iframeWindow,
-						processClose: this.props.processClose,
-					});
-				}),
 			];
+
+			if (this.props.onOpen) {
+				this.spaNavigationHandlers.push(
+					iframeWindow.Liferay.on('screenFlip', () => {
+						this.props.onOpen({
+							iframeWindow,
+							processClose: this.props.processClose,
+						});
+					})
+				);
+			}
 		}
 
 		this.props.updateLoading(false);

@@ -1,5 +1,44 @@
 # Poshi Runner Change Log
 
+## 1.0.403
+
+### Gradle
+
+* [POSHI-261](https://issues.liferay.com/browse/POSHI-261) - Add the stopping of lingering chromedriver processes to the downloadChromeDriver gradle task
+* [POSHI-310](https://issues.liferay.com/browse/POSHI-310) - Add additional browser driver support to gradle plugin
+* [POSHI-469](https://issues.liferay.com/browse/POSHI-469) - Investigate and fix gradle system properties (-D command line option) on Windows
+
+### Other
+
+* [LPS-171976](https://issues.liferay.com/browse/LPS-171976) - SF rule: Simply return statement when in else statement 
+
+### Runner
+
+* [POSHI-461](https://issues.liferay.com/browse/POSHI-461) - Give clearer error message when Test name doesnt exist
+
+### Script
+
+* [POSHI-245](https://issues.liferay.com/browse/POSHI-245) - Clean up integer usage and variable references for Poshi variables
+* [POSHI-386](https://issues.liferay.com/browse/POSHI-386) - Add break & continue & return to While/For loops
+* [POSHI-463](https://issues.liferay.com/browse/POSHI-463) - Fix parsing of non quoted ElementAttributes
+* [POSHI-467](https://issues.liferay.com/browse/POSHI-467) - Allow for nonquoted values in ArgPoshiElement
+
+### Testing
+
+* [POSHI-458](https://issues.liferay.com/browse/POSHI-458) - Create harness for Poshi unit testing and restore unit tests
+
+### Utils
+
+* [POSHI-449](https://issues.liferay.com/browse/POSHI-449) - Allow for direct usage of AntCommands through utility classes instead of LiferaySelenium
+
+### Validation
+
+* [POSHI-462](https://issues.liferay.com/browse/POSHI-462) - Fix error throwing in multithreading in Poshi
+
+### WebDriver
+
+* [POSHI-460](https://issues.liferay.com/browse/POSHI-460) - Add a format method to format date to new pattern
+
 ## 1.0.394
 
 ### Core

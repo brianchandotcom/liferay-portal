@@ -93,6 +93,15 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@description = "This test ensures that the description can be displayed on the KB article widget after enabling it in the configuration."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDescriptionAfterEnablingInConfiguration {
+
+		// TODO LPS-172372
+
+	}
+
 	@priority = "3"
 	@refactordone
 	test DeleteKBArticleViaKBArticle {

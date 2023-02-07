@@ -137,6 +137,15 @@ definition {
 			skipNavigation = "true");
 	}
 
+	@description = "This test ensures that users can add an article with the description."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddArticleWithDescription {
+
+		// TODO LPS-172372
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanAddArticleWithHTML {

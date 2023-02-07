@@ -1,0 +1,40 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBArticle.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that the description can be displayed on the KB search widget after enabling it in the configuration."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewDescriptionAfterEnablingInConfiguration {
+
+		// TODO LPS-172372
+
+	}
+
+}

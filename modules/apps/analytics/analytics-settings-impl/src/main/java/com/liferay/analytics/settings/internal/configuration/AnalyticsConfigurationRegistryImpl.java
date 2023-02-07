@@ -623,7 +623,11 @@ public class AnalyticsConfigurationRegistryImpl
 						unscheduleDispatchTriggerNames.toArray(new String[0]));
 				}
 
-				return;
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LRAC-10632"))) {
+
+					return;
+				}
 			}
 
 			String[] previousSyncedContactFieldNames =

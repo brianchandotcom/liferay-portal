@@ -49,18 +49,18 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		String[] excludes = {
-			"**/modules/apps/static/**/*.jar",
-			"**/modules/apps/static/**/*.lar",
-			"**/modules/apps/static/**/*.war",
-			"**/modules/apps/static/**/*.zip", "**/modules/sdk/**/*.jar",
-			"**/modules/sdk/**/*.lar", "**/modules/sdk/**/*.war",
-			"**/modules/sdk/**/*.zip", "**/modules/util/**/*.jar",
-			"**/modules/util/**/*.lar", "**/modules/util/**/*.war",
-			"**/modules/util/**/*.zip"
-		};
-
-		List<String> fileNames = getFileNames(excludes, getIncludes());
+		List<String> fileNames = getFileNames(
+			new String[] {
+				"**/modules/apps/static/**/*.jar",
+				"**/modules/apps/static/**/*.lar",
+				"**/modules/apps/static/**/*.war",
+				"**/modules/apps/static/**/*.zip", "**/modules/sdk/**/*.jar",
+				"**/modules/sdk/**/*.lar", "**/modules/sdk/**/*.war",
+				"**/modules/sdk/**/*.zip", "**/modules/util/**/*.jar",
+				"**/modules/util/**/*.lar", "**/modules/util/**/*.war",
+				"**/modules/util/**/*.zip"
+			},
+			getIncludes());
 
 		Iterator<String> iterator = fileNames.iterator();
 

@@ -26,6 +26,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
+import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -284,6 +285,10 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		if (infoFieldType instanceof FileInfoFieldType) {
 			return "INPUTS-file-upload";
+		}
+
+		if (infoFieldType instanceof HTMLInfoFieldType) {
+			return "INPUTS-rich-text-input";
 		}
 
 		if (infoFieldType instanceof NumberInfoFieldType) {

@@ -13,12 +13,32 @@ definition {
 			locator1 = "PRMMDFRequest#ADD_BUTTON");
 	}
 
+	@summary = "Assert claim message"
+	macro assertClaimMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "PRMMDFRequest#CLAIM_MESSAGE",
+			value1 = "${key_claimMessage}");
+	}
+
+	@summary = "Change MDF status"
+	macro changeMDFStatus {
+		Click(
+			key_MDFName = "${campaignName}",
+			locator1 = "PRMMDFRequest#REQUEST_ID");
+
+		ClickNoError(
+			buttonId = "${key_statusButton}",
+			locator1 = "PRMMDFRequest#STATUS_BUTTON");
+
+		Confirm.acceptAlert();
+	}
+
 	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
 		PRMMDFRequest.fillGoalsPage(
 			accountName = "${accountName}",
-			additionalOptions = "${additionalOptions}",
 			campaignDescription = "${campaignDescription}",
+			additionalOptions = "${additionalOptions}",
 			campaignName = "${campaignName}",
 			countryName = "${countryName}",
 			goalsOptions = "${goalsOptions}",
@@ -27,12 +47,9 @@ definition {
 
 		Button.click(button = "Continue");
 
-		Click(
-			key_buttonText = "Add Activity",
-			locator1 = "PRMMDFRequest#ADD_BUTTON");
-
 		PRMMDFRequest.newActivity(
 			activityName = "${activityName}",
+			activityDescription = "${activityDescription}",
 			budgetList = "${budgetList}",
 			followUpStrategy = "${followUpStrategy}",
 			leadFollowUpList = "${leadFollowUpList}",

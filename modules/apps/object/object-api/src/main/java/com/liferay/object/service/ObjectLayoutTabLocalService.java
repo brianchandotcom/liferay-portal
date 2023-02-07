@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -297,6 +298,10 @@ public interface ObjectLayoutTabLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void registryObjectLayoutTabScreenNavigationCategories(
+		ObjectDefinition objectDefinition,
+		List<ObjectLayoutTab> objectLayoutTabs);
 
 	/**
 	 * Updates the object layout tab in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

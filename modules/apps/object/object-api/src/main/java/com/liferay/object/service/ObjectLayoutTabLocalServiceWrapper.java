@@ -386,6 +386,17 @@ public class ObjectLayoutTabLocalServiceWrapper
 		return _objectLayoutTabLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void registryObjectLayoutTabScreenNavigationCategories(
+		com.liferay.object.model.ObjectDefinition objectDefinition,
+		java.util.List<com.liferay.object.model.ObjectLayoutTab>
+			objectLayoutTabs) {
+
+		_objectLayoutTabLocalService.
+			registryObjectLayoutTabScreenNavigationCategories(
+				objectDefinition, objectLayoutTabs);
+	}
+
 	/**
 	 * Updates the object layout tab in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

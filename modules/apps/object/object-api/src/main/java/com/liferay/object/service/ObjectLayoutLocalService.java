@@ -15,7 +15,6 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -317,10 +316,6 @@ public interface ObjectLayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	public void registryObjectLayoutTabScreenNavigationCategory(
-		ObjectDefinition objectDefinition,
-		List<ObjectLayoutTab> objectLayoutTabs);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectLayout updateObjectLayout(

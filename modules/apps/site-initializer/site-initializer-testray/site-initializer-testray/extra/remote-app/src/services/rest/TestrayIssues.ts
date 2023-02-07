@@ -13,7 +13,7 @@
  */
 
 import yupSchema from '../../schema/yup';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import Rest from './Rest';
 import {TestrayIssue} from './types';
 
@@ -32,7 +32,7 @@ class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
 
 	public async createIfNotExist(name: string) {
 		const response = await this.getAll({
-			filter: searchUtil.eq('name', name),
+			filter: SearchBuilder.eq('name', name),
 		});
 
 		if ((response?.totalCount ?? 0) > 0) {

@@ -24,7 +24,7 @@ import i18n from '../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import BuildAddButton from './Builds/BuildAddButton';
 import useBuildActions from './Builds/useBuildActions';
 
@@ -261,7 +261,7 @@ const Routine = () => {
 					testrayBuildImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: searchUtil.eq('routineId', routineId as string),
+					filter: SearchBuilder.eq('routineId', routineId as string),
 				}}
 			>
 				{({items, totalCount}) =>

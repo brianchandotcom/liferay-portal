@@ -31,7 +31,7 @@ import {
 	testraySubTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskIssuesImpl} from '../../../services/rest/TestraySubtaskIssues';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -52,7 +52,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 		revalidate: revalidateSubtaskIssues,
 	} = useFetch(testraySubtaskIssuesImpl.resource, {
 		params: {
-			filter: searchUtil.eq('subtaskId', subtask.id),
+			filter: SearchBuilder.eq('subtaskId', subtask.id),
 		},
 		transformData: (response) =>
 			testraySubtaskIssuesImpl.transformDataFromList(response),
@@ -110,8 +110,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			revalidateSubtaskIssues();
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

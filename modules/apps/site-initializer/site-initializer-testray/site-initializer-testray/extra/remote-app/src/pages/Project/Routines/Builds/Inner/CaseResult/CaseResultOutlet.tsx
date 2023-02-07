@@ -32,7 +32,7 @@ import {
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {testrayCaseResultsIssuesImpl} from '../../../../../../services/rest/TestrayCaseresultsIssues';
-import {searchUtil} from '../../../../../../util/search';
+import {SearchBuilder} from '../../../../../../util/search';
 import useCaseResultActions from './useCaseResultActions';
 
 type OutletContext = {
@@ -70,7 +70,10 @@ const CaseResultOutlet = () => {
 		testrayCaseResultsIssuesImpl.resource,
 		{
 			params: {
-				filter: searchUtil.eq('caseResultId', caseResultId as string),
+				filter: SearchBuilder.eq(
+					'caseResultId',
+					caseResultId as string
+				),
 			},
 			transformData: (response) =>
 				testrayCaseResultsIssuesImpl.transformDataFromList(response),

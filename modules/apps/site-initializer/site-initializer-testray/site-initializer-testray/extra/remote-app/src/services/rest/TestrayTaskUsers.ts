@@ -16,7 +16,7 @@ import {InferType} from 'yup';
 
 import yupSchema from '../../schema/yup';
 import {getUniqueList} from '../../util';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import Rest from './Rest';
 import {APIResponse, TestrayTaskUser} from './types';
 
@@ -65,7 +65,7 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 
 	public async assign(taskId: number, userIds: number[] | number) {
 		let response = await this.getAll({
-			filter: searchUtil.eq('taskId', taskId),
+			filter: SearchBuilder.eq('taskId', taskId),
 			pageSize: 100,
 		});
 

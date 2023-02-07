@@ -33,7 +33,7 @@ import {
 } from '../../../services/rest';
 import {STORAGE_KEYS} from '../../../util/constants';
 import dayjs from '../../../util/date';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 
 type CaseWithRequirement = {
 	[key: number]: TestrayRequirement[];
@@ -254,7 +254,7 @@ const Export = () => {
 		'/cases',
 		{
 			params: {
-				filter: searchUtil.in('id', caseIds),
+				filter: SearchBuilder.in('id', caseIds),
 				nestedFields: 'caseType,component,project,team',
 				nestedFieldsDepth: 3,
 				pageSize: 1000,
@@ -268,7 +268,7 @@ const Export = () => {
 		APIResponse<TestrayRequirementCase>
 	>(loading ? null : '/requirementscaseses', {
 		params: {
-			filter: searchUtil.in('caseId', caseIds),
+			filter: SearchBuilder.in('caseId', caseIds),
 			nestedFields: 'case.component,requirement,team',
 			nestedFieldsDepth: 3,
 			pageSize: 1000,
@@ -293,8 +293,7 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			}
-			else {
+			} else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});

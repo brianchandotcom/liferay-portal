@@ -27,7 +27,7 @@ import {
 	requirementsResource,
 } from '../../../services/rest';
 import {Action} from '../../../types';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import useRequirementActions from './useRequirementActions';
 
 type RequirementListViewProps = {
@@ -139,7 +139,7 @@ const Requirements = () => {
 			<RequirementListView
 				actions={actions}
 				variables={{
-					filter: searchUtil.eq('projectId', projectId as string),
+					filter: SearchBuilder.eq('projectId', projectId as string),
 				}}
 			/>
 		</Container>

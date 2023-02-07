@@ -24,7 +24,7 @@ import {
 	TestrayRequirementCase,
 	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
 import useCaseRequirementActions from './useCaseRequirementActions';
 
@@ -136,7 +136,7 @@ const CaseRequirement = () => {
 					testrayCaseRequirementsImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: searchUtil.eq('caseId', testrayCase.id),
+					filter: SearchBuilder.eq('caseId', testrayCase.id),
 				}}
 			>
 				{(response) => {

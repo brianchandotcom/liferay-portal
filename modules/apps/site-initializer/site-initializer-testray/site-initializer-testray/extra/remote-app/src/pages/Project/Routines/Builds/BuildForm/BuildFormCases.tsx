@@ -22,7 +22,7 @@ import {useFetch} from '../../../../../hooks/useFetch';
 import useFormModal from '../../../../../hooks/useFormModal';
 import i18n from '../../../../../i18n';
 import {APIResponse, TestrayCase} from '../../../../../services/rest';
-import {searchUtil} from '../../../../../util/search';
+import {SearchBuilder} from '../../../../../util/search';
 import {CaseListView} from '../../../Cases';
 import SuiteFormSelectModal from '../../../Suites/modal';
 import BuildSelectSuitesModal from '../BuildSelectSuitesModal';
@@ -47,7 +47,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 	const {data: casesResponse} = useFetch<APIResponse<TestrayCase>>('/cases', {
 		params: {
 			fields: 'id',
-			filter: searchUtil.eq('projectId', projectId as string),
+			filter: SearchBuilder.eq('projectId', projectId as string),
 			pageSize: 1,
 		},
 	});
@@ -142,7 +142,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 							],
 						},
 						variables: {
-							filter: searchUtil.in('id', caseIds),
+							filter: SearchBuilder.in('id', caseIds),
 						},
 					}}
 				/>

@@ -30,7 +30,7 @@ import {
 	testrayTaskUsersImpl,
 } from '../../services/rest';
 import {testrayTaskCaseTypesImpl} from '../../services/rest/TestrayTaskCaseTypes';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import {SubTaskStatuses} from '../../util/statuses';
 
 const TestflowNavigationOutlet = () => {
@@ -85,7 +85,7 @@ const TestflowOutlet = () => {
 		APIResponse<TestrayTaskCaseTypes>
 	>(testrayTaskCaseTypesImpl.resource, {
 		params: {
-			filter: searchUtil.eq('taskId', taskId),
+			filter: SearchBuilder.eq('taskId', taskId),
 		},
 		transformData: (response) =>
 			testrayTaskCaseTypesImpl.transformDataFromList(response),

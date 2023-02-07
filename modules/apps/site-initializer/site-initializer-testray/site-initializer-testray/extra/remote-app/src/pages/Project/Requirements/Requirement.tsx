@@ -31,7 +31,7 @@ import {
 	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import RequirementCaseLinkModal from './RequirementCaseLinkModal';
 import useRequirementCaseActions from './useRequirementCaseActions';
 
@@ -180,7 +180,7 @@ const Requirement = () => {
 						)
 					}
 					variables={{
-						filter: searchUtil.eq(
+						filter: SearchBuilder.eq(
 							'requirementId',
 							testrayRequirement.id
 						),

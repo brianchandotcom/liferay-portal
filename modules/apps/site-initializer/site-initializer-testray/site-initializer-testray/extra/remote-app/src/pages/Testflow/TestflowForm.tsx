@@ -38,7 +38,7 @@ import {
 	testrayTaskImpl,
 	testrayTaskUsersImpl,
 } from '../../services/rest';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import {UserListView} from '../Manage/User';
 import useTestFlowAssign from './TestflowFormAssignUserActions';
@@ -176,8 +176,7 @@ const TestflowForm = () => {
 			onSuccess();
 
 			navigate(`/testflow/${response.id}`);
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -290,7 +289,7 @@ const TestflowForm = () => {
 						managementToolbarProps: {
 							visible: false,
 						},
-						variables: {filter: searchUtil.in('id', userIds)},
+						variables: {filter: SearchBuilder.in('id', userIds)},
 					}}
 				/>
 			)}

@@ -19,7 +19,7 @@ import ListView from '../../../../../../components/ListView';
 import useRuns from '../../../../../../hooks/useRuns';
 import i18n from '../../../../../../i18n';
 import {testrayRunImpl} from '../../../../../../services/rest';
-import {searchUtil} from '../../../../../../util/search';
+import {SearchBuilder} from '../../../../../../util/search';
 import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 
@@ -84,7 +84,7 @@ const Runs = () => {
 					testrayRunImpl.transformDataFromList(response)
 				}
 				variables={{
-					filter: searchUtil.eq('buildId', buildId as string),
+					filter: SearchBuilder.eq('buildId', buildId as string),
 				}}
 			/>
 

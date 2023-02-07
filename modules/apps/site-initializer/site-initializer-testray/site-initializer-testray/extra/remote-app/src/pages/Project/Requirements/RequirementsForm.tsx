@@ -33,7 +33,7 @@ import {
 	createRequirement,
 	updateRequirement,
 } from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 
 type RequirementsFormType = typeof yupSchema.requirement.__outputType;
 
@@ -76,7 +76,7 @@ const RequirementsForm = () => {
 	const {data: testrayComponentsData} = useFetch<
 		APIResponse<TestrayComponent>
 	>(
-		`/components?fields=id,name&filter=${searchUtil.eq(
+		`/components?fields=id,name&filter=${SearchBuilder.eq(
 			'projectId',
 			projectId as string
 		)}&pageSize=1000`

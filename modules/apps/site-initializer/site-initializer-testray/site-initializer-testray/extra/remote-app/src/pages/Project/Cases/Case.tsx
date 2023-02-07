@@ -19,7 +19,7 @@ import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
 import {TestrayCase} from '../../../services/rest';
 import dayjs from '../../../util/date';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import CaseResultHistory from './CaseResultHistory';
 import useCaseActions from './useCaseActions';
 
@@ -79,7 +79,10 @@ const Case = () => {
 				<CaseResultHistory
 					listViewProps={{
 						variables: {
-							filter: searchUtil.eq('caseId', caseId as string),
+							filter: SearchBuilder.eq(
+								'caseId',
+								caseId as string
+							),
 						},
 					}}
 					tableProps={{

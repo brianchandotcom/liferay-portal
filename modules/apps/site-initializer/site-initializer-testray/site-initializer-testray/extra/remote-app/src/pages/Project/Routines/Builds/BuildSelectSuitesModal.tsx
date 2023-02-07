@@ -24,7 +24,7 @@ import i18n from '../../../../i18n';
 import fetcher from '../../../../services/fetcher';
 import {APIResponse, TestraySuiteCase} from '../../../../services/rest';
 import {getUniqueList} from '../../../../util';
-import {searchUtil} from '../../../../util/search';
+import {SearchBuilder} from '../../../../util/search';
 import SelectCase from '../../Suites/modal/SelectCase';
 
 type BuildSelectSuitesModalProps = {
@@ -61,7 +61,7 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 
 		if (modalType.type === 'select-suites') {
 			fetcher<APIResponse<TestraySuiteCase>>(
-				`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${searchUtil.in(
+				`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${SearchBuilder.in(
 					'suiteId',
 					suiteIds
 				)}&pageSize=1000`
@@ -146,7 +146,10 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 						rowSelectable: true,
 					}}
 					variables={{
-						filter: searchUtil.eq('projectId', projectId as string),
+						filter: SearchBuilder.eq(
+							'projectId',
+							projectId as string
+						),
 					}}
 				/>
 			)}

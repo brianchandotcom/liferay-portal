@@ -32,7 +32,7 @@ import {
 	testrayFactorRest,
 	testrayRunImpl,
 } from '../../../../../../services/rest';
-import {searchUtil} from '../../../../../../util/search';
+import {SearchBuilder} from '../../../../../../util/search';
 
 type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
 
@@ -68,8 +68,8 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 	>([[] as any]);
 
 	const filter = selectedRun
-		? searchUtil.eq('runId', selectedRun.id)
-		: searchUtil.eq('routineId', routineId as string);
+		? SearchBuilder.eq('runId', selectedRun.id)
+		: SearchBuilder.eq('routineId', routineId as string);
 
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
@@ -87,7 +87,7 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		selectedRun ? null : testrayRunImpl.resource,
 		{
 			params: {
-				filter: searchUtil.eq('buildId', buildId as string),
+				filter: SearchBuilder.eq('buildId', buildId as string),
 				pageSize: 1000,
 			},
 		}

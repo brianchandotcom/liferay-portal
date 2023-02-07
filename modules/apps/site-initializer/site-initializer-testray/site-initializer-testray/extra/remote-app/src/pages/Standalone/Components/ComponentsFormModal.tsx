@@ -26,7 +26,7 @@ import {
 	TestrayTeam,
 	testrayComponentImpl,
 } from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 
 type ComponentForm = typeof yupSchema.component.__outputType;
 
@@ -60,7 +60,7 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	const {data: teamsResponse} = useFetch<APIResponse<TestrayTeam>>(`/teams`, {
 		params: {
 			fields: 'id,name',
-			filter: searchUtil.eq('projectId', projectId),
+			filter: SearchBuilder.eq('projectId', projectId),
 			pageSize: 100,
 			sort: 'name:asc',
 		},

@@ -17,7 +17,7 @@ import {useCallback, useMemo} from 'react';
 import {useFetch} from '../hooks/useFetch';
 import {APIResponse, FacetAggregation, TestrayBuild} from '../services/rest';
 import {chartColors} from '../util/constants';
-import {searchUtil} from '../util/search';
+import {SearchBuilder} from '../util/search';
 import {CaseResultStatuses} from '../util/statuses';
 
 function getStatusesMap(
@@ -45,7 +45,7 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 		params: {
 			aggregationTerms: 'dueStatus',
 			fields: 'id',
-			filter: searchUtil.eq('buildId', buildId as number),
+			filter: SearchBuilder.eq('buildId', buildId as number),
 		},
 	});
 

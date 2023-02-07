@@ -14,7 +14,7 @@
 
 import yupSchema from '../../schema/yup';
 import {waitTimeout} from '../../util';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import {CaseResultStatuses, SubTaskStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import {liferayMessageBoardImpl} from './LiferayMessageBoard';
@@ -74,7 +74,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 
 	private async getCaseResultsFromSubtask(subTaskId: number) {
 		const subTaskCaseResultResponse = await testraySubtaskCaseResultImpl.getAll(
-			{filter: searchUtil.eq('subtaskId', subTaskId)}
+			{filter: SearchBuilder.eq('subtaskId', subTaskId)}
 		);
 
 		if (!subTaskCaseResultResponse) {
@@ -155,8 +155,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}
@@ -168,7 +167,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		subTaskId: number
 	) {
 		const subtaskIssuesResponse = await testraySubtaskIssuesImpl.getAll({
-			filter: searchUtil.eq('subtaskId', subTaskId),
+			filter: SearchBuilder.eq('subtaskId', subTaskId),
 		});
 
 		for (const issue of issues) {
@@ -288,7 +287,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 	) {
 		const [subtaskResponse, currentSubtask] = await Promise.all([
 			this.fetcher(
-				`/${this.uri}?filter=${searchUtil.eq(
+				`/${this.uri}?filter=${SearchBuilder.eq(
 					'taskId',
 					taskId
 				)}&fields=number&pageSize=1&sort=number:desc`

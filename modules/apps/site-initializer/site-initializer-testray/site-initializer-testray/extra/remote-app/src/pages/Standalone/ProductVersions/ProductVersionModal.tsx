@@ -15,7 +15,7 @@
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
 import {testrayProductVersionImpl} from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import TeamFormModal from './ProductVersionFormModal';
 import useTeamActions from './useProductVersionActions';
 
@@ -48,7 +48,7 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 				transformData={(response) =>
 					testrayProductVersionImpl.transformDataFromList(response)
 				}
-				variables={{filter: searchUtil.eq('projectId', projectId)}}
+				variables={{filter: SearchBuilder.eq('projectId', projectId)}}
 			/>
 
 			<TeamFormModal modal={formModal.modal} projectId={projectId} />

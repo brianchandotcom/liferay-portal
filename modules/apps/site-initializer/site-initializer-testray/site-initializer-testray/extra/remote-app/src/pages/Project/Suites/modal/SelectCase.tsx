@@ -16,7 +16,7 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
-import {searchUtil} from '../../../../util/search';
+import {SearchBuilder} from '../../../../util/search';
 import {CaseListView} from '../../Cases';
 
 type SelectCaseParametersProps = {
@@ -58,7 +58,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 			}}
 			variables={{
 				filter: projectId
-					? searchUtil.eq('projectId', projectId)
+					? SearchBuilder.eq('projectId', projectId)
 					: null,
 			}}
 		/>

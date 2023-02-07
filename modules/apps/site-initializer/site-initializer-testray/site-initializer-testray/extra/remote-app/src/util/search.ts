@@ -12,38 +12,48 @@
  * details.
  */
 
-type Key = string;
-type Value = string | number | boolean;
 type Filter = {
 	[key: string]: string | number | string[] | number[];
 };
+type Key = string;
+type Value = string | number | boolean;
+
+export interface SearchBuilderConstructor {
+	useURIEncode?: boolean;
+}
 
 /**
  * @description
  * Based in the following article https://help.liferay.com/hc/pt/articles/360031163631-Filter-Sort-and-Search
  */
 
-export const searchUtil = {
+export class SearchBuilder {
+	private lock: boolean = false;
+	private query: string = '';
+	private useURIEncode?: boolean = true;
+
+	constructor({useURIEncode}: SearchBuilderConstructor = {}) {
+		this.useURIEncode = useURIEncode;
+	}
+
 	/**
 	 * @description Contains
 	 * @example contains(title,'edmon')
 	 */
 
-	contains: (key: Key, value: Value) => `contains(${key}, '${value}')`,
+	static contains(key: Key, value: Value) {
+		return `contains(${key}, '${value}')`;
+	}
 
-	/**
-	 * @description Equal
-	 * @example addressLocality eq 'Redmond'
-	 */
-
-	eq: (key: Key, value: Value) =>
-		`${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`,
+	static eq(key: Key, value: Value) {
+		return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
+	}
 
 	/**
 	 * @description In [values]
 	 * @example addressLocality in ('London', 'Recife')
 	 */
-	in: (key: Key, values: Value[]) => {
+	static in(key: Key, values: Value[]) {
 		if (values) {
 			const operator = `${key} in ({values})`;
 
@@ -56,26 +66,14 @@ export const searchUtil = {
 		}
 
 		return '';
-	},
+	}
 
 	/**
 	 * @description Not equal
 	 * @example addressLocality ne 'London'
 	 */
-	ne: (key: Key, value: Value) => `${key} ne '${value}'`,
-};
-
-export interface SearchBuilderConstructor {
-	useURIEncode?: boolean;
-}
-
-export class SearchBuilder {
-	private lock: boolean = false;
-	private query: string = '';
-	private useURIEncode?: boolean = true;
-
-	constructor({useURIEncode}: SearchBuilderConstructor = {}) {
-		this.useURIEncode = useURIEncode;
+	static ne(key: Key, value: Value) {
+		return `${key} ne '${value}'`;
 	}
 
 	public and() {
@@ -121,8 +119,8 @@ export class SearchBuilder {
 			}
 
 			const _value = Array.isArray(value)
-				? searchUtil.in(key, value)
-				: searchUtil.eq(key, value);
+				? SearchBuilder.in(key, value)
+				: SearchBuilder.eq(key, value);
 
 			_filter.push(_value);
 		}
@@ -131,19 +129,19 @@ export class SearchBuilder {
 	}
 
 	public contains(key: Key, value: Value) {
-		return this.setContext(searchUtil.contains(key, value));
+		return this.setContext(SearchBuilder.contains(key, value));
 	}
 
 	public eq(key: Key, value: Value) {
-		return this.setContext(searchUtil.eq(key, value));
+		return this.setContext(SearchBuilder.eq(key, value));
 	}
 
 	public in(key: Key, values: Value[]) {
-		return this.setContext(searchUtil.in(key, values));
+		return this.setContext(SearchBuilder.in(key, values));
 	}
 
 	public ne(key: Key, value: Value) {
-		return this.setContext(searchUtil.ne(key, value));
+		return this.setContext(SearchBuilder.ne(key, value));
 	}
 
 	private setContext(query: string) {

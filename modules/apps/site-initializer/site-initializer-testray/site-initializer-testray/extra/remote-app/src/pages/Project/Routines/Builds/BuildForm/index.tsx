@@ -34,7 +34,7 @@ import {
 	TestrayRoutine,
 	testrayBuildImpl,
 } from '../../../../../services/rest';
-import {searchUtil} from '../../../../../util/search';
+import {SearchBuilder} from '../../../../../util/search';
 import ProductVersionFormModal from '../../../../Standalone/ProductVersions/ProductVersionFormModal';
 import BuildFormCases from './BuildFormCases';
 import BuildFormRun, {BuildFormType} from './BuildFormRun';
@@ -76,14 +76,14 @@ const BuildForm = () => {
 	const {data: productVersionsData, mutate} = useFetch<
 		APIResponse<TestrayProductVersion>
 	>(
-		`/productversions?fields=id,name&filter=${searchUtil.eq(
+		`/productversions?fields=id,name&filter=${SearchBuilder.eq(
 			'projectId',
 			projectId as string
 		)}`
 	);
 
 	const {data: routinesData} = useFetch<APIResponse<TestrayRoutine>>(
-		`/routines?fields=id,name&filter=${searchUtil.eq(
+		`/routines?fields=id,name&filter=${SearchBuilder.eq(
 			'projectId',
 			projectId as string
 		)}`

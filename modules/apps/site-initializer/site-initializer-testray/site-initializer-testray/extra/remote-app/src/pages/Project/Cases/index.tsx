@@ -23,7 +23,7 @@ import i18n from '../../../i18n';
 import {testrayCaseRest} from '../../../services/rest';
 import {Action} from '../../../types';
 import dayjs from '../../../util/date';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import useCaseActions from './useCaseActions';
 
 type CaseListViewProps = {
@@ -134,7 +134,7 @@ const Cases = () => {
 					},
 				}}
 				variables={{
-					filter: searchUtil.eq('projectId', projectId as string),
+					filter: SearchBuilder.eq('projectId', projectId as string),
 				}}
 			/>
 		</Container>

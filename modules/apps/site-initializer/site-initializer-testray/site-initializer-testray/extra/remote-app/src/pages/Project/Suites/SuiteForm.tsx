@@ -34,7 +34,7 @@ import {
 	testraySuiteRest,
 } from '../../../services/rest';
 import {getUniqueList} from '../../../util';
-import {searchUtil} from '../../../util/search';
+import {SearchBuilder} from '../../../util/search';
 import {CaseListView} from '../Cases';
 import SuiteSelectCasesModal from './modal';
 
@@ -203,7 +203,7 @@ const SuiteForm = () => {
 								},
 							],
 						},
-						variables: {filter: searchUtil.in('id', cases)},
+						variables: {filter: SearchBuilder.in('id', cases)},
 					}}
 				/>
 			)}

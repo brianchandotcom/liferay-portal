@@ -16,7 +16,7 @@ import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
-import {SearchBuilder, searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import {BuildStatuses, CaseResultStatuses} from '../../util/statuses';
 import Rest from './Rest';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
@@ -139,7 +139,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 
 	public async hasBuildsInProjectId(projectId: number): Promise<boolean> {
 		const routineResponse = await this.fetcher<APIResponse<TestrayRoutine>>(
-			`/routines?filter=${searchUtil.eq(
+			`/routines?filter=${SearchBuilder.eq(
 				'projectId',
 				projectId
 			)}&fields=id`
@@ -152,7 +152,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		}
 
 		const buildResponse = await this.fetcher<APIResponse<TestrayBuild>>(
-			`/${this.uri}?filter=${searchUtil.eq(
+			`/${this.uri}?filter=${SearchBuilder.eq(
 				'routineId',
 				routine.id
 			)}&fields=id`
@@ -197,7 +197,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 
 	public async getCurrentCaseIds(buildId: string | number) {
 		const response = await this.fetcher(
-			`/caseresults?filter=${searchUtil.eq(
+			`/caseresults?filter=${SearchBuilder.eq(
 				'buildId',
 				buildId
 			)}&pageSize=1000&fields=r_caseToCaseResult_c_caseId`

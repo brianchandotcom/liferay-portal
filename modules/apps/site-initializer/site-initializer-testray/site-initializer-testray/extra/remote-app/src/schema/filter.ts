@@ -22,7 +22,7 @@ import {
 	TestrayTeam,
 	UserAccount,
 } from '../services/rest';
-import {SearchBuilder, searchUtil} from '../util/search';
+import {SearchBuilder} from '../util/search';
 
 export type Filters = {
 	[key: string]: RendererFields[];
@@ -92,7 +92,7 @@ const baseFilters: Filter = {
 		label: i18n.translate('Component'),
 		name: 'componentId',
 		resource: ({projectId}) =>
-			`/components?fields=id,name&sort=name:asc&pageSize=100&filter=${searchUtil.eq(
+			`/components?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
 				'projectId',
 				projectId as string
 			)}`,
@@ -130,7 +130,7 @@ const baseFilters: Filter = {
 		name: 'teamId',
 		options: [{label: 'Solutions', value: 'solutions'}],
 		resource: ({projectId}) =>
-			`/teams?fields=id,name&sort=name:asc&pageSize=100&filter=${searchUtil.eq(
+			`/teams?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
 				'projectId',
 				projectId as string
 			)}`,

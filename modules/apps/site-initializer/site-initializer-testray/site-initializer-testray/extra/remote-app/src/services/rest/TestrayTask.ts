@@ -16,7 +16,7 @@ import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {DISPATCH_TRIGGER_TYPE} from '../../util/enum';
-import {SearchBuilder, searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
 import {DispatchTriggerStatuses, TaskStatuses} from '../../util/statuses';
 import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
@@ -148,8 +148,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			await liferayDispatchTriggerImpl.run(
 				dispatchTrigger.liferayDispatchTrigger.id
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}
@@ -164,7 +163,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 
 	public getTasksByBuildId(buildId: number) {
 		return this.fetcher<APIResponse<TestrayTask>>(
-			`/tasks?filter=${searchUtil.eq('buildId', buildId)}`
+			`/tasks?filter=${SearchBuilder.eq('buildId', buildId)}`
 		);
 	}
 

@@ -30,7 +30,7 @@ import {
 	testrayFactorCategoryRest,
 	testrayFactorRest,
 } from '../../../../../services/rest';
-import {searchUtil} from '../../../../../util/search';
+import {SearchBuilder} from '../../../../../util/search';
 import FactorOptionsFormModal from '../../../../Standalone/FactorOptions/FactorOptionsFormModal';
 import BuildSelectStacksModal, {FactorStack} from './BuildSelectStacksModal';
 import StackList from './Stack';
@@ -68,7 +68,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 		testrayFactorRest.resource,
 		{
 			params: {
-				filter: searchUtil.eq('routineId', routineId as string),
+				filter: SearchBuilder.eq('routineId', routineId as string),
 				pageSize: 100,
 			},
 			transformData: (response) =>

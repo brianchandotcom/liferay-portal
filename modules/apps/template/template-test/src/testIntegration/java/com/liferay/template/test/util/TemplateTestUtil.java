@@ -170,8 +170,6 @@ public class TemplateTestUtil {
 					infoItemFormVariationsProvider.getInfoItemFormVariations(
 						groupId);
 
-				InfoItemFormVariation infoItemFormVariation = null;
-
 				for (InfoItemFormVariation curInfoItemFormVariation :
 						infoItemFormVariations) {
 
@@ -179,16 +177,10 @@ public class TemplateTestUtil {
 						continue;
 					}
 
-					infoItemFormVariation = curInfoItemFormVariation;
-
-					break;
+					return infoItemClassDetails;
 				}
 
-				if (infoItemFormVariation == null) {
-					continue;
-				}
-
-				return infoItemClassDetails;
+				continue;
 			}
 
 			return infoItemClassDetails;

@@ -107,6 +107,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		AssetEntry assetEntry = (AssetEntry)relatedItem;
 
+		if (ArrayUtil.isEmpty(assetEntry.getCategoryIds())) {
+			return InfoPage.of(
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
+		}
+
 		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
 			assetEntry, collectionQuery);
 

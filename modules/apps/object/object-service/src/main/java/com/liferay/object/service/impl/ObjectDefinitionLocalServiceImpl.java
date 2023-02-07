@@ -166,9 +166,10 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, null, null, enableComments, labelMap, name, panelAppOrder,
-			panelCategoryKey, null, null, pluralLabelMap, scope, storageType,
-			false, null, 0, WorkflowConstants.STATUS_DRAFT, objectFields);
+			userId, null, null, enableComments, labelMap, true, name,
+			panelAppOrder, panelCategoryKey, null, null, pluralLabelMap, scope,
+			storageType, false, null, 0, WorkflowConstants.STATUS_DRAFT,
+			objectFields);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -190,6 +191,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setActive(false);
 		objectDefinition.setLabel(externalReferenceCode);
+		objectDefinition.setModifiable(true);
 		objectDefinition.setName(externalReferenceCode);
 		objectDefinition.setPluralLabel(externalReferenceCode);
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -234,7 +236,7 @@ public class ObjectDefinitionLocalServiceImpl
 			return addSystemObjectDefinition(
 				userId, systemObjectDefinitionMetadata.getModelClassName(),
 				table.getTableName(),
-				systemObjectDefinitionMetadata.getLabelMap(),
+				systemObjectDefinitionMetadata.getLabelMap(), false,
 				systemObjectDefinitionMetadata.getName(),
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionMetadata.getPluralLabelMap(),
@@ -300,7 +302,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
-			Map<Locale, String> labelMap, String name,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope,
 			String titleObjectFieldName, int version,
@@ -308,8 +310,9 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, className, dbTableName, false, labelMap, name, null, null,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
+			userId, className, dbTableName, false, labelMap, modifiable, name,
+			null, null, pkObjectFieldDBColumnName, pkObjectFieldName,
+			pluralLabelMap, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, WorkflowConstants.STATUS_APPROVED,
 			objectFields);
@@ -821,12 +824,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private ObjectDefinition _addObjectDefinition(
 			long userId, String className, String dbTableName,
-			boolean enableComments, Map<Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope,
-			String storageType, boolean system, String titleObjectFieldName,
-			int version, int status, List<ObjectField> objectFields)
+			boolean enableComments, Map<Locale, String> labelMap,
+			boolean modifiable, String name, String panelAppOrder,
+			String panelCategoryKey, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
+			String scope, String storageType, boolean system,
+			String titleObjectFieldName, int version, int status,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -872,6 +876,7 @@ public class ObjectDefinitionLocalServiceImpl
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(name);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);

@@ -115,10 +115,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
-		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(collectionQuery);
-
 		try {
 			SearchContext searchContext = _getSearchContext(assetEntry);
+
+			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
+				collectionQuery);
 
 			Hits hits = _assetHelper.search(
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),

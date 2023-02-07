@@ -37,7 +37,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		</portlet:renderURL>
 
 		<clay:content-col
-			cssClass="print-action user-tool-asset-addon-entry"
+			cssClass="p-1 print-action user-tool-asset-addon-entry"
 		>
 
 			<%

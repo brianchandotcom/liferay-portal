@@ -187,7 +187,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 	%>
 
 	<c:if test='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRelatedAssets") %>'>
-		<div class="asset-links content-metadata-asset-addon-entries mb-4">
+		<div class="asset-links content-metadata-asset-addon-entries">
 			<div class="content-metadata-asset-addon-entry content-metadata-asset-addon-entry-links">
 				<liferay-asset:asset-links
 					className="<%= JournalArticle.class.getName() %>"
@@ -211,7 +211,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 		<hr class="separator" />
 
 		<clay:content-row
-			cssClass="mb-4 user-tool-asset-addon-entries"
+			cssClass="user-tool-asset-addon-entries"
 			floatElements=""
 			verticalAlign="center"
 		>
@@ -263,7 +263,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 	<c:if test='<%= journalContentDisplayContext.articleCommentsEnabled() && journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableComments") %>'>
 		<hr class="separator" />
 
-		<div class="asset-links content-metadata-asset-addon-entries mb-4">
+		<div class="asset-links content-metadata-asset-addon-entries">
 			<div class="content-metadata-asset-addon-entry content-metadata-comments">
 				<liferay-comment:discussion
 					className="<%= JournalArticle.class.getName() %>"

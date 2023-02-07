@@ -45,12 +45,14 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 	%>
 
 	<c:if test="<%= availableLocales.length > 1 %>">
-		<div class="locale-actions user-tool-asset-addon-entry">
+		<clay:content-col
+			cssClass="locale-actions p-1 user-tool-asset-addon-entry"
+		>
 			<liferay-ui:language
 				formAction="<%= currentURL %>"
 				languageId="<%= languageId %>"
 				languageIds="<%= availableLocales %>"
 			/>
-		</div>
+		</clay:content-col>
 	</c:if>
 </c:if>

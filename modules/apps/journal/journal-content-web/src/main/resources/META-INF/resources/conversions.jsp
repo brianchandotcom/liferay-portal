@@ -25,7 +25,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 
 <c:if test="<%= !viewMode.equals(Constants.PRINT) %>">
 	<clay:content-col
-		cssClass="export-action user-tool-asset-addon-entry"
+		cssClass="export-action p-1 user-tool-asset-addon-entry"
 	>
 		<portlet:resourceURL id="exportArticle" var="exportArticleURL">
 			<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
@@ -33,6 +33,15 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 			<portlet:param name="targetExtension" value="<%= extension %>" />
 		</portlet:resourceURL>
 
-		<aui:a cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm" href="<%= exportArticleURL.toString() %>" label='<%= LanguageUtil.format(resourceBundle, "x-download-x-as-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>' />
+		<clay:link
+			aria-label='<%= LanguageUtil.format(request, "download-x-as-x", new Object[] {HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
+			borderless="<%= true %>"
+			displayType="secondary"
+			href="<%= exportArticleURL.toString() %>"
+			label="<%= StringUtil.toUpperCase(HtmlUtil.escape(extension)) %>"
+			monospaced="<%= true %>"
+			small="<%= true %>"
+			type="button"
+		/>
 	</clay:content-col>
 </c:if>

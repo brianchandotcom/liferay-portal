@@ -14,14 +14,11 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
-import com.liferay.object.internal.layout.tab.screen.navigation.category.ObjectLayoutTabScreenNavigationCategory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
@@ -38,8 +35,6 @@ import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -48,23 +43,17 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -225,36 +214,6 @@ public class ObjectLayoutLocalServiceImpl
 			objectDefinitionId);
 	}
 
-	@Override
-	public void registryObjectLayoutTabScreenNavigationCategory(
-		ObjectDefinition objectDefinition,
-		List<ObjectLayoutTab> objectLayoutTabs) {
-
-		Iterator<ObjectLayoutTab> objectLayoutTabIterator =
-			ListUtil.reverseIterator(objectLayoutTabs);
-
-		while (objectLayoutTabIterator.hasNext()) {
-			ObjectLayoutTab objectLayoutTab = objectLayoutTabIterator.next();
-
-			_serviceRegistrationMap.computeIfAbsent(
-				_getServiceRegistrationMapKey(objectLayoutTab),
-				serviceRegistrationMapKey -> _bundleContext.registerService(
-					new String[] {
-						ScreenNavigationCategory.class.getName(),
-						ScreenNavigationEntry.class.getName()
-					},
-					new ObjectLayoutTabScreenNavigationCategory(
-						objectDefinition, objectLayoutTab),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"screen.navigation.category.order:Integer",
-						objectLayoutTab.getObjectLayoutTabId()
-					).put(
-						"screen.navigation.entry.order:Integer",
-						objectLayoutTab.getObjectLayoutId()
-					).build()));
-		}
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectLayout updateObjectLayout(
@@ -284,11 +243,6 @@ public class ObjectLayoutLocalServiceImpl
 				objectLayoutTabs));
 
 		return objectLayout;
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
 	}
 
 	private ObjectLayoutBox _addObjectLayoutBox(
@@ -457,10 +411,11 @@ public class ObjectLayoutLocalServiceImpl
 				objectLayoutTab.getObjectLayoutBoxes()));
 
 		if (objectLayout.isDefaultObjectLayout()) {
-			registryObjectLayoutTabScreenNavigationCategory(
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectDefinitionId),
-				objectLayoutTabs);
+			_objectLayoutTabLocalService.
+				registryObjectLayoutTabScreenNavigationCategories(
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						objectDefinitionId),
+					objectLayoutTabs);
 		}
 
 		return objectLayoutTabs;
@@ -476,19 +431,6 @@ public class ObjectLayoutLocalServiceImpl
 
 			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
 				objectLayoutTab.getObjectLayoutTabId());
-
-			ServiceRegistration<?> serviceRegistration =
-				_serviceRegistrationMap.get(
-					_getServiceRegistrationMapKey(objectLayoutTab));
-
-			if (serviceRegistration == null) {
-				return;
-			}
-
-			serviceRegistration.unregister();
-
-			_serviceRegistrationMap.remove(
-				String.valueOf(objectLayoutTab.getObjectLayoutTabId()));
 		}
 	}
 
@@ -571,14 +513,6 @@ public class ObjectLayoutLocalServiceImpl
 		}
 
 		return objectLayoutTabs;
-	}
-
-	private String _getServiceRegistrationMapKey(
-		ObjectLayoutTab objectLayoutTab) {
-
-		return StringBundler.concat(
-			objectLayoutTab.getCompanyId(), StringPool.POUND,
-			objectLayoutTab.getObjectLayoutTabId());
 	}
 
 	private void _validate(
@@ -688,8 +622,6 @@ public class ObjectLayoutLocalServiceImpl
 		}
 	}
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
@@ -710,9 +642,6 @@ public class ObjectLayoutLocalServiceImpl
 
 	@Reference
 	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
-
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrationMap =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

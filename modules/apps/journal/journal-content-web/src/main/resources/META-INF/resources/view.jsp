@@ -202,7 +202,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 	boolean enableODT = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableODT") && journalContentDisplayContext.isEnabledConversion("odt");
 	boolean enablePDF = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePDF") && journalContentDisplayContext.isEnabledConversion("pdf");
 	boolean enablePrint = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePrint");
-	boolean enableRatings = journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRatings");
+	boolean enableRatings = journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRatings") && !viewMode.equals(Constants.PRINT);
 	boolean enableTXT = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableTXT") && journalContentDisplayContext.isEnabledConversion("txt");
 	boolean showAvailableLocales = journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("showAvailableLocales");
 	%>
@@ -216,16 +216,14 @@ if (journalContentDisplayContext.isShowArticle()) {
 			verticalAlign="center"
 		>
 			<c:if test="<%= enableRatings %>">
-				<clay:content-row>
-					<c:if test="<%= !viewMode.equals(Constants.PRINT) %>">
-						<div class="content-metadata-asset-addon-entry content-metadata-ratings">
-							<liferay-ratings:ratings
-								className="<%= JournalArticle.class.getName() %>"
-								classPK="<%= articleDisplay.getResourcePrimKey() %>"
-							/>
-						</div>
-					</c:if>
-				</clay:content-row>
+				<clay:content-col>
+					<div class="content-metadata-asset-addon-entry content-metadata-ratings">
+						<liferay-ratings:ratings
+							className="<%= JournalArticle.class.getName() %>"
+							classPK="<%= articleDisplay.getResourcePrimKey() %>"
+						/>
+					</div>
+				</clay:content-col>
 			</c:if>
 
 			<c:if test="<%= showAvailableLocales %>">

@@ -635,7 +635,9 @@ definition {
 			pageName = "TranslationContentPage",
 			siteName = "Guest");
 
-		ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+		ContentPages.changeExperience(
+			experienceName = "NewAnyoneExperience",
+			locale = "es");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
@@ -984,7 +986,9 @@ definition {
 				pageName = "TranslationContentPage${i}",
 				siteName = "Guest");
 
-			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+			ContentPages.changeExperience(
+				experienceName = "NewAnyoneExperience",
+				locale = "es");
 
 			Navigator.ensureLocaleURL(locale = "es");
 

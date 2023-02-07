@@ -423,7 +423,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		ContentPages.changeExperience(experienceName = "Segment Email Experience");
+		ContentPages.changeExperience(
+			experienceName = "Segment Email Experience",
+			locale = "ja");
 
 		Navigator.ensureLocaleURL(locale = "ja");
 

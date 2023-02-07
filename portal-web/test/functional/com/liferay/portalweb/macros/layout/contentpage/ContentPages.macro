@@ -324,7 +324,7 @@ definition {
 	}
 
 	macro changeExperience {
-		ContentPages.openExperienceMenu();
+		ContentPages.openExperienceMenu(locale = "${locale}");
 
 		MenuItem.click(menuItem = "${experienceName}");
 
@@ -362,8 +362,18 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	macro openExperienceMenu {
+		if ("${locale}" == "es") {
+			var ariaLabel = "Selector de experiencia";
+		}
+		else if ("${locale}" == "ja") {
+			var ariaLabel = "エクスペリエンスセレクター";
+		}
+		else {
+			var ariaLabel = "Experience Selector";
+		}
+
 		Click(
-			ariaLabel = "Experience Selector",
+			ariaLabel = "${ariaLabel}",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 

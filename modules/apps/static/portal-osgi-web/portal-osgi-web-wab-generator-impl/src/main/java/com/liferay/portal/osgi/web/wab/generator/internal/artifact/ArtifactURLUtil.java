@@ -37,9 +37,7 @@ import org.osgi.framework.Constants;
  */
 public class ArtifactURLUtil {
 
-	public static URL transform(URL artifact) throws Exception {
-		String path = artifact.getPath();
-
+	public static String getSymbolicName(String path) {
 		int x = path.lastIndexOf('/');
 		int y = path.lastIndexOf(CharPool.PERIOD);
 
@@ -51,9 +49,18 @@ public class ArtifactURLUtil {
 			symbolicName = matcher.group(1);
 		}
 
+		return symbolicName;
+	}
+
+	public static URL transform(URL artifact) throws Exception {
+		String path = artifact.getPath();
+
+		String symbolicName = getSymbolicName(path);
+
 		String contextName = null;
 
-		String fileExtension = path.substring(y + 1);
+		String fileExtension = path.substring(
+			path.lastIndexOf(CharPool.PERIOD) + 1);
 
 		if (fileExtension.equals("war")) {
 			try (ZipFile zipFile = new ZipFile(new File(artifact.toURI()))) {

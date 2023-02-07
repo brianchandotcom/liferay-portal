@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
-import java.net.URL;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -215,11 +214,15 @@ public class WabGenerator
 						continue;
 					}
 
-					URL url = ArtifactURLUtil.transform(uri.toURL());
+					String contextName = properties.getProperty(
+						"servlet-context-name");
 
-					contextPaths.add(
-						HttpComponentsUtil.getParameter(
-							url.toString(), "Web-ContextPath", false));
+					if (contextName == null) {
+						contextName = ArtifactURLUtil.getSymbolicName(
+							uri.getPath());
+					}
+
+					contextPaths.add("/".concat(contextName));
 				}
 			}
 		}

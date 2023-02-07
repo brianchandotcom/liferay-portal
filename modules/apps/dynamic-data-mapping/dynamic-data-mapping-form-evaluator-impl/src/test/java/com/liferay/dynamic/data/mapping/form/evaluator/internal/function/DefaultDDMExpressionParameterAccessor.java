@@ -19,7 +19,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -54,6 +56,11 @@ public class DefaultDDMExpressionParameterAccessor
 	}
 
 	@Override
+	public Map<String, Object> getObjectFieldsOldValues() {
+		return _getObjectFieldsOldValues.get();
+	}
+
+	@Override
 	public String getTimeZoneId() {
 		return _getTimeZoneIdSupplier.get();
 	}
@@ -79,6 +86,12 @@ public class DefaultDDMExpressionParameterAccessor
 		_getLocaleSupplier = supplier;
 	}
 
+	protected void setGetObjectFieldsOldValuesSupplier(
+		Supplier<Map<String, Object>> objectFieldsOldValues) {
+
+		_getObjectFieldsOldValues = objectFieldsOldValues;
+	}
+
 	protected void setGetUserIdSupplier(Supplier<Long> supplier) {
 		_getUserIdSupplier = supplier;
 	}
@@ -90,6 +103,8 @@ public class DefaultDDMExpressionParameterAccessor
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");
 	private final Supplier<JSONArray> _getObjectFieldsJSONArraySupplier =
 		JSONFactoryUtil::createJSONArray;
+	private Supplier<Map<String, Object>> _getObjectFieldsOldValues =
+		() -> Collections.emptyMap();
 	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 

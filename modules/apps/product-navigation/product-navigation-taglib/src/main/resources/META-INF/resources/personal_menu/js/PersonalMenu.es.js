@@ -104,11 +104,12 @@ function PersonalMenu({
 					/>
 				) : (
 					<ClayButton
-						aria-label={Liferay.Language.get('personal-menu')}
+						aria-label={Liferay.Language.get('user-profile')}
 						className="rounded-circle"
 						displayType="unstyled"
 						onFocus={preloadItems}
 						onMouseOver={preloadItems}
+						title={Liferay.Language.get('user-profile-menu')}
 					>
 						<span
 							className={`sticker sticker-user-icon sticker-${size}`}

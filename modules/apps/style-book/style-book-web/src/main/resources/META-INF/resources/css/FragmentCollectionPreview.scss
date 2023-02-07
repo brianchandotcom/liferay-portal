@@ -9,7 +9,7 @@ body.page-maximized {
 }
 
 .fragment-preview {
-	+ & {
+	& + & {
 		border-top: solid 2px #dadee3;
 	}
 
@@ -43,7 +43,7 @@ html#{$cadmin-selector} {
 }
 
 .variation-preview__content {
-	background-color: #f7f8f9;
+	background-color: $cadmin-gray-100;
 
 	> * {
 		flex-grow: 1;

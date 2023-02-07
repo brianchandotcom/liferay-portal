@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Peter Yoo
@@ -53,9 +55,17 @@ public class ParallelExecutor<T> {
 	}
 
 	public List<T> execute() {
+		return execute(null);
+	}
+
+	public List<T> execute(Long timeoutSeconds) {
 		start();
 
-		return waitFor();
+		return waitFor(timeoutSeconds);
+	}
+
+	public void shutdownNow() {
+		_executorService.shutdownNow();
 	}
 
 	public synchronized void start() {
@@ -71,8 +81,16 @@ public class ParallelExecutor<T> {
 	}
 
 	public List<T> waitFor() {
+		return waitFor(null);
+	}
+
+	public List<T> waitFor(Long timeoutSeconds) {
 		if (_futures == null) {
 			start();
+		}
+
+		if (timeoutSeconds == null) {
+			timeoutSeconds = 90L;
 		}
 
 		try {
@@ -80,7 +98,27 @@ public class ParallelExecutor<T> {
 
 			for (Future<T> future : _futures) {
 				try {
-					T result = future.get();
+					T result = null;
+
+					try {
+						result = future.get(timeoutSeconds, TimeUnit.SECONDS);
+					}
+					catch (TimeoutException timeoutException) {
+						if (future.cancel(true)) {
+							System.out.println(
+								"A callable task was cancelled.");
+						}
+						else {
+							System.out.println(
+								"Failed to cancel callable task.");
+						}
+
+						result = null;
+					}
+
+					System.out.println(
+						(_futures.indexOf(future) + 1) +
+							" callables returned.");
 
 					if ((result == null) && _excludeNulls) {
 						continue;
@@ -97,7 +135,7 @@ public class ParallelExecutor<T> {
 		}
 		finally {
 			if (_disposeExecutor) {
-				_executorService.shutdown();
+				_executorService.shutdownNow();
 
 				while (!_executorService.isShutdown()) {
 					JenkinsResultsParserUtil.sleep(100);

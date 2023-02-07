@@ -393,14 +393,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					companyId);
 		}
 
-		Long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-
 		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setWithSafeCloseable(
-					companyThreadLocalCompanyId);
+				CompanyThreadLocal.setWithSafeCloseable(companyId);
 			SafeCloseable safeCloseable2 =
-				PortalInstances.setCompanyInDeletionProcess(
-					companyThreadLocalCompanyId)) {
+				PortalInstances.setCompanyInDeletionProcess(companyId)) {
 
 			return doDeleteCompany(companyId);
 		}

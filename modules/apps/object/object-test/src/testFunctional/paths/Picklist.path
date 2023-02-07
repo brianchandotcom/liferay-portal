@@ -66,13 +66,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_PICKLIST_ITEM_NAME</td>
-		<td>//input[@id='locale' and @value='${key_itemName}']/ancestor::div[@class='modal-body']//input[@class='form-control' and @value='${key_itemKey}']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>ADD_PICKLIST_ITEM_KEY</td>
-		<td>//input[(@name='name' and @class='form-control' and @type='text')]</td>
+		<td>ADD_PICKLIST_ITEM_NAME_AND_KEY</td>
+		<td>//*[contains(@class,'modal-body')] //label[text()='${key_selectField}']/..//input</td>
 		<td></td>
 	</tr>
 	<tr>

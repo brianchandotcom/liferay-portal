@@ -50,13 +50,15 @@ definition {
 
 		if (isSet(picklistItemName)) {
 			Type(
-				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+				key_selectField = "Name",
+				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME_AND_KEY",
 				value1 = ${picklistItemName});
 		}
 
 		if (isSet(picklistItemKey)) {
 			Type(
-				locator1 = "Picklist#ADD_PICKLIST_ITEM_KEY",
+				key_selectField = "Key",
+				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME_AND_KEY",
 				value1 = ${picklistItemKey});
 		}
 	}
@@ -77,7 +79,8 @@ definition {
 		}
 
 		Type(
-			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
+			key_selectField = "Name",
+			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME_AND_KEY",
 			value1 = ${newItemName});
 
 		ObjectAdmin.chooseAnyLanguage(

@@ -19,7 +19,6 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Spliterator;
 
 /**
  * @author André de Oliveira
@@ -40,10 +39,7 @@ public class ModelKeywordQueryContributorsRegistryImpl
 		List<KeywordQueryContributor> keywordQueryContributors =
 			new ArrayList<>();
 
-		Spliterator<KeywordQueryContributor> spliterator =
-			_keywordQueryContributors.spliterator();
-
-		spliterator.forEachRemaining(keywordQueryContributors::add);
+		_keywordQueryContributors.forEach(keywordQueryContributors::add);
 
 		return IncludeExcludeUtil.filter(
 			keywordQueryContributors, includes, excludes,

@@ -108,6 +108,6 @@ create table SamlSpSession (
 	assertionXml TEXT null,
 	jSessionId VARCHAR(200) null,
 	samlSpSessionKey VARCHAR(75) null,
-	sessionIndex VARCHAR(75) null,
+	sessionIndex VARCHAR(200) null,
 	terminated_ BOOLEAN
 );

@@ -96,7 +96,7 @@ public class SamlSpSessionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlPeerBindingId LONG,assertionXml TEXT null,jSessionId VARCHAR(200) null,samlSpSessionKey VARCHAR(75) null,sessionIndex VARCHAR(75) null,terminated_ BOOLEAN)";
+		"create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlPeerBindingId LONG,assertionXml TEXT null,jSessionId VARCHAR(200) null,samlSpSessionKey VARCHAR(75) null,sessionIndex VARCHAR(200) null,terminated_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpSession";
 

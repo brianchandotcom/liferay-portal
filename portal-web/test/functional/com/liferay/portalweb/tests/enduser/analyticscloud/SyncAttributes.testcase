@@ -106,7 +106,7 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12838 | Test Summary: Cannot deselect required Attributes for Account"
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12838 | Test Summary: Deselect non-required Attributes for Account"
 	@priority = "5"
 	test CanDeselectNonRequiredAccountAttributes {
 		var nonRequiredAttributesName = '''companyId,createDate,defaultCPaymentMethodKey,description,
@@ -476,7 +476,7 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12835 | Test Summary: Select Attributes for Account "
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12835 | Test Summary: Select Attributes for Account"
 	@priority = "5"
 	test CanSelectAccountAttributes {
 		task ("Get the number of attributes currently synced") {
@@ -866,7 +866,7 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12841 | Test Summary: Check that all defaults attributes are being checked for Attribute for Account"
+	@description = "Story: LRAC-10865 | Automation ID: LRAC-12841 | Test Summary: Check that all defaults attributes are being checked for Account"
 	@priority = "4"
 	test CheckAllDefaultsAttributesAreBeingCheckedForAccounts {
 		var defaultAttributesName = '''

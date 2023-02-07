@@ -16,11 +16,12 @@ package com.liferay.analytics.reports.web.internal.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -166,13 +167,14 @@ public class TrafficSource {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
-		return JSONUtil.putAll(
-			TransformUtil.transformToArray(
-				_countrySearchKeywordsList,
-				countrySearchKeywords -> countrySearchKeywords.toJSONObject(
-					locale),
-				JSONObject.class));
+		return JSONUtil.toJSONArray(
+			_countrySearchKeywordsList,
+			countrySearchKeywords -> countrySearchKeywords.toJSONObject(locale),
+			_log);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TrafficSource.class.getName());
 
 	private List<CountrySearchKeywords> _countrySearchKeywordsList;
 	private boolean _error;

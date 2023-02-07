@@ -24,13 +24,12 @@ import java.util.function.Predicate;
  */
 public class IncludeExcludeUtil {
 
-	public static <T> List<T> filterIncludeExclude(
-		List<T> includeExcludeList, Collection<String> includeIds,
+	public static <T> List<T> filter(
+		List<T> list, Collection<String> includeIds,
 		Collection<String> excludeIds, Function<T, String> function) {
 
 		return _exclude(
-			_include(includeExcludeList, includeIds, function), excludeIds,
-			function);
+			_include(list, includeIds, function), excludeIds, function);
 	}
 
 	protected static <T> boolean isPresent(
@@ -48,24 +47,21 @@ public class IncludeExcludeUtil {
 	}
 
 	private static <T> List<T> _filter(
-		List<T> includeExcludeList, Collection<String> ids,
-		Predicate<? super T> predicate) {
+		List<T> list, Collection<String> ids, Predicate<? super T> predicate) {
 
 		if ((ids == null) || ids.isEmpty()) {
-			return includeExcludeList;
+			return list;
 		}
 
-		includeExcludeList.removeIf(cur -> !predicate.test(cur));
+		list.removeIf(cur -> !predicate.test(cur));
 
-		return includeExcludeList;
+		return list;
 	}
 
 	private static <T> List<T> _include(
-		List<T> includeExcludeList, Collection<String> ids,
-		Function<T, String> function) {
+		List<T> list, Collection<String> ids, Function<T, String> function) {
 
-		return _filter(
-			includeExcludeList, ids, t -> isPresent(t, ids, function));
+		return _filter(list, ids, t -> isPresent(t, ids, function));
 	}
 
 }

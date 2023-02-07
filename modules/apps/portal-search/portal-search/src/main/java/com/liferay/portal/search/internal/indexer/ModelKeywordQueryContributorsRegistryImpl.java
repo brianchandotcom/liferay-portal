@@ -45,7 +45,7 @@ public class ModelKeywordQueryContributorsRegistryImpl
 
 		spliterator.forEachRemaining(keywordQueryContributors::add);
 
-		return IncludeExcludeUtil.filterIncludeExclude(
+		return IncludeExcludeUtil.filter(
 			keywordQueryContributors, includes, excludes,
 			object -> getClassName(object));
 	}

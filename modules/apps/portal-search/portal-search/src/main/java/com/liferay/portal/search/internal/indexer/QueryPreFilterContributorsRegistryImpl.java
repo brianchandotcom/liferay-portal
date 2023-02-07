@@ -47,7 +47,7 @@ public class QueryPreFilterContributorsRegistryImpl
 
 		spliterator.forEachRemaining(queryPreFilterContributors::add);
 
-		return IncludeExcludeUtil.filterIncludeExclude(
+		return IncludeExcludeUtil.filter(
 			queryPreFilterContributors, includes, excludes,
 			object -> getClassName(object));
 	}

@@ -20,15 +20,10 @@
 String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);
 %>
 
-<div class="active control-menu-link customization-link d-block d-md-none">
+<div class="active control-menu-link customization-link d-block d-md-none lfr-portal-tooltip">
 	<clay:icon
 		aria-label='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
-		cssClass="lfr-portal-tooltip"
-		data='<%=
-			HashMapBuilder.<String, Object>put(
-				"qa-id", "customizations"
-			).build()
-		%>'
+		data-qa-id="customizations"
 		id='<%= portletNamespace + "customizationButton" %>'
 		symbol="pencil"
 		title='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'

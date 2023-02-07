@@ -79,13 +79,10 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				AssetCategory assetCategory =
 					_assetCategoryLocalService.fetchAssetCategory(classPK);
 
-				long vocabularyId = assetCategory.getVocabularyId();
-
-				vocabularyIdInfoItemReferencesMap.putIfAbsent(
-					vocabularyId, new HashMap<>());
-
 				Map<Long, InfoItemReference> categoryIdInfoItemReferencesMap =
-					vocabularyIdInfoItemReferencesMap.get(vocabularyId);
+					vocabularyIdInfoItemReferencesMap.computeIfAbsent(
+						assetCategory.getVocabularyId(),
+						key -> new HashMap<>());
 
 				categoryIdInfoItemReferencesMap.put(classPK, infoItemReference);
 			}

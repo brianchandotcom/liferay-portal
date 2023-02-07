@@ -791,7 +791,7 @@ definition {
 	@priority = "5"
 	test AllOrderAttributesRequired {
 		task ("Click to configure Orders attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
 
 		task ("See that the all the attributes are checked") {
@@ -835,7 +835,7 @@ definition {
 		var unsearchedOrdersAttribute = "currencyCode,orderDate";
 
 		task ("Click to select attribute for orders") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
 
 		task ("Search for orders attributes") {
@@ -868,7 +868,7 @@ definition {
 		var secondPageList = "id,orderStatus,orderTypeId,paymentStatus,status";
 
 		task ("Click to select attribute for Orders") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
 
 		task ("Change filter to Data type"){
@@ -900,6 +900,91 @@ definition {
 
 		task ("Check that the attributes for Order on the first page does not appear on the second page") {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
+	@description = "Story: LRAC-10867 | Automation ID: LRAC-12914 | Test Summary: Check that it is possible to sort the Attribute for Order list by Attribute Name and Data Type"
+	@priority = "3"
+	test CanSortOrdersListByAttribute {
+		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35";
+		var attributesAscendingOrder = '''
+			accountId,channelId,cpDefinitionId,createDate,createDate,currencyCode,
+			customFields,customFields,externalReferenceCode,externalReferenceCode,
+			finalPrice,id,id,modifiedDate,modifiedDate,name,options,orderDate,orderId,
+			orderItems,orderStatus,orderTypeExternalReferenceCode,orderTypeId,
+			parentOrderItemId,paymentMethod,paymentStatus,quantity,sku,status,subscription,
+			total,unitOfMeasure,unitPrice,userId,userId
+		''';
+		var attributesDescendingOrder = '''
+			userId,userId,unitPrice,unitOfMeasure,total,subscription,status,sku,quantity,
+			paymentStatus,paymentMethod,parentOrderItemId,orderTypeId,orderTypeExternalReferenceCode,
+			orderStatus,orderItems,orderId,orderDate,options,name,modifiedDate,modifiedDate,
+			id,id,finalPrice,externalReferenceCode,externalReferenceCode,customFields,customFields,
+			currencyCode,createDate,createDate,cpDefinitionId,channelId,accountId
+		''';
+		var attributesDataTypeAscending = '''
+			orderItems,total,subscription,accountId,channelId,id,orderStatus,orderTypeId,
+			paymentStatus,status,userId,cpDefinitionId,id,orderId,parentOrderItemId,quantity,
+			userId,finalPrice,unitPrice,customFields,customFields,name,createDate,currencyCode,
+			externalReferenceCode,modifiedDate,orderDate,orderTypeExternalReferenceCode,
+			paymentMethod,createDate,externalReferenceCode,modifiedDate,options,sku,unitOfMeasure
+		''';
+		var attributesDataTypeDescending = '''
+			createDate,currencyCode,externalReferenceCode,modifiedDate,orderDate,orderTypeExternalReferenceCode,
+			paymentMethod,createDate,externalReferenceCode,modifiedDate,options,sku,unitOfMeasure,customFields,
+			customFields,name,finalPrice,unitPrice,accountId,channelId,id,orderStatus,
+			orderTypeId,paymentStatus,status,userId,cpDefinitionId,id,orderId,parentOrderItemId,
+			quantity,userId,subscription,total,orderItems
+		''';
+
+		task ("Click to configure Orders attributes") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
+
+			ACUtils.changePagination(itemsPerPage = "50");
+		}
+
+		task ("Sort the list by the Attribute Name column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesAscendingOrder}");
+		}
+
+		task ("Sort the list by the Attribute Name column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDescendingOrder}");
+		}
+
+		task ("Sort the list by the Data Type column (Ascending)") {
+			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDataTypeAscending}");
+		}
+
+		task ("Sort the list by the Data Type column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "${indexList}",
+				itemValueList = "${attributesDataTypeDescending}");
 		}
 	}
 

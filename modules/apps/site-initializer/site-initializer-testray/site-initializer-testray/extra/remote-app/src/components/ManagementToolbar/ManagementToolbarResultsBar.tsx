@@ -56,31 +56,35 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 				</span>
 			</ClayResultsBar.Item>
 
-			{entries.map((entry, index) => {
-				return (
-					<ClayResultsBar.Item
-						expand={index === entries.length - 1}
-						key={index}
+			{entries.map((entry, index) => (
+				<ClayResultsBar.Item
+					expand={index === entries.length - 1}
+					key={index}
+				>
+					<ClayLabel
+						className="component-label result-filter tbar-label"
+						displayType="unstyled"
 					>
-						<ClayLabel
-							className="component-label result-filter tbar-label"
-							displayType="unstyled"
-						>
-							<span className="d-flex flex-row">
-								<b>{entry.label}</b>
+						<span className="d-flex flex-row">
+							<b>{entry.label}</b>
 
-								{`: ${entry.value}`}
+							{`: ${
+								Array.isArray(entry.value)
+									? entry.value
+											.map(({label}) => label)
+											.join(', ')
+									: entry.value
+							}`}
 
-								<ClayIcon
-									className="cursor-pointer ml-2"
-									onClick={() => onRemoveFilter(entry.name)}
-									symbol="times"
-								/>
-							</span>
-						</ClayLabel>
-					</ClayResultsBar.Item>
-				);
-			})}
+							<ClayIcon
+								className="cursor-pointer ml-2"
+								onClick={() => onRemoveFilter(entry.name)}
+								symbol="times"
+							/>
+						</span>
+					</ClayLabel>
+				</ClayResultsBar.Item>
+			))}
 
 			<ClayResultsBar.Item>
 				<ClayButton

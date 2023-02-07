@@ -19,7 +19,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ReactNode, useState} from 'react';
 
 import i18n from '../../i18n';
-import {RendererFields} from '../Form/Renderer';
+import {FilterSchema} from '../../schema/filter';
 import ManagementToolbarFilter from './ManagementToolbarFilter';
 
 export type IItem = {
@@ -54,7 +54,7 @@ type ManagementToolbarRightProps = {
 	display?: {
 		columns?: boolean;
 	};
-	filterFields?: RendererFields[];
+	filterSchema?: FilterSchema;
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
@@ -64,13 +64,13 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	display = {columns: true},
 	columns,
 	disabled,
-	filterFields,
+	filterSchema,
 }) => {
 	const [pinned, setPinned] = useState(false);
 
 	return (
 		<ClayManagementToolbar.ItemList>
-			{filterFields?.length && (
+			{filterSchema?.fields?.length && (
 				<>
 					<ClayManagementToolbar.Item>
 						<ClayButtonWithIcon
@@ -83,7 +83,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 						/>
 					</ClayManagementToolbar.Item>
 
-					<ManagementToolbarFilter filterFields={filterFields} />
+					<ManagementToolbarFilter filterSchema={filterSchema} />
 				</>
 			)}
 

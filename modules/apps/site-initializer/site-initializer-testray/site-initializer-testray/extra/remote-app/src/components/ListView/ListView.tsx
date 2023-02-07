@@ -32,6 +32,10 @@ import ListViewContextProvider, {
 } from '../../context/ListViewContext';
 import {useFetch} from '../../hooks/useFetch';
 import i18n from '../../i18n';
+import {
+	FilterSchema as FilterSchemaType,
+	filterSchema as filterSchemas,
+} from '../../schema/filter';
 import {APIResponse} from '../../services/rest';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
@@ -84,7 +88,7 @@ const ListView: React.FC<ListViewProps> = ({
 	resource,
 	tableProps,
 	transformData,
-	variables: _variables,
+	variables,
 	pagination = {displayTop: true},
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
@@ -96,26 +100,45 @@ const ListView: React.FC<ListViewProps> = ({
 		sort,
 	} = listViewContext;
 
+	const filterSchemaName: any = managementToolbarProps.filterSchema ?? '';
+	const filterSchema = (filterSchemas as any)[
+		filterSchemaName
+	] as FilterSchemaType;
+
+	const onApplyFilterMemo = useMemo(
+		() => filterSchema?.onApply?.bind(filterSchema),
+		[filterSchema]
+	);
+
+	const filterVariables = useMemo(
+		() => ({
+			appliedFilter: filters.filter,
+			defaultFilter: variables?.filter,
+		}),
+		[variables?.filter, filters.filter]
+	);
+
 	const getURLSearchParams = useCallback(
 		() => ({
-			filter:
-				SearchBuilder.createFilter(
-					filters.filter,
-					_variables?.filter
-				) || '',
+			filter: onApplyFilterMemo
+				? onApplyFilterMemo(filterVariables)
+				: SearchBuilder.createFilter(
+						filterVariables.appliedFilter,
+						filterVariables.defaultFilter
+				  ) || '',
 			forceRefetch,
 			page: listViewContext.page,
 			pageSize: listViewContext.pageSize,
 			sort: sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '',
 		}),
 		[
+			onApplyFilterMemo,
+			filterVariables,
 			forceRefetch,
-			_variables?.filter,
-			filters.filter,
 			listViewContext.page,
 			listViewContext.pageSize,
-			sort.direction,
 			sort.key,
+			sort.direction,
 		]
 	);
 

@@ -14,6 +14,7 @@
 
 import Form from '..';
 import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 import i18n from '../../../i18n';
 import fetcher from '../../../services/fetcher';
@@ -22,6 +23,7 @@ import {AutoCompleteProps} from '../AutoComplete';
 type RenderedFieldOptions = string[] | {label: string; value: string}[];
 
 export type RendererFields = {
+	disabled?: boolean;
 	label: string;
 	name: string;
 	options?: RenderedFieldOptions;
@@ -47,6 +49,7 @@ const Renderer: React.FC<RendererProps> = ({
 	form,
 	onChange,
 }) => {
+	const params = useParams();
 	const [disabledFields, setDisableFields] = useState({});
 	const [gqlOptions, setGqlOptions] = useState<{[key: string]: []}>({});
 
@@ -85,16 +88,29 @@ const Renderer: React.FC<RendererProps> = ({
 			.filter(({resource}) => resource)
 			.map(({resource, ...field}) => [
 				field,
-				() => fetcher(resource as string),
+				() =>
+					fetcher(
+						(typeof resource === 'function'
+							? resource(params)
+							: resource) as string
+					),
 			]);
 
-		fetchQueries(gqlQueries);
-	}, [fields]);
+		fetchQueries(gqlQueries as any);
+	}, [fields, params]);
 
 	return (
 		<div className="form-renderer">
 			{fieldsFiltered.map((field, index) => {
-				const {label, name, type, options = [], resource} = field;
+				const {
+					label,
+					disabled,
+					name,
+					type,
+					options = [],
+					resource,
+				} = field;
+
 				const currentValue = form[name];
 
 				const getOptions = () => {
@@ -116,14 +132,17 @@ const Renderer: React.FC<RendererProps> = ({
 					return (
 						<div key={index}>
 							<Form.Input
-								disabled={(disabledFields as any)[name]}
+								disabled={
+									(disabled ?? (disabledFields as any))[name]
+								}
 								onChange={onChange}
 								value={currentValue}
-								{...field}
+								{...(field as any)}
 							/>
 
 							{type === 'textarea' && (
 								<Form.Checkbox
+									disabled={disabled}
 									label={i18n.sub('no-x', field.label)}
 									onClick={() => {
 										onChange({target: {name, value: null}});
@@ -144,6 +163,7 @@ const Renderer: React.FC<RendererProps> = ({
 				if (type === 'select') {
 					return (
 						<Form.Select
+							disabled={disabled}
 							key={index}
 							label={label}
 							name={name}
@@ -178,6 +198,7 @@ const Renderer: React.FC<RendererProps> = ({
 							{options.map((option, index) => (
 								<Form.Checkbox
 									checked={form[name]?.includes(option)}
+									disabled={disabled}
 									key={index}
 									label={
 										typeof option === 'string'
@@ -211,7 +232,10 @@ const Renderer: React.FC<RendererProps> = ({
 					return (
 						<div className="mb-2" key={index}>
 							<Form.MultiSelect
+								disabled={disabled}
 								label={label}
+								name={name}
+								onChange={onChange}
 								options={getOptions()}
 								value={currentValue}
 							/>

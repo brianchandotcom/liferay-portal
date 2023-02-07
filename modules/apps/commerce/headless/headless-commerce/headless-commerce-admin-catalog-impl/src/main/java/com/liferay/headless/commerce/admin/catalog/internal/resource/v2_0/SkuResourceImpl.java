@@ -20,6 +20,8 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v2_0.Product;
@@ -27,7 +29,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v2_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v2_0.converter.SkuDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v2_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v2_0.SkuEntityModel;
-import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v2_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v2_0.SkuResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
@@ -38,9 +39,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -52,7 +51,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -250,7 +248,9 @@ public class SkuResourceImpl
 			cpDefinition.getGroupId());
 
 		CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
-			_cpInstanceService, sku, cpDefinition, serviceContext);
+			_cpInstanceService, sku, cpDefinition,
+			_cpDefinitionOptionValueRelService, _cpDefinitionOptionRelService,
+			serviceContext);
 
 		SkuUtil.updateCommercePriceEntries(
 			_commercePriceEntryLocalService, _commercePriceListLocalService,
@@ -275,69 +275,25 @@ public class SkuResourceImpl
 
 		long replacementCProductId = 0;
 		String replacementCPInstanceUuid = null;
+		CPInstance replacementCPInstance = SkuUtil.getReplacementCPInstance(
+			_cpInstanceService, sku, contextCompany.getCompanyId());
 
-		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
-			CPInstance discontinuedCPInstance = null;
+		if (replacementCPInstance != null) {
+			CPDefinition replacementCPDefinition =
+				replacementCPInstance.getCPDefinition();
 
-			if (Validator.isNotNull(
-					sku.getReplacementSkuExternalReferenceCode())) {
+			replacementCProductId = replacementCPDefinition.getCProductId();
 
-				discontinuedCPInstance =
-					_cpInstanceService.fetchByExternalReferenceCode(
-						sku.getReplacementSkuExternalReferenceCode(),
-						contextCompany.getCompanyId());
-			}
-
-			if ((discontinuedCPInstance == null) &&
-				(GetterUtil.getLong(sku.getReplacementSkuId()) > 0)) {
-
-				discontinuedCPInstance = _cpInstanceService.fetchCPInstance(
-					sku.getReplacementSkuId());
-			}
-
-			if (discontinuedCPInstance != null) {
-				CPDefinition cpDefinition =
-					discontinuedCPInstance.getCPDefinition();
-
-				replacementCProductId = cpDefinition.getCProductId();
-
-				replacementCPInstanceUuid =
-					discontinuedCPInstance.getCPInstanceUuid();
-			}
+			replacementCPInstanceUuid =
+				replacementCPInstance.getCPInstanceUuid();
 		}
 
-		Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (sku.getDiscontinuedDate() != null) {
-			discontinuedCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDiscontinuedDate());
-		}
-
-		DateConfig discontinuedDateConfig = new DateConfig(
-			discontinuedCalendar);
-
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (sku.getDisplayDate() != null) {
-			displayCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDisplayDate());
-		}
-
-		DateConfig displayDateConfig = new DateConfig(displayCalendar);
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		if (sku.getExpirationDate() != null) {
-			expirationCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getExpirationDate());
-		}
-
-		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
+		DateConfig discontinuedDateConfig = SkuUtil.getDateConfig(
+			sku.getDiscontinuedDate(), serviceContext);
+		DateConfig displayDateConfig = SkuUtil.getDateConfig(
+			sku.getDisplayDate(), serviceContext);
+		DateConfig expirationDateConfig = SkuUtil.getExpirationDateConfig(
+			sku.getExpirationDate(), serviceContext);
 
 		cpInstance = _cpInstanceService.updateCPInstance(
 			cpInstance.getExternalReferenceCode(), cpInstance.getCPInstanceId(),
@@ -386,6 +342,13 @@ public class SkuResourceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private CPDefinitionOptionValueRelService
+		_cpDefinitionOptionValueRelService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

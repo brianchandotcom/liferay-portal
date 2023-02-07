@@ -22,7 +22,11 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v2_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v2_0.SkuOption;
@@ -44,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -53,82 +58,42 @@ public class SkuUtil {
 
 	public static CPInstance addOrUpdateCPInstance(
 			CPInstanceService cpInstanceService, Sku sku,
-			CPDefinition cpDefinition, ServiceContext serviceContext)
+			CPDefinition cpDefinition,
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long replacementCProductId = 0;
 		String replacementCPInstanceUuid = null;
+		CPInstance replacementCPInstance = getReplacementCPInstance(
+			cpInstanceService, sku, cpDefinition.getCompanyId());
 
-		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
-			CPInstance discontinuedCPInstance = null;
+		if (replacementCPInstance != null) {
+			CPDefinition replacementCPDefinition =
+				replacementCPInstance.getCPDefinition();
 
-			if (Validator.isNotNull(
-					sku.getReplacementSkuExternalReferenceCode())) {
+			replacementCProductId = replacementCPDefinition.getCProductId();
 
-				discontinuedCPInstance =
-					cpInstanceService.fetchByExternalReferenceCode(
-						sku.getReplacementSkuExternalReferenceCode(),
-						cpDefinition.getCompanyId());
-			}
-
-			long replacementSkuId = GetterUtil.getLong(
-				sku.getReplacementSkuId());
-
-			if ((discontinuedCPInstance == null) && (replacementSkuId > 0)) {
-				discontinuedCPInstance = cpInstanceService.fetchCPInstance(
-					replacementSkuId);
-			}
-
-			if (discontinuedCPInstance != null) {
-				CPDefinition discontinuedCPDefinition =
-					discontinuedCPInstance.getCPDefinition();
-
-				replacementCProductId =
-					discontinuedCPDefinition.getCProductId();
-
-				replacementCPInstanceUuid =
-					discontinuedCPInstance.getCPInstanceUuid();
-			}
+			replacementCPInstanceUuid =
+				replacementCPInstance.getCPInstanceUuid();
 		}
 
-		Calendar discontinuedCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (sku.getDiscontinuedDate() != null) {
-			discontinuedCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDiscontinuedDate());
-		}
-
-		DateConfig discontinuedDateConfig = new DateConfig(
-			discontinuedCalendar);
-
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (sku.getDisplayDate() != null) {
-			displayCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getDisplayDate());
-		}
-
-		DateConfig displayDateConfig = new DateConfig(displayCalendar);
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		if (sku.getExpirationDate() != null) {
-			expirationCalendar = DateConfigUtil.convertDateToCalendar(
-				sku.getExpirationDate());
-		}
-
-		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
+		DateConfig discontinuedDateConfig = getDateConfig(
+			sku.getDiscontinuedDate(), serviceContext);
+		DateConfig displayDateConfig = getDateConfig(
+			sku.getDisplayDate(), serviceContext);
+		DateConfig expirationDateConfig = getExpirationDateConfig(
+			sku.getExpirationDate(), serviceContext);
 
 		return cpInstanceService.addOrUpdateCPInstance(
 			sku.getExternalReferenceCode(), cpDefinition.getCPDefinitionId(),
 			cpDefinition.getGroupId(), sku.getSku(), sku.getGtin(),
 			sku.getManufacturerPartNumber(),
-			GetterUtil.get(sku.getPurchasable(), false), _getOptions(sku),
+			GetterUtil.get(sku.getPurchasable(), false),
+			_getOptions(
+				cpDefinitionOptionValueRelService, cpDefinitionOptionRelService,
+				sku),
 			GetterUtil.get(sku.getWidth(), 0.0),
 			GetterUtil.get(sku.getHeight(), 0.0),
 			GetterUtil.get(sku.getDepth(), 0.0),
@@ -147,6 +112,62 @@ public class SkuUtil {
 			replacementCPInstanceUuid, replacementCProductId,
 			discontinuedDateConfig.getMonth(), discontinuedDateConfig.getDay(),
 			discontinuedDateConfig.getYear(), serviceContext);
+	}
+
+	public static DateConfig getDateConfig(
+		Date date, ServiceContext serviceContext) {
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		if (date != null) {
+			calendar = DateConfigUtil.convertDateToCalendar(date);
+		}
+
+		return new DateConfig(calendar);
+	}
+
+	public static DateConfig getExpirationDateConfig(
+		Date date, ServiceContext serviceContext) {
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		calendar.add(Calendar.MONTH, 1);
+
+		if (date != null) {
+			calendar = DateConfigUtil.convertDateToCalendar(date);
+		}
+
+		return new DateConfig(calendar);
+	}
+
+	public static CPInstance getReplacementCPInstance(
+			CPInstanceService cpInstanceService, Sku sku, long companyId)
+		throws PortalException {
+
+		CPInstance replacementCPInstance = null;
+
+		if (GetterUtil.getBoolean(sku.getDiscontinued())) {
+			if (Validator.isNotNull(
+					sku.getReplacementSkuExternalReferenceCode())) {
+
+				replacementCPInstance =
+					cpInstanceService.fetchByExternalReferenceCode(
+						sku.getReplacementSkuExternalReferenceCode(),
+						companyId);
+			}
+
+			long replacementSkuId = GetterUtil.getLong(
+				sku.getReplacementSkuId());
+
+			if ((replacementCPInstance == null) && (replacementSkuId > 0)) {
+				replacementCPInstance = cpInstanceService.fetchCPInstance(
+					replacementSkuId);
+			}
+		}
+
+		return replacementCPInstance;
 	}
 
 	public static void updateCommercePriceEntries(
@@ -185,7 +206,10 @@ public class SkuUtil {
 		return commercePricingConfiguration.commercePricingCalculationKey();
 	}
 
-	private static String _getOptions(Sku sku) {
+	private static String _getOptions(
+		CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
+		CPDefinitionOptionRelService cpDefinitionOptionRelService, Sku sku) {
+
 		SkuOption[] skuOptions = sku.getSkuOptions();
 
 		if (skuOptions == null) {
@@ -197,9 +221,35 @@ public class SkuUtil {
 		for (SkuOption skuOption : skuOptions) {
 			jsonArray.put(
 				JSONUtil.put(
-					"key", skuOption.getKey()
+					"key",
+					() -> {
+						if (skuOption.getKey() == null) {
+							CPDefinitionOptionRel cpDefinitionOptionRel =
+								cpDefinitionOptionRelService.
+									getCPDefinitionOptionRel(
+										skuOption.getOptionId());
+
+							return cpDefinitionOptionRel.getKey();
+						}
+
+						return skuOption.getKey();
+					}
 				).put(
-					"value", JSONUtil.put(skuOption.getValue())
+					"value",
+					JSONUtil.put(
+						() -> {
+							if (skuOption.getValue() == null) {
+								CPDefinitionOptionValueRel
+									cpDefinitionOptionValueRel =
+										cpDefinitionOptionValueRelService.
+											getCPDefinitionOptionValueRel(
+												skuOption.getOptionValueId());
+
+								return cpDefinitionOptionValueRel.getKey();
+							}
+
+							return skuOption.getValue();
+						})
 				));
 		}
 

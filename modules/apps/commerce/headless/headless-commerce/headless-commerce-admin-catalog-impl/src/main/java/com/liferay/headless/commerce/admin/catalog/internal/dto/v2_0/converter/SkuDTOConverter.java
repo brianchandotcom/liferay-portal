@@ -15,8 +15,12 @@
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v2_0.converter;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.admin.catalog.dto.v2_0.Sku;
@@ -80,6 +84,25 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				weight = cpInstance.getWeight();
 				width = cpInstance.getWidth();
 
+				setReplacementSkuExternalReferenceCode(
+					() -> {
+						if (replacementCPInstance != null) {
+							return replacementCPInstance.
+								getExternalReferenceCode();
+						}
+
+						return null;
+					});
+
+				setReplacementSkuId(
+					() -> {
+						if (replacementCPInstance != null) {
+							return replacementCPInstance.getCPInstanceId();
+						}
+
+						return null;
+					});
+
 				setSkuOptions(
 					() -> {
 						List<SkuOption> skuOptions = new ArrayList<>();
@@ -93,14 +116,28 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
 								cpInstanceOptionValueRels) {
 
+							CPDefinitionOptionRel cpDefinitionOptionRel =
+								_cpDefinitionOptionRelLocalService.
+									getCPDefinitionOptionRel(
+										cpInstanceOptionValueRel.
+											getCPDefinitionOptionRelId());
+							CPDefinitionOptionValueRel
+								cpDefinitionOptionValueRel =
+									_cpDefinitionOptionValueRelLocalService.
+										getCPDefinitionOptionValueRel(
+											cpInstanceOptionValueRel.
+												getCPDefinitionOptionValueRelId());
+
 							SkuOption skuOption = new SkuOption() {
 								{
-									key =
-										cpInstanceOptionValueRel.
+									key = cpDefinitionOptionRel.getKey();
+									optionId =
+										cpDefinitionOptionRel.
 											getCPDefinitionOptionRelId();
-									value =
-										cpInstanceOptionValueRel.
+									optionValueId =
+										cpDefinitionOptionValueRel.
 											getCPDefinitionOptionValueRelId();
+									value = cpDefinitionOptionValueRel.getKey();
 								}
 							};
 
@@ -109,28 +146,17 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 						return skuOptions.toArray(new SkuOption[0]);
 					});
-
-				setReplacementSkuId(
-					() -> {
-						if (replacementCPInstance != null) {
-							return replacementCPInstance.getCPInstanceId();
-						}
-
-						return null;
-					});
-
-				setReplacementSkuExternalReferenceCode(
-					() -> {
-						if (replacementCPInstance != null) {
-							return replacementCPInstance.
-								getExternalReferenceCode();
-						}
-
-						return null;
-					});
 			}
 		};
 	}
+
+	@Reference
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
+
+	@Reference
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

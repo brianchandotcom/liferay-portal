@@ -895,7 +895,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		if (skus != null) {
 			for (Sku sku : skus) {
 				SkuUtil.addOrUpdateCPInstance(
-					_cpInstanceService, sku, cpDefinition, serviceContext);
+					_cpInstanceService, sku, cpDefinition,
+					_cpDefinitionOptionValueRelService,
+					_cpDefinitionOptionRelService, serviceContext);
 			}
 		}
 

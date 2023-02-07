@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -743,14 +744,14 @@ public class AssetListAssetEntryProviderImpl
 
 		try {
 			availableClassTypeIds = ArrayUtil.toArray(
-				(Long[])TransformUtil.transformToArray(
+				TransformUtil.transformToArray(
 					classTypeReader.getAvailableClassTypes(
 						_portal.getSharedContentSiteGroupIds(
 							assetListEntry.getCompanyId(),
 							assetListEntry.getGroupId(),
 							assetListEntry.getUserId()),
 						LocaleUtil.getDefault()),
-					classType -> classType.getClassTypeId(), Long.class));
+					ClassType::getClassTypeId, Long.class));
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -819,7 +820,7 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		long[] combinedSegmentsEntryIds = ArrayUtil.toArray(
-			(Long[])TransformUtil.transformToArray(
+			TransformUtil.transformToArray(
 				ListUtil.sort(
 					assetListEntrySegmentsEntryRels,
 					Comparator.comparing(
@@ -1314,7 +1315,7 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return ArrayUtil.toArray(
-			(Long[])TransformUtil.transformToArray(
+			TransformUtil.transformToArray(
 				ListUtil.sort(
 					assetListEntrySegmentsEntryRels,
 					Comparator.comparing(

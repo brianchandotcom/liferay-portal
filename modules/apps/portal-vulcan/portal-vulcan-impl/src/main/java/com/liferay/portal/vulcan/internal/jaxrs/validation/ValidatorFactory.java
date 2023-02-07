@@ -24,7 +24,7 @@ import javax.validation.spi.ValidationProvider;
 
 import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorConfiguration;
-import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
+import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 
 /**
  * @author Javier Gamarra
@@ -46,7 +46,7 @@ public class ValidatorFactory {
 			allowOverridingMethodAlterParameterConstraint(true);
 
 		hibernateValidatorConfiguration.messageInterpolator(
-			new ParameterMessageInterpolator());
+			new ResourceBundleMessageInterpolator());
 
 		javax.validation.ValidatorFactory validatorFactory =
 			hibernateValidatorConfiguration.buildValidatorFactory();

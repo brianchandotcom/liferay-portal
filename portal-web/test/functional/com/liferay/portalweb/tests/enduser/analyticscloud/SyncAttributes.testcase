@@ -113,8 +113,6 @@ definition {
         domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,status,taxExemptionCode,
         taxIdNumber,type_''';
 
-		var nonRequiredAttributesList = ListUtil.newListFromString("${nonRequiredAttributesName}");
-
 		task ("Get the number of attributes currently synced") {
 			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
 		}
@@ -122,7 +120,7 @@ definition {
 		task ("Deselect the non required attributes for Account") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "Account",
-				attributeNameList = "${nonRequiredAttributesList}");
+				attributeNameList = "${nonRequiredAttributesName}");
 		}
 
 		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
@@ -875,14 +873,12 @@ definition {
 			status,taxExemptionCode,taxIdNumber,type_
         ''';
 
-		var defaultAttributesList = ListUtil.newListFromString("${defaultAttributesName}");
-
 		task ("Click to configure account attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
 		}
 
 		task ("See that the all the default attributes are checked") {
-			for (var attribute : list "${defaultAttributesList}") {
+			for (var attribute : list "${defaultAttributesName}") {
 				AssertElementPresent(
 					key_attributeName = "${attribute}",
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
@@ -900,8 +896,6 @@ definition {
 			parentContactId,skypeSn,smsSn,status,timeZoneId,twitterSn,userName
 		''';
 
-		var defaultAttributesList = ListUtil.newListFromString("${defaultAttributes}");
-
 		task ("Click to configure people attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
 		}
@@ -909,7 +903,7 @@ definition {
 		task ("See that the all the default attributes are checked") {
 			ACUtils.changePagination(itemsPerPage = "50");
 
-			for (var attribute : list "${defaultAttributesList}") {
+			for (var attribute : list "${defaultAttributes}") {
 				AssertElementPresent(
 					key_attributeName = "${attribute}",
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
@@ -922,14 +916,12 @@ definition {
 	test CheckNotPossibleDeselectRequiredAttributesForAccounts {
 		var requiredAttributes = "accountEntryId,emailAddress,name";
 
-		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
-
 		task ("Click to configure account attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
 		}
 
 		task ("See that the required attributes can not be deselected (the input is disabled)") {
-			for (var attribute : list "${requiredAttributesList}") {
+			for (var attribute : list "${requiredAttributes}") {
 				AssertElementPresent(
 					key_requiredAttribute = "${attribute}",
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
@@ -947,8 +939,6 @@ definition {
 			quantity,sku,status,subscription,total,unitOfMeasure,unitPrice,userId
 			''';
 
-		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
-
 		task ("Click to configure orders attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
 		}
@@ -956,7 +946,7 @@ definition {
 		task ("See that the required attributes can not be deselected") {
 			ACUtils.changePagination(itemsPerPage = "50");
 
-			for (var attribute : list "${requiredAttributesList}") {
+			for (var attribute : list "${requiredAttributes}") {
 				AssertElementPresent(
 					key_requiredAttribute = "${attribute}",
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
@@ -972,8 +962,6 @@ definition {
 			emailAddress,emailAddress,modifiedDate,modifiedDate,userId,uuid
 		''';
 
-		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
-
 		task ("Click to configure people attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
 		}
@@ -981,7 +969,7 @@ definition {
 		task ("See that the required attributes can not be deselected (the input is disabled)") {
 			ACUtils.changePagination(itemsPerPage = "50");
 
-			for (var attribute : list "${requiredAttributesList}") {
+			for (var attribute : list "${requiredAttributes}") {
 				AssertElementPresent(
 					key_requiredAttribute = "${attribute}",
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");

@@ -25,6 +25,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
+import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -65,6 +67,26 @@ public class ElasticsearchIndexSearcherTest {
 	}
 
 	@Test
+	public void testInitialStartAndEndBasedOnPermissionSearch()
+		throws SearchException {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setEnd(50);
+		searchContext.setStart(0);
+
+		SearchRequest searchRequest = _mockSearchRequest();
+
+		_assertStartAndEnd(14, 4, searchRequest, searchContext);
+
+		searchContext.setAttribute(
+			SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER,
+			Boolean.TRUE);
+
+		_assertStartAndEnd(50, 0, searchRequest, searchContext);
+	}
+
+	@Test
 	public void testSearchContextAttributes() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
@@ -91,6 +113,23 @@ public class ElasticsearchIndexSearcherTest {
 		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
 	}
 
+	private void _assertStartAndEnd(
+		int expectedEnd, int expectedStart, SearchRequest searchRequest,
+		SearchContext searchContext) {
+
+		int[] startAndEnd =
+			_elasticsearchIndexSearcher.calculateInitialStartAndEnd(
+				searchContext, searchRequest);
+
+		int start = startAndEnd[0];
+
+		int end = startAndEnd[1];
+
+		Assert.assertEquals(expectedStart, end);
+
+		Assert.assertEquals(expectedEnd, start);
+	}
+
 	private ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
@@ -106,8 +145,29 @@ public class ElasticsearchIndexSearcherTest {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexSearcher, "_searchRequestBuilderFactory",
 			searchRequestBuilderFactory);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchResponseBuilderFactory",
+			Mockito.mock(SearchResponseBuilderFactory.class));
 
 		return elasticsearchIndexSearcher;
+	}
+
+	private SearchRequest _mockSearchRequest() {
+		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
+
+		Mockito.doReturn(
+			4
+		).when(
+			searchRequest
+		).getFrom();
+
+		Mockito.doReturn(
+			10
+		).when(
+			searchRequest
+		).getSize();
+
+		return searchRequest;
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();

@@ -71,9 +71,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		try {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-					null, group.getCreatorUserId(), group.getGroupId(), 0, 0,
-					true, "404 Error",
-					LayoutUtilityPageEntryConstants.SC_NOT_FOUND, 0);
+					"LFR-404-ERROR", group.getCreatorUserId(),
+					group.getGroupId(), 0, 0, true, "404 Error",
+					LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0);
 
 			JSONObject errorCodeI18nJSONObject =
 				_jsonFactory.createJSONObject();

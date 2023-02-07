@@ -57,6 +57,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
@@ -741,10 +742,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				return chromeDriverVersion.trim();
 			}
 			catch (IOException ioException) {
-				System.out.println(ioException.getMessage());
-				System.out.println(
-					"Unable to get chromedriver version for Chrome " +
-						chromeMajorVersion);
+				Logger logger = project.getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						"{}.\nUnable to get driver version for Chrome {}",
+						ioException.getMessage(), chromeMajorVersion);
+				}
 			}
 		}
 

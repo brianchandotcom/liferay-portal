@@ -80,39 +80,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
-			int end = searchContext.getEnd();
-			int start = searchContext.getStart();
-
 			SearchRequest searchRequest = _getSearchRequest(searchContext);
 
-			if (!_permissionedSearch(searchContext)) {
-				Integer from = searchRequest.getFrom();
-				Integer size = searchRequest.getSize();
+			int[] initialStartAndEnd = calculateInitialStartAndEnd(
+				searchContext, searchRequest);
 
-				if ((from == null) && (size != null)) {
-					end = size;
-					start = 0;
-				}
-				else if ((from != null) && (size != null)) {
-					end = from + size;
-					start = from;
-				}
-			}
-
-			if (start == QueryUtil.ALL_POS) {
-				start = 0;
-			}
-			else if (start < 0) {
-				throw new IllegalArgumentException("Invalid start " + start);
-			}
-
-			if (end == QueryUtil.ALL_POS) {
-				end = GetterUtil.getInteger(
-					_props.get(PropsKeys.INDEX_SEARCH_LIMIT));
-			}
-			else if (end < 0) {
-				throw new IllegalArgumentException("Invalid end " + end);
-			}
+			int start = initialStartAndEnd[0];
+			int end = initialStartAndEnd[1];
 
 			SearchResponseBuilder searchResponseBuilder =
 				_getSearchResponseBuilder(searchContext);
@@ -234,6 +208,44 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 						"Searching took ", stopWatch.getTime(), " ms"));
 			}
 		}
+	}
+
+	protected int[] calculateInitialStartAndEnd(
+		SearchContext searchContext, SearchRequest searchRequest) {
+
+		int end = searchContext.getEnd();
+		int start = searchContext.getStart();
+
+		if (!_permissionedSearch(searchContext)) {
+			Integer from = searchRequest.getFrom();
+			Integer size = searchRequest.getSize();
+
+			if ((from == null) && (size != null)) {
+				end = size;
+				start = 0;
+			}
+			else if ((from != null) && (size != null)) {
+				end = from + size;
+				start = from;
+			}
+		}
+
+		if (start == QueryUtil.ALL_POS) {
+			start = 0;
+		}
+		else if (start < 0) {
+			throw new IllegalArgumentException("Invalid start " + start);
+		}
+
+		if (end == QueryUtil.ALL_POS) {
+			end = GetterUtil.getInteger(
+				_props.get(PropsKeys.INDEX_SEARCH_LIMIT));
+		}
+		else if (end < 0) {
+			throw new IllegalArgumentException("Invalid end " + end);
+		}
+
+		return new int[] {start, end};
 	}
 
 	protected SearchSearchRequest createSearchSearchRequest(
@@ -405,7 +417,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	private boolean _permissionedSearch(SearchContext searchContext) {
 		return GetterUtil.getBoolean(
-			searchContext.getAttribute("permissionedSearch"));
+			searchContext.getAttribute(
+				SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER));
 	}
 
 	private void _populateResponse(

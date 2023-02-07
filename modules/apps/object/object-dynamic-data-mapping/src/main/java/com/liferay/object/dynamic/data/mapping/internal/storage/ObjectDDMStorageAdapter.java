@@ -71,8 +71,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -337,10 +335,12 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		Stream<ObjectField> stream = objectFields.stream();
+		Map<String, String> objectFieldDBTypes = new HashMap<>();
 
-		Map<String, String> objectFieldDBTypes = stream.collect(
-			Collectors.toMap(ObjectField::getName, ObjectField::getDBType));
+		for (ObjectField objectField : objectFields) {
+			objectFieldDBTypes.put(
+				objectField.getName(), objectField.getDBType());
+		}
 
 		Map<String, ObjectField> objectFieldsMap = _toObjectFieldsMap(
 			objectFields);

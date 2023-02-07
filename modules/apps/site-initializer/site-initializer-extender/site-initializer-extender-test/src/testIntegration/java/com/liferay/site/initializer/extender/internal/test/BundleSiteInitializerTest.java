@@ -2043,6 +2043,15 @@ public class BundleSiteInitializerTest {
 					objectDefinition3.getObjectDefinitionId());
 			}
 
+			ObjectDefinition objectDefinition4 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition4");
+
+			if (objectDefinition4 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition4.getObjectDefinitionId());
+			}
+
 			//FileUtil.deltree(unzipFolder);
 		}
 	}

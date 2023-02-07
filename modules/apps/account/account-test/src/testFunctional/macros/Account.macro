@@ -1075,6 +1075,8 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "\RETURN");
 
+		SelectFrameTop();
+
 		Button.click(button = "Invite");
 	}
 

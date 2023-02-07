@@ -14,6 +14,9 @@
 
 package com.liferay.digital.signature.model;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
 /**
  * @author Victor Trajano
  */
@@ -57,6 +60,18 @@ public class DSCustomField {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"fieldId", dsCustomFieldId
+		).put(
+			"name", name
+		).put(
+			"show", show
+		).put(
+			"value", value
+		);
 	}
 
 	protected long dsCustomFieldId;

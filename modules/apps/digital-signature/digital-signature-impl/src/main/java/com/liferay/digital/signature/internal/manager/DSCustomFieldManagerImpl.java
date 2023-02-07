@@ -48,16 +48,7 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 					"textCustomFields",
 					JSONUtil.toJSONArray(
 						dsCustomFields,
-						dsCustomField -> JSONUtil.put(
-							"fieldId", dsCustomField.getDSCustomFieldId()
-						).put(
-							"name", dsCustomField.getName()
-						).put(
-							"show", dsCustomField.getShow()
-						).put(
-							"value", dsCustomField.getValue()
-						),
-						_log))));
+						dsCustomField -> dsCustomField.toJSONObject(), _log))));
 	}
 
 	private List<DSCustomField> _toDSCustomFields(JSONObject jsonObject) {

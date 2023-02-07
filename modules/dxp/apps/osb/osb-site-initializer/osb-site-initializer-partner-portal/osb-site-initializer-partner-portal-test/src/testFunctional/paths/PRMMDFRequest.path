@@ -41,6 +41,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLAIM_MESSAGE</td>
+	<td>//div[contains(@class,'claims-list')]//h6[contains(.,'${key_claimMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_ID</td>
+	<td>//thead//th/p[text()='Name']//ancestor::table//tbody//th//span[text()='${key_MDFName}']//ancestor::tr//th[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_BUTTON</td>
+	<td>//div[@Class='status-buttons']//button[contains(@id,'status') and contains(text(),'${key_statusButton}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_BUTTON</td>
 	<td>//div[@role='tablist']//h5[contains(text(),'${key_textButton}')]</td>
 	<td></td>

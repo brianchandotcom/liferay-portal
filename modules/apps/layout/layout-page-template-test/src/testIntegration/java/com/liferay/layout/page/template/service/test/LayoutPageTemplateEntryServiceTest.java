@@ -15,6 +15,8 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -23,17 +25,27 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.layout.page.template.service.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -240,6 +252,112 @@ public class LayoutPageTemplateEntryServiceTest {
 	}
 
 	@Test
+	public void testCopyLayoutPageTemplateEntry() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntryCopy =
+			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntryCopy.getClassNameId());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getClassTypeId(),
+			layoutPageTemplateEntryCopy.getClassTypeId());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getCompanyId(),
+			layoutPageTemplateEntryCopy.getCompanyId());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getGroupId(),
+			layoutPageTemplateEntryCopy.getGroupId());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+			layoutPageTemplateEntryCopy.getLayoutPageTemplateCollectionId());
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getType(),
+			layoutPageTemplateEntryCopy.getType());
+		Assert.assertEquals(
+			0, layoutPageTemplateEntryCopy.getPreviewFileEntryId());
+
+		Assert.assertNotEquals(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
+			layoutPageTemplateEntryCopy.getLayoutPageTemplateEntryKey());
+		Assert.assertNotEquals(
+			layoutPageTemplateEntry.getPlid(),
+			layoutPageTemplateEntryCopy.getPlid());
+
+		Assert.assertTrue(
+			StringUtil.startsWith(
+				layoutPageTemplateEntryCopy.getName(),
+				StringBundler.concat(
+					layoutPageTemplateEntry.getName(), " (",
+					_language.get(LocaleUtil.getDefault(), "copy"), ")")));
+	}
+
+	@Test
+	public void testCopyLayoutPageTemplateEntryWithPreviewFileEntry()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			_group.getGroupId(), LayoutAdminPortletKeys.GROUP_PAGES,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			FragmentCollection.class.getName(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),
+			new byte[0], "test.png", ContentTypes.IMAGE_PNG, false);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				fileEntry.getFileEntryId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntryCopy =
+			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
+				_group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotEquals(
+			0, layoutPageTemplateEntryCopy.getPreviewFileEntryId());
+		Assert.assertNotEquals(
+			layoutPageTemplateEntry.getPreviewFileEntryId(),
+			layoutPageTemplateEntryCopy.getPreviewFileEntryId());
+
+		FileEntry fileEntryCopy = _portletFileRepository.getPortletFileEntry(
+			layoutPageTemplateEntryCopy.getPreviewFileEntryId());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntryCopy.getLayoutPageTemplateEntryId() +
+				"_preview.png",
+			fileEntryCopy.getFileName());
+		Assert.assertEquals(
+			fileEntry.getExtension(), fileEntryCopy.getExtension());
+
+		FileVersion fileVersionCopy = fileEntryCopy.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fileVersionCopy.getStatus());
+	}
+
+	@Test
 	public void testDeleteLayoutPageTemplateEntries() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -376,6 +494,9 @@ public class LayoutPageTemplateEntryServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private Language _language;
+
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 
 	@Inject
@@ -387,5 +508,8 @@ public class LayoutPageTemplateEntryServiceTest {
 
 	@Inject
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
 
 }

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -357,7 +358,9 @@ public class DefaultSearchResultPermissionFilter
 			int offset = 0;
 			long startTime = 0;
 
-			searchContext.setAttribute("permissionedSearch", Boolean.TRUE);
+			searchContext.setAttribute(
+				SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER,
+				Boolean.TRUE);
 
 			while (true) {
 				int count = end - filteredDocsCount;

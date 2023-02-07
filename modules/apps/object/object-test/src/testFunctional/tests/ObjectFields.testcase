@@ -1744,6 +1744,66 @@ definition {
 		}
 	}
 
+	@description = "LPS-162190 - Verify that it's possible to update the layout of a System Object"
+	@priority = "5"
+	test CanUpdateLayoutInSystemObject {
+		task ("Given: A custom object with a Layout") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162190",
+				objectName = "CustomObject162190",
+				pluralLabelName = "Custom Objects 162190");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout",
+				objectName = "CustomObject162190");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162190");
+		}
+
+		task ("When: Add field on created Layout and edit the name") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162190");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block Name",
+				columnsNumber = "2",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+			Type(
+				locator1 = "ObjectAdmin#LAYOUT_BASIC_INFO_NAME_FIELD",
+				value1 = "Layout Updated");
+
+			Button.clickSave();
+		}
+
+		task ("Then: The Layout can be updated") {
+			Refresh();
+
+			AssertTextEquals(
+				key_name = "Layout",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE",
+				value1 = "Layout Updated");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
 	@priority = "4"
 	test CanUpdateShowFilesOptionBeforePublished {

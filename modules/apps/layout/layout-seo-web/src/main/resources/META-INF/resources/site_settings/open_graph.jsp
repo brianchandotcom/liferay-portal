@@ -66,15 +66,22 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>" />
 
 	<div class="form-group">
-		<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="preview-help" /></label>
+		<label><liferay-ui:message key="preview" />
+			<span class="lfr-portal-tooltip ml-1">
+				<clay:icon
+					aria-label='<%= LanguageUtil.get(request, "preview-help") %>'
+					symbol="question-circle-full"
+					title='<%= LanguageUtil.get(request, "preview-help") %>'
+				/>
+			</span>
+		</label>
 
 		<div class="preview-seo preview-seo-og" dir="ltr">
 			<div class="aspect-ratio aspect-ratio-191-to-100 bg-light mb-0 preview-seo-image">
 				<div class="preview-seo-placeholder" id="<portlet:namespace />openGraphPreviewPlaceholder">
-					<liferay-ui:icon
-						icon="picture"
-						iconCssClass="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid preview-seo-placeholder-icon"
-						markupView="lexicon"
+					<clay:icon
+						cssClass="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid preview-seo-placeholder-icon"
+						symbol="picture"
 					/>
 
 					<div class="preview-seo-placeholder-text"><liferay-ui:message key="open-graph-image-placeholder" /></div>

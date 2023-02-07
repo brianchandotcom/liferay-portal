@@ -2720,6 +2720,75 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Is Not Equals to operator is available when adding filters for the integer fields to select data from the object"
+	@priority = "4"
+	test IsEqualToIsAvailableForIntegerFields {
+		task ("Given: A custom object with an integer field type") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				field = "Custom Integer",
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Max",
+				relationship = "Relationship");
+		}
+
+		task ("When: A new filter is created with the custom integer field with Is Equal To selected") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Aggregation");
+
+			Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
+
+			Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+			Click(
+				key_picklistOption = "Custom Integer",
+				locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
+
+			Click(
+				key_filterLabel = "Filter Type",
+				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+			Click(
+				key_fieldType = "Is Equal To",
+				locator1 = "ObjectField#TYPE_OPTION");
+
+			Type(
+				key_text = "Value",
+				locator1 = "TextInput#ANY",
+				value1 = "1");
+
+			ObjectCustomViews.clickSaveOnModal();
+		}
+
+		task ("Then: The new filter is created") {
+			ObjectCustomViews.assertPresentEntriesOnFilters(
+				filterBy = "Custom Integer",
+				filterValue = "1");
+		}
+	}
+
 	@description = "Verify that the Is Equals to operator is available when adding filters for the long integer fields to select data from the object"
 	@priority = "4"
 	test IsEqualToIsAvailableForLongIntegerFields {
@@ -2789,10 +2858,10 @@ definition {
 		}
 	}
 
-	@description = "Verify that the Is Not Equals to operator is available when adding filters for the integer fields to select data from the object"
+	@description = "Verify that the Is Not Equals to operator is available when adding filters for the long integer fields to select data from the object"
 	@priority = "4"
-	test IsEqualToIsAvailableForIntegerFields {
-		task ("Given: A custom object with an integer field type") {
+	test IsNotEqualToIsAvailableForLongIntegerFields {
+		task ("Given: A custom object with a long integer field type") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",
@@ -2812,19 +2881,19 @@ definition {
 			ObjectAdmin.goToFieldsTab();
 
 			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Custom Integer",
-				fieldName = "customInteger",
-				fieldType = "Integer");
+				fieldLabel = "Custom Long Integer",
+				fieldName = "customLongInteger",
+				fieldType = "Long Integer");
 
 			ObjectAdmin.addObjectFieldViaUI(
-				field = "Custom Integer",
+				field = "Custom Long Integer",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
 				function = "Max",
 				relationship = "Relationship");
 		}
 
-		task ("When: A new filter is created with the custom integer field with Is Equal To selected") {
+		task ("When: A new filter is created with the custom long integer field with Is Not Equal To selected") {
 			ObjectAdmin.goToFieldsDetails(label = "Custom Aggregation");
 
 			Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
@@ -2832,7 +2901,7 @@ definition {
 			Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 			Click(
-				key_picklistOption = "Custom Integer",
+				key_picklistOption = "Custom Long Integer",
 				locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
 
 			Click(
@@ -2853,7 +2922,7 @@ definition {
 
 		task ("Then: The new filter is created") {
 			ObjectCustomViews.assertPresentEntriesOnFilters(
-				filterBy = "Custom Integer",
+				filterBy = "Custom Long Integer",
 				filterValue = "1");
 		}
 	}

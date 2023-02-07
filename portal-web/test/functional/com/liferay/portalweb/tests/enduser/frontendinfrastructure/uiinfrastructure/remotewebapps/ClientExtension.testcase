@@ -99,12 +99,20 @@ definition {
 	@description = "Verify that the client extension is not available on the workflow page"
 	@priority = "3"
 	test CannotConfigureWorkflowSiteLevel {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow",
-			site = "${siteName}");
+		task ("Given Product Menu → Configuration → Workflow page") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Workflow",
+				site = "${siteName}");
+		}
 
-		AssertTextNotPresent(value1 = "Client Extension");
+		task ("When: View entry list table") {
+			AssertElementPresent(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
+		}
+
+		task ("Then Client Extension* is not") {
+			AssertTextNotPresent(value1 = "Client Extension");
+		}
 	}
 
 	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."

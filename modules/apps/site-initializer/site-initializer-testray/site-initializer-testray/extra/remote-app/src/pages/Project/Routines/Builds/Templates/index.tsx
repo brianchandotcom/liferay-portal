@@ -17,19 +17,17 @@ import {useNavigate, useParams} from 'react-router-dom';
 import Container from '../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../components/ListView';
 import {useHeader} from '../../../../../hooks';
+import useSearchBuilder from '../../../../../hooks/useSearchBuilder';
 import i18n from '../../../../../i18n';
-import {filters} from '../../../../../schema/filter';
 import dayjs from '../../../../../util/date';
-import {SearchBuilder} from '../../../../../util/search';
 import {BuildStatuses} from '../../../../../util/statuses';
 import useBuildTemplateActions from './useBuildTemplateActions';
-
-const searchBuilder = new SearchBuilder({useURIEncode: false});
 
 const BuildTemplates = () => {
 	const {actions} = useBuildTemplateActions();
 	const {projectId, routineId} = useParams();
 	const navigate = useNavigate();
+	const searchBuilder = useSearchBuilder({useURIEncode: false});
 
 	const buildFilter = searchBuilder
 		.eq('projectId', projectId as string)
@@ -52,7 +50,7 @@ const BuildTemplates = () => {
 			<ListViewRest
 				managementToolbarProps={{
 					addButton: () => navigate('../create/template/true'),
-					filterFields: filters.template as any,
+					filterSchema: 'buildTemplates',
 					title: i18n.translate('templates'),
 				}}
 				resource="/builds"

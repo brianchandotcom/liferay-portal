@@ -35,7 +35,6 @@ import useSubtaskScore from '../../data/useSubtaskScore';
 import useHeader from '../../hooks/useHeader';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
-import {filters} from '../../schema/filter';
 import {Liferay} from '../../services/liferay';
 import {
 	PickList,
@@ -295,7 +294,7 @@ const TestFlowTasks = () => {
 				<ListView
 					forceRefetch={forceRefetch}
 					managementToolbarProps={{
-						filterFields: filters.subtasks as any,
+						filterSchema: 'subtasks',
 						title: i18n.translate('subtasks'),
 					}}
 					resource={testraySubTaskImpl.resource}

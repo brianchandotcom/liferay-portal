@@ -16,7 +16,6 @@ import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView';
 import ProgressBar from '../../../../../components/ProgressBar';
 import i18n from '../../../../../i18n';
-import {filters} from '../../../../../schema/filter';
 
 const CaseTypes = () => (
 	<Container className="mt-4">
@@ -30,7 +29,7 @@ const CaseTypes = () => (
 				},
 			}}
 			managementToolbarProps={{
-				filterFields: filters.build.caseTypes,
+				filterSchema: 'buildCaseTypes',
 				title: i18n.translate('case-types'),
 			}}
 			resource="/casetypes"

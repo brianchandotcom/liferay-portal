@@ -24,14 +24,13 @@ import StatusBadge from '../../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../../components/StatusBadge/StatusBadge';
 import useMutate from '../../../../hooks/useMutate';
 import useRuns from '../../../../hooks/useRuns';
+import useSearchBuilder from '../../../../hooks/useSearchBuilder';
 import i18n from '../../../../i18n';
-import {filters} from '../../../../schema/filter';
 import {
 	PickList,
 	TestrayCaseResult,
 	testrayCaseResultImpl,
 } from '../../../../services/rest';
-import {SearchBuilder} from '../../../../util/search';
 import useBuildTestActions from './useBuildTestActions';
 
 const Build = () => {
@@ -47,7 +46,7 @@ const Build = () => {
 		return () => setRunId(null);
 	}, [setRunId]);
 
-	const caseResultFilter = new SearchBuilder();
+	const caseResultFilter = useSearchBuilder({useURIEncode: false});
 
 	const filter = runId
 		? caseResultFilter
@@ -61,7 +60,7 @@ const Build = () => {
 		<Container className="mt-4">
 			<ListViewRest
 				managementToolbarProps={{
-					filterFields: filters.build.results as any,
+					filterSchema: 'buildResults',
 					title: i18n.translate('tests'),
 				}}
 				resource={testrayCaseResultImpl.resource}

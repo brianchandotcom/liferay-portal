@@ -24,7 +24,6 @@ import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
-import {filters} from '../../../schema/filter';
 import {
 	TestrayRequirement,
 	TestrayRequirementCase,
@@ -137,7 +136,7 @@ const Requirement = () => {
 								</Button>
 							</ClayManagementToolbar.Item>
 						),
-						filterFields: filters.requirementCase as any,
+						filterSchema: 'requirementCases',
 						title: i18n.translate('cases'),
 					}}
 					resource={requirementsCasesResource}

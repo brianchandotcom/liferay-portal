@@ -14,7 +14,6 @@
 
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
-import {filters} from '../../../schema/filter';
 import {testrayTeamImpl} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import TeamFormModal from './TeamsFormModal';
@@ -33,7 +32,7 @@ const TeamsModal: React.FC<TeamsModalProps> = ({projectId}) => {
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
-					filterFields: filters.team as any,
+					filterSchema: 'teams',
 				}}
 				resource={testrayTeamImpl.resource}
 				tableProps={{

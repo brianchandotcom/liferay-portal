@@ -21,7 +21,6 @@ import ListView from '../../../components/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import i18n from '../../../i18n';
-import {filters} from '../../../schema/filter';
 import {TestrayBuild, testrayBuildImpl} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
@@ -29,9 +28,66 @@ import {searchUtil} from '../../../util/search';
 import BuildAddButton from './Builds/BuildAddButton';
 import useBuildActions from './Builds/useBuildActions';
 
+type BuildChartProps = {
+	builds: TestrayBuild[];
+};
+
+const BuildChart: React.FC<BuildChartProps> = ({builds}) => {
+	const {colors, getColumns} = useBuildHistory();
+
+	return (
+		<div className="graph-container graph-container-sm">
+			<ClayChart
+				axis={{
+					x: {
+						label: {
+							position: 'outer-center',
+							text: i18n.translate('builds-ordered-by-date'),
+						},
+					},
+					y: {
+						label: {
+							position: 'outer-middle',
+							text: i18n.translate('tests').toUpperCase(),
+						},
+					},
+				}}
+				bar={{
+					width: {
+						max: 30,
+					},
+				}}
+				data={{
+					colors,
+					columns: getColumns(builds),
+					stack: {
+						normalize: true,
+					},
+					type: 'area',
+				}}
+				legend={{
+					inset: {
+						anchor: 'top-right',
+						step: 1,
+						x: 10,
+						y: -30,
+					},
+					item: {
+						tile: {
+							height: 12,
+							width: 12,
+						},
+					},
+					position: 'inset',
+				}}
+				padding={{bottom: 5, top: 30}}
+			/>
+		</div>
+	);
+};
+
 const Routine = () => {
 	const {actions, formModal} = useBuildActions();
-	const {colors, getColumns} = useBuildHistory();
 	const {routineId} = useParams();
 
 	return (
@@ -48,7 +104,7 @@ const Routine = () => {
 				}}
 				managementToolbarProps={{
 					buttons: <BuildAddButton routineId={routineId as string} />,
-					filterFields: filters.build.index as any,
+					filterSchema: 'builds',
 					title: i18n.translate('build-history'),
 				}}
 				resource={testrayBuildImpl.resource}
@@ -100,12 +156,12 @@ const Routine = () => {
 							render: (dateCreated) =>
 								dayjs(dateCreated).format('lll'),
 							size: 'sm',
-							value: 'Create Date',
+							value: i18n.translate('create-date'),
 						},
 						{
 							clickable: true,
 							key: 'gitHash',
-							value: 'Git Hash',
+							value: i18n.translate('git-hash'),
 						},
 						{
 							clickable: true,
@@ -209,59 +265,7 @@ const Routine = () => {
 				}}
 			>
 				{({items, totalCount}) =>
-					Boolean(totalCount) && (
-						<div className="graph-container graph-container-sm">
-							<ClayChart
-								axis={{
-									x: {
-										label: {
-											position: 'outer-center',
-											text: i18n.translate(
-												'builds-ordered-by-date'
-											),
-										},
-									},
-									y: {
-										label: {
-											position: 'outer-middle',
-											text: i18n
-												.translate('tests')
-												.toUpperCase(),
-										},
-									},
-								}}
-								bar={{
-									width: {
-										max: 30,
-									},
-								}}
-								data={{
-									colors,
-									columns: getColumns(items),
-									stack: {
-										normalize: true,
-									},
-									type: 'area',
-								}}
-								legend={{
-									inset: {
-										anchor: 'top-right',
-										step: 1,
-										x: 10,
-										y: -30,
-									},
-									item: {
-										tile: {
-											height: 12,
-											width: 12,
-										},
-									},
-									position: 'inset',
-								}}
-								padding={{bottom: 5, top: 30}}
-							/>
-						</div>
-					)
+					totalCount > 0 && <BuildChart builds={items} />
 				}
 			</ListView>
 		</Container>

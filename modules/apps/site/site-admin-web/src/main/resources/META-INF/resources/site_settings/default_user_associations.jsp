@@ -61,9 +61,15 @@ for (long defaultTeamId : defaultTeamIds) {
 	</clay:content-col>
 
 	<clay:content-col>
-		<span class="heading-end">
-			<aui:button cssClass="btn-sm modify-link" id="selectSiteRoleLink" value="select" />
-		</span>
+		<clay:button
+			aria-label='<%= LanguageUtil.get(request, "select") %>'
+			cssClass="modify-link"
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "selectSiteRoleLink" %>'
+			label='<%= LanguageUtil.get(request, "select") %>'
+			small="<%= true %>"
+			title='<%= LanguageUtil.get(request, "select") %>'
+		/>
 	</clay:content-col>
 </clay:content-row>
 
@@ -121,9 +127,15 @@ for (long defaultTeamId : defaultTeamIds) {
 	</clay:content-col>
 
 	<clay:content-col>
-		<span class="heading-end">
-			<aui:button cssClass="btn-sm modify-link" id="selectTeamLink" value="select" />
-		</span>
+		<clay:button
+			aria-label='<%= LanguageUtil.get(request, "select") %>'
+			cssClass="modify-link"
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "selectTeamLink" %>'
+			label='<%= LanguageUtil.get(request, "select") %>'
+			small="<%= true %>"
+			title='<%= LanguageUtil.get(request, "select") %>'
+		/>
 	</clay:content-col>
 </clay:content-row>
 

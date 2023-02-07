@@ -320,6 +320,34 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetUserAccount() throws Exception {
+		super.testGetUserAccount();
+
+		User user = UserTestUtil.addUser();
+
+		Group group = GroupTestUtil.addGroup();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
+			group, user);
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _organizationLocalService.addUserOrganization(
+				user.getUserId(), organization),
+			organization.getGroup(), user);
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_testGetUserAccountsPageWithInheritedRoles(
+			() -> _userGroupLocalService.addUserUserGroup(
+				user.getUserId(), userGroup),
+			userGroup.getGroup(), user);
+	}
+
+	@Override
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
@@ -407,31 +435,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			"userGroupRoleNames/any(f:contains(f, 'Test group role '))",
 			userAccount2);
 		_testGetUserAccountsPage("userGroupRoleNames/any(f:f eq 'Test Role')");
-	}
-
-	@Test
-	public void testGetUserAccountsPageWithInheritedRoles() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		Group group = GroupTestUtil.addGroup();
-
-		_testGetUserAccountsPageWithInheritedRoles(
-			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
-			group, user);
-
-		Organization organization = OrganizationTestUtil.addOrganization();
-
-		_testGetUserAccountsPageWithInheritedRoles(
-			() -> _organizationLocalService.addUserOrganization(
-				user.getUserId(), organization),
-			organization.getGroup(), user);
-
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_testGetUserAccountsPageWithInheritedRoles(
-			() -> _userGroupLocalService.addUserUserGroup(
-				user.getUserId(), userGroup),
-			userGroup.getGroup(), user);
 	}
 
 	@Override

@@ -300,6 +300,7 @@ export default {
 	'score': 'Score',
 	'screen-name': 'Screen Name',
 	'search': 'Search',
+	'search-filters': 'Search Filters',
 	'search-in': 'Search in...',
 	'search-x': 'Search {0}',
 	'select-build': 'Select Build',

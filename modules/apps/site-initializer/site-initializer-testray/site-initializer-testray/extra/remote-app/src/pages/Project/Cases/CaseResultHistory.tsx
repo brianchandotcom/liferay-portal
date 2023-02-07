@@ -101,13 +101,8 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 						value: i18n.translate('errors'),
 					},
 				],
-				highlight: (items) => {
-					if (items.id === Number(caseResultId)) {
-						return true;
-					}
-
-					return false;
-				},
+				highlight: (caseResult) =>
+					caseResult.id === Number(caseResultId),
 				responsive: true,
 				rowWrap: true,
 				...tableProps,

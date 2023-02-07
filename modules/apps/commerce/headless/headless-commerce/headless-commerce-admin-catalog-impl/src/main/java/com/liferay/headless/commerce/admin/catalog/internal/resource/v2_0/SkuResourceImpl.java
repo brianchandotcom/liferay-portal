@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -51,10 +50,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.List;
-
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,17 +70,12 @@ public class SkuResourceImpl
 	extends BaseSkuResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteSku(Long id) throws Exception {
+	public void deleteSku(Long id) throws Exception {
 		_cpInstanceService.deleteCPInstance(id);
-
-		Response.ResponseBuilder responseBuilder = Response.noContent();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteSkuByExternalReferenceCode(
-			String externalReferenceCode)
+	public void deleteSkuByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
 
 		CPInstance cpInstance = _cpInstanceService.fetchByExternalReferenceCode(
@@ -97,10 +88,6 @@ public class SkuResourceImpl
 		}
 
 		_cpInstanceService.deleteCPInstance(cpInstance.getCPInstanceId());
-
-		Response.ResponseBuilder responseBuilder = Response.noContent();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -124,21 +111,9 @@ public class SkuResourceImpl
 					externalReferenceCode);
 		}
 
-		List<CPInstance> cpInstances =
-			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinition.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-
-		int totalItems = _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		return Page.of(
-			_skuHelper.toSKUs(
-				cpInstances, contextAcceptLanguage.getPreferredLocale()),
-			pagination, totalItems);
+		return _skuHelper.getSkusPage(
+			cpDefinition.getCProductId(),
+			contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "skus")

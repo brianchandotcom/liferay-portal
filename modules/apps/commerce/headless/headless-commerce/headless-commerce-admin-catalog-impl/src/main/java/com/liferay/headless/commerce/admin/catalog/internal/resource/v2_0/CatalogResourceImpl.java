@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,16 +64,12 @@ public class CatalogResourceImpl
 	extends BaseCatalogResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteCatalog(Long id) throws Exception {
+	public void deleteCatalog(Long id) throws Exception {
 		_commerceCatalogService.deleteCommerceCatalog(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteCatalogByExternalReferenceCode(
+	public void deleteCatalogByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -88,9 +83,8 @@ public class CatalogResourceImpl
 					externalReferenceCode);
 		}
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		_commerceCatalogService.deleteCommerceCatalog(
+			commerceCatalog.getCommerceCatalogId());
 	}
 
 	@Override
@@ -187,26 +181,23 @@ public class CatalogResourceImpl
 	}
 
 	@Override
-	public Response patchCatalog(Long id, Catalog catalog) throws Exception {
+	public Catalog patchCatalog(Long id, Catalog catalog) throws Exception {
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.getCommerceCatalog(id);
 
-		_commerceCatalogService.updateCommerceCatalog(
-			commerceCatalog.getCommerceCatalogId(), catalog.getName(),
-			GetterUtil.get(
-				catalog.getCurrencyCode(),
-				commerceCatalog.getCommerceCurrencyCode()),
-			GetterUtil.get(
-				catalog.getDefaultLanguageId(),
-				commerceCatalog.getCatalogDefaultLanguageId()));
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toCatalog(
+			_commerceCatalogService.updateCommerceCatalog(
+				commerceCatalog.getCommerceCatalogId(), catalog.getName(),
+				GetterUtil.get(
+					catalog.getCurrencyCode(),
+					commerceCatalog.getCommerceCurrencyCode()),
+				GetterUtil.get(
+					catalog.getDefaultLanguageId(),
+					commerceCatalog.getCatalogDefaultLanguageId())));
 	}
 
 	@Override
-	public Response patchCatalogByExternalReferenceCode(
+	public Catalog patchCatalogByExternalReferenceCode(
 			String externalReferenceCode, Catalog catalog)
 		throws Exception {
 
@@ -220,9 +211,15 @@ public class CatalogResourceImpl
 					externalReferenceCode);
 		}
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toCatalog(
+			_commerceCatalogService.updateCommerceCatalog(
+				commerceCatalog.getCommerceCatalogId(), catalog.getName(),
+				GetterUtil.get(
+					catalog.getCurrencyCode(),
+					commerceCatalog.getCommerceCurrencyCode()),
+				GetterUtil.get(
+					catalog.getDefaultLanguageId(),
+					commerceCatalog.getCatalogDefaultLanguageId())));
 	}
 
 	@Override

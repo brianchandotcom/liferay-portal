@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,18 +61,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class OptionResourceImpl extends BaseOptionResourceImpl {
 
 	@Override
-	public Response deleteOption(Long id) throws Exception {
+	public void deleteOption(Long id) throws Exception {
 		CPOption cpOption = _cpOptionService.getCPOption(id);
 
 		_cpOptionService.deleteCPOption(cpOption.getCPOptionId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteOptionByExternalReferenceCode(
+	public void deleteOptionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -87,10 +82,6 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 		}
 
 		_cpOptionService.deleteCPOption(cpOption.getCPOptionId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -111,6 +102,12 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 
 		CPOption cpOption = _cpOptionService.fetchByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpOption == null) {
+			throw new NoSuchCPOptionException(
+				"Unable to find option with external reference code " +
+					externalReferenceCode);
+		}
 
 		return _toOption(cpOption.getCPOptionId());
 	}
@@ -134,16 +131,12 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 	}
 
 	@Override
-	public Response patchOption(Long id, Option option) throws Exception {
-		_updateOption(_cpOptionService.getCPOption(id), option);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+	public Option patchOption(Long id, Option option) throws Exception {
+		return _updateOption(_cpOptionService.getCPOption(id), option);
 	}
 
 	@Override
-	public Response patchOptionByExternalReferenceCode(
+	public Option patchOptionByExternalReferenceCode(
 			String externalReferenceCode, Option option)
 		throws Exception {
 
@@ -156,11 +149,7 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 					externalReferenceCode);
 		}
 
-		_updateOption(cpOption, option);
-
-		Response.ResponseBuilder responseBuilder = Response.noContent();
-
-		return responseBuilder.build();
+		return _updateOption(cpOption, option);
 	}
 
 	@Override

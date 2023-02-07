@@ -132,7 +132,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -316,7 +315,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	@Override
-	public Response patchProduct(Long id, Product product) throws Exception {
+	public Product patchProduct(Long id, Product product) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
 
@@ -325,7 +324,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				"Unable to find Product with ID: " + id);
 		}
 
-		_updateProduct(cpDefinition, product);
+		cpDefinition = _updateProduct(cpDefinition, product);
 
 		if (!Validator.isBlank(product.getExternalReferenceCode())) {
 			_cpDefinitionService.updateExternalReferenceCode(
@@ -333,13 +332,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				cpDefinition.getCPDefinitionId());
 		}
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductByExternalReferenceCode(
+	public Product patchProductByExternalReferenceCode(
 			String externalReferenceCode, Product product)
 		throws Exception {
 
@@ -354,21 +351,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					externalReferenceCode);
 		}
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			cpDefinition.getGroupId());
+		cpDefinition = _updateProduct(cpDefinition, product);
 
-		int productStatus = GetterUtil.getInteger(product.getProductStatus());
-
-		if (productStatus == WorkflowConstants.STATUS_DRAFT) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		_updateProduct(cpDefinition, product);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override

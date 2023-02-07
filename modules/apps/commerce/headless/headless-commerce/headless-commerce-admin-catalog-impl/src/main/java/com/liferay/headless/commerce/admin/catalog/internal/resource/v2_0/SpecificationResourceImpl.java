@@ -42,7 +42,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Collections;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,12 +59,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 	@Override
-	public Response deleteSpecification(Long id) throws Exception {
+	public void deleteSpecification(Long id) throws Exception {
 		_cpSpecificationOptionService.deleteCPSpecificationOption(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -99,14 +94,15 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	}
 
 	@Override
-	public Response patchSpecification(Long id, Specification specification)
+	public Specification patchSpecification(
+			Long id, Specification specification)
 		throws Exception {
 
-		_updateSpecification(id, specification);
+		CPSpecificationOption cpSpecificationOption = _updateSpecification(
+			id, specification);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toSpecification(
+			cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
 	@Override

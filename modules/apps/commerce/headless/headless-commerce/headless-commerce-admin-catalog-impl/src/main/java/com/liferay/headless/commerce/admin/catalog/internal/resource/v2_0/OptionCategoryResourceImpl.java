@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Collections;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,12 +55,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 
 	@Override
-	public Response deleteOptionCategory(Long id) throws Exception {
+	public void deleteOptionCategory(Long id) throws Exception {
 		_cpOptionCategoryService.deleteCPOptionCategory(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -95,14 +90,14 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 	}
 
 	@Override
-	public Response patchOptionCategory(Long id, OptionCategory optionCategory)
+	public OptionCategory patchOptionCategory(
+			Long id, OptionCategory optionCategory)
 		throws Exception {
 
-		_updateOptionCategory(id, optionCategory);
+		CPOptionCategory cpOptionCategory = _updateOptionCategory(
+			id, optionCategory);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toOptionCategory(cpOptionCategory.getCPOptionCategoryId());
 	}
 
 	@Override

@@ -45,7 +45,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,20 +133,19 @@ public class ProductGroupResourceImpl extends BaseProductGroupResourceImpl {
 	}
 
 	@Override
-	public Response patchProductGroup(Long id, ProductGroup productGroup)
+	public ProductGroup patchProductGroup(Long id, ProductGroup productGroup)
 		throws Exception {
 
-		_updateProductGroup(
+		CommercePricingClass commercePricingClass = _updateProductGroup(
 			_commercePricingClassService.getCommercePricingClass(id),
 			productGroup);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductGroup(
+			commercePricingClass.getCommercePricingClassId());
 	}
 
 	@Override
-	public Response patchProductGroupByExternalReferenceCode(
+	public ProductGroup patchProductGroupByExternalReferenceCode(
 			String externalReferenceCode, ProductGroup productGroup)
 		throws Exception {
 
@@ -161,11 +159,11 @@ public class ProductGroupResourceImpl extends BaseProductGroupResourceImpl {
 					externalReferenceCode);
 		}
 
-		_updateProductGroup(commercePricingClass, productGroup);
+		commercePricingClass = _updateProductGroup(
+			commercePricingClass, productGroup);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductGroup(
+			commercePricingClass.getCommercePricingClassId());
 	}
 
 	@Override

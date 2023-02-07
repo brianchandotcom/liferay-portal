@@ -14,8 +14,11 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v2_0;
 
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v2_0.Product;
@@ -140,12 +143,21 @@ public class ProductSpecificationResourceImpl
 			}
 		}
 
+		CPDefinition cpDefinition =
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with ID: " + id);
+		}
+
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
 				ProductSpecificationUtil.
 					addCPDefinitionSpecificationOptionValue(
 						_cpDefinitionSpecificationOptionValueService,
-						_cpSpecificationOptionService, id, productSpecification,
+						_cpSpecificationOptionService,
+						cpDefinition.getCPDefinitionId(), productSpecification,
 						_serviceContextHelper.getServiceContext());
 
 		return _toProductSpecification(
@@ -182,6 +194,9 @@ public class ProductSpecificationResourceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductSpecificationResourceImpl.class);
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueService

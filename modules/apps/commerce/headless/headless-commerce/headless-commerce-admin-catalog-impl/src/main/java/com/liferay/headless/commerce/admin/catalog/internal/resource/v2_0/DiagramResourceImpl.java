@@ -49,6 +49,11 @@ public class DiagramResourceImpl
 	extends BaseDiagramResourceImpl implements NestedFieldSupport {
 
 	@Override
+	public Diagram getDiagram(Long id) throws Exception {
+		return _toDiagram(id);
+	}
+
+	@Override
 	public Diagram getProductByExternalReferenceCodeDiagram(
 			String externalReferenceCode)
 		throws Exception {

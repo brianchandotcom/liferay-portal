@@ -41,8 +41,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -61,16 +59,12 @@ public class ProductOptionResourceImpl
 	extends BaseProductOptionResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteProductOption(Long id) throws Exception {
+	public void deleteProductOption(Long id) throws Exception {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(id);
 
 		_cpDefinitionOptionRelService.deleteCPDefinitionOptionRel(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -150,14 +144,11 @@ public class ProductOptionResourceImpl
 	}
 
 	@Override
-	public Response patchProductOption(Long id, ProductOption productOption)
+	public ProductOption patchProductOption(
+			Long id, ProductOption productOption)
 		throws Exception {
 
-		_updateProductOption(id, productOption);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _updateProductOption(id, productOption);
 	}
 
 	@Override

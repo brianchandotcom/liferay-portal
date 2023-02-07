@@ -30,8 +30,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -85,9 +83,10 @@ public class ProductConfigurationResourceImpl
 	}
 
 	@Override
-	public Response patchProductByExternalReferenceCodeConfiguration(
-			String externalReferenceCode,
-			ProductConfiguration productConfiguration)
+	public ProductConfiguration
+			patchProductByExternalReferenceCodeConfiguration(
+				String externalReferenceCode,
+				ProductConfiguration productConfiguration)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -105,13 +104,11 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductIdConfiguration(
+	public ProductConfiguration patchProductIdConfiguration(
 			Long id, ProductConfiguration productConfiguration)
 		throws Exception {
 
@@ -127,9 +124,7 @@ public class ProductConfigurationResourceImpl
 			_cpDefinitionInventoryService, productConfiguration,
 			cpDefinition.getCPDefinitionId());
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	private ProductConfiguration _toProductConfiguration(Long cpDefinitionId)

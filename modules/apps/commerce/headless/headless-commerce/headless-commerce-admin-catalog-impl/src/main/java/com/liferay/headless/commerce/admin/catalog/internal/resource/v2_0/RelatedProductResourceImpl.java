@@ -38,8 +38,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -57,12 +55,8 @@ public class RelatedProductResourceImpl
 	extends BaseRelatedProductResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteRelatedProduct(Long id) throws Exception {
+	public void deleteRelatedProduct(Long id) throws Exception {
 		_cpDefinitionLinkService.deleteCPDefinitionLink(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override

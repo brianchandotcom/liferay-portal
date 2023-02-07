@@ -96,11 +96,14 @@ public class CPOptionCategoryServiceImpl
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryLocalService.getCPOptionCategory(
+				cpOptionCategoryId);
+
 		_cpOptionCategoryModelResourcePermission.check(
 			getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
 
-		return cpOptionCategoryLocalService.getCPOptionCategory(
-			cpOptionCategoryId);
+		return cpOptionCategory;
 	}
 
 	@Override

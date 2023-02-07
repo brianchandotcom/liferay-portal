@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -70,16 +69,12 @@ public class OptionValueResourceImpl
 	extends BaseOptionValueResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteOptionValue(Long id) throws Exception {
+	public void deleteOptionValue(Long id) throws Exception {
 		_cpOptionValueService.deleteCPOptionValue(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteOptionValueByExternalReferenceCode(
+	public void deleteOptionValueByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -95,10 +90,6 @@ public class OptionValueResourceImpl
 
 		_cpOptionValueService.deleteCPOptionValue(
 			cpOptionValue.getCPOptionValueId());
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -178,21 +169,18 @@ public class OptionValueResourceImpl
 	}
 
 	@Override
-	public Response patchOptionValue(Long id, OptionValue optionValue)
+	public OptionValue patchOptionValue(Long id, OptionValue optionValue)
 		throws Exception {
 
 		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
 			id);
 
-		_addOrUpdateOptionValue(cpOptionValue.getCPOption(), optionValue);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _addOrUpdateOptionValue(
+			cpOptionValue.getCPOption(), optionValue);
 	}
 
 	@Override
-	public Response patchOptionValueByExternalReferenceCode(
+	public OptionValue patchOptionValueByExternalReferenceCode(
 			String externalReferenceCode, OptionValue optionValue)
 		throws Exception {
 
@@ -206,11 +194,8 @@ public class OptionValueResourceImpl
 					externalReferenceCode);
 		}
 
-		_addOrUpdateOptionValue(cpOptionValue.getCPOption(), optionValue);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _addOrUpdateOptionValue(
+			cpOptionValue.getCPOption(), optionValue);
 	}
 
 	@Override

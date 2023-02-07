@@ -153,10 +153,12 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption getCPOption(long cpOptionId) throws PortalException {
+		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
+
 		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 
-		return cpOptionLocalService.getCPOption(cpOptionId);
+		return cpOption;
 	}
 
 	@Override

@@ -29,8 +29,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -61,6 +59,12 @@ public class ProductSubscriptionConfigurationResourceImpl
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
 		return _toProductSubscriptionConfiguration(
 			cpDefinition.getCPDefinitionId());
 	}
@@ -87,7 +91,7 @@ public class ProductSubscriptionConfigurationResourceImpl
 	}
 
 	@Override
-	public Response
+	public ProductSubscriptionConfiguration
 			patchProductByExternalReferenceCodeSubscriptionConfiguration(
 				String externalReferenceCode,
 				ProductSubscriptionConfiguration
@@ -108,15 +112,16 @@ public class ProductSubscriptionConfigurationResourceImpl
 		_updateProductSubscriptionConfiguration(
 			cpDefinition, productSubscriptionConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductSubscriptionConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductIdSubscriptionConfiguration(
-			Long id,
-			ProductSubscriptionConfiguration productSubscriptionConfiguration)
+	public ProductSubscriptionConfiguration
+			patchProductIdSubscriptionConfiguration(
+				Long id,
+				ProductSubscriptionConfiguration
+					productSubscriptionConfiguration)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -130,9 +135,8 @@ public class ProductSubscriptionConfigurationResourceImpl
 		_updateProductSubscriptionConfiguration(
 			cpDefinition, productSubscriptionConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductSubscriptionConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	private ProductSubscriptionConfiguration

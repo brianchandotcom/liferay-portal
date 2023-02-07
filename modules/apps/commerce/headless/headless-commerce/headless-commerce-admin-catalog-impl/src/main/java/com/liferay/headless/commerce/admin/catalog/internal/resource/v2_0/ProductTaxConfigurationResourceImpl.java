@@ -28,8 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -58,6 +56,12 @@ public class ProductTaxConfigurationResourceImpl
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
+		if (cpDefinition == null) {
+			throw new NoSuchCPDefinitionException(
+				"Unable to find product with external reference code " +
+					externalReferenceCode);
+		}
+
 		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
@@ -79,9 +83,10 @@ public class ProductTaxConfigurationResourceImpl
 	}
 
 	@Override
-	public Response patchProductByExternalReferenceCodeTaxConfiguration(
-			String externalReferenceCode,
-			ProductTaxConfiguration productTaxConfiguration)
+	public ProductTaxConfiguration
+			patchProductByExternalReferenceCodeTaxConfiguration(
+				String externalReferenceCode,
+				ProductTaxConfiguration productTaxConfiguration)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -97,13 +102,11 @@ public class ProductTaxConfigurationResourceImpl
 
 		_updateProductTaxConfiguration(cpDefinition, productTaxConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductIdTaxConfiguration(
+	public ProductTaxConfiguration patchProductIdTaxConfiguration(
 			Long id, ProductTaxConfiguration productTaxConfiguration)
 		throws Exception {
 
@@ -117,9 +120,7 @@ public class ProductTaxConfigurationResourceImpl
 
 		_updateProductTaxConfiguration(cpDefinition, productTaxConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductTaxConfiguration(cpDefinition.getCPDefinitionId());
 	}
 
 	private ProductTaxConfiguration _toProductTaxConfiguration(

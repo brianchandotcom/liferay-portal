@@ -69,6 +69,13 @@ public class MappedProductResourceImpl
 	}
 
 	@Override
+	public MappedProduct getMappedProduct(Long mappedProductId)
+		throws Exception {
+
+		return _toMappedProduct(mappedProductId);
+	}
+
+	@Override
 	public MappedProduct
 			getProductByExternalReferenceCodeMappedProductBySequence(
 				String externalReferenceCode, String sequence)

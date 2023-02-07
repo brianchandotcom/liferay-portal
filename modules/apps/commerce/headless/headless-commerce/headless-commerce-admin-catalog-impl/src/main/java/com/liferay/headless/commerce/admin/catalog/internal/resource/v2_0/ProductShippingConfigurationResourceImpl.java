@@ -29,8 +29,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -90,9 +88,10 @@ public class ProductShippingConfigurationResourceImpl
 	}
 
 	@Override
-	public Response patchProductByExternalReferenceCodeShippingConfiguration(
-			String externalReferenceCode,
-			ProductShippingConfiguration productShippingConfiguration)
+	public ProductShippingConfiguration
+			patchProductByExternalReferenceCodeShippingConfiguration(
+				String externalReferenceCode,
+				ProductShippingConfiguration productShippingConfiguration)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -109,13 +108,12 @@ public class ProductShippingConfigurationResourceImpl
 		_updateProductShippingConfiguration(
 			cpDefinition, productShippingConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductShippingConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
-	public Response patchProductIdShippingConfiguration(
+	public ProductShippingConfiguration patchProductIdShippingConfiguration(
 			Long id, ProductShippingConfiguration productShippingConfiguration)
 		throws Exception {
 
@@ -130,9 +128,8 @@ public class ProductShippingConfigurationResourceImpl
 		_updateProductShippingConfiguration(
 			cpDefinition, productShippingConfiguration);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
+		return _toProductShippingConfiguration(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	private ProductShippingConfiguration _toProductShippingConfiguration(

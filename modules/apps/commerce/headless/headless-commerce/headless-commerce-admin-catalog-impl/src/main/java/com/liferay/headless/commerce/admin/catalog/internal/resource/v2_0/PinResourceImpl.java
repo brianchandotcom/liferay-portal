@@ -97,6 +97,11 @@ public class PinResourceImpl
 	}
 
 	@Override
+	public Pin getPin(Long pinId) throws Exception {
+		return _toPin(pinId);
+	}
+
+	@Override
 	public Page<Pin> getProductByExternalReferenceCodePinsPage(
 			String externalReferenceCode, String search, Pagination pagination,
 			Sort[] sorts)

@@ -861,4 +861,46 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10867 | Automation ID: LRAC-12913 | Test Summary: Check that it is possible to make pagination in the Attribute for Order list"
+	@priority = "3"
+	test CanPaginateInOrdersAttributeList {
+		var firstPageList = "orderItems,total,subscription,accountId,channelId";
+		var secondPageList = "id,orderStatus,orderTypeId,paymentStatus,status";
+
+		task ("Click to select attribute for Orders") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Orders");
+		}
+
+		task ("Change filter to Data type"){
+			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
+		}
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 35 entries.");
+		}
+
+		task ("Check that 5 attributes for Orders appear on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${firstPageList}");
+		}
+
+		task ("Check that the attributes for Orders on the second page does not appear on the first") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${secondPageList}");
+		}
+
+		task ("Click to navigate for the second page") {
+			ACUtils.checkAnyPage(pageNumber = "2");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 35 entries.");
+		}
+
+		task ("Check that 2 attributes for Order appear on the second page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+		}
+
+		task ("Check that the attributes for Order on the first page does not appear on the second page") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "${firstPageList}");
+		}
+	}
+
 }

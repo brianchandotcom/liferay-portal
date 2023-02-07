@@ -23,9 +23,12 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,8 +79,9 @@ public class SXPBlueprintDTOConverter
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					sxpBlueprint.getDescriptionMap());
-				elementInstances = _toElementInstances(
-					sxpBlueprint.getElementInstancesJSON());
+				elementInstances = _translateElementInstances(
+					_toElementInstances(sxpBlueprint.getElementInstancesJSON()),
+					dtoConverterContext.getLocale());
 				externalReferenceCode = sxpBlueprint.getExternalReferenceCode();
 				id = sxpBlueprint.getSXPBlueprintId();
 				modifiedDate = sxpBlueprint.getModifiedDate();
@@ -137,6 +141,30 @@ public class SXPBlueprintDTOConverter
 	private ElementInstance[] _toElementInstances(String json) {
 		try {
 			return ElementInstanceUtil.toElementInstances(json);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return null;
+		}
+	}
+
+	private ElementInstance[] _translateElementInstances(
+		ElementInstance[] elementInstances, Locale locale) {
+
+		try {
+			for (ElementInstance elementInstance : elementInstances) {
+				SXPElement sxpElement = elementInstance.getSxpElement();
+
+				sxpElement.setTitle(
+					_language.get(locale, sxpElement.getTitle()));
+				sxpElement.setDescription(
+					_language.get(locale, sxpElement.getDescription()));
+			}
+
+			return elementInstances;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

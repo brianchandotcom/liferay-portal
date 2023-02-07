@@ -70,13 +70,14 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			vocabularyIdInfoItemReferencesMap = new HashMap<>();
 
 		for (InfoItemReference infoItemReference : infoItemReferences) {
+			long classPK = _getClassPK(infoItemReference);
+
 			if (Objects.equals(
 					getClassName(), infoItemReference.getClassName()) &&
-				(_getClassPK(infoItemReference) > 0)) {
+				(classPK > 0)) {
 
 				AssetCategory assetCategory =
-					_assetCategoryLocalService.fetchAssetCategory(
-						_getClassPK(infoItemReference));
+					_assetCategoryLocalService.fetchAssetCategory(classPK);
 
 				long vocabularyId = assetCategory.getVocabularyId();
 
@@ -86,8 +87,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				Map<Long, InfoItemReference> categoryIdInfoItemReferencesMap =
 					vocabularyIdInfoItemReferencesMap.get(vocabularyId);
 
-				categoryIdInfoItemReferencesMap.put(
-					_getClassPK(infoItemReference), infoItemReference);
+				categoryIdInfoItemReferencesMap.put(classPK, infoItemReference);
 			}
 		}
 

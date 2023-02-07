@@ -112,6 +112,49 @@ definition {
 			objectName = "CustomObject184");
 	}
 
+	@description = "LPS-161893 - Verify that it's possible to export an object entry with aggregation field"
+	@priority = "4"
+	test CanExportObjectWithAggregationField {
+		task ("Given: A custom object with a self-relationship") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161893",
+				objectName = "CustomObject161893",
+				pluralLabelName = "Custom Objects 161893");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject161893",
+				objectName_2 = "CustomObject161893",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161893");
+		}
+
+		task ("When: An Aggregation field is added to the custom object from the Fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161893");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				field = "ID",
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Max",
+				relationship = "Relationship");
+		}
+
+		task ("Then: The custom object with a self-relationship and Aggregation field can be exported") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectExportImport.exportObject(
+				objectLabel = "Custom Object 161893",
+				objectName = "CustomObject161893");
+		}
+	}
+
 	@description = "LPS-142175 - Verify it's possible to export imported object with custom views"
 	@priority = "4"
 	test CanImportAndExportCustomViewsStructure {

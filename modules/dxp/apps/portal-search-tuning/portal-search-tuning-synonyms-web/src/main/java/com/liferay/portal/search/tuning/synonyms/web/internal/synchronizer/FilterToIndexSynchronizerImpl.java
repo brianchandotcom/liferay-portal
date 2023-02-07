@@ -20,9 +20,8 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.filter.name.Synony
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSetStorageAdapter;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,16 +55,14 @@ public class FilterToIndexSynchronizerImpl
 	}
 
 	private String[] _getSynonymsFromFilters(String companyIndexName) {
-		LinkedHashSet<String> synonyms = Stream.of(
-			_synonymSetFilterNameHolder.getFilterNames()
-		).map(
-			filterName -> _synonymSetFilterReader.getSynonymSets(
-				companyIndexName, filterName)
-		).flatMap(
-			Stream::of
-		).collect(
-			Collectors.toCollection(LinkedHashSet::new)
-		);
+		LinkedHashSet<String> synonyms = new LinkedHashSet<>();
+
+		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {
+			Collections.addAll(
+				synonyms,
+				_synonymSetFilterReader.getSynonymSets(
+					companyIndexName, filterName));
+		}
 
 		return synonyms.toArray(new String[0]);
 	}

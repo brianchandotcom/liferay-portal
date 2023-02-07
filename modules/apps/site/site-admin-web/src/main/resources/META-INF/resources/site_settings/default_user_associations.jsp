@@ -41,10 +41,8 @@ for (long defaultTeamId : defaultTeamIds) {
 <liferay-util:buffer
 	var="removeRoleIcon"
 >
-	<liferay-ui:icon
-		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
+	<clay:icon
+		symbol="times-circle"
 	/>
 </liferay-util:buffer>
 
@@ -92,7 +90,17 @@ for (long defaultTeamId : defaultTeamIds) {
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
+			<clay:button
+				aria-label='<%= LanguageUtil.get(request, "remove") %>'
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip modify-link"
+				data-rowId="<%= role.getRoleId() %>"
+				displayType="secondary"
+				icon="times-circle"
+				monospaced="<%= true %>"
+				title='<%= LanguageUtil.get(request, "remove") %>'
+				type="button"
+			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -142,7 +150,17 @@ for (long defaultTeamId : defaultTeamIds) {
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
+			<clay:button
+				aria-label='<%= LanguageUtil.get(request, "remove") %>'
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip modify-link"
+				data-rowId="<%= team.getTeamId() %>"
+				displayType="secondary"
+				icon="times-circle"
+				monospaced="<%= true %>"
+				title='<%= LanguageUtil.get(request, "remove") %>'
+				type="button"
+			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -196,9 +214,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 					var rowColumns = [
 						A.Escape.html(event.entityname),
-						'<a class="modify-link" data-rowId="' +
-							entityId +
-							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>',
+						`<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="${entityId}" title="<%= LanguageUtil.get(request, "remove") %>" type="button">
+							<%= UnicodeFormatter.toString(removeRoleIcon) %>
+						</button>`,
 					];
 
 					searchContainer.addRow(rowColumns, entityId);

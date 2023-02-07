@@ -1,5 +1,11 @@
 definition {
 
+	macro closeToastAlert {
+		Click(
+			key_type = "${key_type}",
+			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON");
+	}
+
 	macro getElementRectanglePositionX {
 		WaitForSPARefresh();
 
@@ -36,16 +42,10 @@ definition {
 		return "${position_y}";
 	}
 
-	macro closeToastAlert {
-		Click(
-			key_type = "${key_type}",
-			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON"
-		);
-	}
 	macro openToastAlert {
 		Click(
-			locator1 = "Button#ANY",
-			key_text = "${key_text}"
-		);
+			key_text = "${key_text}",
+			locator1 = "Button#ANY");
 	}
+
 }

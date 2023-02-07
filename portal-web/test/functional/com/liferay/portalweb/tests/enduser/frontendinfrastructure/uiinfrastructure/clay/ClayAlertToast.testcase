@@ -76,29 +76,34 @@ definition {
 	@description = "LPS-170580 - Verify alert in the middle of stack is closed, the others fill the stack"
 	@priority = "4"
 	test CanTransitionToFillGapOfDeletedToast {
-		task("Given the known first (top) alert position from two stacked toast alert success messages") {
-			ClayAlertToast.openToastAlert(key_text="Success Submit");
-			ClayAlertToast.openToastAlert(key_text="Success Submit");
+		task ("Given the known first (top) alert position from two stacked toast alert success messages") {
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
+
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
+
 			var position_x = ClayAlertToast.getElementRectanglePositionX(
 				code = "#ToastAlertContainer .alert-success",
 				index = "0");
 			var position_y = ClayAlertToast.getElementRectanglePositionY(
 				code = "#ToastAlertContainer .alert-success",
 				index = "0");
+
 			ClayAlertToast.closeToastAlert(key_type = "success");
+
 			ClayAlertToast.closeToastAlert(key_type = "success");
 		}
+
 		task ("And multiple toast alerts") {
-			ClayAlertToast.openToastAlert(key_text="Success Submit");
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
 
-			ClayAlertToast.openToastAlert(key_text="Fail Submit");
+			ClayAlertToast.openToastAlert(key_text = "Fail Submit");
 
-			ClayAlertToast.openToastAlert(key_text="Success Submit");
+			ClayAlertToast.openToastAlert(key_text = "Success Submit");
 		}
 
 		task ("When an alert in the middle of the stack is closed") {
 			ClayAlertToast.closeToastAlert(key_type = "danger");
-		}	
+		}
 
 		task ("Then the alerts transition to fill the stack") {
 			var positionAlertX = ClayAlertToast.getElementRectanglePositionX(
@@ -110,11 +115,13 @@ definition {
 
 			if ("${positionAlertX}" != "${position_x}") {
 				takeScreenshot();
+
 				fail("FAIL. X coordinate positions do not match.");
 			}
 
 			if ("${positionAlertY}" != "${position_y}") {
 				takeScreenshot();
+
 				fail("FAIL. Y coordinate positions do not match.");
 			}
 		}

@@ -47,17 +47,17 @@
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON</td>
-	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Next')]</td>
+	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'next')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_PAGINATION_NUMBER_BUTTON</td>
-	<td>//button[contains(@class, 'page-link') and contains(text(), '${key_pageNumber}')]</td>
+	<td>//a[contains(@class, 'page-link') and contains(text(), '${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON</td>
-	<td>//button[contains(@class, 'page-link') and contains(@aria-label,'Previous')]</td>
+	<td>//a[contains(@class, 'page-link') and contains(@aria-label,'Previous')]</td>
 	<td></td>
 </tr>
 <tr>

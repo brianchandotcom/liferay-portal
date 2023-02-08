@@ -293,36 +293,6 @@
 							'sortable',
 						],
 					},
-					'liferay-item-selector-dialog': {
-						path: 'item_selector_dialog.js',
-						requires: ['aui-component'],
-					},
-					'liferay-item-selector-repository-entry-browser': {
-						path: 'item_selector_repository_entry_browser.js',
-						requires: [
-							'liferay-item-selector-uploader',
-							'liferay-item-viewer',
-							'liferay-notice',
-							'liferay-portlet-base',
-						],
-					},
-					'liferay-item-selector-uploader': {
-						path: 'item_selector_uploader.js',
-						requires: [
-							'aui-base',
-							'aui-progressbar',
-							'liferay-portlet-base',
-							'uploader',
-						],
-					},
-					'liferay-item-selector-url': {
-						path: 'item_selector_url.js',
-						requires: [
-							'aui-event-input',
-							'liferay-item-viewer',
-							'liferay-portlet-base',
-						],
-					},
 					'liferay-item-viewer': {
 						path: 'item_viewer.js',
 						requires: [

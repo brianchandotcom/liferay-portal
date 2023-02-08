@@ -20,6 +20,11 @@
 	<td>//p[contains(., 'This file extension is not supported by DocuSign.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_DISABLED_BUTTON</td>
+	<td>//button[@disabled and contains (text(),'${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

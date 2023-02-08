@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
@@ -18,7 +18,16 @@ import VelocityChart from '../../../../src/main/resources/META-INF/resources/js/
 import '@testing-library/jest-dom/extend-expect';
 
 describe('The velocity chart should', () => {
+	const {ResizeObserver} = window;
+
 	beforeAll(() => {
+		delete window.ResizeObserver;
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+
 		jest.spyOn(
 			HTMLElement.prototype,
 			'clientHeight',
@@ -27,6 +36,12 @@ describe('The velocity chart should', () => {
 		jest.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
 			100
 		);
+	});
+
+	afterAll(() => {
+		cleanup();
+		window.ResizeObserver = ResizeObserver;
+		jest.restoreAllMocks();
 	});
 
 	it('Be rendered in document', () => {

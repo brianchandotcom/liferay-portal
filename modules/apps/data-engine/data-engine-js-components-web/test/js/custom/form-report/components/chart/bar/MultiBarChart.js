@@ -46,7 +46,22 @@ const props = {
 };
 
 describe('MultiBarChart', () => {
-	afterEach(cleanup);
+	const {ResizeObserver} = window;
+
+	beforeAll(() => {
+		delete window.ResizeObserver;
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+	});
+
+	afterAll(() => {
+		cleanup();
+		window.ResizeObserver = ResizeObserver;
+		jest.restoreAllMocks();
+	});
 
 	it('renders', () => {
 		const {queryByText} = render(<MultiBarChart {...props} />);

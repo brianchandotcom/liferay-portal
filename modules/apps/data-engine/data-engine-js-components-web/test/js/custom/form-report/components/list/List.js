@@ -19,6 +19,7 @@ import List from '../../../../../../src/main/resources/META-INF/resources/js/cus
 
 const props = {
 	data: ['label1', 'label2', 'label3', 'label4', 'label5'],
+	field: {name: 'fieldName'},
 	onClick: () => {},
 	summary: {},
 	totalEntries: 5,

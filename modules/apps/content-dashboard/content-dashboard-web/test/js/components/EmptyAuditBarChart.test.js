@@ -12,7 +12,7 @@
  * details.
  */
 
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/AuditGraphApp/EmptyAuditBarChart';
@@ -24,6 +24,22 @@ const LEARN_HOW_URL =
 
 describe('EmptyAuditBarChart', () => {
 	Liferay.Util.sub.mockImplementation((langKey) => langKey);
+	const {ResizeObserver} = window;
+
+	beforeAll(() => {
+		delete window.ResizeObserver;
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+	});
+
+	afterEach(() => {
+		cleanup();
+		window.ResizeObserver = ResizeObserver;
+		jest.restoreAllMocks();
+	});
 
 	it('renders empty bar chart if there is no content labeled with categories', () => {
 		const {getByText} = render(

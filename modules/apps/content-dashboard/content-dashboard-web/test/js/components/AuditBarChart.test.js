@@ -12,7 +12,7 @@
  * details.
  */
 
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -235,8 +235,25 @@ const mockTwoVocabulariesWithNoneCategory = [
 ];
 
 describe('AuditBarChart', () => {
+	const {ResizeObserver} = window;
+
+	beforeAll(() => {
+		delete window.ResizeObserver;
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+	});
+
 	afterEach(() => {
 		jest.clearAllMocks();
+	});
+
+	afterAll(() => {
+		cleanup();
+		window.ResizeObserver = ResizeObserver;
+		jest.restoreAllMocks();
 	});
 
 	it('renders audit bar chart from one vocabulary', () => {

@@ -106,6 +106,10 @@ public class DefaultTable implements Table {
 		throw new RuntimeException("Table does not contain row names");
 	}
 
+	public List<List<String>> getTable() {
+		return _table;
+	}
+
 	@Override
 	public int getTableRowWidth(List<List<String>> table) {
 		if (table.isEmpty()) {

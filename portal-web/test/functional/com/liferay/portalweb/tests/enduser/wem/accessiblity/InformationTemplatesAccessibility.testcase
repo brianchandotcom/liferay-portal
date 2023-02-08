@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164875. The template creator could leave code mirror via keyboard."
-	@priority = "2"
+	@priority = 2
 	test LeaveCodeMirrorViaKeyboard {
 		task ("Given a template creator has a information template") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");

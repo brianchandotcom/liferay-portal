@@ -2,7 +2,7 @@ definition {
 
 	macro changeRole {
 		Click(
-			key_fieldLabel = "${roleName}",
+			key_fieldLabel = ${roleName},
 			locator1 = "Checkbox#CHECKBOX_LABEL");
 	}
 
@@ -10,25 +10,25 @@ definition {
 		if (isSet(userFirstNameEdit)) {
 			Type(
 				locator1 = "TextInput#FIRST_NAME",
-				value1 = "${userFirstNameEdit}");
+				value1 = ${userFirstNameEdit});
 		}
 
 		if (isSet(userLastNameEdit)) {
 			Type(
 				locator1 = "TextInput#LAST_NAME",
-				value1 = "${userLastNameEdit}");
+				value1 = ${userLastNameEdit});
 		}
 
 		if (isSet(userEmailAddressEdit)) {
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-				value1 = "${userEmailAddressEdit}");
+				value1 = ${userEmailAddressEdit});
 		}
 
 		if (isSet(userScreenNameEdit)) {
 			Type(
 				locator1 = "TextInput#SCREEN_NAME",
-				value1 = "${userScreenNameEdit}");
+				value1 = ${userScreenNameEdit});
 		}
 
 		Button.clickSave();
@@ -37,19 +37,19 @@ definition {
 	macro viewUserInfomation {
 		AssertTextEquals(
 			locator1 = "Testray#DETAILS_LAST_NAME_FIELD",
-			value1 = "${lastName}");
+			value1 = ${lastName});
 
 		AssertTextEquals(
 			locator1 = "Testray#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		AssertTextEquals(
 			locator1 = "Testray#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${screenName}");
+			value1 = ${screenName});
 
 		AssertTextEquals(
 			locator1 = "Testray#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${firstName}");
+			value1 = ${firstName});
 	}
 
 }

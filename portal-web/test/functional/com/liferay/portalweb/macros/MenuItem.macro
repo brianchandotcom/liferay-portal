@@ -2,42 +2,42 @@ definition {
 
 	macro click {
 		Click(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro clickNoError {
 		ClickNoError(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewDisabled {
 		AssertElementPresent(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#DISABLED_MENU_ITEM");
 	}
 
 	macro viewNotPresent {
 		AssertElementNotPresent(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewNotVisible {
 		AssertNotVisible(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewOrder {
-		var key_index = "1";
+		var key_index = 1;
 
-		for (var menuItem : list "${menuItemList}") {
+		for (var menuItem : list ${menuItemList}) {
 			AssertTextEquals.assertPartialText(
-				index = "${key_index}",
+				index = ${key_index},
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
-				value1 = "${menuItem}");
+				value1 = ${menuItem});
 
 			var key_index = ${key_index} + 1;
 		}
@@ -45,13 +45,13 @@ definition {
 
 	macro viewPresent {
 		AssertElementPresent(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewVisible {
 		AssertVisible(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 

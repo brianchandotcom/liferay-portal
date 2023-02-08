@@ -50,7 +50,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
-	@priority = "5"
+	@priority = 5
 	test CanDistributionChartFilteredDateProperty {
 		property analytics.cloud.upstream = "false";
 
@@ -78,7 +78,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {
@@ -110,23 +110,23 @@ definition {
 		}
 
 		task ("Get current date") {
-			var dayNum = DateUtil.getDate("0");
-			var tomorrowNum = DateUtil.getDate("1");
+			var dayNum = DateUtil.getDate(0);
+			var tomorrowNum = DateUtil.getDate(1);
 			var monthNum = DateUtil.getCurrentMonth();
 			var yearNum = DateUtil.getCurrentYear();
 
-			if (("${monthNum}" != "10") && ("${monthNum}" != "11") && ("${monthNum}" != "12")) {
+			if ((${monthNum} != 10) && (${monthNum} != 11) && (${monthNum} != 12)) {
 				var monthNum = "0${monthNum}";
 			}
 
 			var i = ${dayNum} / 10;
 			var j = ${tomorrowNum} / 10;
 
-			if ("${i}" == "0") {
+			if (${i} == 0) {
 				var dayNum = "0${dayNum}";
 			}
 
-			if ("${j}" == "0") {
+			if (${j} == 0) {
 				var tomorrowNum = "0${tomorrowNum}";
 			}
 		}
@@ -142,7 +142,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8627 | Test Summary: Segment distribution chart can be filtered by number property"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanDistributionChartFilteredNumber {
 
 		// AC Refactor: Chart fails to appear when filtering with a number property.
@@ -157,7 +157,7 @@ definition {
 				customFieldType = "Input Field",
 				customInputDataType = "Integer",
 				resourceName = "User",
-				startingValue = "21");
+				startingValue = 21);
 
 			ACDXPSettings.syncNewUserData(fieldNameList = "Age");
 		}
@@ -177,7 +177,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8628 | Test Summary: Segment distribution chart can be filtered by text property"
-	@priority = "3"
+	@priority = 3
 	test CanDistributionChartFilteredText {
 		property portal.upstream = "quarantine";
 
@@ -239,7 +239,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8625 | Test Summary: Search the Segment Profile Distribution"
-	@priority = "3"
+	@priority = 3
 	test CanSearchTheSegmentProfileDistribution {
 		property analytics.cloud.upstream = "false";
 
@@ -285,13 +285,13 @@ definition {
 		var nameList = "ac ac,dxp dxp,userfn userln";
 
 		task ("Create new users") {
-			for (var userCreate : list "${userList}") {
+			for (var userCreate : list ${userList}) {
 				JSONUser.addUser(
 					jobTitle = "QA",
 					userEmailAddress = "${userCreate}@liferay.com",
-					userFirstName = "${userCreate}",
-					userLastName = "${userCreate}",
-					userScreenName = "${userCreate}");
+					userFirstName = ${userCreate},
+					userLastName = ${userCreate},
+					userScreenName = ${userCreate});
 			}
 		}
 
@@ -299,7 +299,7 @@ definition {
 
 		task ("View AC Page as new user") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -307,7 +307,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {
@@ -321,7 +321,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
+			ACSegments.addStaticMultiMember(tableMember = ${nameList});
 
 			ACSegments.saveSegment();
 		}
@@ -343,7 +343,7 @@ definition {
 		}
 
 		task ("Assert that a right word will be found") {
-			for (var userSearch : list "${userList}") {
+			for (var userSearch : list ${userList}) {
 				ACSegments.searchTheSegmentProfile(searchTerm = "${userSearch} ${userSearch}");
 
 				ACInterests.viewIndividualInterestSpecificOrder(interestTopic = "${userSearch} ${userSearch}");
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8624 | Test Summary: Order the Segment Profile Distribution"
-	@priority = "3"
+	@priority = 3
 	test OrderSegmentProfileDistribution {
 		property analytics.cloud.upstream = "false";
 
@@ -371,13 +371,13 @@ definition {
 		}
 
 		task ("Add two new users") {
-			for (var name : list "${userList}") {
+			for (var name : list ${userList}) {
 				JSONUser.addUser(
 					jobTitle = "QA",
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 
 			ACDXPSettings.syncNewContactData();
@@ -385,7 +385,7 @@ definition {
 
 		task ("Login with the users and open the site") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -395,7 +395,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new static segment") {
@@ -409,7 +409,7 @@ definition {
 		}
 
 		task ("Add new user as member") {
-			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
+			ACSegments.addStaticMultiMember(tableMember = ${nameList});
 
 			ACSegments.saveSegment();
 		}

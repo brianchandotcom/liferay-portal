@@ -4,42 +4,42 @@ definition {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			siteTemplateName = "Raylife AP");
 	}
 
 	macro assertFieldRequiredMessage {
 		AssertElementPresent(
-			key_field = "${field}",
+			key_field = ${field},
 			locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
 	}
 
 	macro assertPageHeader {
 		AssertElementPresent(
-			key_header = "${key_header}",
+			key_header = ${key_header},
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
 	}
 
 	macro assertVisibleSidebar {
 		AssertVisible(
-			key_menuSidebar = "${key_menuSidebar}",
+			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
 	macro clickOnSubsectionTasks {
 		Click(
-			key_subsection = "${key_subsection}",
+			key_subsection = ${key_subsection},
 			locator1 = "RaylifeAP#TASKS_SECTION");
 	}
 
 	macro expandedSidebar {
 		MouseOver(
-			key_menuSidebar = "${key_menuSidebar}",
+			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
 	macro mouseOverSidebar {
-		var key_menu = "${menu}";
+		var key_menu = ${menu};
 
 		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
@@ -49,7 +49,7 @@ definition {
 			Type(
 				labelTitle = "Email Address",
 				locator1 = "RaylifeAP#SIGN_IN_FORM",
-				value1 = "${emailAddress}");
+				value1 = ${emailAddress});
 		}
 		else {
 			Type(
@@ -62,7 +62,7 @@ definition {
 			Type(
 				labelTitle = "Password",
 				locator1 = "RaylifeAP#SIGN_IN_FORM",
-				value1 = "${password}");
+				value1 = ${password});
 		}
 		else {
 			Type(

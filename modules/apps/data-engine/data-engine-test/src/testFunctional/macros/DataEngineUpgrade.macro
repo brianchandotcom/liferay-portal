@@ -23,13 +23,13 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Date,Number") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
 		for (var locale : list "pt-BR,ca-ES") {
-			PortletEntry.changeLocale(locale = "${locale}");
+			PortletEntry.changeLocale(locale = ${locale});
 
 			for (var fieldFieldLabel : list "Text,Date,Number") {
 				AssertVisible(
@@ -197,15 +197,15 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
 
-		for (var structureFieldName : list "${fieldList}") {
+		for (var structureFieldName : list ${fieldList}) {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${structureFieldName}",
+				fieldFieldLabel = ${structureFieldName},
 				fieldFieldLabelEdit = "${structureFieldName} Edited");
 		}
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		for (var structureFieldName : list "${fieldList}") {
+		for (var structureFieldName : list ${fieldList}) {
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "${structureFieldName} - pt_BR",
 				fieldFieldLabelEdit = "${structureFieldName} - pt_BR Edited");
@@ -213,7 +213,7 @@ definition {
 
 		PortletEntry.changeLocale(locale = "ca-ES");
 
-		for (var structureFieldName : list "${fieldList}") {
+		for (var structureFieldName : list ${fieldList}) {
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "${structureFieldName} - ca_ES",
 				fieldFieldLabelEdit = "${structureFieldName} - ca_ES Edited");
@@ -457,7 +457,7 @@ definition {
 			webContentTitle = "My Web Content based on My Structure with repeated fields");
 
 		for (var locale : list "pt-BR,ca-ES") {
-			PortletEntry.changeLocale(locale = "${locale}");
+			PortletEntry.changeLocale(locale = ${locale});
 
 			WebContent.addWithStructureCP(
 				webContentDate = "23/02/2021",
@@ -486,7 +486,7 @@ definition {
 			WebContent.viewWithStructureCP(
 				webContentDate = "03/02/2021",
 				webContentDateFieldLabel = "Date - ${locale}",
-				webContentLocaleFieldLabel = "${locale}",
+				webContentLocaleFieldLabel = ${locale},
 				webContentNumeric = "1,2",
 				webContentNumericFieldLabel = "Number - ${locale}",
 				webContentText = "Text - ${locale}",
@@ -503,25 +503,25 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with all fields");
 
-		for (var fields : list "${allFields}") {
+		for (var fields : list ${allFields}) {
 			Click(
-				key_fieldFieldLabel = "${fields}",
+				key_fieldFieldLabel = ${fields},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 			AssertTextEquals(
 				key_fieldLabel = "Label",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fields}");
+				value1 = ${fields});
 		}
 
 		for (var locale : list "pt-BR,ca-ES") {
-			PortletEntry.changeLocale(locale = "${locale}");
+			PortletEntry.changeLocale(locale = ${locale});
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
 				value1 = "My Structure with all fields - ${locale}");
 
-			for (var fields : list "${allFields}") {
+			for (var fields : list ${allFields}) {
 				Click(
 					key_fieldFieldLabel = "${fields} - ${locale}",
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -542,7 +542,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure with nested fields");
 
 		for (var language : list "pt-BR,ca-ES") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
@@ -639,9 +639,9 @@ definition {
 
 		for (var structureTitle : list "My Structure with all fields,My Structure with nested fields,My Structure with fieldsets level 0,My Structure with fieldsets level 1,My Structure with fieldsets level 2") {
 			AssertTextEquals(
-				key_ddlDataDefinitionName = "${structureTitle}",
+				key_ddlDataDefinitionName = ${structureTitle},
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-				value1 = "${structureTitle}");
+				value1 = ${structureTitle});
 		}
 	}
 
@@ -650,11 +650,11 @@ definition {
 
 		var wcList = "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields";
 
-		for (var wcTitle : list "${wcList}") {
+		for (var wcTitle : list ${wcList}) {
 			AssertTextEquals(
-				key_webContentTitle = "${wcTitle}",
+				key_webContentTitle = ${wcTitle},
 				locator1 = "WC#ENTRY_LIST_TITLE",
-				value1 = "${wcTitle}");
+				value1 = ${wcTitle});
 		}
 	}
 
@@ -665,20 +665,20 @@ definition {
 
 		var localeCodeList = "pt_BR,ca_ES";
 
-		for (var fieldLabel : list "${fieldList}") {
+		for (var fieldLabel : list ${fieldList}) {
 			AssertElementPresent(
-				key_fieldName = "${fieldLabel}",
+				key_fieldName = ${fieldLabel},
 				locator1 = "Form#FIELD_LABEL");
 		}
 
-		for (var localeCode : list "${localeCodeList}") {
-			var localeCode = StringUtil.replace("${localeCode}", "_", "-");
+		for (var localeCode : list ${localeCodeList}) {
+			var localeCode = StringUtil.replace(${localeCode}, "_", "-");
 
-			PortletEntry.changeLocale(locale = "${localeCode}");
+			PortletEntry.changeLocale(locale = ${localeCode});
 
-			var localeCode = StringUtil.replace("${localeCode}", "-", "_");
+			var localeCode = StringUtil.replace(${localeCode}, "-", "_");
 
-			for (var fieldLabel : list "${fieldList}") {
+			for (var fieldLabel : list ${fieldList}) {
 				AssertElementPresent(
 					key_fieldName = "${fieldLabel} - ${localeCode}",
 					locator1 = "Form#FIELD_LABEL");
@@ -771,42 +771,42 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Text - en_US");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "02/22/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "1.1");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "REP Text - en_US");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "02/23/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "1.2");
@@ -819,42 +819,42 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Text - pt_BR");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "23/02/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "2,1");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "REP Text - pt_BR");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "24/02/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "2,2");
@@ -867,42 +867,42 @@ definition {
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Text - ca_ES");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "24/02/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "3,1");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "REP Text - ca_ES");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
 			value1 = "25/02/2021");
 
 		AssertAttributeValue(
 			attribute1 = "value",
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "3,2");

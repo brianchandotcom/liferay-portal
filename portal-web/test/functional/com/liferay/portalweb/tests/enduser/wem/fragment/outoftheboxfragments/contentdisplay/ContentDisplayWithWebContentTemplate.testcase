@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a use test for LPS-101248. Delete a web content template used in Content Display fragment."
-	@priority = "2"
+	@priority = 2
 	test DeleteSelectedTemplate {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -55,7 +55,7 @@ definition {
 			WebContentTemplates.addCP(
 				structureName = "Basic Web Content",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a Content Display to page") {
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a Template for web content selected in content fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test SelectCustomWebContentTemplate {
 		property portal.acceptance = "true";
@@ -144,18 +144,18 @@ definition {
 			ContentPages.viewFragmentText(
 				assetType = "journal",
 				fragmentName = "Content Display",
-				text = "${siteId}");
+				text = ${siteId});
 
 			AssertTextNotEquals.assertNotPartialText(
 				assetType = "journal",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
 				value1 = "This content maps from web content");
 		}
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from Global site as a Template for Content Display fragment."
-	@priority = "2"
+	@priority = 2
 	test SelectWebContentTemplateFromGlobalSite {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -174,7 +174,7 @@ definition {
 			WebContentTemplates.addCP(
 				structureName = "Basic Web Content",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a Content Display to page") {
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from script file as a "Template" for Content Display fragment."
-	@priority = "2"
+	@priority = 2
 	test SelectWebContentTemplateFromScriptFile {
 		task ("Add a web content structure with Text and Numeric fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -224,8 +224,8 @@ definition {
 
 			for (var fieldName : list "Text,Numeric") {
 				DataEngine.addField(
-					fieldFieldLabel = "${fieldName}",
-					fieldName = "${fieldName}");
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName});
 			}
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -247,7 +247,7 @@ definition {
 			WebContent.addWithStructureCP(
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentText = "This is a Text field",
 				webContentTitle = "Web Content Title");
 
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. The available web content template options are grouped and listed in alphabetical order in Content Display. Additionally, the web content templates for other structrue and deleted ones shouldn't be available."
-	@priority = "3"
+	@priority = 3
 	test ViewAvailableWebContentTemplates {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -362,15 +362,15 @@ definition {
 		}
 
 		task ("View the order of templates options in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var templateName : list "Basic Web Content,First Template For Basic Web Content,Second Template For Basic Web Content") {
 				AssertTextEquals(
 					key_fieldLabel = "Template",
 					key_groupLabel = "Basic Web Content",
-					key_index = "${n}",
+					key_index = ${n},
 					locator1 = "Select#GROUPED_SELECT_VALUE_ANY",
-					value1 = "${templateName}");
+					value1 = ${templateName});
 
 				var n = ${n} + 1;
 			}
@@ -392,7 +392,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Color field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithColorField {
 		task ("Add a web content structure with a Color field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -455,7 +455,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Date field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithDateField {
 		task ("Add a web content structure with a Date field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -518,7 +518,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Geolocation field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithGeolocationField {
 		task ("Add a web content structure with a Geolocation field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Grid field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithGridField {
 		task ("Add a web content structure with a Grid field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -606,8 +606,8 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				column = "1",
-				row = "1",
+				column = 1,
+				row = 1,
 				webContentGrid = "true",
 				webContentTitle = "Web Content Title");
 
@@ -641,7 +641,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Image field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithImageField {
 		task ("Add a web content structure with a Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -705,7 +705,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Link to Page field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithLinkToPageField {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -773,7 +773,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Multiple Selection field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithMultipleSelectionField {
 		task ("Add a web content structure with a Multiple Selection field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -834,7 +834,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Numeric field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithNumericField {
 		task ("Add a web content structure with a Numeric field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -864,7 +864,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
@@ -892,12 +892,12 @@ definition {
 			ContentPages.viewFragmentText(
 				assetType = "journal",
 				fragmentName = "Content Display",
-				text = "9");
+				text = 9);
 		}
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Rich Text field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithRichTextField {
 		task ("Add a web content structure with a Rich Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -960,7 +960,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Select from List field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithSelectFromListField {
 		task ("Add a web content structure with a Select from List field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1021,7 +1021,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Single Selection field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithSingleSelectionField {
 		task ("Add a web content structure with a Single Selection field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1082,7 +1082,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Text field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithTextField {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1145,7 +1145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Upload field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithUploadField {
 		task ("Add a web content structure with a Upload field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1208,7 +1208,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Display web content with Web Content field in Content Display."
-	@priority = "3"
+	@priority = 3
 	test ViewSelectedWebContentWithWebContentField {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

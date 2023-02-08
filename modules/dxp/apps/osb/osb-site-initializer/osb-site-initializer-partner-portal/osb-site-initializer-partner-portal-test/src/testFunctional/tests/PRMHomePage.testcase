@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "LPS-172079 - Verify that the admin user can add a new announcement."
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddAnnouncement {
 		task ("Given: The user goes to Web Content and enters on 'Announcements' folder") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "partner-portal");
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-172458. User can access Deal Registration Listing through Quick Links"
-	@priority = "4"
+	@priority = 4
 	test CanAccessDealListingViaQuickLinks {
 		task ("When I click on 'Deal Registration' button, on Quick Links section") {
 			PRMHomePage.gotoQuickLinksOption(
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-171642. User can access MDF Request Listing through Quick Links"
-	@priority = "4"
+	@priority = 4
 	test CanAccessMDFRequestListingViaQuickLinks {
 		task ("When I click on 'MDF' button, on Quick Links section") {
 			PRMHomePage.gotoQuickLinksOption(

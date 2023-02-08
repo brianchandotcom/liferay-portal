@@ -14,13 +14,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This test assert the account manager can view account users by default."
-	@priority = "4"
+	@priority = 4
 	test AccountManagersCanViewUsersbyDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142654. This asserts user with Add Account Role permissions for an account can add account roles."
-	@priority = "4"
+	@priority = 4
 	test CanAddAccountRolesWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -128,7 +128,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,ADD_ACCOUNT_ROLE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Account Specific Role",
 					roleType = "account");
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-142654. This test asserts that a user with the correct permissions is able to assign a user to an account role."
-	@priority = "3"
+	@priority = 3
 	test CanAssignUsersToAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -202,7 +202,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES,VIEW_USERS") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Assign Account Roles",
 					roleType = "account");
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142654. This asserts user with Define Permission can define owned account role permissions."
-	@priority = "4"
+	@priority = 4
 	test CanDefinePermissionsforAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -294,7 +294,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Define Permissions Role",
 					roleType = "account");
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142654. This asserts user with Delete Account Role permissions for an account can Delete account roles."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -376,7 +376,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Access Account Permission");
 			}
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-158344. This test assert the account manager can only view account organizations by default and can not change organization associations."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewOrganizationsByDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -497,21 +497,21 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			for (var orgName : list "AM Organization,Account Org1") {
-				LexiconEntry.viewEntryName(rowEntry = "${orgName}");
+				LexiconEntry.viewEntryName(rowEntry = ${orgName});
 
 				AssertElementNotPresent(
-					key_entryName = "${orgName}",
+					key_entryName = ${orgName},
 					locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 				AssertElementNotPresent(
-					key_rowEntry = "${orgName}",
+					key_rowEntry = ${orgName},
 					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 			}
 		}
 	}
 
 	@description = "This is a use case for LPS-151552. This asserts saving edits in one permissions tab in Account Roles does not clear related permissions from the other tab."
-	@priority = "4"
+	@priority = 4
 	test CanSavePermissionsWithoutDeletingOthers {
 		task ("Given an account role is created") {
 			Role.openRolesAdmin();
@@ -559,7 +559,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142654. This asserts user with Update Account Role permissions for an account can update account roles."
-	@priority = "4"
+	@priority = 4
 	test CanUpdateAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -601,7 +601,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Account Specific Role",
 					roleType = "account");
@@ -648,7 +648,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142654. This asserts user with View Account Roles permissions for an account can only view and cannot do other actions to those roles. It also asserts that a user only has this permissions to the account he has the role in."
-	@priority = "4"
+	@priority = 4
 	test CanViewAccountRolesWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -692,7 +692,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Account Specific Role1",
 					roleType = "account");

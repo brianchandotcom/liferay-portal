@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112994. Assert the Collections administration is written accessible on the staging site while read-only accessible on live site."
-	@priority = "5"
+	@priority = 5
 	test AssertCollectionsAdminInStagingAndLiveSite {
 		property portal.acceptance = "true";
 
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from staging and live site."
-	@priority = "4"
+	@priority = 4
 	test ViewUsagesOfCollection {
 		task ("Given the site designer has a collection") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -98,7 +98,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "2");
+				tableEntryInfo = 2);
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -125,7 +125,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "2");
+				tableEntryInfo = 2);
 		}
 	}
 

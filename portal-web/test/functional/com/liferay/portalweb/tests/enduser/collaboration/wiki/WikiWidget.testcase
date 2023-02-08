@@ -15,7 +15,7 @@ definition {
 			layoutName = "Wiki Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Wiki");
@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This ensures that the portlet display setting can be configured."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanConfigurePortletDisplaySettings {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This ensures that a link added with another page URL can navigate to the page after clicking the link."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -96,11 +96,11 @@ definition {
 	}
 
 	@description = "This ensures that the Wiki tabs can be viewed in the Breadcrumb widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewBreadcrumbViaBreadcrumbWidgetAfterChangingWikiTab {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Breadcrumb");
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-67548. It ensures that the history can be viewed in wiki details."
-	@priority = "3"
+	@priority = 3
 	test CanViewHistoryInDetails {
 		JSONWiki.updateWikiPage(
 			groupName = "Guest",
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."
-	@priority = "3"
+	@priority = 3
 	test CanViewPagesViaTreeMenu {
 		for (var num : list "1,2") {
 			JSONWiki.addWikiPage(
@@ -163,7 +163,7 @@ definition {
 		}
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Tree Menu");
@@ -183,10 +183,10 @@ definition {
 
 	@description = "This test ensures that the wiki widget follows W3C accessibility standards."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Wiki Display");

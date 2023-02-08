@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment entities text fields."
-	@priority = "4"
+	@priority = 4
 	test AddCustomTextInputFieldsOnContentPage {
 		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment with translated entities text fields."
-	@priority = "4"
+	@priority = 4
 	test AddCustomTextInputFieldsWithTranslation {
 		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container and Language Selector widget on a content page") {
 			task ("Add a Form Container framgment to content page") {
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150278. The sites designer cannot hide a Text Input fragment on content page."
-	@priority = "4"
+	@priority = 4
 	test CannotHideTextInputFragmentOnContentPage {
 		task ("Given a page designer has a Text Input fragment to content page") {
 			JSONLayout.addPublicLayout(
@@ -281,7 +281,7 @@ definition {
 
 		task ("Then the page designer could not view the hide icon on structure tree") {
 			AssertElementNotPresent(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Text Input",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 		}
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149725. The pages designer cannot type more than 280 characters in the text input field."
-	@priority = "4"
+	@priority = 4
 	test CannotType281CharactersInTextInputField {
 		var actualText = "The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters";
 		var inputText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characterss";
@@ -343,14 +343,14 @@ definition {
 			Type.sendKeys(
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 		}
 
 		task ("Then the pages designer can see just 280 characters in Text Input field") {
 			AssertTextEquals(
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
-				value1 = "${modifiedText}");
+				value1 = ${modifiedText});
 		}
 
 		task ("When the pages designer types 280 characters in the Input Fragment") {
@@ -361,19 +361,19 @@ definition {
 			Type.sendKeys(
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
-				value1 = "${actualText}");
+				value1 = ${actualText});
 		}
 
 		task ("Then the pages designer can see 280 characters in Text Input field") {
 			AssertTextEquals(
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
-				value1 = "${actualText}");
+				value1 = ${actualText});
 		}
 	}
 
 	@description = "This is a test for LPS-151400. The required field has an asterisk symbol on dropdown menu of mapping field selector."
-	@priority = "4"
+	@priority = 4
 	test ViewAsteriskSymbolOfRequiredField {
 		task ("Given a page creator has a Form Container with a Text Input fragment") {
 			task ("Add a required Text field to object") {
@@ -419,7 +419,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with blank required field."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithBlankRequiredField {
 		task ("Given a user has a content page where a required Text Input and Submit Button fragments are inside a Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -474,7 +474,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the length of field."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheLengthOfField {
 		task ("Given a user has a content page where a Text Input and Submit Button fragments are inside a Form Container") {
 			task ("Change the Maximum Number of Characters of Region field to 20") {
@@ -491,7 +491,7 @@ definition {
 				Type(
 					key_text = "Maximum Number of Characters",
 					locator1 = "TextInput#ANY",
-					value1 = "20");
+					value1 = 20);
 
 				ObjectField.save();
 			}

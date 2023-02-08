@@ -2,174 +2,174 @@ definition {
 
 	macro assertAxisTick {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
-		if ("${axis}" == "xAxis") {
+		if (${axis} == "xAxis") {
 			AssertTextEquals(
-				index = "${index}",
-				key_cardTitle = "${cardName}",
+				index = ${index},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK",
-				value1 = "${tick}");
+				value1 = ${tick});
 		}
-		else if ("${axis}" == "yAxis") {
+		else if (${axis} == "yAxis") {
 			AssertTextEquals(
-				index = "${index}",
-				key_cardTitle = "${cardName}",
+				index = ${index},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#RECHARTS_CARTESIAN_Y_AXIS_TICK",
-				value1 = "${tick}");
+				value1 = ${tick});
 		}
 	}
 
 	macro getAxisTick {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
-		if ("${axis}" == "xAxis") {
+		if (${axis} == "xAxis") {
 			WaitForVisible(
-				index = "${index}",
-				key_cardTitle = "${cardName}",
+				index = ${index},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#RECHARTS_CARTESIAN_X_AXIS_TICK");
 		}
-		else if ("${axis}" == "yAxis") {
+		else if (${axis} == "yAxis") {
 			WaitForVisible(
-				index = "${index}",
-				key_cardTitle = "${cardName}",
+				index = ${index},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#RECHARTS_CARTESIAN_Y_AXIS_TICK");
 		}
 
 		var tick = selenium.getText("xpath=(//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${cardName}']]//div[contains(@class,'recharts')]//*[name()='g'][contains(@class,'${axis}')]//*[name()='tspan'])[${index}]");
 
-		return "${tick}";
+		return ${tick};
 	}
 
 	macro noViewTopSitesCardByIndexes {
 		AssertElementNotPresent(
-			key_indexNumber = "${key_index}",
+			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
 	macro noViewTopVisitedPages {
 		AssertElementNotPresent(
-			key_entryName = "${key_entry}",
-			key_resultNumber = "${key_result}",
+			key_entryName = ${key_entry},
+			key_resultNumber = ${key_result},
 			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
 	macro selectInterval {
 		if (isSet(cardName)) {
 			Click(
-				interval = "${interval}",
-				key_cardTitle = "${cardName}",
+				interval = ${interval},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#INTERVAL_OPTION_IN_SPECIFIC_CARD");
 		}
 		else {
 			Click(
-				interval = "${interval}",
+				interval = ${interval},
 				locator1 = "ACCards#INTERVAL_OPTION");
 		}
 	}
 
 	macro viewCards {
-		var key_cardTitle = "${cardTitle}";
+		var key_cardTitle = ${cardTitle};
 
 		AssertTextEquals(
 			locator1 = "ACCards#CARD_TITLE",
-			value1 = "${cardTitle}");
+			value1 = ${cardTitle});
 	}
 
 	macro viewGeomapContainer {
 		AssertVisible(
 			element = "",
-			key_cardTitle = "${cardTitle}",
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_CONTAINER");
 	}
 
 	macro viewGeomapTableText {
 		AssertTextEquals(
-			key_cardTitle = "${cardTitle}",
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
 			position = "left",
-			value1 = "${leftText}");
+			value1 = ${leftText});
 
 		AssertTextEquals(
-			key_cardTitle = "${cardTitle}",
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
 			position = "right",
-			value1 = "${rightText}");
+			value1 = ${rightText});
 	}
 
 	macro viewMetricBarStyle {
 		AssertAttributeValue(
 			attribute1 = "style",
-			entryName = "${entryName}",
-			key_cardTitle = "${cardTitle}",
+			entryName = ${entryName},
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#METRIC_BAR",
-			value1 = "${style}");
+			value1 = ${style});
 
 		AssertCssValue(
-			entryName = "${entryName}",
-			key_cardTitle = "${cardTitle}",
+			entryName = ${entryName},
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#METRIC_BAR",
 			locator2 = "background-color",
-			value1 = "${backgroundColor}");
+			value1 = ${backgroundColor});
 	}
 
 	macro viewMetricValue {
-		var key_cardTitle = "${cardTitle}";
-		var key_metricName = "${metricName}";
-		var key_metricValue = "${metricValue}";
+		var key_cardTitle = ${cardTitle};
+		var key_metricName = ${metricName};
+		var key_metricValue = ${metricValue};
 
 		WaitForPageLoad();
 
 		while ((IsElementNotPresent(locator1 = "ACCards#METRIC_VALUE")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
-			if ("${timeFilter}" != "Custom Range") {
+			if (${timeFilter} != "Custom Range") {
 				ACTimeFilter.clickTimeFilterButton();
 
-				if ("${timeFilter}" == "Last 24 hours") {
+				if (${timeFilter} == "Last 24 hours") {
 					ACTimeFilter.setLast24Hours();
 				}
 
-				if ("${timeFilter}" == "Yesterday") {
+				if (${timeFilter} == "Yesterday") {
 					ACTimeFilter.setYesterday();
 				}
 
-				if ("${timeFilter}" == "Last 7 days") {
+				if (${timeFilter} == "Last 7 days") {
 					ACTimeFilter.setLast7Days();
 				}
 
-				if ("${timeFilter}" == "Last 28 days") {
+				if (${timeFilter} == "Last 28 days") {
 					ACTimeFilter.setLast28Days();
 				}
 
-				if ("${timeFilter}" == "Last 30 days") {
+				if (${timeFilter} == "Last 30 days") {
 					ACTimeFilter.setLast30Days();
 				}
 
-				if ("${timeFilter}" == "Last 90 days") {
+				if (${timeFilter} == "Last 90 days") {
 					ACTimeFilter.setLast90Days();
 				}
 
-				if ("${timeFilter}" == "Last 180 days") {
+				if (${timeFilter} == "Last 180 days") {
 					ACTimeFilter.setLast180Days();
 				}
 
-				if ("${timeFilter}" == "Last Year") {
+				if (${timeFilter} == "Last Year") {
 					ACTimeFilter.setLastYear();
 				}
 			}
 
-			if ("${timeFilter}" == "Custom Range") {
+			if (${timeFilter} == "Custom Range") {
 				ACTimeFilter.setCustomRange(
-					endDay = "${endDay}",
-					endMonth = "${endMonth}",
-					endYear = "${endYear}",
-					startDay = "${startDay}",
-					startMonth = "${startMonth}",
-					startYear = "${startYear}");
+					endDay = ${endDay},
+					endMonth = ${endMonth},
+					endYear = ${endYear},
+					startDay = ${startDay},
+					startMonth = ${startMonth},
+					startYear = ${startYear});
 			}
 		}
 
@@ -179,51 +179,51 @@ definition {
 	macro viewSelectedInterval {
 		if (isSet(cardName)) {
 			AssertElementPresent(
-				interval = "${interval}",
-				key_cardTitle = "${cardName}",
+				interval = ${interval},
+				key_cardTitle = ${cardName},
 				locator1 = "ACCards#INTERVAL_OPTION_ACTIVE_IN_SPECIFIC_CARD");
 		}
 		else {
 			AssertElementPresent(
-				interval = "${interval}",
+				interval = ${interval},
 				locator1 = "ACCards#INTERVAL_OPTION_ACTIVE");
 		}
 	}
 
 	macro viewTableEntryInfo {
 		AssertVisible(
-			column = "${column}",
-			entryInfo = "${entryInfo}",
-			entryName = "${entryName}",
-			key_cardTitle = "${cardTitle}",
+			column = ${column},
+			entryInfo = ${entryInfo},
+			entryName = ${entryName},
+			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#TABLE_ENTRY_INFO");
 	}
 
 	macro viewTopSitesByIndexes {
 		AssertElementPresent(
-			key_entryName = "${key_entry}",
-			key_indexNumber = "${key_index}",
+			key_entryName = ${key_entry},
+			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_INDEXES");
 	}
 
 	macro viewTopSitesCardByIndexes {
 		AssertElementPresent(
-			key_indexNumber = "${key_index}",
+			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
 	macro viewTopVisitedPages {
 		AssertElementPresent(
-			key_entryName = "${key_entry}",
-			key_resultNumber = "${key_result}",
+			key_entryName = ${key_entry},
+			key_resultNumber = ${key_result},
 			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
 	macro viewTotalCount {
 		AssertTextEquals(
-			key_cardTitle = "${cardName}",
+			key_cardTitle = ${cardName},
 			locator1 = "ACCards#TOTAL_COUNT",
-			value1 = "${count}");
+			value1 = ${count});
 	}
 
 }

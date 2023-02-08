@@ -1,9 +1,9 @@
 definition {
 
 	macro changeConfigColor {
-		var key_fragmentName = "${fragmentName}";
+		var key_fragmentName = ${fragmentName};
 
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -13,12 +13,12 @@ definition {
 
 		if (isSet(colorPicker)) {
 			PageEditor.selectColorSwatchItem(
-				colorSwatchItem = "${colorPicker}",
-				fieldLabel = "${fieldLabel}");
+				colorSwatchItem = ${colorPicker},
+				fieldLabel = ${fieldLabel});
 		}
 		else {
 			Click(
-				colorPalette = "${colorPalette}",
+				colorPalette = ${colorPalette},
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
 		}
 
@@ -26,7 +26,7 @@ definition {
 	}
 
 	macro changeConfigSelection {
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -35,17 +35,17 @@ definition {
 		Navigator.gotoNavTab(navTab = "General");
 
 		Select(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${optionValue}");
+			value1 = ${optionValue});
 
 		PageEditor.waitForAutoSave();
 	}
 
 	macro changeConfigText {
-		var key_fragmentName = "${fragmentName}";
+		var key_fragmentName = ${fragmentName};
 
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -54,8 +54,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "General");
 
 		FormFields.editText(
-			fieldName = "${textConfigName}",
-			fieldValue = "${editableText}");
+			fieldName = ${textConfigName},
+			fieldValue = ${editableText});
 
 		Click(
 			key_sidebarButton = "Browser",
@@ -65,11 +65,11 @@ definition {
 	}
 
 	macro checkConfigCheckbox {
-		var key_fragmentName = "${fragmentName}";
+		var key_fragmentName = ${fragmentName};
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
-		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -77,9 +77,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "General");
 
-		while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${checkboxName}", locator1 = "Checkbox#ANY_CHECKBOX")) {
+		while (IsNotChecked.isNotCheckedNotVisible(checkboxName = ${checkboxName}, locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.clickAtNotVisible(
-				checkboxName = "${checkboxName}",
+				checkboxName = ${checkboxName},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 

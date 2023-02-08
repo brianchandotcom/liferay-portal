@@ -1,8 +1,8 @@
 definition {
 
 	macro MarkAsNotSpam {
-		if ("${assetType}" == "wikiPage") {
-			var key_wikiPageTitle = "${wikiPageTitle}";
+		if (${assetType} == "wikiPage") {
+			var key_wikiPageTitle = ${wikiPageTitle};
 
 			Check(locator1 = "SpamModeration#WIKI_PAGE_TABLE_CHECKBOX");
 
@@ -23,7 +23,7 @@ definition {
 	}
 
 	macro viewDefault {
-		if ("${assetType}" == "wikiPage") {
+		if (${assetType} == "wikiPage") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
 				value1 = "There are no pages. ");
@@ -31,22 +31,22 @@ definition {
 	}
 
 	macro viewMarkedAsSpam {
-		if ("${assetType}" == "wikiPage") {
-			var key_wikiPageTitle = "${wikiPageTitle}";
+		if (${assetType} == "wikiPage") {
+			var key_wikiPageTitle = ${wikiPageTitle};
 
 			AssertElementPresent(locator1 = "SpamModeration#WIKI_PAGE_TABLE_CHECKBOX");
 
 			AssertTextEquals(
 				locator1 = "SpamModeration#WIKI_PAGE_TABLE_TITLE",
-				value1 = "${wikiPageTitle}");
+				value1 = ${wikiPageTitle});
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_REVISION",
-				value1 = "${wikiPageRevision}");
+				value1 = ${wikiPageRevision});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "SpamModeration#WIKI_PAGE_TABLE_POSTED_BY",
-				value1 = "${wikiPageUsername}");
+				value1 = ${wikiPageUsername});
 
 			AssertElementPresent(locator1 = "SpamModeration#WIKI_PAGE_TABLE_ACTIONS");
 		}

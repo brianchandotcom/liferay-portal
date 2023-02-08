@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136813. It checks that a Blog entry can be resubmitted after it is rejected."
-	@priority = "4"
+	@priority = 4
 	test CanResubmitRejectedEntry {
 		property portal.acceptance = "true";
 

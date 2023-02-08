@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 	}
 
@@ -34,19 +34,19 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150534 | Test Summary: Verify if for projects with DXP version 7.4 the card title is 'Latest Updates' and in the version 7.3 appears 'Latest Fix Packs'"
-	@priority = "4"
+	@priority = 4
 	test CanViewCardsInDiferentVersions {
 		task ("Go to CP2.0 and join a project with version 7.3") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.3");
 		}
@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project with version 7.4") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
@@ -71,10 +71,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150533 | Test Summary: Verify the 'Submit a Ticket' card appears at the top of the Quick Links list if the project has an SLA card."
-	@priority = "4"
+	@priority = 4
 	test CanViewSubmitATicketCard {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -101,10 +101,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144906 | Test Summary: Verify if when Hide button is clicked by user, the Quick Links panel collapses"
-	@priority = "3"
+	@priority = 3
 	test HideButtonClickedPanelCollapses {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -118,7 +118,7 @@ definition {
 
 	@description = "Automation ID: LPS-144933 | Test Summary: Verify if Activate Analytics Cloud doesn't appear in Quick Links panel when Analytics Cloud is Active"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfACActiveNoActivateAC {
 		task ("Creating objects for the Analytics Cloud") {
 			CustomerPortal.showCPObject(title = "Account Subscription Group");
@@ -137,7 +137,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
@@ -173,7 +173,7 @@ definition {
 		}
 
 		task ("Go back to CP2.0 and enter the project again") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Analytics Cloud");
 		}
@@ -192,10 +192,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144932 | Test Summary: Verify if 'Activate Analytics Cloud' appears in Quick Links panel when Analytics Cloud is Not Active"
-	@priority = "5"
+	@priority = 5
 	test IfACNotActiveShowActivateAC {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -214,10 +214,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144912 | Test Summary: Verify if 'Environment Details' appears in Quick Links panel when DXP is Active"
-	@priority = "5"
+	@priority = 5
 	test IfDXPActiveShowsEnvironmentDetails {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -234,10 +234,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144928 | Test Summary: Verify if 'Source Code Access' appears in Quick Links panel when DXP is 'Active'"
-	@priority = "5"
+	@priority = 5
 	test IfDXPActiveShowsSourceCode {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -255,10 +255,10 @@ definition {
 
 	@description = "Automation ID: LPS-144930 | Test Summary: Verify if Latest Fix Packs appears in Quick Links panel when DXP Cloud is Active"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test IfDXPCloudActiveShowLatestFix {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -275,14 +275,14 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144924 | Test Summary: Verify if when DXP Cloud is present Environment Details doesn't show up unless Commerce is Active too"
-	@priority = "4"
+	@priority = 4
 	test IfDXPCloudAndCommerceActiveShowsEnvironmentDetails {
 		task ("Width desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -292,7 +292,7 @@ definition {
 		}
 
 		task ("Go back to the homepage and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -307,10 +307,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144929 | Test Summary: Verify if when DXP Cloud is not active, Source Code Access doesn't show up. DXP cannot be active otherwise, Source Code Access will appear"
-	@priority = "4"
+	@priority = 4
 	test IfDXPCloudNotActiveNoSourceCode {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -327,10 +327,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144931 | Automation ID: Verify if 'Latest Fix Packs' does not appear when DXP is not active. DXP Cloud cannot be active otherwise, Latest Fix Packs will appear"
-	@priority = "4"
+	@priority = 4
 	test IfDXPNotActiveNoLatestFix {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -345,10 +345,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144926 | Test Summary: Verify if when Limited SLA is Active, Large File Attachments doesn't show up"
-	@priority = "4"
+	@priority = 4
 	test IfLimitedSLAActiveNoLargeFile {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
 		}
@@ -364,10 +364,10 @@ definition {
 
 	@description = "Automation ID: LPS-144914 | Test Summary: Verify if when Partnership is Active, Environment Details doesn't appear. Note: DXP, Portal and Commerce cannot be active otherwise, Environment Details will appear"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfPartnershipActiveNoEnvironmentDetails {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Partnership");
 		}
@@ -382,10 +382,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144925 | Test Summary: Verify if Large File Attachments appears in Quick Links panel when there is no Limited SLA or Partnership Active"
-	@priority = "5"
+	@priority = 5
 	test IfPartnershipNorLimitedSLAShowsLargeFile {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -403,20 +403,20 @@ definition {
 
 	@description = "Automation ID: LPS-144934 | Test Summary: Verify if Activate Analytics Cloud don't show up if Portal is active and if DXP or DXP Cloud aren't Active"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfPortalActiveButNoDXPNoActivateAC {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 	}
 
 	@description = "Automation ID: LPS-144741 | Test Summary: Verify if the Quick Links panel is visible on the Overview page"
-	@priority = "5"
+	@priority = 5
 	test IsQuickLinksOnOverviewPage {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Others");
 		}
@@ -427,10 +427,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144742 | Test Summary: Verify if the Quick Links panel is visible on the Product Activation pages"
-	@priority = "5"
+	@priority = 5
 	test IsQuickLinksOnProductActivation {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -448,7 +448,7 @@ definition {
 
 	@description = "Automation ID: LPS-154791 | Test Summary: Verify that the Quick Links Panel does not appear in Team Members"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test QuickLinksDoesNotAppearInTeamMembers {
 
 		// Needs refactor since it depends on login OKTA
@@ -458,7 +458,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
@@ -477,10 +477,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144907 | Test Summary: Verify if when user clicks on Show, the Quick Links panel expands"
-	@priority = "3"
+	@priority = 3
 	test ShowButtonClickedPanelExpands {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}

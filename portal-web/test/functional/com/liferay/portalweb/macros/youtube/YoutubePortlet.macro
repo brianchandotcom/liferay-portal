@@ -5,7 +5,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${videoId}");
+			value1 = ${videoId});
 	}
 
 	macro assertVideoTitle {
@@ -13,7 +13,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "YoutubePortlet#VIDEO_TITLE",
-			value1 = "${videoTitle}");
+			value1 = ${videoTitle});
 
 		SelectFrameTop();
 	}
@@ -22,17 +22,17 @@ definition {
 		SelectFrame(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
 		WaitForElementPresent(
-			key_value = "${progressBarInitialization}",
+			key_value = ${progressBarInitialization},
 			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
 
 		Click(locator1 = "Button#YOUTUBE_PLAY");
 
 		MouseOver(
-			key_value = "${videoDuration}",
+			key_value = ${videoDuration},
 			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
 
 		WaitForElementPresent(
-			key_value = "${videoPlayNode}",
+			key_value = ${videoPlayNode},
 			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
 	}
 
@@ -41,7 +41,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#URL",
-			value1 = "${videoId}");
+			value1 = ${videoId});
 	}
 
 }

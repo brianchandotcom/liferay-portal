@@ -15,7 +15,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddDocumentInFolder {
 		property custom.properties = "dl.actions.visible=true";
@@ -62,7 +62,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddImageInFolder {
 		property custom.properties = "dl.actions.visible=true";
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "We only need one test to cover performing actions in a subfolder. The rest of the subfolder cases will be covered at the folder level."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddImageInSubFolder {
 		property custom.properties = "dl.actions.visible=true";
@@ -124,7 +124,7 @@ definition {
 			dmDocumentTitle = "DM Image Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddMultipleSubFolders {
 		property custom.properties = "dl.actions.visible=true";
@@ -156,7 +156,7 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder2 Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteDocumentInFolder {
 		property custom.properties = "dl.actions.visible=true";
@@ -183,7 +183,7 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteFolderWithDocument {
 		property custom.properties = "dl.actions.visible=true";
@@ -211,7 +211,7 @@ definition {
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteSubFolderInSite {
 		property custom.properties = "dl.actions.visible=true";
@@ -239,7 +239,7 @@ definition {
 		DMFolder.deletePG(dmFolderName = "DM SubFolder Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditFolder {
 		property portal.acceptance = "true";
@@ -260,7 +260,7 @@ definition {
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditSubFolder {
 		property custom.properties = "dl.actions.visible=true";
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@description = "This case ensures that a document can be viewed after being moved into a folder."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMoveDocumentToFolder {
 		property portal.acceptance = "true";
@@ -326,7 +326,7 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanMoveDocumentWithSlashesInTitle {
 		property custom.properties = "dl.actions.visible=true";
@@ -356,7 +356,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "/D/M/Document Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanMoveFolderToFolder {
 		property portal.acceptance = "true";
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@description = "This ensures that a folder can be moved to another folder via drag and drop."
-	@priority = "4"
+	@priority = 4
 	test CanMoveFolderToFolderViaDragAndDrop {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description1",
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@description = "This case covers LPS-127681. It ensures that a subfolder cannot be moved to parent folder when they are using same name."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanMoveFolderToParentWithSameName {
 		JSONFolder.addFolder(
@@ -439,7 +439,7 @@ definition {
 			moveSubfolder = "true");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMoveFolderToRecycleBin {
 		property portal.acceptance = "true";

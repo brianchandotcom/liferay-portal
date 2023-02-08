@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116076. The New button should be hidden when disable template creation in Dynamic Data Mapping. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewTemplateEditorSidebarPanel {
 		task ("Add a widget template for Asset Publisher") {
@@ -124,7 +124,7 @@ definition {
 
 			for (var fieldName : list "Asset Entries*,Asset Entry,Current URL,Locale,Portlet Preferences,Template ID,Theme Display,HTTP Request,Render Request,Render Response,Asset Publisher Helper") {
 				AssertElementPresent(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMEditTemplate#SCRIPT_FIELD");
 			}
 		}
@@ -134,7 +134,7 @@ definition {
 
 			for (var fieldName : list "Template Key,URL,WebDAV URL") {
 				AssertVisible(
-					key_text = "${fieldName}",
+					key_text = ${fieldName},
 					locator1 = "TextInput#ANY");
 			}
 

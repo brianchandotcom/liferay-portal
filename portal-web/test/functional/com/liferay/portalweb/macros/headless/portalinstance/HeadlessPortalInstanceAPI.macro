@@ -4,7 +4,7 @@ definition {
 	macro _getPortalInstances {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
-		if ("${authenticationMethod}" == "By Screen Name") {
+		if (${authenticationMethod} == "By Screen Name") {
 			var userName = "test";
 		}
 		else {
@@ -17,9 +17,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var json = JSONCurlUtil.get("${curl}");
+		var json = JSONCurlUtil.get(${curl});
 
-		return "${json}";
+		return ${json};
 	}
 
 	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, and portalInstanceId = webId"
@@ -33,16 +33,16 @@ definition {
 			value = "\"${domain}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
-			json = "${parameters}",
+			json = ${parameters},
 			key = "virtualHost",
 			value = "\"${virtualHost}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
-			json = "${parameters}",
+			json = ${parameters},
 			key = "portalInstanceId",
 			value = "\"${portalInstanceId}\"");
 
-		if ("${authenticationMethod}" == "By Screen Name") {
+		if (${authenticationMethod} == "By Screen Name") {
 			var userName = "test";
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, portalInstanceId = webId, and siteInitializerKey = virtualInstanceInitializer"
@@ -70,21 +70,21 @@ definition {
 			value = "\"${domain}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
-			json = "${parameters}",
+			json = ${parameters},
 			key = "virtualHost",
 			value = "\"${virtualHost}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
-			json = "${parameters}",
+			json = ${parameters},
 			key = "portalInstanceId",
 			value = "\"${portalInstanceId}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
-			json = "${parameters}",
+			json = ${parameters},
 			key = "siteInitializerKey",
 			value = "\"${siteInitializerKey}\"");
 
-		if ("${authenticationMethod}" == "By Screen Name") {
+		if (${authenticationMethod} == "By Screen Name") {
 			var userName = "test";
 		}
 		else {
@@ -98,32 +98,32 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
-		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
+		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = ${authenticationMethod});
 
-		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJson}", "$.items..portalInstanceId");
+		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJson}, "$.items..portalInstanceId");
 
-		for (var portalInstanceId : list "${portalInstanceIds}") {
-			if ("${portalInstanceId}" != "liferay.com") {
+		for (var portalInstanceId : list ${portalInstanceIds}) {
+			if (${portalInstanceId} != "liferay.com") {
 				HeadlessPortalInstanceAPI.deletePortalInstance(
-					authenticationMethod = "${authenticationMethod}",
-					portalInstanceId = "${portalInstanceId}");
+					authenticationMethod = ${authenticationMethod},
+					portalInstanceId = ${portalInstanceId});
 			}
 		}
 	}
 
 	@summary = "Deletes a Portal Instance with portalInstanceId resembling webId"
 	macro deletePortalInstance {
-		Variables.assertDefined(parameterList = "${portalInstanceId}");
+		Variables.assertDefined(parameterList = ${portalInstanceId});
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
-		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
+		var portalInstanceId = StringUtil.replace(${portalInstanceId}, " ", "%20");
 
-		if ("${authenticationMethod}" == "By Screen Name") {
+		if (${authenticationMethod} == "By Screen Name") {
 			var userName = "test";
 		}
 		else {
@@ -136,7 +136,7 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 }

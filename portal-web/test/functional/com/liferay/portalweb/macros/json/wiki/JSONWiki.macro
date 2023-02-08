@@ -5,15 +5,15 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName},${fileName},${mimeType}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
-			groupName = "${groupName}",
-			name = "${wikiNodeName}",
-			site = "${site}");
+			groupName = ${groupName},
+			name = ${wikiNodeName},
+			site = ${site});
 
 		JSONWikiAPI._addAttachmentToWikiPage(
-			fileName = "${fileName}",
-			mimeType = "${mimeType}",
-			nodeId = "${nodeId}",
-			title = "${wikiPageName}");
+			fileName = ${fileName},
+			mimeType = ${mimeType},
+			nodeId = ${nodeId},
+			title = ${wikiPageName});
 	}
 
 	@summary = "Directly calls the JSON WS API to add a wiki child page"
@@ -21,31 +21,31 @@ definition {
 		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
 
 		var parentResourcePrimKey = JSONWikiSetter.setResourcePrimKey(
-			groupName = "${groupName}",
-			name = "${wikiNodeName}",
-			site = "${site}",
-			title = "${wikiParentPageName}");
+			groupName = ${groupName},
+			name = ${wikiNodeName},
+			site = ${site},
+			title = ${wikiParentPageName});
 
 		JSONWikiAPI._addWikiChildPage(
-			assetCategoryIds = "${assetCategoryIds}",
-			content = "${wikiChildPageContent}",
-			encodingFormat = "${encodingFormat}",
-			headline = "${wikiChildPageName}",
-			parentResourcePrimKey = "${parentResourcePrimKey}",
-			tagName = "${tagName}",
-			viewableBy = "${viewableBy}");
+			assetCategoryIds = ${assetCategoryIds},
+			content = ${wikiChildPageContent},
+			encodingFormat = ${encodingFormat},
+			headline = ${wikiChildPageName},
+			parentResourcePrimKey = ${parentResourcePrimKey},
+			tagName = ${tagName},
+			viewableBy = ${viewableBy});
 	}
 
 	@summary = "Directly calls the JSON WS API to add a wiki node"
 	macro addWikiNode {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName}");
 
-		var serviceContext = JSONWikiSetter.setServiceContext(groupName = "${groupName}");
+		var serviceContext = JSONWikiSetter.setServiceContext(groupName = ${groupName});
 
 		JSONWikiAPI._addWikiNode(
-			description = "${wikiNodeDescription}",
-			name = "${wikiNodeName}",
-			serviceContext = "${serviceContext}");
+			description = ${wikiNodeDescription},
+			name = ${wikiNodeName},
+			serviceContext = ${serviceContext});
 	}
 
 	@summary = "Directly calls the JSON WS API to add a wiki page"
@@ -53,39 +53,39 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
-			groupName = "${groupName}",
-			name = "${wikiNodeName}",
-			noSelenium = "${noSelenium}",
-			site = "${site}");
+			groupName = ${groupName},
+			name = ${wikiNodeName},
+			noSelenium = ${noSelenium},
+			site = ${site});
 
 		var response = JSONWikiAPI._addWikiPage(
-			assetCategoryIds = "${assetCategoryIds}",
-			content = "${wikiPageContent}",
-			encodingFormat = "${encodingFormat}",
-			headline = "${wikiPageName}",
-			nodeId = "${nodeId}",
-			tagName = "${tagName}",
-			viewableBy = "${viewableBy}");
+			assetCategoryIds = ${assetCategoryIds},
+			content = ${wikiPageContent},
+			encodingFormat = ${encodingFormat},
+			headline = ${wikiPageName},
+			nodeId = ${nodeId},
+			tagName = ${tagName},
+			viewableBy = ${viewableBy});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteWikiPageById {
-		Variables.assertDefined(parameterList = "${wikiPageId}");
+		Variables.assertDefined(parameterList = ${wikiPageId});
 
-		var response = JSONWikiAPI._deleteWikiPageById(wikiPageId = "${wikiPageId}");
+		var response = JSONWikiAPI._deleteWikiPageById(wikiPageId = ${wikiPageId});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getWikiPageExternalReferenceCodeByWikiPageId {
-		Variables.assertDefined(parameterList = "${wikiPageId}");
+		Variables.assertDefined(parameterList = ${wikiPageId});
 
-		var response = JSONWikiAPI._getWikiPageById(wikiPageId = "${wikiPageId}");
+		var response = JSONWikiAPI._getWikiPageById(wikiPageId = ${wikiPageId});
 
-		var wikiPageExternalReferenceCode = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+		var wikiPageExternalReferenceCode = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 
-		return "${wikiPageExternalReferenceCode}";
+		return ${wikiPageExternalReferenceCode};
 	}
 
 	@summary = "Directly calls the JSON WS API to move page to trash"
@@ -93,13 +93,13 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
-			groupName = "${groupName}",
-			name = "${wikiNodeName}",
-			site = "${site}");
+			groupName = ${groupName},
+			name = ${wikiNodeName},
+			site = ${site});
 
 		JSONWikiAPI._movePageToTrash(
-			nodeId = "${nodeId}",
-			title = "${wikiPageName}");
+			nodeId = ${nodeId},
+			title = ${wikiPageName});
 	}
 
 	@summary = "Directly calls the JSON WS API to update a wiki page"
@@ -107,19 +107,19 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var resourcePrimKey = JSONWikiSetter.setResourcePrimKey(
-			groupName = "${groupName}",
-			name = "${wikiNodeName}",
-			site = "${site}",
-			title = "${wikiPageName}");
+			groupName = ${groupName},
+			name = ${wikiNodeName},
+			site = ${site},
+			title = ${wikiPageName});
 
 		JSONWikiAPI._updateWikiPage(
-			assetCategoryIds = "${assetCategoryIds}",
-			content = "${wikiPageContent}",
-			encodingFormat = "${encodingFormat}",
-			headline = "${wikiPageName}",
-			resourcePrimKey = "${resourcePrimKey}",
-			tagName = "${tagName}",
-			viewableBy = "${viewableBy}");
+			assetCategoryIds = ${assetCategoryIds},
+			content = ${wikiPageContent},
+			encodingFormat = ${encodingFormat},
+			headline = ${wikiPageName},
+			resourcePrimKey = ${resourcePrimKey},
+			tagName = ${tagName},
+			viewableBy = ${viewableBy});
 	}
 
 }

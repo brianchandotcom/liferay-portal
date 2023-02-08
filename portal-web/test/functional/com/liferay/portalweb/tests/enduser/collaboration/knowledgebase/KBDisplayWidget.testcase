@@ -15,7 +15,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddChildArticle {
 		property portal.acceptance = "true";
@@ -63,7 +63,7 @@ definition {
 			kbChildArticleTitle = "Child Article Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanAddMultipleSuggestions {
 		JSONKnowledgeBase.addkBArticle(
@@ -100,7 +100,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCancelAddingChildArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -124,7 +124,7 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -139,7 +139,7 @@ definition {
 		KBDisplayWidget.viewDefaultViaKBDisplayPG();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteChildArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -163,7 +163,7 @@ definition {
 		KBArticle.deletePG();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditArticle {
 		property portal.acceptance = "true";
@@ -187,7 +187,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title Edit");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanEditChildArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -218,7 +218,7 @@ definition {
 		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanEditDisplaySettings {
 		JSONKnowledgeBase.addkBArticle(
@@ -243,7 +243,7 @@ definition {
 			subscribe = "false");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -269,7 +269,7 @@ definition {
 		AssertElementNotPresent(locator1 = "//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSaveChildArticleAsDraft {
 		JSONKnowledgeBase.addkBArticle(
@@ -298,7 +298,7 @@ definition {
 			kbStatus = "Draft");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSelectParentArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -324,7 +324,7 @@ definition {
 		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewArticlesInFolder {
 		JSONKnowledgeBase.addkBFolder(
@@ -357,7 +357,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title 2");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test CanViewArticlesWithDifferentSiteScopes {
 		JSONLayout.addPublicLayout(
@@ -365,7 +365,7 @@ definition {
 			layoutName = "Knowledge Base Display Page 2");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page 2",
 			widgetName = "Knowledge Base Display");
@@ -417,7 +417,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title for Page 2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanViewArticleViaDefaultFriendlyURL {
 		JSONKnowledgeBase.addkBArticle(
@@ -434,14 +434,14 @@ definition {
 
 		var kbArticleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
-		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
+		Navigator.openSpecificURL(url = ${kbArticleFriendlyURL});
 
 		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test CanViewArticleViaNavigationLinks {
 		JSONKnowledgeBase.addkBArticle(
@@ -510,7 +510,7 @@ definition {
 			previous = "false");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanViewArticleViaUserDefinedFriendlyURL {
 		JSONKnowledgeBase.addkBArticle(
@@ -531,14 +531,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "Home");
 
-		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
+		Navigator.openSpecificURL(url = ${kbArticleFriendlyURL});
 
 		KBDisplayWidget.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",
 			kbArticleTitle = "Knowledge Base Article2 Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewChildArticleViaNextLink {
 		JSONKnowledgeBase.addkBArticle(
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91303. It ensures that the content of a selected root folder is viewable."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewContentOfConfiguredRootFolder {
 		JSONKnowledgeBase.addkBFolder(
@@ -590,7 +590,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Folder Title 1");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCustomFriendlyURL {
 		property portal.acceptance = "true";
@@ -614,7 +614,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDefaultFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -637,14 +637,14 @@ definition {
 
 	@description = "This test ensures that the description can be displayed on the KB display widget after enabling it in the configuration."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
 
 		// TODO LPS-172372
 
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewEditedKBArticleTitleHistory {
 		JSONKnowledgeBase.addkBArticle(
@@ -664,12 +664,12 @@ definition {
 		KBArticle.viewArticleHistoryPG(
 			kbArticleContent = "KB Article Content Edit",
 			kbArticleContentAddedDiff = "Edit",
-			kbArticleVersionNew = "2",
-			kbArticleVersionOld = "1",
+			kbArticleVersionNew = 2,
+			kbArticleVersionOld = 1,
 			viewNoXmlInTitle = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewEmptyState {
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
@@ -677,7 +677,7 @@ definition {
 		KBDisplayWidget.viewDefaultViaKBDisplayPG();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSuggestionsWorkflow {
 		JSONKnowledgeBase.addkBArticle(
@@ -693,7 +693,7 @@ definition {
 
 		KBArticleSuggestion.gotoSuggestionStatusNew(
 			kbSuggestionBody = "Knowledge Base Article1 Suggestion",
-			suggestionCount = "1");
+			suggestionCount = 1);
 
 		KBArticleSuggestion.viewPG(
 			kbSuggestionBody = "Knowledge Base Article1 Suggestion",
@@ -719,7 +719,7 @@ definition {
 			status = "Resolved");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test JavascriptIsEscapedFromArticleTitle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -739,7 +739,7 @@ definition {
 			kbArticleTitle = '''><img onerror="alert('xss')" src="xx" /><''');
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewNoDuplicateKBSuggestionAfterRefresh {
 		JSONKnowledgeBase.addkBArticle(
@@ -769,7 +769,7 @@ definition {
 
 	@description = "This test ensures that the blogs widgets follow W3C accessibility standards."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test WidgetsFollowAccessibilityStandards {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -777,10 +777,10 @@ definition {
 
 		for (var widgetName : list "Knowledge Base Display,Knowledge Base Article,Knowledge Base Search,Knowledge Base Section") {
 			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
+				column = 1,
 				groupName = "Guest",
 				layoutName = "Knowledge Base Display Page",
-				widgetName = "${widgetName}");
+				widgetName = ${widgetName});
 		}
 
 		Navigator.openSitePage(

@@ -1,72 +1,72 @@
 definition {
 
 	macro setGroupId {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setSiteNavigationMenuId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
-			groupId = "${groupId}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+			groupId = ${groupId},
+			siteNavigationMenuName = ${siteNavigationMenuName});
 
-		return "${siteNavigationMenuId}";
+		return ${siteNavigationMenuId};
 	}
 
 	macro setSiteNavigationMenuItemId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
-			groupId = "${groupId}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+			groupId = ${groupId},
+			siteNavigationMenuName = ${siteNavigationMenuName});
 
 		var siteNavigationMenuItemId = JSONSitenavigationAPI._getSiteNavigationMenuItemIdByName(
-			siteNavigationMenuId = "${siteNavigationMenuId}",
-			siteNavigationMenuItemName = "${siteNavigationMenuItemName}");
+			siteNavigationMenuId = ${siteNavigationMenuId},
+			siteNavigationMenuItemName = ${siteNavigationMenuItemName});
 
-		return "${siteNavigationMenuItemId}";
+		return ${siteNavigationMenuItemId};
 	}
 
 	macro setTypeSettings {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuItemName},${type}");
 
-		if ("${type}" == "layout") {
+		if (${type} == "layout") {
 			var layoutUuid = JSONLayoutAPI._getUuidByName(
-				groupId = "${groupId}",
-				layoutName = "${siteNavigationMenuItemName}",
-				privateLayout = "${privateLayout}");
+				groupId = ${groupId},
+				layoutName = ${siteNavigationMenuItemName},
+				privateLayout = ${privateLayout});
 
 			var typeSettings = '''groupId=${groupId}%0AlayoutUuid=${layoutUuid}%0AprivateLayout=${privateLayout}%0Atitle=${siteNavigationMenuItemName}%0A''';
 		}
 
-		if ("${type}" == "node") {
+		if (${type} == "node") {
 			var typeSettings = '''defaultLanguageId=en_US%0Aname_en_US=${siteNavigationMenuItemName}%0A''';
 		}
 
-		if ("${type}" == "url") {
+		if (${type} == "url") {
 			var typeSettings = '''defaultLanguageId=en_US%0Aname_en_US=${siteNavigationMenuItemName}%0Aurl=${url}%0AuseNewTab=${useNewTab}%0A''';
 		}
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 }

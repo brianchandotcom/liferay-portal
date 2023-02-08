@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test BlogsEntryWithSocialBookmarksAreViewableInSite {
 		property osgi.app.includes = "social-bookmarks";
@@ -40,7 +40,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -75,7 +75,7 @@ definition {
 		SocialBookmarks.viewDefaultSharableBookmarks();
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test KBArticleWithAllSocialBookmarkAreViewableInSite {
 		property osgi.app.includes = "social-bookmarks,knowledge-base";
@@ -85,7 +85,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -100,7 +100,7 @@ definition {
 		SocialBookmarks.viewBookmarkMenuItems(socialBookmarks = "Twitter,Facebook,LinkedIn");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test KBArticleWithSocialBookmarkCanBeChangedInSite {
 		property osgi.app.includes = "social-bookmarks,knowledge-base";
@@ -110,7 +110,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "Verify portal can be enabled to preload AUI modules"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeEnabledToPreloadModules {
 		property test.name.skip.portal.instance = "AUI#CanBeEnabledToPreloadModules";

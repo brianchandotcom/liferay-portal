@@ -20,7 +20,7 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanAddCompanyWithCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -30,26 +30,26 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		User.logoutPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -105,11 +105,11 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
-			expectedCount = "1");
+			expectedCount = 1);
 	}
 
 	@description = "This is a use case for LPS-160064."
-	@priority = "4"
+	@priority = 4
 	test CanAddCompanyWithHeadlessAPI {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanAddCompanyWithHeadlessAPI";
@@ -143,10 +143,10 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "lpartition%",
 			databaseSubstring = "lpartition",
-			expectedCount = "1");
+			expectedCount = 1);
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanAddCompanyWithPortalInstancesAdminUI {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property portal.acceptance = "true";
@@ -184,10 +184,10 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
-			expectedCount = "1");
+			expectedCount = 1);
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanDeleteCompany {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property portal.acceptance = "true";
@@ -230,10 +230,10 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
-			expectedCount = "0");
+			expectedCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanSetVirtualHostViaPages {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanSetVirtualHostViaPages";
@@ -283,7 +283,7 @@ definition {
 		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ExecuteSchemaValidator {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property test.name.skip.portal.instance = "DatabasePartitioning#ExecuteSchemaValidator";
@@ -347,12 +347,12 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
-			expectedCount = "2");
+			expectedCount = 2);
 
 		DBPartition.validateSchemas(schemaNamePrefix = "testPartition");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test NewCompanyStillAccessibleAfterRestart {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";
 		property test.assert.warning.exceptions = "true";
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@description = "LPS-163671 - Scenario to cover creation of Virtual Instances with case insensitive DB and DB partitioning enabled"
-	@priority = "3"
+	@priority = 3
 	test NewCompanyStillAccessibleAfterRestartWithCaseInsensitiveDatabase {
 		property database.lowercase.enabled = "true";
 		property test.assert.warning.exceptions = "true";
@@ -408,8 +408,8 @@ definition {
 		task ("Verify if the lower_case_table_names is enabled") {
 			var variableQueryResult = SQL.executeMySQLStatement(mysqlStatement = "show variables where Variable_name='lower_case_table_names';");
 
-			if (!(contains("${variableQueryResult}", "lower_case_table_names,1"))) {
-				echo("${variableQueryResult}");
+			if (!(contains(${variableQueryResult}, "lower_case_table_names,1"))) {
+				echo(${variableQueryResult});
 
 				fail("lower_case_table_names variable not set to 1, case insensitive not enabled.");
 			}
@@ -453,7 +453,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"1\"";
@@ -482,7 +482,7 @@ definition {
 				webContentContent = "WC WebContent Content New Company",
 				webContentTitle = "WC WebContent Title New Company");
 
-			WebContent.increaseDisplayDate(minuteIncrease = "5");
+			WebContent.increaseDisplayDate(minuteIncrease = 5);
 
 			PortletEntry.publish();
 
@@ -505,7 +505,7 @@ definition {
 				webContentContent = "WC WebContent Content Default Company",
 				webContentTitle = "WC WebContent Title Default Company");
 
-			WebContent.increaseDisplayDate(minuteIncrease = "2");
+			WebContent.increaseDisplayDate(minuteIncrease = 2);
 
 			PortletEntry.publish();
 
@@ -519,7 +519,7 @@ definition {
 
 			// Pausing 150 seconds due to LRQA-75909
 
-			Pause(locator1 = "150000");
+			Pause(locator1 = 150000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -536,7 +536,7 @@ definition {
 
 			// Pausing 230 seconds due to LRQA-75909
 
-			Pause(locator1 = "230000");
+			Pause(locator1 = 230000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

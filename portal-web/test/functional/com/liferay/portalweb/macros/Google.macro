@@ -17,14 +17,14 @@ definition {
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleClientId}");
+			value1 = ${googleClientId});
 
 		var googleClientSecret = PropsUtil.get("google.client.secret.${num}");
 
 		Type(
 			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleClientSecret}");
+			value1 = ${googleClientSecret});
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
@@ -46,7 +46,7 @@ definition {
 
 			Type(
 				locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
@@ -54,12 +54,12 @@ definition {
 
 			Type(
 				locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD",
-				value1 = "${userPassword}");
+				value1 = ${userPassword});
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		AssertElementPresent(
 			key_text = "Save and Return to ${siteName}",

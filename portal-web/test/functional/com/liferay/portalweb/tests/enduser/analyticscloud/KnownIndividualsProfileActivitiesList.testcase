@@ -27,7 +27,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8151 | Test Summary: Individual activities list shows accurate activities from today when switched to 24 hour view"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
 
 		// AC Bug ticket: LRAC-10734
@@ -49,12 +49,12 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		ACDXPSettings.syncNewContactData();
@@ -62,7 +62,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View DM",
 			documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -70,9 +70,9 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
@@ -88,7 +88,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = "${currentTotalActivities}");
+			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = ${currentTotalActivities});
 		}
 	}
 

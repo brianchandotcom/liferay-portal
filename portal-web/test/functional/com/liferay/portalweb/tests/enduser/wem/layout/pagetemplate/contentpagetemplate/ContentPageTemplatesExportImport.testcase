@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106212. Can not export multiple selected page templates if one of them is widget page template."
-	@priority = "4"
+	@priority = 4
 	test CannotExportMultipleWhenOneOfSelectedIsWidgetPageTemplate {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -72,10 +72,10 @@ definition {
 
 			for (var entry : list "Page Template Name,Widget Page Template Name") {
 				PageTemplatesAdmin.viewEntryWorkflowStatus(
-					entry = "${entry}",
+					entry = ${entry},
 					workflowStatus = "Approved");
 
-				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = "${entry}");
+				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = ${entry});
 			}
 		}
 
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106212. Can not export multiple selected content page templates when one of them doesn't has published version."
-	@priority = "4"
+	@priority = 4
 	test CannotExportMultipleWhenOneOfSelectedWithoutPublishedVersion {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -153,7 +153,7 @@ definition {
 				workflowStatus = "Draft");
 
 			for (var entry : list "Page Template Name,Second Page Template Name") {
-				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = "${entry}");
+				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = ${entry});
 			}
 		}
 
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template based on custom master and import."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ExportImportContentPageTemplateBasedOnCustomMaster {
 		task ("Add a custom master with Heading then Publish") {
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107748. Can export a content page template with custom fragments and import."
-	@priority = "4"
+	@priority = 4
 	test ExportImportContentPageTemplateWithCustomFragment {
 		task ("Add a fragment collection via JSON") {
 			JSONFragment.addFragmentCollection(
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template with the custom Look and Feel and import."
-	@priority = "4"
+	@priority = 4
 	test ExportImportContentPageTemplateWithCustomLookAndFeel {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106815. The Team Role permission settings of widgets will be exported and imported with content page template."
-	@priority = "4"
+	@priority = 4
 	test ExportImportContentPageTemplateWithTeamRolePermissionSettingsOfWidgets {
 		task ("Add a Team in site") {
 			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
@@ -630,7 +630,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-128399. Selected Stylebook is exported when exporting a page template."
-	@priority = "4"
+	@priority = 4
 	test ExportImportPageTemplateWithStylebook {
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
@@ -698,7 +698,7 @@ definition {
 
 			UploadTempFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${pageTemplateZipFileName}");
+				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
 
@@ -723,7 +723,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107748. Can export a content page template with custom fragments and import."
-	@priority = "4"
+	@priority = 4
 	test IgnoreFragmentNotExistInSiteWhenImportContentPageTemplate {
 		task ("Add a fragment collection via JSON") {
 			JSONFragment.addFragmentCollection(
@@ -825,7 +825,7 @@ definition {
 
 			UploadTempFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${pageTemplateZipFileName}");
+				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
 
@@ -874,7 +874,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129107 Unable to import a page template that includes a deleted fragment."
-	@priority = "4"
+	@priority = 4
 	test ImportContentPageTemplateThatIncludesDeletedFragment {
 		task ("Create a new test fragment.") {
 			JSONFragment.addFragmentCollection(
@@ -961,7 +961,7 @@ definition {
 
 			UploadTempFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${pageTemplateZipFileName}");
+				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
 
@@ -984,7 +984,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
-	@priority = "4"
+	@priority = 4
 	test OnlyPublishedVersionIsExported {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -1078,7 +1078,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106815. The specific message will be shown when import content page template where the widget has permission settings for a Role if it doesn't exist in site."
-	@priority = "4"
+	@priority = 4
 	test ShowSpecificWarningMessageWhenImportContentPageTemplateWithPermissionSettingsOfWidgetsToSiteWhereTheSpecificRoleNotExist {
 		task ("Add a organization and organization site") {
 			JSONOrganization.addOrganization(
@@ -1164,7 +1164,7 @@ definition {
 
 			UploadTempFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${pageTemplateZipFileName}");
+				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
 

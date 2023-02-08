@@ -2,7 +2,7 @@ definition {
 
 	macro configureDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -15,23 +15,23 @@ definition {
 				value1 = "Display Settings");
 		}
 
-		if ("${enableDisplaySettingsShowSearch}" == "true") {
+		if (${enableDisplaySettingsShowSearch} == "true") {
 			Check(locator1 = "Checkbox#SHOW_SEARCH_CHECKBOX");
 		}
-		else if ("${enableDisplaySettingsShowSearch}" == "false") {
+		else if (${enableDisplaySettingsShowSearch} == "false") {
 			Uncheck(locator1 = "Checkbox#SHOW_SEARCH_CHECKBOX");
 		}
 
 		if (isSet(entriesToDisplayCount)) {
 			Select(
 				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT",
-				value1 = "${entriesToDisplayCount}");
+				value1 = ${entriesToDisplayCount});
 		}
 
-		if ("${enableDisplaySettingsRelatedAssets}" == "true") {
+		if (${enableDisplaySettingsRelatedAssets} == "true") {
 			Check(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX");
 		}
-		else if ("${enableDisplaySettingsRelatedAssets}" == "false") {
+		else if (${enableDisplaySettingsRelatedAssets} == "false") {
 			Uncheck(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX");
 		}
 
@@ -42,24 +42,24 @@ definition {
 				Click(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON");
 			}
 
-			if ("${currentDisplayStyleViews}" != "") {
-				for (var currentDisplayStyleView : list "${currentDisplayStyleViews}") {
+			if (${currentDisplayStyleViews} != "") {
+				for (var currentDisplayStyleView : list ${currentDisplayStyleViews}) {
 					Select(
 						locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT",
-						value1 = "${currentDisplayStyleView}");
+						value1 = ${currentDisplayStyleView});
 
 					Click(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON");
 
 					AssertTextEquals.assertPartialText(
 						locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT",
-						value1 = "${currentDisplayStyleView}");
+						value1 = ${currentDisplayStyleView});
 				}
 			}
 		}
 
 		Button.clickSave();
 
-		if ("${currentDisplayStyleViews}" == "") {
+		if (${currentDisplayStyleViews} == "") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertClick.assertPartialTextClickAt(
@@ -86,11 +86,11 @@ definition {
 			key_title = "Select Folder",
 			locator1 = "IFrame#MODAL_ANY");
 
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 
 		AssertClick(
 			locator1 = "DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_SELECT",
@@ -102,7 +102,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 
 		PortletEntry.save();
 
@@ -133,7 +133,7 @@ definition {
 
 	macro viewDefaultConfigurationDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -148,7 +148,7 @@ definition {
 
 		AssertTextEquals.assertValue(
 			locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT",
-			value1 = "20");
+			value1 = 20);
 
 		AssertChecked(locator1 = "Checkbox#SHOW_SEARCH_CHECKBOX");
 

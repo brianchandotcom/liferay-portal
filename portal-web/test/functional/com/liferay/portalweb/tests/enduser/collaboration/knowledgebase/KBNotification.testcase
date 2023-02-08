@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 
 	@description = "This test checks that a user can subscribe and unsubscribe from an article."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanSubscribeToArticleViaToolbar {
 
 		// TODO LPS-166644
@@ -41,16 +41,16 @@ definition {
 	}
 
 	@description = "This test ensures that users can subscribe to the KB home folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeToHomeFolderViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "Test",
-			userLastName = "2",
+			userLastName = 2,
 			userScreenName = "usersn");
 
 		JSONUser.setFirstPassword(
@@ -61,7 +61,7 @@ definition {
 		User.openUsersAdmin();
 
 		User.editUserSiteCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		User.openUsersAdmin();
@@ -102,20 +102,20 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
 		Notifications.navigateToContent(contentBody = "Knowledge Base Article Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewKBArticleSuggestionsWorkflowNotificationEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -129,7 +129,7 @@ definition {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "Test",
-			userLastName = "2",
+			userLastName = 2,
 			userScreenName = "usersn");
 
 		JSONUser.setFirstPassword(
@@ -143,7 +143,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editUserSiteCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(

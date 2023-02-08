@@ -79,39 +79,39 @@ definition {
 			JSONClientExtension.addRemoteAppEntry(
 				name = "TextColor",
 				type = "globalJS",
-				url = "${firstURL}");
+				url = ${firstURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "InnerText",
 				type = "globalJS",
-				url = "${secondURL}");
+				url = ${secondURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "FontFamily",
 				type = "globalJS",
-				url = "${thirdURL}");
+				url = ${thirdURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "FontSize",
 				type = "globalJS",
-				url = "${fourthURL}");
+				url = ${fourthURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "FontWeight",
 				type = "globalJS",
-				url = "${fifthURL}");
+				url = ${fifthURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "MarginTop",
 				type = "globalJS",
-				url = "${sixthURL}");
+				url = ${sixthURL});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153655 and LPS-153658. The site designer could add JavaScript extension to page, page template, and group of pages. The site designer could add a JavaScript Extension to Page Head or Page Bottom."
-	@priority = "5"
+	@priority = 5
 	test AddJavaScriptExtension {
 		property portal.acceptance = "true";
 
@@ -285,7 +285,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153658. The site designer could add same JavaScript Extension to Page Head or Page Bottom of different pages."
-	@priority = "4"
+	@priority = 4
 	test AddSameJavaScriptExtensionToPageHeadOrPageBottomOfDifferentPages {
 		task ("Given a site designer has two content pages") {
 			for (var i : list "1,2") {
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153655. The site designer could change JavaScript extension selection to an inheritor page from page template."
-	@priority = "5"
+	@priority = 5
 	test ChangeJavaScriptExtensionOfInheritorPage {
 		property portal.acceptance = "true";
 
@@ -456,7 +456,7 @@ definition {
 
 			for (var extensionName : list "InnerText,TextColor") {
 				Click(
-					key_tableEntry = "${extensionName}",
+					key_tableEntry = ${extensionName},
 					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 				DropdownMenuItem.click(menuItem = "Delete");
@@ -483,7 +483,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153655. The site designer could delete the JavaScript extenion selection."
-	@priority = "4"
+	@priority = 4
 	test ClearJavaScriptExtensionSelection {
 		task ("Given a site designer has a content page with a JavaScript extension") {
 			JSONLayout.addPublicLayout(
@@ -547,7 +547,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153658. The site designer could configure the load attribute of JavaScript Extension."
-	@priority = "5"
+	@priority = 5
 	test ConfigureLoadAttributeOfJavaScriptExtension {
 		property portal.acceptance = "true";
 
@@ -829,7 +829,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153655 and LPS-153658. Page should inherit the JavaScript extension from master page. The inherited JavaScript extensions from master should be read-only mode and keep insertion configuration."
-	@priority = "4"
+	@priority = 4
 	test ViewInheritedJavaScriptExtensionFromMasterPage {
 		task ("Given a site designer has a master page with a JavaScript extension") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -882,7 +882,7 @@ definition {
 				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
 
 			LexiconTable.viewTableEntryInfo(
-				index = "3",
+				index = 3,
 				tableEntry = "InnerText",
 				tableEntryInfo = "From Master");
 
@@ -893,7 +893,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153658. The inherited JavaScript extensions from Pages should be read-only mode and keep insertion configuration."
-	@priority = "4"
+	@priority = 4
 	test ViewInheritedJavaScriptExtensionFromPages {
 		task ("Given a site designer has the Pages with a JavaScript extension") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -940,7 +940,7 @@ definition {
 				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
 
 			LexiconTable.viewTableEntryInfo(
-				index = "3",
+				index = 3,
 				tableEntry = "FontFamily",
 				tableEntryInfo = "From Pages");
 
@@ -951,7 +951,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153658. View the loading order of applied JavaScript Extensions to page."
-	@priority = "4"
+	@priority = 4
 	test ViewLoadingOrderOfAppliedJavaScriptExtensions {
 		task ("Given a site designer has a page with multiple JavaScript extensions") {
 			task ("Add JavaScript extensions and embedded JavaScript to Pages") {
@@ -982,7 +982,7 @@ definition {
 				Type(
 					key_text = "javascript",
 					locator1 = "TextArea#ANY",
-					value1 = "${javaScript}");
+					value1 = ${javaScript});
 
 				PortletEntry.save();
 			}
@@ -1015,7 +1015,7 @@ definition {
 				Type(
 					key_text = "javascript",
 					locator1 = "TextArea#ANY",
-					value1 = "${javaScript}");
+					value1 = ${javaScript});
 
 				PortletEntry.save();
 
@@ -1052,7 +1052,7 @@ definition {
 				Type(
 					key_text = "javascript",
 					locator1 = "TextArea#ANY",
-					value1 = "${javaScript}");
+					value1 = ${javaScript});
 
 				PortletEntry.save();
 
@@ -1071,12 +1071,12 @@ definition {
 		}
 
 		task ("Then the site designer could see the loading order of JavaScript extensions") {
-			var n = "1";
+			var n = 1;
 
 			for (var extensionName : list "font-family,font-size,font-weight,text-color,inner-text,margin-top") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "xpath=(//a[contains(@class,'html-resource-link')][contains(@href,'documents/d/test-site-name')])[${n}]",
-					value1 = "${extensionName}");
+					value1 = ${extensionName});
 
 				var n = ${n} + 1;
 			}
@@ -1088,20 +1088,20 @@ definition {
 			var textColor = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'/text-color')]]/td[contains(@class,'line-number')]");
 
 			TestUtils.isLessThan(
-				actual = "${fontWeight}",
-				expected = "${pages}");
+				actual = ${fontWeight},
+				expected = ${pages});
 
 			TestUtils.isLessThan(
-				actual = "${pages}",
-				expected = "${master}");
+				actual = ${pages},
+				expected = ${master});
 
 			TestUtils.isLessThan(
-				actual = "${master}",
-				expected = "${contentPage}");
+				actual = ${master},
+				expected = ${contentPage});
 
 			TestUtils.isLessThan(
-				actual = "${contentPage}",
-				expected = "${textColor}");
+				actual = ${contentPage},
+				expected = ${textColor});
 		}
 	}
 

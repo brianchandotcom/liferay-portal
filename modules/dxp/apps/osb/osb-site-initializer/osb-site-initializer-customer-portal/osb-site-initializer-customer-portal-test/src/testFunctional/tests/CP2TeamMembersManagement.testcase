@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -34,22 +34,22 @@ definition {
 
 		CustomerPortal.customerPortalTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-146292 | Test Summary: Check if there is a 'Cancel' button if the user wants to leave the process"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CancelButtonIsPresent {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -65,9 +65,9 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(projectName = "${testAccount}");
+			CustomerPortal.enterOnProject(projectName = ${testAccount});
 		}
 
 		task ("Go to the Team Members page and open the invitation modal") {
@@ -85,12 +85,12 @@ definition {
 
 	@description = "Automation ID: LPS-146292 | Test Summary: Verify if after inviting member, the screen goes back to previous screen (Team Members page)"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanGoBackOnTeamMembersPage {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -106,9 +106,9 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(projectName = "${testAccount}");
+			CustomerPortal.enterOnProject(projectName = ${testAccount});
 		}
 
 		task ("Go to the invite modal and invite a member to the project") {
@@ -117,8 +117,8 @@ definition {
 			CustomerPortal.clickAtButton(text = "Invite");
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "test1@liferay.com",
 				rowRole = "User");
 

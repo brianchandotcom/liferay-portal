@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -42,7 +42,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.save();
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -66,13 +66,13 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
@@ -91,14 +91,14 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.editHelpTextField(fieldHelpText = "Help Text Test");
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -142,7 +142,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.save();
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be required"
-	@priority = "5"
+	@priority = 5
 	test CanBeRequired {
 		property portal.acceptance = "true";
 
@@ -180,9 +180,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		FormFields.enableSwitch(fieldName = "Required Field");
 
@@ -206,14 +206,14 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be set to repeatable"
-	@priority = "5"
+	@priority = 5
 	test CanBeSetToRepeatable {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.gotoAdvancedTab();
@@ -222,7 +222,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldName = "Color",
-			key_repeatableFieldNumber = "1",
+			key_repeatableFieldNumber = 1,
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 
 		Form.save();
@@ -233,25 +233,25 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Color",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewColorField(
-			colorValue = "000000",
+			colorValue = 000000,
 			fieldLabel = "Color",
 			fieldName = "Color",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.editColorField(
 			colorValue = "ff0d0d",
 			fieldLabel = "Color",
 			fieldName = "Color",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.selectColorFromColorPicker(
 			colorValue = "#FF0D0D",
 			fieldLabel = "Color",
 			fieldName = "Color",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormPortlet.submitSuccessfully();
 
@@ -269,14 +269,14 @@ definition {
 	}
 
 	@description = "Verify that a Form can be submitted with the Color Field"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmitted {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.save();
@@ -303,7 +303,7 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries(formName = "Form1");
 
-		FormsAdminNavigator.gotoView(rowIndexNumber = "1");
+		FormsAdminNavigator.gotoView(rowIndexNumber = 1);
 
 		FormFields.viewColorLabel(fieldLabel = "Color");
 
@@ -314,7 +314,7 @@ definition {
 
 	@description = "Verify that changes to the Field can be canceled"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
 
@@ -323,14 +323,14 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added to a Color Field"
-	@priority = "5"
+	@priority = 5
 	test HelpTextCanBeAdded {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.editHelpText(
@@ -359,14 +359,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be changed"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.viewTextLabel(fieldLabel = "Color");
@@ -387,14 +387,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.viewTextLabel(fieldLabel = "Color");
@@ -415,7 +415,7 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set for the Color Field"
-	@priority = "5"
+	@priority = 5
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -424,7 +424,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.editPredefinedValueInput(fieldValue = "7f26ff");
@@ -451,14 +451,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be changed"
-	@priority = "5"
+	@priority = 5
 	test ReferenceCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		Form.gotoAdvancedTab();
@@ -478,7 +478,7 @@ definition {
 
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";
 

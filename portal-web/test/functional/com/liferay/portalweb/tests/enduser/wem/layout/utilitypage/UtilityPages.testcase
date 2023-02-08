@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could add a 404 error type of utility page."
-	@priority = "5"
+	@priority = 5
 	test Add404ErrorUtilityPage {
 		task ("Given a page designer navigates to the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could change the default utility page."
-	@priority = "4"
+	@priority = 4
 	test ChangeDefault404ErrorUtilityPage {
 		task ("Given a page designer has 404 error utility pages and static pages") {
 			JSONLayout.addPublicLayout(
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could change thumbnail of a 404 error type of utility page."
-	@priority = "4"
+	@priority = 4
 	test ChangeThumbnailOf404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could make a copy of a 404 error type of utility page."
-	@priority = "4"
+	@priority = 4
 	test Copy404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could edit a 404 error type of utility page."
-	@priority = "5"
+	@priority = 5
 	test Edit404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
-	@priority = "5"
+	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {
 		property test.name.skip.portal.instance = "UtilityPages#Mark404ErrorUtilityPageAsDefault";
 
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could preview a 404 error type of utility page."
-	@priority = "5"
+	@priority = 5
 	test Preview404ErrorUtilityPage {
 		task ("Given a page designer has a draft 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -525,7 +525,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could rename a 404 error type of utility page."
-	@priority = "4"
+	@priority = 4
 	test Rename404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162767. The page designer could unmark a 404 error type of utility page as default."
-	@priority = "4"
+	@priority = 4
 	test Unmark404ErrorUtilityPageAsDefault {
 		task ("Given a page designer has a default 404 error utility page and a static page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");

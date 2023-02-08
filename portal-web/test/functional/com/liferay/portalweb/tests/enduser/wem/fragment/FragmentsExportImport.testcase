@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-80625. The fragment importer should not allow non-zip files to be imported."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CannotImportNonZip {
 		property portal.acceptance = "true";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-101256. Can edit inline content of fragment in composition."
-	@priority = "4"
+	@priority = 4
 	test EditInlineContentOfImportedFragmentComposition {
 		task ("Import a fragment collection") {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "collections-InlineContent-edited.zip");
@@ -89,7 +89,7 @@ definition {
 		task ("View the inline content of imported fragment composition") {
 			AssertTextEquals(
 				key_elementHeader = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT",
 				value1 = "Modify Text");
 		}
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-101256. The fragment composition could be exported and imported."
-	@priority = "4"
+	@priority = 4
 	test ExportFragmentCompositionAndImport {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -148,7 +148,7 @@ definition {
 }
 			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -160,7 +160,7 @@ definition {
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -234,13 +234,13 @@ definition {
 		task ("View the fragment composition is rendered well") {
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Fragment Name']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "Fragment collections can be exported and imported."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ExportImportCollectionViewFragment {
 		property portal.acceptance = "true";
@@ -300,7 +300,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+				Button.viewPresent(button = ${button});
 			}
 
 			IFrame.selectTopFrame();
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-101255. The composition of fragments can be saved in an existing collection."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ExportImportFragmentCompositionWithCustomConfigurations {
 		property portal.acceptance = "true";
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-101256. Can duplicate fragment in layout elements in composition."
-	@priority = "4"
+	@priority = 4
 	test ExportImportFragmentCompositionWithDuplicatedFragment {
 		task ("Add a Container to a content page") {
 			JSONLayout.addPublicLayout(
@@ -445,7 +445,7 @@ definition {
 		task ("Add a Heading to first module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
@@ -462,20 +462,20 @@ definition {
 				targetElementName = "Grid");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Heading'][2]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Grid']/following-sibling::div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
@@ -519,26 +519,26 @@ definition {
 
 		task ("View the fragment composition is rendered well") {
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Heading'][2]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Grid']/following-sibling::div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ExportImportFragmentCompositionWithInlineContent {
 		property portal.acceptance = "true";
@@ -561,7 +561,7 @@ definition {
 		task ("Add a Heading fragment into the first module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
@@ -576,7 +576,7 @@ definition {
 		task ("Add an Image fragment into the second module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Image",
 				navTab = "Fragments");
 		}
@@ -592,7 +592,7 @@ definition {
 		task ("Add a HTML fragment into the third module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "3",
+				columnNumber = 3,
 				fragmentName = "HTML",
 				navTab = "Fragments");
 		}
@@ -651,9 +651,9 @@ definition {
 				id = "element-text");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'New editable fragment text')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.clickEditableField(
@@ -662,9 +662,9 @@ definition {
 				id = "image");
 
 			AssertElementPresent(
-				key_columnNumber = "2",
+				key_columnNumber = 2,
 				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'document_1-png')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.clickEditableField(
@@ -673,15 +673,15 @@ definition {
 				id = "element-html");
 
 			AssertElementPresent(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_elementHeader = "//div[contains(@class,'page-editor')]//*[contains(.,'Basic Text')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
-	@priority = "4"
+	@priority = 4
 	test ExportImportFragmentCompositionWithMappingConfiguration {
 		task ("Add a document with an image") {
 			JSONDocument.addFileWithUploadedFile(
@@ -788,7 +788,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120198. Export and import fragment composition linked to page."
-	@priority = "4"
+	@priority = 4
 	test ExportImportFragmentCompositionWithMappingLink {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -814,7 +814,7 @@ definition {
 		task ("Add a Card into the second module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Card",
 				navTab = "Fragments");
 		}
@@ -908,7 +908,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ExportImportFragmentCompositionWithoutInlineContent {
 		property portal.acceptance = "true";
@@ -931,7 +931,7 @@ definition {
 		task ("Add a Heading fragment into the first module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
@@ -946,7 +946,7 @@ definition {
 		task ("Add an Image fragment into the second module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Image",
 				navTab = "Fragments");
 		}
@@ -962,7 +962,7 @@ definition {
 		task ("Add a HTML fragment into the third module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "3",
+				columnNumber = 3,
 				fragmentName = "HTML",
 				navTab = "Fragments");
 		}
@@ -1019,9 +1019,9 @@ definition {
 				id = "element-text");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'Heading Example')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.clickEditableField(
@@ -1030,9 +1030,9 @@ definition {
 				id = "image");
 
 			AssertElementNotPresent(
-				key_columnNumber = "2",
+				key_columnNumber = 2,
 				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'document_1-png')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.clickEditableField(
@@ -1041,15 +1041,15 @@ definition {
 				id = "element-html");
 
 			AssertElementPresent(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_elementHeader = "//div[contains(@class,'page-editor')]//h1[contains(.,'HTML Example')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
-	@priority = "4"
+	@priority = 4
 	test ExportImportFragmentCompositionWithoutMappingConfiguration {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1145,7 +1145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98501. Export and Import a global collection with fragment."
-	@priority = "4"
+	@priority = 4
 	test ExportImportGlobalCollectionWithFragment {
 		task ("Add a fragment collection in Global site") {
 			JSONFragment.addFragmentCollection(
@@ -1162,7 +1162,7 @@ definition {
 </${configuration.headingLevel}>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
 	"fieldSets": [
@@ -1203,14 +1203,14 @@ definition {
 }
 			''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Global",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Global Fragment Name");
 		}
 
@@ -1244,7 +1244,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98501. Export and Import a global fragment."
-	@priority = "4"
+	@priority = 4
 	test ExportImportGlobalFragment {
 		task ("Add a fragment collection in Global site") {
 			JSONFragment.addFragmentCollection(
@@ -1261,7 +1261,7 @@ definition {
 </${configuration.headingLevel}>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
 	"fieldSets": [
@@ -1302,14 +1302,14 @@ definition {
 }
 			''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Global",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Global Fragment Name");
 		}
 
@@ -1345,13 +1345,13 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-120957. Export and Import multiple collections."
-	@priority = "4"
+	@priority = 4
 	test ExportImportMultipleCollections {
 		task ("Add three collections") {
 			for (var collectionName : list "Collection Name 1,Collection Name 2,Collection Name 3") {
 				JSONFragment.addFragmentCollection(
 					groupName = "Test Site Name",
-					name = "${collectionName}");
+					name = ${collectionName});
 			}
 		}
 
@@ -1361,10 +1361,10 @@ definition {
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name 1",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Checkbox Fragment Example");
 
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.html");
@@ -1372,10 +1372,10 @@ definition {
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name 2",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "ColorPalette Fragment Example");
 
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
@@ -1383,10 +1383,10 @@ definition {
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name 3",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Text Fragment Example");
 		}
 
@@ -1409,13 +1409,13 @@ definition {
 		}
 
 		task ("Assert collections and fragments are imported") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Checkbox Fragment Example,ColorPalette Fragment Example,Text Fragment Example") {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name ${n}");
 
 				FragmentsAdmin.viewEntryWorkflowStatus(
-					entry = "${fragmentName}",
+					entry = ${fragmentName},
 					workflowStatus = "Approved");
 
 				var n = ${n} + 1;
@@ -1424,7 +1424,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-101256. The fragment replacing HTML,CSS,JS,JSON in dependencies survives after importing."
-	@priority = "4"
+	@priority = 4
 	test ImportFragmentWithHTMLCSSJSJSONReplaced {
 		task ("Import a fragment collection") {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "collections-HTMLCSSJSJSON-replace.zip");
@@ -1451,7 +1451,7 @@ definition {
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Fragment Name']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			AssertElementPresent(
@@ -1477,7 +1477,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-151013. Old Fragment resources are removed during import."
-	@priority = "4"
+	@priority = 4
 	test ReImportFragmentCollectionWithDifferentFragmentResource {
 		task ("Given an imported fragment on content page") {
 			task ("Import a fragment collection") {
@@ -1526,7 +1526,7 @@ definition {
 	}
 
 	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ValidateDependenciesFragments {
 		property portal.acceptance = "true";
@@ -1553,7 +1553,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-128652. View the changes of fragment on content page still persist after overwrite the fragment."
-	@priority = "4"
+	@priority = 4
 	test ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment {
 		property test.name.skip.portal.instance = "FragmentsExportImport#ViewChangesOfFragmentOnContentPagePersistAfterOverwriteTheFragment";
 
@@ -1625,8 +1625,8 @@ definition {
 			for (var fragmentName : list "Tabs (Copy),Tabs (Copy)") {
 				PageEditor.addElementToColumn(
 					collectionName = "Collection Name",
-					columnNumber = "2",
-					fragmentName = "${fragmentName}",
+					columnNumber = 2,
+					fragmentName = ${fragmentName},
 					navTab = "Fragments");
 			}
 		}
@@ -1634,7 +1634,7 @@ definition {
 		task ("Increase number of tabs to 5 in the first copied Tabs") {
 			PageEditor.gotoConfiguration(fragmentName = "Tabs (Copy)");
 
-			PageEditor.configureFragment(numberOfTabs = "5");
+			PageEditor.configureFragment(numberOfTabs = 5);
 		}
 
 		task ("Edit inline text of the fifth tabs") {

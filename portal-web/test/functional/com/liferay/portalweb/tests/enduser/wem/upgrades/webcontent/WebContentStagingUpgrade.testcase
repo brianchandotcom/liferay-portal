@@ -14,7 +14,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade625 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "mariadb,mysql,postgresql";
@@ -23,7 +23,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade704 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "mariadb,mysql,postgresql";
@@ -32,7 +32,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade713 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "mariadb,mysql,postgresql";
@@ -41,7 +41,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade721 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "mariadb,mysql,postgresql";
@@ -50,7 +50,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade7110 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property portal.version = "7.1.10";
@@ -58,7 +58,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade70106 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property portal.version = "7.0.10.6";
@@ -66,7 +66,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade72101 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property portal.version = "7.2.10.1";
@@ -74,7 +74,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade621015 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -83,7 +83,7 @@ definition {
 		Upgrade.publishStagedSite();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishStagingArchiveAfterUpgrade621021 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

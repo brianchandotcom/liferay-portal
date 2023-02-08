@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-157342."
-	@priority = "4"
+	@priority = 4
 	test UserPlacedInLastOwnedPublicationIfCurrentPublicationIsDeleted {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -44,7 +44,7 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
 				roleTitle = "Regrole Name");
 		}
@@ -56,7 +56,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		JSONRole.assignRoleToUser(
@@ -84,13 +84,13 @@ definition {
 
 		var currentPublicationName = Publications.getPublicationName();
 
-		if ("${sandboxedPublicationName}" != "${currentPublicationName}") {
+		if (${sandboxedPublicationName} != ${currentPublicationName}) {
 			fail("User was not placed back into last owned publication when current publication was deleted.");
 		}
 	}
 
 	@description = "All users with access to publications (view and access in control panel) will be sandboxed."
-	@priority = "4"
+	@priority = 4
 	test UserWithAccessToPublicationsPermissionsCanbeSandboxed {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -109,26 +109,26 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
 				roleTitle = "Regrole Name");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 				roleTitle = "Regrole Name");
 		}
 
 		for (var resourceActionIndex : list "ADD_ARTICLE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.journal",
 				roleTitle = "Regrole Name");
 		}
@@ -150,15 +150,15 @@ definition {
 		var sandboxedPublicationName1 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
-			sandboxedPublicationName = "${sandboxedPublicationName1}",
+			sandboxedPublicationName = ${sandboxedPublicationName1},
 			sandboxedUser = "true");
 
-		Publications.deletePublication(publicationName = "${sandboxedPublicationName1}");
+		Publications.deletePublication(publicationName = ${sandboxedPublicationName1});
 
 		var sandboxedPublicationName2 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
-			sandboxedPublicationName = "${sandboxedPublicationName2}",
+			sandboxedPublicationName = ${sandboxedPublicationName2},
 			sandboxedUser = "true");
 
 		JSONWebcontent.addWebContent(
@@ -169,19 +169,19 @@ definition {
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
-			publicationName = "${sandboxedPublicationName2}");
+			publicationName = ${sandboxedPublicationName2});
 
-		Publications.publishPublication(publicationName = "${sandboxedPublicationName2}");
+		Publications.publishPublication(publicationName = ${sandboxedPublicationName2});
 
 		var sandboxedPublicationName3 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
-			sandboxedPublicationName = "${sandboxedPublicationName3}",
+			sandboxedPublicationName = ${sandboxedPublicationName3},
 			sandboxedUser = "true");
 	}
 
 	@description = "The user without access to publications Permissions can not be sandboxed."
-	@priority = "4"
+	@priority = 4
 	test UserWithoutAccessToPublicationsPermissionsCannotBeSandboxed {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "The user with Work on Production Permissions can not be sandboxed."
-	@priority = "4"
+	@priority = 4
 	test UserWithWorkOnProductionPermissionsCannotBeSandboxed {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -231,14 +231,14 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW,WORK_ON_PRODUCTION") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
 				roleTitle = "Regrole Name");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Publications.enablePublications(enableSandboxOnly = "true");

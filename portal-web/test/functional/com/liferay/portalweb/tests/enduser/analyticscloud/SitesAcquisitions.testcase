@@ -37,7 +37,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8344 | Test Summary: Site overview acquisition card shows which channels individuals are coming from"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AssertShowsChannelsIndividualsComingFrom {
 
 		// AC Refactor: data doesn't appear on time
@@ -112,7 +112,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -141,7 +141,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "direct");
 
 			ACCards.viewTableEntryInfo(
@@ -159,7 +159,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "social");
 
 			ACCards.viewTableEntryInfo(
@@ -177,7 +177,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "organic");
 
 			ACCards.viewTableEntryInfo(
@@ -195,7 +195,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "paid search");
 
 			ACCards.viewTableEntryInfo(
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesAcquisitionCardChannelsHighestSession {
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
@@ -222,7 +222,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -251,7 +251,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "direct");
 
 			ACCards.viewTableEntryInfo(
@@ -263,14 +263,14 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesAcquisitionCardReferrersHighestSession {
 		task ("Get the portal URL") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
-			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+			var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
 		}
 
 		task ("Sign out then sign in as Test Test") {
@@ -298,7 +298,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -321,32 +321,32 @@ definition {
 			ACCards.viewMetricBarStyle(
 				backgroundColor = "rgba(80, 210, 160, 1)",
 				cardTitle = "Acquisitions",
-				entryName = "${portalURL}",
+				entryName = ${portalURL},
 				style = "width: 100%;");
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
-				entryName = "${portalURL}");
+				entryInfo = 1,
+				entryName = ${portalURL});
 
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "column-text-end",
 				entryInfo = "100.00%",
-				entryName = "${portalURL}");
+				entryName = ${portalURL});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8348 | Test Summary: Assert Sites Acquisition card Source|Medium highest session"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesAcquisitionCardSourceAndMediumHighestSession {
 		task ("Get the portal URL") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
-			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+			var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
 		}
 
 		task ("Sign out then sign in as Test Test") {
@@ -374,7 +374,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview in Sites dashboard") {
@@ -403,7 +403,7 @@ definition {
 			ACCards.viewTableEntryInfo(
 				cardTitle = "Acquisitions",
 				column = "cell-expand",
-				entryInfo = "1",
+				entryInfo = 1,
 				entryName = "${portalURL} / referral");
 
 			ACCards.viewTableEntryInfo(

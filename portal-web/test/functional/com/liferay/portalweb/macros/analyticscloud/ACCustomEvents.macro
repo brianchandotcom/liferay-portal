@@ -6,13 +6,13 @@ definition {
 		}
 
 		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
+			layoutName = ${layoutName},
 			widgetName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "${webContentTitle}");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = ${webContentTitle});
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 	}
 
@@ -25,30 +25,30 @@ definition {
 
 		ACUtils.clickAnyButton(button = "Block Events");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}
 
 	macro blockCustomEvent {
 		var key_actionButton = "Block";
-		var key_nameList = "${customEventName}";
+		var key_nameList = ${customEventName};
 
 		WaitForPageLoad();
 
 		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 		}
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
 		Click(locator1 = "ACCustomEvents#BLOCK_UNBLOCK_EVENT_BUTTON");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}
 
 	macro changeAttributeDataType {
 		Select(
 			locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
-			value1 = "${newDataType}");
+			value1 = ${newDataType});
 
 		Button.clickSave();
 	}
@@ -57,13 +57,13 @@ definition {
 		if (isSet(newDisplayName)) {
 			Type(
 				locator1 = "TextInput#TEXT",
-				value1 = "${newDisplayName}");
+				value1 = ${newDisplayName});
 		}
 
 		if (isSet(newDescription)) {
 			Type(
 				locator1 = "TextArea#DESCRIPTION",
-				value1 = "${newDescription}");
+				value1 = ${newDescription});
 		}
 
 		Click(locator1 = "ACCustomEvents#EDIT_MODAL_TITLE");
@@ -84,7 +84,7 @@ definition {
 
 		// Disable attributes that will not be included in the JS by the checkbox before copying
 
-		ACCustomEvents.disableAttributes(disableAttributesList = "${disableAttributesList}");
+		ACCustomEvents.disableAttributes(disableAttributesList = ${disableAttributesList});
 
 		Copy(locator1 = "//code");
 
@@ -96,55 +96,55 @@ definition {
 
 		// Change single quotes to double quotes, remove spaces to be able to create WC with API
 
-		for (var attribute : list "${attributesList}") {
-			var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'${attribute}'", "${attribute}");
+		for (var attribute : list ${attributesList}) {
+			var sampleJavascript = StringUtil.replace(${sampleJavascript}, "'${attribute}'", ${attribute});
 		}
 
-		var sampleJavascript = StringUtil.replace("${sampleJavascript}", "'", "\"");
+		var sampleJavascript = StringUtil.replace(${sampleJavascript}, "'", "\"");
 
-		var sampleJavascript = StringUtil.replace("${sampleJavascript}", " ", "");
+		var sampleJavascript = StringUtil.replace(${sampleJavascript}, " ", "");
 
 		if (isSet(oldCustomEventName)) {
 
 			// Change the custom event name to the new name
 
-			var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldCustomEventName}", "${newCustomEventName}");
+			var sampleJavascript = StringUtil.replace(${sampleJavascript}, ${oldCustomEventName}, ${newCustomEventName});
 		}
 
 		if (isSet(oldAttributeList)) {
 
 			// If the list is set, change the name of the attributes present in the sample JS to put new attributes
 
-			var list1 = ListUtil.newListFromString("${oldAttributeList}");
-			var list2 = ListUtil.newListFromString("${newAttributeList}");
-			var size = ListUtil.size("${list1}");
-			var i = "0";
+			var list1 = ListUtil.newListFromString(${oldAttributeList});
+			var list2 = ListUtil.newListFromString(${newAttributeList});
+			var size = ListUtil.size(${list1});
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var oldAttribute = ListUtil.get("${list1}", "${i}");
-				var newAttribute = ListUtil.get("${list2}", "${i}");
+			while (${i} != ${size}) {
+				var oldAttribute = ListUtil.get(${list1}, ${i});
+				var newAttribute = ListUtil.get(${list2}, ${i});
 
-				var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldAttribute}", "${newAttribute}");
+				var sampleJavascript = StringUtil.replace(${sampleJavascript}, ${oldAttribute}, ${newAttribute});
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 
 			// If the list is set, change the value of the attributes present in the sample JS to put new values in the attributes
 
-			var list3 = ListUtil.newListFromString("${oldValueList}");
-			var list4 = ListUtil.newListFromString("${newValueList}");
-			var size = ListUtil.size("${list3}");
-			var i = "0";
+			var list3 = ListUtil.newListFromString(${oldValueList});
+			var list4 = ListUtil.newListFromString(${newValueList});
+			var size = ListUtil.size(${list3});
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var oldValue = ListUtil.get("${list3}", "${i}");
-				var newValue = ListUtil.get("${list4}", "${i}");
+			while (${i} != ${size}) {
+				var oldValue = ListUtil.get(${list3}, ${i});
+				var newValue = ListUtil.get(${list4}, ${i});
 
-				var sampleJavascript = StringUtil.replace("${sampleJavascript}", "${oldValue}", "${newValue}");
+				var sampleJavascript = StringUtil.replace(${sampleJavascript}, ${oldValue}, ${newValue});
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 	}
@@ -161,22 +161,22 @@ definition {
 		Type(
 			key_inputId = "name-custom",
 			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
-			value1 = "${customEventName}");
+			value1 = ${customEventName});
 
 		Type(
 			key_inputId = "times-custom",
 			locator1 = "ACCustomEvents#INPUT_CUSTOM_EVENT",
-			value1 = "${timeToSendCustomEvent}");
+			value1 = ${timeToSendCustomEvent});
 
 		Type(
 			key_textareaId = "placements",
 			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
-			value1 = "${attributesName}");
+			value1 = ${attributesName});
 
 		Type(
 			key_textareaId = "expected",
 			locator1 = "ACCustomEvents#TEXTAREA_CUSTOM_EVENT",
-			value1 = "${attributesValue}");
+			value1 = ${attributesValue});
 
 		Click(locator1 = "ACCustomEvents#INPUT_BUTTON");
 	}
@@ -201,7 +201,7 @@ definition {
 				let placements = document.getElementById("placements").value; let values = document.getElementById("expected").value; placements = placements.split(","); values = values.split(","); if (eventName == "" || eventName.startsWith(" ")) { return alert("Event name is empty or starts with a space character. Please review the name and try again."); } \
 				if (placements.length !== values.length){ return alert("You are missing a placement or value in the input fields.\ Please make sure both fields have the same number of entries."); } const attributesList = {}; placements.forEach((placement, value) => attributesList[placement] = values[value]); timesCustom =  Array.from({length: timesCustom}); \
 				timesCustom.forEach((_) => { Analytics.track(eventName, attributesList); console.log("fired!"); }); console.log(attributesList); } </script></div> </br\>''',
-				webContentTitle = "${webContentTitle}");
+				webContentTitle = ${webContentTitle});
 		}
 
 		if (isSet(customEventsNumber)) {
@@ -209,12 +209,12 @@ definition {
 
 			ACUtils.createWCAndAddToPage(
 				webContentContent = '''<div><button class="mybutton-shop product-shop-button" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { for(let i = 0; i < ${customEventsNumber}; i = i %2B 1 ) { var message = "Multiple Custom Event ${customEventName} V"; var finalMessage = message.replace("V", i); Analytics.track(finalMessage, {category: "wetsuit"});  } } </script>''',
-				webContentTitle = "${webContentTitle}");
+				webContentTitle = ${webContentTitle});
 		}
 	}
 
 	macro disableAttributes {
-		for (var key_tableMember : list "${disableAttributesList}") {
+		for (var key_tableMember : list ${disableAttributesList}) {
 			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 		}
 	}
@@ -227,14 +227,14 @@ definition {
 
 		var customEventName = "AC-${displayDateHour}-${displayDateDay}-${displayDateMonth}-${displayDateYear}";
 
-		return "${customEventName}";
+		return ${customEventName};
 	}
 
 	macro getSampleRawData {
-		var key_attributeName = "${attributeName}";
+		var key_attributeName = ${attributeName};
 		var sampleRawDataValue = selenium.getText("ACCustomEvents#SAMPLE_RAW_DATA_LIST");
 
-		return "${sampleRawDataValue}";
+		return ${sampleRawDataValue};
 	}
 
 	macro hideAllCustomEvents {
@@ -244,26 +244,26 @@ definition {
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 			value1 = "\SPACE");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}
 
 	macro hideCustomEvent {
 		var key_actionButton = "Hide";
-		var key_nameList = "${customEventName}";
+		var key_nameList = ${customEventName};
 
 		WaitForPageLoad();
 
 		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 		}
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
 		Click(locator1 = "ACDefinitions#HIDE_UNHIDE_EVENT_BUTTON");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}
 
 	macro openBlockCustomEventList {
@@ -282,12 +282,12 @@ definition {
 
 	macro unblockCustomEvent {
 		var key_actionButton = "Unblock";
-		var key_nameList = "${customEventName}";
+		var key_nameList = ${customEventName};
 
 		WaitForPageLoad();
 
 		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 		}
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
@@ -304,40 +304,40 @@ definition {
 	}
 
 	macro viewDataAttribute {
-		for (var attributeValue : list "${attributeValueList}") {
+		for (var attributeValue : list ${attributeValueList}) {
 			AssertElementPresent(
-				itemName = "${attributeValue}",
+				itemName = ${attributeValue},
 				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
 	}
 
 	macro viewDataAttributeInOrder {
-		var index = "${index}";
+		var index = ${index};
 
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#SAMPLE_RAW_DATA_IN_ORDER",
-			value1 = "${attributeValue}");
+			value1 = ${attributeValue});
 	}
 
 	macro viewDataType {
-		var typeValue = StringUtil.upperCase("${typeValue}");
+		var typeValue = StringUtil.upperCase(${typeValue});
 
 		AssertTextEquals(
 			locator1 = "ACSegments#EDITOR_LABEL",
-			value1 = "${typeValue}");
+			value1 = ${typeValue});
 	}
 
 	macro viewDataTypeList {
-		var key_attributeName = "${attributeName}";
-		var typeValue = StringUtil.upperCase("${typeValue}");
+		var key_attributeName = ${attributeName};
+		var typeValue = StringUtil.upperCase(${typeValue});
 
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#DATA_TYPE_LIST",
-			value1 = "${typeValue}");
+			value1 = ${typeValue});
 	}
 
 	macro viewDisplayNameOrDescriptionList {
-		var key_nameValue = "${nameValue}";
+		var key_nameValue = ${nameValue};
 
 		AssertElementPresent(locator1 = "ACCustomEvents#DISPLAY_NAME_OR_DESCRIPTION_LIST");
 	}
@@ -345,7 +345,7 @@ definition {
 	macro viewInvalidCustomEventEdition {
 		AssertTextEquals(
 			locator1 = "ACCustomEvents#INVALID_MESSAGE",
-			value1 = "${invalidMessage}");
+			value1 = ${invalidMessage});
 
 		AssertElementPresent(
 			key_text = "Save",

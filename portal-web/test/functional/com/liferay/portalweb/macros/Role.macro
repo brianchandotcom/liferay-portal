@@ -3,8 +3,8 @@ definition {
 	macro _changePermisionScope {
 		if (isSet(siteNameScope)) {
 			AssertClick(
-				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
-				key_permissionValue = "${permissionValue}",
+				key_permissionSheetSubtitle = ${permissionSheetSubtitle},
+				key_permissionValue = ${permissionValue},
 				locator1 = "RolesPermissions#PERMISSION_CHANGE_SCOPE",
 				value1 = "Change");
 
@@ -14,7 +14,7 @@ definition {
 				locator1 = "NavBar#RECENT",
 				value1 = "Recent");
 
-			if ("${assetLibrariesScope}" == "true") {
+			if (${assetLibrariesScope} == "true") {
 				AssertClick(
 					locator1 = "NavBar#ASSET_LIBRARIES",
 					value1 = "Asset Libraries");
@@ -26,33 +26,33 @@ definition {
 			}
 
 			Click(
-				key_card = "${siteNameScope}",
+				key_card = ${siteNameScope},
 				locator1 = "Card#CARD_TITLE");
 
 			SelectFrame(value1 = "relative=top");
 
 			AssertTextEquals.assertPartialText(
-				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
-				key_permissionValue = "${permissionValue}",
-				key_siteNameScope = "${siteNameScope}",
+				key_permissionSheetSubtitle = ${permissionSheetSubtitle},
+				key_permissionValue = ${permissionValue},
+				key_siteNameScope = ${siteNameScope},
 				locator1 = "RolesPermissions#PERMISSION_SITE_SCOPE",
-				value1 = "${siteNameScope}");
+				value1 = ${siteNameScope});
 		}
 		else if (isSet(removeSiteScope)) {
 			Click(
-				key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
-				key_permissionValue = "${permissionValue}",
-				key_siteNameScope = "${removeSiteScope}",
+				key_permissionSheetSubtitle = ${permissionSheetSubtitle},
+				key_permissionValue = ${permissionValue},
+				key_siteNameScope = ${removeSiteScope},
 				locator1 = "RolesPermissions#PERMISSION_SITE_SCOPE_REMOVE");
 		}
 	}
 
 	macro _goToRoleAssigneeType {
-		LexiconEntry.gotoEntry(rowEntry = "${roleTitle}");
+		LexiconEntry.gotoEntry(rowEntry = ${roleTitle});
 
 		Navigator.gotoNavItem(navItem = "Assignees");
 
-		Navigator.gotoNavItem(navItem = "${assigneeType}");
+		Navigator.gotoNavItem(navItem = ${assigneeType});
 	}
 
 	macro add {
@@ -67,17 +67,17 @@ definition {
 			value1 = "New Role");
 
 		if (isSet(roleTitle)) {
-			PortletEntry.inputTitle(title = "${roleTitle}");
+			PortletEntry.inputTitle(title = ${roleTitle});
 		}
 
 		if (isSet(roleDescription)) {
-			PortletEntry.inputDescription(description = "${roleDescription}");
+			PortletEntry.inputDescription(description = ${roleDescription});
 		}
 
 		if (isSet(roleKey)) {
 			Type(
 				locator1 = "TextInput#KEY",
-				value1 = "${roleKey}");
+				value1 = ${roleKey});
 		}
 
 		AssertClick(
@@ -89,8 +89,8 @@ definition {
 
 	macro addAssignee {
 		Role._goToRoleAssigneeType(
-			assigneeType = "${assigneeType}",
-			roleTitle = "${roleTitle}");
+			assigneeType = ${assigneeType},
+			roleTitle = ${roleTitle});
 
 		LexiconEntry.gotoAdd();
 
@@ -98,11 +98,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
-		var key_assigneeName = "${assigneeName}";
+		var key_assigneeName = ${assigneeName};
 
 		AssertTextEquals(
 			locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_NAME",
-			value1 = "${assigneeName}");
+			value1 = ${assigneeName});
 
 		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
 
@@ -114,16 +114,16 @@ definition {
 	}
 
 	macro definePermissionPG {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(permissionsList)) {
-			for (var permissionDefinitionKey : list "${permissionsList}") {
+			for (var permissionDefinitionKey : list ${permissionsList}) {
 				ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
 				Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
@@ -149,49 +149,49 @@ definition {
 			var navItem = "Define Permissions";
 		}
 
-		Navigator.gotoNavItem(navItem = "${navItem}");
+		Navigator.gotoNavItem(navItem = ${navItem});
 
 		task ("Navigate to the item in the right header via search bar") {
 			Type(
 				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
-				value1 = "${permissionNavItem}");
+				value1 = ${permissionNavItem});
 
 			AssertClick(
-				key_permissionNavHeader = "${permissionNavHeader}",
-				key_permissionNavItem = "${permissionNavItem}",
+				key_permissionNavHeader = ${permissionNavHeader},
+				key_permissionNavItem = ${permissionNavItem},
 				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
-				value1 = "${permissionNavItem}");
+				value1 = ${permissionNavItem});
 
 			AssertTextEquals(
 				locator1 = "RolesPermissions#PERMISSION_ITEM_HEADER",
-				value1 = "${permissionNavItem}");
+				value1 = ${permissionNavItem});
 		}
 
 		if (!(isSet(permissionValues))) {
-			var permissionValues = "${permissionValue}";
+			var permissionValues = ${permissionValue};
 		}
 
 		task ("Define/remove the given permissions") {
-			for (var permissionValue : list "${permissionValues}") {
-				if ("${define}" == "true") {
+			for (var permissionValue : list ${permissionValues}) {
+				if (${define} == "true") {
 					Check(
-						key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
-						key_permissionValue = "${permissionValue}",
+						key_permissionSheetSubtitle = ${permissionSheetSubtitle},
+						key_permissionValue = ${permissionValue},
 						locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
 				}
-				else if ("${remove}" == "true") {
+				else if (${remove} == "true") {
 					Uncheck(
-						key_permissionSheetSubtitle = "${permissionSheetSubtitle}",
-						key_permissionValue = "${permissionValue}",
+						key_permissionSheetSubtitle = ${permissionSheetSubtitle},
+						key_permissionValue = ${permissionValue},
 						locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
 				}
 
 				Role._changePermisionScope(
-					assetLibrariesScope = "${assetLibrariesScope}",
-					permissionSheetSubtitle = "${permissionSheetSubtitle}",
-					permissionValue = "${permissionValue}",
-					removeSiteScope = "${removeSiteScope}",
-					siteNameScope = "${siteNameScope}");
+					assetLibrariesScope = ${assetLibrariesScope},
+					permissionSheetSubtitle = ${permissionSheetSubtitle},
+					permissionValue = ${permissionValue},
+					removeSiteScope = ${removeSiteScope},
+					siteNameScope = ${siteNameScope});
 			}
 		}
 
@@ -202,17 +202,17 @@ definition {
 
 	macro editRole {
 		if (isSet(roleTitleEdit)) {
-			PortletEntry.inputTitle(title = "${roleTitleEdit}");
+			PortletEntry.inputTitle(title = ${roleTitleEdit});
 		}
 
 		if (isSet(roleDescriptionEdit)) {
-			PortletEntry.inputDescriptionTextInput(description = "${roleDescriptionEdit}");
+			PortletEntry.inputDescriptionTextInput(description = ${roleDescriptionEdit});
 		}
 
 		if (isSet(roleKeyEdit)) {
 			Type(
 				locator1 = "TextInput#KEY",
-				value1 = "${roleKeyEdit}");
+				value1 = ${roleKeyEdit});
 		}
 
 		AssertClick(
@@ -230,18 +230,18 @@ definition {
 		Role.openRolesAdmin();
 
 		Role._goToRoleAssigneeType(
-			assigneeType = "${assigneeType}",
-			roleTitle = "${roleTitle}");
+			assigneeType = ${assigneeType},
+			roleTitle = ${roleTitle});
 
-		LexiconEntry.selectEntry(key_rowEntry = "${assigneeName}");
+		LexiconEntry.selectEntry(key_rowEntry = ${assigneeName});
 
 		ClickNoError(locator1 = "Icon#DELETE");
 	}
 
 	macro removePermissionPG {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -280,14 +280,14 @@ definition {
 
 	macro viewAssignee {
 		Role._goToRoleAssigneeType(
-			assigneeType = "${assigneeType}",
-			roleTitle = "${roleTitle}");
+			assigneeType = ${assigneeType},
+			roleTitle = ${roleTitle});
 
-		LexiconEntry.viewEntryName(rowEntry = "${assigneeName}");
+		LexiconEntry.viewEntryName(rowEntry = ${assigneeName});
 	}
 
 	macro viewCP {
-		if (contains("Asset Library,Organization,Site", "${roleType}")) {
+		if (contains("Asset Library,Organization,Site", ${roleType})) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}
 		else {
@@ -295,45 +295,45 @@ definition {
 		}
 
 		if (isSet(roleKey) && !(isSet(roleTitle))) {
-			var rowEntry = "${roleKey}";
+			var rowEntry = ${roleKey};
 			var roleTitle = "";
 		}
 		else {
-			var rowEntry = "${roleTitle}";
+			var rowEntry = ${roleTitle};
 		}
 
 		if (!(isSet(roleKey))) {
-			var roleKey = "${roleTitle}";
+			var roleKey = ${roleTitle};
 		}
 
 		AssertClick(
-			key_itemName = "${rowEntry}",
+			key_itemName = ${rowEntry},
 			locator1 = "ListGroupItem#ITEM_NAME_LINK",
-			value1 = "${rowEntry}");
+			value1 = ${rowEntry});
 
-		SiteAdmin.viewPortletTitle(portletTitle = "${rowEntry}");
+		SiteAdmin.viewPortletTitle(portletTitle = ${rowEntry});
 
 		if (isSet(toolTip)) {
 			MouseOver(locator1 = "Icon#TOOLTIP");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#TOOLTIP",
-				value1 = "${toolTip}");
+				value1 = ${toolTip});
 		}
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "${roleTitle}");
+			value1 = ${roleTitle});
 
 		if (isSet(roleDescription)) {
 			AssertTextEquals(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${roleDescription}");
+				value1 = ${roleDescription});
 		}
 
 		AssertTextEquals(
 			locator1 = "TextInput#KEY",
-			value1 = "${roleKey}");
+			value1 = ${roleKey});
 	}
 
 	macro viewDefaultCP {
@@ -345,8 +345,8 @@ definition {
 	}
 
 	macro viewPermissionCP {
-		var key_permissionDefinitionValue = "${permissionDefinitionValue}";
-		var key_permissionNavigationValue = "${permissionNavigationValue}";
+		var key_permissionDefinitionValue = ${permissionDefinitionValue};
+		var key_permissionNavigationValue = ${permissionNavigationValue};
 
 		while (IsElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS")) {
 			Click(locator1 = "Pagination#NEXT_LINK");
@@ -354,31 +354,31 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS",
-			value1 = "${permissionNavigationValue}");
+			value1 = ${permissionNavigationValue});
 
 		if (isSet(siteNameScope)) {
 			AssertTextEquals(
-				key_siteNameScope = "${siteNameScope}",
+				key_siteNameScope = ${siteNameScope},
 				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_SCOPE",
-				value1 = "${siteNameScope}");
+				value1 = ${siteNameScope});
 		}
 	}
 
 	macro viewPermissionPG {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
-		if ("${permissionFlagged}" == "true") {
+		if (${permissionFlagged} == "true") {
 			AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
-		else if ("${permissionFlagged}" == "false") {
+		else if (${permissionFlagged} == "false") {
 			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 	}
 
 	macro viewPermissionSubdirectory {
-		var key_navItem = "${navItem}";
+		var key_navItem = ${navItem};
 
 		if (IsElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED")) {
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
@@ -386,8 +386,8 @@ definition {
 			AssertElementNotPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
 		}
 
-		for (var subItem : list "${subItemList}") {
-			var key_subItem = "${subItem}";
+		for (var subItem : list ${subItemList}) {
+			var key_subItem = ${subItem};
 
 			AssertElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
 

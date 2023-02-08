@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-75561."
-	@priority = "5"
+	@priority = 5
 	test AddWidgetToPageAfterUpgrade625 {
 		property data.archive.type = "data-archive-pages-administration";
 		property database.types = "mariadb,mysql,postgresql";
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-75561."
-	@priority = "5"
+	@priority = 5
 	test AddWidgetToPageAfterUpgrade621015 {
 		property data.archive.type = "data-archive-pages-administration";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-75561."
-	@priority = "5"
+	@priority = 5
 	test AddWidgetToPageAfterUpgrade621021 {
 		property data.archive.type = "data-archive-pages-administration";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

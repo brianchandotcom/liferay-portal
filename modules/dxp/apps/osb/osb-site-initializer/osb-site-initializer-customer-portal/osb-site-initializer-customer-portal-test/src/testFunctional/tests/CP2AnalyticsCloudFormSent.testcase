@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
-	@priority = "3"
+	@priority = 3
 	test MessageConfirmingFormHasAlreadyBeenSent {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -112,7 +112,7 @@ definition {
 		task ("Delete the entries and objects created") {
 			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
 				entry = "ERC-003",
-				position = "3",
+				position = 3,
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150681 | Test Summary: Verify if when the first customer admin logs in and goes through the onboarding flow, and an staff already made the set up the form should be already submitted."
-	@priority = "3"
+	@priority = 3
 	test UserDoesNotGoThroughOnboarding {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -193,7 +193,7 @@ definition {
 		task ("Delete the entries and objects created") {
 			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
 				entry = "ERC-003",
-				position = "3",
+				position = 3,
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(

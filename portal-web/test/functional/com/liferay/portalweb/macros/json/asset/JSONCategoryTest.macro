@@ -2,45 +2,45 @@ definition {
 
 	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		// Vocabulary
 
 		JSONCategory.addVocabulary(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			title = "vocabulary 1");
 
 		JSONCategory.addVocabulary(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			titleMap = "en_US:vocabulary 2,es_ES:vocabulary 2es");
 
 		JSONCategory.addVocabulary(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			title = "vocabulary 3",
 			visibility = "internal");
 
 		// Category
 
 		JSONCategory.addCategory(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			title = "category 1",
 			vocabularyName = "vocabulary 1");
 
 		JSONCategory.addCategory(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			titleMap = "en_US:category 2,es_ES:category 2es",
 			vocabularyName = "vocabulary 2");
 
 		// Subcategory
 
 		JSONCategory.addSubcategory(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			parentCategoryName = "category 1",
 			title = "subcategory 1",
 			vocabularyName = "vocabulary 1");
 
 		JSONCategory.addSubcategory(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			parentCategoryName = "category 2",
 			titleMap = "en_US:subcategory 2,es_ES:subcategory 2es",
 			vocabularyName = "vocabulary 2");
@@ -49,10 +49,10 @@ definition {
 
 		var categoryId = JSONCategory.getCategoryId(
 			categoryName = "category 1",
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			vocabularyName = "vocabulary 1");
 
-		if ("${categoryId}" == "0") {
+		if (${categoryId} == 0) {
 			fail("Invalid categoryId retrieved");
 		}
 	}

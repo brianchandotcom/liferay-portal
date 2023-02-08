@@ -4,11 +4,11 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type.type(
-			key_customField = "${customField}",
+			key_customField = ${customField},
 			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
-			value1 = "${entry}");
+			value1 = ${entry});
 
-		if ("${invalidEntry}" == "true") {
+		if (${invalidEntry} == "true") {
 			Button.clickSave();
 		}
 		else {
@@ -21,9 +21,9 @@ definition {
 
 		Type.type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
-			value1 = "${entry}");
+			value1 = ${entry});
 
-		if ("${invalidEntry}" == "true") {
+		if (${invalidEntry} == "true") {
 			Button.clickSave();
 		}
 		else {
@@ -33,30 +33,30 @@ definition {
 
 	macro assertAuthorColumnDisplaysUserName {
 		AssertElementPresent(
-			key_column = "${column}",
+			key_column = ${column},
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 
 		AssertElementPresent(
-			key_entry = "${authorName}",
+			key_entry = ${authorName},
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
 	macro assertColumnLabelEntries {
 		AssertElementPresent(
-			key_sortFieldName = "${columnLabelName}",
+			key_sortFieldName = ${columnLabelName},
 			locator1 = "ObjectPortlet#SORT_FIELD",
-			value1 = "${columnLabelName}");
+			value1 = ${columnLabelName});
 	}
 
 	macro assertDeleteEntryButtonNotPresent {
 		if (IsElementPresent(key_entry = "", locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(
-				key_entry = "${entry}",
+				key_entry = ${entry},
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 		}
 		else {
 			AssertElementNotPresent(
-				key_entry = "${entry}",
+				key_entry = ${entry},
 				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 		}
 
@@ -65,19 +65,19 @@ definition {
 
 	macro assertDuplicatedEntryNotPresent {
 		AssertElementNotPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "ObjectPortlet#DUPLICATED_ENTRY_VALUE");
 	}
 
 	macro assertEntryColumnNotPresent {
 		AssertElementNotPresent(
-			key_column = "${column}",
+			key_column = ${column},
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
 	macro assertEntryColumnPresent {
 		AssertElementPresent(
-			key_column = "${column}",
+			key_column = ${column},
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
@@ -87,13 +87,13 @@ definition {
 
 	macro assertEntryDetailsLabelNotPresent {
 		AssertNotVisible(
-			key_entryLabel = "${entryLabel}",
+			key_entryLabel = ${entryLabel},
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
 	macro assertEntryDetailsLabelPresent {
 		AssertElementPresent(
-			key_entryLabel = "${entryLabel}",
+			key_entryLabel = ${entryLabel},
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
 
@@ -101,13 +101,13 @@ definition {
 		SelectFrameTop();
 
 		AssertElementNotPresent(
-			key_entrySelected = "${entryNotSelected}",
+			key_entrySelected = ${entryNotSelected},
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
 	}
 
 	macro assertEntryDetailsValuePresent {
 		AssertElementPresent(
-			key_entryValue = "${entryValue}",
+			key_entryValue = ${entryValue},
 			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
 
@@ -115,78 +115,78 @@ definition {
 		SelectFrameTop();
 
 		AssertElementPresent(
-			key_entrySelected = "${entrySelected}",
+			key_entrySelected = ${entrySelected},
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
 	}
 
 	macro assertEntryNotPresent {
 		AssertElementNotPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
 	macro assertEntryOnRelationshipFieldNotPresent {
 		AssertTextNotEquals(
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "${entryValue}");
+			value1 = ${entryValue});
 	}
 
 	macro assertEntryStauts {
 		AssertElementPresent(
-			key_entry = "${entry}",
-			key_status = "${status}",
+			key_entry = ${entry},
+			key_status = ${status},
 			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
 	macro assertFieldAtSpecificColumn {
 		AssertElementPresent(
-			key_fieldColumnNumber = "${fieldColumnNumber}",
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldColumnNumber = ${fieldColumnNumber},
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 	}
 
 	macro assertFieldEntryColumnIsDisplayed {
 		AssertElementPresent(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_ENTRY_COLUMN");
 	}
 
 	macro assertFieldLabelName {
 		AssertTextEquals(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
-			value1 = "${key_fieldLabelName}");
+			value1 = ${key_fieldLabelName});
 	}
 
 	macro assertFieldLabelNameNotPresent {
 		AssertTextNotEquals(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
-			value1 = "${key_fieldLabelName}");
+			value1 = ${key_fieldLabelName});
 	}
 
 	macro assertFilterResultsSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var entry : list "${entry}") {
+		for (var entry : list ${entry}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertVisible(
-				key_entry = "${entry}",
+				key_entry = ${entry},
 				locator1 = "ObjectPortlet#ENTRY_VALUE_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
+				resultOrder = ${resultOrder});
 		}
 	}
 
 	macro assertGenericEntryColumnIsDisplayed {
 		AssertElementPresent(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
 	}
 
 	macro assertHeader {
 		AssertElementPresent(
-			key_objectLabel = "${objectLabel}",
+			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 	}
 
@@ -196,13 +196,13 @@ definition {
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
 
 		AssertElementPresent(
-			key_itemMenu = "${itemMenu}",
+			key_itemMenu = ${itemMenu},
 			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
 	}
 
 	macro assertMenuItemColumn {
 		AssertElementPresent(
-			key_dropdowntItem = "${dropdowntItem}",
+			key_dropdowntItem = ${dropdowntItem},
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
@@ -226,14 +226,14 @@ definition {
 
 	macro assertRelationshipEntrySearchResultsNotPresent {
 		AssertElementNotPresent(
-			key_picklistOption = "${entry}",
+			key_picklistOption = ${entry},
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 	}
 
 	macro assertRelationshipEntrySearchResultsPresent {
 		AssertElementPresent(
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "${entry}");
+			value1 = ${entry});
 	}
 
 	macro assertUserCanNotUpdateEntryWithoutPermission {
@@ -251,11 +251,11 @@ definition {
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
 	macro checkAnyPage {
-		var key_pageNumber = "${pageNumber}";
+		var key_pageNumber = ${pageNumber};
 
 		Click(locator1 = "ObjectPortlet#ANY_PAGE");
 	}
@@ -264,7 +264,7 @@ definition {
 		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
 
 		Click(
-			key_dropdowntItem = "${dropdowntItem}",
+			key_dropdowntItem = ${dropdowntItem},
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
@@ -276,7 +276,7 @@ definition {
 			value1 = "\BACK_SPACE");
 
 		Click(
-			key_picklistOption = "${entryOption}",
+			key_picklistOption = ${entryOption},
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 		if (IsElementPresent(key_feedbackMessage = "The field value is invalid.", locator1 = "Form#FEEDBACK_MESSAGE")) {
@@ -288,16 +288,16 @@ definition {
 
 	macro chooseEntryOnRelationshipFieldSpecific {
 		Click(
-			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			key_relationshipFieldLabel = ${relationshipFieldLabel},
 			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC");
 
 		KeyPress(
-			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			key_relationshipFieldLabel = ${relationshipFieldLabel},
 			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC",
 			value1 = "\BACK_SPACE");
 
 		Click(
-			key_picklistOption = "${entryOption}",
+			key_picklistOption = ${entryOption},
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 		if (IsElementPresent(key_feedbackMessage = "The field value is invalid.", locator1 = "Form#FEEDBACK_MESSAGE")) {
@@ -313,7 +313,7 @@ definition {
 
 	macro deleteEntry {
 		Click(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
@@ -338,7 +338,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
-			value1 = "${columnName}");
+			value1 = ${columnName});
 
 		Click(locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
 	}
@@ -348,7 +348,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectPortlet#SEARCH_FIELD",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		KeyPress(
 			locator1 = "ObjectPortlet#SEARCH_FIELD",
@@ -358,34 +358,34 @@ definition {
 	macro searchEntryRelationshipField {
 		Type.type(
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
-			value1 = "${entryValue}");
+			value1 = ${entryValue});
 	}
 
 	macro selectCustomObject {
 		SelectFrame(locator1 = "ObjectPortlet#SELECT_FRAME_OBJECT");
 
 		WaitForVisible(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 	}
 
 	macro selectObject {
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_OBJECT");
 	}
 
 	macro selectRelationshipFieldEntry {
 		Click(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 
 		Click(
-			key_entry = "${newEntry}",
+			key_entry = ${newEntry},
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 
 		PortletEntry.save();
@@ -393,26 +393,26 @@ definition {
 
 	macro selectSystemObject {
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_SYSTEM_OBJECT");
 	}
 
 	macro sortField {
 		Click(
-			key_sortFieldName = "${sortFieldName}",
+			key_sortFieldName = ${sortFieldName},
 			locator1 = "ObjectPortlet#SORT_FIELD",
-			value1 = "${sortFieldName}");
+			value1 = ${sortFieldName});
 	}
 
 	macro typeCustomField {
 		Type.type(
-			key_customField = "${customField}",
+			key_customField = ${customField},
 			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
-			value1 = "${entry}");
+			value1 = ${entry});
 	}
 
 	macro updateBooleanEntry {
-		ObjectPortlet.viewEntryDetails(entry = "${entry}");
+		ObjectPortlet.viewEntryDetails(entry = ${entry});
 
 		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
 
@@ -420,13 +420,13 @@ definition {
 	}
 
 	macro updateEntry {
-		ObjectPortlet.viewEntryDetails(entry = "${entry}");
+		ObjectPortlet.viewEntryDetails(entry = ${entry});
 
 		Type.type(
 			locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
-			value1 = "${updateEntry}");
+			value1 = ${updateEntry});
 
-		if ("${invalidEntry}" == "true") {
+		if (${invalidEntry} == "true") {
 			Button.clickSave();
 		}
 		else {
@@ -435,7 +435,7 @@ definition {
 	}
 
 	macro viewClobEntryDetails {
-		var key_entry = "${clobEntry}";
+		var key_entry = ${clobEntry};
 
 		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_CLOB_KEBAB_MENU")) {
 			Click(locator1 = "ObjectPortlet#ENTRY_CLOB_KEBAB_MENU");
@@ -459,12 +459,12 @@ definition {
 		SelectFrameTop();
 
 		AssertElementPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
 	macro viewEntryDetails {
-		var key_entry = "${entry}";
+		var key_entry = ${entry};
 
 		Refresh();
 
@@ -485,7 +485,7 @@ definition {
 	macro viewWarningMessage {
 		AssertElementPresent(
 			locator1 = "Message#ERROR_3_ALT",
-			value1 = "${warningMessage}");
+			value1 = ${warningMessage});
 	}
 
 	macro viewWidgetButton {

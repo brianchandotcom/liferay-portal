@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129406. The user that has all permissions for Web Content in Content & Data role can not add a page via Page Tree Panel."
-	@priority = "4"
+	@priority = 4
 	test CannotAddPageWithAllWebContentPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -71,12 +71,12 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regular Role Name");
 
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -84,7 +84,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -92,7 +92,7 @@ definition {
 
 			for (var resourceActionIndex : list "ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalFolder",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -100,7 +100,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalArticle",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -108,7 +108,7 @@ definition {
 
 			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalFeed",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -116,7 +116,7 @@ definition {
 
 			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -124,7 +124,7 @@ definition {
 
 			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle",
 					roleTitle = "Regular Role Name",
 					roleType = "regular");
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106110. Pages are not shown when users are not allowed to view certain pages."
-	@priority = "4"
+	@priority = 4
 	test CannotViewChildPageWhenRemovingSiblingPagePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -205,7 +205,7 @@ definition {
 		task ("Define the permissions of new role") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Regular Role Name");
 			}
@@ -252,7 +252,7 @@ definition {
 		task ("Remove view permission from Test Child Page 1 on Site Member and Guest") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = 2);
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",

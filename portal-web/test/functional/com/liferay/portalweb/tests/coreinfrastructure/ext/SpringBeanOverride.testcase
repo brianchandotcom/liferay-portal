@@ -14,12 +14,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanOverridePortalImpl {
 		property custom.properties = "spring.bean.com.liferay.portal.kernel.uuid.PortalUUID=com.liferay.ext.test.internal.portal.uuid.ExtPortalUUIDImpl${line.separator}spring.bean.com.liferay.portal.util.Portal=com.liferay.ext.test.internal.portal.util.ExtPortalImpl${line.separator}web.server.display.node=true";
 		property osgi.modules.includes = "ext-test-impl";

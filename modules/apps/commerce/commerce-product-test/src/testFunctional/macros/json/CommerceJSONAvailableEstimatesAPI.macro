@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteCommerceAvailableEstimates {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,8 +9,8 @@ definition {
 
 		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
 
-		if ("${commerceAvailabilityEstimateIds}" != "") {
-			for (var commerceAvailabilityEstimateId : list "${commerceAvailabilityEstimateIds}") {
+		if (${commerceAvailabilityEstimateIds} != "") {
+			for (var commerceAvailabilityEstimateId : list ${commerceAvailabilityEstimateIds}) {
 				echo("Deleting Commerce commerceAvailabilityEstimate with id: ${commerceAvailabilityEstimateId}");
 
 				var curl = '''
@@ -19,7 +19,7 @@ definition {
 						-d commerceAvailabilityEstimateId=${commerceAvailabilityEstimateId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -28,22 +28,22 @@ definition {
 	}
 
 	macro _getAvailableEstimatesCount {
-		var availableEstimatesCount = "0";
+		var availableEstimatesCount = 0;
 		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
 
-		for (var commerceAvailabilityEstimateId : list "${commerceAvailabilityEstimateIds}") {
-			if ("${commerceAvailabilityEstimateId}" != "") {
+		for (var commerceAvailabilityEstimateId : list ${commerceAvailabilityEstimateIds}) {
+			if (${commerceAvailabilityEstimateId} != "") {
 				var availableEstimatesCount = ${availableEstimatesCount} + 1;
 			}
 		}
 
 		echo("The Commerce available estimates count is: ${availableEstimatesCount}");
 
-		return "${availableEstimatesCount}";
+		return ${availableEstimatesCount};
 	}
 
 	macro _getCommerceAvailableEstimates {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -62,11 +62,11 @@ definition {
 
 		echo("curl: ${curl}");
 
-		var availableEstimates = JSONCurlUtil.post("${curl}", "$..['commerceAvailabilityEstimateId']");
+		var availableEstimates = JSONCurlUtil.post(${curl}, "$..['commerceAvailabilityEstimateId']");
 
 		echo("availableEstimates: ${availableEstimates}");
 
-		return "${availableEstimates}";
+		return ${availableEstimates};
 	}
 
 }

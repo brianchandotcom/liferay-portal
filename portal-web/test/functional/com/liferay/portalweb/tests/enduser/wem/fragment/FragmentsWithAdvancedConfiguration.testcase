@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147393. The user could add advanced options in fragment's configuration and the advanced options are grouped in collapsable section."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFragmentAdvancedSettings {
 		property portal.acceptance = "true";
 
@@ -83,7 +83,7 @@ definition {
 	]
 }			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -94,7 +94,7 @@ definition {
 	Fragment Example
 </div>			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -117,7 +117,7 @@ definition {
 			Select(
 				key_fieldLabel = "Advanced Config Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "0");
+				value1 = 0);
 
 			PageEditor.waitForAutoSave();
 		}
@@ -142,12 +142,12 @@ definition {
 			AssertSelectedLabel(
 				key_fieldLabel = "Advanced Config Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "0");
+				value1 = 0);
 		}
 	}
 
 	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide result from search."
-	@priority = "5"
+	@priority = 5
 	test HideResultFromSearchInAdvancedSettings {
 		property portal.acceptance = "true";
 
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide single text in multiple results."
-	@priority = "3"
+	@priority = 3
 	test HideSingleResultInMultipleResultsInAdvancedSettings {
 		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150921. The Hide from Site Search Results is not grouped in fieldset on Advanced panel."
-	@priority = "4"
+	@priority = 4
 	test ViewHideFromSiteSearchResultsNotGroupedInFieldset {
 		task ("Given a Page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150921. The user could view message when the parent fragment is hidden from search."
-	@priority = "5"
+	@priority = 5
 	test ViewMessageWhenParentFragmentIsHiddenFromSiteSearchResults {
 		property portal.acceptance = "true";
 

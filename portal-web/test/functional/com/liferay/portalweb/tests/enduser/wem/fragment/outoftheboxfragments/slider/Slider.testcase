@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140820. The user could decrease the Number of Slides in Slider."
-	@priority = "5"
+	@priority = 5
 	test DecreaseNumberOfSlides {
 		property portal.acceptance = "true";
 
@@ -71,11 +71,11 @@ definition {
 		task ("Change the Number of Slides to 2") {
 			PageEditor.gotoConfiguration(fragmentName = "Slider");
 
-			PageEditor.configureFragment(numberOfSlides = "2");
+			PageEditor.configureFragment(numberOfSlides = 2);
 		}
 
 		task ("Map the Content and Display Page URL fields to title and subtitle fields in the second slide") {
-			ContentPages.focusSlide(slideNumber = "2");
+			ContentPages.focusSlide(slideNumber = 2);
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",
@@ -122,7 +122,7 @@ definition {
 
 			var baseURL = PropsUtil.get("portal.url");
 
-			ContentPages.focusSlide(slideNumber = "1");
+			ContentPages.focusSlide(slideNumber = 1);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
@@ -134,7 +134,7 @@ definition {
 				id = "01-03-subtitle",
 				text = "Test Test");
 
-			ContentPages.focusSlide(slideNumber = "2");
+			ContentPages.focusSlide(slideNumber = 2);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140820. The user could increase the Number of Slides in Slider."
-	@priority = "5"
+	@priority = 5
 	test IncreaseNumberOfSlides {
 		property portal.acceptance = "true";
 
@@ -184,7 +184,7 @@ definition {
 		task ("Change the Number of Slides to 4") {
 			PageEditor.gotoConfiguration(fragmentName = "Slider");
 
-			PageEditor.configureFragment(numberOfSlides = "4");
+			PageEditor.configureFragment(numberOfSlides = 4);
 		}
 
 		task ("View inline texts of slides") {
@@ -198,7 +198,7 @@ definition {
 				fragmentName = "Slider",
 				id = "01-03-subtitle");
 
-			ContentPages.focusSlide(slideNumber = "2");
+			ContentPages.focusSlide(slideNumber = 2);
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Slide 2 Title",
@@ -210,7 +210,7 @@ definition {
 				fragmentName = "Slider",
 				id = "02-03-subtitle");
 
-			ContentPages.focusSlide(slideNumber = "3");
+			ContentPages.focusSlide(slideNumber = 3);
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Slide 3 Title",
@@ -222,7 +222,7 @@ definition {
 				fragmentName = "Slider",
 				id = "03-03-subtitle");
 
-			ContentPages.focusSlide(slideNumber = "4");
+			ContentPages.focusSlide(slideNumber = 4);
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Slide 4 Title",
@@ -254,7 +254,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.focusSlide(slideNumber = "1");
+			ContentPages.focusSlide(slideNumber = 1);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
@@ -266,7 +266,7 @@ definition {
 				id = "01-03-subtitle",
 				text = "Nets vs Warriors");
 
-			ContentPages.focusSlide(slideNumber = "2");
+			ContentPages.focusSlide(slideNumber = 2);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
@@ -278,7 +278,7 @@ definition {
 				id = "02-03-subtitle",
 				text = "Slide 2 Subtitle");
 
-			ContentPages.focusSlide(slideNumber = "3");
+			ContentPages.focusSlide(slideNumber = 3);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",
@@ -290,7 +290,7 @@ definition {
 				id = "03-03-subtitle",
 				text = "Slide 3 Subtitle");
 
-			ContentPages.focusSlide(slideNumber = "4");
+			ContentPages.focusSlide(slideNumber = 4);
 
 			ContentPages.viewFragmentText(
 				fragmentName = "slider",

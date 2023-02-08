@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111561. The user could configure grid layout of Collection Display."
-	@priority = "5"
+	@priority = 5
 	test ConfigureGridLayoutOfCollectionDisplay {
 		property portal.acceptance = "true";
 
@@ -70,19 +70,19 @@ definition {
 
 		task ("Then the Collection Display fragment shows the collection items in the selected number of columns") {
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "6",
-				layout = "2",
-				position = "1");
+				columnCount = 6,
+				layout = 2,
+				position = 1);
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2,Web Content Title 1,") {
 				AssertTextEquals(
-					key_columnNumber = "${n}",
-					key_position = "1",
-					key_rowNumber = "1",
+					key_columnNumber = ${n},
+					key_position = 1,
+					key_rowNumber = 1,
 					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-					value1 = "${text}");
+					value1 = ${text});
 
 				var n = ${n} + 1;
 			}
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111561. The user could customize grid layout of Collection Display in non-desktop viewport."
-	@priority = "4"
+	@priority = 4
 	test CustomizeGridLayoutOfCollectionDisplayInNonDesktopViewport {
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
@@ -133,27 +133,27 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "4",
-				layout = "3",
-				position = "1");
+				columnCount = 4,
+				layout = 3,
+				position = 1);
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2") {
 				AssertTextEquals(
-					key_columnNumber = "${n}",
-					key_position = "1",
-					key_rowNumber = "1",
+					key_columnNumber = ${n},
+					key_position = 1,
+					key_rowNumber = 1,
 					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-					value1 = "${text}");
+					value1 = ${text});
 
 				var n = ${n} + 1;
 			}
 
 			AssertTextEquals(
-				key_columnNumber = "1",
-				key_position = "1",
-				key_rowNumber = "2",
+				key_columnNumber = 1,
+				key_position = 1,
+				key_rowNumber = 2,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
 				value1 = "Web Content Title 1");
 
@@ -166,9 +166,9 @@ definition {
 
 		task ("Then the Collection Display fragment has Full Width layout") {
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "1",
-				layout = "12",
-				position = "1");
+				columnCount = 1,
+				layout = 12,
+				position = 1);
 		}
 
 		task ("When the user changes to Portrait Phone viewport") {
@@ -179,14 +179,14 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "1",
-				layout = "12",
-				position = "1");
+				columnCount = 1,
+				layout = 12,
+				position = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-111561. The grid layout of Collection Display defined in Desktop viewport should be propagated to other viewports."
-	@priority = "4"
+	@priority = 4
 	test PropagateGridLayoutDefinedInDesktopToOtherViewports {
 		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
 			task ("Add five web contents") {
@@ -218,9 +218,9 @@ definition {
 
 		task ("When the user changes to Tablet viewport") {
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "1",
-				layout = "12",
-				position = "1");
+				columnCount = 1,
+				layout = 12,
+				position = 1);
 
 			PageEditor.switchViewport(deviceType = "Tablet");
 		}
@@ -229,9 +229,9 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "1",
-				layout = "12",
-				position = "1");
+				columnCount = 1,
+				layout = 12,
+				position = 1);
 
 			SelectFrame(value1 = "relative=top");
 		}
@@ -252,9 +252,9 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			PageEditor.viewCollectionDisplayStyle(
-				columnCount = "4",
-				layout = "3",
-				position = "1",
+				columnCount = 4,
+				layout = 3,
+				position = 1,
 				spaceBetweenColumns = "false");
 		}
 	}

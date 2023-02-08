@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can export a file at import Export/Import navigation menu"
-	@priority = "4"
+	@priority = 4
 	test CanExportAFile {
 		CalendarNavigator.gotoConfiguration();
 
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-57992."
-	@priority = "4"
+	@priority = 4
 	test CanExportCalendar {
 		CalendarNavigator.gotoAddEvent();
 
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can import a file at import Export/Import navigation menu"
-	@priority = "4"
+	@priority = 4
 	test CanImportAFile {
 		CalendarNavigator.gotoConfiguration();
 
@@ -182,25 +182,25 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-53072."
-	@priority = "4"
+	@priority = 4
 	test CanImportCalendar {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		CalendarNavigator.gotoCurrentSiteCalendarsManage();
 
 		Calendar.importCalendarFile(
 			calendarFile = "calendar_microsoft_outlook_calendar.ics",
-			calendarName = "${siteName}");
+			calendarName = ${siteName});
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanViewCommentFromImportedCalendar {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Calendar.enableComments(
-			calendarName = "${siteName}",
+			calendarName = ${siteName},
 			calendarType = "Current Site Calendars",
-			site = "${siteName}",
+			site = ${siteName},
 			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -208,23 +208,23 @@ definition {
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.add(
-			calendarName = "${siteName}",
+			calendarName = ${siteName},
 			eventComment = "Calendar Event Regular Comment",
 			eventCommentEnabled = "true",
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
 			pageName = "Calendar Page",
-			site = "${siteName}",
+			site = ${siteName},
 			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewComment(
-			calendarName = "${siteName}",
+			calendarName = ${siteName},
 			eventComment = "Calendar Event Regular Comment",
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			site = "${siteName}",
+			site = ${siteName},
 			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -250,7 +250,7 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
+			larFileName = ${larFileName},
 			siteName = "Guest");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
@@ -258,7 +258,7 @@ definition {
 		CalendarEvent.view(eventTitle = "Calendar Event Regular Title");
 
 		CalendarEvent.viewComment(
-			calendarName = "${siteName}",
+			calendarName = ${siteName},
 			eventComment = "Calendar Event Regular Comment",
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that the user can view the message: -Failed to import empty file.- after import empty file."
-	@priority = "3"
+	@priority = 3
 	test CanViewMessageAfterImportEmptyFile {
 		CalendarExportImport.gotoPortletExportImport();
 
@@ -280,7 +280,7 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new exported process status in the Current and Previous tab"
-	@priority = "3"
+	@priority = 3
 	test CanViewProcessStatusExported {
 		CalendarExportImport.gotoPortletExportImport();
 
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@description = "LRQA-71361 - Verify that user can view the new imported process status in the Current and Previous tab"
-	@priority = "3"
+	@priority = 3
 	test CanViewProcessStatusImported {
 		CalendarExportImport.gotoPortletExportImport();
 

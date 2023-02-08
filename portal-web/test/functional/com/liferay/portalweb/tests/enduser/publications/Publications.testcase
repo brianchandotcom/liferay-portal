@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Assert we can add edit and delete comment for Publication Review."
-	@priority = "4"
+	@priority = 4
 	test AddEditAndDeleteCommentForPublicationReview {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "Assert Publications user can add/delete/publish publication with all permissions of Publications, can't add/publish a new publicaiton without add/publish publication permission."
-	@priority = "5"
+	@priority = 5
 	test AllowPublicationsPermissionUserToAddAndPublishPublications {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -66,26 +66,26 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
 				roleTitle = "Publications Role");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Publications Role");
 
 		for (var resourceActionIndex : list "ADD_PUBLICATION,PERMISSIONS") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.change.tracking",
 				roleTitle = "Publications Role");
 		}
 
 		for (var resourceActionIndex : list "DELETE,PERMISSIONS,PUBLISH,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.change.tracking.model.CTCollection",
 				roleTitle = "Publications Role");
 		}
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@description = "Assert Non-privileged user cannot see Publications bar."
-	@priority = "5"
+	@priority = 5
 	test AssertNonPrivilegedUserCannotSeePublicationsBar {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-153276. Browsing in a publication should not cause changes inside the publication."
-	@priority = "4"
+	@priority = 4
 	test BrowsingInPublicationCannotCauseChanges {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "Assert that is possible to add a Wiki Page within a publication and then publish it"
-	@priority = "3"
+	@priority = 3
 	test CanAddWikiPageWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -274,7 +274,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Node",
-			changeOrder = "1",
+			changeOrder = 1,
 			changeSite = "Guest",
 			changeTitle = "Wiki Node Name",
 			changeType = "Added",
@@ -282,7 +282,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Wiki Page",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "Wiki Page Title",
 			changeType = "Added",
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-158789. Allow you to change publication via URL parameter"
-	@priority = "4"
+	@priority = 4
 	test CanChangePublicationViaURLParameter {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "Filter Publications Changes."
-	@priority = "4"
+	@priority = 4
 	test CanFilterChangesInReview {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 1",
@@ -419,7 +419,7 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.viewChangesResultNotPresent(
@@ -443,7 +443,7 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -466,7 +466,7 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -505,7 +505,7 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
@@ -521,7 +521,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Test Site Name",
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-158789."
-	@priority = "4"
+	@priority = 4
 	test CannotChangePublicationViaURLWithNonexistentCollectionId {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-158789."
-	@priority = "4"
+	@priority = 4
 	test CannotPreviewPublishedPublicationViaURL {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "LPS-136380 - Add localization for translated titles and content."
-	@priority = "4"
+	@priority = 4
 	test CanPublishLocalizedContent {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -652,7 +652,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Translation",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Guest",
 			changeTitle = "网页内容标题",
 			changeType = "Added",
@@ -694,7 +694,7 @@ definition {
 	}
 
 	@description = "Login after resetting password when last in Publication."
-	@priority = "4"
+	@priority = 4
 	test CanResetPasswordWhenLastInPublication {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -720,7 +720,7 @@ definition {
 			userInvite = "userea@liferay.com",
 			userMissingPublicationsRole = "true");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -728,7 +728,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.impersonateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		Publications.selectPublication(publicationName = "Publication Name");
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@description = "This is use case for LPS-170779. File upload causes publication to become unusable"
-	@priority = "4"
+	@priority = 4
 	test CanReviewChangesWithManyDocuments {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Publications#CanReviewChangesWithManyDocuments";
@@ -757,7 +757,7 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -781,7 +781,7 @@ definition {
 	}
 
 	@description = "This is use case for LPS-157264.Changing permissions on a publication shouldn't go into the publication"
-	@priority = "3"
+	@priority = 3
 	test ChangePermissionsOnAPublicationShouldGoIntoProduction {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -816,7 +816,7 @@ definition {
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DiscardSubsetsofChangesInPublication {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -906,7 +906,7 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test IsBrowserHistoryPreserved {
 		property app.server.types = "jboss,tomcat,websphere,wildfly";
 		property test.assert.warning.exceptions = "true";
@@ -948,7 +948,7 @@ definition {
 			value1 = "Published");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test IsLocalizedInPublicationsAdmin {
 		property test.name.skip.portal.instance = "Publications#IsLocalizedInPublicationsAdmin";
 
@@ -984,7 +984,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-153949. Users should always be able to modify their account regardless of whether they are in a publication."
-	@priority = "4"
+	@priority = 4
 	test MyAccountActionsAreForcedToProduction {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -1012,7 +1012,7 @@ definition {
 	}
 
 	@description = "Assert publications changes can search and sort"
-	@priority = "4"
+	@priority = 4
 	test PublicationsChangesCanSearchAndSort {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -1029,7 +1029,7 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		Search.searchCP(searchTerm = "1");
+		Search.searchCP(searchTerm = 1);
 
 		PublicationsChanges.viewChangesResultsOrder(
 			changeCategory = "Web Content Article",
@@ -1037,12 +1037,12 @@ definition {
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeTitle = "WC Title 2");
 
 		PublicationsChanges.viewChangesResultNotPresent(
 			changeCategory = "Web Content Article",
-			changeOrder = "3",
+			changeOrder = 3,
 			changeTitle = "WC Title 3");
 
 		Search.searchCP(searchTerm = "WC");
@@ -1068,7 +1068,7 @@ definition {
 			changesList = "WC Title 3,WC Title 2,WC Title 1");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishParallelPublications {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
@@ -1151,7 +1151,7 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test RescheduleAndCancelScheduledPublication {
 		property portal.acceptance = "true";
 
@@ -1179,7 +1179,7 @@ definition {
 			value1 = "No publication has been scheduled yet.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test RevertPublicationAndPublishNow {
 		property portal.acceptance = "true";
 
@@ -1218,7 +1218,7 @@ definition {
 	}
 
 	@description = "Assert that we can schedule a asset inside a publication and publish it."
-	@priority = "3"
+	@priority = 3
 	test ScheduledAssetsCanBePublished {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -1251,7 +1251,7 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SchedulePublication {
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
@@ -1299,37 +1299,37 @@ definition {
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SearchPublishedPublications {
 		for (var publicationName : list "Apple,Banana,Cherry") {
-			JSONPublications.addPublication(publicationName = "${publicationName}");
+			JSONPublications.addPublication(publicationName = ${publicationName});
 		}
 
 		PublicationsNavigator.openPublicationsAdmin();
 
 		for (var publicationName : list "Apple,Banana,Cherry") {
-			Publications.search(publicationName = "${publicationName}");
+			Publications.search(publicationName = ${publicationName});
 		}
 
 		for (var publicationName : list "Apple,Banana,Cherry") {
-			JSONPublications.selectPublication(publicationName = "${publicationName}");
+			JSONPublications.selectPublication(publicationName = ${publicationName});
 
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
-				layoutName = "${publicationName}");
+				layoutName = ${publicationName});
 
-			JSONPublications.publishPublication(publicationName = "${publicationName}");
+			JSONPublications.publishPublication(publicationName = ${publicationName});
 		}
 
 		Navigator.gotoNavTab(navTab = "History");
 
 		for (var publicationName : list "Apple,Banana,Cherry") {
-			Publications.search(publicationName = "${publicationName}");
+			Publications.search(publicationName = ${publicationName});
 		}
 	}
 
 	@description = "This is the use case for LPS-158789."
-	@priority = "4"
+	@priority = 4
 	test UserWithoutAccessCannotChangePublicationViaURL {
 
 		// Workaround LPS-160890 on Websphere
@@ -1379,7 +1379,7 @@ definition {
 	}
 
 	@description = "Assert Publications change details on Display Data Parents and Children Tabs"
-	@priority = "4"
+	@priority = 4
 	test ViewPublicationsChangeDetails {
 
 		// Workaround LPS-140997 and LPS-148148
@@ -1442,7 +1442,7 @@ definition {
 	}
 
 	@description = "Can view Published Publications items pagination and order on History Tab."
-	@priority = "4"
+	@priority = 4
 	test ViewPublicationsHistoryItemsPaginationAndOrder {
 		for (var count : list "1,2,3,4,5,6,7") {
 			JSONPublications.addPublication(publicationName = "Publication Name ${count}");
@@ -1463,7 +1463,7 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 7 of 7 entries.");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
 

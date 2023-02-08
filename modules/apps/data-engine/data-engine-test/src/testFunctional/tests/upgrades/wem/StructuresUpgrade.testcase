@@ -19,7 +19,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -30,7 +30,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -41,7 +41,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -52,7 +52,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -63,7 +63,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test EditAnUpgradedStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -74,7 +74,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -85,7 +85,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -96,7 +96,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -107,7 +107,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -118,7 +118,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -126,12 +126,12 @@ definition {
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = ${allFields});
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -139,12 +139,12 @@ definition {
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = ${allFields});
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -152,12 +152,12 @@ definition {
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = ${allFields});
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -165,12 +165,12 @@ definition {
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = ${allFields});
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -178,12 +178,12 @@ definition {
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator,Web Content,Geolocation";
 
-		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = "${allFields}");
+		DataEngineUpgrade.validateFieldLabelsTranslatedInStructure(allFields = ${allFields});
 	}
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -194,7 +194,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -205,7 +205,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -216,7 +216,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -227,7 +227,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -238,7 +238,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -249,7 +249,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -260,7 +260,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -271,7 +271,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -282,7 +282,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateNStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -293,7 +293,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateNStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -304,7 +304,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateNStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -315,7 +315,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateNStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -326,7 +326,7 @@ definition {
 
 	@description = "This is a use case for LPS-123540. Upgrade in WEM Structures with translations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValidateNStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

@@ -48,7 +48,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can be mentioned in a comment when he has valid permission."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMentionUserWithValidPermissions {
 		JSONUser.addUser(
@@ -109,7 +109,7 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewMentionsDisplayOption(
 			fragmentComment = "@user",
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user can mention the other user in a comment."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCommentMentionedUser {
 		JSONRole.assignRoleToUser(
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This case ensures a user cannot access a comment he is mentioned on after his permissions are revoked."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMentionAfterRevokingPermissions {
 		JSONRole.addRegularRole(
@@ -202,11 +202,11 @@ definition {
 
 		Notifications.viewNoPermissions(
 			contentBody = "user2",
-			notificationCount = "1");
+			notificationCount = 1);
 	}
 
 	@description = "This case ensures that the mention popup disappears."
-	@priority = "4"
+	@priority = 4
 	test CanViewMentionPopUpDisappear {
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",

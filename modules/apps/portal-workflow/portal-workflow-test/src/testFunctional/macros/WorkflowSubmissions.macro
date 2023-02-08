@@ -3,7 +3,7 @@ definition {
 	macro searchSubmissions {
 		Type(
 			locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BAR",
-			value1 = "${searchValue}");
+			value1 = ${searchValue});
 
 		Click(locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BUTTON");
 	}
@@ -11,10 +11,10 @@ definition {
 	macro viewSubmissionStatus {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		MenuItem.click(menuItem = "${submissionStatus}");
+		MenuItem.click(menuItem = ${submissionStatus});
 
 		AssertElementPresent(
-			key_taskName = "${submissionTitle}",
+			key_taskName = ${submissionTitle},
 			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
 	}
 

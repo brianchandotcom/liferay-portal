@@ -13,7 +13,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -21,11 +21,11 @@ definition {
 	macro addAttachmentViaPageEdit {
 		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiPageTitle = "${wikiPageTitle}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 		else {
 			AssertClick(
@@ -37,11 +37,11 @@ definition {
 
 		AssertVisible(locator1 = "Button#SELECT_FILES");
 
-		var key_attachmentFileName = "${attachmentFileName}";
+		var key_attachmentFileName = ${attachmentFileName};
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${attachmentFileName}");
+			value1 = ${attachmentFileName});
 
 		WaitForElementPresent(locator1 = "Checkbox#SELECT_ALL");
 
@@ -61,9 +61,9 @@ definition {
 
 		Type(
 			locator1 = "Wiki#ENTRY_TITLE",
-			value1 = "${wikiChildPageTitle}");
+			value1 = ${wikiChildPageTitle});
 
-		if ("${htmlSource}" == "true") {
+		if (${htmlSource} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			SelectNoError(
@@ -72,14 +72,14 @@ definition {
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-			CKEditor.addSourceContent(content = "${wikiChildPageContent}");
+			CKEditor.addSourceContent(content = ${wikiChildPageContent});
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${wikiChildPageContent}");
+				value1 = ${wikiChildPageContent});
 
 			SelectFrame(value1 = "relative=top");
 		}
@@ -96,9 +96,9 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
-		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiChildPageTitle});
 
-		if ("${htmlSource}" == "true") {
+		if (${htmlSource} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			SelectNoError(
@@ -107,14 +107,14 @@ definition {
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-			CKEditor.addSourceContent(content = "${wikiChildPageContent}");
+			CKEditor.addSourceContent(content = ${wikiChildPageContent});
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${wikiChildPageContent}");
+				value1 = ${wikiChildPageContent});
 
 			SelectFrame(value1 = "relative=top");
 		}
@@ -127,11 +127,11 @@ definition {
 	}
 
 	macro addChildPageViaEllipsis {
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Add Child Page");
 
-		PortletEntry.inputTitle(title = "${key_wikiChildPageTitle}");
+		PortletEntry.inputTitle(title = ${key_wikiChildPageTitle});
 	}
 
 	macro addComment {
@@ -139,7 +139,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${entryComment}");
+			value1 = ${entryComment});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -155,34 +155,34 @@ definition {
 	macro addCP {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
-				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}");
+				groupName = ${groupName},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName});
 		}
 		else {
 			LexiconEntry.gotoAdd();
 		}
 
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
-		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiPageTitle});
 
-		var key_wikiPageTitle = "${wikiPageContent}";
+		var key_wikiPageTitle = ${wikiPageContent};
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		SelectFrame(value1 = "relative=top");
 
 		if (isSet(contentImageName)) {
 			WikiPage.addInlineImage(
-				contentImageName = "${contentImageName}",
-				imageSourceURL = "${imageSourceURL}",
-				navTab = "${navTab}",
-				wikiAdmin = "${wikiAdmin}");
+				contentImageName = ${contentImageName},
+				imageSourceURL = ${imageSourceURL},
+				navTab = ${navTab},
+				wikiAdmin = ${wikiAdmin});
 		}
 
 		PortletEntry.publish();
@@ -191,11 +191,11 @@ definition {
 	macro addFrontPageChildPageInvalidTitle {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddChildPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiParentPageTitle = "${wikiParentPageTitle}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiParentPageTitle = ${wikiParentPageTitle});
 		}
 		else {
 			AssertClick(
@@ -203,15 +203,15 @@ definition {
 				value1 = "Add Child Page");
 		}
 
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
-		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiChildPageTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiChildPageContent}");
+			value1 = ${wikiChildPageContent});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -231,15 +231,15 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
-		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiChildPageTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiChildPageContent}");
+			value1 = ${wikiChildPageContent});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -263,27 +263,27 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiFrontPageContent}");
+			value1 = ${wikiFrontPageContent});
 
 		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addFrontPagePG {
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		if (isSet(addFrontPagetoNode)) {
 			AssertClick(
 				locator1 = "Wiki#NODE_NAME",
-				value1 = "${wikiNodeName}");
+				value1 = ${wikiNodeName});
 		}
 
 		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiPageTitle = "${wikiPageTitle}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 		else {
 			AssertClick(
@@ -291,7 +291,7 @@ definition {
 				value1 = "This page is empty. Edit it to add some text.");
 		}
 
-		if ("${creoleSource}" == "true") {
+		if (${creoleSource} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			Select(
@@ -302,9 +302,9 @@ definition {
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
-		else if ("${htmlSource}" == "true") {
+		else if (${htmlSource} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			SelectNoError(
@@ -313,29 +313,29 @@ definition {
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-			CKEditor.addSourceContent(content = "${wikiPageContent}");
+			CKEditor.addSourceContent(content = ${wikiPageContent});
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
 
 		SelectFrame(value1 = "relative=top");
 
-		if ("${pageAddTag}" == "true") {
-			WikiPage.addTagPGCmd(tagNameList = "${tagNameList}");
+		if (${pageAddTag} == "true") {
+			WikiPage.addTagPGCmd(tagNameList = ${tagNameList});
 
-			WikiPage.viewTagViaAddPG(tagNameList = "${tagNameList}");
+			WikiPage.viewTagViaAddPG(tagNameList = ${tagNameList});
 		}
 
 		PortletEntry.publish();
 	}
 
 	macro addFrontPageWithWorkflowPG {
-		WikiPage._editEmptyFrontPage(wikiPageContent = "${wikiPageContent}");
+		WikiPage._editEmptyFrontPage(wikiPageContent = ${wikiPageContent});
 
 		WikiPage.submitForPublication();
 	}
@@ -344,31 +344,31 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "${imageSourceURL}",
-			navTab = "${navTab}",
-			wikiAdmin = "${wikiAdmin}");
+			imageSourceURL = ${imageSourceURL},
+			navTab = ${navTab},
+			wikiAdmin = ${wikiAdmin});
 
-		CKEditor.viewEntryContentImage(contentImageName = "${contentImageName}");
+		CKEditor.viewEntryContentImage(contentImageName = ${contentImageName});
 	}
 
 	macro addInlineImageViaEdit {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.uploadFile(
-			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}");
+			navTab = ${navTab},
+			uploadFileName = ${uploadFileName});
 	}
 
 	macro addLocalizedFrontPagePG {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
-			value1 = "${emptyPageMessage}");
+			value1 = ${emptyPageMessage});
 
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
-		if ("${rtl}" == "true") {
+		if (${rtl} == "true") {
 			var textDirection = "rtl";
 		}
 		else {
@@ -385,7 +385,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "${successMessage}");
+			value1 = ${successMessage});
 
 		AssertElementPresent(locator1 = "//html[@dir='${textDirection}']");
 
@@ -393,19 +393,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY_HTML",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 	}
 
 	macro addPageWithWorkflowPG {
 		WikiNavigator.gotoAddPageViaPG();
 
-		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiPageTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -420,38 +420,38 @@ definition {
 		if (isSet(viewableBy)) {
 			Select(
 				locator1 = "AssetPermissions#VIEWABLE_AS_SELECT",
-				value1 = "${viewableBy}");
+				value1 = ${viewableBy});
 		}
 
 		if (isSet(permissionsDefinitionKey)) {
 			PermissionsInline.addOrRemoveEntryPermissionsFromAllRoles(
-				addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
-				key_roleTitle = "${roleTitle}",
-				permissionDefinitionKeyList = "${permissionDefinitionKey}");
+				addOrRemoveViewPermission = ${addOrRemoveViewPermission},
+				key_roleTitle = ${roleTitle},
+				permissionDefinitionKeyList = ${permissionDefinitionKey});
 		}
 	}
 
 	macro addPG {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName});
 		}
 		else {
 			WikiNavigator.gotoAddPageViaPG();
 		}
 
-		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
+		WikiEntry.addPageTitle(title = ${wikiPageTitle});
 
-		if ("${viewFormat}" == "true") {
+		if (${viewFormat} == "true") {
 			AssertSelectedLabel(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${wikiFormat}");
+				value1 = ${wikiFormat});
 		}
 
-		if ("${htmlSource}" == "true") {
+		if (${htmlSource} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			SelectNoError(
@@ -460,27 +460,27 @@ definition {
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
-			CKEditor.addSourceContent(content = "${wikiPageContent}");
+			CKEditor.addSourceContent(content = ${wikiPageContent});
 		}
 		else {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 
 			SelectFrame(value1 = "relative=top");
 		}
 
 		if (isSet(contentImageName)) {
 			WikiPage.addInlineImage(
-				contentImageName = "${contentImageName}",
-				imageSourceURL = "${imageSourceURL}",
-				navTab = "${navTab}",
-				wikiAdmin = "${wikiAdmin}");
+				contentImageName = ${contentImageName},
+				imageSourceURL = ${imageSourceURL},
+				navTab = ${navTab},
+				wikiAdmin = ${wikiAdmin});
 		}
 
-		if ("${viewCkEditorResizer}" == "true") {
+		if (${viewCkEditorResizer} == "true") {
 			AssertVisible(locator1 = "CKEditor#RESIZER");
 
 			MouseDown(locator1 = "CKEditor#RESIZER");
@@ -488,14 +488,14 @@ definition {
 			MouseUp(locator1 = "CKEditor#RESIZER");
 		}
 
-		if ("${pageAddPermissions}" == "true") {
+		if (${pageAddPermissions} == "true") {
 			WikiPage.addPermissionsPGCmd();
 		}
 
-		if ("${pageAddTag}" == "true") {
-			WikiPage.addTagPGCmd(tagNameList = "${tagNameList}");
+		if (${pageAddTag} == "true") {
+			WikiPage.addTagPGCmd(tagNameList = ${tagNameList});
 
-			WikiPage.viewTagViaAddPG(tagNameList = "${tagNameList}");
+			WikiPage.viewTagViaAddPG(tagNameList = ${tagNameList});
 		}
 
 		if (isSet(customFieldText)) {
@@ -503,13 +503,13 @@ definition {
 
 			Type(
 				locator1 = "TextInput#CUSTOM_FIELD",
-				value1 = "${customFieldText}");
+				value1 = ${customFieldText});
 		}
 
 		if (isSet(saveAsDraft)) {
 			WikiEntry.saveAsDraft();
 		}
-		else if ("${wikiPageTitleVariation}" == "Invalid") {
+		else if (${wikiPageTitleVariation} == "Invalid") {
 			AssertClick(
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");
@@ -532,8 +532,8 @@ definition {
 	macro addTagPGCmd {
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "${tagNameList}") {
-			AssetCategorization.addTag(tagName = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			AssetCategorization.addTag(tagName = ${tagName});
 		}
 	}
 
@@ -542,23 +542,23 @@ definition {
 	}
 
 	macro changeParentWikipageCP {
-		WikiNavigator.gotoEntryMoveViaTable(wikiPageTitle = "${wikiPageTitle}");
+		WikiNavigator.gotoEntryMoveViaTable(wikiPageTitle = ${wikiPageTitle});
 
 		WikiNavigator.gotoChangeParent();
 
-		WikiPage.selectNewParent(wikiParentName = "${newParentWikiPageTitle}");
+		WikiPage.selectNewParent(wikiParentName = ${newParentWikiPageTitle});
 	}
 
 	macro changeParentWikipagetoWikipagePG {
-		var key_wikiPageTitle = "${wikiPage2Title}";
+		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPage2Title}");
+			value1 = ${wikiPage2Title});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPage2Content}");
+			value1 = ${wikiPage2Content});
 
 		AssertClick(
 			locator1 = "Link#DETAILS",
@@ -572,7 +572,7 @@ definition {
 			locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT",
 			value1 = "Change Parent");
 
-		var key_wikiPageTitle = "${wikiPage1Title}";
+		var key_wikiPageTitle = ${wikiPage1Title};
 
 		Select(
 			locator1 = "Select#NEW_PARENT",
@@ -587,18 +587,18 @@ definition {
 
 	macro clickWikiPage {
 		AssertClick(
-			key_workflowInstanceName = "${workflowInstanceName}",
+			key_workflowInstanceName = ${workflowInstanceName},
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "${workflowInstanceName}");
+			value1 = ${workflowInstanceName});
 	}
 
 	macro compareVersionsCP {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		WikiNavigator.openToWikiPage(
-			siteURLKey = "${siteURLKey}",
-			wikiNodeName = "${wikiNodeName}",
-			wikiPageTitle = "${wikiPageTitle}");
+			siteURLKey = ${siteURLKey},
+			wikiNodeName = ${wikiNodeName},
+			wikiPageTitle = ${wikiPageTitle});
 
 		Click(locator1 = "Icon#INFO");
 
@@ -608,10 +608,10 @@ definition {
 
 		MenuItem.click(menuItem = "Versions");
 
-		var key_wikiPageVersion = "${wikiPageVersionNew}";
+		var key_wikiPageVersion = ${wikiPageVersionNew};
 
 		Click.waitForMenuToggleJSClick(
-			key_wikiPageVersion = "${wikiPageVersionNew}",
+			key_wikiPageVersion = ${wikiPageVersionNew},
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION_ACTIONS");
 
 		AssertClick(
@@ -620,37 +620,37 @@ definition {
 
 		SelectFrame(locator1 = "Wiki#COMPARE_VERSIONS_IFRAME");
 
-		var key_wikiPageVersion = "${wikiPageVersionNew}";
+		var key_wikiPageVersion = ${wikiPageVersionNew};
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION",
-			value1 = "${wikiPageVersionNew}");
+			value1 = ${wikiPageVersionNew});
 
 		AssertElementPresent(locator1 = "Wiki#COMPARE_VERSIONS_DATE");
 
-		var key_wikiPageVersion = "${wikiPageVersionOld}";
+		var key_wikiPageVersion = ${wikiPageVersionOld};
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION",
-			value1 = "${wikiPageVersionOld}");
+			value1 = ${wikiPageVersionOld});
 
 		AssertElementPresent(locator1 = "Wiki#COMPARE_VERSIONS_DATE");
 
 		AssertClick(
 			locator1 = "Wiki#COMPARE_VERSIONS_VERSION_LINK",
-			value1 = "${wikiPageVersionOld}");
+			value1 = ${wikiPageVersionOld});
 
 		SelectFrame(value1 = "relative=top");
 
-		var key_wikiPageVersionDiff = "${wikiPageVersionDiff}";
+		var key_wikiPageVersionDiff = ${wikiPageVersionDiff};
 
 		AssertTextEquals(
 			locator1 = "Wiki#COMPARE_VERSIONS_DIFF",
-			value1 = "${wikiPageVersionDiff}");
+			value1 = ${wikiPageVersionDiff});
 	}
 
 	macro compareVersionsPG {
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		AssertClick(
 			locator1 = "Link#DETAILS",
@@ -664,17 +664,17 @@ definition {
 			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
 			value1 = "Versions");
 
-		var key_wikiPageVersionNew = "${wikiPageVersionNew}";
+		var key_wikiPageVersionNew = ${wikiPageVersionNew};
 
 		Check(
 			locator1 = "WikiTable#SELECT_VERSION_NEW_VERSION_CHECKBOX",
-			value1 = "${wikiPageVersionNew}");
+			value1 = ${wikiPageVersionNew});
 
-		var key_wikiPageVersionOld = "${wikiPageVersionOld}";
+		var key_wikiPageVersionOld = ${wikiPageVersionOld};
 
 		Check(
 			locator1 = "WikiTable#SELECT_VERSION_OLD_VERSION_CHECKBOX",
-			value1 = "${wikiPageVersionOld}");
+			value1 = ${wikiPageVersionOld});
 
 		AssertClick(
 			locator1 = "Button#COMPARE_VERSIONS",
@@ -682,22 +682,22 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		if ("${wikiPageCompareContentDetails}" == "true") {
-			var key_wikiPageContentCompareAdded = "${wikiPageContentCompareAdded}";
-			var key_wikiPageContentCompareFull = "${wikiPageContentCompareFull}";
-			var key_wikiPageContentCompareRemoved = "${wikiPageContentCompareRemoved}";
+		if (${wikiPageCompareContentDetails} == "true") {
+			var key_wikiPageContentCompareAdded = ${wikiPageContentCompareAdded};
+			var key_wikiPageContentCompareFull = ${wikiPageContentCompareFull};
+			var key_wikiPageContentCompareRemoved = ${wikiPageContentCompareRemoved};
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF_ADDED",
-				value1 = "${wikiPageContentCompareAdded}");
+				value1 = ${wikiPageContentCompareAdded});
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF_REMOVED",
-				value1 = "${wikiPageContentCompareRemoved}");
+				value1 = ${wikiPageContentCompareRemoved});
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_PARAGRAPH_FULL",
-				value1 = "${wikiPageContentCompareFull}");
+				value1 = ${wikiPageContentCompareFull});
 
 			AssertClick(
 				locator1 = "Wiki#COMPARE_ACTIVITIES_NAVIGATION_TEXT_MODE_LINK",
@@ -735,27 +735,27 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_OLD_1",
-				value1 = "${wikiPageContentCompareOld}");
+				value1 = ${wikiPageContentCompareOld});
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_NEW_1",
-				value1 = "${wikiPageContentCompareNew}");
+				value1 = ${wikiPageContentCompareNew});
 		}
 		else {
-			var key_wikiPageVersionDiff = "${wikiPageVersionDiff}";
+			var key_wikiPageVersionDiff = ${wikiPageVersionDiff};
 
 			AssertTextEquals(
 				locator1 = "Wiki#COMPARE_VERSIONS_DIFF",
-				value1 = "${wikiPageVersionDiff}");
+				value1 = ${wikiPageVersionDiff});
 		}
 	}
 
 	macro deleteCP {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
@@ -765,7 +765,7 @@ definition {
 	}
 
 	macro deleteFrontPagePGViaWD {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
@@ -781,7 +781,7 @@ definition {
 	}
 
 	macro deletePG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
 
@@ -789,7 +789,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		if ("${wikiPageTitle}" == "FrontPage") {
+		if (${wikiPageTitle} == "FrontPage") {
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
 				value1 = "FrontPage");
@@ -810,7 +810,7 @@ definition {
 
 		Type.typeCKEditorWaitForCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
-			value1 = "${wikiPageContentEdit}");
+			value1 = ${wikiPageContentEdit});
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -818,7 +818,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContentEdit}");
+			value1 = ${wikiPageContentEdit});
 
 		Alert.viewSuccessMessage();
 	}
@@ -826,13 +826,13 @@ definition {
 	macro editPageCP {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToEditPage(
-				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiPageTitle = "${wikiPageTitle}");
+				groupName = ${groupName},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 		else {
-			LexiconEntry.openEntryMenu(rowEntry = "${wikiPageTitle}");
+			LexiconEntry.openEntryMenu(rowEntry = ${wikiPageTitle});
 
 			MenuItem.click(menuItem = "Edit");
 		}
@@ -841,7 +841,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContentEdit}");
+			value1 = ${wikiPageContentEdit});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -849,15 +849,15 @@ definition {
 	}
 
 	macro editPagePG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToEditPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiPageTitle = "${wikiPageTitle}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 		else {
 			Click(locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS");
@@ -869,11 +869,11 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContentEdit}");
+			value1 = ${wikiPageContentEdit});
 
 		SelectFrame(value1 = "relative=top");
 
-		if ("${minorEdit}" == "true") {
+		if (${minorEdit} == "true") {
 			Panel.expandPanel(panel = "Configuration");
 
 			Check(locator1 = "Checkbox#THIS_IS_A_MINOR_EDIT");
@@ -884,7 +884,7 @@ definition {
 
 			Type(
 				locator1 = "TextInput#CUSTOM_FIELD",
-				value1 = "${customFieldTextEdit}");
+				value1 = ${customFieldTextEdit});
 		}
 
 		PortletEntry.publish();
@@ -893,19 +893,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContentEdit}");
+			value1 = ${wikiPageContentEdit});
 	}
 
 	macro linkPG {
-		var key_wikiPageTitle = "${wikiPage2Title}";
+		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextNotPresent(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPage2Title}");
+			value1 = ${wikiPage2Title});
 
 		AssertTextNotPresent(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPage2Content}");
+			value1 = ${wikiPage2Content});
 
 		AssertClick(
 			locator1 = "Link#EDIT",
@@ -921,7 +921,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPage2Link}");
+			value1 = ${wikiPage2Link});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -929,15 +929,15 @@ definition {
 
 		AssertClick(
 			locator1 = "WikiEntry#BODY_LINK",
-			value1 = "${wikiPage2Title}");
+			value1 = ${wikiPage2Title});
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPage2Title}");
+			value1 = ${wikiPage2Title});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPage2Content}");
+			value1 = ${wikiPage2Content});
 	}
 
 	macro markAsSpamCP {
@@ -953,7 +953,7 @@ definition {
 	}
 
 	macro moveToRecycleBinCP {
-		LexiconEntry.openEntryMenu(rowEntry = "${wikiPageTitle}");
+		LexiconEntry.openEntryMenu(rowEntry = ${wikiPageTitle});
 
 		PortletEntry.clickMoveToRecycleBin();
 
@@ -967,7 +967,7 @@ definition {
 
 		Panel.expandPanel(panel = "Attachments");
 
-		var key_attachmentFileName = "${attachmentFileName}";
+		var key_attachmentFileName = ${attachmentFileName};
 
 		AssertVisible(
 			locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN",
@@ -995,7 +995,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPage2Content}");
+			value1 = ${wikiPage2Content});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -1007,11 +1007,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		Type(
 			locator1 = "TextInput#NEW_TITLE",
-			value1 = "${wikiPageTitleRename}");
+			value1 = ${wikiPageTitleRename});
 
 		AssertClick(
 			locator1 = "Button#RENAME",
@@ -1036,11 +1036,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		Type(
 			locator1 = "TextInput#NEW_TITLE",
-			value1 = "${wikiPageTitleRename}");
+			value1 = ${wikiPageTitleRename});
 
 		AssertClick(
 			locator1 = "Button#RENAME",
@@ -1050,15 +1050,15 @@ definition {
 	}
 
 	macro revertChangeParentWikipagetoWikipagePG {
-		var key_wikiPageTitle = "${wikiPage2Title}";
+		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPage2Title}");
+			value1 = ${wikiPage2Title});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPage2Content}");
+			value1 = ${wikiPage2Content});
 
 		AssertClick(
 			locator1 = "Link#DETAILS",
@@ -1073,17 +1073,17 @@ definition {
 			value1 = "Versions");
 
 		var key_wikiPageRevision = "1.1";
-		var key_wikiPageTitle = "${wikiPage2Title}";
-		var key_wikiVersionSummary = "${wikiVersion1Summary}";
+		var key_wikiPageTitle = ${wikiPage2Title};
+		var key_wikiVersionSummary = ${wikiVersion1Summary};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersion1Summary}");
+			value1 = ${wikiVersion1Summary});
 
 		var key_wikiPageRevision = "1.0";
 
 		Click.waitForMenuToggleJSClick(
-			key_wikiPageRevision = "${wikiPageRevision}",
+			key_wikiPageRevision = ${wikiPageRevision},
 			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS");
 
 		MenuItem.click(menuItem = "Revert");
@@ -1091,19 +1091,19 @@ definition {
 		Alert.viewSuccessMessage();
 
 		var key_wikiPageRevision = "1.2";
-		var key_wikiVersionSummary = "${wikiVersion2Summary}";
+		var key_wikiVersionSummary = ${wikiVersion2Summary};
 
 		AssertTextEquals(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersion2Summary}");
+			value1 = ${wikiVersion2Summary});
 	}
 
 	macro revertEditPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertClick(
 			locator1 = "Link#DETAILS",
@@ -1117,30 +1117,30 @@ definition {
 			locator1 = "Wiki#HISTORY_VERSIONS_TAB",
 			value1 = "Versions");
 
-		var key_wikiPageRevision = "${wikiPageRevisionOld}";
+		var key_wikiPageRevision = ${wikiPageRevisionOld};
 
 		Click.waitForMenuToggleJSClick(
-			key_wikiPageRevision = "${wikiPageRevision}",
+			key_wikiPageRevision = ${wikiPageRevision},
 			locator1 = "Wiki#HISTORY_VERSIONS_ACTIONS");
 
 		MenuItem.click(menuItem = "Revert");
 
 		Alert.viewSuccessMessage();
 
-		var key_wikiPageRevision = "${wikiPageRevisionNew}";
-		var key_wikiVersionSummary = "${wikiVersionSummary}";
+		var key_wikiPageRevision = ${wikiPageRevisionNew};
+		var key_wikiVersionSummary = ${wikiVersionSummary};
 
 		AssertTextEquals(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersionSummary}");
+			value1 = ${wikiVersionSummary});
 	}
 
 	macro searchPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		Search.searchPG(
 			portletName = "Wiki",
-			searchTerm = "${searchTerm}");
+			searchTerm = ${searchTerm});
 	}
 
 	macro selectNewParent {
@@ -1180,16 +1180,16 @@ definition {
 	}
 
 	macro viewAttachmentPGViaEdit {
-		var key_attachmentFileName = "${attachmentFileName}";
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_attachmentFileName = ${attachmentFileName};
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
-				groupName = "${groupName}",
-				layoutURLKey = "${layoutURLKey}",
-				siteURLKey = "${siteURLKey}",
-				wikiNodeName = "${wikiNodeName}",
-				wikiPageTitle = "${wikiPageTitle}");
+				groupName = ${groupName},
+				layoutURLKey = ${layoutURLKey},
+				siteURLKey = ${siteURLKey},
+				wikiNodeName = ${wikiNodeName},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 		else {
 			AssertClick(
@@ -1201,12 +1201,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#ATTACHMENT_TABLE_FILE_NAME",
-			value1 = "${attachmentFileName}");
+			value1 = ${attachmentFileName});
 
 		if (isSet(attachmentFileSize)) {
 			AssertTextEquals(
 				locator1 = "Wiki#ATTACHMENT_TABLE_SIZE",
-				value1 = "${attachmentFileSize}");
+				value1 = ${attachmentFileSize});
 		}
 		else {
 			AssertElementPresent(locator1 = "Wiki#ATTACHMENT_TABLE_SIZE");
@@ -1218,72 +1218,72 @@ definition {
 	}
 
 	macro viewChildPageCP {
-		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "${wikiPageTitle}");
+		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = ${wikiPageTitle});
 
-		WikiEntry.viewPageContentBody(wikiPageContent = "${wikiPageContent}");
+		WikiEntry.viewPageContentBody(wikiPageContent = ${wikiPageContent});
 
-		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "${wikiChildPageTitle}");
+		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = ${wikiChildPageTitle});
 
-		WikiEntry.viewPageContentBody(wikiPageContent = "${wikiChildPageContent}");
+		WikiEntry.viewPageContentBody(wikiPageContent = ${wikiChildPageContent});
 	}
 
 	macro viewChildPagePG {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiChildPageTitle}");
+			value1 = ${wikiChildPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiChildPageContent}");
+			value1 = ${wikiChildPageContent});
 	}
 
 	macro viewChildPagePGViaWD {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#CHILD_PAGE_HEADER",
 			value1 = "Child Page");
 
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
 		AssertTextEquals(
 			locator1 = "Wiki#CHILD_PAGE_TITLE",
-			value1 = "${wikiChildPageTitle}");
+			value1 = ${wikiChildPageTitle});
 	}
 
 	macro viewCommentPG {
-		var key_entryComment = "${entryComment}";
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_entryComment = ${entryComment};
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${entryComment}");
+			value1 = ${entryComment});
 	}
 
 	macro viewCP {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#PAGE_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		if (isSet(contentImageName)) {
 			AssertElementPresent(
-				key_contentImageName = "${contentImageName}",
+				key_contentImageName = ${contentImageName},
 				locator1 = "Wiki#CONTENT_IMAGE_NAME");
 		}
 
-		if ("${akismetEnabled}" == "true") {
+		if (${akismetEnabled} == "true") {
 			AssertTextNotPresent(
 				locator1 = "Message#SUCCESS",
 				value1 = "Version ${wikiPageRevision} was marked as spam.");
@@ -1305,7 +1305,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		AssertElementPresent(locator1 = "Link#ADD_CHILD_PAGE");
 
@@ -1333,7 +1333,7 @@ definition {
 			locator1 = "Portlet#H3_HEADER",
 			value1 = "FrontPage");
 
-		AssertTextNotPresent(value1 = "${wikiPageContent}");
+		AssertTextNotPresent(value1 = ${wikiPageContent});
 
 		AssertElementNotPresent(locator1 = "WikiEntry#BODY");
 	}
@@ -1347,7 +1347,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiFrontPageContent}");
+			value1 = ${wikiFrontPageContent});
 
 		AssertElementNotPresent(locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE");
 
@@ -1361,7 +1361,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		AssertElementPresent(locator1 = "Link#ADD_CHILD_PAGE");
 
@@ -1391,16 +1391,16 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		AssertTextNotPresent(value1 = "${wikiFrontPageContent}");
+		AssertTextNotPresent(value1 = ${wikiFrontPageContent});
 	}
 
 	macro viewFrontPagePG {
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
-		if ("${viewWikiNode}" == "true") {
+		if (${viewWikiNode} == "true") {
 			AssertClick(
 				locator1 = "Wiki#NODE_NAME",
-				value1 = "${wikiNodeName}");
+				value1 = ${wikiNodeName});
 		}
 
 		AssertTextEquals(
@@ -1409,11 +1409,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		if (isSet(contentImageName)) {
 			AssertElementPresent(
-				key_contentImageName = "${contentImageName}",
+				key_contentImageName = ${contentImageName},
 				locator1 = "Wiki#CONTENT_IMAGE_NAME");
 		}
 
@@ -1421,7 +1421,7 @@ definition {
 	}
 
 	macro viewLocalizedFrontPagePG {
-		if ("${rightToLeft}" == "true") {
+		if (${rightToLeft} == "true") {
 			var textDirection = "rtl";
 		}
 		else {
@@ -1434,11 +1434,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY_HTML",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 	}
 
 	macro viewNoChildPagePG {
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
+		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
 		AssertTextNotPresent(
 			locator1 = "Wiki#CHILD_PAGE_HEADER",
@@ -1446,15 +1446,15 @@ definition {
 
 		AssertTextNotPresent(
 			locator1 = "Wiki#CHILD_PAGE_TITLE",
-			value1 = "${wikiChildPageTitle}");
+			value1 = ${wikiChildPageTitle});
 	}
 
 	macro viewNoChildPagePGViaAllPages {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_STATUS",
@@ -1462,7 +1462,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WikiTable#ALL_PAGES_REVISION",
-			value1 = "${wikiPageRevision}");
+			value1 = ${wikiPageRevision});
 
 		AssertElementNotPresent(
 			key_wikiPageUsername = "Test Test",
@@ -1470,7 +1470,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_DATE");
 
-		var key_wikiPageTitle = "${wikiChildPageTitle}";
+		var key_wikiPageTitle = ${wikiChildPageTitle};
 
 		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE");
 	}
@@ -1482,7 +1482,7 @@ definition {
 	}
 
 	macro viewNoPagePG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE");
 	}
@@ -1493,65 +1493,65 @@ definition {
 
 	macro viewPageNoAttachment {
 		WikiPage.viewPG(
-			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}");
+			wikiPageContent = ${wikiPageContent},
+			wikiPageTitle = ${wikiPageTitle});
 
 		AssertElementNotPresent(locator1 = "WikiEntry#ATTACHMENTS_LABEL");
 
 		AssertElementNotPresent(
-			key_attachmentFileName = "${attachmentFileName}",
+			key_attachmentFileName = ${attachmentFileName},
 			locator1 = "WikiEntry#ATTACHMENT_FILE_NAME");
 	}
 
 	macro viewPagePG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		if (isSet(customFieldText)) {
-			var key_customFieldContent = "${customFieldText}";
+			var key_customFieldContent = ${customFieldText};
 
 			AssertTextEquals(
 				locator1 = "Wiki#CUSTOM_FIELD_CONTENT",
-				value1 = "${customFieldText}");
+				value1 = ${customFieldText});
 		}
 	}
 
 	macro viewPageWithAttachment {
-		var key_attachmentFileName = "${attachmentFileName}";
-		var key_wikiPageContent = "${wikiPageContent}";
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_attachmentFileName = ${attachmentFileName};
+		var key_wikiPageContent = ${wikiPageContent};
+		var key_wikiPageTitle = ${wikiPageTitle};
 
-		if ("${inlineImage}" == "true") {
+		if (${inlineImage} == "true") {
 			AssertTextEquals(
 				locator1 = "Portlet#H3_HEADER",
-				value1 = "${wikiPageTitle}");
+				value1 = ${wikiPageTitle});
 
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY_GENERIC",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
 		else {
 			WikiPage.viewPG(
-				wikiPageContent = "${wikiPageContent}",
-				wikiPageTitle = "${wikiPageTitle}");
+				wikiPageContent = ${wikiPageContent},
+				wikiPageTitle = ${wikiPageTitle});
 		}
 
 		AssertElementPresent(locator1 = "WikiEntry#ATTACHMENTS_LABEL");
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
-			value1 = "${attachmentFileName}");
+			value1 = ${attachmentFileName});
 	}
 
 	macro viewPageWithWorkflowPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_PENDING_HEADER",
@@ -1559,11 +1559,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_WIKI_PAGE_NAME",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_STATUS",
-			value1 = "${wikiPageStatus}");
+			value1 = ${wikiPageStatus});
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_REVISION",
@@ -1571,7 +1571,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#DRAFT_PAGES_USER",
-			value1 = "${wikiPageUsername}");
+			value1 = ${wikiPageUsername});
 
 		AssertElementPresent(locator1 = "WikiTable#DRAFT_PAGES_DATE");
 	}
@@ -1579,34 +1579,34 @@ definition {
 	macro viewPG {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
-		if ("${wikiPageContentGeneric}" == "true") {
+		if (${wikiPageContentGeneric} == "true") {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY_GENERIC",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
-		else if ("${wikiPageContentLink}" == "true") {
+		else if (${wikiPageContentLink} == "true") {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY_LINK",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
-		else if ("${wikiPageContentTable}" == "true") {
+		else if (${wikiPageContentTable} == "true") {
 			AssertElementPresent(locator1 = "WikiEntry#BODY_TABLE");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 		}
 
 		if ("viewViewCount" == "true") {
-			if ("${viewCountNumber}" == "1") {
+			if (${viewCountNumber} == 1) {
 				AssertTextEquals(
 					locator1 = "Wiki#VIEW_COUNT",
 					value1 = "${viewCountNumber} View");
 			}
-			else if ("${viewCountNumber}" == "0") {
+			else if (${viewCountNumber} == 0) {
 				AssertTextEquals(
 					locator1 = "Wiki#VIEW_COUNT",
 					value1 = "");
@@ -1618,7 +1618,7 @@ definition {
 			}
 		}
 
-		if ("${viewIncomingLinks}" == "true") {
+		if (${viewIncomingLinks} == "true") {
 			AssertClick(
 				locator1 = "Link#DETAILS",
 				value1 = "Details");
@@ -1627,12 +1627,12 @@ definition {
 				locator1 = "Wiki#PAGE_TABS_INCOMING_LINKS",
 				value1 = "Incoming Links");
 
-			var key_wikiPageTitle = "${wikiPageTitleIncomingLink}";
-			var key_wikiPageUsername = "${wikiPageUsername}";
+			var key_wikiPageTitle = ${wikiPageTitleIncomingLink};
+			var key_wikiPageUsername = ${wikiPageUsername};
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-				value1 = "${wikiPageTitleIncomingLink}");
+				value1 = ${wikiPageTitleIncomingLink});
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_STATUS",
@@ -1640,36 +1640,36 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_REVISION",
-				value1 = "${wikiPageRevisionIncomingLink}");
+				value1 = ${wikiPageRevisionIncomingLink});
 
 			AssertTextEquals(
 				locator1 = "WikiTable#ALL_PAGES_USER",
-				value1 = "${wikiPageUsernameIncomingLink}");
+				value1 = ${wikiPageUsernameIncomingLink});
 
 			AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_DATE");
 
 			AssertClick(
 				locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-				value1 = "${wikiPageTitleIncomingLink}");
+				value1 = ${wikiPageTitleIncomingLink});
 
 			AssertTextEquals(
 				locator1 = "Portlet#H3_HEADER_2",
-				value1 = "${wikiPageTitleIncomingLink}");
+				value1 = ${wikiPageTitleIncomingLink});
 
 			AssertTextEquals(
 				locator1 = "WikiEntry#BODY",
-				value1 = "${wikiPageContentIncomingLink}");
+				value1 = ${wikiPageContentIncomingLink});
 		}
 	}
 
 	macro viewPGViaWD {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		AssertTextNotPresent(value1 = "Please configure this portlet to make it visible to all users.");
 	}
@@ -1677,20 +1677,20 @@ definition {
 	macro viewRedirectLinkPG {
 		AssertTextEquals(
 			locator1 = "Link#REDIRECT",
-			value1 = "${wikiPageRedirectLink}");
+			value1 = ${wikiPageRedirectLink});
 	}
 
 	macro viewRelatedAsset {
 		AssertTextEquals(
-			key_relatedAssetTitle = "${relatedAssetTitle}",
+			key_relatedAssetTitle = ${relatedAssetTitle},
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
-			value1 = "${relatedAssetTitle}");
+			value1 = ${relatedAssetTitle});
 	}
 
 	macro viewSearchResultsPG {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
-		if ("${searchNoResults}" == "true") {
+		if (${searchNoResults} == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO_1",
 				value1 = "No pages were found that matched the keywords: ${searchTerm}.");
@@ -1699,32 +1699,32 @@ definition {
 				locator1 = "Wiki#SEARCH_CREATE_NEW_PAGE_LINK",
 				value1 = "Create a new page on this topic.");
 		}
-		else if ("${wikiComment}" == "true") {
+		else if (${wikiComment} == "true") {
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_COMMENT_BODY",
-				value1 = "${commentBody}");
+				value1 = ${commentBody});
 		}
-		else if ("${wikiAttachment}" == "true") {
+		else if (${wikiAttachment} == "true") {
 			Click(locator1 = "Wiki#SEARCH_RESULT_ATTACHMENT_BODY");
 
 			AssertTextEquals(
-				key_attachmentFileName = "${wikiAttachmentBody}",
+				key_attachmentFileName = ${wikiAttachmentBody},
 				locator1 = "WikiEntry#ATTACHMENT_FILE_NAME",
-				value1 = "${wikiAttachmentBody}");
+				value1 = ${wikiAttachmentBody});
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_TITLE",
-				value1 = "${wikiPageTitle}");
+				value1 = ${wikiPageTitle});
 
 			AssertTextEquals(
 				locator1 = "Wiki#SEARCH_RESULT_DESCRIPTION",
-				value1 = "${wikiPageContent}");
+				value1 = ${wikiPageContent});
 
 			if (isSet(wikiNodeName)) {
 				AssertTextEquals(
 					locator1 = "Wiki#SEARCH_RESULT_NODE",
-					value1 = "${wikiNodeName}");
+					value1 = ${wikiNodeName});
 			}
 			else {
 				AssertTextEquals(
@@ -1735,13 +1735,13 @@ definition {
 	}
 
 	macro viewSummary {
-		var key_wikiPageRevision = "${wikiPageRevision}";
-		var key_wikiPageTitle = "${wikiPageTitle}";
-		var key_wikiVersionSummary = "${wikiVersionSummary}";
+		var key_wikiPageRevision = ${wikiPageRevision};
+		var key_wikiPageTitle = ${wikiPageTitle};
+		var key_wikiVersionSummary = ${wikiVersionSummary};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertClick(
 			locator1 = "Link#DETAILS",
@@ -1757,26 +1757,26 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-			value1 = "${wikiVersionSummary}");
+			value1 = ${wikiVersionSummary});
 	}
 
 	macro viewTagViaAddPG {
-		for (var tagName : list "${tagNameList}") {
-			var key_tagName = "${tagName}";
+		for (var tagName : list ${tagNameList}) {
+			var key_tagName = ${tagName};
 
 			AssertElementPresent(
-				key_tagName = StringUtil.lowerCase("${tagName}"),
+				key_tagName = StringUtil.lowerCase(${tagName}),
 				locator1 = "AssetCategorization#TAG");
 		}
 	}
 
 	macro viewViewCount {
-		if ("${viewCountNumber}" == "1") {
+		if (${viewCountNumber} == 1) {
 			AssertTextEquals(
 				locator1 = "Wiki#VIEW_COUNT",
 				value1 = "${viewCountNumber} View");
 		}
-		else if ("${viewCountNumber}" == "0") {
+		else if (${viewCountNumber} == 0) {
 			AssertTextEquals(
 				locator1 = "Wiki#VIEW_COUNT",
 				value1 = "");

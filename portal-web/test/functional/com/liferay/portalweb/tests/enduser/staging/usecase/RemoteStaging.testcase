@@ -23,13 +23,13 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPP-8122. Verify that when remote publishing, the child pages are not published when they are unselected."
-	@priority = "3"
+	@priority = 3
 	test AssertCannotPublishChildPageWhenUnselected {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertCannotPublishChildPageWhenUnselected";
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154557 TC-1: Verify detailed error message should show up with default configuration."
-	@priority = "4"
+	@priority = 4
 	test AssertDetailedErrorMessageWithDefaultConfiguration {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertDetailedErrorMessageWithDefaultConfiguration";
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154557 TC-2: Verify only generic error message should show up when set property to true."
-	@priority = "4"
+	@priority = 4
 	test AssertExceptionDataIsHiddenWhenSetPropertyToTrue {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunnel.servlet.hide.exception.data=true";
 		property test.name.skip.portal.instance = "RemoteStaging#AssertExceptionDataIsHiddenWhenSetPropertyToTrue";
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify that the publication process message is shown while the publication is in progress."
-	@priority = "4"
+	@priority = 4
 	test AssertLongPublicationProcessMessage {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertLongPublicationProcessMessage";
 
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83187. Add a publish template to the staging site then verify the title of the scheduled publication after it is finished."
-	@priority = "3"
+	@priority = 3
 	test AssertTemplatesTitleOfScheduledStagingPublishes {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertTemplatesTitleOfScheduledStagingPublishes";
 
@@ -181,7 +181,7 @@ definition {
 
 		Staging.editPublishTemplateRemoteSiteID(
 			groupName = "Remote Site 2",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		Staging.savePublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify that correct error message will appear when the publishing process encounters an error."
-	@priority = "4"
+	@priority = 4
 	test AssertValidationErrors {
 		property test.name.skip.portal.instance = "RemoteStaging#AssertValidationErrors";
 
@@ -223,12 +223,12 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-52285. Verify that remote staging can be disabled after shutting down the remote site."
-	@priority = "4"
+	@priority = 4
 	test CanDisableRemoteStagingAfterShuttingDownRemoteSite {
 		property test.name.skip.portal.instance = "RemoteStaging#CanDisableRemoteStagingAfterShuttingDownRemoteSite";
 
 		task ("When: Shut down the remote live environment and attempt to disable staging settings") {
-			Clustering.shutdownSpecificServer(nodePort = "9080");
+			Clustering.shutdownSpecificServer(nodePort = 9080);
 
 			Staging.openStagingAdmin(siteURLKey = "site-name");
 
@@ -268,7 +268,7 @@ definition {
 
 	@description = "This test covers LPS-163951. Verify the image thumbnail in asset publisher can be published when using image URL."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanPublishWCWithImagesViaAP {
 		property test.name.skip.portal.instance = "RemoteStaging#CanPublishWCWithImagesViaAP";
 
@@ -317,7 +317,7 @@ definition {
 
 			WebContent.addCP(
 				embedImage = "true",
-				imageSourceURL = "${latestVersionURL}",
+				imageSourceURL = ${latestVersionURL},
 				webContentContent = "Web Content Content B",
 				webContentTitle = "Web Content Title B");
 
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146399. In the publish summary of a remote staging site only the previously published pages should be present."
-	@priority = "3"
+	@priority = 3
 	test OnlyPublishedPagesShouldBePresentInSummary {
 		property test.name.skip.portal.instance = "RemoteStaging#OnlyPublishedPagesShouldBePresentInSummary";
 
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80494. Documents can be published with link to page fields."
-	@priority = "3"
+	@priority = 3
 	test StagingRemoteDMDocumentType {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteDMDocumentType";
 
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
-	@priority = "4"
+	@priority = 4
 	test StagingRemoteLiveWebContent {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContent";
 
@@ -527,10 +527,10 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
 		WebContent.addWithStructureCP(
-			column = "1",
+			column = 1,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "1",
+			row = 1,
 			structureName = "Structure Name",
 			templateName = "Template Name",
 			webContentColor = "FF0D0D",
@@ -538,7 +538,7 @@ definition {
 			webContentGrid = "true",
 			webContentImage = "Document_3.png",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentRichText = "Staging Web Content Body",
 			webContentSelectFromList = "Option 2",
 			webContentSingleSelection = "Option 3",
@@ -603,7 +603,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82839. Web contents can be published on remote staging."
-	@priority = "5"
+	@priority = 5
 	test StagingRemoteLiveWebContentViaPortletCP {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentViaPortletCP";
@@ -641,7 +641,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81950. Web contents can be published via their portlet."
-	@priority = "5"
+	@priority = 5
 	test StagingRemoteLiveWebContentViaPortletPG {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentViaPortletPG";
 
@@ -707,7 +707,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81953. Web contents can be published with manually chosen ID."
-	@priority = "3"
+	@priority = 3
 	test StagingRemoteLiveWebContentWithManualChosenID {
 		property test.name.skip.portal.instance = "RemoteStaging#StagingRemoteLiveWebContentWithManualChosenID";
 
@@ -758,7 +758,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentId = "12345",
+			webContentId = 12345,
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -785,15 +785,15 @@ definition {
 		AssertTextEquals(
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_TABLE_ID",
-			value1 = "12345");
+			value1 = 12345);
 	}
 
 	@description = "This is a use case for LPS-74038. Expected error message will appear on the UI when the live instance is not running on remote staging and the link to it is not visible."
-	@priority = "5"
+	@priority = 5
 	test ViewInfoMessageAfterShutDownRemoteSite {
 		property test.name.skip.portal.instance = "RemoteStaging#ViewInfoMessageAfterShutDownRemoteSite";
 
-		Clustering.shutdownSpecificServer(nodePort = "9080");
+		Clustering.shutdownSpecificServer(nodePort = 9080);
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -807,7 +807,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81836. Web contents can be published via SAP."
-	@priority = "4"
+	@priority = 4
 	test ViewSingleAssetRemotePublication {
 		property test.name.skip.portal.instance = "RemoteStaging#ViewSingleAssetRemotePublication";
 

@@ -5,7 +5,7 @@ definition {
 
 		if (isSet(fieldName)) {
 			Click.clickNoMouseOver(
-				key_fieldName = "${fieldName}",
+				key_fieldName = ${fieldName},
 				locator1 = "Button#LOCALIZATION");
 		}
 		else if (isSet(friendlyURLHistory)) {
@@ -23,12 +23,12 @@ definition {
 		}
 		else if (isSet(modal)) {
 			Click(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#DROPDOWN_MENU_ITEM");
 		}
 		else {
 			Click(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#LOCALIZATION_NAME");
 		}
 	}
@@ -37,7 +37,7 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_SUMMARY");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
@@ -66,14 +66,14 @@ definition {
 	macro deleteViaMenuItem {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${rowEntry}");
+			rowEntry = ${rowEntry});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
 	macro deleteViaToolbar {
-		for (var rowEntry : list "${rowEntries}") {
-			LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
+		for (var rowEntry : list ${rowEntries}) {
+			LexiconEntry.selectEntry(key_rowEntry = ${rowEntry});
 		}
 
 		ClickNoError(locator1 = "Icon#DELETE");
@@ -92,53 +92,53 @@ definition {
 	macro inputDescription {
 		Type(
 			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 	macro inputDescriptionTextInput {
 		Type(
 			locator1 = "TextInput#DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 	macro inputLocalizedName {
 		PortletEntry.changeLocale(
 			fieldName = "Name",
-			locale = "${language}");
+			locale = ${language});
 
-		PortletEntry.inputName(name = "${localizedName}");
+		PortletEntry.inputName(name = ${localizedName});
 	}
 
 	macro inputName {
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${name}");
+			value1 = ${name});
 	}
 
 	macro inputStructureKeyTextInput {
 		Type(
 			locator1 = "TextInput#STRUCTURE_KEY_FIELD",
-			value1 = "${structureKey}");
+			value1 = ${structureKey});
 	}
 
 	macro inputText {
 		Type(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${text}");
+			value1 = ${text});
 	}
 
 	macro inputTextArea {
 		Type(
-			key_text = "${fieldId}",
+			key_text = ${fieldId},
 			locator1 = "TextArea#ANY",
-			value1 = "${text}");
+			value1 = ${text});
 	}
 
 	macro inputTitle {
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${title}");
+			value1 = ${title});
 	}
 
 	macro publish {
@@ -150,7 +150,7 @@ definition {
 	macro publishAndWait {
 		Button.clickPublish();
 
-		Pause(locator1 = "3000");
+		Pause(locator1 = 3000);
 
 		Alert.viewSuccessMessage();
 	}
@@ -183,14 +183,14 @@ definition {
 	}
 
 	macro SelectAllOnSpecificWidget {
-		if (IsNotChecked.isNotCheckedNotVisible(key_position = "${widgetPosition}", locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_position = ${widgetPosition}, locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC")) {
 			Click(
-				key_position = "${widgetPosition}",
+				key_position = ${widgetPosition},
 				locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_SPECIFIC");
 		}
 
 		AssertChecked.assertCheckedNotVisible(
-			key_position = "${widgetPosition}",
+			key_position = ${widgetPosition},
 			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC");
 	}
 
@@ -207,7 +207,7 @@ definition {
 	}
 
 	macro viewEmptyMessage {
-		var entity = StringUtil.toLowerCase("${entity}");
+		var entity = StringUtil.toLowerCase(${entity});
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -215,22 +215,22 @@ definition {
 	}
 
 	macro viewLocale {
-		if ("${portletName}" == "Web Content") {
+		if (${portletName} == "Web Content") {
 			AssertElementPresent(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#CURRENT_LOCALE_TITLE");
 
 			AssertElementPresent(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#CURRENT_LOCALE_CONTENT");
 
 			AssertElementPresent(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
 		}
 		else {
 			AssertElementPresent(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#CURRENT_LOCALE");
 		}
 	}

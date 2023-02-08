@@ -26,7 +26,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Roles Regrole Name");
 		}
 	}
@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -46,10 +46,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
-    When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen
-    Then the user may still add segments to the list by using the '+' button, but assigning won't be accomplished"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#AssigningBySegmentNotWorkingDisabledInstanceSettings";
@@ -140,7 +138,7 @@ definition {
 	}
 
 	@description = "LPS-122800: Validate if, with the option Enable Assign roles by segments disabled, the option Assign Site Roles is disabled"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
@@ -194,10 +192,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
-    When Enable Segmentation by roles is enabled And the user accesses the Segments tab in the role assignment screen
-    Then no warning message is shown and the assigning will be accomplished"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CanAssignBySegmentEnabledInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignBySegmentEnabledInstanceSettings";
 
@@ -293,10 +289,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
-    When Enable Segmentation by roles is enabled
-    Then it shows a dialog allowing user to assign/unassign site roles"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CanAssignSiteRolesToSegment {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CanAssignSiteRolesToSegment";
@@ -349,10 +343,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings
-	When Enable Segmentation by roles is disabled And the user accesses the Segments tab in the role assignment screen
-	Then a message will show: 'Warning: Assigning roles by segment is disabled. To enable, go to Instance Settings.'."
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#CheckMessageSegmentationByRolesDisabledInstanceSettings";
 
@@ -390,7 +382,7 @@ definition {
 	}
 
 	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments disabled, the role is not working for the user"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DisableAssignRolesBySegment {
 		property portal.acceptance = "true";
@@ -469,7 +461,7 @@ definition {
 	}
 
 	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments disabled, the warning message is displayed"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test DisableAssignRolesWarningMessage {
 		property portal.acceptance = "true";
@@ -508,10 +500,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130918: Given the Segment Service Configuration in Instance Settings And Enable Segmentation by roles is checked in System Settings
-    When Enable Segmentation by roles is disabled
-    Then the Assign Site Roles option will be disabled in the Segments Editor"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DisabledAssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisabledAssignSiteRolesOptionInSegmentsEditor";
@@ -567,7 +557,7 @@ definition {
 	}
 
 	@description = "LPS-161227 Bug: NoSuchExperienceException when attempting to edit Content Page with Enable Assign Roles by Segment configuration enabled"
-	@priority = "5"
+	@priority = 5
 	test EditPageAfterEnableAssignRole {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationAssigningRoles#";
@@ -605,7 +595,7 @@ definition {
 	}
 
 	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test EnableAssignRolesBySegment {
 		property portal.acceptance = "true";
@@ -690,7 +680,7 @@ definition {
 	}
 
 	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments enabled, the warning message is not displayed"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test EnableAssignRolesNoWarningMessage {
 		property portal.acceptance = "true";

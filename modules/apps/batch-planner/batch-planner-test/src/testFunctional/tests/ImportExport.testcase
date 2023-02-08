@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "Verify users can download the original import file in the executions list after a completed import"
-	@priority = "3"
+	@priority = 3
 	test CanDownloadOriginalImportFile {
 		property portal.acceptance = "true";
 
@@ -68,12 +68,12 @@ definition {
 
 			ImportExport.assertFileContent(
 				comparisonFileName = "csv_account_import.csv",
-				fileName = "${originalFileDownloadName}");
+				fileName = ${originalFileDownloadName});
 		}
 	}
 
 	@description = "Verify users can download a sample file for a selected entity so that they can fill it with data and import it"
-	@priority = "3"
+	@priority = 3
 	test CanDownloadSampleImportFile {
 		property portal.acceptance = "true";
 
@@ -96,12 +96,12 @@ definition {
 
 			ImportExport.assertFileContent(
 				comparisonFileName = "csv_account_import_sample.csv",
-				fileName = "${sampleFileName}");
+				fileName = ${sampleFileName});
 		}
 	}
 
 	@description = "Verify users can exclude fields from being exported in CSV format"
-	@priority = "3"
+	@priority = 3
 	test CanExcludeCSVFieldsFromExport {
 		property portal.acceptance = "true";
 
@@ -110,13 +110,13 @@ definition {
 				channelName = "Test Channel 1",
 				channelType = "site",
 				currencyCode = "USD",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "Test Channel 2",
 				channelType = "site",
 				currencyCode = "CAD",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 		}
 
 		task ("When the user selects specific channel fields for export and exports the channels in CSV format") {
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@description = "Verify users can exclude fields from being imported"
-	@priority = "3"
+	@priority = 3
 	test CanExcludeFieldsFromImport {
 		property portal.acceptance = "true";
 
@@ -167,7 +167,7 @@ definition {
 				accountDescription = "",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -175,7 +175,7 @@ definition {
 				accountDescription = "",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			Navigator.gotoBack();
 
@@ -183,12 +183,12 @@ definition {
 				accountDescription = "",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
 	@description = "Verify users can exclude fields from being exported in JSON format"
-	@priority = "3"
+	@priority = 3
 	test CanExcludeJSONFieldsFromExport {
 		property portal.acceptance = "true";
 
@@ -197,13 +197,13 @@ definition {
 				channelName = "Test Channel 1",
 				channelType = "site",
 				currencyCode = "USD",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "Test Channel 2",
 				channelType = "site",
 				currencyCode = "CAD",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 		}
 
 		task ("When the user selects specific channel fields for export and exports the channels in JSON format") {
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Verify users can exclude fields from being exported in JSONL format"
-	@priority = "3"
+	@priority = 3
 	test CanExcludeJSONLFieldsFromExport {
 		property portal.acceptance = "true";
 
@@ -232,13 +232,13 @@ definition {
 				channelName = "Test Channel 1",
 				channelType = "site",
 				currencyCode = "USD",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			CommerceJSONChannelsAPI._addChannel(
 				channelName = "Test Channel 2",
 				channelType = "site",
 				currencyCode = "CAD",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 		}
 
 		task ("When the user selects specific channel fields for export and exports the channels in JSONL format") {
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "Verify users can export entity data via CSV files"
-	@priority = "3"
+	@priority = 3
 	test CanExportCSVFiles {
 		property portal.acceptance = "true";
 
@@ -267,19 +267,19 @@ definition {
 				accountEntryDescription = "Test Business Account Description",
 				accountEntryName = "Test Business Account",
 				accountEntryType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Guest Account Description",
 				accountEntryName = "Test Guest Account",
 				accountEntryType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Person Account Description",
 				accountEntryName = "Test Person Account",
 				accountEntryType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 
 		task ("When the user selects CSV as Export File Format and exports the accounts") {
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@description = "Verify users can export entity data via CSV files without headers"
-	@priority = "3"
+	@priority = 3
 	test CanExportCSVFileWithoutHeaders {
 		property portal.acceptance = "true";
 
@@ -308,19 +308,19 @@ definition {
 				accountEntryDescription = "Test Business Account Description",
 				accountEntryName = "Test Business Account",
 				accountEntryType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Guest Account Description",
 				accountEntryName = "Test Guest Account",
 				accountEntryType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Person Account Description",
 				accountEntryName = "Test Person Account",
 				accountEntryType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 
 		task ("When the user exports the accounts in CSV format with Contains Headers not checked") {
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "Verify users can export entity data via JSON files"
-	@priority = "3"
+	@priority = 3
 	test CanExportJSONFiles {
 		property portal.acceptance = "true";
 
@@ -350,19 +350,19 @@ definition {
 				accountEntryDescription = "Test Business Account Description",
 				accountEntryName = "Test Business Account",
 				accountEntryType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Guest Account Description",
 				accountEntryName = "Test Guest Account",
 				accountEntryType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Person Account Description",
 				accountEntryName = "Test Person Account",
 				accountEntryType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 
 		task ("When the user selects JSON as Export File Format and exports the accounts") {
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@description = "Verify users can export entity data via JSONL files"
-	@priority = "3"
+	@priority = 3
 	test CanExportJSONLFiles {
 		property portal.acceptance = "true";
 
@@ -391,19 +391,19 @@ definition {
 				accountEntryDescription = "Test Business Account Description",
 				accountEntryName = "Test Business Account",
 				accountEntryType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Guest Account Description",
 				accountEntryName = "Test Guest Account",
 				accountEntryType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Person Account Description",
 				accountEntryName = "Test Person Account",
 				accountEntryType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 
 		task ("When the user selects JSONL as Export File Format and exports the accounts") {
@@ -423,7 +423,7 @@ definition {
 	}
 
 	@description = "Verify users can filter Import/Export executions by Action."
-	@priority = "3"
+	@priority = 3
 	test CanFilterExecutionsByAction {
 		property portal.acceptance = "true";
 
@@ -501,7 +501,7 @@ definition {
 	}
 
 	@description = "Verify users can filter Import/Export templates by Action."
-	@priority = "3"
+	@priority = 3
 	test CanFilterTemplatesByAction {
 		property portal.acceptance = "true";
 
@@ -563,7 +563,7 @@ definition {
 	}
 
 	@description = "Verify users can import entities via CSV files"
-	@priority = "3"
+	@priority = 3
 	test CanImportCSVFiles {
 		property portal.acceptance = "true";
 
@@ -593,7 +593,7 @@ definition {
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -601,7 +601,7 @@ definition {
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			Navigator.gotoBack();
 
@@ -609,12 +609,12 @@ definition {
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
 	@description = "Verify users can import entities via a CSV file without headers"
-	@priority = "3"
+	@priority = 3
 	test CanImportCSVFileWithoutHeaders {
 		property portal.acceptance = "true";
 
@@ -653,7 +653,7 @@ definition {
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -661,7 +661,7 @@ definition {
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			Navigator.gotoBack();
 
@@ -669,12 +669,12 @@ definition {
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
 	@description = "Verify users can import entities via JSON files"
-	@priority = "3"
+	@priority = 3
 	test CanImportJSONFiles {
 		property portal.acceptance = "true";
 
@@ -704,7 +704,7 @@ definition {
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -712,7 +712,7 @@ definition {
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			Navigator.gotoBack();
 
@@ -720,12 +720,12 @@ definition {
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
 	@description = "Verify users can import entities via JSONL files"
-	@priority = "3"
+	@priority = 3
 	test CanImportJSONLFiles {
 		property portal.acceptance = "true";
 
@@ -755,7 +755,7 @@ definition {
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -763,7 +763,7 @@ definition {
 				accountDescription = "Test Guest Account Description",
 				accountName = "Test Guest Account",
 				accountType = "Guest",
-				externalReferenceCode = "102");
+				externalReferenceCode = 102);
 
 			Navigator.gotoBack();
 
@@ -771,11 +771,11 @@ definition {
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanImportObjectDefinitionWithApprovedStatus {
 		property portal.acceptance = "true";
 
@@ -810,15 +810,15 @@ definition {
 		task ("And Then the status of the imported objectDefinition is approved") {
 			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
 
-			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
 
 			TestUtils.assertEquals(
-				actual = "${objectDefinitionStatus}",
+				actual = ${objectDefinitionStatus},
 				expected = "true");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanImportObjectDefinitionWithDraftStatus {
 		property portal.acceptance = "true";
 
@@ -853,17 +853,17 @@ definition {
 		task ("And Then the status of the imported objectDefinition is Draft") {
 			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
 
-			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
 
 			TestUtils.assertEquals(
-				actual = "${objectDefinitionStatus}",
+				actual = ${objectDefinitionStatus},
 				expected = "false");
 		}
 	}
 
 	@description = "Ignored due to LPS-171830"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CannotImportWithoutRequiredFields {
 		property portal.acceptance = "true";
 
@@ -928,7 +928,7 @@ definition {
 	}
 
 	@description = "Verify users can order Import/Export executions by Create Date."
-	@priority = "3"
+	@priority = 3
 	test CanOrderExecutionsByCreateDate {
 		property portal.acceptance = "true";
 
@@ -956,12 +956,12 @@ definition {
 
 		task ("Then the executions should be ordered by create date in descending order") {
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Export Account");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Import Account");
 		}
@@ -972,19 +972,19 @@ definition {
 
 		task ("Then the executions should be ordered by create date in descending order") {
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Import Account");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Export Account");
 		}
 	}
 
 	@description = "Verify users can recall a template during an export."
-	@priority = "3"
+	@priority = 3
 	test CanRecallExportTemplate {
 		property portal.acceptance = "true";
 
@@ -1021,7 +1021,7 @@ definition {
 	}
 
 	@description = "Verify users can recall a template during an import."
-	@priority = "3"
+	@priority = 3
 	test CanRecallImportTemplate {
 		property portal.acceptance = "true";
 
@@ -1056,7 +1056,7 @@ definition {
 	}
 
 	@description = "Verify users can save export configuration as a template during the export process"
-	@priority = "3"
+	@priority = 3
 	test CanSaveTemplateDuringExport {
 		property portal.acceptance = "true";
 
@@ -1085,7 +1085,7 @@ definition {
 	}
 
 	@description = "Verify users can save import configuration as a template during the import process"
-	@priority = "3"
+	@priority = 3
 	test CanSaveTemplateDuringImport {
 		property portal.acceptance = "true";
 
@@ -1114,7 +1114,7 @@ definition {
 	}
 
 	@description = "Verify users can schedule an import"
-	@priority = "3"
+	@priority = 3
 	test CanScheduleImport {
 		property test.name.skip.portal.instance = "ImportExport#CanScheduleImport";
 
@@ -1193,7 +1193,7 @@ definition {
 
 	@description = "Ignored due to LPS-171830"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanSearchExecutions {
 		task ("Given an account import and export") {
 			ImportExport.openImportExportAdmin();
@@ -1323,7 +1323,7 @@ definition {
 	}
 
 	@description = "Verify users can search Import/Exports templates by name and action."
-	@priority = "3"
+	@priority = 3
 	test CanSearchTemplates {
 		property portal.acceptance = "true";
 
@@ -1421,7 +1421,7 @@ definition {
 	}
 
 	@description = "Verify certain users can be granted permission to view specific templates."
-	@priority = "3"
+	@priority = 3
 	test CanShareTemplates {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1438,7 +1438,7 @@ definition {
 		task ("And given the power user can view the templates list") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Power User");
 
 			Permissions.definePermissionViaJSONAPI(
@@ -1506,7 +1506,7 @@ definition {
 	}
 
 	@description = "Verify users receive a notification when an export is triggered."
-	@priority = "3"
+	@priority = 3
 	test CanViewExportNotifications {
 		property portal.acceptance = "true";
 
@@ -1552,7 +1552,7 @@ definition {
 		}
 
 		task ("Then the the user should receive a notification for the failed and successful exports") {
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = 2);
 
 			Notifications.gotoNotifications();
 
@@ -1573,7 +1573,7 @@ definition {
 	}
 
 	@description = "Verify users can download a report of the rows that had warnings or were not imported."
-	@priority = "3"
+	@priority = 3
 	test CanViewImportErrorReport {
 		property portal.acceptance = "true";
 
@@ -1614,12 +1614,12 @@ definition {
 
 			ImportExport.assertFileContent(
 				comparisonFileName = "account_import_error_report.csv",
-				fileName = "${errorReportDownloadName}");
+				fileName = ${errorReportDownloadName});
 		}
 	}
 
 	@description = "Verify users receive a notification when an import is triggered."
-	@priority = "3"
+	@priority = 3
 	test CanViewImportNotifications {
 		property portal.acceptance = "true";
 
@@ -1669,7 +1669,7 @@ definition {
 		}
 
 		task ("Then the the user should receive a notification for the failed and successful imports") {
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = 2);
 
 			Notifications.gotoNotifications();
 
@@ -1690,7 +1690,7 @@ definition {
 	}
 
 	@description = "Verify import rows with errors are skipped during an import if 'Stop the Import on Error' is no checked."
-	@priority = "3"
+	@priority = 3
 	test ContinueImportOnError {
 		property portal.acceptance = "true";
 
@@ -1729,7 +1729,7 @@ definition {
 				accountDescription = "Test Business Account Description",
 				accountName = "Test Business Account",
 				accountType = "Business",
-				externalReferenceCode = "101");
+				externalReferenceCode = 101);
 
 			Navigator.gotoBack();
 
@@ -1737,12 +1737,12 @@ definition {
 				accountDescription = "Test Person Account Description",
 				accountName = "Test Person Account",
 				accountType = "Person",
-				externalReferenceCode = "103");
+				externalReferenceCode = 103);
 		}
 	}
 
 	@description = "Verify CSV fields are automatically mapped to fields in Liferay when the names are the same"
-	@priority = "3"
+	@priority = 3
 	test CSVFieldsAreAutoMapped {
 		property portal.acceptance = "true";
 
@@ -1763,7 +1763,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetExportFileAvailableEntityTypes {
 		property portal.acceptance = "true";
 
@@ -1780,7 +1780,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetImportFileAvailableEntityTypes {
 		property portal.acceptance = "true";
 
@@ -1798,7 +1798,7 @@ definition {
 	}
 
 	@description = "Verify JSON fields are automatically mapped to fields in Liferay when the names are the same"
-	@priority = "3"
+	@priority = 3
 	test JSONFieldsAreAutoMapped {
 		property portal.acceptance = "true";
 
@@ -1820,7 +1820,7 @@ definition {
 	}
 
 	@description = "Verify JSONL fields are automatically mapped to fields in Liferay when the names are the same"
-	@priority = "3"
+	@priority = 3
 	test JSONLFieldsAreAutoMapped {
 		property portal.acceptance = "true";
 
@@ -1842,7 +1842,7 @@ definition {
 	}
 
 	@description = "Verify imports are stopped if 'Stop the Import on Error' is checked when importing a file with an error in any of the rows."
-	@priority = "3"
+	@priority = 3
 	test StopImportOnError {
 		property portal.acceptance = "true";
 
@@ -1882,7 +1882,7 @@ definition {
 	}
 
 	@description = "Verify users are shown a preview for the first row being imported in a CSV file."
-	@priority = "3"
+	@priority = 3
 	test ViewCSVFirstRowPreview {
 		property portal.acceptance = "true";
 
@@ -1906,7 +1906,7 @@ definition {
 	}
 
 	@description = "Verify users can view a preview of the CSV file being imported."
-	@priority = "3"
+	@priority = 3
 	test ViewCSVImportPreview {
 		property portal.acceptance = "true";
 
@@ -1943,7 +1943,7 @@ definition {
 	}
 
 	@description = "Verify users can view how many rows were successfully imported, how many rows were not imported, and the total number of rows for an import."
-	@priority = "3"
+	@priority = 3
 	test ViewImportedRows {
 		property portal.acceptance = "true";
 
@@ -1967,14 +1967,14 @@ definition {
 				executionAction = "Import",
 				executionName = "csv_account_import_error",
 				executionStatus = "Partially Completed",
-				failedRows = "1",
-				successfulRows = "2",
-				totalRows = "3");
+				failedRows = 1,
+				successfulRows = 2,
+				totalRows = 3);
 		}
 	}
 
 	@description = "Verify users are shown a preview for the first row being imported in a JSON file."
-	@priority = "3"
+	@priority = 3
 	test ViewJSONFirstRowPreview {
 		property portal.acceptance = "true";
 
@@ -1998,7 +1998,7 @@ definition {
 	}
 
 	@description = "Verify users can view a preview of the JSON file being imported."
-	@priority = "3"
+	@priority = 3
 	test ViewJSONImportPreview {
 		property portal.acceptance = "true";
 
@@ -2031,7 +2031,7 @@ definition {
 	}
 
 	@description = "Verify users are shown a preview for the first row being imported in a JSONL file."
-	@priority = "3"
+	@priority = 3
 	test ViewJSONLFirstRowPreview {
 		property portal.acceptance = "true";
 
@@ -2055,7 +2055,7 @@ definition {
 	}
 
 	@description = "Verify users can view a preview of the JSONL file being imported."
-	@priority = "3"
+	@priority = 3
 	test ViewJSONLImportPreview {
 		property portal.acceptance = "true";
 
@@ -2088,7 +2088,7 @@ definition {
 	}
 
 	@description = "Verify users are shown which fields are required for an import."
-	@priority = "3"
+	@priority = 3
 	test ViewRequiredImportFields {
 		property portal.acceptance = "true";
 

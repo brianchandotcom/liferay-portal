@@ -16,7 +16,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanExcludeFieldsFromExport {
 		property portal.acceptance = "false";
 
@@ -26,7 +26,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanExportFileWithHeaders {
 		property portal.acceptance = "false";
 
@@ -36,7 +36,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanExportFileWithoutHeaders {
 		property portal.acceptance = "false";
 
@@ -46,7 +46,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanSaveTemplateDuringExport {
 		property portal.acceptance = "false";
 

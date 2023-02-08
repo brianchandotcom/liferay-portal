@@ -36,7 +36,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8456 | Test Summary: Web content appears on card shows the pages that the web content appears on"
-	@priority = "5"
+	@priority = 5
 	test AssertAppearsOnListShowsPagesWebContentExists {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -63,7 +63,7 @@ definition {
 		task ("Switch to new property in AC and go to WC tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToAssets();
 
@@ -80,7 +80,7 @@ definition {
 
 		task ("Assert appears on metric") {
 			var portalURL = PropsUtil.get("portal.url");
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name",
@@ -91,7 +91,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8446 | Test Summary: Assert 180 day time filter in Assets"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertAssetsPageTimeFilter180Days {
 
 		// AC Refactor: the test needs data from a past date
@@ -114,7 +114,7 @@ definition {
 		}
 
 		task ("Navigate to Web Content tab in Assets") {
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToAssets();
 
@@ -144,25 +144,25 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8448 | Test Summary: Web content audience card shows expected amount of known and anonymous individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInWC {
 		property analytics.cloud.upstream = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -178,7 +178,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 
@@ -195,12 +195,12 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		ACUtils.assertAudienceCard(
-			index = "1",
+			index = 1,
 			percentageList = "66.67%,33.33%");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
 		property portal.upstream = "quarantine";
 
@@ -213,12 +213,12 @@ definition {
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Create users and sync") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -226,7 +226,7 @@ definition {
 
 		task ("Go to page and get data for unsegmented individuals") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -246,7 +246,7 @@ definition {
 		task ("Go to AC and create segment for the user") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 
@@ -291,14 +291,14 @@ definition {
 			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 			ACUtils.assertAudienceCard(
-				index = "2",
+				index = 2,
 				percentageList = "66.67%,33.33%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8444 | Test Summary: Custom Range time filter in Web Content assets page"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanAssertWebContentTimeFilterCustom {
 
 		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
@@ -321,7 +321,7 @@ definition {
 		}
 
 		task ("Navigate to Web Content tab in Assets") {
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToAssets();
 
@@ -338,12 +338,12 @@ definition {
 
 		task ("Set time filter use Custom Range") {
 			ACTimeFilter.setCustomRange(
-				endDay = "13",
+				endDay = 13,
 				endMonth = "July",
-				endYear = "2021",
-				startDay = "1",
+				endYear = 2021,
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2021");
+				startYear = 2021);
 		}
 
 		task ("Assert result returns") {
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8130 | Test Summary: Click a web content in the web content list navigates to the web content overview page"
-	@priority = "5"
+	@priority = 5
 	test CanNavigateToWebContentOverviewPage {
 		property test.name.skip.portal.instance = "AssetsWebContent#CanNavigateToWebContentOverviewPage";
 
@@ -387,7 +387,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 
@@ -404,16 +404,16 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Asset Appears On") {
-			ACCards.viewCards(cardTitle = "${cardTitle}");
+			ACCards.viewCards(cardTitle = ${cardTitle});
 		}
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",
-			metricValue = "1");
+			metricValue = 1);
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
-	@priority = "5"
+	@priority = 5
 	test CanSearchWebContentList {
 		property test.name.skip.portal.instance = "AssetsWebContent#CanSearchWebContentList";
 
@@ -421,7 +421,7 @@ definition {
 
 		task ("Add pages and add web content to earch of the page") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
-				ACUtils.addPage(layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = ${layoutName});
 			}
 
 			for (var n : list "2,3") {
@@ -455,7 +455,7 @@ definition {
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 				ACUtils.navigateToSitePage(
 					actionType = "View WC",
-					pageName = "${pageName}",
+					pageName = ${pageName},
 					siteName = "Site Name");
 			}
 		}
@@ -465,7 +465,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to Web Content assets") {
@@ -483,13 +483,13 @@ definition {
 		task ("Search the Web Contents") {
 			ACUtils.searchBar(searchItem = "Web Content AC Title");
 
-			ACUtils.viewNameList(nameList = "${assetNameList}");
+			ACUtils.viewNameList(nameList = ${assetNameList});
 
-			ACUtils.searchBar(searchItem = "2");
+			ACUtils.searchBar(searchItem = 2);
 
 			ACUtils.viewNameList(nameList = "Web Content AC Title 2");
 
-			ACUtils.searchBar(searchItem = "3");
+			ACUtils.searchBar(searchItem = 3);
 
 			ACUtils.viewNameList(nameList = "Web Content AC Title 3");
 		}
@@ -497,7 +497,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8445 | Test Summary: Assert Web Content 180 Days Time Filter In Web Content Assets Page"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUse180DaysTimeFilterInWebContentOverview {
 
 		// AC Refactor: the test needs data from a past date
@@ -512,7 +512,7 @@ definition {
 		task ("Navigate to AC property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to Web Content tab in Assets") {
@@ -545,7 +545,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8443 | Test Summary: Assert Custom Range time filter in assets"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUseCustomRangeTimeFilterInWebContentOverview {
 
 		// AC Refactor: the test needs data from a past date
@@ -562,7 +562,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to Web Content tab in Assets") {
@@ -585,12 +585,12 @@ definition {
 
 		task ("Set time filter use Custom Range") {
 			ACTimeFilter.setCustomRange(
-				endDay = "13",
+				endDay = 13,
 				endMonth = "July",
-				endYear = "2020",
-				startDay = "1",
+				endYear = 2020,
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2020");
+				startYear = 2020);
 		}
 
 		task ("Assert result returns") {
@@ -600,12 +600,12 @@ definition {
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Views",
-				metricValue = "0");
+				metricValue = 0);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
-	@priority = "5"
+	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "AssetsWebContent#KnownIndividualsShowsWhichIndividualsInteractWithWebContent";
@@ -616,18 +616,18 @@ definition {
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -646,7 +646,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 
@@ -666,7 +666,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.viewNameList(nameList = "${nameList}");
+		ACUtils.viewNameList(nameList = ${nameList});
 
 		AssertElementNotPresent(
 			key_userName = "userac userac",
@@ -674,14 +674,14 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8125 | Test Summary: Web content list shows all web content in a list"
-	@priority = "5"
+	@priority = 5
 	test ViewAllWebContentShownInAssetList {
 		property test.name.skip.portal.instance = "AssetsWebContent#ViewAllWebContentShownInAssetList";
 
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {
-			ACUtils.addPage(layoutName = "${layoutName}");
+			ACUtils.addPage(layoutName = ${layoutName});
 		}
 
 		for (var n : list "2,3") {
@@ -707,7 +707,7 @@ definition {
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 			ACUtils.navigateToSitePage(
 				actionType = "View WC",
-				pageName = "${pageName}",
+				pageName = ${pageName},
 				siteName = "Site Name");
 		}
 
@@ -715,7 +715,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 
@@ -725,11 +725,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.viewNameList(nameList = "${assetNameList}");
+		ACUtils.viewNameList(nameList = ${assetNameList});
 	}
 
 	@description = "Web content visitor behavior card shows expected amount of views"
-	@priority = "5"
+	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
 		property test.name.skip.portal.instance = "AssetsWebContent#VisitorBehaviorCardShowsExpectedAmountOfViewsInWC";
 
@@ -750,7 +750,7 @@ definition {
 		task ("Navigate to AC property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to Web Content tab in Assets") {
@@ -770,13 +770,13 @@ definition {
 		task ("Confirm the Views number is correct") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Views",
-				metricValue = "3");
+				metricValue = 3);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8451 | Test Summary: Web content submissions by location card shows expected views by location"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test WebContentLocationCardShowsViewsByExpectedLocation {
 
 		// AC Refactor: The location data should show the name of the country but it's actually showing "Local network"
@@ -827,7 +827,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to Web Content tab") {
@@ -859,13 +859,13 @@ definition {
 
 			ACCards.viewGeomapTableText(
 				cardTitle = "Views by Location",
-				leftText = "${country}",
+				leftText = ${country},
 				rightText = "1 100%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8454 | Test Summary: Web content submissions by technology card shows views by expected browser"
-	@priority = "5"
+	@priority = 5
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {
 		property test.name.skip.portal.instance = "AssetsWebContent#WebContentTechnologyCardShowsViewsByExpectedBrowser";
 
@@ -892,7 +892,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 
@@ -922,7 +922,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8453 | Test Summary: Web content submissions by technology card shows views by expected device"
-	@priority = "5"
+	@priority = 5
 	test WebContentTechnologyCardShowsViewsByExpectedDevice {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -948,7 +948,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 

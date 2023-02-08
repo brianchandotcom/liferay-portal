@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -41,13 +41,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-162816 - Verify that as an Administrator I can delete a smart suite"
-	@priority = "4"
+	@priority = 4
 	test AdminCanDeleteSmartSuite {
 		task ("Given that the user goes to add a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -78,7 +78,7 @@ definition {
 			TestraySuites.addSuite(
 				caseType = "Manual Test",
 				mainComponent = "Tags",
-				priorityNumber = "3",
+				priorityNumber = 3,
 				smartSuite = "true",
 				suiteDescription = "ATF_Suites_1 Suite Description",
 				suiteName = "ATF_Suites_1 Suite");
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160626 - Verify if as an Administrator I am able delete a suite"
-	@priority = "4"
+	@priority = 4
 	test AdminCanDeleteSuite {
 		task ("Given that the user goes to add a new suite") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160574 - Verify if as an Administrator I am able to design Suites"
-	@priority = "4"
+	@priority = 4
 	test AdminCanDesignSuite {
 		task ("Given that the user goes to add a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -138,8 +138,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project",
 				description = "ATF_Suites Case Description",
-				duration = "10",
-				priority = "5",
+				duration = 10,
+				priority = 5,
 				steps = "ATF_Suites Case Steps");
 		}
 
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162815 - Verify that as an Administrator I can edit and update a smart suite"
-	@priority = "4"
+	@priority = 4
 	test AdminCanEditSmartSuite {
 		task ("Given that the user goes to add a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -191,7 +191,7 @@ definition {
 			TestraySuites.addSuite(
 				caseType = "Unit Test",
 				mainComponent = "Components_1 Project",
-				priorityNumber = "1",
+				priorityNumber = 1,
 				requirementName = "ATF_Requirements Summary",
 				smartSuite = "true",
 				subComponent = "Components_1 Project",
@@ -205,7 +205,7 @@ definition {
 			TestraySuites.verifyCaseParametersInSuite(
 				caseType = "Unit Test",
 				components = "Components_1 Project",
-				priority = "1",
+				priority = 1,
 				requirements = "ATF_Requirements Summary",
 				subComponents = "Components_1 Project");
 		}
@@ -218,7 +218,7 @@ definition {
 			TestraySuites.editSmartSuite(
 				caseType = "Cucumber",
 				mainComponent = "Calendar",
-				priorityNumber = "5",
+				priorityNumber = 5,
 				smartSuite = "true",
 				subComponent = "Wiki",
 				suiteDescription = "ATF_Suites_1 Suite Description",
@@ -231,14 +231,14 @@ definition {
 			TestraySuites.verifyCaseParametersInSuite(
 				caseType = "Cucumber",
 				components = "Calendar",
-				priority = "5",
+				priority = 5,
 				requirements = "ATF_Requirements Summary",
 				subComponents = "Wiki");
 		}
 	}
 
 	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"
-	@priority = "4"
+	@priority = 4
 	test AdminCanEditSuite {
 		task ("Given that the user goes to add a new suite") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166559 - Verify if as an Administrator I should not be able to add a duplicate Suites"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateSuites {
 		task ("Given that the user goes to add a new suite duplicate") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164152 - Verify that the user can not create a suite if all the required fields are not filled in"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewRequiredField {
 		task ("Given that the user goes to add a new suite without name") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");

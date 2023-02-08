@@ -1,146 +1,146 @@
 definition {
 
 	macro addDepotRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
-		var name = JSONRoleSetter.setName(name = "${roleTitle}");
-		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
+		var name = JSONRoleSetter.setName(name = ${roleTitle});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
 		var type = JSONRoleSetter.setType(roleType = "Depot");
 
 		JSONRoleAPI._addRole(
-			descriptionMap = "${descriptionMap}",
-			name = "${name}",
-			titleMap = "${titleMap}",
-			type = "${type}");
+			descriptionMap = ${descriptionMap},
+			name = ${name},
+			titleMap = ${titleMap},
+			type = ${type});
 	}
 
 	macro addOrganizationRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
-		var name = JSONRoleSetter.setName(name = "${roleTitle}");
-		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
+		var name = JSONRoleSetter.setName(name = ${roleTitle});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
 		var type = JSONRoleSetter.setType(roleType = "organization");
 
 		JSONRoleAPI._addRole(
-			descriptionMap = "${descriptionMap}",
-			name = "${name}",
-			titleMap = "${titleMap}",
-			type = "${type}");
+			descriptionMap = ${descriptionMap},
+			name = ${name},
+			titleMap = ${titleMap},
+			type = ${type});
 	}
 
 	macro addRegularRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
-		var name = JSONRoleSetter.setName(name = "${roleTitle}");
-		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
+		var name = JSONRoleSetter.setName(name = ${roleTitle});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
 		var type = JSONRoleSetter.setType(roleType = "regular");
 
 		JSONRoleAPI._addRole(
-			descriptionMap = "${descriptionMap}",
-			name = "${name}",
-			titleMap = "${titleMap}",
-			type = "${type}");
+			descriptionMap = ${descriptionMap},
+			name = ${name},
+			titleMap = ${titleMap},
+			type = ${type});
 	}
 
 	macro addSharedAccountRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
-		var name = JSONRoleSetter.setName(name = "${roleTitle}");
-		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
+		var name = JSONRoleSetter.setName(name = ${roleTitle});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
 		var type = JSONRoleSetter.setType(roleType = "account");
 
 		JSONRoleAPI._addAccountRole(
-			descriptionMap = "${descriptionMap}",
-			name = "${name}",
-			titleMap = "${titleMap}",
-			type = "${type}");
+			descriptionMap = ${descriptionMap},
+			name = ${name},
+			titleMap = ${titleMap},
+			type = ${type});
 	}
 
 	macro addSiteRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
-		var name = JSONRoleSetter.setName(name = "${roleTitle}");
-		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
+		var name = JSONRoleSetter.setName(name = ${roleTitle});
+		var titleMap = JSONRoleSetter.setTitleMap(title = ${roleKey});
 		var type = JSONRoleSetter.setType(roleType = "site");
 
 		JSONRoleAPI._addRole(
-			descriptionMap = "${descriptionMap}",
-			name = "${name}",
-			titleMap = "${titleMap}",
-			type = "${type}");
+			descriptionMap = ${descriptionMap},
+			name = ${name},
+			titleMap = ${titleMap},
+			type = ${type});
 	}
 
 	macro assignDepotRoleToUser {
 		Variables.assertDefined(parameterList = "${depotName},${roleTitle},${userEmailAddress}");
 
 		var depotId = JSONUserSetter.setGroupId(
-			groupName = "${depotName}",
+			groupName = ${depotName},
 			site = "false");
-		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
-		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = ${userEmailAddress});
 
 		JSONRoleAPI._assignDepotRoleToUser(
-			groupId = "${depotId}",
-			roleId = "${roleId}",
-			userId = "${userId}");
+			groupId = ${depotId},
+			roleId = ${roleId},
+			userId = ${userId});
 	}
 
 	macro assignRoleToGroup {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle}");
 
-		var groupId = JSONUserSetter.setGroupId(groupName = "${groupName}");
-		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
+		var groupId = JSONUserSetter.setGroupId(groupName = ${groupName});
+		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
 
 		JSONRoleAPI._assignRoleToGroup(
-			groupId = "${groupId}",
-			roleId = "${roleId}");
+			groupId = ${groupId},
+			roleId = ${roleId});
 	}
 
 	macro assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
-		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
-		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = ${userEmailAddress});
 
 		JSONRoleAPI._assignRoleToUser(
-			roleId = "${roleId}",
-			userId = "${userId}");
+			roleId = ${roleId},
+			userId = ${userId});
 	}
 
 	macro assignSiteRoleToUser {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
 
 		var groupId = JSONUserSetter.setGroupId(
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}");
-		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
-		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName});
+		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = ${userEmailAddress});
 
 		JSONRoleAPI._assignSiteRoleToUser(
-			groupId = "${groupId}",
-			roleId = "${roleId}",
-			userId = "${userId}");
+			groupId = ${groupId},
+			roleId = ${roleId},
+			userId = ${userId});
 	}
 
 	macro deleteRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(name = ${roleTitle});
 
-		JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
+		JSONRoleAPI._deleteRoleById(roleId = ${roleId});
 	}
 
 	@summary = "Gets all users that contains 'Test' and deletes them"
 	macro deleteTestRoles {
 		var rolesIds = JSONRoleAPI._searchRolesIds(roleName = "Test");
 
-		for (var roleId : list "${rolesIds}") {
-			JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
+		for (var roleId : list ${rolesIds}) {
+			JSONRoleAPI._deleteRoleById(roleId = ${roleId});
 		}
 	}
 

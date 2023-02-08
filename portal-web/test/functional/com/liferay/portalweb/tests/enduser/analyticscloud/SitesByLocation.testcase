@@ -27,7 +27,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6637 | Automation ID: LRAC-8309 | Test Summary: Private IPs reported as Local Network"
-	@priority = "4"
+	@priority = 4
 	test CanprivateIpsReportedAsLocalNetwork {
 		property portal.upstream = "quarantine";
 
@@ -65,7 +65,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to the sites overview") {
@@ -92,7 +92,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8308 | Test Summary: Top 5 locations by session"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test LocationsBySession {
 
 		// TODO LRAC-8308 LocationsBySession pending implementation

@@ -17,7 +17,7 @@ definition {
 
 	macro assertCardStatusChanged {
 		AssertElementPresent(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
@@ -25,12 +25,12 @@ definition {
 		var entry = "ERC-001";
 
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
-			entry = "${entry}",
+			entry = ${entry},
 			portlet = "DXP Cloud Environments");
 
 		CustomerPortal.clearActivationStatus(
-			position = "${position}",
-			status = "${status}");
+			position = ${position},
+			status = ${status});
 	}
 
 	macro clickOnAddAnotherAdminButton {
@@ -51,7 +51,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscriptions");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "${index}");
+		CustomerPortal.viewCPObjectCustomInfo(index = ${index});
 
 		Click(locator1 = "CP2DXPCloudSetup#HAS_DISASTER_DATA_CENTER_REGION");
 
@@ -66,7 +66,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		CustomerPortal.viewCPObjectCustomInfo(position = "14");
+		CustomerPortal.viewCPObjectCustomInfo(position = 14);
 
 		CreateObject.checkToggleActive();
 
@@ -78,36 +78,36 @@ definition {
 	}
 
 	macro deleteEntryCloudEnvironments {
-		var key_status = "${entry}";
+		var key_status = ${entry};
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "${portlet}");
+			portlet = ${portlet});
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			ObjectPortlet.deleteEntry(entry = "${entry}");
+			ObjectPortlet.deleteEntry(entry = ${entry});
 		}
 	}
 
 	macro notViewSetupDXPCloufEXtraInfo {
 		AssertElementNotPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "email",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "firstName",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "lastName",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
@@ -115,7 +115,7 @@ definition {
 	macro typeAllSetupDXPCloudInfoFields {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "projectId",
-			value = "001");
+			value = 001);
 
 		Select(
 			locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
@@ -141,102 +141,102 @@ definition {
 	macro typeAllSetupDXPCloufEXtraInfo {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "email",
-			position = "2",
+			position = 2,
 			value = "test@liferay.com");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "firstName",
-			position = "2",
+			position = 2,
 			value = "FirstName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "lastName",
-			position = "2",
+			position = 2,
 			value = "LastName");
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "github",
-			position = "2",
+			position = 2,
 			value = "GitHubUser");
 	}
 
 	macro typeSetupDXPCloudInfoFields {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
-		var key_index = "${position}";
+		var key_index = ${position};
 
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro viewDisasterRegionList {
 		Click(locator1 = "CP2DXPCloudSetup#SELECT_DISASTER_REGION");
 
-		for (var region : list "${regionRow}") {
+		for (var region : list ${regionRow}) {
 			AssertElementPresent(
-				key_region = "${regionRow}",
+				key_region = ${regionRow},
 				locator1 = "CP2DXPCloudSetup#DISASTER_REGION",
-				value1 = "${region}");
+				value1 = ${region});
 		}
 	}
 
 	macro viewRegionList {
 		Click(locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION");
 
-		for (var regionName : list "${regionList}") {
+		for (var regionName : list ${regionList}) {
 			AssertElementPresent(
-				key_regionName = "${regionList}",
+				key_regionName = ${regionList},
 				locator1 = "CP2DXPCloudSetup#REGIONS_NAMES",
-				value1 = "${regionName}");
+				value1 = ${regionName});
 		}
 	}
 
 	macro viewSetupDXPCloudExtraFields {
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "email",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "firstName",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "lastName",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
 	macro viewSetupDXPCloudExtraInfo {
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "email",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "firstName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "lastName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
@@ -246,7 +246,7 @@ definition {
 		AssertElementPresent(
 			label = "projectId",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
-			value = "001");
+			value = 001);
 
 		AssertElementPresent(
 			locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",

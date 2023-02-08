@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "Verify can filter by completed tasks"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByCompletedTasks {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "Verify can filter by pending tasks"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByPendingTasks {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "Verify if the Clear option cleans the search results"
-	@priority = "3"
+	@priority = 3
 	test ClearOptionCleanSearchResults {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -190,7 +190,7 @@ definition {
 			panel = "Applications",
 			portlet = "Submissions");
 
-		WorkflowSubmissions.searchSubmissions(searchValue = "1");
+		WorkflowSubmissions.searchSubmissions(searchValue = 1);
 
 		AssertElementPresent(
 			key_submissionName = "Blogs Entry 1",
@@ -202,7 +202,7 @@ definition {
 
 		Click(locator1 = "WorkflowSubmissions#SUBMISSION_CLEAR_SEARCH_BUTTON");
 
-		WorkflowSubmissions.searchSubmissions(searchValue = "2");
+		WorkflowSubmissions.searchSubmissions(searchValue = 2);
 
 		AssertElementPresent(
 			key_submissionName = "Blogs Entry 2",
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "Verify if the table is organized by Asset Title, Asset Type, Status, Definition, Last Activity Date and End Date columns"
-	@priority = "4"
+	@priority = 4
 	test ColumnsAreDisplayed {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -247,70 +247,70 @@ definition {
 			portlet = "Submissions");
 
 		AssertTextEquals(
-			key_index = "1",
+			key_index = 1,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Asset Title");
 
 		AssertTextEquals(
-			key_index = "2",
+			key_index = 2,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Asset Type");
 
 		AssertTextEquals(
-			key_index = "3",
+			key_index = 3,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Status");
 
 		AssertTextEquals(
-			key_index = "4",
+			key_index = 4,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Definition");
 
 		AssertTextEquals(
-			key_index = "5",
+			key_index = 5,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Last Activity Date");
 
 		AssertTextEquals(
-			key_index = "6",
+			key_index = 6,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "End Date");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		AssertTextEquals(
-			key_index = "1",
+			key_index = 1,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Asset Title");
 
 		AssertTextEquals(
-			key_index = "2",
+			key_index = 2,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Asset Type");
 
 		AssertTextEquals(
-			key_index = "3",
+			key_index = 3,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Status");
 
 		AssertTextEquals(
-			key_index = "4",
+			key_index = 4,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Definition");
 
 		AssertTextEquals(
-			key_index = "5",
+			key_index = 5,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "Last Activity Date");
 
 		AssertTextEquals(
-			key_index = "6",
+			key_index = 6,
 			locator1 = "WorkflowSubmissions#HEADER_INDEX",
 			value1 = "End Date");
 	}
 
 	@description = "Verify the kebab menu is not displayed when task is completed"
-	@priority = "4"
+	@priority = 4
 	test CompletedTaskCannnotBeWithdrawn {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "Verify the kebab menu is not displayed on details page when task is completed"
-	@priority = "4"
+	@priority = 4
 	test CompletedTaskCannnotBeWithdrawnThroughDetailsPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "Verify that clicking on the task name takes you to a details page"
-	@priority = "4"
+	@priority = 4
 	test DetailsPageIsDisplayeed {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "Verify if when the task is pending, the "End Date" field is blank"
-	@priority = "3"
+	@priority = 3
 	test EndDateIsBlankWhenTaskPending {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -450,7 +450,7 @@ definition {
 	}
 
 	@description = "Verify if when the task is approved, the "End Date" field is filled"
-	@priority = "3"
+	@priority = 3
 	test EndDateIsFilledWhenTaskCompleted {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@description = "Verify that when having 5 tasks on the screen, a pagination bar is displayed"
-	@priority = "3"
+	@priority = 3
 	test PaginationBarIsDisplayed {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -509,9 +509,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		var count = "0";
+		var count = 0;
 
-		while ("${count}" != "5") {
+		while (${count} != 5) {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry B",
 				entryTitle = "Second Blogs Entry Title");
@@ -532,7 +532,7 @@ definition {
 	}
 
 	@description = "Verify that a task can be withdrawn"
-	@priority = "4"
+	@priority = 4
 	test TaskCanBeWithdrawn {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -559,7 +559,7 @@ definition {
 			portlet = "Submissions");
 
 		Click(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "WorkflowSubmissions#ENTRY_TASK_ROW_NUMBER_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Withdraw Submission");
@@ -572,7 +572,7 @@ definition {
 	}
 
 	@description = "Verify that a task can be withdrawn through details page"
-	@priority = "4"
+	@priority = 4
 	test TaskCanBeWithdrawnThroughDetailsPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "Verify that the task changes to approved"
-	@priority = "4"
+	@priority = 4
 	test TaskIsApprovedOnTheTable {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -670,14 +670,14 @@ definition {
 	}
 
 	@description = "Verify that the task is displayed on table"
-	@priority = "5"
+	@priority = 5
 	test TaskIsDisplayedOnTable {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -708,7 +708,7 @@ definition {
 	}
 
 	@description = "Verify if the tasks are grouped into pending and completed"
-	@priority = "3"
+	@priority = 3
 	test TasksAreGroupedByPendingAndCompleted {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -766,7 +766,7 @@ definition {
 	}
 
 	@description = "Verify if clicking the arrow changes the order of the table (asc - desc)"
-	@priority = "3"
+	@priority = 3
 	test ViewAscDescSequenceSubmissions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -792,30 +792,30 @@ definition {
 		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		AssertElementPresent(
-			key_order = "2",
+			key_order = 2,
 			key_title = "Blogs Entry Title 2",
 			locator1 = "WorkflowSubmissionsTask#TABLE_ORDER_SUBMISSIONS");
 
 		AssertElementPresent(
-			key_order = "3",
+			key_order = 3,
 			key_title = "Blogs Entry Title 1",
 			locator1 = "WorkflowSubmissionsTask#TABLE_ORDER_SUBMISSIONS");
 
 		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		AssertElementPresent(
-			key_order = "3",
+			key_order = 3,
 			key_title = "Blogs Entry Title 2",
 			locator1 = "WorkflowSubmissionsTask#TABLE_ORDER_SUBMISSIONS");
 
 		AssertElementPresent(
-			key_order = "2",
+			key_order = 2,
 			key_title = "Blogs Entry Title 1",
 			locator1 = "WorkflowSubmissionsTask#TABLE_ORDER_SUBMISSIONS");
 	}
 
 	@description = "Verify that the message 'There are no publication requested by me.' when there is no task"
-	@priority = "2"
+	@priority = 2
 	test ViewNoPublicationRequestedByMeMessage {
 		Navigator.openURL();
 
@@ -827,7 +827,7 @@ definition {
 	}
 
 	@description = "Verify that the message 'There are no publication requests.' when there is no task"
-	@priority = "2"
+	@priority = 2
 	test ViewNoPublicationRequestsMessage {
 		Navigator.openURL();
 

@@ -41,7 +41,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -61,7 +61,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ApproveFrontPageUserEdit {
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69555. Verify that the user can save as Draft a Wiki Page with assigned Workflow."
-	@priority = "5"
+	@priority = 5
 	test CanSaveAsDraftPage {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -168,7 +168,7 @@ definition {
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 
 		WikiNode.addWikiPage(
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69554. Verify that the user can Submit for Publication a Wiki Page with assigned Workflow."
-	@priority = "5"
+	@priority = 5
 	test CanSubmitWikiPage {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -194,7 +194,7 @@ definition {
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 
 		WikiNode.addWikiPage(
@@ -224,21 +224,21 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "2",
+			numberOfWikiPages = 2,
 			wikiNodeName = "Wiki Node Name");
 
 		WorkflowWiki.viewWikiPageStatus(workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69570. Verify that a new page with the same name can't be created while the page is on Review."
-	@priority = "4"
+	@priority = 4
 	test CantCreatePageWithSameNameOnReview {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiNode.addWikiPage(
@@ -264,7 +264,7 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiNode.addWikiPage(
@@ -278,11 +278,11 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		MyWorkflowTasks.viewMyWorkflowTaskItemPosition(
-			rowPosition = "2",
+			rowPosition = 2,
 			title = "Wiki Page Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RejectFrontPageUserEdit {
 		property portal.upstream = "quarantine";
 
@@ -375,7 +375,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RejectWikiPagePG {
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69561. Verify that the Child Page status are displayed correctly on approval."
-	@priority = "2"
+	@priority = 2
 	test WikiChildPageStatusOnApprove {
 		property portal.upstream = "quarantine";
 
@@ -435,7 +435,7 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
@@ -471,14 +471,14 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "2",
+			numberOfWikiPages = 2,
 			wikiNodeName = "Main");
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69567. Verify that the a rejected Child Page is not displayed on list."
-	@priority = "4"
+	@priority = 4
 	test WikiChildPageStatusOnReject {
 		property portal.upstream = "quarantine";
 
@@ -487,7 +487,7 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
@@ -523,21 +523,21 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WorkflowWiki.viewWikiPageNotPresent(viewWikiPagePresent = "Child Page Title");
 	}
 
 	@description = "This is a test for LRQA-69568. Verify that the Front Page content doesn't change on reject."
-	@priority = "4"
+	@priority = 4
 	test WikiFrontPageContentDoesntChangeOnReject {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
@@ -569,14 +569,14 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");
 	}
 
 	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit."
-	@priority = "2"
+	@priority = 2
 	test WikiFrontPageStatusChangesOnEdit {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -585,7 +585,7 @@ definition {
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "
-	@priority = "2"
+	@priority = 2
 	test WikiPageApprovedStatus {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -611,7 +611,7 @@ definition {
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 
 		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
@@ -641,21 +641,21 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Wiki Node Name");
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LRQA-69569. Verify that a page isn't added to the Wiki on Reject."
-	@priority = "4"
+	@priority = 4
 	test WikiPageNotAddedOnReject {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WikiNode.addWikiPage(
@@ -681,14 +681,14 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Main");
 
 		WorkflowWiki.viewWikiPageNotPresent(key_workflowInstanceName = "Wiki Page Name");
 	}
 
 	@description = "This is a test for LRQA-69558. Verify that the Front Page status are displayed correctly on reject process."
-	@priority = "2"
+	@priority = 2
 	test WikiPageRejectStatus {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -697,7 +697,7 @@ definition {
 		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 
 		WikiPage.clickWikiPage(workflowInstanceName = "FrontPage");
@@ -727,7 +727,7 @@ definition {
 			portlet = "Wiki");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Wiki Node Name");
 
 		WorkflowWiki.viewWikiPageStatusViaDetails(workflowStatus = "Pending");

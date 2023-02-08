@@ -2,24 +2,24 @@ definition {
 
 	@description = "Go to Instance settings"
 	macro gotoInstanceSettings {
-		Variables.assertDefined(parameterList = "${portlet}");
+		Variables.assertDefined(parameterList = ${portlet});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var portletId = "";
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "Banner") {
+		if (${portlet} == "Banner") {
 			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
-		if ("${portlet}" == "Consent Panel") {
+		if (${portlet} == "Consent Panel") {
 			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
-		if ("${portlet}" == "Preference Handling") {
+		if (${portlet} == "Preference Handling") {
 			var portletId = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration";
 		}
 
@@ -30,12 +30,12 @@ definition {
 
 	@description = "Go to Site settings"
 	macro gotoSiteSettings {
-		Variables.assertDefined(parameterList = "${portlet}");
+		Variables.assertDefined(parameterList = ${portlet});
 
 		takeScreenshot();
 
-		var baseURL = "${baseURL}";
-		var siteURLKey = "${siteURLKey}";
+		var baseURL = ${baseURL};
+		var siteURLKey = ${siteURLKey};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -45,15 +45,15 @@ definition {
 			var siteURLKey = "guest";
 		}
 
-		if ("${portlet}" == "Banner") {
+		if (${portlet} == "Banner") {
 			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
-		if ("${portlet}" == "Consent Panel") {
+		if (${portlet} == "Consent Panel") {
 			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
-		if ("${portlet}" == "Preference Handling") {
+		if (${portlet} == "Preference Handling") {
 			var portletId = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration";
 		}
 
@@ -64,24 +64,24 @@ definition {
 
 	@description = "Go to System settings"
 	macro gotoSystemSettings {
-		Variables.assertDefined(parameterList = "${portlet}");
+		Variables.assertDefined(parameterList = ${portlet});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var portletId = "";
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "Banner") {
+		if (${portlet} == "Banner") {
 			var portletId = "com.liferay.cookies.configuration.banner.CookiesBannerConfiguration";
 		}
 
-		if ("${portlet}" == "Consent Panel") {
+		if (${portlet} == "Consent Panel") {
 			var portletId = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration";
 		}
 
-		if ("${portlet}" == "Preference Handling") {
+		if (${portlet} == "Preference Handling") {
 			var portletId = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration";
 		}
 

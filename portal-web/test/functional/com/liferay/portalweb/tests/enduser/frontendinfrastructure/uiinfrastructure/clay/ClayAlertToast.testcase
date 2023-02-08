@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "LPS-170578 Validate alert toast message does disapear."
-	@priority = "5"
+	@priority = 5
 	test AutoclosesWhenNotHoveredOver {
 		property portal.acceptance = "true";
 
@@ -55,13 +55,13 @@ definition {
 
 			// For LPS-170578, need this to pause until right before auto close time of the fail message
 
-			Pause(locator1 = "19000");
+			Pause(locator1 = 19000);
 
 			if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 
 				// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
-				Pause(locator1 = "1100");
+				Pause(locator1 = 1100);
 
 				if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 					fail("Alert message did not disappear after 20 seconds");
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "LPS-170575 - Verify toast alert with no actions disappears after 5 seconds"
-	@priority = "5"
+	@priority = 5
 	test DisappearsAfter5SecsWithoutActions {
 		task ("When a toast alert appears") {
 			Click(
@@ -90,7 +90,7 @@ definition {
 
 			// For LPS-170575, need this pause to see if after 5 seconds, the alert is not showing anymore
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = 5000);
 
 			AssertElementNotPresent(
 				key_type = "dismissible alert-danger",
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "LPS-170577 - Verify toast alert with action button disappears after 10 seconds"
-	@priority = "5"
+	@priority = 5
 	test DisappearsAfter10SecsWithActions {
 		task ("When a toast alert appears") {
 			Click(
@@ -115,7 +115,7 @@ definition {
 
 			// For LPS-170577, need this pause to see if after 10 seconds, the alert is not showing anymore
 
-			Pause(locator1 = "10000");
+			Pause(locator1 = 10000);
 
 			if (!(IsElementPresent.isElementPresentNoSPARefresh(key_type = "info", locator1 = "ClayAlertToast#ALERT_TOAST"))) {
 				TestUtils.pass(message = "Test passed: Alert toast with action disappeared after 10 seconds");
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "LPS-170578 Validate alert toast message does not disapear when mouse hovers over it."
-	@priority = "5"
+	@priority = 5
 	test DoesNotAutocloseWhenHoveredOver {
 		property portal.acceptance = "true";
 
@@ -149,14 +149,14 @@ definition {
 
 			// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
-			Pause(locator1 = "20100");
+			Pause(locator1 = 20100);
 
 			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
 		}
 	}
 
 	@description = "LPS-170579 - Assert that multiples messages can be displayed"
-	@priority = "5"
+	@priority = 5
 	test MultipleContainersCanBeDisplayed {
 		task ("When a toast alert appears") {
 			WaitForElementPresent(

@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,16 +35,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-143790 | Test Summary: Assert if the project card contains Project name"
-	@priority = "4"
+	@priority = 4
 	test AssertCardProjectNameLessThan5 {
 
 		// TODO LPS-143790 archive pending implementation
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143778 | Test Summary: Assert the name of the project card"
-	@priority = "4"
+	@priority = 4
 	test AssertCardProjectNameMoreThan5 {
 
 		// TODO LPS-143778 archive pending implementation
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143791 | Test Summary: Assert if the project card contains Status"
-	@priority = "4"
+	@priority = 4
 	test AssertCardStatusLessThan5 {
 
 		// TODO LPS-143791 archive pending implementation
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143779 | Test Summary: Assert if the project card contains Status"
-	@priority = "4"
+	@priority = 4
 	test AssertCardStatusMoreThan5 {
 
 		// TODO LPS-143779 archive pending implementation
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143792 | Test Summary: Assert if the project card contains Subscription End Date"
-	@priority = "4"
+	@priority = 4
 	test AssertCardSubscriptionEndDateLessThan5 {
 
 		// TODO LPS-143792 archive pending implementation
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143780 | Test Summary: Assert if the project card contains Subscription End Date"
-	@priority = "4"
+	@priority = 4
 	test AssertCardSubscriptionEndDateMoreThan5 {
 
 		// TODO LPS-143780 archive pending implementation
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143785 | Test Summary: Check if when the user clicks on the card he is directed to another page"
-	@priority = "5"
+	@priority = 5
 	test VerifyCardDirectsToAnotherPageMoreThan5 {
 
 		// TODO LPS-143785 archive pending implementation
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143781 | Test Summary: Verify if the projects are displayed as a list"
-	@priority = "5"
+	@priority = 5
 	test VerifyIfProjectsDisplayedAsAList {
 
 		// TODO LPS-143781 archive pending implementation
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143793 | Test Summary: Verify if the projects are displayed as cards"
-	@priority = "5"
+	@priority = 5
 	test VerifyIfProjectsDisplayedAsCards {
 
 		// TODO LPS-143793 archive pending implementation
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143782 | Test Summary: Verify if when more than 5 projects are chosen the search bar will be visible"
-	@priority = "3"
+	@priority = 3
 	test VerifyIfSearchIsVisible {
 
 		// TODO LPS-143782 archive pending implementation
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143784 | Test Summary: Verify if the number of projects is being showed by side of the search bar"
-	@priority = "3"
+	@priority = 3
 	test VerifyProjectsNumberBySideOfSearchBar {
 
 		// TODO LPS-143784 archive pending implementation
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143795 | Test Summary: Assert the name of the project card"
-	@priority = "2"
+	@priority = 2
 	test VerifyUserName {
 
 		// TODO LPS-143795 archive pending implementation
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143794 | Test Summary: Check if when the user clicks on the card he is directed to another page"
-	@priority = "4"
+	@priority = 4
 	test VerifyWhenCardIsClickedGoesAnotherPage {
 
 		// TODO LPS-143794 archive pending implementation

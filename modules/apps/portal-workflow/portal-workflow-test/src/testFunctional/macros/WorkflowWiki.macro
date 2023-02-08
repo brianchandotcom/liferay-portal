@@ -2,29 +2,29 @@ definition {
 
 	macro viewWikiPageNotPresent {
 		AssertElementNotPresent(
-			key_workflowInstanceName = "${workflowInstanceName}",
+			key_workflowInstanceName = ${workflowInstanceName},
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "${workflowInstanceName}");
+			value1 = ${workflowInstanceName});
 	}
 
 	macro viewWikiPagePresent {
 		AssertElementPresent(
-			key_workflowInstanceName = "${workflowInstanceName}",
+			key_workflowInstanceName = ${workflowInstanceName},
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE",
-			value1 = "${workflowInstanceName}");
+			value1 = ${workflowInstanceName});
 	}
 
 	macro viewWikiPageStatus {
 		AssertTextEquals(
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "${workflowStatus}");
+			value1 = ${workflowStatus});
 	}
 
 	macro viewWikiPageStatusViaDetails {
 		AssertTextEquals(
-			kfStatus = "${workflowStatus}",
+			kfStatus = ${workflowStatus},
 			locator1 = "AssetWorkflow#WORKFLOW_STATUS",
-			value1 = "${workflowStatus}");
+			value1 = ${workflowStatus});
 	}
 
 }

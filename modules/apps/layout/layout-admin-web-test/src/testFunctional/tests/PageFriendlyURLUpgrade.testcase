@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanConfigurePageFriendlyURLAfterUpgradeFrom71105 {
 		property data.archive.type = "data-archive-page-friendly-url";
 		property portal.version = "7.1.10.5";
@@ -58,7 +58,7 @@ definition {
 			pageName = "german");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanConfigurePageFriendlyURLAfterUpgradeFrom72104 {
 		property data.archive.type = "data-archive-page-friendly-url";
 		property portal.version = "7.2.10.4";
@@ -98,7 +98,7 @@ definition {
 			pageName = "german");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanConfigurePageFriendlyURLAfterUpgradeFrom73101 {
 		property data.archive.type = "data-archive-page-friendly-url";
 		property portal.version = "7.3.10.1";
@@ -157,7 +157,7 @@ definition {
 			pageName = "german");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanConfigurePageFriendlyURLAfterUpgradeFrom701015 {
 		property data.archive.type = "data-archive-page-friendly-url";
 		property portal.version = "7.0.10.15";

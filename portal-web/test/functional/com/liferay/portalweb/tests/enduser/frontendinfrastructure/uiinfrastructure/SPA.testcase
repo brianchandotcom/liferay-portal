@@ -14,13 +14,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Verify loading bar can be visible during new location based SPA load event"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test NewURLLoadEventCanDisplayLoadingBar {
 		property portal.acceptance = "true";

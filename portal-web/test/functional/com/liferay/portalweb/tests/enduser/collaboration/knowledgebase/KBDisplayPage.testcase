@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This test ensures that the Max Nesting settings can be configured in the KB navigation fragment for a display page."
-	@priority = "5"
+	@priority = 5
 	test CanUpdateMaxNestingForArticleNavigation {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -60,7 +60,7 @@ definition {
 			collectionName = "Menu Display",
 			fragmentName = "Knowledge Base Navigation");
 
-		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = "2");
+		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = 2);
 
 		PageEditor.publish();
 
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "This test ensures that when viewing a KB article in the navigation fragment, the corresponding KB article content is displayed in another fragment that selects to display KB content."
-	@priority = "5"
+	@priority = 5
 	test CanViewArticlesViaKBNavigation {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -140,7 +140,7 @@ definition {
 				assetType = "Knowledge Base",
 				entryTitle = "KB Parent Article",
 				groupName = "Guest",
-				kbChildArticleTitle = "${kbChildArticleTitle}",
+				kbChildArticleTitle = ${kbChildArticleTitle},
 				pageName = "Display Page Template Name",
 				siteURLKey = "guest");
 		}
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "This test ensures that a KB article is displayed with the default template when accessing the KB display page URL."
-	@priority = "4"
+	@priority = 4
 	test CanViewArticleWithDefaultTemplate {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-166627. It ensures that child article can be viewed after setting nesting level with minimum."
-	@priority = "4"
+	@priority = 4
 	test CanViewChildArticleAfterSettingNestingLevelWithMinimum {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -230,7 +230,7 @@ definition {
 			collectionName = "Menu Display",
 			fragmentName = "Knowledge Base Navigation");
 
-		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = "1");
+		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = 1);
 
 		PageEditor.publish();
 

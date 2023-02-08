@@ -21,7 +21,7 @@ definition {
 	}
 
 	@description = "Verify a default shipping option can be set, edited, and removed for an account."
-	@priority = "3"
+	@priority = 3
 	test AddEditAndRemoveNewDefaultShippingOption {
 		property portal.acceptance = "true";
 
@@ -116,7 +116,7 @@ definition {
 
 		task ("And the Active column becomes empty") {
 			AssertTextEquals(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_productName = "Minium Portal",
 				key_value = "",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "This is a test for the ticket COMMERCE-9130 | When selecting an account's Default Shipping Option, assert ineligible Shipping Options are not selectable"
-	@priority = "3"
+	@priority = 3
 	test CanAssertIneligibleShippingOptionsNotSelectable {
 		property portal.acceptance = "false";
 
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "Verify that not eligible default shipping method cannot be selected into the checkout."
-	@priority = "3"
+	@priority = 3
 	test CheckIfNotEligibleDefaultShippingMethodIntoTheCheckoutCanNotBeSelected {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -255,9 +255,9 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Shipping Option Settings");
 
 			CommerceEntry.addShippingOptionSettingsVariableRate(
-				fixedPrice = "100",
+				fixedPrice = 100,
 				shippingOption = "Test Shipping Option",
-				weightTo = "100");
+				weightTo = 100);
 
 			Alert.viewSuccessMessage();
 		}
@@ -272,7 +272,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@description = "Verify only one default account shipping option can be set."
-	@priority = "3"
+	@priority = 3
 	test DefaultShippingOptionsAreSingleSelectable {
 		property portal.acceptance = "false";
 
@@ -344,7 +344,7 @@ definition {
 	}
 
 	@description = "Verify the Active column for the default account shipping option displays 'Yes' if the default shipping option is active and 'No' if it is innactive."
-	@priority = "3"
+	@priority = 3
 	test MakeADefaultShippingOptionActiveAndInactive {
 		property portal.acceptance = "false";
 
@@ -372,19 +372,19 @@ definition {
 
 		task ("Then the the status of the Active column for Minium Portal is No") {
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Minium Portal",
 				key_value = "Flat Rate",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 			AssertElementPresent(
-				key_columnNumber = "2",
+				key_columnNumber = 2,
 				key_productName = "Minium Portal",
 				key_value = "Expedited Delivery",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 			AssertElementPresent(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_productName = "Minium Portal",
 				key_value = "No",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@description = "Verify the default account shipping option reverts to Use Priority Settings if the current default account shipping option is deleted."
-	@priority = "3"
+	@priority = 3
 	test RemoveAShippingOptionThatIsLinkedAsDefault {
 		property portal.acceptance = "false";
 
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@description = "Verify the eligible shipping option with the highest priority is used at checkout if the default shipping option is not linked to the order type of the order."
-	@priority = "3"
+	@priority = 3
 	test UseANotEligibleDefaultShippingOptionIntoTheCheckoutWithOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -504,16 +504,16 @@ definition {
 			CommerceChannels.addShippingOption(
 				key = "test-shipping-option",
 				name = "Test Shipping Option",
-				priority = "3");
+				priority = 3);
 		}
 
 		task ("And given the Sales Manager edits the priority for Standard Delivery to 1 and Expedited Delivery to 2") {
 			CommerceChannels.editShippingOption(
-				priority = "1",
+				priority = 1,
 				shippingOption = "Standard Delivery");
 
 			CommerceChannels.editShippingOption(
-				priority = "2",
+				priority = 2,
 				shippingOption = "Expedited Delivery");
 		}
 
@@ -556,7 +556,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -571,14 +571,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				notEligibleShippingMethods = "Expedited Delivery",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Test Shipping Option");
 		}
 	}
 
 	@description = "Verify the default account shipping option is pre-selected at checkout."
-	@priority = "3"
+	@priority = 3
 	test UseDefaultShippingOptionIntoTheCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -606,11 +606,11 @@ definition {
 			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
 
 			CommerceChannels.editShippingOption(
-				priority = "1",
+				priority = 1,
 				shippingOption = "Standard Delivery");
 
 			CommerceChannels.editShippingOption(
-				priority = "2",
+				priority = 2,
 				shippingOption = "Expedited Delivery");
 		}
 
@@ -632,7 +632,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -646,14 +646,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify the list of selectable default shipping options is sorted alphanumerically by name and that Use Priority Settings is an option."
-	@priority = "3"
+	@priority = 3
 	test VerifyIfDefaultShippingOptionsAreSortedAndIfUsePrioritySettingArePresentIntoTheList {
 		property portal.acceptance = "false";
 
@@ -685,12 +685,12 @@ definition {
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			AssertTextEquals(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "Radio#LABEL_NUMBER",
 				value1 = "Flat Rate / Expedited Delivery");
 
 			AssertElementPresent(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "Radio#LABEL_NUMBER",
 				value1 = "Flat Rate / Standard Delivery");
 		}

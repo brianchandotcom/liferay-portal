@@ -18,7 +18,7 @@ definition {
 			layoutName = "Media Gallery Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Media Gallery Page",
 			widgetName = "Media Gallery");
@@ -31,7 +31,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddDocumentInFolder {
 		JSONFolder.addFolder(
@@ -65,7 +65,7 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddMGWidgetTemplate {
 		JSONFolder.addFolder(
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddMultipleFolders {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
@@ -127,7 +127,7 @@ definition {
 		DMFolder.viewPGViaMG(mgFolderName = "DM Folder2 Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteDocument {
 		property portal.acceptance = "true";
@@ -144,7 +144,7 @@ definition {
 		DMDocument.deletePGViaMG(mgDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditDocument {
 		JSONDocument.addFileWithUploadedFile(
@@ -163,7 +163,7 @@ definition {
 			mgDocumentTitleEdit = "DM Document Title Edit");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditSubfolder {
 		JSONFolder.addFolder(
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This test ensures that the restricted file extension cannot be uploaded via Media Gallery."
-	@priority = "3"
+	@priority = 3
 	test CanLimitUploadedFileExtension {
 		property test.name.skip.portal.instance = "DMMediaGallery#CanLimitUploadedFileExtension";
 
@@ -225,7 +225,7 @@ definition {
 		DMDocument.viewNoFilesViaMG(mgDocumentTitle = "Document_1.jpeg");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentInFolder {
 		JSONFolder.addFolder(
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-153892. It ensures that the external video shortcuts can be rendered."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoShortcut {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This test ensures that a users can view file after configuring a new root folder."
-	@priority = "3"
+	@priority = 3
 	test CanViewFileAfterConfiguringRootFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -311,7 +311,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in MG widget can be rendered correctly after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageViaMGAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-107521. It ensures that the SVG file can be viewed."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSVGImage {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
@@ -355,7 +355,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-89361. It ensures that video can be played via media gallery."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewVideoViaMediaGallery {
 		property test.assert.warning.exceptions = "false";
@@ -381,7 +381,7 @@ definition {
 			mgVideoPreview = "true");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test DocumentWillNotAppearIfSearchQueryIsIrrelevant {
 		JSONDocument.addFileWithUploadedFile(

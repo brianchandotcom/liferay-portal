@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166207. The site designer could add a page template set during convert to page template when the site doesn't have a page template set."
-	@priority = "5"
+	@priority = 5
 	test AddFirstPageTemplateSetWhenCreatePageTemplate {
 		property portal.acceptance = "true";
 
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166207. The site designer could save in a new set during convert to page template when the site has page template sets."
-	@priority = "5"
+	@priority = 5
 	test AddNewPageTemplateSetWhenCreatePageTemplate {
 		property portal.acceptance = "true";
 
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The created page template from content page will be auto renamed when site designer creates the second one in the same collection."
-	@priority = "4"
+	@priority = 4
 	test AutoRenamePageTemplateCreatedFromContentPageInTheSameCollection {
 		task ("Given a site designer creates a content page template from the content page") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -179,13 +179,13 @@ definition {
 				value1 = "See in Page Templates");
 
 			for (var pageTemplateName : list "Test Page Name - Page Template 2,Test Page Name - Page Template") {
-				PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
+				PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-140483 and LPS-166207. The site admin could create page template from a content page with elements."
-	@priority = "5"
+	@priority = 5
 	test CreatePageTemplateFromContentPage {
 		property portal.acceptance = "true";
 
@@ -240,13 +240,13 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
 
 			for (var elementName : list "Heading,Asset Publisher") {
-				PageEditor.viewFragment(fragmentName = "${elementName}");
+				PageEditor.viewFragment(fragmentName = ${elementName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on content page template."
-	@priority = "5"
+	@priority = 5
 	test CreatePageTemplateFromContentPageBasedOnContentPageTemplate {
 		property portal.acceptance = "true";
 
@@ -309,13 +309,13 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
 
 			for (var fragmentName : list "Heading,Button") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragment(fragmentName = ${fragmentName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on master page."
-	@priority = "5"
+	@priority = 5
 	test CreatePageTemplateFromContentPageBasedOnMasterPage {
 		property portal.acceptance = "true";
 
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on style book."
-	@priority = "5"
+	@priority = 5
 	test CreatePageTemplateFromContentPageBasedOnStyleBook {
 		property portal.acceptance = "true";
 
@@ -469,7 +469,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
 				value1 = "times");
@@ -487,7 +487,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from an empty content page."
-	@priority = "4"
+	@priority = 4
 	test CreatePageTemplateFromEmptyContentPage {
 		task ("Create a content page template from the empty content page under page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -522,7 +522,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "1",
+				index = 1,
 				pageName = "Test Page Name",
 				status = "Draft");
 		}

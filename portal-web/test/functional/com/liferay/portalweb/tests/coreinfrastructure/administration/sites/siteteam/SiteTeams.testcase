@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "Able to add site team."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddSiteTeam {
 		property testray.component.names = "Site Administration";
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Able to assign user to site team."
-	@priority = "4"
+	@priority = 4
 	test AddSiteTeamAssignUser {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "Able to assign user to user group."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddSiteTeamAssignUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "Able to add multiple site teams."
-	@priority = "5"
+	@priority = 5
 	test AddSiteTeamMultiple {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration";
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "Able to remove user after assigning to site team."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddSiteTeamRemoveUser {
 		property portal.acceptance = "true";
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "Able to remove user group after assigning to site team."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddSiteTeamRemoveUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "Able to find user group in site team."
-	@priority = "4"
+	@priority = 4
 	test AddSiteTeamSearchUserGroups {
 		property testray.component.names = "Site Administration,User Groups";
 
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "Able to find user in site team."
-	@priority = "5"
+	@priority = 5
 	test AddSiteTeamSearchUsers {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -408,20 +408,20 @@ definition {
 			for (var searchTerm : list "userfn1,userln1,usersn1") {
 				Team.searchCP(
 					membershipType = "User",
-					searchTerm = "${searchTerm}");
+					searchTerm = ${searchTerm});
 			}
 
 			for (var searchTerm : list "userfn2,userln2,usersn2") {
 				Team.searchCP(
 					isEmpty = "true",
 					membershipType = "User",
-					searchTerm = "${searchTerm}");
+					searchTerm = ${searchTerm});
 			}
 		}
 	}
 
 	@description = "Able to delete site team."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteSiteTeam {
 		property portal.acceptance = "true";
@@ -445,7 +445,7 @@ definition {
 	}
 
 	@description = "Able to edit site team."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSiteTeam {
 		property portal.acceptance = "true";
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "Check site teams permissions to see it is able to view page."
-	@priority = "4"
+	@priority = 4
 	test SiteTeamsPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Permissions,Site Administration";
@@ -567,7 +567,7 @@ definition {
 
 			for (var permissionsInLineUncheckListsCount : list "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX") {
 				Role.removePermissionPG(
-					permissionDefinitionKey = "${permissionsInLineUncheckListsCount}",
+					permissionDefinitionKey = ${permissionsInLineUncheckListsCount},
 					roleTitle = "Site Member");
 			}
 		}
@@ -583,7 +583,7 @@ definition {
 
 			for (var permissionsInLineCheckListsCount : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
 				Team.definePermissionPG(
-					permissionDefinitionKey = "${permissionsInLineCheckListsCount}",
+					permissionDefinitionKey = ${permissionsInLineCheckListsCount},
 					teamName = "Site Team Name");
 			}
 		}
@@ -602,7 +602,7 @@ definition {
 			for (var portletName : list "SearchBar,Suggestions,SiteFacet,TypeFacet,TagFacet,CategoryFacet,FolderFacet,UserFacet,ModifiedFacet,SearchResults,SearchOptions") {
 				AssertVisible(
 					key_decorator = "barebone",
-					key_portletTitleName = "${portletName}",
+					key_portletTitleName = ${portletName},
 					locator1 = "Portlet#SPECIFIC_PORTLET_BORDER_DECORATOR");
 			}
 		}
@@ -627,7 +627,7 @@ definition {
 	}
 
 	@description = "Add site team name with XSS."
-	@priority = "4"
+	@priority = 4
 	test SiteTeamsXSS {
 		property testray.component.names = "Site Administration,XSS";
 
@@ -657,9 +657,9 @@ definition {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 

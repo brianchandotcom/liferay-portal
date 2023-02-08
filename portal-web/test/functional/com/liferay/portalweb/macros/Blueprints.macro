@@ -9,14 +9,14 @@ definition {
 
 		Type.sendKeysApplicationSearch(
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_BAR",
-			value1 = "${element}");
+			value1 = ${element});
 
 		MouseOver(
-			element = "${element}",
+			element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_NAME");
 
 		Click.clickNoMouseOverNoWaitForVisible(
-			element = "${element}",
+			element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON");
 	}
 
@@ -34,7 +34,7 @@ definition {
 		Button.clickSelect();
 
 		Click(
-			blueprintTitle = "${blueprintTitle}",
+			blueprintTitle = ${blueprintTitle},
 			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
 
 		SelectFrameTop();
@@ -54,13 +54,13 @@ definition {
 
 	macro configureElementDropdown {
 		Click(
-			dropdownName = "${dropdownName}",
+			dropdownName = ${dropdownName},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN");
 
 		Click.clickNoMouseOver(
-			dropdownName = "${dropdownName}",
+			dropdownName = ${dropdownName},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION",
-			option = "${option}");
+			option = ${option});
 	}
 
 	macro configureFederatedSearchKeyForOptionsWidget {
@@ -73,7 +73,7 @@ definition {
 		Type(
 			key_fieldLabel = "Federated Search Key",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${federatedSearchKey}");
+			value1 = ${federatedSearchKey});
 
 		Button.clickSave();
 
@@ -85,10 +85,10 @@ definition {
 	macro createBlueprint {
 		Click(locator1 = "Button#PLUS");
 
-		PortletEntry.inputTitle(title = "${title}");
+		PortletEntry.inputTitle(title = ${title});
 
 		if (isSet(description)) {
-			PortletEntry.inputDescription(description = "${description}");
+			PortletEntry.inputDescription(description = ${description});
 		}
 
 		PortletEntry.create();
@@ -99,14 +99,14 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		PortletEntry.inputTitle(title = "${title}");
+		PortletEntry.inputTitle(title = ${title});
 
 		Button.click(button = "Create");
 
 		if (isSet(elementSourceJson)) {
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-				value1 = "${elementSourceJson}");
+				value1 = ${elementSourceJson});
 		}
 
 		PortletEntry.save();
@@ -115,7 +115,7 @@ definition {
 	macro deleteEntry {
 		Blueprints.gotoEntryMenuItem(
 			menuItem = "Delete",
-			title = "${title}");
+			title = ${title});
 
 		Confirm();
 
@@ -123,7 +123,7 @@ definition {
 	}
 
 	macro getBlueprintID {
-		Variables.assertDefined(parameterList = "${title}");
+		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -133,15 +133,15 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var blueprintId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${title}')]['id']");
+		var blueprintId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");
 
 		echo("## ID for Blueprint ${title}: ${blueprintId}");
 
-		return "${blueprintId}";
+		return ${blueprintId};
 	}
 
 	macro getElementID {
-		Variables.assertDefined(parameterList = "${title}");
+		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -151,39 +151,39 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var elementId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${title}')]['id']");
+		var elementId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");
 
 		echo("## ID for Element ${title}: ${elementId}");
 
-		return "${elementId}";
+		return ${elementId};
 	}
 
 	macro gotoBlueprint {
-		Blueprints.gotoEntry(title = "${title}");
+		Blueprints.gotoEntry(title = ${title});
 	}
 
 	macro gotoElement {
 		Navigator.gotoNavItem(navItem = "Elements");
 
-		if ("${searchForElement}" == "true") {
-			Search.searchCP(searchTerm = "${element}");
+		if (${searchForElement} == "true") {
+			Search.searchCP(searchTerm = ${element});
 		}
 
-		Blueprints.gotoEntry(title = "${element}");
+		Blueprints.gotoEntry(title = ${element});
 	}
 
 	macro gotoEntry {
 		Click(
-			entryTitle = "${title}",
+			entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro gotoEntryMenuItem {
 		if (IsElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DROPDOWN_MENU_OPEN")) {
-			Blueprints.openEntryMenu(title = "${title}");
+			Blueprints.openEntryMenu(title = ${title});
 		}
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro openBlueprintsAdmin {
@@ -201,7 +201,7 @@ definition {
 
 	macro openEntryMenu {
 		Click.waitForMenuToggleJSClick(
-			entryTitle = "${title}",
+			entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS");
 	}
 
@@ -217,23 +217,23 @@ definition {
 
 			Type(
 				locator1 = "TextInput#KEY",
-				value1 = "${attributesKey}");
+				value1 = ${attributesKey});
 
 			Type(
 				key_fieldLabel = "Value",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${attributesValue}");
+				value1 = ${attributesValue});
 
 			Button.clickDone();
 		}
 
 		Type(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_BAR",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		var browserType = PropsUtil.get("browser.type");
 
-		if ("${browserType}" == "safari") {
+		if (${browserType} == "safari") {
 			Click(locator1 = "Icon#BASIC_SEARCH");
 		}
 		else {
@@ -247,28 +247,28 @@ definition {
 
 	macro selectAddedElementMenuItem {
 		Click(
-			element = "${element}",
+			element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_VERTICAL_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro setTitleAndDescriptionLocalization {
 		Click(
-			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
+			key_currentLocale = StringUtil.lowerCase(${currentLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 
 		AssertVisible(
-			key_currentLocale = StringUtil.lowerCase("${locale}"),
+			key_currentLocale = StringUtil.lowerCase(${locale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
-		PortletEntry.inputTitle(title = "${title}");
+		PortletEntry.inputTitle(title = ${title});
 
-		PortletEntry.inputDescription(description = "${description}");
+		PortletEntry.inputDescription(description = ${description});
 	}
 
 	macro viewDownloadedContent {
@@ -276,7 +276,7 @@ definition {
 
 		var fileContent = FileUtil.read("${tempDir}/${fileName}");
 
-		if (contains("${fileContent}", "${text}")) {
+		if (contains(${fileContent}, ${text})) {
 			echo("File ${fileName} contains text ${text}");
 		}
 		else {
@@ -285,50 +285,50 @@ definition {
 	}
 
 	macro viewEntriesSpecificOrder {
-		var entryOrder = "0";
+		var entryOrder = 0;
 
-		for (var entryTitle : list "${entryList}") {
+		for (var entryTitle : list ${entryList}) {
 			var entryOrder = ${entryOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER",
-				rowNumber = "${entryOrder}",
-				value1 = "${entryTitle}");
+				rowNumber = ${entryOrder},
+				value1 = ${entryTitle});
 		}
 	}
 
 	macro viewEntryTitle {
 		AssertElementPresent(
-			entryTitle = "${title}",
+			entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro viewNoEntry {
 		AssertElementNotPresent(
-			entryTitle = "${title}",
+			entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro viewTitleAndDescriptionLocalization {
 		Click(
-			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
+			key_currentLocale = StringUtil.lowerCase(${currentLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
 		AssertElementPresent(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Blueprints#LANGUAGE_TRANSLATED_LABEL");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 
 		AssertElementPresent(
 			locator1 = "TextInput#TITLE",
-			value1 = "${title}");
+			value1 = ${title});
 
 		AssertElementPresent(
 			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 }

@@ -14,14 +14,14 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 
 		JSONDepot.deleteDepot(depotName = "Test Depot Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
@@ -32,28 +32,28 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When with curl I request getDocument with fields=id") {
 			var response = DocumentAPI.getDocumentsByDifferentParameters(
-				documentId = "${documentId}",
+				documentId = ${documentId},
 				parameter = "fields",
 				parameterValue = "id");
 		}
 
 		task ("Then in a response I received an id value only") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "{id=${documentId}}");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveTitleFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
@@ -64,23 +64,23 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When with curl I request getDocument with restrictFields equal all fields except title field") {
 			var response = DocumentAPI.getDocumentsByDifferentParameters(
-				documentId = "${documentId}",
+				documentId = ${documentId},
 				parameter = "restrictFields",
 				parameterValue = "actions,adaptedImages,assetLibraryKey,contentUrl,creator,customFields,dateCreated,dateModified,description,documentFolderId,documentType,encodingFormat,externalReferenceCode,fileExtension,id,keywords,numberOfComments,relatedContents,renderedContents,siteId,sizeInBytes,taxonomyCategoryBriefs");
 		}
 
 		task ("Then in a response I receive a body with title field values only") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "{title=Document_1.txt}");
 		}
 	}

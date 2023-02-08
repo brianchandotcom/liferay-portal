@@ -25,14 +25,14 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8673 | Test Summary: Account contact information matches Salesforce info"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AccountContactInformationMatchesSalesforceinfo {
 
 		// TODO LRAC-8673 AccountContactInformationMatchesSalesforceinfo pending implementation

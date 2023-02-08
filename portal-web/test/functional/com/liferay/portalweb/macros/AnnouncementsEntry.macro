@@ -9,13 +9,13 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		KeyPress(
 			locator1 = "CKEditor#BODY",
-			value1 = "${entryContent}");
+			value1 = ${entryContent});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -23,11 +23,11 @@ definition {
 
 		Select(
 			locator1 = "AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT",
-			value1 = "${distributionScope}");
+			value1 = ${distributionScope});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
@@ -36,9 +36,9 @@ definition {
 		task ("Convert 0 and 1 selenium attributes to AM and PM") {
 			var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
 
-			var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
+			var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
 
-			var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
+			var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
 		}
 
 		task ("Add 2 minutes for the future time. If it exceeds 60 then add one hour then reset the minutes.") {
@@ -46,11 +46,11 @@ definition {
 
 			var displayDateMinuteFuture = ${displayDateMinute} + 2;
 
-			if ("${displayDateMinuteFuture}" == "60") {
-				var displayDateMinuteFuture = "00";
+			if (${displayDateMinuteFuture} == 60) {
+				var displayDateMinuteFuture = 00;
 			}
-			else if ("${displayDateMinuteFuture}" == "61") {
-				var displayDateMinuteFuture = "01";
+			else if (${displayDateMinuteFuture} == 61) {
+				var displayDateMinuteFuture = 01;
 			}
 
 			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
@@ -61,15 +61,15 @@ definition {
 		}
 
 		task ("Make sure minutes and hours with single digits have a 0 in front of them.") {
-			var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
+			var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
 
-			if ("${displayDateMinuteFutureLength}" == "1") {
+			if (${displayDateMinuteFutureLength} == 1) {
 				var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 			}
 
-			var displayDateHourLength = StringUtil.length("${displayDateHour}");
+			var displayDateHourLength = StringUtil.length(${displayDateHour});
 
-			if ("${displayDateHourLength}" == "1") {
+			if (${displayDateHourLength} == 1) {
 				var displayDateHour = "0${displayDateHour}";
 			}
 		}
@@ -78,7 +78,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#DISPLAY_DATE_TIME",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		Button.clickSave();
 	}
@@ -92,24 +92,24 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
-		CKEditor.addContent(content = "${entryContent}");
+		CKEditor.addContent(content = ${entryContent});
 
 		Panel.expandPanel(panel = "Configuration");
 
 		Select(
 			locator1 = "AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT",
-			value1 = "${distributionScope}");
+			value1 = ${distributionScope});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 
 		if (isSet(priority)) {
 			Select(
 				locator1 = "Announcements#PRIORITY_SELECT",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
 		if (isSet(expirationDate)) {
@@ -117,7 +117,7 @@ definition {
 
 			Type(
 				locator1 = "TextInput#EXPIRATION_DATE",
-				value1 = "${expirationDate}");
+				value1 = ${expirationDate});
 
 			Button.clickSave();
 		}
@@ -132,9 +132,9 @@ definition {
 
 	macro deletePG {
 		AssertTextEquals(
-			key_entryTitle = "${entryTitle}",
+			key_entryTitle = ${entryTitle},
 			locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		Click.waitForMenuToggleJSClick(locator1 = "Announcements#CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS");
 
@@ -144,21 +144,21 @@ definition {
 	}
 
 	macro editPG {
-		var key_distributionScope = "${distributionScope}";
-		var key_entryTitle = "${entryTitle}";
+		var key_distributionScope = ${distributionScope};
+		var key_entryTitle = ${entryTitle};
 
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_SCOPE",
-			value1 = "${distributionScope}");
+			value1 = ${distributionScope});
 
 		AssertTextEquals(
-			key_entryContent = "${entryContent}",
+			key_entryContent = ${entryContent},
 			locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT",
-			value1 = "${entryContent}");
+			value1 = ${entryContent});
 
 		Click.waitForMenuToggleJSClick(locator1 = "Announcements#CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS");
 
@@ -168,17 +168,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${entryTitleEdit}");
+			value1 = ${entryTitleEdit});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${entryContentEdit}");
+			value1 = ${entryContentEdit});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -186,18 +186,18 @@ definition {
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${entryURLEdit}");
+			value1 = ${entryURLEdit});
 
 		Button.clickSave();
 	}
 
 	macro markAsReadPG {
-		var key_entryContent = "${entryContent}";
+		var key_entryContent = ${entryContent};
 
 		AnnouncementsNavigator.openToEntriesTab(
-			layoutName = "${layoutName}",
-			siteURLKey = "${siteURLKey}",
-			tabName = "${tabName}");
+			layoutName = ${layoutName},
+			siteURLKey = ${siteURLKey},
+			tabName = ${tabName});
 
 		AssertVisible(locator1 = "Announcements#CARD_VIEW_ENTRY_VERTICAL_ELLIPSIS");
 
@@ -227,15 +227,15 @@ definition {
 	}
 
 	macro viewList {
-		var key_entryTitle = "${entryTitle}";
+		var key_entryTitle = ${entryTitle};
 
 		AssertTextEquals(
 			locator1 = "Blogs#ENTRY_TABLE_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		AssertTextEquals(
 			locator1 = "Blogs#ENTRY_TABLE_AUTHOR",
-			value1 = "${distributionScope}");
+			value1 = ${distributionScope});
 	}
 
 	macro viewNoAdmin {
@@ -245,36 +245,36 @@ definition {
 	}
 
 	macro viewNoPG {
-		var key_entryTitle = "${entryTitle}";
+		var key_entryTitle = ${entryTitle};
 
 		AssertTextNotPresent(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 	}
 
 	macro viewPG {
-		var key_distributionScope = "${distributionScope}";
-		var key_entryTitle = "${entryTitle}";
+		var key_distributionScope = ${distributionScope};
+		var key_entryTitle = ${entryTitle};
 
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_SCOPE",
-			value1 = "${distributionScope}");
+			value1 = ${distributionScope});
 
 		if (isSet(priority)) {
 			AssertTextEquals(
 				locator1 = "Announcements#PRIORITY_IMPORTANT",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
-		var key_entryContent = "${entryContent}";
+		var key_entryContent = ${entryContent};
 
 		AssertTextEquals(
 			locator1 = "Announcements#CARD_VIEW_ENTRY_CONTENT",
-			value1 = "${entryContent}");
+			value1 = ${entryContent});
 	}
 
 	macro viewReadPG {
@@ -283,12 +283,12 @@ definition {
 			value1 = "Read");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "${announcementType}",
-			distributionScope = "${distributionScope}",
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}",
-			key_distributionScope = "${distributionScope}",
-			key_entryTitle = "${entryTitle}");
+			announcementType = ${announcementType},
+			distributionScope = ${distributionScope},
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle},
+			key_distributionScope = ${distributionScope},
+			key_entryTitle = ${entryTitle});
 	}
 
 }

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can clear the uploaded image from form by clicking on Clear button."
-	@priority = "4"
+	@priority = 4
 	test ClearUploadedImage {
 		property portal.acceptance = "false";
 
@@ -42,7 +42,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -52,18 +52,18 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureTitle});
 
 		WebContent.addWithStructureCP(
 			imageFileName = "Document Title",
 			navTab = "Documents and Media",
-			structureName = "${structureTitle}",
+			structureName = ${structureTitle},
 			webContentImage = "Document Title",
-			webContentTitle = "${webTitle}");
+			webContentTitle = ${webTitle});
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webTitle});
 
 		AssertClick(
 			key_fieldFieldLabel = "Image",
@@ -72,7 +72,7 @@ definition {
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webTitle});
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Image",
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can add the image field to the builder."
-	@priority = "5"
+	@priority = 5
 	test DragAndDropImageFieldToBuilder {
 		property portal.acceptance = "false";
 
@@ -90,24 +90,24 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}");
+			structureName = ${structureTitle});
 
 		DataEngine.addField(
-			fieldFieldLabel = "${newLabel}",
+			fieldFieldLabel = ${newLabel},
 			fieldName = "Image");
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${newLabel}",
+			key_fieldFieldLabel = ${newLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${newLabel}");
+			value1 = ${newLabel});
 	}
 
 	@description = "This test ensures that a user can duplicate the Image field on the builder."
-	@priority = "4"
+	@priority = 4
 	test DuplicateImageField {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
@@ -134,17 +134,17 @@ definition {
 		for (var n : list "1,2") {
 			DataEngine.assertFieldRepeated(
 				fieldName = "Image",
-				index = "${n}");
+				index = ${n});
 		}
 
 		AssertVisible(
 			key_fieldName = "Image",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
 	@description = "This test aims to verify if label from image field can be translated."
-	@priority = "4"
+	@priority = 4
 	test LocalizationOfImageFieldPersists {
 		property portal.acceptance = "false";
 
@@ -155,39 +155,39 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}");
+			structureName = ${structureTitle});
 
 		DataEngine.addField(
-			fieldFieldLabel = "${fieldLabelEn}",
+			fieldFieldLabel = ${fieldLabelEn},
 			fieldName = "Image");
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		WebContentStructures.addTranslations(localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.addName(structureName = "${structureTitlePt}");
+		WebContentStructures.addName(structureName = ${structureTitlePt});
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "${fieldLabelEn}",
-			label = "${fieldLabelPt}");
+			fieldLabel = ${fieldLabelEn},
+			label = ${fieldLabelPt});
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitlePt}");
+			value1 = ${structureTitlePt});
 	}
 
 	@description = "This test aims to verify if the user is required to define a description for an uploaded image."
-	@priority = "4"
+	@priority = 4
 	test PublishWebContentWithUploadedImageWithoutDescription {
 		var structureTitle = "Image Field Structure";
 		var webContentName = "Web Content";
@@ -197,9 +197,9 @@ definition {
 			dmDocumentTitle = "Document Title",
 			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
-			sourceFileName = "${fileName}");
+			sourceFileName = ${fileName});
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -209,20 +209,20 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureTitle});
 
 		WebContent.addWithStructureCP(
 			imageFileName = "Document Title",
 			navTab = "Documents and Media",
-			structureName = "${structureTitle}",
+			structureName = ${structureTitle},
 			webContentImage = "Document Title",
-			webContentTitle = "${webContentName}");
+			webContentTitle = ${webContentName});
 
 		Button.clickPublish();
 
 		NavItem.gotoStructures();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
 
@@ -230,7 +230,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentName}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentName});
 
 		Button.clickPublish();
 
@@ -244,7 +244,7 @@ definition {
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentName}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentName});
 
 		AssertTextEquals(
 			key_fieldFieldLabel = "Image",
@@ -253,47 +253,47 @@ definition {
 	}
 
 	@description = "This test ensures that a user can define a help text."
-	@priority = "4"
+	@priority = 4
 	test SetHelpTextOfImageField {
 		property portal.acceptance = "false";
 
 		var structureTitle = "My Structure";
 		var newLabel = "Image";
 		var fieldHelp = "Help Text";
-		var key_fieldFieldLabel = "${newLabel}";
+		var key_fieldFieldLabel = ${newLabel};
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}");
+			structureName = ${structureTitle});
 
 		DataEngine.addField(
-			fieldFieldLabel = "${newLabel}",
+			fieldFieldLabel = ${newLabel},
 			fieldName = "Image");
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "${newLabel}",
-			fieldHelp = "${fieldHelp}");
+			fieldFieldLabel = ${newLabel},
+			fieldHelp = ${fieldHelp});
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${newLabel}",
+			key_fieldFieldLabel = ${newLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${newLabel}");
+			value1 = ${newLabel});
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "${fieldHelp}");
+			value1 = ${fieldHelp});
 	}
 
 	@description = "This test aims to verify if user can define a description for the uploaded image."
-	@priority = "4"
+	@priority = 4
 	test SetImageDescriptionOnWebContent {
 		property portal.acceptance = "false";
 
@@ -306,7 +306,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -316,19 +316,19 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureTitle});
 
 		WebContent.addWithStructureCP(
 			imageFileName = "Document Title",
 			navTab = "Documents and Media",
-			structureName = "${structureTitle}",
+			structureName = ${structureTitle},
 			webContentImage = "Document Title",
 			webContentImageDescription = "My description",
-			webContentTitle = "${webTitle}");
+			webContentTitle = ${webTitle});
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webTitle});
 
 		AssertTextEquals(
 			key_fieldFieldLabel = "Image",
@@ -337,11 +337,11 @@ definition {
 	}
 
 	@description = "This test ensures that user can set the image field as repeatable."
-	@priority = "3"
+	@priority = 3
 	test SetImageFieldAsRepeatable {
 		var structureTitle = "Image field Structure";
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -351,13 +351,13 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
 	}
 
 	@description = "This test ensures that user can set the image field label."
-	@priority = "5"
+	@priority = 5
 	test SetLabelOfImageField {
 		property portal.acceptance = "false";
 
@@ -365,35 +365,35 @@ definition {
 		var newFieldLabel = "Text";
 		var fieldLabel = "Image Field";
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
-			fieldFieldLabel = "${fieldLabel}",
+			fieldFieldLabel = ${fieldLabel},
 			fieldName = "Image");
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldLabel}",
+			key_fieldFieldLabel = ${fieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${fieldLabel}",
-			fieldFieldLabelEdit = "${newFieldLabel}");
+			fieldFieldLabel = ${fieldLabel},
+			fieldFieldLabelEdit = ${newFieldLabel});
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${newFieldLabel}",
+			key_fieldFieldLabel = ${newFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This test ensures that a user can upload an image from Liferay Documents and Media."
-	@priority = "5"
+	@priority = 5
 	test UploadImageFromDocumentsAndMedia {
 		property portal.acceptance = "true";
 
@@ -406,7 +406,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -416,20 +416,20 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureTitle});
 
 		WebContent.addWithStructureCP(
 			imageFileName = "Document Title",
 			navTab = "Documents and Media",
-			structureName = "${structureTitle}",
+			structureName = ${structureTitle},
 			webContentImage = "Document Title",
-			webContentTitle = "${webTitle}");
+			webContentTitle = ${webTitle});
 
 		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentImage = "Document Title",
-			webContentTitle = "${webTitle}");
+			webContentTitle = ${webTitle});
 	}
 
 }

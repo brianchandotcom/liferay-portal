@@ -3,9 +3,9 @@ definition {
 	macro changePaginationPermissions {
 		Click(locator1 = "CalendarPermissions#PERMISSIONS_ITEMS_PER_PAGE_SELECT");
 
-		var key_itemsPerPage = "${itemsPerPage}";
+		var key_itemsPerPage = ${itemsPerPage};
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
@@ -33,34 +33,34 @@ definition {
 
 		Type(
 			locator1 = "CalendarPermissions#PERMISSIONS_FIELD_SEARCH",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		Click(locator1 = "CalendarPermissions#PERMISSIONS_SEARCH_ICON");
 	}
 
 	macro viewPermissionsRoleName {
 		AssertTextEquals(
-			key_roleName = "${roleName}",
+			key_roleName = ${roleName},
 			locator1 = "CalendarPermissions#PERMISSIONS_ROLE_NAME",
-			value1 = "${key_roleName}");
+			value1 = ${key_roleName});
 	}
 
 	macro viewResultsEntries {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#RESULTS_ENTRIES",
-			value1 = "${results}");
+			value1 = ${results});
 	}
 
 	macro viewSearchResult {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR",
-			value1 = "${searchResults}");
+			value1 = ${searchResults});
 	}
 
 	macro viewTableDisplay {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#NO_ROLES_WERE_FOUND",
-			value1 = "${message}");
+			value1 = ${message});
 	}
 
 }

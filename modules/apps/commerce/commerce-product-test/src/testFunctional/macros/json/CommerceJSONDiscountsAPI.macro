@@ -3,7 +3,7 @@ definition {
 	macro _addDiscount {
 		Variables.assertDefined(parameterList = "${active},${level},${target},${title},${usePercentage}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -14,30 +14,30 @@ definition {
 		}
 
 		if (!(isSet(maximumDiscountAmount))) {
-			var maximumDiscountAmount = "0";
+			var maximumDiscountAmount = 0;
 		}
 
 		if (!(isSet(percentageLevel1))) {
-			var percentageLevel1 = "0";
+			var percentageLevel1 = 0;
 		}
 
 		if (!(isSet(percentageLevel2))) {
-			var percentageLevel2 = "0";
+			var percentageLevel2 = 0;
 		}
 
 		if (!(isSet(percentageLevel3))) {
-			var percentageLevel3 = "0";
+			var percentageLevel3 = 0;
 		}
 
 		if (!(isSet(percentageLevel4))) {
-			var percentageLevel4 = "0";
+			var percentageLevel4 = 0;
 		}
 
 		if (!(isSet(useCouponCode))) {
 			var useCouponCode = "false";
 		}
 
-		if ("${useCouponCode}" == "false") {
+		if (${useCouponCode} == "false") {
 			var couponCode = "";
 		}
 		else {
@@ -69,20 +69,20 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addDiscountAccount {
 		Variables.assertDefined(parameterList = "${discountTitle},${accountEntryName}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = "${discountTitle}");
-		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-accounts \
@@ -94,20 +94,20 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addDiscountAccountGroup {
 		Variables.assertDefined(parameterList = "${accountGroupName},${discountTitle}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = "${discountTitle}");
-		var accountGroupId = CommerceJSONAccountGroupsAPI._getAccountGroupId(accountGroupName = "${accountGroupName}");
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		var accountGroupId = CommerceJSONAccountGroupsAPI._getAccountGroupId(accountGroupName = ${accountGroupName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-account-groups \
@@ -119,20 +119,20 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addDiscountProduct {
 		Variables.assertDefined(parameterList = "${discountTitle},${productName}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = "${discountTitle}");
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId}/discount-products \
@@ -144,11 +144,11 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteAllCommerceDiscounts {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -156,10 +156,10 @@ definition {
 
 		var discountsCount = CommerceJSONDiscountsAPI._getCommerceDiscountsCount();
 
-		if ("${discountsCount}" != "0") {
-			var discountIds = CommerceJSONDiscountsAPI._getCommerceDiscountIds(discountCount = "${discountsCount}");
+		if (${discountsCount} != 0) {
+			var discountIds = CommerceJSONDiscountsAPI._getCommerceDiscountIds(discountCount = ${discountsCount});
 
-			for (var discountId : list "${discountIds}") {
+			for (var discountId : list ${discountIds}) {
 				echo("Deleting Commerce discount with id: ${discountId}");
 
 				var curl = '''
@@ -168,7 +168,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -177,17 +177,17 @@ definition {
 	}
 
 	macro _getCommerceDiscountIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(discountCount)) {
-			var discountsCount = "${discountCount}";
+			var discountsCount = ${discountCount};
 		}
 		else {
-			var discountsCount = "100";
+			var discountsCount = 100;
 		}
 
 		var curl = '''
@@ -196,13 +196,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var discountIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var discountIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		return "${discountIds}";
+		return ${discountIds};
 	}
 
 	macro _getCommerceDiscountsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -214,27 +214,27 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var discountsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var discountsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The Commerce discounts count is: ${discountsCount}");
 
-		return "${discountsCount}";
+		return ${discountsCount};
 	}
 
 	macro _getDiscountId {
-		Variables.assertDefined(parameterList = "${discountTitle}");
+		Variables.assertDefined(parameterList = ${discountTitle});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(discountCount)) {
-			var discountCount = "${discountCount}";
+			var discountCount = ${discountCount};
 		}
 		else {
-			var discountCount = "100";
+			var discountCount = 100;
 		}
 
 		var curl = '''
@@ -243,9 +243,9 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var discountId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${discountTitle}')].['id']");
+		var discountId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${discountTitle}')].['id']");
 
-		return "${discountId}";
+		return ${discountId};
 	}
 
 }

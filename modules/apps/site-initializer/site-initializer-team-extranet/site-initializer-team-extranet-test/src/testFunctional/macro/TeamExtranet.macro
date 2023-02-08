@@ -5,16 +5,16 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
-		if ("${singleSiteTypePermission}" != "true") {
+		if (${singleSiteTypePermission} != "true") {
 			if (!(isSet(siteTemplateName))) {
 				var siteTemplateName = "${siteType} Site";
 			}
 
-			LexiconCard.clickCard(card = "${siteTemplateName}");
+			LexiconCard.clickCard(card = ${siteTemplateName});
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			PortletEntry.inputName(name = "${siteName}");
+			PortletEntry.inputName(name = ${siteName});
 
 			Button.clickAdd();
 
@@ -25,11 +25,11 @@ definition {
 
 				LexiconEntry.gotoAdd();
 
-				LexiconCard.clickCard(card = "${siteTemplateName}");
+				LexiconCard.clickCard(card = ${siteTemplateName});
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-				PortletEntry.inputName(name = "${siteName}");
+				PortletEntry.inputName(name = ${siteName});
 
 				Button.clickAdd();
 			}
@@ -39,8 +39,8 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		if ("${siteType}" == "Site Template") {
-			if ("${uncheckPropagation}" == "true") {
+		if (${siteType} == "Site Template") {
+			if (${uncheckPropagation} == "true") {
 				Click(
 					key_itemName = "Pages",
 					locator1 = "ListGroupItem#ITEM_TEXT");
@@ -67,12 +67,12 @@ definition {
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
-		if ("${membershipType}" == "Private") {
+		if (${membershipType} == "Private") {
 			Select(
 				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
 				value1 = "Private");
 		}
-		else if ("${membershipType}" == "Restricted") {
+		else if (${membershipType} == "Restricted") {
 			Select(
 				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
 				value1 = "Restricted");
@@ -91,21 +91,21 @@ definition {
 				key_text = "Change",
 				locator1 = "Button#ANY_WITH_LABEL");
 
-			var key_parentSiteName = "${parentSiteName}";
+			var key_parentSiteName = ${parentSiteName};
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Search.searchCP(searchTerm = "${parentSiteName}");
+			Search.searchCP(searchTerm = ${parentSiteName});
 
-			var key_site = "${parentSiteName}";
+			var key_site = ${parentSiteName};
 
 			AssertTextEquals(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "${parentSiteName}");
+				value1 = ${parentSiteName});
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK");
 
-			var key_parentSiteName = "${parentSiteName}";
+			var key_parentSiteName = ${parentSiteName};
 
 			SelectFrameTop();
 		}
@@ -116,26 +116,26 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "${siteName}");
+			value1 = ${siteName});
 	}
 
 	macro addSiteTemplateCP {
 		TeamExtranet.addCP(
-			membershipType = "${membershipType}",
-			parentSiteName = "${parentSiteName}",
-			siteName = "${siteName}",
-			siteTemplateName = "${siteTemplateName}",
+			membershipType = ${membershipType},
+			parentSiteName = ${parentSiteName},
+			siteName = ${siteName},
+			siteTemplateName = ${siteTemplateName},
 			siteType = "Site Template",
-			uncheckPropagation = "${uncheckPropagation}");
+			uncheckPropagation = ${uncheckPropagation});
 	}
 
 	macro editFragmentImage {
 		Click(
-			key_imageName = "${id}",
+			key_imageName = ${id},
 			locator1 = "TeamExtranet#BACKGROUND_IMAGE");
 
 		Click(
-			key_documentTitle = "${container}",
+			key_documentTitle = ${container},
 			locator1 = "OneDrive#FILES_CHECKBOX");
 
 		Navigator.gotoNavTab(navTab = "Image Source");
@@ -167,12 +167,12 @@ definition {
 
 		if (isSet(imageFileName)) {
 			ItemSelector.selectDMImage(
-				imageFileName = "${imageFileName}",
+				imageFileName = ${imageFileName},
 				navTab = "Documents and Media");
 		}
 		else if (isSet(imageSourceURL)) {
 			ItemSelector.addImageFromURL(
-				imageSourceURL = "${imageSourceURL}",
+				imageSourceURL = ${imageSourceURL},
 				navTab = "URL");
 		}
 		else {
@@ -182,7 +182,7 @@ definition {
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
-				value1 = "${fileName}");
+				value1 = ${fileName});
 
 			Button.clickAdd();
 		}
@@ -191,7 +191,7 @@ definition {
 			Type(
 				key_text = "Image Description",
 				locator1 = "TextInput#ANY",
-				value1 = "${imageDescription}");
+				value1 = ${imageDescription});
 
 			Click(
 				key_sidebarButton = "Browser",
@@ -202,7 +202,7 @@ definition {
 			AssertTextEquals(
 				key_text = "Image Description",
 				locator1 = "TextInput#ANY",
-				value1 = "${imageDescription}");
+				value1 = ${imageDescription});
 		}
 	}
 

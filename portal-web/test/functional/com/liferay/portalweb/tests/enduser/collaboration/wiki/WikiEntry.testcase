@@ -15,7 +15,7 @@ definition {
 			layoutName = "Wiki Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Wiki");
@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136983. It checks that an external link can be accessed from a wiki page."
-	@priority = "3"
+	@priority = 3
 	test CanAccessExternalLink {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136987. It checks that related assets can be added to a page."
-	@priority = "3"
+	@priority = 3
 	test CanAddRelatedAssets {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136985. It checks that a summary can be added to a page."
-	@priority = "3"
+	@priority = 3
 	test CanAddSummary {
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
@@ -123,7 +123,7 @@ definition {
 				layoutURLKey = "wiki-test-page",
 				siteURLKey = "guest",
 				wikiNodeName = "Main",
-				wikiPageTitle = "${wikiPageTitle}");
+				wikiPageTitle = ${wikiPageTitle});
 
 			WikiEntry.addPageSummary(wikiPageSummary = "${wikiPageTitle} Summary");
 
@@ -131,17 +131,17 @@ definition {
 				layoutURLKey = "wiki-test-page",
 				siteURLKey = "guest",
 				wikiNodeName = "Main",
-				wikiPageTitle = "${wikiPageTitle}");
+				wikiPageTitle = ${wikiPageTitle});
 
 			WikiPage.viewSummary(
 				wikiPageRevision = "1.1",
-				wikiPageTitle = "${wikiPageTitle}",
+				wikiPageTitle = ${wikiPageTitle},
 				wikiVersionSummary = "${wikiPageTitle} Summary");
 		}
 	}
 
 	@description = "This is a test for LPS-136988. It checks that a table of contents can be added to a page."
-	@priority = "3"
+	@priority = 3
 	test CanAddTableOfContents {
 		WikiNavigator.openToAddPage(
 			groupName = "Guest",
@@ -168,7 +168,7 @@ definition {
 
 	@description = "This is a test for LPS-136995. It checks that page versions can be compared."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanComparePageVersions {
 		property portal.acceptance = "false";
 
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136996. It checks that a minor change can be created for a page."
-	@priority = "3"
+	@priority = 3
 	test CanCreateMinorChange {
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136989. It checks that pages can be imported into a specific node."
-	@priority = "3"
+	@priority = 3
 	test CanImportPagesIntoSpecificNode {
 		JSONWiki.addWikiNode(
 			groupName = "Guest",
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This ensures that the script can be escaped."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewEscapedScriptFromHTML {
 		property portal.acceptance = "false";
@@ -250,13 +250,13 @@ definition {
 		var actualScript = '''<script>alert(123);</script>''';
 		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+		AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 	}
 
 	@description = "This is a test for LPS-136984. It checks that Javascript will not be excuted from the page title."
-	@priority = "3"
+	@priority = 3
 	test TitleWillNotExecuteXSS {
 		WikiPage.addPG(
 			groupName = "Guest",

@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Categories for This Item into another Collection Display with a dynamic collection."
-	@priority = "5"
+	@priority = 5
 	test AddCollectionDisplayWithCategoriesForThisItemToAnotherCollectionDisplayWithDynamicCollection {
 		property portal.acceptance = "true";
 
@@ -63,7 +63,7 @@ definition {
 
 		task ("Add a web content with the first category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${firstCategoryId}",
+				assetCategoryIds = ${firstCategoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -105,14 +105,14 @@ definition {
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
@@ -120,7 +120,7 @@ definition {
 		task ("Select the dynamic collection in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display");
 		}
 
@@ -141,7 +141,7 @@ definition {
 		task ("Add a Collection Display to the second module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
@@ -149,7 +149,7 @@ definition {
 		task ("Select the dynamic collection in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display");
 		}
 
@@ -163,7 +163,7 @@ definition {
 		task ("Select the Categories for This Item in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "3",
+				index = 3,
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
 
@@ -182,55 +182,55 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 		}
 
 		task ("View the name of associated categories are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Category Name 1,Category Name 2,Category Name 3") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "1",
+					key_rowPosition = 1,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Category Name 1,Category Name 2") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "2",
+					key_rowPosition = 2,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 
 			AssertTextEquals(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//div[contains(@class,'row')]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
+				key_rowPosition = 3,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
 				value1 = "Category Name 1");
 
@@ -244,28 +244,28 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
 		}
 
 		task ("View the name of associated categories are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Category Name 1,Category Name 2,Category Name 3,Category Name 1,Category Name 2,Category Name 1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "link",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Items with This Category into another Collection Display with Categories for This Item."
-	@priority = "4"
+	@priority = 4
 	test AddCollectionDisplayWithItemsWithThisCategoryToAnotherCollectionDisplayWithCategoriesForThisItem {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -290,7 +290,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -298,7 +298,7 @@ definition {
 
 		task ("Add a blogs entry with the category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -306,7 +306,7 @@ definition {
 
 		task ("Add a document entry with category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -333,21 +333,21 @@ definition {
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Categories for This Item in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
@@ -369,14 +369,14 @@ definition {
 		task ("Add a Collection Display to the second module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Categories for This Item in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
@@ -391,7 +391,7 @@ definition {
 		task ("Select the Items with This Category in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "3",
+				index = 3,
 				infoItemRelatedListProviderName = "Items with This Category");
 		}
 
@@ -439,14 +439,14 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "link",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -454,7 +454,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with the Highest Rated Assets."
-	@priority = "5"
+	@priority = 5
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithHighestRatedAssets {
 		property portal.acceptance = "true";
 
@@ -519,21 +519,21 @@ definition {
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Highest Rated Assets in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets");
 		}
@@ -555,14 +555,14 @@ definition {
 		task ("Add a Collection Display to the second module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Highest Rated Assets in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets");
 		}
@@ -577,7 +577,7 @@ definition {
 		task ("Select the Related Assets in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "3",
+				index = 3,
 				infoItemRelatedListProviderName = "Related Assets");
 		}
 
@@ -596,60 +596,60 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[@aria-label='Heading']//*[contains(@data-lfr-editable-id,'element-text')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 		}
 
 		task ("View the title of related assets are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "1",
+					key_rowPosition = 1,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Web Content Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "2",
+					key_rowPosition = 2,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "3",
+					key_rowPosition = 3,
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -664,28 +664,28 @@ definition {
 		}
 
 		task ("View the title of assets are shown in the first module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
 		}
 
 		task ("View the title of related assets are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Blogs Entry Title,Web Content Title,Document Title,Web Content Title,Document Title,Blogs Entry Title") {
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "link",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -693,7 +693,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with Related Assets into another Collection Display with Items with This Category."
-	@priority = "4"
+	@priority = 4
 	test AddCollectionDisplayWithRelatedAssetsToAnotherCollectionDisplayWithItemsWithThisCategory {
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -714,21 +714,21 @@ definition {
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 		}
 
 		task ("Add a Collection Display to the first module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Items with This Category in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Items with This Category");
 		}
@@ -750,14 +750,14 @@ definition {
 		task ("Add a Collection Display to the second module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Content Display",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				navTab = "Fragments");
 		}
 
 		task ("Select the Items with This Category in Collection Display") {
 			PageEditor.editCollectionDisplay(
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Items with This Category");
 		}
@@ -772,7 +772,7 @@ definition {
 		task ("Select the Related Assets in inner Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "3",
+				index = 3,
 				infoItemRelatedListProviderName = "Related Assets");
 		}
 
@@ -807,7 +807,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -882,14 +882,14 @@ definition {
 		}
 
 		task ("View the title of related assets are shown in the second module") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title") {
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "link",
-					position = "${n}",
-					text = "${title}");
+					position = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -897,7 +897,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166039. The page creator can filter the categories."
-	@priority = "4"
+	@priority = 4
 	test PrefilterCollectionOnItemWithSameCategories {
 		property custom.properties = "feature.flag.LPS-166036=true";
 
@@ -905,20 +905,20 @@ definition {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(
 					groupName = "Test Site Name",
-					title = "${vocabularyName}");
+					title = ${vocabularyName});
 			}
 
 			var firstId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2020",
+				title = 2020,
 				vocabularyName = "Release Date");
 			var secondId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2021",
+				title = 2021,
 				vocabularyName = "Release Date");
 			var thirdId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2022",
+				title = 2022,
 				vocabularyName = "Release Date");
 			var teslaId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
@@ -954,26 +954,26 @@ definition {
 				title = "GA8");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${teslaId}",
+				assetCategoryIds = ${teslaId},
 				content = "Telsa Motors Club",
 				groupName = "Test Site Name",
 				title = "Telsa Motors Club");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${gacId}",
+				assetCategoryIds = ${gacId},
 				content = "GA8 Intelligent System",
 				groupName = "Test Site Name",
 				title = "GA8 Intelligent System");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${thirdId}",
+				assetCategoryIds = ${thirdId},
 				dmDocumentTitle = "Model 3 Interior",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${firstId}",
+				assetCategoryIds = ${firstId},
 				dmDocumentTitle = "GA8 Interior",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1004,7 +1004,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				infoItemRelatedListProviderName = "Items With Same Categories");
 		}
 
@@ -1012,38 +1012,38 @@ definition {
 			PageEditor.editCollectionDisplay(
 				filterCollection = "true",
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				itemTypeList = "Document",
 				selectedName = "Items With Same Categories");
 		}
 
 		task ("Then the page designer sees the documents on inner Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Intelligent System",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Model 3 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Telsa Motors Club",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
@@ -1051,7 +1051,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				filterCollection = "true",
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				itemTypeList = "Web Content Article",
 				selectedName = "Items With Same Categories");
 		}
@@ -1064,7 +1064,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can preview the mapped content of collection item in DPT for Category."
-	@priority = "5"
+	@priority = 5
 	test PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory";
@@ -1096,7 +1096,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1114,7 +1114,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1273,7 +1273,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can view the available mappable fields of collection item in DPT for Category."
-	@priority = "4"
+	@priority = 4
 	test ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory {
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory";
 
@@ -1352,7 +1352,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1378,7 +1378,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1386,7 +1386,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Schedule",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1423,7 +1423,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1431,7 +1431,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Content",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1439,7 +1439,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Configuration",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1447,7 +1447,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1455,7 +1455,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Fields",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1492,7 +1492,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1500,7 +1500,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "File Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1514,7 +1514,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1551,7 +1551,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1571,7 +1571,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1579,7 +1579,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Schedule",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1616,7 +1616,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1624,7 +1624,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "File Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1644,7 +1644,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1663,7 +1663,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Document related item collection provider in DPT for Category."
-	@priority = "5"
+	@priority = 5
 	test ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory";
@@ -1691,7 +1691,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1699,7 +1699,7 @@ definition {
 
 		task ("Add a blogs entry with category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -1707,7 +1707,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -1764,14 +1764,14 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_image = "Document_1.jpg",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_IMAGE");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_rowPosition = "2",
+				key_colPosition = 1,
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
 
@@ -1785,7 +1785,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Web Content related item collection provider in DPT for Category."
-	@priority = "5"
+	@priority = 5
 	test ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory";
@@ -1813,7 +1813,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1821,7 +1821,7 @@ definition {
 
 		task ("Add a blogs entry with category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -1829,7 +1829,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name");
 		}
@@ -1880,13 +1880,13 @@ definition {
 			AssertVisible(
 				key_entryContent = "[normalize-space()='Web Content Title']",
 				key_fragmentName = "Collection Display",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 			AssertElementNotPresent(
 				key_entryContent = "",
 				key_fragmentName = "Collection Display",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
 
@@ -1900,7 +1900,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use Blogs related item collection provider in DPT for Category."
-	@priority = "5"
+	@priority = 5
 	test ViewCollectionItemsBasedOnBlogsOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 
@@ -1919,7 +1919,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1927,7 +1927,7 @@ definition {
 
 		task ("Add a blogs entry with category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -1935,7 +1935,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name");
 		}
@@ -1997,22 +1997,22 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertTextEquals(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 				value1 = "Blogs Entry Title");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use custom document type related item collection provider in DPT for Category."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory {
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory";
 
@@ -2039,7 +2039,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -2047,7 +2047,7 @@ definition {
 
 		task ("Add a blogs entry with category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -2055,7 +2055,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name");
 		}
@@ -2125,13 +2125,13 @@ definition {
 			AssertVisible(
 				key_entryContent = "[normalize-space()='DM Text Title']",
 				key_fragmentName = "Collection Display",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 			AssertElementNotPresent(
 				key_entryContent = "",
 				key_fragmentName = "Collection Display",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
 
@@ -2145,7 +2145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use custom web content structure related item collection provider in DPT for Category."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory {
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory";
 
@@ -2172,7 +2172,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -2180,7 +2180,7 @@ definition {
 
 		task ("Add a blogs entry with category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -2188,7 +2188,7 @@ definition {
 
 		task ("Add a document with category") {
 			JSONDocument.addFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name");
 		}
@@ -2269,13 +2269,13 @@ definition {
 			AssertVisible(
 				key_entryContent = "[normalize-space()='WC Text Title']",
 				key_fragmentName = "Collection Display",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 			AssertElementNotPresent(
 				key_entryContent = "",
 				key_fragmentName = "Collection Display",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
 
@@ -2289,7 +2289,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166039. The page creator can see items with same categories from a content page."
-	@priority = "4"
+	@priority = 4
 	test ViewItemsWithSameCategoriesOnContentPage {
 		property custom.properties = "feature.flag.LPS-166036=true";
 
@@ -2297,20 +2297,20 @@ definition {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(
 					groupName = "Test Site Name",
-					title = "${vocabularyName}");
+					title = ${vocabularyName});
 			}
 
 			var firstId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2020",
+				title = 2020,
 				vocabularyName = "Release Date");
 			var secondId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2021",
+				title = 2021,
 				vocabularyName = "Release Date");
 			var thirdId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2022",
+				title = 2022,
 				vocabularyName = "Release Date");
 			var teslaId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
@@ -2346,26 +2346,26 @@ definition {
 				title = "GA8");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${teslaId}",
+				assetCategoryIds = ${teslaId},
 				content = "Telsa Motors Club",
 				groupName = "Test Site Name",
 				title = "Telsa Motors Club");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${gacId}",
+				assetCategoryIds = ${gacId},
 				content = "GA8 Intelligent System",
 				groupName = "Test Site Name",
 				title = "GA8 Intelligent System");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${thirdId}",
+				assetCategoryIds = ${thirdId},
 				dmDocumentTitle = "Model 3 Interior",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${firstId}",
+				assetCategoryIds = ${firstId},
 				dmDocumentTitle = "GA8 Interior",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -2398,43 +2398,43 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				infoItemRelatedListProviderName = "Items With Same Categories");
 		}
 
 		task ("Then the page designer sees the items with same categories on inner Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Intelligent System",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Model 3 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Telsa Motors Club",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 	}
 
 	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a Knowledge Base Article Display Page Template."
-	@priority = "3"
+	@priority = 3
 	test ViewKBArticleWithSameCategoriesOnDisplayPageTemplateForKBArticle {
 		property custom.properties = "feature.flag.LPS-166036=true";
 
@@ -2442,20 +2442,20 @@ definition {
 			for (var vocabularyName : list "Release Date,Company,Engine") {
 				JSONCategory.addVocabulary(
 					groupName = "Test Site Name",
-					title = "${vocabularyName}");
+					title = ${vocabularyName});
 			}
 
 			var firstId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2020",
+				title = 2020,
 				vocabularyName = "Release Date");
 			var secondId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2021",
+				title = 2021,
 				vocabularyName = "Release Date");
 			var thirdId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
-				title = "2022",
+				title = 2022,
 				vocabularyName = "Release Date");
 			var teslaId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
@@ -2485,19 +2485,19 @@ definition {
 				title = "Model 3");
 
 			JSONKnowledgeBase.addkBArticle(
-				assetCategoryIds = "${thirdId}",
+				assetCategoryIds = ${thirdId},
 				groupName = "Test Site Name",
 				kbArticleContent = "Model 3 Interior",
 				kbArticleTitle = "Model 3 Interior");
 
 			JSONKnowledgeBase.addkBArticle(
-				assetCategoryIds = "${gacId}",
+				assetCategoryIds = ${gacId},
 				groupName = "Test Site Name",
 				kbArticleContent = "GA8 Intelligent System",
 				kbArticleTitle = "GA8 Intelligent System");
 
 			JSONKnowledgeBase.addkBArticle(
-				assetCategoryIds = "${teslaId}",
+				assetCategoryIds = ${teslaId},
 				groupName = "Test Site Name",
 				kbArticleContent = "Telsa Motors Club",
 				kbArticleTitle = "Telsa Motors Club");
@@ -2534,36 +2534,36 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				infoItemRelatedListProviderName = "Items With Same Categories");
 		}
 
 		task ("Then the page designer sees the knowledge base articles with same categories on inner Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Telsa Motors Club",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Model 3 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Intelligent System",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "3",
+				key_rowPosition = 3,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 	}
 
 	@description = "This is a use case for LPS-127023 and LPS-112360. The related assets should be in Collection Display when select Related Assets from Related Items Collection Provider."
-	@priority = "5"
+	@priority = 5
 	test ViewRelatedAssetsInCollectionDisplay {
 		property portal.acceptance = "true";
 		property testray.component.names = "Display Pages,Fragments";
@@ -2681,15 +2681,15 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -2741,13 +2741,13 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content Title,Document Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2800,12 +2800,12 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Document Title");
 
-			var n = "1";
+			var n = 1;
 
 			for (var content : list "Blogs Entry Title,Web Content Title") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${content}");
+					row = ${n},
+					text = ${content});
 
 				var n = ${n} + 1;
 			}
@@ -2813,7 +2813,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132081. View related categories shown in display page template for non-category assets when apply Categories for This Item to Collection Display."
-	@priority = "5"
+	@priority = 5
 	test ViewRelatedCategoriesInCollectionDisplayWithCategoriesForThisItem {
 		property portal.acceptance = "true";
 
@@ -2844,7 +2844,7 @@ definition {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			for (var displayPageName : list "Web Content DPT,Blogs Entry DPT,Document DPT") {
-				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = ${displayPageName});
 
 				PageEditor.addFragment(
 					collectionName = "Content Display",
@@ -2975,9 +2975,9 @@ definition {
 
 				for (var n : list "1,2,3") {
 					AssertTextEquals(
-						key_colPosition = "1",
+						key_colPosition = 1,
 						key_fragmentName = "heading",
-						key_rowPosition = "${n}",
+						key_rowPosition = ${n},
 						locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
 						value1 = "Category Name ${n}");
 				}

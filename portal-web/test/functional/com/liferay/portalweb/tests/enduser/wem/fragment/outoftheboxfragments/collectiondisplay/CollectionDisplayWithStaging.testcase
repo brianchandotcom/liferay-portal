@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are displayed normally when enable local staging."
-	@priority = "4"
+	@priority = 4
 	test AddAllThreeContentFragmentsInCollectionDisplayOneCellWithLocalLiveStaging {
 		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
@@ -75,12 +75,12 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -107,28 +107,28 @@ definition {
 			for (var i : list "1,2,3") {
 				AssertAttributeValue(
 					attribute1 = "aria-expanded",
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR",
 					value1 = "false");
 
 				AssertVisible(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					key_fragmentName = "Content Flags",
 					locator1 = "Fragment#FRAGMENT_CONTENT",
 					value1 = "Report");
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;
@@ -145,12 +145,12 @@ definition {
 			for (var i : list "1,2,3") {
 				AssertAttributeValue(
 					attribute1 = "aria-expanded",
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR",
 					value1 = "false");
 
 				AssertVisible(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 
 				AssertVisible(
@@ -158,13 +158,13 @@ definition {
 					value1 = "Report");
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;
@@ -184,12 +184,12 @@ definition {
 
 			for (var i : list "1,2,3") {
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
 					value1 = "-");
 
 				AssertVisible(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 
 				AssertVisible(
@@ -197,13 +197,13 @@ definition {
 					value1 = "Report");
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114174. Can create a Collection Page based on Collections or Collection Providers in Staging site."
-	@priority = "4"
+	@priority = 4
 	test AddCollectionPage {
 		task ("Add three web contents") {
 			for (var i : list "3,2,1") {
@@ -264,7 +264,7 @@ definition {
 			for (var i : list "1,2,3") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = "${i}");
+					row = ${i});
 			}
 		}
 
@@ -308,7 +308,7 @@ definition {
 			for (var i : list "1,2,3") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = "${i}");
+					row = ${i});
 			}
 		}
 
@@ -322,7 +322,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86193. Can export display page template and import to Staging site via UI."
-	@priority = "3"
+	@priority = 3
 	test ExportImportDisplayPageTemplateWithCollectionDisplay {
 		property testray.component.names = "Display Pages,Fragments";
 
@@ -380,13 +380,13 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			for (var fragmentName : list "Collection Display,Display Page Content") {
-				PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");
+				PageEditor.viewFragmentMessageInfo(fragmentName = ${fragmentName});
 			}
 		}
 	}
 
 	@description = "This is a use case for LPS-166039. The page creator can see Items with same categories from a staging site."
-	@priority = "4"
+	@priority = 4
 	test ViewItemsWithSameCategoriesInStagingSite {
 		property custom.properties = "feature.flag.LPS-166036=true";
 
@@ -395,23 +395,23 @@ definition {
 				JSONCategory.addVocabulary(
 					groupName = "Test Site Name (Staging)",
 					site = "false",
-					title = "${vocabularyName}");
+					title = ${vocabularyName});
 			}
 
 			var firstId = JSONCategory.addCategory(
 				groupName = "Test Site Name (Staging)",
 				site = "false",
-				title = "2020",
+				title = 2020,
 				vocabularyName = "Release Date");
 			var secondId = JSONCategory.addCategory(
 				groupName = "Test Site Name (Staging)",
 				site = "false",
-				title = "2021",
+				title = 2021,
 				vocabularyName = "Release Date");
 			var thirdId = JSONCategory.addCategory(
 				groupName = "Test Site Name (Staging)",
 				site = "false",
-				title = "2022",
+				title = 2022,
 				vocabularyName = "Release Date");
 			var teslaId = JSONCategory.addCategory(
 				groupName = "Test Site Name (Staging)",
@@ -454,28 +454,28 @@ definition {
 				title = "GA8");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${teslaId}",
+				assetCategoryIds = ${teslaId},
 				content = "Telsa Motors Club",
 				groupName = "Test Site Name (Staging)",
 				site = "false",
 				title = "Telsa Motors Club");
 
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${gacId}",
+				assetCategoryIds = ${gacId},
 				content = "GA8 Intelligent System",
 				groupName = "Test Site Name (Staging)",
 				site = "false",
 				title = "GA8 Intelligent System");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${thirdId}",
+				assetCategoryIds = ${thirdId},
 				dmDocumentTitle = "Model 3 Interior",
 				groupName = "Test Site Name-staging",
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${firstId}",
+				assetCategoryIds = ${firstId},
 				dmDocumentTitle = "GA8 Interior",
 				groupName = "Test Site Name-staging",
 				mimeType = "image/jpeg",
@@ -515,43 +515,43 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				index = "2",
+				index = 2,
 				infoItemRelatedListProviderName = "Items With Same Categories");
 		}
 
 		task ("Then the page designer sees the items with same categories on inner Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "GA8 Intelligent System",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Model 3 Interior",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Telsa Motors Club",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "2",
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 	}
 
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed normally when enable local staging."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentInContentDisplay {
 		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
@@ -593,12 +593,12 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -612,13 +612,13 @@ definition {
 		}
 
 		task ("View content of web contents shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;
@@ -641,13 +641,13 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;
@@ -665,13 +665,13 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Content ${i}");
 
 				var n = ${n} + 1;

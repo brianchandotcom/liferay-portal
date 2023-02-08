@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 
 	@description = "This checks that an entry can be added in the control panel."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddEntryInAdmin {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-67664. It ensures that a user can order blog entries by display date."
-	@priority = "4"
+	@priority = 4
 	test CanOrderByDisplayDate {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -68,13 +68,13 @@ definition {
 
 		Blogs.viewEntryTitle(
 			entryTitle = "Test Title",
-			position = "1");
+			position = 1);
 
 		ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Display Date");
 	}
 
 	@description = "This checks that the content for a blogs entry can be searched in admin."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForContentInAdmin {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -95,7 +95,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Blogs Entry Content",
 			entryTitle = "Unique Title",
-			position = "1",
+			position = 1,
 			relevance = "true");
 
 		BlogsEntry.searchCP(
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This checks that the content for a blogs entry can be searched in admin."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForTitleInAdmin {
 		JSONBlog.addEntry(
@@ -129,7 +129,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySearchTerm = "Unique Title",
 			entryTitle = "Unique Title",
-			position = "1",
+			position = 1,
 			relevance = "true");
 
 		BlogsEntry.searchCP(

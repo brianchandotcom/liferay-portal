@@ -1,7 +1,7 @@
 definition {
 
 	macro addMultipleTags {
-		for (var customTag : list "${customTagsList}") {
+		for (var customTag : list ${customTagsList}) {
 			Click(locator1 = "Icon#PLUS_LAST");
 
 			Type(
@@ -19,11 +19,11 @@ definition {
 	macro addTag {
 		Type(
 			locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY",
-			value1 = "${customProperty}");
+			value1 = ${customProperty});
 
 		Type(
 			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT",
-			value1 = "${customContent}");
+			value1 = ${customContent});
 
 		Button.click(button = "Save");
 	}
@@ -32,28 +32,28 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#LOCALIZATION_NAME_METATAGS");
 	}
 
 	macro editMultipleTags {
 		if (isSet(newCustomProperty)) {
-			for (var customProperty : list "${customPropertiesList}") {
+			for (var customProperty : list ${customPropertiesList}) {
 				Type(
-					key_customProperty = "${customProperty}",
+					key_customProperty = ${customProperty},
 					locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_EDITOR",
-					value1 = "${newCustomProperty}");
+					value1 = ${newCustomProperty});
 			}
 
 			Button.click(button = "Save");
 		}
 
 		if (isSet(newCustomContent)) {
-			for (var customContent : list "${customContentsList}") {
+			for (var customContent : list ${customContentsList}) {
 				Type(
-					key_customContent = "${customContent}",
+					key_customContent = ${customContent},
 					locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR",
-					value1 = "${newCustomContent}");
+					value1 = ${newCustomContent});
 			}
 
 			Button.click(button = "Save");
@@ -63,16 +63,16 @@ definition {
 	macro editTag {
 		if (isSet(newCustomProperty)) {
 			Type(
-				key_customProperty = "${customProperty}",
+				key_customProperty = ${customProperty},
 				locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_EDITOR",
-				value1 = "${newCustomProperty}");
+				value1 = ${newCustomProperty});
 		}
 
 		if (isSet(newCustomContent)) {
 			Type(
-				key_customContent = "${customContent}",
+				key_customContent = ${customContent},
 				locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR",
-				value1 = "${newCustomContent}");
+				value1 = ${newCustomContent});
 		}
 
 		Button.click(button = "Save");
@@ -80,15 +80,15 @@ definition {
 
 	macro openToCustomMetaTags {
 		var plid = JSONLayout.getPlid(
-			groupName = "${groupName}",
-			layoutName = "${layoutName}");
+			groupName = ${groupName},
+			layoutName = ${layoutName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=custom-meta-tags");
 	}
 
 	macro removeTag {
 		Click(
-			key_tagNum = "${tagNum}",
+			key_tagNum = ${tagNum},
 			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
 
 		Click.clickAt(
@@ -102,19 +102,19 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_DISABLED");
 
 		AssertElementPresent(
-			key_customContent = "${customContent}",
+			key_customContent = ${customContent},
 			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR");
 	}
 
 	macro viewNoTags {
-		for (var customMetaTag : list "${customMetaTagsList}") {
-			AssertHTMLSourceTextNotPresent(value1 = "${customMetaTag}");
+		for (var customMetaTag : list ${customMetaTagsList}) {
+			AssertHTMLSourceTextNotPresent(value1 = ${customMetaTag});
 		}
 	}
 
 	macro viewTags {
-		for (var customMetaTag : list "${customMetaTagsList}") {
-			AssertHTMLSourceTextPresent(value1 = "${customMetaTag}");
+		for (var customMetaTag : list ${customMetaTagsList}) {
+			AssertHTMLSourceTextPresent(value1 = ${customMetaTag});
 		}
 	}
 

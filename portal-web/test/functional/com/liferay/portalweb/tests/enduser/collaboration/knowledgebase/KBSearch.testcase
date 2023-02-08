@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,14 +30,14 @@ definition {
 
 	@description = "This test checks that an article can be searched for in the admin search bar."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForArticleInAdmin {
 
 		// TODO LPS-166644
 
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SearchChildArticleViaSearchPortletPG {
 		JSONKnowledgeBase.addkBArticle(
@@ -65,7 +65,7 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test SearchKBArticleInFolderViaSearchPortlet {
 		JSONLayout.addPublicLayout(
@@ -73,7 +73,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -111,7 +111,7 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SearchKBArticleViaSearchPortlet {
 		property portal.acceptance = "true";
@@ -135,7 +135,7 @@ definition {
 			searchAssetType = "Knowledge Base Article");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test SearchKBArticleWithSpecialCharactersViaSearchPortletPG {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

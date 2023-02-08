@@ -27,13 +27,13 @@ definition {
 
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.business.location.zip",
-			value = "12345");
+			value = 12345);
 	}
 
 	macro typeBasicsInfoFields {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro viewBasicsInfo {
@@ -65,7 +65,7 @@ definition {
 		AssertElementPresent(
 			label = "basics.businessInformation.business.location.zip",
 			locator1 = "Raylife#FORMS_VALUE",
-			value = "12345");
+			value = 12345);
 	}
 
 }

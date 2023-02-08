@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 			layoutName = "Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -62,7 +62,7 @@ definition {
 			assetTitle = "Home",
 			assetType = "Documents Folder");
 
-		Subscriptions.unsubscribeViaMySubscriptions(rowNumber = "1");
+		Subscriptions.unsubscribeViaMySubscriptions(rowNumber = 1);
 
 		Navigator.gotoPage(pageName = "My Subscriptions Page");
 

@@ -2,10 +2,10 @@ definition {
 
 	macro _clickResultEllipsisItem {
 		Click(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro addResult {
@@ -13,20 +13,20 @@ definition {
 
 		Type(
 			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		KeyPress(
 			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
 			value1 = "\RETURN");
 
 		Check.checkNotVisible(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_CHECKBOX_LABEL");
 
 		Button.click(button = "Add");
 
 		AssertElementPresent(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 
@@ -35,7 +35,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Search Query",
-			text = "${searchQuery}");
+			text = ${searchQuery});
 
 		Button.click(button = "Customize Results");
 
@@ -47,15 +47,15 @@ definition {
 
 		Type.sendKeys(
 			locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
-			value1 = "${synonyms}");
+			value1 = ${synonyms});
 
 		KeyPress(
 			locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
 			value1 = ",");
 
-		for (var synonym : list "${synonyms}") {
+		for (var synonym : list ${synonyms}) {
 			AssertElementPresent(
-				key_synonym = "${synonym}",
+				key_synonym = ${synonym},
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_VALUE");
 		}
 
@@ -65,56 +65,56 @@ definition {
 	macro configureAliases {
 		if (isSet(deleteAlias)) {
 			Click(
-				key_alias = "${deleteAlias}",
+				key_alias = ${deleteAlias},
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_REMOVE");
 
 			AssertElementNotPresent(
-				key_alias = "${deleteAlias}",
+				key_alias = ${deleteAlias},
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_VALUE");
 		}
 
 		if (isSet(addAlias)) {
 			Type(
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
-				value1 = "${addAlias}");
+				value1 = ${addAlias});
 
 			KeyPress(
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
 				value1 = ",");
 
 			AssertElementPresent(
-				key_alias = "${addAlias}",
+				key_alias = ${addAlias},
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_VALUE");
 		}
 	}
 
 	macro deleteSynonymSet {
-		LexiconEntry.delete(rowEntry = "${synonymSet}");
+		LexiconEntry.delete(rowEntry = ${synonymSet});
 
 		AssertElementNotPresent(
-			key_synonyms = "${synonymSet}",
+			key_synonyms = ${synonymSet},
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 	}
 
 	macro editSynonymSet {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${synonymSet}");
+			rowEntry = ${synonymSet});
 
 		if (isSet(deleteSynonym)) {
 			Click(
-				key_synonym = "${deleteSynonym}",
+				key_synonym = ${deleteSynonym},
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_REMOVE");
 
 			AssertElementNotPresent(
-				key_synonym = "${deleteSynonym}",
+				key_synonym = ${deleteSynonym},
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_VALUE");
 		}
 
 		if (isSet(addSynonyms)) {
 			Type.sendKeys(
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
-				value1 = "${addSynonyms}");
+				value1 = ${addSynonyms});
 
 			KeyPress(
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
@@ -126,11 +126,11 @@ definition {
 
 	macro hideResult {
 		SearchTuning._clickResultEllipsisItem(
-			assetTitle = "${assetTitle}",
+			assetTitle = ${assetTitle},
 			menuItem = "Hide Result");
 
 		AssertElementNotPresent(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
@@ -144,11 +144,11 @@ definition {
 
 	macro pinResult {
 		SearchTuning._clickResultEllipsisItem(
-			assetTitle = "${assetTitle}",
+			assetTitle = ${assetTitle},
 			menuItem = "Pin Result");
 
 		AssertElementPresent(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 
@@ -157,29 +157,29 @@ definition {
 			Navigator.gotoNavTab(navTab = "Hidden");
 		}
 
-		if ("${pinResult}" == "true") {
+		if (${pinResult} == "true") {
 			SearchTuning._clickResultEllipsisItem(
-				assetTitle = "${assetTitle}",
+				assetTitle = ${assetTitle},
 				menuItem = "Pin Result");
 		}
 		else {
 			SearchTuning._clickResultEllipsisItem(
-				assetTitle = "${assetTitle}",
+				assetTitle = ${assetTitle},
 				menuItem = "Show Result");
 		}
 
 		AssertElementNotPresent(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
 	macro unpinResult {
 		SearchTuning._clickResultEllipsisItem(
-			assetTitle = "${assetTitle}",
+			assetTitle = ${assetTitle},
 			menuItem = "Unpin Result");
 
 		AssertElementNotPresent(
-			key_assetTitle = "${assetTitle}",
+			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 

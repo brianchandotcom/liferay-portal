@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90999. A user can access to edit the display page template at view mode."
-	@priority = "5"
+	@priority = 5
 	test AccessToEditDisplayPageTemplateAtViewMode {
 		property portal.acceptance = "true";
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90999. The administrator can access to edit the web content article or display page while viewing the article through its display page."
-	@priority = "5"
+	@priority = 5
 	test AccessToEditWebContentAndDisplayPageTemplateAtViewModeAsAdministrator {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90999. A user can access to edit the web content article at view mode."
-	@priority = "5"
+	@priority = 5
 	test AccessToEditWebContentAtViewMode {
 		property portal.acceptance = "true";
 
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@description = "Display page template can be viewed through the Asset Publisher widget."
-	@priority = "5"
+	@priority = 5
 	test NavigateToDisplayPageTemplateViaAssetPublisher {
 		property portal.acceptance = "true";
 
@@ -397,7 +397,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121195. Display page template can be viewed through friendly URL."
-	@priority = "5"
+	@priority = 5
 	test NavigateToDisplayPageTemplateViaFriendlyURL {
 		property portal.acceptance = "true";
 
@@ -452,7 +452,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86221. A user can preview a draft web content within its display page."
-	@priority = "5"
+	@priority = 5
 	test PreviewDraftWebContent {
 		property portal.acceptance = "true";
 
@@ -514,7 +514,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86221 and LPS-112994. A user can preview a pending web content within its display page."
-	@priority = "5"
+	@priority = 5
 	test PreviewPendingWebContent {
 		property portal.acceptance = "true";
 
@@ -584,7 +584,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163800. Can preview web content with predefined values in structure in Asset Libraries through site' s display page template."
-	@priority = "3"
+	@priority = 3
 	test PreviewPredefinedValuesThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
 		task ("Given a site designer has display page templates for web content") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -648,7 +648,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86221. A user can preview a published web content within its display page."
-	@priority = "5"
+	@priority = 5
 	test PreviewPublishedWebContent {
 		property portal.acceptance = "true";
 
@@ -711,7 +711,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130607 and LPS-163074. The site designer could preview current version of web content through display page template in site."
-	@priority = "5"
+	@priority = 5
 	test PreviewWebContentThroughTheDisplayPageOfCurrentSite {
 		property portal.acceptance = "true";
 
@@ -813,12 +813,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163800. Preview web content in Asset Libraries through sites' display page templates."
-	@priority = "4"
+	@priority = 4
 	test PreviewWebContentThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
 		task ("Given a site designer has display page templates for web content") {
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "7") {
+			while (${i} != 7) {
 				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
 
 				var i = ${i} + 1;
@@ -959,12 +959,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163800. Preview web content in global site through site's display page templates."
-	@priority = "3"
+	@priority = 3
 	test PreviewWebContentThroughTheDisplayPageOfSpecificSiteInGlobalSite {
 		task ("Given a site designer has display page templates for web content") {
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "7") {
+			while (${i} != 7) {
 				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
 
 				var i = ${i} + 1;
@@ -1105,7 +1105,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150919. Canonical URL should be valid for DPT."
-	@priority = "2"
+	@priority = 2
 	test ViewCanonicalURL {
 		property test.name.skip.portal.instance = "DisplayPageTemplatesForWebContentArticle#ViewCanonicalURL";
 
@@ -1153,25 +1153,25 @@ definition {
 
 			var jornalURL = Navigator.getCurrentURL();
 
-			echo("${jornalURL}");
+			echo(${jornalURL});
 
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "${jornalURL}");
+			Navigator.openSpecificURL(url = ${jornalURL});
 		}
 
 		task ("Then it should use Localized URL as Canonical URL") {
 			var canonicalText = '''<link data-senna-track="temporary" href="http://localhost:8080/web/test-site-name/w/web-content-title" rel="canonical"''';
 			var alternateText = '''<link data-senna-track="temporary" href="http://localhost:8080/zh/web/test-site-name/w/web-content-title" hreflang="zh-CN" rel="alternate"''';
 
-			AssertHTMLSourceTextPresent(value1 = "${canonicalText}");
+			AssertHTMLSourceTextPresent(value1 = ${canonicalText});
 
-			AssertHTMLSourceTextPresent(value1 = "${alternateText}");
+			AssertHTMLSourceTextPresent(value1 = ${alternateText});
 		}
 	}
 
 	@description = "This is a test for LPS-96438. Guests should be able to view display page template."
-	@priority = "5"
+	@priority = 5
 	test ViewDisplayPageTemplateAsGuest {
 		property portal.acceptance = "true";
 
@@ -1264,7 +1264,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86190. Asset metadata should appear in page source."
-	@priority = "4"
+	@priority = 4
 	test ViewMetadataInDisplayPageTemplateSource {
 		task ("Add a Heading fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -1298,7 +1298,7 @@ definition {
 
 		task ("Add a web content article with a category and tag") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				assetTagNames = "test tag",
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
@@ -1329,7 +1329,7 @@ definition {
 	}
 
 	@description = "When no display page template is selected, assets should not be displayed through the default display page."
-	@priority = "4"
+	@priority = 4
 	test ViewNoDisplayPageTemplate {
 		task ("Add a Heading fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -1412,7 +1412,7 @@ definition {
 	}
 
 	@description = "The selected display page template should override the default display page template."
-	@priority = "5"
+	@priority = 5
 	test ViewNonDefaultDisplayPageTemplate {
 		property portal.acceptance = "true";
 

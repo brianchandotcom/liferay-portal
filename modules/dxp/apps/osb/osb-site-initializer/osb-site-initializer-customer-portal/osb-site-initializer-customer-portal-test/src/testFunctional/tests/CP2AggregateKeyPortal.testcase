@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150697 | Test Summary: Verify if when the user selects multiple keys that cannot be aggregated to a file, the Aggregate key (single file) option in the download drop-down menu will be disabled"
-	@priority = "4"
+	@priority = 4
 	test AggregateKeyInDropdownMenuIsDeactivated {
 
 		// TODO LPS-150697 AggregateKeyInDropdownMenuIsDeactivated pending implementation
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150693 | Test Summary: Verify if the management bar displays a Download button after the user selects one or more activation keys"
-	@priority = "3"
+	@priority = 3
 	test CanSeeDownloadButton {
 
 		// TODO LPS-150693 CanSeeDownloadButton pending implementation
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150694 | Test Summary: Verify if when the user selects two or more keys, the Download button a drop-down menu appears with the following option Aggregate Key (single file)"
-	@priority = "3"
+	@priority = 3
 	test CanSeeDropdownMenu {
 
 		// TODO LPS-150693 CanSeeDropdownMenu pending implementation
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150692 | Test Summary: Verify if the management bar displays the amount of keys selected by the user"
-	@priority = "3"
+	@priority = 3
 	test CanViewQuantityOfSelectedKeys {
 
 		// TODO LPS-150692 CanViewQuantityOfSelectedKeys pending implementation
@@ -76,7 +76,7 @@ definition {
 
 	@description = "Automation ID: LPS-150695 | Test Summary: Verify if when the key is downloaded a success message is displayed on the screen"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanViewTheDownloadSuccessfulMessage {
 
 		// Needs refactor since it depends on example Avangrid Portals account
@@ -86,29 +86,29 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("I selected two keys in the table") {
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
 				date = "Mar 30, 2023",
-				position = "1");
+				position = 1);
 
 			CP2ActivationKeys.selectKeyCheckboxByExpirationDate(
 				date = "Mar 30, 2023",
-				position = "3");
+				position = 3);
 		}
 
 		task ("When I click at the 'Aggregate key single file' option") {
@@ -124,18 +124,18 @@ definition {
 		task ("And I get the expected downloaded file name") {
 			var downloadedFileName = CP2ActivationKeys.formatLicenseFileName(
 				fileType = "xml",
-				licenseName = "${testAccount}",
+				licenseName = ${testAccount},
 				licenseType = "activation-key-multiple-products",
 				version = "7.4");
 		}
 
 		task ("And I assert that the Activation Key was downloaded") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${downloadedFileName}");
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${downloadedFileName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150698 | Test Summary: Verify if when you hover the mouse over the key a tooltip appears on the screen with the message same as the Info Alert"
-	@priority = "3"
+	@priority = 3
 	test YouCanSeeTheTooltipByHoveringOverTheDisabledKey {
 
 		// TODO LPS-150698 YouCanSeeTheTooltipByHoveringOverTheDisabledKey pending implementation

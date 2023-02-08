@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
-	@priority = "5"
+	@priority = 5
 	test CanViewPartnerManagerInviteUsers {
 		property portal.upstream = "quarantine";
 
@@ -52,7 +52,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -60,7 +60,7 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Login in Okta") {
@@ -74,7 +74,7 @@ definition {
 		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "${testAccount}");
+				title = ${testAccount});
 		}
 
 		task ("Go to the Team Members page and click on the Invite button") {
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
-	@priority = "5"
+	@priority = 5
 	test RemovingTeamMembers {
 		property portal.upstream = "quarantine";
 
@@ -111,17 +111,17 @@ definition {
 
 			Account.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
 
 			Account.assignUsers(
-				accountName = "${testAccount}",
+				accountName = ${testAccount},
 				assigneeName = "Test User");
 		}
 
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -129,7 +129,7 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Login in Okta") {
@@ -143,7 +143,7 @@ definition {
 		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "${testAccount}");
+				title = ${testAccount});
 		}
 
 		task ("Go to the team members page and remove a guest user") {

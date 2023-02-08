@@ -19,7 +19,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"
-	@priority = "3"
+	@priority = 3
 	test AdminCanBeEditedOrRemoved {
 		task ("Create a new user and change your permission to Administrator") {
 			ACNavigation.goToSettings();
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
-	@priority = "3"
+	@priority = 3
 	test AdminCanBeSelected {
 		task ("Go to settings and go to user management") {
 			ACNavigation.goToSettings();
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9048 | Test Summary: Assert the User Management Page"
-	@priority = "3"
+	@priority = 3
 	test AssertUserManagementPage {
 		task ("go to User Management page and assert page elements") {
 			ACNavigation.goToSettings();
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
-	@priority = "3"
+	@priority = 3
 	test MemberCanBeEditedOrRemoved {
 		task ("Create a new user as a member ") {
 			ACNavigation.goToSettings();
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
-	@priority = "3"
+	@priority = 3
 	test MemberCanBeSelected {
 		var emailAdress = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("Add multiples users, go to data sources and go back to user management") {
-			ACSettings.addMultiplesOptions(optionsList = "${emailAdress}");
+			ACSettings.addMultiplesOptions(optionsList = ${emailAdress});
 
 			ACSettings.goToDataSources();
 
@@ -148,10 +148,10 @@ definition {
 		}
 
 		task ("Click on user") {
-			ACSettings.clickUsersByEmail(userEmail = "${emailAdress}");
+			ACSettings.clickUsersByEmail(userEmail = ${emailAdress});
 
-			for (var email : list "${emailAdress}") {
-				ACUtils.searchBar(searchItem = "${email}");
+			for (var email : list ${emailAdress}) {
+				ACUtils.searchBar(searchItem = ${email});
 
 				AssertChecked.assertCheckedNotVisible(locator1 = "ACSettings#USER_LIST_CHECKBOX");
 			}
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"
-	@priority = "3"
+	@priority = 3
 	test ViewAllUserList {
 		var emailAdress = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("Add multiples users, go to data sources and go back to user management") {
-			ACSettings.addMultiplesOptions(optionsList = "${emailAdress}");
+			ACSettings.addMultiplesOptions(optionsList = ${emailAdress});
 
 			ACSettings.goToDataSources();
 
@@ -178,10 +178,10 @@ definition {
 		}
 
 		task ("Assert the users in the list") {
-			for (var user : list "${emailAdress}") {
-				ACUtils.searchBar(searchItem = "${user}");
+			for (var user : list ${emailAdress}) {
+				ACUtils.searchBar(searchItem = ${user});
 
-				ACSettings.assertUserListEmail(userEmail = "${user}");
+				ACSettings.assertUserListEmail(userEmail = ${user});
 			}
 		}
 
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
-	@priority = "5"
+	@priority = 5
 	test ViewOwnerCannotBeEditedOrRemoved {
 		task ("go to User Manaagement page and assert you are there") {
 			ACNavigation.goToSettings();
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9050 | Test Summary: Owner cannot be selected in the user list"
-	@priority = "5"
+	@priority = 5
 	test ViewOwnerCannotBeSelectedInUserList {
 		task ("go to User Management page") {
 			ACNavigation.goToSettings();

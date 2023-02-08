@@ -16,7 +16,7 @@ definition {
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136910. It checks that bold text can be added in the editor."
-	@priority = "4"
+	@priority = 4
 	test CanAddBoldText {
 		MessageboardsThread.addPG(
 			bold = "true",
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136911. It checks that an image can be added in the editor."
-	@priority = "4"
+	@priority = 4
 	test CanAddImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -90,7 +90,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddLinkToDocument {
 		property testray.component.names = "WYSIWYG";
@@ -115,7 +115,7 @@ definition {
 			linkedEntry = "Link to Document");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddLinkToPage {
 		property testray.component.names = "WYSIWYG";
@@ -133,7 +133,7 @@ definition {
 			pageName = "Message Boards Page");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddReply {
 		JSONMBMessage.addMessage(
@@ -149,13 +149,13 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewReplyPG(
-			replyCount = "1",
+			replyCount = 1,
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body",
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddThreadWithUTF8Characters {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -168,7 +168,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thrèad Mèssagè Body",
 			threadSubject = "MB Thrèad Mèssagè Subjèct");
 
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This ensures that a thread with 255 characters in the title can be added."
-	@priority = "4"
+	@priority = 4
 	test CanAddTitleWith255Characters {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -188,13 +188,13 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15||||||||16||||||||17||||||||18||||||||19||||||||20||||||||21||||||||22||||||||23||||||||24||||||||25||||X");
 	}
 
 	@description = "This is a test for LPS-136912. It checks that an urgent thread can be added."
-	@priority = "3"
+	@priority = 3
 	test CanAddUrgentThread {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
@@ -215,7 +215,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCancelEditOnThread {
 		JSONMBMessage.addMessage(
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCancelThread {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@description = "This ensures that the thread can be deleted, also covers LPS-82675."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteThread {
 		JSONMBMessage.addMessage(
@@ -287,7 +287,7 @@ definition {
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanDeleteThreadWithAttachment {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
@@ -324,7 +324,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136914. It checks that an attachment can be downloaded."
-	@priority = "4"
+	@priority = 4
 	test CanDownloadAttachment {
 		MessageboardsThread.addPG(
 			groupName = "Guest",
@@ -335,29 +335,29 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 
 		AssertTextEquals.assertPartialText(
-			index = "1",
+			index = 1,
 			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
 			value1 = "Commerce_Black.jpg");
 
 		AssertTextEquals.assertPartialText(
-			index = "2",
+			index = 2,
 			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
 			value1 = "Document_2.jpeg");
 
 		AssertTextEquals.assertPartialText(
-			index = "3",
+			index = 3,
 			locator1 = "MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_LIST",
 			value1 = "marketplace_icon.png");
 
 		MessageboardsThread.downloadAttachmentPG(
 			attachmentsList = "true",
-			index = "1");
+			index = 1);
 
 		MessageboardsThread.assertDownloadedFileNameFromTempFolder(attachmentFileName = "Commerce_Black");
 	}
 
 	@description = "This is a test for LPS-136920. It checks that a thread can be exported."
-	@priority = "3"
+	@priority = 3
 	test CanExportThread {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136919. It checks that a thread can be imported."
-	@priority = "3"
+	@priority = 3
 	test CanImportThread {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -382,12 +382,12 @@ definition {
 			uploadFrom = "dependencies");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanLimitThreadAttachmentSize {
 		property test.name.skip.portal.instance = "MBThread#CanLimitThreadAttachmentSize";
@@ -399,20 +399,20 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = 102400);
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addInvalidAttachmentPG(
 			invalidSize = "true",
-			maxAttachmentFileSize = "100",
+			maxAttachmentFileSize = 100,
 			mbThreadAttachment = "Document_1.ppt",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 	}
 
 	@description = "This is a test case for UC-6."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanLockAndUnlockThread {
 		JSONMBMessage.addMessage(
@@ -444,13 +444,13 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewReplyPG(
-			replyCount = "1",
+			replyCount = 1,
 			threadBody = "Message Boards Thread Body",
 			threadReplyBody = "Message Boards Thread Reply Body",
 			threadSubject = "Message Boards Thread Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanMoveMBCategory1ThreadToCategory2 {
 		JSONMBMessage.addCategory(
@@ -491,7 +491,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-137634. It ensures that a user cannot publish a thread with a tag that contains Java Script."
-	@priority = "3"
+	@priority = 3
 	test CannotPublishThreadWithTagContainingJavaScript {
 		property portal.acceptance = "false";
 
@@ -508,7 +508,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
-	@priority = "4"
+	@priority = 4
 	test CanPublishThreadWithTag {
 		JSONAssettag.addTag(
 			groupName = "Guest",
@@ -530,7 +530,7 @@ definition {
 			userName = "Test Test");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRestoreThreadWithAttachment {
 		JSONMBMessage.addCategory(
@@ -573,14 +573,14 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsCategory.viewCP(
-			categoryCount = "0",
+			categoryCount = 0,
 			categoryName = "MB Category Name",
-			replyCount = "1",
-			threadCount = "1");
+			replyCount = 1,
+			threadCount = 1);
 
 		MessageboardsThread.viewCP(
 			mbAttachmentFile = "Document_1.jpg",
-			replyCount = "1",
+			replyCount = 1,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",
 			userName = "Test Test");
@@ -592,7 +592,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65368."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewBBCodeNoXSSWithRemoteServices {
 		property custom.properties = "message.boards.message.formats.default=bbcode";
@@ -602,7 +602,7 @@ definition {
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -632,13 +632,13 @@ definition {
 		var actualScript = '''<script>alert(123);</script>''';
 		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+		AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly after it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInThreadAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -677,7 +677,7 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadBodyImage = "dm-document-title",
 			threadSubject = "MB Thread Message Subject",
@@ -685,7 +685,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly when publication is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanViewImageInThreadWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -725,14 +725,14 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadBodyImage = "dm-document-title",
 			threadSubject = "MB Thread Message Subject",
 			userName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test JavascriptIsNotExecutedInBBCodeBody {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -746,7 +746,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]",
 			threadSubject = "MB Thread Message Subject");
 
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65365."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test JavascriptIsNotExecutedInHTMLBody {
 		property custom.properties = "message.boards.message.formats.default=html";
@@ -773,7 +773,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = '''<script>alert(123);</script>''');
 
@@ -783,7 +783,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
-	@priority = "4"
+	@priority = 4
 	test ThreadsAreSortedFromNewestToOldestByDefault {
 		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3") {
 			JSONMBMessage.addMessage(
@@ -795,20 +795,20 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewPG(
-			position = "1",
+			position = 1,
 			threadSubject = "MB Thread Message 3 Subject");
 
 		MessageboardsThread.viewPG(
-			position = "2",
+			position = 2,
 			threadSubject = "MB Thread Message 2 Subject");
 
 		MessageboardsThread.viewPG(
-			position = "3",
+			position = 3,
 			threadSubject = "MB Thread Message 1 Subject");
 	}
 
 	@description = "This ensures that a thread title is over 255 characters will be trimmed to 255."
-	@priority = "4"
+	@priority = 4
 	test TitleShouldBeTrimmedTo255CharactersWhenOver {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

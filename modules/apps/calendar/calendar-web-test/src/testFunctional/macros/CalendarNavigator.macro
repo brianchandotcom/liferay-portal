@@ -17,16 +17,16 @@ definition {
 	macro closeModal {
 		SelectFrameTop();
 
-		var key_modalTitle = "${modalTitle}";
+		var key_modalTitle = ${modalTitle};
 
 		Click(locator1 = "Button#CLOSE_MODAL");
 	}
 
 	macro gotoAddCurrentSiteCalendars {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Click(
-			key_siteName = "${siteName}",
+			key_siteName = ${siteName},
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW");
 
 		AssertClick(
@@ -49,14 +49,14 @@ definition {
 	}
 
 	macro gotoAddEventToday {
-		var viewTypeUppercase = StringUtil.upperCase("${viewType}");
+		var viewTypeUppercase = StringUtil.upperCase(${viewType});
 
 		Click(locator1 = "Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY");
 	}
 
 	macro gotoAddEventViaCurrentSite {
 		Click(
-			key_site = "${site}",
+			key_site = ${site},
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 		AssertClick(
@@ -70,7 +70,7 @@ definition {
 
 	macro gotoAddEventViaMyCalendars {
 		Click(
-			key_user = "${user}",
+			key_user = ${user},
 			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 		AssertClick(
@@ -111,10 +111,10 @@ definition {
 	}
 
 	macro gotoCurrentSiteCalendarsManage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Click(
-			key_siteName = "${siteName}",
+			key_siteName = ${siteName},
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW");
 
 		AssertClick(
@@ -125,33 +125,33 @@ definition {
 	macro gotoEditEvent {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEvent(eventTitle = ${eventTitle});
 
-		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = "${eventTitle}");
+		CalendarScheduler.viewEventTitleViaDialogBox(eventTitle = ${eventTitle});
 
 		CalendarScheduler.gotoEditViaDialogBox();
 	}
 
 	macro gotoEditResourceCalendar {
-		var key_calendarResourceName = "${calendarResourceName}";
+		var key_calendarResourceName = ${calendarResourceName};
 
 		AssertTextEquals(
 			locator1 = "CalendarResources#RESOURCE_TABLE_NAME",
-			value1 = "${calendarResourceName}");
+			value1 = ${calendarResourceName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${calendarResourceName}");
+			rowEntry = ${calendarResourceName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${calendarResourceName}");
+			value1 = ${calendarResourceName});
 	}
 
 	macro gotoEventDetails {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEvent(eventTitle = ${eventTitle});
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 	}
@@ -167,7 +167,7 @@ definition {
 			Click(locator1 = "Calendar#SMALL_CALENDAR_PREVIOUS");
 		}
 
-		while ((IsTextNotEqual(locator1 = "Calendar#SMALL_CALENDAR_DATE", value1 = "${dateMonth}")) && (maxIterations = "100")) {
+		while ((IsTextNotEqual(locator1 = "Calendar#SMALL_CALENDAR_DATE", value1 = ${dateMonth})) && (maxIterations = "100")) {
 			Click(locator1 = "Calendar#SMALL_CALENDAR_NEXT");
 		}
 	}
@@ -197,7 +197,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View Calendars",
-			rowEntry = "${calendarResourceName}");
+			rowEntry = ${calendarResourceName});
 	}
 
 	macro gotoResources {
@@ -205,7 +205,7 @@ definition {
 	}
 
 	macro gotoSpecificBusyDayViaSmallCalendar {
-		var key_dateNumber = "${dateNumber}";
+		var key_dateNumber = ${dateNumber};
 
 		AssertElementPresent(locator1 = "Calendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY");
 
@@ -219,38 +219,38 @@ definition {
 	}
 
 	macro gotoView {
-		if ("${viewType}" == "Day") {
+		if (${viewType} == "Day") {
 			if (IsElementNotPresent(locator1 = "Calendar#VIEW_DAY_BUTTON_ACTIVE")) {
 				AssertClick(
 					locator1 = "Calendar#VIEW_DAY_BUTTON",
-					value1 = "${viewType}");
+					value1 = ${viewType});
 			}
 
 			AssertElementPresent(locator1 = "CalendarDayView#SCHEDULER_VIEW_DAY");
 		}
-		else if ("${viewType}" == "Week") {
+		else if (${viewType} == "Week") {
 			if (IsElementNotPresent(locator1 = "Calendar#VIEW_WEEK_BUTTON_ACTIVE")) {
 				AssertClick(
 					locator1 = "Calendar#VIEW_WEEK_BUTTON",
-					value1 = "${viewType}");
+					value1 = ${viewType});
 			}
 
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
 		}
-		else if ("${viewType}" == "Month") {
+		else if (${viewType} == "Month") {
 			if (IsElementNotPresent(locator1 = "Calendar#VIEW_MONTH_BUTTON_ACTIVE")) {
 				AssertClick(
 					locator1 = "Calendar#VIEW_MONTH_BUTTON",
-					value1 = "${viewType}");
+					value1 = ${viewType});
 			}
 
 			AssertElementPresent(locator1 = "CalendarMonthView#SCHEDULER_VIEW_MONTH");
 		}
-		else if ("${viewType}" == "Agenda") {
+		else if (${viewType} == "Agenda") {
 			if (IsElementNotPresent(locator1 = "Calendar#VIEW_AGENDA_BUTTON_ACTIVE")) {
 				AssertClick(
 					locator1 = "Calendar#VIEW_AGENDA_BUTTON",
-					value1 = "${viewType}");
+					value1 = ${viewType});
 			}
 
 			AssertElementPresent(locator1 = "CalendarAgendaView#SCHEDULER_VIEW_AGENDA");

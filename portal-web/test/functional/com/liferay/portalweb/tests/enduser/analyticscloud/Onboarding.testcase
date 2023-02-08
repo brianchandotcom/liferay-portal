@@ -25,13 +25,13 @@ definition {
 
 		ACUtils.tearDownAC();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: LRAC-8720 | Automation ID: LRAC-10622 | Test Summary: Modal is displayed on first access to a new workspace"
-	@priority = "5"
+	@priority = 5
 	test ModalDisplayedWhenFirstAccessToWorkspace {
 		property test.name.skip.portal.instance = "Onboarding#ModalDisplayedWhenFirstAccessToWorkspace";
 
@@ -59,7 +59,7 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${supportedFPVersionList}") {
+				for (var key_version : list ${supportedFPVersionList}) {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}
@@ -115,7 +115,7 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${supportedFPVersionList}") {
+				for (var key_version : list ${supportedFPVersionList}) {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}

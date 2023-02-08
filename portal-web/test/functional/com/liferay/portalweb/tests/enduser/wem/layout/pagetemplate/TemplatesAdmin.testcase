@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of template."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInTemplatesAdmin {
 		task ("Given a Template creator has an Information Template") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");

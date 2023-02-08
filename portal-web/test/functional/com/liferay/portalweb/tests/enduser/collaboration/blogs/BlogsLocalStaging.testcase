@@ -18,7 +18,7 @@ definition {
 			layoutName = "Staging Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging Blogs Page",
 			widgetName = "Blogs");
@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-168638. It checks that blog cover images in a staged environment will also display from repository in Live."
-	@priority = "4"
+	@priority = 4
 	test CanCoverImageDisplayFromRepositoryAfterPublishToLive {
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
@@ -48,7 +48,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		JSONBlog.addEntryWithImage(
-			coverImageId = "${imageId}",
+			coverImageId = ${imageId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-81685. It ensures that blogs aren't available to edit on Live"
-	@priority = "4"
+	@priority = 4
 	test CanNotEditBlogsAfterPublishToLive {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotPublishUnapprovedDraft {
 		BlogsNavigator.openToStagingCP(
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotShareUnpublishedEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -169,7 +169,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
-	@priority = "3"
+	@priority = 3
 	test CanPublishBlogWithLayoutReference {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136790. It checks that a blog with a deleted cover image can be published using the SAP."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedCoverImageViaSAP {
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
@@ -234,7 +234,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		JSONBlog.addEntryWithImage(
-			coverImageId = "${imageId}",
+			coverImageId = ${imageId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136793 and LPS-139452. It checks that a custom friendly URL for Blogs can be deleted and republished."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedCustomFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136796. It checks that a deleted embedded linked image for Blogs can be published."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedEmbeddedLinkedImage {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136799. It checks that a deleted image from the Blogs repository can be published and does not appear in live."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedImageFromRepository {
 		JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136795. It checks that an embedded image using a link for Blogs can be published."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEmbeddedImage {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanPublishEntryViaSAP {
 		JSONBlog.addEntry(
@@ -516,7 +516,7 @@ definition {
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2");
+			notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -527,7 +527,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-138246. It ensures that a blog entry can be published via SAP on a page."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEntryViaSAPOnPage {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -554,7 +554,7 @@ definition {
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2");
+			notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -565,7 +565,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136801. It checks that Blogs permissions can be published."
-	@priority = "4"
+	@priority = 4
 	test CanPublishPermissions {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -624,7 +624,7 @@ definition {
 	}
 
 	@description = "This ensures that users can publish a scheduled blog entry to the live site."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanPublishScheduledEntry {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
@@ -634,7 +634,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
-			increaseMinutes = "2",
+			increaseMinutes = 2,
 			site = "false");
 
 		Navigator.gotoStagedSitePage(
@@ -659,7 +659,7 @@ definition {
 
 		// We need to wait for the system time to pass by 2 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = 120000);
 
 		Refresh();
 
@@ -669,7 +669,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-122140. It ensures that a small image can be published."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishSmallImage {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
@@ -704,7 +704,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78833. It ensures that a small image deletion can be published."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishSmallImageDeletion {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136794. It checks that an updated custom friendly URL for Blogs can be published."
-	@priority = "4"
+	@priority = 4
 	test CanPublishUpdatedCustomFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -808,7 +808,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72949."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishUpdatedEntryTitle {
 		JSONBlog.addEntry(
@@ -870,7 +870,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136804. It checks that a small image can be update and published through the normal publication flow."
-	@priority = "4"
+	@priority = 4
 	test CanPublishUpdatedSmallImage {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -920,7 +920,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136791. It checks that the cover image can be updated and republished using the SAP."
-	@priority = "4"
+	@priority = 4
 	test CanRepublishCoverImageViaSAP {
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Site Name (Staging)",
@@ -928,7 +928,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		JSONBlog.addEntryWithImage(
-			coverImageId = "${imageId}",
+			coverImageId = ${imageId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
@@ -948,7 +948,7 @@ definition {
 			sourceFileName = "Document_2.jpg");
 
 		JSONBlog.updateEntryCoverImage(
-			coverImageId = "${imageId}",
+			coverImageId = ${imageId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name (Staging)",
@@ -971,7 +971,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136800. It checks that an updated inline image can be published and does not appear in live."
-	@priority = "4"
+	@priority = 4
 	test CanRepublishInlineImageViaSAP {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -1018,7 +1018,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136803. It checks that the small image can be updated and republished using the SAP."
-	@priority = "4"
+	@priority = 4
 	test CanRepublishSmallImageViaSAP {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
@@ -1064,7 +1064,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136805. It checks that the Blogs video can be updated and republished using the SAP."
-	@priority = "4"
+	@priority = 4
 	test CanRepublishVideoViaSAP {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
@@ -1114,7 +1114,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "5"
+	@priority = 5
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -1182,7 +1182,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154409.It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "5"
+	@priority = 5
 	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -1247,7 +1247,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154411. It ensures that a small image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited."
-	@priority = "3"
+	@priority = 3
 	test CanViewSmallImageAfterFriendlyURLIsUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -1313,7 +1313,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-160639. Verify the blog entry can be published via portlet to Live when adding an entry after selecting blog page as the scope."
-	@priority = "3"
+	@priority = 3
 	test PublishBlogWithScopeViaPortlet {
 		task ("Given: Select page as the Blog portlet scope and add a blog entry") {
 			Navigator.gotoStagedSitePage(

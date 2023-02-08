@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderDescription)) {
-			var description = "${folderDescription}";
+			var description = ${folderDescription};
 		}
 		else {
 			var description = "";
@@ -31,7 +31,7 @@ definition {
 				-d description=${description}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to add a WC Article via JSON"
@@ -62,7 +62,7 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to delete a WC Article via JSON"
@@ -79,15 +79,15 @@ definition {
 				-d articleURL='' \
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _getArticleIdByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -97,9 +97,9 @@ definition {
 				-d "urlTitle=${urlTitle}"
 		''';
 
-		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
+		var articleId = JSONCurlUtil.post(${curl}, "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
 
-		return "${articleId}";
+		return ${articleId};
 	}
 
 	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
@@ -114,13 +114,13 @@ definition {
 				-d groupId=${groupId}
 		''';
 
-		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
+		var folderId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${folderName}')]['folderId']");
 
-		if ("${folderId}" == "") {
+		if (${folderId} == "") {
 			fail("FAIL. Cannot find folder.");
 		}
 		else {
-			return "${folderId}";
+			return ${folderId};
 		}
 	}
 
@@ -136,20 +136,20 @@ definition {
 				-d groupId=${groupId}
 		''';
 
-		var folderUuid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['uuid']");
+		var folderUuid = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${folderName}')]['uuid']");
 
-		if ("${folderUuid}" == "") {
+		if (${folderUuid} == "") {
 			fail("FAIL. Cannot find folder.");
 		}
 		else {
-			return "${folderUuid}";
+			return ${folderUuid};
 		}
 	}
 
 	macro _getResourcePrimKeyByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(groupName = ${groupName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -159,9 +159,9 @@ definition {
 				-d urlTitle=${urlTitle}
 		''';
 
-		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['resourcePrimKey']");
+		var resourcePrimKey = JSONCurlUtil.post(${curl}, "$.[?(@['urlTitle'] == '${urlTitle}')]['resourcePrimKey']");
 
-		return "${resourcePrimKey}";
+		return ${resourcePrimKey};
 	}
 
 	@summary = "Helper function to move a WC Article to the trash via JSON"
@@ -177,7 +177,7 @@ definition {
 				-d articleId=${articleId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to update status of WC Article via JSON"
@@ -196,7 +196,7 @@ definition {
 				-d articleURL=
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

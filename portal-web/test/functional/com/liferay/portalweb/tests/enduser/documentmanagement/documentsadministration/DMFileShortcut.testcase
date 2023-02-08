@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136839. It checks that a shortcut can still be accessed after the target is moved."
-	@priority = "4"
+	@priority = 4
 	test CanAccessAfterMovingTarget {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "This tests that a shortcut can be added to a document."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddShortcutToDocument {
 		property portal.acceptance = "true";
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-155147. It ensures that a user downloading a shortcut will download the related document."
-	@priority = "4"
+	@priority = 4
 	test CanDownloadFileThroughShortcut {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can edit the shortcut."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditShortcutDestination {
 		for (var entryCount : list "1,2") {
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
-	@priority = "4"
+	@priority = 4
 	test CanMoveShortcutIntoFolder {
 		property custom.properties = "dl.actions.visible=true";
 
@@ -182,7 +182,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "This ensures that the shortcut is deleted after deleting the shortcut target."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test ShortcutIsDeletedAfterTargetIsDeleted {
 		JSONDocument.addFileWithUploadedFile(
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@description = "This ensures that the shortcut target is not deleted after deleting the shortcut."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test TargetIsPreservedAfterDeletingShortcut {
 		JSONDocument.addFileWithUploadedFile(

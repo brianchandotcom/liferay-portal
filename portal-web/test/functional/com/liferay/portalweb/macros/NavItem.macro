@@ -1,15 +1,15 @@
 definition {
 
 	macro click {
-		var key_navItem = "${navItem}";
+		var key_navItem = ${navItem};
 
 		if (IsElementNotPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK")) {
 			AssertClick(
 				locator1 = "NavBar#NAV_ITEM_LINK",
-				value1 = "${navItem}");
+				value1 = ${navItem});
 		}
 
-		NavItem.viewActive(navItem = "${navItem}");
+		NavItem.viewActive(navItem = ${navItem});
 	}
 
 	macro gotoAvailableSites {
@@ -62,7 +62,7 @@ definition {
 
 	macro viewActive {
 		AssertElementPresent(
-			key_navItem = "${navItem}",
+			key_navItem = ${navItem},
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 	}
 

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6118. ActiveAllTaxCalculations"
-	@priority = "3"
+	@priority = 3
 	test ActiveAllTaxCalculations {
 		property portal.acceptance = "false";
 		property portal.release = "false";
@@ -152,7 +152,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AddANewDefaultPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
-	@priority = "3"
+	@priority = 3
 	test AddShippingOptionFedEx {
 		property portal.acceptance = "false";
 
@@ -191,7 +191,7 @@ definition {
 
 		for (var labels : list "URL,Key,Account Number,Meter Number") {
 			Type(
-				key_fieldLabel = "${labels}",
+				key_fieldLabel = ${labels},
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "Test");
 		}
@@ -202,7 +202,7 @@ definition {
 
 		for (var key_value : list "FedEx Europe First International Priority,FedEx 1Day Freight,FedEx 2Day,FedEx 2Day AM,FedEx 2Day Freight,FedEx 3Day Freight,FedEx Distance Deferred,FedEx Express Saver,FedEx First Freight,FedEx Freight Economy,FedEx Freight Priority,FedEx Ground,FedEx Next Day Afternoon,FedEx Next Day Early Morning,FedEx Next Day End of Day,FedEx Next Day Freight,FedEx Next Day Mid-Morning,FedEx First Overnight,FedEx Ground Home Delivery,FedEx International Economy,FedEx International Economy Freight,FedEx International First,FedEx International Priority,FedEx International Priority Express,FedEx International Priority Freight,FedEx Priority Overnight,FedEx Same Day,FedEx Same Day City,FedEx SmartPost,FedEx Standard Overnight") {
 			Check.checkToggleSwitch(
-				checkboxName = "${key_value}",
+				checkboxName = ${key_value},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6111. AddShippingOptionFlatRate"
-	@priority = "3"
+	@priority = 3
 	test AddShippingOptionFlatRate {
 		property portal.acceptance = "false";
 
@@ -280,12 +280,12 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Type(
 			key_fieldLabel = "Priority",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6113. AddShippingOptionSettingVariableRate"
-	@priority = "3"
+	@priority = 3
 	test AddShippingOptionSettingVariableRate {
 		property portal.acceptance = "false";
 
@@ -336,21 +336,21 @@ definition {
 
 		CommerceEntry.addShippingOptionSettingsVariableRate(
 			country = "Italy",
-			fixedPrice = "1",
-			priceUnitWeight = "1",
+			fixedPrice = 1,
+			priceUnitWeight = 1,
 			region = "Roma",
 			shippingOption = "Standard",
-			subtotal = "1",
+			subtotal = 1,
 			warehouse = "Italy",
-			weightFrom = "1",
-			weightTo = "1",
-			zip = "0100");
+			weightFrom = 1,
+			weightTo = 1,
+			zip = 0100);
 
 		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"
-	@priority = "3"
+	@priority = 3
 	test AddShippingOptionVariableRate {
 		property portal.acceptance = "false";
 
@@ -396,7 +396,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6120. AddTaxRateSettingsByAddressTaxCalculation"
-	@priority = "3"
+	@priority = 3
 	test AddTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "false";
 
@@ -443,7 +443,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "20");
+			value1 = 20);
 
 		Select(
 			key_fieldLabel = "Country",
@@ -458,7 +458,7 @@ definition {
 		Type(
 			key_fieldLabel = "Zip",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "0100");
+			value1 = 0100);
 
 		Button.click(button = "Submit");
 
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
-	@priority = "3"
+	@priority = 3
 	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
 
@@ -522,7 +522,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSubmitButton();
 
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6413. Commerce Channel API unable to define Type"
-	@priority = "3"
+	@priority = 3
 	test CanCreateChannelViaAPIAndCheckTabs {
 		property portal.acceptance = "false";
 
@@ -543,14 +543,14 @@ definition {
 		var channelTabsList = "General,Type,Notification Queue,Notification Templates,Payment Restrictions,Shipping Restrictions";
 		var createChannelResponseWithError = CommerceJSONChannelsAPI._addChannel(
 			channelName = "Test Channel New",
-			channelType = "${wrongChannelType}",
+			channelType = ${wrongChannelType},
 			currencyCode = "US",
-			externalReferenceCode = "101");
+			externalReferenceCode = 101);
 
-		var createChannelErrorMessage = JSONUtil.getWithJSONPath("${createChannelResponseWithError}", "$");
+		var createChannelErrorMessage = JSONUtil.getWithJSONPath(${createChannelResponseWithError}, "$");
 
 		TestUtils.assertEquals(
-			actual = "${createChannelErrorMessage}",
+			actual = ${createChannelErrorMessage},
 			expected = "{errorDescription=Invalid channel type, message=null, status=400}");
 
 		CommerceNavigator.gotoPortlet(
@@ -561,21 +561,21 @@ definition {
 
 		CommerceJSONChannelsAPI._addChannel(
 			channelName = "Test Channel New",
-			channelType = "${correctChannelType}",
+			channelType = ${correctChannelType},
 			currencyCode = "US",
-			externalReferenceCode = "101");
+			externalReferenceCode = 101);
 
 		Refresh();
 
 		CommerceNavigator.gotoEntry(entryName = "Test Channel New");
 
-		for (var channelTab : list "${channelTabsList}") {
-			CommerceEntry.gotoMenuTab(menuTab = "${channelTab}");
+		for (var channelTab : list ${channelTabsList}) {
+			CommerceEntry.gotoMenuTab(menuTab = ${channelTab});
 		}
 	}
 
 	@description = "This is a test for COMMERCE-9459. CanEditShippingMethodTrackingURL"
-	@priority = "2"
+	@priority = 2
 	test CanEditShippingMethodTrackingURL {
 		property portal.acceptance = "false";
 
@@ -663,7 +663,7 @@ definition {
 	}
 
 	@description = "Verify users without edit permission cannot change the currency of a channel."
-	@priority = "3"
+	@priority = 3
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -711,7 +711,7 @@ definition {
 	}
 
 	@description = "Test for COMMERCE-9432 | Can paginate Payment and Shipping Restrictions pages"
-	@priority = "3"
+	@priority = 3
 	test CanPaginatePaymentAndShippingRestrictions {
 		property test.name.skip.portal.instance = "CPCommerceChannels#CanPaginatePaymentAndShippingRestrictions";
 
@@ -731,12 +731,12 @@ definition {
 					CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 247");
 
 					AssertElementNotPresent(
-						key_rowNumber = "5",
+						key_rowNumber = 5,
 						locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER");
 
 					for (var country : list "Afghanistan,Aland Islands,Albania,Algeria") {
 						AssertElementPresent(
-							key_tableEntry = "${country}",
+							key_tableEntry = ${country},
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 
@@ -745,34 +745,34 @@ definition {
 					CommerceEntry.viewPaginationResults(results = "Showing 5 to 8 of 247");
 
 					AssertElementNotPresent(
-						key_rowNumber = "5",
+						key_rowNumber = 5,
 						locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER");
 
 					for (var country : list "Afghanistan,Aland Islands,Albania,Algeria") {
 						AssertElementNotPresent(
-							key_tableEntry = "${country}",
+							key_tableEntry = ${country},
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 
 					Click(locator1 = "ACUtils#PREVIOUS_PAGES");
 
 					AssertElementNotPresent(
-						key_rowNumber = "5",
+						key_rowNumber = 5,
 						locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER");
 
 					for (var country : list "Afghanistan,Aland Islands,Albania,Algeria") {
 						AssertElementPresent(
-							key_tableEntry = "${country}",
+							key_tableEntry = ${country},
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 
 					Click(
-						key_pageNumber = "4",
+						key_pageNumber = 4,
 						locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 					for (var country : list "Afghanistan,Aland Islands,Albania,Algeria") {
 						AssertElementNotPresent(
-							key_tableEntry = "${country}",
+							key_tableEntry = ${country},
 							locator1 = "LexiconTable#TABLE_ENTRY");
 					}
 				}
@@ -781,13 +781,13 @@ definition {
 	}
 
 	@description = "Verify users can set and edit delivery term eligibility for shipping options."
-	@priority = "3"
+	@priority = 3
 	test CanSetAndEditDeliveryTermsEligibility {
 		property portal.acceptance = "true";
 
 		task ("Given an active delivery term") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
-				termsCount = "2",
+				termsCount = 2,
 				termsType = "Delivery");
 		}
 
@@ -847,7 +847,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10602. Verify that the user can see the channel entries only if the 'Channels > Commerce Channel: View' is present"
-	@priority = "3"
+	@priority = 3
 	test CanUserWithChannelViewPermissionSeeChannelEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 
@@ -931,7 +931,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-4270. CheckAvalaraTaxPresence"
-	@priority = "3"
+	@priority = 3
 	test CheckAvalaraTaxPresence {
 		property portal.acceptance = "false";
 		property portal.release = "false";
@@ -989,7 +989,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel {
 		property portal.acceptance = "false";
 
@@ -999,7 +999,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType {
 		property portal.acceptance = "false";
 
@@ -1009,7 +1009,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType {
 		property portal.acceptance = "false";
 
@@ -1019,7 +1019,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel {
 		property portal.acceptance = "false";
 
@@ -1029,7 +1029,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CompleteCheckoutWithDefaultPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -1067,7 +1067,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
-	@priority = "3"
+	@priority = 3
 	test CreateNewChannelCompileAll {
 		property portal.acceptance = "true";
 
@@ -1113,7 +1113,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NUMBER",
-			value1 = "1");
+			value1 = 1);
 
 		Type(
 			locator1 = "CommerceEntry#CHANGE_TAX_CATEGORY",
@@ -1169,7 +1169,7 @@ definition {
 		AssertElementPresent(
 			key_title = "Maximum Number of Open Orders per Account",
 			locator1 = "TextInput#NUMBER",
-			value = "1");
+			value = 1);
 
 		AssertElementPresent(
 			key_title = "Shipping Tax Category",
@@ -1219,7 +1219,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test DeactivatePaymentMethodLinkedToAnAccount {
 		property portal.acceptance = "false";
 
@@ -1228,7 +1228,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6109. EditAuthorizePaymentMethod"
-	@priority = "3"
+	@priority = 3
 	test EditAuthorizePaymentMethod {
 		property portal.acceptance = "false";
 
@@ -1269,7 +1269,7 @@ definition {
 
 		for (var key_value : list "Show Bank Account,Show Credit Card,Show Store Name,Require CAPTCHA,Require Card Code Verification") {
 			Check.checkToggleSwitch(
-				checkboxName = "${key_value}",
+				checkboxName = ${key_value},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
@@ -1279,7 +1279,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"
-	@priority = "3"
+	@priority = 3
 	test EditConfigurationRemoteTaxCalculation {
 		property portal.acceptance = "false";
 
@@ -1330,7 +1330,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6107. EditMercanetPaymentMethod"
-	@priority = "3"
+	@priority = 3
 	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -1376,7 +1376,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6105. EditMoneyOrderPaymentMethod"
-	@priority = "3"
+	@priority = 3
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -1408,7 +1408,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6276. EditNotificationTemplate"
-	@priority = "3"
+	@priority = 3
 	test EditNotificationTemplate {
 		property portal.acceptance = "false";
 
@@ -1482,7 +1482,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"
-	@priority = "3"
+	@priority = 3
 	test EditPaypalPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -1522,7 +1522,7 @@ definition {
 		Type(
 			key_text = "Payment Attempts Max Count",
 			locator1 = "TextInput#ANY",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -1530,7 +1530,7 @@ definition {
 	}
 
 	@description = "Verify users can configure payment method eligibility to specific payment terms."
-	@priority = "3"
+	@priority = 3
 	test PaymentMethodEligibleForSpecificPaymentTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1580,7 +1580,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -1595,8 +1595,8 @@ definition {
 				paymentMethod = "PayPal",
 				paymentTerm = "Payment Term 1",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1605,7 +1605,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -1620,14 +1620,14 @@ definition {
 				paymentMethod = "Mercanet",
 				paymentTerm = "",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
-	@priority = "3"
+	@priority = 3
 	test RemoveNotificationQueue {
 		property portal.acceptance = "true";
 
@@ -1694,7 +1694,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -1705,8 +1705,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -1725,7 +1725,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6271. RemoveNotificationTemplate"
-	@priority = "3"
+	@priority = 3
 	test RemoveNotificationTemplate {
 		property portal.acceptance = "false";
 
@@ -1768,7 +1768,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"
-	@priority = "3"
+	@priority = 3
 	test RemoveShippingOptionFlatRate {
 		property portal.acceptance = "false";
 
@@ -1822,7 +1822,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -1852,7 +1852,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6112. RemoveShippingOptionVariableRate"
-	@priority = "3"
+	@priority = 3
 	test RemoveShippingOptionVariableRate {
 		property portal.acceptance = "false";
 
@@ -1924,7 +1924,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6115. RemoveShippingSettingOptionVariableRate"
-	@priority = "3"
+	@priority = 3
 	test RemoveShippingSettingOptionVariableRate {
 		property portal.acceptance = "false";
 
@@ -1969,15 +1969,15 @@ definition {
 
 		CommerceEntry.addShippingOptionSettingsVariableRate(
 			country = "Italy",
-			fixedPrice = "1",
-			priceUnitWeight = "1",
+			fixedPrice = 1,
+			priceUnitWeight = 1,
 			region = "Roma",
 			shippingOption = "Standard",
-			subtotal = "1",
+			subtotal = 1,
 			warehouse = "Italy",
-			weightFrom = "1",
-			weightTo = "1",
-			zip = "0100");
+			weightFrom = 1,
+			weightTo = 1,
+			zip = 0100);
 
 		Click(
 			key_text = "Standard",
@@ -1989,7 +1989,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6121. RemoveTaxRateSettingsByAddressTaxCalculation"
-	@priority = "3"
+	@priority = 3
 	test RemoveTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "false";
 
@@ -2027,20 +2027,20 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var current : list "Tax Category-Normal Product,Amount-20,Country-Italy,Region-Roma,Zip-0100") {
-			var fieldLabel = StringUtil.extractFirst("${current}", "-");
-			var value = StringUtil.extractLast("${current}", "-");
+			var fieldLabel = StringUtil.extractFirst(${current}, "-");
+			var value = StringUtil.extractLast(${current}, "-");
 
-			if (("${fieldLabel}" == "Tax Category") || ("${fieldLabel}" == "Country") || ("${fieldLabel}" == "Region")) {
+			if ((${fieldLabel} == "Tax Category") || (${fieldLabel} == "Country") || (${fieldLabel} == "Region")) {
 				Select(
-					key_fieldLabel = "${fieldLabel}",
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "${value}");
+					value1 = ${value});
 			}
 			else {
 				Type(
-					key_fieldLabel = "${fieldLabel}",
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "TextInput#GENERIC_TEXT_INPUT",
-					value1 = "${value}");
+					value1 = ${value});
 			}
 		}
 
@@ -2064,7 +2064,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6124. RemoveTaxRateSettingsFixedTaxRateTaxCalculation"
-	@priority = "3"
+	@priority = 3
 	test RemoveTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
 
@@ -2111,7 +2111,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.click(button = "Submit");
 
@@ -2129,7 +2129,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
-	@priority = "3"
+	@priority = 3
 	test SearchProductDisplayPage {
 		property portal.acceptance = "false";
 
@@ -2150,7 +2150,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
 
 		for (var nameList : list "Channels,Account Groups") {
-			CommerceEntry.assertCheckedSpecificToggle(name = "${nameList}");
+			CommerceEntry.assertCheckedSpecificToggle(name = ${nameList});
 		}
 
 		CommerceNavigator.gotoPortlet(
@@ -2184,7 +2184,7 @@ definition {
 			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
 
 		Click(
-			key_pageNumber = "3",
+			key_pageNumber = 3,
 			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 		AssertElementPresent(
@@ -2193,7 +2193,7 @@ definition {
 	}
 
 	@description = "Verify users can set and edit payment term eligibility for payment methods."
-	@priority = "3"
+	@priority = 3
 	test SetAndEditPaymentMethodTermElgibility {
 		property portal.acceptance = "true";
 
@@ -2239,7 +2239,7 @@ definition {
 	}
 
 	@description = "Verify all shipping options are available when orders are made using different order types given shipping option eligibility is set to All Order Types."
-	@priority = "3"
+	@priority = 3
 	test ShippingOptionEligibleForAnyOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -2297,9 +2297,9 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order2Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order2Id});
 
 			Button.click(button = "Checkout");
 		}
@@ -2324,15 +2324,15 @@ definition {
 		task ("When the user goes to checkout for the Test Order Type 1 order") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order1Id});
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order1Id});
 
 			Button.click(button = "Checkout");
 		}
@@ -2356,7 +2356,7 @@ definition {
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific delivery terms."
-	@priority = "3"
+	@priority = 3
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2378,7 +2378,7 @@ definition {
 
 		task ("And given an active delivery term") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
-				termsCount = "1",
+				termsCount = 1,
 				termsType = "Delivery");
 		}
 
@@ -2403,7 +2403,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -2417,8 +2417,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -2427,7 +2427,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -2441,14 +2441,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Expedited");
 		}
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific order types."
-	@priority = "3"
+	@priority = 3
 	test ShippingOptionEligibleForSpecificOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2517,9 +2517,9 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order2Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order2Id});
 
 			Button.click(button = "Checkout");
 		}
@@ -2537,15 +2537,15 @@ definition {
 		task ("When the user goes to checkout for the Test Order Type 1 order") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order1Id});
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
-			CommerceOrders.selectOrderFromAccountSelector(orderId = "${order1Id}");
+			CommerceOrders.selectOrderFromAccountSelector(orderId = ${order1Id});
 
 			Button.click(button = "Checkout");
 		}
@@ -2569,7 +2569,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The store admin can upload a custom jasper print template"
-	@priority = "3"
+	@priority = 3
 	test UploadCustomJasperPrintTemplate {
 		property portal.acceptance = "false";
 
@@ -2600,7 +2600,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test UsePunchOut {
 		property portal.acceptance = "false";
 
@@ -2609,7 +2609,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6101. UseSearchBar"
-	@priority = "3"
+	@priority = 3
 	test UseSearchBar {
 		property portal.acceptance = "false";
 
@@ -2635,13 +2635,13 @@ definition {
 			key_entryName = "Test Channel",
 			locator1 = "CommerceNavigation#ENTRY_NAME");
 
-		CommerceNavigator.searchEntry(entryName = "1111");
+		CommerceNavigator.searchEntry(entryName = 1111);
 
 		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 	}
 
 	@description = "This is a test for COMMERCE-6266. VerifyNotificationQueue"
-	@priority = "3"
+	@priority = 3
 	test VerifyNotificationQueue {
 		property portal.acceptance = "Intern Test";
 
@@ -2708,7 +2708,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2719,8 +2719,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -2733,12 +2733,12 @@ definition {
 
 		AssertElementPresent(
 			key_name = "Test",
-			key_order = "1",
+			key_order = 1,
 			locator1 = "CommerceEntry#ASSERT_NOTIFICATION_QUEUE");
 	}
 
 	@description = "Verify users can view the priority of shipping options"
-	@priority = "3"
+	@priority = 3
 	test VerifyPriorityColumnForShippingOption {
 		property portal.acceptance = "false";
 
@@ -2758,11 +2758,11 @@ definition {
 
 		task ("And the Sales Manager edits the priority for Standard Delivery to 1 and Expedited Delivery to 2") {
 			CommerceChannels.editShippingOption(
-				priority = "1",
+				priority = 1,
 				shippingOption = "Standard Delivery");
 
 			CommerceChannels.editShippingOption(
-				priority = "2",
+				priority = 2,
 				shippingOption = "Expedited Delivery");
 		}
 
@@ -2772,33 +2772,33 @@ definition {
 				locator1 = "Button#ANY");
 
 			AssertTextEquals(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_entryName = "Standard Delivery",
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-				value1 = "1");
+				value1 = 1);
 
 			AssertTextEquals(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_entryName = "Expedited Delivery",
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-				value1 = "2");
+				value1 = 2);
 		}
 
 		task ("And the shipping options will be re-ordered based on the priority") {
 			AssertTextEquals(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
 				value1 = "Standard Delivery");
 
 			AssertTextEquals(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
 				value1 = "Expedited Delivery");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8300. The store admin can view and download the jasper template"
-	@priority = "3"
+	@priority = 3
 	test ViewAndDownloadCustomJasperPrintTemplate {
 		property portal.acceptance = "false";
 
@@ -2822,7 +2822,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The buyer can view the order preview with the uploaded template"
-	@priority = "3"
+	@priority = 3
 	test ViewOrderPreviewWithJasperTemplate {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2862,7 +2862,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 

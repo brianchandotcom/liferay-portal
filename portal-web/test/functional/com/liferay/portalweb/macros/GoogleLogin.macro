@@ -33,13 +33,13 @@ definition {
 
 		Type(
 			locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD",
-			value1 = "${userEmailAddress}");
+			value1 = ${userEmailAddress});
 
 		Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
 		Type(
 			locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD",
-			value1 = "${userPassword}");
+			value1 = ${userPassword});
 
 		if (IsElementPresent(locator1 = "GoogleLogin#LOGIN_SIGN_IN_BUTTON")) {
 			Click(locator1 = "GoogleLogin#LOGIN_SIGN_IN_BUTTON");

@@ -26,9 +26,9 @@ definition {
 				-d script=${script}
 		''';
 
-		var templateKey = JSONCurlUtil.post("${curl}", "$..templateKey");
+		var templateKey = JSONCurlUtil.post(${curl}, "$..templateKey");
 
-		return "${templateKey}";
+		return ${templateKey};
 	}
 
 	macro _addWidgetTemplate {
@@ -57,9 +57,9 @@ definition {
 				-d script=${script}
 		''';
 
-		var templateKey = JSONCurlUtil.post("${curl}", "$..templateKey");
+		var templateKey = JSONCurlUtil.post(${curl}, "$..templateKey");
 
-		return "${templateKey}";
+		return ${templateKey};
 	}
 
 }

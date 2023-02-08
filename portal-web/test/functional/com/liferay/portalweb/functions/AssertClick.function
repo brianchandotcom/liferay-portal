@@ -5,7 +5,7 @@ definition {
 	function assertClick {
 		WaitForSPARefresh();
 
-		if (contains("${locator1}", "/input")) {
+		if (contains(${locator1}, "/input")) {
 			AssertClick.assertValueClickAt();
 		}
 		else {
@@ -66,7 +66,7 @@ definition {
 
 		selenium.assertLiferayErrors();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 	}
 
 	function assertTextClickAtNoJavaScript {
@@ -138,7 +138,7 @@ definition {
 	function pauseAssertTextClickAt {
 		WaitForSPARefresh();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		AssertClick.assertTextClickAt();
 
@@ -152,7 +152,7 @@ definition {
 
 		selenium.waitForElementPresent("//div[contains(@id,'documentLibraryContainer')]");
 
-		selenium.pause("1500");
+		selenium.pause(1500);
 
 		AssertClick.assertTextClickAt();
 

@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
-		Variables.assertDefined(parameterList = "${content}");
+		Variables.assertDefined(parameterList = ${content});
 
 		if (isSet(source)) {
 			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
@@ -11,32 +11,32 @@ definition {
 			var contentXml = '''<root available-locales="en_US" default-locale="en_US">%0A%09<dynamic-element name="content" type="text_area" index-type="text">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[<p>${content}</p>]]>%0A%09%09</dynamic-content>%0A%09</dynamic-element>%0A</root>''';
 		}
 
-		return "${contentXml}";
+		return ${contentXml};
 	}
 
 	@summary = "Helper function to help input localized content html info"
 	macro _localizedConvertToXML {
-		Variables.assertDefined(parameterList = "${contentMap}");
+		Variables.assertDefined(parameterList = ${contentMap});
 
 		// Get list of localizations used
 
 		var localeList = "";
 
-		for (var i : list "${contentMap}") {
-			var locale = StringUtil.extractFirst("${i}", ":");
+		for (var i : list ${contentMap}) {
+			var locale = StringUtil.extractFirst(${i}, ":");
 
 			var localeList = "${localeList},${locale}";
 		}
 
-		var localeList = RegexUtil.replace("${localeList}", ",(.*)", "1");
+		var localeList = RegexUtil.replace(${localeList}, ",(.*)", 1);
 
 		// Build dynamic content
 
 		var dynamicContent = "";
 
-		for (var i : list "${contentMap}") {
-			var locale = StringUtil.extractFirst("${i}", ":");
-			var translated = StringUtil.extractLast("${i}", ":");
+		for (var i : list ${contentMap}) {
+			var locale = StringUtil.extractFirst(${i}, ":");
+			var translated = StringUtil.extractLast(${i}, ":");
 
 			var dynamicContent = '''${dynamicContent} <dynamic-content language-id="${locale}">${translated}</dynamic-content>''';
 		}
@@ -45,7 +45,7 @@ definition {
 
 		var contentXml = '''<root available-locales="${localeList}" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> ${dynamicContent} </dynamic-element> </root> ''';
 
-		return "${contentXml}";
+		return ${contentXml};
 	}
 
 }

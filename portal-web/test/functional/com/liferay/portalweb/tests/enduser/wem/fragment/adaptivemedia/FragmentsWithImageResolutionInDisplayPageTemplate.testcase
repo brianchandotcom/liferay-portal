@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 				AdaptiveMedia.disableImageResolution(
 					imageName = "Image Resolution",
 					imageState = "Disabled",
-					percentAdapted = "0");
+					percentAdapted = 0);
 
 				AdaptiveMedia.deleteImageResolution(imageName = "Image Resolution");
 			}
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to directly selected image in fragment with background image editable field in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForBackgroundImageDirectlySelectedInBannerCenter {
 		property portal.acceptance = "true";
@@ -91,12 +91,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Tablet viewport") {
@@ -122,14 +122,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizeTablet}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizeTablet});
 
 			PortletEntry.publish();
 		}
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to directly selected background image in Container with padding settings in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForBackgroundImageDirectlySelectedInContainer {
 		property portal.acceptance = "true";
@@ -229,15 +229,15 @@ definition {
 		task ("Directly select an image with width greater than 2000px as background image of Container") {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Direct",
-				paddingBottom = "3",
-				paddingTop = "3",
+				paddingBottom = 3,
+				paddingTop = 3,
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo-jpg",
-				paddingBottom = "3",
-				paddingTop = "3");
+				paddingBottom = 3,
+				paddingTop = 3);
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -253,12 +253,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Portrait Phone viewport") {
@@ -294,14 +294,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizePortraitPhone}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizePortraitPhone});
 
 			PortletEntry.publish();
 		}
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to directly selected image in fragment with image editable field in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForImageDirectlySelectedInCard {
 		property portal.acceptance = "true";
@@ -424,12 +424,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Landscape Phone viewport") {
@@ -466,14 +466,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizeLandscapePhone}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizeLandscapePhone});
 
 			PortletEntry.publish();
 		}
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to mapping background image of a fragment with editable field in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInBannerCenter {
 		property portal.acceptance = "true";
@@ -672,7 +672,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to mapping background image of the Container with padding settings."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInContainer {
 		property portal.acceptance = "true";
@@ -710,8 +710,8 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				fieldName = "Image",
-				paddingBottom = "3",
-				paddingTop = "3",
+				paddingBottom = 3,
+				paddingTop = 3,
 				panel = "Styles");
 		}
 
@@ -794,7 +794,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125191. The image resolution is applied to mapping image of a fragment with editable field in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForMappingImageInCard {
 		property portal.acceptance = "true";

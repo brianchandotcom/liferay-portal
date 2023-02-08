@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124056. The page creator could enable Lazy loading on the Image fragment."
-	@priority = "5"
+	@priority = 5
 	test ConfigureLazyLoadingOnImageFragment {
 		property portal.acceptance = "true";
 
@@ -53,7 +53,7 @@ definition {
 				attribute1 = "loading",
 				fragmentName = "image",
 				id = "image",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "auto");
 		}
@@ -73,7 +73,7 @@ definition {
 				attribute1 = "loading",
 				fragmentName = "image",
 				id = "image",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "lazy");
 		}
@@ -87,7 +87,7 @@ definition {
 				attribute1 = "loading",
 				fragmentName = "image",
 				id = "image",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "auto");
 		}

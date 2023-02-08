@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 
 	@description = "This ensures that a depot can be connected to different types of sites."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanConnectMultipleSites {
 		Site.openSitesAdmin();
@@ -62,7 +62,7 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewConnectedSiteNumber(
-			connectedSiteNumber = "0",
+			connectedSiteNumber = 0,
 			depotName = "Test Depot Name");
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
@@ -78,7 +78,7 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewConnectedSiteNumber(
-			connectedSiteNumber = "4",
+			connectedSiteNumber = 4,
 			depotName = "Test Depot Name");
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
@@ -92,7 +92,7 @@ definition {
 
 	@description = "This ensures that a depot can be connected to the site."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanConnectSite {
 		property portal.acceptance = "true";
@@ -114,7 +114,7 @@ definition {
 
 	@description = "This ensures that the disconnected site can not access the the depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisconnectSite {
 		JSONDepot.addDepot(
@@ -128,7 +128,7 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewConnectedSiteNumber(
-			connectedSiteNumber = "1",
+			connectedSiteNumber = 1,
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library can not be connected to a staged site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotConnectStagedSite {
 		JSONDepot.addDepot(
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRestrictionWhenConnectingSites {
 		JSONDepot.addDepot(
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This asserts that a deactivated site is still shown in connected sites."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test DeactivatedSiteWillRemainInConnectedSitesList {
 		JSONDepot.addDepot(
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "This asserts that a deleted site is removed from connected sites."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test DeletedSiteCannotBeDisplayedInConnectedSitesList {
 		JSONDepot.addDepot(

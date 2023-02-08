@@ -1,17 +1,17 @@
 definition {
 
 	macro selectJsonFile {
-		Navigator.gotoNavTab(navTab = "${tabName}");
+		Navigator.gotoNavTab(navTab = ${tabName});
 
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
 		UploadFile(
-			key_tab = "${tabName}",
+			key_tab = ${tabName},
 			locator1 = "MockLDAP#BROWSE_BUTTON",
-			value1 = "${dependencyFilePath}");
+			value1 = ${dependencyFilePath});
 
 		AssertClick(
-			key_tab = "${tabName}",
+			key_tab = ${tabName},
 			locator1 = "Button#TAB_SUBMIT_BTN",
 			value1 = "Add ${tabName}");
 

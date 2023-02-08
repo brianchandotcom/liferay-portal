@@ -4,27 +4,27 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Select(
-			key_fieldLabel = "${label}",
+			key_fieldLabel = ${label},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption}");
+			value1 = ${listOption});
 
 		Select(
-			key_fieldLabel = "${label1}",
+			key_fieldLabel = ${label1},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption1}");
+			value1 = ${listOption1});
 
 		Button.click(button = "Save");
 	}
 
 	macro assertValueRun {
 		AssertElementPresent(
-			key_title = "${valueRun}",
+			key_title = ${valueRun},
 			locator1 = "TestrayRun#VERIFY_VALUES_RUN");
 	}
 
 	macro deleteRun {
 		RightClick.rightClick(
-			key_projectName = "${runName}",
+			key_projectName = ${runName},
 			locator1 = "Testray#ITEM_NAME");
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -34,20 +34,20 @@ definition {
 
 	macro editRun {
 		RightClick.rightClick(
-			key_projectName = "${runName}",
+			key_projectName = ${runName},
 			locator1 = "Testray#ITEM_NAME");
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Environment Factors");
 
 		Select(
-			key_fieldLabel = "${label}",
+			key_fieldLabel = ${label},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption}");
+			value1 = ${listOption});
 
 		Select(
-			key_fieldLabel = "${label1}",
+			key_fieldLabel = ${label1},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption1}");
+			value1 = ${listOption1});
 
 		Button.click(button = "Save");
 

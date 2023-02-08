@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
-	@priority = "3"
+	@priority = 3
 	test AddItemsToShipment {
 		property portal.acceptance = "true";
 
@@ -65,7 +65,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -80,8 +80,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -122,7 +122,7 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -131,18 +131,18 @@ definition {
 		Refresh();
 
 		for (var column : list "2-${orderId},4-Italy,5-0,6-1") {
-			var key_columnNumber = StringUtil.extractFirst("${column}", "-");
-			var currentValue = StringUtil.extractLast("${column}", "-");
+			var key_columnNumber = StringUtil.extractFirst(${column}, "-");
+			var currentValue = StringUtil.extractLast(${column}, "-");
 
 			AssertTextEquals(
 				key_entryName = "MIN55861",
 				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-				value1 = "${currentValue}");
+				value1 = ${currentValue});
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6248. It should not be possible to add non-shippable items to a shipment"
-	@priority = "3"
+	@priority = 3
 	test AssertAddingNonShippableItemToShipmentNotPossible {
 		property portal.acceptance = "true";
 
@@ -176,7 +176,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -187,8 +187,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "ABS Sensor",
-			productQuantity = "1",
-			productUnitPrice = "50");
+			productQuantity = 1,
+			productUnitPrice = 50);
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
@@ -215,7 +215,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6252. Check that shipment information set at product level are overriden by the shipment info at cpInstance level"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertProductShipmentInfoOverrideCPInstanceShipmentInfo {
 		property portal.acceptance = "false";
 
@@ -225,7 +225,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6253. Shipment dimensions should be correctly calculated"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertShipmentDimensionsIsCorrectlyCalculated {
 		property portal.acceptance = "false";
 
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6249. Shipment items should be taken only from active warehouses"
-	@priority = "3"
+	@priority = 3
 	test AssertShipmentItemTakenFromActiveWarehouses {
 		property portal.acceptance = "true";
 
@@ -252,7 +252,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -263,8 +263,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -333,7 +333,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6254. Shipment weight should be correctly calculated"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertShipmentWeightIsCorrectlyCalculated {
 		property portal.acceptance = "false";
 
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6251. Delete shipment"
-	@priority = "3"
+	@priority = 3
 	test AssertShippedShipmentNotDeletable {
 		property portal.acceptance = "false";
 
@@ -391,7 +391,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -404,8 +404,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -439,7 +439,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9459. CanAddShipmentTrackingURL"
-	@priority = "3"
+	@priority = 3
 	test CanAddShipmentTrackingURL {
 		property portal.acceptance = "false";
 
@@ -470,7 +470,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -481,8 +481,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -507,7 +507,7 @@ definition {
 			CommerceOrders.createShipment(
 				carrierDetail = "Test Carrier",
 				productSkuList = "MIN55861",
-				trackingNumber = "123456789",
+				trackingNumber = 123456789,
 				warehouseName = "Italy");
 		}
 
@@ -542,7 +542,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9459. CanCheckShipmentTrackingURLAfterShippingMethodSelection"
-	@priority = "3"
+	@priority = 3
 	test CanCheckShipmentTrackingURLAfterShippingMethodSelection {
 		property portal.acceptance = "false";
 
@@ -595,7 +595,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -606,8 +606,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -660,15 +660,15 @@ definition {
 
 			CommerceEntry.addShippingOptionSettingsVariableRate(
 				country = "Italy",
-				fixedPrice = "1",
-				priceUnitWeight = "1",
+				fixedPrice = 1,
+				priceUnitWeight = 1,
 				region = "Roma",
 				shippingOption = "Standard",
-				subtotal = "1",
+				subtotal = 1,
 				warehouse = "Italy",
-				weightFrom = "1",
-				weightTo = "1",
-				zip = "0100");
+				weightFrom = 1,
+				weightTo = 1,
+				zip = 0100);
 
 			Alert.viewSuccessMessage();
 
@@ -689,7 +689,7 @@ definition {
 			CommerceOrders.createShipment(
 				carrierDetail = "Test Carrier",
 				productSkuList = "MIN55861",
-				trackingNumber = "123456789",
+				trackingNumber = 123456789,
 				warehouseName = "Italy");
 		}
 
@@ -742,7 +742,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9331 Shipments - Custom fields"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteShipmentCustomFields {
 		property portal.acceptance = "false";
 
@@ -786,7 +786,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -797,8 +797,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -841,7 +841,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -897,7 +897,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9331 Shipments - Custom fields"
-	@priority = "3"
+	@priority = 3
 	test CanEditShipmentCustomFields {
 		property portal.acceptance = "false";
 
@@ -940,7 +940,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -951,8 +951,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -995,7 +995,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1038,7 +1038,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
-	@priority = "3"
+	@priority = 3
 	test CanEditShipmentERC {
 		property portal.acceptance = "false";
 
@@ -1069,7 +1069,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1080,8 +1080,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1124,7 +1124,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1167,7 +1167,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8676 UI to show Shipment Item External Reference"
-	@priority = "3"
+	@priority = 3
 	test CanEditShipmentItemERC {
 		property portal.acceptance = "false";
 
@@ -1198,7 +1198,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1209,8 +1209,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1266,7 +1266,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1306,7 +1306,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9459. CanEditShipmentTrackingURL"
-	@priority = "3"
+	@priority = 3
 	test CanEditShipmentTrackingURL {
 		property portal.acceptance = "false";
 
@@ -1357,7 +1357,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1368,8 +1368,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1394,7 +1394,7 @@ definition {
 			CommerceOrders.createShipment(
 				carrierDetail = "Test Carrier",
 				productSkuList = "MIN55861",
-				trackingNumber = "123456789",
+				trackingNumber = 123456789,
 				warehouseName = "Italy");
 		}
 
@@ -1429,7 +1429,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8676 UI to show Shipment Item External Reference"
-	@priority = "3"
+	@priority = 3
 	test CanNotUseTheSameERCForDifferentShipmentItems {
 		property portal.acceptance = "false";
 
@@ -1460,8 +1460,8 @@ definition {
 
 			for (var productName : list "U-Joint,Torque Converters") {
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "1");
+					productName = ${productName},
+					productQuantity = 1);
 			}
 
 			CommerceCheckout.gotoCheckout();
@@ -1503,7 +1503,7 @@ definition {
 
 			for (var productSku : list "MIN55859,MIN55861") {
 				Check.checkToggleSwitch(
-					key_productSku = "${productSku}",
+					key_productSku = ${productSku},
 					locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 			}
 
@@ -1521,7 +1521,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1552,7 +1552,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1565,7 +1565,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8376 UI to show Shipment External Reference"
-	@priority = "3"
+	@priority = 3
 	test CanNotUseTheSameERCForDifferentShipments {
 		property portal.acceptance = "false";
 
@@ -1596,7 +1596,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1607,8 +1607,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1651,7 +1651,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1676,7 +1676,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1687,8 +1687,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "Torque Converters",
-				productQuantity = "1",
-				productUnitPrice = "34",
+				productQuantity = 1,
+				productUnitPrice = 34,
 				shippingMethod = "Standard");
 		}
 
@@ -1731,7 +1731,7 @@ definition {
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -1748,7 +1748,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9917 | Add 2 items from different orders with different shipping methods selected to the same shipment and assert an info message is shown"
-	@priority = "3"
+	@priority = 3
 	test CanViewShipmentItemsDifferentShippingMethodsInfoMessage {
 		property portal.acceptance = "true";
 
@@ -1803,8 +1803,8 @@ definition {
 				configureShippingOption = "true",
 				shippingMethod = "Variable Rate",
 				shippingOptions = "Standard Option",
-				shippingOptionSettingsFixedPrice = "5",
-				shippingOptionSettingsPriceUnitWeight = "2",
+				shippingOptionSettingsFixedPrice = 5,
+				shippingOptionSettingsPriceUnitWeight = 2,
 				trackingURL = "www.variableratecarriersite.com/");
 		}
 
@@ -1812,18 +1812,18 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55861:1",
-				orderStatus = "10",
+				orderStatus = 10,
 				paymentMethod = "Money Order",
-				paymentStatus = "0",
+				paymentStatus = 0,
 				shippingAddressName = "Test Name",
 				shippingOption = "Expedited Delivery");
 
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55860:1",
-				orderStatus = "10",
+				orderStatus = 10,
 				paymentMethod = "Money Order",
-				paymentStatus = "0",
+				paymentStatus = 0,
 				shippingAddressName = "Test Name",
 				shippingMethod = "Variable Rate",
 				shippingOption = "Standard Option");
@@ -1853,7 +1853,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9459. CanViewShipmentTrackingURL"
-	@priority = "3"
+	@priority = 3
 	test CanViewShipmentTrackingURL {
 		property portal.acceptance = "false";
 
@@ -1904,7 +1904,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1915,8 +1915,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1941,7 +1941,7 @@ definition {
 			CommerceOrders.createShipment(
 				carrierDetail = "Test Carrier",
 				productSkuList = "MIN55861",
-				trackingNumber = "123456789",
+				trackingNumber = 123456789,
 				warehouseName = "Italy");
 		}
 
@@ -1962,7 +1962,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
-	@priority = "3"
+	@priority = 3
 	test CreateMultipleShipmentsForOneOrder {
 		property portal.acceptance = "true";
 
@@ -1980,8 +1980,8 @@ definition {
 
 		for (var productCard : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount") {
 			FrontStore.addInitializerProductToCart(
-				productName = "${productCard}",
-				productQuantity = "1");
+				productName = ${productCard},
+				productQuantity = 1);
 		}
 
 		CommerceCheckout.gotoCheckout();
@@ -2069,7 +2069,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6237. Create a shipment from an order"
-	@priority = "3"
+	@priority = 3
 	test CreateOrderShipment {
 		property portal.acceptance = "false";
 
@@ -2095,7 +2095,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2106,8 +2106,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -2147,7 +2147,7 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -2167,7 +2167,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6250. Delete shipment"
-	@priority = "3"
+	@priority = 3
 	test DeleteShipment {
 		property portal.acceptance = "true";
 
@@ -2185,7 +2185,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2196,8 +2196,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -2241,7 +2241,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
-	@priority = "3"
+	@priority = 3
 	test ExecuteShipmentWorkflow {
 		property portal.acceptance = "true";
 
@@ -2290,7 +2290,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2369,7 +2369,7 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -2392,7 +2392,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6255. Filter, Sort shipment from shipment UI"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FilterAndSortShipments {
 		property portal.acceptance = "false";
 
@@ -2401,7 +2401,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
-	@priority = "3"
+	@priority = 3
 	test RemoveItemFromShipment {
 		property portal.acceptance = "true";
 
@@ -2429,11 +2429,11 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2494,21 +2494,21 @@ definition {
 
 		for (var productSku : list "MIN55860,MIN55861") {
 			Check.checkToggleSwitch(
-				key_productSku = "${productSku}",
+				key_productSku = ${productSku},
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 		}
 
 		Button.clickSubmitButton();
 
 		for (var productSku : list "MIN55860,MIN55861") {
-			CommerceNavigator.gotoEntry(entryName = "${productSku}");
+			CommerceNavigator.gotoEntry(entryName = ${productSku});
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			Type(
 				key_warehouseName = "Italy",
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.clickSave();
 
@@ -2539,7 +2539,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6256. Search shipment from shipment UI"
-	@priority = "3"
+	@priority = 3
 	test SearchShipment {
 		property portal.acceptance = "false";
 
@@ -2571,7 +2571,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -2582,8 +2582,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoPortlet(
@@ -2607,10 +2607,10 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Shipments");
 
 			Click(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "CommerceNavigation#ENTRY_NAME_N");
 
-			if ("${i}" == "1") {
+			if (${i} == 1) {
 				var ship1Id = selenium.getText("CommerceEntry#HEADER_ID");
 			}
 			else {
@@ -2623,31 +2623,31 @@ definition {
 			portlet = "Shipments");
 
 		for (var search : list "${ship1Id},${ship2Id},account1,account2") {
-			CommerceNavigator.searchEntry(entryName = "${search}");
+			CommerceNavigator.searchEntry(entryName = ${search});
 
-			if (("${search}" == "account1") || ("${search}" == "${ship1Id}")) {
+			if ((${search} == "account1") || (${search} == ${ship1Id})) {
 				AssertElementPresent(
-					key_entryName = "${ship1Id}",
+					key_entryName = ${ship1Id},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 
 				AssertElementNotPresent(
-					key_entryName = "${ship2Id}",
+					key_entryName = ${ship2Id},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 			}
 			else {
 				AssertElementPresent(
-					key_entryName = "${ship2Id}",
+					key_entryName = ${ship2Id},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 
 				AssertElementNotPresent(
-					key_entryName = "${ship1Id}",
+					key_entryName = ${ship1Id},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 			}
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6242. Update address"
-	@priority = "3"
+	@priority = 3
 	test UpdateShipmentAddress {
 		property portal.acceptance = "true";
 
@@ -2689,7 +2689,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -2764,7 +2764,7 @@ definition {
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${billingAddressStreet}");
+			value1 = ${billingAddressStreet});
 
 		Button.click(button = "Submit");
 
@@ -2774,7 +2774,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_titleName = "Billing Address",
 				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-				value1 = "${address}");
+				value1 = ${address});
 		}
 
 		Click(
@@ -2789,7 +2789,7 @@ definition {
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${shippingAddressStreet}");
+			value1 = ${shippingAddressStreet});
 
 		Button.click(button = "Submit");
 
@@ -2799,12 +2799,12 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_titleName = "Shipping Address",
 				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-				value1 = "${address}");
+				value1 = ${address});
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
-	@priority = "3"
+	@priority = 3
 	test UpdateShipmentItems {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
@@ -2847,7 +2847,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -2866,8 +2866,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -2908,7 +2908,7 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -2917,7 +2917,7 @@ definition {
 		Refresh();
 
 		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
-			quantityInShipment = "1",
+			quantityInShipment = 1,
 			shipmentItemSku = "MIN55861",
 			warehouseName = "Italy");
 
@@ -2927,7 +2927,7 @@ definition {
 
 		for (var valueList : list "Italy,United States - Southwest,United States - Northeast") {
 			WaitForElementPresent(
-				key_warehouseName = "${valueList}",
+				key_warehouseName = ${valueList},
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE");
 		}
 
@@ -2938,7 +2938,7 @@ definition {
 		AssertTextEquals(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "0");
+			value1 = 0);
 
 		RunScript(locator1 = "document.querySelectorAll('div.quantity-selector input')[1].value=1");
 
@@ -2947,20 +2947,20 @@ definition {
 		AssertTextEquals(
 			key_warehouseName = "United States - Southwest",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrameTop();
 
 		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
-			quantityInShipment = "1",
+			quantityInShipment = 1,
 			shipmentItemSku = "MIN55861",
 			warehouseName = "United States - Southwest");
 	}
 
 	@description = "This is a test for COMMERCE-6243. Update address"
-	@priority = "3"
+	@priority = 3
 	test ValidateShipmentAddress {
 		property portal.acceptance = "false";
 
@@ -3009,7 +3009,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -3079,7 +3079,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
-	@priority = "3"
+	@priority = 3
 	test ViewOrderShipmentAmountIsCorrect {
 		property portal.acceptance = "true";
 
@@ -3132,7 +3132,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -3145,8 +3145,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Click(
@@ -3170,7 +3170,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
-	@priority = "3"
+	@priority = 3
 	test ViewOrderShipmentDiscountAmountIsCorrect {
 		property portal.acceptance = "true";
 
@@ -3191,7 +3191,7 @@ definition {
 
 		CommerceEntry.addNewDiscountsEntry(
 			channelsEligibility = "Minium Portal",
-			discountAmount = "7",
+			discountAmount = 7,
 			discountName = "Test Discount",
 			discountTarget = "Shipping",
 			discountType = "Fixed Amount");
@@ -3232,7 +3232,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -3256,7 +3256,7 @@ definition {
 		Type(
 			key_fieldName = "Zip",
 			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-			value1 = "0100");
+			value1 = 0100);
 
 		Type(
 			key_fieldName = "City",

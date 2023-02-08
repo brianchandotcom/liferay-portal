@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
+	@priority = 4
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
 		property portal.acceptance = "false";
 
@@ -74,7 +74,7 @@ definition {
 		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then by clicking Submit button from minicart, completes the checkout process") {
@@ -87,8 +87,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
+	@priority = 4
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
 		property portal.acceptance = "false";
 
@@ -156,7 +156,7 @@ definition {
 		task ("And buyer user 2 adds a product to the cart for the order opened by buyer user 1") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then by clicking View Details from minicart, completes the checkout process") {
@@ -169,8 +169,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
-	@priority = "5"
+	@priority = 5
 	test AddOrderFromAUserAndCheckoutFromAdminUser {
 		property portal.acceptance = "false";
 
@@ -212,7 +212,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		User.logoutPG();
 
@@ -242,13 +242,13 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 	}
 
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "4"
+	@priority = 4
 	test AddOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
 		property portal.acceptance = "false";
 
@@ -293,7 +293,7 @@ definition {
 		task ("And given a product is added to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -312,7 +312,7 @@ definition {
 		task ("And opens the mini cart to see the active order of buyer user 1") {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
-				value1 = "${activeOrderId}");
+				value1 = ${activeOrderId});
 		}
 
 		task ("Then by clicking Submit button, completes the checkout process") {
@@ -325,8 +325,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -336,7 +336,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8350. This is a use case for COMMERCE-8143"
-	@priority = "5"
+	@priority = 5
 	test AddOrderFromAUserAndCheckoutFromAnotherUserViaOrderDetails {
 		property portal.acceptance = "true";
 
@@ -376,7 +376,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -391,7 +391,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#ACTIVE_ORDER_ID",
-			value1 = "${activeOrderId}");
+			value1 = ${activeOrderId});
 
 		CommerceCheckout.gotoCheckout();
 
@@ -402,8 +402,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		AssertTextEquals(
@@ -412,7 +412,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8168. This is a use case for COMMERCE-8127"
-	@priority = "5"
+	@priority = 5
 	test DeleteOrderAndCheckoutNewOrder {
 		property portal.acceptance = "true";
 
@@ -452,7 +452,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -468,7 +468,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -479,8 +479,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		AssertTextEquals(

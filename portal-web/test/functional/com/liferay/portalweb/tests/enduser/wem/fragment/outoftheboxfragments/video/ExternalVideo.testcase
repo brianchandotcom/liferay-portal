@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130453. Display video from Documents and Media in External Video fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DisplayVideoFromDocumentsAndMediaInExternalVideo {
 		property portal.acceptance = "true";
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130453. Display video from URL in External Video fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DisplayVideoFromURLInExternalVideo {
 		property portal.acceptance = "true";
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151368. It checks that the video URL is saved when adding external video shortcut in non-default language."
-	@priority = "4"
+	@priority = 4
 	test VideoURLIsSavedWhenUsingNonDefaultLanguage {
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -4,19 +4,19 @@ definition {
 	macro viewHeaderTitle {
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "${headerTitle}");
+			value1 = ${headerTitle});
 	}
 
 	macro viewHeaderTitleLabel {
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING_LABEL",
-			value1 = "${headerTitleLabel}");
+			value1 = ${headerTitleLabel});
 	}
 
 	macro viewHeaderTitleNotPresent {
 		AssertTextNotEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "${headerTitle}");
+			value1 = ${headerTitle});
 	}
 
 }

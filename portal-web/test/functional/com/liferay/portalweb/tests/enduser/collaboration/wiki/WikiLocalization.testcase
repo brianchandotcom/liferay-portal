@@ -16,7 +16,7 @@ definition {
 			layoutName = "Wiki Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Test Page",
 			widgetName = "Wiki");
@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136991. It checks that a wiki page can be viewed in Arabic."
-	@priority = "3"
+	@priority = 3
 	test CanViewEntryInArabic {
 		WikiPage.addPG(
 			groupName = "Guest",
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136990. It checks that a wiki page can be viewed in Japanese."
-	@priority = "3"
+	@priority = 3
 	test CanViewEntryInJapanese {
 		WikiPage.addPG(
 			groupName = "Guest",
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-144498. It validates that once localized, the Table of Contents uses the current language translation."
-	@priority = "3"
+	@priority = 3
 	test CanViewTableOfContentsInJapanese {
 		JSONWiki.addWikiPage(
 			groupName = "Guest",

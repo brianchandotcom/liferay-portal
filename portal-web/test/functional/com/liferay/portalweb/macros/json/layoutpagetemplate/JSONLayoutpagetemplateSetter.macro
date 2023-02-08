@@ -1,47 +1,47 @@
 definition {
 
 	macro setClassNameId {
-		Variables.assertDefined(parameterList = "${contentType}");
+		Variables.assertDefined(parameterList = ${contentType});
 
-		if ("${contentType}" == "Commerce Order") {
+		if (${contentType} == "Commerce Order") {
 			var value = "com.liferay.commerce.model.CommerceOrder";
 		}
-		else if ("${contentType}" == "Commerce Product") {
+		else if (${contentType} == "Commerce Product") {
 			var value = "com.liferay.commerce.product.model.CPDefinition";
 		}
-		else if ("${contentType}" == "Web Content Article") {
+		else if (${contentType} == "Web Content Article") {
 			var value = "com.liferay.journal.model.JournalArticle";
 		}
-		else if ("${contentType}" == "Document") {
+		else if (${contentType} == "Document") {
 			var value = "com.liferay.portal.kernel.repository.model.FileEntry";
 		}
-		else if ("${contentType}" == "Blogs Entry") {
+		else if (${contentType} == "Blogs Entry") {
 			var value = "com.liferay.blogs.model.BlogsEntry";
 		}
-		else if ("${contentType}" == "Category") {
+		else if (${contentType} == "Category") {
 			var value = "com.liferay.asset.kernel.model.AssetCategory";
 		}
-		else if ("${contentType}" == "Knowledge Base Article") {
+		else if (${contentType} == "Knowledge Base Article") {
 			var value = "com.liferay.knowledge.base.model.KBArticle";
 		}
 		else {
 			fail("'value' is either invalid or not yet set.");
 		}
 
-		var classNameId = JSONClassname._getClassNameId(value = "${value}");
+		var classNameId = JSONClassname._getClassNameId(value = ${value});
 
-		return "${classNameId}";
+		return ${classNameId};
 	}
 
 	macro setClassTypeId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var classTypeId = JSONDDMstructure._getStructureId(
-			classNameId = "${classNameId}",
-			groupId = "${groupId}",
-			structureName = "${structureName}");
+			classNameId = ${classNameId},
+			groupId = ${groupId},
+			structureName = ${structureName});
 
-		return "${classTypeId}";
+		return ${classTypeId};
 	}
 
 	macro setDescriptionMap {
@@ -52,111 +52,111 @@ definition {
 			var descriptionMap = "{}";
 		}
 
-		return "${descriptionMap}";
+		return ${descriptionMap};
 	}
 
 	macro setDisplayPageTemplatePlid {
 		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
 
 		var displayPageTemplatePlid = JSONLayoutpagetemplateAPI._getDisplayPageTemplatePlidByName(
-			displayPageTemplateEntryName = "${displayPageTemplateEntryName}",
-			groupId = "${groupId}");
+			displayPageTemplateEntryName = ${displayPageTemplateEntryName},
+			groupId = ${groupId});
 
-		return "${displayPageTemplatePlid}";
+		return ${displayPageTemplatePlid};
 	}
 
 	macro setGroupId {
-		Variables.assertDefined(parameterList = "${groupKey}");
+		Variables.assertDefined(parameterList = ${groupKey});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByGroupKey(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupKey = "${groupKey}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupKey},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setLayoutPageTemplateCollectionId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
 		var layoutPageTemplateCollectionId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateCollectionIdByName(
-			groupId = "${groupId}",
-			layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}");
+			groupId = ${groupId},
+			layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName});
 
-		return "${layoutPageTemplateCollectionId}";
+		return ${layoutPageTemplateCollectionId};
 	}
 
 	macro setLayoutPageTemplateEntryId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
-		if ("${type}" == "Content Page Template") {
-			var type = "0";
+		if (${type} == "Content Page Template") {
+			var type = 0;
 		}
-		else if ("${type}" == "Display Page Template") {
-			var type = "1";
+		else if (${type} == "Display Page Template") {
+			var type = 1;
 		}
-		else if ("${type}" == "Master Page Template") {
-			var type = "3";
+		else if (${type} == "Master Page Template") {
+			var type = 3;
 		}
-		else if ("${type}" == "Widget Page Template") {
-			var type = "2";
+		else if (${type} == "Widget Page Template") {
+			var type = 2;
 		}
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateEntryIdByName(
-			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
-			type = "${type}");
+			groupId = ${groupId},
+			layoutPageTemplateEntryName = ${layoutPageTemplateEntryName},
+			type = ${type});
 
-		return "${layoutPageTemplateEntryId}";
+		return ${layoutPageTemplateEntryId};
 	}
 
 	macro setMasterLayoutPlid {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
 		var masterLayoutPlid = JSONLayoutpagetemplateAPI._getMasterLayoutPlidByName(
-			groupId = "${groupId}",
-			masterLayoutEntryName = "${masterLayoutEntryName}");
+			groupId = ${groupId},
+			masterLayoutEntryName = ${masterLayoutEntryName});
 
-		return "${masterLayoutPlid}";
+		return ${masterLayoutPlid};
 	}
 
 	macro setNameMap {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
 
-		return "${nameMap}";
+		return ${nameMap};
 	}
 
 	macro setServiceContext {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
-				addGuestPermissions = "${addGuestPermissions}",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				workflowAction = "${workflowAction}");
+				addGuestPermissions = ${addGuestPermissions},
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				workflowAction = ${workflowAction});
 		}
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 	macro setStatus {
-		Variables.assertDefined(parameterList = "${statusKey}");
+		Variables.assertDefined(parameterList = ${statusKey});
 
-		if ("${statusKey}" == "APPROVED") {
-			var status = "0";
+		if (${statusKey} == "APPROVED") {
+			var status = 0;
 		}
 
-		if ("${statusKey}" == "DRAFT") {
-			var status = "2";
+		if (${statusKey} == "DRAFT") {
+			var status = 2;
 		}
 
-		return "${status}";
+		return ${status};
 	}
 
 }

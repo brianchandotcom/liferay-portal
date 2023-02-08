@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102566, LPS-109594 and LPS-119634. Add a page based on custom master."
-	@priority = "5"
+	@priority = 5
 	test AddPageBasedOnCustomMaster {
 		property portal.acceptance = "true";
 
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
-	@priority = "5"
+	@priority = 5
 	test CanDuplicateMastersPageTemplate {
 		property portal.acceptance = "true";
 
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "This is for LPS-102202. Validate if the Blank page template can not be edited and deleted."
-	@priority = "5"
+	@priority = 5
 	test CannotDeleteBlankPageTemplate {
 		property portal.acceptance = "true";
 
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is for LPS-121979. Change the configuration of page won't break the connection with its master page."
-	@priority = "4"
+	@priority = 4
 	test ChangeConfigurationOfPageBasedOnMasterPage {
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "This is for LPS-102200. Can change master of a content page among any existing masters."
-	@priority = "5"
+	@priority = 5
 	test ChangeMasterOfContentPageAmongExistingMasters {
 		property portal.acceptance = "true";
 
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "This is for LPS-102200. Can change master of a content page template among any existing masters"
-	@priority = "5"
+	@priority = 5
 	test ChangeMasterOfContentPageTemplateAmongExistingMasters {
 		property portal.acceptance = "true";
 
@@ -523,7 +523,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131982. Change master of content page with HTML title."
-	@priority = "3"
+	@priority = 3
 	test ChangeMasterOfContentPageWithHTMLTitle {
 		task ("Add a page based on custom master") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -573,7 +573,7 @@ definition {
 	}
 
 	@description = "This is for LPS-102200. Can change master of a display page template among any existing masters."
-	@priority = "5"
+	@priority = 5
 	test ChangeMasterOfDisplayPageTemplateAmongExistingMasters {
 		property portal.acceptance = "true";
 
@@ -714,7 +714,7 @@ definition {
 	}
 
 	@description = "This is for LPS-105864. Can change master of a widget page among any existing masters."
-	@priority = "5"
+	@priority = 5
 	test ChangeMasterOfWidgetPageAmongExistingMasters {
 		property portal.acceptance = "true";
 
@@ -846,7 +846,7 @@ definition {
 	}
 
 	@description = "This is for LPS-105864. Can change master of a widget page template among any existing masters."
-	@priority = "5"
+	@priority = 5
 	test ChangeMasterOfWidgetPageTemplateAmongExistingMasters {
 		property portal.acceptance = "true";
 
@@ -993,7 +993,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after changing master page which set allowed fragments in drop zone."
-	@priority = "4"
+	@priority = 4
 	test ChangeMasterPageWithAllowedFragments {
 		task ("Select Heading in master page template and publish") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1068,7 +1068,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102194. When checking the checkbox beside Select New Fragments Automatically, the new fragment will be available in content page."
-	@priority = "5"
+	@priority = 5
 	test CheckSelectNewFragmentsAutomaticallyInAllowedFragments {
 		property portal.acceptance = "true";
 
@@ -1180,7 +1180,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102194. Only can add allowed fragments to drop zone in fragment pages when set them in master."
-	@priority = "5"
+	@priority = 5
 	test ConfigureAllowedFragmentsInDropZone {
 		property portal.acceptance = "true";
 
@@ -1226,7 +1226,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102194. Assert all fragments inside collection are available in fragment pages when check the checkbox beside collection"
-	@priority = "4"
+	@priority = 4
 	test ConfigureBasicComponentsAsAllowedFragments {
 		task ("Select Basic Components in master page template and publish") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1258,14 +1258,14 @@ definition {
 			for (var fragmentName : list "Button,Card,Heading,HTML,Image,Paragraph,Separator,Slider,Social,Spacer,Video URL") {
 				AssertVisible(
 					key_collectionName = "Basic Components",
-					key_fragmentName = "${fragmentName}",
+					key_fragmentName = ${fragmentName},
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 			}
 		}
 	}
 
 	@description = "This is for LPS-102200. Assert the content in Drop Zone is not changed when change master of page."
-	@priority = "3"
+	@priority = 3
 	test ContentInDropZoneIsNotChangedWhenChangeMasterofPage {
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1338,7 +1338,7 @@ definition {
 	}
 
 	@description = "This is for LPS-105864. Assert the content of widget page is not changed when change master of page."
-	@priority = "4"
+	@priority = 4
 	test ContentInWidgetPageIsNotChangedWhenChangeMasterofPage {
 		task ("Add header and footer in custom master") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1372,7 +1372,7 @@ definition {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					widgetName = "${portletName}");
+					widgetName = ${portletName});
 			}
 
 			Navigator.gotoSitePage(
@@ -1380,7 +1380,7 @@ definition {
 				siteName = "Test Site Name");
 
 			for (var portletName : list "Asset Publisher,Web Content Display") {
-				Portlet.viewPG(portletName = "${portletName}");
+				Portlet.viewPG(portletName = ${portletName});
 			}
 		}
 
@@ -1425,13 +1425,13 @@ definition {
 				locator1 = "PageEditor#FOOTERS");
 
 			for (var portletName : list "Asset Publisher,Web Content Display") {
-				Portlet.viewPG(portletName = "${portletName}");
+				Portlet.viewPG(portletName = ${portletName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-102194. Assert contents in drop zone shouldn't be changed and available fragments should be changed in sidebar after editing allowed fragments."
-	@priority = "4"
+	@priority = 4
 	test EditAllowedFragments {
 		task ("Select Heading in allowed fragments and publish master page template") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1517,7 +1517,7 @@ definition {
 	}
 
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
-	@priority = "5"
+	@priority = 5
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {
 		property portal.acceptance = "true";
 
@@ -1579,7 +1579,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134844. Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed."
-	@priority = "4"
+	@priority = 4
 	test FragmentsHiddenInMasterPagesAreHiddenInPagesThatUseIt {
 		task ("Add two header fragments") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1604,14 +1604,14 @@ definition {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				index = "2",
+				index = 2,
 				text = "Heading Example 2");
 		}
 
 		task ("Hide Heading Example 1 and save master page") {
 			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
-				index = "1");
+				index = 1);
 
 			MastersPageTemplates.publishMaster();
 		}
@@ -1628,31 +1628,31 @@ definition {
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				position = "2",
+				position = 2,
 				text = "Heading Example 2");
 
 			PageEditor.gotoTab(tabName = "Browser");
 
 			Click.clickNoWaitForVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX");
 
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -1660,16 +1660,16 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				position = "2",
+				position = 2,
 				text = "Heading Example 2");
 
 			AssertElementNotPresent(
-				key_index = "2",
+				key_index = 2,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX");
 		}
@@ -1682,19 +1682,19 @@ definition {
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				position = "2",
+				position = 2,
 				text = "Heading Example 2");
 		}
 	}
 
 	@description = "This is a test for LPS-102566. The new elements can only be added into Drop Zone in a page based on custom master and the elements inherited from the custom master are changless."
-	@priority = "3"
+	@priority = 3
 	test OnlyAddElementsInDropZoneOfPageAndElementsInheritedAreChangeless {
 		task ("Add a custom master with Heading fragment and Asset Publisher portlet") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
@@ -1755,7 +1755,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102566 and LPS-140318. Master page can be used in page, page template and display page, changes in master page will be propagated to page, page template and display page"
-	@priority = "5"
+	@priority = 5
 	test PropagateChangesFromCustomMastersToAllBasedOnCustomMasters {
 		property portal.acceptance = "true";
 

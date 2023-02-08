@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120190 and LPS-125164. Can add fragments into drop zone of Dropdown fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddFragmentIntoDropdownPanel {
 		property portal.acceptance = "true";
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120190. Can define the displayed behavior of dropdown panel in Dropdown fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DefineDisplayedBehaviorOfDropdownPanel {
 		property portal.acceptance = "true";
@@ -162,7 +162,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			Click.javaScriptClick(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
@@ -175,7 +175,7 @@ definition {
 			AssertNotVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			MastersPageTemplates.publishMaster();
@@ -221,7 +221,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			MouseOver(
@@ -236,7 +236,7 @@ definition {
 			AssertNotVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
@@ -267,7 +267,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			PageEditor.clickManagementBar();
@@ -282,7 +282,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
@@ -301,7 +301,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 			PageEditor.clickManagementBar();
@@ -316,13 +316,13 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "menu",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 	}
 
 	@description = "This is a test for LPS-120190. Can define the panel type of Dropdown fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DefinePanelType {
 		property portal.acceptance = "true";
@@ -348,7 +348,7 @@ definition {
 		task ("Add a Dropdown fragment to the second module") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Dropdown",
 				navTab = "Fragments");
 		}
@@ -382,7 +382,7 @@ definition {
 			var moduleContainerWidth = selenium.getAttribute("//div[contains(@class,'col-4')][2]//div[contains(@class,'col__border')]@width");
 
 			AssertVisible(
-				key_panelWidth = "${moduleContainerWidth}",
+				key_panelWidth = ${moduleContainerWidth},
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_WIDTH");
 		}
 
@@ -398,13 +398,13 @@ definition {
 			var pageEditorWidth = selenium.getAttribute("//div[contains(@class,'layout-viewport')]/div[contains(@id,'page-editor')]@width");
 
 			AssertVisible(
-				key_panelWidth = "${pageEditorWidth}",
+				key_panelWidth = ${pageEditorWidth},
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_WIDTH");
 		}
 	}
 
 	@description = "This is a test for LPS-120190. Can edit the text of dropdown button in Dropdown fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditInlineContent {
 		property portal.acceptance = "true";

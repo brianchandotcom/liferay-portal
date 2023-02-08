@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Verify if user can clear the uploaded image from form by clicking on Clear button"
-	@priority = "4"
+	@priority = 4
 	test ClearUploadedImage {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "Verify if user can drag and drop image field into form builder"
-	@priority = "5"
+	@priority = 5
 	test DragAndDropImageFieldToBuilder {
 		DMDocument.addImageField();
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Verify if user can duplicate the image field"
-	@priority = "4"
+	@priority = 4
 	test DuplicateImageField {
 		DMDocument.addImageField();
 
@@ -103,13 +103,13 @@ definition {
 
 		for (var fieldFieldLabel : list "Image,Copy of Image") {
 			DataEngine.viewField(
-				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldFieldLabel = ${fieldFieldLabel},
 				fieldName = "Image");
 		}
 	}
 
 	@description = "Verify if label and field name of image field can be translated"
-	@priority = "5"
+	@priority = 5
 	test LocalizationOfImageFieldtPersists {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -147,7 +147,7 @@ definition {
 			value1 = "Imagen");
 
 		AssertTextEquals(
-			index = "1",
+			index = 1,
 			key_fieldName = "Imagen",
 			locator1 = "DataEngineBuilder#FIELD_NAME_INDEXED",
 			value1 = "Imagen");
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "Verify if user is required to define a description for an uploaded image"
-	@priority = "3"
+	@priority = 3
 	test SaveUploadedImageWithoutDescription {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "Verify if user can define a field Reference"
-	@priority = "4"
+	@priority = 4
 	test SetFieldReferenceOfImageField {
 		DMDocument.addImageField();
 
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "Verify if user can define a help text"
-	@priority = "4"
+	@priority = 4
 	test SetHelpTextOfImageField {
 		DMDocument.addImageField();
 
@@ -239,7 +239,7 @@ definition {
 	}
 
 	@description = "Verify if user can define a description for the uploaded image"
-	@priority = "4"
+	@priority = 4
 	test SetImageDescriptionOnDM {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -277,7 +277,7 @@ definition {
 	}
 
 	@description = "Verify if user can set the image field as repeatable"
-	@priority = "4"
+	@priority = 4
 	test SetImageFieldAsRepeatable {
 		DMDocument.addImageField();
 
@@ -293,19 +293,19 @@ definition {
 
 		AssertVisible(
 			key_fieldName = "Image",
-			key_repeatableFieldNumber = "2",
+			key_repeatableFieldNumber = 2,
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 
 		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
 
 		AssertElementNotPresent(
 			key_fieldName = "Image",
-			key_repeatableFieldNumber = "2",
+			key_repeatableFieldNumber = 2,
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
 	@description = "Verify if user can add a field label"
-	@priority = "5"
+	@priority = 5
 	test SetLabelOfImageField {
 		DMDocument.addImageField();
 
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "Verify if user can show/hide label"
-	@priority = "4"
+	@priority = 4
 	test ShowAndHideImageFieldLabel {
 		DMDocument.addImageField();
 
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@description = "Verify if user can upload an image from Liferay Documents and Media"
-	@priority = "5"
+	@priority = 5
 	test UploadImageFromDocumentsAndMedia {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.jpg",
@@ -371,7 +371,7 @@ definition {
 	}
 
 	@description = "Verify if user can upload an image from local storage"
-	@priority = "5"
+	@priority = 5
 	test UploadImageFromLocalStorage {
 		DMDocument.addImageField();
 
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "Verify if user is not allowed to upload a file that is not an image"
-	@priority = "4"
+	@priority = 4
 	test UploadInvalidFile {
 		DMDocument.addImageField();
 
@@ -419,7 +419,7 @@ definition {
 	}
 
 	@description = "Verify if user can set the field as required or not"
-	@priority = "4"
+	@priority = 4
 	test VerifyRequiredPropertyOfImageField {
 		DMDocument.addImageField();
 

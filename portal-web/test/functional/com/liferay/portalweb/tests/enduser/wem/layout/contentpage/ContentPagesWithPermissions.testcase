@@ -53,7 +53,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-161974. The user with Update permission should be able to add custom value to margin and padding."
-	@priority = "4"
+	@priority = 4
 	test AddCustomValuesToSpacingWithUpdatePermission {
 		task ("Given a new user with update permission has a Heading fragment on content page") {
 			task ("Define the permission of new role") {
@@ -113,7 +113,7 @@ definition {
 			Type(
 				ariaLabel = "Padding Right",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "20");
+				value1 = 20);
 
 			Click(
 				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
@@ -125,20 +125,20 @@ definition {
 		task ("Then the new user could view the custom value of Spacing") {
 			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Heading",
-				index = "1",
+				index = 1,
 				styleName = "paddingRight",
 				styleValue = "20%");
 		}
 	}
 
 	@description = "This is a test for LPS-161974. The user with Update-limited or basic permission should not be able to add custom value to margin and padding."
-	@priority = "4"
+	@priority = 4
 	test CannotAddCustomValuesToSpacingWithLimitedPermission {
 		task ("Given a new user with update-limited and basic permission has a Heading fragment on content page") {
 			task ("Define the permission of new role") {
 				for (var resourceActionIndex : list "UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_LIMITED") {
 					Permissions.definePermissionViaJSONAPI(
-						resourceAction = "${resourceActionIndex}",
+						resourceAction = ${resourceActionIndex},
 						resourceName = "com.liferay.portal.kernel.model.Layout",
 						roleTitle = "Roles Siterole Name",
 						roleType = "site");
@@ -192,12 +192,12 @@ definition {
 		task ("Then the new user could view the custom value of Spacing") {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				paddingTop = "3");
+				paddingTop = 3);
 		}
 	}
 
 	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
-	@priority = "2"
+	@priority = 2
 	test CannotEditAssetWithoutAssetUpdatePermission {
 		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
@@ -208,7 +208,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -233,7 +233,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
 					groupName = "Test Site Name",
-					title = "${webContentTitle}");
+					title = ${webContentTitle});
 			}
 		}
 
@@ -314,7 +314,7 @@ definition {
 		task ("Assert cannot access to web content editor via Contents panel") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				Click.clickAtNotVisible(
-					key_rowEntry = "${webContentTitle}",
+					key_rowEntry = ${webContentTitle},
 					locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
 
 				AssertElementNotPresent(
@@ -339,12 +339,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140136. As a page viewer with only page view permission, the draft actions are invisible."
-	@priority = "4"
+	@priority = 4
 	test CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission {
 		task ("Define the permissions of new role") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -364,7 +364,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_LAYOUT,VIEW_SITE_ADMINISTRATION") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -419,7 +419,7 @@ definition {
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
 
 			for (var itemName : list "Preview Draft,Discard Draft") {
-				MenuItem.viewNotPresent(menuItem = "${itemName}");
+				MenuItem.viewNotPresent(menuItem = ${itemName});
 			}
 		}
 
@@ -434,7 +434,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -454,7 +454,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "
-	@priority = "4"
+	@priority = 4
 	test EditBlogsEntryWithBlogEntryUpdatePermission {
 		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
@@ -526,7 +526,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96795. Content author having permissions to create and update web content could see edit icon in the content page displaying the web contents and could edit web content in edit mode."
-	@priority = "5"
+	@priority = 5
 	test EditContentWithCreateAndUpdateWebContentPermissions {
 		property portal.acceptance = "true";
 
@@ -539,7 +539,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -547,7 +547,7 @@ definition {
 
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -561,7 +561,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_ARTICLE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -595,7 +595,7 @@ definition {
 
 				WebContent.addCP(
 					webContentContent = "WC WebContent Content",
-					webContentTitle = "${webContentTitle}");
+					webContentTitle = ${webContentTitle});
 
 				PortletEntry.publish();
 			}
@@ -683,7 +683,7 @@ definition {
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
-					rowEntry = "${webContentTitle}");
+					rowEntry = ${webContentTitle});
 
 				AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
@@ -693,7 +693,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96795. Content author having permissions to update web content and Update Page Content could see edit icon in the content page displaying the web contents and could edit web content in editmode."
-	@priority = "5"
+	@priority = 5
 	test EditContentWithUpdateWebContentAndUpdatePageContentPermissions {
 		property portal.acceptance = "true";
 
@@ -706,7 +706,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -737,7 +737,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
 					groupName = "Test Site Name",
-					title = "${webContentTitle}");
+					title = ${webContentTitle});
 			}
 		}
 
@@ -831,7 +831,7 @@ definition {
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
-					rowEntry = "${webContentTitle}");
+					rowEntry = ${webContentTitle});
 
 				AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
@@ -841,7 +841,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103454. Content author having permission to update web content could see edit icon in the content page displaying the web contents and could edit web content in editmode, but could not edit editable field "
-	@priority = "5"
+	@priority = 5
 	test EditContentWithWebContentArticleUpdatePermission {
 		property portal.acceptance = "true";
 
@@ -865,7 +865,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
 					groupName = "Test Site Name",
-					title = "${webContentTitle}");
+					title = ${webContentTitle});
 			}
 		}
 
@@ -934,7 +934,7 @@ definition {
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
-					rowEntry = "${webContentTitle}");
+					rowEntry = ${webContentTitle});
 
 				AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
@@ -948,7 +948,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
-	@priority = "5"
+	@priority = 5
 	test EditInlineContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
@@ -961,7 +961,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -1005,13 +1005,13 @@ definition {
 			Click(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			DoubleClick(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			Type(
@@ -1034,7 +1034,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125388. The new user can edit specific content page as site member with update permission."
-	@priority = "4"
+	@priority = 4
 	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
 		task ("Grant Update permission of specific content page to Site Member") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -1086,7 +1086,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
-	@priority = "5"
+	@priority = 5
 	test MapContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
@@ -1099,7 +1099,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -1166,7 +1166,7 @@ definition {
 			Click(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
@@ -1189,7 +1189,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126159. The user can publish a content page without permissions for custom fields."
-	@priority = "4"
+	@priority = 4
 	test PublishContentPageWithoutCustomFieldsPermission {
 		task ("Add a custom field for Page") {
 			ApplicationsMenu.gotoPortlet(
@@ -1273,7 +1273,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137155. The page creator can change permissions of content page via header ellipsis icon at edit mode."
-	@priority = "3"
+	@priority = 3
 	test RemoveViewPermissionForGuestViaHeaderEllipsisIcon {
 		task ("Given a page designer has content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -1312,7 +1312,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
-	@priority = "4"
+	@priority = 4
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
@@ -1412,7 +1412,7 @@ definition {
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				locator1 = "PageEditor#PAGE_CONTENTS_ITEM_POSITION");
 		}
 	}

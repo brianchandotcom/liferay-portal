@@ -4,9 +4,9 @@ definition {
 	macro addLayout {
 		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
 
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
-		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
-		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = ${friendlyURL});
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = ${userGroupName});
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -15,45 +15,45 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
+		var groupId = JSONCurlUtil.get(${curl}, "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
 		var serviceContext = JSONLayoutSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
-		var type = JSONLayoutSetter.setType(type = "${type}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
+		var type = JSONLayoutSetter.setType(type = ${type});
 
 		JSONLayoutAPI._addLayout(
-			friendlyURL = "${friendlyURL}",
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			parentLayoutId = "0",
-			privateLayout = "${privateLayout}",
-			serviceContext = "${serviceContext}",
-			type = "${type}");
+			friendlyURL = ${friendlyURL},
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			parentLayoutId = 0,
+			privateLayout = ${privateLayout},
+			serviceContext = ${serviceContext},
+			type = ${type});
 	}
 
 	@summary = "Add a user group"
 	macro addUserGroup {
-		Variables.assertDefined(parameterList = "${userGroupName}");
+		Variables.assertDefined(parameterList = ${userGroupName});
 
 		JSONUserGroupAPI._addUserGroup(
-			userGroupDescription = "${userGroupDescription}",
-			userGroupName = "${userGroupName}");
+			userGroupDescription = ${userGroupDescription},
+			userGroupName = ${userGroupName});
 	}
 
 	@summary = "Add user group with a group role"
 	macro assignGroupRoleToUserGroup {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
-		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
-		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		var roleId = JSONRoleAPI._getRoleIdByName(name = ${roleTitle});
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = ${userGroupName});
 
 		JSONUserGroupAPI._assignGroupRoleToUserGroup(
-			groupId = "${groupId}",
-			roleId = "${roleId}",
-			userGroupId = "${userGroupId}");
+			groupId = ${groupId},
+			roleId = ${roleId},
+			userGroupId = ${userGroupId});
 	}
 
 }

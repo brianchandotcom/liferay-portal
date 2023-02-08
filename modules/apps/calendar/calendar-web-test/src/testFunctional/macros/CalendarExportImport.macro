@@ -13,7 +13,7 @@ definition {
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "CalendarExportImport#EXPORTED_CALENDAR_FILE_NAME",
-			value1 = "${calendarSelected}");
+			value1 = ${calendarSelected});
 	}
 
 	macro exportCalendarFile {
@@ -24,7 +24,7 @@ definition {
 		if (isSet(subTab)) {
 			Navigator.gotoNavTab(navTab = "Export");
 
-			Navigator.gotoNavTab(navTab = "${subTab}");
+			Navigator.gotoNavTab(navTab = ${subTab});
 		}
 		else {
 			Navigator.gotoNavTab(navTab = "Export");
@@ -35,7 +35,7 @@ definition {
 		if (isSet(subTab)) {
 			Navigator.gotoNavTab(navTab = "Import");
 
-			Navigator.gotoNavTab(navTab = "${subTab}");
+			Navigator.gotoNavTab(navTab = ${subTab});
 		}
 		else {
 			Navigator.gotoNavTab(navTab = "Import");
@@ -49,13 +49,13 @@ definition {
 	}
 
 	macro importCalendarFile {
-		UploadDependencyFile.uploadArchiveFile(fileName = "${calendarFile}");
+		UploadDependencyFile.uploadArchiveFile(fileName = ${calendarFile});
 
 		if (isSet(importValidationErrorMessage)) {
 			AssertTextEquals.assertPartialText(
-				importValidationErrorMessage = "${importValidationErrorMessage}",
+				importValidationErrorMessage = ${importValidationErrorMessage},
 				locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER",
-				value1 = "${importValidationErrorMessage}");
+				value1 = ${importValidationErrorMessage});
 		}
 		else {
 			Button.click(button = "Continue");
@@ -83,7 +83,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CalendarExportImport#EXPORTED_CALENDAR_FILE_NAME",
-			value1 = "${calendarSelected}");
+			value1 = ${calendarSelected});
 	}
 
 	macro viewNoProcessesOnCurrentAndPreviousTab {
@@ -96,7 +96,7 @@ definition {
 		AssertTextEquals(
 			key_larFileName = "Successful",
 			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "${key_larFileName}");
+			value1 = ${key_larFileName});
 	}
 
 }

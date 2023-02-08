@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150596 | Test Summary: Verify when the user clicks on a project name in the Project Breadcrumb, the user is taken to that project's page"
-	@priority = "3"
+	@priority = 3
 	test ClickProjectGoesToProjectPage {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-150593 | Test Summary: Verify if the user can search for a project in the list using the search bar, the list should be updated based on the search term"
-	@priority = "4"
+	@priority = 4
 	test SearchUpdatedWithSearchTerm {
 		var key_project = "Test Account Analytics Cloud";
 
@@ -84,7 +84,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CP2Utils#SVG_DROPDOWN_LIST",
-				value1 = "${searchItem}");
+				value1 = ${searchItem});
 		}
 	}
 

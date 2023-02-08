@@ -3,19 +3,19 @@ definition {
 	macro assertAvailabelEntityTypes {
 		Click(locator1 = "ImportExport#ENTITY_TYPE");
 
-		for (var entityType : list "${entityTypes}") {
+		for (var entityType : list ${entityTypes}) {
 			AssertTextEquals(
 				locator1 = "ImportExport#ENTITY_TYPE",
-				value1 = "${entityType}");
+				value1 = ${entityType});
 		}
 	}
 
 	macro assertDownloadedFileName {
-		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFile}");
+		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = ${downloadedFile});
 
 		echo("## downloadedFileName: ${downloadedFileName}");
 
-		if (contains("${downloadedFileName}", "${downloadedFile}")) {
+		if (contains(${downloadedFileName}, ${downloadedFile})) {
 			echo("This is a correct file.");
 		}
 		else {
@@ -25,30 +25,30 @@ definition {
 
 	macro assertExecutionEntry {
 		AssertElementPresent(
-			key_entityType = "${entityType}",
-			key_executionAction = "${executionAction}",
-			key_executionName = "${executionName}",
-			key_executionStatus = "${executionStatus}",
+			key_entityType = ${entityType},
+			key_executionAction = ${executionAction},
+			key_executionName = ${executionName},
+			key_executionStatus = ${executionStatus},
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 
 		if (isSet(successfulRows) && isSet(failedRows) && isSet(totalRows)) {
 			AssertTextEquals(
 				key_column = "successful-rows",
-				key_executionName = "${executionName}",
+				key_executionName = ${executionName},
 				locator1 = "ImportExport#EXECUTION_COLUMN",
-				value1 = "${successfulRows}");
+				value1 = ${successfulRows});
 
 			AssertTextEquals(
 				key_column = "failed-rows",
-				key_executionName = "${executionName}",
+				key_executionName = ${executionName},
 				locator1 = "ImportExport#EXECUTION_COLUMN",
-				value1 = "${failedRows}");
+				value1 = ${failedRows});
 
 			AssertTextEquals(
 				key_column = "total",
-				key_executionName = "${executionName}",
+				key_executionName = ${executionName},
 				locator1 = "ImportExport#EXECUTION_COLUMN",
-				value1 = "${totalRows}");
+				value1 = ${totalRows});
 		}
 	}
 
@@ -60,33 +60,33 @@ definition {
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Template",
 			locator1 = "ImportExport#SELECT",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 
 		AssertSelectedLabel(
 			locator1 = "ImportExport#ENTITY_TYPE",
-			value1 = "${entityType}");
+			value1 = ${entityType});
 
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Export File Format",
 			locator1 = "ImportExport#SELECT",
-			value1 = "${exportFileFormat}");
+			value1 = ${exportFileFormat});
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_checkboxOption = "Attribute Code",
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
-		for (var exportField : list "${exportFields}") {
+		for (var exportField : list ${exportFields}) {
 			AssertChecked.assertCheckedNotVisible(
-				key_checkboxOption = "${exportField}",
+				key_checkboxOption = ${exportField},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 	}
 
 	macro assertFileContent {
-		var fileContent = TestCase.getTempFileContent(fileName = "${fileName}");
-		var expectedFileContent = TestCase.getFileContent(fileName = "${comparisonFileName}");
+		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
+		var expectedFileContent = TestCase.getFileContent(fileName = ${comparisonFileName});
 
-		if ("${fileContent}" != "${expectedFileContent}") {
+		if (${fileContent} != ${expectedFileContent}) {
 			fail("The file content does not match the expected file content.");
 		}
 	}
@@ -96,14 +96,14 @@ definition {
 			key_title = "Import Mappings",
 			locator1 = "Header#H4_TITLE");
 
-		for (var fieldMapping : list "${fieldMappings}") {
-			var destinationField = StringUtil.extractFirst("${fieldMapping}", ":");
-			var sourceField = StringUtil.extractLast("${fieldMapping}", ":");
+		for (var fieldMapping : list ${fieldMappings}) {
+			var destinationField = StringUtil.extractFirst(${fieldMapping}, ":");
+			var sourceField = StringUtil.extractLast(${fieldMapping}, ":");
 
 			AssertSelectedLabel(
-				key_destinationField = "${destinationField}",
+				key_destinationField = ${destinationField},
 				locator1 = "ImportExport#IMPORT_MAPPING_SELECT",
-				value1 = "${sourceField}");
+				value1 = ${sourceField});
 		}
 	}
 
@@ -112,13 +112,13 @@ definition {
 			key_title = "Import Mappings",
 			locator1 = "Header#H4_TITLE");
 
-		for (var importPreview : list "${importPreviews}") {
-			var destinationField = StringUtil.extractFirst("${importPreview}", ":");
-			var previewField = StringUtil.extractLast("${importPreview}", ":");
+		for (var importPreview : list ${importPreviews}) {
+			var destinationField = StringUtil.extractFirst(${importPreview}, ":");
+			var previewField = StringUtil.extractLast(${importPreview}, ":");
 
 			AssertElementPresent(
-				key_destinationField = "${destinationField}",
-				key_previewField = "${previewField}",
+				key_destinationField = ${destinationField},
+				key_previewField = ${previewField},
 				locator1 = "ImportExport#IMPORT_PREVIEW");
 		}
 	}
@@ -127,113 +127,113 @@ definition {
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Template",
 			locator1 = "ImportExport#SELECT",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 
 		AssertSelectedLabel(
 			locator1 = "ImportExport#ENTITY_TYPE",
-			value1 = "${entityType}");
+			value1 = ${entityType});
 	}
 
 	macro assertNoExecutionEntry {
 		AssertElementNotPresent(
-			key_entityType = "${entityType}",
-			key_executionAction = "${executionAction}",
-			key_executionStatus = "${executionStatus}",
+			key_entityType = ${entityType},
+			key_executionAction = ${executionAction},
+			key_executionStatus = ${executionStatus},
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
 	macro assertOptionalImportFields {
-		for (var optionalField : list "${optionalFields}") {
+		for (var optionalField : list ${optionalFields}) {
 			AssertElementPresent(
-				key_destinationField = "${optionalField}",
+				key_destinationField = ${optionalField},
 				locator1 = "ImportExport#OPTIONAL_IMPORT_FIELD");
 		}
 	}
 
 	macro assertPreviewEntry {
 		AssertElementPresent(
-			key_entryName = "${entryName}",
+			key_entryName = ${entryName},
 			locator1 = "ImportExport#PREVIEW_ENTRY");
 
-		for (var previewField : list "${previewFields}") {
+		for (var previewField : list ${previewFields}) {
 			AssertElementPresent(
-				key_entryName = "${entryName}",
-				key_previewField = "${previewField}",
+				key_entryName = ${entryName},
+				key_previewField = ${previewField},
 				locator1 = "ImportExport#PREVIEW_ENTRY_FIELD");
 		}
 	}
 
 	macro assertPreviewLabels {
-		for (var previewLabel : list "${previewLabels}") {
+		for (var previewLabel : list ${previewLabels}) {
 			AssertElementPresent(
-				key_previewLabel = "${previewLabel}",
+				key_previewLabel = ${previewLabel},
 				locator1 = "ImportExport#PREVIEW_LABEL");
 		}
 	}
 
 	macro assertRequiredImportFields {
-		for (var requiredField : list "${requiredFields}") {
+		for (var requiredField : list ${requiredFields}) {
 			AssertElementPresent(
-				key_destinationField = "${requiredField}",
+				key_destinationField = ${requiredField},
 				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD");
 		}
 	}
 
 	macro configureExport {
-		ImportExport.selectEntity(entityType = "${entityType}");
+		ImportExport.selectEntity(entityType = ${entityType});
 
 		Select(
 			key_selectFieldLabel = "Export File Format",
 			locator1 = "ImportExport#SELECT",
-			value1 = "${exportFileFormat}");
+			value1 = ${exportFileFormat});
 
-		if ("${containsHeaders}" == "false") {
+		if (${containsHeaders} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapExport(exportFields = "${exportFields}");
+		ImportExport.mapExport(exportFields = ${exportFields});
 
 		if (isSet(templateName)) {
-			ImportExport.saveAsTemplate(templateName = "${templateName}");
+			ImportExport.saveAsTemplate(templateName = ${templateName});
 		}
 	}
 
 	macro configureImport {
-		UploadDependencyFile.uploadFile(fileName = "${fileName}");
+		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${importName}");
+				value1 = ${importName});
 		}
 
 		if (isSet(csvSeparator)) {
 			Type(
 				key_text = "CSV Separator",
 				locator1 = "TextInput#ANY",
-				value1 = "${csvSeparator}");
+				value1 = ${csvSeparator});
 		}
 
-		if ("${containsHeaders}" == "false") {
+		if (${containsHeaders} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.selectEntity(entityType = "${entityType}");
+		ImportExport.selectEntity(entityType = ${entityType});
 
-		if ("${stopImportOnError}" == "false") {
+		if (${stopImportOnError} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Stop the Import on Error",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapImport(fieldMappings = "${fieldMappings}");
+		ImportExport.mapImport(fieldMappings = ${fieldMappings});
 
 		if (isSet(templateName)) {
-			ImportExport.saveAsTemplate(templateName = "${templateName}");
+			ImportExport.saveAsTemplate(templateName = ${templateName});
 		}
 	}
 
@@ -242,20 +242,20 @@ definition {
 
 		MenuItem.click(menuItem = "Export File");
 
-		ImportExport.selectEntity(entityType = "${entityType}");
+		ImportExport.selectEntity(entityType = ${entityType});
 
 		Select(
 			key_selectFieldLabel = "Export File Format",
 			locator1 = "ImportExport#SELECT",
-			value1 = "${exportFileFormat}");
+			value1 = ${exportFileFormat});
 
-		if ("${containsHeaders}" == "false") {
+		if (${containsHeaders} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapExport(exportFields = "${exportFields}");
+		ImportExport.mapExport(exportFields = ${exportFields});
 
 		Button.click(button = "Export");
 
@@ -289,36 +289,36 @@ definition {
 
 		MenuItem.click(menuItem = "Import File");
 
-		UploadDependencyFile.uploadFile(fileName = "${fileName}");
+		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${importName}");
+				value1 = ${importName});
 		}
 
 		if (isSet(csvSeparator)) {
 			Type(
 				key_text = "CSV Separator",
 				locator1 = "TextInput#ANY",
-				value1 = "${csvSeparator}");
+				value1 = ${csvSeparator});
 		}
 
-		if ("${containsHeaders}" == "false") {
+		if (${containsHeaders} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.selectEntity(entityType = "${entityType}");
+		ImportExport.selectEntity(entityType = ${entityType});
 
-		if ("${stopImportOnError}" == "false") {
+		if (${stopImportOnError} == "false") {
 			Uncheck.uncheckNotVisible(
 				checkboxName = "Stop the Import on Error",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapImport(fieldMappings = "${fieldMappings}");
+		ImportExport.mapImport(fieldMappings = ${fieldMappings});
 
 		Button.click(button = "Next");
 
@@ -338,32 +338,32 @@ definition {
 			key_checkboxOption = "Attribute Code",
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
-		for (var exportField : list "${exportFields}") {
-			if ("${exportField}" != "") {
+		for (var exportField : list ${exportFields}) {
+			if (${exportField} != "") {
 				Click.clickAtNotVisible(
-					key_checkboxOption = "${exportField}",
+					key_checkboxOption = ${exportField},
 					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 			}
 		}
 	}
 
 	macro mapImport {
-		for (var fieldMapping : list "${fieldMappings}") {
-			var destinationField = StringUtil.extractFirst("${fieldMapping}", ":");
-			var sourceField = StringUtil.extractLast("${fieldMapping}", ":");
+		for (var fieldMapping : list ${fieldMappings}) {
+			var destinationField = StringUtil.extractFirst(${fieldMapping}, ":");
+			var sourceField = StringUtil.extractLast(${fieldMapping}, ":");
 
 			echo("Mapping ${destinationField} to ${sourceField} source field");
 
 			Select(
-				key_destinationField = "${destinationField}",
+				key_destinationField = ${destinationField},
 				locator1 = "ImportExport#IMPORT_MAPPING_SELECT",
-				value1 = "${sourceField}");
+				value1 = ${sourceField});
 		}
 	}
 
 	macro openImportExportAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
@@ -379,7 +379,7 @@ definition {
 		Type(
 			key_placeHolder = "Template Name",
 			locator1 = "TextInput#ANY_PLACEHOLDER",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 
 		Button.clickSave();
 
@@ -391,7 +391,7 @@ definition {
 
 		Select(
 			locator1 = "ImportExport#ENTITY_TYPE",
-			value1 = "${entityType}");
+			value1 = ${entityType});
 	}
 
 }

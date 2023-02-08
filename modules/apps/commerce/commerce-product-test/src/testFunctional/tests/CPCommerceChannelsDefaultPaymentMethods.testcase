@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "Verify a default payment method linked to an account is applied when that account completes the checkout process"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutWithDefaultPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -39,13 +39,13 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			for (var paymentMethodConfiguration : list "PayPal:1,Authorize.Net:2,Mercanet:3,Money Order:4") {
-				var paymentMethod = StringUtil.extractFirst("${paymentMethodConfiguration}", ":");
-				var priority = StringUtil.extractLast("${paymentMethodConfiguration}", ":");
+				var paymentMethod = StringUtil.extractFirst(${paymentMethodConfiguration}, ":");
+				var priority = StringUtil.extractLast(${paymentMethodConfiguration}, ":");
 
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}",
-					priority = "${priority}");
+					paymentMethod = ${paymentMethod},
+					priority = ${priority});
 			}
 		}
 
@@ -67,7 +67,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -82,14 +82,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify the active payment method with the highest priority is applied to an order if the default payment method is not enabled in the channel"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutWithDefaultPaymentMethodDisabled {
 		property portal.acceptance = "false";
 
@@ -99,13 +99,13 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			for (var paymentMethodConfiguration : list "PayPal:1,Money Order:2") {
-				var paymentMethod = StringUtil.extractFirst("${paymentMethodConfiguration}", ":");
-				var priority = StringUtil.extractLast("${paymentMethodConfiguration}", ":");
+				var paymentMethod = StringUtil.extractFirst(${paymentMethodConfiguration}, ":");
+				var priority = StringUtil.extractLast(${paymentMethodConfiguration}, ":");
 
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}",
-					priority = "${priority}");
+					paymentMethod = ${paymentMethod},
+					priority = ${priority});
 			}
 		}
 
@@ -143,7 +143,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -159,14 +159,14 @@ definition {
 				notEligiblePaymentMethods = "PayPal",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify the active payment method with the highest priority is applied to an order if the default payment method is linked to the order type of the order but is not enabled in the channel"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutWithDefaultPaymentMethodDisabledAndEligibleForOrderType {
 		property portal.acceptance = "true";
 
@@ -183,13 +183,13 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			for (var paymentMethodConfiguration : list "Money Order:1,Mercanet:2,PayPal:3") {
-				var paymentMethod = StringUtil.extractFirst("${paymentMethodConfiguration}", ":");
-				var priority = StringUtil.extractLast("${paymentMethodConfiguration}", ":");
+				var paymentMethod = StringUtil.extractFirst(${paymentMethodConfiguration}, ":");
+				var priority = StringUtil.extractLast(${paymentMethodConfiguration}, ":");
 
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}",
-					priority = "${priority}");
+					paymentMethod = ${paymentMethod},
+					priority = ${priority});
 			}
 		}
 
@@ -247,7 +247,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -263,14 +263,14 @@ definition {
 				notEligiblePaymentMethods = "PayPal",
 				paymentMethod = "Mercanet",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify the default payment method is applied to an order if the order type is linked to the default payment method"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutWithDefaultPaymentMethodEligibleForOrderType {
 		property portal.acceptance = "true";
 
@@ -287,13 +287,13 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			for (var paymentMethodConfiguration : list "Money Order:1,Mercanet:2,PayPal:3") {
-				var paymentMethod = StringUtil.extractFirst("${paymentMethodConfiguration}", ":");
-				var priority = StringUtil.extractLast("${paymentMethodConfiguration}", ":");
+				var paymentMethod = StringUtil.extractFirst(${paymentMethodConfiguration}, ":");
+				var priority = StringUtil.extractLast(${paymentMethodConfiguration}, ":");
 
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}",
-					priority = "${priority}");
+					paymentMethod = ${paymentMethod},
+					priority = ${priority});
 			}
 		}
 
@@ -341,7 +341,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -356,14 +356,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify the payment method with the highest priority is applied to an order if the default payment method is not linked to the order type of the Order"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutWithDefaultPaymentMethodIneligibleForOrderType {
 		property portal.acceptance = "false";
 
@@ -385,13 +385,13 @@ definition {
 			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
 			for (var paymentMethodConfiguration : list "PayPal:0,Money Order:1,Mercanet:2") {
-				var paymentMethod = StringUtil.extractFirst("${paymentMethodConfiguration}", ":");
-				var priority = StringUtil.extractLast("${paymentMethodConfiguration}", ":");
+				var paymentMethod = StringUtil.extractFirst(${paymentMethodConfiguration}, ":");
+				var priority = StringUtil.extractLast(${paymentMethodConfiguration}, ":");
 
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}",
-					priority = "${priority}");
+					paymentMethod = ${paymentMethod},
+					priority = ${priority});
 			}
 		}
 
@@ -439,7 +439,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -455,14 +455,14 @@ definition {
 				notEligiblePaymentMethods = "PayPal",
 				paymentMethod = "Mercanet",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify users can see the status of a default payment method linked to an account"
-	@priority = "3"
+	@priority = 3
 	test CanDeactivatePaymentMethodLinkedToAnAccount {
 		property portal.acceptance = "true";
 
@@ -474,7 +474,7 @@ definition {
 			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}");
+					paymentMethod = ${paymentMethod});
 			}
 		}
 
@@ -502,13 +502,13 @@ definition {
 
 		task ("Then the the status of Payment Method on the Active column for Minium Portal is No") {
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Minium Portal",
 				key_value = "Money Order",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 			AssertElementPresent(
-				key_columnNumber = "2",
+				key_columnNumber = 2,
 				key_productName = "Minium Portal",
 				key_value = "No",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "Verify users can edit default payment method linked to an account"
-	@priority = "3"
+	@priority = 3
 	test CanEditDefaultPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -528,7 +528,7 @@ definition {
 			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}");
+					paymentMethod = ${paymentMethod});
 			}
 		}
 
@@ -549,7 +549,7 @@ definition {
 
 			for (var paymentMethod : list "Use Priority Settings,Authorize.Net,Mercanet,Money Order,PayPal") {
 				AssertElementPresent(
-					key_radioOption = "${paymentMethod}",
+					key_radioOption = ${paymentMethod},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 			}
 		}
@@ -566,7 +566,7 @@ definition {
 
 		task ("Then the Default Payment Method should be saved and listed correctly") {
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Minium Portal",
 				key_value = "Money Order",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -592,7 +592,7 @@ definition {
 			IFrame.selectTopFrame();
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Minium Portal",
 				key_value = "Use Priority Settings",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -600,7 +600,7 @@ definition {
 	}
 
 	@description = "Verify an account reverts to priority settings after an offline payment method that is set as default payment method for the account is removed"
-	@priority = "3"
+	@priority = 3
 	test CanRemoveOfflinePaymentSetAsDefaultPaymentMethod {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannelsDefaultPaymentMethods#RemoveOfflinePaymentLinkedAsDefaultPaymentMethod";
@@ -617,7 +617,7 @@ definition {
 			for (var paymentMethod : list "Money Order,Mercanet,Authorize.Net,PayPal,Test Offline Payment Method") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}");
+					paymentMethod = ${paymentMethod});
 			}
 		}
 
@@ -650,7 +650,7 @@ definition {
 
 		task ("Then the Default Payment Method should be 'Use Priority Settings'") {
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Minium Portal",
 				key_value = "Use Priority Settings",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");

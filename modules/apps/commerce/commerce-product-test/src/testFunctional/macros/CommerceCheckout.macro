@@ -2,25 +2,25 @@ definition {
 
 	macro checkout {
 		CommerceCheckout.setAddress(
-			guestEmail = "${guestEmail}",
-			newAddressAddress = "${newAddressAddress}",
-			newAddressCity = "${newAddressCity}",
-			newAddressCountry = "${newAddressCountry}",
-			newAddressName = "${newAddressName}",
-			newAddressZipCode = "${newAddressZipCode}",
-			selectedAddressName = "${selectedShippingAddressName}");
+			guestEmail = ${guestEmail},
+			newAddressAddress = ${newAddressAddress},
+			newAddressCity = ${newAddressCity},
+			newAddressCountry = ${newAddressCountry},
+			newAddressName = ${newAddressName},
+			newAddressZipCode = ${newAddressZipCode},
+			selectedAddressName = ${selectedShippingAddressName});
 
 		Click(locator1 = "Button#CONTINUE");
 
 		Click(
-			key_radioOption = "${shippingMethod}",
+			key_radioOption = ${shippingMethod},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Click(locator1 = "Button#CONTINUE");
 
 		if (isSet(paymentMethod) && (IsElementPresent(key_radioOption = "", locator1 = "CommerceEntry#RADIO_BUTTON"))) {
 			Click(
-				key_radioOption = "${paymentMethod}",
+				key_radioOption = ${paymentMethod},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Click(locator1 = "Button#CONTINUE");
@@ -30,26 +30,26 @@ definition {
 	}
 
 	macro getDeliveryCost {
-		var deliveryExpeditedCost = "25";
-		var deliveryStandardCost = "15";
+		var deliveryExpeditedCost = 25;
+		var deliveryStandardCost = 15;
 
-		if ("${shippingMethod}" == "Expedited") {
-			var deliveryCost = "${deliveryExpeditedCost}";
+		if (${shippingMethod} == "Expedited") {
+			var deliveryCost = ${deliveryExpeditedCost};
 		}
-		else if ("${shippingMethod}" == "Standard") {
-			var deliveryCost = "${deliveryStandardCost}";
+		else if (${shippingMethod} == "Standard") {
+			var deliveryCost = ${deliveryStandardCost};
 		}
 		else if (isSet(customDeliveryValue)) {
-			var deliveryCost = "${customDeliveryValue}";
+			var deliveryCost = ${customDeliveryValue};
 		}
 
 		if (isSet(deliveryDiscountPercentage)) {
-			var deliverydiscountAmount = MathUtil.percent("${deliveryDiscountPercentage}", "${deliveryCost}");
+			var deliverydiscountAmount = MathUtil.percent(${deliveryDiscountPercentage}, ${deliveryCost});
 
 			var deliveryCost = ${deliveryCost} - ${deliverydiscountAmount};
 		}
 
-		return "${deliveryCost}";
+		return ${deliveryCost};
 	}
 
 	macro gotoCheckout {
@@ -74,15 +74,15 @@ definition {
 
 	macro initializersCheckout {
 		CommerceCheckout.setAddress(
-			guestEmail = "${guestEmail}",
-			newAddressAddress = "${newAddressAddress}",
-			newAddressCity = "${newAddressCity}",
-			newAddressCountry = "${newAddressCountry}",
-			newAddressName = "${newAddressName}",
-			newAddressZipCode = "${newAddressZipCode}",
-			selectedAddressName = "${selectedShippingAddressName}");
+			guestEmail = ${guestEmail},
+			newAddressAddress = ${newAddressAddress},
+			newAddressCity = ${newAddressCity},
+			newAddressCountry = ${newAddressCountry},
+			newAddressName = ${newAddressName},
+			newAddressZipCode = ${newAddressZipCode},
+			selectedAddressName = ${selectedShippingAddressName});
 
-		if ("${viewBillingAddressPermission}" != "false") {
+		if (${viewBillingAddressPermission} != "false") {
 			if (isSet(billingAddressName)) {
 				Uncheck.uncheckToggleSwitch(
 					checkboxName = "Use shipping address as billing address",
@@ -91,11 +91,11 @@ definition {
 				var setBillingAddress = "true";
 			}
 			else {
-				var billingAddressAddress = "${newAddressAddress}";
-				var billingAddressCity = "${newAddressCity}";
-				var billingAddressCountry = "${newAddressCountry}";
-				var billingAddressName = "${newAddressName}";
-				var billingAddressZipCode = "${newAddressZipCode}";
+				var billingAddressAddress = ${newAddressAddress};
+				var billingAddressCity = ${newAddressCity};
+				var billingAddressCountry = ${newAddressCountry};
+				var billingAddressName = ${newAddressName};
+				var billingAddressZipCode = ${newAddressZipCode};
 			}
 		}
 		else {
@@ -115,46 +115,46 @@ definition {
 		}
 
 		if (isSet(productDiscountedTotalPrice)) {
-			var subtotal = "${productDiscountedTotalPrice}";
+			var subtotal = ${productDiscountedTotalPrice};
 		}
 
 		if (isSet(singleShippingOption)) {
 			if (isSet(shippingMethod)) {
 				var deliveryCost = CommerceCheckout.getDeliveryCost(
-					customDeliveryValue = "${customDeliveryValue}",
-					deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
-					shippingMethod = "${shippingMethod}");
+					customDeliveryValue = ${customDeliveryValue},
+					deliveryDiscountPercentage = ${deliveryDiscountPercentage},
+					shippingMethod = ${shippingMethod});
 
 				var total = ${subtotal} + ${deliveryCost};
 			}
 		}
 		else if (isSet(shippingMethod)) {
-			if ("${manageShippingOptionsPermission}" != "false") {
+			if (${manageShippingOptionsPermission} != "false") {
 				if (isSet(defaultShippingMethod)) {
 					AssertChecked(
-						key_radioOption = "${defaultShippingMethod}",
+						key_radioOption = ${defaultShippingMethod},
 						locator1 = "CommerceEntry#RADIO_BUTTON");
 				}
 
 				if (isSet(eligibleShippingMethods)) {
-					for (var eligibleShippingMethod : list "${eligibleShippingMethods}") {
+					for (var eligibleShippingMethod : list ${eligibleShippingMethods}) {
 						AssertElementPresent(
-							key_radioOption = "${eligibleShippingMethod}",
+							key_radioOption = ${eligibleShippingMethod},
 							locator1 = "CommerceEntry#RADIO_BUTTON");
 					}
 				}
 
 				if (isSet(notEligibleShippingMethods)) {
-					for (var notEligibleShippingMethod : list "${notEligibleShippingMethods}") {
+					for (var notEligibleShippingMethod : list ${notEligibleShippingMethods}) {
 						AssertElementNotPresent(
-							key_radioOption = "${notEligibleShippingMethod}",
+							key_radioOption = ${notEligibleShippingMethod},
 							locator1 = "CommerceEntry#RADIO_BUTTON");
 					}
 				}
 
 				if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 					Click(
-						key_radioOption = "${shippingMethod}",
+						key_radioOption = ${shippingMethod},
 						locator1 = "CommerceEntry#RADIO_BUTTON");
 
 					Click(locator1 = "Button#CONTINUE");
@@ -167,25 +167,25 @@ definition {
 			}
 
 			var deliveryCost = CommerceCheckout.getDeliveryCost(
-				customDeliveryValue = "${customDeliveryValue}",
-				deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
-				shippingMethod = "${shippingMethod}");
+				customDeliveryValue = ${customDeliveryValue},
+				deliveryDiscountPercentage = ${deliveryDiscountPercentage},
+				shippingMethod = ${shippingMethod});
 
 			var total = ${subtotal} + ${deliveryCost};
 		}
 		else {
-			var total = "${subtotal}";
+			var total = ${subtotal};
 		}
 
 		if (isSet(setBillingAddress)) {
 			CommerceCheckout.setAddress(
-				guestEmail = "${guestEmail}",
-				newAddressAddress = "${billingAddressAddress}",
-				newAddressCity = "${billingAddressCity}",
-				newAddressCountry = "${billingAddressCountry}",
-				newAddressName = "${billingAddressName}",
-				newAddressZipCode = "${billingAddressZipCode}",
-				selectedAddressName = "${selectedBillingAddressName}");
+				guestEmail = ${guestEmail},
+				newAddressAddress = ${billingAddressAddress},
+				newAddressCity = ${billingAddressCity},
+				newAddressCountry = ${billingAddressCountry},
+				newAddressName = ${billingAddressName},
+				newAddressZipCode = ${billingAddressZipCode},
+				selectedAddressName = ${selectedBillingAddressName});
 
 			Click(locator1 = "Button#CONTINUE");
 		}
@@ -193,12 +193,12 @@ definition {
 		if (isSet(deliveryTerm)) {
 			if (IsElementPresent(key_label = "Delivery Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 				Click(
-					key_radioOption = "${deliveryTerm}",
+					key_radioOption = ${deliveryTerm},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 
 				Click(locator1 = "Button#CONTINUE");
 			}
-			else if (("${manageDeliveryTerms}" == "false") && isSet(manageDeliveryTerms)) {
+			else if ((${manageDeliveryTerms} == "false") && isSet(manageDeliveryTerms)) {
 				AssertElementNotPresent(
 					key_label = "Delivery Terms",
 					locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
@@ -209,28 +209,28 @@ definition {
 			if (IsElementPresent(key_label = "Payment Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 				if (isSet(defaultPaymentMethod)) {
 					AssertChecked(
-						key_radioOption = "${defaultPaymentMethod}",
+						key_radioOption = ${defaultPaymentMethod},
 						locator1 = "CommerceEntry#RADIO_BUTTON");
 				}
 
 				if (isSet(eligiblePaymentMethods)) {
-					for (var eligiblePaymentMethod : list "${eligiblePaymentMethods}") {
+					for (var eligiblePaymentMethod : list ${eligiblePaymentMethods}) {
 						AssertElementPresent(
-							key_radioOption = "${eligiblePaymentMethod}",
+							key_radioOption = ${eligiblePaymentMethod},
 							locator1 = "CommerceEntry#RADIO_BUTTON");
 					}
 				}
 
 				if (isSet(notEligiblePaymentMethods)) {
-					for (var notEligiblePaymentMethod : list "${notEligiblePaymentMethods}") {
+					for (var notEligiblePaymentMethod : list ${notEligiblePaymentMethods}) {
 						AssertElementNotPresent(
-							key_radioOption = "${notEligiblePaymentMethod}",
+							key_radioOption = ${notEligiblePaymentMethod},
 							locator1 = "CommerceEntry#RADIO_BUTTON");
 					}
 				}
 
 				Click(
-					key_radioOption = "${paymentMethod}",
+					key_radioOption = ${paymentMethod},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 
 				Click(locator1 = "Button#CONTINUE");
@@ -240,12 +240,12 @@ definition {
 		if (isSet(paymentTerm)) {
 			if (IsElementPresent(key_label = "Payment Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 				Click(
-					key_radioOption = "${paymentTerm}",
+					key_radioOption = ${paymentTerm},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 
 				Click(locator1 = "Button#CONTINUE");
 			}
-			else if (("${managePaymentTerms}" == "false") && isSet(managePaymentTerms)) {
+			else if ((${managePaymentTerms} == "false") && isSet(managePaymentTerms)) {
 				AssertElementNotPresent(
 					key_label = "Payment Terms",
 					locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL");
@@ -254,56 +254,56 @@ definition {
 
 		if (isSet(selectedShippingAddressName) && isSet(accountName)) {
 			var newAddressAddress = CommerceJSONAccountsAPI._getAccountAddressStreetByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedShippingAddressName}",
-				streetNumber = "1");
+				accountEntryName = ${accountName},
+				addressName = ${selectedShippingAddressName},
+				streetNumber = 1);
 			var newAddressCity = CommerceJSONAccountsAPI._getAccountAddressCityByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedShippingAddressName}");
+				accountEntryName = ${accountName},
+				addressName = ${selectedShippingAddressName});
 			var newAddressCountry = CommerceJSONAccountsAPI._getAccountAddressCountryByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedShippingAddressName}");
-			var newAddressName = "${selectedShippingAddressName}";
+				accountEntryName = ${accountName},
+				addressName = ${selectedShippingAddressName});
+			var newAddressName = ${selectedShippingAddressName};
 		}
 
 		if (isSet(selectedBillingAddressName) && isSet(accountName)) {
 			var billingAddressAddress = CommerceJSONAccountsAPI._getAccountAddressStreetByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedBillingAddressName}",
-				streetNumber = "1");
+				accountEntryName = ${accountName},
+				addressName = ${selectedBillingAddressName},
+				streetNumber = 1);
 			var billingAddressCity = CommerceJSONAccountsAPI._getAccountAddressCityByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedBillingAddressName}");
+				accountEntryName = ${accountName},
+				addressName = ${selectedBillingAddressName});
 			var billingAddressCountry = CommerceJSONAccountsAPI._getAccountAddressCountryByAddressName(
-				accountEntryName = "${accountName}",
-				addressName = "${selectedBillingAddressName}");
-			var billingAddressName = "${selectedBillingAddressName}";
+				accountEntryName = ${accountName},
+				addressName = ${selectedBillingAddressName});
+			var billingAddressName = ${selectedBillingAddressName};
 		}
 
 		CommerceCheckout.viewCheckoutOrderSummary(
-			addressAddress = "${newAddressAddress}",
-			addressCity = "${newAddressCity}",
-			addressCountry = "${newAddressCountry}",
-			addressName = "${newAddressName}",
-			billingAddressAddress = "${billingAddressAddress}",
-			billingAddressCity = "${billingAddressCity}",
-			billingAddressCountry = "${billingAddressCountry}",
-			billingAddressName = "${billingAddressName}",
-			deliveryDiscountPercentage = "${deliveryDiscountPercentage}",
-			deliveryDiscountValue = "${deliveryDiscountValue}",
-			deliveryTerm = "${deliveryTerm}",
-			deliveryValue = "${deliveryValue}",
-			paymentMethod = "${paymentMethod}",
-			paymentTerm = "${paymentTerm}",
-			productDiscountedTotalPrice = "${productDiscountedTotalPrice}",
-			productDiscountValue = "${productDiscountValue}",
-			productName = "${productName}",
-			productPrice = "${productUnitPrice}",
-			productQuantity = "${productQuantity}",
-			shippingOption = "${shippingOption}",
-			subtotalValue = "${subtotal}",
-			totalValue = "${total}",
-			viewBillingAddressPermission = "${viewBillingAddressPermission}");
+			addressAddress = ${newAddressAddress},
+			addressCity = ${newAddressCity},
+			addressCountry = ${newAddressCountry},
+			addressName = ${newAddressName},
+			billingAddressAddress = ${billingAddressAddress},
+			billingAddressCity = ${billingAddressCity},
+			billingAddressCountry = ${billingAddressCountry},
+			billingAddressName = ${billingAddressName},
+			deliveryDiscountPercentage = ${deliveryDiscountPercentage},
+			deliveryDiscountValue = ${deliveryDiscountValue},
+			deliveryTerm = ${deliveryTerm},
+			deliveryValue = ${deliveryValue},
+			paymentMethod = ${paymentMethod},
+			paymentTerm = ${paymentTerm},
+			productDiscountedTotalPrice = ${productDiscountedTotalPrice},
+			productDiscountValue = ${productDiscountValue},
+			productName = ${productName},
+			productPrice = ${productUnitPrice},
+			productQuantity = ${productQuantity},
+			shippingOption = ${shippingOption},
+			subtotalValue = ${subtotal},
+			totalValue = ${total},
+			viewBillingAddressPermission = ${viewBillingAddressPermission});
 
 		if (IsElementPresent(key_productName = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT")) {
 			Click(locator1 = "Button#CONTINUE");
@@ -317,39 +317,39 @@ definition {
 			Type(
 				key_fieldName = "Name",
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-				value1 = "${newAddressName}");
+				value1 = ${newAddressName});
 
 			Type(
 				key_fieldName = "Address",
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-				value1 = "${newAddressAddress}");
+				value1 = ${newAddressAddress});
 
 			Select(
 				key_fieldName = "Country",
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
-				value1 = "${newAddressCountry}");
+				value1 = ${newAddressCountry});
 
 			Type(
 				key_fieldName = "Zip",
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-				value1 = "${newAddressZipCode}");
+				value1 = ${newAddressZipCode});
 
 			Type(
 				key_fieldName = "City",
 				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-				value1 = "${newAddressCity}");
+				value1 = ${newAddressCity});
 
 			if (isSet(guestEmail)) {
 				Type(
 					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
-					value1 = "${guestEmail}");
+					value1 = ${guestEmail});
 			}
 		}
 		else if (isSet(selectedAddressName)) {
 			Select(
 				key_selectFieldLabel = "Choose",
 				locator1 = "Select#ANY",
-				value1 = "${selectedAddressName}");
+				value1 = ${selectedAddressName});
 		}
 	}
 
@@ -359,7 +359,7 @@ definition {
 		Type(
 			key_fieldName = "mm/dd/yyyy",
 			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		Click(locator1 = "Button#CONTINUE");
 	}
@@ -379,57 +379,57 @@ definition {
 
 		if (IsElementPresent(key_addressInfo = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS")) {
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressName}",
+				key_addressInfo = ${addressName},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
-				value1 = "${addressName}");
+				value1 = ${addressName});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressAddress}",
+				key_addressInfo = ${addressAddress},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
-				value1 = "${addressAddress}");
+				value1 = ${addressAddress});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCity}",
+				key_addressInfo = ${addressCity},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
-				value1 = "${addressCity}");
+				value1 = ${addressCity});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCountry}",
+				key_addressInfo = ${addressCountry},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_ADDRESS",
-				value1 = "${addressCountry}");
+				value1 = ${addressCountry});
 		}
 
 		if (IsElementPresent(key_addressInfo = "", locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS")) {
 			if (isSet(billingAddressName)) {
 				AssertTextEquals.assertPartialText(
-					key_addressInfo = "${billingAddressName}",
+					key_addressInfo = ${billingAddressName},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS",
-					value1 = "${billingAddressName}");
+					value1 = ${billingAddressName});
 			}
 
 			if (isSet(billingAddress)) {
 				AssertTextEquals.assertPartialText(
-					key_addressInfo = "${billingAddressAddress}",
+					key_addressInfo = ${billingAddressAddress},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS",
-					value1 = "${billingAddressAddress}");
+					value1 = ${billingAddressAddress});
 			}
 
 			if (isSet(billingAddressCity)) {
 				AssertTextEquals.assertPartialText(
-					key_addressInfo = "${billingAddressCity}",
+					key_addressInfo = ${billingAddressCity},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS",
-					value1 = "${billingAddressCity}");
+					value1 = ${billingAddressCity});
 			}
 
 			if (isSet(billingAddressCountry)) {
 				AssertTextEquals.assertPartialText(
-					key_addressInfo = "${billingAddressCountry}",
+					key_addressInfo = ${billingAddressCountry},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS",
-					value1 = "${billingAddressCountry}");
+					value1 = ${billingAddressCountry});
 			}
 		}
 
-		if ("${viewBillingAddressPermission}" == "false") {
+		if (${viewBillingAddressPermission} == "false") {
 			AssertElementNotPresent(
 				key_addressInfo = "",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_BILLING_ADDRESS");
@@ -437,124 +437,124 @@ definition {
 
 		if (isSet(paymentMethod)) {
 			AssertTextEquals(
-				key_paymentMethod = "${paymentMethod}",
+				key_paymentMethod = ${paymentMethod},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
-				value1 = "${paymentMethod}");
+				value1 = ${paymentMethod});
 		}
 
 		if (isSet(paymentTerm)) {
-			if ("${paymentTerm}" == "") {
+			if (${paymentTerm} == "") {
 				AssertElementNotPresent(
 					key_paymentTerm = "",
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_TERM");
 			}
 			else {
 				AssertTextEquals(
-					key_paymentTerm = "${paymentTerm}",
+					key_paymentTerm = ${paymentTerm},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_TERM",
-					value1 = "${paymentTerm}");
+					value1 = ${paymentTerm});
 			}
 		}
 
 		if (isSet(deliveryTerm)) {
-			if ("${deliveryTerm}" == "") {
+			if (${deliveryTerm} == "") {
 				AssertElementNotPresent(
 					key_deliveryTerm = "",
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_TERM");
 			}
 			else {
 				AssertTextEquals(
-					key_paymentMethod = "${deliveryTerm}",
+					key_paymentMethod = ${deliveryTerm},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
-					value1 = "${deliveryTerm}");
+					value1 = ${deliveryTerm});
 			}
 		}
 
 		if (isSet(productName)) {
 			AssertTextEquals.assertPartialText(
-				key_productName = "${productName}",
+				key_productName = ${productName},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
-				value1 = "${productName}");
+				value1 = ${productName});
 		}
 
 		if (isSet(productQuantity)) {
 			AssertTextEquals(
-				key_productQuantity = "${productQuantity}",
+				key_productQuantity = ${productQuantity},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
-				value1 = "${productQuantity}");
+				value1 = ${productQuantity});
 		}
 
 		if (isSet(productPrice)) {
 			AssertTextEquals.assertPartialText(
-				key_productPrice = "${productPrice}",
+				key_productPrice = ${productPrice},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE",
-				value1 = "${productPrice}");
+				value1 = ${productPrice});
 		}
 
 		if (isSet(productDiscountValue)) {
 			AssertTextEquals.assertPartialText(
 				key_column = "discount",
-				key_value = "${productDiscountValue}",
+				key_value = ${productDiscountValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_VALUE",
-				value1 = "${productDiscountValue}");
+				value1 = ${productDiscountValue});
 		}
 
 		if (isSet(productDiscountedTotalPrice)) {
 			AssertTextEquals.assertPartialText(
 				key_column = "total",
-				key_value = "${productDiscountedTotalPrice}",
+				key_value = ${productDiscountedTotalPrice},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_VALUE",
-				value1 = "${productDiscountedTotalPrice}");
+				value1 = ${productDiscountedTotalPrice});
 		}
 
 		if (isSet(subtotalValue)) {
 			AssertTextEquals.assertPartialText(
-				key_subtotalValue = "${subtotalValue}",
+				key_subtotalValue = ${subtotalValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
-				value1 = "${subtotalValue}");
+				value1 = ${subtotalValue});
 		}
 
 		if (isSet(deliveryValue)) {
 			AssertTextEquals.assertPartialText(
-				key_deliveryValue = "${deliveryValue}",
+				key_deliveryValue = ${deliveryValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY",
-				value1 = "${deliveryValue}");
+				value1 = ${deliveryValue});
 		}
 
 		if (isSet(deliveryDiscountValue)) {
 			AssertElementPresent(
-				key_currency = "${currency}",
-				key_discountValue = "${deliveryDiscountValue}",
+				key_currency = ${currency},
+				key_discountValue = ${deliveryDiscountValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_VALUE");
 		}
 
 		if (isSet(deliveryDiscountPercentage)) {
-			var deliveryDiscountPercentage = CommerceUtilities.convertWholeNumberToDecimal(number = "${deliveryDiscountPercentage}");
+			var deliveryDiscountPercentage = CommerceUtilities.convertWholeNumberToDecimal(number = ${deliveryDiscountPercentage});
 
 			AssertElementPresent(
-				key_discountPercentage = "${deliveryDiscountPercentage}",
+				key_discountPercentage = ${deliveryDiscountPercentage},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_DISCOUNT_PERCENTAGE");
 		}
 
 		if (isSet(shippingOption)) {
 			AssertTextEquals.assertPartialText(
-				key_shippingOption = "${shippingOption}",
+				key_shippingOption = ${shippingOption},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SHIPPING_OPTION",
-				value1 = "${shippingOption}");
+				value1 = ${shippingOption});
 		}
 
 		if (isSet(taxValue)) {
 			AssertTextEquals(
-				key_taxValue = "${taxValue}",
+				key_taxValue = ${taxValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TAX",
-				value1 = "${taxValue}");
+				value1 = ${taxValue});
 		}
 
 		if (isSet(totalValue)) {
 			AssertTextEquals.assertPartialText(
-				key_totalValue = "${totalValue}",
+				key_totalValue = ${totalValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TOTAL",
-				value1 = "${totalValue}");
+				value1 = ${totalValue});
 		}
 	}
 

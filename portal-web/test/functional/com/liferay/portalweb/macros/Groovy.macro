@@ -2,19 +2,19 @@ definition {
 
 	macro runScriptViaGogoShell {
 		if (!(isSet(nodePort))) {
-			var nodePort = "8080";
+			var nodePort = 8080;
 		}
 
-		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
+		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		if ("${bundleIndex}" != "0") {
+		if (${bundleIndex} != 0) {
 			var liferayHome = "${liferayHome}-${bundleIndex}";
 		}
 
-		var scriptFilePath = TestCase.getDependenciesDirPath(fileName = "${scriptFile}");
+		var scriptFilePath = TestCase.getDependenciesDirPath(fileName = ${scriptFile});
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -23,7 +23,7 @@ definition {
 		if (isSet(expectedOutput)) {
 			var outputContent = FileUtil.read("${liferayHome}/gogo-output.txt");
 
-			if (contains("${outputContent}", "${expectedOutput}")) {
+			if (contains(${outputContent}, ${expectedOutput})) {
 				echo("${expectedOutput} exists!");
 			}
 			else {
@@ -34,7 +34,7 @@ definition {
 
 	macro runScriptViaUI {
 		if (!(isSet(nodePort))) {
-			var nodePort = "8080";
+			var nodePort = 8080;
 		}
 
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
@@ -51,11 +51,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
-		var script = TestCase.getFileContent(fileName = "${scriptFile}");
+		var script = TestCase.getFileContent(fileName = ${scriptFile});
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 	}
 
 }

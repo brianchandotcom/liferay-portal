@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Verify that new roles appear after create PRM site"
-	@priority = "5"
+	@priority = 5
 	test CheckCreatedRoles {
 		task ("When: I go to Roles Page in Control Panel") {
 			Role.openRolesAdmin();
@@ -42,9 +42,9 @@ definition {
 
 		task ("Then: I search for the PRM Roles and assert them") {
 			for (var searchTerm : list "Channel Account Manager,Channel General Manager,Channel Finance Manager,Channel Global Marketing Manager,Channel Regional Marketing Manager") {
-				Search.searchCP(searchTerm = "${searchTerm}");
+				Search.searchCP(searchTerm = ${searchTerm});
 
-				LexiconEntry.viewEntryName(rowEntry = "${searchTerm}");
+				LexiconEntry.viewEntryName(rowEntry = ${searchTerm});
 			}
 		}
 	}

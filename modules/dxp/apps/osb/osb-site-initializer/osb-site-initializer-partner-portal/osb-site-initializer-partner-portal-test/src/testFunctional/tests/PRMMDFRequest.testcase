@@ -58,7 +58,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
-	@priority = "5"
+	@priority = 5
 	test CanExpandAndSeeMultipleActivities {
 		task ("Given I go to add a MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -103,7 +103,7 @@ definition {
 
 			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
-				activityIndex = "1",
+				activityIndex = 1,
 				activityName = "Activity Name 2",
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
 				followUpStrategy = "test",
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-171637. Verify that an alert will appear when user don't fill a mandatory* field and that “Continue” button only will be clickable after fill all mandatory fields"
-	@priority = "5"
+	@priority = 5
 	test CannotContinueWithoutFillRequiredField {
 		task ("Given I go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-172479. Verify that the difference between the start date and end date cannot be higher than six months."
-	@priority = "5"
+	@priority = 5
 	test DifferenceBetweenStartAndEndDateCannotExceedSixMonths {
 		task ("Given I go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
-	@priority = "5"
+	@priority = 5
 	test StartDateCannotBeBeforeToCurrentDate {
 		task ("Given I go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-172891. Verify that the start date cannot be equals to the current date"
-	@priority = "5"
+	@priority = 5
 	test StartDateCannotBeEqualsToCurrentDate {
 		task ("Given I go to add a new MDF Request and fill all Goals form with my information") {
 			PRMMarketing.gotoAddNewMDF();
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
-	@priority = "5"
+	@priority = 5
 	test SubmittedMDFAppearsOnListing {
 		task ("Given I go to add a new MDF Request") {
 			PRMMarketing.gotoAddNewMDF();
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-173512. Verify that If no claim was made, the message ‘You can submit up to 2 claims’ appears"
-	@priority = "5"
+	@priority = 5
 	test VerifyMessageWhenNoClaimWasMade {
 		task ("Given that a partner submit a new MDF Request") {
 			var campaignName = "Campaign Name";
@@ -400,7 +400,7 @@ definition {
 				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
 				budgetList = "Sponsorship Fee-2000,Room Rental-3000",
 				campaignDescription = "Campaign Description",
-				campaignName = "${campaignName}",
+				campaignName = ${campaignName},
 				countryName = "Global",
 				followUpStrategy = "test",
 				goalsOptions = "Lead generation",

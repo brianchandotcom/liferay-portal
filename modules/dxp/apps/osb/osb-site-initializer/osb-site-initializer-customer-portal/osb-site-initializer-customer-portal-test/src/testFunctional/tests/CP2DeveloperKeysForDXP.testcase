@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,17 +35,17 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-146195 | Test Summary: Verify that when you click the Download Key button a file is downloaded."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AssertsThatTheFileHasBeenDownloaded {
 
 		// Needs refactor since it depends on example Avangrid Portals account
@@ -55,11 +55,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Select a project and go to activation page") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -87,27 +87,27 @@ definition {
 
 	@description = "Automation ID: LPS-151318 | Test Summary: Verify that when you insert a not valid value, a erro message appear."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertTheErrorMessage {
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Type a invalid value in the field and assert the error message") {
 			Type(
 				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-				value1 = "0");
+				value1 = 0);
 
 			AssertElementPresent(
 				key_error = "enter-a-minimum-node-value-greater-than-0",
@@ -115,7 +115,7 @@ definition {
 
 			Type(
 				locator1 = "CP2NavigationMenu#NODES_CLUSTER_ENABLE",
-				value1 = "1");
+				value1 = 1);
 
 			AssertElementPresent(
 				key_error = "max-nodes-must-be-greater-than-min-nodes",
@@ -139,15 +139,15 @@ definition {
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Open Environment Type tab and Assert the environment type options") {
@@ -159,7 +159,7 @@ definition {
 
 			for (var environmentName : list "Non-Production,Production,Subscription") {
 				AssertElementPresent(
-					key_checkbox = "${environmentName}",
+					key_checkbox = ${environmentName},
 					key_menu = "Environment Type",
 					locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
 			}
@@ -176,21 +176,21 @@ definition {
 
 	@description = "Automation ID: LPS-146199 | Test Summary: Verify that when clicking on the Deploying Activation Keys article link, the user is redirected to another page."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ConfirmRedirectionFromDxpToAnotherPage {
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Open the dropdown and verify that there are 5 DXP versions") {
@@ -212,21 +212,21 @@ definition {
 
 	@description = "Automation ID: LPS-151315 | Test Summary: Verify that the Fields Min and Max are enabled and disabled based on the filter selection.S"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test TheMinAndMaxFieldsCanBeDisableAndEnable {
 
 		// Needs refactor since it depends on example Avangrid Portals account
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Open Environment Type tab and Assert the nodes field is disable") {
@@ -256,7 +256,7 @@ definition {
 
 	@description = "Automation ID: LPS-166936 | Test Summary: Verify that the user with the Admin and Partner Manager roles can see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test UserAdminAndPartnerManagerRoleCanSeeAndPerformAllActionsForDXP {
 
 		// Needs refactor since it depends on example Avangrid Portals account
@@ -270,7 +270,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Change the user role in the project") {
@@ -292,7 +292,7 @@ definition {
 
 			Refresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -304,7 +304,7 @@ definition {
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Click in the Action button and assert if the user with the right role can see the options") {
@@ -336,7 +336,7 @@ definition {
 
 	@description = "Automation ID: LPS-166937 | Test Summary: Assert that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test UserPartnerMemberAndRequesterRoleCannotSeeSomeActionsForDXP {
 
 		// Needs refactor since it depends on example Avangrid Portals account
@@ -344,13 +344,13 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Click in the Action button and assert the user with the right role can see the option") {
@@ -366,7 +366,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Change the user role in the project") {
@@ -388,13 +388,13 @@ definition {
 
 			Refresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Click in the Action button and assert if the user with the right role can see the options") {
@@ -428,7 +428,7 @@ definition {
 
 	@description = "Automation ID: LPS-166940 | Test Summary: Verify that users with the roles Partner Members, Requesters and Users cannot see the actions (Generate New - Deactivate - Actions Menu - Deactivate button)."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test UserPartnerMemberAndRequesterRoleCanSeeAndPerformActionsForDXP {
 
 		// Needs refactor since it depends on example Avangrid Portals account
@@ -436,13 +436,13 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Click in the Action button and assert the user with the right role can see the option") {
@@ -458,7 +458,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Change the user role in the project") {
@@ -480,13 +480,13 @@ definition {
 
 			Refresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Click in the Action button and assert if the user with the right role can see the options") {

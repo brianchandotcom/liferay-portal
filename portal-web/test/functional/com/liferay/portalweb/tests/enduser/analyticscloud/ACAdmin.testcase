@@ -12,7 +12,7 @@ definition {
 		task ("Launch AC") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Open(locator1 = "${analyticsCloudURL}");
+			Open(locator1 = ${analyticsCloudURL});
 
 			ACLogin.loginAs(emailAddress = "test@liferay.com");
 
@@ -25,7 +25,7 @@ definition {
 
 		ACUtils.tearDownAC();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10001 | Automation ID: LRAC-10738 | Test Summary: Make sure the AC user account name is correct after creation in the admin part of the AC"
-	@priority = "3"
+	@priority = 3
 	test CheckUserAccountNameWithSpecialChars {
 		var userFirstName = "acção";
 		var userLastName = "acé";
@@ -58,19 +58,19 @@ definition {
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-				value1 = "${userScreenName}");
+				value1 = ${userScreenName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-				value1 = "${userFirstName}");
+				value1 = ${userFirstName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-				value1 = "${userLastName}");
+				value1 = ${userLastName});
 
 			AssertClick(
 				locator1 = "Button#SUBMIT",
@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("Go to user data page") {
-			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+			UserNavigator.gotoUser(userScreenName = ${userScreenName});
 		}
 
 		task ("Check that the page title is correct with the username with special chars") {
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11364 | Test Summary: A new user created in the admin page can not access that page but the user Test Test can"
-	@priority = "5"
+	@priority = 5
 	test NewUserCanNotAccessAdminPage {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var userFirstName = "ac";
@@ -114,25 +114,25 @@ definition {
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-				value1 = "${userScreenName}");
+				value1 = ${userScreenName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-				value1 = "${userFirstName}");
+				value1 = ${userFirstName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-				value1 = "${userLastName}");
+				value1 = ${userLastName});
 
 			AssertClick(
 				locator1 = "Button#SUBMIT",
 				value1 = "Save");
 
-			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+			UserNavigator.gotoUser(userScreenName = ${userScreenName});
 
 			UserNavigator.gotoPassword();
 
@@ -147,10 +147,10 @@ definition {
 			ACAdmin.goToACAdmin();
 
 			ACLogin.loginAs(
-				emailAddress = "${userEmailAddress}",
+				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Open(locator1 = "${analyticsCloudURL}");
+			Open(locator1 = ${analyticsCloudURL});
 
 			ACAdmin.goToACAdmin();
 		}
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11365 | Test Summary: A new user created in the admin page can be invited to the workspace and see the data, the same user, now with admin permission, also can see the data"
-	@priority = "5"
+	@priority = 5
 	test NewUserIndependentOfRoleCanSeeDataInTheWorkspace {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var userFirstName = "ac";
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Navigate to the AC Admin page") {
-			Open(locator1 = "${analyticsCloudURL}");
+			Open(locator1 = ${analyticsCloudURL});
 
 			ACAdmin.goToACAdmin();
 		}
@@ -217,25 +217,25 @@ definition {
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-				value1 = "${userScreenName}");
+				value1 = ${userScreenName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-				value1 = "${userFirstName}");
+				value1 = ${userFirstName});
 
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-				value1 = "${userLastName}");
+				value1 = ${userLastName});
 
 			AssertClick(
 				locator1 = "Button#SUBMIT",
 				value1 = "Save");
 
-			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+			UserNavigator.gotoUser(userScreenName = ${userScreenName});
 
 			UserNavigator.gotoPassword();
 
@@ -249,21 +249,21 @@ definition {
 
 			ACSettings.goToUserManagement();
 
-			ACSettings.addUser(userInvite = "${userEmailAddress}");
+			ACSettings.addUser(userInvite = ${userEmailAddress});
 		}
 
 		task ("Go to AC with the new user and assert that the user can see the data") {
 			ACWorkspace.signOut();
 
 			ACLogin.loginAs(
-				emailAddress = "${userEmailAddress}",
+				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Navigator.openSpecificURL(url = "${currentURL}");
+			Navigator.openSpecificURL(url = ${currentURL});
 
 			ACWorkspace.openWorkspace();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSites();
 
@@ -273,7 +273,7 @@ definition {
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Unique Visitors",
-				metricValue = "1");
+				metricValue = 1);
 		}
 
 		task ("Go to admin with Test Test and give administrator permission to the new user") {
@@ -293,7 +293,7 @@ definition {
 
 			User.assignRegularRoleCP(
 				roleTitle = "Administrator",
-				userScreenName = "${userScreenName}");
+				userScreenName = ${userScreenName});
 		}
 
 		task ("Go to AC with the new user and assert that user can see the data") {
@@ -302,14 +302,14 @@ definition {
 			Click(locator1 = "ProductMenu#USER_SIGNOUT");
 
 			ACLogin.loginAs(
-				emailAddress = "${userEmailAddress}",
+				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Navigator.openSpecificURL(url = "${currentURL}");
+			Navigator.openSpecificURL(url = ${currentURL});
 
 			ACWorkspace.openWorkspace();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSites();
 
@@ -319,7 +319,7 @@ definition {
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Unique Visitors",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 

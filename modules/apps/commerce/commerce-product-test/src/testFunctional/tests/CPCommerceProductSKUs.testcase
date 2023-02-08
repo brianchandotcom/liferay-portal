@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6021. AddASKU"
-	@priority = "3"
+	@priority = 3
 	test AddASKU {
 		property portal.acceptance = "false";
 
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6024. AddASKUWithSubscriptions"
-	@priority = "3"
+	@priority = 3
 	test AddASKUWithSubscriptions {
 		property portal.acceptance = "false";
 
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
-	@priority = "3"
+	@priority = 3
 	test CanEditSKUERC {
 		property portal.acceptance = "false";
 
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
-	@priority = "3"
+	@priority = 3
 	test CanEditSKUERCOfANewProduct {
 		property portal.acceptance = "false";
 
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
-	@priority = "3"
+	@priority = 3
 	test CanNotUseTheSameSKUERCForDifferentSKU {
 		property portal.acceptance = "true";
 
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6022. EditASKU"
-	@priority = "3"
+	@priority = 3
 	test EditASKU {
 		property portal.acceptance = "false";
 
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
-	@priority = "3"
+	@priority = 3
 	test RemoveASKU {
 		property portal.acceptance = "true";
 
@@ -364,7 +364,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyIfSaveAndSaveAsDraftButtonsAreNotPresent {
 		property portal.acceptance = "false";
 

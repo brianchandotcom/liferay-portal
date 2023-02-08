@@ -67,7 +67,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10563 | Test Summary: Search for analysis report"
-	@priority = "3"
+	@priority = 3
 	test AnalysisReportListSearchable {
 		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
 		var defaultEventName = "webContentViewed";
@@ -88,18 +88,18 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
-		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+		for (var eventAnalysisName : list ${eventAnalysisNameList}) {
 			task ("Add the event to analysis") {
-				ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+				ACEventAnalysis.addEvent(customEventName = ${defaultEventName});
 			}
 
 			task ("Name the report") {
-				ACUtils.setItemName(itemName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = ${eventAnalysisName});
 			}
 
 			task ("Check the analysis result appears") {
@@ -116,10 +116,10 @@ definition {
 		}
 
 		task ("Search for the name of the analysis and check if it is present in the list") {
-			for (var eventAnalysisName : list "${eventAnalysisNameList}") {
-				ACUtils.searchBar(searchItem = "${eventAnalysisName}");
+			for (var eventAnalysisName : list ${eventAnalysisNameList}) {
+				ACUtils.searchBar(searchItem = ${eventAnalysisName});
 
-				ACUtils.viewPartialNameList(nameList = "${eventAnalysisName}");
+				ACUtils.viewPartialNameList(nameList = ${eventAnalysisName});
 			}
 		}
 
@@ -131,25 +131,25 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10557 | Test Summary: Change data type with event already in use"
-	@priority = "4"
+	@priority = 4
 	test CanChangeAttributeTypeInUseWithoutAffectingExistingAnalysisReports {
 		var attributeNameList = "temp,category,duration";
 		var attributeNameChangeList = "temp,duration";
 		var filterName = "temp";
 		var newDataTypeList = "Date,String";
 		var oldDataTypeList = "Number,Duration";
-		var list1 = ListUtil.newListFromString("${attributeNameChangeList}");
-		var list2 = ListUtil.newListFromString("${newDataTypeList}");
-		var list3 = ListUtil.newListFromString("${oldDataTypeList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${attributeNameChangeList});
+		var list2 = ListUtil.newListFromString(${newDataTypeList});
+		var list3 = ListUtil.newListFromString(${oldDataTypeList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -159,23 +159,23 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${customEventName});
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeNameList});
 		}
 
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-				filterName = "${filterName}",
-				inputValue = "10",
+				filterName = ${filterName},
+				inputValue = 10,
 				optionValue = "is greater than");
 		}
 
@@ -209,20 +209,20 @@ definition {
 			ACNavigation.openItem(itemName = "Attributes");
 		}
 
-		while ("${i}" != "${size}") {
-			var attributeName = ListUtil.get("${list1}", "${i}");
-			var newDataType = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var attributeName = ListUtil.get(${list1}, ${i});
+			var newDataType = ListUtil.get(${list2}, ${i});
 
 			task ("Edit the new attribute") {
-				ACUtils.searchBar(searchItem = "${attributeName}");
+				ACUtils.searchBar(searchItem = ${attributeName});
 
-				ACNavigation.openItem(itemName = "${attributeName}");
+				ACNavigation.openItem(itemName = ${attributeName});
 
 				ACUtils.clickAnyButton(button = "Edit");
 			}
 
 			task ("Change the type of the attribute") {
-				ACCustomEvents.changeAttributeDataType(newDataType = "${newDataType}");
+				ACCustomEvents.changeAttributeDataType(newDataType = ${newDataType});
 			}
 
 			task ("Back to Event Attributes and Navigation to attributes tab") {
@@ -232,16 +232,16 @@ definition {
 			}
 
 			task ("Check if the type has been changed") {
-				ACUtils.searchBar(searchItem = "${attributeName}");
+				ACUtils.searchBar(searchItem = ${attributeName});
 
 				ACCustomEvents.viewDataTypeList(
-					attributeName = "${attributeName}",
-					typeValue = "${newDataType}");
+					attributeName = ${attributeName},
+					typeValue = ${newDataType});
 			}
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 
 		task ("Go to event analysis and click on newly created analysis") {
@@ -254,9 +254,9 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeNameList}",
-				eventName = "${customEventName}",
-				filterNameList = "${filterName}");
+				attributeNameList = ${attributeNameList},
+				eventName = ${customEventName},
+				filterNameList = ${filterName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -264,33 +264,33 @@ definition {
 		}
 
 		task ("Check that the attributes used have not had the attribute type changed") {
-			var size = ListUtil.size("${list1}");
-			var i = "0";
+			var size = ListUtil.size(${list1});
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var attributeName = ListUtil.get("${list1}", "${i}");
-				var oldDataType = ListUtil.get("${list3}", "${i}");
+			while (${i} != ${size}) {
+				var attributeName = ListUtil.get(${list1}, ${i});
+				var oldDataType = ListUtil.get(${list3}, ${i});
 
-				var oldDataType = StringUtil.upperCase("${oldDataType}");
+				var oldDataType = StringUtil.upperCase(${oldDataType});
 
 				Click(
-					key_attributeName = "${attributeName}",
+					key_attributeName = ${attributeName},
 					locator1 = "ACEventAnalysis#VIEW_DASHBOARD_INFORMATION");
 
 				AssertTextEquals(
-					key_attributeName = "${attributeName}",
+					key_attributeName = ${attributeName},
 					locator1 = "ACEventAnalysis#EDITOR_LABEL",
-					value1 = "${oldDataType}");
+					value1 = ${oldDataType});
 
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10558 | Test Summary: Viewing newly created analysis report"
-	@priority = "5"
+	@priority = 5
 	test CanCreateAnalysisReport {
 		var attributeNameList = "category,url";
 		var filterName = "like";
@@ -299,8 +299,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -310,22 +310,22 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${customEventName});
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeNameList}");
+			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeNameList});
 		}
 
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-				filterName = "${filterName}",
+				filterName = ${filterName},
 				optionValue = "True");
 		}
 
@@ -355,9 +355,9 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeNameList}",
-				eventName = "${customEventName}",
-				filterNameList = "${filterName}");
+				attributeNameList = ${attributeNameList},
+				eventName = ${customEventName},
+				filterNameList = ${filterName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10567 | Test Summary: Special character on report name"
-	@priority = "2"
+	@priority = 2
 	test CanCreateAnalysisReportWithSpecialCharacterOnName {
 		var eventAnalysisName = "@#$%*&_>Save+Analysis<!?";
 
@@ -374,8 +374,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -385,17 +385,17 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${customEventName});
 		}
 
 		task ("Name the report") {
-			ACUtils.setItemName(itemName = "${eventAnalysisName}");
+			ACUtils.setItemName(itemName = ${eventAnalysisName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -411,15 +411,15 @@ definition {
 		}
 
 		task ("Assert the analysis is saved and show up on event analysis list") {
-			ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			ACUtils.viewNameList(nameList = ${eventAnalysisName});
 		}
 
 		task ("Click on newly created analysis") {
-			ACNavigation.openItem(itemName = "${eventAnalysisName}");
+			ACNavigation.openItem(itemName = ${eventAnalysisName});
 		}
 
 		task ("Check that the analysis dashboard contains the event") {
-			ACEventAnalysis.viewAnalysisDashboard(eventName = "${customEventName}");
+			ACEventAnalysis.viewAnalysisDashboard(eventName = ${customEventName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10560 | Test Summary: Delete an analysis report and Bulk delete analysis reports"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteAnalysisReport {
 		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2,Save Analysis 3";
 
@@ -436,8 +436,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -447,18 +447,18 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
-		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+		for (var eventAnalysisName : list ${eventAnalysisNameList}) {
 			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+				ACEventAnalysis.addEvent(customEventName = ${customEventName});
 			}
 
 			task ("Name the report") {
-				ACUtils.setItemName(itemName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = ${eventAnalysisName});
 			}
 
 			task ("Check the analysis result appears") {
@@ -474,7 +474,7 @@ definition {
 			}
 
 			task ("Assert the analysis is saved and show up on event analysis list") {
-				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+				ACUtils.viewNameList(nameList = ${eventAnalysisName});
 			}
 		}
 
@@ -495,7 +495,7 @@ definition {
 		}
 
 		task ("Navigate to the URL of the deleted analysis") {
-			Navigator.openSpecificURL(url = "${currentURL}");
+			Navigator.openSpecificURL(url = ${currentURL});
 		}
 
 		task ("Check that the deleted analysis cannot be accessed via the URL") {
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10559 | Test Summary: Edit an analysis report"
-	@priority = "5"
+	@priority = 5
 	test CanEditAnalysisReport {
 		var attributeName1 = "price";
 		var attributeName2 = "like";
@@ -526,8 +526,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -537,17 +537,17 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${customEventName});
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName1}");
+			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeName1});
 		}
 
 		task ("Name the report") {
@@ -575,16 +575,16 @@ definition {
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName2}");
+			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeName2});
 		}
 
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-				filterName = "${filterName}",
-				inputValue = "25",
+				filterName = ${filterName},
+				inputValue = 25,
 				month = "November",
 				optionValue = "is",
-				year = "2021");
+				year = 2021);
 		}
 
 		task ("Check the analysis result appears") {
@@ -602,8 +602,8 @@ definition {
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
 				attributeNameList = "${attributeName1},${attributeName2}",
-				eventName = "${customEventName}",
-				filterNameList = "${filterName}");
+				eventName = ${customEventName},
+				filterNameList = ${filterName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10561 | Test Summary: Edit report name to the same name as existing report"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveAnalysisReportWithExistingName {
 		var defaultEventName = "webContentViewed";
 		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2";
@@ -621,8 +621,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -632,14 +632,14 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		for (var eventName : list "${customEventName},${defaultEventName}") {
 			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = "${eventName}");
+				ACEventAnalysis.addEvent(customEventName = ${eventName});
 			}
 
 			task ("Name the report") {
@@ -670,24 +670,24 @@ definition {
 		}
 
 		task ("Assert the analysis is saved and show up on event analysis list") {
-			ACUtils.viewNameList(nameList = "${eventAnalysisNameList}");
+			ACUtils.viewNameList(nameList = ${eventAnalysisNameList});
 		}
 
-		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
+		var list1 = ListUtil.newListFromString(${eventAnalysisNameList});
 		var list2 = ListUtil.newListFromString("${customEventName},${defaultEventName}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var eventAnalysisName = ListUtil.get("${list1}", "${i}");
-			var eventName = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var eventAnalysisName = ListUtil.get(${list1}, ${i});
+			var eventName = ListUtil.get(${list2}, ${i});
 
 			task ("Click on newly created analysis") {
-				ACNavigation.openItem(itemName = "${eventAnalysisName}");
+				ACNavigation.openItem(itemName = ${eventAnalysisName});
 			}
 
 			task ("Check that the analysis dashboard contains the event,attribute and filter") {
-				ACEventAnalysis.viewAnalysisDashboard(eventName = "${eventName}");
+				ACEventAnalysis.viewAnalysisDashboard(eventName = ${eventName});
 			}
 
 			task ("Check the analysis result appears") {
@@ -700,12 +700,12 @@ definition {
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10562 | Test Summary: Pagination for analysis report"
-	@priority = "4"
+	@priority = 4
 	test CanPaginationAnalysisReportList {
 		var eventAnalysisNameList1 = "Save Analysis 0,Save Analysis 1,Save Analysis 2,Save Analysis 3,Save Analysis 4";
 		var eventAnalysisNameList2 = "Save Analysis 5,Save Analysis 6,Save Analysis 7,Save Analysis 8,Save Analysis 9";
@@ -714,8 +714,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -725,18 +725,18 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		for (var eventAnalysisName : list "${eventAnalysisNameList1},${eventAnalysisNameList2}") {
 			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+				ACEventAnalysis.addEvent(customEventName = ${customEventName});
 			}
 
 			task ("Name the report") {
-				ACUtils.setItemName(itemName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = ${eventAnalysisName});
 			}
 
 			task ("Check the analysis result appears") {
@@ -752,29 +752,29 @@ definition {
 			}
 
 			task ("Assert the analysis is saved and show up on event analysis list") {
-				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+				ACUtils.viewNameList(nameList = ${eventAnalysisName});
 			}
 		}
 
 		task ("Check pagination for "20" item filter") {
 			ACUtils.viewResultsMessage(results = "Showing 1 to 10 of 10 entries.");
 
-			ACUtils.viewResultsPages(pageNumber = "1");
+			ACUtils.viewResultsPages(pageNumber = 1);
 		}
 
 		task ("Change the pagination to "5" and Check pagination for "5" item filter") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 10 entries.");
 
-			ACUtils.viewResultsPages(pageNumber = "1");
+			ACUtils.viewResultsPages(pageNumber = 1);
 
-			ACUtils.viewResultsPages(pageNumber = "2");
+			ACUtils.viewResultsPages(pageNumber = 2);
 		}
 
 		task ("Assert the analysis is saved and show up on event analysis list") {
-			for (var eventAnalysisName : list "${eventAnalysisNameList1}") {
-				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			for (var eventAnalysisName : list ${eventAnalysisNameList1}) {
+				ACUtils.viewNameList(nameList = ${eventAnalysisName});
 			}
 		}
 
@@ -785,21 +785,21 @@ definition {
 		}
 
 		task ("Assert the analysis is saved and show up on event analysis list") {
-			for (var eventAnalysisName : list "${eventAnalysisNameList2}") {
-				ACUtils.viewNameList(nameList = "${eventAnalysisName}");
+			for (var eventAnalysisName : list ${eventAnalysisNameList2}) {
+				ACUtils.viewNameList(nameList = ${eventAnalysisName});
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10564 | Test Summary: Sorting analysis report by name and order of creation"
-	@priority = "3"
+	@priority = 3
 	test CanSortAnalysisReport {
 		var eventAnalysisNameList = "Save Analysis 1,Save Analysis 2,Save Analysis 3";
 		var defaultEventName = "webContentViewed";
-		var list1 = ListUtil.newListFromString("${eventAnalysisNameList}");
+		var list1 = ListUtil.newListFromString(${eventAnalysisNameList});
 		var list2 = ListUtil.newListFromString("3,2,1");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
 		task ("Close sessions") {
 			ACUtils.closeAllSessionsAndWait();
@@ -808,18 +808,18 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
-		for (var eventAnalysisName : list "${eventAnalysisNameList}") {
+		for (var eventAnalysisName : list ${eventAnalysisNameList}) {
 			task ("Add the event to analysis") {
-				ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+				ACEventAnalysis.addEvent(customEventName = ${defaultEventName});
 			}
 
 			task ("Name the report") {
-				ACUtils.setItemName(itemName = "${eventAnalysisName}");
+				ACUtils.setItemName(itemName = ${eventAnalysisName});
 			}
 
 			task ("Check the analysis result appears") {
@@ -838,17 +838,17 @@ definition {
 		task ("Order the list by Name and check if the positions are correct") {
 			ACUtils.orderAnyTable(columnName = "Name");
 
-			while ("${i}" != "${size}") {
-				var eventAnalysisName = ListUtil.get("${list1}", "${i}");
-				var position = ListUtil.get("${list2}", "${i}");
+			while (${i} != ${size}) {
+				var eventAnalysisName = ListUtil.get(${list1}, ${i});
+				var position = ListUtil.get(${list2}, ${i});
 
 				ACUtils.viewNameListInOrder(
-					index = "${position}",
-					name = "${eventAnalysisName}");
+					index = ${position},
+					name = ${eventAnalysisName});
 
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 
@@ -857,7 +857,7 @@ definition {
 
 			for (var n : list "1,2,3") {
 				ACUtils.viewNameListInOrder(
-					index = "${n}",
+					index = ${n},
 					name = "Save Analysis ${n}");
 			}
 		}
@@ -867,19 +867,19 @@ definition {
 
 			for (var n : list "1,2,3") {
 				ACUtils.viewNameListInOrder(
-					index = "${n}",
+					index = ${n},
 					name = "Save Analysis ${n}");
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10566 | Test Summary: Empty state of analysis report"
-	@priority = "2"
+	@priority = 2
 	test CheckEmptyStateOfAnalysisReport {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10569 | Test Summary: Viewing the newly created analysis report with member permission"
-	@priority = "4"
+	@priority = 4
 	test UserWithMemberPermissionCanViewAndCreateAnalysisReport {
 		var attributeName = "category";
 		var filterName = "like";
@@ -908,8 +908,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -919,22 +919,22 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis by the all tab") {
-			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${customEventName});
 		}
 
 		task ("Add the breakdown to analysis") {
-			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+			ACEventAnalysis.addBreakdown(attributeNameList = ${attributeName});
 		}
 
 		task ("Add the filter to analysis") {
 			ACEventAnalysis.addFilter(
-				filterName = "${filterName}",
+				filterName = ${filterName},
 				optionValue = "True");
 		}
 
@@ -969,13 +969,13 @@ definition {
 		}
 
 		task ("Switch the property in AC and go to event analysis") {
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
 
 		task ("Add the custom event to analysis") {
-			ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+			ACEventAnalysis.addEvent(customEventName = ${defaultEventName});
 		}
 
 		task ("Name the report") {
@@ -1000,9 +1000,9 @@ definition {
 
 		task ("Check that the analysis dashboard contains the event,attribute and filter") {
 			ACEventAnalysis.viewAnalysisDashboard(
-				attributeNameList = "${attributeName}",
-				eventName = "${customEventName}",
-				filterNameList = "${filterName}");
+				attributeNameList = ${attributeName},
+				eventName = ${customEventName},
+				filterNameList = ${filterName});
 		}
 
 		task ("Check the analysis result appears") {
@@ -1018,7 +1018,7 @@ definition {
 		}
 
 		task ("Check that the analysis dashboard contains the event") {
-			ACEventAnalysis.viewAnalysisDashboard(eventName = "${defaultEventName}");
+			ACEventAnalysis.viewAnalysisDashboard(eventName = ${defaultEventName});
 		}
 
 		task ("Check the analysis result appears") {

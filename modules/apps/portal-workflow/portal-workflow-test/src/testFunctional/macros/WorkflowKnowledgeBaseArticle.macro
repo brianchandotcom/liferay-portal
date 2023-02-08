@@ -1,7 +1,7 @@
 definition {
 
 	macro addChildArticle {
-		var key_rowEntry = "${kbArticleTitle}";
+		var key_rowEntry = ${kbArticleTitle};
 
 		if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -16,14 +16,14 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${kbChildArticleTitle}");
+			value1 = ${kbChildArticleTitle});
 
-		CKEditor.addContent(content = "${kbChildArticleContent}");
+		CKEditor.addContent(content = ${kbChildArticleContent});
 
-		if ("${submitForPublication}" == "true") {
+		if (${submitForPublication} == "true") {
 			PortletEntry.submitForPublication();
 		}
-		else if ("${saveAsDraft}" == "true") {
+		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 
 	macro editKBArticle {
 		Click(
-			key_rowEntry = "${kbArticleTitle}",
+			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
@@ -46,14 +46,14 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${kbArticleTitleEdit}");
+			value1 = ${kbArticleTitleEdit});
 
 		if (isSet(kbArticleContentEdit)) {
-			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+			CKEditor.addContent(kbArticleContentEdit = ${kbArticleContentEdit});
 		}
 
 		if (isSet(kbArticleAttachment)) {
-			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
+			KBArticle.selectAttachmentCP(kbArticleAttachment = ${kbArticleAttachment});
 		}
 
 		if (isSet(customFieldTextEdit)) {
@@ -61,16 +61,16 @@ definition {
 
 			Type(
 				locator1 = "TextInput#CUSTOM_FIELD",
-				value1 = "${customFieldTextEdit}");
+				value1 = ${customFieldTextEdit});
 		}
 
-		if ("${cancel}" == "true") {
+		if (${cancel} == "true") {
 			Button.clickCancel();
 		}
-		else if ("${submitForPublication}" == "true") {
+		else if (${submitForPublication} == "true") {
 			PortletEntry.submitForPublication();
 		}
-		else if ("${saveAsDraft}" == "true") {
+		else if (${saveAsDraft} == "true") {
 			PortletEntry.saveAsDraft();
 		}
 		else {

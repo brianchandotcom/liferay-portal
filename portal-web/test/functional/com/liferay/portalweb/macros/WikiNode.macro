@@ -5,11 +5,11 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${wikiNodeName}");
+		PortletEntry.inputName(name = ${wikiNodeName});
 
 		Button.clickSave();
 
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		Alert.viewSuccessMessage();
 	}
@@ -18,9 +18,9 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			contentImageName = "${contentImageName}",
-			imageSourceURL = "${imageSourceURL}",
-			navTab = "${navTab}");
+			contentImageName = ${contentImageName},
+			imageSourceURL = ${imageSourceURL},
+			navTab = ${navTab});
 
 		Click(locator1 = "Button#PUBLISH_LOCALIZED");
 	}
@@ -38,12 +38,12 @@ definition {
 	}
 
 	macro addWikiPage {
-		var key_wikiPageTitle = "${wikiPageTitle}";
-		var key_wikiPageContent = "${wikiPageContent}";
+		var key_wikiPageTitle = ${wikiPageTitle};
+		var key_wikiPageContent = ${wikiPageContent};
 
 		Click(locator1 = "Button#PLUS");
 
-		PortletEntry.inputTitle(title = "${wikiPageTitle}");
+		PortletEntry.inputTitle(title = ${wikiPageTitle});
 
 		SelectFrame.selectFrameNoLoading(
 			key_title = "Rich Text Editor",
@@ -51,7 +51,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
 	}
@@ -59,14 +59,14 @@ definition {
 	macro deleteCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		Click(
-			key_listEntry = "${wikiNodeName}",
+			key_listEntry = ${wikiNodeName},
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		PortletEntry.clickMoveToRecycleBin();
@@ -75,27 +75,27 @@ definition {
 	}
 
 	macro editCP {
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		Click(
-			key_listEntry = "${wikiNodeName}",
+			key_listEntry = ${wikiNodeName},
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${wikiNodeNameEdit}");
+		PortletEntry.inputName(name = ${wikiNodeNameEdit});
 
-		PortletEntry.inputDescription(description = "${wikiNodeDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${wikiNodeDescriptionEdit});
 
 		Button.clickSave();
 
-		var key_wikiNodeName = "${wikiNodeNameEdit}";
+		var key_wikiNodeName = ${wikiNodeNameEdit};
 
 		Alert.viewSuccessMessage();
 	}
@@ -103,14 +103,14 @@ definition {
 	macro importWikiPage {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Import Pages",
-			rowEntry = "${wikiNodeName}");
+			rowEntry = ${wikiNodeName});
 
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
 		UploadFile(
 			key_tag = "Pages File",
 			locator1 = "Wiki#IMPORT_PAGES_MEDIAWIKI",
-			value1 = "${dependencyFilePath}");
+			value1 = ${dependencyFilePath});
 
 		Click(
 			key_text = "Import",
@@ -136,21 +136,21 @@ definition {
 	}
 
 	macro viewCP {
-		var key_wikiNodeName = "${wikiNodeName}";
+		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
-			value1 = "${numberOfWikiPages}");
+			value1 = ${numberOfWikiPages});
 
 		AssertClick(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Wiki");
 	}
@@ -159,17 +159,17 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		Click(
-			key_wikiNodeName = "${wikiPageTitle}",
+			key_wikiNodeName = ${wikiPageTitle},
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
 
 		AssertElementPresent(
-			key_contentImageName = "${contentImageName}",
+			key_contentImageName = ${contentImageName},
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
 	macro viewNoCP {
 		AssertElementNotPresent(
-			key_wikiNodeName = "${wikiNodeName}",
+			key_wikiNodeName = ${wikiNodeName},
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
 	}
 

@@ -25,7 +25,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8319 | Test Summary: Custom Range time period filter in Sites"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CustomRangeTimePeriodFilterSites {
 
 		// AC Refactor: the test needs data from a past date
@@ -58,7 +58,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset Custom Range time period filter") {
@@ -77,22 +77,22 @@ definition {
 
 			var cardNameList = "${propertyName} Activities,Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology";
 
-			for (var cardName : list "${cardNameList}") {
+			for (var cardName : list ${cardNameList}) {
 				ACTimeFilter.setCustomRange(
-					cardName = "${cardName}",
-					endDay = "${displayDateDay}",
-					endMonth = "${displayDateMonth}",
-					endYear = "${displayDateYear}",
-					startDay = "${previousDay}",
-					startMonth = "${previousMonth}",
-					startYear = "${previousYear}");
+					cardName = ${cardName},
+					endDay = ${displayDateDay},
+					endMonth = ${displayDateMonth},
+					endYear = ${displayDateYear},
+					startDay = ${previousDay},
+					startMonth = ${previousMonth},
+					startYear = ${previousYear});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: 180 Days time period filter in Sites"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test PeriodFilter180Days {
 
 		// AC Refactor: the test needs data from a past date
@@ -119,7 +119,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset 180 Days time period filter") {
@@ -135,9 +135,9 @@ definition {
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 
 			for (var cardTitle : list "Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology") {
-				ACCards.viewCards(cardTitle = "${cardTitle}");
+				ACCards.viewCards(cardTitle = ${cardTitle});
 
-				ACTimeFilter.clickTimeFilterButton(cardName = "${cardTitle}");
+				ACTimeFilter.clickTimeFilterButton(cardName = ${cardTitle});
 
 				ACTimeFilter.setLast180Days();
 			}
@@ -146,7 +146,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8318 | Test Summary: Last Year time period filter in Sites"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test PeriodFilterLastYear {
 
 		// AC Refactor: the test needs data from a past date
@@ -173,7 +173,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset Last Year time period filter") {
@@ -189,9 +189,9 @@ definition {
 			ACUtils.assertXAxisTimedGraph(parentName = "${propertyName} Activities");
 
 			for (var cardTitle : list "Top Pages,Acquisitions,Visitors by Day and Time,Search Terms,Interests,Sessions by Location,Session Technology") {
-				ACCards.viewCards(cardTitle = "${cardTitle}");
+				ACCards.viewCards(cardTitle = ${cardTitle});
 
-				ACTimeFilter.clickTimeFilterButton(cardName = "${cardTitle}");
+				ACTimeFilter.clickTimeFilterButton(cardName = ${cardTitle});
 
 				ACTimeFilter.setLastYear();
 			}
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
-	@priority = "4"
+	@priority = 4
 	test UserLostAccess {
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8322 | Test Summary: A user (independent of user role) should only see the properties they are invited to by the AC admin or the properties which the user is owner"
-	@priority = "4"
+	@priority = 4
 	test UserShouldOnlySeePropertiesAreInvitedByACAdminOrPropertiesWhichUserOwner {
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();

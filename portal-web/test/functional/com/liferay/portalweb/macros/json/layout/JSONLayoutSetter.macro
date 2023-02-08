@@ -2,10 +2,10 @@ definition {
 
 	macro setColumn {
 		if (!(isSet(column))) {
-			var column = "1";
+			var column = 1;
 		}
 
-		return "${column}";
+		return ${column};
 	}
 
 	macro setFriendlyURL {
@@ -13,7 +13,7 @@ definition {
 			var friendlyURL = "";
 		}
 
-		return "${friendlyURL}";
+		return ${friendlyURL};
 	}
 
 	macro setGroupId {
@@ -22,42 +22,42 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			portalURL = "${portalURL}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			portalURL = ${portalURL},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setLayoutId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var layoutId = JSONLayoutAPI._getLayoutIdByName(
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "${privateLayout}");
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			privateLayout = ${privateLayout});
 
-		return "${layoutId}";
+		return ${layoutId};
 	}
 
 	macro setParentLayoutId {
-		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
 
 		if (isSet(parentLayoutName)) {
 			Variables.assertDefined(parameterList = "${groupId},${parentLayoutName}");
 
 			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "${privateLayout}");
+				groupId = ${groupId},
+				layoutName = ${parentLayoutName},
+				privateLayout = ${privateLayout});
 		}
 		else {
-			var parentLayoutId = "0";
+			var parentLayoutId = 0;
 		}
 
-		return "${parentLayoutId}";
+		return ${parentLayoutId};
 	}
 
 	macro setPrivateLayout {
@@ -65,19 +65,19 @@ definition {
 			var privateLayout = "false";
 		}
 
-		return "${privateLayout}";
+		return ${privateLayout};
 	}
 
 	macro setServiceContext {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGuestPermissions = "true",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				workflowAction = "${workflowAction}");
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				workflowAction = ${workflowAction});
 		}
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 	macro setSite {
@@ -85,7 +85,7 @@ definition {
 			var site = "true";
 		}
 
-		return "${site}";
+		return ${site};
 	}
 
 	@summary = "Valid types declared in LayoutConstants.java. Search for 'TYPE_*'"
@@ -94,36 +94,36 @@ definition {
 			var type = "portlet";
 		}
 
-		return "${type}";
+		return ${type};
 	}
 
 	macro setTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "${privateLayout}");
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			privateLayout = ${privateLayout});
 
 		if (isSet(layoutTemplate)) {
 			var typeSettings = JSONLayoutUtil._updateLayoutTemplateId(
-				layoutTemplate = "${layoutTemplate}",
-				typeSettings = "${typeSettings}");
+				layoutTemplate = ${layoutTemplate},
+				typeSettings = ${typeSettings});
 		}
 
 		if (isSet(widgetName)) {
 			var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
-				column = "${column}",
-				remoteAppEntryId = "${remoteAppEntryId}",
-				typeSettings = "${typeSettings}",
-				widgetName = "${widgetName}");
+				column = ${column},
+				remoteAppEntryId = ${remoteAppEntryId},
+				typeSettings = ${typeSettings},
+				widgetName = ${widgetName});
 		}
 
 		if (!(isSet(layoutTemplate)) && !(isSet(widgetName))) {
 			fail("typeSettings will not be updated.");
 		}
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 }

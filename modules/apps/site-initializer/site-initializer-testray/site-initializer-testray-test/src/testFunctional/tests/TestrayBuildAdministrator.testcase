@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to created project and add a new team") {
@@ -59,8 +59,8 @@ definition {
 
 		task ("Create a new Routine and a new Case") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -73,8 +73,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			Testray.projectTabNavigator(navTabName = "Routine");
@@ -97,8 +97,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -113,13 +113,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -132,7 +132,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163712 - Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddBuildWithMultipleOptions {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -153,7 +153,7 @@ definition {
 			TestraySuites.addSuite(
 				caseType = "Automated Functional Test",
 				mainComponent = "Tags",
-				priorityNumber = "3",
+				priorityNumber = 3,
 				smartSuite = "true",
 				suiteDescription = "ATF_Suites_1 Suite Description",
 				suiteName = "ATF_Suites_1 Suite");
@@ -169,7 +169,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				labelStack = "Application Server",
 				labelStack2 = "Browser",
 				optionName = "Option_1",
@@ -187,7 +187,7 @@ definition {
 
 	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AdminCanArchiveBuild {
 
 		// TODO LPS-157540 AdminCanArchiveBuild pending implementation
@@ -196,7 +196,7 @@ definition {
 
 	@description = "This is a test for LPS-157539 - Verify if as an Administrator I should be able to Autoanalyze Builds in a Routine and assert that the Assignee, Comments, Issues have been copied"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAutoanalyzeBuildsInRoutine {
 
 		// TODO LPS-157539 AdminCanAutoanalyzeBuildsInRoutine pending implementation
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156513 - Verify if as an Administrator I can delete Builds"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -217,7 +217,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
-	@priority = "4"
+	@priority = 4
 	test AdminCanDeleteBuildContainsRuns {
 		task ("Given that the user add a new build with Environments Factors") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -245,7 +245,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -262,8 +262,8 @@ definition {
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156543 - Verify if as an Administrator I am able to edit Builds"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -291,7 +291,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -304,7 +304,7 @@ definition {
 			TestrayBuild.editBuild(
 				description = "Builds_1 Project Description Edited",
 				fieldName = "Builds_1 Project Edited",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -315,7 +315,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156546 - Verify if as an Administrator I should not be able to add a duplicate build"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -328,7 +328,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -340,7 +340,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.4",
 				routine = "Routines_1 Routine");
 		}
@@ -352,7 +352,7 @@ definition {
 
 	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AdminCanNotArchivedBuildInAnalysis {
 
 		// TODO LPS-156557 AdminCanNotArchivedBuildInAnalysis pending implementation
@@ -361,7 +361,7 @@ definition {
 
 	@description = "This is a test for LPS-156455 - Verify if as an Administrator I should not be able to archive a promoted build"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotArchivePromotedBuild {
 
 		// TODO LPS-156455 AdminCanNotArchivePromotedBuild pending implementation
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156583 - Verify if as an Administrator I should be able to promote a build"
-	@priority = "5"
+	@priority = 5
 	test AdminCanPromoteBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -382,7 +382,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -400,7 +400,7 @@ definition {
 
 	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Name"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSortBuildByName {
 
 		// TODO LPS-156585 AdminCanSortBuildByName pending implementation
@@ -409,7 +409,7 @@ definition {
 
 	@description = "This is a test for LPS-156588 - Verify if as an Administrator I should be able to sort the Builds Product Version"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSortBuildProductVersion {
 
 		// TODO LPS-156588 AdminCanSortBuildProductVersion pending implementation
@@ -418,7 +418,7 @@ definition {
 
 	@description = "This is a test for LPS-156586 - Verify if as an Administrator I should be able to sort the Builds Promoted"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AdminCanSortBuildPromoted {
 
 		// TODO LPS-156586 AdminCanSortBuildPromoted pending implementation
@@ -427,7 +427,7 @@ definition {
 
 	@description = "This is a test for LPS-156580 - Verify if as an Administrator I should be able to specify a start and end parameter when fetching a build index "
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSpecifyStartAndEndParameter {
 
 		// TODO LPS-156580 AdminCanSpecifyStartAndEndParameter pending implementation
@@ -436,7 +436,7 @@ definition {
 
 	@description = "This is a test for LPS-156592 - Verify if as an Administrator I should be able to unarchive a build"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanUnarchiveBuilds {
 
 		// TODO LPS-156592 AdminCanUnarchiveBuilds pending implementation

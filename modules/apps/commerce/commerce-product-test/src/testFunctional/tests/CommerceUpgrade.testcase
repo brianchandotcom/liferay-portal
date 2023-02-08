@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a use case for COMMERCE-8643"
-	@priority = "5"
+	@priority = 5
 	test ViewCommerceAppsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-commerce";
 		property portal.version = "7.3.10";
@@ -41,7 +41,7 @@ definition {
 
 			for (var catalogs : list "Master,Minium") {
 				AssertElementPresent(
-					key_entryName = "${catalogs}",
+					key_entryName = ${catalogs},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 			}
 		}
@@ -63,7 +63,7 @@ definition {
 
 			for (var priceLists : list "Master Base Price List,Minium Base Price List") {
 				AssertElementPresent(
-					key_entryName = "${priceLists}",
+					key_entryName = ${priceLists},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 			}
 		}
@@ -78,7 +78,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
@@ -89,13 +89,13 @@ definition {
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Processing");
 
 			CommerceOrders.viewOrdersEntry(
-				addressAddress = "${shippingAddressAddress}",
-				addressCity = "${shippingAddressCity}",
-				addressZipCode = "${shippingAddressZipCode}",
+				addressAddress = ${shippingAddressAddress},
+				addressCity = ${shippingAddressCity},
+				addressZipCode = ${shippingAddressZipCode},
 				paymentMethod = "Money Order",
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
@@ -115,7 +115,7 @@ definition {
 				value1 = "Flat Rate");
 
 			CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
-				quantityInShipment = "2",
+				quantityInShipment = 2,
 				shipmentItemSku = "MIN93015",
 				warehouseName = "Italy");
 
@@ -123,7 +123,7 @@ definition {
 				AssertTextEquals.assertPartialText(
 					key_titleName = "Shipping Address",
 					locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-					value1 = "${address}");
+					value1 = ${address});
 			}
 		}
 	}

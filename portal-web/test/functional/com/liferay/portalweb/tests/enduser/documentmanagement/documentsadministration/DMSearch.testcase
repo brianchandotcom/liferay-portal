@@ -19,7 +19,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98063. It checks that a user can search for document by synonyms."
-	@priority = "4"
+	@priority = 4
 	test CanSearchForDocumentBySynonyms {
 		property test.run.environment = "EE";
 
@@ -70,7 +70,7 @@ definition {
 			searchAssetType = "Document");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentInFolder {
 		property portal.acceptance = "true";
@@ -99,7 +99,7 @@ definition {
 			searchAssetType = "Document");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentThroughContent {
 		property portal.acceptance = "true";
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-129887. It ensures that the user can search for documents using file name."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForDocumentThroughFileName {
 		property portal.acceptance = "true";
@@ -139,13 +139,13 @@ definition {
 		for (var searchTermList : list "Document_1.doc,Document_1") {
 			Search.searchPG(
 				portletName = "Documents and Media",
-				searchTerm = "${searchTermList}");
+				searchTerm = ${searchTermList});
 
 			DMDocument.viewSearchResultsPG(dmDocumentTitle = "DM Document Title");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentThroughTitle {
 		property portal.acceptance = "true";
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80203. It checks that the users will remain in the current context after clearing the search."
-	@priority = "4"
+	@priority = 4
 	test UserRemainsInCurrentContextAfterClearingSearch {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

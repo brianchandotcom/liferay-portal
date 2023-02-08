@@ -14,7 +14,7 @@ definition {
 		PagesAdmin.tearDownCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewJSR {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

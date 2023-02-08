@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-147201. Verify approved remote app portlet can be added to page"
-	@priority = "4"
+	@priority = 4
 	test AdminCanApproveRemotePortlet {
 		task ("Apply workflow approval process to remote apps") {
 			ClientExtensionWorkflow.applyWorkflow();
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "LPS-147197. Verify rejected remote app portlet cannot be added to page"
-	@priority = "5"
+	@priority = 5
 	test AdminCanRejectRemotePortlet {
 		task ("Given workflow approval process applied to remote apps") {
 			ClientExtensionWorkflow.applyWorkflow();
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "LPS-147198. Verify remote app entry workflow can be configured at instance level"
-	@priority = "5"
+	@priority = 5
 	test CanConfigureWorkflowInstanceLevel {
 		task ("Navigate to workflow configuration") {
 			ApplicationsMenu.gotoPortlet(
@@ -190,7 +190,7 @@ definition {
 		task ("Assert Remote App Entry is listed") {
 			AssertElementPresent(
 				key_fieldName = "Client Extension Entry",
-				key_order = "1",
+				key_order = 1,
 				locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 
 			AssertElementPresent(
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "LPS-147202. Verify admin can receive notification request to approve remote app"
-	@priority = "4"
+	@priority = 4
 	test CanSendWorkflowNotification {
 		task ("Apply workflow approval process to remote apps") {
 			ClientExtensionWorkflow.applyWorkflow();
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@description = "LPS-147200. Verify pending remote app portlet cannot be added to page"
-	@priority = "4"
+	@priority = 4
 	test PendingRemoteAppCannotBeAddedToPage {
 		task ("Apply workflow approval process to remote apps") {
 			ClientExtensionWorkflow.applyWorkflow();

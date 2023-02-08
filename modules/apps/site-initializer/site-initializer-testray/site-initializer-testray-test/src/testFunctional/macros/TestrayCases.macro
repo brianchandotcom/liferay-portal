@@ -3,31 +3,31 @@ definition {
 	macro editCases {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
+			value1 = ${caseName});
 
 		Select(
 			locator1 = "TestrayCases#CASE_PRIORITY",
-			value1 = "${priority}");
+			value1 = ${priority});
 
 		Select(
 			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = "${caseTypeId}");
+			value1 = ${caseTypeId});
 
 		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = "${componentId}");
+			value1 = ${componentId});
 
 		Type(
 			locator1 = "TestrayCases#ESTIMATED_DURATION",
-			value1 = "${duration}");
+			value1 = ${duration});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_STEPS",
-			value1 = "${steps}");
+			value1 = ${steps});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -37,7 +37,7 @@ definition {
 
 		if (isSet(caseName)) {
 			Click.clickAtNotVisible(
-				key_checkboxOption = "${caseName}",
+				key_checkboxOption = ${caseName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 
@@ -48,9 +48,9 @@ definition {
 
 	macro linkCasesRequirement {
 		TestrayRequirements.addRequirementCase(
-			buttonText = "${buttonText}",
-			caseName = "${requirementName}",
-			linkText = "${linkText}");
+			buttonText = ${buttonText},
+			caseName = ${requirementName},
+			linkText = ${linkText});
 	}
 
 	macro typeCasesField {
@@ -58,35 +58,35 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
+			value1 = ${caseName});
 
 		Select(
 			locator1 = "TestrayCases#CASE_PRIORITY",
-			value1 = "${priority}");
+			value1 = ${priority});
 
 		Select(
 			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = "${caseTypeId}");
+			value1 = ${caseTypeId});
 
 		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = "${componentId}");
+			value1 = ${componentId});
 
 		Type(
 			locator1 = "TestrayCases#ESTIMATED_DURATION",
-			value1 = "${duration}");
+			value1 = ${duration});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_STEPS",
-			value1 = "${steps}");
+			value1 = ${steps});
 
 		if (isSet(addAnotherCase)) {
 			Click.clickAtNotVisible(
-				key_checkboxOption = "${addAnotherCase}",
+				key_checkboxOption = ${addAnotherCase},
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 		}
 
@@ -95,17 +95,17 @@ definition {
 
 	macro verifyCase {
 		AssertElementPresent(
-			key_caseComponent = "${caseComponent}",
-			key_caseName = "${caseName}",
-			key_casePriority = "${casePriority}",
+			key_caseComponent = ${caseComponent},
+			key_caseName = ${caseName},
+			key_casePriority = ${casePriority},
 			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
 	macro verifyLinkCaseRequirement {
 		AssertElementPresent(
-			key_component = "${component}",
-			key_summary = "${summary}",
-			key_teamName = "${teamName}",
+			key_component = ${component},
+			key_summary = ${summary},
+			key_teamName = ${teamName},
 			locator1 = "TestrayCases#CASE_REQUIREMENT_DETAIL");
 	}
 

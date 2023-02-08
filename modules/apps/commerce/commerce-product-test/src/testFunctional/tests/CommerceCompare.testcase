@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5912. Verify buyers can select a product for comparison from the product's details page."
-	@priority = "3"
+	@priority = 3
 	test AddComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "false";
 
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5911. Verify products selected for comparison are visible in the mini compare widget at the bottom of the page."
-	@priority = "3"
+	@priority = 3
 	test AssertComparisonItemsAreVisibleOnMiniCompare {
 		property portal.acceptance = "false";
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5915. Verify buyers can only see the max number of comparison items allowed in the Compare page."
-	@priority = "3"
+	@priority = 3
 	test EditMaxNumberOfComparisonItemsInComparePage {
 		property portal.acceptance = "false";
 
@@ -107,7 +107,7 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/compare");
 
-			FrontStore.setMaxComparisonItems(maxItems = "3");
+			FrontStore.setMaxComparisonItems(maxItems = 3);
 		}
 
 		task ("When the buyer views the comparison from the Compare page") {
@@ -123,14 +123,14 @@ definition {
 
 		task ("Then the buyer cannot see the fourth product in the comparison table") {
 			for (var product : list "U-Joint,Transmission Fluid,Torque Converters,Mount") {
-				if ("${product}" == "Mount") {
+				if (${product} == "Mount") {
 					AssertElementNotPresent(
-						key_productName = "${product}",
+						key_productName = ${product},
 						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 				}
 				else {
 					AssertElementPresent(
-						key_productName = "${product}",
+						key_productName = ${product},
 						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 				}
 			}
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5916. Verify buyers can only add the max number of comparison items allowed in the MiniCompare widget."
-	@priority = "3"
+	@priority = 3
 	test EditMaxNumberOfComparisonItemsInMiniCompare {
 		property portal.acceptance = "false";
 
@@ -147,7 +147,7 @@ definition {
 
 			WaitForPageLoad();
 
-			FrontStore.setMaxComparisonItems(maxItems = "3");
+			FrontStore.setMaxComparisonItems(maxItems = 3);
 		}
 
 		task ("When buyer select 3 products for comparison") {
@@ -169,14 +169,14 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX_DISABLED");
 
 			AssertElementNotPresent(
-				key_value = "4",
+				key_value = 4,
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_N");
 		}
 	}
 
 	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test RemoveComparisonItemFromComparePage {
 		property portal.acceptance = "false";
 
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5913. Verify buyers can deselect items that are being compared from the MiniCompare widget."
-	@priority = "3"
+	@priority = 3
 	test RemoveComparisonItemFromMiniCompare {
 		property portal.acceptance = "false";
 
@@ -206,13 +206,13 @@ definition {
 			var transmissionFluidImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "Transmission Fluid");
 
 			Click(
-				key_productMediaId = "${transmissionFluidImageId}",
+				key_productMediaId = ${transmissionFluidImageId},
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
 		}
 
 		task ("Then that product is removed from the comparison") {
 			AssertElementNotPresent(
-				key_productMediaId = "${transmissionFluidImageId}",
+				key_productMediaId = ${transmissionFluidImageId},
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
 			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5914. Verify buyers can deselect items that are being compared from the product's details page."
-	@priority = "3"
+	@priority = 3
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -255,7 +255,7 @@ definition {
 
 		task ("Then that product is removed from the comparison") {
 			AssertElementNotPresent(
-				key_productMediaId = "${transmissionFluidImageId}",
+				key_productMediaId = ${transmissionFluidImageId},
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
 			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
@@ -268,7 +268,7 @@ definition {
 
 	@description = "COMMERCE-6662. I want to be able to use ADT to render Commerce Comparison Bar widget and I want to be able to select a Display Template and see it applied to the widget"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test UseADTInCommerceComparisonBarWidget {
 		property portal.acceptance = "false";
 
@@ -278,7 +278,7 @@ definition {
 
 	@description = "COMMERCE-6661. I want to be able to use ADT to render Commerce Comparison Table widget and I want to be able to select a Display Template and see it applied to the widget"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test UseADTInCommerceComparisonTableWidget {
 		property portal.acceptance = "false";
 
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5919. Verify buyers can view product options and specifications, if set, when comparing items in the Compare page."
-	@priority = "3"
+	@priority = 3
 	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
 		property portal.acceptance = "false";
 

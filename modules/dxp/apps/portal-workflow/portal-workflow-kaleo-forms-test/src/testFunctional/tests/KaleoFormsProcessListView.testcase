@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Verify that the user can clear the result bar after the user use  the search bar."
-	@priority = "5"
+	@priority = 5
 	test CanClearSearchBar {
 		for (var newProcess : list "one,two") {
 			KaleoFormsAdmin.addProcess();
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete multiple process."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteMultipleProcesses {
 		for (var newProcess : list "1,2,3") {
 			KaleoFormsAdmin.addProcess();
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Verify that the user can export a process."
-	@priority = "3"
+	@priority = 3
 	test CanExportProcess {
 		KaleoFormsAdmin.addProcess();
 
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Create Date."
-	@priority = "3"
+	@priority = 3
 	test CanOrderByCreateDate {
 		for (var newProcess : list "1,2,3") {
 			KaleoFormsAdmin.addProcess();
@@ -144,12 +144,12 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "Create Date");
 
 		KaleoFormsAdmin.viewProcessByPosition(
-			order = "1",
+			order = 1,
 			title = "Kaleo Forms Process 1 Edited");
 	}
 
 	@description = "Verify that the user is able to order by Last Modified."
-	@priority = "3"
+	@priority = 3
 	test CanOrderByLastModified {
 		for (var newProcess : list "1,2,3") {
 			KaleoFormsAdmin.addProcess();
@@ -180,12 +180,12 @@ definition {
 		KaleoFormsAdmin.saveProcess(kfProcessName = "Kaleo Forms Process 1 Edited");
 
 		KaleoFormsAdmin.viewProcessByPosition(
-			order = "3",
+			order = 3,
 			title = "Kaleo Forms Process 1 Edited");
 	}
 
 	@description = "Verify that the user can search a process by description."
-	@priority = "3"
+	@priority = 3
 	test CanSearchByDescription {
 		for (var newProcess : list "Kaleo Forms,Promotion System") {
 			KaleoFormsAdmin.addProcess();
@@ -193,7 +193,7 @@ definition {
 			KaleoFormsAdmin.createKaleoFormsProcess(
 				kfFieldSetName = "Contacts",
 				kfFormName = "Created Task Form",
-				kfProcessDescription = "${newProcess}",
+				kfProcessDescription = ${newProcess},
 				kfProcessName = "Process Name",
 				workflowDefinitionTitle = "Single Approver",
 				workflowTask = "created");
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "Verify that the user can search by process name."
-	@priority = "4"
+	@priority = 4
 	test CanSearchByProcessName {
 		for (var newProcess : list "Kaleo Forms,Promotion System") {
 			KaleoFormsAdmin.addProcess();
@@ -216,7 +216,7 @@ definition {
 				kfFieldSetName = "Contacts",
 				kfFormName = "Created Task Form",
 				kfProcessDescription = "Process Description",
-				kfProcessName = "${newProcess}",
+				kfProcessName = ${newProcess},
 				workflowDefinitionTitle = "Single Approver",
 				workflowTask = "created");
 		}
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@description = "Verify that the user can search for process name field with alphanumeric/special character."
-	@priority = "3"
+	@priority = 3
 	test CanSearchForFieldNameWithAlphanumericOrSpecialCharacter {
 		KaleoFormsAdmin.addProcess();
 
@@ -245,13 +245,13 @@ definition {
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
 
-		Search.searchCP(searchTerm = "123");
+		Search.searchCP(searchTerm = 123);
 
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process 123 (カレオフォームプロセス)");
 	}
 
 	@description = "Verify that the user can select edit option."
-	@priority = "4"
+	@priority = 4
 	test CanSelectEditOption {
 		KaleoFormsAdmin.addProcess();
 
@@ -267,11 +267,11 @@ definition {
 
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
-			kfProgressStep = "1");
+			kfProgressStep = 1);
 	}
 
 	@description = "Verify that the user can select permissions option."
-	@priority = "4"
+	@priority = 4
 	test CanSelectPermissionsOption {
 		KaleoFormsAdmin.addProcess();
 
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select view option."
-	@priority = "5"
+	@priority = 5
 	test CanSelectViewOption {
 		KaleoFormsAdmin.addProcess();
 
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@description = "Verify that the user can view the process after it has been created."
-	@priority = "5"
+	@priority = 5
 	test CanViewProcessAfterCreated {
 		KaleoFormsAdmin.addProcess();
 
@@ -321,7 +321,7 @@ definition {
 	}
 
 	@description = "Verify that the page displays columns Id, Name, Description and Modified Date."
-	@priority = "5"
+	@priority = 5
 	test DisplaysColumnsNameDescriptionModifiedDate {
 		KaleoFormsAdmin.addProcess();
 
@@ -339,7 +339,7 @@ definition {
 	}
 
 	@description = "Verify that the page displays the pagination button."
-	@priority = "4"
+	@priority = 4
 	test DisplaysThePaginationButton {
 		for (var newProcess : list "1,2,3,4") {
 			KaleoFormsAdmin.addProcess();
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."
-	@priority = "3"
+	@priority = 3
 	test NoResultMessageInSearch {
 		KaleoFormsAdmin.addProcess();
 

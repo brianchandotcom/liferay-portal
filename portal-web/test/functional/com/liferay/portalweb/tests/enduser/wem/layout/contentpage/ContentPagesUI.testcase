@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146373. The page creator could access to Look and Feel settings via the configuration icon."
-	@priority = "4"
+	@priority = 4
 	test AccessToLookAndFeelSettings {
 		task ("Given a page creator accesses to the Page Design Options panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -57,14 +57,14 @@ definition {
 
 			for (var sectionName : list "Favicon,Master,Style Book,Theme") {
 				AssertElementPresent(
-					key_sectionTitle = "${sectionName}",
+					key_sectionTitle = ${sectionName},
 					locator1 = "PagesAdmin#SECTION_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
-	@priority = "4"
+	@priority = 4
 	test CannotResizeLeftSidebarPanelBeyoundLimitation {
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
-	@priority = "4"
+	@priority = 4
 	test CloseLeftPageEditorSidebar {
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
-	@priority = "3"
+	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -185,7 +185,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
 
 			AssertElementPresent(
-				index = "1",
+				index = 1,
 				key_panel = "Favorites",
 				locator1 = "Panel#PANEL_BY_INDEX");
 
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
-	@priority = "5"
+	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {
 		property portal.release = "false";
 
@@ -262,7 +262,7 @@ definition {
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 
 				AssertElementPresent(
-					index = "1",
+					index = 1,
 					key_panel = "Favorites",
 					locator1 = "Panel#PANEL_BY_INDEX");
 
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
-	@priority = "5"
+	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
 
@@ -386,7 +386,7 @@ definition {
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 
 				AssertElementPresent(
-					index = "1",
+					index = 1,
 					key_panel = "Favorites",
 					locator1 = "Panel#PANEL_BY_INDEX");
 
@@ -461,7 +461,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140266. The user could look for color samples via scroll bar."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test FindColorSamplesViaScrollBar {
 		task ("Add a Button fragment to a content page") {
@@ -483,20 +483,20 @@ definition {
 
 			ScrollWebElementIntoView(
 				category = "Button Link",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
 				panel = "Buttons");
 
 			ScrollWebElementIntoView(
 				category = "Brand Colors",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
 				panel = "Color System");
 		}
 	}
 
 	@description = "This is a test for LPS-146373. The page creator should be redirected to the previous page when clicking the back button in the page editor."
-	@priority = "4"
+	@priority = 4
 	test RedirectToPreviousPageWhenClickBackInPageEditor {
 		task ("Given a page creator adds a content page via the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146373. The page creator could use a scroll bar for each section in the page editor."
-	@priority = "4"
+	@priority = 4
 	test UseScrollBarInEachSection {
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -593,7 +593,7 @@ definition {
 			ScrollWebElementIntoView(
 				fragmentName = "card",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			var leftSidebarButtonsWidth = selenium.getElementWidth("PageEditor#FRAGMENT_SIDEBAR_BODY");
@@ -610,13 +610,13 @@ definition {
 			var pageContentWidth = ${gridFragmentWidth} + ${scrollBarWidth};
 
 			TestUtils.assertEquals(
-				actual = MathUtil.difference("${bodyWidth}", "${bothSidebarWidth}"),
-				expected = "${pageContentWidth}");
+				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
+				expected = ${pageContentWidth});
 		}
 	}
 
 	@description = "This is a test for LPS-170955. View Autosave icon styles are adjusted."
-	@priority = "5"
+	@priority = 5
 	test ViewAutosaveIconStyles {
 		task ("Given a page designer navigates to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -647,7 +647,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
-	@priority = "5"
+	@priority = 5
 	test ViewCollapseStyleInFragmentConfiguration {
 		property portal.acceptance = "true";
 
@@ -681,19 +681,19 @@ definition {
 			Navigator.gotoNavTab(navTab = "Styles");
 
 			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
-				Panel.collapsePanel(panel = "${key_panel}");
+				Panel.collapsePanel(panel = ${key_panel});
 			}
 
 			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
 
 			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
-				Panel.expandPanel(panel = "${key_panel}");
+				Panel.expandPanel(panel = ${key_panel});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
-	@priority = "3"
+	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -785,7 +785,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158746. Favorite session is hidden when no favorite fragment is chosen."
-	@priority = "4"
+	@priority = 4
 	test ViewFavoriteSessionIsHiddenWhenNoFavoriteFragmentIsChosen {
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -813,7 +813,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158746. Different users keep their own favorites list."
-	@priority = "4"
+	@priority = 4
 	test ViewFavoritesListInDifferentUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -927,7 +927,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewOrderOfColorSamplesInColorPicker {
 		property portal.acceptance = "true";
@@ -949,36 +949,36 @@ definition {
 				key_fieldLabel = "Text Color",
 				locator1 = "Button#COLOR_PICKER");
 
-			var n = "1";
+			var n = 1;
 
 			for (var panel : list "Color System,General,Typography,Buttons") {
 				AssertTextEquals(
-					index = "${n}",
+					index = ${n},
 					locator1 = "PageEditor#COLOR_SWATCH_PANEL",
-					value1 = "${panel}");
+					value1 = ${panel});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var category : list "Brand Colors,Grays,Theme Colors") {
 				AssertTextEquals(
-					index = "${n}",
+					index = ${n},
 					locator1 = "PageEditor#COLOR_SWATCH_CATEGORY",
 					panel = "Color System",
-					value1 = "${category}");
+					value1 = ${category});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "1,2,3,4") {
 				AssertAttributeValue(
 					attribute1 = "title",
 					category = "Brand Colors",
-					index = "${n}",
+					index = ${n},
 					locator1 = "PageEditor#COLOR_SWATCH_ITEM",
 					panel = "Color System",
 					value1 = "Brand Color ${i}");
@@ -990,7 +990,7 @@ definition {
 		task ("View the token name shown in tooltip when hover on color swatch item") {
 			MouseOver.javaScriptFocus(
 				category = "Grays",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COLOR_SWATCH_ITEM",
 				panel = "Color System");
 
@@ -1001,7 +1001,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
-	@priority = "3"
+	@priority = 3
 	test ViewOrderOfContentPagesActions {
 		task ("Add a Heading fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1033,7 +1033,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146373. The page creator could find Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar. Both page editor sidebars shouldn't overlay the page content."
-	@priority = "4"
+	@priority = 4
 	test ViewPageEditorSidebars {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1044,7 +1044,7 @@ definition {
 		task ("Then the page creator sees Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar and both page editor sidebars don't overlay the page content") {
 			for (var tabName : list "Fragments and Widgets,Browser,Page Design Options,Page Content,Comments") {
 				AssertVisible(
-					key_tabName = "${tabName}",
+					key_tabName = ${tabName},
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 			}
 
@@ -1064,7 +1064,7 @@ definition {
 
 			for (var tabName : list "General,Styles,Advanced") {
 				AssertVisible(
-					key_tab = "${tabName}",
+					key_tab = ${tabName},
 					locator1 = "NavTab#TAB_LINK");
 			}
 
@@ -1078,13 +1078,13 @@ definition {
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
 
 			TestUtils.assertEquals(
-				actual = MathUtil.difference("${bodyWidth}", "${bothSidebarWidth}"),
-				expected = "${headingFragmentWidth}");
+				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
+				expected = ${headingFragmentWidth});
 		}
 	}
 
 	@description = "This is a test for LPS-146373. Both page editor sidebars should be closed when the product menu is open."
-	@priority = "4"
+	@priority = 4
 	test ViewPageEditorSidebarsClosedWhenProductMenuOpen {
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1104,13 +1104,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153650. The portal version info should be shown on the Home page."
-	@priority = "4"
+	@priority = 4
 	test ViewPortalVersionInfoOnHomePage {
 		var portalVersionInfo = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
 
-		var match = StringUtil.matches("${portalVersionInfo}", "Liferay Digital Experience Platform \d+\.\d+\.\d+ Update \d+ \(\w+ \/ Build \d+ \/ \w+ \d+, \d+\)");
+		var match = StringUtil.matches(${portalVersionInfo}, "Liferay Digital Experience Platform \d+\.\d+\.\d+ Update \d+ \(\w+ \/ Build \d+ \/ \w+ \d+, \d+\)");
 
-		if ("${match}" == "true") {
+		if (${match} == "true") {
 			echo("The portal version info ${portalVersionInfo} is shown on the Home page");
 		}
 		else {

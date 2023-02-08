@@ -10,7 +10,7 @@ definition {
 	}
 
 	@description = "LPS-171056 Verify sendRedirect works with non root context."
-	@priority = "3"
+	@priority = 3
 	test SendRedirectWorksWithNonRootContext {
 		property portal.acceptance = "true";
 		property portal.context = "liferay";
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "Runs the smoke test on a non-root portal context."
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property portal.acceptance = "true";
 		property portal.context = "liferay";

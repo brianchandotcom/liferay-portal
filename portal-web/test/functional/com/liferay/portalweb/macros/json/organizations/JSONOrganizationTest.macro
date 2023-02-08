@@ -25,11 +25,11 @@ definition {
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "organization 1");
 
-		if ("${organizationId}" == "0") {
+		if (${organizationId} == 0) {
 			fail("Invalid organizationId retrieved");
 		}
 
-		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
+		var organizationName = JSONOrganization.getOrganizationName(organizationId = ${organizationId});
 	}
 
 }

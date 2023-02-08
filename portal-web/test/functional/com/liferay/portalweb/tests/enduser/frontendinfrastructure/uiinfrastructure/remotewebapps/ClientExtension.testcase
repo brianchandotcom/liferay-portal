@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 
 				JSONLayout.deletePublicLayout(
 					groupName = "Guest",
-					layoutName = "${layoutName}");
+					layoutName = ${layoutName});
 
 				Navigator.gotoPage(pageName = "Home");
 
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "LPS-141236. Verify remote app can be displayed under a portlet category"
-	@priority = "3"
+	@priority = 3
 	test CanBeAssignedAPortletCategory {
 		property portal.acceptance = "true";
 
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "Verify remote app can be deleted"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeDeleted {
 		property portal.acceptance = "true";
@@ -87,23 +87,23 @@ definition {
 
 		JSONClientExtension.addIFrameRemoteAppEntry(
 			iFrameURL = "http://www.liferay.com/my_new_remote_app",
-			name = "${remoteAppName}");
+			name = ${remoteAppName});
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "${remoteAppName}");
+		ClientExtensionGeneral.deleteRemoteApp(tableEntry = ${remoteAppName});
 
 		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
 	@description = "Verify that the client extension is not available on the workflow page"
-	@priority = "3"
+	@priority = 3
 	test CannotConfigureWorkflowSiteLevel {
 		task ("Given go to Workflow page") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Workflow",
-				site = "${siteName}");
+				site = ${siteName});
 		}
 
 		task ("When View entry list table") {
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."
-	@priority = "3"
+	@priority = 3
 	test CSSCanBeCreated {
 		task ("Given a site administrator accesses to the Client Extensions admin") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
@@ -141,7 +141,7 @@ definition {
 
 			ClientExtensionGeneral.addApp(
 				entryName = "Font Family",
-				entryURL = "${url}");
+				entryURL = ${url});
 		}
 
 		task ("Then the site administrator sees the created CSS remote app") {
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can be created"
-	@priority = "5"
+	@priority = 5
 	test CustomElementCanBeCreated {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "LPS-158083 Remote App using non-root portal context"
-	@priority = "4"
+	@priority = 4
 	test CustomElementCanBeCreatedInNonRootContext {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";
@@ -207,10 +207,10 @@ definition {
 		task ("Given a non-root portal context") {
 			var portalURL = JSONCompany.getPortalURL();
 
-			var portalContextIsCorrect = StringUtil.extractLast("${portalURL}", "/");
+			var portalContextIsCorrect = StringUtil.extractLast(${portalURL}, "/");
 
 			TestUtils.assertEquals(
-				actual = "${portalContextIsCorrect}",
+				actual = ${portalContextIsCorrect},
 				expected = "liferay");
 		}
 
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can be deleted"
-	@priority = "4"
+	@priority = 4
 	test CustomElementCanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can be displayed by portlet"
-	@priority = "5"
+	@priority = 5
 	test CustomElementCanBeDisplayedByPortlet {
 		property portal.acceptance = "true";
 
@@ -306,9 +306,9 @@ definition {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "${customElementHtmlName}",
-				entryName = "${customElementName}",
-				entryURL = "${customElementURL}");
+				entryHtmlName = ${customElementHtmlName},
+				entryName = ${customElementName},
+				entryURL = ${customElementURL});
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
@@ -329,7 +329,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can be edited"
-	@priority = "4"
+	@priority = 4
 	test CustomElementCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -346,7 +346,7 @@ definition {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			Click(
-				key_tableEntryName = "${remoteAppName}",
+				key_tableEntryName = ${remoteAppName},
 				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 			ClientExtensionGeneral.editCustomElement(
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can be instanceable in a Content Page"
-	@priority = "3"
+	@priority = 3
 	test CustomElementCanBeInstanceable {
 		property portal.acceptance = "true";
 
@@ -409,14 +409,14 @@ definition {
 
 		task ("Change the Number of Modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panelList = "General");
 		}
 
 		task ("Add Vanilla Counter in each module") {
 			for (var n : list "1,2") {
 				PageEditor.addElementToColumn(
-					columnNumber = "${n}",
+					columnNumber = ${n},
 					navTab = "Widgets",
 					portletName = "Vanilla Counter");
 			}
@@ -429,14 +429,14 @@ definition {
 
 			for (var n : list "1,2") {
 				AssertElementPresent(
-					column_number = "${n}",
+					column_number = ${n},
 					locator1 = "ClientExtension#VANILLA_COUNTER_PAGE_COLUMN_N");
 			}
 		}
 	}
 
 	@description = "Verify remote app can be configured one its portlet name has been changed"
-	@priority = "3"
+	@priority = 3
 	test CustomElementCanConfigurePortletName {
 		property portal.acceptance = "true";
 
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can displayed properties in HTML"
-	@priority = "3"
+	@priority = 3
 	test CustomElementCanInjectHTMLProperties {
 		property portal.acceptance = "true";
 
@@ -526,7 +526,7 @@ definition {
 	}
 
 	@description = "Verify that remote app of type Custom Element can save multiple URLs"
-	@priority = "4"
+	@priority = 4
 	test CustomElementCanSaveMultipleURLs {
 		property portal.acceptance = "true";
 
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@description = "LPS-159013 ES module custom element portlets render incorrect script node when dragged in the UI"
-	@priority = "4"
+	@priority = 4
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Client Extensions";
@@ -593,7 +593,7 @@ definition {
 	}
 
 	@description = "LPS-165425. Validate that HTML eror is thrown if left empty."
-	@priority = "3"
+	@priority = 3
 	test ErrorAppearsWhenHTMLBlank {
 		task ("Given Add Custom Element Client Extensions admin page") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -621,7 +621,7 @@ definition {
 	}
 
 	@description = "LPS-163525. Validate Client Extensions UI has an understandable error message when user inputs an invalid URL."
-	@priority = "4"
+	@priority = 4
 	test HasAnUnderstandableErrorMessageWhenURLInvalid {
 		task ("Given Add IFrame Client Extensions") {
 			ApplicationsMenu.gotoPortlet(
@@ -635,7 +635,7 @@ definition {
 		task ("When type testurl in URL field and a valid name is entered") {
 			ClientExtensionGeneral.addApp(
 				entryName = "Test Name",
-				entryURL = "${testURL}");
+				entryURL = ${testURL});
 		}
 
 		task ("And When attempt to save the remote app") {
@@ -651,7 +651,7 @@ definition {
 
 	@description = "LPS-163525. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test HasMandatoryFieldErrorMessagesWhenEmpty {
 		task ("Given Add IFrame Client Extensions admin page") {
 			ApplicationsMenu.gotoPortlet(
@@ -682,7 +682,7 @@ definition {
 	}
 
 	@description = "LPS-165745. Error thrown when HTML Element contains empty/white space."
-	@priority = "3"
+	@priority = 3
 	test HTMLElementConatinsInvlaidCharacters {
 		task ("Given Add Custom Element Client Extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -694,7 +694,7 @@ definition {
 			ClientExtensionGeneral.addApp(
 				entryHTMLElementName = "vanilla counter",
 				entryName = "RemoteApp Test Name",
-				entryURL = "${testURL}");
+				entryURL = ${testURL});
 		}
 
 		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
@@ -705,7 +705,7 @@ definition {
 	}
 
 	@description = "LPS-165835. Error thrown when HTML Element doesn't have at least one hyphen."
-	@priority = "3"
+	@priority = 3
 	test HTMLElementMustHaveOneHyphen {
 		task ("Given Add Custom Element Client Extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -717,7 +717,7 @@ definition {
 			ClientExtensionGeneral.addApp(
 				entryHTMLElementName = "vanilla.counter",
 				entryName = "RemoteApp Test",
-				entryURL = "${testURL}");
+				entryURL = ${testURL});
 		}
 
 		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {
@@ -728,7 +728,7 @@ definition {
 	}
 
 	@description = "LPS-165834. Error thrown when HTML Element doesn't start with a lowercase letter."
-	@priority = "3"
+	@priority = 3
 	test HTMLElementMustStartWithLowercase {
 		task ("Given Add Custom Element Client Extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -740,7 +740,7 @@ definition {
 			ClientExtensionGeneral.addApp(
 				entryHTMLElementName = "Vanilla counter",
 				entryName = "RemoteApp Test",
-				entryURL = "${testURL}");
+				entryURL = ${testURL});
 		}
 
 		task ("And When attempt to save the remote app") {
@@ -755,7 +755,7 @@ definition {
 	}
 
 	@description = "Verify an iframe remote app can be created"
-	@priority = "5"
+	@priority = 5
 	test IFrameCanBeCreated {
 		property portal.acceptance = "true";
 		property testray.component.names = "Frontend Dataset,Remote Apps";
@@ -772,7 +772,7 @@ definition {
 	}
 
 	@description = "Verify that remote app type IFrame can display property fields"
-	@priority = "4"
+	@priority = 4
 	test IframeTypeCanDisplayProperFields {
 		property portal.acceptance = "true";
 
@@ -802,7 +802,7 @@ definition {
 	}
 
 	@description = "Verify that the UI label is present when a client extension is not created through osgi"
-	@priority = "3"
+	@priority = 3
 	test UILabelIsPresent {
 	}
 

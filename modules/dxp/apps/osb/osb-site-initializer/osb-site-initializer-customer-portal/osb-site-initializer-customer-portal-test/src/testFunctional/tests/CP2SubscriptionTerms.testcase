@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 	}
 
@@ -34,19 +34,19 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-144449 | Test Automation: Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms"
-	@priority = "4"
+	@priority = 4
 	test ClickingSubscriptionCardPopUpShows {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -68,10 +68,10 @@ definition {
 
 	@description = "Automation ID: LPS-144483 | Test Summary: Verify there if status Active shows up"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test IfActiveStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -99,10 +99,10 @@ definition {
 
 	@description = "Automation ID: LPS-144484 | Test Summary: Verify there if status Expired shows up"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test IfExpiredStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -118,10 +118,10 @@ definition {
 
 	@description = "Automation ID: LPS-144485 | Test Summary: Verify there if status Future shows up"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test IfFutureStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -148,10 +148,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144452 | Test Summary: Check if when the user clicks out of the modal it closes"
-	@priority = "3"
+	@priority = 3
 	test ModalCloseIfClickedOut {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -177,14 +177,14 @@ definition {
 
 	@description = "Automation ID: LPS-144464 | Test Summary: Verify that the Provisioned column appears for Commerce"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ProvisionedColumnAppearsForCommerce {
 		task ("Width desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -207,14 +207,14 @@ definition {
 
 	@description = "Automation ID: LPS-144466 | Test Summary: Verify that the Provisioned column appears for DXP."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ProvisionedColumnAppearsForDXP {
 		task ("Width desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -236,10 +236,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144470 | Test Summary: Verify that the Provisioned column does not appear for DXP Cloud"
-	@priority = "3"
+	@priority = 3
 	test ProvisionedColumnAppearsForDXPCloud {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -262,9 +262,9 @@ definition {
 
 	@description = "Automation ID: LPS-144454 | Test Summary: Verify there is value under the Start - End Date column"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ValueUnderColumnFields {
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		CustomerPortal.enterOnProject(title = "Test Account DXP");
 

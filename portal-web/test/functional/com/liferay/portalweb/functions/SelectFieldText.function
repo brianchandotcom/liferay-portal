@@ -8,11 +8,11 @@ definition {
 		var input = "keys=CONTROL,a";
 		var mac = OSDetector.isApple();
 
-		if (contains("${mac}", "true")) {
+		if (contains(${mac}, "true")) {
 			var input = "keys=COMMAND,a";
 		}
 
-		selenium.sendKeys("${locator1}", "${input}");
+		selenium.sendKeys(${locator1}, ${input});
 
 		selenium.assertJavaScriptErrors();
 

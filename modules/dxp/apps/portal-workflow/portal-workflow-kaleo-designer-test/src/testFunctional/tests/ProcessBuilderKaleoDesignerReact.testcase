@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Verify that, when the user adds a translation, the action reflects in the language selector"
-	@priority = "4"
+	@priority = 4
 	test AddedTranslationsAreDisplayedOnLanguageSelector {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#AddedTranslationsAreDisplayedOnLanguageSelector";
 
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "Verify that Action can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddAction {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAction";
 
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "Verify that Assignment can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddAssignment {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAssignment";
 
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
-	@priority = "5"
+	@priority = 5
 	test CanAddConditionNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddConditionNode";
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
-	@priority = "5"
+	@priority = 5
 	test CanAddEndNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddEndNode";
 
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
-	@priority = "5"
+	@priority = 5
 	test CanAddForkNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddForkNode";
 
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
-	@priority = "5"
+	@priority = 5
 	test CanAddJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinNode";
 
@@ -187,7 +187,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
-	@priority = "5"
+	@priority = 5
 	test CanAddJoinXorNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinXorNode";
 
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleActions {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleActions";
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple notifications"
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleNotifications {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleNotifications";
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple Timers to a task node"
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleTimers";
@@ -273,7 +273,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "1",
+			durationValue = 1,
 			newSection = "New Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to add new languages"
-	@priority = "3"
+	@priority = 3
 	test CanAddNewLanguages {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNewLanguages";
 
@@ -318,7 +318,7 @@ definition {
 	}
 
 	@description = "Verify that Notification can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddNotification {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNotification";
 
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to add a Script to define the Action"
-	@priority = "3"
+	@priority = 3
 	test CanAddScriptToDefineAction {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddScriptToDefineAction";
 
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
-	@priority = "5"
+	@priority = 5
 	test CanAddStartNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStartNode";
 
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
-	@priority = "5"
+	@priority = 5
 	test CanAddStateNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStateNode";
 
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
-	@priority = "5"
+	@priority = 5
 	test CanAddTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTaskNode";
 
@@ -425,7 +425,7 @@ definition {
 	}
 
 	@description = "Verify that Timers can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTimers";
@@ -441,7 +441,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -456,7 +456,7 @@ definition {
 
 	@description = "Verify that the user can add translations"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanAddTranslations {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTranslations";
 
@@ -492,7 +492,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to select Account role type for role assignments"
-	@priority = "5"
+	@priority = 5
 	test CanAssignAccountRole {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignAccountRole";
 
@@ -513,7 +513,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to multiple Role Types"
-	@priority = "4"
+	@priority = 4
 	test CanAssignMultipleRoleTypesToTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignMultipleRoleTypesToTaskNode";
 
@@ -543,7 +543,7 @@ definition {
 			newSection = "New Section",
 			roleTypeName = "Account",
 			roleTypeRoleName = "Account Member",
-			sectionOptionList = "3");
+			sectionOptionList = 3);
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -556,7 +556,7 @@ definition {
 			newSection = "New Section",
 			roleTypeName = "Regular",
 			roleTypeRoleName = "Owner",
-			sectionOptionList = "4");
+			sectionOptionList = 4);
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -566,22 +566,22 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "2",
+			positonOption = 2,
 			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "3",
+			positonOption = 3,
 			selectedRole = "Account");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "4",
+			positonOption = 4,
 			selectedRole = "Organization");
 	}
 
 	@description = "Verify that the user is able to assign the task node to a single Role Type"
-	@priority = "3"
+	@priority = 3
 	test CanAssignSingleRoleTypeToTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignSingleRoleTypeToTaskNode";
 
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to the Asset Creator"
-	@priority = "4"
+	@priority = 4
 	test CanAssignTaskNodeToAssetCreator {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToAssetCreator";
 
@@ -620,7 +620,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a Resource Action"
-	@priority = "3"
+	@priority = 3
 	test CanAssignTaskNodeToResourceActions {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToResourceActions";
 
@@ -640,7 +640,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a Role"
-	@priority = "4"
+	@priority = 4
 	test CanAssignTaskNodeToRole {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToRole";
 
@@ -661,7 +661,7 @@ definition {
 
 	@description = "Verify that the user is able to assign the task node to a Scripted Assignment"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanAssignTaskNodeToScriptedAssignments {
 
 		// TODO CanAssignTaskNodeToScriptedAssignments pending implementation
@@ -669,7 +669,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a specific User"
-	@priority = "4"
+	@priority = 4
 	test CanAssignTaskNodeToSpecificUser {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToSpecificUser";
 
@@ -708,7 +708,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
-	@priority = "3"
+	@priority = 3
 	test CanCloseDeleteModal {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseDeleteModal";
 
@@ -727,7 +727,7 @@ definition {
 	}
 
 	@description = "Verify that when the user click “X”, the Manage Translations window closes"
-	@priority = "3"
+	@priority = 3
 	test CanCloseManageTranslationsWindowOnXClick {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseManageTranslationsWindowOnXClick";
 
@@ -748,7 +748,7 @@ definition {
 
 	@description = "Verify that the user is able to complete the task through different types of users assigned at My Workflow Task"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanCompleteTaskThroughDifferentUsersAssignments {
 
 		// TODO CanCompleteTaskThroughDifferentUsersAssignments pending implementation
@@ -756,7 +756,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"
-	@priority = "3"
+	@priority = 3
 	test CanConfigureActionAtTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureActionAtTimers";
@@ -774,7 +774,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer 1",
 			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -790,7 +790,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple Actions to Timers at task node"
-	@priority = "3"
+	@priority = 3
 	test CanConfigureMultipleActionsAtTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureMultipleActionsAtTimers";
@@ -808,7 +808,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer 1",
 			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -838,7 +838,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
-	@priority = "3"
+	@priority = 3
 	test CanConfigureReassignmentAtTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureReassignmentAtTimers";
@@ -855,7 +855,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionTypeOption = "Reassignment",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -871,7 +871,7 @@ definition {
 	}
 
 	@description = "Verify that the user can create a Template for Notification"
-	@priority = "4"
+	@priority = 4
 	test CanCreateNotificationTemplate {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateNotificationTemplate";
@@ -923,7 +923,7 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"
-	@priority = "4"
+	@priority = 4
 	test CanCreateOnlyOneTransitionInSameDirection {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateOnlyOneTransitionInSameDirection";
 
@@ -950,7 +950,7 @@ definition {
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"
-	@priority = "5"
+	@priority = 5
 	test CanCreateTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateTransition";
 
@@ -972,7 +972,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to input a Groovy script to define the assignment"
-	@priority = "4"
+	@priority = 4
 	test CanDefineAssignmentWithGroovyScript {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineAssignmentWithGroovyScript";
 
@@ -990,7 +990,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to define the Resource Action"
-	@priority = "3"
+	@priority = 3
 	test CanDefineResourceAction {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineResourceAction";
 
@@ -1008,7 +1008,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete action with the trash icon at the bottom right corner"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAction {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAction";
 
@@ -1042,7 +1042,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete actions inside Timers"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteActionsAtTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteActionsAtTimers";
@@ -1060,7 +1060,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer 1",
 			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -1094,7 +1094,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAllActionsAtOnce {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllActionsAtOnce";
@@ -1127,7 +1127,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all Timers at once"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAllTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllTimers";
@@ -1141,7 +1141,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "1",
+			durationValue = 1,
 			newSection = "New Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
@@ -1162,7 +1162,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Condition"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteConditionNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
 
@@ -1183,7 +1183,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of End"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteEndNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteEndNode";
 
@@ -1202,7 +1202,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Fork"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteForkNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteForkNode";
 
@@ -1223,7 +1223,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Join"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinNode";
 
@@ -1244,7 +1244,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Join XOR"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteJoinXORNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinXORNode";
 
@@ -1265,7 +1265,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all notifications configurations"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteMultipleNotifications {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteMultipleNotifications";
@@ -1306,7 +1306,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteNodeViaDeleteKey {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaDeleteKey";
 
@@ -1325,7 +1325,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete icon in the sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteNodeViaSidebar {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaSidebar";
 
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete notification role types"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteNotificationRoleTypes {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNotificationRoleTypes";
@@ -1394,7 +1394,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a specific notification configuration"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteSpecificNotification {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteSpecificNotification";
@@ -1435,7 +1435,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Start"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStartNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStartNode";
 
@@ -1454,7 +1454,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of State"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStateNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStateNode";
 
@@ -1475,7 +1475,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Task"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTaskNode";
 
@@ -1496,7 +1496,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete the Timers"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteTimers {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimers";
@@ -1510,7 +1510,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Liferay Timer Template",
-			durationValue = "1",
+			durationValue = 1,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -1526,7 +1526,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteTimersBySidebarCard {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimersBySidebarCard";
@@ -1540,7 +1540,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -1556,7 +1556,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to delete translations"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteTranslations {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTranslations";
 
@@ -1588,7 +1588,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Delete a Draft workflow"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteWorkflowDefinitionDraft {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteWorkflowDefinitionDraft";
 
@@ -1610,7 +1610,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to designate a Role Name at a Role Type"
-	@priority = "3"
+	@priority = 3
 	test CanDesignateRoleTypeRoleName {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDesignateRoleTypeRoleName";
 
@@ -1631,7 +1631,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Action fields"
-	@priority = "4"
+	@priority = 4
 	test CanEditActionFields {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditActionFields";
 
@@ -1647,7 +1647,7 @@ definition {
 			description = "Liferay Actions Description",
 			executionTypeOption = "On Entry",
 			name = "Liferay Actions",
-			priorityValue = "2",
+			priorityValue = 2,
 			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
                         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
@@ -1665,7 +1665,7 @@ definition {
 			description = "Liferay Actions Description Edited",
 			executionTypeOption = "On Exit",
 			name = "Liferay Actions Edited",
-			priorityValue = "10",
+			priorityValue = 10,
 			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
                         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
@@ -1683,7 +1683,7 @@ definition {
 			description = "Liferay Actions Description Edited",
 			executionTypeOption = "On Exit",
 			name = "Liferay Actions Edited",
-			priorityValue = "10",
+			priorityValue = 10,
 			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
                         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
@@ -1692,7 +1692,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Description of the Notification"
-	@priority = "4"
+	@priority = 4
 	test CanEditNotificationDescription {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationDescription";
 
@@ -1726,7 +1726,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Name of the Notification"
-	@priority = "4"
+	@priority = 4
 	test CanEditNotificationName {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationName";
 
@@ -1759,7 +1759,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit a Template for Notification"
-	@priority = "4"
+	@priority = 4
 	test CanEditNotificationTemplate {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationTemplate";
 
@@ -1795,7 +1795,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes ID in the sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanEditStepID {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepID";
 
@@ -1821,7 +1821,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to view and edit the node's Label in the sidebar"
-	@priority = "4"
+	@priority = 4
 	test CanEditStepLabel {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepLabel";
 
@@ -1847,7 +1847,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to FreeMarker"
-	@priority = "4"
+	@priority = 4
 	test CanEditTemplateLanguageToFreeMarker {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToFreeMarker";
 
@@ -1873,7 +1873,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to Text"
-	@priority = "4"
+	@priority = 4
 	test CanEditTemplateLanguageToText {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToText";
 
@@ -1899,7 +1899,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
-	@priority = "4"
+	@priority = 4
 	test CanEditTemplateLanguageToVelocity {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToVelocity";
 
@@ -1925,7 +1925,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Description of the Timer"
-	@priority = "3"
+	@priority = 3
 	test CanEditTimerDescription {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDescription";
@@ -1940,7 +1940,7 @@ definition {
 			actionName = "Liferay Timer Action",
 			actionsTemplateValue = "Timer Template",
 			description = "Description of Workflow Timer",
-			durationValue = "1",
+			durationValue = 1,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -1968,7 +1968,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Duration of the Timer"
-	@priority = "4"
+	@priority = 4
 	test CanEditTimerDuration {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDuration";
@@ -1984,7 +1984,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer Action",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "1",
+			durationValue = 1,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Java",
@@ -1997,7 +1997,7 @@ definition {
 			propertyValue = "Duration: 1 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
-			durationValue = "1",
+			durationValue = 1,
 			scaleTypeOption = "Minute");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -2007,7 +2007,7 @@ definition {
 			propertyValue = "Duration: 1 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			durationValue = "2",
+			durationValue = 2,
 			scaleTypeOption = "Minute",
 			singleTimer = "true");
 
@@ -2018,12 +2018,12 @@ definition {
 			propertyValue = "Duration: 2 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
-			durationValue = "2",
+			durationValue = 2,
 			scaleTypeOption = "Minute");
 	}
 
 	@description = "Verify that the user can edit the Name of the Timer"
-	@priority = "4"
+	@priority = 4
 	test CanEditTimerName {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerName";
@@ -2038,7 +2038,7 @@ definition {
 			actionName = "Liferay Timer Action",
 			actionsTemplateValue = "Timer Template",
 			description = "Description of Workflow Timer",
-			durationValue = "1",
+			durationValue = 1,
 			name = "Name of Workflow Timer",
 			newTimer = "true",
 			scaleTypeOption = "Minute",
@@ -2067,7 +2067,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Timers recurrence field"
-	@priority = "3"
+	@priority = 3
 	test CanEditTimerRecurrenceFields {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerRecurrenceFields";
@@ -2081,9 +2081,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
-			recurrenceDurationValue = "1",
+			recurrenceDurationValue = 1,
 			recurrenceOption = "True",
 			recurrenceScaleTypeOption = "Hour",
 			scaleTypeOption = "Minute",
@@ -2097,7 +2097,7 @@ definition {
 			propertyValue = "Recurrence: 1 hour");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			recurrenceDurationValue = "5",
+			recurrenceDurationValue = 5,
 			recurrenceScaleTypeOption = "Minute");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -2108,7 +2108,7 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
-	@priority = "4"
+	@priority = 4
 	test CanEditTransitionID {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTransitionID";
 
@@ -2134,7 +2134,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
-	@priority = "2"
+	@priority = 2
 	test CanHideShowInformationArea {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanHideShowInformationArea";
 
@@ -2165,7 +2165,7 @@ definition {
 
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanLocalizeStepLabelWhenTranslated {
 
 		// TODO LRQA-72982 CanLocalizeStepLabelWhenTranslated pending implementation
@@ -2173,7 +2173,7 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that the user is able to localize the label of the transition"
-	@priority = "3"
+	@priority = 3
 	test CanLocalizeTransitionLabel {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanLocalizeTransitionLabel";
 
@@ -2191,7 +2191,7 @@ definition {
 	}
 
 	@description = "Verify that the link to Manage Translations component is displayed"
-	@priority = "4"
+	@priority = 4
 	test CanManageTranslations {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanManageTranslations";
 
@@ -2205,7 +2205,7 @@ definition {
 	}
 
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
-	@priority = "4"
+	@priority = 4
 	test CanMoveNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanMoveNode";
 
@@ -2218,25 +2218,25 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNodePosition(
 			nodeLabel = "Start",
 			nodeType = "start",
-			nodeXPosition = "300",
-			nodeYPosition = "100");
+			nodeXPosition = 300,
+			nodeYPosition = 100);
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodeLabel = "Start",
 			nodePosition = "100,-50");
 
 		ProcessBuilderKaleoDesignerReact.viewNodePosition(
-			firstNodeXPosition = "300",
-			firstNodeYPosition = "100",
+			firstNodeXPosition = 300,
+			firstNodeYPosition = 100,
 			newPosition = "true",
 			nodeLabel = "Start",
 			nodeType = "start",
-			nodeXPosition = "400",
-			nodeYPosition = "50");
+			nodeXPosition = 400,
+			nodeYPosition = 50);
 	}
 
 	@description = "Verify that the user can't delete a Assignment through trash icon"
-	@priority = "4"
+	@priority = 4
 	test CanNotDeleteAssignmentByTrashIcon {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotDeleteAssignmentByTrashIcon";
 
@@ -2254,7 +2254,7 @@ definition {
 	}
 
 	@description = "Verify that is not possible to have multiple Start nodes"
-	@priority = "4"
+	@priority = 4
 	test CanNotHaveMultipleStartNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotHaveMultipleStartNode";
 
@@ -2277,7 +2277,7 @@ definition {
 
 	@description = "LPS-139388 - Verify that nodes behave correctly when we import a workflow with the same names for different elements"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanNotImportProcessWithDuplicatedElementNames {
 
 		// TODO LRQA-72988 CanNotImportProcessWithDuplicatedElementNames pending implementation
@@ -2286,7 +2286,7 @@ definition {
 
 	@description = "LPS-129928 - Verify that the collision detection between nodes are working after moving nodes on canvas"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanNotPlaceNodeOverAnother {
 
 		// TODO LRQA-73005 CanNotPlaceNodeOverAnother pending implementation
@@ -2294,7 +2294,7 @@ definition {
 	}
 
 	@description = "Verify that the user can't Publish a workflow without transitions"
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishWorkflowWithoutTransitions {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotPublishWorkflowWithoutTransitions";
 
@@ -2312,7 +2312,7 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"
-	@priority = "4"
+	@priority = 4
 	test CanNotSaveProcessWithDuplicatedNodeID {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithDuplicatedNodeID";
 
@@ -2328,7 +2328,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Id",
-			infoValue = "${nodeIdValue}");
+			infoValue = ${nodeIdValue});
 
 		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
 
@@ -2338,7 +2338,7 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with the node ID not filled"
-	@priority = "4"
+	@priority = 4
 	test CanNotSaveProcessWithEmptyNodeID {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithEmptyNodeID";
 
@@ -2360,7 +2360,7 @@ definition {
 	}
 
 	@description = "Verify that only the task node thas Assignments property"
-	@priority = "3"
+	@priority = 3
 	test CanOnlyViewAssignmentsAtTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanOnlyViewAssignmentsAtTaskNode";
 
@@ -2391,7 +2391,7 @@ definition {
 
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanProgressToNextStepWhenParallelTasksCompleted {
 
 		// TODO LRQA-72985 CanProgressToNextStepWhenParallelTasksCompleted pending implementation
@@ -2399,7 +2399,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Condition node"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithConditionNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithConditionNode";
 
@@ -2419,7 +2419,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Fork node"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithForkNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithForkNode";
 
@@ -2505,7 +2505,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Join node"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinNode";
 
@@ -2529,7 +2529,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with Join XOR node "
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithJoinXORNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithJoinXORNode";
 
@@ -2619,7 +2619,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a definition with State node"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithStateNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithStateNode";
 
@@ -2655,7 +2655,7 @@ definition {
 	}
 
 	@description = "Verify that the user can can publish a definition with Task node"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWithTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWithTaskNode";
 
@@ -2689,7 +2689,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Publish workflow"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflow";
 
@@ -2713,7 +2713,7 @@ definition {
 	}
 
 	@description = "Verify that the user can publish a workflow with Timer configured"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWorkflowWithTimerConfigured {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflowWithTimerConfigured";
@@ -2729,7 +2729,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
 			scaleTypeOption = "Minute",
 			selectType = "Groovy",
@@ -2763,7 +2763,7 @@ definition {
 	}
 
 	@description = "Verify that the user can restore to a previous definition version in the Revision History tab"
-	@priority = "5"
+	@priority = 5
 	test CanRestorePreviousVersionAtRevisionHistoryTab {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanRestorePreviousVersionAtRevisionHistoryTab";
 
@@ -2793,7 +2793,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
+		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = 1);
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
 
@@ -2803,7 +2803,7 @@ definition {
 	}
 
 	@description = "Verify that user can Save workflow as Draft"
-	@priority = "5"
+	@priority = 5
 	test CanSaveAsDraft {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSaveAsDraft";
 
@@ -2822,7 +2822,7 @@ definition {
 
 	@description = "Verify that the user can search languages"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanSearchLanguages {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSearchLanguages";
 
@@ -2840,7 +2840,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"
-	@priority = "4"
+	@priority = 4
 	test CanSeeStartAndEndNodesByDefault {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSeeStartAndEndNodesByDefault";
 
@@ -2854,7 +2854,7 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Asset Creator"
-	@priority = "5"
+	@priority = 5
 	test CanSelectAssetCreatorAsNotificationRecipientType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
 
@@ -2880,7 +2880,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Email as Notification type"
-	@priority = "5"
+	@priority = 5
 	test CanSelectEmailAsNotificationType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectEmailAsNotificationType";
 
@@ -2905,7 +2905,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select each node in Diagram"
-	@priority = "4"
+	@priority = 4
 	test CanSelectNodeOnDiagram {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectNodeOnDiagram";
 
@@ -2929,7 +2929,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Assignment as Execution Type"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtActions {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtActions";
@@ -2958,7 +2958,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications";
 
@@ -2986,7 +2986,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryAsExecutionTypeAtNodeNotifications";
 
@@ -3012,7 +3012,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Entry as Execution Type"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnEntryExecutionTypeAtActions {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryExecutionTypeAtActions";
@@ -3041,7 +3041,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Exit as Execution Type"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtActions {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtActions";
@@ -3070,7 +3070,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
-	@priority = "4"
+	@priority = 4
 	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtNodeNotifications";
 
@@ -3096,7 +3096,7 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Role"
-	@priority = "5"
+	@priority = 5
 	test CanSelectRoleAsNotificationRecipientType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
 
@@ -3123,7 +3123,7 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"
-	@priority = "5"
+	@priority = 5
 	test CanSelectScriptedRecipientAsNotificationRecipientType {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectScriptedRecipientAsNotificationRecipientType";
@@ -3151,7 +3151,7 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Task Assignees"
-	@priority = "5"
+	@priority = 5
 	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode";
@@ -3180,7 +3180,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Email and User Notification as Notification type"
-	@priority = "5"
+	@priority = 5
 	test CanSelectUserNotificationAndEmailAsNotificationType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAndEmailAsNotificationType";
 
@@ -3211,7 +3211,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select User Notification as Notification type"
-	@priority = "5"
+	@priority = 5
 	test CanSelectUserNotificationAsNotificationType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAsNotificationType";
 
@@ -3236,7 +3236,7 @@ definition {
 	}
 
 	@description = "Verify that the user can set the Priority for the Action"
-	@priority = "3"
+	@priority = 3
 	test CanSetActionsPriority {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetActionsPriority";
@@ -3251,7 +3251,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
 			name = "Liferay Actions",
-			priorityValue = "10",
+			priorityValue = 10,
 			script = '''import com.liferay.portal.kernel.workflow.WorkflowConstants;
                         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
@@ -3265,11 +3265,11 @@ definition {
 			propertyName = "Actions",
 			propertyValue = "Liferay Actions");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInfo(priorityValue = "10");
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(priorityValue = 10);
 	}
 
 	@description = "Verify that the user can set transition Default"
-	@priority = "4"
+	@priority = 4
 	test CanSetDefaultTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetDefaultTransition";
 
@@ -3301,7 +3301,7 @@ definition {
 	}
 
 	@description = "Verify that the user can switch between Details and Revision Story Tab"
-	@priority = "4"
+	@priority = 4
 	test CanSwitchBetweenDetailsRevisionTabs {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSwitchBetweenDetailsRevisionTabs";
 
@@ -3323,7 +3323,7 @@ definition {
 	}
 
 	@description = "Verify that the user can turn on the Timers recurrence mode"
-	@priority = "4"
+	@priority = 4
 	test CanTurnOnTimerRecurrenceMode {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanTurnOnTimerRecurrenceMode";
@@ -3337,9 +3337,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "Timer Template",
-			durationValue = "2",
+			durationValue = 2,
 			newTimer = "true",
-			recurrenceDurationValue = "1",
+			recurrenceDurationValue = 1,
 			recurrenceOption = "True",
 			recurrenceScaleTypeOption = "Hour",
 			scaleTypeOption = "Minute",
@@ -3355,7 +3355,7 @@ definition {
 
 	@description = "Verify that the Revision History tab display the definition current version"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanViewCurrentVersionAtRevisionHistoryTab {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewCurrentVersionAtRevisionHistoryTab";
 
@@ -3399,11 +3399,11 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = "2");
+		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = 2);
 	}
 
 	@description = "Verify that the user can see the Assignments on Single Approver"
-	@priority = "3"
+	@priority = 3
 	test CanViewDefaultSingleApproverAssignments {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefaultSingleApproverAssignments";
 
@@ -3419,72 +3419,72 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "2",
+			positonOption = 2,
 			selectedRole = "Account");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "3",
+			positonOption = 3,
 			selectedRole = "Account");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "4",
+			positonOption = 4,
 			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "5",
+			positonOption = 5,
 			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "6",
+			positonOption = 6,
 			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "7",
+			positonOption = 7,
 			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "8",
+			positonOption = 8,
 			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "9",
+			positonOption = 9,
 			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "10",
+			positonOption = 10,
 			selectedRole = "Regular");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "11",
+			positonOption = 11,
 			selectedRole = "Regular");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "12",
+			positonOption = 12,
 			selectedRole = "Site");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "13",
+			positonOption = 13,
 			selectedRole = "Site");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "14",
+			positonOption = 14,
 			selectedRole = "Site");
 	}
 
 	@description = "Verify that at the Details/Revision Story sidebar Header the definition Title is present"
-	@priority = "3"
+	@priority = 3
 	test CanViewDefinitionTitleAtInfoHeader {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefinitionTitleAtInfoHeader";
 
@@ -3508,7 +3508,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
-	@priority = "4"
+	@priority = 4
 	test CanViewDiagramEditor {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDiagramEditor";
 
@@ -3528,7 +3528,7 @@ definition {
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified and Total Modifications"
-	@priority = "3"
+	@priority = 3
 	test CanViewFieldsAtDetailsTab {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewFieldsAtDetailsTab";
 
@@ -3559,7 +3559,7 @@ definition {
 
 	@description = "Verify that the Revision History tab displays a list of the previous definition versions in descending order (3,2,1)"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewPreviousVersionsListInOrderAtRevisionHistoryTab";
 
@@ -3603,17 +3603,17 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
+		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = 1);
 
-		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = "3");
+		ProcessBuilderKaleoDesignerReact.viewCurrentVersionAtRevisionHistoryTab(number = 3);
 
-		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = "2");
+		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = 2);
 
-		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = "1");
+		ProcessBuilderKaleoDesignerReact.viewRevisionHistoryVersion(number = 1);
 	}
 
 	@description = "Verify that the user can see a tooltip with 'Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).' at Resource Actions "
-	@priority = "2"
+	@priority = 2
 	test CanViewResourceActionsTooltip {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewResourceActionsTooltip";
 
@@ -3641,7 +3641,7 @@ definition {
 	}
 
 	@description = "Verify that a Success alert appears when the user restore a definition version (Example: Success:Restored to Revision 'X')"
-	@priority = "3"
+	@priority = 3
 	test CanViewRestoreVersionSuccessAlert {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewRestoreVersionSuccessAlert";
 
@@ -3687,13 +3687,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Revision History");
 
-		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
+		ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = 1);
 
 		Alert.viewSuccessMessageText(successMessage = "Restored to Revision 1");
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
-	@priority = "4"
+	@priority = 4
 	test CanViewSourceEditor {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewSourceEditor";
 
@@ -3707,7 +3707,7 @@ definition {
 	}
 
 	@description = "Verify that the user can see the Timers Recurrence tooltip with the value 'Repeat the action at a given duration until the workflow task is completed.'"
-	@priority = "2"
+	@priority = 2
 	test CanViewTimerRecurrenceFieldTooltip {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimerRecurrenceFieldTooltip";
@@ -3726,7 +3726,7 @@ definition {
 	}
 
 	@description = "Verify that the user can view the Timer required fields"
-	@priority = "3"
+	@priority = 3
 	test CanViewTimersRequiredFields {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimersRequiredFields";
@@ -3743,7 +3743,7 @@ definition {
 	}
 
 	@description = "Verify that on the Details tab, the Total Modifications field follows the number of times the definition was updated"
-	@priority = "3"
+	@priority = 3
 	test CanViewTotalModificationsAtDetailsTab {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTotalModificationsAtDetailsTab";
 
@@ -3781,7 +3781,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"
-	@priority = "5"
+	@priority = 5
 	test ChangesOnDiagramAreReflectedOnXML {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ChangesOnDiagramAreReflectedOnXML";
 
@@ -3810,7 +3810,7 @@ definition {
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ChangesOnXMLAreReflectedOnDiagram {
 
 		// TODO LRQA-72999 ChangesOnXMLAreReflectedOnDiagram pending implementation
@@ -3818,7 +3818,7 @@ definition {
 	}
 
 	@description = "Verify that Condition Node do not have Timers property"
-	@priority = "4"
+	@priority = 4
 	test ConditionHasNoTimersProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionHasNoTimersProperty";
 
@@ -3836,7 +3836,7 @@ definition {
 	}
 
 	@description = "Verify that the Condition node must have at least two outgoing transitions"
-	@priority = "4"
+	@priority = 4
 	test ConditionMustHaveMoreThanOneTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionMustHaveMoreThanOneTransition";
 
@@ -3858,7 +3858,7 @@ definition {
 	}
 
 	@description = "Verify that connectors can be deleted"
-	@priority = "4"
+	@priority = 4
 	test ConnectorCanBeDeleted {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConnectorCanBeDeleted";
 
@@ -3880,7 +3880,7 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the connectors label"
-	@priority = "4"
+	@priority = 4
 	test ConnectorsLabelCanBeEdited {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConnectorsLabelCanBeEdited";
 
@@ -3912,7 +3912,7 @@ definition {
 	}
 
 	@description = "Verify that default label and ID for nodes are provided"
-	@priority = "4"
+	@priority = 4
 	test DefaultLabelAndIDAreProvided {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelAndIDAreProvided";
 
@@ -3929,7 +3929,7 @@ definition {
 	}
 
 	@description = "Verify that default names for nodes are provided"
-	@priority = "4"
+	@priority = 4
 	test DefaultLabelsAreProvided {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelsAreProvided";
 
@@ -3959,7 +3959,7 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that the changes on Default settings, for transitions, reflects on the diagram"
-	@priority = "4"
+	@priority = 4
 	test DefaultSettingsChangesReflectsOnDiagram {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultSettingsChangesReflectsOnDiagram";
 
@@ -3991,7 +3991,7 @@ definition {
 
 	@description = "Publish workflow definition with no End Node And View Error Message"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test DefinitionRequiresEndNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
 
@@ -4009,7 +4009,7 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"
-	@priority = "4"
+	@priority = 4
 	test DefinitionRequiresStartNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresStartNodeToPublish";
 
@@ -4031,7 +4031,7 @@ definition {
 	}
 
 	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"
-	@priority = "4"
+	@priority = 4
 	test DeletedTranslationsAreNotDisplayedOnLanguageSelector {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DeletedTranslationsAreNotDisplayedOnLanguageSelector";
 
@@ -4058,7 +4058,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
-	@priority = "2"
+	@priority = 2
 	test DiagramViewToolTipIsDisplayed {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DiagramViewToolTipIsDisplayed";
 
@@ -4072,7 +4072,7 @@ definition {
 	}
 
 	@description = "Verify that the Fork node must have at least two outgoing transitions"
-	@priority = "4"
+	@priority = 4
 	test ForkNodeMustHaveMoreThanOneTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeMustHaveMoreThanOneTransition";
 
@@ -4094,7 +4094,7 @@ definition {
 	}
 
 	@description = "Verify that each fork node requires a join node"
-	@priority = "4"
+	@priority = 4
 	test ForkNodeRequiresJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeRequiresJoinNode";
 
@@ -4128,7 +4128,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Actions property"
-	@priority = "4"
+	@priority = 4
 	test HasActionsProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasActionsProperty";
 
@@ -4230,7 +4230,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Description property"
-	@priority = "4"
+	@priority = 4
 	test HasDescriptionProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasDescriptionProperty";
 
@@ -4268,7 +4268,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Notifications property"
-	@priority = "4"
+	@priority = 4
 	test HasNotificationsProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasNotificationsProperty";
 
@@ -4310,7 +4310,7 @@ definition {
 	}
 
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
-	@priority = "4"
+	@priority = 4
 	test ImportedProcessIsShownOnDiagram {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ImportedProcessIsShownOnDiagram";
 
@@ -4330,7 +4330,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
-	@priority = "3"
+	@priority = 3
 	test NodeCoordinatedAreUpdated {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeCoordinatedAreUpdated";
 
@@ -4341,10 +4341,10 @@ definition {
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.viewXMLSourceNodeCoordinate(
-			coordinateX = "300",
-			coordinateY = "100",
-			lineX = "15",
-			lineY = "16",
+			coordinateX = 300,
+			coordinateY = 100,
+			lineX = 15,
+			lineY = 16,
 			nodeLabel = "Start");
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
@@ -4356,15 +4356,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.viewXMLSourceNodeCoordinate(
-			coordinateX = "390",
-			coordinateY = "150",
-			lineX = "15",
-			lineY = "16",
+			coordinateX = 390,
+			coordinateY = 150,
+			lineX = 15,
+			lineY = 16,
 			nodeLabel = "Start");
 	}
 
 	@description = "Verify that the Role ID is a read only field"
-	@priority = "3"
+	@priority = 3
 	test NodeIDIsReadyOnly {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeIDIsReadyOnly";
 
@@ -4388,7 +4388,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
-	@priority = "4"
+	@priority = 4
 	test NodeInfoIsDisplayedWhenNodeIsSelected {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeInfoIsDisplayedWhenNodeIsSelected";
 
@@ -4410,7 +4410,7 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that the active node is highlighted on the diagram"
-	@priority = "2"
+	@priority = 2
 	test NodeIsHighlightedWhenActive {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeIsHighlightedWhenActive";
 
@@ -4428,7 +4428,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
-	@priority = "3"
+	@priority = 3
 	test PublishButtonTurnsUnavailableAfterPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#PublishButtonTurnsUnavailableAfterPublish";
 
@@ -4449,7 +4449,7 @@ definition {
 
 	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountMemberAndAdmRoleName";
 
@@ -4469,7 +4469,7 @@ definition {
 	}
 
 	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"
-	@priority = "5"
+	@priority = 5
 	test SingleApproverComesWithAccountRole {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountRole";
 
@@ -4485,12 +4485,12 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			positonOption = "2",
+			positonOption = 2,
 			selectedRole = "Account");
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"
-	@priority = "2"
+	@priority = 2
 	test SourceViewToolTipIsDisplayed {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SourceViewToolTipIsDisplayed";
 
@@ -4502,7 +4502,7 @@ definition {
 	}
 
 	@description = "Verify that Start node can't have incoming transition"
-	@priority = "4"
+	@priority = 4
 	test StartNodeCanNotHaveIncomingTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StartNodeCanNotHaveIncomingTransition";
 
@@ -4536,7 +4536,7 @@ definition {
 	}
 
 	@description = "Verify that the Start Node must have an outgoing transition"
-	@priority = "4"
+	@priority = 4
 	test StartNodeMustHaveOutgoingTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StartNodeMustHaveOutgoingTransition";
 
@@ -4566,7 +4566,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the Node ID is a required field"
-	@priority = "3"
+	@priority = 3
 	test StepIDIsRequired {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepIDIsRequired";
 
@@ -4588,7 +4588,7 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user can not use the same name for more than one node"
-	@priority = "5"
+	@priority = 5
 	test StepIDIsUnique {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepIDIsUnique";
 
@@ -4604,13 +4604,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Id",
-			infoValue = "${nodeIdValue}");
+			infoValue = ${nodeIdValue});
 
 		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
 	}
 
 	@description = "LPS-139387 - Verify that the Step Label is a required field"
-	@priority = "3"
+	@priority = 3
 	test StepLabelIsRequired {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepLabelIsRequired";
 
@@ -4632,7 +4632,7 @@ definition {
 	}
 
 	@description = "Verify that the Task Node comes with Asset Creator Assignment as default"
-	@priority = "3"
+	@priority = 3
 	test TaskNodeComesWithAssetCreatorAssignmentAsDefault {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TaskNodeComesWithAssetCreatorAssignmentAsDefault";
 
@@ -4648,7 +4648,7 @@ definition {
 	}
 
 	@description = "Verify that the Task node has Timers property"
-	@priority = "4"
+	@priority = 4
 	test TaskNodeHasTimersProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TaskNodeHasTimersProperty";
 
@@ -4666,7 +4666,7 @@ definition {
 	}
 
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
-	@priority = "5"
+	@priority = 5
 	test TransitionDoNotLoseReferenceOnTaskIDChange {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionDoNotLoseReferenceOnTaskIDChange";
 
@@ -4706,7 +4706,7 @@ definition {
 	}
 
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
-	@priority = "5"
+	@priority = 5
 	test TransitionIsDeletedWhenNodeIsDeleted {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionIsDeletedWhenNodeIsDeleted";
 
@@ -4746,7 +4746,7 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language."
-	@priority = "2"
+	@priority = 2
 	test TranslationDropdownClosesAfterSelection {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TranslationDropdownClosesAfterSelection";
 
@@ -4763,7 +4763,7 @@ definition {
 
 	@description = "Verify that the date and time format in Details tab is following the system language (Example: Apr 07, 2022, 1:34 PM for en_US and 07 Abr, 2022, 13:34 for pt)"
 	@ignore = "Test Stub"
-	@priority = "2"
+	@priority = 2
 	test ViewDateAndTimeFormatAtDetailsTab {
 
 		// TODO ViewDateAndTimeFormatAtDetailsTab pending implementation
@@ -4771,7 +4771,7 @@ definition {
 	}
 
 	@description = "Publish workflow definition with Invalid Join Node And View Error Message"
-	@priority = "3"
+	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinDefinition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinDefinition";
 
@@ -4793,7 +4793,7 @@ definition {
 	}
 
 	@description = "Publish workflow definition with Invalid JoinXOR Node And View Error Message"
-	@priority = "3"
+	@priority = 3
 	test ViewErrorMessageAfterPublishInvalidJoinXORDefinition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinXORDefinition";
 
@@ -4815,7 +4815,7 @@ definition {
 	}
 
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"
-	@priority = "3"
+	@priority = 3
 	test WarningIsDisplayedWhenNewTransitionDefault {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsDisplayedWhenNewTransitionDefault";
 
@@ -4845,7 +4845,7 @@ definition {
 	}
 
 	@description = "Verify that a message warning is not displayed when the user adds another transition and do not selects it as default"
-	@priority = "3"
+	@priority = 3
 	test WarningIsNotDisplayedWhenNewTransitionNotDefault {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#WarningIsNotDisplayedWhenNewTransitionNotDefault";
 

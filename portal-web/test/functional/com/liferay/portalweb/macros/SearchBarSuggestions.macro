@@ -8,37 +8,37 @@ definition {
 		if (isSet(characterThresholdForDisplayingSuggestions)) {
 			Type(
 				locator1 = "SearchBarSuggestions#CHARACTER_THRESHOLD_FOR_DISPLAYING_SUGGESTIONS",
-				value1 = "${characterThresholdForDisplayingSuggestions}");
+				value1 = ${characterThresholdForDisplayingSuggestions});
 		}
 
-		if ("${addContributor}" == "true") {
+		if (${addContributor} == "true") {
 			Click.javaScriptClick(
 				key_text = "Add Contributor",
 				locator1 = "Button#ANY");
 		}
 
 		if (!(isSet(suggestionContributorOrder))) {
-			var suggestionContributorOrder = "1";
+			var suggestionContributorOrder = 1;
 		}
 
 		if (isSet(suggestionContributor)) {
 			Click(
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR");
 
 			Click(
-				key_suggestionContributor = "${suggestionContributor}",
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributor = ${suggestionContributor},
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT");
 		}
 
 		if (isSet(suggestionContributorBlueprint)) {
 			Click(
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT_BLUEPRINT");
 
 			Click(
-				blueprintTitle = "${suggestionContributorBlueprint}",
+				blueprintTitle = ${suggestionContributorBlueprint},
 				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
 
 			SelectFrameTop();
@@ -48,23 +48,23 @@ definition {
 
 		if (isSet(characterThreshold)) {
 			Type(
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_THRESHOLD",
-				value1 = "${characterThreshold}");
+				value1 = ${characterThreshold});
 		}
 
 		if (isSet(suggestionContributorDisplayGroupName)) {
 			Type(
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
-				value1 = "${suggestionContributorDisplayGroupName}");
+				value1 = ${suggestionContributorDisplayGroupName});
 		}
 
 		if (isSet(suggestionContributorSize)) {
 			Type(
-				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				key_suggestionContributorOrder = ${suggestionContributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
-				value1 = "${suggestionContributorSize}");
+				value1 = ${suggestionContributorSize});
 		}
 
 		PortletEntry.save();
@@ -73,33 +73,33 @@ definition {
 	}
 
 	macro copyConfiguration {
-		if ("${suggestionContributor}" == "Display Group Name") {
+		if (${suggestionContributor} == "Display Group Name") {
 			Click.clickAt(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
 				value1 = "keys=CONTROL,a");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
 				value1 = "keys=CONTROL,c");
 		}
-		else if ("${suggestionContributor}" == "Size") {
+		else if (${suggestionContributor} == "Size") {
 			Click.clickAt(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
 				value1 = "keys=CONTROL,a");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
 				value1 = "keys=CONTROL,c");
 		}
@@ -111,34 +111,34 @@ definition {
 		}
 
 		Click.mouseDownMouseUp(
-			key_searchAssetTitle = "${searchAssetTitle}",
-			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
+			key_searchAssetTitle = ${searchAssetTitle},
+			key_suggestionContributorDisplayGroupName = ${suggestionContributorDisplayGroupName},
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
 	}
 
 	macro pasteConfiguration {
-		if ("${suggestionContributor}" == "Display Group Name") {
+		if (${suggestionContributor} == "Display Group Name") {
 			Click.clickAt(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
 				value1 = "keys=CONTROL,v");
 		}
-		else if ("${suggestionContributor}" == "Size") {
+		else if (${suggestionContributor} == "Size") {
 			Click.clickAt(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
 				value1 = "keys=CONTROL,a");
 
 			Type.sendKeys(
-				key_suggestionContributorOrder = "${contributorOrder}",
+				key_suggestionContributorOrder = ${contributorOrder},
 				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
 				value1 = "keys=CONTROL,c");
 		}
@@ -154,15 +154,15 @@ definition {
 		}
 
 		AssertElementNotPresent(
-			key_searchAssetTitle = "${searchAssetTitle}",
-			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
+			key_searchAssetTitle = ${searchAssetTitle},
+			key_suggestionContributorDisplayGroupName = ${suggestionContributorDisplayGroupName},
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
 	}
 
 	macro viewSuggestionResultDetails {
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 	}
 
 	macro viewSuggestions {
@@ -171,18 +171,18 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_searchAssetTitle = "${searchAssetTitle}",
-			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
+			key_searchAssetTitle = ${searchAssetTitle},
+			key_suggestionContributorDisplayGroupName = ${suggestionContributorDisplayGroupName},
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 
 		if (isSet(searchAssetDescription)) {
 			AssertTextEquals.assertPartialText(
-				key_searchAssetDescription = "${searchAssetDescription}",
-				key_searchAssetTitle = "${searchAssetTitle}",
-				key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
+				key_searchAssetDescription = ${searchAssetDescription},
+				key_searchAssetTitle = ${searchAssetTitle},
+				key_suggestionContributorDisplayGroupName = ${suggestionContributorDisplayGroupName},
 				locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION",
-				value1 = "${searchAssetDescription}");
+				value1 = ${searchAssetDescription});
 		}
 	}
 

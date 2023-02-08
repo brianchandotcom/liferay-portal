@@ -4,7 +4,7 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			site = "true");
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -15,7 +15,7 @@ definition {
 				-H accept: application/json \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _curlWikiPageAttachments {
@@ -31,7 +31,7 @@ definition {
 			Variables.assertDefined(parameterList = "${groupName},${wikiPageErc},${wikiPageAttachementErc}");
 
 			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "${groupName}",
+				groupName = ${groupName},
 				site = "true");
 
 			var api = "sites/${siteId}/wiki-pages/by-external-reference-code/${wikiPageErc}/wiki-page-attachments/by-external-reference-code/${wikiPageAttachementErc}";
@@ -43,11 +43,11 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getAttachmentById {
-		Variables.assertDefined(parameterList = "${wikiPageAttachmentId}");
+		Variables.assertDefined(parameterList = ${wikiPageAttachmentId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -58,19 +58,19 @@ definition {
 				-H accept: application/json \
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro AssertCorrectErcInResponse {
 		Variables.assertDefined(parameterList = "${responseToParse},${expectedErc}");
 
-		var actualErc = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+		var actualErc = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
 
 		TestUtils.assertEquals(
-			actual = "${actualErc}",
-			expected = "${expectedErc}");
+			actual = ${actualErc},
+			expected = ${expectedErc});
 	}
 
 	macro createWikiPageAttachment {
@@ -85,43 +85,43 @@ definition {
 				-F file=@${filePath}
 		''';
 
-		var curl = JSONCurlUtil.post("${curl}");
+		var curl = JSONCurlUtil.post(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro deleteByErc {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var curl = WikiPageAttachmentAPI._curlDeleteByErc(
-			groupName = "${groupName}",
-			wikiPageAttachmentErc = "${wikiPageAttachmentErc}",
-			wikiPageErc = "${wikiPageErc}");
+			groupName = ${groupName},
+			wikiPageAttachmentErc = ${wikiPageAttachmentErc},
+			wikiPageErc = ${wikiPageErc});
 
-		var curl = JSONCurlUtil.delete("${curl}");
+		var curl = JSONCurlUtil.delete(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro getAttachmentById {
-		Variables.assertDefined(parameterList = "${wikiPageAttachmentId}");
+		Variables.assertDefined(parameterList = ${wikiPageAttachmentId});
 
-		var response = WikiPageAttachmentAPI._getAttachmentById(wikiPageAttachmentId = "${wikiPageAttachmentId}");
+		var response = WikiPageAttachmentAPI._getAttachmentById(wikiPageAttachmentId = ${wikiPageAttachmentId});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getWikiPageAttachments {
 		var curl = WikiPageAttachmentAPI._curlWikiPageAttachments(
-			groupName = "${groupName}",
-			wikiPageAttachementErc = "${wikiPageAttachementErc}",
-			wikiPageAttachementId = "${wikiPageAttachementId}",
-			wikiPageErc = "${wikiPageErc}",
-			wikiPageId = "${wikiPageId}");
+			groupName = ${groupName},
+			wikiPageAttachementErc = ${wikiPageAttachementErc},
+			wikiPageAttachementId = ${wikiPageAttachementId},
+			wikiPageErc = ${wikiPageErc},
+			wikiPageId = ${wikiPageId});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro setupGlobalWikiPageWithAttachment {
@@ -132,28 +132,28 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Title");
 
-		var wikiPageId = JSONUtil.getWithJSONPath("${wikiPage}", "$.id");
-		var wikiPageErc = JSONUtil.getWithJSONPath("${wikiPage}", "$.externalReferenceCode");
+		var wikiPageId = JSONUtil.getWithJSONPath(${wikiPage}, "$.id");
+		var wikiPageErc = JSONUtil.getWithJSONPath(${wikiPage}, "$.externalReferenceCode");
 		var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 		var wikiPageAttachment = WikiPageAttachmentAPI.createWikiPageAttachment(
-			filePath = "${filePath}",
-			wikiPageId = "${wikiPageId}");
+			filePath = ${filePath},
+			wikiPageId = ${wikiPageId});
 
-		var wikiPageAttachmentErc = JSONUtil.getWithJSONPath("${wikiPageAttachment}", "$.externalReferenceCode");
-		var wikiPageAttachmentId = JSONUtil.getWithJSONPath("${wikiPageAttachment}", "$.id");
-		static var staticWikiPageId = "${wikiPageId}";
-		static var staticWikiPageErc = "${wikiPageErc}";
-		static var staticWikiPageAttachmentId = "${wikiPageAttachmentId}";
-		static var staticWikiPageAttachmentErc = "${wikiPageAttachmentErc}";
+		var wikiPageAttachmentErc = JSONUtil.getWithJSONPath(${wikiPageAttachment}, "$.externalReferenceCode");
+		var wikiPageAttachmentId = JSONUtil.getWithJSONPath(${wikiPageAttachment}, "$.id");
+		static var staticWikiPageId = ${wikiPageId};
+		static var staticWikiPageErc = ${wikiPageErc};
+		static var staticWikiPageAttachmentId = ${wikiPageAttachmentId};
+		static var staticWikiPageAttachmentErc = ${wikiPageAttachmentErc};
 
 		return "${staticWikiPageId }";
 
-		return "${staticWikiPageErc}";
+		return ${staticWikiPageErc};
 
-		return "${staticWikiPageAttachmentId}";
+		return ${staticWikiPageAttachmentId};
 
-		return "${staticWikiPageAttachmentErc}";
+		return ${staticWikiPageAttachmentErc};
 	}
 
 }

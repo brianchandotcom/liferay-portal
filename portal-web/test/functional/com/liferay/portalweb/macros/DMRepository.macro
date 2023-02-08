@@ -9,11 +9,11 @@ definition {
 
 		Type(
 			locator1 = "DocumentsAndMediaEditRepository#CABINET_FIELD",
-			value1 = "${dmCabinetName}");
+			value1 = ${dmCabinetName});
 
 		Type(
 			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_FIELD",
-			value1 = "${dmRepositoryFieldName}");
+			value1 = ${dmRepositoryFieldName});
 	}
 
 	macro addSharepoint {
@@ -21,41 +21,41 @@ definition {
 
 		Select(
 			locator1 = "DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT",
-			value1 = "${dmRepositoryName}");
+			value1 = ${dmRepositoryName});
 
 		if (isSet(dmServerVersion)) {
 			Type(
 				key_fieldLabel = "Server Version",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmServerVersion}");
+				value1 = ${dmServerVersion});
 		}
 
 		if (isSet(dmRepositoryLibraryPath)) {
 			Type(
 				key_fieldLabel = "Library Path",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmRepositoryLibraryPath}");
+				value1 = ${dmRepositoryLibraryPath});
 		}
 
 		if (isSet(dmRepositorySiteAbsoluteURL)) {
 			Type(
 				key_fieldLabel = "Site Absolute URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmRepositorySiteAbsoluteURL}");
+				value1 = ${dmRepositorySiteAbsoluteURL});
 
 			Type(
 				key_fieldLabel = "Library Path",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${dmRepositoryLibraryPath}");
+				value1 = ${dmRepositoryLibraryPath});
 		}
 		else {
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#SITE_URL_FIELD",
-				value1 = "${dmRepositorySiteURL}");
+				value1 = ${dmRepositorySiteURL});
 
 			Type(
 				locator1 = "DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD",
-				value1 = "${dmRepositoryLibraryName}");
+				value1 = ${dmRepositoryLibraryName});
 		}
 
 		if (isSet(permissionDefinitionKey)) {
@@ -68,8 +68,8 @@ definition {
 					value1 = "More Options");
 			}
 
-			var key_permissionDefinitionKey = "${permissionDefinitionKey}";
-			var key_roleTitle = "${roleTitle}";
+			var key_permissionDefinitionKey = ${permissionDefinitionKey};
+			var key_roleTitle = ${roleTitle};
 
 			Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
 		}
@@ -81,37 +81,37 @@ definition {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		if (isSet(dmDocumentTitle)) {
-			if (IsElementPresent(key_dmDocumentTitle = "${dmDocumentTitle}", locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE")) {
+			if (IsElementPresent(key_dmDocumentTitle = ${dmDocumentTitle}, locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE")) {
 				DMDocument.deleteCP(
-					dmDocumentTitle = "${dmDocumentTitle}",
+					dmDocumentTitle = ${dmDocumentTitle},
 					recycleBinDisabled = "true");
 			}
 		}
 		else if (isSet(dmFolderName)) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			if (IsElementPresent(key_dmFolderName = "${dmFolderName}", locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE")) {
+			if (IsElementPresent(key_dmFolderName = ${dmFolderName}, locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE")) {
 				DMFolder.deleteCP(
-					dmFolderName = "${dmFolderName}",
+					dmFolderName = ${dmFolderName},
 					recycleBinDisabled = "true");
 			}
 		}
 	}
 
 	macro edit {
-		PortletEntry.inputName(name = "${dmRepositoryName}");
+		PortletEntry.inputName(name = ${dmRepositoryName});
 	}
 
 	macro gotoCP {
-		var key_dmRepositoryName = "${dmRepositoryName}";
+		var key_dmRepositoryName = ${dmRepositoryName};
 
 		AssertElementPresent.assertVisible(locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW");
 
 		AssertClick.assertTextClickAt(
 			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
-			value1 = "${dmRepositoryName}");
+			value1 = ${dmRepositoryName});
 
-		var key_dmFolderName = "${dmRepositoryName}";
+		var key_dmFolderName = ${dmRepositoryName};
 
 		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 
@@ -155,16 +155,16 @@ definition {
 	}
 
 	macro viewBreadcrumb {
-		var key_dmFolderName = "${dmRepositoryName}";
+		var key_dmFolderName = ${dmRepositoryName};
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmRepositoryName}");
+			value1 = ${dmRepositoryName});
 	}
 
 	macro viewNoDownloadItem {
 		Click(
-			key_dmFolderName = "${dmRepositoryName}",
+			key_dmFolderName = ${dmRepositoryName},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
 		AssertElementNotPresent(locator1 = "MenuItem#DOWNLOAD");

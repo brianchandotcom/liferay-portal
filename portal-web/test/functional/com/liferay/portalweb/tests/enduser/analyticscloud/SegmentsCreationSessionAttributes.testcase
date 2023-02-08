@@ -33,7 +33,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9204 | Test Summary: Add segment using a session property 'Device'"
-	@priority = "4"
+	@priority = 4
 	test CanCreateSessionAttributeUsingDevice {
 		property portal.upstream = "quarantine";
 
@@ -66,7 +66,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		// Total Members data is taking too much time to appear
@@ -112,15 +112,15 @@ definition {
 			// Takes too much time to the card data appear
 
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+				anonymousNumber = 0,
+				knownNumber = 1,
+				totalNumber = 1);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9208 | Test Summary: Add segment using a session property 'Referrer URL'"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanCreateSessionAttributeUsingReferrerURL {
 
 		// AC Refactor: timing issue for Referrer URL with page sync
@@ -133,12 +133,12 @@ definition {
 		}
 
 		task ("Add a new user in DXP") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 		}
 
@@ -169,7 +169,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -187,10 +187,10 @@ definition {
 
 			ACSegments.selectOperator(operator = "is");
 
-			ACSegments.editTextCriterion(textInput = "${myURL}");
+			ACSegments.editTextCriterion(textInput = ${myURL});
 
 			ACSegments.editWebBehaviorCriterion(
-				indexField = "1",
+				indexField = 1,
 				timeOption = "ever");
 		}
 
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9211 | Test Summary: Add segment using a session property 'URL'"
-	@priority = "4"
+	@priority = 4
 	test CanCreateSessionAttributeUsingURL {
 		property portal.upstream = "quarantine";
 
@@ -263,7 +263,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -281,10 +281,10 @@ definition {
 
 			ACSegments.selectOperator(operator = "is");
 
-			ACSegments.editTextCriterion(textInput = "${myURL}");
+			ACSegments.editTextCriterion(textInput = ${myURL});
 
 			ACSegments.editWebBehaviorCriterion(
-				indexField = "1",
+				indexField = 1,
 				timeOption = "ever");
 		}
 
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9213 | Test Summary: Show 'duplicate' and 'delete' options in a list for every segment criteria"
-	@priority = "4"
+	@priority = 4
 	test SegmentCriteriaOptionsContainsDuplicateAndDelete {
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -321,7 +321,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -345,7 +345,7 @@ definition {
 		task ("Assert that Duplicate and Delete are present in the criterias options") {
 			Click(
 				criteriaName = "URL",
-				index = "1",
+				index = 1,
 				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
 			MenuItem.viewPresent(menuItem = "Duplicate");
@@ -354,7 +354,7 @@ definition {
 
 			Click(
 				criteriaName = "additionalName",
-				index = "1",
+				index = 1,
 				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
 			MenuItem.viewPresent(menuItem = "Duplicate");

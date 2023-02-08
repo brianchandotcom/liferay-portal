@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "Verify that the Basic Article status is Pending after Submit for Publication"
-	@priority = "4"
+	@priority = 4
 	test ArticleStatusIsPendingAfterSubmitForPublication {
 		Navigator.openURL();
 
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Article"
-	@priority = "5"
+	@priority = 5
 	test CanApproveBasicArticle {
 		Navigator.openURL();
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Article when the Child Article is Pending"
-	@priority = "4"
+	@priority = 4
 	test CanApproveBasicArticleWhenChildPending {
 		Navigator.openURL();
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Child Article"
-	@priority = "5"
+	@priority = 5
 	test CanApproveBasicChildArticle {
 		Navigator.openURL();
 
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Child Article when the Parent Article is Pending"
-	@priority = "4"
+	@priority = 4
 	test CanApproveBasicChildArticleWhenParentPending {
 		property portal.upstream = "quarantine";
 
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@description = "Verify that when the user Edit an approved Basic Article it's status comes to Pending"
-	@priority = "4"
+	@priority = 4
 	test CanEditApprovedBasicArticle {
 		Navigator.openURL();
 
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Reject a Basic Article"
-	@priority = "5"
+	@priority = 5
 	test CanRejectBasicArticle {
 		Navigator.openURL();
 
@@ -407,7 +407,7 @@ definition {
 	}
 
 	@description = "Verify that when the Basic Article is saved as Draft it's status is Draft"
-	@priority = "3"
+	@priority = 3
 	test CanSaveAsDraft {
 		Navigator.openURL();
 
@@ -435,7 +435,7 @@ definition {
 	}
 
 	@description = "Verify that the child Basic Article status is Pending after Submit for Publication"
-	@priority = "4"
+	@priority = 4
 	test ChildArticleStatusIsPendingAfterSubmitForPublication {
 		property portal.upstream = "quarantine";
 
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "Verify that when the Basic Article is saved as Draft the Submit for Publication button still available"
-	@priority = "3"
+	@priority = 3
 	test SubmitForPublicationButtonIsAvaliable {
 		Navigator.openURL();
 

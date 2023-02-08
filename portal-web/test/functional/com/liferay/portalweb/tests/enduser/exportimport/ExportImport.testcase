@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify if information about staging system settings are present."
-	@priority = "3"
+	@priority = 3
 	test AssertStagingSystemSettingsInfo {
 		property test.name.skip.portal.instance = "ExportImport#AssertSystemSettingsInfo";
 
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83011. Verify if a user can configure asset links when export."
-	@priority = "4"
+	@priority = 4
 	test AssetLinksCanBeConfiguredWhenExport {
 		property test.name.skip.portal.instance = "ExportImport#AssetLinksCanBeConfiguredWhenExport";
 
@@ -113,7 +113,7 @@ definition {
 
 			var folderExisted1 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
 
-			if ("${folderExisted1}" == "false") {
+			if (${folderExisted1} == "false") {
 				echo("The download temp file doesn't contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
 			}
 			else {
@@ -149,7 +149,7 @@ definition {
 
 			var folderExisted2 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
 
-			if ("${folderExisted2}" == "true") {
+			if (${folderExisted2} == "true") {
 				echo("The download temp file contain the com.liferay.asset.kernel.model.adapter.StagedAssetLink folder.");
 			}
 			else {
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139101. Verify that missing references validation also works on portlet import processes."
-	@priority = "3"
+	@priority = 3
 	test CanImportJournalArticleWhenUncheckMissingReferencesValidation {
 		property test.name.skip.portal.instance = "ExportImport#CanImportJournalArticleWhenUncheckMissingReferencesValidation";
 
@@ -227,7 +227,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-161743. Verify that it's not possible to import the lar file which contains missing references to classNames."
-	@priority = "3"
+	@priority = 3
 	test CannotImportLARContainsMissingReferencesToClassname {
 		task ("Given: Add a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file."
-	@priority = "4"
+	@priority = 4
 	test CustomFieldDeletionViaImporting {
 		property app.server.bundles.size = "1";
 		property databases.size = "1";
@@ -330,7 +330,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125446. Verify if display style remains even after navigation."
-	@priority = "4"
+	@priority = 4
 	test DisplayStyleCanRemainAfterNavigation {
 		task ("Given: User make a successful export") {
 			ProductMenu.gotoPortlet(
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84223. Verify if a publish fails adding a file entry that do not exist."
-	@priority = "3"
+	@priority = 3
 	test DLLinkValidationInWebContent {
 		task ("Given: User add a new file") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -374,11 +374,11 @@ definition {
 
 			var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-			var editDocumentURL = StringUtil.replaceFirst("${dmDocumentURL}", "_1", "_10000");
+			var editDocumentURL = StringUtil.replaceFirst(${dmDocumentURL}, "_1", "_10000");
 
 			echo("## * Edit Document URL: ${editDocumentURL}");
 
-			var entryExternalURL = StringUtil.replace("${editDocumentURL}", "http://", "");
+			var entryExternalURL = StringUtil.replace(${editDocumentURL}, "http://", "");
 
 			echo("## * Entry External URL: ${entryExternalURL}");
 		}
@@ -391,8 +391,8 @@ definition {
 			PortletEntry.inputTitle(title = "Web Content Title");
 
 			CKEditor.addEntryExternalURL(
-				displayText = "${editDocumentURL}",
-				entryExternalURL = "${entryExternalURL}",
+				displayText = ${editDocumentURL},
+				entryExternalURL = ${entryExternalURL},
 				fieldLabel = "Content");
 
 			Button.clickPublish();
@@ -410,7 +410,7 @@ definition {
 	}
 
 	@description = "Verify is possible edit an exported template."
-	@priority = "4"
+	@priority = 4
 	test EditExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#EditExportTemplate";
 
@@ -456,7 +456,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -502,7 +502,7 @@ definition {
 
 		task ("Then: User import the LAR file and can see the imported Blog entry on the site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86501. Verify is possible edit an imported template."
-	@priority = "3"
+	@priority = 3
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
 		property osgi.module.configurations = "exportDraftLayout=\"true\"";
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82752. Verify is possible export content and then publish."
-	@priority = "5"
+	@priority = 5
 	test ExportContentThenPublish {
 		property portal.acceptance = "true";
 
@@ -648,7 +648,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95589. Verify is not possible export a DM with deleted document link."
-	@priority = "4"
+	@priority = 4
 	test ExportDMWithDeletedDocumentLink {
 		property test.name.skip.portal.instance = "ExportImport#ExportDMWithDeletedDocumentLink";
 
@@ -702,7 +702,7 @@ definition {
 	}
 
 	@description = "Verify is possible export and import a DDL via Global."
-	@priority = "5"
+	@priority = 5
 	test ExportImportDDLViaGlobal {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportDDLViaGlobal";
 
@@ -804,7 +804,7 @@ definition {
 	}
 
 	@description = "Verify is possible export import deletions."
-	@priority = "4"
+	@priority = 4
 	test ExportImportDeletions {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportDeletions";
 
@@ -859,7 +859,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-91735. Verify is possible export/import DDM structure in Global site via instances."
-	@priority = "3"
+	@priority = 3
 	test ExportImportGlobalDDMStructureViaInstances {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalDDMStructureViaInstances";
@@ -878,7 +878,7 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "Export");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -909,7 +909,7 @@ definition {
 
 			LAR.importSiteCP(
 				baseURL = "http://www.able.com:8080",
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Global");
 		}
 
@@ -919,7 +919,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-91440. Verify is possible export/import Global Pages via instances."
-	@priority = "3"
+	@priority = 3
 	test ExportImportGlobalPagesViaInstances {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
@@ -940,7 +940,7 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "Export");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -973,7 +973,7 @@ definition {
 
 			LAR.importSiteCP(
 				baseURL = "http://www.able.com:8080",
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Global");
 		}
 
@@ -983,7 +983,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-128533. Verify is possible export/import of Journal Article with link to layout."
-	@priority = "3"
+	@priority = 3
 	test ExportImportJournalArticleWithLinkToPage {
 		property testray.component.names = "Web Content Administration";
 
@@ -1071,7 +1071,7 @@ definition {
 		task ("When: User exports the site and creates a new site with 3 pages") {
 			LAR.exportSiteCP(siteScopeName = "Site A");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -1089,7 +1089,7 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site A");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site B");
 		}
 
@@ -1111,7 +1111,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88378. Verify is possible export/import layout circular reference."
-	@priority = "3"
+	@priority = 3
 	test ExportImportLayoutCircularReference {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportLayoutCircularReference";
 		property testray.component.names = "Site Pages Administration,Web Content Administration";
@@ -1213,7 +1213,7 @@ definition {
 		task ("And: Exports the site") {
 			LAR.exportSiteCP(siteScopeName = "Site Name");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -1228,7 +1228,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name B");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name B");
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
@@ -1236,7 +1236,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Portlet."
-	@priority = "5"
+	@priority = 5
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
 
@@ -1292,7 +1292,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Portlet with ADT."
-	@priority = "3"
+	@priority = 3
 	test ExportImportPortletWithADT {
 		task ("Given: User adds a Blog ADT template then a new page") {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
@@ -1347,7 +1347,7 @@ definition {
 
 		task ("And: Import the LAR file on the new site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 
@@ -1365,7 +1365,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Private Page."
-	@priority = "5"
+	@priority = 5
 	test ExportImportPrivatePage {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -1391,7 +1391,7 @@ definition {
 				privateLayout = "true",
 				siteScopeName = "Guest");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -1401,7 +1401,7 @@ definition {
 
 		task ("Then: User can import the private page on the new site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				privateLayout = "true",
 				siteName = "Site Name");
 
@@ -1412,7 +1412,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84201. Verify if asset publisher's scope settings can be export/import."
-	@priority = "3"
+	@priority = 3
 	test ExportImportSiteWithAssetPublisherScopeSetting {
 		task ("Given: User adds a new site with a page, then adds an AP widget to it") {
 			JSONGroup.addGroup(groupName = "Site Name A");
@@ -1450,7 +1450,7 @@ definition {
 		task ("When: User exports the first site then deletes the previously created sites") {
 			LAR.exportSiteCP(siteScopeName = "Site Name A");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -1471,7 +1471,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name B");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name A");
 		}
 
@@ -1485,7 +1485,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142076. Verify is possible import site with the 'Copy as new' option in the Update data section."
-	@priority = "3"
+	@priority = 3
 	test ExportImportSiteWithCopyAsNew {
 		task ("Add a new site and add a widget page to site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
@@ -1555,7 +1555,7 @@ definition {
 
 			LAR.importSiteCP(
 				copyAsNew = "true",
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 
@@ -1565,7 +1565,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88331. Verify is possbile export/import a site with nested upload field."
-	@priority = "3"
+	@priority = 3
 	test ExportImportSiteWithNestedUploadField {
 		task ("Given: User adds a new site and a file to it") {
 			JSONGroup.addGroup(groupName = "Site A");
@@ -1633,7 +1633,7 @@ definition {
 		task ("When: User exports the site then delete it") {
 			LAR.exportSiteCP(siteScopeName = "Site A");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -1645,7 +1645,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site B");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site B");
 		}
 
@@ -1662,7 +1662,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Smoke template."
-	@priority = "5"
+	@priority = 5
 	test ExportImportSmoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportSmoke";
@@ -1671,7 +1671,7 @@ definition {
 		task ("Given: User exports default site") {
 			LAR.exportSiteCP(siteScopeName = "Guest");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -1681,7 +1681,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 
@@ -1693,7 +1693,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import theme settings."
-	@priority = "4"
+	@priority = 4
 	test ExportImportThemeSettings {
 		task ("Given: User adds a new site with a page") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -1746,7 +1746,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name 2");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name 2");
 		}
 
@@ -1763,7 +1763,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import validation."
-	@priority = "5"
+	@priority = 5
 	test ExportImportValidation {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportValidation";
@@ -1818,13 +1818,13 @@ definition {
 		task ("Then: User can import the LAR file on this new site and it will not include the previously created DM") {
 			LAR.importSiteCP(
 				importValidationMissingItem = "DM Document Title",
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 	}
 
 	@description = "This is a use case for LPS-88743. Verify is possible export/import Web Content circular reference."
-	@priority = "3"
+	@priority = 3
 	test ExportImportWebContentCircularReference {
 		task ("Given: User adds a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -1895,7 +1895,7 @@ definition {
 
 			LAR.exportSiteCP(siteScopeName = "Site Name");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -1909,7 +1909,7 @@ definition {
 
 		task ("And: Import the LAR file on this site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name A");
 		}
 
@@ -1919,7 +1919,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83326 and LPS-99287. Verify is possible export/import Web Content Folder with a Workflow."
-	@priority = "5"
+	@priority = 5
 	test ExportImportWebContentFolderWithWorkflow {
 		property portal.acceptance = "true";
 
@@ -1970,7 +1970,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86608. Verify is possible export/import Web Content with repeat field."
-	@priority = "3"
+	@priority = 3
 	test ExportImportWebcontentWithRepeatField {
 		task ("Given: User adds a new site") {
 			JSONGroup.addGroup(groupName = "Exported Site");
@@ -2031,7 +2031,7 @@ definition {
 				value1 = "Liferay");
 
 			Type(
-				index = "2",
+				index = 2,
 				key_fieldFieldLabel = "Text",
 				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 				value1 = "Liferay 1");
@@ -2066,7 +2066,7 @@ definition {
 				value1 = "Liferay");
 
 			AssertTextEquals.assertValue(
-				index = "2",
+				index = 2,
 				key_fieldFieldLabel = "Text",
 				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 				value1 = "Liferay 1");
@@ -2105,7 +2105,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import with an export template."
-	@priority = "4"
+	@priority = 4
 	test ExportImportWithExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWithExportTemplate";
 
@@ -2139,13 +2139,13 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 	}
 
 	@description = "This is a use case for LPS-88498. Verify if a Guest is able to export files."
-	@priority = "5"
+	@priority = 5
 	test ExportViaGuest {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
@@ -2176,7 +2176,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.openSpecificURL(url = "${downloadURL}");
+			Navigator.openSpecificURL(url = ${downloadURL});
 		}
 
 		task ("Then: The download is forbidden because guest role has no sufficient permission") {
@@ -2187,7 +2187,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88831, LPS-88889 and LPS-88890. Verify is possible export a web content with deleted reference."
-	@priority = "4"
+	@priority = 4
 	test ExportWebContentWithDeletedReference {
 		property test.name.skip.portal.instance = "ExportImport#ExportWebContentWithDeletedReference";
 
@@ -2273,7 +2273,7 @@ definition {
 	}
 
 	@description = "Verify is possible import corrupted file."
-	@priority = "5"
+	@priority = 5
 	test ImportCorruptedFile {
 		property portal.acceptance = "true";
 		property portal.release = "false";
@@ -2299,7 +2299,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-135706. Verify that exporting and importing a Documents & Media URL does not append UUID to the imported URL if it was not there to begin with."
-	@priority = "3"
+	@priority = 3
 	test ImportDMUrlWithoutUUID {
 		task ("Given: User adds a new file and saves its external URL") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -2315,7 +2315,7 @@ definition {
 
 			var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-			var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+			var editDocumentURL = StringUtil.extractFirst(${dmDocumentURL}, "jpg");
 		}
 
 		task ("And: Create a new WC with the saved URL as reference in the source content") {
@@ -2348,7 +2348,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 		}
 
@@ -2362,7 +2362,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84290. Verify is possible export Home Folder Permissions."
-	@priority = "3"
+	@priority = 3
 	test ImportSiteHomeFolderPermissions {
 		task ("Given: User adds a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -2427,7 +2427,7 @@ definition {
 
 			for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_FOLDER") {
 				Role.viewPermissionPG(
-					permissionDefinitionKey = "${permissionDefinitionKey}",
+					permissionDefinitionKey = ${permissionDefinitionKey},
 					permissionFlagged = "false",
 					roleTitle = "Site Member");
 			}
@@ -2435,7 +2435,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-97544 and LPS-90886. Verify is possible import a staged site with circular reference."
-	@priority = "3"
+	@priority = 3
 	test ImportStagedSiteWithCircularReference {
 		property portal.upstream = "true";
 
@@ -2573,7 +2573,7 @@ definition {
 
 			LAR.exportSiteCP(siteScopeName = "Site Name");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -2585,13 +2585,13 @@ definition {
 			JSONGroup.addGroup(groupName = "Site Name B");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name B");
 		}
 	}
 
 	@description = "This is a use case for LPS-94738. Verify is possible import a WCD after activate staging."
-	@priority = "4"
+	@priority = 4
 	test ImportWCDReferenceAfterActivateStaging {
 		property test.name.skip.portal.instance = "ExportImport#ImportWCDReferenceAfterActivateStaging";
 
@@ -2623,7 +2623,7 @@ definition {
 
 			LAR.exportSiteCP(siteScopeName = "Site Name A");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -2639,7 +2639,7 @@ definition {
 
 		task ("And: Imports the previously exported site's LAR file") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "site-name-b-staging");
 		}
 
@@ -2655,7 +2655,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-91233. Verify is possible publish a web content with a broken link."
-	@priority = "3"
+	@priority = 3
 	test PublishWebContentWithBrokenLink {
 		property test.name.skip.portal.instance = "ExportImport#PublishWebContentWithBrokenLink";
 
@@ -2693,7 +2693,7 @@ definition {
 
 			var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-			var entryExternalURL = StringUtil.replace("${dmDocumentURL}", "http://", "");
+			var entryExternalURL = StringUtil.replace(${dmDocumentURL}, "http://", "");
 		}
 
 		task ("And: Delete the newly created file") {
@@ -2710,8 +2710,8 @@ definition {
 			PortletEntry.inputTitle(title = "WC WebContent Title");
 
 			CKEditor.addEntryExternalURL(
-				displayText = "${dmDocumentURL}",
-				entryExternalURL = "${entryExternalURL}",
+				displayText = ${dmDocumentURL},
+				entryExternalURL = ${entryExternalURL},
 				fieldLabel = "Content");
 
 			PortletEntry.publish();

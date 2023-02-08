@@ -5,7 +5,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${sourceFullDescription}");
+		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = ${sourceFullDescription});
 
 		Click(
 			key_titleName = "Source",
@@ -45,64 +45,64 @@ definition {
 			return compare;
 		''';
 
-		var compareDatesResult = selenium.getJavaScriptResult("${javaScript}", "${date1}", "${date2}");
+		var compareDatesResult = selenium.getJavaScriptResult(${javaScript}, ${date1}, ${date2});
 
-		return "${compareDatesResult}";
+		return ${compareDatesResult};
 	}
 
 	macro convertStringToKey {
-		var string = StringUtil.lowerCase("${string}");
+		var string = StringUtil.lowerCase(${string});
 
-		var string = StringUtil.replace("${string}", " ", "-");
+		var string = StringUtil.replace(${string}, " ", "-");
 
-		return "${string}";
+		return ${string};
 	}
 
 	macro convertWholeNumberToDecimal {
-		Variables.assertDefined(parameterList = "${number}");
+		Variables.assertDefined(parameterList = ${number});
 
-		var isDecimal = StringUtil.contains("${number}", ".");
+		var isDecimal = StringUtil.contains(${number}, ".");
 
-		if ("${isDecimal}" == "true") {
-			return "${number}";
+		if (${isDecimal} == "true") {
+			return ${number};
 		}
 		else {
-			var decimalNumber = StringUtil.concat("${number}", ".00");
+			var decimalNumber = StringUtil.concat(${number}, ".00");
 
-			return "${decimalNumber}";
+			return ${decimalNumber};
 		}
 	}
 
 	macro getConvertedBase64File {
-		Variables.assertDefined(parameterList = "${file}");
+		Variables.assertDefined(parameterList = ${file});
 
 		var projectDir = PropsUtil.get("project.dir");
 		var fileDir = "modules/apps/commerce/commerce-product-test/src/testFunctional/tests/dependencies";
 
-		if ("${file}" == "Commerce_Black.jpg") {
+		if (${file} == "Commerce_Black.jpg") {
 			var fileBase64 = FileUtil.read("${projectDir}/${fileDir}/commerce_black_t_shirt_encoded_base64.txt");
 		}
 
-		return "${fileBase64}";
+		return ${fileBase64};
 	}
 
 	macro getFutureDate {
 		if (isSet(monthFormat)) {
-			var dateMonth = DateUtil.getFormattedCurrentDate("${monthFormat}");
+			var dateMonth = DateUtil.getFormattedCurrentDate(${monthFormat});
 		}
 		else {
 			var dateMonth = DateUtil.getCurrentMonth();
 		}
 
 		if (isSet(dayFormat)) {
-			var dateDay = DateUtil.getFormattedCurrentDate("${dayFormat}");
+			var dateDay = DateUtil.getFormattedCurrentDate(${dayFormat});
 		}
 		else {
 			var dateDay = DateUtil.getCurrentDate();
 		}
 
 		if (isSet(yearFormat)) {
-			var dateYear = DateUtil.getFormattedCurrentDate("${yearFormat}");
+			var dateYear = DateUtil.getFormattedCurrentDate(${yearFormat});
 		}
 		else {
 			var dateYear = DateUtil.getCurrentYear();
@@ -122,30 +122,30 @@ definition {
 
 		var futureDate = "${dateMonth}/${dateDay}/${dateYear}";
 
-		return "${futureDate}";
+		return ${futureDate};
 	}
 
 	@description = "Create ${payload} from a list of fields passed for an API call and returns it"
 	macro getPayloadFromFieldsList {
-		Variables.assertDefined(parameterList = "${fieldsList}");
+		Variables.assertDefined(parameterList = ${fieldsList});
 
-		var count = "0";
-		var list = ListUtil.newListFromString("${fieldsList}");
+		var count = 0;
+		var list = ListUtil.newListFromString(${fieldsList});
 
-		var listSize = ListUtil.size("${list}");
+		var listSize = ListUtil.size(${list});
 		var payload = "";
-		var isLessThanSize = MathUtil.isLessThan("${count}", "${listSize}");
+		var isLessThanSize = MathUtil.isLessThan(${count}, ${listSize});
 
-		while (("${isLessThanSize}" == "true")) {
-			var field = ListUtil.get("${list}", "${count}");
+		while (("" == "true")) {
+			var field = ListUtil.get(${list}, ${count});
 
-			var isAllowedOrderQuantities = StringUtil.matches("${field}", "(.*)allowedOrderQuantities(.*)");
+			var isAllowedOrderQuantities = StringUtil.matches(${field}, "(.*)allowedOrderQuantities(.*)");
 
-			if ("${isAllowedOrderQuantities}" == "true") {
-				var field = StringUtil.replace("${field}", "-", ",");
+			if (${isAllowedOrderQuantities} == "true") {
+				var field = StringUtil.replace(${field}, "-", ",");
 			}
 
-			if ("${count}" == "0") {
+			if (${count} == 0) {
 				var comma = "";
 			}
 			else {
@@ -156,20 +156,20 @@ definition {
 				${field}''';
 			var count = ${count} + 1;
 
-			var count = StringUtil.valueOf("${count}");
+			var count = StringUtil.valueOf(${count});
 
-			var isLessThanSize = MathUtil.isLessThan("${count}", "${listSize}");
+			var isLessThanSize = MathUtil.isLessThan(${count}, ${listSize});
 		}
 
-		return "${payload}";
+		return ${payload};
 	}
 
 	macro uploadSingleFile {
-		Variables.assertDefined(parameterList = "${uploadFileName}");
+		Variables.assertDefined(parameterList = ${uploadFileName});
 
 		if (isSet(selectButtonName)) {
 			CommerceEntry.clickButtonWithName(
-				buttonName = "${selectButtonName}",
+				buttonName = ${selectButtonName},
 				text = "Select");
 		}
 		else {
@@ -178,7 +178,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+		CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
 
 		SelectFrameTop();
 	}

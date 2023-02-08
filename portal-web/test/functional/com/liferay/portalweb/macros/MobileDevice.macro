@@ -10,21 +10,21 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "New Classification Rule");
 
-		PortletEntry.inputName(name = "${classificationName}");
+		PortletEntry.inputName(name = ${classificationName});
 
 		if (isSet(classificationDescription)) {
-			PortletEntry.inputDescription(description = "${classificationDescription}");
+			PortletEntry.inputDescription(description = ${classificationDescription});
 		}
 
 		Panel.expandPanel(panel = "Operating System and Type");
 
 		AddSelection(
 			locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM",
-			value1 = "${ruleOsScope}");
+			value1 = ${ruleOsScope});
 
 		Select(
 			locator1 = "MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE",
-			value1 = "${deviceType}");
+			value1 = ${deviceType});
 
 		Click(locator1 = "Button#SAVE");
 
@@ -38,10 +38,10 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "New Device Family");
 
-		PortletEntry.inputName(name = "${deviceFamilyName}");
+		PortletEntry.inputName(name = ${deviceFamilyName});
 
 		if (isSet(deviceDescription)) {
-			PortletEntry.inputDescription(description = "${deviceDescription}");
+			PortletEntry.inputDescription(description = ${deviceDescription});
 		}
 
 		Click(locator1 = "Button#SAVE");
@@ -50,13 +50,13 @@ definition {
 	}
 
 	macro assertRedirectActionPG {
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		AssertClick(
 			locator1 = "Home#PAGE",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
-		var key_pageName = "${redirectPageName}";
+		var key_pageName = ${redirectPageName};
 
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
@@ -66,9 +66,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "IFrame#LOADING_MESSAGE");
 
-		var key_deviceType = "${deviceType}";
+		var key_deviceType = ${deviceType};
 
-		if ("${deviceType}" == "smartphone") {
+		if (${deviceType} == "smartphone") {
 			takeScreenshot();
 
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
@@ -77,7 +77,7 @@ definition {
 
 			takeScreenshot();
 		}
-		else if ("${deviceType}" == "tablet") {
+		else if (${deviceType} == "tablet") {
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			takeScreenshot();
@@ -88,14 +88,14 @@ definition {
 
 			takeScreenshot();
 		}
-		else if ("${deviceType}" == "desktop") {
+		else if (${deviceType} == "desktop") {
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
 
 			takeScreenshot();
 		}
-		else if ("${deviceType}" == "custom") {
+		else if (${deviceType} == "custom") {
 			Click(locator1 = "ControlMenuPreviewPanel#PREVIEW_DATA_DEVICE_BUTTON");
 
 			AssertElementPresent(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
@@ -105,19 +105,19 @@ definition {
 			if (isSet(height)) {
 				Type(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD",
-					value1 = "${height}");
+					value1 = ${height});
 			}
 			else {
-				var height = "400";
+				var height = 400;
 			}
 
 			if (isSet(width)) {
 				Type(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD",
-					value1 = "${width}");
+					value1 = ${width});
 			}
 			else {
-				var width = "400";
+				var width = 400;
 			}
 
 			takeScreenshot();

@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "The user with site member permissions can add and remove a portlet from customizable view."
-	@priority = "4"
+	@priority = 4
 	test AddAndRemoveWidgetAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -50,7 +50,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
-				columnId = "1",
+				columnId = 1,
 				pageName = "Test Page Name");
 		}
 
@@ -67,7 +67,7 @@ definition {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					widgetName = "${widgetName}");
+					widgetName = ${widgetName});
 			}
 		}
 
@@ -104,7 +104,7 @@ definition {
 
 		task ("View portlets are shown") {
 			for (var portletName : list "Web Content Display,Asset Publisher,Language Selector") {
-				Portlet.viewSpecificPG(portletName = "${portletName}");
+				Portlet.viewSpecificPG(portletName = ${portletName});
 			}
 		}
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "A new user can add a widget portlet with customize permission."
-	@priority = "4"
+	@priority = 4
 	test AddWidgetAsUserWithCustomizePermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -126,7 +126,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
-				columnId = "1",
+				columnId = 1,
 				pageName = "Test Page Name");
 		}
 
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "The configurations applied to a customizable page should not affect all users."
-	@priority = "4"
+	@priority = 4
 	test PortletConfigurationChangesWithinCustomizableColumnShouldNotAffectAllUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -189,7 +189,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
-				columnId = "1",
+				columnId = 1,
 				pageName = "Test Page Name");
 		}
 
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@description = "User with site member and customize permission will only see portlets in customizable view."
-	@priority = "4"
+	@priority = 4
 	test SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PageCustomizations#SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView";
@@ -281,7 +281,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PageCustomizations.enableSectionCustomizableCP(
-				columnId = "1",
+				columnId = 1,
 				pageName = "Test Page Name");
 		}
 
@@ -298,7 +298,7 @@ definition {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					widgetName = "${widgetName}");
+					widgetName = ${widgetName});
 			}
 		}
 
@@ -350,7 +350,7 @@ definition {
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
-				Portlet.viewSpecificPG(portletName = "${portletName}");
+				Portlet.viewSpecificPG(portletName = ${portletName});
 			}
 		}
 
@@ -360,7 +360,7 @@ definition {
 			PageCustomizations.configureCustomization(menuItem = "Reset My Customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
-				Portlet.viewNoSpecificPG(portletName = "${portletName}");
+				Portlet.viewNoSpecificPG(portletName = ${portletName});
 			}
 		}
 
@@ -392,7 +392,7 @@ definition {
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
 			for (var portletName : list "Message Boards,Language Selector") {
-				Portlet.viewSpecificPG(portletName = "${portletName}");
+				Portlet.viewSpecificPG(portletName = ${portletName});
 			}
 		}
 	}

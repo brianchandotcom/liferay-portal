@@ -16,12 +16,12 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Clustering.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = 8080);
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "This test ensures that a web content can be published successfully after editing the embedded video."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishWCAfterEditingEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -134,7 +134,7 @@ definition {
 
 	@description = "This test ensures that a video reference can be removed after republishing a KB article"
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveVideoReferenceAfterRepublishingKBArticle {
 		property portal.acceptance = "true";

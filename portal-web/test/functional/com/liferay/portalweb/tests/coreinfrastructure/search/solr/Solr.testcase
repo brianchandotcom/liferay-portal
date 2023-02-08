@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -38,12 +38,12 @@ definition {
 		var serverVersion = PropsUtil.get("solr.version");
 
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "${serverVersion}",
+			clientVersion = ${serverVersion},
 			engineVendor = "Solr",
-			serverVersion = "${serverVersion}");
+			serverVersion = ${serverVersion});
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssertSearchInsightsExplain {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -93,7 +93,7 @@ definition {
 			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AssertSearchTuningDisabled {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
-	@priority = "4"
+	@priority = 4
 	test SolrSmokeTest {
 		property test.name.skip.portal.instance = "Solr#SolrSmokeTest";
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal."
-	@priority = "4"
+	@priority = 4
 	test SolrWithSolrCloudSmokeTest {
 		property dummy.socket.proxy.disabled = "true";
 		property solr.solrcloud.enabled = "true";
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
-	@priority = "4"
+	@priority = 4
 	test SolrWithSSLAuthenticationSmokeTest {
 		property solr.ssl.authentication.enabled = "true";
 		property test.name.skip.portal.instance = "Solr#SolrWithSSLAuthenticationSmokeTest";

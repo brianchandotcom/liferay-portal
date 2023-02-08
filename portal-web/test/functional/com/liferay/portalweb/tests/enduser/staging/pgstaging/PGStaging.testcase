@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ActivateDeactivateRemoteStagingInOnePortal {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -90,7 +90,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ActivateDeactivateStagingLocalLiveDM {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -142,7 +142,7 @@ definition {
 			pageStaging = "true");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ActivateRemoteStaging {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -152,7 +152,7 @@ definition {
 		property test.name.skip.portal.instance = "PGStaging#ActivateRemoteStaging";
 
 		Staging.remoteStagingSetUp(
-			remotePort = "9080",
+			remotePort = 9080,
 			remoteStaging = "true",
 			siteName = "Site Name");
 
@@ -169,7 +169,7 @@ definition {
 		Site.deleteAllCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddDMDocumentWCArticleStagingLocalLive {
 		property testray.component.names = "Training";
 
@@ -230,7 +230,7 @@ definition {
 			pageStaging = "true");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AssertEditWebContentStaging {
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -297,7 +297,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AssertNoEditLink {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125709."
-	@priority = "3"
+	@priority = 3
 	test AssertPublishPageDisplayInFullPage {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -391,7 +391,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Staging#PROCESS_HALF_DISPLAY_PAGE");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DeactivateLocalStaging {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -406,7 +406,7 @@ definition {
 		Staging.deactivateStagingCP(siteName = "Site Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DeleteDMDocument {
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -492,7 +492,7 @@ definition {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_ICON");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test LayoutScope {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -519,7 +519,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-72893."
-	@priority = "4"
+	@priority = 4
 	test PublishLayoutIconDeletion {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -558,7 +558,7 @@ definition {
 		Page.viewLayoutLogoPG();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishPrivatePage {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -601,7 +601,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80367."
-	@priority = "5"
+	@priority = 5
 	test PublishWCIncludingTextsAndImages {
 		Navigator.openURL();
 
@@ -636,7 +636,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "${dmDocumentURL}",
+			imageSourceURL = ${dmDocumentURL},
 			navTab = "URL");
 
 		PortletEntry.publish();
@@ -688,7 +688,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80295."
-	@priority = "4"
+	@priority = 4
 	test PublishWCWithFriendlyURL {
 		var baseURL = PropsUtil.get("portal.url");
 		var friendlyURL = "link";
@@ -712,7 +712,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithFriendlyURL(
-			friendlyURL = "${friendlyURL}",
+			friendlyURL = ${friendlyURL},
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
@@ -755,7 +755,7 @@ definition {
 			value1 = "Web Content Content");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWCWithPagesVariationViaRemoteStaging {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -765,7 +765,7 @@ definition {
 
 		Staging.remoteStagingSetUp(
 			pageVersioningEnabled = "true",
-			remotePort = "9080",
+			remotePort = 9080,
 			remoteStaging = "true",
 			siteName = "Site Name");
 

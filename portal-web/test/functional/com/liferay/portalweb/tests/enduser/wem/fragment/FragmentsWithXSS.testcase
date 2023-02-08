@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-121200. No alert popup when add a fragment collection in site with XSS name."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddFragmentCollectionInSiteWithXSSName {
 		var siteName = '''<script>alert(123)</script>''';
@@ -33,7 +33,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Sites");
 
-			Site.addBlankCP(siteName = "${siteName}");
+			Site.addBlankCP(siteName = ${siteName});
 		}
 
 		task ("Add a fragment collection") {

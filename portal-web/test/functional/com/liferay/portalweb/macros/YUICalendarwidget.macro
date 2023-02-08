@@ -8,15 +8,15 @@ definition {
 		*/
 
 		var key_month = "May";
-		var key_year = "2016";
+		var key_year = 2016;
 
 		while (IsElementNotPresent(locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR")) {
 			Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");
 		}
 
-		var key_day = "${day}";
-		var key_month = "${month}";
-		var key_year = "${year}";
+		var key_day = ${day};
+		var key_month = ${month};
+		var key_year = ${year};
 
 		while (IsElementNotPresent(locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR")) {
 			Click(locator1 = "YUICalendarWidget#NEXT_MONTH_ARROW");
@@ -28,7 +28,7 @@ definition {
 
 		AssertClick(
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY",
-			value1 = "${day}");
+			value1 = ${day});
 	}
 
 }

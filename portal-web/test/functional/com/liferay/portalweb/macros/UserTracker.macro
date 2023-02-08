@@ -1,7 +1,7 @@
 definition {
 
 	macro viewAccessedURL {
-		var key_friendlyURL = "${friendlyURL}";
+		var key_friendlyURL = ${friendlyURL};
 
 		Click(locator1 = "LexiconTable#TABLE_HITS_COUNT");
 
@@ -13,7 +13,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ListGroupItem#ACCESSED_FRIENDLY_URLS",
-			value1 = "${friendlyURL}");
+			value1 = ${friendlyURL});
 	}
 
 }

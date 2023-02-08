@@ -1,7 +1,7 @@
 definition {
 
 	macro addCP {
-		var key_webContentTitle = "${folderName}";
+		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.gotoAdd();
 
@@ -9,9 +9,9 @@ definition {
 			MenuItem.click(menuItem = "Folder");
 		}
 
-		PortletEntry.inputName(name = "${folderName}");
+		PortletEntry.inputName(name = ${folderName});
 
-		PortletEntry.inputDescription(description = "${folderDescription}");
+		PortletEntry.inputDescription(description = ${folderDescription});
 
 		PortletEntry.save();
 
@@ -23,17 +23,17 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 	}
 
 	macro addSubfolderCP {
-		var key_webContentTitle = "${folderName}";
+		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -45,13 +45,13 @@ definition {
 			MenuItem.click(menuItem = "Subfolder");
 		}
 
-		PortletEntry.inputName(name = "${subfolderName}");
+		PortletEntry.inputName(name = ${subfolderName});
 
-		PortletEntry.inputDescription(description = "${subfolderDescription}");
+		PortletEntry.inputDescription(description = ${subfolderDescription});
 
 		Button.clickSave();
 
-		var key_webContentTitle = "${subfolderName}";
+		var key_webContentTitle = ${subfolderName};
 
 		Alert.viewSuccessMessage();
 
@@ -59,17 +59,17 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${subfolderName}");
+			value1 = ${subfolderName});
 	}
 
 	macro checkSubfolderPermissions {
-		var key_webContentTitle = "${folderName}";
+		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -77,7 +77,7 @@ definition {
 
 		MouseOver(locator1 = "Button#PLUS");
 
-		if ("${subfolder}" == "false") {
+		if (${subfolder} == "false") {
 			MenuItem.viewNotPresent(menuItem = "Subfolder");
 		}
 		else {
@@ -87,17 +87,17 @@ definition {
 
 	macro configureWorkflowCP {
 		WebContentFolder.gotoEditCP(
-			folderName = "${folderName}",
-			webContentTitle = "${folderName}");
+			folderName = ${folderName},
+			webContentTitle = ${folderName});
 
 		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
 			Click(locator1 = "WCEditFolder#WORKFLOW_STRUCTURE_RESTRICTIONS_TOGGLE");
 		}
 
-		if ("${workflowRestriction}" == "Parent Folder") {
+		if (${workflowRestriction} == "Parent Folder") {
 			Click(locator1 = "Radio#WORKFLOW_PARENT_FOLDER");
 		}
-		else if ("${workflowRestriction}" == "Specific Restrictions") {
+		else if (${workflowRestriction} == "Specific Restrictions") {
 			Click(locator1 = "Radio#WORKFLOW_SPECIFIC_RESTRICTIONS");
 
 			AssertClick(
@@ -109,23 +109,23 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClickNoError(
-				key_tableEntry = "${structureName}",
+				key_tableEntry = ${structureName},
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
-				value1 = "${structureName}");
+				value1 = ${structureName});
 
 			SelectFrame(value1 = "relative=top");
 
 			Select(
-				key_ddlDataDefinitionName = "${structureName}",
+				key_ddlDataDefinitionName = ${structureName},
 				locator1 = "WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT",
-				value1 = "${workflowDefinition}");
+				value1 = ${workflowDefinition});
 		}
-		else if ("${workflowRestriction}" == "Default Workflow") {
+		else if (${workflowRestriction} == "Default Workflow") {
 			Click(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
 
 			Select(
 				locator1 = "Select#WORKFLOW_DEFAULT",
-				value1 = "${workflowDefinition}");
+				value1 = ${workflowDefinition});
 		}
 
 		PortletEntry.save();
@@ -134,15 +134,15 @@ definition {
 	macro gotoCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_webContentTitle = "${webContentTitle}";
+		var key_webContentTitle = ${webContentTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertClick(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -150,13 +150,13 @@ definition {
 	}
 
 	macro gotoEditCP {
-		var key_webContentTitle = "${folderName}";
+		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${webContentTitle}");
+			value1 = ${webContentTitle});
 
 		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
@@ -166,14 +166,14 @@ definition {
 	macro moveToRecycleBinCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_webContentTitle = "${folderName}";
+		var key_webContentTitle = ${folderName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WC#ENTRY_LIST_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		WebContentNavigator.gotoEntryMenuItem(
-			entry = "${folderName}",
+			entry = ${folderName},
 			menuItem = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
@@ -183,20 +183,20 @@ definition {
 		Portlet.expandTree();
 
 		Click(
-			key_nodeName = "${nodeName}",
+			key_nodeName = ${nodeName},
 			locator1 = "Treeview#NODE_ITEM");
 	}
 
 	macro viewFolderWorkflow {
 		WebContentFolder.gotoEditCP(
-			folderName = "${folderName}",
-			webContentTitle = "${folderName}");
+			folderName = ${folderName},
+			webContentTitle = ${folderName});
 
-		var key_workflowResourceValue = "${workflowResourceValue}";
+		var key_workflowResourceValue = ${workflowResourceValue};
 
 		AssertTextEquals(
 			locator1 = "WCEditFolder#WORKFLOW_FOLDER_WORKFLOW",
-			value1 = "${workflowResourceValue}");
+			value1 = ${workflowResourceValue});
 	}
 
 }

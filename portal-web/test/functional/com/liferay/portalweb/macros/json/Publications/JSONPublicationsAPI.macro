@@ -16,7 +16,7 @@ definition {
 				-d description=${publicationDescription}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _enablePublications {
@@ -31,11 +31,11 @@ definition {
 				-d userId=0
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _getCTCollectionId {
-		Variables.assertDefined(parameterList = "${publicationName}");
+		Variables.assertDefined(parameterList = ${publicationName});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -50,17 +50,17 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var ctCollectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");
+		var ctCollectionId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");
 
-		if ("${ctCollectionId}" == "") {
+		if (${ctCollectionId} == "") {
 			fail("FAIL. Cannot find ctCollectionId.");
 		}
 
-		return "${ctCollectionId}";
+		return ${ctCollectionId};
 	}
 
 	macro _publishPublication {
-		Variables.assertDefined(parameterList = "${ctCollectionId}");
+		Variables.assertDefined(parameterList = ${ctCollectionId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -73,11 +73,11 @@ definition {
 				-d userId=${userId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _selectPublication {
-		Variables.assertDefined(parameterList = "${ctCollectionId}");
+		Variables.assertDefined(parameterList = ${ctCollectionId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -91,7 +91,7 @@ definition {
 				-d userId=${userId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

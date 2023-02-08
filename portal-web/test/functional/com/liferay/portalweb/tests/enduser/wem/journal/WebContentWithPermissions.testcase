@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddAndViewStructureAndTemplateWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -215,7 +215,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_SUBFOLDER,ADD_ARTICLE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.journal.model.JournalFolder",
 				roleTitle = "Regular Role Name");
 		}
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "A new user with power user role can add a web content based on global structure with edited default values."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentBasedOnGlobalStructureAndEditedDefaultValues {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -373,7 +373,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddWebContentRemoveGuestViewPermission {
 		property test.name.skip.portal.instance = "WebContentWithPermissions#AddWebContentRemoveGuestViewPermission";
 		property testray.component.names = "Permissions,Web Content Administration";
@@ -445,7 +445,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145308. The site administrator could add a web content with image based on structure from parent site."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentWithImageBasedOnStructureFromParentSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -546,7 +546,7 @@ definition {
 	}
 
 	@description = "A new user with web content administration role can edit a web content."
-	@priority = "4"
+	@priority = 4
 	test EditWebContentAsUserWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Permissions,Roles,Users and Organizations,Web Content Administration";
@@ -573,28 +573,28 @@ definition {
 		task ("Define the permissions of new role") {
 			for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
 					roleTitle = "Web Content Administrator Role");
 			}
 
 			for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalArticle",
 					roleTitle = "Web Content Administrator Role");
 			}
 
 			for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalFolder",
 					roleTitle = "Web Content Administrator Role");
 			}
 
 			for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 					roleTitle = "Web Content Administrator Role");
 			}

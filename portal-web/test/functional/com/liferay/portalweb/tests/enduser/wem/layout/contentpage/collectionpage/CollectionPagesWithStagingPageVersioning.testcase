@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-139864. Can enable local live in a site with different types of collection page."
-	@priority = "4"
+	@priority = 4
 	test ActivateStagingPageVersioning {
 		task ("Add a manual collection for all types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(

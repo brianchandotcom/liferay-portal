@@ -19,7 +19,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This ensures that a document in a depot can be auto tagged and have its tag replaced manually."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test AutoTagCanBeReplacedInDocument {
 		property test.name.skip.portal.instance = "DepotAutoTagging#AutoTagCanBeReplacedInDocument";
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "This test asserts that an auto-tagged web content can be deleted in a depot when OpenNLP Auto-Tagging is enabled."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanDeleteAutotaggedWebContent {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDeleteAutotaggedWebContent";
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the instance level."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDisableAtInstanceScope {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableAtInstanceScope";
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This ensures that the depot auto-tagging can be disabled and enabled at the system level."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDisableAtSystemScope {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableAtSystemScope";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a depot that has auto-tagging disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableForImage {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForImage";
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a text document is uploaded to a depot that has auto-tagging disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableForTextDocument {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForTextDocument";
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tag is generated when a web content article is uploaded to a depot that has auto-tagging disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableForWebContent {
 		property test.name.skip.portal.instance = "DepotAutoTagging#CanDisableForWebContent";
@@ -245,7 +245,7 @@ definition {
 
 	@description = "This test asserts that an image is auto-tagged in a depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ImageCanBeAutoTagged {
 		property test.name.skip.portal.instance = "DepotAutoTagging#ImageCanBeAutoTagged";
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "This test asserts that a text document is auto-tagged in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test TextDocumentCanBeAutoTagged {
 		property test.name.skip.portal.instance = "DepotAutoTagging#TextDocumentCanBeAutoTagged";
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@description = "This test asserts that a web content article is auto-tagged in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test WebContentCanBeAutoTagged {
 		property test.name.skip.portal.instance = "DepotAutoTagging#WebContentCanBeAutoTagged";

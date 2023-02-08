@@ -4,43 +4,43 @@ definition {
 		Portlet.expandTree();
 
 		AssertClick(
-			key_nodeName = "${categoryName}",
+			key_nodeName = ${categoryName},
 			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 	}
 
 	macro viewCustomADTMultiColumnPG {
-		for (var column : list "${columnList}") {
-			var key_column = "${column}";
+		for (var column : list ${columnList}) {
+			var key_column = ${column};
 
 			AssertElementPresent(locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN");
 		}
 
-		var n = "1";
+		var n = 1;
 
-		for (var vocabularyName : list "${vocabularyNameList}") {
-			var column = "${n}";
+		for (var vocabularyName : list ${vocabularyNameList}) {
+			var column = ${n};
 
-			var key_column = "${column}";
+			var key_column = ${column};
 
 			AssertTextEquals(
 				locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_VOCABULARY_NAME",
-				value1 = "${vocabularyName}");
+				value1 = ${vocabularyName});
 
 			var n = ${n} + 1;
 		}
 
-		var n = "1";
+		var n = 1;
 
-		for (var categoryName : list "${categoryNameList}") {
-			var column = "${n}";
+		for (var categoryName : list ${categoryNameList}) {
+			var column = ${n};
 
-			var key_column = "${column}";
+			var key_column = ${column};
 
-			if ("${categoryName}" != "Null") {
+			if (${categoryName} != "Null") {
 				AssertTextEquals(
 					locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_CATEGORY_NAME",
-					value1 = "${categoryName}");
+					value1 = ${categoryName});
 			}
 
 			var n = ${n} + 1;
@@ -48,11 +48,11 @@ definition {
 	}
 
 	macro viewDefaultPG {
-		var key_nodeListName = "${vocabularyName}";
+		var key_nodeListName = ${vocabularyName};
 
 		Portlet.expandTree();
 
-		var key_nodeName = "${categoryName}";
+		var key_nodeName = ${categoryName};
 
 		AssertElementPresent(locator1 = "Treeview#NODE_UNSELECTED");
 	}

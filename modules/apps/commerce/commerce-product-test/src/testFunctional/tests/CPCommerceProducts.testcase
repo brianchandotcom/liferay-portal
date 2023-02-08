@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6269. AddAnOptionAndVerifyIfIsPresent"
-	@priority = "3"
+	@priority = 3
 	test AddAnOptionAndVerifyIfIsPresent {
 		property portal.acceptance = "false";
 
@@ -54,7 +54,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6021. AddASKU"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AddASKU {
 		property portal.acceptance = "false";
 
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
-	@priority = "3"
+	@priority = 3
 	test AddASpecificationAndVerifyIfIsPresent {
 		property portal.acceptance = "false";
 
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
-	@priority = "3"
+	@priority = 3
 	test AddGroupedProduct {
 		property portal.acceptance = "true";
 
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
-	@priority = "3"
+	@priority = 3
 	test AddVirtualProduct {
 		property portal.acceptance = "false";
 
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
-	@priority = "3"
+	@priority = 3
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
 		property portal.acceptance = "true";
 
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete Products"
-	@priority = "3"
+	@priority = 3
 	test BulkDeleteProducts {
 		property portal.acceptance = "true";
 
@@ -393,13 +393,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckAnyProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckAnyProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "9",
+			productStatusCode = 9,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
-	@priority = "3"
+	@priority = 3
 	test CanCheckApprovedProductDuplication {
 		property portal.acceptance = "false";
 
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9183. CanCheckApprovedProductSaveAsDraft"
-	@priority = "3"
+	@priority = 3
 	test CanCheckApprovedProductSaveAsDraft {
 		property portal.acceptance = "false";
 
@@ -487,13 +487,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckApprovedProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "0",
+			productStatusCode = 0,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -610,13 +610,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDeniedProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "4",
+			productStatusCode = 4,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -633,7 +633,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9190. CanCheckDraftProductDuplication"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductDuplication {
 		property portal.acceptance = "false";
 
@@ -661,7 +661,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9181. CanCheckDraftProductSaveAsDraft"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductSaveAsDraft {
 		property portal.acceptance = "false";
 
@@ -694,7 +694,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductStatus {
 		property portal.acceptance = "true";
 
@@ -719,7 +719,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9191. CanCheckDraftProductStatusWithWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductStatusWithWorkflow {
 		property portal.acceptance = "false";
 
@@ -760,7 +760,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -858,13 +858,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckDraftProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "2",
+			productStatusCode = 2,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -881,7 +881,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -947,13 +947,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckExpiredProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "3",
+			productStatusCode = 3,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -970,13 +970,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckInactiveProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "5",
+			productStatusCode = 5,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -993,13 +993,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckIncompleteProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "6",
+			productStatusCode = 6,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -1016,13 +1016,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckInRecycleBinProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckInRecycleBinProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "8",
+			productStatusCode = 8,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -1039,13 +1039,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckPendingProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckPendingProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "1",
+			productStatusCode = 1,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -1062,7 +1062,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1165,7 +1165,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9180. CanCheckProductPublication"
-	@priority = "3"
+	@priority = 3
 	test CanCheckProductPublication {
 		property portal.acceptance = "false";
 
@@ -1180,13 +1180,13 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckScheduledProductStatusWorkflow"
-	@priority = "3"
+	@priority = 3
 	test CanCheckScheduledProductWorkflowStatus {
 		property portal.acceptance = "false";
 
 		CommerceProducts.addProductWithStatusViaAPI(
 			catalogName = "Master",
-			productStatusCode = "7",
+			productStatusCode = 7,
 			productType = "simple");
 
 		CommerceNavigator.gotoPortlet(
@@ -1203,7 +1203,7 @@ definition {
 	}
 
 	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
-	@priority = "4"
+	@priority = 4
 	test CanUploadProductBase64ImageViaAPI {
 		property portal.acceptance = "false";
 
@@ -1215,7 +1215,7 @@ definition {
 			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
 
 			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
-				attachment = "${attachment}",
+				attachment = ${attachment},
 				contentType = "image/png",
 				imageTitle = "Black T-Shirt",
 				productERC = "MIN93015minium-initializer");
@@ -1237,7 +1237,7 @@ definition {
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Black T-Shirt",
 				key_value = "png",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -1255,7 +1255,7 @@ definition {
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
-				attachment = "${attachment}",
+				attachment = ${attachment},
 				imageTitle = "Black T-Shirt.test",
 				productERC = "MIN93015minium-initializer");
 
@@ -1268,7 +1268,7 @@ definition {
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_productName = "Black T-Shirt",
 				key_value = "jpg",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
@@ -1276,7 +1276,7 @@ definition {
 	}
 
 	@description = "This is a test for bug COMMERCE-9448. Verify a product image can be uploaded via headless API."
-	@priority = "3"
+	@priority = 3
 	test CanUploadProductImageViaAPI {
 		property portal.acceptance = "false";
 
@@ -1307,11 +1307,11 @@ definition {
 					}'
 			''';
 
-			var responseBody = JSONCurlUtil.post("${curl}");
+			var responseBody = JSONCurlUtil.post(${curl});
 
-			var productName = JSONUtil.getWithJSONPath("${responseBody}", "$..['name'].['en_US']");
+			var productName = JSONUtil.getWithJSONPath(${responseBody}, "$..['name'].['en_US']");
 
-			if ("${productName}" != "Simple Product") {
+			if (${productName} != "Simple Product") {
 				fail("Something went wrong with the API call");
 			}
 		}
@@ -1338,7 +1338,7 @@ definition {
 	}
 
 	@description = "This is a test for bug COMMERCE-9999. Verify a product image can be uploaded via headless API with CDN."
-	@priority = "3"
+	@priority = 3
 	test CanUploadProductImageViaAPIUsingCDN {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1369,9 +1369,9 @@ definition {
 				imageTitle = "title2",
 				productERC = "MIN93015minium-initializer");
 
-			var status = JSONUtil.getWithJSONPath("${responseBody}", "$..['status']");
+			var status = JSONUtil.getWithJSONPath(${responseBody}, "$..['status']");
 
-			if ("${status}" != "") {
+			if (${status} != "") {
 				fail("Something went wrong with the API call");
 			}
 		}
@@ -1417,12 +1417,12 @@ definition {
 			var miniumImage = CommerceProductImages.getProductMediaSrc(imagePath = "//a[contains(@href,'abs-sensor')]//img[contains(@class,'card-picture')]");
 
 			TestUtils.assertEquals(
-				actual = "${adminImage}",
-				expected = "${miniumImage}");
+				actual = ${adminImage},
+				expected = ${miniumImage});
 
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			Click(
 				key_productName = "abs-sensor",
@@ -1440,7 +1440,7 @@ definition {
 	}
 
 	@description = "This is a test for bug COMMERCE-9503. Verify a product image can be uploaded via headless API with default workflow enabled"
-	@priority = "3"
+	@priority = 3
 	test CanUploadProductImageViaAPIWithWorkflowEnabled {
 		property portal.acceptance = "false";
 
@@ -1452,7 +1452,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProductImage(
 				catalogName = "Master",
 				imageTitle = "Image Title",
-				productStatus = "2",
+				productStatus = 2,
 				productTitle = "Simple Product",
 				productType = "simple");
 		}
@@ -1485,7 +1485,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8850. Verify that the list of filters is reduced to only show matching results"
-	@priority = "3"
+	@priority = 3
 	test CanVerifyFiltersListShowsOnlyMatchingResults {
 		property portal.acceptance = "false";
 
@@ -1504,7 +1504,7 @@ definition {
 		task ("Then all filters are shown in the dropdown list") {
 			for (var filterItemName : list "Category,Catalog,Channel,Product Type") {
 				AssertElementPresent(
-					key_filter = "${filterItemName}",
+					key_filter = ${filterItemName},
 					locator1 = "FrontendDataSet#FILTER_OPTION");
 			}
 		}
@@ -1520,7 +1520,7 @@ definition {
 
 			for (var filterItemName : list "Category,Catalog,Channel") {
 				AssertElementNotPresent(
-					key_filter = "${filterItemName}",
+					key_filter = ${filterItemName},
 					locator1 = "FrontendDataSet#FILTER_OPTION");
 			}
 		}
@@ -1528,7 +1528,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6747. ConfigureGroupedProduct"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ConfigureGroupedProduct {
 		property portal.acceptance = "false";
 
@@ -1537,7 +1537,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
-	@priority = "3"
+	@priority = 3
 	test ConfigureVirtualProduct {
 		property portal.acceptance = "true";
 
@@ -1583,7 +1583,7 @@ definition {
 		Type(
 			key_fieldLabel = "Max Number of Downloads",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10");
+			value1 = 10);
 
 		if (IsElementPresent(key_contentType = "Sample", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
 			Click(
@@ -1630,7 +1630,7 @@ definition {
 		AssertTextEquals(
 			key_fieldLabel = "Max Number of Downloads",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10");
+			value1 = 10);
 	}
 
 	test CreateProductBundleWithPriceTypeDynamic {
@@ -1719,7 +1719,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6018. CreateProductBundleWithPriceTypeStatic"
-	@priority = "3"
+	@priority = 3
 	test CreateProductBundleWithPriceTypeStatic {
 		property portal.acceptance = "false";
 
@@ -1873,7 +1873,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8425. DuplicateAProductAndVerifyIfSkuPriceIsUnique"
-	@priority = "3"
+	@priority = 3
 	test DuplicateAProductAndVerifyIfSkuPriceIsUnique {
 		property portal.acceptance = "false";
 
@@ -1940,7 +1940,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
-	@priority = "3"
+	@priority = 3
 	test EditAProduct {
 		property portal.acceptance = "true";
 
@@ -1967,7 +1967,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6022. EditASKU"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test EditASKU {
 		property portal.acceptance = "false";
 
@@ -1976,7 +1976,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
-	@priority = "3"
+	@priority = 3
 	test EditSkuAndDelete {
 		property portal.acceptance = "true";
 
@@ -2125,7 +2125,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
-	@priority = "3"
+	@priority = 3
 	test UseFilters {
 		property portal.acceptance = "true";
 
@@ -2229,7 +2229,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
-	@priority = "3"
+	@priority = 3
 	test UseFriendlyURL {
 		property portal.acceptance = "false";
 
@@ -2240,9 +2240,9 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test Channel");
 
 		for (var fixIssueButtonName : list "Product Detail") {
-			if (IsElementPresent(key_fixIssueButtonName = "${fixIssueButtonName}", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON")) {
+			if (IsElementPresent(key_fixIssueButtonName = ${fixIssueButtonName}, locator1 = "CommerceEntry#FIX_ISSUE_BUTTON")) {
 				Click(
-					key_fixIssueButtonName = "${fixIssueButtonName}",
+					key_fixIssueButtonName = ${fixIssueButtonName},
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
 				Alert.viewSuccessMessage();
@@ -2268,7 +2268,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6303. UseSchedule"
-	@priority = "3"
+	@priority = 3
 	test UseSchedule {
 		property portal.acceptance = "false";
 
@@ -2302,7 +2302,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#EXPIRATION_DATE_FIELD",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		Button.clickPublish();
 
@@ -2310,7 +2310,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5805. UseSearchBarAndPagination"
-	@priority = "3"
+	@priority = 3
 	test UseSearchBarAndPagination {
 		property portal.acceptance = "false";
 
@@ -2340,7 +2340,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5801. UseSkuSearchBarAndPagination"
-	@priority = "3"
+	@priority = 3
 	test UseSkuSearchBarAndPagination {
 		property portal.acceptance = "false";
 
@@ -2364,7 +2364,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5803. UseSortingByNameAndDate"
-	@priority = "3"
+	@priority = 3
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";
 
@@ -2393,7 +2393,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyIfCategorizationIsWorking {
 		property portal.acceptance = "false";
 

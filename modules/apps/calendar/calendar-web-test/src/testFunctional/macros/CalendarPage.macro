@@ -43,7 +43,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CalendarPage#CURRENT_MONTH_BY_BASE_NAV",
-			value1 = "${currentMonth}");
+			value1 = ${currentMonth});
 	}
 
 	macro viewMiniCalendarOnSideBar {
@@ -55,19 +55,19 @@ definition {
 	}
 
 	macro viewTypeOfTableView {
-		if ("${tableType}" == "Day") {
+		if (${tableType} == "Day") {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY");
 		}
 
-		if ("${tableType}" == "Week") {
+		if (${tableType} == "Week") {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK");
 		}
 
-		if ("${tableType}" == "Month") {
+		if (${tableType} == "Month") {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH");
 		}
 
-		if ("${tableType}" == "Agenda") {
+		if (${tableType} == "Agenda") {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_AGENDA");
 		}
 	}

@@ -18,7 +18,7 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
@@ -33,16 +33,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "LPS-146217 - Verify if when Customer Portal is created, Accounts Users will be created for it as well"
-	@priority = "4"
+	@priority = 4
 	test AccountUsersAreCreatedForCP20 {
 		property solutions.acceptance = "true";
 
@@ -55,7 +55,7 @@ definition {
 
 	@description = "LPS-148456 - Verify if its possible login in Okta, Configure SAML Admin and create CP2.0"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanConnectWithOkta {
 		task ("Login in Okta") {
 
@@ -69,11 +69,11 @@ definition {
 
 			Type(
 				locator1 = "CustomerPortalSite#OKTA_USERNAME",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Type(
 				locator1 = "CustomerPortalSite#OKTA_PASSWORD",
-				value1 = "${userPassword}");
+				value1 = ${userPassword});
 
 			Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
 		}
@@ -126,8 +126,8 @@ definition {
 
 			CustomerPortal.addIdPCForCustomerPortal(
 				idpAttributeMapping = "emailAddress,UUID,screenName,lastName,firstName",
-				idpEntityId = "${entityId}",
-				idpMetadataURL = "${metadataURL}",
+				idpEntityId = ${entityId},
+				idpMetadataURL = ${metadataURL},
 				idpNameId = "CP2",
 				nameIdentifierFormat = "Unspecified");
 
@@ -141,7 +141,7 @@ definition {
 			Site.openSitesAdmin();
 
 			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
+				siteName = ${testSiteName},
 				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
@@ -159,7 +159,7 @@ definition {
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
-			SAMLPortlet.deleteSAMLConnection(samlEntityId = "${entityId}");
+			SAMLPortlet.deleteSAMLConnection(samlEntityId = ${entityId});
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
@@ -175,12 +175,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146215 | Test Summary: Verify if Customer Portal can be created"
-	@priority = "5"
+	@priority = 5
 	test CanCP20BeCreated {
 		property portal.acceptance = "true";
 
 		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Assert the Customer Portal Page is present") {
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146220 | Test Summary: Verify if when Customer Portal is created, Objects will be created for it as well"
-	@priority = "4"
+	@priority = 4
 	test ObjectsAreCreatedForCP20 {
 		task ("Go to the Objects admin and assert that the objects have been created") {
 			ObjectAdmin.openObjectAdmin();
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146219 | Test Summary: Verify if when Customer Portal is created, Remote Apps will be created for it as well"
-	@priority = "4"
+	@priority = 4
 	test RemoteAppsAreCreatedForCP20 {
 		task ("Assert that when the Customer Portal is created, remote applications are also created") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146216 | Test Summary: Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
-	@priority = "4"
+	@priority = 4
 	test TestsAccountsAreCreatedForCP20 {
 		task ("Assert that after the Customer Portal was created, test accounts were also created") {
 			Account.openAccountsAdmin();

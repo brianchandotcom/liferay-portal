@@ -9,7 +9,7 @@ definition {
 
 		FormFields.editTextMultiline(
 			fieldName = "metadataJSON",
-			fieldValue = "${authServerMetadata}");
+			fieldValue = ${authServerMetadata});
 
 		PortletEntry.save();
 	}
@@ -27,16 +27,16 @@ definition {
 
 		FormFields.editText(
 			fieldName = "authServerWellKnownURI",
-			fieldValue = "${wellknownURI}");
+			fieldValue = ${wellknownURI});
 
 		FormFields.editTextMultiline(
 			fieldName = "infoJSON",
-			fieldValue = "${clientInfo}");
+			fieldValue = ${clientInfo});
 
 		if (isSet(authRequestParametersJSON)) {
 			FormFields.editTextMultiline(
 				fieldName = "authRequestParametersJSON",
-				fieldValue = "${authRequestParametersJSON}");
+				fieldValue = ${authRequestParametersJSON});
 		}
 		else {
 			FormFields.editTextMultiline(
@@ -52,7 +52,7 @@ definition {
 		if (isSet(tokenRequestParametersJSON)) {
 			FormFields.editTextMultiline(
 				fieldName = "tokenRequestParametersJSON",
-				fieldValue = "${tokenRequestParametersJSON}");
+				fieldValue = ${tokenRequestParametersJSON});
 		}
 		else {
 			FormFields.editTextMultiline(
@@ -70,7 +70,7 @@ definition {
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${userMapperInfo}");
+				fieldValue = ${userMapperInfo});
 		}
 
 		PortletEntry.save();
@@ -82,7 +82,7 @@ definition {
 		if (isSet(authServerMetadata)) {
 			FormFields.editTextMultiline(
 				fieldName = "metadataJSON",
-				fieldValue = "${authServerMetadata}");
+				fieldValue = ${authServerMetadata});
 		}
 
 		ClickNoError(locator1 = "Button#SAVE");
@@ -94,13 +94,13 @@ definition {
 		if (isSet(wellknownURI)) {
 			FormFields.editText(
 				fieldName = "authServerWellKnownURI",
-				fieldValue = "${wellknownURI}");
+				fieldValue = ${wellknownURI});
 		}
 
 		if (isSet(clientInfo)) {
 			FormFields.editTextMultiline(
 				fieldName = "infoJSON",
-				fieldValue = "${clientInfo}");
+				fieldValue = ${clientInfo});
 		}
 
 		if (isSet(jsonFileName)) {
@@ -110,19 +110,19 @@ definition {
 
 			FormFields.editTextMultiline(
 				fieldName = "infoJSON",
-				fieldValue = "${clientInfo}");
+				fieldValue = ${clientInfo});
 		}
 
 		if (isSet(authRequestParametersJSON)) {
 			FormFields.editTextMultiline(
 				fieldName = "authRequestParametersJSON",
-				fieldValue = "${authRequestParametersJSON}");
+				fieldValue = ${authRequestParametersJSON});
 		}
 
 		if (isSet(tokenRequestParametersJSON)) {
 			FormFields.editTextMultiline(
 				fieldName = "tokenRequestParametersJSON",
-				fieldValue = "${tokenRequestParametersJSON}");
+				fieldValue = ${tokenRequestParametersJSON});
 		}
 
 		ClickNoError(locator1 = "Button#SAVE");
@@ -130,7 +130,7 @@ definition {
 
 	macro deleteClient {
 		Click(
-			key_rowIndexNumber = "${rowIndexNumber}",
+			key_rowIndexNumber = ${rowIndexNumber},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -149,22 +149,22 @@ definition {
 
 		echo("Well-known URI: ${wellknownURI}");
 
-		return "${wellknownURI}";
+		return ${wellknownURI};
 	}
 
 	macro openOAuthClientAdmin {
-		Variables.assertDefined(parameterList = "${navbar}");
+		Variables.assertDefined(parameterList = ${navbar});
 
-		if ("${navbar}" == "Auth Server Local Metadata") {
+		if (${navbar} == "Auth Server Local Metadata") {
 			var navigationName = "oauth-client-as-local-metadata";
 		}
 
-		if ("${navbar}" == "Clients") {
+		if (${navbar} == "Clients") {
 			var navigationName = "oauth-clients";
 		}
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth_client_admin_web_internal_portlet_OAuthClientAdminPortlet&_com_liferay_oauth_client_admin_web_internal_portlet_OAuthClientAdminPortlet_navigation=${navigationName}");
 
 		WaitForVisible(locator1 = "Button#PLUS");
@@ -172,10 +172,10 @@ definition {
 
 	macro viewOAuthClient {
 		OAuthClient.openOAuthClientAdmin(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			navbar = "Clients");
 
-		while ((IsElementNotPresent(key_rowIndexNumber = "1", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N")) && (maxIterations = "10")) {
+		while ((IsElementNotPresent(key_rowIndexNumber = 1, locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N")) && (maxIterations = "10")) {
 			Refresh();
 		}
 	}

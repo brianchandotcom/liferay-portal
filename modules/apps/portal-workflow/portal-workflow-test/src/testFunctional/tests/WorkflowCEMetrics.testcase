@@ -15,13 +15,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LRQA-53649 Automate LPS-87560: Verify metrics available or not for CE and DXP customers"
-	@priority = "5"
+	@priority = 5
 	test MetricsUnavailableForCECustomers {
 		property portal.acceptance = "true";
 

@@ -15,7 +15,7 @@ definition {
 			layoutName = "Knowledge Base Article Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Article Page",
 			widgetName = "Knowledge Base Article");
@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can select a child article to display from the widget configuration."
-	@priority = "5"
+	@priority = 5
 	test CanSelectChildArticleToDisplay {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can select an article in a folder to display from the widget configuration."
-	@priority = "5"
+	@priority = 5
 	test CanSelectFolderArticleToDisplay {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -95,14 +95,14 @@ definition {
 
 	@description = "This test ensures that the description can be displayed on the KB article widget after enabling it in the configuration."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
 
 		// TODO LPS-172372
 
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test DeleteKBArticleViaKBArticle {
 		property custom.properties = "feature.flag.LPS-156421=true";

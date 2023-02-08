@@ -12,7 +12,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test RemoveOrphanedPortletPreferences7310 {
 		property data.archive.type = "data-archive-publications-with-orphaned-portlet-preferences";
 		property portal.version = "7.3.10";
@@ -28,7 +28,7 @@ definition {
 			value1 = "Out of Date");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test RemoveOrphanedPortletPreferences7413 {
 		property data.archive.type = "data-archive-publications-with-orphaned-portlet-preferences";
 		property portal.version = "7.4.13";
@@ -44,7 +44,7 @@ definition {
 			value1 = "Out of Date");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAdminRoleNameArchive735 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -53,7 +53,7 @@ definition {
 		PublicationsUpgrade.viewAdminRoleName();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAdminRoleNameArchive740 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -62,7 +62,7 @@ definition {
 		PublicationsUpgrade.viewAdminRoleName();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAdminRoleNameArchive7310 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -72,7 +72,7 @@ definition {
 		PublicationsUpgrade.viewAdminRoleName();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAdminRoleNameArchive7413 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
@@ -82,7 +82,7 @@ definition {
 		PublicationsUpgrade.viewAdminRoleName();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAdminRoleNameArchive73101 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
@@ -92,7 +92,7 @@ definition {
 		PublicationsUpgrade.viewAdminRoleName();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewNoUnrelatedPreviewsArchive7310 {
 		property data.archive.type = "data-archive-publications-with-unrelated-previews-generated";
 		property database.types = "db2,mariadb,mysql,sybase";
@@ -102,7 +102,7 @@ definition {
 		PublicationsUpgrade.viewNoUnrelatedPreviews();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewNoUnrelatedPreviewsArchive7413 {
 		property data.archive.type = "data-archive-publications-with-unrelated-previews-generated";
 		property database.types = "db2,mysql,sybase";
@@ -112,7 +112,7 @@ definition {
 		PublicationsUpgrade.viewNoUnrelatedPreviews();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOutOfDatePublicationsArchive735 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -121,7 +121,7 @@ definition {
 		PublicationsUpgrade.viewOutOfDatePublications();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOutOfDatePublicationsArchive740 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -130,7 +130,7 @@ definition {
 		PublicationsUpgrade.viewOutOfDatePublications();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOutOfDatePublicationsArchive7310 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -140,7 +140,7 @@ definition {
 		PublicationsUpgrade.viewOutOfDatePublications();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOutOfDatePublicationsArchive7413 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
@@ -150,7 +150,7 @@ definition {
 		PublicationsUpgrade.viewOutOfDatePublications();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOutOfDatePublicationsArchive73101 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
@@ -160,7 +160,7 @@ definition {
 		PublicationsUpgrade.viewOutOfDatePublications();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive735 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -169,7 +169,7 @@ definition {
 		PublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive740 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,postgresql";
@@ -178,7 +178,7 @@ definition {
 		PublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive7310 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -188,7 +188,7 @@ definition {
 		PublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive7413 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
@@ -198,7 +198,7 @@ definition {
 		PublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPublicationsUserRolePermissionsArchive73101 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";

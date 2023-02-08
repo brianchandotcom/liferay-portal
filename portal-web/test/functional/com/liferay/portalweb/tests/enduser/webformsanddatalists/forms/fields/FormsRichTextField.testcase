@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -42,9 +42,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.save();
 
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -65,16 +65,16 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.closeSidebar();
 
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		property portal.acceptance = "true";
 
@@ -103,7 +103,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		FormFields.editHelpText(
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -159,7 +159,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.save();
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be required"
-	@priority = "5"
+	@priority = 5
 	test CanBeRequired {
 		property portal.acceptance = "true";
 
@@ -195,7 +195,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		FormViewBuilder.setFieldRequired();
@@ -220,14 +220,14 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be set to repeatable"
-	@priority = "5"
+	@priority = 5
 	test CanBeSetToRepeatable {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.gotoAdvancedTab();
@@ -253,7 +253,7 @@ definition {
 			fieldLabel = "Rich Text");
 
 		SelectFrame.selectFrameNoLoading(
-			index = "2",
+			index = 2,
 			key_fieldLabel = "Rich Text",
 			locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
@@ -267,14 +267,14 @@ definition {
 	}
 
 	@description = "Verify that a Form can be submitted with the Rich Text Field"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmitted {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.save();
@@ -297,7 +297,7 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries(formName = "Form1");
 
-		FormsAdminNavigator.gotoView(rowIndexNumber = "1");
+		FormsAdminNavigator.gotoView(rowIndexNumber = 1);
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Rich Text");
 
@@ -308,7 +308,7 @@ definition {
 
 	@description = "Verify that changes to the Field can be canceled"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
 
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "Verify if the source option of the rich text field is working correctly."
-	@priority = "4"
+	@priority = 4
 	test CheckSourceOptionAtRichTextField {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -327,7 +327,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.publishForm();
@@ -346,14 +346,14 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added to a Rich Text Field"
-	@priority = "5"
+	@priority = 5
 	test HelpTextCanBeAdded {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		FormFields.editHelpText(
@@ -382,16 +382,16 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be changed"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.editFieldLabelMetal(fieldValue = "Test Rich Text");
 
@@ -407,14 +407,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.gotoAdvancedTab();
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set for the Rich Text Field"
-	@priority = "5"
+	@priority = 5
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -440,7 +440,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.gotoAdvancedTab();
@@ -471,14 +471,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be changed"
-	@priority = "5"
+	@priority = 5
 	test ReferenceCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.gotoAdvancedTab();
@@ -500,7 +500,7 @@ definition {
 
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";
 

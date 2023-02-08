@@ -15,9 +15,9 @@ definition {
 			Click(locator1 = "Checkbox#SELECT_ALL");
 		}
 		else {
-			for (var accountGroupName : list "${accountGroupNames}") {
+			for (var accountGroupName : list ${accountGroupNames}) {
 				Check(
-					key_checkboxName = "${accountGroupName}",
+					key_checkboxName = ${accountGroupName},
 					locator1 = "Checkbox#ENABLE_CHECKBOX");
 			}
 		}
@@ -36,53 +36,53 @@ definition {
 	}
 
 	macro addPin {
-		var key_pinNumber = "${pinNumber}";
+		var key_pinNumber = ${pinNumber};
 
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
 
 		Type(
 			key_inputField = "Position",
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-			value1 = "${pinNumber}");
+			value1 = ${pinNumber});
 
 		Select(
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_TYPE_SELECT",
-			value1 = "${selectType}");
+			value1 = ${selectType});
 
-		if ("${selectType}" == "Not Linked to a Catalog") {
+		if (${selectType} == "Not Linked to a Catalog") {
 			Type(
 				key_inputField = "Label",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${label}");
+				value1 = ${label});
 
 			Type(
 				key_inputField = "Quantity",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 		}
-		else if ("${selectType}" == "Linked to a SKU") {
+		else if (${selectType} == "Linked to a SKU") {
 			Type(
 				key_inputField = "SKU",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${sku}");
+				value1 = ${sku});
 
 			Click(
-				key_menuItem = "${sku}",
+				key_menuItem = ${sku},
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 			Type(
 				key_inputField = "Quantity",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 		}
-		else if ("${selectType}" == "Linked to a Diagram") {
+		else if (${selectType} == "Linked to a Diagram") {
 			Type(
 				key_inputField = "Diagram",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${diagram}");
+				value1 = ${diagram});
 
 			Click(
-				key_menuItem = "${diagram}",
+				key_menuItem = ${diagram},
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
@@ -90,60 +90,60 @@ definition {
 
 		if (isSet(position)) {
 			DragAndDrop.dragAndDropReorganizeObjects(
-				key_pinNumber = "${pinNumber}",
+				key_pinNumber = ${pinNumber},
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN",
 				locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
-				position = "${position}");
+				position = ${position});
 		}
 
 		Refresh();
 
 		WaitForElementPresent(
-			key_pinNumber = "${pinNumber}",
+			key_pinNumber = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 	}
 
 	macro assertDiagramSettingsType {
 		AssertElementPresent(
-			key_selectedType = "${settingsType}",
+			key_selectedType = ${settingsType},
 			locator1 = "CommerceDiagrams#DIAGRAM_SETTINGS_SELECTED_TYPE");
 	}
 
 	macro assertPinSize {
-		if ("${pinSize}" == "Small") {
+		if (${pinSize} == "Small") {
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_SMALL");
 		}
-		else if ("${pinSize}" == "Medium") {
+		else if (${pinSize} == "Medium") {
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_MEDIUM");
 		}
-		else if ("${pinSize}" == "Large") {
+		else if (${pinSize} == "Large") {
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_LARGE");
 		}
 	}
 
 	macro assertPinToolTipInfo {
 		AssertElementPresent(
-			key_positionValue = "${pinNumber}",
+			key_positionValue = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_POSITION");
 
 		AssertElementPresent(
-			key_linkedType = "${pinType}",
+			key_linkedType = ${pinType},
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_LINKED_TYPE");
 
-		if ("${pinType}" != "Diagram") {
+		if (${pinType} != "Diagram") {
 			AssertElementPresent(
-				key_quantity = "${quantity}",
+				key_quantity = ${quantity},
 				locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_QUANTITY");
 		}
 
 		if (isSet(sku)) {
-			var key_inputItem = "${sku}";
+			var key_inputItem = ${sku};
 		}
 		else if (isSet(diagram)) {
-			var key_inputItem = "${diagram}";
+			var key_inputItem = ${diagram};
 		}
 		else if (isSet(label)) {
-			var key_inputItem = "${label}";
+			var key_inputItem = ${label};
 		}
 
 		if (isSet(key_inputItem)) {
@@ -152,31 +152,31 @@ definition {
 	}
 
 	macro assertPinToolTipInfoInProduct {
-		if ("${selectedType}" == "Linked to a SKU") {
+		if (${selectedType} == "Linked to a SKU") {
 			AssertElementPresent(
-				key_sku = "${sku}",
+				key_sku = ${sku},
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
 
 			AssertElementPresent(
-				key_productName = "${productName}",
+				key_productName = ${productName},
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
 
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_QUANTITY");
 
 			if (isSet(replaceSku)) {
 				AssertElementPresent(
-					key_text = "${replaceText}",
+					key_text = ${replaceText},
 					locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 			}
 		}
-		else if ("${selectedType}" == "Linked to a Diagram") {
+		else if (${selectedType} == "Linked to a Diagram") {
 			AssertElementPresent(
-				key_sku = "${productName}",
+				key_sku = ${productName},
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
 		}
-		else if ("${selectedType}" == "Not Linked to a Catalog") {
+		else if (${selectedType} == "Not Linked to a Catalog") {
 			AssertElementPresent(
-				key_productName = "${productName}",
+				key_productName = ${productName},
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_UNLINKED_PRODUCT_NAME");
 
 			AssertElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_QUANTITY");
@@ -198,47 +198,47 @@ definition {
 	}
 
 	macro changePinInfo {
-		CommerceDiagram.viewPin(pinNumber = "${pinNumber}");
+		CommerceDiagram.viewPin(pinNumber = ${pinNumber});
 
 		Type(
 			key_inputField = "Position",
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-			value1 = "${newPinNumber}");
+			value1 = ${newPinNumber});
 
 		Select(
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_TYPE_SELECT",
-			value1 = "${selectType}");
+			value1 = ${selectType});
 
-		if ("${selectType}" == "Not Linked to a Catalog") {
+		if (${selectType} == "Not Linked to a Catalog") {
 			Type(
 				key_inputField = "Label",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${label}");
+				value1 = ${label});
 
 			Type(
 				key_inputField = "Quantity",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 		}
-		else if ("${selectType}" == "Linked to a SKU") {
+		else if (${selectType} == "Linked to a SKU") {
 			Type(
 				key_inputField = "SKU",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${sku}");
+				value1 = ${sku});
 
 			Type(
 				key_inputField = "Quantity",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 		}
-		else if ("${selectType}" == "Linked to a Diagram") {
+		else if (${selectType} == "Linked to a Diagram") {
 			Type(
 				key_inputField = "Diagram",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-				value1 = "${diagram}");
+				value1 = ${diagram});
 
 			Click(
-				key_menuItem = "${diagram}",
+				key_menuItem = ${diagram},
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
@@ -252,14 +252,14 @@ definition {
 		Refresh();
 
 		WaitForElementPresent(
-			key_pinNumber = "${newPinNumber}",
+			key_pinNumber = ${newPinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 	}
 
 	macro changeSettingsType {
 		SelectField.select(
 			selectFieldLabel = "Type",
-			selectFieldValue = "${settingsType}");
+			selectFieldValue = ${settingsType});
 
 		Button.clickPublish();
 
@@ -274,21 +274,21 @@ definition {
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON");
 
 		AssertClick(
-			key_pinSize = "${pinSize}",
+			key_pinSize = ${pinSize},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_DROPDOWN",
-			value1 = "${pinSize}");
+			value1 = ${pinSize});
 	}
 
 	macro setVisibility {
 		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
 
 		Click(
-			key_name = "${name}",
+			key_name = ${name},
 			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
 
-		if ("${name}" == "Account Groups") {
+		if (${name} == "Account Groups") {
 			ClickNoError.clickNoMouseOver(
-				key_webContentTitle = "${webContentTitle}",
+				key_webContentTitle = ${webContentTitle},
 				locator1 = "Button#BUTTON_PLUS_PRODUCT_VISIBILITY");
 		}
 		else {
@@ -298,7 +298,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Check(
-			key_checkboxName = "${checkboxName}",
+			key_checkboxName = ${checkboxName},
 			locator1 = "Checkbox#ENABLE_CHECKBOX");
 
 		SelectFrameTop();
@@ -317,14 +317,14 @@ definition {
 		var first_position = selenium.getAttribute("//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']@transform");
 
 		DragAndDrop.dragAndDropReorganizeObjects(
-			key_image = "${image_name}",
+			key_image = ${image_name},
 			locator1 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC",
 			locator2 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC",
-			position = "${position}");
+			position = ${position});
 
 		var second_position = selenium.getAttribute("//div[contains(@class,'shop-by-diagram')]//*[name()='svg']//*[name()='g' and @class='zoom-handler']@transform");
 
-		if ("${first_position}" != "${second_position}") {
+		if (${first_position} != ${second_position}) {
 			echo("The position after the drag is correct");
 		}
 		else {
@@ -339,14 +339,14 @@ definition {
 		var first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']/../../*[name()='g']@transform");
 
 		DragAndDrop.dragAndDropReorganizeObjects(
-			key_image = "${image_name}",
+			key_image = ${image_name},
 			locator1 = "CommerceEntry#VERIFY_IMAGE",
 			locator2 = "CommerceEntry#VERIFY_IMAGE",
-			position = "${position}");
+			position = ${position});
 
 		var second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='circle']/../../*[name()='g']@transform");
 
-		if ("${first_position}" != "${second_position}") {
+		if (${first_position} != ${second_position}) {
 			echo("The pin position after the drag is correct");
 		}
 		else {
@@ -360,20 +360,20 @@ definition {
 
 		CommerceDiagram.useResetZoom();
 
-		CommerceDiagram.usePreDefinedZoomValues(key_list = "${key_list}");
+		CommerceDiagram.usePreDefinedZoomValues(key_list = ${key_list});
 	}
 
 	macro usePreDefinedZoomValues {
-		for (var zoom : list "${key_list}") {
+		for (var zoom : list ${key_list}) {
 			var first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
 			Select(
 				locator1 = "CommerceEntry#DIAGRAM_ZOOM_SELECT",
-				value1 = "${zoom}");
+				value1 = ${zoom});
 
 			var second_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
-			if ("${first_position}" != "${second_position}") {
+			if (${first_position} != ${second_position}) {
 				echo("The position is correct for ${zoom}");
 			}
 			else {
@@ -383,7 +383,7 @@ definition {
 	}
 
 	macro useResetZoom {
-		var i = "0";
+		var i = 0;
 
 		Click(
 			key_text = "Reset Zoom",
@@ -391,7 +391,7 @@ definition {
 
 		var actual_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
-		if (("${actual_position}" == "translate(0,0) scale(1)") || ("${actual_position}" == "translate(0, 0) scale(1,1)")) {
+		if ((${actual_position} == "translate(0,0) scale(1)") || (${actual_position} == "translate(0, 0) scale(1,1)")) {
 			echo("The reset zoom position is correct");
 		}
 		else {
@@ -401,14 +401,14 @@ definition {
 
 	macro viewMappedProducts {
 		AssertElementPresent(
-			key_pinNumber = "${pinNumber}",
-			key_productName = "${productName}",
+			key_pinNumber = ${pinNumber},
+			key_productName = ${productName},
 			locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC");
 	}
 
 	macro viewPin {
 		Click(
-			key_pinNumber = "${pinNumber}",
+			key_pinNumber = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
@@ -416,7 +416,7 @@ definition {
 
 	macro viewPinInProduct {
 		Click(
-			key_pinNumber = "${pinNumber}",
+			key_pinNumber = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP");

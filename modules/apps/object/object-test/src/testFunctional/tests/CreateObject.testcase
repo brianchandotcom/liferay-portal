@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view and access the Object Admin portlet with the Access in Control Panel permission"
-	@priority = "4"
+	@priority = 4
 	test CanAccessObjectAdminWithAccessPermission {
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -30,7 +30,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -42,7 +42,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regular Role");
 
 		JSONUser.addUser(
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Block"
-	@priority = "5"
+	@priority = 5
 	test CanAddBlock {
 		property portal.acceptance = "true";
 
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add Entries with Custom Layout Created"
-	@priority = "4"
+	@priority = 4
 	test CanAddEntriesWithCustomLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 2",
@@ -138,7 +138,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to add a field after the Object is published and submit entries to it"
-	@priority = "5"
+	@priority = 5
 	test CanAddFieldAndViewEntriesAfterPublished {
 		property portal.acceptance = "true";
 
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with one column"
-	@priority = "4"
+	@priority = 4
 	test CanAddFieldForBlockOneColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 4",
@@ -226,7 +226,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block Name",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with three columns"
-	@priority = "4"
+	@priority = 4
 	test CanAddFieldForBlockThreeColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 5",
@@ -267,7 +267,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block Name",
-			columnsNumber = "3",
+			columnsNumber = 3,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with two columns"
-	@priority = "4"
+	@priority = 4
 	test CanAddFieldForBlockTwoColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 6",
@@ -308,7 +308,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block Name",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
-	@priority = "5"
+	@priority = 5
 	test CanAddFieldTab {
 		property portal.acceptance = "true";
 
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it is possible to add a Object Entry Title Field"
-	@priority = "5"
+	@priority = 5
 	test CanAddObjectEntryTitleField {
 		property portal.acceptance = "true";
 
@@ -376,7 +376,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
-	@priority = "4"
+	@priority = 4
 	test CanAddObjectWithAddPermission {
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
-	@priority = "5"
+	@priority = 5
 	test CanAddRelationOnRelationshipField {
 		property portal.acceptance = "true";
 
@@ -500,7 +500,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldList = "Custom Field",
 			tabName = "Field Tab");
 
@@ -540,7 +540,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add many relations through the Relationship tab"
-	@priority = "5"
+	@priority = 5
 	test CanAddRelationOnRelationshipTab {
 		property portal.acceptance = "true";
 
@@ -595,7 +595,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldList = "Custom Field,Relationship",
 			tabName = "Field Tab");
 
@@ -625,11 +625,11 @@ definition {
 
 		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "CustomObject10");
 
-		ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${objectDefinitionId}");
+		ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${objectDefinitionId});
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"
-	@priority = "4"
+	@priority = 4
 	test CanCancelCreationCustomObject {
 		ObjectAdmin.openObjectAdmin();
 
@@ -646,7 +646,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Field"
-	@priority = "4"
+	@priority = 4
 	test CanCancelCreationField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 12",
@@ -675,7 +675,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
-	@priority = "4"
+	@priority = 4
 	test CanCancelRelationshipCreation {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 13",
@@ -712,7 +712,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
-	@priority = "4"
+	@priority = 4
 	test CanCancelUpdateLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 14",
@@ -745,7 +745,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -766,7 +766,7 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to change the Panel Category Key after publishing the Object"
-	@priority = "4"
+	@priority = 4
 	test CanChangePanelCategoryKeyAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 15",
@@ -797,7 +797,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify it is possible to collapse and expand a block of fields"
-	@priority = "4"
+	@priority = 4
 	test CanCollapseAndExpandBlock {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 16",
@@ -830,7 +830,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			isCollapsible = "Yes",
 			tabName = "Field Tab");
@@ -851,7 +851,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a BigDecimal field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateBigDecimalField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 17",
@@ -876,7 +876,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Boolean field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateBooleanField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 18",
@@ -901,7 +901,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify if it is possible to create a Custom Object"
-	@priority = "5"
+	@priority = 5
 	test CanCreateCustomObject {
 		property portal.acceptance = "true";
 
@@ -917,7 +917,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Date field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateDateField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 20",
@@ -942,7 +942,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Double field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateDoubleField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 21",
@@ -967,7 +967,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create an Integer field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateIntegerField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 22",
@@ -992,7 +992,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to create a Layout for an Object"
-	@priority = "5"
+	@priority = 5
 	test CanCreateLayout {
 		property portal.acceptance = "true";
 
@@ -1013,7 +1013,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Long field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateLongField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 24",
@@ -1038,7 +1038,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
-	@priority = "5"
+	@priority = 5
 	test CanCreateManyToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -1069,7 +1069,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"
-	@priority = "4"
+	@priority = 4
 	test CanCreateOneToManyRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object A 27",
@@ -1098,12 +1098,12 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to create a Picklist field"
-	@priority = "4"
+	@priority = 4
 	test CanCreatePicklistField {
 		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
 		Picklist.addPicklistItemViaAPI(
-			itemKey = "0",
+			itemKey = 0,
 			itemName = "Item Test",
 			picklistName = "Custom Picklist");
 
@@ -1129,7 +1129,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a String field"
-	@priority = "5"
+	@priority = 5
 	test CanCreateStringField {
 		property portal.acceptance = "true";
 
@@ -1156,7 +1156,7 @@ definition {
 	}
 
 	@description = "LPS-137879 - Verify it is not possible to delete a Custom Object field after the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteCustomObjectFieldAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 31",
@@ -1193,7 +1193,7 @@ definition {
 	}
 
 	@description = "LPS-137879 - Verify it is possible to delete a Custom Object field before the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteCustomObjectFieldBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 32",
@@ -1220,7 +1220,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Field"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteFieldOnLayout {
 		property portal.acceptance = "true";
 
@@ -1255,7 +1255,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block Name",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -1267,7 +1267,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteLayout {
 		property portal.acceptance = "true";
 
@@ -1292,7 +1292,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to delete an Object with the Delete permission"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteObjectWithDeletePermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 35",
@@ -1311,7 +1311,7 @@ definition {
 
 		for (var resourceActionIndex : list "DELETE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role",
 				roleType = "regular");
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to delete a relation with an entry on the Relationship tab"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteRelationOnRelationshipTab {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141661",
@@ -1391,7 +1391,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldList = "Custom Field,Relationship",
 			tabName = "Field Tab");
 
@@ -1442,7 +1442,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteRelationship {
 		property portal.acceptance = "true";
 
@@ -1470,7 +1470,7 @@ definition {
 	}
 
 	@description = "LPS-151877 - Verify that when the admin user deletes the relationship between Account and the Object, the Account Restriction is disabled and the admin user can edit the Object"
-	@priority = "4"
+	@priority = 4
 	test CanDisableAccountRestriction {
 		task ("Add Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1526,7 +1526,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
-	@priority = "5"
+	@priority = 5
 	test CannotAddObjectWithoutAddPermission {
 		property portal.acceptance = "true";
 
@@ -1567,7 +1567,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
-	@priority = "4"
+	@priority = 4
 	test CannotAddRelationshibTabWithoutRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 37",
@@ -1600,7 +1600,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify that the Relationship tab cannot be added first"
-	@priority = "4"
+	@priority = 4
 	test CannotAddRelationshipTabFirst {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 38",
@@ -1627,7 +1627,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Field with a duplicated Field Name"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateDuplicatedFieldName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 39",
@@ -1659,7 +1659,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateDuplicatedObjectName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 40",
@@ -1683,7 +1683,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to create duplicated Relationship name"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateDuplicatedRelationshipName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 41",
@@ -1713,7 +1713,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"
-	@priority = "4"
+	@priority = 4
 	test CannotDeleteObjectWithoutDeletePermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 42",
@@ -1726,7 +1726,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -1758,7 +1758,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveFieldNameBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 45",
@@ -1782,7 +1782,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveLabelFieldBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 46",
@@ -1806,7 +1806,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveObjectLabelFieldBlank {
 		ObjectAdmin.openObjectAdmin();
 
@@ -1826,7 +1826,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveObjectNameFieldBlank {
 		ObjectAdmin.openObjectAdmin();
 
@@ -1841,7 +1841,7 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave the Picklist field empty when creating an Object Picklist field"
-	@priority = "4"
+	@priority = 4
 	test CannotLeavePicklistFieldEmpty {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 48",
@@ -1864,7 +1864,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveRelationshipNameBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 49",
@@ -1887,7 +1887,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveRelationshipObjectBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 50",
@@ -1908,7 +1908,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveRelationshipTypeBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 51",
@@ -1929,7 +1929,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Type field blank"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveTypeFieldBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 52",
@@ -1950,7 +1950,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to publish an Object without the Publish Object Definition permission"
-	@priority = "4"
+	@priority = 4
 	test CannotPublishObjectWithouPublishPermission {
 		property test.name.skip.portal.instance = "CreateObject#CannotPublishObjectWithouPublishPermission";
 
@@ -2004,7 +2004,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveLowerCaseObjectName {
 		ObjectAdmin.openObjectAdmin();
 
@@ -2021,7 +2021,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveSpecialCharacterFieldName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 55",
@@ -2047,7 +2047,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveUpperCaseFieldName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 56",
@@ -2071,7 +2071,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveWithSpecialCharacterForObjectName {
 		ObjectAdmin.openObjectAdmin();
 
@@ -2089,7 +2089,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify it is not possible to set a layout as default without all the required fields on the first tab"
-	@priority = "4"
+	@priority = 4
 	test CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 58",
@@ -2130,7 +2130,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field Not Required",
 			tabName = "Field Tab");
 
@@ -2148,7 +2148,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
-	@priority = "4"
+	@priority = 4
 	test CannotSubmitEntriesInFormAfterObjectInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 59",
@@ -2216,7 +2216,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to submit an entry with a invalid value on the Relationship field"
-	@priority = "4"
+	@priority = 4
 	test CannotSubmitEntryWithInvalidValueOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 60",
@@ -2259,7 +2259,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Mandatory of a Field after the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateFieldMandatoryAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 62",
@@ -2288,7 +2288,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Name of a Field after the Object is published"
-	@priority = "5"
+	@priority = 5
 	test CannotUpdateFieldNameAfterPublished {
 		property portal.acceptance = "true";
 
@@ -2319,7 +2319,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Type of a Field after the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateFieldTypeAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 64",
@@ -2348,7 +2348,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
-	@priority = "5"
+	@priority = 5
 	test CannotUpdateObjectNameAfterPublished {
 		property portal.acceptance = "true";
 
@@ -2375,7 +2375,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object scope after it is published"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateObjectScopeAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 66",
@@ -2400,7 +2400,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to update an Object without the Update permission"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateObjectWithUpdatePermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 67",
@@ -2413,7 +2413,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -2450,7 +2450,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Searchable section after the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateSearchableSectionAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 68",
@@ -2479,7 +2479,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that the Object is not displayed on Process Builder settings before Published"
-	@priority = "4"
+	@priority = 4
 	test CannotViewObjectOnProcessBuilderBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 69",
@@ -2492,7 +2492,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that the Object is not not displayed on Workflow settings from Site Menu before Published"
-	@priority = "4"
+	@priority = 4
 	test CannotViewObjectOnWorkflowSettingsSiteMenuBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 70",
@@ -2505,7 +2505,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view an Object without the View permission"
-	@priority = "4"
+	@priority = 4
 	test CannotViewObjectWithoutViewPermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 71",
@@ -2518,7 +2518,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regular Role");
 
 		JSONUser.addUser(
@@ -2546,7 +2546,7 @@ definition {
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object, the admin user is able to restrict users to only see entries from an account that they are part of"
-	@priority = "5"
+	@priority = 5
 	test CanOnlySeeEntriesFromAccount {
 		property portal.acceptance = "true";
 
@@ -2704,7 +2704,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
-	@priority = "5"
+	@priority = 5
 	test CanPublishCustomObject {
 		property portal.acceptance = "true";
 
@@ -2739,7 +2739,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to publish an Object with the Publish Object Definition permission"
-	@priority = "4"
+	@priority = 4
 	test CanPublishObjectWithPublishPermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 73",
@@ -2760,7 +2760,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -2772,7 +2772,7 @@ definition {
 
 		for (var resourceAction : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role");
 		}
@@ -2812,7 +2812,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
-	@priority = "5"
+	@priority = 5
 	test CanRelateManyOtherEntriesBothObjects {
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2865,7 +2865,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "2",
+				columnsNumber = 2,
 				fieldLabelName = "Custom Field ${letter}",
 				tabName = "Field Tab");
 
@@ -2934,7 +2934,7 @@ definition {
 	}
 
 	@description = "LPS-155962 - Verify that it's possible to restrict a previously created Object"
-	@priority = "4"
+	@priority = 4
 	test CanRestrictExistingObject {
 		task ("Add Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2970,7 +2970,7 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"
-	@priority = "5"
+	@priority = 5
 	test CanScopeObjectByCompany {
 		property portal.acceptance = "true";
 
@@ -3001,7 +3001,7 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Site"
-	@priority = "5"
+	@priority = 5
 	test CanScopeObjectBySite {
 		property portal.acceptance = "true";
 
@@ -3035,7 +3035,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForCustomObject {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -3054,7 +3054,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a Custom Object"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForFieldCustomObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 77",
@@ -3087,7 +3087,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a field from a System Object"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForFieldSystemObject {
 		ObjectAdmin.openObjectAdmin();
 
@@ -3105,7 +3105,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify it is possible to search for a System Object"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForSystemObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object A 78",
@@ -3122,7 +3122,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it is possible to search for the Object Entry Title on the Relationship field"
-	@priority = "4"
+	@priority = 4
 	test CanSearchObjectEntryTitleOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 79",
@@ -3158,7 +3158,7 @@ definition {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
 				objectName = "CustomObject79",
-				value = "${fieldEntry}");
+				value = ${fieldEntry});
 		}
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject79");
@@ -3173,7 +3173,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to set the block as Collapsible"
-	@priority = "4"
+	@priority = 4
 	test CanSetBlockCollapsible {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 80",
@@ -3204,7 +3204,7 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"
-	@priority = "4"
+	@priority = 4
 	test CanSetDifferentLanguageForFieldLabel {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 81",
@@ -3245,7 +3245,7 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Label"
-	@priority = "5"
+	@priority = 5
 	test CanSetDifferentLanguageForObjectLabel {
 		property portal.acceptance = "true";
 
@@ -3274,7 +3274,7 @@ definition {
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for an Object Plural Label"
-	@priority = "4"
+	@priority = 4
 	test CanSetDifferentLanguageForObjectPluralLabel {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 83",
@@ -3318,7 +3318,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to set a field as Mandatory"
-	@priority = "4"
+	@priority = 4
 	test CanSetFieldMandatory {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 84",
@@ -3342,7 +3342,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
-	@priority = "4"
+	@priority = 4
 	test CanSubmitEntriesOnFormWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 85",
@@ -3422,7 +3422,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to update a Custom Layout Created"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateCustomLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 86",
@@ -3455,7 +3455,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -3476,7 +3476,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field after the Object is published"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateFieldLabelAfterPublished {
 		property portal.acceptance = "true";
 
@@ -3513,7 +3513,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateFieldLabelBeforePublished {
 		property portal.acceptance = "true";
 
@@ -3548,7 +3548,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateFieldMandatoryBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 89",
@@ -3581,7 +3581,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateFieldNameBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 90",
@@ -3614,7 +3614,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateFieldSearchableSectionBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 91",
@@ -3647,7 +3647,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateFieldTypeBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 92",
@@ -3680,7 +3680,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectLabelAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 93",
@@ -3713,7 +3713,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label before it is published"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateObjectLabelBeforePublished {
 		property portal.acceptance = "true";
 
@@ -3738,7 +3738,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object name before it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectNameBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 95",
@@ -3761,7 +3761,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectPanelCategoryBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 96",
@@ -3788,7 +3788,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectPanelCategoryKeyAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 97",
@@ -3817,7 +3817,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectPluralLabelAfterPublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 98",
@@ -3850,7 +3850,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label before it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectPluralLabelBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 99",
@@ -3873,7 +3873,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object scope before it is published"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectScopeBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 100",
@@ -3896,7 +3896,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update an Object with the Update permission"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateObjectWithUpdatePermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 101",
@@ -3917,14 +3917,14 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceAction : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role");
 		}
@@ -3985,7 +3985,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to update a Relationship"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateRelationship {
 		property portal.acceptance = "true";
 
@@ -4024,7 +4024,7 @@ definition {
 	}
 
 	@description = "LPS-140342 - Verify it is possible to view and edit its own Object with only the Add Object Definition permission"
-	@priority = "4"
+	@priority = 4
 	test CanViewAndEditObjectWithAddObjectPermission {
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -4032,7 +4032,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -4044,7 +4044,7 @@ definition {
 
 		for (var resourceAction : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role");
 		}
@@ -4093,7 +4093,7 @@ definition {
 		CreateObject.saveObject();
 
 		for (var valueFieldLabel : list "ObjectEdit103,Object Edit 103,Objects Edit 103") {
-			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
+			CreateObject.assertValuesOnObjectData(fieldLabel = ${valueFieldLabel});
 		}
 
 		CreateObject.assertValuesOnScope(
@@ -4102,7 +4102,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view Entries with Custom Layout Created"
-	@priority = "4"
+	@priority = 4
 	test CanViewEntriesWithCustomLayout {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 104",
@@ -4135,7 +4135,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -4180,7 +4180,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with one column"
-	@priority = "4"
+	@priority = 4
 	test CanViewEntryWithOneColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 105",
@@ -4213,7 +4213,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -4231,7 +4231,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with three columns"
-	@priority = "4"
+	@priority = 4
 	test CanViewEntryWithThreeColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 106",
@@ -4266,7 +4266,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "3",
+			columnsNumber = 3,
 			fieldList = "Custom Field A,Custom Field B,Custom Field C",
 			tabName = "Field Tab");
 
@@ -4283,20 +4283,20 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = "0",
+			fieldColumnNumber = 0,
 			fieldLabel = "Custom Field A");
 
 		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = "1",
+			fieldColumnNumber = 1,
 			fieldLabel = "Custom Field B");
 
 		ObjectPortlet.assertFieldAtSpecificColumn(
-			fieldColumnNumber = "2",
+			fieldColumnNumber = 2,
 			fieldLabel = "Custom Field C");
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with two columns"
-	@priority = "5"
+	@priority = 5
 	test CanViewEntryWithTwoColumns {
 		property portal.acceptance = "true";
 
@@ -4333,7 +4333,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldList = "Custom Field A,Custom Field B",
 			tabName = "Field Tab");
 
@@ -4352,18 +4352,18 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(
-			key_fieldColumnNumber = "0",
+			key_fieldColumnNumber = 0,
 			key_fieldLabel = "Custom Field A",
 			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 
 		AssertElementPresent(
-			key_fieldColumnNumber = "1",
+			key_fieldColumnNumber = 1,
 			key_fieldLabel = "Custom Field B",
 			locator1 = "ObjectAdmin#FIELD_COLUMN_POSITION_ON_ENTRY_PAGE");
 	}
 
 	@description = "LPS-135400 - There is an explanation about each Relationship type"
-	@priority = "3"
+	@priority = 3
 	test CanViewExplanationRelationshipTypes {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 108",
@@ -4390,7 +4390,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
-	@priority = "4"
+	@priority = 4
 	test CanViewFieldsDetailsByClickingEyeIcon {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 109",
@@ -4419,7 +4419,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
-	@priority = "4"
+	@priority = 4
 	test CanViewFieldsDetailsByClickingName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 110",
@@ -4446,7 +4446,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a BigDecimal type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleBigDecimalOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 111",
@@ -4489,7 +4489,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Boolean type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleBooleanOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 112",
@@ -4531,7 +4531,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Date type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleDateOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 113",
@@ -4574,7 +4574,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleDoubleOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 114",
@@ -4621,7 +4621,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Integer type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleIntegerOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 115",
@@ -4660,15 +4660,15 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject115",
-			value = "123");
+			value = 123);
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject115");
 
-		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "123");
+		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = 123);
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Long type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleLongOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141616",
@@ -4702,15 +4702,15 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
-		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = "1234567891234567");
+		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = 1234567891234567);
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
-		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "1234567891234567");
+		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = 1234567891234567);
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Item Selector of a fragment on a Display Page"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleOnItemSelectorFragment {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 116",
@@ -4765,7 +4765,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Relationship tab"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleOnRelationshipTab {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141620",
@@ -4809,7 +4809,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldList = "Custom Field,Relationship",
 			tabName = "Field Tab");
 
@@ -4846,7 +4846,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed for Object entries on workflow pages (My Workflow Tasks, My Submissions, and Submissions)"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitleOnWorkflowPages {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141624",
@@ -4900,7 +4900,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Picklist type is displayed on the Relationship field when adding an entry"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitlePicklistOnRelationshipField {
 		task ("Create Picklist and Picklist Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
@@ -4964,7 +4964,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed when selecting to preview an object entry on a Page Template"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectEntryTitlePreviewOnPageTemplate {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141623",
@@ -5017,7 +5017,7 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a String type is displayed on the Relationship field when adding an entry"
-	@priority = "5"
+	@priority = 5
 	test CanViewObjectEntryTitleStringOnRelationshipField {
 		property portal.acceptance = "true";
 
@@ -5061,7 +5061,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectsDetailsByClickingEyeIcon {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 118",
@@ -5076,7 +5076,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectsDetailsByClickingName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 118",
@@ -5093,7 +5093,7 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is possible to view an Object with the View permission"
-	@priority = "4"
+	@priority = 4
 	test CanViewObjectWithViewPermission {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 119",
@@ -5106,12 +5106,12 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
@@ -5148,7 +5148,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is possible to view a Relationship"
-	@priority = "5"
+	@priority = 5
 	test CanViewRelationship {
 		property portal.acceptance = "true";
 
@@ -5176,7 +5176,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view a tab of relationship with entries"
-	@priority = "5"
+	@priority = 5
 	test CanViewRelationshipTab {
 		property portal.acceptance = "true";
 
@@ -5218,7 +5218,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -5255,7 +5255,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship Many to Many will allow to delete the entry with relation and its relations to be deleted"
-	@priority = "4"
+	@priority = 4
 	test CascadeDeletionManyToManyWillAllowDelete {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5304,7 +5304,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -5357,7 +5357,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted but not its relation"
-	@priority = "4"
+	@priority = 4
 	test CascadeDeletionOneToManyWillAllowDeleteChild {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5406,7 +5406,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -5463,7 +5463,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) and its relations to be deleted"
-	@priority = "5"
+	@priority = 5
 	test CascadeDeletionOneToManyWillAllowDeleteParent {
 		property portal.acceptance = "true";
 
@@ -5541,7 +5541,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that when adding an entry that was already related to another it will keep related to both entries"
-	@priority = "4"
+	@priority = 4
 	test ChoosingAlreadyRelatedEntryWillKeepOnBothEntries {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5590,7 +5590,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldLabelName = "Custom Field ${letter}",
 				tabName = "Field Tab");
 
@@ -5645,7 +5645,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
-	@priority = "4"
+	@priority = 4
 	test ColumnsAreDisplayedFieldsTable {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 126",
@@ -5672,7 +5672,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
-	@priority = "4"
+	@priority = 4
 	test ColumnsAreDisplayedObjectsTable {
 		ObjectAdmin.openObjectAdmin();
 
@@ -5680,7 +5680,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that a completed entry is displayed with an Approved status"
-	@priority = "5"
+	@priority = 5
 	test CompletedEntryDisplaysApprovedStatus {
 		property portal.acceptance = "true";
 
@@ -5730,7 +5730,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many will allow the entry with relation to be deleted and its relations to be disassociated"
-	@priority = "4"
+	@priority = 4
 	test DisassociateDeletionManyToManyWillAllowDelete {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5779,7 +5779,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -5838,7 +5838,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted and its relation to be disassociated"
-	@priority = "4"
+	@priority = 4
 	test DisassociateDeletionOneToManyWillAllowDeleteChild {
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5887,7 +5887,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -5948,7 +5948,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
-	@priority = "5"
+	@priority = 5
 	test DisassociateDeletionOneToManyWillAllowDeleteParent {
 		property portal.acceptance = "true";
 
@@ -6024,7 +6024,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
-	@priority = "3"
+	@priority = 3
 	test EmptyStateNoResultObject {
 		ObjectAdmin.openObjectAdmin();
 
@@ -6034,7 +6034,7 @@ definition {
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
-	@priority = "3"
+	@priority = 3
 	test EmptyStateNoResultObjectField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 130",
@@ -6062,7 +6062,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
-	@priority = "3"
+	@priority = 3
 	test EmptyStateWhenNoRelationship {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 131",
@@ -6079,7 +6079,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
-	@priority = "4"
+	@priority = 4
 	test FieldNameIsAutofilled {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 132",
@@ -6100,7 +6100,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
-	@priority = "4"
+	@priority = 4
 	test FieldOptionRequired {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 133",
@@ -6135,7 +6135,7 @@ definition {
 	}
 
 	@description = "LPS-140097 - Verify that other fields are not deleted when a Relationship field is deleted after a Relationship is deleted"
-	@priority = "4"
+	@priority = 4
 	test FieldsAreNotDeletedWhenRelationshipDeleted {
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -6180,7 +6180,7 @@ definition {
 
 	@description = "LPS-137874 - Verify that Objects created on a Virtual Instance are not displayed on the Forms Settings, Collection Providers and Display Page Template of the Main Instance and vice versa"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test FormCollectionProvidersDisplayPageDisplayOnlyItsInstanceObjects {
 
 		// TODO LPS-141684 FormCollectionProvidersDisplayPageDisplayOnlyItsInstanceObjects pending implementation
@@ -6188,7 +6188,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"
-	@priority = "4"
+	@priority = 4
 	test KeywordAndTextAppearsWhenUpdateFieldType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 135",
@@ -6219,7 +6219,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"
-	@priority = "4"
+	@priority = 4
 	test KeywordAndTextDisappearsWhenUpdateFieldType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 136",
@@ -6248,7 +6248,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the field with String type has the options Keyword and Text under the Searchable section"
-	@priority = "4"
+	@priority = 4
 	test KeywordAndTextDisplayedForStringTypeField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 137",
@@ -6277,7 +6277,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"
-	@priority = "4"
+	@priority = 4
 	test LanguageDisplayedForTextOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 138",
@@ -6309,7 +6309,7 @@ definition {
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ObjectAdminDisplaysOnlyItsInstanceObjects {
 
 		// TODO LPS-141682 ObjectAdminDisplaysOnlyItsInstanceObjects pending implementation
@@ -6317,7 +6317,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Collection Providers when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsCollectionProvidersWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 139",
@@ -6342,7 +6342,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsFormStorageSettingsWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140",
@@ -6375,7 +6375,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Item Selector when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsPageItemSelectWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141",
@@ -6414,7 +6414,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Template (subtype) when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsPageTemplateWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 142",
@@ -6444,7 +6444,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Process Builder page when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsProcessBuilderWhenInactivated {
 		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsProcessBuilderWhenInactivated";
 
@@ -6473,7 +6473,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Workflow Site Menu page when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
 		property test.name.skip.portal.instance = "CreateObject#ObjectDisappearsWorkflowSiteMenuWhenInactivated";
 
@@ -6506,7 +6506,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries are not displayed on Page fragments from an Object that was inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesDisappearsPageFragmentsWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145",
@@ -6573,7 +6573,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow Metrics page when they are deleted"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesDisappearsWorkflowMetricsWhenDeleted {
 		property test.run.environment = "EE";
 
@@ -6607,14 +6607,14 @@ definition {
 		ObjectPortlet.deleteEntry(entry = "Entry Test");
 
 		WorkflowMetrics.checkWorkflowReports(
-			key_onTimeValue = "0",
-			key_overdueValue = "0",
-			key_totalPendingValue = "0",
+			key_onTimeValue = 0,
+			key_overdueValue = 0,
+			key_totalPendingValue = 0,
 			key_workflowProcessName = "Single Approver");
 	}
 
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow pages (My Workflow Tasks, Submissions, and My Submissions) when they are deleted"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesDisappearsWorkflowPagesWhenDeleted {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141635",
@@ -6667,7 +6667,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesDisappearsWorkflowPagesWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140865",
@@ -6750,7 +6750,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries are displayed again on Page fragments from an Object that was reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesReappearsPageFragmentsWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 142598",
@@ -6820,7 +6820,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object entries with workflow are displayed again on the Workflow Metrics page when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesReappearsWorkflowMetricsWhenReactivated {
 		property test.run.environment = "EE";
 
@@ -6879,22 +6879,22 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "1",
-			key_ontime = "0",
-			key_overdue = "0",
-			key_untracked = "1");
+			key_completed = 1,
+			key_ontime = 0,
+			key_overdue = 0,
+			key_untracked = 1);
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are displayed again on the workflow pages (My Workflow Tasks, My Submissions, and Submissions) when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesReappearsWorkflowPagesWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 140887",
@@ -6985,7 +6985,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify the Asset Title, Asset Type and Item Subject of a Object's entry on the Workflow Metrics page"
-	@priority = "4"
+	@priority = 4
 	test ObjectInfoDisplayedOnWorkflowMetrics {
 		property test.run.environment = "EE";
 
@@ -7048,7 +7048,7 @@ definition {
 	}
 
 	@description = "LPS-139603 - Verify that the Object Name is displayed on the Relationship tab when a Relationship is created"
-	@priority = "4"
+	@priority = 4
 	test ObjectNameDisplayedOnTheRelationshipTab {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -7084,7 +7084,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
-	@priority = "4"
+	@priority = 4
 	test ObjectNameIsAutofilled {
 		ObjectAdmin.openObjectAdmin();
 
@@ -7098,7 +7098,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that when Objects are not scoped by Site it should not be displayed on the Workflow settings from the Site Menu"
-	@priority = "4"
+	@priority = 4
 	test ObjectNotScopedBySiteNotDisplayedOnSiteMenu {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151",
@@ -7113,7 +7113,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
-	@priority = "5"
+	@priority = 5
 	test ObjectPorletDisappearsOpenMenuWhenInactivated {
 		property portal.acceptance = "true";
 
@@ -7153,7 +7153,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Site Menu when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectPorletDisappearsSiteMenuWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152",
@@ -7185,7 +7185,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Open Menu when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectPortletReappearsOpenMenuWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153",
@@ -7224,7 +7224,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectPortletReappearsSiteMenuWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 154",
@@ -7272,7 +7272,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Collection Providers when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsCollectionProvidersWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 155",
@@ -7313,7 +7313,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Form's storage type when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsFormStorageTypeWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 156",
@@ -7362,7 +7362,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Item Selector when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsPageItemSelectorWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 157",
@@ -7417,7 +7417,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsPageTemplateWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 158",
@@ -7454,7 +7454,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Workflow Process Builder page when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsProcessBuilderWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 159",
@@ -7497,7 +7497,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Workflow Site Menu page when reactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectReappearsWorkflowSiteMenuWhenReactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 160",
@@ -7545,7 +7545,7 @@ definition {
 	}
 
 	@description = "LPS-135551 - Verify that when the Object is scoped by Site each site will have its own entries"
-	@priority = "4"
+	@priority = 4
 	test ObjectScopedBySiteEntries {
 		for (var sites : list "A,B") {
 			JSONGroup.addGroup(groupName = "Site ${sites}");
@@ -7591,7 +7591,7 @@ definition {
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Panel of the Main Instance and vice versa"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test PanelDisplaysOnlyItsInstanceObjects {
 
 		// TODO LPS-141683 PanelDisplaysOnlyItsInstanceObjects pending implementation
@@ -7599,7 +7599,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that by default the Prevent deletion type of Relationship is selected"
-	@priority = "4"
+	@priority = 4
 	test PreventDeletionIsDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 162",
@@ -7623,7 +7623,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship Many to Many won't allow the user to delete an entry with relation"
-	@priority = "4"
+	@priority = 4
 	test PreventDeletionManyToManyWontAllowDelete {
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -7671,7 +7671,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -7724,7 +7724,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many will allow the user to delete an entry with relation from the child Object"
-	@priority = "4"
+	@priority = 4
 	test PreventDeletionOneToManyWillAllowDelete {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -7772,7 +7772,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -7831,7 +7831,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many won't allow the user to delete an entry with relation from the parent Object"
-	@priority = "5"
+	@priority = 5
 	test PreventDeletionOneToManyWontAllowDelete {
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -7896,7 +7896,7 @@ definition {
 	}
 
 	@description = "LPS-139418 - Verify that previous filled data is not kept when cancelling the creation of an Object"
-	@priority = "4"
+	@priority = 4
 	test PreviousFilledDataIsNotKeptAfterCancel {
 		ObjectAdmin.openObjectAdmin();
 
@@ -7924,7 +7924,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that the Relationship is created on both objects for a Many to Many Relationship"
-	@priority = "5"
+	@priority = 5
 	test RelationshipCreatedBothObjectsManyToMany {
 		property portal.acceptance = "true";
 
@@ -7960,7 +7960,7 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify that relationship field is automatically created"
-	@priority = "5"
+	@priority = 5
 	test RelationshipFieldAutomaticallyCreated {
 		property portal.acceptance = "true";
 
@@ -7997,7 +7997,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
-	@priority = "4"
+	@priority = 4
 	test RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8085,7 +8085,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"
-	@priority = "4"
+	@priority = 4
 	test RelationshipFieldCannotBeSelectedForPageFragmentWhenInactivated {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8150,7 +8150,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is no longer displayed when the parent object is inactivated (One to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipFieldDisappearsWhenInactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8218,7 +8218,7 @@ definition {
 	}
 
 	@description = "LPS-135401 - Verify that the Relationship field is not created"
-	@priority = "4"
+	@priority = 4
 	test RelationshipFieldNotCreatedOnManyToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8244,7 +8244,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipFieldReappearsWhenReactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8318,7 +8318,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the other object is inactivated (Many to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipTabDisappearsWhenInactivatedManyToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8367,7 +8367,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldLabelName = "Custom Field ${letter}",
 				tabName = "Field Tab");
 
@@ -8425,7 +8425,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is no longer displayed when the child object is inactivated (One to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipTabDisappearsWhenInactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8475,7 +8475,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -8508,7 +8508,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the other object is reactivated (Many to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipTabReappearsWhenReactivatedManyToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8555,7 +8555,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldLabelName = "Custom Field ${letter}",
 				tabName = "Field Tab");
 
@@ -8611,7 +8611,7 @@ definition {
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship tab is displayed again when the child object is reactivated (One to Many)"
-	@priority = "4"
+	@priority = 4
 	test RelationshipTabReappearsWhenReactivatedOneToMany {
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8655,7 +8655,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = 2,
 			fieldLabelName = "Custom Field A",
 			tabName = "Field Tab");
 
@@ -8705,7 +8705,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
-	@priority = "4"
+	@priority = 4
 	test TableDisplayCorrectValueWhenObjectCreated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 175",
@@ -8722,7 +8722,7 @@ definition {
 	}
 
 	@description = "LPS-138213 - Verify that updated data is kept when clicking on the Publish button"
-	@priority = "4"
+	@priority = 4
 	test UpdatedDataIsKeptWhenPublishing {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 141685",
@@ -8759,7 +8759,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Object Edit 141685");
 
 		for (var valueFieldLabel : list "ObjectEdit141685,Object Edit 141685,Objects Edit 141685") {
-			CreateObject.assertValuesOnObjectData(fieldLabel = "${valueFieldLabel}");
+			CreateObject.assertValuesOnObjectData(fieldLabel = ${valueFieldLabel});
 		}
 
 		CreateObject.assertValuesOnScope(
@@ -8768,7 +8768,7 @@ definition {
 	}
 
 	@description = "LPS-151877 - Verify that, when adding a new Object with Account Restriction, the Account Restriction field turns into a mandatory field for the created Object"
-	@priority = "4"
+	@priority = 4
 	test VerifyAccountRestrictionFieldTurnsIntoMandatoryField {
 		task ("Add Custom Object with Relationship related to System Object Account (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -8822,7 +8822,7 @@ definition {
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"
-	@priority = "5"
+	@priority = 5
 	test ViewCustomObjects {
 		property portal.acceptance = "true";
 
@@ -8837,7 +8837,7 @@ definition {
 	}
 
 	@description = "LPS-135548 - Verify that user can view system objects"
-	@priority = "5"
+	@priority = 5
 	test ViewSystemObjects {
 		property portal.acceptance = "true";
 
@@ -8847,7 +8847,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that a withdrawn pending entry is displayed with a Draft status"
-	@priority = "4"
+	@priority = 4
 	test WithdrawnEntryDisplaysDraftStatus {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 177",
@@ -8889,7 +8889,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Forms"
-	@priority = "4"
+	@priority = 4
 	test WorkflowTriggeredWhenSubmitingEntryThroughForms {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 178",
@@ -8950,7 +8950,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry through Custom Object portlet"
-	@priority = "4"
+	@priority = 4
 	test WorkflowTriggeredWhenSubmitingEntryThroughObjectPortlet {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 179",
@@ -8987,7 +8987,7 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that the workflow is triggered when submitting an entry when Object is scoped by Site and the workflow was assigned on the Workflow settings from the Site Menu"
-	@priority = "4"
+	@priority = 4
 	test WorkflowTriggeredWhenSubmitingEntryThroughObjectPortletFromSiteMenu {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 180",

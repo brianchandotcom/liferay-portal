@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This test verifies if a pop-up with the flag, label, and translation status is shown up when the user clicks on the language flag."
-	@priority = "4"
+	@priority = 4
 	test CheckLanguageSelector {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This test ensures that when the user changes the language, the title remains the default until the user changes it."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "This test ensures that the default title persists after tranlating to another locale."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -132,7 +132,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Image") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -149,7 +149,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Image") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -166,14 +166,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Image") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures that the translation is carried over for all fields after duplicating a field group."
-	@priority = "4"
+	@priority = 4
 	test DuplicateTranslatedField {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
@@ -234,7 +234,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -245,14 +245,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Copy of Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "${fieldFieldLabel} Field Help Text");
 		}
@@ -276,7 +276,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Texto,Numérica") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de Campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -287,28 +287,28 @@ definition {
 
 		for (var fieldFieldLabel : list "Copy of Texto,Copy of Numérica") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Copy of Grupo de Campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
 		for (var fieldFieldLabel : list "Texto,Copy of Texto") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "Texto de ajuda do campo de texto");
 		}
 
 		for (var fieldFieldLabel : list "Numérica,Copy of Numérica") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "Texto de ajuda do campo numérico");
 		}
 	}
 
 	@description = "This test ensures that the translation for all fields persists even if it's inside Field Groups."
-	@priority = "5"
+	@priority = 5
 	test TranslateStructureWithAllFieldsNested {
 		property portal.acceptance = "false";
 
@@ -355,13 +355,13 @@ definition {
 			fieldName = "Multiple Selection",
 			targetFieldLabel = "Single Selection");
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "Value 1,Value 2") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "${optionValue}");
+				index = ${index},
+				optionValue = ${optionValue});
 
 			var index = ${index} + 1;
 		}
@@ -450,14 +450,14 @@ definition {
 
 		for (var key_fieldFieldLabel : list "Conteúdo Web,Numérico,Data,Enviar,Imagem,Texto Completo,Cor,Seleção Única,Seleção Múltipla,Texto,Grade,Localização Terrestre,Selecionar da Lista,Separador,Link para Página") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${key_fieldFieldLabel}",
+				key_fieldFieldLabel = ${key_fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-				value1 = "${key_fieldFieldLabel}");
+				value1 = ${key_fieldFieldLabel});
 		}
 	}
 
 	@description = "This test ensures that is possible to translate the structure without adding a title to the default language."
-	@priority = "4"
+	@priority = 4
 	test TranslateStructureWithoutDefaultTitle {
 		WebContentStructures.addCP();
 
@@ -524,14 +524,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "${fieldFieldLabel} Field Help Text");
 		}
@@ -558,7 +558,7 @@ definition {
 	}
 
 	@description = "This test ensures that a translation doesn't change another one."
-	@priority = "5"
+	@priority = 5
 	test TranslationDoesNotChangeAnother {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
@@ -617,7 +617,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -634,7 +634,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Texto,Numérica") {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de Campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -651,14 +651,14 @@ definition {
 
 		for (var fieldFieldLabel : list "der Text,Numerisch") {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Feldgruppe",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures that the translation persist after creating a 2-level nested fields."
-	@priority = "5"
+	@priority = 5
 	test TranslationPersistsForTwoLevelNestedFields {
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
@@ -742,7 +742,7 @@ definition {
 
 		for (var fieldsGroupLabel : list "First Level Fields Group,Second Level Fields Group") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -769,7 +769,7 @@ definition {
 
 		for (var fieldsGroupLabel : list "Grupo de campos de primeiro nível,Grupo de Campos de Segundo Nível") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -790,7 +790,7 @@ definition {
 	}
 
 	@description = "This test ensures that the default language is the first shown to the user."
-	@priority = "4"
+	@priority = 4
 	test VerifyDefaultLanguageIsFirstShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -839,7 +839,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Link to Page,Numeric") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}

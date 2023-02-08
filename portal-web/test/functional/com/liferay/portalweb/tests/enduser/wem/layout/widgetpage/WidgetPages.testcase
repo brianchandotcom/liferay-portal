@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "The user can add a page based in global search template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddPageBasedOnGlobalSearchTemplate {
 		property portal.acceptance = "true";
@@ -53,13 +53,13 @@ definition {
 				siteName = "Test Site Name");
 
 			for (var portletName : list "Search Bar,Suggestions,Site Facet,Type Facet,Tag Facet,Category Facet,Folder Facet,User Facet,Modified Facet,Search Results,Search Options") {
-				Portlet.viewDefaultTitle(portletName = "${portletName}");
+				Portlet.viewDefaultTitle(portletName = ${portletName});
 			}
 		}
 	}
 
 	@description = "Can add a widget page with escape characters."
-	@priority = "3"
+	@priority = 3
 	test AddPageWithEscapeCharacter {
 		task ("Add a page with escape characters name") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -72,7 +72,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddPageWithMultipleChildPages {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -98,14 +98,14 @@ definition {
 		task ("View children pages are shwon") {
 			for (var i : list "1,2,3") {
 				PagesAdmin.viewPageItemPresent(
-					depth = "2",
+					depth = 2,
 					pageName = "Test Child Page ${i}");
 			}
 		}
 	}
 
 	@description = "The user can add a private widget page with a child page."
-	@priority = "4"
+	@priority = 4
 	test AddPrivateChildPage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -126,14 +126,14 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
-				depth = "2",
+				depth = 2,
 				pageName = "Test Child Page",
 				privacy = "Private Pages");
 		}
 	}
 
 	@description = "Add a web content via content panel on a widget page."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddWebContentViaContentPanel {
 		task ("Add a widget page") {
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "The user can add a Blogs portlet to private page."
-	@priority = "4"
+	@priority = 4
 	test AddWidgetToPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "The user can add a Blogs portlet to public page."
-	@priority = "4"
+	@priority = 4
 	test AddWidgetToPublicPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@description = "Cannot reset changes as user without permissions."
-	@priority = "3"
+	@priority = 3
 	test CannotResetChangesAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site and Page Templates";
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@description = "The user can change the page layout template of a widget page."
-	@priority = "5"
+	@priority = 5
 	test ChangeLayoutTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -321,7 +321,7 @@ definition {
 				JSONLayout.updateLayoutTemplateOfPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					layoutTemplate = "${layoutTemplate}");
+					layoutTemplate = ${layoutTemplate});
 
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
@@ -329,13 +329,13 @@ definition {
 
 				Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
-				PagesAdmin.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
+				PagesAdmin.viewSelectedLayoutColumn(columnName = ${layoutTemplate});
 			}
 		}
 	}
 
 	@description = "Can configure a full page application to use all available portlets on the page."
-	@priority = "4"
+	@priority = 4
 	test ConfigureFullPageApplicationOfPage {
 		property osgi.app.includes = "hello-soy";
 
@@ -352,14 +352,14 @@ definition {
 
 				PagesAdmin.configurePage(
 					pageName = "Test Page Name",
-					portlet = "${portletName}",
+					portlet = ${portletName},
 					sitePageType = "Full Page Application");
 
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");
 
-				Portlet.viewPG(portletName = "${portletName}");
+				Portlet.viewPG(portletName = ${portletName});
 
 				AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 			}
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@description = "Can edit the page name and layout template via pages administration."
-	@priority = "5"
+	@priority = 5
 	test EditViaPagesAdmin {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -419,7 +419,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169310. The Add menu should persist tab selection in the same browser session."
-	@priority = "5"
+	@priority = 5
 	test PersistAddMenuTabSelectionInTheSameBrowserSession {
 		property portal.acceptance = "true";
 
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169310. The tab selection of Add menu should be back to default in a new browser session."
-	@priority = "5"
+	@priority = 5
 	test PersistDefaultAddMenuTabSelectionInTheNewBrowserSession {
 		task ("Given a page designer selects the Content tab on the Add menu") {
 			JSONLayout.addPublicLayout(
@@ -483,7 +483,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123143. View the languageId shown in configuration page."
-	@priority = "3"
+	@priority = 3
 	test ViewLanguageIdInConfigurationPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -503,7 +503,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142251. View widgets are rendered well after adding a web content via content panel."
-	@priority = "4"
+	@priority = 4
 	test ViewWidgetAfterAddWebContentViaContentPanel {
 		task ("Add an IFrame and a Web Content Display to a widget page") {
 			JSONLayout.addPublicLayout(
@@ -511,7 +511,7 @@ definition {
 				layoutName = "Test Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
-				column = "2",
+				column = 2,
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
 				widgetName = "IFrame");
@@ -533,7 +533,7 @@ definition {
 				portletName = "IFrame",
 				portletOption = "Configuration");
 
-			IFrame.addCP(sourceURL = "${baseURL}");
+			IFrame.addCP(sourceURL = ${baseURL});
 
 			IFrame.closeFrame();
 		}

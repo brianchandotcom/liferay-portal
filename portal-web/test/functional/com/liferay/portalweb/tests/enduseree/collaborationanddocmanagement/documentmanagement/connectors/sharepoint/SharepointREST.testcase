@@ -38,47 +38,47 @@ definition {
 		Type(
 			key_text = "name",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationName}");
+			value1 = ${configurationName});
 
 		Type(
 			key_text = "authorizationGrantEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationGrantEndpoint}");
+			value1 = ${authorizationGrantEndpoint});
 
 		Type(
 			key_text = "authorizationTokenEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationTokenEndpoint}");
+			value1 = ${authorizationTokenEndpoint});
 
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${clientId}");
+			value1 = ${clientId});
 
 		Type(
 			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
-			value1 = "${clientSecret}");
+			value1 = ${clientSecret});
 
 		Type(
 			key_text = "scope",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationScope}");
+			value1 = ${configurationScope});
 
 		Type(
 			key_text = "tenantId",
 			locator1 = "TextArea#ANY",
-			value1 = "${tenantId}");
+			value1 = ${tenantId});
 
 		Type(
 			key_text = "siteDomain",
 			locator1 = "TextArea#ANY",
-			value1 = "${siteDomain}");
+			value1 = ${siteDomain});
 
 		Type(
 			key_text = "resource",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationResource}");
+			value1 = ${configurationResource});
 
 		PortletEntry.save();
 
@@ -116,8 +116,8 @@ definition {
 			value1 = "Collaboration Test Application");
 
 		MicrosoftLogin.accountSignIn(
-			userEmail = "${userName}",
-			userPassword = "${userPassword}");
+			userEmail = ${userName},
+			userPassword = ${userPassword});
 
 		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "Collaboration Test Application");
 	}
@@ -125,13 +125,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
-	@priority = "3"
+	@priority = 3
 	test CanPublishRepository {
 		property test.name.skip.portal.instance = "SharepointREST#CanPublishRepository";
 
@@ -140,7 +140,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122682. It checks that a repository can be remote published in depot."
-	@priority = "4"
+	@priority = 4
 	test CanRemotePublishRepositoryInDepot {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -188,52 +188,52 @@ definition {
 		Type(
 			key_text = "name",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationName}");
+			value1 = ${configurationName});
 
 		Type(
 			key_text = "authorizationGrantEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationGrantEndpoint}");
+			value1 = ${authorizationGrantEndpoint});
 
 		Type(
 			key_text = "authorizationTokenEndpoint",
 			locator1 = "TextArea#ANY",
-			value1 = "${authorizationTokenEndpoint}");
+			value1 = ${authorizationTokenEndpoint});
 
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${clientId}");
+			value1 = ${clientId});
 
 		Type(
 			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
-			value1 = "${clientSecret}");
+			value1 = ${clientSecret});
 
 		Type(
 			key_text = "scope",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationScope}");
+			value1 = ${configurationScope});
 
 		Type(
 			key_text = "tenantId",
 			locator1 = "TextArea#ANY",
-			value1 = "${tenantId}");
+			value1 = ${tenantId});
 
 		Type(
 			key_text = "siteDomain",
 			locator1 = "TextArea#ANY",
-			value1 = "${siteDomain}");
+			value1 = ${siteDomain});
 
 		Type(
 			key_text = "resource",
 			locator1 = "TextArea#ANY",
-			value1 = "${configurationResource}");
+			value1 = ${configurationResource});
 
 		PortletEntry.save();
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -243,7 +243,7 @@ definition {
 
 		Depot.remoteStagingSetUpViaJson(
 			groupName = "Test Depot Name",
-			remotePort = "9080",
+			remotePort = 9080,
 			site = "false");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -286,7 +286,7 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "Collaboration Test Application");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CheckinDocument {
 		property test.name.skip.portal.instance = "SharepointREST#CheckinDocument";
@@ -328,7 +328,7 @@ definition {
 			dmRepositoryName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DeleteDocumentInSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteDocumentInSubfolder";
@@ -378,7 +378,7 @@ definition {
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DeleteSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
@@ -402,7 +402,7 @@ definition {
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test EditDocumentFile {
 		property portal.acceptance = "true";
@@ -455,7 +455,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "SharepointREST#MoveCheckedoutDocumentToFolder";
@@ -516,7 +516,7 @@ definition {
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveDocumentToHome {
 		property test.name.skip.portal.instance = "SharepointREST#MoveDocumentToHome";
@@ -544,7 +544,7 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "SharepointREST#SearchDocumentViaHome";
@@ -566,7 +566,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewDocumentAsGuest {
 		property test.name.skip.portal.instance = "SharepointREST#ViewDocumentAsGuest";
@@ -631,7 +631,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.doc");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewEditedCheckedoutDocument {
 		property test.name.skip.portal.instance = "SharepointREST#ViewEditedCheckedoutDocument";
@@ -675,7 +675,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1_Edit.xls");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
@@ -711,7 +711,7 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
@@ -748,7 +748,7 @@ definition {
 	}
 
 	@description = "This test ensures that repositories can be added both on site admin and on a content page."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewRepository {
 		property portal.acceptance = "true";

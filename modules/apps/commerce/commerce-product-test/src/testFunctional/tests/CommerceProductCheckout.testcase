@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutAMiniumProduct {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
@@ -44,7 +44,7 @@ definition {
 		task ("And buyer user add a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "Mount",
-				productQuantity = "5");
+				productQuantity = 5);
 		}
 
 		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
@@ -57,8 +57,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "Mount",
-				productQuantity = "5",
-				productUnitPrice = "3",
+				productQuantity = 5,
+				productUnitPrice = 3,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10258. Create a new product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutNewProduct {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
@@ -89,7 +89,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Minium",
 				neverExpire = "false",
-				price = "50",
+				price = 50,
 				productDescription = "Full Description",
 				productName = "Soft Tyre",
 				productType = "Simple",
@@ -109,7 +109,7 @@ definition {
 		task ("And buyer user add a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "Soft Tyre",
-				productQuantity = "5");
+				productQuantity = 5);
 		}
 
 		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
@@ -122,8 +122,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "Soft Tyre",
-				productQuantity = "5",
-				productUnitPrice = "50",
+				productQuantity = 5,
+				productUnitPrice = 50,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10245. Select a product with bulk price, no promotion ,no discount, link and do a checkout"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutProductWithBulkPrice {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
@@ -163,8 +163,8 @@ definition {
 
 			CommercePriceLists.createPriceListPriceTiers(
 				key_pricingType = "Bulk Pricing",
-				key_quantity = "7",
-				key_value = "50");
+				key_quantity = 7,
+				key_value = 50);
 		}
 
 		task ("And Buyer User logged in") {
@@ -179,7 +179,7 @@ definition {
 		task ("And buyer user add a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "7");
+				productQuantity = 7);
 		}
 
 		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
@@ -192,8 +192,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "7",
-				productUnitPrice = "50",
+				productQuantity = 7,
+				productUnitPrice = 50,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10277."
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
@@ -228,7 +228,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = "40",
+				entryPrice = 40,
 				productSKU = "MIN55861",
 				promotionName = "Minium Base Promotion");
 		}
@@ -252,7 +252,7 @@ definition {
 		task ("And buyer user add a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 		}
 
 		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
@@ -265,8 +265,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "3",
-				productUnitPrice = "24",
+				productQuantity = 3,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10280. Set a promotion price lower then the price list and do the checkout"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutProductWithPromotionPriceLowerThenPricelist {
 		task ("Given a Commerce Account and Buyer User are created") {
 			CommerceEntry.addAccountEntryUser(
@@ -301,7 +301,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = "14",
+				entryPrice = 14,
 				productSKU = "MIN55861",
 				promotionName = "Minium Base Promotion");
 		}
@@ -318,7 +318,7 @@ definition {
 		task ("And buyer user add a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "2");
+				productQuantity = 2);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -337,8 +337,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "2",
-				productUnitPrice = "14",
+				productQuantity = 2,
+				productUnitPrice = 14,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(

@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteCommerceTaxCategories {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,8 +9,8 @@ definition {
 
 		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
 
-		if ("${commerceTaxCategoriesIds}" != "") {
-			for (var commerceTaxCategoriesId : list "${commerceTaxCategoriesIds}") {
+		if (${commerceTaxCategoriesIds} != "") {
+			for (var commerceTaxCategoriesId : list ${commerceTaxCategoriesIds}) {
 				echo("Deleting Commerce Tax Categories with id: ${commerceTaxCategoriesId}");
 
 				var curl = '''
@@ -19,7 +19,7 @@ definition {
 						-d cpTaxCategoryId=${commerceTaxCategoriesId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro _getCommerceTaxCategories {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -47,26 +47,26 @@ definition {
 
 		echo("curl: ${curl}");
 
-		var commerceTaxCategories = JSONCurlUtil.post("${curl}", "$..['CPTaxCategoryId']");
+		var commerceTaxCategories = JSONCurlUtil.post(${curl}, "$..['CPTaxCategoryId']");
 
 		echo("commerceTaxCategories: ${commerceTaxCategories}");
 
-		return "${commerceTaxCategories}";
+		return ${commerceTaxCategories};
 	}
 
 	macro _getCommereTaxCategoriesCount {
-		var taxCategoriesCount = "0";
+		var taxCategoriesCount = 0;
 		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
 
-		for (var commerceTaxCategoriesId : list "${commerceTaxCategoriesIds}") {
-			if ("${commerceTaxCategoriesId}" != "") {
+		for (var commerceTaxCategoriesId : list ${commerceTaxCategoriesIds}) {
+			if (${commerceTaxCategoriesId} != "") {
 				var taxCategoriesCount = ${taxCategoriesCount} + 1;
 			}
 		}
 
 		echo("The Commerce available estimates count is: ${taxCategoriesCount}");
 
-		return "${taxCategoriesCount}";
+		return ${taxCategoriesCount};
 	}
 
 }

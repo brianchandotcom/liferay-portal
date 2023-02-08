@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddCustomFieldsSmoke {
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
@@ -228,7 +228,7 @@ definition {
 			resourceName = "Wiki Page");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddCustomFieldUserTextField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146795. The user admin could add new user with space character in geolocation custom field name."
-	@priority = "4"
+	@priority = 4
 	test AddNewUserWithGeolocationCustomFields {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -301,7 +301,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -350,9 +350,9 @@ definition {
 			startingValue = "Nickname");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test EditRevertCustomFieldWikiPage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -368,7 +368,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "${siteName}");
+			site = ${siteName});
 
 		PagesAdmin.addPage(pageName = "Wiki Test Page");
 
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-57830."
-	@priority = "4"
+	@priority = 4
 	test UpdateDocumentWithCustomField {
 		JSONGroup.addGroup(groupName = "Site Name");
 

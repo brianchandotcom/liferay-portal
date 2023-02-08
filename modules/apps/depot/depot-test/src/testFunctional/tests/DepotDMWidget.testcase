@@ -25,7 +25,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -40,7 +40,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This ensures that a subfolder stored in the asset library folder can be accessed via DM widget on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanAccessSubfolderFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in the asset library folder can be edited via DM widget on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanEditAssetFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in the asset library folder will not be displayed in DM widget once the site is disconnected."
-	@priority = "5"
+	@priority = 5
 	test CannotViewAssetsFromWidgetAfterDisconnecting {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in the asset library folder can be removed via DM widget on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveAssetFromSiteWidget {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

@@ -11,9 +11,9 @@ definition {
 			PortletEntry.selectAll();
 		}
 		else {
-			for (var assigneeName : list "${assigneeNames}") {
+			for (var assigneeName : list ${assigneeNames}) {
 				Check(
-					key_tableEntry = "${assigneeName}",
+					key_tableEntry = ${assigneeName},
 					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 			}
 		}
@@ -32,10 +32,10 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Add Account Group");
 
-		PortletEntry.inputName(name = "${accountGroupName}");
+		PortletEntry.inputName(name = ${accountGroupName});
 
 		if (isSet(accountGroupDescription)) {
-			PortletEntry.inputDescription(description = "${accountGroupDescription}");
+			PortletEntry.inputDescription(description = ${accountGroupDescription});
 		}
 
 		Button.clickSave();
@@ -48,16 +48,16 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${accountGroupName}");
+			rowEntry = ${accountGroupName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Edit ${accountGroupName}");
 
-		PortletEntry.inputName(name = "${accountGroupNameEdit}");
+		PortletEntry.inputName(name = ${accountGroupNameEdit});
 
 		if (isSet(accountGroupDescriptionEdit)) {
-			PortletEntry.inputDescription(description = "${accountGroupDescriptionEdit}");
+			PortletEntry.inputDescription(description = ${accountGroupDescriptionEdit});
 		}
 
 		Button.clickSave();
@@ -74,8 +74,8 @@ definition {
 	}
 
 	macro removeAccount {
-		if ("${removeType}" == "Toolbar Remove Icon") {
-			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
+		if (${removeType} == "Toolbar Remove Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = ${accountGroupName});
 
 			ClickNoError.clickNoMouseOver(locator1 = "ManagementBar#REMOVE");
 
@@ -83,8 +83,8 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
-		else if ("${removeType}" == "Management Toolbar") {
-			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
+		else if (${removeType} == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = ${accountGroupName});
 
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
@@ -96,7 +96,7 @@ definition {
 		}
 		else {
 			ClickNoError(
-				key_entryName = "${accountGroupName}",
+				key_entryName = ${accountGroupName},
 				locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 			AssertConfirm(value1 = "Are you sure you want to remove this account?");
@@ -104,7 +104,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		LexiconEntry.viewNoEntry(rowEntry = "${accountGroupName}");
+		LexiconEntry.viewNoEntry(rowEntry = ${accountGroupName});
 	}
 
 	macro viewAssignee {
@@ -113,19 +113,19 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 		AssertTextEquals.assertPartialText(
-			key_tableEntry = "${assigneeName}",
+			key_tableEntry = ${assigneeName},
 			locator1 = "LexiconTable#TABLE_ENTRY",
-			value1 = "${assigneeName}");
+			value1 = ${assigneeName});
 	}
 
 	macro viewDefault {
-		if (IsElementPresent(key_tab = "${tabName}", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+		if (IsElementPresent(key_tab = ${tabName}, locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			AssertElementPresent(
-				key_tab = "${tabName}",
+				key_tab = ${tabName},
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 		}
 
-		var tabName = StringUtil.toLowerCase("${tabName}");
+		var tabName = StringUtil.toLowerCase(${tabName});
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -133,21 +133,21 @@ definition {
 	}
 
 	macro viewEntry {
-		LexiconEntry.viewEntryName(rowEntry = "${accountGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = ${accountGroupName});
 
 		if (isSet(accountGroupDescription)) {
 			AssertTextEquals(
-				key_rowEntry = "${accountGroupName}",
+				key_rowEntry = ${accountGroupName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3",
-				value1 = "${accountGroupDescription}");
+				value1 = ${accountGroupDescription});
 		}
 
 		if (isSet(accountGroupAccount)) {
 			AssertTextEquals(
 				key_columnName = "lfr-accounts-column",
-				key_rowEntry = "${accountGroupName}",
+				key_rowEntry = ${accountGroupName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "${accountGroupAccount}");
+				value1 = ${accountGroupAccount});
 		}
 	}
 

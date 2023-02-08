@@ -14,12 +14,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanStartPortalWithSchedulerDisabled {
 		property custom.properties = "scheduler.enabled=false";
 		property test.assert.warning.exceptions = "true";

@@ -12,16 +12,16 @@ definition {
 		Select(
 			key_selectFieldLabel = "Channel",
 			locator1 = "CommerceEntry#ANY_SELECT",
-			value1 = "${channelName}");
+			value1 = ${channelName});
 
 		Select(
 			key_selectFieldLabel = "User",
 			locator1 = "CommerceEntry#ANY_SELECT",
-			value1 = "${userName}");
+			value1 = ${userName});
 
 		Button.clickSave();
 
-		if (isSet(assertError) && ("${assertError}" == "true")) {
+		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "This user is already defined for the selected channel.");
 		}
 
@@ -32,9 +32,9 @@ definition {
 		Variables.assertDefined(parameterList = "${channelName},${defaultEntryName},${defaultEntryLabel}");
 
 		Click(
-			key_firstColumnValue = "${channelName}",
-			key_secondColumnValue = "${defaultEntryName}",
-			key_table = "${defaultEntryLabel}",
+			key_firstColumnValue = ${channelName},
+			key_secondColumnValue = ${defaultEntryName},
+			key_table = ${defaultEntryLabel},
 			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -46,8 +46,8 @@ definition {
 		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
 
 		Click(
-			key_firstColumnValue = "${channelName}",
-			key_secondColumnValue = "${userFullName}",
+			key_firstColumnValue = ${channelName},
+			key_secondColumnValue = ${userFullName},
 			key_table = "defaultUsers",
 			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
 
@@ -59,19 +59,19 @@ definition {
 			Select(
 				key_selectFieldLabel = "Channel",
 				locator1 = "CommerceEntry#ANY_SELECT",
-				value1 = "${newChannelName}");
+				value1 = ${newChannelName});
 		}
 
 		if (isSet(newUserName)) {
 			Select(
 				key_selectFieldLabel = "User",
 				locator1 = "CommerceEntry#ANY_SELECT",
-				value1 = "${newUserName}");
+				value1 = ${newUserName});
 		}
 
 		Button.clickSave();
 
-		if (isSet(assertError) && ("${assertError}" == "true")) {
+		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "This user is already defined for the selected channel.");
 		}
 
@@ -82,8 +82,8 @@ definition {
 		Variables.assertDefined(parameterList = "${currentChannelName},${currentPriceListName}");
 
 		Click(
-			key_firstColumnValue = "${currentChannelName}",
-			key_secondColumnValue = "${currentPriceListName}",
+			key_firstColumnValue = ${currentChannelName},
+			key_secondColumnValue = ${currentPriceListName},
 			key_table = "PriceLists",
 			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
 
@@ -95,10 +95,10 @@ definition {
 			Select(
 				key_selectFieldLabel = "Channel",
 				locator1 = "CommerceEntry#ANY_SELECT",
-				value1 = "${newChannelName}");
+				value1 = ${newChannelName});
 		}
 
-		if (isSet(override) && ("${override}" == "true")) {
+		if (isSet(override) && (${override} == "true")) {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Override Eligibility",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -108,12 +108,12 @@ definition {
 			Select(
 				key_selectFieldLabel = "Price List",
 				locator1 = "CommerceEntry#ANY_SELECT",
-				value1 = "${newPriceListName}");
+				value1 = ${newPriceListName});
 		}
 
 		Button.clickSave();
 
-		if (isSet(assertError) && ("${assertError}" == "true")) {
+		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");
 		}
 
@@ -121,21 +121,21 @@ definition {
 	}
 
 	macro setAccountChannelDefaults {
-		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "${accountName}");
+		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = ${accountName});
 
 		if (isSet(paymentMethod)) {
 			WaitForPageLoad();
 
 			Click(
-				key_firstColumnValue = "${channelName}",
-				key_secondColumnValue = "${defaultPaymentMethod}",
+				key_firstColumnValue = ${channelName},
+				key_secondColumnValue = ${defaultPaymentMethod},
 				key_table = "PaymentMethod",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Click.clickAtNotVisible(
-				key_radioOption = "${paymentMethod}",
+				key_radioOption = ${paymentMethod},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Click(locator1 = "Button#SAVE");
@@ -143,16 +143,16 @@ definition {
 			IFrame.selectTopFrame();
 
 			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "${channelName}",
-				key_value = "${paymentMethod}",
+				key_columnNumber = 1,
+				key_productName = ${channelName},
+				key_value = ${paymentMethod},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 
 		if (isSet(shippingOption) && isSet(channelName)) {
 			Click(
-				key_firstColumnValue = "${channelName}",
-				key_secondColumnValue = "${shippingMethodEntry}",
+				key_firstColumnValue = ${channelName},
+				key_secondColumnValue = ${shippingMethodEntry},
 				key_table = "ShippingOption",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_EDIT_BUTTON");
 
@@ -160,7 +160,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			if ("${shippingOption}" == "Use Priority Settings") {
+			if (${shippingOption} == "Use Priority Settings") {
 				var shippingMethod = "Use Priority Settings";
 				var shippingOption = "Use Priority Settings";
 
@@ -179,15 +179,15 @@ definition {
 			IFrame.selectTopFrame();
 
 			AssertElementPresent(
-				key_columnNumber = "1",
-				key_productName = "${channelName}",
-				key_value = "${shippingMethodEntry}",
+				key_columnNumber = 1,
+				key_productName = ${channelName},
+				key_value = ${shippingMethodEntry},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 			AssertElementPresent(
-				key_columnNumber = "2",
-				key_productName = "${channelName}",
-				key_value = "${shippingOption}",
+				key_columnNumber = 2,
+				key_productName = ${channelName},
+				key_value = ${shippingOption},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 	}
@@ -203,14 +203,14 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+		if (isSet(channelEntry) && (${channelEntry} != "")) {
 			Select(
 				key_fieldLabel = "Channel",
 				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
-				value1 = "${channelEntry}");
+				value1 = ${channelEntry});
 		}
 
-		if (isSet(override) && ("${override}" == "true")) {
+		if (isSet(override) && (${override} == "true")) {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Override Eligibility",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -219,11 +219,11 @@ definition {
 		Select(
 			key_fieldLabel = "Price List",
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
-			value1 = "${priceListTitle}");
+			value1 = ${priceListTitle});
 
 		Button.clickSave();
 
-		if (isSet(assertError) && ("${assertError}" == "true")) {
+		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");
 		}
 
@@ -232,28 +232,28 @@ definition {
 
 	macro viewDefaultPriceListEntries {
 		if (isSet(priceListEntries)) {
-			if (isSet(row) && ("${row}" != "")) {
-				for (var priceListEntry : list "${priceListEntries}") {
+			if (isSet(row) && (${row} != "")) {
+				for (var priceListEntry : list ${priceListEntries}) {
 					AssertElementPresent(
-						key_entryDetails = "${priceListEntry}",
-						key_row = "${row}",
-						key_termType = "${priceListLabel}",
+						key_entryDetails = ${priceListEntry},
+						key_row = ${row},
+						key_termType = ${priceListLabel},
 						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
 				}
 			}
 			else {
-				for (var priceListEntry : list "${priceListEntries}") {
+				for (var priceListEntry : list ${priceListEntries}) {
 					AssertElementPresent(
-						key_entryDetails = "${priceListEntry}",
-						key_row = "1",
-						key_termType = "${priceListLabel}",
+						key_entryDetails = ${priceListEntry},
+						key_row = 1,
+						key_termType = ${priceListLabel},
 						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
 				}
 			}
 		}
 		else {
 			AssertElementPresent(
-				key_termType = "${priceListLabel}",
+				key_termType = ${priceListLabel},
 				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 		}
 	}

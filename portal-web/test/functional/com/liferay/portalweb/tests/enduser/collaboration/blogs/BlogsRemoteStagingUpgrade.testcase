@@ -19,7 +19,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154463. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.1.10.5."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageFromContentFieldAfterUpgradeFrom71105Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154462. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.2.10.4."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageFromContentFieldAfterUpgradeFrom72104Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154461. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.3.10.1"
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageFromContentFieldAfterUpgradeFrom73101Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154464. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.0.10.15."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageFromContentFieldAfterUpgradeFrom701015Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154471. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.1.10.5."
-	@priority = "4"
+	@priority = 4
 	test CanPublishSmallImageAfterUpgradeFrom71105Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154470. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.2.10.4."
-	@priority = "4"
+	@priority = 4
 	test CanPublishSmallImageAfterUpgradeFrom72104Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154469. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.3.10.1."
-	@priority = "4"
+	@priority = 4
 	test CanPublishSmallImageAfterUpgradeFrom73101Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154472. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.0.10.15."
-	@priority = "4"
+	@priority = 4
 	test CanPublishSmallImageAfterUpgradeFrom701015Archive {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-blogs-entries";

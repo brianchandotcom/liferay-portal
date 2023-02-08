@@ -7,7 +7,7 @@ definition {
 	macro addErrorMessage {
 		Type.type(
 			locator1 = "ObjectCustomValidation#ADD_ERROR_MESSAGE_VALIDATION",
-			value1 = "${errorMessage}");
+			value1 = ${errorMessage});
 	}
 
 	macro addObjectValidation {
@@ -15,12 +15,12 @@ definition {
 
 		Type(
 			locator1 = "ObjectCustomValidation#LABEL_ON_ADD_VALIDATION",
-			value1 = "${validationName}");
+			value1 = ${validationName});
 
 		Click(locator1 = "ObjectCustomValidation#SELECT_TYPE_VALIDATION");
 
 		Click(
-			key_validationType = "${validationType}",
+			key_validationType = ${validationType},
 			locator1 = "ObjectCustomValidation#CHOOSE_OPTION_TYPE_VALIDATION");
 
 		PortletEntry.save();
@@ -28,15 +28,15 @@ definition {
 
 	macro assertValidationPresent {
 		AssertElementPresent(
-			key_validationName = "${validationName}",
+			key_validationName = ${validationName},
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
 
 		AssertElementPresent(
-			key_validationInfo = "${validationType}",
+			key_validationInfo = ${validationType},
 			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
 
 		AssertElementPresent(
-			key_validationInfo = "${validationActive}",
+			key_validationInfo = ${validationActive},
 			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
 	}
 
@@ -47,12 +47,12 @@ definition {
 	macro editLabelOnCustomValidation {
 		Type(
 			locator1 = "ObjectCustomValidation#LABEL_EDIT_VALIDATION",
-			value1 = "${editValidationName}");
+			value1 = ${editValidationName});
 	}
 
 	macro gotoCustomValidation {
 		Click(
-			key_validationName = "${validationName}",
+			key_validationName = ${validationName},
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
@@ -60,19 +60,19 @@ definition {
 
 	macro gotoTab {
 		Click(
-			key_tab = "${tabName}",
+			key_tab = ${tabName},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
 	macro insertScriptOnValidation {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "ObjectCustomValidation#INSERT_SCRIPT_ON_VALIDATION",
-			value1 = "${scriptValidation}");
+			value1 = ${scriptValidation});
 	}
 
 	macro viewCardsOnCustomValidation {
 		AssertElementPresent.assertVisible(
-			key_title = "${cardName}",
+			key_title = ${cardName},
 			locator1 = "Header#H3_TITLE");
 	}
 

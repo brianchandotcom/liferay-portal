@@ -5,13 +5,13 @@ definition {
 
 		Type(
 			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD");
 
 		Type(
 			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_PASSWORD_LOGIN_FIELD",
-			value1 = "${password}");
+			value1 = ${password});
 
 		Check(locator1 = "AnalyticsCloudConnection#REMEMBER_ME_CHECKBOX");
 

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-42767. Service access policy smoke. Blocked by POSHI-354."
-	@priority = "5"
+	@priority = 5
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";
 		property portal.acceptance = "true";
@@ -42,7 +42,7 @@ definition {
 					-d emailAddress=test@liferay.com
 			''';
 
-			SystemSettings.getUserEmailAddressRequestDenied(curl = "${curl}");
+			SystemSettings.getUserEmailAddressRequestDenied(curl = ${curl});
 		}
 
 		task ("Edit service access policy") {
@@ -65,8 +65,8 @@ definition {
 			''';
 
 			SystemSettings.getViewUserEmailPermissionDenied(
-				curl = "${curl}",
-				userId = "${userId}");
+				curl = ${curl},
+				userId = ${userId});
 		}
 
 		task ("Assert permission available") {
@@ -77,8 +77,8 @@ definition {
 			''';
 
 			SystemSettings.getUserEmailSuccessfully(
-				companyId = "${companyId}",
-				curl = "${curl}");
+				companyId = ${companyId},
+				curl = ${curl});
 		}
 
 		task ("Edit service access policy") {
@@ -99,7 +99,7 @@ definition {
 					-u test@liferay.com:test
 			''';
 
-			SystemSettings.getCurrentUserEmailResquestDenied(curl = "${curl}");
+			SystemSettings.getCurrentUserEmailResquestDenied(curl = ${curl});
 		}
 	}
 

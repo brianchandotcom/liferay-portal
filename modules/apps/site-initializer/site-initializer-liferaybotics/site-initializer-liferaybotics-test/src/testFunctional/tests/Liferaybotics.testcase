@@ -19,18 +19,18 @@ definition {
 		}
 
 		task ("Create a new Liferaybotics Site") {
-			Liferaybotics.addLiferayboticsSite(siteName = "${testSiteName}");
+			Liferaybotics.addLiferayboticsSite(siteName = ${testSiteName});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 
 			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 		}
@@ -38,12 +38,12 @@ definition {
 
 	@description = "This is a test for LPS-150999. User Can create a Lifebotics Site"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AddLiferayboticsSite {
 		property portal.acceptance = "true";
 
 		task ("Go to Liferaybotics Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Assert the Liferaybotics Welcome Page is present") {
@@ -55,12 +55,12 @@ definition {
 
 	@description = "This is a test for LPS-150999. User can navigate to a Dashboard Page after Lifebotics site is created"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test LiferayboticsDashboardPage {
 		property portal.acceptance = "true";
 
 		task ("Go to Liferaybotics Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Dashboard Page on Liferaybotics Site") {
@@ -78,12 +78,12 @@ definition {
 
 	@description = "This is a test for LPS-150999. User can navigate to a Home Page after Lifebotics site is created"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test LiferayboticsHomePage {
 		property portal.acceptance = "true";
 
 		task ("Go to Liferaybotics Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Home Page on Liferaybotics Site") {
@@ -101,10 +101,10 @@ definition {
 
 	@description = "This is a test for LPS-150999. Verify all the links present in the Dashboard Page related with News redirect to their respective pages"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheLinksRedirectsToItsPage {
 		task ("Go to Liferaybotics Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Dashboard Page on Liferaybotics Site") {
@@ -115,13 +115,13 @@ definition {
 
 		task ("Click in The 'All New Series of TX Robotic Machine' link and assert it redirects to Blog Page") {
 			Click(
-				key_title = "${testNewsArticleName1}",
+				key_title = ${testNewsArticleName1},
 				locator1 = "Liferaybotics#NEWS_LINK");
 		}
 
 		task ("Assert the Article Page is present") {
 			AssertElementPresent(
-				key_title = "${testNewsArticleName1}",
+				key_title = ${testNewsArticleName1},
 				locator1 = "Liferaybotics#NEWS_TITLE");
 		}
 
@@ -131,13 +131,13 @@ definition {
 
 		task ("Click in The 'Easier to operate than never before' link and assert it redirects to Blog Page") {
 			Click(
-				key_title = "${testNewsArticleName2}",
+				key_title = ${testNewsArticleName2},
 				locator1 = "Liferaybotics#NEWS_LINK");
 		}
 
 		task ("Assert the Article Page is present") {
 			AssertElementPresent(
-				key_title = "${testNewsArticleName2}",
+				key_title = ${testNewsArticleName2},
 				locator1 = "Liferaybotics#NEWS_TITLE");
 		}
 
@@ -147,13 +147,13 @@ definition {
 
 		task ("Click in The 'Grab the best deals this June' link and assert it redirects to Blog Page") {
 			Click(
-				key_title = "${testNewsArticleName3}",
+				key_title = ${testNewsArticleName3},
 				locator1 = "Liferaybotics#NEWS_LINK");
 		}
 
 		task ("Assert the Article Page is present") {
 			AssertElementPresent(
-				key_title = "${testNewsArticleName3}",
+				key_title = ${testNewsArticleName3},
 				locator1 = "Liferaybotics#NEWS_TITLE");
 		}
 
@@ -164,10 +164,10 @@ definition {
 
 	@description = "This is a test for LPS-150999. Verify Product Publisher contained a Warranty product"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheProductPublisherContainsWarrantyProduct {
 		task ("Go to Liferaybotics Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Dashboard Page on Liferaybotics Site") {

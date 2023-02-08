@@ -25,14 +25,14 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8493 | Test Summary: Segment Composition shows Active and Known individuals"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test SegmentCompositionShowsActiveAndKnownIndividuals {
 
 		// AC Refactor: Test blocked by LRAC-9056
@@ -71,7 +71,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSegments();
 		}
@@ -94,12 +94,12 @@ definition {
 			// Active individuals informations does not show up properly on graphic.
 
 			ACSegments.viewSegmentComposition(
-				individualsNumber = "1",
+				individualsNumber = 1,
 				individualsPercent = "100%",
 				individualsType = "Active");
 
 			ACSegments.viewSegmentComposition(
-				individualsNumber = "1",
+				individualsNumber = 1,
 				individualsPercent = "100%",
 				individualsType = "Known");
 		}

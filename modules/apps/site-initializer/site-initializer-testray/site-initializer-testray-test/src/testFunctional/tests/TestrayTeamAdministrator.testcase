@@ -27,13 +27,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160594 - Verify if as an Administrator I am able to add a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddTeam {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -45,8 +45,8 @@ definition {
 
 		task ("Change pagination, create Team and Assert it was created") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166560 - Verify if as an administrator I can assign teams without components to dualbox"
-	@priority = "4"
+	@priority = 4
 	test AdminCanAssignTeamsByDualbox {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -69,8 +69,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("create a component without team") {
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160595 - Verify if as an Administrator I am able to delete a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteTeam {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -121,8 +121,8 @@ definition {
 
 		task ("Change pagination and create Team") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160596 - Verify if as an Administrator I am able to edit a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditTeam {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -153,8 +153,8 @@ definition {
 
 		task ("Change pagination and create Team") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162501 - Verify if as an Administrator I should not be able to add a duplicate Teams"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateTeams {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -185,8 +185,8 @@ definition {
 
 		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162502 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = "4"
+	@priority = 4
 	test AdminCanViewWarningMessage {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -213,8 +213,8 @@ definition {
 
 		task ("Change pagination and Assert that field Name is required") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 

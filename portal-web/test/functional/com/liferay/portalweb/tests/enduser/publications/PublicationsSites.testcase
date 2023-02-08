@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishPrivateChildSite {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -77,7 +77,7 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishSiteCreatedInPublication {
 
 		// Workaround LPS-129369 and LPS-148424

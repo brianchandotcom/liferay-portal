@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on content page."
-	@priority = "4"
+	@priority = 4
 	test AddCustomTextOnButtonTextFieldOnContentPage {
 		task ("Given a content page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
 			task ("Add an Attachment field to object") {
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer."
-	@priority = "3"
+	@priority = 3
 	test AddFileFromComputerDiectly {
 		task ("Given a page creator has a File Upload fragment") {
 			task ("Add an Attachment field to object") {
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155170. File Upload fragment could map to attachment type object."
-	@priority = "5"
+	@priority = 5
 	test CanAddFileFromComputerAndDMInMappedObject {
 		property portal.acceptance = "true";
 
@@ -220,10 +220,10 @@ definition {
 
 				PageEditor.removeFragment(
 					fragmentName = "File Upload",
-					index = "2");
+					index = 2);
 
 				for (var fragmentName : list "File Upload,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
 
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer to DM when enable Show Files in Documents and Media."
-	@priority = "3"
+	@priority = 3
 	test CanAddFileFromComputerToDMWhenEnableShowFilesInDocumentsAndMedia {
 		task ("Given a content page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
 			task ("Add an Attachment field to object") {
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with attached file size larger than allowed maximum upload size."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize {
 		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
 			task ("Add an Attachment field to object") {
@@ -446,7 +446,7 @@ definition {
 				Type(
 					key_text = "Maximum File Size",
 					locator1 = "TextInput#ANY",
-					value1 = "2");
+					value1 = 2);
 
 				ObjectField.save();
 			}
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid extension of attached file."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithInvalidExtensionOfAttachedFile {
 		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
 			task ("Add an Attachment field to object") {

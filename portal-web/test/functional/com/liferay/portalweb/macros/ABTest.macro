@@ -16,15 +16,15 @@ definition {
 		}
 
 		AssertTextEquals(
-			abTestTitle = "${abTestTitle}",
+			abTestTitle = ${abTestTitle},
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
-			value1 = "${abTestTitle}");
+			value1 = ${abTestTitle});
 
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}
 
 	macro checkVariantAnalyticsCloud {
-		var index = "1";
+		var index = 1;
 
 		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
 			ABTest.runTest();
@@ -40,13 +40,13 @@ definition {
 				password = "test");
 		}
 
-		for (var variantNames : list "${variantNames}") {
+		for (var variantNames : list ${variantNames}) {
 			var index = ${index} + 1;
 
 			AssertElementPresent(
-				key_index = "${index}",
+				key_index = ${index},
 				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
-				name = "${variantNames}");
+				name = ${variantNames});
 		}
 
 		Close(locator1 = "title=Tests - Analytics Cloud");
@@ -60,10 +60,10 @@ definition {
 		Button.click(button = "Create Test");
 
 		ABTest.fillInput(
-			key_testTitle = "${testTitle}",
+			key_testTitle = ${testTitle},
 			labelValue = "Test Name");
 
-		ABTest.selectGoal(key_goal = "${goal}");
+		ABTest.selectGoal(key_goal = ${goal});
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
@@ -72,7 +72,7 @@ definition {
 		Button.click(button = "Create Variant");
 
 		ABTest.fillInput(
-			key_testTitle = "${variantName}",
+			key_testTitle = ${variantName},
 			labelValue = "Name");
 
 		Click(
@@ -102,7 +102,7 @@ definition {
 
 	macro deleteVariant {
 		if (!(isSet(key_index))) {
-			var key_index = "1";
+			var key_index = 1;
 		}
 
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
@@ -116,13 +116,13 @@ definition {
 
 	macro editVariant {
 		Click(
-			key_variantName = "${variantName}",
+			key_variantName = ${variantName},
 			locator1 = "ABTest#EDIT_VARIANT_BUTTON");
 	}
 
 	macro editVariantName {
 		if (!(isSet(key_index))) {
-			var key_index = "1";
+			var key_index = 1;
 		}
 
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
@@ -132,13 +132,13 @@ definition {
 
 	macro fillInput {
 		Click(
-			key_fieldLabel = "${labelValue}",
+			key_fieldLabel = ${labelValue},
 			locator1 = "Modal#INPUT_WITH_LABEL");
 
 		Type(
-			key_fieldLabel = "${labelValue}",
+			key_fieldLabel = ${labelValue},
 			locator1 = "Modal#INPUT_WITH_LABEL",
-			value1 = "${key_testTitle}");
+			value1 = ${key_testTitle});
 	}
 
 	macro openABTestInAC {
@@ -172,7 +172,7 @@ definition {
 	macro openTab {
 		Click(
 			locator1 = "ABTest#TAB",
-			tabValue = "${tabValue}");
+			tabValue = ${tabValue});
 	}
 
 	macro runTest {
@@ -195,7 +195,7 @@ definition {
 
 	macro selectElementID {
 		if (!(isSet(key_index))) {
-			var key_index = "1";
+			var key_index = 1;
 		}
 
 		Click(
@@ -217,26 +217,26 @@ definition {
 		Select(
 			locator1 = "Modal#SELECT_WITH_LABEL",
 			selectLabel = "Select Goal",
-			value1 = "${key_goal}");
+			value1 = ${key_goal});
 	}
 
 	macro statusABTestInAC {
 		AssertTextEquals(
 			locator1 = "ACTests#SUMMARY_CARD_TEXT",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 	macro switchVariant {
 		ABTest.openABTestPanel();
 
 		Click(
-			key_variantName = "${variantName}",
+			key_variantName = ${variantName},
 			locator1 = "ABTest#VARIANT_TITLE");
 	}
 
 	macro takeElementID {
 		if (!(isSet(key_index))) {
-			var key_index = "1";
+			var key_index = 1;
 		}
 
 		Click(
@@ -247,11 +247,11 @@ definition {
 
 		var idelement = selenium.getAttribute("//div[contains(@class,'text-truncate')]@title");
 
-		var idelement = StringUtil.substring("${idelement}", "1", "19");
+		var idelement = StringUtil.substring(${idelement}, 1, 19);
 
 		Click(locator1 = "ABTest#X_BUTTON_TARGET_ID_ELEMENT");
 
-		return "${idelement}";
+		return ${idelement};
 	}
 
 	macro terminateTest {
@@ -270,16 +270,16 @@ definition {
 	}
 
 	macro viewInfoItems {
-		var index = "0";
+		var index = 0;
 
-		for (var values : list "${values}") {
+		for (var values : list ${values}) {
 			var index = ${index} + 1;
 
 			AssertElementPresent(
-				key_index = "${index}",
-				key_value = "${values}",
+				key_index = ${index},
+				key_value = ${values},
 				locator1 = "ABTest#VIEW_INFO_ITEMS",
-				value1 = "${values}");
+				value1 = ${values});
 		}
 	}
 
@@ -288,7 +288,7 @@ definition {
 
 		Type(
 			locator1 = "ABTest#ELEMENT_ID_INPUT",
-			value1 = "${elementId}");
+			value1 = ${elementId});
 	}
 
 }

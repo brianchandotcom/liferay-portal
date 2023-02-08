@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This test adds a new language key via the Language Override portlet and asserts that a user can search and view it in the main view page."
-	@priority = "5"
+	@priority = 5
 	test CanAddLanguageKey {
 		property portal.acceptance = "true";
 
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This test changes the display style from list to table."
-	@priority = "2"
+	@priority = 2
 	test CanChangeTheDisplayStyletoTableView {
 		task ("Given the default display style is List") {
 			LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "Filtering by 'Selected Language' and choosing a language will only show keys created with translations available in the selected language."
-	@priority = "3"
+	@priority = 3
 	test CanFilterLanguageKeysByLocaleViaLanguageSelector {
 		task ("Given two separate language keys are added") {
 			LanguageOverride.addLanguageKey(
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "This test filters to only see Overrides."
-	@priority = "4"
+	@priority = 4
 	test CanFilterOverridesByAnyLanguage {
 		task ("Given that assert no existing keys filter by Any Language") {
 			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "The testcase asserts the override filtered by 'Selected Language'."
-	@priority = "4"
+	@priority = 4
 	test CanFilterOverridesBySelectedLanguage {
 		task ("Given three new keys with en-US and es-ES language translations") {
 			LanguageOverride.addLanguageKey(
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can remove all translation overrides on the main view page for language keys that are overridden and doing so will delete the language key"
-	@priority = "5"
+	@priority = 5
 	test CanRemoveAllTranslationOverridesViaMenuItem {
 		property portal.acceptance = "true";
 
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can remove translation override for a selected language for language keys that are overridden via the menu item"
-	@priority = "3"
+	@priority = 3
 	test CanRemoveTranslationOverrideForSelectedLanguageViaMenuItem {
 		task ("Given that a user has created a new language key") {
 			LanguageOverride.addLanguageKey(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This test can search existing keys and view it in the main view page."
-	@priority = "5"
+	@priority = 5
 	test CanSearchForExistingKeys {
 		property portal.acceptance = "true";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146565. It asserts the language key filtered by 'Any Language' can be searched."
-	@priority = "3"
+	@priority = 3
 	test CanSearchForLanguageKeyFilterByAnyLanguage {
 		task ("Given a new language key is created with three language override translations") {
 			LanguageOverride.addLanguageKey(
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146565. It asserts the translation filtered by 'Any Language' can be searched."
-	@priority = "3"
+	@priority = 3
 	test CanSearchForTranslationFilterbyAnyLanguage {
 		task ("Given two new language keys are created with three language override translations") {
 			LanguageOverride.addLanguageKey(
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "This test asserts that searching for existing translations will yield accurate results."
-	@priority = "5"
+	@priority = 5
 	test CanSearchForTranslations {
 		property portal.acceptance = "true";
 
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "It asserts proper override and translation infos for new language key."
-	@priority = "4"
+	@priority = 4
 	test CanViewProperOverrideInfosforNewLanguageKey {
 		task ("Given one new language key is created with all language override translations") {
 			LanguageOverride.addLanguageKey(
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@description = "This test clears all overrides for an overridden language key via the Edit page. Doing so will delete the language key."
-	@priority = "5"
+	@priority = 5
 	test ClearingAllOverridesInEditPageWillDeleteCreatedKey {
 		property portal.acceptance = "true";
 
@@ -469,7 +469,7 @@ definition {
 	}
 
 	@description = "This test updates an existing key's translation override values. It then clears all overrides for the existing language key via the Edit page. Doing so will reset all values. It will not delete the key."
-	@priority = "5"
+	@priority = 5
 	test ClearingAllOverridesInEditPageWillResetValuesForExistingKeys {
 		property portal.acceptance = "true";
 
@@ -536,7 +536,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146568. It asserts the language overriden will be bolded and translation displayed when it matches the selected language."
-	@priority = "3"
+	@priority = 3
 	test LanguageOverrideIsBoldedWhenMatchestheSelectedLanguage {
 		task ("Given new languages key are added for en-US and nl-NL separately") {
 			LanguageOverride.addLanguageKey(
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This test assert the OOTB Language Key added by default has no override related information."
-	@priority = "3"
+	@priority = 3
 	test NoOverrideRelatedInfosDisplayForOOTBLanguageKey {
 		task ("Given that assert no existing keys when filter by Any Language") {
 			ManagementBar.setFilterAndOrder(filterBy = "Any Language");

@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-137871 - Verify it is not possible to select an unpublished Object for a Page Template"
-	@priority = "4"
+	@priority = 4
 	test CannotSelectUnpublishedObjectForPageTemplate {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 205",

@@ -11,7 +11,7 @@ definition {
 		task ("Open Analytics Cloud") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			Navigator.openURL(baseURL = ${analyticsCloudURL});
 		}
 
 		task ("Take token from Analytics Cloud") {
@@ -50,7 +50,7 @@ definition {
 		task ("Launch AC and Switch Property") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to Segments and add a new segment") {
@@ -85,7 +85,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -95,16 +95,13 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments
-	and I have connected my DXP instance with AC
-	when I create an Individual Segment in AC and it shows in the DXP Segments administration
-	then I don't see the edit action"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckNotEditableSegmentFromACAtDXP {
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#CheckNotEditableSegmentFromACAtDXP";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = "1");
+			Segmentation.updateSegmentsInterval(interval = 1);
 		}
 
 		task ("Go to segmentats page and assert that not possible Edit/Delete ") {
@@ -129,7 +126,7 @@ definition {
 	}
 
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
-	@priority = "5"
+	@priority = 5
 	test DefaultInstanceNotSynchronizedWithAC {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#DefaultInstanceNotSynchronizedWithAC";
@@ -182,24 +179,21 @@ definition {
 
 	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test NonDefaultInstanceSynchronizedOnAC {
 
 		// TODO LPS-111464 NonDefaultInstanceSynchronizedOnAC pending implementation
 
 	}
 
-	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments
-	and I have connected my DXP instance with AC
-	when I create an Individual Segment in AC and it shows in the DXP Segments administration
-	Then in the next sync time, the segment will appear again"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test PersistSegmentFromACAtDXP {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#PersistSegmentFromACAtDXP";
 
 		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = "1");
+			Segmentation.updateSegmentsInterval(interval = 1);
 		}
 
 		task ("Go to segmentats page and assert that the segment created is preset") {
@@ -230,7 +224,7 @@ definition {
 				configurationScope = "System Scope");
 
 			AssertElementPresent(
-				key_value = "1",
+				key_value = 1,
 				locator1 = "SystemSettings#UPDATE_INTERVAL_SEGMENTS_VALUE");
 
 			AssertClick(
@@ -255,13 +249,13 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"
-	@priority = "5"
+	@priority = 5
 	test RedirectToSegmentPageAC {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = "1");
+			Segmentation.updateSegmentsInterval(interval = 1);
 		}
 
 		task ("Go to segmentats page and click at segment crieted in AC") {
@@ -294,13 +288,13 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user is redirected to the not found Analytics Cloud page, when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the segment does not exist in Analytics Cloud anymore"
-	@priority = "4"
+	@priority = 4
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#RedirectToSegmentPageErrorAC";
 
 		task ("Update Segments Analytics Cloud in System Settings") {
-			Segmentation.updateSegmentsInterval(interval = "1");
+			Segmentation.updateSegmentsInterval(interval = 1);
 		}
 
 		task ("Go to segmentats page and at segment created in AC") {
@@ -324,7 +318,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 
@@ -372,7 +366,7 @@ definition {
 
 	@description = "LPS-94940 Validate if, The migrated AC segment, it appears in Liferay DXP Segments administration without an edit/delete actions"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test SegmentsWithoutEditingAndDeletingFromTheSite {
 
 		// TODO LPS-94940 SegmentsWithoutEditingAndDeletingFromTheSite pending implementation
@@ -380,7 +374,7 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user have the text unlinked when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the connection with Analytics Cloud does not exist anymore"
-	@priority = "4"
+	@priority = 4
 	test ShoudNotRedirectToSegmentPageAC {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ACSegmentsInDXP#ShoudNotRedirectToSegmentPageAC";

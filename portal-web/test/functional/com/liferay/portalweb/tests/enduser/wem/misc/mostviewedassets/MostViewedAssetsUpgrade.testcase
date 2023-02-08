@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125952. View displayed assets on Most Viewed Assets widget."
-	@priority = "4"
+	@priority = 4
 	test ViewDisplayedAssetsOnMostViewedAssetsAfterUpgrade706 {
 		property data.archive.type = "data-archive-most-viewed-assets";
 		property database.types = "mariadb,mysql,postgresql";
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125952. View displayed assets on Most Viewed Assets widget."
-	@priority = "4"
+	@priority = 4
 	test ViewDisplayedAssetsOnMostViewedAssetsAfterUpgrade701016 {
 		property data.archive.type = "data-archive-most-viewed-assets";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

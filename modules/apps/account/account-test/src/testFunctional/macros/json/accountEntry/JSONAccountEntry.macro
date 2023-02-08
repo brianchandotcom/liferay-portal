@@ -15,33 +15,33 @@ definition {
 			var accountEntryDescription = "Account Entry Description";
 		}
 
-		var accountEntryStatus = JSONAccountEntrySetter.setStatus(accountEntryStatus = "${accountEntryStatus}");
-		var accountEntryType = JSONAccountEntrySetter.setType(accountEntryType = "${accountEntryType}");
+		var accountEntryStatus = JSONAccountEntrySetter.setStatus(accountEntryStatus = ${accountEntryStatus});
+		var accountEntryType = JSONAccountEntrySetter.setType(accountEntryType = ${accountEntryType});
 
 		JSONAccountEntryAPI._addAccountEntry(
-			accountEntryDescription = "${accountEntryDescription}",
-			accountEntryName = "${accountEntryName}",
-			accountEntryStatus = "${accountEntryStatus}",
-			accountEntryType = "${accountEntryType}",
-			creatorEmailAddress = "${creatorEmailAddress}",
-			creatorPassword = "${creatorPassword}");
+			accountEntryDescription = ${accountEntryDescription},
+			accountEntryName = ${accountEntryName},
+			accountEntryStatus = ${accountEntryStatus},
+			accountEntryType = ${accountEntryType},
+			creatorEmailAddress = ${creatorEmailAddress},
+			creatorPassword = ${creatorPassword});
 
 		if (isSet(externalReferenceCode)) {
 			JSONAccountEntryAPI._setAccountExternalReferenceCode(
-				accountEntryName = "${accountEntryName}",
-				externalReferenceCode = "${externalReferenceCode}");
+				accountEntryName = ${accountEntryName},
+				externalReferenceCode = ${externalReferenceCode});
 		}
 	}
 
 	macro addAccountEntryOrganization {
 		Variables.assertDefined(parameterList = "${accountEntryName},${organizationName}");
 
-		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
-		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
 
 		JSONAccountEntryAPI._addAccountEntryOrganization(
-			accountEntryId = "${accountEntryId}",
-			organizationId = "${organizationId}");
+			accountEntryId = ${accountEntryId},
+			organizationId = ${organizationId});
 	}
 
 }

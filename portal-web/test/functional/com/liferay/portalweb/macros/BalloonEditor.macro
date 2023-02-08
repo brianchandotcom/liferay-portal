@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro clearParagraphWithBackspace {
-		BalloonEditor.highlightText(paragraph_number = "${paragraph_number}");
+		BalloonEditor.highlightText(paragraph_number = ${paragraph_number});
 
 		KeyPress(
 			locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
@@ -29,16 +29,16 @@ definition {
 	macro highlightText {
 		TripleClick(
 			locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-			paragraph_number = "${paragraph_number}");
+			paragraph_number = ${paragraph_number});
 	}
 
 	macro toggleBalloonEditorContentStyle {
 		ScrollWebElementIntoView(
-			key_titleName = "${optionTool}",
+			key_titleName = ${optionTool},
 			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
 
 		Click(
-			key_titleName = "${optionTool}",
+			key_titleName = ${optionTool},
 			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
 	}
 

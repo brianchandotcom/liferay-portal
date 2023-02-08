@@ -11,14 +11,14 @@ definition {
 
 		if (!(isSet(type))) {
 			JSONLayout.addPublicLayout(
-				groupName = "${siteName}",
-				layoutName = "${layoutName}");
+				groupName = ${siteName},
+				layoutName = ${layoutName});
 		}
 		else {
 			JSONLayout.addPublicLayout(
-				groupName = "${siteName}",
-				layoutName = "${layoutName}",
-				type = "${type}");
+				groupName = ${siteName},
+				layoutName = ${layoutName},
+				type = ${type});
 		}
 	}
 
@@ -27,7 +27,7 @@ definition {
 			var siteName = "Site Name";
 		}
 
-		JSONGroup.addGroup(groupName = "${siteName}");
+		JSONGroup.addGroup(groupName = ${siteName});
 
 		if (!(isSet(layoutName))) {
 			var layoutName = "AC Page";
@@ -35,14 +35,14 @@ definition {
 
 		if (!(isSet(type))) {
 			ACUtils.addPage(
-				layoutName = "${layoutName}",
-				siteName = "${siteName}");
+				layoutName = ${layoutName},
+				siteName = ${siteName});
 		}
 		else {
 			ACUtils.addPage(
-				layoutName = "${layoutName}",
-				siteName = "${siteName}",
-				type = "${type}");
+				layoutName = ${layoutName},
+				siteName = ${siteName},
+				type = ${type});
 		}
 	}
 
@@ -53,69 +53,69 @@ definition {
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
-			layoutName = "${layoutName}",
-			widgetName = "${widgetName}");
+			layoutName = ${layoutName},
+			widgetName = ${widgetName});
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 	}
 
 	macro assertActiveIndividualChart {
-		var key_timeFilter = "${timeFilter}";
+		var key_timeFilter = ${timeFilter};
 
 		if (isSet(visitorLegend)) {
-			var key_visitorLegend = "${visitorLegend}";
+			var key_visitorLegend = ${visitorLegend};
 
 			MouseOver(locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
 
 			while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
-				if ("${timeFilter}" != "Custom Range") {
+				if (${timeFilter} != "Custom Range") {
 					ACTimeFilter.clickTimeFilterButton();
 
-					if ("${timeFilter}" == "Last 24 hours") {
+					if (${timeFilter} == "Last 24 hours") {
 						ACTimeFilter.setLast24Hours();
 					}
 
-					if ("${timeFilter}" == "Yesterday") {
+					if (${timeFilter} == "Yesterday") {
 						ACTimeFilter.setYesterday();
 					}
 
-					if ("${timeFilter}" == "Last 7 days") {
+					if (${timeFilter} == "Last 7 days") {
 						ACTimeFilter.setLast7Days();
 					}
 
-					if ("${timeFilter}" == "Last 28 days") {
+					if (${timeFilter} == "Last 28 days") {
 						ACTimeFilter.setLast28Days();
 					}
 
-					if ("${timeFilter}" == "Last 30 days") {
+					if (${timeFilter} == "Last 30 days") {
 						ACTimeFilter.setLast30Days();
 					}
 
-					if ("${timeFilter}" == "Last 90 days") {
+					if (${timeFilter} == "Last 90 days") {
 						ACTimeFilter.setLast90Days();
 					}
 
-					if ("${timeFilter}" == "Last 180 days") {
+					if (${timeFilter} == "Last 180 days") {
 						ACTimeFilter.setLast180Days();
 					}
 
-					if ("${timeFilter}" == "Last Year") {
+					if (${timeFilter} == "Last Year") {
 						ACTimeFilter.setLastYear();
 					}
 				}
 
-				if ("${timeFilter}" == "Custom Range") {
+				if (${timeFilter} == "Custom Range") {
 					ACTimeFilter.setCustomRange(
-						endDay = "${endDay}",
-						endMonth = "${endMonth}",
-						endYear = "${endYear}",
-						startDay = "${startDay}",
-						startMonth = "${startMonth}",
-						startYear = "${startYear}");
+						endDay = ${endDay},
+						endMonth = ${endMonth},
+						endYear = ${endYear},
+						startDay = ${startDay},
+						startMonth = ${startMonth},
+						startYear = ${startYear});
 				}
 
 				MouseOver(locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
@@ -125,50 +125,50 @@ definition {
 			while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
-				if ("${timeFilter}" != "Custom Range") {
+				if (${timeFilter} != "Custom Range") {
 					ACTimeFilter.clickTimeFilterButton();
 
-					if ("${timeFilter}" == "Last 24 hours") {
+					if (${timeFilter} == "Last 24 hours") {
 						ACTimeFilter.setLast24Hours();
 					}
 
-					if ("${timeFilter}" == "Yesterday") {
+					if (${timeFilter} == "Yesterday") {
 						ACTimeFilter.setYesterday();
 					}
 
-					if ("${timeFilter}" == "Last 7 days") {
+					if (${timeFilter} == "Last 7 days") {
 						ACTimeFilter.setLast7Days();
 					}
 
-					if ("${timeFilter}" == "Last 28 days") {
+					if (${timeFilter} == "Last 28 days") {
 						ACTimeFilter.setLast28Days();
 					}
 
-					if ("${timeFilter}" == "Last 30 days") {
+					if (${timeFilter} == "Last 30 days") {
 						ACTimeFilter.setLast30Days();
 					}
 
-					if ("${timeFilter}" == "Last 90 days") {
+					if (${timeFilter} == "Last 90 days") {
 						ACTimeFilter.setLast90Days();
 					}
 
-					if ("${timeFilter}" == "Last 180 days") {
+					if (${timeFilter} == "Last 180 days") {
 						ACTimeFilter.setLast180Days();
 					}
 
-					if ("${timeFilter}" == "Last Year") {
+					if (${timeFilter} == "Last Year") {
 						ACTimeFilter.setLastYear();
 					}
 				}
 
-				if ("${timeFilter}" == "Custom Range") {
+				if (${timeFilter} == "Custom Range") {
 					ACTimeFilter.setCustomRange(
-						endDay = "${endDay}",
-						endMonth = "${endMonth}",
-						endYear = "${endYear}",
-						startDay = "${startDay}",
-						startMonth = "${startMonth}",
-						startYear = "${startYear}");
+						endDay = ${endDay},
+						endMonth = ${endMonth},
+						endYear = ${endYear},
+						startDay = ${startDay},
+						startMonth = ${startMonth},
+						startYear = ${startYear});
 				}
 			}
 		}
@@ -177,10 +177,10 @@ definition {
 	}
 
 	macro assertAudienceCard {
-		var key_index = "${index}";
+		var key_index = ${index};
 
-		for (var percentage : list "${percentageList}") {
-			var key_percentage = "${percentage}";
+		for (var percentage : list ${percentageList}) {
+			var key_percentage = ${percentage};
 
 			while ((IsElementNotPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
@@ -188,40 +188,40 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE",
-				value1 = "${percentage}");
+				value1 = ${percentage});
 		}
 	}
 
 	macro assertDataSourceName {
-		var itemName = "${dataSourceName}";
+		var itemName = ${dataSourceName};
 
-		ACUtils.assertItemsName(itemList = "${itemName}");
+		ACUtils.assertItemsName(itemList = ${itemName});
 	}
 
 	macro assertDatePattern {
-		if ("${format}" == "MMM d") {
+		if (${format} == "MMM d") {
 			var pattern = "[A-Z][a-z][a-z]\s\d+";
 		}
 
-		if ("${format}" == "MMM") {
+		if (${format} == "MMM") {
 			var pattern = "[A-Z][a-z][a-z]";
 		}
 
-		if ("${format}" == "MMM d - d") {
+		if (${format} == "MMM d - d") {
 			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s\d+";
 		}
 
-		if ("${format}" == "MMM d - MMM d") {
+		if (${format} == "MMM d - MMM d") {
 			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s[A-Z][a-z][a-z]\s\d+";
 		}
 
-		if ("${format}" == "yyyy MMM dd") {
+		if (${format} == "yyyy MMM dd") {
 			var pattern = "\d\d\d\d\s[A-Z][a-z][a-z]\s\d+";
 		}
 
-		var match = StringUtil.matches("${date}", "${pattern}");
+		var match = StringUtil.matches(${date}, ${pattern});
 
-		if ("${match}" == "true") {
+		if (${match} == "true") {
 			echo("PASSED");
 		}
 		else {
@@ -230,11 +230,11 @@ definition {
 	}
 
 	macro assertDropdownItem {
-		var key_dropdownItem = "${menuItem}";
+		var key_dropdownItem = ${menuItem};
 
 		AssertTextEquals(
 			locator1 = "ACUtils#DROPDOWN_ITEM",
-			value1 = "${menuItem}");
+			value1 = ${menuItem});
 	}
 
 	macro assertEventNotPresent {
@@ -243,7 +243,7 @@ definition {
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
+			actual = ${actual},
 			expected = "");
 	}
 
@@ -253,8 +253,8 @@ definition {
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${eventId}");
+			actual = ${actual},
+			expected = ${eventId});
 	}
 
 	macro assertEventPropertyValue {
@@ -263,8 +263,8 @@ definition {
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${value}");
+			actual = ${actual},
+			expected = ${value});
 	}
 
 	macro assertIdentityRequestPropertiesValue {
@@ -273,15 +273,15 @@ definition {
 			property = "dataSourceId");
 
 		TestUtils.assertPartialEquals(
-			actual = "${actualDataSourceId}",
-			expected = "${expectedDataSourceId}");
+			actual = ${actualDataSourceId},
+			expected = ${expectedDataSourceId});
 
 		var emailAddressHashed = ACUtils.getPageRefRequestPropertyValue(
 			pageRef = "identity",
 			property = "emailAddressHashed");
 
 		TestUtils.assertNotEquals(
-			actual = "${emailAddressHashed}",
+			actual = ${emailAddressHashed},
 			expected = "");
 
 		var id = ACUtils.getPageRefRequestPropertyValue(
@@ -289,7 +289,7 @@ definition {
 			property = "id");
 
 		TestUtils.assertNotEquals(
-			actual = "${id}",
+			actual = ${id},
 			expected = "");
 
 		var userId = ACUtils.getPageRefRequestPropertyValue(
@@ -297,78 +297,78 @@ definition {
 			property = "userId");
 
 		TestUtils.assertNotEquals(
-			actual = "${userId}",
+			actual = ${userId},
 			expected = "");
 	}
 
 	@summary = "Asserts a list of items by the name"
 	macro assertItemsName {
-		for (var key_itemName : list "${itemList}") {
+		for (var key_itemName : list ${itemList}) {
 			AssertElementPresent(
-				itemName = "${key_itemName}",
+				itemName = ${key_itemName},
 				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
 	}
 
 	@summary = "Asserts an element not present in the list of items by the name"
 	macro assertItemsNameNotPresent {
-		for (var itemName : list "${itemList}") {
+		for (var itemName : list ${itemList}) {
 			AssertElementNotPresent(
-				itemName = "${itemName}",
+				itemName = ${itemName},
 				locator1 = "ACSettings#ITEM_ON_LIST");
 		}
 	}
 
 	macro assertPageTitle {
-		var key_pageTitle = "${pageTitle}";
+		var key_pageTitle = ${pageTitle};
 
 		AssertTextEquals(
 			locator1 = "ACUtils#PAGE_TITLE",
-			value1 = "${pageTitle}");
+			value1 = ${pageTitle});
 	}
 
 	macro assertPageTitleNotPresent {
-		var key_pageTitle = "${pageTitle}";
+		var key_pageTitle = ${pageTitle};
 
 		AssertElementNotPresent(
 			locator1 = "ACUtils#PAGE_TITLE",
-			value1 = "${pageTitle}");
+			value1 = ${pageTitle});
 	}
 
 	macro assertRequestCommonPropertiesValue {
 		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
 
 		TestUtils.assertEquals(
-			actual = "${actualChannelId}",
-			expected = "${expectedChannelId}");
+			actual = ${actualChannelId},
+			expected = ${expectedChannelId});
 
 		var actualDataSourceId = ACUtils.getRequestCommonPropertyValue(property = "dataSourceId");
 
 		TestUtils.assertEquals(
-			actual = "${actualDataSourceId}",
-			expected = "${expectedDataSourceId}");
+			actual = ${actualDataSourceId},
+			expected = ${expectedDataSourceId});
 
 		var id = ACUtils.getRequestCommonPropertyValue(property = "id");
 
 		TestUtils.assertNotEquals(
-			actual = "${id}",
+			actual = ${id},
 			expected = "");
 
 		var userId = ACUtils.getRequestCommonPropertyValue(property = "userId");
 
 		TestUtils.assertNotEquals(
-			actual = "${userId}",
+			actual = ${userId},
 			expected = "");
 	}
 
 	macro assertTimePattern {
-		if ("${format}" == "h tt") {
+		if (${format} == "h tt") {
 			var pattern = "\d+\s[A-Z][A-Z]";
 		}
 
-		var match = StringUtil.regexReplaceFirst("${time}", "${pattern}", "true");
+		var match = StringUtil.regexReplaceFirst(${time}, ${pattern}, "true");
 
-		if ("${match}" == "true") {
+		if (${match} == "true") {
 			echo("PASSED");
 		}
 		else {
@@ -377,7 +377,7 @@ definition {
 	}
 
 	macro assertXAxisTimedGraph {
-		var key_parentName = "${parentName}";
+		var key_parentName = ${parentName};
 
 		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");
 	}
@@ -385,13 +385,13 @@ definition {
 	macro changePagination {
 		Click(locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 
-		ACUtils.viewPaginationItemsPerPage(itemsPerPage = "${itemsPerPage}");
+		ACUtils.viewPaginationItemsPerPage(itemsPerPage = ${itemsPerPage});
 	}
 
 	macro checkAnyPage {
-		var key_pageNumber = "${pageNumber}";
+		var key_pageNumber = ${pageNumber};
 
 		Click(locator1 = "ACUtils#ANY_PAGE");
 	}
@@ -411,7 +411,7 @@ definition {
 		localStorage.clear();
 		''';
 
-		var localStorageItem = selenium.getEval("${javaScript}");
+		var localStorageItem = selenium.getEval(${javaScript});
 	}
 
 	macro clearSearchBar {
@@ -419,18 +419,18 @@ definition {
 	}
 
 	macro clickAnyButton {
-		var buttonName = "${button}";
+		var buttonName = ${button};
 
 		Click(
-			key_buttonName = "${buttonName}",
+			key_buttonName = ${buttonName},
 			locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
 	macro clickGenericHyperlink {
-		var key_textValue = "${hyperlinkText}";
+		var key_textValue = ${hyperlinkText};
 
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(locator1 = "ACUtils#GENERIC_TEXT_ORDER");
@@ -442,17 +442,17 @@ definition {
 
 	macro clickOnDistributionBar {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
-		while (IsElementNotPresent(index = "${index}", locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
+		while (IsElementNotPresent(index = ${index}, locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
 			TestUtils.hardRefresh();
 
 			ACUtils.waitForChartLoad();
 		}
 
 		Click(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
@@ -469,7 +469,7 @@ definition {
 				-H 'osb-asah-project-id: osbasah'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${cleanCurl});
 	}
 
 	@summary = "This macro close all open AC sessions. It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518"
@@ -478,7 +478,7 @@ definition {
 
 		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = 30000);
 	}
 
 	macro closeModal {
@@ -491,12 +491,12 @@ definition {
 		}
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 
 		if (IsElementNotPresent(key_portletTitleName = "Blogs", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			ACUtils.addWidgetToPage(
-				layoutName = "${layoutName}",
+				layoutName = ${layoutName},
 				widgetName = "Blogs");
 		}
 
@@ -506,7 +506,7 @@ definition {
 
 		JSONBlog.addEntry(
 			entryContent = "This is the blog test for AC",
-			entryTitle = "${entryTitle}",
+			entryTitle = ${entryTitle},
 			groupName = "Site Name");
 	}
 
@@ -516,12 +516,12 @@ definition {
 		}
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 
 		if (IsElementNotPresent(key_portletTitleName = "Documents and Media", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			ACUtils.addWidgetToPage(
-				layoutName = "${layoutName}",
+				layoutName = ${layoutName},
 				widgetName = "Documents and Media");
 		}
 
@@ -534,10 +534,10 @@ definition {
 		}
 
 		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "${dmDocumentTitle}",
+			dmDocumentTitle = ${dmDocumentTitle},
 			groupName = "Site Name",
 			mimeType = "image/jpeg",
-			sourceFileName = "${dmDocumentFile}");
+			sourceFileName = ${dmDocumentFile});
 	}
 
 	macro createFormAndAddToPage {
@@ -550,28 +550,28 @@ definition {
 		}
 
 		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
+			layoutName = ${layoutName},
 			widgetName = "Form");
 
 		FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName(formTitle = "${formAcTitle}");
+		Form.editName(formTitle = ${formAcTitle});
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Button.clickPublish();
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 
 		FormPortletNavigator.gotoSelectForm();
 
-		FormPortletConfiguration.selectForm(formTitle = "${formAcTitle}");
+		FormPortletConfiguration.selectForm(formTitle = ${formAcTitle});
 
 		PortletEntry.save();
 	}
@@ -582,7 +582,7 @@ definition {
 		}
 
 		if (!(isSet(portletIndex))) {
-			var portletIndex = "1";
+			var portletIndex = 1;
 		}
 
 		if (!(isSet(webContentTitle))) {
@@ -593,44 +593,44 @@ definition {
 			var webContentContent = "This is the web content test for AC";
 
 			JSONWebcontent.addWebContent(
-				content = "${webContentContent}",
+				content = ${webContentContent},
 				groupName = "Site Name",
-				title = "${webContentTitle}");
+				title = ${webContentTitle});
 		}
 		else {
 			JSONWebcontent.addWebContent(
-				content = "${webContentContent}",
+				content = ${webContentContent},
 				groupName = "Site Name",
 				source = "true",
-				title = "${webContentTitle}");
+				title = ${webContentTitle});
 		}
 
 		ACUtils.addWidgetToPage(
-			layoutName = "${layoutName}",
+			layoutName = ${layoutName},
 			widgetName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(
-			portletIndex = "${portletIndex}",
-			webContentTitle = "${webContentTitle}");
+			portletIndex = ${portletIndex},
+			webContentTitle = ${webContentTitle});
 
 		Navigator.gotoSitePage(
-			pageName = "${layoutName}",
+			pageName = ${layoutName},
 			siteName = "Site Name");
 	}
 
 	macro deleteItemFromList {
 		var key_actionButton = "Delete";
-		var key_nameList = "${itemName}";
+		var key_nameList = ${itemName};
 
 		WaitForPageLoad();
 
-		ACUtils.searchBar(searchItem = "${itemName}");
+		ACUtils.searchBar(searchItem = ${itemName});
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
 
 		Click(locator1 = "ACUtils#DELETE_BUTTON");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 
 		ACUtils.clearSearchBar();
 	}
@@ -643,9 +643,9 @@ definition {
 	}
 
 	macro executeJSInBrowserConsole {
-		var javaScript = "${javaScriptCode}";
+		var javaScript = ${javaScriptCode};
 
-		var javaScriptItem = selenium.getEval("${javaScript}");
+		var javaScriptItem = selenium.getEval(${javaScript});
 	}
 
 	macro getEventPropertyValue {
@@ -653,59 +653,59 @@ definition {
 
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
 
-		return "${value}";
+		return ${value};
 	}
 
 	macro getGroupId {
 		var currentURL = Navigator.getCurrentURL();
 
-		var groupId = StringUtil.extractLast("${currentURL}", "workspace/");
+		var groupId = StringUtil.extractLast(${currentURL}, "workspace/");
 
-		var groupId = StringUtil.extractFirst("${groupId}", "/");
+		var groupId = StringUtil.extractFirst(${groupId}, "/");
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro getIPAddress {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		var extractedIPAddress = StringUtil.extractFirst("${analyticsCloudURL}", ":8080");
+		var extractedIPAddress = StringUtil.extractFirst(${analyticsCloudURL}, ":8080");
 
-		var extractedIPAddress = StringUtil.extractLast("${extractedIPAddress}", "/");
+		var extractedIPAddress = StringUtil.extractLast(${extractedIPAddress}, "/");
 
-		return "${extractedIPAddress}";
+		return ${extractedIPAddress};
 	}
 
 	macro getIPCountry {
 		var curl = '''https://ipinfo.io''';
 
-		var code = JSONCurlUtil.get("${curl}", "$.country");
+		var code = JSONCurlUtil.get(${curl}, "$.country");
 
-		if ("${code}" == "GB") {
+		if (${code} == "GB") {
 			var country = "United Kingdom";
 		}
 
-		if ("${code}" == "BR") {
+		if (${code} == "BR") {
 			var country = "Brazil";
 		}
 
-		if ("${code}" == "US") {
+		if (${code} == "US") {
 			var country = "United States";
 		}
 
-		if ("${code}" == "CN") {
+		if (${code} == "CN") {
 			var country = "China";
 		}
 
-		if ("${code}" == "ES") {
+		if (${code} == "ES") {
 			var country = "Spain";
 		}
 
-		if ("${code}" == "NZ") {
+		if (${code} == "NZ") {
 			var country = "New Zealand";
 		}
 
-		return "${country}";
+		return ${country};
 	}
 
 	macro getLocalStorageItem {
@@ -715,11 +715,11 @@ definition {
 		return localStorageItem;
 		''';
 
-		var localStorageItem = selenium.getEval("${javaScript}");
+		var localStorageItem = selenium.getEval(${javaScript});
 
-		var localStorageItem = StringUtil.replace("${localStorageItem}", "\"", "");
+		var localStorageItem = StringUtil.replace(${localStorageItem}, "\"", "");
 
-		return "${localStorageItem}";
+		return ${localStorageItem};
 	}
 
 	macro getPageRefRequestPropertyValue {
@@ -727,7 +727,7 @@ definition {
 
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..${property}");
 
-		return "${value}";
+		return ${value};
 	}
 
 	macro getRequestCommonPropertyValue {
@@ -735,13 +735,13 @@ definition {
 
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$.[-1:]..${property}");
 
-		return "${value}";
+		return ${value};
 	}
 
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		Open(locator1 = "${analyticsCloudURL}");
+		Open(locator1 = ${analyticsCloudURL});
 
 		if (!(isSet(emailAddress))) {
 			var emailAddress = "test@liferay.com";
@@ -749,12 +749,12 @@ definition {
 
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 			if (!(isSet(password))) {
-				ACLogin.loginAs(emailAddress = "${emailAddress}");
+				ACLogin.loginAs(emailAddress = ${emailAddress});
 			}
 			else {
 				ACLogin.loginAs(
-					emailAddress = "${emailAddress}",
-					password = "${password}");
+					emailAddress = ${emailAddress},
+					password = ${password});
 			}
 		}
 
@@ -764,13 +764,13 @@ definition {
 
 		if (isSet(workspaceName)) {
 			if (!(isSet(emailList))) {
-				ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
+				ACWorkspace.openWorkspace(workspaceName = ${workspaceName});
 			}
 
 			if (isSet(emailList)) {
 				ACWorkspace.createWorkspace(
-					emailList = "${emailList}",
-					workspaceName = "${workspaceName}");
+					emailList = ${emailList},
+					workspaceName = ${workspaceName});
 			}
 		}
 	}
@@ -783,7 +783,7 @@ definition {
 		}
 
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
-			User.firstLoginPG(userEmailAddress = "${userEmailAddress}");
+			User.firstLoginPG(userEmailAddress = ${userEmailAddress});
 		}
 	}
 
@@ -791,51 +791,51 @@ definition {
 
 		// Pause is necessary because poshi logs in from one user to another quickly. For more information about pause see LRAC-9514
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 	}
 
 	@summary = "This macro access a page/document"
 	macro navigateToSitePage {
-		for (var documentTitle : list "${documentTitleList}") {
+		for (var documentTitle : list ${documentTitleList}) {
 			Navigator.gotoSitePage(
-				pageName = "${pageName}",
-				siteName = "${siteName}");
+				pageName = ${pageName},
+				siteName = ${siteName});
 
-			if ("${actionType}" == "View WC") {
+			if (${actionType} == "View WC") {
 				ACUtils.waitForSendingRequest();
 			}
 
-			if ("${actionType}" == "View Blog") {
-				BlogsNavigator.gotoPG(entryTitle = "${documentTitle}");
+			if (${actionType} == "View Blog") {
+				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
 			}
 
-			if ("${actionType}" == "Comment Blog") {
-				BlogsNavigator.gotoPG(entryTitle = "${documentTitle}");
+			if (${actionType} == "Comment Blog") {
+				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
 
-				Comments.addPG(entryComment = "${commentText}");
+				Comments.addPG(entryComment = ${commentText});
 			}
 
-			if ("${actionType}" == "View DM") {
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentTitle}");
+			if (${actionType} == "View DM") {
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
 			}
 
-			if ("${actionType}" == "Download DM") {
-				DMDocument.downloadPG(dmDocumentTitle = "${documentTitle}");
+			if (${actionType} == "Download DM") {
+				DMDocument.downloadPG(dmDocumentTitle = ${documentTitle});
 			}
 
-			if ("${actionType}" == "Comment DM") {
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = "${documentTitle}");
+			if (${actionType} == "Comment DM") {
+				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
 
-				Comments.addPG(entryComment = "${commentText}");
+				Comments.addPG(entryComment = ${commentText});
 			}
 
-			if ("${actionType}" == "View Form") {
+			if (${actionType} == "View Form") {
 				FormPortlet.waitFormRenderer(text = "Submit");
 
 				ACUtils.waitForSendingRequest();
 			}
 
-			if ("${actionType}" == "Submit Form") {
+			if (${actionType} == "Submit Form") {
 				FormPortlet.waitFormRenderer(text = "Submit");
 
 				FormFields.viewTextLabel(
@@ -844,7 +844,7 @@ definition {
 
 				FormFields.editText(
 					fieldName = "Text",
-					fieldValue = "${submitText}");
+					fieldValue = ${submitText});
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 			}
@@ -853,36 +853,36 @@ definition {
 
 	@summary = "This macro access a page/document with different users. Pause is necessary because poshi logs in from one user to another very quickly. For more information about pause see LRAC-9514"
 	macro navigateToSitePageWithUser {
-		for (var email : list "${emailList}") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "${email}");
+		for (var email : list ${emailList}) {
+			User.logoutAndLoginPG(userLoginEmailAddress = ${email});
 
 			ACUtils.navigateToSitePage(
-				actionType = "${actionType}",
-				documentTitleList = "${documentTitleList}",
-				pageName = "${pageName}",
-				siteName = "${siteName}",
-				submitText = "${submitText}");
+				actionType = ${actionType},
+				documentTitleList = ${documentTitleList},
+				pageName = ${pageName},
+				siteName = ${siteName},
+				submitText = ${submitText});
 
 			ACUtils.logInPause();
 		}
 	}
 
 	macro orderAnyTable {
-		var key_columnName = "${columnName}";
+		var key_columnName = ${columnName};
 
 		Click(locator1 = "ACUtils#GENERIC_ORDER_BUTTON");
 	}
 
 	macro orderArrow {
-		var type = "${type}";
+		var type = ${type};
 
-		if ("${type}" == "descending") {
+		if (${type} == "descending") {
 			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC")) {
 				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC");
 			}
 		}
 
-		if ("${type}" == "ascending") {
+		if (${type} == "ascending") {
 			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES")) {
 				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES");
 			}
@@ -890,15 +890,15 @@ definition {
 	}
 
 	macro orderTableTitleArrow {
-		var type = "${type}";
+		var type = ${type};
 
-		if ("${type}" == "down") {
+		if (${type} == "down") {
 			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP")) {
 				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP");
 			}
 		}
 
-		if ("${type}" == "up") {
+		if (${type} == "up") {
 			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN")) {
 				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN");
 			}
@@ -906,7 +906,7 @@ definition {
 	}
 
 	macro restartDockerContainer {
-		var containerName = "${containerName}";
+		var containerName = ${containerName};
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -922,19 +922,19 @@ definition {
 	macro searchBar {
 		if (isSet(cardTitle)) {
 			Type(
-				key_cardTitle = "${cardTitle}",
+				key_cardTitle = ${cardTitle},
 				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
-				value1 = "${searchItem}");
+				value1 = ${searchItem});
 
 			KeyPress(
-				key_cardTitle = "${cardTitle}",
+				key_cardTitle = ${cardTitle},
 				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
 				value1 = "\ENTER");
 		}
 		else {
 			Type(
 				locator1 = "ACSettings#SEARCH_BAR",
-				value1 = "${searchItem}");
+				value1 = ${searchItem});
 
 			KeyPress(
 				locator1 = "ACSettings#SEARCH_BAR",
@@ -945,7 +945,7 @@ definition {
 	macro selectGenericOption {
 		Select(
 			locator1 = "Select#SELECT",
-			value1 = "${optionValue}");
+			value1 = ${optionValue});
 	}
 
 	macro setItemName {
@@ -957,7 +957,7 @@ definition {
 
 		Type.sendKeys(
 			locator1 = "ACUtils#NAME_FIELD",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 	}
 
 	macro setLocalStorageValue {
@@ -965,7 +965,7 @@ definition {
 		localStorage.setItem('${keyName}', '${keyValue}');
 		''';
 
-		var localStorageItem = selenium.getEval("${javaScript}");
+		var localStorageItem = selenium.getEval(${javaScript});
 	}
 
 	macro tearDownAC {
@@ -985,24 +985,24 @@ definition {
 	macro viewActivePage {
 		AssertTextEquals(
 			locator1 = "ACUtils#ACTIVE_PAGE",
-			value1 = "${pageNumber}");
+			value1 = ${pageNumber});
 	}
 
 	macro viewAlertInfo {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = "${infoMessage}");
+			value1 = ${infoMessage});
 	}
 
 	macro viewGenericButton {
-		var key_buttonName = "${buttonName}";
+		var key_buttonName = ${buttonName};
 
 		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
 	macro viewGenericText {
-		for (var textValue : list "${textValueList}") {
-			var key_textValue = "${textValue}";
+		for (var textValue : list ${textValueList}) {
+			var key_textValue = ${textValue};
 
 			WaitForPageLoad();
 
@@ -1016,11 +1016,11 @@ definition {
 
 	macro viewGenericTextInOrder {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
-		for (var textValue : list "${textValueList}") {
-			var key_textValue = "${textValue}";
+		for (var textValue : list ${textValueList}) {
+			var key_textValue = ${textValue};
 
 			WaitForPageLoad();
 
@@ -1033,26 +1033,26 @@ definition {
 	}
 
 	macro viewNameList {
-		for (var name : list "${nameList}") {
-			var key_nameList = "${name}";
+		for (var name : list ${nameList}) {
+			var key_nameList = ${name};
 
 			WaitForPageLoad();
 
 			while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = "${name}");
+				ACSegments.searchSegment(findSegment = ${name});
 
 				ACUtils.clearSearchBar();
 			}
 
 			AssertTextEquals(
 				locator1 = "ACUtils#NAME_LIST",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 	}
 
 	macro viewNameListInOrder {
-		var key_userName = "${name}";
-		var index = "${index}";
+		var key_userName = ${name};
+		var index = ${index};
 
 		WaitForPageLoad();
 
@@ -1062,17 +1062,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE",
-			value1 = "${name}");
+			value1 = ${name});
 	}
 
 	macro viewNameListIsNotPresent {
-		for (var name : list "${nameList}") {
-			var key_nameList = "${name}";
+		for (var name : list ${nameList}) {
+			var key_nameList = ${name};
 
 			WaitForPageLoad();
 
 			while ((IsElementPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = "${name}");
+				ACSegments.searchSegment(findSegment = ${name});
 
 				ACUtils.clearSearchBar();
 			}
@@ -1082,7 +1082,7 @@ definition {
 	}
 
 	macro viewNoResultsMessage {
-		var key_noResultMessage = "${noResultMessage}";
+		var key_noResultMessage = ${noResultMessage};
 
 		WaitForPageLoad();
 
@@ -1092,12 +1092,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-			value1 = "${noResultMessage}");
+			value1 = ${noResultMessage});
 	}
 
 	macro viewNoResultsMessageNotPresent {
 		AssertElementNotPresent(
-			key_noResultMessage = "${noResultMessage}",
+			key_noResultMessage = ${noResultMessage},
 			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
 	}
 
@@ -1108,35 +1108,35 @@ definition {
 	}
 
 	macro viewPartialNameList {
-		for (var name : list "${nameList}") {
-			var key_nameList = "${name}";
+		for (var name : list ${nameList}) {
+			var key_nameList = ${name};
 
 			WaitForPageLoad();
 
 			while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = "${name}");
+				ACSegments.searchSegment(findSegment = ${name});
 
 				ACUtils.clearSearchBar();
 			}
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ACUtils#PARTIAL_NAME_LIST",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 	}
 
 	macro viewResultsMessage {
 		AssertTextEquals(
 			locator1 = "ACUtils#RESULT_MESSAGE",
-			value1 = "${results}");
+			value1 = ${results});
 	}
 
 	macro viewResultsPages {
-		var key_pageNumber = "${pageNumber}";
+		var key_pageNumber = ${pageNumber};
 
 		AssertTextEquals(
 			locator1 = "ACUtils#ANY_PAGE",
-			value1 = "${key_pageNumber}");
+			value1 = ${key_pageNumber});
 	}
 
 	macro viewSearchResultsInfo {
@@ -1146,14 +1146,14 @@ definition {
 	}
 
 	macro viewTableInformation {
-		var list1 = ListUtil.newListFromString("${nameList}");
-		var list2 = ListUtil.newListFromString("${numberValueList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${nameList});
+		var list2 = ListUtil.newListFromString(${numberValueList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var key_nameList = ListUtil.get("${list1}", "${i}");
-			var key_numberValue = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var key_nameList = ListUtil.get(${list1}, ${i});
+			var key_numberValue = ListUtil.get(${list2}, ${i});
 
 			WaitForPageLoad();
 
@@ -1165,7 +1165,7 @@ definition {
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
@@ -1173,14 +1173,14 @@ definition {
 
 		// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
 
-		Pause(locator1 = "2000");
+		Pause(locator1 = 2000);
 	}
 
 	macro waitForClearProperty {
 
 		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
 
-		Pause(locator1 = "10000");
+		Pause(locator1 = 10000);
 	}
 
 	macro waitForLoading {
@@ -1191,7 +1191,7 @@ definition {
 
 		// Pausing is necessary for poshi to scroll down to specific element. For more info see LRAC-11569
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 	}
 
 	macro waitForSendingRequest {
@@ -1199,13 +1199,13 @@ definition {
 
 			// Pausing for harRecording test for reuse purpose, see LRAC-10600
 
-			Pause(locator1 = "${time}");
+			Pause(locator1 = ${time});
 		}
 		else if (!(isSet(time))) {
 
 			// Pausing for harRecording tests, see LRAC-10600
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = 5000);
 		}
 	}
 

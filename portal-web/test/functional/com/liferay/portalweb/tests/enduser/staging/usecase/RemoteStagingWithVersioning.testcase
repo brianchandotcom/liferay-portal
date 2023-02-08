@@ -25,13 +25,13 @@ definition {
 			branchingPrivate = "true",
 			branchingPublic = "true",
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-128736. Check Asset Publisher can't publish the displayed content to live by default."
-	@priority = "4"
+	@priority = 4
 	test AssertContentNotBePublishedByDefault {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#AssertContentNotBePublishedByDefault";
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "Able to publish web content via remote staging."
-	@priority = "3"
+	@priority = 3
 	test PublishWCViaRemoteStaging {
 		property test.name.skip.portal.instance = "RemoteStagingWithVersioning#PublishWCViaRemoteStaging";
 

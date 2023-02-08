@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that a web content folder can be deleted in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteFolder {
 		JSONWebcontent.addFolder(
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This test deletes multiple web content in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteMultipleWebContent {
 		for (var i : list "1,2,3") {
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This test deletes template and structure in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteTemplateAndStructure {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -112,7 +112,7 @@ definition {
 
 	@description = "This ensures that a web content folder can be edited in a depot."
 	@e2e
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanEditFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@description = "This test edits template and structure in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditTemplateAndStructure {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -188,7 +188,7 @@ definition {
 
 	@description = "This ensures that a web content can be edited in a depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditWebContent {
 		property portal.acceptance = "true";
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "This ensures that a web content can be expired in a depot."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanExpireWebContent {
 		JSONDepot.addDepot(
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@description = "This ensures that web content can be moved to a folder in a depot."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanMoveWebContentToFolder {
 		JSONWebcontent.addWebContent(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This ensures that web content with structure can be restored to a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRestoreWebContentWithStructure {
 		JSONDepot.addDepot(

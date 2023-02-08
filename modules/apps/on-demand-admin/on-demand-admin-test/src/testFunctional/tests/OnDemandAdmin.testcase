@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 
 	@description = "This is a use case for LPS-150388 TC-4: On-Demand Admin can change user information on created virtual instances"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test OnDemandAdminCanChangeInstanceAdminPassword {
 		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminCanChangeInstanceAdminPassword";
 
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-156154 and asserts that the portlet for On-Demand Admin is not available when accessing through a non-default instance."
-	@priority = "5"
+	@priority = 5
 	test OnDemandAdminUnavailableInNonDefaultInstance {
 		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminUnavailableInNonDefaultInstance";
 

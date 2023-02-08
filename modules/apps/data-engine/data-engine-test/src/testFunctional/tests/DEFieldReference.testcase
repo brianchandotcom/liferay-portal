@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can be edited for the Options of a field."
-	@priority = "5"
+	@priority = 5
 	test CanEditReferenceForOptions {
 		NavItem.gotoStructures();
 
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be blank."
-	@priority = "5"
+	@priority = 5
 	test CanNotBeBlank {
 		NavItem.gotoStructures();
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be blank for the Options of a field."
-	@priority = "5"
+	@priority = 5
 	test CanNotBeBlankForOptions {
 		NavItem.gotoStructures();
 
@@ -126,7 +126,7 @@ definition {
 
 		var originalOptionReference = DEBuilder.getOptionReference(
 			fieldLabel = "Single Selection",
-			optionIndex = "1");
+			optionIndex = 1);
 
 		DEBuilder.editOptionReferences(
 			fieldLabel = "Single Selection",
@@ -135,13 +135,13 @@ definition {
 		DEBuilder.openField(fieldLabel = "Single Selection");
 
 		AssertTextEquals.assertValue(
-			index = "1",
+			index = 1,
 			locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
-			value1 = "${originalOptionReference}");
+			value1 = ${originalOptionReference});
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be the same for two fields."
-	@priority = "5"
+	@priority = 5
 	test CanNotBeTheSameForTwoFields {
 		NavItem.gotoStructures();
 
@@ -155,7 +155,7 @@ definition {
 
 		DEBuilder.editFieldReference(
 			fieldLabel = "First Text",
-			fieldReference = "${textReference}");
+			fieldReference = ${textReference});
 
 		DEBuilder.addField(
 			fieldLabel = "Second Text",
@@ -166,7 +166,7 @@ definition {
 		DEBuilder.editFieldReference(
 			assertErrorMessage = "This reference is already being used. Try a different one.",
 			fieldLabel = "Second Text",
-			fieldReference = "${textReference}");
+			fieldReference = ${textReference});
 
 		Button.click(button = "Save");
 
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be the same for two Options of fields."
-	@priority = "5"
+	@priority = 5
 	test CanNotBeTheSameForTwoOptionsOfFields {
 		NavItem.gotoStructures();
 
@@ -193,11 +193,11 @@ definition {
 
 		var originalOptionReference = DEBuilder.getOptionReference(
 			fieldLabel = "Single Selection",
-			optionIndex = "2");
+			optionIndex = 2);
 
 		DEBuilder.editOptionReferences(
 			assertErrorMessage = "This reference is already being used. Try a different one.",
-			assertOptionIndex = "2",
+			assertOptionIndex = 2,
 			fieldLabel = "Single Selection",
 			optionReferenceList = "OptionReference,OptionReference");
 

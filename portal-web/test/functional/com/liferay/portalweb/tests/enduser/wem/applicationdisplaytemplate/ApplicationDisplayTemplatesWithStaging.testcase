@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "Add a widget template in staging site."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddWidgetTemplateInStagingSite {
 		task ("Add a widget templates in staging site") {
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates in staging model."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewTemplateEditorSidebarPanel {
 		task ("Enable Staging Model") {
@@ -102,7 +102,7 @@ definition {
 
 			for (var fieldName : list "Asset Entries*,Asset Entry,Current URL,Locale,Portlet Preferences,Template ID,Theme Display,HTTP Request,Render Request,Render Response,Asset Publisher Helper") {
 				AssertElementPresent(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMEditTemplate#SCRIPT_FIELD");
 			}
 		}
@@ -112,7 +112,7 @@ definition {
 
 			for (var fieldName : list "Template Key,URL,WebDAV URL") {
 				AssertVisible(
-					key_text = "${fieldName}",
+					key_text = ${fieldName},
 					locator1 = "TextInput#ANY");
 			}
 
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "View the widget template applied to Categories Navigation in staging and live site."
-	@priority = "3"
+	@priority = 3
 	test ViewWidgetTemplateAppliedToCategoriesNavigationInStagingAndLiveSite {
 		property testray.component.names = "Categories,Content and Application Templates,Staging";
 

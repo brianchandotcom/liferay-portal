@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-117983. No alert will popup when add a web content based on structure with XSS name."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentBasedOnStructureNameWithXSS {
 		task ("Add a structure with XSS name") {
 			var actualScript = '''<script>alert(123);</script>''';
@@ -38,7 +38,7 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "${actualScript}");
+			WebContentStructures.addCP(structureName = ${actualScript});
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
@@ -48,20 +48,20 @@ definition {
 		}
 
 		task ("View the structure is shown") {
-			WebContentStructures.viewCP(structureName = "${actualScript}");
+			WebContentStructures.viewCP(structureName = ${actualScript});
 		}
 
 		task ("View no alert popup when add a web content based on new structure") {
 			NavItem.gotoWebContent();
 
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "${actualScript}");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = ${actualScript});
 
 			AssertAlertNotPresent();
 		}
 	}
 
 	@description = "Add a web content with a title with escape characters."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Delete a web content with escape characters in web content admin."
-	@priority = "3"
+	@priority = 3
 	test DeleteWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
 
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163074. The XSS shouldn't be executed on preview window."
-	@priority = "4"
+	@priority = 4
 	test PreviewWebContentWithXSS {
 		task ("Given a site designer has a display page template for web content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

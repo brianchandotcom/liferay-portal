@@ -21,13 +21,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 
 		task ("Login on OKTA") {
@@ -35,9 +35,9 @@ definition {
 		}
 
 		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
 		}
 	}
 
@@ -46,17 +46,17 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertAllColumnsInTheTable {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -77,27 +77,27 @@ definition {
 
 		task ("Then I assert all the values from the table") {
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "2",
-				linePosition = "2",
+				lineColunm = 2,
+				linePosition = 2,
 				text = "Redacted");
 
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "2",
+				lineColunm = 3,
+				linePosition = 2,
 				text = "On-Premise");
 
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "4",
-				linePosition = "2",
+				lineColunm = 4,
+				linePosition = 2,
 				text = "Non-Prod");
 
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "5",
-				linePosition = "2",
+				lineColunm = 5,
+				linePosition = 2,
 				text = "Sep 7, 2022");
 
 			CP2ActivationKeys.putMouseOverStatusElementAtTable(
-				linePosition = "2",
+				linePosition = 2,
 				status = "Expired");
 
 			CP2ActivationKeys.assertTooltipIsVisible(text = "Expired");
@@ -106,7 +106,7 @@ definition {
 
 	@description = "Automation ID: LPS-147571 | Test Summary: Assert that paging is only displayed when the table contains at least one key"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertThatThePageIsNotShownWhenThereAreNoKeys {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("When I select 5 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 5);
 		}
 
 		task ("Then I should be able to see the pagination button with the text Show 5 Items") {
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147568 | Test Summary: Assert that the tab statuses reflect with the amount of keys displayed in the table"
-	@priority = "4"
+	@priority = 4
 	test AssertThatTheTabDisplaysTheFollowingStatuses {
 
 		// TODO LPS-147568 AssertThatTheTabDisplaysTheFollowingStatuses pending implementation
@@ -158,7 +158,7 @@ definition {
 
 	@description = "Automation ID: LPS-147582 | Test Summary: Verify that when the user clicks on the download icon a key is downloaded"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanViewTheActivationKeyDownload {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -180,7 +180,7 @@ definition {
 		task ("And I get the formated name for the activation key file") {
 			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
 				fileType = "xml",
-				licenseName = "${testAccount}",
+				licenseName = ${testAccount},
 				licenseType = "activation-key",
 				product = "DXP",
 				version = "7.0");
@@ -191,13 +191,13 @@ definition {
 		}
 
 		task ("Then I should see the downloaded file") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${expectedDownloadedFileName});
 		}
 	}
 
 	@description = "LPS-150784 - Verify if the 'Activated' tab displays the number of keys for it"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheActivatedTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
@@ -218,11 +218,11 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("And I click at the Activated tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+			CP2ActivationKeys.goToKeyTab(licenseTab = ${keyStatus});
 		}
 
 		task ("When I count the numbers of rows") {
@@ -231,14 +231,14 @@ definition {
 
 		task ("Then I assert that the amount of rows is equals to the number at the tab") {
 			CP2ActivationKeys.assertLicenseQuantity(
-				licenseTab = "${keyStatus}",
-				numberOfLicenses = "${keyCount}");
+				licenseTab = ${keyStatus},
+				numberOfLicenses = ${keyCount});
 		}
 	}
 
 	@description = "LPS-160211 - Verify if the 'All' tab displays the number of keys for it"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheAllTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
@@ -259,11 +259,11 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("And I click at the All tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+			CP2ActivationKeys.goToKeyTab(licenseTab = ${keyStatus});
 		}
 
 		task ("When I count the numbers of rows") {
@@ -272,14 +272,14 @@ definition {
 
 		task ("Then I assert that the amount of rows is equals to the number at the tab") {
 			CP2ActivationKeys.assertLicenseQuantity(
-				licenseTab = "${keyStatus}",
-				numberOfLicenses = "${keyCount}");
+				licenseTab = ${keyStatus},
+				numberOfLicenses = ${keyCount});
 		}
 	}
 
 	@description = "LPS-150787 - Verify that by default pagination option is 'Show 5 Items'"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheDefaultPaginationOption {
 		property portal.upstream = "quarantine";
 
@@ -306,7 +306,7 @@ definition {
 
 	@description = "LPS-150793 - Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheExpirationDateFormat {
 		property portal.upstream = "quarantine";
 
@@ -327,7 +327,7 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("And I generate full start and end date for the license") {
@@ -336,15 +336,15 @@ definition {
 
 		task ("Then I assert the the date is correct") {
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "5",
-				linePosition = "1",
-				text = "${staticFullEndDate}");
+				lineColunm = 5,
+				linePosition = 1,
+				text = ${staticFullEndDate});
 		}
 	}
 
 	@description = "LPS-150786 - Verify if the 'Expired' tab displays the number of keys for it"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
@@ -365,11 +365,11 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("And I click at the Expired tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+			CP2ActivationKeys.goToKeyTab(licenseTab = ${keyStatus});
 		}
 
 		task ("When I count the numbers of rows") {
@@ -378,14 +378,14 @@ definition {
 
 		task ("Then I assert that the amount of rows is equals to the number at the tab") {
 			CP2ActivationKeys.assertLicenseQuantity(
-				licenseTab = "${keyStatus}",
-				numberOfLicenses = "${keyCount}");
+				licenseTab = ${keyStatus},
+				numberOfLicenses = ${keyCount});
 		}
 	}
 
 	@description = "LPS-150794 - Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheMessageWhenMouseOverDNE {
 		property portal.upstream = "quarantine";
 
@@ -406,7 +406,7 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("When I put the mouse over the Enviroment Name of a key at the table") {
@@ -420,7 +420,7 @@ definition {
 
 	@description = "LPS-150790 - Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
 		property portal.upstream = "quarantine";
 
@@ -441,7 +441,7 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("When I put the mouse over the Enviroment Name of a key at the table") {
@@ -459,7 +459,7 @@ definition {
 
 	@description = "LPS-150785 - Verify if the 'Not Activated' tab displays the number of keys for it"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheNotActivatedTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
@@ -480,11 +480,11 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("And I click at the Not Activated tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+			CP2ActivationKeys.goToKeyTab(licenseTab = ${keyStatus});
 		}
 
 		task ("When I count the numbers of rows") {
@@ -493,14 +493,14 @@ definition {
 
 		task ("Then I assert that the amount of rows is equals to the number at the tab") {
 			CP2ActivationKeys.assertLicenseQuantity(
-				licenseTab = "${keyStatus}",
-				numberOfLicenses = "${keyCount}");
+				licenseTab = ${keyStatus},
+				numberOfLicenses = ${keyCount});
 		}
 	}
 
 	@description = "LPS-150788 - Verify if the drop-down list contains the following options: Show 5 items - 10 items - 20 items - 50 items"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheOptionsOfTheDropdownList {
 		property portal.upstream = "quarantine";
 
@@ -521,7 +521,7 @@ definition {
 		}
 
 		task ("When I select 5 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 5);
 		}
 
 		task ("Then I should be able to see the pagination button with the text 'Show 5 Items'") {
@@ -529,7 +529,7 @@ definition {
 		}
 
 		task ("When I select 10 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "10");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 10);
 		}
 
 		task ("Then I should be able to see the pagination button with the text 'Show 10 Items'") {
@@ -537,7 +537,7 @@ definition {
 		}
 
 		task ("When I select 20 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "20");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 20);
 		}
 
 		task ("Then I should be able to see the pagination button with the text 'Show 20 Items'") {
@@ -545,7 +545,7 @@ definition {
 		}
 
 		task ("When I select 15 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("Then I should be able to see the pagination button with the text 'Show 50 Items'") {
@@ -555,7 +555,7 @@ definition {
 
 	@description = "LPS-150792 - Verify that for local keys the subtext is 'On-Premise'"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheSubTextForLocalKeys {
 		property portal.upstream = "quarantine";
 
@@ -576,25 +576,25 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("Then I assert that local keys has key type as 'On-Premise'") {
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "2",
+				lineColunm = 3,
+				linePosition = 2,
 				text = "On-Premise");
 
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "2",
-				text = "${testAccount}");
+				lineColunm = 3,
+				linePosition = 2,
+				text = ${testAccount});
 		}
 	}
 
 	@description = "LPS-150791 - Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheSubTextForVirtualKeys {
 		property portal.upstream = "quarantine";
 
@@ -615,25 +615,25 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("Then I assert that virtual clusters description has 'Cluster Nodes (Keys)' text") {
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "3",
+				lineColunm = 3,
+				linePosition = 3,
 				text = "Virtual Cluster");
 
 			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "3",
+				lineColunm = 3,
+				linePosition = 3,
 				text = "1 Cluster Nodes (Keys)");
 		}
 	}
 
 	@description = "LPS-150795 - Verify that when the key is downloaded a success message appears"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheSuccessMessageWhenDownloadTheKey {
 		property portal.upstream = "quarantine";
 
@@ -656,7 +656,7 @@ definition {
 		task ("And I get the formated name for the activation key file") {
 			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
 				fileType = "xml",
-				licenseName = "${testAccount}",
+				licenseName = ${testAccount},
 				licenseType = "activation-key",
 				product = "Portal",
 				version = "6.2");
@@ -667,13 +667,13 @@ definition {
 		}
 
 		task ("Then I should see the downloaded file") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${expectedDownloadedFileName});
 		}
 	}
 
 	@description = "Automation ID: LPS-147577 | Test Summary: Make sure that when you hover the mouse over 'DNE' a tooltip appears with a message This key does not expire"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test YouMaySeeAMessageAsATooltip {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -693,7 +693,7 @@ definition {
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("When I put the mouse over the Enviroment Name of a key at the table") {

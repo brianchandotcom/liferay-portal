@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "Verify all products sharing a partial sku are populated in the catalog when the user searches products by partial sku"
-	@priority = "3"
+	@priority = 3
 	test AssertMultipleProductsPopulatedSharingSamePartialSKUThatIsSearchedFor {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -50,23 +50,23 @@ definition {
 
 		task ("Then all of the products sharing same partial SKU that is searched are populated") {
 			for (var product : list "Lift Support:MIN77825,Muffler/Resonators:MIN77824,Exhaust Clamps:MIN77823,Catalytic Converters:MIN77822") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productSku = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productSku = StringUtil.extractLast(${product}, ":");
 
 				AssertElementPresent(
-					key_productName = "${productName}",
-					key_productSku = "${productSku}",
+					key_productName = ${productName},
+					key_productSku = ${productSku},
 					locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 			}
 
 			AssertElementPresent(
-				key_productCount = "4",
+				key_productCount = 4,
 				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-9998 We can see all order results on the Global Search by email"
-	@priority = "3"
+	@priority = 3
 	test CanSeeAllOrdersOnTheGlobalSearchByEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -98,7 +98,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -109,8 +109,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -133,11 +133,11 @@ definition {
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 			AssertElementPresent(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			Click(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
@@ -155,17 +155,17 @@ definition {
 		}
 
 		task ("Then the buyer can see the other order in Placed Orders page with status Pending") {
-			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "2");
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 2);
 
-			var placedOrderId = StringUtil.extractFirst("${orderIds}", ",");
-			var activeOrderId = StringUtil.extractLast("${orderIds}", ",");
+			var placedOrderId = StringUtil.extractFirst(${orderIds}, ",");
+			var activeOrderId = StringUtil.extractLast(${orderIds}, ",");
 
 			AssertElementPresent(
-				key_value = "${placedOrderId}",
+				key_value = ${placedOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			Click(
-				key_value = "${placedOrderId}",
+				key_value = ${placedOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			AssertLocation.assertPartialLocation(value1 = "web/minium/placed-orders");
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
-	@priority = "3"
+	@priority = 3
 	test DisableSearchResultsWidgetPagination {
 		property portal.acceptance = "false";
 
@@ -210,7 +210,7 @@ definition {
 
 	@description = "COMMERCE-6323. As a buyer, I want to be able to search an entry in Accounts using Global Search and I want the results to be visible in Account Management page"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchEntryInAccounts {
 		property portal.acceptance = "false";
 
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchEntryInAllContent {
 		property portal.acceptance = "true";
 
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog using Global Search and I want the results to be visible in Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchEntryInCatalog {
 		property portal.acceptance = "false";
 
@@ -292,7 +292,7 @@ definition {
 
 	@description = "COMMERCE-6325. As a buyer, I want to be able to search an entry in Orders using Global Search and I want the results to be visible in Orders page"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchEntryInOrders {
 		property portal.acceptance = "false";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6329. As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions(single category, multiple categories)"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchProductsByCategories {
 		property portal.acceptance = "false";
 
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchProductsBySKUs {
 		property portal.acceptance = "true";
 
@@ -401,7 +401,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6328. As a buyer, I want to search for products by typing different Specification Values in Global Search and I want to see the products with that specification values in the suggestions(single specification, multiple specifications)"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSearchProductsBySpecificationValues {
 		property portal.acceptance = "false";
 
@@ -442,7 +442,7 @@ definition {
 
 	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSuggestedAccountsEntry {
 		property portal.acceptance = "false";
 
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6319. As a buyer, I want to be able to search a Catalog entry using Global Search(Product Name, Product Name with single quotes, Product Name with double quotes) and I want to be able to click on a suggested entry and get redirected to that product Details page"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSuggestedCatalogEntries {
 		property portal.acceptance = "false";
 
@@ -495,7 +495,7 @@ definition {
 
 		Type(
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = "${product}");
+			value1 = ${product});
 
 		AssertElementPresent(
 			key_entryName = "ABS Sensor",
@@ -519,7 +519,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6321. As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page"
-	@priority = "3"
+	@priority = 3
 	test GlobalSearchSuggestedOrdersEntries {
 		property portal.acceptance = "false";
 
@@ -580,10 +580,10 @@ definition {
 		Type(
 			key_text = "Search",
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
-			value1 = "${orderId}");
+			value1 = ${orderId});
 
 		AssertElementPresent(
-			key_value = "${orderId}",
+			key_value = ${orderId},
 			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 		Click(locator1 = "Button#SEARCH_CLOSE");
@@ -594,20 +594,20 @@ definition {
 			value1 = "buyer@liferay.com");
 
 		AssertElementPresent(
-			key_value = "${orderId}",
+			key_value = ${orderId},
 			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 		Click(
-			key_value = "${orderId}",
+			key_value = ${orderId},
 			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 		AssertElementPresent(
-			key_value = "${orderId}",
+			key_value = ${orderId},
 			locator1 = "CommerceEntry#ORDER_BY_KEY");
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductByName {
 		property portal.acceptance = "true";
 
@@ -624,21 +624,21 @@ definition {
 		Button.clickSubmitButton();
 
 		for (var i : list "ABS Sensor,Wear Sensors,3") {
-			if ("${i}" == "3") {
+			if (${i} == 3) {
 				AssertElementNotPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
 			else {
 				AssertElementPresent(
-					key_productName = "${i}",
+					key_productName = ${i},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6149.As a buyer, I want to search a product by its name using double quotes in the Search Bar widget and that product should be visible on the Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductByNameDoubleQuotes {
 		property portal.acceptance = "false";
 
@@ -650,12 +650,12 @@ definition {
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "${product}");
+			value1 = ${product});
 
 		Button.clickSubmitButton();
 
 		AssertElementPresent(
-			key_value = "1",
+			key_value = 1,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 
 		AssertElementPresent(
@@ -663,12 +663,12 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementNotPresent(
-			key_value = "2",
+			key_value = 2,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6150. As a buyer, I want to search a product by its name using single quotes in the Search Bar widget and the results should be visible on the Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductByNameSingleQuotes {
 		property portal.acceptance = "false";
 
@@ -685,21 +685,21 @@ definition {
 		Button.clickSubmitButton();
 
 		for (var i : list "ABS Sensor,Wear Sensors,3") {
-			if ("${i}" == "3") {
+			if (${i} == 3) {
 				AssertElementNotPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
 			else {
 				AssertElementPresent(
-					key_productName = "${i}",
+					key_productName = ${i},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6151. As a buyer, I want to search a product by typing its SKU in the Search Bar widget and the results should be visible on the Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductBySKU {
 		property portal.acceptance = "false";
 
@@ -716,16 +716,16 @@ definition {
 		Button.clickSubmitButton();
 
 		AssertElementPresent(
-			key_value = "1",
+			key_value = 1,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 
 		AssertElementNotPresent(
-			key_value = "2",
+			key_value = 2,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6155. As a buyer, I want to search for products by typing a Category in Search Bar widget and the results should be visible on Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductsByCategory {
 		property portal.acceptance = "true";
 
@@ -743,17 +743,17 @@ definition {
 
 		for (var i : list "Transmission Fluid,Transmission Cooler Line Assembly,U-Joint,Torque Converters,Wheel Seal - Front,Mount,Drive Shafts,Universal CV Boot,CV Axles") {
 			AssertElementPresent(
-				key_productName = "${i}",
+				key_productName = ${i},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 		}
 
 		AssertElementNotPresent(
-			key_value = "10",
+			key_value = 10,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6156. As a buyer, I want to search for products by typing different Categories in Search Bar widget and the results should be visible on Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductsByDifferentCategories {
 		property portal.acceptance = "false";
 
@@ -771,19 +771,19 @@ definition {
 
 		var products = "Engine Mount,Transmission Fluid,Transmission Cooler Line Assembly,U-Joint,Torque Converters,Wheel Seal - Front,Mount,Drive Shafts,Universal CV Boot,CV Axles,Valve Cover Grommets,Timing Chain,Timing Chain Tensioner,Seal,Pulley Kit,Piston,Oil Pump,Oil Filter,Cams,Bearings";
 
-		for (var i : list "${products}") {
+		for (var i : list ${products}) {
 			AssertElementPresent(
-				key_productName = "${i}",
+				key_productName = ${i},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 		}
 
 		AssertElementNotPresent(
-			key_value = "21",
+			key_value = 21,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6152. As a buyer, I want to search for different products by typing their SKUs in the Search Bar widget and the results should be visible on the Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductsByDifferentSKUs {
 		property portal.acceptance = "false";
 
@@ -800,21 +800,21 @@ definition {
 		Button.clickSubmitButton();
 
 		for (var i : list "U-Joint,ABS Sensor,3") {
-			if ("${i}" == "3") {
+			if (${i} == 3) {
 				AssertElementNotPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
 			else {
 				AssertElementPresent(
-					key_productName = "${i}",
+					key_productName = ${i},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6154. As a buyer, I want to search for products by typing different Specification Values in Search Bar widget and the results should be visible on Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductsByDifferentSpecificationValues {
 		property portal.acceptance = "false";
 
@@ -831,36 +831,36 @@ definition {
 		Button.clickSubmitButton();
 
 		for (var i : list "1,Timing Chain Tensioner,2,Premium Brake Pads,3") {
-			if ("${i}" == "1") {
+			if (${i} == 1) {
 				AssertElementPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
-			else if ("${i}" == "Timing Chain Tensioner") {
+			else if (${i} == "Timing Chain Tensioner") {
 				AssertElementPresent(
-					key_productName = "${i}",
+					key_productName = ${i},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
-			else if ("${i}" == "2") {
+			else if (${i} == 2) {
 				AssertElementPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
-			else if ("${i}" == "Premium Brake Pads") {
+			else if (${i} == "Premium Brake Pads") {
 				AssertElementPresent(
-					key_productName = "${i}",
+					key_productName = ${i},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 			else {
 				AssertElementNotPresent(
-					key_value = "${i}",
+					key_value = ${i},
 					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6153. As a buyer, I want to search for products by typing a Specifications Value in Search Bar widget and the results should be visible on Search Results widget"
-	@priority = "3"
+	@priority = 3
 	test SearchBarWidgetSearchProductsBySpecificationValue {
 		property portal.acceptance = "false";
 
@@ -877,7 +877,7 @@ definition {
 		Button.clickSubmitButton();
 
 		AssertElementPresent(
-			key_value = "1",
+			key_value = 1,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 
 		AssertElementPresent(
@@ -885,12 +885,12 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
 		AssertElementNotPresent(
-			key_value = "2",
+			key_value = 2,
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "Verify users can search products by partial SKU in the catalog"
-	@priority = "3"
+	@priority = 3
 	test SearchProductsByPartialSKU {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -938,13 +938,13 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 
 			AssertElementPresent(
-				key_productCount = "1",
+				key_productCount = 1,
 				locator1 = "CommerceFrontStore#FS_PRODUCT_COUNT");
 		}
 	}
 
 	@description = "COMMERCE-6145. As a buyer, I want to change the number of items to display for every page from Search Results widget pagination bar"
-	@priority = "3"
+	@priority = 3
 	test SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar {
 		property portal.acceptance = "false";
 
@@ -954,7 +954,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "8");
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = 8);
 
 		AssertElementPresent(
 			key_numberEntries = "8 Entries",
@@ -962,7 +962,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6147. As a buyer, I want to switch from one results page to another in Search Results"
-	@priority = "3"
+	@priority = 3
 	test SearchResultsWidgetChangeResultsPage {
 		property portal.acceptance = "false";
 
@@ -977,15 +977,15 @@ definition {
 
 		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
 			Click(
-				key_index = "${iterator}",
+				key_index = ${iterator},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
 
 			WaitForElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
 
 			var curr_productNamePage1 = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
 
-			if ("${iterator}" == "1") {
-				var productsNamePage1 = "${curr_productNamePage1}";
+			if (${iterator} == 1) {
+				var productsNamePage1 = ${curr_productNamePage1};
 			}
 			else {
 				var productsNamePage1 = "${productsNamePage1},${curr_productNamePage1}";
@@ -995,23 +995,23 @@ definition {
 		}
 
 		Click(
-			key_pageNumber = "2",
+			key_pageNumber = 2,
 			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
-		var iterator = "1";
+		var iterator = 1;
 
-		for (var curr_productNamePage1 : list "${productsNamePage1}") {
+		for (var curr_productNamePage1 : list ${productsNamePage1}) {
 			AssertTextNotEquals(
-				key_index = "${iterator}",
+				key_index = ${iterator},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
-				value1 = "${curr_productNamePage1}");
+				value1 = ${curr_productNamePage1});
 
 			var iterator = ${iterator} + 1;
 		}
 	}
 
 	@description = "COMMERCE-6146. As a buyer, I want to change the number of items to display for every page from Search Results widget configuration"
-	@priority = "3"
+	@priority = 3
 	test SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration {
 		property portal.acceptance = "false";
 
@@ -1034,7 +1034,7 @@ definition {
 		Type(
 			key_fieldLabel = "Number of Items to Display",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "4");
+			value1 = 4);
 
 		Button.clickSave();
 
@@ -1046,7 +1046,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6663. I want to be able to use ADT to render Search Results widget and I want to be able to select a Display Template and see it applied to the widget"
-	@priority = "3"
+	@priority = 3
 	test UseADTInSearchResultsWidget {
 		property portal.acceptance = "false";
 
@@ -1117,7 +1117,7 @@ definition {
 		Type(
 			key_fieldLabel = "Number of Items to Display",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -1132,7 +1132,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Search Results",
 			locator1 = "Portlet#BODY",
-			value1 = "${productId}");
+			value1 = ${productId});
 	}
 
 }

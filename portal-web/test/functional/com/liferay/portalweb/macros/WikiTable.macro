@@ -3,38 +3,38 @@ definition {
 	macro deleteEntry {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		Click(
 			locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		PortletEntry.clickMoveToRecycleBin();
 	}
 
 	macro viewEntry {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}");
+			value1 = ${wikiPageTitle});
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_STATUS",
-			value1 = "${entryStatus}");
+			value1 = ${entryStatus});
 
 		if (isSet(revision)) {
 			AssertTextEquals.assertPartialText(
-				key_wikiPageRevision = "${revision}",
-				key_wikiPageTitle = "${wikiPageTitle}",
-				key_wikiVersionSummary = "${revision}",
+				key_wikiPageRevision = ${revision},
+				key_wikiPageTitle = ${wikiPageTitle},
+				key_wikiVersionSummary = ${revision},
 				locator1 = "Wiki#HISTORY_VERSIONS_SUMMARY",
-				value1 = "${revision}");
+				value1 = ${revision});
 		}
 	}
 
 	macro viewNoEntry {
-		var key_wikiPageTitle = "${wikiPageTitle}";
+		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE");
 	}

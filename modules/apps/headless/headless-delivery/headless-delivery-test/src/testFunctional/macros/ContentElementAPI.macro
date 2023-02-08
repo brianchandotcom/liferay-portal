@@ -11,24 +11,24 @@ definition {
 				-H accept: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro assertResponseHasABodyWithAssetLibraryKeyOnly {
-		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.items");
+		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
 
 		TestUtils.assertEquals(
-			actual = "${actualValue}",
-			expected = "${expectedValue}");
+			actual = ${actualValue},
+			expected = ${expectedValue});
 	}
 
 	macro getAssetLibraryContentElementsByDifferentParameters {
 		ContentElementAPI._getAssetLibraryContentElementsByDifferentParameters(
-			assetLibraryId = "${assetLibraryId}",
-			fieldValue = "${fieldValue}",
-			parameter = "${parameter}");
+			assetLibraryId = ${assetLibraryId},
+			fieldValue = ${fieldValue},
+			parameter = ${parameter});
 	}
 
 }

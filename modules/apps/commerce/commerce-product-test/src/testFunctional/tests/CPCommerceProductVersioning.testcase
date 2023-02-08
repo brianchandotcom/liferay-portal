@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9549"
-	@priority = "3"
+	@priority = 3
 	test CanCheckProductVersionsWithProductVersioningDisabled {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductVersioning#CanCheckProductVersionsWithProductVersioningDisabled";
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9553"
-	@priority = "3"
+	@priority = 3
 	test CanCheckVersionableProductConvertToDraftStatus {
 		property portal.acceptance = "false";
 
@@ -164,7 +164,7 @@ definition {
 
 		task ("Then the admin will see 2 products, with different id and into the Draft status") {
 			CommerceProducts.checkProductIdsEqual(
-				firstProductId = "${approvedProductId}",
+				firstProductId = ${approvedProductId},
 				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
 				status = "Draft");
 
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9535"
-	@priority = "3"
+	@priority = 3
 	test CanCheckVersionableProductSaveAsDraftButton {
 		property portal.acceptance = "false";
 
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9540"
-	@priority = "3"
+	@priority = 3
 	test CanCheckVersionableProductVisibilityOnMiniumCatalogPage {
 		property portal.acceptance = "true";
 
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9537"
-	@priority = "3"
+	@priority = 3
 	test CanCreateNewVersionableProductDraftVersion {
 		property portal.acceptance = "true";
 
@@ -363,8 +363,8 @@ definition {
 			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
 
 			CommerceProducts.checkProductIdsNotEqual(
-				firstProductId = "${approvedProductId}",
-				secondProductId = "${draftProductId}");
+				firstProductId = ${approvedProductId},
+				secondProductId = ${draftProductId});
 		}
 
 		task ("if the admin goes back, he will find two products with the same name where the first is approved, and the second is draft") {
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@description = "This is a test for the ticket COMMERCE-9941"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteVersionableProducts {
 		property portal.acceptance = "true";
 
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@description = "This is a test for the ticket COMMERCE-9941"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteVersionableProductsOneByOne {
 		property portal.acceptance = "false";
 
@@ -483,20 +483,20 @@ definition {
 
 				Click(
 					key_productName = "Simple T-Shirt",
-					key_status = "${status}",
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 
 				CommerceEntry.clickNoError(menuItem = "Delete");
 
 				Alert.viewSuccessMessage();
 
-				if (("${status}" == "Approved") || ("${status}" == "Incomplete")) {
+				if ((${status} == "Approved") || (${status} == "Incomplete")) {
 					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 				}
 
 				WaitForElementNotPresent(
 					key_productName = "Simple T-Shirt",
-					key_status = "${status}",
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 			}
 
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@description = "This is a test for the ticket COMMERCE-9941"
-	@priority = "3"
+	@priority = 3
 	test CanDuplicateVersionableProductsAndDelete {
 		property portal.acceptance = "false";
 
@@ -543,7 +543,7 @@ definition {
 				WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 				Click(
-					key_productName = "${productName}",
+					key_productName = ${productName},
 					key_status = "Approved",
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 
@@ -551,12 +551,12 @@ definition {
 
 				Alert.viewSuccessMessage();
 
-				if (("${productName}" == "Simple T-Shirt") || ("${productName}" == "Copy of Simple T-Shirt")) {
+				if ((${productName} == "Simple T-Shirt") || (${productName} == "Copy of Simple T-Shirt")) {
 					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 				}
 
 				WaitForElementNotPresent(
-					key_productName = "${productName}",
+					key_productName = ${productName},
 					key_status = "Approved",
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 			}
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9539"
-	@priority = "3"
+	@priority = 3
 	test CanOnlyHaveOneVersionableProductDraftVersion {
 		property portal.acceptance = "false";
 
@@ -643,8 +643,8 @@ definition {
 
 		task ("Then if the admin goes back to the products page the admin will see 3 products, one approved, one incomplete, and one draft") {
 			CommerceProducts.checkProductIdsNotEqual(
-				firstProductId = "${incompleteProductId}",
-				secondProductId = "${draftProductId}");
+				firstProductId = ${incompleteProductId},
+				secondProductId = ${draftProductId});
 
 			Navigator.gotoBack();
 

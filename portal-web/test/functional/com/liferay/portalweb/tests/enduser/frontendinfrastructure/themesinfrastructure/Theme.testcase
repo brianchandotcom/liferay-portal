@@ -13,7 +13,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "Verify page theme can be applied to page"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeAppliedToPage {
 		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPage";
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "Verify portal will apply different available page theme if classic theme not available"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "Verify page theme can be deactivated and reactivated"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeDeactivatedAndReactivated {
 		property test.name.skip.portal.instance = "Theme#CanBeDeactivatedAndReactivated";
@@ -122,9 +122,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		Search.searchCP(searchTerm = "${appName}");
+		Search.searchCP(searchTerm = ${appName});
 
-		AppManager.deactivateApp(appName = "${appName}");
+		AppManager.deactivateApp(appName = ${appName});
 
 		AssertConsoleTextPresent(value1 = "STOPPED test-theme_1.0.0");
 
@@ -145,9 +145,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		Search.searchCP(searchTerm = "${appName}");
+		Search.searchCP(searchTerm = ${appName});
 
-		AppManager.activateApp(appName = "${appName}");
+		AppManager.activateApp(appName = ${appName});
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "Verify page theme can be uninstalled and redeployed"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeUnInstalledAndRedeployed {
 		property test.name.skip.portal.instance = "Theme#CanBeUnInstalledAndRedeployed";
@@ -197,9 +197,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "App Manager");
 
-		Search.searchCP(searchTerm = "${appName}");
+		Search.searchCP(searchTerm = ${appName});
 
-		AppManager.uninstallApp(appName = "${appName}");
+		AppManager.uninstallApp(appName = ${appName});
 
 		WaitForConsoleTextPresent(value1 = "Stopping blacklisted bundle test-theme_1.0.0");
 

@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Document is deleted in an asset library by custom erc"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteDocumentInAssetLibraryByAssetLibraryIdAndCustomErc {
 		property portal.acceptance = "true";
 
@@ -36,27 +36,27 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a DELETE request by assetLibraryId and custom erc") {
 			DocumentAPI.deleteDocumentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then the document is correctly deleted") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 0,
 				filtervalue = "title%20eq%20%27Document_1.txt%27");
 		}
 	}
 
 	@description = "Document is deleted in an asset library by default erc"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteDocumentInAssetLibraryByAssetLibraryIdAndDefaultErc {
 		property portal.acceptance = "true";
 
@@ -65,28 +65,28 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
-				filePath = "${filePath}");
+				assetLibraryId = ${assetLibraryId},
+				filePath = ${filePath});
 		}
 
 		task ("When I make a DELETE request by assetLibraryId and UUID as the erc") {
-			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${response}");
+			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${response});
 
 			DocumentAPI.deleteDocumentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				responseToParse = "${response}");
+				assetLibraryId = ${assetLibraryId},
+				responseToParse = ${response});
 		}
 
 		task ("Then the document is correctly deleted") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 0,
 				filtervalue = "title%20eq%20%27Document_1.txt%27");
 		}
 	}
 
 	@description = "Get document in asset library by existing custom erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetDocumentInAssetLibraryByExistingCustomErc {
 		property portal.acceptance = "true";
 
@@ -95,26 +95,26 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a GET request by assetLibraryId and erc") {
 			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then I receive a correct body response") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get document in asset library by existing uuid as erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetDocumentInAssetLibraryByExistingUuidAsErc {
 		property portal.acceptance = "true";
 
@@ -123,27 +123,27 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
-				filePath = "${filePath}");
+				assetLibraryId = ${assetLibraryId},
+				filePath = ${filePath});
 		}
 
 		task ("When I make a GET request by assetLibraryId and UUID as the erc") {
-			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${response}");
+			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${response});
 
 			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${documentUuid}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${documentUuid});
 		}
 
 		task ("Then I receive a correct body response") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${documentUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${documentUuid},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Document is not able to create with an existing erc in asset library"
-	@priority = "5"
+	@priority = 5
 	test CannotCreateDocumentInAssetLibraryWithExistingErc {
 		property portal.acceptance = "true";
 
@@ -152,36 +152,36 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When with POST I create another document with an existing erc") {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("Then I receive duplicate external reference code response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "Duplicate file entry external reference code erc");
 		}
 
 		task ("And Then another document with same erc is not being created") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 0,
 				filtervalue = "title%20eq%20%27Document_2.txt%27");
 		}
 	}
 
 	@description = "Document erc is not able to update with put request in asset library"
-	@priority = "5"
+	@priority = 5
 	test CannotUpdateDocumentErcInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -190,14 +190,14 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a PUT request by assetLibraryId and erc with an erc modified in the body") {
 			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				title = "title",
 				updateExternalReferenceCode = "update-erc");
@@ -206,19 +206,19 @@ definition {
 		task ("Then the erc in the response body is not changed") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then another document with an erc being the modified value is not being created") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27title%27");
 		}
 	}
 
 	@description = "Unable to get document by nonexistent assetLibraryId"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentAssetLibraryId {
 		property portal.acceptance = "true";
 
@@ -230,7 +230,7 @@ definition {
 
 		task ("Then I receive not found error response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "NOT_FOUND");
 		}
 
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@description = "Unable to get document by nonexistent erc"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetDocumentInAssetLibraryByNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -248,19 +248,19 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = DocumentAPI.getDocumentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then I receive error message in response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "No DLFileEntry exists with the key");
 		}
 	}
 
 	@description = "Document is updated by asset library id and erc"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateDocumentTitleInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -269,36 +269,36 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a PUT request by assetLibraryId and erc") {
 			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				title = "updated title");
 		}
 
 		task ("Then I receive a correct body response with updated title") {
-			var documentTitle = DocumentAPI.getTitleOfDocument(responseToParse = "${response}");
+			var documentTitle = DocumentAPI.getTitleOfDocument(responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${documentTitle}",
+				actual = ${documentTitle},
 				expected = "updated title");
 		}
 
 		task ("And Then the document is correctly updated") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27updated%20title%27");
 		}
 	}
 
 	@description = "Document is not able to delete in an asset library by nonexistent erc"
-	@priority = "3"
+	@priority = 3
 	test DocumentDeletionImpossibleByAssetLibraryIdAndNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -307,27 +307,27 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a DELETE request by assetLibraryId and use internal ID as erc") {
 			DocumentAPI.deleteDocumentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${documentId}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${documentId});
 		}
 
 		task ("Then the document with a custom erc created earlier still exists") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27Document_1.txt%27");
 		}
 	}
 
 	@description = "Document is created by nonexistent erc in asset with put request"
-	@priority = "5"
+	@priority = 5
 	test DocumentIsCreatedInAssetLibraryByPutNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -336,27 +336,27 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("Then its erc matches the inserted one") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "nonexistent-erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then a document is being created") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27Document_1.txt%27");
 		}
 	}
 
 	@description = "Document is created by nonexistent erc with existing erc in body by put request"
-	@priority = "5"
+	@priority = 5
 	test DocumentIsCreatedInAssetLibraryByPutNonexistentErcWithErcInBody {
 		property portal.acceptance = "true";
 
@@ -365,18 +365,18 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When I make a PUT request by assetLibraryId and a non-existent erc with exsiting erc in the body") {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.txt");
 
 			var response = DocumentAPI.updateDocumentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc",
-				filePath = "${filePath}",
+				filePath = ${filePath},
 				title = "Document_2.txt",
 				updateExternalReferenceCode = "erc");
 		}
@@ -384,19 +384,19 @@ definition {
 		task ("Then its erc matches the inserted one") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "nonexistent-erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then a document is being created") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27Document_2.txt%27");
 		}
 	}
 
 	@description = "Document is created in an asset library with custom erc"
-	@priority = "5"
+	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -405,20 +405,20 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("Then the document is being created with custom erc in the body response") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Document is created in an asset library with previous document id as erc"
-	@priority = "5"
+	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithDocumentIdAsErc {
 		property portal.acceptance = "true";
 
@@ -427,36 +427,36 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("When with POST request I create a document with a custom erc equals to the internal id of the previously created document") {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${documentId}",
-				filePath = "${filePath}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${documentId},
+				filePath = ${filePath});
 		}
 
 		task ("Then I can see erc equals to the id in the body response") {
 			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${documentId}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${documentId},
+				responseToParse = ${response});
 		}
 
 		task ("And Then the document is created properly") {
 			DocumentAPI.assertProperDocumentTotalCount(
-				assetLibraryId = "${assetLibraryId}",
-				expectedDocumentTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedDocumentTotalCount = 1,
 				filtervalue = "title%20eq%20%27Document_2.txt%27");
 		}
 	}
 
 	@description = "Document is created in an asset library with erc by default"
-	@priority = "5"
+	@priority = 5
 	test DocumentIsCreatedInAssetLibraryWithErcByDefault {
 		property portal.acceptance = "true";
 
@@ -465,12 +465,12 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-				assetLibraryId = "${assetLibraryId}",
-				filePath = "${filePath}");
+				assetLibraryId = ${assetLibraryId},
+				filePath = ${filePath});
 		}
 
 		task ("Then the document is being created with erc value equals to uuid in the body response") {
-			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = ${response});
 		}
 	}
 

@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a user can upload up to 5 files when the Repeatable option is enabled"
-	@priority = "3"
+	@priority = 3
 	test AllowsFiveUploadsWhenRepeatableIsEnabled {
 		property portal.acceptance = "true";
 
@@ -42,7 +42,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.gotoAdvancedTab();
@@ -59,19 +59,19 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Upload",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.addRepeatableField(
 			fieldName = "Upload",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.addRepeatableField(
 			fieldName = "Upload",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.addRepeatableField(
 			fieldName = "Upload",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewRepeatableFieldDuplicateHidden();
 
@@ -83,31 +83,31 @@ definition {
 			fieldName = "Upload",
 			fileName = "Document_1.docx",
 			navTab = "Documents and Media",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.selectFileUpload(
 			fieldName = "Upload",
 			fileName = "Document_1.pdf",
 			navTab = "Documents and Media",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.selectFileUpload(
 			fieldName = "Upload",
 			fileName = "Document_1.pptx",
 			navTab = "Documents and Media",
-			rowNumber = "3");
+			rowNumber = 3);
 
 		FormFields.selectFileUpload(
 			fieldName = "Upload",
 			fileName = "Document_1.xlsx",
 			navTab = "Documents and Media",
-			rowNumber = "4");
+			rowNumber = 4);
 
 		FormFields.selectFileUpload(
 			fieldName = "Upload",
 			fileName = "Document_1.jpg",
 			navTab = "Documents and Media",
-			rowNumber = "5");
+			rowNumber = 5);
 
 		FormPortlet.submit();
 
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "Verify that, by default, guest users cannot upload files"
-	@priority = "5"
+	@priority = 5
 	test ByDefaultCannotBeUsedByGuestUser {
 		property portal.acceptance = "true";
 
@@ -126,7 +126,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.save();
@@ -135,11 +135,11 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "You need to be signed in to edit this field.");
 
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@description = "Verify that a file added to the Upload field can be removed by clicking the Clear button"
-	@priority = "5"
+	@priority = 5
 	test CanBeCleared {
 		property portal.acceptance = "true";
 
@@ -156,9 +156,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.save();
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -189,7 +189,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.save();
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -213,12 +213,12 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = 1);
 
 		Form.closeSidebar();
 
@@ -236,16 +236,16 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		FormFields.editHelpText(
 			fieldHelpText = "Help Text Test",
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -277,7 +277,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.save();
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be required"
-	@priority = "5"
+	@priority = 5
 	test CanBeRequired {
 		property portal.acceptance = "true";
 
@@ -315,7 +315,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		FormViewBuilder.setFieldRequired();
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be set to repeatable"
-	@priority = "5"
+	@priority = 5
 	test CanBeSetToRepeatable {
 		property test.name.skip.portal.instance = "FormsUploadField#CanBeSetToRepeatable";
 
@@ -357,9 +357,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -367,7 +367,7 @@ definition {
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
-			key_repeatableFieldsNumber = "1");
+			key_repeatableFieldsNumber = 1);
 
 		Form.save();
 
@@ -377,7 +377,7 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Upload",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewFieldRepeatableButton(
 			fieldName = "Upload",
@@ -389,7 +389,7 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.docx");
 
-		ItemSelector.gotoItemSelectorViaSelectButtonByIndex(index = "2");
+		ItemSelector.gotoItemSelectorViaSelectButtonByIndex(index = 2);
 
 		ItemSelector.uploadFile(
 			navTab = "Documents and Media",
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@description = "LPS-84340 - Verify that a Form can be submitted with the Upload Field"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmitted {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -415,7 +415,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		var fieldUploadField = FormFields.getFieldName();
@@ -440,7 +440,7 @@ definition {
 
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
-			fieldName = "${fieldUploadField}");
+			fieldName = ${fieldUploadField});
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
@@ -462,12 +462,12 @@ definition {
 
 		FormsAdmin.viewUploadFile(
 			fieldLabel = "Upload Field",
-			fieldName = "${fieldUploadField}",
+			fieldName = ${fieldUploadField},
 			uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "LPS-125462 - Verify that a new user can submit a Form after uploading a file"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmittedByANewUser {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -506,7 +506,7 @@ definition {
 		Form.editName();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.save();
@@ -515,7 +515,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		Navigator.openURL();
 
@@ -523,7 +523,7 @@ definition {
 			userLoginEmailAddress = "user1@liferay.com",
 			userLoginFullName = "user1 user1");
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -554,7 +554,7 @@ definition {
 	}
 
 	@description = "LPS-122760 - Verify that a guest user can upload a file"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmittedByGuestUser {
 		property portal.acceptance = "true";
 
@@ -565,7 +565,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		var uploadFieldName = FormFields.getFieldName();
@@ -578,27 +578,27 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewUploadFieldAsGuest(
 			fieldLabel = "Upload Field",
-			fieldName = "${uploadFieldName}");
+			fieldName = ${uploadFieldName});
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document_1.mp4");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid extension (doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx).");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document_1.jpg");
 
@@ -607,7 +607,7 @@ definition {
 		Click(locator1 = "FormFields#UPLOAD_FIELD_CLEAR_BUTTON");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document_1.jpg");
 
@@ -627,13 +627,13 @@ definition {
 
 		FormsAdmin.viewUploadFile(
 			fieldLabel = "Upload Field",
-			fieldName = "${uploadFieldName}",
+			fieldName = ${uploadFieldName},
 			uploadFileName = "Document_1");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
 
@@ -642,7 +642,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125499."
-	@priority = "2"
+	@priority = 2
 	test GuestUserCannotUploadFileWithInvalidSize {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsUploadField#GuestUserCannotUploadFileWithInvalidSize";
@@ -654,7 +654,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		var uploadFieldName = FormFields.getFieldName();
@@ -665,7 +665,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -679,7 +679,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "maxSize",
-			fieldValue = "10485760");
+			fieldValue = 10485760);
 
 		SystemSettings.saveConfiguration();
 
@@ -692,29 +692,29 @@ definition {
 
 		FormFields.editText(
 			fieldName = "guestUploadMaximumFileSize",
-			fieldValue = "1");
+			fieldValue = 1);
 
 		SystemSettings.saveConfiguration();
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewUploadFieldAsGuest(
 			fieldLabel = "Upload",
-			fieldName = "${uploadFieldName}");
+			fieldName = ${uploadFieldName});
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document_1.mp4");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 10.0MB.");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "large_file.pdf");
 
@@ -747,7 +747,7 @@ definition {
 	}
 
 	@description = "Verify that guest users can only access upload fields that have guest user uploads enabled"
-	@priority = "5"
+	@priority = 5
 	test GuestUserCanOnlyAccessEnabledFields {
 		property portal.acceptance = "true";
 
@@ -756,7 +756,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		var uploadFieldName = FormFields.getFieldName();
@@ -768,7 +768,7 @@ definition {
 		FormViewBuilder.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Upload");
 
 		Form.save();
@@ -781,7 +781,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishFormURL}");
+		Navigator.openSpecificURL(url = ${publishFormURL});
 
 		FormFields.viewFieldValidationErrorMessage(
 			fieldName = "Upload",
@@ -790,7 +790,7 @@ definition {
 		AssertElementPresent(locator1 = "FormFields#SELECT_UPLOAD_FIELD_DISABLE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "${uploadFieldName}",
+			key_fieldName = ${uploadFieldName},
 			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document_1.jpg");
 
@@ -802,14 +802,14 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added to an Upload Field"
-	@priority = "5"
+	@priority = 5
 	test HelpTextCanBeAdded {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -838,16 +838,16 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.editFieldLabelMetal(fieldValue = "Test Upload");
 
@@ -863,7 +863,7 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		property portal.acceptance = "true";
 
@@ -872,9 +872,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -890,14 +890,14 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
-	@priority = "5"
+	@priority = 5
 	test ReferenceCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		Form.gotoAdvancedTab();
@@ -925,7 +925,7 @@ definition {
 	}
 
 	@description = "Verify that guest users cannot see files submitted by other users"
-	@priority = "5"
+	@priority = 5
 	test SubmittedFilesCannotBeSeenByGuestUsers {
 		property portal.acceptance = "true";
 
@@ -934,7 +934,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
@@ -945,7 +945,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		FormsAdminNavigator.gotoPublishedForm();
 
@@ -965,7 +965,7 @@ definition {
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
 		ItemSelector.gotoItemSelectorViaSelectButtonByGuest(fieldName = "Upload");
 
@@ -974,7 +974,7 @@ definition {
 
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";
 

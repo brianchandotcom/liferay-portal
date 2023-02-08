@@ -10,55 +10,55 @@ definition {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHtmlName}");
+			value1 = ${entryHtmlName});
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "ClientExtensionEntry#URL",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 	}
 
 	macro addCustomElementAllFields {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHtmlName}");
+			value1 = ${entryHtmlName});
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "ClientExtensionEntry#URL",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 
 		Type(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCssurl}");
+			value1 = ${entryCssurl});
 
 		Type(
 			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
-			value1 = "${entryProperties}");
+			value1 = ${entryProperties});
 	}
 
 	macro addCustomElementMultipleURLs {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHtmlName}");
+			value1 = ${entryHtmlName});
 
 		ClientExtensionEntry.addURLRow();
 
@@ -66,60 +66,60 @@ definition {
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
-			value1 = "${entryUrl1}");
+			value1 = ${entryUrl1});
 
 		Type(
 			key_id = "ClientExtensionAdminPortlet_url",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
-			value1 = "${entryUrl2}");
+			value1 = ${entryUrl2});
 
 		Type(
 			key_id = "cssURLs",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
-			value1 = "${entryCssurl1}");
+			value1 = ${entryCssurl1});
 
 		Type(
 			key_id = "cssURLs",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
-			value1 = "${entryCssurl2}");
+			value1 = ${entryCssurl2});
 	}
 
 	macro addEntry {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		if (isSet(mainURL)) {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_mainURL",
 				locator1 = "ClientExtensionEntry#URL",
-				value1 = "${mainURL}");
+				value1 = ${mainURL});
 		}
 		else {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_url",
 				locator1 = "ClientExtensionEntry#URL",
-				value1 = "${entryURL}");
+				value1 = ${entryURL});
 		}
 
 		if (isSet(entryHTMLElementName)) {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_htmlElementName",
 				locator1 = "ClientExtensionEntry#URL",
-				value1 = "${entryHTMLElementName}");
+				value1 = ${entryHTMLElementName});
 		}
 	}
 
 	macro addPortletCategory {
 		Select(
 			locator1 = "ClientExtensionEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 	}
 
 	macro addURLRow {
@@ -130,7 +130,7 @@ definition {
 
 	macro removeURLRow {
 		Click(
-			key_id = "${key_id}",
+			key_id = ${key_id},
 			locator1 = "ClientExtensionEntry#REMOVE_URL_ROW");
 	}
 

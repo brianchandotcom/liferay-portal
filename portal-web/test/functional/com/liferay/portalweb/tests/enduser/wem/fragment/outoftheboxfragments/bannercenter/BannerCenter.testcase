@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-95042, LPS-108339 and LPS-122017. View the Banner Center in content page. Can add Banner Center directly without Container to page."
-	@priority = "4"
+	@priority = 4
 	test ViewBannerCenterInContentPage {
 		task ("Add a Banner Center to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -52,7 +52,7 @@ definition {
 		task ("View the Banner Center is not inside of Container element") {
 			AssertElementNotPresent(
 				key_elementHeader = "//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'bg-gray500Color')][contains(@class,'page-editor__container')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 

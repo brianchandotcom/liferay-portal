@@ -16,21 +16,21 @@ definition {
 				-H accept: application/json \
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro getAssetLibraryLanguages {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
-		LanguageAPI._getLanguages(assetLibraryId = "${assetLibraryId}");
+		LanguageAPI._getLanguages(assetLibraryId = ${assetLibraryId});
 	}
 
 	macro getSiteLanguages {
-		Variables.assertDefined(parameterList = "${siteId}");
+		Variables.assertDefined(parameterList = ${siteId});
 
-		LanguageAPI._getLanguages(siteId = "${siteId}");
+		LanguageAPI._getLanguages(siteId = ${siteId});
 	}
 
 }

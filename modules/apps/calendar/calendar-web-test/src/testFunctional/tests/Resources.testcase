@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -55,7 +55,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddAndViewOtherCalendars {
 		property portal.acceptance = "true";
 
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "LRQA-71886 - Verify that is possible to create an Inactive Resource"
-	@priority = "3"
+	@priority = 3
 	test CanAddInactiveResource {
 		CalendarNavigator.gotoAddResource();
 

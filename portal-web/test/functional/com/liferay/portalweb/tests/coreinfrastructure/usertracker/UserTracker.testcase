@@ -15,12 +15,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanConvertTrackedPathToFriendlyURL {
 		property custom.properties = "live.users.enabled=true${line.separator}session.tracker.friendly.paths.enabled=true";
 		property test.name.skip.portal.instance = "UserTracker#CanConvertTrackedPathToFriendlyURL";
@@ -57,7 +57,7 @@ definition {
 		UserTracker.viewAccessedURL(friendlyURL = "http://www.able.com:8080/web/guest/home");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanTrackUserClicks {
 		property test.name.skip.portal.instance = "UserTracker#CanTrackUserClicks";
 
@@ -68,7 +68,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = "5");
+			value1 = 5);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -94,7 +94,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = "7");
+			value1 = 7);
 
 		SignOut.signOut();
 
@@ -124,7 +124,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = "7");
+			value1 = 7);
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -135,10 +135,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = "12");
+			value1 = 12);
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanTrackUserSessionInDatabase {
 		property custom.properties = "live.users.enabled=true${line.separator}session.tracker.persistence.enabled=true";
 		property test.name.skip.portal.instance = "UserTracker#CanTrackUserSessionInDatabase";
@@ -152,10 +152,10 @@ definition {
 
 		echo("UserTracker table: ${afterLoginUserTrackerTable}");
 
-		if ("${emptyUserTrackerTable}" == "${afterLoginUserTrackerTable}") {
+		if (${emptyUserTrackerTable} == ${afterLoginUserTrackerTable}) {
 			fail("User session is not persisted. UserTracker Table is still empty.");
 		}
-		else if (!(contains("${afterLoginUserTrackerTable}", "${companyId}"))) {
+		else if (!(contains(${afterLoginUserTrackerTable}, ${companyId}))) {
 			fail("User session is not persisted. UserTracker Table is missing companyId.");
 		}
 		else {
@@ -188,10 +188,10 @@ definition {
 
 		echo("UserTracker table: ${afterVirutalInstanceUserTrackerTable}");
 
-		if ("${afterLoginUserTrackerTable}" == "${afterVirutalInstanceUserTrackerTable}") {
+		if (${afterLoginUserTrackerTable} == ${afterVirutalInstanceUserTrackerTable}) {
 			fail("User session is not persisted. UserTracker Table remains unmodified after new virutal instance is created.");
 		}
-		else if (!(contains("${afterVirutalInstanceUserTrackerTable}", "${virutalInstanceCompanyId}"))) {
+		else if (!(contains(${afterVirutalInstanceUserTrackerTable}, ${virutalInstanceCompanyId}))) {
 			fail("User session is not persisted. UserTracker Table does not have new virtual instance companyId.");
 		}
 		else {

@@ -34,7 +34,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -44,7 +44,7 @@ definition {
 
 	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10166 | Test Summary: Search Events Blocked List"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test BlockedEventsListSearchable {
 
 		// AC Quarantine Reason: The data in the event analysis taking a while to appear
@@ -87,8 +87,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -98,7 +98,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -112,7 +112,7 @@ definition {
 		}
 
 		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.blockCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Navigation to block custom event list") {
@@ -120,9 +120,9 @@ definition {
 		}
 
 		task ("Search for the name of the custom event that was blocked in block list") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Search for the name of the custom event that was not blocked in block list") {
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10359 | Automation ID: LRAC-10360 | Test Summary: Sort blocked events by Event Name and Last Seen"
-	@priority = "4"
+	@priority = 4
 	test CanSortBlockedEventsByNameAndLastSeen {
 		property test.name.skip.portal.instance = "CustomEventsBlockedEventsList#CanSortBlockedEventsByNameAndLastSeen";
 
@@ -141,8 +141,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createWCWithCustomEventAndAddToPage(
-				customEventName = "${customEventName}",
-				customEventsNumber = "3");
+				customEventName = ${customEventName},
+				customEventsNumber = 3);
 		}
 
 		task ("Add a new user") {
@@ -185,7 +185,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Block all custom events") {
-			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+			ACUtils.viewPartialNameList(nameList = ${customEventName});
 
 			ACCustomEvents.blockAllCustomEvents();
 		}
@@ -212,13 +212,13 @@ definition {
 			for (var n : list "1,2") {
 				ACUtils.orderAnyTable(columnName = "Last Seen");
 
-				ACUtils.viewPartialNameList(nameList = "${customEventName}");
+				ACUtils.viewPartialNameList(nameList = ${customEventName});
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10164 | Test Summary: Check custom event list and blocked event list when more than 100 events are created"
-	@priority = "5"
+	@priority = 5
 	test CheckBlockedEventsListWhenMore100EventsCreated {
 		property test.name.skip.portal.instance = "CustomEventsBlockedEventsList#CheckBlockedEventsListWhenMore100EventsCreated";
 
@@ -226,8 +226,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createWCWithCustomEventAndAddToPage(
-				customEventName = "${customEventName}",
-				customEventsNumber = "101");
+				customEventName = ${customEventName},
+				customEventsNumber = 101);
 		}
 
 		task ("Add a new user") {
@@ -270,7 +270,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -294,9 +294,9 @@ definition {
 		}
 
 		task ("Search for the name of the custom event that was blocked in block list") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+			ACUtils.viewPartialNameList(nameList = ${customEventName});
 		}
 
 		task ("Try to unblock a custom event with the list having reached the limit") {
@@ -304,7 +304,7 @@ definition {
 
 			Alert.viewErrorMessage(errorMessage = "Error:Your workspace is over the event limit. Please remove some events from the allow list to continue. Visit our documentation to learn more.");
 
-			ACUtils.viewPartialNameList(nameList = "${customEventName}");
+			ACUtils.viewPartialNameList(nameList = ${customEventName});
 		}
 
 		task ("Navigation to custom events tab") {

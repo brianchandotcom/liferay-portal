@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "LPS-157927 Verify Clamd Antivirus will block a document that contains a virus even if the document is submitted twice."
-	@priority = "3"
+	@priority = 3
 	test ClamdAntivirusSmoke {
 		property custom.properties = "dl.store.antivirus.enabled=true";
 		property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
@@ -86,7 +86,7 @@ definition {
 			var fileContent = TestCase.getTempFileContent(fileName = "eicar.com");
 
 			TestUtils.assertEquals(
-				actual = "${fileContent}",
+				actual = ${fileContent},
 				expected = "");
 		}
 	}

@@ -9,7 +9,7 @@ definition {
 
 		Select(
 			locator1 = "CalendarConfiguration#EVENTS_DISPLAYED_MAX_DAYS",
-			value1 = "${maxNumberOfEvents}");
+			value1 = ${maxNumberOfEvents});
 	}
 
 	macro editTimeZonePacific {
@@ -64,25 +64,25 @@ definition {
 	macro selectDefaultDuration {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_DURATION_SELECT",
-			value1 = "${defaultDuration}");
+			value1 = ${defaultDuration});
 	}
 
 	macro selectDefaultView {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
-			value1 = "${defaultView}");
+			value1 = ${defaultView});
 	}
 
 	macro selectTimeFormat {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_TIME_FORMAT_SELECT",
-			value1 = "${timeFormat}");
+			value1 = ${timeFormat});
 	}
 
 	macro selectWeekStartsOn {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 	}
 
 	macro tearDown {
@@ -102,25 +102,25 @@ definition {
 	}
 
 	macro viewDefaultViewConfiguration {
-		if ("${defaultView}" == "Day") {
+		if (${defaultView} == "Day") {
 			AssertSelectedLabel(
 				locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
 				value1 = "Day");
 		}
 
-		if ("${defaultView}" == "Month") {
+		if (${defaultView} == "Month") {
 			AssertSelectedLabel(
 				locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
 				value1 = "Month");
 		}
 
-		if ("${defaultView}" == "Week") {
+		if (${defaultView} == "Week") {
 			AssertSelectedLabel(
 				locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
 				value1 = "Week");
 		}
 
-		if ("${defaultView}" == "Agenda") {
+		if (${defaultView} == "Agenda") {
 			AssertSelectedLabel(
 				locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
 				value1 = "Agenda");
@@ -134,25 +134,25 @@ definition {
 	macro viewSelectDefaultDuration {
 		AssertSelectedLabel(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_DURATION_SELECT",
-			value1 = "${defaultDuration}");
+			value1 = ${defaultDuration});
 	}
 
 	macro viewSelectDefaultView {
 		AssertSelectedLabel(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
-			value1 = "${defaultView}");
+			value1 = ${defaultView});
 	}
 
 	macro viewSelectTimeFormat {
 		AssertSelectedLabel(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_TIME_FORMAT_SELECT",
-			value1 = "${timeFormat}");
+			value1 = ${timeFormat});
 	}
 
 	macro viewSelectWeekStartsOn {
 		AssertSelectedLabel(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 	}
 
 }

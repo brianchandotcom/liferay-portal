@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165776. The page creator could add elements into the Container via keyboard."
-	@priority = "5"
+	@priority = 5
 	test AddElementsIntoContainer {
 		property portal.acceptance = "true";
 
@@ -54,29 +54,29 @@ definition {
 			PageEditor.addFragmentViaKeyboard(
 				collectionName = "Basic Components",
 				fragmentName = "Button",
-				upCount = "1");
+				upCount = 1);
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Button']",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.addWidgetViaKeyboard(
 				categoryName = "Content Management",
-				upCount = "1",
+				upCount = 1,
 				widgetName = "Web Content Display");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Web Content Display']",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-165776. The page creator could add elements into the Grid via keyboard."
-	@priority = "5"
+	@priority = 5
 	test AddElementsIntoGrid {
 		property portal.acceptance = "true";
 
@@ -101,42 +101,42 @@ definition {
 			PageEditor.addFragmentViaKeyboard(
 				collectionName = "Basic Components",
 				fragmentName = "Heading",
-				upCount = "1");
+				upCount = 1);
 
 			AssertElementPresent(
-				key_columnNumber = "3",
+				key_columnNumber = 3,
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.addWidgetViaKeyboard(
 				categoryName = "Content Management",
-				upCount = "4",
+				upCount = 4,
 				widgetName = "Asset Publisher");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Asset Publisher']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			PageEditor.addFragmentViaKeyboard(
 				collectionName = "Basic Components",
 				fragmentName = "Button",
-				upCount = "6");
+				upCount = 6);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Button",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Grid",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "This is a test for LPS-165776. The page creator could add fragments to page via keyboard."
-	@priority = "5"
+	@priority = 5
 	test AddFragmentsToPage {
 		property portal.acceptance = "true";
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165776. The page creator could add widgets to page via keyboard."
-	@priority = "5"
+	@priority = 5
 	test AddWidgetsToPage {
 		property portal.acceptance = "true";
 
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167457. The page creator shouldn't be able to add multiple Blogs widget to page via keyboard."
-	@priority = "3"
+	@priority = 3
 	test CannotAddMultipleBlogsWidgetToPageViaKeyboard {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
-	@priority = "5"
+	@priority = 5
 	test ReorderElements {
 		property portal.acceptance = "true";
 
@@ -291,49 +291,49 @@ definition {
 		task ("Then the page creator could reorder elements via keyboard") {
 			PageEditor.reorderElementViaKeyboard(
 				elementName = "Documents and Media",
-				upCount = "4");
+				upCount = 4);
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Documents and Media']",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Container",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Documents and Media",
-				position = "2");
+				position = 2);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Image",
-				position = "3");
+				position = 3);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Heading",
-				position = "4");
+				position = 4);
 
 			PageEditor.reorderElementViaKeyboard(
-				downCount = "3",
+				downCount = 3,
 				elementName = "Image");
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Container",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Documents and Media",
-				position = "2");
+				position = 2);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Heading",
-				position = "3");
+				position = 3);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Image",
-				position = "4");
+				position = 4);
 		}
 	}
 

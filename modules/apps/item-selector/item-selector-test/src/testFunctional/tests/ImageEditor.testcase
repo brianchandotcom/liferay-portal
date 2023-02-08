@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This makes sure that canceling the image edition will preserve the original image."
-	@priority = "5"
+	@priority = 5
 	test CanDiscardChange {
 		property test.name.skip.portal.instance = "ImageEditor#CanDiscardChange";
 
@@ -51,16 +51,16 @@ definition {
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "313",
+			metadataData = 313,
 			metadataLabel = "Image Length");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "500",
+			metadataData = 500,
 			metadataLabel = "Image Width");
 	}
 
 	@description = "This makes sure that a resized image can be saved."
-	@priority = "5"
+	@priority = 5
 	test CanSaveResizedImage {
 		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImage";
 
@@ -84,16 +84,16 @@ definition {
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "312",
+			metadataData = 312,
 			metadataLabel = "Image Length");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "500",
+			metadataData = 500,
 			metadataLabel = "Image Width");
 	}
 
 	@description = "This makes sure that a resized image preview can be saved and that a copy is made."
-	@priority = "5"
+	@priority = 5
 	test CanSaveResizedImagePreview {
 		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImagePreview";
 
@@ -129,11 +129,11 @@ definition {
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "313",
+			metadataData = 313,
 			metadataLabel = "Image Length");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "500",
+			metadataData = 500,
 			metadataLabel = "Image Width");
 
 		Refresh();
@@ -141,16 +141,16 @@ definition {
 		LexiconCard.checkCardCheckbox(card = "Document_2 (1).jpg");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "312",
+			metadataData = 312,
 			metadataLabel = "Image Length");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "500",
+			metadataData = 500,
 			metadataLabel = "Image Width");
 	}
 
 	@description = "This makes sure that a rotated image can be saved."
-	@priority = "5"
+	@priority = 5
 	test CanSaveRotatedImage {
 		property test.name.skip.portal.instance = "ImageEditor#CanSaveRotatedImage";
 
@@ -174,11 +174,11 @@ definition {
 		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "313",
+			metadataData = 313,
 			metadataLabel = "Image Length");
 
 		DMDocument.viewDocumentMetadataCP(
-			metadataData = "195",
+			metadataData = 195,
 			metadataLabel = "Image Width");
 	}
 

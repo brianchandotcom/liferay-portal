@@ -17,7 +17,7 @@ definition {
 			ObjectFieldAPI.setUpGlobalObjectFieldId(
 				dbType = "String",
 				name = "passportNumber",
-				objectDefinitionId = "${staticObjectId}");
+				objectDefinitionId = ${staticObjectId});
 		}
 
 		task ("Given a custom object definition is created with post request") {
@@ -27,19 +27,19 @@ definition {
 
 	tearDown {
 		for (var objectName : list "University,Subject") {
-			ObjectAdmin.deleteObjectViaAPI(objectName = "${objectName}");
+			ObjectAdmin.deleteObjectViaAPI(objectName = ${objectName});
 		}
 
 		ObjectFieldAPI.deleteObjectField();
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanIncludePropertiesInSchemasWithManyToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -48,8 +48,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UsersSubjects",
 				name = "usersSubjects",
-				objectDefinitionId1 = "${staticObjectId}",
-				objectDefinitionId2 = "${staticObjectId2}",
+				objectDefinitionId1 = ${staticObjectId},
+				objectDefinitionId2 = ${staticObjectId2},
 				type = "manyToMany");
 		}
 
@@ -74,7 +74,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanIncludePropertiesInSchemasWithOneToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -83,18 +83,18 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "UniversityUsers",
 				name = "universityUsers",
-				objectDefinitionId1 = "${staticObjectId1}",
-				objectDefinitionId2 = "${staticObjectId}",
+				objectDefinitionId1 = ${staticObjectId1},
+				objectDefinitionId2 = ${staticObjectId},
 				type = "oneToMany");
 		}
 
 		task ("Then a new field of universityUsers of type relationship is generated") {
-			var response = ObjectFieldAPI.getObjectFieldsByObjectId(objectDefinitionId = "${staticObjectId}");
+			var response = ObjectFieldAPI.getObjectFieldsByObjectId(objectDefinitionId = ${staticObjectId});
 
-			var objectField = JSONUtil.getWithJSONPath("${response}", "$.items[?(@.businessType == 'Relationship')].label.en_US");
+			var objectField = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.businessType == 'Relationship')].label.en_US");
 
 			TestUtils.assertEquals(
-				actual = "${objectField}",
+				actual = ${objectField},
 				expected = "UniversityUsers");
 		}
 
@@ -121,7 +121,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanIncludePropertyInSchemaForCustomObject {
 		property portal.acceptance = "true";
 
@@ -139,7 +139,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanIncludePropertyInSchemaForSystemObject {
 		property portal.acceptance = "true";
 

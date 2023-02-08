@@ -57,16 +57,16 @@ definition {
 
 		task ("Create a project") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.createProjectTestray(
 				description = "Projects_1 Description",
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to created project and add a new team") {
@@ -105,8 +105,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -132,7 +132,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -141,8 +141,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -159,13 +159,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160590 - Verify if as an Administrator I should be able to add and delete a Run"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddAndDeleteRun {
 		task ("Given that the user goes into build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -184,20 +184,20 @@ definition {
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-			Testray.assertItemName(key_name = "01");
+			Testray.assertItemName(key_name = 01);
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Then run should not appear on the list") {
-			TestrayRun.deleteRun(runName = "01");
+			TestrayRun.deleteRun(runName = 01);
 
-			Testray.assertItemNotPresent(key_name = "01");
+			Testray.assertItemNotPresent(key_name = 01);
 		}
 	}
 
 	@description = "This is a test for LPS-163959 - Verify if as an Administrator I should be able to edit a Run"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditRun {
 		task ("Given that the user goes into build") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -216,7 +216,7 @@ definition {
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-			Testray.assertItemName(key_name = "01");
+			Testray.assertItemName(key_name = 01);
 
 			TestrayRun.assertValueRun(valueRun = "Option 1");
 
@@ -229,7 +229,7 @@ definition {
 				label1 = "Environments_1 Category B",
 				listOption = "Option 2",
 				listOption1 = "Option 3",
-				runName = "01");
+				runName = 01);
 
 			TestrayRun.assertValueRun(valueRun = "Option 2");
 		}
@@ -237,7 +237,7 @@ definition {
 
 	@description = "This is a test for LPS-160591 - Verify if as an Administrator I should not be able to add a duplicate run"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateRun {
 
 		// TODO LPS-160591 AdminCanNotAddDuplicateRun pending implementation
@@ -246,7 +246,7 @@ definition {
 
 	@description = "This is a test for LPS-160592 - Verify if as an administrator I should not be allowed to add runs with identical environments"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanNotAddRunWithIdenticalEnvironments {
 
 		// TODO LPS-160592 AdminCanNotAddRunWithIdenticalEnvironments pending implementation

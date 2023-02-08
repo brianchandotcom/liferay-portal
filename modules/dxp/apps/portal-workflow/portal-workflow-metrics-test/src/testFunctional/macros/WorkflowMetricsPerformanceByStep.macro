@@ -1,27 +1,27 @@
 definition {
 
 	macro assertStepNameByProcessVersion {
-		var key_dateRange = "${version}";
-		var key_rowName = "${rowName}";
-		var key_rowNumber = "${rowNumber}";
+		var key_dateRange = ${version};
+		var key_rowName = ${rowName};
+		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#PROCESS_VERSION_DROPDOWN");
 
 		Click(
-			key_dateRange = "${version}",
+			key_dateRange = ${version},
 			locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 
 		AssertElementPresent(
-			key_rowName = "${rowName}",
-			key_rowNumber = "${rowNumber}",
+			key_rowName = ${rowName},
+			key_rowNumber = ${rowNumber},
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
 	}
 
 	macro clickViewAllSteps {
 		Click(
-			key_stepsNumber = "${stepsNumber}",
+			key_stepsNumber = ${stepsNumber},
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS",
-			value1 = "${valueSteps}");
+			value1 = ${valueSteps});
 	}
 
 	macro goToPerformanceTab {
@@ -29,15 +29,15 @@ definition {
 	}
 
 	macro searchForStep {
-		var key_stepName = "${stepName}";
+		var key_stepName = ${stepName};
 
 		Click(
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_INPUT_FIELD",
-			value1 = "${stepName}");
+			value1 = ${stepName});
 
 		Type(
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_INPUT_FIELD",
-			value1 = "${stepName}");
+			value1 = ${stepName});
 
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
@@ -45,7 +45,7 @@ definition {
 	}
 
 	macro selectDateRangeFilter {
-		var key_dateRange = "${dateRange}";
+		var key_dateRange = ${dateRange};
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
 
@@ -56,7 +56,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION");
 
 		Click(
-			key_versionOption = "${versionOption}",
+			key_versionOption = ${versionOption},
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_OPTION");
 	}
 
@@ -67,21 +67,21 @@ definition {
 	}
 
 	macro viewPerformanceByStepValues {
-		var key_stepName = "${stepName}";
+		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_SLA_BREACHED_VALUE",
-			value1 = "${slaBreachedValue}");
+			value1 = ${slaBreachedValue});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_AVG_COMPLETION_TIME_VALUE",
-			value1 = "${avgCompletionTimeValue}");
+			value1 = ${avgCompletionTimeValue});
 
-		if ("${isNotPresent}" != "") {
-			for (var isStepNotPresent : list "${isNotPresent}") {
-				var key_stepName = "${isStepNotPresent}";
+		if (${isNotPresent} != "") {
+			for (var isStepNotPresent : list ${isNotPresent}) {
+				var key_stepName = ${isStepNotPresent};
 
 				AssertElementNotPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 			}

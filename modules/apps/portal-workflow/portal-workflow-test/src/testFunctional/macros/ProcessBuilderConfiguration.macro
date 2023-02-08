@@ -4,20 +4,20 @@ definition {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		Click(
-			key_menuItem = "${key_menuItem}",
+			key_menuItem = ${key_menuItem},
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
 
 	macro viewSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var searchAssetTitle : list "${resultsList}") {
+		for (var searchAssetTitle : list ${resultsList}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ProcessBuilderConfiguration#ASSET_TYPE",
-				resultOrder = "${resultOrder}",
-				value1 = "${searchAssetTitle}");
+				resultOrder = ${resultOrder},
+				value1 = ${searchAssetTitle});
 		}
 	}
 

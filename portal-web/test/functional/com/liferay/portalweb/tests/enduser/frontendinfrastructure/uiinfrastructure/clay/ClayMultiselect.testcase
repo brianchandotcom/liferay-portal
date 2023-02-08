@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSelectFromAutoComplete {
 		Navigator.gotoNavTab(navTab = "Form Elements");

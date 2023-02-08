@@ -7,7 +7,7 @@ definition {
 			portlet = "Sites");
 
 		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			siteTemplateName = "Liferaybotics");
 	}
 

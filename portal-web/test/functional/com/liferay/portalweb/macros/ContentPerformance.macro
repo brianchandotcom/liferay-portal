@@ -4,7 +4,7 @@ definition {
 		Click(locator1 = "ContentPerformance#LOCALE_BUTTON");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
@@ -13,21 +13,21 @@ definition {
 
 		var list1 = ListUtil.newListFromString("1,2,3,4,5,6,7,8,9,10,11,12,13");
 		var list2 = ListUtil.newListFromString("English,Arabic,Catalan,Chinese,Dutch,Finnish,French,German,Hungarian,Japanese,Portuguese,Spanish,Swedish");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var index = ListUtil.get("${list1}", "${i}");
-			var language = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var index = ListUtil.get(${list1}, ${i});
+			var language = ListUtil.get(${list2}, ${i});
 
 			AssertTextEquals.assertPartialText(
-				key_index = "${index}",
+				key_index = ${index},
 				locator1 = "Translation#DROPDOWN_MENU_ITEM_INDEX",
-				value1 = "${language}");
+				value1 = ${language});
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
@@ -55,7 +55,7 @@ definition {
 		}
 
 		AssertVisible(
-			key_numberViews = "${numberViews}",
+			key_numberViews = ${numberViews},
 			locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 	}
 
@@ -67,8 +67,8 @@ definition {
 		}
 
 		AssertVisible(
-			key_numberViews = "${numberViews}",
-			key_trafficChannel = "${trafficChannel}",
+			key_numberViews = ${numberViews},
+			key_trafficChannel = ${trafficChannel},
 			locator1 = "ContentPerformance#TRAFFIC_CHANNELS_VALUE");
 	}
 

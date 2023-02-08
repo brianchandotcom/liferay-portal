@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8146. As a buyer, I want to add two or more or all products to my cart directly from the Shop by Diagram"
-	@priority = "4"
+	@priority = 4
 	test AddMultipleSKUToTheCart {
 		property portal.acceptance = "false";
 
@@ -49,23 +49,23 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93016A");
 
 			CommerceDiagram.addPin(
-				pinNumber = "3",
+				pinNumber = 3,
 				position = "0,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93017");
 
@@ -87,15 +87,15 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
-			var n = "1";
+			var n = 1;
 
 			for (var key_inventoryName : list "Italy,United States - Northeast,United States - Southwest") {
 				Type(
 					locator1 = "CommerceEntry#INVENTORY_INPUT",
-					value1 = "0");
+					value1 = 0);
 
 				Click(
-					key_indexNumber = "${n}",
+					key_indexNumber = ${n},
 					key_text = "Save",
 					locator1 = "Button#ANY_N");
 
@@ -129,11 +129,11 @@ definition {
 		}
 
 		task ("And the Buyer can add to the cart only the available products") {
-			var n = "2";
+			var n = 2;
 
 			for (var key_productName : list "MIN93016A,MIN93017") {
 				AssertChecked.assertCheckedNotVisible(
-					key_pinNumber = "${n}",
+					key_pinNumber = ${n},
 					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX");
 
 				var n = ${n} + 1;
@@ -142,14 +142,14 @@ definition {
 
 		task ("And verify that the ABS Sensor checkbox is not clickable") {
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_pinNumber = "1",
+				key_pinNumber = 1,
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX_DISABLED");
 		}
 	}
 
 	@description = "COMMERCE-8068. As a Developer, I want to verify if Shop By Diagram admin configuration with png images works on the storefront"
-	@priority = "4"
+	@priority = 4
 	test AssertDefaultTypeDiagramStoreFront {
 		property portal.acceptance = "false";
 
@@ -168,16 +168,16 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93020");
 
@@ -195,14 +195,14 @@ definition {
 		}
 
 		task ("Then the Developer is presented with the related product details page.") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "ABS Sensor",
 				selectedType = "Linked to a SKU",
 				sku = "MIN93015");
 
-			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+			CommerceDiagram.viewPinInProduct(pinNumber = 2);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "Brake Rotors",
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."
-	@priority = "4"
+	@priority = 4
 	test AssertDiagramFileIsRendered {
 		property portal.acceptance = "false";
 
@@ -231,16 +231,16 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93020");
 
@@ -265,17 +265,17 @@ definition {
 
 		task ("Then I am presented with the correct related product details page") {
 			AssertElementPresent(
-				key_pinNumber = "1",
+				key_pinNumber = 1,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 			AssertElementPresent(
-				key_pinNumber = "2",
+				key_pinNumber = 2,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 		}
 	}
 
 	@description = "COMMERCE-8209. Assert that a Buyer is able to add a part from Diagram to the cart"
-	@priority = "4"
+	@priority = 4
 	test AssertIfTheQuantityFromThePopupAreCorrect {
 		property portal.acceptance = "false";
 
@@ -294,8 +294,8 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
-				quantity = "1",
+				pinNumber = 1,
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
@@ -313,7 +313,7 @@ definition {
 		}
 
 		task ("And click on the pin linked to ABS Sensor") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 
 			Click(
 				key_productName = "ABS Sensor",
@@ -323,7 +323,7 @@ definition {
 		task ("And add 2 units to the cart by clicking on the add to cart button") {
 			FrontStore.addInitializerProductToCartFromProductDetails(
 				productName = "ABS Sensor",
-				productQuantity = "2");
+				productQuantity = 2);
 		}
 
 		task ("When I click on the add to cart button a little dot appears on the button, it's located on the right of the cart icon inside the blue button") {
@@ -333,7 +333,7 @@ definition {
 				pseudo = "::after");
 
 			TestUtils.assertEquals(
-				actual = "${backgroundImageOutlineStyle}",
+				actual = ${backgroundImageOutlineStyle},
 				expected = "none");
 		}
 
@@ -342,7 +342,7 @@ definition {
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
 
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 
 			Click(
 				key_productName = "ABS Sensor",
@@ -354,7 +354,7 @@ definition {
 				pseudo = "::after");
 
 			TestUtils.assertEquals(
-				actual = "${backgroundImageOutlineStyle}",
+				actual = ${backgroundImageOutlineStyle},
 				expected = "none");
 		}
 
@@ -365,14 +365,14 @@ definition {
 		task ("Then I can verify if the correct quantity was added correctly from the pop-up") {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "ABS Sensor",
-				cartItemPriceValue = "50",
-				cartItemQuantity = "2",
+				cartItemPriceValue = 50,
+				cartItemQuantity = 2,
 				cartItemSku = "MIN93015");
 		}
 	}
 
 	@description = "COMMERCE-8078. As a Developer, I want to verify if Shop By Diagram admin configuration with SVG images works on the storefront"
-	@priority = "4"
+	@priority = 4
 	test AssertSVGTypeDiagramStoreFront {
 		property portal.acceptance = "false";
 
@@ -400,23 +400,23 @@ definition {
 
 		task ("And link them to some specific SKUs") {
 			CommerceDiagram.changePinInfo(
-				newPinNumber = "1",
-				pinNumber = "1",
-				quantity = "2",
+				newPinNumber = 1,
+				pinNumber = 1,
+				quantity = 2,
 				selectType = "Linked to a SKU",
 				sku = "MIN93016A");
 
 			CommerceDiagram.changePinInfo(
-				newPinNumber = "32",
-				pinNumber = "32",
-				quantity = "2",
+				newPinNumber = 32,
+				pinNumber = 32,
+				quantity = 2,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.changePinInfo(
-				newPinNumber = "2",
-				pinNumber = "2",
-				quantity = "2",
+				newPinNumber = 2,
+				pinNumber = 2,
+				quantity = 2,
 				selectType = "Linked to a SKU",
 				sku = "MIN93017");
 
@@ -436,21 +436,21 @@ definition {
 		}
 
 		task ("Then the Developer will see a pop-up and verify if for all the pins will open a pop-up with the linked product inside") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "Brake Fluid",
 				selectedType = "Linked to a SKU",
 				sku = "MIN93016A");
 
-			CommerceDiagram.viewPinInProduct(pinNumber = "32");
+			CommerceDiagram.viewPinInProduct(pinNumber = 32);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "ABS Sensor",
 				selectedType = "Linked to a SKU",
 				sku = "MIN93015");
 
-			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+			CommerceDiagram.viewPinInProduct(pinNumber = 2);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "Premium Brake Fluid",
@@ -461,14 +461,14 @@ definition {
 		task ("And vSerify if into the Mapped Product we have only 3 relations") {
 			for (var mappedProducts : list "MIN93016A,MIN93015,MIN93017") {
 				AssertElementPresent(
-					key_productName = "${mappedProducts}",
+					key_productName = ${mappedProducts},
 					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT");
 			}
 		}
 	}
 
 	@description = "COMMERCE-8151 | As a buyer, using SBD I want discontinued products to be replaced by the replacement product when adding a discontinued product to an order"
-	@priority = "3"
+	@priority = 3
 	test CanAddReplacementProductToCart {
 		property portal.acceptance = "false";
 
@@ -493,9 +493,9 @@ definition {
 
 		task ("And a pin is added on the diagram product") {
 			CommerceDiagram.addPin(
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN55861");
 		}
@@ -511,8 +511,8 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "0",
-					warehouseName = "${warehouseName}");
+					quantity = 0,
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -534,7 +534,7 @@ definition {
 		}
 
 		task ("When the user hovers on the discontinued sku's pin") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+			CommerceDiagram.viewPinInProduct(pinNumber = 2);
 		}
 
 		task ("Then the warnings and data about the discontinued product are shown in the tooltip") {
@@ -555,8 +555,8 @@ definition {
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "ABS Sensor",
-				cartItemPriceValue = "50",
-				cartItemQuantity = "1",
+				cartItemPriceValue = 50,
+				cartItemQuantity = 1,
 				cartItemSku = "MIN93015");
 		}
 
@@ -589,7 +589,7 @@ definition {
 			Refresh();
 
 			Check.checkNotVisible(
-				key_pinNumber = "1",
+				key_pinNumber = 1,
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC_CHECKBOX");
 
@@ -605,14 +605,14 @@ definition {
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "ABS Sensor",
-				cartItemPriceValue = "50",
-				cartItemQuantity = "1",
+				cartItemPriceValue = 50,
+				cartItemQuantity = 1,
 				cartItemSku = "MIN93015");
 		}
 	}
 
 	@description = "COMMERCE-8971. Verify that the Diagram Product name and short description are displayed on the product card."
-	@priority = "4"
+	@priority = 4
 	test CanAssertDiagramNameAndDescriptionOnTheProductCard {
 		property portal.acceptance = "false";
 
@@ -675,7 +675,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8129. Assert that a buyer can see the thumbnails for a diagram"
-	@priority = "4"
+	@priority = 4
 	test CanAssertDiagramThumbnailIntoSearchResults {
 		property portal.acceptance = "false";
 
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@description = "Verify users can search a diagram product's product details page by SKU, name, and description"
-	@priority = "3"
+	@priority = 3
 	test UseMappedProductSearchbar {
 		property portal.acceptance = "false";
 
@@ -762,19 +762,19 @@ definition {
 				diagram = "Test Diagram Product",
 				linkedSKU = "MIN93015",
 				pinType = "Linked to a SKU",
-				position = "1",
-				positionX = "40",
-				positionY = "40",
-				quantity = "1");
+				position = 1,
+				positionX = 40,
+				positionY = 40,
+				quantity = 1);
 
 			CommerceJSONProductsAPI._addDiagramPin(
 				diagram = "Test Diagram Product",
 				linkedSKU = "MIN93016A",
 				pinType = "Linked to a SKU",
-				position = "2",
-				positionX = "20",
-				positionY = "25",
-				quantity = "1");
+				position = 2,
+				positionX = 20,
+				positionY = 25,
+				quantity = 1);
 
 			Refresh();
 		}
@@ -850,7 +850,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8147. Verify all pin information mapping with mapped products, and a buyer can navigate from a diagram to a related diagram"
-	@priority = "4"
+	@priority = 4
 	test VerifyAllPinTypeAndMappedProductInformation {
 		property portal.acceptance = "false";
 
@@ -875,24 +875,24 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
 				diagram = "Diagram2",
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a Diagram");
 
 			CommerceDiagram.addPin(
 				label = "Test Product",
-				pinNumber = "3",
+				pinNumber = 3,
 				position = "0,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Not Linked to a Catalog");
 
 			Button.clickPublish();
@@ -912,16 +912,16 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93016A");
 
 			CommerceDiagram.addPin(
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93017");
 
@@ -942,7 +942,7 @@ definition {
 		}
 
 		task ("Then if the Buyer clicks on a pin linked to MIN93015(ABS Sensor), the information that we can find inside are (SKU, Name, Quantity) and into the Mapped Product section (Pin number, SKU, Name)") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "ABS Sensor",
@@ -951,32 +951,32 @@ definition {
 
 			for (var productName : list "MIN93015,ABS Sensor") {
 				CommerceDiagram.viewMappedProducts(
-					pinNumber = "1",
-					productName = "${productName}");
+					pinNumber = 1,
+					productName = ${productName});
 			}
 		}
 
 		task ("And if the Buyer clicks on a pin linked to "Test Product", the information that we can find inside are (Name, Quantity) and into the Mapped Product section (Pin number, Name)") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "3");
+			CommerceDiagram.viewPinInProduct(pinNumber = 3);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "Test Product",
 				selectedType = "Not Linked to a Catalog");
 
 			CommerceDiagram.viewMappedProducts(
-				pinNumber = "3",
+				pinNumber = 3,
 				productName = "Test Product");
 		}
 
 		task ("And if the Buyer clicks on the pin linked the "Diagram 2", the information that we can find inside are (Name) and into the Mapped Product section (Pin number, Name)") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+			CommerceDiagram.viewPinInProduct(pinNumber = 2);
 
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "Diagram2",
 				selectedType = "Linked to a Diagram");
 
 			CommerceDiagram.viewMappedProducts(
-				pinNumber = "2",
+				pinNumber = 2,
 				productName = "Diagram2");
 		}
 
@@ -991,14 +991,14 @@ definition {
 		task ("And the Buyer can see the two pins on the "Diagram 2" detail page after the redirect") {
 			for (var pinNumber : list "1,2") {
 				AssertElementPresent(
-					key_pinNumber = "${pinNumber}",
+					key_pinNumber = ${pinNumber},
 					locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 			}
 		}
 	}
 
 	@description = "COMMERCE-8265. Breadcrumb widget works with Product Details widget."
-	@priority = "4"
+	@priority = 4
 	test VerifyBreadcrumbWidget {
 		property portal.acceptance = "false";
 
@@ -1017,8 +1017,8 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
-				quantity = "1",
+				pinNumber = 1,
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
@@ -1053,7 +1053,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8358. As a buyer, I want to see all the diagrams that a product is compatible with on the product detail page."
-	@priority = "4"
+	@priority = 4
 	test VerifyIfDiagramWithProductPublisherWidgets {
 		property portal.acceptance = "false";
 
@@ -1072,8 +1072,8 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
-				quantity = "1",
+				pinNumber = 1,
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
@@ -1190,7 +1190,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8565. Add Product Name and Description to the default Diagram product renderer."
-	@priority = "4"
+	@priority = 4
 	test VerifyNameAndDescriptionDefaultRender {
 		property portal.acceptance = "false";
 
@@ -1231,7 +1231,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8153. Verify the visibility rules"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheVisibilityRules {
 		property portal.acceptance = "false";
 
@@ -1305,15 +1305,15 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
+				pinNumber = 1,
 				position = "0,150",
-				quantity = "1",
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 
 			CommerceDiagram.addPin(
 				diagram = "Diagram Test 2",
-				pinNumber = "2",
+				pinNumber = 2,
 				position = "150,100",
 				selectType = "Linked to a Diagram");
 
@@ -1358,11 +1358,11 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test 1");
 
 			AssertElementPresent(
-				key_pinNumber = "1",
+				key_pinNumber = 1,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 			AssertElementPresent(
-				key_pinNumber = "2",
+				key_pinNumber = 2,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 		}
 
@@ -1389,17 +1389,17 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test 1");
 
 			AssertElementPresent(
-				key_pinNumber = "1",
+				key_pinNumber = 1,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 			AssertElementNotPresent(
-				key_pinNumber = "2",
+				key_pinNumber = 2,
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 		}
 	}
 
 	@description = "COMMERCE-8566. Tooltip pin information can be seen on the product with diagrams, if click the product name, it can redirect to the product details page."
-	@priority = "4"
+	@priority = 4
 	test VerifyTooltipPinInformation {
 		property portal.acceptance = "false";
 
@@ -1418,8 +1418,8 @@ definition {
 				productType = "Diagram");
 
 			CommerceDiagram.addPin(
-				pinNumber = "1",
-				quantity = "1",
+				pinNumber = 1,
+				quantity = 1,
 				selectType = "Linked to a SKU",
 				sku = "MIN93015");
 		}
@@ -1435,7 +1435,7 @@ definition {
 		}
 
 		task ("And click on the pin") {
-			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+			CommerceDiagram.viewPinInProduct(pinNumber = 1);
 		}
 
 		task ("Then the tooltip should display the SKU (MIN93015) and the name of the product (ABS Sensor)") {

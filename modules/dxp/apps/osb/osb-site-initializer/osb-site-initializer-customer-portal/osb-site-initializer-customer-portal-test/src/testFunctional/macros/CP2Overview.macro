@@ -1,44 +1,44 @@
 definition {
 
 	macro _getBackgroundColor {
-		if ("${slaCardtitle}" == "Platinum") {
+		if (${slaCardtitle} == "Platinum") {
 			var color = "rgba(255, 255, 255, 1)";
 		}
 
-		if ("${slaCardtitle}" == "Premium") {
+		if (${slaCardtitle} == "Premium") {
 			var color = "rgba(231, 239, 255, 1)";
 		}
 
-		if ("${slaCardtitle}" == "Gold") {
+		if (${slaCardtitle} == "Gold") {
 			var color = "rgba(255, 251, 240, 1)";
 		}
 
-		return "${color}";
+		return ${color};
 	}
 
 	macro assertEmptySLACardMessage {
 		AssertTextEquals(
 			locator1 = "CP2Overview#EMPTY_SLA_CARD_MESSAGE",
-			value1 = "${message}");
+			value1 = ${message});
 	}
 
 	macro assertSLACardBackgroundColor {
-		var color = CP2Overview._getBackgroundColor(slaCardtitle = "${slaCardTitle}");
+		var color = CP2Overview._getBackgroundColor(slaCardtitle = ${slaCardTitle});
 
 		AssertCssValue(
 			locator1 = "CP2Overview#SLA_CARD_CONTAINER",
 			locator2 = "background-color",
-			value1 = "${color}");
+			value1 = ${color});
 	}
 
 	macro assertSLACardContentIsVisible {
-		var key_cardContent = "${cardContent}";
+		var key_cardContent = ${cardContent};
 
 		AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
 	}
 
 	macro assertSLACardUnicContentIsVisible {
-		var key_cardContent = "${cardContent}";
+		var key_cardContent = ${cardContent};
 
 		AssertVisible(locator1 = "CP2Overview#SLA_CARD_UNIC_CONTENT");
 	}

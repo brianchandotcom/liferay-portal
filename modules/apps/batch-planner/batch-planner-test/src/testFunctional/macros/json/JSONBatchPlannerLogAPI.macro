@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteBatchPlannerLogs {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,8 +9,8 @@ definition {
 
 		var batchPlannerLogIds = JSONBatchPlannerLogAPI._getBatchPlannerLogIds();
 
-		if ("${batchPlannerLogIds}" != "") {
-			for (var batchPlannerLogId : list "${batchPlannerLogIds}") {
+		if (${batchPlannerLogIds} != "") {
+			for (var batchPlannerLogId : list ${batchPlannerLogIds}) {
 				echo("Deleting Batch Planner Log with ID: ${batchPlannerLogId}");
 
 				var curl = '''
@@ -19,7 +19,7 @@ definition {
 						-d batchPlannerLogId=${batchPlannerLogId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro _getBatchPlannerLogIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -45,11 +45,11 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var batchPlannerLogIds = JSONCurlUtil.post("${curl}", "$..['batchPlannerLogId']");
+		var batchPlannerLogIds = JSONCurlUtil.post(${curl}, "$..['batchPlannerLogId']");
 
 		echo("batchPlannerLogIds: ${batchPlannerLogIds}");
 
-		return "${batchPlannerLogIds}";
+		return ${batchPlannerLogIds};
 	}
 
 }

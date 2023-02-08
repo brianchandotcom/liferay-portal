@@ -2,7 +2,7 @@ definition {
 
 	macro addContent {
 		AlloyEditor.typeEditor(
-			content = "${content}",
+			content = ${content},
 			editor = "content");
 	}
 
@@ -13,7 +13,7 @@ definition {
 
 		Type.typeAceEditor(
 			locator1 = "TextArea#ACE_EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro clickContentField {
@@ -24,9 +24,9 @@ definition {
 
 	macro typeEditor {
 		Type.typeEditor(
-			key_editor = "${editor}",
+			key_editor = ${editor},
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 }

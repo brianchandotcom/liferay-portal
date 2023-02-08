@@ -10,31 +10,31 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setPrimKey {
-		JSONPermissionValidator.validateRoleType(roleType = "${roleType}");
+		JSONPermissionValidator.validateRoleType(roleType = ${roleType});
 
-		if ("${roleType}" == "regular") {
+		if (${roleType} == "regular") {
 			var primKey = JSONCompany.getCompanyId();
 		}
-		else if (("${roleType}" == "site") || ("${roleType}" == "organization") || ("${roleType}" == "asset library") || ("${roleType}" == "account")) {
-			var primKey = "0";
+		else if ((${roleType} == "site") || (${roleType} == "organization") || (${roleType} == "asset library") || (${roleType} == "account")) {
+			var primKey = 0;
 		}
 
-		return "${primKey}";
+		return ${primKey};
 	}
 
 	macro setRoleId {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(name = ${roleTitle});
 
-		return "${roleId}";
+		return ${roleId};
 	}
 
 	macro setRoleType {
@@ -42,20 +42,20 @@ definition {
 			var roleType = "regular";
 		}
 
-		return "${roleType}";
+		return ${roleType};
 	}
 
 	macro setScope {
-		JSONPermissionValidator.validateRoleType(roleType = "${roleType}");
+		JSONPermissionValidator.validateRoleType(roleType = ${roleType});
 
-		if ("${roleType}" == "regular") {
-			var scope = "1";
+		if (${roleType} == "regular") {
+			var scope = 1;
 		}
-		else if (("${roleType}" == "site") || ("${roleType}" == "organization") || ("${roleType}" == "asset library") || ("${roleType}" == "account")) {
-			var scope = "3";
+		else if ((${roleType} == "site") || (${roleType} == "organization") || (${roleType} == "asset library") || (${roleType} == "account")) {
+			var scope = 3;
 		}
 
-		return "${scope}";
+		return ${scope};
 	}
 
 }

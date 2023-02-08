@@ -3,25 +3,25 @@ definition {
 	macro _setDefaultAccountShippingOption {
 		Variables.assertDefined(parameterList = "${accountName},${channelName},${shippingOption}");
 
-		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountName}");
-		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = "${channelName}");
-		var commerceShippingOptionKey = StringUtil.lowerCase("${shippingOption}");
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+		var commerceShippingOptionKey = StringUtil.lowerCase(${shippingOption});
 
-		var commerceShippingOptionKey = StringUtil.replace("${commerceShippingOptionKey}", " ", "-");
+		var commerceShippingOptionKey = StringUtil.replace(${commerceShippingOptionKey}, " ", "-");
 
 		if (!(isSet(commerceShippingMethodKey))) {
-			Variables.assertDefined(parameterList = "${shippingMethod}");
+			Variables.assertDefined(parameterList = ${shippingMethod});
 
-			if ("${shippingMethod}" == "Flat Rate") {
+			if (${shippingMethod} == "Flat Rate") {
 				var commerceShippingMethodKey = "fixed";
 			}
 
-			if ("${shippingMethod}" == "Variable Rate") {
+			if (${shippingMethod} == "Variable Rate") {
 				var commerceShippingMethodKey = "by-weight";
 			}
 		}
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -36,7 +36,7 @@ definition {
 				-d commerceShippingOptionKey='${commerceShippingOptionKey}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 }

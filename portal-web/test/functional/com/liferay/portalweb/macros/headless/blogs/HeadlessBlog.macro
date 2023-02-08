@@ -9,25 +9,25 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		var entryId = HeadlessBlogAPI._addBlogEntry(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			content = "${content}",
-			coverImageId = "${coverImageId}",
-			description = "${description}",
-			groupId = "${groupId}",
-			subtitle = "${subtitle}",
-			title = "${title}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			viewableBy = "${viewableBy}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			content = ${content},
+			coverImageId = ${coverImageId},
+			description = ${description},
+			groupId = ${groupId},
+			subtitle = ${subtitle},
+			title = ${title},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
 
-		return "${entryId}";
+		return ${entryId};
 	}
 
 }

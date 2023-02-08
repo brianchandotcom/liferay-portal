@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6343. As a buyer, I want to be able to select only the allowed quantities of a cart item, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyAllowedQuantitiesAreSelectableInMiniCartItem {
 		property portal.acceptance = "false";
 
@@ -51,7 +51,7 @@ definition {
 		Select(
 			key_productName = "U-Joint",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
-			value1 = "1");
+			value1 = 1);
 
 		Click(
 			key_productName = "U-Joint",
@@ -60,34 +60,34 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		AssertElementPresent(
-			key_dropdownOption = "1",
+			key_dropdownOption = 1,
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 
 		AssertElementPresent(
-			key_dropdownOption = "4",
+			key_dropdownOption = 4,
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 
 		AssertElementPresent(
-			key_dropdownOption = "5",
+			key_dropdownOption = 5,
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 
 		AssertElementPresent(
-			key_dropdownOption = "7",
+			key_dropdownOption = 7,
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 
 		AssertElementPresent(
-			key_dropdownOption = "11",
+			key_dropdownOption = 11,
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 	@description = "COMMERCE-6346. As a buyer, I want to be able to select the quantity of a cart item by multiple value, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var multipleQuantity = "3";
+		var multipleQuantity = 3;
 		var product = "U-Joint";
 		var productSku = "MIN55861";
 
@@ -97,16 +97,16 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_text = "Multiple Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -119,65 +119,65 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addToCartProductWithInvalidQuantityValue(
-			productName = "${product}",
-			productQuantity = "1");
+			productName = ${product},
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
-			productName = "${product}",
-			productQuantity = "${multipleQuantity}");
+			productName = ${product},
+			productQuantity = ${multipleQuantity});
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${productSku}",
+			key_cartItemSku = ${productSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		for (var quantity : list "1,3,4,6,300") {
 			Type(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "4")) {
+			if ((${quantity} == 1) || (${quantity} == 4)) {
 				var conditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 			}
 			else {
 				var conditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${conditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${conditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertQuantityInMiniCartItemCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "true";
 
 		// TODO Review
 
-		var maximumQuantity = "4";
+		var maximumQuantity = 4;
 		var product = "U-Joint";
 		var productSku = "MIN55861";
 
@@ -187,16 +187,16 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceProducts.searchProduct(search = "${product}");
+		CommerceProducts.searchProduct(search = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_fieldLabel = "Maximum Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${maximumQuantity}");
+			value1 = ${maximumQuantity});
 
 		Button.clickPublish();
 
@@ -209,61 +209,61 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addToCartProductWithInvalidQuantityValue(
-			productName = "${product}",
-			productQuantity = "10");
+			productName = ${product},
+			productQuantity = 10);
 
 		FrontStore.addInitializerProductToCart(
-			productName = "${product}",
-			productQuantity = "1");
+			productName = ${product},
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${productSku}",
+			key_cartItemSku = ${productSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "1");
+			value1 = 1);
 
 		for (var quantity : list "4,5,10") {
 			Type(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "5") || ("${quantity}" == "10")) {
+			if ((${quantity} == 5) || (${quantity} == 10)) {
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 
 				FrontStore.viewQuantitySelectorPopoverListItem(
 					conditionNotSatisfied = "true",
-					quantity = "${maximumQuantity}",
+					quantity = ${maximumQuantity},
 					quantityConfiguration = "max");
 			}
 			else {
 				AssertElementNotPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6344. As a buyer, I want to be able to select the quantity of a cart item starting from a minimum quantity, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertSelectableQuantitiesInMiniCartItemStartFromMinimumQuantitySet {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var minimumQuantity = "3";
+		var minimumQuantity = 3;
 		var product = "U-Joint";
 		var productSku = "MIN55861";
 
@@ -273,16 +273,16 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceProducts.searchProduct(search = "${product}");
+		CommerceProducts.searchProduct(search = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_fieldLabel = "Minimum Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Button.clickPublish();
 
@@ -295,59 +295,59 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addToCartProductWithInvalidQuantityValue(
-			productName = "${product}",
-			productQuantity = "1");
+			productName = ${product},
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
-			productName = "${product}",
-			productQuantity = "${minimumQuantity}");
+			productName = ${product},
+			productQuantity = ${minimumQuantity});
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${productSku}",
+			key_cartItemSku = ${productSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		for (var quantity : list "1,2,3") {
 			Type(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "2")) {
+			if ((${quantity} == 1) || (${quantity} == 2)) {
 				var conditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 			}
 			else {
 				var conditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${conditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${conditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 		}
 	}
 
 	@description = "Verify products with long names are truncated in the mini-cart."
-	@priority = "3"
+	@priority = 3
 	test CanSeeProductNameTruncated {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -388,7 +388,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "This Is a Product With a Very Long Name That Will Be Truncated",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 		}
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7870. CanUpdateSubscriptionProductQuantity"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateSubscriptionProductQuantity {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -453,7 +453,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("And the product quantity is increased") {
@@ -462,14 +462,14 @@ definition {
 			Type(
 				key_cartItemSku = "MIN93015",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "5");
+				value1 = 5);
 		}
 
 		task ("Then the mini cart summary is updated according to the product quantity") {
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "5");
+				value1 = 5);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Subtotal",
@@ -489,14 +489,14 @@ definition {
 			Type(
 				key_cartItemSku = "MIN93015",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "2");
+				value1 = 2);
 		}
 
 		task ("Then the mini cart summary is again updated according to the product quantity") {
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "2");
+				value1 = 2);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Subtotal",
@@ -514,7 +514,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10247 Verify that the buyer can complete the checkout using the mini cart widget"
-	@priority = "4"
+	@priority = 4
 	test CanUseMiniCartWidgetToCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -556,7 +556,7 @@ definition {
 		task ("And add something to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then the buyer can start and complete the checkout using the mini cart widget ") {
@@ -575,12 +575,12 @@ definition {
 	}
 
 	@description = "COMMERCE-10247 Verify that the admin can complete the checkout using the mini cart widget with the Buyer Order Approval Workflow"
-	@priority = "4"
+	@priority = 4
 	test CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#CanUseMiniCartWidgetToCheckoutWithBuyerOrderApprovalWorkflow";
 
-		var approvedCount = "0";
+		var approvedCount = 0;
 
 		task ("Given a Minium Site is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -620,17 +620,17 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then the admin can approve and start the checkout of the order directly using the mini cart") {
 			for (var value : list "Submit,Approve,Reject,Approve") {
 				Click(
-					key_text = "${value}",
+					key_text = ${value},
 					locator1 = "Button#ANY");
 
-				if ("${value}" == "Approve") {
-					if ("${approvedCount}" == "1") {
+				if (${value} == "Approve") {
+					if (${approvedCount} == 1) {
 						Button.clickDone();
 
 						Click(
@@ -644,7 +644,7 @@ definition {
 					var approvedCount = ${approvedCount} + 1;
 				}
 
-				if ("${value}" == "Reject") {
+				if (${value} == "Reject") {
 					Button.clickDone();
 
 					Click(
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7695. As a buyer, I want to verify if I will be redirected to the product details when I click on the item in the minicart"
-	@priority = "3"
+	@priority = 3
 	test ClickOnCartItemRedirectToProductDetails {
 		property portal.acceptance = "true";
 
@@ -689,13 +689,13 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
-				cartItemQuantity = "3",
+				cartItemQuantity = 3,
 				cartItemSku = "MIN55861");
 		}
 
@@ -714,23 +714,23 @@ definition {
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
-				cartItemQuantity = "3",
+				cartItemQuantity = 3,
 				cartItemSku = "MIN55861");
 
 			CommerceNavigator.editMiniCartItemQuantity(
 				cartItemSku = "MIN55861",
-				productQuantity = "5");
+				productQuantity = 5);
 		}
 
 		task ("Then the item quantity will be changed to the new number") {
 			CommerceNavigator.validateMiniCartItemQuantity(
 				cartItemSku = "MIN55861",
-				productQuantity = "5");
+				productQuantity = 5);
 		}
 	}
 
 	@description = "COMMERCE-7751 As a buyer, I want to add a cart widget to the pending orders page and I want to view the product details and edit the quantity of an item in the cart widget"
-	@priority = "3"
+	@priority = 3
 	test ClickOnCartItemWidgetRedirectToProductDetails {
 		property portal.acceptance = "false";
 
@@ -751,7 +751,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 		}
 
 		task ("When a cart widget is added to pending orders page") {
@@ -767,12 +767,12 @@ definition {
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
-			CommerceOrders.editCartPortletOrderQuantity(orderQuantity = "2");
+			CommerceOrders.editCartPortletOrderQuantity(orderQuantity = 2);
 		}
 	}
 
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
-	@priority = "3"
+	@priority = 3
 	test EditBundledProductQuantityFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -880,7 +880,7 @@ definition {
 				cartItemName = "Bundled Product",
 				cartItemOption = "black",
 				cartItemPriceValue = "70.00",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "BLACKSKU");
 
 			AssertTextEquals.assertPartialText(
@@ -893,12 +893,12 @@ definition {
 
 			CommerceNavigator.editMiniCartItemQuantity(
 				cartItemSku = "BLACKSKU",
-				productQuantity = "2");
+				productQuantity = 2);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "2");
+				value1 = 2);
 
 			User.logoutPG();
 
@@ -913,7 +913,7 @@ definition {
 				cartItemName = "Bundled Product",
 				cartItemOption = "black",
 				cartItemPriceValue = "70.00",
-				cartItemQuantity = "2",
+				cartItemQuantity = 2,
 				cartItemSku = "BLACKSKU");
 
 			AssertTextEquals.assertPartialText(
@@ -926,17 +926,17 @@ definition {
 
 			CommerceNavigator.editMiniCartItemQuantity(
 				cartItemSku = "BLACKSKU",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "3");
+				value1 = 3);
 		}
 	}
 
 	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using the quantity selector and I want to view the changes applied to the mini-cart summary"
-	@priority = "3"
+	@priority = 3
 	test EditCartItemQuantityFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -969,7 +969,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then as an admin and a buyer, the user is able to edit the quantity of the item in the mini cart") {
@@ -977,12 +977,12 @@ definition {
 
 			CommerceNavigator.editMiniCartItemQuantity(
 				cartItemSku = "MIN55861",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "3");
+				value1 = 3);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Subtotal",
@@ -1009,12 +1009,12 @@ definition {
 
 			CommerceNavigator.editMiniCartItemQuantity(
 				cartItemSku = "MIN55861",
-				productQuantity = "2");
+				productQuantity = 2);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Quantity",
 				locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-				value1 = "2");
+				value1 = 2);
 
 			AssertTextEquals(
 				key_summaryTableItem = "Subtotal",
@@ -1033,7 +1033,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"
-	@priority = "3"
+	@priority = 3
 	test RemoveAllItemsFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1066,11 +1066,11 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then as an admin, the user is able to empty the cart by using the Remove All Items button in the mini cart") {
@@ -1117,11 +1117,11 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -1156,7 +1156,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6331. As a buyer, I want to be able to remove an item from cart by clicking on the delete button('x')"
-	@priority = "3"
+	@priority = 3
 	test RemoveSingleCartItemFromMiniCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1189,11 +1189,11 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("Then as an admin, the user is able to remove an item from the cart by clicking on the delete button") {
@@ -1217,7 +1217,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Torque Converters",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -1231,7 +1231,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7736, As a buyer, I want to be able to view product details for more than one item in the cart"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheProductDetailPageRedirectWithTwoProducts {
 		property portal.acceptance = "false";
 
@@ -1252,7 +1252,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
@@ -1260,7 +1260,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("When the product in the minicart is clicked") {
@@ -1268,12 +1268,12 @@ definition {
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
-				cartItemQuantity = "3",
+				cartItemQuantity = 3,
 				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "ABS Sensor",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "MIN93015");
 
 			CommerceNavigator.gotoMiniCartEntry(
@@ -1295,14 +1295,14 @@ definition {
 	}
 
 	@description = "COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = "3"
+	@priority = 3
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var minimumQuantity = "6";
-		var multipleQuantity = "5";
+		var minimumQuantity = 6;
+		var multipleQuantity = 5;
 		var product = "U-Joint";
 		var productSku = "MIN55861";
 
@@ -1312,21 +1312,21 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_text = "Minimum Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Type(
 			key_text = "Multiple Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -1339,40 +1339,40 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addToCartProductWithInvalidQuantityValue(
-			productName = "${product}",
-			productQuantity = "1");
+			productName = ${product},
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
-			productName = "${product}",
-			productQuantity = "10");
+			productName = ${product},
+			productQuantity = 10);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${productSku}",
+			key_cartItemSku = ${productSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "10");
+			value1 = 10);
 
 		for (var quantity : list "5,20") {
 			Type(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if ("${quantity}" == "5") {
+			if (${quantity} == 5) {
 				var minimumConditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 			}
 			else {
@@ -1380,31 +1380,31 @@ definition {
 				var multipleConditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${minimumConditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${minimumConditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${multipleConditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${multipleConditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-6349. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@priority = "3"
+	@priority = 3
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var minimumQuantity = "4";
-		var multipleQuantity = "5";
+		var minimumQuantity = 4;
+		var multipleQuantity = 5;
 		var product = "U-Joint";
 		var productSku = "MIN55861";
 
@@ -1414,21 +1414,21 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_text = "Minimum Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Type(
 			key_text = "Multiple Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -1441,35 +1441,35 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addToCartProductWithInvalidQuantityValue(
-			productName = "${product}",
-			productQuantity = "1");
+			productName = ${product},
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
-			productName = "${product}",
-			productQuantity = "${multipleQuantity}");
+			productName = ${product},
+			productQuantity = ${multipleQuantity});
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${productSku}",
+			key_cartItemSku = ${productSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		for (var quantity : list "1,4,5,20") {
 			Type(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_cartItemSku = "${productSku}",
+				key_cartItemSku = ${productSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "4")) {
+			if ((${quantity} == 1) || (${quantity} == 4)) {
 				var multipleConditionNotSatisfied = "true";
 
-				if ("${quantity}" == "1") {
+				if (${quantity} == 1) {
 					var minimumConditionNotSatisfied = "true";
 				}
 				else {
@@ -1477,11 +1477,11 @@ definition {
 				}
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 
 				AssertElementPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_ERROR_THE_PRODUCT_QUANTITY_IS_NOT_VALID");
 			}
 			else {
@@ -1489,24 +1489,24 @@ definition {
 				var multipleConditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_cartItemSku = "${productSku}",
+					key_cartItemSku = ${productSku},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${minimumConditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${minimumConditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${multipleConditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${multipleConditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-6334. The user is able to view a bundled product details in the mini cart(Name, SKU, Bundled Items, Quantity, List Price, Image)"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartBundledProductDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1614,7 +1614,7 @@ definition {
 				cartItemName = "Bundled Product",
 				cartItemOption = "black",
 				cartItemPriceValue = "70.00",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "BLACKSKU");
 
 			AssertTextEquals.assertPartialText(
@@ -1638,7 +1638,7 @@ definition {
 				cartItemName = "Bundled Product",
 				cartItemOption = "black",
 				cartItemPriceValue = "70.00",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "BLACKSKU");
 
 			AssertTextEquals.assertPartialText(
@@ -1652,7 +1652,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1685,7 +1685,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			CommerceNavigator.searchEntry(entryName = "Hoses");
 
@@ -1698,7 +1698,7 @@ definition {
 		}
 
 		task ("Then as an admin, the user is able to view the item details in the mini cart") {
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = 2);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -1708,15 +1708,15 @@ definition {
 
 			FrontStore.viewMiniCart(
 				cartItemNames = "Hoses",
-				cartItemOption = "24",
-				cartItemPriceValues = "120",
-				cartItemQuantities = "1",
+				cartItemOption = 24,
+				cartItemPriceValues = 120,
+				cartItemQuantities = 1,
 				cartItemSkUs = "MIN93022B");
 
 			FrontStore.viewMiniCart(
 				cartItemNames = "U-Joint",
-				cartItemPriceValues = "24",
-				cartItemQuantities = "3",
+				cartItemPriceValues = 24,
+				cartItemQuantities = 3,
 				cartItemSkUs = "MIN55861");
 
 			CommerceNavigator.gotoMiniCart();
@@ -1738,7 +1738,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "3");
+				productQuantity = 3);
 
 			CommerceNavigator.searchEntry(entryName = "Hoses");
 
@@ -1749,7 +1749,7 @@ definition {
 				productName = "Hoses",
 				productSku = "MIN93022B");
 
-			Notifications.viewBadgeCount(notificationCount = "2");
+			Notifications.viewBadgeCount(notificationCount = 2);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -1759,21 +1759,21 @@ definition {
 
 			FrontStore.viewMiniCart(
 				cartItemNames = "Hoses",
-				cartItemOption = "24",
-				cartItemPriceValues = "120",
-				cartItemQuantities = "1",
+				cartItemOption = 24,
+				cartItemPriceValues = 120,
+				cartItemQuantities = 1,
 				cartItemSkUs = "MIN93022B");
 
 			FrontStore.viewMiniCart(
 				cartItemNames = "U-Joint",
-				cartItemPriceValues = "24",
-				cartItemQuantities = "3",
+				cartItemPriceValues = 24,
+				cartItemQuantities = 3,
 				cartItemSkUs = "MIN55861");
 		}
 	}
 
 	@description = "COMMERCE-6653. As a buyer, I want to see the list price updating on the mini-cart item when changing product quantity, if bulk price is set"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithBulkPrice {
 		property portal.acceptance = "false";
 
@@ -1808,7 +1808,7 @@ definition {
 		Type(
 			key_text = "Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "2");
+			value1 = 2);
 
 		Type(
 			key_text = "Tier Price",
@@ -1835,7 +1835,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1848,14 +1848,14 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
 			key_summaryTableItem = "Quantity",
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "2");
+			value1 = 2);
 
 		AssertTextEquals(
 			key_summaryTableItem = "Subtotal",
@@ -1873,7 +1873,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6338. As a buyer, I want to see the barred list price, the discount percentage and the discounted price of an item in the mini-cart, if a discount is set"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithDiscount {
 		property portal.acceptance = "true";
 
@@ -1889,7 +1889,7 @@ definition {
 
 		CommerceEntry.addNewDiscountsEntry(
 			channelsEligibility = "Minium Portal",
-			discountAmount = "20",
+			discountAmount = 20,
 			discountName = "Test Discount",
 			discountTarget = "Products",
 			discountType = "Percentage");
@@ -1912,7 +1912,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1924,7 +1924,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6339. As a buyer, I want to see the barred list price, the discount levels and the discounted price of an item in the mini-cart, if discount levels are set and visible"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithDiscountLevels {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountLevels";
@@ -1969,12 +1969,12 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		for (var current : list "L1-10,L2-20,L3-0,L4-0") {
-			var key_text = StringUtil.extractFirst("${current}", "-");
-			var currentValue = StringUtil.extractLast("${current}", "-");
+			var key_text = StringUtil.extractFirst(${current}, "-");
+			var currentValue = StringUtil.extractLast(${current}, "-");
 
 			Type(
 				locator1 = "TextInput#ANY",
-				value1 = "${currentValue}");
+				value1 = ${currentValue});
 		}
 
 		Button.clickSave();
@@ -1995,7 +1995,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -2003,13 +2003,13 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
 			value1 = "50.00");
 
-		var i = "1";
+		var i = 1;
 
 		for (var discount : list "10,20,0,0") {
 			AssertTextEquals.assertPartialText(
-				key_index = "${i}",
+				key_index = ${i},
 				locator1 = "CommerceAccelerators#MINI_CART_DISCOUNT_LEVELS",
-				value1 = "${discount}");
+				value1 = ${discount});
 
 			var i = ${i} + 1;
 		}
@@ -2020,7 +2020,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6340. As a buyer, I want to be able to view subtotal and it's total price changed in the mini-cart summary when a discount with target 'Subtotal' is set"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithDiscountToSubtotal {
 		property portal.acceptance = "true";
 
@@ -2036,7 +2036,7 @@ definition {
 
 		CommerceEntry.addNewDiscountsEntry(
 			channelsEligibility = "Minium Portal",
-			discountAmount = "20",
+			discountAmount = 20,
 			discountName = "Test Discount",
 			discountTarget = "Subtotal",
 			discountType = "Percentage");
@@ -2057,14 +2057,14 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
 			key_summaryTableItem = "Quantity",
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "1");
+			value1 = 1);
 
 		AssertTextEquals(
 			key_summaryTableItem = "Subtotal",
@@ -2082,7 +2082,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6341. As a buyer, I want to be able to view order discount and it's total price changed in the mini-cart summary when a discount with target 'Total' is set"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithDiscountToTotal {
 		property portal.acceptance = "false";
 
@@ -2098,7 +2098,7 @@ definition {
 
 		CommerceEntry.addNewDiscountsEntry(
 			channelsEligibility = "Minium Portal",
-			discountAmount = "20",
+			discountAmount = 20,
 			discountName = "Test Discount",
 			discountTarget = "Total",
 			discountType = "Percentage");
@@ -2119,14 +2119,14 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
 			key_summaryTableItem = "Quantity",
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "1");
+			value1 = 1);
 
 		AssertTextEquals(
 			key_summaryTableItem = "Subtotal",
@@ -2144,7 +2144,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a promo price of an item in the mini-cart, if a promotion is set"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithPromotion {
 		property portal.acceptance = "true";
 
@@ -2164,7 +2164,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Premium Brake Fluid",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -2178,7 +2178,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the promo price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"
-	@priority = "3"
+	@priority = 3
 	test ViewMiniCartItemWithTierPrice {
 		property portal.acceptance = "false";
 
@@ -2203,7 +2203,7 @@ definition {
 
 		var sku = "MIN93015";
 
-		CommerceNavigator.gotoEntry(entryName = "${sku}");
+		CommerceNavigator.gotoEntry(entryName = ${sku});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -2222,12 +2222,12 @@ definition {
 
 		Button.clickSubmitButton();
 
-		CommerceNavigator.gotoEntry(entryName = "${sku}");
+		CommerceNavigator.gotoEntry(entryName = ${sku});
 
 		CommercePriceLists.createPriceListPriceTiers(
 			key_pricingType = "Tiered Pricing",
-			key_quantity = "2",
-			key_value = "45");
+			key_quantity = 2,
+			key_value = 45);
 
 		Refresh();
 
@@ -2243,29 +2243,29 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
 		AssertTextEquals(
-			key_cartItemSku = "${sku}",
+			key_cartItemSku = ${sku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 50.00");
 
 		Type(
-			key_cartItemSku = "${sku}",
+			key_cartItemSku = ${sku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "2");
+			value1 = 2);
 
 		AssertTextEquals(
-			key_cartItemSku = "${sku}",
+			key_cartItemSku = ${sku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 			value1 = "$ 47.50");
 
 		AssertTextEquals(
 			key_summaryTableItem = "Quantity",
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
-			value1 = "2");
+			value1 = 2);
 
 		AssertTextEquals(
 			key_summaryTableItem = "Subtotal",

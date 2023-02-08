@@ -5,46 +5,46 @@ definition {
 
 		if (isSet(dropdownItem)) {
 			Click.javaScriptClick(
-				key_picklistOption = "${dropdownItem}",
+				key_picklistOption = ${dropdownItem},
 				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 		}
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
-			value1 = "${routine}");
+			value1 = ${routine});
 
-		TestrayManage.addProductVersionInBuild(key_name = "${addVersion}");
+		TestrayManage.addProductVersionInBuild(key_name = ${addVersion});
 
 		Select(
 			locator1 = "TestrayBuild#PRODUCT_VERSION",
-			value1 = "${productVersion}");
+			value1 = ${productVersion});
 
 		Type(
 			locator1 = "TestrayBuild#GIT_HASH_FIELD",
-			value1 = "${gitHash}");
+			value1 = ${gitHash});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		TestrayRequirements.addRequirementCase(
 			buttonText = "Select Cases",
-			caseName = "${caseName}",
+			caseName = ${caseName},
 			linkText = "Add Cases");
 
 		TestrayBuild.addNewOptionInBuild(
-			category = "${categoryName}",
-			option = "${optionName}");
+			category = ${categoryName},
+			option = ${optionName});
 
 		TestrayBuild.addSelectStacksInBuild(
-			parameterLabel = "${labelStack}",
-			parameterLabel2 = "${labelStack2}",
-			stackoptions = "${stackName}",
-			stackoptions2 = "${stackName2}");
+			parameterLabel = ${labelStack},
+			parameterLabel2 = ${labelStack2},
+			stackoptions = ${stackName},
+			stackoptions2 = ${stackName2});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -56,11 +56,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_IN_MODAL",
-			value1 = "${option}");
+			value1 = ${option});
 
 		Select(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = "${category}");
+			value1 = ${category});
 
 		Button.clickSave();
 	}
@@ -70,13 +70,13 @@ definition {
 
 		Click(
 			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD",
-			parameterLabel = "${parameterLabel}",
-			stackoptions = "${stackoptions}");
+			parameterLabel = ${parameterLabel},
+			stackoptions = ${stackoptions});
 
 		Click(
 			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD_2",
-			parameterLabel = "${parameterLabel2}",
-			stackoptions = "${stackoptions2}");
+			parameterLabel = ${parameterLabel2},
+			stackoptions = ${stackoptions2});
 
 		Button.click(button = "Next");
 
@@ -85,15 +85,15 @@ definition {
 
 	macro addSuitesInBuild {
 		Click(
-			key_text = "${linkText}",
+			key_text = ${linkText},
 			locator1 = "Button#ANY");
 
 		Click.clickAtNotVisible(
-			key_checkboxOption = "${caseName}",
+			key_checkboxOption = ${caseName},
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 		Click(
-			key_text = "${buttonText}",
+			key_text = ${buttonText},
 			locator1 = "Button#ANY");
 	}
 
@@ -102,35 +102,35 @@ definition {
 
 		if (isSet(dropdownItem)) {
 			Click.javaScriptClick(
-				key_picklistOption = "${dropdownItem}",
+				key_picklistOption = ${dropdownItem},
 				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 		}
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
-			value1 = "${routine}");
+			value1 = ${routine});
 
-		TestrayManage.addProductVersionInBuild(key_name = "${addVersion}");
+		TestrayManage.addProductVersionInBuild(key_name = ${addVersion});
 
 		Select(
 			locator1 = "TestrayBuild#PRODUCT_VERSION",
-			value1 = "${productVersion}");
+			value1 = ${productVersion});
 
 		Type(
 			locator1 = "TestrayBuild#GIT_HASH_FIELD",
-			value1 = "${gitHash}");
+			value1 = ${gitHash});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		TestrayRequirements.addRequirementCase(
 			buttonText = "Select Cases",
-			caseName = "${caseName}",
+			caseName = ${caseName},
 			linkText = "Add Cases");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
@@ -140,45 +140,45 @@ definition {
 		TestrayLayout.clickResultsOnSidebar();
 
 		Testray.changePagination(
-			numberItems = "20",
-			valuePagination = "150");
+			numberItems = 20,
+			valuePagination = 150);
 
 		Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 		TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 		while (IsElementPresent(key_projectName = "Builds_", locator1 = "Testray#ITEM_NAME")) {
-			Testray.deleteComponent(itemName = "${itemName}");
+			Testray.deleteComponent(itemName = ${itemName});
 		}
 	}
 
 	macro editBuild {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
-			value1 = "${routine}");
+			value1 = ${routine});
 
 		Select(
 			locator1 = "TestrayBuild#PRODUCT_VERSION",
-			value1 = "${productVersion}");
+			value1 = ${productVersion});
 
 		Type(
 			locator1 = "TestrayBuild#GIT_HASH_FIELD",
-			value1 = "${gitHash}");
+			value1 = ${gitHash});
 
 		Type(
 			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro goToBuild {
 		Click(
-			key_projectName = "${buildName}",
+			key_projectName = ${buildName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
@@ -193,9 +193,9 @@ definition {
 			key_environmentFactors = "Application Server",
 			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
-		for (var listboxItem : list "${listCategory}") {
+		for (var listboxItem : list ${listCategory}) {
 			Click(
-				key_environmentFactors = "${listboxItem}",
+				key_environmentFactors = ${listboxItem},
 				locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
 			Click(locator1 = "Testray#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
@@ -204,38 +204,38 @@ definition {
 		Button.click(button = "Next");
 
 		Select(
-			key_fieldLabel = "${label}",
+			key_fieldLabel = ${label},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption}");
+			value1 = ${listOption});
 
 		Select(
-			key_fieldLabel = "${label1}",
+			key_fieldLabel = ${label1},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption1}");
+			value1 = ${listOption1});
 
 		Button.click(button = "Save");
 	}
 
 	macro verifyEnvironmentFactors {
 		AssertElementPresent(
-			key_environmentFactors = "${listCategory}",
+			key_environmentFactors = ${listCategory},
 			locator1 = "Testray#VERIFY_ENVIRONMENT_FACTORS_SELECTED");
 
 		AssertElementPresent(
-			key_environmentFactors = "${listCategory1}",
+			key_environmentFactors = ${listCategory1},
 			locator1 = "Testray#VERIFY_ENVIRONMENT_FACTORS_SELECTED");
 
 		Button.click(button = "Next");
 
 		AssertElementPresent(
-			key_fieldLabel = "${label}",
+			key_fieldLabel = ${label},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${listOption}");
+			value1 = ${listOption});
 
 		AssertElementPresent(
-			key_fieldLabel = "${label1}",
+			key_fieldLabel = ${label1},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${factorOptionId1}");
+			value1 = ${factorOptionId1});
 	}
 
 	macro verifyPromoteBuild {
@@ -245,15 +245,15 @@ definition {
 	macro viewBuildDetails {
 		AssertElementPresent(
 			locator1 = "TestrayBuild#BUILD_DETAILS_PRODUCT_VERSION",
-			value1 = "${productVersion}");
+			value1 = ${productVersion});
 
 		AssertElementPresent(
 			locator1 = "TestrayBuild#BUILD_DETAILS_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 
 		AssertElementPresent(
 			locator1 = "TestrayBuild#BUILD_DETAILS_GIT_HASH",
-			value1 = "${gitHash}");
+			value1 = ${gitHash});
 	}
 
 }

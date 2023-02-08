@@ -18,7 +18,7 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
@@ -33,16 +33,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-147791 | Test Summary: Verify if the Liferay Staff user can view a project for which he is not a member/worker/does not participate/does not have a role in it"
-	@priority = "4"
+	@priority = 4
 	test IfStaffCanSeeProjectHeIsNotRelated {
 		task ("Check how many projects are available in CP2.0") {
 			Account.openAccountsAdmin();
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147725 | Test Summary: Verify if when the user is Liferay Staff and it's administrator of the project, he will pass through the onboarding"
-	@priority = "5"
+	@priority = 5
 	test IfStaffIsAdmWillPassOnboarding {
 		task ("Navigate to Account Administrator and make the user an admin of the project") {
 			Account.openAccountsAdmin();
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"
-	@priority = "5"
+	@priority = 5
 	test IfStaffNotAdmWontPassOnboarding {
 		task ("Navigate to Account Administrator") {
 			CustomerPortal.openAccountsAdminForCP();
@@ -105,7 +105,7 @@ definition {
 
 	@description = "Automation ID: LPS-147731 | Test Summary: Verify if when the user isn't Liferay Staff and it's a administrator of a Project, he will pass through the onboarding"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test NotASatffButIsAdmWillPassOnboarding {
 
 		// TODO LPS-147731 NotASatffButIsAdmWillPassOnboarding pending implementation

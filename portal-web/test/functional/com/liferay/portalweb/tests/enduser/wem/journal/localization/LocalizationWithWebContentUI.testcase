@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "The Web Content creator can add a localized web content via source editor."
-	@priority = "5"
+	@priority = 5
 	test AddLocalizedWebContentViaSourceEditor {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -125,14 +125,14 @@ definition {
 				webContentTitle = "Basic S.P.A.C.E. Banner");
 
 			AssertTextNotEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 		}
 	}
 
 	@description = "This is a test for LPS-141232. The user can add a web content with Spanish translation on CKEditor."
-	@priority = "5"
+	@priority = 5
 	test AddWebContentWithSpanishTranslation {
 		property portal.acceptance = "true";
 		property testray.component.names = "Localization,Web Content Administration,WYSIWYG";
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "Validate translations in web content admin."
-	@priority = "4"
+	@priority = 4
 	test WebContentAdministrationLocalization {
 		property testray.component.names = "Localization,Web Content Administration";
 

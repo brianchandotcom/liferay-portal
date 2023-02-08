@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112992. The user could add a child site in Sites admin."
-	@priority = "5"
+	@priority = 5
 	test AddChildSite {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "Able to add multiple sites basing on different site template."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddSitesMultiple {
 		task ("Add a blank site") {
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149293. The user could cancel the site creation."
-	@priority = "4"
+	@priority = 4
 	test CancelSiteCreation {
 		task ("Navigate to the Sites admin") {
 			Site.openSitesAdmin();
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "Able to delete site."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteSite {
 		property portal.acceptance = "true";
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149293. The site creation process continues even though the user close the modal after submitting form."
-	@priority = "5"
+	@priority = 5
 	test ViewSiteCreatedEvenThoughCloseModalAfterSubmitForm {
 		property portal.acceptance = "true";
 		property portal.release = "false";
@@ -182,7 +182,7 @@ definition {
 				groupName = "Test Site Name",
 				site = "true");
 
-			while (("${groupId}" == "")) {
+			while (("" == "")) {
 				var groupId = JSONGroupAPI._getGroupIdByNameNoError(
 					groupName = "Test Site Name",
 					site = "true");
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149293 and LPS-146278. The user could view a message in modal when create a new site."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewSiteCreationMessage {
 		property portal.acceptance = "true";
@@ -219,7 +219,7 @@ definition {
 		task ("View the Add and Cancel buttons are not shown") {
 			for (var button : list "Add,Cancel") {
 				AssertNotVisible(
-					key_text = "${button}",
+					key_text = ${button},
 					locator1 = "Button#ANY");
 			}
 		}

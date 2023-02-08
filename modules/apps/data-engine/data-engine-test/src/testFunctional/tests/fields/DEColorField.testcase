@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -142,12 +142,12 @@ definition {
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
-			index = "1",
+			index = 1,
 			value = "006ef8");
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
-			index = "2",
+			index = 2,
 			value = "ff21a0");
 
 		Button.clickPublish();
@@ -156,17 +156,17 @@ definition {
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
-			index = "1",
+			index = 1,
 			value = "006ef8");
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
-			index = "2",
+			index = 2,
 			value = "ff21a0");
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to remove a duplicated field (repeatable)."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -200,11 +200,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Color",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that chosen color persists."
-	@priority = "5"
+	@priority = 5
 	test CanSelectColor {
 		NavItem.gotoStructures();
 
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by HEX."
-	@priority = "5"
+	@priority = 5
 	test CanSelectColorByHEX {
 		NavItem.gotoStructures();
 
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by choosing RGB values by clicking on the drop icon."
-	@priority = "5"
+	@priority = 5
 	test CanSelectColorByRGB {
 		NavItem.gotoStructures();
 
@@ -290,9 +290,9 @@ definition {
 		DERenderer.inputDataInColorField(
 			colorSelectionMethod = "RGB",
 			fieldLabel = "Color",
-			valueBlue = "248",
-			valueGreen = "110",
-			valueRed = "0");
+			valueBlue = 248,
+			valueGreen = 110,
+			valueRed = 0);
 
 		Button.clickPublish();
 
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by clicking on the color square."
-	@priority = "5"
+	@priority = 5
 	test CanSelectColorBySwatch {
 		NavItem.gotoStructures();
 
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEColorField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -371,7 +371,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEColorField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -405,7 +405,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -430,7 +430,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68657. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -460,7 +460,7 @@ definition {
 	}
 
 	@description = "Check if Select from Color Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewColorFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -475,7 +475,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Color",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -497,7 +497,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Color",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

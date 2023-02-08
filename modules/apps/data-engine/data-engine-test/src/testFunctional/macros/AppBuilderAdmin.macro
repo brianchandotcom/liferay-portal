@@ -5,8 +5,8 @@ definition {
 	}
 
 	macro addAllPermissionsFromRoles {
-		for (var roleTitle : list "${roleList}") {
-			var key_roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var key_roleTitle = ${roleTitle};
 
 			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 
@@ -21,38 +21,38 @@ definition {
 	}
 
 	macro addOrRemovePermissionFromRoles {
-		for (var roleTitle : list "${roleList}") {
-			var key_roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var key_roleTitle = ${roleTitle};
 
-			if ("${permission}" == "ADD") {
-				if ("${addOrRemovePermission}" == "ADD") {
+			if (${permission} == "ADD") {
+				if (${addOrRemovePermission} == "ADD") {
 					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 				}
-				else if ("${addOrRemovePermission}" == "REMOVE") {
+				else if (${addOrRemovePermission} == "REMOVE") {
 					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 				}
 			}
-			else if ("${permission}" == "DELETE") {
-				if ("${addOrRemovePermission}" == "ADD") {
+			else if (${permission} == "DELETE") {
+				if (${addOrRemovePermission} == "ADD") {
 					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
 				}
-				else if ("${addOrRemovePermission}" == "REMOVE") {
+				else if (${addOrRemovePermission} == "REMOVE") {
 					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
 				}
 			}
-			else if ("${permission}" == "UPDATE") {
-				if ("${addOrRemovePermission}" == "ADD") {
+			else if (${permission} == "UPDATE") {
+				if (${addOrRemovePermission} == "ADD") {
 					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
 				}
-				else if ("${addOrRemovePermission}" == "REMOVE") {
+				else if (${addOrRemovePermission} == "REMOVE") {
 					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
 				}
 			}
-			else if ("${permission}" == "VIEW") {
-				if ("${addOrRemovePermission}" == "ADD") {
+			else if (${permission} == "VIEW") {
+				if (${addOrRemovePermission} == "ADD") {
 					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 				}
-				else if ("${addOrRemovePermission}" == "REMOVE") {
+				else if (${addOrRemovePermission} == "REMOVE") {
 					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
 				}
 			}
@@ -63,14 +63,14 @@ definition {
 
 	macro assertCheckboxPresent {
 		AssertElementPresent(
-			key_checkboxOption = "${checkboxOption}",
+			key_checkboxOption = ${checkboxOption},
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
 	macro assertNewButtonIsVisible {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
-			value1 = "${buttonValue}");
+			value1 = ${buttonValue});
 	}
 
 	macro cancel {
@@ -81,7 +81,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
-			key_filterOption = "${filterOption}",
+			key_filterOption = ${filterOption},
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 		Button.clickDone();
@@ -91,12 +91,12 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click.clickAtNotVisible(
-			key_filterOption = "${statusFilterOption}",
+			key_filterOption = ${statusFilterOption},
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_STATUS");
 
 		Button.clickDone();
 
-		AppBuilderAdmin.filterByDeploymentType(itemName = "${deploymentFilterOption}");
+		AppBuilderAdmin.filterByDeploymentType(itemName = ${deploymentFilterOption});
 
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
@@ -109,7 +109,7 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
-			key_filterOption = "${filterOption}",
+			key_filterOption = ${filterOption},
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 	}
 
@@ -127,7 +127,7 @@ definition {
 
 	macro deleteApp {
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -136,12 +136,12 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${key_itemName}");
+			value1 = ${key_itemName});
 	}
 
 	macro deleteEntry {
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -152,7 +152,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${key_itemName}");
+			value1 = ${key_itemName});
 	}
 
 	macro deployApp {
@@ -162,7 +162,7 @@ definition {
 			value1 = "Undeployed");
 
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Deploy");
@@ -176,17 +176,17 @@ definition {
 	macro editCustomObjectNameAtPopover {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_NAME",
-			value1 = "${customObjectName}");
+			value1 = ${customObjectName});
 	}
 
 	macro editItem {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
 	macro filterByDeploymentType {
-		var key_itemName = "${itemName}";
+		var key_itemName = ${itemName};
 
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
@@ -223,32 +223,32 @@ definition {
 		ProductMenuHelper.closeProductMenu();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "${portlet}",
+			category = ${portlet},
 			panel = "Applications",
-			portlet = "${portlet}");
+			portlet = ${portlet});
 	}
 
 	macro openActionMenu {
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 	}
 
 	macro openItem {
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
 	macro openStandAloneApp {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "Open Standalone App");
 	}
 
 	macro removeAllPermissionsFromRoles {
-		for (var roleTitle : list "${roleList}") {
-			var key_roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var key_roleTitle = ${roleTitle};
 
 			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 
@@ -265,13 +265,13 @@ definition {
 	macro renameObject {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
-			value1 = "${newName}");
+			value1 = ${newName});
 	}
 
 	macro searchByItem {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
@@ -279,22 +279,22 @@ definition {
 	macro setName {
 		Type(
 			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
-			value1 = "${title}");
+			value1 = ${title});
 	}
 
 	macro switchTab {
-		Navigator.gotoNavItem(navItem = "${tabName}");
+		Navigator.gotoNavItem(navItem = ${tabName});
 	}
 
 	macro uncheckCheckbox {
 		Click(
-			key_checkboxOption = "${checkboxOption}",
+			key_checkboxOption = ${checkboxOption},
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
 	macro undeployApp {
 		Click(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Undeploy");
@@ -316,7 +316,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "Applications");
 
 		AssertElementNotPresent(
-			key_category = "${portlet}",
+			key_category = ${portlet},
 			locator1 = "ApplicationsMenu#CATEGORY");
 	}
 
@@ -326,29 +326,29 @@ definition {
 		ProductMenuHelper.expandCategory(category = "Content & Data");
 
 		AssertElementNotPresent(
-			key_portlet = "${portlet}",
+			key_portlet = ${portlet},
 			locator1 = "ProductMenu#PORTLET");
 	}
 
 	macro validateCustomObjectNameOnHeader {
 		AssertTextEquals(
 			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
-			value1 = "${customObjectName}");
+			value1 = ${customObjectName});
 	}
 
 	macro validateEmptyListMessage {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
-			value1 = "${title}");
+			value1 = ${title});
 
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_DESCRIPTION_EMPTY_LIST",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 	macro validateFieldIsOnTable {
 		AssertElementPresent(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
 	}
 
@@ -387,20 +387,20 @@ definition {
 	macro validateItemNameOnTable {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 	}
 
 	macro validateItemNameOnTableNotPresent {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 	}
 
 	macro validateListTitleAtRow {
 		AssertTextEquals(
-			key_rowNumber = "${rowNumber}",
+			key_rowNumber = ${rowNumber},
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
-			value1 = "${title}");
+			value1 = ${title});
 	}
 
 	macro validateNewButtonIconIsNotPresent {
@@ -410,12 +410,12 @@ definition {
 	macro validateNewButtonIsNotPresent {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
-			value1 = "${buttonValue}");
+			value1 = ${buttonValue});
 	}
 
 	macro validatePermissionsFromRolesAreChecked {
-		for (var roleTitle : list "${roleList}") {
-			var key_roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var key_roleTitle = ${roleTitle};
 
 			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 
@@ -428,8 +428,8 @@ definition {
 	}
 
 	macro validatePermissionsFromRolesAreNotChecked {
-		for (var roleTitle : list "${roleList}") {
-			var key_roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var key_roleTitle = ${roleTitle};
 
 			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
 
@@ -444,7 +444,7 @@ definition {
 	macro validateProductMenuApp {
 		AssertTextEquals(
 			locator1 = "AppBuilder#PRODUCT_MENU_DEPLOYED",
-			value1 = "${appName}");
+			value1 = ${appName});
 	}
 
 	macro validateRequiredValidNameMessage {
@@ -464,11 +464,11 @@ definition {
 	}
 
 	macro validateStandAloneOptionNotPresent {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.viewNotPresent(menuItem = "Open Standalone App");
 
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 	}
 
 	macro validateSuccessMessage {
@@ -477,7 +477,7 @@ definition {
 
 	macro validateTextBox {
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_BOX_FIELD");
 	}
 
@@ -490,7 +490,7 @@ definition {
 	macro validateWidgetApp {
 		AssertTextEquals(
 			locator1 = "AppBuilder#WIDGET_DEPLOYED",
-			value1 = "${appName}");
+			value1 = ${appName});
 	}
 
 	macro viewCheckboxChecked {
@@ -502,7 +502,7 @@ definition {
 	}
 
 	macro viewItem {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "View");
 	}

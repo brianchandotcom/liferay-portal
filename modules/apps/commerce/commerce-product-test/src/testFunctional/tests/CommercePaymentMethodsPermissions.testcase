@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9506. As a user of the storefront, I should have access only to payment methods that are assigned to my role"
-	@priority = "4"
+	@priority = 4
 	test CanSFUsersSelectPaymentMethodsDuringCheckoutBasedOnViewPermissionForEachPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -49,7 +49,7 @@ definition {
 			for (var paymentMethod : list "Money Order, Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}");
+					paymentMethod = ${paymentMethod});
 			}
 		}
 
@@ -104,7 +104,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -120,14 +120,14 @@ definition {
 				notEligiblePaymentMethods = "PayPal",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "COMMERCE-9505. As a Channel Manager, I can configure an active payment method to be accessible by some roles"
-	@priority = "4"
+	@priority = 4
 	test CanUsersSelectPaymentMethodsBasedOnViewPermissionForEachPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -153,16 +153,16 @@ definition {
 			for (var paymentMethod : list "Money Order, Authorize.Net,PayPal") {
 				CommerceChannels.editPaymentMethod(
 					active = "true",
-					paymentMethod = "${paymentMethod}");
+					paymentMethod = ${paymentMethod});
 			}
 		}
 
 		task ("And given an order is created") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "paypal",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 		}
@@ -242,7 +242,7 @@ definition {
 	}
 
 	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can edit the payment method of an order"
-	@priority = "3"
+	@priority = 3
 	test UsersWithManagePaymentMethodsPermissionCanEditSelectedPaymentMethod {
 		property portal.acceptance = "true";
 
@@ -282,7 +282,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -298,8 +298,8 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can select payment method during checkout"
-	@priority = "3"
+	@priority = 3
 	test UsersWithManagePermissionCanSelectPaymentMethodDuringCheckout {
 		property portal.acceptance = "false";
 
@@ -356,7 +356,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -401,7 +401,7 @@ definition {
 	}
 
 	@description = "Verify users without the 'Manage Commerce Order Payment Methods' permission cannot edit the payment method of an order"
-	@priority = "3"
+	@priority = 3
 	test UsersWithoutManagePermissionCannotEditSelectedPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -434,7 +434,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -450,8 +450,8 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -482,7 +482,7 @@ definition {
 	}
 
 	@description = "Verify the payment method selection step is skipped when a buyer without the 'Manage Commerce Order Payment Methods' permission checks out an order"
-	@priority = "3"
+	@priority = 3
 	test UsersWithoutManagePermissionSkipsPaymentMethodStepDuringCheckout {
 		property portal.acceptance = "false";
 
@@ -513,7 +513,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 

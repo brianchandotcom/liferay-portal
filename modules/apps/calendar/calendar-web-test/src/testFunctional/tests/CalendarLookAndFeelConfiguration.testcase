@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can apply configuration of Application Decorators in the calendar widget"
-	@priority = "3"
+	@priority = 3
 	test ApplyConfigurationDecorators {
 		CalendarLookAndFeelConfiguration.viewPortletNameDefault(portletTitle = "Calendar");
 
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify Text Styles in the look and feel configuration page"
-	@priority = "3"
+	@priority = 3
 	test ApplyModifiedTextStyles {
 		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
-	@priority = "2"
+	@priority = 2
 	test CanModifyBackground {
 		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
-	@priority = "2"
+	@priority = 2
 	test CanModifyBorder {
 		property portal.upstream = "quarantine";
 
@@ -159,10 +159,10 @@ definition {
 		CalendarLookAndFeelConfiguration.selectTab(tabName = "Border Styles");
 
 		CalendarLookAndFeelConfiguration.fillBorderWidthColumn(
-			fieldTextBottom = "40",
-			fieldTextLeft = "60",
-			fieldTextRight = "60",
-			fieldTextTop = "40",
+			fieldTextBottom = 40,
+			fieldTextLeft = 60,
+			fieldTextRight = 60,
+			fieldTextTop = 40,
 			optionBottom = "px",
 			optionLeft = "px",
 			optionRight = "px",
@@ -236,27 +236,27 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"
-	@priority = "2"
+	@priority = 2
 	test CanModifyMarginAndPadding {
 		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
 		CalendarLookAndFeelConfiguration.selectTab(tabName = "Margin and Padding");
 
 		CalendarLookAndFeelConfiguration.fillPaddingColumn(
-			fieldTextBottom = "35",
-			fieldTextLeft = "15",
-			fieldTextRight = "15",
-			fieldTextTop = "50",
+			fieldTextBottom = 35,
+			fieldTextLeft = 15,
+			fieldTextRight = 15,
+			fieldTextTop = 50,
 			optionBottom = "px",
 			optionLeft = "px",
 			optionRight = "px",
 			optionTop = "px");
 
 		CalendarLookAndFeelConfiguration.fillMarginColumn(
-			fieldTextBottom = "20",
-			fieldTextLeft = "60",
-			fieldTextRight = "25",
-			fieldTextTop = "50",
+			fieldTextBottom = 20,
+			fieldTextLeft = 60,
+			fieldTextRight = 25,
+			fieldTextTop = 50,
 			optionBottom = "px",
 			optionLeft = "px",
 			optionRight = "px",
@@ -303,7 +303,7 @@ definition {
 
 	@description = "LRQA-71889 - Verify that the user can set Advanced Styling on calendar"
 	@ignore = "Test Stub"
-	@priority = "2"
+	@priority = 2
 	test CanSetAdvancedStyling {
 
 		// TODO LRQA-71968 CanSetAdvancedStyling pending implementation

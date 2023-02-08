@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,17 +35,17 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150811 | Test Summary: Verify if the right pane displays the following data (Product - Version - Environment Type - Subscription - Key Activations Available - Instance size)"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test CanViewTheDataInThePanel {
 
 		// Needs refactor since it depends on example FIFA account
@@ -55,19 +55,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -94,8 +94,8 @@ definition {
 
 		task ("Then the card will show all the details of the generated activation key") {
 			CP2ActivationKeys.assertInfoNewKeyCard(
-				activationsAvailable = "62",
-				instanceSize = "1",
+				activationsAvailable = 62,
+				instanceSize = 1,
 				licenseType = "Production (Virtual Cluster)",
 				product = "DXP",
 				subscription = "Jun 30, 2021 - Mar 30, 2023",
@@ -105,7 +105,7 @@ definition {
 
 	@description = "Automation ID: LPS-150809 | Test Summary: Verify that after filling out all required fields the Generate Cluster (Keys) button is enabled"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanViewTheGenerateClusterButtonEnabled {
 
 		// Needs refactor since it depends on example FIFA account
@@ -115,19 +115,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -161,7 +161,7 @@ definition {
 				environmentDetails = "name",
 				value = "Liferay Test");
 
-			CP2ActivationKeys.selectClusterNodes(key_option = "1");
+			CP2ActivationKeys.selectClusterNodes(key_option = 1);
 		}
 
 		task ("Then I should be able to see that the Next button is enabled") {
@@ -171,7 +171,7 @@ definition {
 
 	@description = "Automation ID: LPS-150805 | Test Summary: Verify if the user clicks the Cancel button the modal closes without saving anything"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanViewTheModalClosing {
 
 		// Needs refactor since it depends on example FIFA account
@@ -181,19 +181,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -227,7 +227,7 @@ definition {
 
 	@description = "Automation ID: LPS-150810 | Test Summary: Verify if the button name changes according to the number of keys generated by the user"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test CanViewTheNumberOfKeysInTheButtonText {
 
 		// Needs refactor since it depends on example FIFA account
@@ -237,19 +237,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -267,18 +267,18 @@ definition {
 		}
 
 		task ("The button will then display the number of keys selected") {
-			CP2ActivationKeys.selectClusterNodes(key_option = "1");
+			CP2ActivationKeys.selectClusterNodes(key_option = 1);
 
 			CP2ActivationKeys.assertTextButton(text = "Generate Cluster (1 Keys)");
 
-			CP2ActivationKeys.selectClusterNodes(key_option = "2");
+			CP2ActivationKeys.selectClusterNodes(key_option = 2);
 
 			CP2ActivationKeys.assertTextButton(text = "Generate Cluster (2 Keys)");
 		}
 	}
 
 	@description = "Automation ID: LPS-150812 | Test Summary: Verify that when the user downloads the keys a success message appears"
-	@priority = "3"
+	@priority = 3
 	test CanViewTheSuccessMessageAfterDownloadingTheNewKey {
 
 		// TODO LPS-150812 CanViewTheSuccessMessageAfterDownloadingTheNewKey pending implementation
@@ -287,7 +287,7 @@ definition {
 
 	@description = "Automation ID: LPS-150807 | Test Summary: Verify if the user goes back to the previous screen no changes have been made"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test UserGoesBackToThePreviousScreenAndNoChangesAreMade {
 
 		// Needs refactor since it depends on example FIFA account
@@ -297,19 +297,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -355,7 +355,7 @@ definition {
 
 	@description = "Automation ID: LPS-150804 | Test Summary: Verify if the Cluster Nodes field is required"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyClusterNodesField {
 
 		// Needs refactor since it depends on example FIFA account
@@ -365,19 +365,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
@@ -403,7 +403,7 @@ definition {
 				environmentDetails = "name",
 				value = "Liferay Test");
 
-			CP2ActivationKeys.selectClusterNodes(key_option = "2");
+			CP2ActivationKeys.selectClusterNodes(key_option = 2);
 
 			CustomerPortal.assertButtonIsActive(text = "Generate Cluster (2 Keys)");
 		}
@@ -411,7 +411,7 @@ definition {
 
 	@description = "Automation ID: LPS-150803 | Test Summary: Verify if the Environment Name field is required"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test VerifyEnvironmentNameField {
 
 		// Needs refactor since it depends on example FIFA account
@@ -421,19 +421,19 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {

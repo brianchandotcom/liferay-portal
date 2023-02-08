@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteAllOrganizations {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,10 +9,10 @@ definition {
 
 		var organizationsCount = CommerceJSONOrganizationsAPI._getOrganizationsCount();
 
-		if ("${organizationsCount}" != "0") {
-			var organizationIds = CommerceJSONOrganizationsAPI._getOrganizationIds(organizationsCount = "${organizationsCount}");
+		if (${organizationsCount} != 0) {
+			var organizationIds = CommerceJSONOrganizationsAPI._getOrganizationIds(organizationsCount = ${organizationsCount});
 
-			for (var organizationId : list "${organizationIds}") {
+			for (var organizationId : list ${organizationIds}) {
 				echo("Deleting organization with id: ${organizationId}");
 
 				var curl = '''
@@ -21,7 +21,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -30,17 +30,17 @@ definition {
 	}
 
 	macro _getOrganizationIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(organizationsCount)) {
-			var organizationsCount = "${organizationsCount}";
+			var organizationsCount = ${organizationsCount};
 		}
 		else {
-			var organizationsCount = "100";
+			var organizationsCount = 100;
 		}
 
 		var curl = '''
@@ -49,13 +49,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var channelIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		return "${channelIds}";
+		return ${channelIds};
 	}
 
 	macro _getOrganizationsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -67,11 +67,11 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var organizationsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var organizationsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The organizations count is: ${organizationsCount}");
 
-		return "${organizationsCount}";
+		return ${organizationsCount};
 	}
 
 }

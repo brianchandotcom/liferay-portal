@@ -9,17 +9,17 @@ definition {
 
 		var archivedFilePath = "${destinationPath}/${fileNameWithExtension}";
 
-		ArchiveUtil.archive("${sourceFilePath}", "${archivedFilePath}");
+		ArchiveUtil.archive(${sourceFilePath}, ${archivedFilePath});
 
-		FileUtil.delete("${sourceFilePath}");
+		FileUtil.delete(${sourceFilePath});
 
-		return "${archivedFilePath}";
+		return ${archivedFilePath};
 	}
 
 	macro copyDependenciesDirToFolder {
-		Variables.assertDefined(parameterList = "${file}");
+		Variables.assertDefined(parameterList = ${file});
 
-		var filePath = TestCase.getDependenciesDirPath(fileName = "${file}");
+		var filePath = TestCase.getDependenciesDirPath(fileName = ${file});
 
 		if (!(isSet(destinationDir))) {
 			var destinationDir = PropsUtil.get("liferay.home.dir.name");
@@ -27,9 +27,9 @@ definition {
 
 		var destinationFilePath = "${destinationDir}/${file}";
 
-		FileUtil.copyDirectory("${filePath}", "${destinationFilePath}");
+		FileUtil.copyDirectory(${filePath}, ${destinationFilePath});
 
-		return "${destinationFilePath}";
+		return ${destinationFilePath};
 	}
 
 	macro moveFileToDeployFolder {
@@ -49,18 +49,18 @@ definition {
 
 		// Need to add pause here to finish deploying zip through batch engine LPS-161983
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 	}
 
 	macro setUpGlobalIds {
-		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
+		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
-		static var staticCompanyId = "${companyId}";
-		static var staticSiteId = "${siteId}";
+		static var staticCompanyId = ${companyId};
+		static var staticSiteId = ${siteId};
 
-		return "${staticCompanyId}";
+		return ${staticCompanyId};
 
-		return "${staticSiteId}";
+		return ${staticSiteId};
 	}
 
 }

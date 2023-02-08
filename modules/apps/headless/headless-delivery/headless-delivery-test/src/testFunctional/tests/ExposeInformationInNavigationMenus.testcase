@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetAssetLibraryDocumentInformationInNavigationMenuWithSiteId {
 		property portal.acceptance = "true";
 
@@ -59,9 +59,9 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("And Given a navigation menu doesn't use custom name associate with the document through UI") {
@@ -78,7 +78,7 @@ definition {
 		task ("When with get request and siteId to retrieve the navigation menu") {
 			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
@@ -89,11 +89,11 @@ definition {
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "false",
 				responseFromSite = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetAssetLibraryDocumentInformationWithNavigationMenuId {
 		property portal.acceptance = "true";
 
@@ -110,9 +110,9 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
-				filePath = "${filePath}");
+				filePath = ${filePath});
 		}
 
 		task ("And Given a navigation menu use custom name associate with the document through UI") {
@@ -135,7 +135,7 @@ definition {
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = ${navigationMenuId});
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
@@ -145,11 +145,11 @@ definition {
 				expectedType = "document",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetAssetLibraryStructuredContentInformationInNavigationMenuWithSiteId {
 		property portal.acceptance = "true";
 
@@ -164,7 +164,7 @@ definition {
 		task ("And Given a content structure created in asset library") {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = "${assetLibraryId}");
+			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -180,9 +180,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "Web Content Title");
@@ -206,23 +206,23 @@ definition {
 		task ("When with get request and siteId to retrieve the navigation menu") {
 			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to webcontent endpoint and type equals to structuredContent") {
 			var portalURL = JSONCompany.getPortalURL();
-			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${responseFromCreate});
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetAssetLibraryWebContentArticlesInformationWithNavigationMenuId {
 		property portal.acceptance = "true";
 
@@ -237,7 +237,7 @@ definition {
 		task ("And Given a content structure created in asset library") {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = "${assetLibraryId}");
+			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -253,9 +253,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "Web Content Title");
@@ -277,22 +277,22 @@ definition {
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = ${navigationMenuId});
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
 			var portalURL = JSONCompany.getPortalURL();
-			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${responseFromCreate});
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
 				expectedType = "structuredContent",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetBlogEntryInformationInNavigationMenuWithNavigationMenuId {
 		property portal.acceptance = "true";
 
@@ -317,7 +317,7 @@ definition {
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = ${navigationMenuId});
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to blog endpoint and type equals to blogPosting") {
@@ -327,11 +327,11 @@ definition {
 				expectedType = "blogPosting",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
 				expectedUseCustomName = "false",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetBlogEntryInformationInNavigationMenuWithSiteId {
 		property portal.acceptance = "true";
 
@@ -358,7 +358,7 @@ definition {
 		task ("When with get request to retrieve the navigation menu with siteId") {
 			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
 		}
 
 		task ("Then I can see values of useCustomName is true, contentURL equals to blog endpoint and type equals to blogPosting") {
@@ -369,11 +369,11 @@ definition {
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetDocumentInformationInNavigationMenuWithSiteId {
 		property portal.acceptance = "true";
 
@@ -398,7 +398,7 @@ definition {
 		task ("When with get request and siteId to retrieve the navigation menu") {
 			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
@@ -412,11 +412,11 @@ definition {
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "false",
 				responseFromSite = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetDocumentInformationWithNavigationMenuId {
 		property portal.acceptance = "true";
 
@@ -447,7 +447,7 @@ definition {
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = ${navigationMenuId});
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
@@ -460,11 +460,11 @@ definition {
 				expectedType = "document",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
 				expectedUseCustomName = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetStructuredContentInformationInNavigationMenuWithSiteId {
 		property portal.acceptance = "true";
 
@@ -492,7 +492,7 @@ definition {
 		task ("When with get request and siteId to retrieve the navigation menu") {
 			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 
-			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = ${siteId});
 		}
 
 		task ("Then I can see values of useCustomName equals to true, contentURL equals to webcontent endpoint and type equals to structuredContent") {
@@ -504,11 +504,11 @@ definition {
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "true",
 				responseFromSite = "true",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GetWebContentArticlesInformationWithNavigationMenuId {
 		property portal.acceptance = "true";
 
@@ -534,7 +534,7 @@ definition {
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = ${navigationMenuId});
 		}
 
 		task ("Then I can see values of useCustomName is false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
@@ -545,7 +545,7 @@ definition {
 				expectedType = "structuredContent",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 

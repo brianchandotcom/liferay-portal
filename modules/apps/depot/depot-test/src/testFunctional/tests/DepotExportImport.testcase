@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with collections to an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithCollectionsCanBeImportedToDepot {
 		JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -61,7 +61,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Import Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Import Depot Name");
 
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with collections to a site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithCollectionsCanBeImportedToSite {
 		JSONAssetlist.addManualAssetListEntry(
@@ -92,7 +92,7 @@ definition {
 		JSONGroup.addGroup(groupName = "New Site");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
+			larFileName = ${larFileName},
 			siteName = "New Site");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "new-site");
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with customize document to an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithCustomizeDMCanBeImportedToDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -133,7 +133,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "1234",
+			numericField = 1234,
 			textField = "Text");
 
 		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
@@ -160,7 +160,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Import Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openToDMEntryInDepot(
 			depotName = "Test Import Depot Name",
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library customize web content to an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithCustomizeWCCanBeImportedToDepot {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -229,7 +229,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Import Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Import Depot Name");
 
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with document to a site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithDMCanBeImportedToSite {
 		JSONDocument.addFile(
@@ -269,7 +269,7 @@ definition {
 		JSONGroup.addGroup(groupName = "New Site");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
+			larFileName = ${larFileName},
 			siteName = "New Site");
 
 		DMNavigator.openToEntryInAdmin(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the asset library with web content to a site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedDepotWithWCCanBeImportedToSite {
 		JSONWebcontent.addWebContent(
@@ -303,7 +303,7 @@ definition {
 		JSONGroup.addGroup(groupName = "New Site");
 
 		LAR.importSiteCP(
-			larFileName = "${larFileName}",
+			larFileName = ${larFileName},
 			siteName = "New Site");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "new-site");
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with collections to a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedSiteWithCollectionsCanBeImportedToDepot {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -333,7 +333,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with document to a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedSiteWithDMCanBeImportedToDepot {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -365,7 +365,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openToDMEntryInDepot(
 			depotName = "Test Depot Name",
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can import the site with web content to a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExportedSiteWithWCCanBeImportedToDepot {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -397,7 +397,7 @@ definition {
 
 		LAR.importSiteCP(
 			depotName = "Test Depot Name",
-			larFileName = "${larFileName}");
+			larFileName = ${larFileName});
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

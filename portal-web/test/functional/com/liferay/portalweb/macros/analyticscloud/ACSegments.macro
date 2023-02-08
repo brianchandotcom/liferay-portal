@@ -1,7 +1,7 @@
 definition {
 
 	macro accessSegment {
-		var key_segmentName = "${segmentName}";
+		var key_segmentName = ${segmentName};
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
@@ -23,25 +23,25 @@ definition {
 
 		Type(
 			locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE",
-			value1 = "${attribute}");
+			value1 = ${attribute});
 
 		Click(
 			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
-			menuItem = "${attribute}");
+			menuItem = ${attribute});
 
 		if (isSet(binsAmount)) {
 			Click(locator1 = "ACSegments#BINS_INPUT");
 
 			Type(
 				locator1 = "ACSegments#BINS_INPUT",
-				value1 = "${binsAmount}");
+				value1 = ${binsAmount});
 		}
 
 		Click(locator1 = "ACSegments#BREAKDOWN_NAME_INPUT");
 
 		Type(
 			locator1 = "ACSegments#BREAKDOWN_NAME_INPUT",
-			value1 = "${breakdownName}");
+			value1 = ${breakdownName});
 
 		Click(locator1 = "Button#SAVE");
 	}
@@ -49,16 +49,16 @@ definition {
 	macro addNestedSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",
-			value1 = "${segmentField}");
+			value1 = ${segmentField});
 
-		var key_segmentField = "${segmentField}";
+		var key_segmentField = ${segmentField};
 
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
 			locator2 = "ACSegments#CRITERIA_STATEMENT_BODY");
 	}
@@ -66,15 +66,15 @@ definition {
 	macro addOrganizationName {
 		Type(
 			locator1 = "ACSegments#ORGANIZATION_NAME_INPUT",
-			value1 = "${organizationName}");
+			value1 = ${organizationName});
 	}
 
 	macro addSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",
-			value1 = "${segmentField}");
+			value1 = ${segmentField});
 
-		var key_segmentField = "${segmentField}";
+		var key_segmentField = ${segmentField};
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
@@ -82,12 +82,12 @@ definition {
 	}
 
 	macro addStaticMember {
-		var key_tableMember = "${tableMember}";
+		var key_tableMember = ${tableMember};
 
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
 		while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
-			ACSegments.searchSegment(findSegment = "${tableMember}");
+			ACSegments.searchSegment(findSegment = ${tableMember});
 
 			ACUtils.clearSearchBar();
 		}
@@ -100,15 +100,15 @@ definition {
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
-		for (var tableMember : list "${tableMember}") {
-			var key_tableMember = "${tableMember}";
+		for (var tableMember : list ${tableMember}) {
+			var key_tableMember = ${tableMember};
 
-			ACSegments.searchSegment(findSegment = "${tableMember}");
+			ACSegments.searchSegment(findSegment = ${tableMember});
 
 			while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
 				ACUtils.clearSearchBar();
 
-				ACSegments.searchSegment(findSegment = "${tableMember}");
+				ACSegments.searchSegment(findSegment = ${tableMember});
 			}
 
 			Click(locator1 = "ACSegments#TABLE_CHECKBOX");
@@ -119,43 +119,43 @@ definition {
 
 	macro assertCriteriaTable {
 		AssertVisible(
-			key_criteriaName = "${criteriaName}",
+			key_criteriaName = ${criteriaName},
 			locator1 = "ACSegments#CRITERIA_ROW");
 	}
 
 	macro assertMember {
 		AssertElementPresent(
-			key_tableMember = "${memberName}",
+			key_tableMember = ${memberName},
 			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro assertMemberNotPresent {
 		AssertElementNotPresent(
-			key_tableMember = "${memberName}",
+			key_tableMember = ${memberName},
 			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro assertMembershipValue {
 		AssertElementPresent(
 			locator1 = "ACSegments#SEGMENT_TABLE_MEMBERSHIP_NAME_AND_VALUE",
-			membershipName = "${membership}",
-			segmentName = "${segmentName}");
+			membershipName = ${membership},
+			segmentName = ${segmentName});
 	}
 
 	macro assertSegmentAttributeNotPresent {
-		var key_segmentField = "${segmentField}";
+		var key_segmentField = ${segmentField};
 
 		AssertElementNotPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 	}
 
 	macro assertSegmentAttributePresent {
-		var key_segmentField = "${segmentField}";
+		var key_segmentField = ${segmentField};
 
 		AssertElementPresent(locator1 = "ACSegments#SEGMENT_CRITERION_ITEM");
 	}
 
 	macro assertSegmentPresent {
-		var key_segmentName = "${segmentName}";
+		var key_segmentName = ${segmentName};
 
 		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
@@ -163,8 +163,8 @@ definition {
 	macro assertTotalActivitiesValue {
 		AssertElementPresent(
 			locator1 = "ACSegments#SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE",
-			segmentName = "${segmentName}",
-			totalActivitiesNumber = "${totalActivities}");
+			segmentName = ${segmentName},
+			totalActivitiesNumber = ${totalActivities});
 	}
 
 	macro cancelSegment {
@@ -172,14 +172,14 @@ definition {
 	}
 
 	macro clickCheckboxMember {
-		var key_tableMember = "${tableMember}";
+		var key_tableMember = ${tableMember};
 
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro clickMemberButton {
-		var key_tableMember = "${memberName}";
-		var key_buttonName = "${buttonName}";
+		var key_tableMember = ${memberName};
+		var key_buttonName = ${buttonName};
 
 		Click(locator1 = "ACSegments#MEMBER_GENERIC_BUTTON");
 	}
@@ -193,11 +193,11 @@ definition {
 	macro createDynamicSegmentAndFillFields {
 		ACSegments.createDynamicSegment();
 
-		ACUtils.setItemName(itemName = "${segments}");
+		ACUtils.setItemName(itemName = ${segments});
 
-		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
+		ACSegments.goToSidebarAttributes(criterion = ${criterion});
 
-		ACSegments.addSegmentField(segmentField = "${segmentField}");
+		ACSegments.addSegmentField(segmentField = ${segmentField});
 	}
 
 	macro createStaticSegment {
@@ -207,7 +207,7 @@ definition {
 	}
 
 	macro deleteSegment {
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
+		ACSegments.searchSegment(findSegment = ${searchTerm});
 
 		ACUtils.clickKebab();
 
@@ -218,21 +218,21 @@ definition {
 
 	macro deleteSegmentCriteria {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(
-			criteriaName = "${criteriaName}",
-			index = "${index}",
+			criteriaName = ${criteriaName},
+			index = ${index},
 			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
-		while (IsElementPresent(criteriaName = "${criteriaName}", index = "${index}", locator1 = "ACSegments#CRITERIA_ELLIPSIS")) {
+		while (IsElementPresent(criteriaName = ${criteriaName}, index = ${index}, locator1 = "ACSegments#CRITERIA_ELLIPSIS")) {
 			DropdownMenuItem.click(menuItem = "Delete");
 		}
 	}
 
 	macro deleteSegmentViaSegmentListInlineButton {
-		var key_segmentName = "${segmentName}";
+		var key_segmentName = ${segmentName};
 
 		ACUtils.waitForLoading();
 
@@ -243,12 +243,12 @@ definition {
 
 	macro duplicateSegmentCriteria {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(
-			criteriaName = "${criteriaName}",
-			index = "${index}",
+			criteriaName = ${criteriaName},
+			index = ${index},
 			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Duplicate");
@@ -256,11 +256,11 @@ definition {
 
 	macro editConjunction {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#CONJUNCTION_BUTTON");
 	}
 
@@ -272,45 +272,45 @@ definition {
 		}
 
 		Select(
-			key_indexCalendar = "2",
+			key_indexCalendar = 2,
 			locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
-			value1 = "${year}");
+			value1 = ${year});
 
 		Select(
-			key_indexCalendar = "1",
+			key_indexCalendar = 1,
 			locator1 = "ACSegments#MONTH_AND_YEAR_CALENDAR",
-			value1 = "${month}");
+			value1 = ${month});
 
 		Click(
-			key_day = "${day}",
+			key_day = ${day},
 			locator1 = "ACSegments#DAY_CALENDAR_OPTION");
 	}
 
 	macro editFormControlCriterion {
-		var key_criterion = "${criterionName}";
+		var key_criterion = ${criterionName};
 
 		Select(
 			locator1 = "ACSegments#FORM_CONTROL_CRITERION",
-			value1 = "${option}");
+			value1 = ${option});
 	}
 
 	macro editNumberCriterion {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Type(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#NUMBER_INPUT",
-			value1 = "${numberInput}");
+			value1 = ${numberInput});
 
 		Click(locator1 = "ACSegments#TOTAL_MEMBERS");
 	}
 
 	macro editSegment {
-		var key_segmentName = "${segmentName}";
+		var key_segmentName = ${segmentName};
 
-		ACSegments.searchSegment(findSegment = "${segmentName}");
+		ACSegments.searchSegment(findSegment = ${segmentName});
 
 		ACUtils.clickKebab();
 
@@ -323,13 +323,13 @@ definition {
 
 	macro editTextCriterion {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Type(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#TEXT_INPUT",
-			value1 = "${textInput}");
+			value1 = ${textInput});
 
 		if (!(isSet(skip))) {
 			Click(locator1 = "ACSegments#TOTAL_MEMBERS");
@@ -339,81 +339,81 @@ definition {
 	macro editWebBehaviorCriterion {
 		if (isSet(activitiesOption)) {
 			Select(
-				key_indexField = "${indexField}",
+				key_indexField = ${indexField},
 				locator1 = "ACSegments#ACTIVITIES_CRITERION",
-				value1 = "${activitiesOption}");
+				value1 = ${activitiesOption});
 		}
 
 		if (isSet(searchTerm)) {
 			ACSegments.selectDocument(
-				documentTitle = "${searchTerm}",
-				indexField = "${indexField}");
+				documentTitle = ${searchTerm},
+				indexField = ${indexField});
 		}
 
 		if (isSet(atLeastMost)) {
 			Select(
-				key_indexField = "${indexField}",
+				key_indexField = ${indexField},
 				locator1 = "ACSegments#OCCURENCE_SELECT",
-				value1 = "${atLeastMost}");
+				value1 = ${atLeastMost});
 		}
 
 		if (isSet(occurenceNumber)) {
-			ACSegments.setOccurence(occurenceNumber = "${occurenceNumber}");
+			ACSegments.setOccurence(occurenceNumber = ${occurenceNumber});
 		}
 
 		if (isSet(timeOption) || isSet(timePeriod)) {
 			ACSegments.editWebBehaviorTimeCriterion(
-				day = "${day}",
-				day2 = "${day2}",
-				indexField = "${indexField}",
-				month = "${month}",
-				month2 = "${month2}",
-				timeOption = "${timeOption}",
-				timePeriod = "${timePeriod}",
-				year = "${year}",
-				year2 = "${year2}");
+				day = ${day},
+				day2 = ${day2},
+				indexField = ${indexField},
+				month = ${month},
+				month2 = ${month2},
+				timeOption = ${timeOption},
+				timePeriod = ${timePeriod},
+				year = ${year},
+				year2 = ${year2});
 		}
 	}
 
 	macro editWebBehaviorTimeCriterion {
 		if (isSet(timeOption)) {
 			Select(
-				key_indexField = "${indexField}",
+				key_indexField = ${indexField},
 				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
-				value1 = "${timeOption}");
+				value1 = ${timeOption});
 		}
 
 		if (isSet(timePeriod)) {
-			if (("${timeOption}" == "since") || !(isSet(timeOption))) {
+			if ((${timeOption} == "since") || !(isSet(timeOption))) {
 				Select(
-					key_indexField = "${indexField}",
+					key_indexField = ${indexField},
 					locator1 = "ACSegments#TIME_INPUT_CRITERION",
-					value1 = "${timePeriod}");
+					value1 = ${timePeriod});
 			}
 		}
 
-		if (("${timeOption}" == "after") || ("${timeOption}" == "before") || ("${timeOption}" == "on")) {
+		if ((${timeOption} == "after") || (${timeOption} == "before") || (${timeOption} == "on")) {
 			ACSegments.editDateCriterion(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
+				day = ${day},
+				month = ${month},
+				year = ${year});
 		}
 
-		if ("${timeOption}" == "between") {
+		if (${timeOption} == "between") {
 			ACSegments.editDateCriterion(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
+				day = ${day},
+				month = ${month},
+				year = ${year});
 
 			ACSegments.editDateCriterion(
-				day = "${day2}",
-				month = "${month2}",
-				year = "${year2}");
+				day = ${day2},
+				month = ${month2},
+				year = ${year2});
 		}
 	}
 
 	macro filterAndOrderForSegLists {
-		var key_filterName = "${filterName}";
+		var key_filterName = ${filterName};
 
 		if (!(isSet(key_dropdownName))) {
 			var key_dropdownName = "Filter and Order";
@@ -423,7 +423,7 @@ definition {
 
 		Click(
 			locator1 = "ACSegments#FILTER_DROPDOWN_OPTION",
-			value1 = "${key_filterName}");
+			value1 = ${key_filterName});
 
 		Click(locator1 = "ACSegments#FILTER_AND_ORDER_BUTTON");
 	}
@@ -440,51 +440,51 @@ definition {
 
 	macro generateDayMonthAndYearValues {
 		if (!(isSet(dateDifferenceFromCurrentDate))) {
-			var dateDifferenceFromCurrentDate = "0";
+			var dateDifferenceFromCurrentDate = 0;
 		}
 
-		var day = DateUtil.getDate("${dateDifferenceFromCurrentDate}");
-		var month = DateUtil.getMonthName("${dateDifferenceFromCurrentDate}");
-		var year = DateUtil.getYear("${dateDifferenceFromCurrentDate}");
-		static var staticDay = "${day}";
-		static var staticMonth = "${month}";
-		static var staticYear = "${year}";
+		var day = DateUtil.getDate(${dateDifferenceFromCurrentDate});
+		var month = DateUtil.getMonthName(${dateDifferenceFromCurrentDate});
+		var year = DateUtil.getYear(${dateDifferenceFromCurrentDate});
+		static var staticDay = ${day};
+		static var staticMonth = ${month};
+		static var staticYear = ${year};
 
-		return "${staticDay}";
+		return ${staticDay};
 
-		return "${staticMonth}";
+		return ${staticMonth};
 
-		return "${staticYear}";
+		return ${staticYear};
 	}
 
 	macro generateSecondDayMonthAndYearValues {
 		if (!(isSet(dateDifferenceFromCurrentDate))) {
-			var dateDifferenceFromCurrentDate = "0";
+			var dateDifferenceFromCurrentDate = 0;
 		}
 
-		var day2 = DateUtil.getDate("${dateDifferenceFromCurrentDate}");
-		var month2 = DateUtil.getMonthName("${dateDifferenceFromCurrentDate}");
-		var year2 = DateUtil.getYear("${dateDifferenceFromCurrentDate}");
-		static var staticDay2 = "${day2}";
-		static var staticMonth2 = "${month2}";
-		static var staticYear2 = "${year2}";
+		var day2 = DateUtil.getDate(${dateDifferenceFromCurrentDate});
+		var month2 = DateUtil.getMonthName(${dateDifferenceFromCurrentDate});
+		var year2 = DateUtil.getYear(${dateDifferenceFromCurrentDate});
+		static var staticDay2 = ${day2};
+		static var staticMonth2 = ${month2};
+		static var staticYear2 = ${year2};
 
-		return "${staticDay2}";
+		return ${staticDay2};
 
-		return "${staticMonth2}";
+		return ${staticMonth2};
 
-		return "${staticYear2}";
+		return ${staticYear2};
 	}
 
 	macro goToSidebarAttributes {
-		var key_criterion = "${criterion}";
+		var key_criterion = ${criterion};
 
 		Click.mouseDownMouseUp(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
 
-		while (IsElementPresent(locator1 = "ACSegments#SELECT_CRITERION_TYPE", value1 = "${criterion}")) {
+		while (IsElementPresent(locator1 = "ACSegments#SELECT_CRITERION_TYPE", value1 = ${criterion})) {
 			Click(
 				locator1 = "ACSegments#SELECT_CRITERION_TYPE",
-				value1 = "${criterion}");
+				value1 = ${criterion});
 		}
 	}
 
@@ -499,7 +499,7 @@ definition {
 	}
 
 	macro removeStaticMember {
-		var key_tableMember = "${tableMember}";
+		var key_tableMember = ${tableMember};
 
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
@@ -513,21 +513,21 @@ definition {
 	}
 
 	macro searchMember {
-		var searchTerm = "${findMember}";
+		var searchTerm = ${findMember};
 
 		Type(
 			locator1 = "ACSegments#SEARCH_MEMBER",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
 
 	macro searchSegment {
-		var searchTerm = "${findSegment}";
+		var searchTerm = ${findSegment};
 
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		KeyPress(
 			locator1 = "ACSettings#SEARCH_BAR",
@@ -535,11 +535,11 @@ definition {
 	}
 
 	macro searchTheSegmentProfile {
-		var key_segmentName = "${searchTerm}";
+		var key_segmentName = ${searchTerm};
 
 		Type(
 			locator1 = "ACSegments#SEARCH_MEMBER",
-			value1 = "${key_segmentName}");
+			value1 = ${key_segmentName});
 
 		KeyPress(
 			locator1 = "ACSegments#SEARCH_MEMBER",
@@ -547,10 +547,10 @@ definition {
 	}
 
 	macro selectAutocompleteOption {
-		var key_autocompleteText = "${autocompleteText}";
+		var key_autocompleteText = ${autocompleteText};
 
 		Click(
-			key_criteriaName = "${criteriaName}",
+			key_criteriaName = ${criteriaName},
 			locator1 = "ACSegments#AUTOCOMPLETE_SELECT_INPUT");
 
 		WaitForElementPresent(locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN");
@@ -563,25 +563,25 @@ definition {
 
 		Type(
 			locator1 = "ACSegments#ATTRIBUTE_TEXT_INPUT",
-			value1 = "${attribute}");
+			value1 = ${attribute});
 
 		Click(
 			locator1 = "ACSegments#ATTRIBUTE_DROPDOWN_MENU_ITEM",
-			menuItem = "${attribute}");
+			menuItem = ${attribute});
 	}
 
 	macro selectDocument {
-		var key_indexField = "${indexField}";
-		var key_tableMember = "${documentTitle}";
+		var key_indexField = ${indexField};
+		var key_tableMember = ${documentTitle};
 
 		Click(locator1 = "ACSegments#SELECT_BUTTON");
 
-		ACSegments.searchSegment(findSegment = "${documentTitle}");
+		ACSegments.searchSegment(findSegment = ${documentTitle});
 
 		while ((IsElementNotPresent(locator1 = "ACSegments#TABLE_CHECKBOX")) && (maxIterations = "50")) {
 			ACUtils.clearSearchBar();
 
-			ACSegments.searchSegment(findSegment = "${documentTitle}");
+			ACSegments.searchSegment(findSegment = ${documentTitle});
 		}
 
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
@@ -591,17 +591,17 @@ definition {
 
 	macro selectOperator {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Select(
-			key_indexField = "${index}",
+			key_indexField = ${index},
 			locator1 = "ACSegments#ACTIVITIES_CRITERION",
-			value1 = "${operator}");
+			value1 = ${operator});
 	}
 
 	macro selectSegmentType {
-		var key_segmentType = "${segmentType}";
+		var key_segmentType = ${segmentType};
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
 	}
@@ -609,7 +609,7 @@ definition {
 	macro setOccurence {
 		Type(
 			locator1 = "ACSegments#OCCURENCE_INPUT",
-			value1 = "${occurenceNumber}");
+			value1 = ${occurenceNumber});
 	}
 
 	macro sortSegmentButton {
@@ -619,40 +619,40 @@ definition {
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",
-			value1 = "${pageNumber}");
+			value1 = ${pageNumber});
 	}
 
 	macro viewAutocompleteSuggestions {
 		Click(
-			index = "1",
+			index = 1,
 			locator1 = "ACSegments#TEXT_INPUT");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
-			value1 = "${autocompleteText}");
+			value1 = ${autocompleteText});
 
 		if (isSet(notPresent)) {
 			AssertTextNotEquals.assertNotPartialText(
 				locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN",
-				value1 = "${notPresent}");
+				value1 = ${notPresent});
 		}
 	}
 
 	macro viewBreakdownChartsEntry {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACSegments#BREAKDOWN_CHART",
-			value1 = "${key_entry}");
+			value1 = ${key_entry});
 	}
 
 	macro viewConjunction {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		AssertTextEquals(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#CONJUNCTION_BUTTON",
-			value1 = "${conjunction}");
+			value1 = ${conjunction});
 	}
 
 	macro viewDeletedCriteria {
@@ -662,22 +662,22 @@ definition {
 	}
 
 	macro viewDeletedSegmentName {
-		var key_segmentName = "${searchTerm}";
+		var key_segmentName = ${searchTerm};
 
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
+		ACSegments.searchSegment(findSegment = ${searchTerm});
 
 		AssertElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
 	macro viewDuplicatedCriteria {
-		var i = "0";
+		var i = 0;
 
-		while ("${i}" != "${totalCriteriaCount}") {
+		while (${i} != ${totalCriteriaCount}) {
 			var i = ${i} + 1;
 
 			AssertVisible(
-				criteriaName = "${criteriaName}",
-				index = "${i}",
+				criteriaName = ${criteriaName},
+				index = ${i},
 				locator1 = "ACSegments#DUPLICATED_CRITERIA");
 		}
 	}
@@ -685,7 +685,7 @@ definition {
 	macro viewEditorLabel {
 		AssertTextPresent(
 			locator1 = "ACSegments#EDITOR_LABEL",
-			value1 = "${labelName}");
+			value1 = ${labelName});
 	}
 
 	macro viewIncludeAnonymousLabel {
@@ -695,174 +695,174 @@ definition {
 	macro viewPreviewNumber {
 		AssertTextPresent(
 			locator1 = "ACLoading#PREVIEW_NUMBER",
-			value1 = "${previewNumber}");
+			value1 = ${previewNumber});
 	}
 
 	macro viewSegmentComposition {
-		if ("${individualsType}" == "Active") {
+		if (${individualsType} == "Active") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
-				value1 = "${individualsNumber}");
+				value1 = ${individualsNumber});
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
-				value1 = "${individualsPercent}");
+				value1 = ${individualsPercent});
 		}
-		else if ("${individualsType}" == "Known") {
+		else if (${individualsType} == "Known") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
-				value1 = "${individualsNumber}");
+				value1 = ${individualsNumber});
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
-				value1 = "${individualsPercent}");
+				value1 = ${individualsPercent});
 		}
 	}
 
 	macro viewSegmentCriteriaIndividualAttributes {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (!(isSet(key_indexNested))) {
-			var key_indexNested = "1";
+			var key_indexNested = 1;
 		}
 
 		AssertVisible(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",
 			type = "Individual");
 
 		if (isSet(attributeName)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
-				value1 = "${attributeName}");
+				value1 = ${attributeName});
 		}
 
 		if (isSet(condition)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
-				value1 = "${condition}");
+				value1 = ${condition});
 		}
 
 		if (isSet(attributeValue)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
-				value1 = "${attributeValue}");
+				value1 = ${attributeValue});
 		}
 
 		if (isSet(conjunction)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_CONJUNCTION",
-				value1 = "${conjunction}");
+				value1 = ${conjunction});
 		}
 	}
 
 	macro viewSegmentCriteriaSessionAttributes {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (!(isSet(key_indexNested))) {
-			var key_indexNested = "1";
+			var key_indexNested = 1;
 		}
 
 		AssertVisible(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#SEGMENT_CRITERIA_TYPE",
 			type = "Session");
 
 		AssertTextEquals(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_NAME",
-			value1 = "${attributeName}");
+			value1 = ${attributeName});
 
 		AssertTextEquals(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACSegments#SEGMENT_CRITERIA_CONDITION",
-			value1 = "${condition}");
+			value1 = ${condition});
 
 		if (isSet(attributeValue)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
-				value1 = "${attributeValue}");
+				value1 = ${attributeValue});
 		}
 
 		AssertTextEquals(
-			index = "${index}",
-			index_2 = "2",
+			index = ${index},
+			index_2 = 2,
 			locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
-			value1 = "${preposition}");
+			value1 = ${preposition});
 
 		if (isSet(time)) {
 			AssertTextEquals(
-				index = "${index}",
-				index_2 = "3",
+				index = ${index},
+				index_2 = 3,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_PREPOSITION_AND_TIME",
-				value1 = "${time}");
+				value1 = ${time});
 		}
 
 		if (isSet(conjunction)) {
 			AssertTextEquals(
-				index = "${index}",
+				index = ${index},
 				locator1 = "ACSegments#SEGMENT_CRITERIA_CONJUNCTION",
-				value1 = "${conjunction}");
+				value1 = ${conjunction});
 		}
 	}
 
 	macro viewSegmentCriteriaWebBehavior {
 		if (isSet(activitiesOption)) {
 			AssertTextEquals(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
-				value1 = "${activitiesOption}");
+				value1 = ${activitiesOption});
 		}
 
 		if (isSet(searchTerm)) {
 			AssertTextEquals(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
-				value1 = "${searchTerm}");
+				value1 = ${searchTerm});
 		}
 
 		if (isSet(atLeastMost)) {
 			AssertTextEquals(
-				key_index = "3",
+				key_index = 3,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
-				value1 = "${atLeastMost}");
+				value1 = ${atLeastMost});
 		}
 
 		if (isSet(occurenceNumber)) {
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
-				value1 = "${occurenceNumber}");
+				value1 = ${occurenceNumber});
 		}
 
 		if (isSet(timeOption)) {
 			AssertTextEquals(
-				key_index = "5",
+				key_index = 5,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
-				value1 = "${timeOption}");
+				value1 = ${timeOption});
 		}
 
 		if (isSet(timePeriod)) {
 			AssertTextEquals(
-				key_index = "6",
+				key_index = 6,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
-				value1 = "${timePeriod}");
+				value1 = ${timePeriod});
 		}
 
 		if (isSet(date)) {
 			AssertTextEquals(
-				key_index = "6",
+				key_index = 6,
 				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
-				value1 = "${date}");
+				value1 = ${date});
 		}
 	}
 
@@ -872,47 +872,47 @@ definition {
 		AssertTextEquals(
 			key_memberType = "Added",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
-			value1 = "${addedMember}");
+			value1 = ${addedMember});
 
 		AssertTextEquals(
 			key_memberType = "Removed",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
-			value1 = "${removedMember}");
+			value1 = ${removedMember});
 
 		AssertTextEquals(
 			key_memberType = "Net Change",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_MEMBER_CHANGE",
-			value1 = "${netChange}");
+			value1 = ${netChange});
 	}
 
 	macro viewSegmentMembershipChartRowNumbers {
 		AssertTextEquals.assertPartialText(
-			key_row = "${row}",
+			key_row = ${row},
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_DATA_ROW",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro viewSegmentMembershipLegendNumbers {
 		AssertTextEquals(
 			key_memberType = "Known Members:",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${knownNumber}");
+			value1 = ${knownNumber});
 
 		AssertTextEquals(
 			key_memberType = "Anonymous Members:",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${anonymousNumber}");
+			value1 = ${anonymousNumber});
 
 		AssertTextEquals(
 			key_memberType = "Total Members:",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${totalNumber}");
+			value1 = ${totalNumber});
 	}
 
 	macro viewSegmentName {
-		var key_segmentName = "${searchTerm}";
+		var key_segmentName = ${searchTerm};
 
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
+		ACSegments.searchSegment(findSegment = ${searchTerm});
 
 		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}

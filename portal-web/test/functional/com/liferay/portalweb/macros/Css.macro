@@ -2,14 +2,14 @@ definition {
 
 	macro assertCssValueIsGreaterThan {
 		var actual = Css.getCssValue(
-			attribute = "${attribute}",
-			element = "${element}");
+			attribute = ${attribute},
+			element = ${element});
 
-		var actual = StringUtil.extractLeadingDigits("${actual}");
+		var actual = StringUtil.extractLeadingDigits(${actual});
 
 		TestUtils.isGreaterThan(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	macro getCssValue {
@@ -26,9 +26,9 @@ return computedStyle.getPropertyValue("${attribute}");
 
 		''';
 
-		var cssValue = selenium.getEval("${javascript}");
+		var cssValue = selenium.getEval(${javascript});
 
-		return "${cssValue}";
+		return ${cssValue};
 	}
 
 	macro getElementPropertyValue {
@@ -40,9 +40,9 @@ var value = document.evaluate("${element}", document, null, XPathResult.FIRST_OR
 return value.toString();
 	''';
 
-		var propertyValue = selenium.getEval("${javascript}");
+		var propertyValue = selenium.getEval(${javascript});
 
-		return "${propertyValue}";
+		return ${propertyValue};
 	}
 
 	macro getPseudoElementCssValue {
@@ -59,9 +59,9 @@ return computedStyle.getPropertyValue("${attribute}");
 
 		''';
 
-		var cssValue = selenium.getEval("${javascript}");
+		var cssValue = selenium.getEval(${javascript});
 
-		return "${cssValue}";
+		return ${cssValue};
 	}
 
 	macro getStyleValue {
@@ -71,9 +71,9 @@ return computedStyle.getPropertyValue("${attribute}");
 return	Array.from(document.querySelector('${cssSelector}').sheet.rules).filter(rule => rule.selectorText == `.${className}`)[0].style.${styleName};
 		''';
 
-		var styleValue = selenium.getEval("${javascript}");
+		var styleValue = selenium.getEval(${javascript});
 
-		return "${styleValue}";
+		return ${styleValue};
 	}
 
 }

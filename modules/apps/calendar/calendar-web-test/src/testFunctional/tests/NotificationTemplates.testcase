@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LRQA-71892 - Verify that the user email is displayed on -From Adress- field, on Notification Templates tab"
-	@priority = "5"
+	@priority = 5
 	test FromAdressFieldDisplaysUserEmail {
 		NotificationTemplates.gotoCalendarMenuOption(
 			calendarName = "Test Test",
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"
-	@priority = "5"
+	@priority = 5
 	test FromNameFieldDisplaysUsername {
 		NotificationTemplates.gotoCalendarMenuOption(
 			calendarName = "Test Test",

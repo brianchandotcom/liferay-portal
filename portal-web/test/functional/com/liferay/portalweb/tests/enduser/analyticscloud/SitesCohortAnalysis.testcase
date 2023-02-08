@@ -41,7 +41,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8327 | Test Summary: Assert Sites Cohort Analysis sort Anonymous Visitors"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
 		property analytics.cloud.upstream = "false";
 
@@ -71,7 +71,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assert that the cohort analysis card shows anonymous visitors after their first views") {
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8326 | Test Summary: Site overview cohort analysis card shows which individuals are returning after their first views"
-	@priority = "5"
+	@priority = 5
 	test ShowsIndividualsReturningAfterFirstViews {
 		property analytics.cloud.upstream = "false";
 
@@ -119,7 +119,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assert that the cohort analysis card shows which individuals are returning after their first views") {

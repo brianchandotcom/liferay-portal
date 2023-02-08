@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109298. Each tab of Tabs fragment is able to contain any elements in content page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddElementToEachPanel {
 		property portal.acceptance = "true";
@@ -56,33 +56,33 @@ definition {
 			PageEditor.addElementToTab(
 				collectionName = "Layout Elements",
 				fragmentName = "Container",
-				index = "2",
+				index = 2,
 				navItem = "Tab 1",
 				navTab = "Fragments",
-				position = "1");
+				position = 1);
 
-			var n = "2";
+			var n = 2;
 
 			for (var fragmentName : list "Heading,Tabs") {
 				var index = ${n} + 1;
 
 				PageEditor.addElementToTab(
 					collectionName = "Basic Components",
-					fragmentName = "${fragmentName}",
-					index = "${index}",
+					fragmentName = ${fragmentName},
+					index = ${index},
 					navItem = "Tab ${n}",
 					navTab = "Fragments",
-					position = "1");
+					position = 1);
 
 				var n = ${n} + 1;
 			}
 
 			PageEditor.addElementToTab(
-				index = "9",
+				index = 9,
 				navItem = "Tab 4",
 				navTab = "Widgets",
 				portletName = "Asset Publisher",
-				position = "5");
+				position = 5);
 
 			PageEditor.publish();
 		}
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This is for LPS-109298. Each tab of Tabs fragment is able to contain any elements in custom master."
-	@priority = "4"
+	@priority = 4
 	test AddElementToEachPanelInMasterPageTemplate {
 		property test.name.skip.portal.instance = "Tabs#AddElementToEachPanelInMasterPageTemplate";
 		property testray.main.component.name = "Master Page Templates";
@@ -120,33 +120,33 @@ definition {
 			PageEditor.addElementToTab(
 				collectionName = "Layout Elements",
 				fragmentName = "Container",
-				index = "2",
+				index = 2,
 				navItem = "Tab 1",
 				navTab = "Fragments",
-				position = "1");
+				position = 1);
 
-			var n = "2";
+			var n = 2;
 
 			for (var fragmentName : list "Heading,Tabs") {
 				var index = ${n} + 1;
 
 				PageEditor.addElementToTab(
 					collectionName = "Basic Components",
-					fragmentName = "${fragmentName}",
-					index = "${index}",
+					fragmentName = ${fragmentName},
+					index = ${index},
 					navItem = "Tab ${n}",
 					navTab = "Fragments",
-					position = "1");
+					position = 1);
 
 				var n = ${n} + 1;
 			}
 
 			PageEditor.addElementToTab(
-				index = "9",
+				index = 9,
 				navItem = "Tab 4",
 				navTab = "Widgets",
 				portletName = "Asset Publisher",
-				position = "5");
+				position = 5);
 		}
 
 		task ("Assert Publish custom master successfully without NPE") {
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109298. Can add elements above and below Tabs fragment to page."
-	@priority = "4"
+	@priority = 4
 	test AddFragmentsAroundTabs {
 		task ("Add a Tabs fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -185,12 +185,12 @@ definition {
 		}
 
 		task ("View the order of fragments") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Button,Tabs,Heading") {
 				PageEditor.viewFragmentOrder(
-					fragmentName = "${fragmentName}",
-					position = "${n}");
+					fragmentName = ${fragmentName},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109298. Can add Tabs fragment to container of Layout elements."
-	@priority = "3"
+	@priority = 3
 	test AddTabsToLayoutElements {
 		task ("Add a Container to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -227,14 +227,14 @@ definition {
 		task ("Add the second Tabs into the first module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Tabs",
 				navTab = "Fragments");
 		}
 	}
 
 	@description = "This is for LPS-109298. If move the Drop Zone of master to one tab, only can add elements to that tab in content page."
-	@priority = "4"
+	@priority = 4
 	test MoveDropZoneIntoPanel {
 		property testray.main.component.name = "Master Page Templates";
 
@@ -261,7 +261,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_dragFragmentName = "Drop Zone",
-				key_index = "2",
+				key_index = 2,
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
 				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
 				value1 = "");
@@ -287,7 +287,7 @@ definition {
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "content",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
@@ -297,22 +297,22 @@ definition {
 				fragmentName = "Card");
 
 			AssertElementNotPresent(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
 		}
 
 		task ("Assert could not add fragment in Tab 2,3,4") {
 			for (var navItem : list "Tab 2,Tab 3,Tab 4") {
-				PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+				PageEditor.gotoTabsFragmentNavItem(navItem = ${navItem});
 
 				AssertElementNotPresent(
 					key_content = "Place fragments or widgets here.",
 					key_fragmentClass = "content",
-					key_position = "1",
+					key_position = 1,
 					locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 				AssertElementNotPresent(
-					key_index = "2",
+					key_index = 2,
 					locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
 			}
 		}
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when navigate through the site."
-	@priority = "5"
+	@priority = 5
 	test PersistSelectedTabWhenNavigateThroughTheSite {
 		property portal.acceptance = "true";
 
@@ -347,18 +347,18 @@ definition {
 			}
 
 			task ("Add a different fragment to each tab") {
-				var n = "1";
+				var n = 1;
 
 				for (var fragmentName : list "Button,Card,Heading,HTML") {
 					var index = ${n} + 1;
 
 					PageEditor.addElementToTab(
 						collectionName = "Basic Components",
-						fragmentName = "${fragmentName}",
-						index = "${index}",
+						fragmentName = ${fragmentName},
+						index = ${index},
 						navItem = "Tab ${n}",
 						navTab = "Fragments",
-						position = "1");
+						position = 1);
 
 					var n = ${n} + 1;
 				}
@@ -388,13 +388,13 @@ definition {
 				contributed = "false",
 				fragmentName = "card",
 				id = "title",
-				position = "7",
+				position = 7,
 				text = "Card Title example");
 		}
 	}
 
 	@description = "This is a test for LPS-154576. The Tabs fragment should persist selected tab when reloading page."
-	@priority = "5"
+	@priority = 5
 	test PersistSelectedTabWhenReloadPage {
 		property portal.acceptance = "true";
 
@@ -439,7 +439,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154576. If disable the Persist Selected Tab, the selected tab of Tabs fragment should be the first tab on page reload."
-	@priority = "4"
+	@priority = 4
 	test ViewFirstTabSelectedAfterReloadPageWhenDisablePersistSelectedTab {
 		task ("Given a page creator has a content page with a Tabs fragment and disable the Persist Selected Tab") {
 			ContentPagesNavigator.openEditContentPage(
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@description = "This is for LPS-109298. Can not add elements to each tab of Tabs fragment that is inherited from custom master in content page."
-	@priority = "4"
+	@priority = 4
 	test ViewInheriatedTabsWithoutDropzoneInContentPage {
 		property testray.main.component.name = "Master Page Templates";
 
@@ -517,20 +517,20 @@ definition {
 			AssertElementNotPresent(
 				key_content = "Place fragments or widgets here.",
 				key_fragmentClass = "content",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Assert could not add fragment in Tab 2,3,4") {
 			for (var navItem : list "Tab 2,Tab 3,Tab 4") {
-				PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+				PageEditor.gotoTabsFragmentNavItem(navItem = ${navItem});
 
 				AssertElementNotPresent(
 					key_fragmentName = "Place fragments or widgets here.",
 					locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 
 				AssertElementNotPresent(
-					key_index = "2",
+					key_index = 2,
 					locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
 			}
 		}
@@ -543,7 +543,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121223. View nested content when increase number of tabs."
-	@priority = "4"
+	@priority = 4
 	test ViewNestedContentWhenIncreaseNumberOfTabs {
 		task ("Add a Tabs fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -565,18 +565,18 @@ definition {
 		}
 
 		task ("Add fragments to drop zone of each tab") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Button,Card,Heading,HTML") {
 				var index = ${n} + 1;
 
 				PageEditor.addElementToTab(
 					collectionName = "Basic Components",
-					fragmentName = "${fragmentName}",
-					index = "${index}",
+					fragmentName = ${fragmentName},
+					index = ${index},
 					navItem = "My Tab ${n}",
 					navTab = "Fragments",
-					position = "1");
+					position = 1);
 
 				var n = ${n} + 1;
 			}
@@ -584,25 +584,25 @@ definition {
 
 		task ("Increase number of tabs") {
 			PageEditor.editTabs(
-				numberOfTabs = "6",
+				numberOfTabs = 6,
 				panel = "General");
 		}
 
 		task ("View nested content in drop zone of each tab") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Button,Card,Heading,HTML") {
 				PageEditor.gotoTabsFragmentNavItem(navItem = "My Tab ${n}");
 
 				AssertElementPresent(
-					key_fragmentName = "${fragmentName}",
+					key_fragmentName = ${fragmentName},
 					key_inFragmentName = "Tabs",
 					locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 
 				var n = ${n} + 1;
 			}
 
-			var position = "1";
+			var position = 1;
 
 			for (var n : list "5,6") {
 				PageEditor.gotoTabsFragmentNavItem(navItem = "Tab ${n}");
@@ -610,7 +610,7 @@ definition {
 				AssertVisible(
 					key_content = "Place fragments or widgets here.",
 					key_fragmentClass = "content",
-					key_position = "${position}",
+					key_position = ${position},
 					locator1 = "Fragment#DROP_ZONE_NO_FRAGMENTS_MESSAGE");
 
 				var position = ${position} + 1;
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154576. The selected tab of Tabs fragment should be the first tab when access to page on a new window."
-	@priority = "4"
+	@priority = 4
 	test ViewSelectedTabWhenAccessToPageOnNewWindow {
 		task ("Given a page creator has a content page with a Tabs fragment") {
 			ContentPagesNavigator.openEditContentPage(
@@ -649,7 +649,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewTopperBarWhenSwitchToOtherTabs {
 		property portal.acceptance = "true";
@@ -666,7 +666,7 @@ definition {
 
 		task ("View the topper bar shown when switch to other tabs") {
 			for (var navItem : list "Tab 2,Tab 3,Tab 4") {
-				PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+				PageEditor.gotoTabsFragmentNavItem(navItem = ${navItem});
 
 				PageEditor.viewFragmentHeaderVisible(fragmentName = "Tabs");
 			}

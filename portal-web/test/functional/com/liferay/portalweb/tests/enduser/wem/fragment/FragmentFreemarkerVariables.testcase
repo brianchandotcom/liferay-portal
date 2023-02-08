@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134599. The fragmentElementId variable will have the same value with the id of wrapping div in a fragment on page."
-	@priority = "5"
+	@priority = 5
 	test AddFragmentWithFragmentElementIdToContentPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Fragments";
@@ -56,13 +56,13 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 			var fragmentEntryId = JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
 
@@ -82,12 +82,12 @@ definition {
 			AssertAttributeValue(
 				attribute1 = "id",
 				locator1 = "//div[@class='gf-1']/parent::div",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 		}
 	}
 
 	@description = "This is a test for LPS-154077. The pages designer can identify in a fragment when they are at edit or view mode."
-	@priority = "3"
+	@priority = 3
 	test AddFragmentWithLayoutModeToContentPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Fragments";
@@ -101,13 +101,13 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 			var fragmentEntryId = JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
 
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154077. The display page template designer can identify in a fragment when they are at edit or view mode."
-	@priority = "3"
+	@priority = 3
 	test AddFragmentWithLayoutModeToDisplayPageTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Display Pages,Fragments";
@@ -159,13 +159,13 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 			var fragmentEntryId = JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
 

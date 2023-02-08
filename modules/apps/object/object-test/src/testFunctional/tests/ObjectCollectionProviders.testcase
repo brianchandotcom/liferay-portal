@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-135388 - Verify it is possible to search for an object's entry with the search experience in collection providers"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForObjectEntryOnSearchExperience {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145750",
@@ -43,7 +43,7 @@ definition {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
 				objectName = "CustomObject145750",
-				value = "${fieldEntry}");
+				value = ${fieldEntry});
 		}
 
 		Navigator.openURL();

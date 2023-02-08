@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95157. Verify control menu on an admin page is styled correctly after refreshing page"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test AdminPageCanDisplayStyleCorrectlyAfterPageRefresh {
 		property app.server.types = "tomcat";
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "Smoke test to verify portlet configuration is available, look and feel is available"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanConfigurePortletUI {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "Smoke test to verify portlet can be dragged and dropped"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDragAndDropPortlet {
 		property app.server.types = "tomcat";
@@ -148,19 +148,19 @@ definition {
 
 		task ("Then able to drag and drop portlet to another column in page") {
 			Portlet.dragAndDropPortletToColumnPG(
-				columnNumberFrom = "1",
-				columnNumberTo = "2",
+				columnNumberFrom = 1,
+				columnNumberTo = 2,
 				portletName = "Clay Sample");
 
 			Portlet.dragAndDropPortletToColumnPG(
-				columnNumberFrom = "2",
-				columnNumberTo = "1",
+				columnNumberFrom = 2,
+				columnNumberTo = 1,
 				portletName = "Clay Sample");
 		}
 	}
 
 	@description = "Smoke test to verify portlet can be removed"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemovePortlet {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-70390."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewNonASCIICharactersWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Verify portlets have defined boundaries in 3 column page layout."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test PortletBoundariesAreContained {
 		property app.server.types = "tomcat";
@@ -243,19 +243,19 @@ definition {
 			layoutTemplate = "3 Columns");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Message Boards");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Clay Sample");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
+			column = 3,
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -263,7 +263,7 @@ definition {
 		Navigator.gotoPage(pageName = "Test Page");
 
 		MouseOver(
-			key_pageColumnNumber = "1",
+			key_pageColumnNumber = 1,
 			key_portletName = "Message Boards",
 			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
@@ -272,7 +272,7 @@ definition {
 		takeScreenshot();
 
 		MouseOver(
-			key_pageColumnNumber = "2",
+			key_pageColumnNumber = 2,
 			key_portletName = "Clay Sample",
 			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
@@ -281,7 +281,7 @@ definition {
 		takeScreenshot();
 
 		MouseOver(
-			key_pageColumnNumber = "3",
+			key_pageColumnNumber = 3,
 			key_portletName = "Documents and Media",
 			locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN");
 
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95157. Verify control menu on home page is styled correctly after refreshing page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test SitePageCanDisplayStyleCorrectlyAfterPageRefresh {
 		property app.server.types = "tomcat";

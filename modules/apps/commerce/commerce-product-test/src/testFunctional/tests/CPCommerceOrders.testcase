@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6215. Maximum open order per account"
-	@priority = "3"
+	@priority = 3
 	test AccountMaximumOpenOrderActive {
 		property portal.acceptance = "false";
 
@@ -38,7 +38,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NUMBER",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -76,7 +76,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
 
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
-	@priority = "3"
+	@priority = 3
 	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
@@ -166,7 +166,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "Verify buyers with the View Billing Address permission can set a new billing address during the checkout process."
-	@priority = "3"
+	@priority = 3
 	test ANewBillingAddressCanBeWrittenDuringCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -225,7 +225,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -236,21 +236,21 @@ definition {
 				billingAddressCity = "Test City",
 				billingAddressCountry = "United States",
 				billingAddressName = "Address Name",
-				billingAddressZipCode = "91767",
+				billingAddressZipCode = 91767,
 				newAddressAddress = "Test Address",
 				newAddressCity = "Test City",
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify guests can set a new billing address during the checkout process."
-	@priority = "3"
+	@priority = 3
 	test ANewBillingAddressCanBeWrittenDuringCheckoutByGuestUser {
 		property portal.acceptance = "true";
 
@@ -277,7 +277,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -288,7 +288,7 @@ definition {
 				billingAddressCity = "Test City",
 				billingAddressCountry = "United States",
 				billingAddressName = "Address Name",
-				billingAddressZipCode = "91767",
+				billingAddressZipCode = 91767,
 				guestEmail = "buyer@liferay.com",
 				newAddressAddress = "Test Address",
 				newAddressCity = "Test City",
@@ -296,14 +296,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify buyers without the View Billing Address permission cannot view the billing address of pending and placed orders."
-	@priority = "3"
+	@priority = 3
 	test AssertBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -342,7 +342,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing",
@@ -379,7 +379,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -390,8 +390,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard",
 				viewBillingAddressPermission = "false");
 
@@ -404,7 +404,7 @@ definition {
 	}
 
 	@description = "Verify buyers with the View Billing Address permission can view the billing address of an order at the order summary."
-	@priority = "3"
+	@priority = 3
 	test AssertBillingAddressIsVisibleToBuyerUserWithPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -444,7 +444,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -457,14 +457,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify buyers without the View Billing Address permission cannot set a new billing address during the checkout process or view the billing address at the order summary."
-	@priority = "3"
+	@priority = 3
 	test AssertDefaultBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -503,7 +503,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing",
@@ -530,7 +530,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -543,15 +543,15 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard",
 				viewBillingAddressPermission = "false");
 		}
 	}
 
 	@description = "Verify an error message appears when a buyer tries placing an order without the View Billing Address permission if a default billing address is not set."
-	@priority = "3"
+	@priority = 3
 	test AssertErrorMessageWhenAnOrderIsPlacedByBuyerWithoutPermissionToViewBillingAddress {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -591,7 +591,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "Verify guests can view the billing address of an order at the order summary."
-	@priority = "3"
+	@priority = 3
 	test AssertGuestCanViewBillingAddressDuringCheckout {
 		property portal.acceptance = "true";
 
@@ -644,7 +644,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -658,14 +658,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify a Sales Manager can limit who can see the billing address associated with an account"
-	@priority = "3"
+	@priority = 3
 	test AssertPermissionToViewBillingAddressIsPresent {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -709,7 +709,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete orders"
-	@priority = "3"
+	@priority = 3
 	test BulkDeleteOrders {
 		property portal.acceptance = "false";
 
@@ -748,10 +748,10 @@ definition {
 		}
 
 		task ("When the admin selects one order using the checkbox and verifies if the Trash icon is now present in the header") {
-			CommerceNavigator.searchEntry(entryName = "${getOrderId}");
+			CommerceNavigator.searchEntry(entryName = ${getOrderId});
 
 			Click.clickNoMouseOverNoWaitForVisible(
-				key_productName = "${getOrderId}",
+				key_productName = ${getOrderId},
 				locator1 = "CommerceEntry#PRODUCT_ENTRY_CHECKBOX");
 
 			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
@@ -760,10 +760,10 @@ definition {
 		task ("Then the admin can remove the order by clicking on the Trash icon") {
 			ClickNoError(locator1 = "Button#TRASH_ENABLED");
 
-			CommerceNavigator.searchEntry(entryName = "${getOrderId}");
+			CommerceNavigator.searchEntry(entryName = ${getOrderId});
 
 			AssertElementNotPresent(
-				key_entryName = "${getOrderId}",
+				key_entryName = ${getOrderId},
 				locator1 = "CommerceNavigation#ENTRY_NAME");
 		}
 
@@ -779,7 +779,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"
-	@priority = "3"
+	@priority = 3
 	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -821,9 +821,9 @@ definition {
 		task ("Given the Admin create an order using API and the Admin change the Payment Status to 'Authorized' but PayPal is disabled") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "paypal",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
@@ -833,7 +833,7 @@ definition {
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
-			CommerceNavigator.gotoEntry(entryName = "${orderId}");
+			CommerceNavigator.gotoEntry(entryName = ${orderId});
 
 			Button.click(button = "Check Out");
 
@@ -930,7 +930,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6210. Shipment cancelled"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CancelShipmentAndCreateNewFromPendingOrder {
 		property portal.acceptance = "false";
 
@@ -939,7 +939,7 @@ definition {
 	}
 
 	@description = "This is a test for bug COMMERCE-9467"
-	@priority = "5"
+	@priority = 5
 	test CanEditAddressOfAnOpenOrderWithAddressAlreadySet {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -973,7 +973,7 @@ definition {
 		task ("And buyer adds a product to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("And the buyer creates an open order") {
@@ -1023,14 +1023,14 @@ definition {
 					addressCity = "${addressType} City",
 					addressRegion = "Lombardia",
 					addressStreet1 = "${addressType} Street 1",
-					addressType = "${addressType}",
+					addressType = ${addressType},
 					addressZipCode = "${addressType} Zip");
 			}
 		}
 	}
 
 	@description = "COMMERCE-7982. A system admin can edit order measurement unit."
-	@priority = "3"
+	@priority = 3
 	test CanEditOrderMeasurementUnit {
 		property portal.acceptance = "true";
 
@@ -1077,7 +1077,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -1088,8 +1088,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1114,7 +1114,7 @@ definition {
 				Select(
 					key_fieldLabel = "Measurement Units",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "${orderItemMeasurementUnit}");
+					value1 = ${orderItemMeasurementUnit});
 			}
 
 			Button.clickSave();
@@ -1154,7 +1154,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"
-	@priority = "3"
+	@priority = 3
 	test CanReorderAFailedPayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1196,9 +1196,9 @@ definition {
 		task ("Given the Admin create an open order using API and the Admin change the Payment Status to 'Failed'") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "paypal",
-				paymentStatus = "4");
+				paymentStatus = 4);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
@@ -1208,7 +1208,7 @@ definition {
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
-			CommerceNavigator.gotoEntry(entryName = "${orderId}");
+			CommerceNavigator.gotoEntry(entryName = ${orderId});
 
 			Button.click(button = "Check Out");
 
@@ -1279,15 +1279,15 @@ definition {
 				addressName = "Address Name",
 				paymentMethod = "PayPal",
 				productName = "U-Joint",
-				productPrice = "24",
-				productQuantity = "1",
-				subtotalValue = "24",
-				totalValue = "39");
+				productPrice = 24,
+				productQuantity = 1,
+				subtotalValue = 24,
+				totalValue = 39);
 		}
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9338"
-	@priority = "3"
+	@priority = 3
 	test CanRetryAnIncompletePayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1329,9 +1329,9 @@ definition {
 		task ("Given the Admin create an order using API and the Admin change the Payment Status to 'Authorized'") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "paypal",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
@@ -1341,7 +1341,7 @@ definition {
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
-			CommerceNavigator.gotoEntry(entryName = "${orderId}");
+			CommerceNavigator.gotoEntry(entryName = ${orderId});
 
 			Button.click(button = "Check Out");
 
@@ -1385,7 +1385,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9408"
-	@priority = "3"
+	@priority = 3
 	test CanRetryAnIncompletePaymentWithAnOpenOrder {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1427,9 +1427,9 @@ definition {
 		task ("Given the Admin create an open order using API and the Admin change the Payment Status to 'Authorized'") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "paypal",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrderItem(productSKU = "MIN55861");
 
@@ -1439,7 +1439,7 @@ definition {
 
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
-			CommerceNavigator.gotoEntry(entryName = "${orderId}");
+			CommerceNavigator.gotoEntry(entryName = ${orderId});
 
 			CommerceEntry.gotoMenuTab(menuTab = "Payments");
 
@@ -1477,7 +1477,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10078. As a buyer user I can search an order using product name"
-	@priority = "3"
+	@priority = 3
 	test CanSearchAnOrderUsingProductName {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1517,11 +1517,11 @@ definition {
 				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
 					accountEntryName = "Commerce Account",
 					orderItems = "${productSKU}:1",
-					orderStatus = "1",
+					orderStatus = 1,
 					paymentMethod = "money-order",
-					paymentStatus = "2");
+					paymentStatus = 2);
 
-				ListUtil.add("${orderIds}", "${orderId}");
+				ListUtil.add(${orderIds}, ${orderId});
 			}
 		}
 
@@ -1530,7 +1530,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("When the buyer logs in and enters a product name in the Global Search") {
@@ -1553,11 +1553,11 @@ definition {
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 			AssertElementPresent(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			Click(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 		}
 
@@ -1575,18 +1575,18 @@ definition {
 		}
 
 		task ("Then only the order that contains this item should be listed") {
-			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
-			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
-			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+			var firstPlacedOrderId = ListUtil.get(${orderIds}, 0);
+			var secondPlacedOrderId = ListUtil.get(${orderIds}, 1);
+			var thirdPlacedOrderId = ListUtil.get(${orderIds}, 2);
 
 			AssertTextEquals(
 				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-				value1 = "${secondPlacedOrderId}");
+				value1 = ${secondPlacedOrderId});
 
 			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
 				AssertTextNotEquals(
 					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-					value1 = "${otherOrders}");
+					value1 = ${otherOrders});
 			}
 		}
 
@@ -1601,7 +1601,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10078. As a buyer user I can search an order using SKU"
-	@priority = "3"
+	@priority = 3
 	test CanSearchAnOrderUsingSKU {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1641,11 +1641,11 @@ definition {
 				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
 					accountEntryName = "Commerce Account",
 					orderItems = "${productSKU}:1",
-					orderStatus = "1",
+					orderStatus = 1,
 					paymentMethod = "money-order",
-					paymentStatus = "2");
+					paymentStatus = 2);
 
-				ListUtil.add("${orderIds}", "${orderId}");
+				ListUtil.add(${orderIds}, ${orderId});
 			}
 		}
 
@@ -1654,7 +1654,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("When the buyer logs in and enters a product SKU in the Global Search") {
@@ -1677,11 +1677,11 @@ definition {
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 			AssertElementPresent(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			Click(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 		}
 
@@ -1699,18 +1699,18 @@ definition {
 		}
 
 		task ("Then only the order that contains this item should be listed") {
-			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
-			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
-			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+			var firstPlacedOrderId = ListUtil.get(${orderIds}, 0);
+			var secondPlacedOrderId = ListUtil.get(${orderIds}, 1);
+			var thirdPlacedOrderId = ListUtil.get(${orderIds}, 2);
 
 			AssertTextEquals(
 				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-				value1 = "${secondPlacedOrderId}");
+				value1 = ${secondPlacedOrderId});
 
 			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
 				AssertTextNotEquals(
 					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-					value1 = "${otherOrders}");
+					value1 = ${otherOrders});
 			}
 		}
 
@@ -1725,7 +1725,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10078. As a buyer user I can search an order using translated product name"
-	@priority = "3"
+	@priority = 3
 	test CanSearchAnOrderUsingTranslatedProductName {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1766,12 +1766,12 @@ definition {
 				portlet = "Products");
 
 			for (var productName : list "U-Joint:Primero,Wheel Seal - Front:Segundo,Drive Shafts:Tercero,Bushings:Cuarto") {
-				var originalName = StringUtil.extractFirst("${productName}", ":");
-				var translatedName = StringUtil.extractLast("${productName}", ":");
+				var originalName = StringUtil.extractFirst(${productName}, ":");
+				var translatedName = StringUtil.extractLast(${productName}, ":");
 
-				CommerceNavigator.searchEntry(entryName = "${originalName}");
+				CommerceNavigator.searchEntry(entryName = ${originalName});
 
-				CommerceNavigator.gotoEntry(entryName = "${originalName}");
+				CommerceNavigator.gotoEntry(entryName = ${originalName});
 
 				PortletEntry.changeLocale(
 					fieldName = "Name",
@@ -1779,7 +1779,7 @@ definition {
 
 				Type(
 					locator1 = "TextInput#NAME",
-					value1 = "${translatedName}");
+					value1 = ${translatedName});
 
 				Button.clickPublish();
 
@@ -1792,11 +1792,11 @@ definition {
 				var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
 					accountEntryName = "Commerce Account",
 					orderItems = "${productSKU}:1",
-					orderStatus = "1",
+					orderStatus = 1,
 					paymentMethod = "money-order",
-					paymentStatus = "2");
+					paymentStatus = 2);
 
-				ListUtil.add("${orderIds}", "${orderId}");
+				ListUtil.add(${orderIds}, ${orderId});
 			}
 		}
 
@@ -1805,7 +1805,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("When the buyer logs in and enters a translated product name in the Global Search") {
@@ -1828,11 +1828,11 @@ definition {
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 			AssertElementPresent(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 
 			Click(
-				key_value = "${activeOrderId}",
+				key_value = ${activeOrderId},
 				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
 		}
 
@@ -1850,18 +1850,18 @@ definition {
 		}
 
 		task ("Then only the order that contains this item should be listed") {
-			var firstPlacedOrderId = ListUtil.get("${orderIds}", "0");
-			var secondPlacedOrderId = ListUtil.get("${orderIds}", "1");
-			var thirdPlacedOrderId = ListUtil.get("${orderIds}", "2");
+			var firstPlacedOrderId = ListUtil.get(${orderIds}, 0);
+			var secondPlacedOrderId = ListUtil.get(${orderIds}, 1);
+			var thirdPlacedOrderId = ListUtil.get(${orderIds}, 2);
 
 			AssertTextEquals(
 				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-				value1 = "${secondPlacedOrderId}");
+				value1 = ${secondPlacedOrderId});
 
 			for (var otherOrders : list "${firstPlacedOrderId},${thirdPlacedOrderId}") {
 				AssertTextNotEquals(
 					locator1 = "CommerceOrders#PLACED_ORDERS_ID",
-					value1 = "${otherOrders}");
+					value1 = ${otherOrders});
 			}
 		}
 
@@ -1876,7 +1876,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7983. A system admin can set order quantity to decimal."
-	@priority = "3"
+	@priority = 3
 	test CanSetOrderQuantityToDecimal {
 		property portal.acceptance = "false";
 
@@ -1923,7 +1923,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -1934,8 +1934,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1971,7 +1971,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10147 The orders can be sorted by Create/Order Date in Pending and Placed Orders Pages"
-	@priority = "3"
+	@priority = 3
 	test CanSortOrdersByCreationDateInPendingAndPlacedOrdersPages {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -2008,16 +2008,16 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55861:1",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55861:1",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("And the buyer has also a pending and a placed order") {
@@ -2034,7 +2034,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -2045,8 +2045,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -2061,23 +2061,23 @@ definition {
 		task ("Then the orders in the pending orders page are sorted from the last to the first as default") {
 			for (var orderAuthorName : list "Buyer User,Test Test") {
 				ObjectPortlet.assertAuthorColumnDisplaysUserName(
-					authorName = "${orderAuthorName}",
+					authorName = ${orderAuthorName},
 					column = "Created By");
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "1");
+				columnIndex = 1,
+				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "2");
+				columnIndex = 1,
+				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
-				date1 = "${firstDate}",
-				date2 = "${secondDate}");
+				date1 = ${firstDate},
+				date2 = ${secondDate});
 
 			TestUtils.assertEquals(
-				actual = "${compareDatesResult}",
+				actual = ${compareDatesResult},
 				expected = "True");
 		}
 
@@ -2088,23 +2088,23 @@ definition {
 		task ("Then the orders are sorted from the first to the last order") {
 			for (var orderAuthorName : list "Test Test,Buyer User") {
 				ObjectPortlet.assertAuthorColumnDisplaysUserName(
-					authorName = "${orderAuthorName}",
+					authorName = ${orderAuthorName},
 					column = "Created By");
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "1");
+				columnIndex = 1,
+				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "2");
+				columnIndex = 1,
+				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
-				date1 = "${firstDate}",
-				date2 = "${secondDate}");
+				date1 = ${firstDate},
+				date2 = ${secondDate});
 
 			TestUtils.assertEquals(
-				actual = "${compareDatesResult}",
+				actual = ${compareDatesResult},
 				expected = "False");
 		}
 
@@ -2115,23 +2115,23 @@ definition {
 		task ("Then the orders are sorted from the last to the first as default") {
 			for (var orderAuthorName : list "Buyer User,Test Test") {
 				ObjectPortlet.assertAuthorColumnDisplaysUserName(
-					authorName = "${orderAuthorName}",
+					authorName = ${orderAuthorName},
 					column = "Submitted By");
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "1");
+				columnIndex = 1,
+				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "2");
+				columnIndex = 1,
+				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
-				date1 = "${firstDate}",
-				date2 = "${secondDate}");
+				date1 = ${firstDate},
+				date2 = ${secondDate});
 
 			TestUtils.assertEquals(
-				actual = "${compareDatesResult}",
+				actual = ${compareDatesResult},
 				expected = "True");
 		}
 
@@ -2142,29 +2142,29 @@ definition {
 		task ("Then the orders are sorted from the first to the last order") {
 			for (var orderAuthorName : list "Test Test,Buyer User") {
 				ObjectPortlet.assertAuthorColumnDisplaysUserName(
-					authorName = "${orderAuthorName}",
+					authorName = ${orderAuthorName},
 					column = "Submitted By");
 			}
 
 			var firstDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "1");
+				columnIndex = 1,
+				rowIndex = 1);
 			var secondDate = CommerceOrders.getOrderCreationDateFromTable(
-				columnIndex = "1",
-				rowIndex = "2");
+				columnIndex = 1,
+				rowIndex = 2);
 
 			var compareDatesResult = CommerceUtilities.compareDates(
-				date1 = "${firstDate}",
-				date2 = "${secondDate}");
+				date1 = ${firstDate},
+				date2 = ${secondDate});
 
 			TestUtils.assertEquals(
-				actual = "${compareDatesResult}",
+				actual = ${compareDatesResult},
 				expected = "False");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-9699 CanUpdateOrderItemCustomFieldValue"
-	@priority = "3"
+	@priority = 3
 	test CanUpdateOrderItemCustomFieldValue {
 		property portal.acceptance = "false";
 
@@ -2206,25 +2206,25 @@ definition {
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55860:8",
 				orderItemsCustomFields = "test custom field:NEWVALUE;",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "Money Order",
-				paymentStatus = "0");
+				paymentStatus = 0);
 		}
 
 		task ("Then the change of the value can be verified with a GET API call") {
 			var orderItemCustomFieldValue = CommerceJSONOrdersAPI._getCommerceOrderItemCustomFieldValue(
 				customFieldName = "test custom field",
-				orderId = "${orderId}",
+				orderId = ${orderId},
 				sku = "MIN55860");
 
 			TestUtils.assertEquals(
-				actual = "${orderItemCustomFieldValue}",
+				actual = ${orderItemCustomFieldValue},
 				expected = "NEWVALUE");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
-	@priority = "3"
+	@priority = 3
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
 
@@ -2259,7 +2259,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
+			value1 = ${currencyName});
 
 		Button.clickSave();
 
@@ -2275,7 +2275,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyAbbreviation}");
+			value1 = ${currencyAbbreviation});
 
 		Button.clickPublish();
 
@@ -2291,7 +2291,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyAbbreviation}");
+			value1 = ${currencyAbbreviation});
 
 		Button.clickSave();
 	}
@@ -2321,7 +2321,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2333,8 +2333,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -2344,7 +2344,7 @@ definition {
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
 		CommerceOrders.editOrderItemDetails(
-			orderItemQuantity = "4",
+			orderItemQuantity = 4,
 			orderItemSku = "MIN93015");
 
 		CommerceNavigator.gotoPortlet(
@@ -2391,7 +2391,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2403,8 +2403,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -2414,7 +2414,7 @@ definition {
 		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
 		CommerceOrders.editOrderItemDetails(
-			orderItemQuantity = "4",
+			orderItemQuantity = 4,
 			orderItemSku = "MIN93015");
 
 		CommerceNavigator.gotoPortlet(
@@ -2437,7 +2437,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5980. As an order manager, I want to edit the payment method and payment status of a submitted order"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test EditOrderPaymentMethod {
 		property portal.acceptance = "false";
 
@@ -2448,7 +2448,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5980. As an order manager, I want to edit the payment method and payment status of a submitted order"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test EditOrderPaymentStatus {
 		property portal.acceptance = "false";
 
@@ -2458,7 +2458,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
-	@priority = "3"
+	@priority = 3
 	test FilterOrderByAccount {
 		property portal.acceptance = "Intern Test";
 
@@ -2496,7 +2496,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -2507,8 +2507,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -2517,7 +2517,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		ApplicationsMenu.gotoSite(site = "Minium2");
 
@@ -2658,7 +2658,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FilterOrderByChannel {
 		property portal.acceptance = "false";
 
@@ -2669,7 +2669,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FilterOrderByOrderDataRange {
 		property portal.acceptance = "false";
 
@@ -2680,7 +2680,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FilterOrderByStatus {
 		property portal.acceptance = "false";
 
@@ -2691,7 +2691,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6209. Admin order fulfillment"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FulfillOrder {
 		property portal.acceptance = "false";
 
@@ -2700,7 +2700,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6213. Buyer Order Approval Workflow"
-	@priority = "3"
+	@priority = 3
 	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithBuyerOrderApprovalWorkflowActive";
@@ -2767,7 +2767,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		AssertElementPresent(
 			key_status = "Draft",
@@ -2827,13 +2827,13 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 	}
 
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
-	@priority = "3"
+	@priority = 3
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
@@ -2900,7 +2900,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -2913,8 +2913,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -2950,7 +2950,7 @@ definition {
 	}
 
 	@description = ""
-	@priority = "3"
+	@priority = 3
 	test MakeAnOrderWithThreeActiveMinimumOrderAmountsWithDifferentPriority {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
@@ -2981,7 +2981,7 @@ definition {
 				orderRuleDescription = "Test Order Rule Description",
 				orderRuleName = "Test Order Rule",
 				orderRuleType = "Minimum Order Amount",
-				priority = "0");
+				priority = 0);
 		}
 
 		task ("And given an active minimum order subtotal rule of priority 1 and minimum of 50.00") {
@@ -2991,7 +2991,7 @@ definition {
 				orderRuleDescription = "Test Order Rule 2 Description",
 				orderRuleName = "Test Order Rule 2",
 				orderRuleType = "Minimum Order Amount",
-				priority = "1");
+				priority = 1);
 		}
 
 		task ("And given an active minimum order subtotal rule of priority 2 and minimum of 75.00") {
@@ -3001,7 +3001,7 @@ definition {
 				orderRuleDescription = "Test Order Rule 3 Description",
 				orderRuleName = "Test Order Rule 3",
 				orderRuleType = "Minimum Order Amount",
-				priority = "2");
+				priority = 2);
 		}
 
 		task ("When the buyer adds a product into the cart with a price less than $25.00 and goes to the order details") {
@@ -3014,7 +3014,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -3034,7 +3034,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6211. Stock management from order"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ManageBackOrdersFromOrder {
 		property portal.acceptance = "false";
 
@@ -3044,7 +3044,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6211. Stock management from order"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ManageProductAvailabilityFromOrder {
 		property portal.acceptance = "false";
 
@@ -3054,7 +3054,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6217. Order Permission Management"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test OrderPermissionManagement {
 		property portal.acceptance = "false";
 
@@ -3063,7 +3063,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6216. Search Order from UI"
-	@priority = "3"
+	@priority = 3
 	test SearchOrder {
 		property portal.acceptance = "true";
 
@@ -3081,7 +3081,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
 
@@ -3093,16 +3093,16 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Mount",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
 			portlet = "Orders");
 
-		CommerceNavigator.searchEntry(entryName = "${orderId}");
+		CommerceNavigator.searchEntry(entryName = ${orderId});
 
 		AssertElementPresent(
-			key_entryName = "${orderId}",
+			key_entryName = ${orderId},
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		AssertTextEquals(
@@ -3111,7 +3111,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"
-	@priority = "3"
+	@priority = 3
 	test SortOrdersByOrderDate {
 		property portal.acceptance = "false";
 
@@ -3131,7 +3131,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
@@ -3143,7 +3143,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "3");
+			productQuantity = 3);
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
@@ -3151,20 +3151,20 @@ definition {
 
 		Button.click(button = "Order Date");
 
-		var index = "1";
+		var index = 1;
 
 		for (var accountName : list "Commerce Account,Commerce Account 2") {
 			AssertTextEquals.assertPartialText(
-				index = "${index}",
+				index = ${index},
 				locator1 = "CommerceAccelerators#ACCOUNT_ORDER_NAME",
-				value1 = "${accountName}");
+				value1 = ${accountName});
 
 			var index = ${index} + 1;
 		}
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
-	@priority = "3"
+	@priority = 3
 	test ViewOrderSKU {
 		property portal.acceptance = "true";
 
@@ -3190,7 +3190,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Click(locator1 = "Button#ANGLE_DOWN");
 
@@ -3207,8 +3207,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -3218,7 +3218,7 @@ definition {
 		CommerceNavigator.searchEntry(entryName = "MIN55861");
 
 		AssertElementPresent(
-			key_orderQuantity = "1",
+			key_orderQuantity = 1,
 			key_reference = "MIN55861",
 			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 
@@ -3227,8 +3227,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "On Order");
 
 		AssertElementPresent(
-			key_orderQuantity = "1",
-			key_reference = "${orderId}",
+			key_orderQuantity = 1,
+			key_reference = ${orderId},
 			locator1 = "CommerceEntry#ON_ORDER_QUANTITY");
 	}
 

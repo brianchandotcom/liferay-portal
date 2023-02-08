@@ -6,7 +6,7 @@ definition {
 		Type(
 			key_text = "apiKey",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleApiKey}");
+			value1 = ${googleApiKey});
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -24,7 +24,7 @@ definition {
 		Type(
 			key_text = "apiKey",
 			locator1 = "TextArea#ANY",
-			value1 = "${googleApiKey}");
+			value1 = ${googleApiKey});
 
 		if (isSet(enableClassificationEndpoint)) {
 			FormFields.enableCheckbox(fieldName = "Classification Endpoint Enabled");
@@ -33,7 +33,7 @@ definition {
 		if (isSet(confidence)) {
 			SystemSettings.editTextSetting(
 				settingName = "Confidence",
-				settingValue = "${confidence}");
+				settingValue = ${confidence});
 		}
 
 		if (isSet(enableEntityEndpoint)) {
@@ -43,12 +43,12 @@ definition {
 		if (isSet(salience)) {
 			SystemSettings.editTextSetting(
 				settingName = "Salience",
-				settingValue = "${salience}");
+				settingValue = ${salience});
 		}
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		DropdownMenuItem.click(menuItem = "${assetType}");
+		DropdownMenuItem.click(menuItem = ${assetType});
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
@@ -61,7 +61,7 @@ definition {
 	macro openToImageConfiguration {
 		var baseURL = PropsUtil.get("portal.url");
 
-		if ("${configurationScope}" == "Instance Settings") {
+		if (${configurationScope} == "Instance Settings") {
 			var portlet = "InstanceSettingsPortlet";
 		}
 		else {
@@ -74,7 +74,7 @@ definition {
 	macro openToTextConfiguration {
 		var baseURL = PropsUtil.get("portal.url");
 
-		if ("${configurationScope}" == "Instance Settings") {
+		if (${configurationScope} == "Instance Settings") {
 			var portlet = "InstanceSettingsPortlet";
 		}
 		else {

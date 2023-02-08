@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Inherit' in Instance Settings"
-	@priority = "5"
+	@priority = 5
 	test CheckStrategyAlwaysInheritPersistence {
 		property solutions.acceptance = "true";
 
@@ -51,7 +51,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -71,25 +71,25 @@ definition {
 
 		var siteSettingsStrategy = "Always Inherit";
 		var chatProvider = "zendesk";
-		var chatProviderId = "${clickToChatZendeskPassword}";
+		var chatProviderId = ${clickToChatZendeskPassword};
 
 		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
-			siteSettingsStrategy = "${siteSettingsStrategy}");
+			siteSettingsStrategy = ${siteSettingsStrategy});
 
 		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
 
 		AssertElementPresent(
-			chatProvider = "${chatProvider}",
+			chatProvider = ${chatProvider},
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
 
 		AssertElementPresent(
-			chatProviderId = "${chatProviderId}",
+			chatProviderId = ${chatProviderId},
 			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
 	}
 
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Override' in Instance Settings"
-	@priority = "5"
+	@priority = 5
 	test CheckStrategyAlwaysOverridePersistence {
 		property solutions.acceptance = "true";
 
@@ -119,7 +119,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -129,25 +129,25 @@ definition {
 
 		var siteSettingsStrategy = "Always Override";
 		var chatProvider = "zendesk";
-		var chatProviderId = "${clickToChatZendeskPassword}";
+		var chatProviderId = ${clickToChatZendeskPassword};
 
 		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
-			siteSettingsStrategy = "${siteSettingsStrategy}");
+			siteSettingsStrategy = ${siteSettingsStrategy});
 
 		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
 
 		AssertElementPresent(
-			chatProvider = "${chatProvider}",
+			chatProvider = ${chatProvider},
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
 
 		AssertElementPresent(
-			chatProviderId = "${chatProviderId}",
+			chatProviderId = ${chatProviderId},
 			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
 	}
 
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Inherit or Override' in Instance Settings"
-	@priority = "5"
+	@priority = 5
 	test CheckStrategyInheritOrOverridePersistence {
 		property solutions.acceptance = "true";
 
@@ -163,7 +163,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -183,20 +183,20 @@ definition {
 
 		var siteSettingsStrategy = "Inherit or Override";
 		var chatProvider = "zendesk";
-		var chatProviderId = "${clickToChatZendeskPassword}";
+		var chatProviderId = ${clickToChatZendeskPassword};
 
 		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
-			siteSettingsStrategy = "${siteSettingsStrategy}");
+			siteSettingsStrategy = ${siteSettingsStrategy});
 
 		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
 
 		AssertElementPresent(
-			chatProvider = "${chatProvider}",
+			chatProvider = ${chatProvider},
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
 
 		AssertElementPresent(
-			chatProviderId = "${chatProviderId}",
+			chatProviderId = ${chatProviderId},
 			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
 	}
 

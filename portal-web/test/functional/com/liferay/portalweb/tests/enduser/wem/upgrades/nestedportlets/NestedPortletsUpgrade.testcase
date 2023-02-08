@@ -16,7 +16,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewNestedPortletsArchive625 {
 		property data.archive.type = "data-archive-nested-portlets";
 		property database.types = "mariadb,mysql,postgresql";
@@ -25,7 +25,7 @@ definition {
 		Upgrade.viewNestedPortlets();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewNestedPortletsArchive621015 {
 		property data.archive.type = "data-archive-nested-portlets";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -34,7 +34,7 @@ definition {
 		Upgrade.viewNestedPortlets();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewNestedPortletsArchive621021 {
 		property data.archive.type = "data-archive-nested-portlets";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66141."
-	@priority = "5"
+	@priority = 5
 	test ViewStagingNestedPortletsArchive625 {
 		property data.archive.type = "data-archive-staging-nested-portlets";
 		property database.types = "mariadb,mysql,postgresql";
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66141."
-	@priority = "5"
+	@priority = 5
 	test ViewStagingNestedPortletsArchive621015 {
 		property data.archive.type = "data-archive-staging-nested-portlets";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-66141."
-	@priority = "5"
+	@priority = 5
 	test ViewStagingNestedPortletsArchive621021 {
 		property data.archive.type = "data-archive-staging-nested-portlets";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

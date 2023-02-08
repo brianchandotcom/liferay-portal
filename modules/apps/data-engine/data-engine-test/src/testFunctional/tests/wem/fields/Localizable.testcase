@@ -24,7 +24,7 @@ definition {
 
 		DataEngine.tearDownInstance();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66432. This test validates it is possible to edit the Localizable property of a field to Off and On on the Fieldset and the propagation of changes."
-	@priority = "4"
+	@priority = 4
 	test EditLocalizableOnPublishedWCWithFieldset {
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "This test ensures that when editing the Localizable state of a field, its content persists"
-	@priority = "5"
+	@priority = 5
 	test EditLocalizableState {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@description = "This test ensures that it's not possible to translate fields with Localizable set as false."
-	@priority = "5"
+	@priority = 5
 	test LocalizableSetToFalse {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -232,7 +232,7 @@ definition {
 			targetFieldLabel = "Text");
 
 		for (var fieldFieldLabel : list "Text,Date,Numeric") {
-			DataEngine.editFieldLocalizable(fieldFieldLabel = "${fieldFieldLabel}");
+			DataEngine.editFieldLocalizable(fieldFieldLabel = ${fieldFieldLabel});
 		}
 
 		WebContentStructures.saveCP();
@@ -245,7 +245,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "03/30/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -259,12 +259,12 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		for (var fieldFieldLabel : list "Text,Date,Numeric") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 	}
 
 	@description = "This test ensures that it's possible/not possible to translate fields with Localizable set as true/false when those fields are in a field group."
-	@priority = "5"
+	@priority = 5
 	test LocalizableSetToFalseAndTrueFieldGroup {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -292,7 +292,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/09/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -303,7 +303,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "09/04/2021",
-			webContentNumeric = "456");
+			webContentNumeric = 456);
 
 		PortletEntry.publish();
 
@@ -312,7 +312,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "04/09/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -320,12 +320,12 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "09/04/2021",
-			webContentNumeric = "456",
+			webContentNumeric = 456,
 			webContentText = "This is a text field");
 	}
 
 	@description = "This is a test for LRQA-66428. This test checks if Localizable property is successfully set when the Portal Instance language is not English US and if it persists for Structures created before changing Portal Instance language"
-	@priority = "5"
+	@priority = 5
 	test LocalizableWithDifferentInstanceLanguage {
 		DataEngine.addFields(fieldNameList = "Text,Numeric");
 
@@ -335,7 +335,7 @@ definition {
 			targetFieldLabel = "Numeric");
 
 		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			DataEngine.editFieldLocalizable(fieldFieldLabel = "${fieldFieldLabel}");
+			DataEngine.editFieldLocalizable(fieldFieldLabel = ${fieldFieldLabel});
 		}
 
 		WebContentStructures.saveCP();
@@ -359,7 +359,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			DataEngine.assertLocalizableFieldUnchecked(fieldFieldLabel = "${fieldFieldLabel}");
+			DataEngine.assertLocalizableFieldUnchecked(fieldFieldLabel = ${fieldFieldLabel});
 		}
 
 		Navigator.gotoBack();
@@ -375,7 +375,7 @@ definition {
 		WebContent.addCP(webContentTitle = "Web Content Title - ca-ES");
 
 		for (var fieldFieldName : list "Text,Numeric,Date") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldName}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldName});
 		}
 
 		PortletEntry.publish();
@@ -399,7 +399,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -407,7 +407,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "03/05/2021",
-			webContentNumeric = "20",
+			webContentNumeric = 20,
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 
@@ -415,7 +415,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -423,13 +423,13 @@ definition {
 			skipGotoEditCp = "true",
 			webContentDate = "03/05/2021",
 			webContentLocaleFieldLabel = "ca-ES",
-			webContentNumeric = "20",
+			webContentNumeric = 20,
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 	}
 
 	@description = "This test ensures that it's possible to translate the content of the fields in a fieldset"
-	@priority = "5"
+	@priority = 5
 	test TranslateFieldSetLocalizableOn {
 		DataEngine.addFields(fieldNameList = "Text,Numeric");
 
@@ -454,7 +454,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/06/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -463,7 +463,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "06/04/2021",
-			webContentNumeric = "456",
+			webContentNumeric = 456,
 			webContentText = "Este é um campo de texto");
 
 		PortletEntry.publish();
@@ -473,7 +473,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "04/06/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -481,12 +481,12 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "06/04/2021",
-			webContentNumeric = "456",
+			webContentNumeric = 456,
 			webContentText = "Este é um campo de texto");
 	}
 
 	@description = "This test ensures that is possible to translate fields with Localizable set as true."
-	@priority = "5"
+	@priority = 5
 	test TranslateLocalizable {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -511,7 +511,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "03/30/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -520,7 +520,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "30/03/2021",
-			webContentNumeric = "456",
+			webContentNumeric = 456,
 			webContentText = "Este é um campo de texto");
 
 		PortletEntry.publish();
@@ -530,7 +530,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "03/30/2021",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "This is a text field");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -538,12 +538,12 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentDate = "30/03/2021",
-			webContentNumeric = "456",
+			webContentNumeric = 456,
 			webContentText = "Este é um campo de texto");
 	}
 
 	@description = "This is a test for LRQA-66429. This test check a field with Localizable property set as True in a simple field, a Field Group, a Fieldset and a Field Group into a Fieldset."
-	@priority = "5"
+	@priority = 5
 	test ValidateDefaulLocalizableValue {
 		var checkboxName = "Localizable";
 
@@ -594,7 +594,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66427. This test check it's not possible to translate a field with Localizable property set as Off in a simple field and a Field Group into a Fieldset"
-	@priority = "5"
+	@priority = 5
 	test ValidateNotTranslatableOnFieldset {
 		property portal.upstream = "quarantine";
 
@@ -610,7 +610,7 @@ definition {
 			targetFieldLabel = "Numeric");
 
 		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			DataEngine.editFieldLocalizable(fieldFieldLabel = "${fieldFieldLabel}");
+			DataEngine.editFieldLocalizable(fieldFieldLabel = ${fieldFieldLabel});
 		}
 
 		Modal.save();
@@ -626,7 +626,7 @@ definition {
 		WebContent.addWithStructureCP(
 			webContentDate = "01/04/2021",
 			webContentDateFieldLabel = "Date",
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text",
@@ -637,7 +637,7 @@ definition {
 		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
 
 		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 
 		PortletEntry.publish();
@@ -645,7 +645,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentDate = "01/04/2021",
 			webContentDateFieldLabel = "Date",
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text",
@@ -656,7 +656,7 @@ definition {
 			webContentDate = "04/01/2021",
 			webContentDateFieldLabel = "Date",
 			webContentLocaleFieldLabel = "pt-BR",
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text",

@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -44,7 +44,7 @@ definition {
 				AdaptiveMedia.disableImageResolution(
 					imageName = "Image Resolution",
 					imageState = "Disabled",
-					percentAdapted = "0");
+					percentAdapted = 0);
 
 				AdaptiveMedia.deleteImageResolution(imageName = "Image Resolution");
 			}
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114283. Can select an image resolution manually in the desktop viewport."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test SelectImageResolutionManuallyInTheDesktopViewport {
 		property portal.acceptance = "true";
@@ -104,19 +104,19 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthManual}",
-				expected = "1000");
+				actual = ${widthManual},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than automatic selection") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeAuto}",
-				expected = "${fileSizeManual}");
+				actual = ${fileSizeAuto},
+				expected = ${fileSizeManual});
 		}
 	}
 
 	@description = "This is a test for LPS-114283. Can select an image resolution manually in the non-desktop viewport."
-	@priority = "4"
+	@priority = 4
 	test SelectImageResolutionManuallyInTheTabletViewport {
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -189,19 +189,19 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthManual}",
-				expected = "300");
+				actual = ${widthManual},
+				expected = 300);
 		}
 
 		task ("Assert the File Size become smaller than automatic selection") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeAuto}",
-				expected = "${fileSizeManual}");
+				actual = ${fileSizeAuto},
+				expected = ${fileSizeManual});
 		}
 	}
 
 	@description = "This is a test for LPS-123101. The image resolution is applied to direct background image of elements."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForBackgroundImageDirectlySelected {
 		property portal.acceptance = "true";
@@ -224,7 +224,7 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo-jpg",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -234,12 +234,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Tablet viewport") {
@@ -259,14 +259,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizeTablet}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizeTablet});
 		}
 
 		task ("Back to the Desktop viewport") {
@@ -288,11 +288,11 @@ definition {
 				backgroundImage = "Direct",
 				entryTitle = "high_resolution_photo.jpg",
 				panel = "Styles",
-				position = "2");
+				position = 2);
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo-jpg",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -302,12 +302,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Portrait Phone viewport") {
@@ -327,19 +327,19 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizePortraitPhone}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizePortraitPhone});
 		}
 	}
 
 	@description = "This is a test for LPS-122822. View auto image resolution for image mapped to web content."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForImageMappedToWebContent {
 		property portal.acceptance = "true";
@@ -352,7 +352,7 @@ definition {
 
 			AdaptiveMedia.addImageResolution(
 				imageName = "Large Image Resolution",
-				maxWidth = "2000");
+				maxWidth = 2000);
 		}
 
 		task ("Add a web content structure with Image field") {
@@ -417,7 +417,7 @@ definition {
 			for (var adaptiveMediaName : list "Thumbnail-300x300,Preview-1000x0,large-image-resolution") {
 				AssertElementPresent(
 					id = "01-img",
-					key_adaptiveMediaName = "${adaptiveMediaName}",
+					key_adaptiveMediaName = ${adaptiveMediaName},
 					key_fragmentName = "Card",
 					locator1 = "Fragment#AVAILABLE_ADAPTIVE_MEDIA");
 			}
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of a fragment with editable field."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInBannerCenter {
 		property portal.acceptance = "true";
@@ -477,12 +477,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Portrait Phone viewport") {
@@ -508,14 +508,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizePortraitPhone}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizePortraitPhone});
 		}
 
 		task ("Back to the Desktop viewport") {
@@ -591,7 +591,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125189. The image resolution is applied to mapping background image of the Container with padding settings."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionForMappingBackgroundImageInContainer {
 		property portal.acceptance = "true";
@@ -612,16 +612,16 @@ definition {
 				entryTitle = "high_resolution_photo.jpg",
 				fieldName = "File URL",
 				navItem = "Documents and Media",
-				paddingBottom = "3",
-				paddingTop = "3",
+				paddingBottom = 3,
+				paddingTop = 3,
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "high_resolution_photo\.jpg",
-				paddingBottom = "3",
-				paddingTop = "3",
-				position = "1");
+				paddingBottom = 3,
+				paddingTop = 3,
+				position = 1);
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -637,12 +637,12 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSizeDesktop}",
-				expected = "4405");
+				actual = ${fileSizeDesktop},
+				expected = 4405);
 		}
 
 		task ("Change to the Tablet viewport") {
@@ -668,14 +668,14 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 1000px") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "1000");
+				actual = ${width},
+				expected = 1000);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizeTablet}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizeTablet});
 		}
 
 		task ("Back to the Desktop viewport") {
@@ -751,7 +751,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when image resolution is greater than original image and original image is greater than viewport."
-	@priority = "4"
+	@priority = 4
 	test ViewAutoImageResolutionWhenImageResolutionIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanViewport {
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -803,20 +803,20 @@ definition {
 
 		task ("Assert the Width of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthLandscapePhone}",
-				expected = "650");
+				actual = ${widthLandscapePhone},
+				expected = 650);
 		}
 
 		task ("Assert the File Size of image resolution shown") {
 			AssertTextEquals.assertPartialText(
 				key_resolutionLabel = "File Size",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_VALUE",
-				value1 = "${fileSizeLandscapePhone}");
+				value1 = ${fileSizeLandscapePhone});
 		}
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when image resolution is greater than viewport and viewport is greater than original image."
-	@priority = "4"
+	@priority = 4
 	test ViewAutoImageResolutionWhenImageResolutionIsGreaterThanViewportAndViewportIsGreaterThanOriginalImage {
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -868,20 +868,20 @@ definition {
 
 		task ("Assert the Width of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthTablet}",
-				expected = "650");
+				actual = ${widthTablet},
+				expected = 650);
 		}
 
 		task ("Assert the File Size of image resolution shown") {
 			AssertTextEquals.assertPartialText(
 				key_resolutionLabel = "File Size",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_VALUE",
-				value1 = "${fileSizeTablet}");
+				value1 = ${fileSizeTablet});
 		}
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than image resolution and image resolution is greater than viewport."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanImageResolutionAndImageResolutionIsGreaterThanViewport {
 		property portal.acceptance = "true";
@@ -894,7 +894,7 @@ definition {
 
 			AdaptiveMedia.addImageResolution(
 				imageName = "Medium Image Resolution",
-				maxWidth = "800");
+				maxWidth = 800);
 		}
 
 		task ("Add an Image fragment to page") {
@@ -947,19 +947,19 @@ definition {
 
 		task ("Assert the Width of selected image resolution is 800px") {
 			TestUtils.assertEquals(
-				actual = "${widthTablet}",
-				expected = "800");
+				actual = ${widthTablet},
+				expected = 800);
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
 			TestUtils.isGreaterThan(
-				actual = "${fileSizeDesktop}",
-				expected = "${fileSizeTablet}");
+				actual = ${fileSizeDesktop},
+				expected = ${fileSizeTablet});
 		}
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when orignal image is greater than viewport and viewport is greater than image resolution."
-	@priority = "4"
+	@priority = 4
 	test ViewAutoImageResolutionWhenOriginalImageIsGreaterThanViewportAndViewportIsGreaterThanImageResolution {
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1001,17 +1001,17 @@ definition {
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${width}",
-				expected = "5464");
+				actual = ${width},
+				expected = 5464);
 
 			TestUtils.assertEquals(
-				actual = "${fileSize}",
-				expected = "4405");
+				actual = ${fileSize},
+				expected = 4405);
 		}
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when viewport is greater than image resolution and image resolution is greater than original image."
-	@priority = "4"
+	@priority = 4
 	test ViewAutoImageResolutionWhenViewportIsGreaterThanImageResolutionAndImageResolutionIsGreaterThanOriginalImage {
 		task ("Add an Image Resolution with 600px Max Width") {
 			ApplicationsMenu.gotoPortlet(
@@ -1021,7 +1021,7 @@ definition {
 
 			AdaptiveMedia.addImageResolution(
 				imageName = "Medium Image Resolution",
-				maxWidth = "600");
+				maxWidth = 600);
 		}
 
 		task ("Add an Image fragment to page") {
@@ -1074,20 +1074,20 @@ definition {
 
 		task ("Assert the Width of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthTablet}",
-				expected = "500");
+				actual = ${widthTablet},
+				expected = 500);
 		}
 
 		task ("Assert the File Size of image resolution shown") {
 			AssertTextEquals.assertPartialText(
 				key_resolutionLabel = "File Size",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_VALUE",
-				value1 = "${fileSizeTablet}");
+				value1 = ${fileSizeTablet});
 		}
 	}
 
 	@description = "This is a test for LPS-113806. View auto image resolution when viewport is greater than original image and original image is greater than image resolution."
-	@priority = "4"
+	@priority = 4
 	test ViewAutoImageResolutionWhenViewportIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanImageResolution {
 		task ("Add an Image Resolution with 600px Max Width") {
 			ApplicationsMenu.gotoPortlet(
@@ -1097,7 +1097,7 @@ definition {
 
 			AdaptiveMedia.addImageResolution(
 				imageName = "Medium Image Resolution",
-				maxWidth = "600");
+				maxWidth = 600);
 		}
 
 		task ("Add an Image fragment to page") {
@@ -1152,15 +1152,15 @@ definition {
 
 		task ("Assert the Width of image resolution equal with orignal image") {
 			TestUtils.assertEquals(
-				actual = "${widthTablet}",
-				expected = "650");
+				actual = ${widthTablet},
+				expected = 650);
 		}
 
 		task ("Assert the File Size of image resolution shown") {
 			AssertTextEquals.assertPartialText(
 				key_resolutionLabel = "File Size",
 				locator1 = "PageEditor#IMAGE_RESOLUTION_VALUE",
-				value1 = "${fileSizeTablet}");
+				value1 = ${fileSizeTablet});
 		}
 	}
 

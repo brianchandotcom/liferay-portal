@@ -18,7 +18,7 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 	}
 
@@ -27,16 +27,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "LPS-153274 - Assert number of total keys in the table is visible even if there is only one page available."
-	@priority = "3"
+	@priority = 3
 	test IfItemCountIsVisibleOnSinglePage {
 		property portal.upstream = "quarantine";
 
@@ -57,7 +57,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("Then the number of items in the table are still visible even when only one page is available") {
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "LPS-163837 - Assert the page navigation controls are removed when there is only one page."
-	@priority = "3"
+	@priority = 3
 	test IfPaginationControlsAreRemovedForSinglePage {
 		property portal.upstream = "quarantine";
 
@@ -89,7 +89,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+			CP2ActivationKeys.selectPaginationQuantity(quantity = 50);
 		}
 
 		task ("Then the controls for page navigation will be removed to reflect that only one page is available") {

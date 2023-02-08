@@ -8,7 +8,7 @@ definition {
 	property testray.component.names = "Training";
 	property testray.main.component.name = "Setup Wizard";
 
-	@priority = "3"
+	@priority = 3
 	test HSQLtoHSQLLportal1SampleDataDisabled {
 		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "hypersonic";
@@ -31,7 +31,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test HSQLtoHSQLLportal1SampleDataEnabled {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoHSQLLportal1SampleDataEnabled";
@@ -57,7 +57,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test HSQLtoMariaDB {
 		property database.types = "mariadb";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoMariaDB";
@@ -78,7 +78,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "3"
+	@priority = 3
 	test HSQLtoMariaDBSampleDataEnabled {
 		property database.types = "mariadb";
 		property databases.size = "1";
@@ -105,7 +105,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test HSQLtoMySQLSampleDataEnabled {
 		property database.types = "mysql";
 		property databases.size = "1";
@@ -132,7 +132,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test HSQLtoPostgreSQL {
 		property database.types = "postgresql";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoPostgreSQL";
@@ -152,7 +152,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "3"
+	@priority = 3
 	test HSQLtoPostgreSQLSampleDataEnabled {
 		property database.types = "postgresql";
 		property databases.size = "1";

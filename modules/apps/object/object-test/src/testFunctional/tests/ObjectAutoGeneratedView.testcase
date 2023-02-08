@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-142659 - Verify that the user is able to add an entry of long text and view the entry"
-	@priority = "4"
+	@priority = 4
 	test CanAddClobLongText {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 195",
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "LPS-147658 - Verify it is possible to submit an empty value for a Date field and it will be correctly displayed on the View"
-	@priority = "5"
+	@priority = 5
 	test CanDisplayEmptyDateValue {
 		property portal.acceptance = "true";
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify it is possible to edit a entry of Clob field and view the update on entry table"
-	@priority = "4"
+	@priority = 4
 	test CanEditClobField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 196",
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "LPS-150797 - Verify it is possible to view object entries after adding a file in the attachment field"
-	@priority = "5"
+	@priority = 5
 	test CanViewObjectEntriesAfterAddingAttachment {
 		property portal.acceptance = "true";
 
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "LPS-143064 - Verify that, when seeing an object view with uploads, the user must only be able to read the first line of the text without considering its format"
-	@priority = "4"
+	@priority = 4
 	test CanViewOnlyFirstLineOfUploadTextField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151585",
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify that a Clob entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
-	@priority = "4"
+	@priority = 4
 	test ClobDisplayed {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 197",
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Text will be truncated on the Object portlet table view if it has more than 56 characters"
-	@priority = "4"
+	@priority = 4
 	test ClobLongTextWillTruncate {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 198",
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that a Picklist entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
-	@priority = "4"
+	@priority = 4
 	test PicklistDisplayed {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 

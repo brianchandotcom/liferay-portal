@@ -20,27 +20,27 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
 	tearDown {
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 
 		PortalInstances.tearDownCP();
 	}
 
 	@description = "LPS-149705 - Verify if the amount of available keys are shown on subscriptions."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test IfAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
@@ -51,15 +51,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -73,7 +73,7 @@ definition {
 
 	@description = "LPS-149727 - Verify if 'Cancel' button brings user back to Product Actiation DXP Page."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfCancelButtonBringsToActivationDXPPage {
 		property portal.upstream = "quarantine";
 
@@ -84,7 +84,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -92,7 +92,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -101,14 +101,14 @@ definition {
 			Button.click(button = "Cancel");
 
 			AssertElementPresent(
-				key_productType = "${testProduct}",
+				key_productType = ${testProduct},
 				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
 		}
 	}
 
 	@description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfKeyTypeCanBeSelected {
 		property portal.upstream = "quarantine";
 
@@ -119,7 +119,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -127,7 +127,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -141,7 +141,7 @@ definition {
 
 	@description = "LPS-149707 - Verify a message with valid activation dates appears after a subscription is selected"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test IfMessageAppearsAfterSelectSubscription {
 		property portal.upstream = "quarantine";
 
@@ -152,7 +152,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -160,7 +160,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
@@ -172,10 +172,10 @@ definition {
 		}
 
 		task ("Then a message will appear after the user selects a subscription with the active dates") {
-			var key_position = "1";
+			var key_position = 1;
 			var activeDate = selenium.getText("CP2ActivationKeys#SUBSCRIPTION_LENGTH");
 
-			CP2ActivationKeys.selectSubscription(position = "${key_position}");
+			CP2ActivationKeys.selectSubscription(position = ${key_position});
 
 			AssertTextEquals(
 				locator1 = "Message#INFO",
@@ -185,7 +185,7 @@ definition {
 
 	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test IfMessageAppearsOnSubscriptionsThatAllowPermanentLicenses {
 		property portal.upstream = "quarantine";
 
@@ -196,7 +196,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -204,13 +204,13 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
 
 		task ("Then a message will appear after the user selects a subscription with a permanent license type") {
-			CP2ActivationKeys.selectSubscription(position = "1");
+			CP2ActivationKeys.selectSubscription(position = 1);
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#INFO",
@@ -220,7 +220,7 @@ definition {
 
 	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test IfNoAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
@@ -231,15 +231,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -253,7 +253,7 @@ definition {
 
 	@description = "LPS-149731 - Verify if product field is already enabled with the product the user selected in product activation."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfProductEnabledFromStart {
 		property portal.upstream = "quarantine";
 
@@ -264,15 +264,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a DXP project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -280,13 +280,13 @@ definition {
 		task ("Then the product field will be filled in by default with the project selected - DXP") {
 			AssertTextEquals(
 				locator1 = "CP2ActivationKeys#ENABLED_PRODUCT",
-				value1 = "${testProduct}");
+				value1 = ${testProduct});
 		}
 	}
 
 	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test IfProductVersionCanBeSelected {
 		property portal.upstream = "quarantine";
 
@@ -297,7 +297,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -305,7 +305,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -319,7 +319,7 @@ definition {
 
 	@description = "LPS-149704 - Verify if start and end dates are displayed on subscriptions."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test IfStartAndEndDateAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
@@ -330,7 +330,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -338,14 +338,14 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
 
 		task ("Then the subscription options will display a start and end date") {
 			AssertTextEquals(
-				key_position = "1",
+				key_position = 1,
 				locator1 = "CP2ActivationKeys#SUBSCRIPTION_LENGTH",
 				value1 = "Aug 2, 2022 - Jul 3, 2023");
 		}
@@ -353,7 +353,7 @@ definition {
 
 	@description = "LPS-149715 - Verify the 'Next' button is disabled until required options are selected."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test NextButtonOnlyAvailableIfAllOptionsAreSelected {
 		property portal.upstream = "quarantine";
 
@@ -364,7 +364,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -372,7 +372,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -382,7 +382,7 @@ definition {
 				key_text = "Next",
 				locator1 = "Button#ANY_DISABLED");
 
-			CP2ActivationKeys.selectSubscription(position = "1");
+			CP2ActivationKeys.selectSubscription(position = 1);
 
 			AssertElementPresent(
 				key_text = "Next",

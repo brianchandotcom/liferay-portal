@@ -1,10 +1,10 @@
 definition {
 
 	macro _addCommerceCart {
-		Variables.assertDefined(parameterList = "${accountEntryName}");
+		Variables.assertDefined(parameterList = ${accountEntryName});
 
-		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
-		var baseURL = "${baseURL}";
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -19,18 +19,18 @@ definition {
 		var cartItemsList = "";
 
 		if (isSet(cartItems)) {
-			for (var cartItem : list "${cartItems}") {
-				var itemSku = StringUtil.extractFirst("${cartItem}", ":");
-				var itemQuantity = StringUtil.extractLast("${cartItem}", ":");
+			for (var cartItem : list ${cartItems}) {
+				var itemSku = StringUtil.extractFirst(${cartItem}, ":");
+				var itemQuantity = StringUtil.extractLast(${cartItem}, ":");
 
-				if ("${itemSku}" != "") {
-					var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${itemSku}");
+				if (${itemSku} != "") {
+					var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${itemSku});
 				}
 				else {
 					var itemSkuId = "";
 				}
 
-				if ("${cartItemsList}" != "") {
+				if (${cartItemsList} != "") {
 					var comma = ",";
 				}
 				else {
@@ -59,19 +59,19 @@ definition {
 				}'
 		''';
 
-		var responseBody = JSONCurlUtil.post("${curl}");
+		var responseBody = JSONCurlUtil.post(${curl});
 
-		return "${responseBody}";
+		return ${responseBody};
 	}
 
 	macro getOrderItemPostRequestStatus {
 		var responseBody = CommerceJSONDeliveryCart._addCommerceCart(
-			accountEntryName = "${accountEntryName}",
-			cartItems = "${cartItems}");
+			accountEntryName = ${accountEntryName},
+			cartItems = ${cartItems});
 
-		var status = JSONUtil.getWithJSONPath("${responseBody}", "$..['status']");
+		var status = JSONUtil.getWithJSONPath(${responseBody}, "$..['status']");
 
-		return "${status}";
+		return ${status};
 	}
 
 }

@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-143122 - Verify that it is possible to add an Object portlet as a widget on a page"
-	@priority = "5"
+	@priority = 5
 	test CanAddObjectPortletWidget {
 		property portal.acceptance = "true";
 
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that a widget button is displayed on the Objects details page"
-	@priority = "4"
+	@priority = 4
 	test CanDisplayWidgetButton {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 293",
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that when the widget button is disabled it is not possible to add an Object portlet as a widget on a page"
-	@priority = "4"
+	@priority = 4
 	test CannotAddObjectPortletWhenWidgetDisabled {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 294",
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that when widget button is disabled the Object portlet widget disappears from the page"
-	@priority = "4"
+	@priority = 4
 	test ObjectPortletWidgetDisappearsWhenWidgetDisabled {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 295",
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "LPS-143122 - Verify that by default the widget button is disabled"
-	@priority = "3"
+	@priority = 3
 	test WidgetButtonDisabledByDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153256",

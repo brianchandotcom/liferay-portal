@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanSetPlaceholderAndHelpText {
 
 		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation

@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Assert that the UI works correctly for adding Asset Lists."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddAssetList {
 		property portal.acceptance = "true";
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
-	@priority = "3"
+	@priority = 3
 	test AddDuplicateAssetList {
 		task ("Create a manual asset list") {
 			JSONAssetlist.addManualAssetListEntry(
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166893. The site designer could change the display style of Collections."
-	@priority = "5"
+	@priority = 5
 	test ChangeDisplayStyleOfCollections {
 		task ("Given a site designer has collections") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -119,7 +119,7 @@ definition {
 
 		task ("Then the site designer see the collections are displayed as table items") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconTable.viewTableEntryTitle(tableEntry = "${collectionName}");
+				LexiconTable.viewTableEntryTitle(tableEntry = ${collectionName});
 			}
 		}
 
@@ -129,7 +129,7 @@ definition {
 
 		task ("Then the site designer see the collections are displayed as list items") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconList.viewListEntryTitle(listEntry = "${collectionName}");
+				LexiconList.viewListEntryTitle(listEntry = ${collectionName});
 			}
 		}
 
@@ -139,13 +139,13 @@ definition {
 
 		task ("Then the site designer see the collections are displayed as cards items") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconCard.viewCardTitle(card = "${collectionName}");
+				LexiconCard.viewCardTitle(card = ${collectionName});
 			}
 		}
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set WITHOUT pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
-	@priority = "5"
+	@priority = 5
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithoutPagination";
@@ -181,7 +181,7 @@ definition {
 		task ("Create web content articles with categories") {
 			for (var i : list "1,2") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId1}",
+					assetCategoryIds = ${categoryId1},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -189,7 +189,7 @@ definition {
 
 			for (var i : list "3,4") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId2}",
+					assetCategoryIds = ${categoryId2},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set WITH pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
-	@priority = "5"
+	@priority = 5
 	test CombineContentForMultisegmentDynamicCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentDynamicCollectionWithPagination";
@@ -315,7 +315,7 @@ definition {
 		task ("Create web content articles with categories") {
 			for (var i : list "1,2") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId1}",
+					assetCategoryIds = ${categoryId1},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -323,7 +323,7 @@ definition {
 
 			for (var i : list "3,4") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId2}",
+					assetCategoryIds = ${categoryId2},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -400,7 +400,7 @@ definition {
 
 		task ("Change the Asset Pubisher pagination") {
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "2",
+				paginationNumber = 2,
 				paginationType = "Regular");
 
 			Portlet.saveAndCloseConfig();
@@ -430,7 +430,7 @@ definition {
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with manual content set WITHOUT pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
-	@priority = "5"
+	@priority = 5
 	test CombineContentForMultisegmentManualCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithoutPagination";
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with manual content set WITH pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
-	@priority = "5"
+	@priority = 5
 	test CombineContentForMultisegmentManualCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Collections#CombineContentForMultisegmentManualCollectionWithPagination";
@@ -619,7 +619,7 @@ definition {
 
 		task ("Change the Asset Pubisher pagination") {
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "2",
+				paginationNumber = 2,
 				paginationType = "Regular");
 
 			Portlet.saveAndCloseConfig();
@@ -649,7 +649,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-115236. Configure Filter by Field."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureFilterByField {
 		property portal.acceptance = "true";
@@ -665,18 +665,18 @@ definition {
 				fieldFieldLabel = "Select from List",
 				fieldName = "Select from List");
 
-			var index = "1";
+			var index = 1;
 
 			for (var optionValue : list "Option 1,Option 2,Option 3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
-					index = "${index}",
-					optionValue = "${optionValue}");
+					index = ${index},
+					optionValue = ${optionValue});
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldFieldLabel = "Select from List",
 					fieldReferenceOfFieldOption = "Value${index}",
-					index = "${index}");
+					index = ${index});
 
 				var index = ${index} + 1;
 			}
@@ -732,7 +732,7 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, only the content matching the criteria of the assigned segment must be shown in asset publisher	"
-	@priority = "4"
+	@priority = 4
 	test ContentMatchesSegmentCriteria {
 		property portal.acceptance = "true";
 
@@ -766,13 +766,13 @@ definition {
 
 		task ("Create two web content articles for each category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title 1");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
+				assetCategoryIds = ${categoryId2},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title 2");
@@ -849,9 +849,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    Then the variations list always contains the 'Anyone' variation"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DefaultVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -893,9 +892,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
-    Then the variations list always contains the 'Anyone' variation"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DefaultVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -938,7 +936,7 @@ definition {
 	}
 
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
-	@priority = "5"
+	@priority = 5
 	test DeleteAssetList {
 		property portal.acceptance = "true";
 
@@ -967,10 +965,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    When the user opens the elipsis menu of a variation and clicks on Delete
-    Then the variation name is removed from the list of personalized variations"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DeleteVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1013,10 +1009,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
-    When the user opens the elipsis menu of a variation and clicks on Delete
-    Then the variation name is removed from the list of personalized variations"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DeleteVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1059,10 +1053,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    When the user opens the elipsis menu of the last variation of the list
-    Then the Deprioritize option of the elipsis menu is disabled"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DeprioritizeDisabledForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1103,10 +1095,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    When the user opens the elipsis menu of a variation and clicks on Deprioritize
-    Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DeprioritizeVariationForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1142,7 +1132,7 @@ definition {
 			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
 
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AssetLists#VARIATION_INDEX",
 				value1 = "Anyone");
 		}
@@ -1162,10 +1152,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
-    When the user opens the elipsis menu of a variation and clicks on Deprioritize
-    Then the variation name is moved downwards in the list of personalized variations (unless is the last variation of the list)"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DeprioritizeVariationForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1201,7 +1189,7 @@ definition {
 			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
 
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AssetLists#VARIATION_INDEX",
 				value1 = "Anyone");
 		}
@@ -1221,10 +1209,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a dynamic collection targeting segment 1, and it is not prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in 'Anyone' in Asset Publisher"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DynamicCollectionInAssetPublisherSegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1246,13 +1232,13 @@ definition {
 
 		task ("Create two web content articles for each category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
+				assetCategoryIds = ${categoryId2},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
@@ -1332,10 +1318,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a dynamic collection targeting segment 1, and it is prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in that variation in Asset Publisher"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DynamicCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1358,13 +1342,13 @@ definition {
 
 		task ("Create two web content articles for each category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
+				assetCategoryIds = ${categoryId2},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
@@ -1448,11 +1432,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
-	When there's a variation of a dynamic collection targeting segment 2, and it is prioritized above the variation targeting segment 1
-	And both are prioritized above the anyone variation
-	Then the user will see only the assets included in the variation targeting segment 2 in Asset Publisher"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DynamicCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1567,10 +1548,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a dynamic collection targeting segment 1, and it is not prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in 'Anyone' in Collection Display Fragment"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DynamicCollectionInCollectionDisplaySegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1592,13 +1571,13 @@ definition {
 
 		task ("Create two web content articles for each category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
+				assetCategoryIds = ${categoryId2},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
@@ -1684,10 +1663,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a dynamic collection targeting segment 1, and it is prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in that variation in Collection Display Fragment"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DynamicCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1710,13 +1687,13 @@ definition {
 
 		task ("Create two web content articles for each category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_1");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId2}",
+				assetCategoryIds = ${categoryId2},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC_Title_2");
@@ -1806,11 +1783,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
-	When there's a variation of a dynamic collection targeting segment 2, and it is prioritized above the variation targeting segment 1
-	And both are prioritized above the anyone variation
-	Then the user will see only the assets included in the variation targeting segment 2 in Collection Display Fragment"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DynamicCollectionInCollectionDisplaySegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -1930,21 +1904,21 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131309. The user could filter collection items by global category."
-	@priority = "4"
+	@priority = 4
 	test FilterCollectionItemsByGlobalCategory {
 		property portal.acceptance = "true";
 
 		task ("Add two web contents with different global category") {
-			var n = "1";
+			var n = 1;
 
 			for (var vocabularyName : list "Topic,Audience") {
 				var categoryId = JSONCategory.addCategory(
 					groupName = "Global",
 					title = "Category Name ${n}",
-					vocabularyName = "${vocabularyName}");
+					vocabularyName = ${vocabularyName});
 
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId}",
+					assetCategoryIds = ${categoryId},
 					content = "Web Content Content ${n}",
 					groupName = "Test Site Name",
 					title = "Web Content Title ${n}");
@@ -2016,23 +1990,21 @@ definition {
 		}
 
 		task ("Delete the global categories") {
-			var n = "1";
+			var n = 1;
 
 			for (var vocabularyName : list "Topic,Audience") {
 				JSONCategory.deleteCategory(
 					categoryName = "Category Name ${n}",
 					groupName = "Global",
-					vocabularyName = "${vocabularyName}");
+					vocabularyName = ${vocabularyName});
 
 				var n = ${n} + 1;
 			}
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a manual collection targeting segment 1, and it is not prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in 'Anyone' in Asset Publisher"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ManualCollectionInAssetPublisherSegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2114,10 +2086,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a manual collection targeting segment 1, and it is prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in that variation in Asset Publisher"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ManualCollectionInAssetPublisherSegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2202,11 +2172,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
-	When there's a variation of a manual collection targeting segment 2, and it is prioritized above the variation targeting segment 1
-	And both are prioritized above the anyone variation
-	Then the user will see only the assets included in the variation targeting segment 2 in Asset Publisher"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ManualCollectionInAssetPublisherSegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2310,10 +2277,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a manual collection targeting segment 1, and it is not prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in 'Anyone' in Collection Display Fragment"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ManualCollectionInCollectionDisplaySegmentNotPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2401,10 +2366,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1
-	When there's a variation of a manual collection targeting segment 1, and it is prioritized above the Anyone variation
-	Then the user belonging to that segment will see only the assets included in that variation in Collection Display Fragment"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ManualCollectionInCollectionDisplaySegmentPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2495,11 +2458,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-141797: Given a user belonging to Segment 1 and Segment 2
-	When there's a variation of a manual collection targeting segment 2, and it is prioritized above the variation targeting segment 1
-	And both are prioritized above the anyone variation
-	Then the user will see only the assets included in the variation targeting segment 2 in Collection Display Fragment"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ManualCollectionInCollectionDisplaySegmentTwoPrioritized {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2609,10 +2569,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    When the user creates a new variation
-    Then the new variation is positioned at the end of the variations list"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test NewVariationPriorityForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2647,16 +2605,14 @@ definition {
 
 		task ("Check that variation is listed at the botton") {
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AssetLists#VARIATION_INDEX",
 				value1 = "First Segment");
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Manual Collection
-    When the user creates a new variation
-    Then the new variation is positioned at the end of the variations list"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test NewVariationPriorityForManualCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2691,14 +2647,14 @@ definition {
 
 		task ("Check that variation is listed at the botton") {
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "AssetLists#VARIATION_INDEX",
 				value1 = "First Segment");
 		}
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set does not show assets for the personalized views that the user doesn't belongs to when the configuration is enabled"
-	@priority = "3"
+	@priority = 3
 	test NotCombineContentForMultisegmentDynamicCollection {
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -2731,7 +2687,7 @@ definition {
 		task ("Create web content articles with categories") {
 			for (var i : list "1,2") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId1}",
+					assetCategoryIds = ${categoryId1},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -2739,7 +2695,7 @@ definition {
 
 			for (var i : list "3,4") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId2}",
+					assetCategoryIds = ${categoryId2},
 					content = "WC Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -2821,7 +2777,7 @@ definition {
 	}
 
 	@description = "LPS-108368: Asset Publisher configured with manual content set does not show assets for the personalized views that the user doesn't belongs to when the configuration is enabled"
-	@priority = "3"
+	@priority = 3
 	test NotCombineContentForMultisegmentManualCollection {
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -2917,7 +2873,7 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, can have only one variation per segment"
-	@priority = "3"
+	@priority = 3
 	test NumberOfVariationsBySegments {
 		task ("Create a segment") {
 			JSONSegmentsentry.addSegment(
@@ -2966,10 +2922,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-101448: Given the personalized variations list of a Dynamic Collection
-    When the user opens the elipsis menu of the first variation of the list
-    Then the Prioritize option of the elipsis menu is disabled"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test PrioritizeDisabledForDynamicCollection {
 		property osgi.module.configuration.file.names = "com.liferay.asset.list.web.internal.configuration.FFCollectionsVariationsPrioritizationConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -3011,7 +2965,7 @@ definition {
 	}
 
 	@description = "LPS-87232: Validate if, The content recommendation not will works if it is disabled, so in this way, the Liferay will show all content for the user"
-	@priority = "3"
+	@priority = 3
 	test RecommendedContentForUsers {
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3040,7 +2994,7 @@ definition {
 		task ("Create a web content article") {
 			for (var i : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId1}",
+					assetCategoryIds = ${categoryId1},
 					content = "WC WebContent Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -3104,7 +3058,7 @@ definition {
 	}
 
 	@description = "Assert that the UI works correctly for renaming Asset Lists."
-	@priority = "5"
+	@priority = 5
 	test RenameAssetList {
 		property portal.acceptance = "true";
 
@@ -3137,7 +3091,7 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, when selecting a segment it is possible to filter and order, sorting and search	"
-	@priority = "4"
+	@priority = 4
 	test SearchingSegments {
 		property portal.acceptance = "true";
 
@@ -3179,12 +3133,12 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
 
 			AssertTextEquals.assertPartialText(
-				index = "1",
+				index = 1,
 				locator1 = "LexiconTable#TABLE_ROW",
 				value1 = "Segment One");
 
 			AssertTextEquals.assertPartialText(
-				index = "2",
+				index = 2,
 				locator1 = "LexiconTable#TABLE_ROW",
 				value1 = "Segment Two");
 		}
@@ -3193,12 +3147,12 @@ definition {
 			ManagementBar.toggleViewOrder(order = "up");
 
 			AssertTextEquals.assertPartialText(
-				index = "1",
+				index = 1,
 				locator1 = "LexiconTable#TABLE_ROW",
 				value1 = "Segment Two");
 
 			AssertTextEquals.assertPartialText(
-				index = "2",
+				index = 2,
 				locator1 = "LexiconTable#TABLE_ROW",
 				value1 = "Segment One");
 		}
@@ -3215,7 +3169,7 @@ definition {
 	}
 
 	@description = "LPS-93726: Validate if, on content set personalized variations, the same content can match different content set variations"
-	@priority = "3"
+	@priority = 3
 	test SelectAssetToDifferentVariations {
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3309,7 +3263,7 @@ definition {
 
 	@description = "LPS-111468: Having the Content recommendation not enabled in Collection, when a visitor that has viewed a content in its display page visits the home page, the asset publisher shows all content (term-related and term-non-related)"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test TermRelatedAndTermNonRelated {
 
 		// TODO LPS-111468 TermRelatedAndTermNonRelated pending implementation
@@ -3317,7 +3271,7 @@ definition {
 	}
 
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Dynamic Content Sets, he can apply in some portlet (assert publisher) to use"
-	@priority = "5"
+	@priority = 5
 	test UseDynamicCollectionAtPortlet {
 		property portal.acceptance = "true";
 
@@ -3347,7 +3301,7 @@ definition {
 
 		task ("Create a web content article") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -3410,7 +3364,7 @@ definition {
 	}
 
 	@description = "LPS-93726: Validate if, when the user creates one content set personalized, for Manual Content Sets, he can apply in some portlet (assert publisher) to use"
-	@priority = "5"
+	@priority = 5
 	test UseManualCollectionAtPortlet {
 		property portal.acceptance = "true";
 
@@ -3492,7 +3446,7 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, the name of the variation is provided by the name of the segment	"
-	@priority = "3"
+	@priority = 3
 	test VariationNameIsShown {
 		task ("Create a segment") {
 			JSONSegmentsentry.addSegment(
@@ -3527,7 +3481,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132626. Able to select all vocabularies when creating a collection."
-	@priority = "4"
+	@priority = 4
 	test ViewAllTwoCategoriesInDynamicCollection {
 		property portal.acceptance = "true";
 
@@ -3562,7 +3516,7 @@ definition {
 
 			Vocabulary.addAssociatedAssetType(
 				assetType = "Page",
-				rowNumber = "2");
+				rowNumber = 2);
 
 			Button.clickNoError(button = "Save");
 
@@ -3607,14 +3561,14 @@ definition {
 
 			for (var vocabularyName : list "Language (Test Site Name),Region (Test Site Name)") {
 				AssertElementPresent(
-					key_nodeName = "${vocabularyName}",
+					key_nodeName = ${vocabularyName},
 					locator1 = "Treeview#NODE_ITEM");
 			}
 		}
 	}
 
 	@description = "Assert that Asset Lists correctly display their selected content."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewAssetListContent {
 		property portal.acceptance = "true";
@@ -3665,7 +3619,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125486. Collection should be available after delete Item Subtype."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionAfterDeleteItemSubtype {
 		task ("Given a collection creator has a dynamic collection with custom structure as Item Subtype") {
 			task ("Add a web content structure with text field") {
@@ -3711,7 +3665,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166046. The site designer could see the icon of collection provider is bolt."
-	@priority = "3"
+	@priority = 3
 	test ViewCollectionProviderIcon {
 		task ("Given a site designer has default collection providers") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -3724,7 +3678,7 @@ definition {
 		task ("Then the site designer sees the collection provider icon") {
 			for (var collectionProviderName : list "Most Viewed Assets,Highest Rated Assets,Recent Content") {
 				AssertVisible(
-					key_listEntry = "${collectionProviderName}",
+					key_listEntry = ${collectionProviderName},
 					key_text = "bolt",
 					locator1 = "LexiconList#ANY_ICON");
 			}
@@ -3732,7 +3686,7 @@ definition {
 	}
 
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
-	@priority = "4"
+	@priority = 4
 	test ViewContentOfAVariant {
 		property portal.acceptance = "true";
 
@@ -3750,7 +3704,7 @@ definition {
 		task ("Create a web content article") {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId1}",
+					assetCategoryIds = ${categoryId1},
 					content = "WC WebContent Content",
 					groupName = "Test Site Name",
 					title = "WC_Title_${i}");
@@ -3799,7 +3753,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of collection."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInCollectionsAdmin {
 		task ("Given a Collection creator has a dynamic collection") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -3832,7 +3786,7 @@ definition {
 		task ("Then the Collection creator can see the new icons on the dropdown menu") {
 			for (var icon : list "pencil,list-ul,password-policies,trash") {
 				AssertVisible(
-					key_text = "${icon}",
+					key_text = ${icon},
 					locator1 = "MenuItem#ANY_ICON");
 			}
 		}
@@ -3863,7 +3817,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166046. The site designer could see the tooltip when hover on the icon of collection."
-	@priority = "3"
+	@priority = 3
 	test ViewTooltipWhenHoverOnCollectionIcon {
 		task ("Given a site designer has collections") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -3935,7 +3889,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from asset library."
-	@priority = "5"
+	@priority = 5
 	test ViewUsagesOfCollectionFromAssetLibrary {
 		task ("Given the site designer has collections from asset library") {
 			JSONDepot.addDepot(depotName = "Test Depot Name");
@@ -3977,7 +3931,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -4006,14 +3960,14 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "2");
+				tableEntryInfo = 2);
 
 			JSONDepot.deleteDepot(depotName = "Test Depot Name");
 		}
 	}
 
 	@description = "This is a test for LPS-84331 and LPS-166045. The site designer could see the usages of Collections from site."
-	@priority = "5"
+	@priority = 5
 	test ViewUsagesOfCollectionFromSite {
 		property portal.acceptance = "true";
 
@@ -4054,7 +4008,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -4083,7 +4037,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "2");
+				tableEntryInfo = 2);
 		}
 
 		task ("When the site designer select the manual collection on an Asset Publisher") {
@@ -4109,7 +4063,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Manual Collection",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -4127,13 +4081,13 @@ definition {
 		task ("Then the site designer could access to the usages page") {
 			AssertElementPresent(
 				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
+				usageAmount = 1,
 				usageType = "All");
 		}
 	}
 
 	@description = "This is a test for LPS-166046. The site designer could see the variations indicator of collection in the Collections admin."
-	@priority = "5"
+	@priority = 5
 	test ViewVariationsIndicatorInCollectionsAdmin {
 		task ("Given a site designer has collections") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -4156,7 +4110,7 @@ definition {
 		task ("Then the site designer see the No Variations label shown in collections") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
 				LexiconCard.viewCardLabel(
-					card = "${collectionName}",
+					card = ${collectionName},
 					cardLabel = "No Variations");
 			}
 		}
@@ -4168,7 +4122,7 @@ definition {
 		task ("Then the site designer see the No Variations label shown in collections") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
 				LexiconList.viewListEntryLabel(
-					listEntry = "${collectionName}",
+					listEntry = ${collectionName},
 					listEntryLabel = "No Variations");
 			}
 		}
@@ -4229,7 +4183,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166046. The site designer could see the variations indicator of collection on the Select modal."
-	@priority = "5"
+	@priority = 5
 	test ViewVariationsIndicatorOnSelectModal {
 		task ("Given a site designer has collections") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -4270,7 +4224,7 @@ definition {
 		task ("Then the site designer see the No Variations label shown on collections") {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
 				LexiconCard.viewCardLabel(
-					card = "${collectionName}",
+					card = ${collectionName},
 					cardLabel = "No Variations");
 			}
 
@@ -4279,8 +4233,8 @@ definition {
 			for (var collectionName : list "Dynamic Collection,Manual Collection") {
 				LexiconTable.viewTableEntryInfo(
 					columnName = "variations",
-					tableEntry = "${collectionName}",
-					tableEntryInfo = "0");
+					tableEntry = ${collectionName},
+					tableEntryInfo = 0);
 			}
 		}
 
@@ -4343,17 +4297,17 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "variations",
 				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "2");
+				tableEntryInfo = 2);
 
 			LexiconTable.viewTableEntryInfo(
 				columnName = "variations",
 				tableEntry = "Manual Collection",
-				tableEntryInfo = "3");
+				tableEntryInfo = 3);
 		}
 	}
 
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
 		property portal.acceptance = "true";
 
@@ -4380,25 +4334,25 @@ definition {
 		}
 
 		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
-			if ("${rule}" == "Contains All") {
+			if (${rule} == "Contains All") {
 				var queryAndOperator = "All";
 				var queryContains = "Contains";
 				var matchingList = "1 2 3 4,2 3 4";
 				var notMatchingList = "1,1 2,1 2 3,1 3 4,3 4,4";
 			}
-			else if ("${rule}" == "Contains Any") {
+			else if (${rule} == "Contains Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Contains";
 				var matchingList = "1 2 3,1 2 3 4,2 3 4,3 4";
 				var notMatchingList = "1 2,1,4";
 			}
-			else if ("${rule}" == "Does Not Contain All") {
+			else if (${rule} == "Does Not Contain All") {
 				var queryAndOperator = "All";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,1 2,1 2 3,3 4,4";
 				var notMatchingList = "1 2 3 4,1 3 4";
 			}
-			else if ("${rule}" == "Does Not Contain Any") {
+			else if (${rule} == "Does Not Contain Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,1 2,4";
@@ -4419,8 +4373,8 @@ definition {
 
 				AssetListsAdmin.addKeywordsFilter(
 					keyWords = "\"2 3\" \"3 4\"",
-					queryAndOperator = "${queryAndOperator}",
-					queryContains = "${queryContains}");
+					queryAndOperator = ${queryAndOperator},
+					queryContains = ${queryContains});
 			}
 
 			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
@@ -4436,7 +4390,7 @@ definition {
 					pageName = "Asset Publisher Page",
 					siteName = "Test Site Name");
 
-				for (var text : list "${matchingList}") {
+				for (var text : list ${matchingList}) {
 					var key_assetTitle = "WC WebContent Title ${text}";
 
 					AssertTextEquals(
@@ -4450,7 +4404,7 @@ definition {
 			}
 
 			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
-				for (var text : list "${notMatchingList}") {
+				for (var text : list ${notMatchingList}) {
 					var key_assetTitle = "WC WebContent Title ${text}";
 
 					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");
@@ -4462,7 +4416,7 @@ definition {
 	}
 
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
-	@priority = "5"
+	@priority = 5
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
 		property portal.acceptance = "true";
 
@@ -4489,25 +4443,25 @@ definition {
 		}
 
 		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
-			if ("${rule}" == "Contains All") {
+			if (${rule} == "Contains All") {
 				var queryAndOperator = "All";
 				var queryContains = "Contains";
 				var matchingList = "1 2 3,1 2 3 4,2 3 4";
 				var notMatchingList = "1,1 2,1 3 4,3 4,4";
 			}
-			else if ("${rule}" == "Contains Any") {
+			else if (${rule} == "Contains Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Contains";
 				var matchingList = "1 2,1 2 3,1 2 3 4,2 3 4,3 4";
 				var notMatchingList = "1,4";
 			}
-			else if ("${rule}" == "Does Not Contain All") {
+			else if (${rule} == "Does Not Contain All") {
 				var queryAndOperator = "All";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,1 2,3 4,4";
 				var notMatchingList = "1 2 3,1 2 3 4,1 3 4";
 			}
-			else if ("${rule}" == "Does Not Contain Any") {
+			else if (${rule} == "Does Not Contain Any") {
 				var queryAndOperator = "Any";
 				var queryContains = "Does Not Contain";
 				var matchingList = "1,4";
@@ -4528,8 +4482,8 @@ definition {
 
 				AssetListsAdmin.addKeywordsFilter(
 					keyWords = "2 3",
-					queryAndOperator = "${queryAndOperator}",
-					queryContains = "${queryContains}");
+					queryAndOperator = ${queryAndOperator},
+					queryContains = ${queryContains});
 			}
 
 			task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
@@ -4545,7 +4499,7 @@ definition {
 					pageName = "Asset Publisher Page",
 					siteName = "Test Site Name");
 
-				for (var text : list "${matchingList}") {
+				for (var text : list ${matchingList}) {
 					var key_assetTitle = "WC WebContent Title ${text}";
 
 					AssertTextEquals(
@@ -4559,7 +4513,7 @@ definition {
 			}
 
 			task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
-				for (var text : list "${notMatchingList}") {
+				for (var text : list ${notMatchingList}) {
 					var key_assetTitle = "WC WebContent Title ${text}";
 
 					AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE");

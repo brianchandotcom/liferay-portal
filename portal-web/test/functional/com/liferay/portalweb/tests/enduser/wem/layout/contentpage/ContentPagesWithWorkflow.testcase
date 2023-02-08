@@ -43,7 +43,7 @@ definition {
 		task ("Define the permissions of new site role") {
 			for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceAction}",
+					resourceAction = ${resourceAction},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Page Author",
 					roleType = "site");
@@ -51,7 +51,7 @@ definition {
 
 			for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceAction}",
+					resourceAction = ${resourceAction},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Page Author",
 					roleType = "site");
@@ -125,7 +125,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 		}
@@ -134,7 +134,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98384. Assert the modification won't be shown in content page for guests until approve."
-	@priority = "3"
+	@priority = 3
 	test CannotViewModificationUntilApproveAsGuest {
 		task ("View guests can not view modification before approve") {
 			User.logoutPG();
@@ -184,7 +184,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				key_itemName = "Test Page Name",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS");
 		}
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98384. The page author can edit content page after reject or approve."
-	@priority = "3"
+	@priority = 3
 	test EditContentPageAfterRejectOrApproveAsPageAuthor {
 		task ("Reviewer rejects the request of modification") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
@@ -241,7 +241,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 		}
@@ -265,7 +265,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 
@@ -296,7 +296,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 
@@ -332,7 +332,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				key_itemName = "Test Page Name",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS");
 		}
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98384. The reviewer can edit the content page and preview the modification after submit."
-	@priority = "5"
+	@priority = 5
 	test PreviewModificationAndEditAfterSubmitAsReviewer {
 		property portal.acceptance = "true";
 
@@ -379,7 +379,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 
@@ -414,7 +414,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 
@@ -430,7 +430,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98384. The page author can not edit again after submit but can preview the modification."
-	@priority = "5"
+	@priority = 5
 	test PreviewModificationButCannotEditAfterSubmitAsPageAuthor {
 		property portal.acceptance = "true";
 
@@ -451,7 +451,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "2",
+				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
 

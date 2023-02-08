@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9509 Verify that the Collection Display fragment with the product specifications can be deployed and that the buyer can see the specifications inside the Collection Display on the storefront"
-	@priority = "4"
+	@priority = 4
 	test CanAddProductSpecificationsCollectionDisplay {
 		property portal.acceptance = "true";
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "Verify a product's availability can be viewed via an availability fragment deployed on a default Commerce Product Display Page Template."
-	@priority = "3"
+	@priority = 3
 	test CanAssertProductAvailabilityUsingAvailabilityFragment {
 		property portal.acceptance = "false";
 
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "Verify an Override Default Product Display Page overrides a Commerce Product Display Page Template marked as default."
-	@priority = "4"
+	@priority = 4
 	test CanDefaultCommerceProductDPTBeOverriddenByOverrideDefaultProductDisplayPageSet {
 		task ("Given a new Commerce Product type display page template marked as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -253,13 +253,13 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
 
 	@description = "Verify a Commerce Product Display Page Template marked as default overrides the Default Product Display Page."
-	@priority = "4"
+	@priority = 4
 	test CanDefaultCommerceProductDPTOverrideDefaultProductDisplayPageSet {
 		property portal.acceptance = "false";
 
@@ -340,12 +340,12 @@ definition {
 		task ("And not the Default Product Display Page") {
 			AssertElementNotPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
-				value1 = "${productName}");
+				value1 = ${productName});
 		}
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Basic Information fields to fragments are visible in Store Front"
-	@priority = "3"
+	@priority = 3
 	test CanMapBasicInformationFieldsToFragments {
 		property portal.acceptance = "true";
 
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9696. Verify user can see DPT mapping categories of selected vocabularies fields into the product details"
-	@priority = "3"
+	@priority = 3
 	test CanMapCategoriesFromDifferentVocabularies {
 		property portal.acceptance = "false";
 
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Delivery Subscription related fields to fragments are visible in Store Fronts"
-	@priority = "3"
+	@priority = 3
 	test CanMapDeliverySubscriptionFieldsToFragments {
 		property portal.acceptance = "false";
 
@@ -528,15 +528,15 @@ definition {
 				panel = "Commerce",
 				portlet = "Products");
 
-			CommerceNavigator.searchEntry(entryName = "${productName}");
+			CommerceNavigator.searchEntry(entryName = ${productName});
 
-			CommerceNavigator.gotoEntry(entryName = "${productName}");
+			CommerceNavigator.gotoEntry(entryName = ${productName});
 
 			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
 
 			CommerceProducts.configureSubscription(
-				subscriptionExactDay = "1",
-				subscriptionLength = "5",
+				subscriptionExactDay = 1,
+				subscriptionLength = 5,
 				subscriptionMode = "Exact Day of Month",
 				subscriptionName = "Delivery Subscription",
 				subscriptionType = "Month");
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Detailed Information fields to fragments are visible in Store Fronts"
-	@priority = "3"
+	@priority = 3
 	test CanMapDetailedInformationFieldsToFragments {
 		property portal.acceptance = "false";
 
@@ -569,7 +569,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Minium",
 				neverExpire = "false",
-				price = "50",
+				price = 50,
 				productDescription = "Full Description",
 				productName = "Simple Product",
 				productType = "Simple",
@@ -609,7 +609,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Display Page and Schedule related fields to fragments are visible in Store Fronts"
-	@priority = "3"
+	@priority = 3
 	test CanMapDisplayPageAndScheduleFieldsToFragments {
 		property portal.acceptance = "false";
 
@@ -617,7 +617,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Minium",
 				neverExpire = "false",
-				price = "50",
+				price = 50,
 				productDescription = "This is a Full Description",
 				productName = "Simple Product",
 				productType = "Simple",
@@ -657,7 +657,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Payment Subscription related fields to fragments are visible in Store Fronts"
-	@priority = "3"
+	@priority = 3
 	test CanMapPaymentSubscriptionFieldsToFragments {
 		property portal.acceptance = "false";
 
@@ -680,15 +680,15 @@ definition {
 				panel = "Commerce",
 				portlet = "Products");
 
-			CommerceNavigator.searchEntry(entryName = "${productName}");
+			CommerceNavigator.searchEntry(entryName = ${productName});
 
-			CommerceNavigator.gotoEntry(entryName = "${productName}");
+			CommerceNavigator.gotoEntry(entryName = ${productName});
 
 			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
 
 			CommerceProducts.configureSubscription(
-				subscriptionExactDay = "15",
-				subscriptionLength = "10",
+				subscriptionExactDay = 15,
+				subscriptionLength = 10,
 				subscriptionMode = "Exact Day of Month",
 				subscriptionName = "Payment Subscription",
 				subscriptionType = "Month");
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9434 Verify that Product Attachments are available for use with Collection Display Fragments"
-	@priority = "3"
+	@priority = 3
 	test CanMapProductAttachmentsToACollectionDisplayFragment {
 		property portal.acceptance = "false";
 
@@ -781,18 +781,18 @@ definition {
 		task ("Then the buyer can see the product attachments mapped along with the 'Download' button") {
 			AssertElementPresent(
 				key_button = "Download",
-				key_entryName = "${fileName1}",
+				key_entryName = ${fileName1},
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_BUTTON");
 
 			AssertElementPresent(
 				key_button = "Download",
-				key_entryName = "${fileName2}",
+				key_entryName = ${fileName2},
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_BUTTON");
 		}
 	}
 
 	@description = "COMMERCE-9461 Verify that the Product Custom fields are available in the list of fields that can be mapped to fragment and that the buyer can see the Product Custom field inside the fragment on the storefront."
-	@priority = "4"
+	@priority = 4
 	test CanMapProductCustomFieldsToFragments {
 
 		// Important note, this test need to be updated after the COMMERCE-9692 is fixed
@@ -809,7 +809,7 @@ definition {
 				portlet = "Custom Fields");
 
 			CustomFields.addCP(
-				customFieldName = "${customField1Name}",
+				customFieldName = ${customField1Name},
 				customFieldType = "Text Area",
 				resourceName = "Commerce Product");
 
@@ -819,7 +819,7 @@ definition {
 				portlet = "Custom Fields");
 
 			CustomFields.addCP(
-				customFieldName = "${customField2Name}",
+				customFieldName = ${customField2Name},
 				customFieldType = "Text Area",
 				resourceName = "Commerce Product");
 		}
@@ -834,14 +834,14 @@ definition {
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 			Type(
-				key_label = "${customField1Name}",
+				key_label = ${customField1Name},
 				locator1 = "TextArea#ANY_LABELED",
-				value1 = "${customField1Desc}");
+				value1 = ${customField1Desc});
 
 			Type(
-				key_label = "${customField2Name}",
+				key_label = ${customField2Name},
 				locator1 = "TextArea#ANY_LABELED",
-				value1 = "${customField2Desc}");
+				value1 = ${customField2Desc});
 
 			Button.clickPublish();
 		}
@@ -884,7 +884,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7277 Verify mapped Shipping related fields to fragments are visible in Store Fronts"
-	@priority = "3"
+	@priority = 3
 	test CanMapShippingFieldsToFragments {
 		property portal.acceptance = "false";
 
@@ -918,7 +918,7 @@ definition {
 	}
 
 	@description = "Verify users can mark and unmark a commerce product display page template as the Default page so that the template can become the default page for the Product Details page."
-	@priority = "4"
+	@priority = 4
 	test CanMarkAndUnmarkCommerceProductDPTAsDefault {
 		property portal.acceptance = "false";
 
@@ -1017,7 +1017,7 @@ definition {
 	}
 
 	@description = "Verify that order fields values are mapped to fragments."
-	@priority = "3"
+	@priority = 3
 	test CanUseCommerceOrderFieldsWithFragments {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-9410=true";
 		property portal.acceptance = "false";
@@ -1032,7 +1032,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1043,8 +1043,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			User.logoutAndLoginPG(
@@ -1074,7 +1074,7 @@ definition {
 			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
 
 			Click(
-				key_entryName = "${orderId}",
+				key_entryName = ${orderId},
 				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 		}
 
@@ -1083,14 +1083,14 @@ definition {
 
 			for (var entry : list "Commerce Account,1,Buyer User,$ 39.00,true") {
 				AssertElementPresent(
-					key_text = "${entry}",
+					key_text = ${entry},
 					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 			}
 		}
 	}
 
 	@description = "Verify a product's images can be viewed via an Image Gallery fragment deployed on a default Commerce Product Display Page Template."
-	@priority = "3"
+	@priority = 3
 	test CanViewProductImagesUsingImageGalleryFragment {
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1147,7 +1147,7 @@ definition {
 
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "1");
+				value1 = 1);
 
 			CommerceEntry.publishProductImage();
 

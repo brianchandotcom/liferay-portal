@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "Inactive and reactive site."
-	@priority = "4"
+	@priority = 4
 	test ActivateSite {
 		property test.name.skip.portal.instance = "Sites#ActivateSite";
 
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "Add child site in child site."
-	@priority = "4"
+	@priority = 4
 	test AddChildChildSite {
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "View public page via virtual host URL."
-	@priority = "3"
+	@priority = 3
 	test AddPublicVirtualHostsSiteURL {
 		task ("Add a site and a page in it") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "Able to add a site with comma."
-	@priority = "3"
+	@priority = 3
 	test AddSiteWithCommaInName {
 		task ("Add a site with comma") {
 			JSONGroup.addGroup(groupName = "Site Name,");
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "Unable to add same site name."
-	@priority = "3"
+	@priority = 3
 	test AddSiteWithInvalidDuplicateName {
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -171,19 +171,19 @@ definition {
 	}
 
 	@description = "Unable to add site name with blank name, invalid characters * and numeric."
-	@priority = "3"
+	@priority = 3
 	test AddSiteWithInvalidName {
 		for (var siteName : list " ,Site Name*,22222") {
 			Site.openSitesAdmin();
 
 			Site.viewCannotAdd(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteNameInvalid = "Invalid");
 		}
 	}
 
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
-	@priority = "4"
+	@priority = 4
 	test DeleteSiteFriendlyURL {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -239,7 +239,7 @@ definition {
 	}
 
 	@description = "Could edit site name."
-	@priority = "5"
+	@priority = 5
 	test EditSite {
 		property portal.acceptance = "true";
 
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@description = "Could edit friendly URL and access by it."
-	@priority = "4"
+	@priority = 4
 	test EditSiteFriendlyURL {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -309,7 +309,7 @@ definition {
 	}
 
 	@description = "Could not add invalid friendly URL and can access by former friendly URL."
-	@priority = "3"
+	@priority = 3
 	test EditSiteFriendlyURLInvalid {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Sites#EditSiteFriendlyURLInvalid";
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "Able to search and find site by site name."
-	@priority = "5"
+	@priority = 5
 	test SearchSite {
 		property portal.acceptance = "true";
 
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "Can not choose its own site as parent site."
-	@priority = "3"
+	@priority = 3
 	test SiteCannotBeItsOwnParent {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "Can not choose its own site as parent site in staging."
-	@priority = "3"
+	@priority = 3
 	test SiteCannotBeItsOwnParentStaging {
 		task ("Add a site and a public page in it") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -401,9 +401,9 @@ definition {
 	}
 
 	@description = "This is a test case for LRQA-5853. Disbale Content Sharing in instance level and view child Sites doesn't display content from parent Sites."
-	@priority = "4"
+	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
@@ -461,7 +461,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
 			contentSharingAcrossSitesEnabled = "false",
-			liferaySiteName = "${siteName}");
+			liferaySiteName = ${siteName});
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -491,7 +491,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
 			contentSharingAcrossSitesEnabled = "false",
-			liferaySiteName = "${siteName}");
+			liferaySiteName = ${siteName});
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
 
@@ -503,9 +503,9 @@ definition {
 	}
 
 	@description = "This is a test case for LRQA-6014. Enable Content Sharing in instance level and view child Sites display content from parent Sites."
-	@priority = "4"
+	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
@@ -537,7 +537,7 @@ definition {
 
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			contentSharingAcrossSitesEnabled = "true",
-			liferaySiteName = "${siteName}");
+			liferaySiteName = ${siteName});
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -562,7 +562,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			contentSharingAcrossSitesEnabled = "true",
 			currentSite = "true",
-			liferaySiteName = "${siteName}");
+			liferaySiteName = ${siteName});
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 
@@ -574,11 +574,11 @@ definition {
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
 			siteScope1 = "Site Name",
-			siteScope2 = "${siteName}");
+			siteScope2 = ${siteName});
 	}
 
 	@description = "View Web Content Admin displayed in global site."
-	@priority = "4"
+	@priority = 4
 	test ViewDefaultGlobalScopeLandingPage {
 		property testray.component.names = "Site Administration";
 
@@ -592,7 +592,7 @@ definition {
 	}
 
 	@description = "View parent site in child site's Sites Directory."
-	@priority = "4"
+	@priority = 4
 	test ViewDisplayParentSiteViaSitesDirectory {
 		Site.openSitesAdmin();
 
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@description = "View sites in child site's Sites Directory."
-	@priority = "4"
+	@priority = 4
 	test ViewSiteHierarchiesViaSitesDirectory {
 		task ("Add a site and a public page in it") {
 			JSONGroup.addGroup(groupName = "Site Name");

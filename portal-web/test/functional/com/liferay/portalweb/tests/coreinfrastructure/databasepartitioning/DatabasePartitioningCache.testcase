@@ -19,7 +19,7 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CacheIsClearedOnCompanyRemoval {
 		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheIsClearedOnCompanyRemoval";
 
@@ -46,7 +46,7 @@ definition {
 
 		PortalCache.putCache(
 			cacheValue = "test.value",
-			companyId = "${secondCompanyId}");
+			companyId = ${secondCompanyId});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -62,10 +62,10 @@ definition {
 
 		PortalCache.getCache(
 			cacheValue = "null",
-			companyId = "${secondCompanyId}");
+			companyId = ${secondCompanyId});
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CacheIsOnlyPopulatedToSingleCompany {
 		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheIsOnlyPopulatedToSingleCompany";
 
@@ -88,7 +88,7 @@ definition {
 		PortalCache.getCache(cacheValue = "null");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CacheOnlyClearsOnSameCompanyAcrossCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -148,7 +148,7 @@ definition {
 			portalInstanceName = "www.able.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test NullCacheDoesNotBreakSiteFromAnotherPartition {
 		property test.name.skip.portal.instance = "DatabasePartitioningCache#NullCacheDoesNotBreakSiteFromAnotherPartition";
 

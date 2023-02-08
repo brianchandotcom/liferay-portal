@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "Assert that pagination is working for the MySites widget"
-	@priority = "3"
+	@priority = 3
 	test DisplayMySitesPagination {
 		property testray.component.names = "Site Administration";
 
@@ -55,14 +55,14 @@ definition {
 
 			Pagination.viewResults(results = "Showing 1 to 20 of 25 entries.");
 
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 25 entries.");
 		}
 	}
 
 	@description = "Assert a default user can join a normal open site"
-	@priority = "4"
+	@priority = 4
 	test JoinSiteOpen {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "Assert a default user cannot join a normal private site"
-	@priority = "5"
+	@priority = 5
 	test JoinSitePrivateNo {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@description = "Assert joining a restricted site requires admin approval"
-	@priority = "5"
+	@priority = 5
 	test JoinSiteRestricted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "Assert a default user can leave a site"
-	@priority = "5"
+	@priority = 5
 	test LeaveSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "Search for a site using MySites widget"
-	@priority = "4"
+	@priority = 4
 	test SearchSite {
 		property testray.component.names = "Site Administration";
 
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@description = "Asssign site membership to a user in multiple ways via CP"
-	@priority = "3"
+	@priority = 3
 	test ViewMembershipAssignViaSiteCP {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "Assert inactive sites are not searchable"
-	@priority = "3"
+	@priority = 3
 	test ViewNoInactiveSite {
 		property testray.component.names = "Site Administration";
 
@@ -437,13 +437,13 @@ definition {
 			Search.searchCP(searchTerm = "Site Name");
 
 			Site.viewNoMySitesViaMySitesPG(
-				memberCount = "1",
+				memberCount = 1,
 				siteName = "Site Name");
 		}
 	}
 
 	@description = "Assert a user cannot join a site with manual membership management disabled"
-	@priority = "3"
+	@priority = 3
 	test ViewNoJoinOption {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,Users and Organizations";
@@ -507,7 +507,7 @@ definition {
 	}
 
 	@description = "Assert a user cannot leave a site with manual membership management disabled"
-	@priority = "3"
+	@priority = 3
 	test ViewNoLeaveOption {
 		property testray.component.names = "Site Administration";
 
@@ -540,7 +540,7 @@ definition {
 	}
 
 	@description = "Assert a user can navigate to a Site's public or private pages via MySites widget"
-	@priority = "3"
+	@priority = 3
 	test ViewSitePages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Site Administration";
@@ -586,7 +586,7 @@ definition {
 	}
 
 	@description = "Assert that site tags appear in MySites widget"
-	@priority = "4"
+	@priority = 4
 	test ViewSiteWithTags {
 		property testray.component.names = "Site Administration,Tags";
 

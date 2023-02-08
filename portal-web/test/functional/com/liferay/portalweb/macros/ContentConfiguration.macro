@@ -1,11 +1,11 @@
 definition {
 
 	macro checkContentNameList {
-		for (var contentName : list "${checkContentNameList}") {
-			var key_contentName = "${contentName}";
+		for (var contentName : list ${checkContentNameList}) {
+			var key_contentName = ${contentName};
 
 			Check.checkNotVisibleNoErrors(
-				key_contentName = "${contentName}",
+				key_contentName = ${contentName},
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 		}
 	}
@@ -13,8 +13,8 @@ definition {
 	macro checkPageName {
 		ContentConfiguration.uncheckPages();
 
-		for (var pageName : list "${checkPageName}") {
-			var key_pageName = "${pageName}";
+		for (var pageName : list ${checkPageName}) {
+			var key_pageName = ${pageName};
 
 			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
@@ -27,8 +27,8 @@ definition {
 
 		Uncheck.uncheckNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
 
-		for (var pageName : list "${checkPrivatePages}") {
-			var key_pageName = "${pageName}";
+		for (var pageName : list ${checkPrivatePages}) {
+			var key_pageName = ${pageName};
 
 			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
@@ -41,15 +41,15 @@ definition {
 
 		ContentConfiguration.uncheckPages();
 
-		for (var pageName : list "${checkPublicPages}") {
-			var key_pageName = "${pageName}";
+		for (var pageName : list ${checkPublicPages}) {
+			var key_pageName = ${pageName};
 
 			Check.checkNotVisible(locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
 	}
 
 	macro checkSubSubContent {
-		var key_contentName = "${contentName}";
+		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 
@@ -57,8 +57,8 @@ definition {
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
 			value1 = "Change");
 
-		var key_subContent = "${subContent}";
-		var key_subSubContent = "${checkSubSubContent}";
+		var key_subContent = ${subContent};
+		var key_subSubContent = ${checkSubSubContent};
 
 		Check.checkNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
 
@@ -74,32 +74,32 @@ definition {
 
 		var browserType = PropsUtil.get("browser.type");
 
-		if ("${contentDateRange}" == "All") {
+		if (${contentDateRange} == "All") {
 			Click(locator1 = "StagingPublishToLive#CONTENT_ALL");
 		}
 
-		if ("${contentDateRange}" == "Date Range") {
+		if (${contentDateRange} == "Date Range") {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE");
 
-			var key_contentDateRange = "${contentDateRange}";
+			var key_contentDateRange = ${contentDateRange};
 
 			Type(
 				locator1 = "Select#DATE_RANGE_START_DATE",
-				value1 = "${dateRangeStartDate}");
+				value1 = ${dateRangeStartDate});
 
 			Type(
 				locator1 = "Select#DATE_RANGE_END_DATE",
-				value1 = "${dateRangeEndDate}");
+				value1 = ${dateRangeEndDate});
 		}
 
-		if (("${contentDateRange}" == "Last") && ("${browserType}" == "safari")) {
+		if ((${contentDateRange} == "Last") && (${browserType} == "safari")) {
 			Click.javaScriptClick(locator1 = "StagingPublishToLive#CONTENT_LAST");
 		}
-		else if ("${contentDateRange}" == "Last") {
+		else if (${contentDateRange} == "Last") {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "StagingPublishToLive#CONTENT_LAST");
 		}
 
-		if ("${browserType}" == "safari") {
+		if (${browserType} == "safari") {
 			Click.javaScriptClick(locator1 = "Link#REFRESH_COUNTS");
 		}
 		else {
@@ -132,7 +132,7 @@ definition {
 	macro setTitle {
 		Type(
 			locator1 = "StagingPublishToLive#PUBLICATION_TITLE",
-			value1 = "${publicationTitle}");
+			value1 = ${publicationTitle});
 	}
 
 	macro uncheckAllPages {
@@ -169,17 +169,17 @@ definition {
 	}
 
 	macro uncheckChildPagesNameList {
-		for (var childPagesName : list "${uncheckChildPagesNameList}") {
+		for (var childPagesName : list ${uncheckChildPagesNameList}) {
 			Check.checkNotVisible(
-				key_pageName = "${childPagesName}",
+				key_pageName = ${childPagesName},
 				locator1 = "PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME");
 		}
 	}
 
 	macro uncheckContentNameList {
-		for (var contentName : list "${uncheckContentNameList}") {
+		for (var contentName : list ${uncheckContentNameList}) {
 			Uncheck.uncheckNotVisible(
-				key_contentName = "${contentName}",
+				key_contentName = ${contentName},
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 		}
 	}
@@ -209,8 +209,8 @@ definition {
 	}
 
 	macro uncheckSubContent {
-		var key_contentName = "${mainContent}";
-		var key_subContent = "${uncheckSubContent}";
+		var key_contentName = ${mainContent};
+		var key_subContent = ${uncheckSubContent};
 
 		WaitForElementPresent(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
 
@@ -220,7 +220,7 @@ definition {
 
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX",
-			value1 = "${key_subContent}");
+			value1 = ${key_subContent});
 
 		AssertClick.assertTextClickNoMouseOver(
 			locator1 = "Button#OK",
@@ -228,7 +228,7 @@ definition {
 	}
 
 	macro uncheckSubSubContent {
-		var key_contentName = "${contentName}";
+		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 
@@ -236,8 +236,8 @@ definition {
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
 			value1 = "Change");
 
-		var key_subContent = "${subContent}";
-		var key_subSubContent = "${uncheckSubSubContent}";
+		var key_subContent = ${subContent};
+		var key_subSubContent = ${uncheckSubSubContent};
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
 

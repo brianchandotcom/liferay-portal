@@ -4,7 +4,7 @@ definition {
 	macro setCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
-		if ("${operator}" == "equals") {
+		if (${operator} == "equals") {
 			if (isSet(date)) {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} eq ${date})"}}''';
 			}
@@ -12,7 +12,7 @@ definition {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"model"}},"filterStrings":{"model":"(${field} eq %27${text}%27)"}}''';
 			}
 		}
-		else if ("${operator}" == "not equals") {
+		else if (${operator} == "not equals") {
 			if (isSet(date)) {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"model"}},"filterStrings":{"model":"((not (${field} eq ${date})))"}}''';
 			}
@@ -20,28 +20,28 @@ definition {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"model"}},"filterStrings":{"model":"((not (${field} eq %27${text}%27)))"}}''';
 			}
 		}
-		else if ("${operator}" == "contains") {
+		else if (${operator} == "contains") {
 			var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"model"}},"filterStrings":{"model":"(contains(${field}, %27${text}%27))"}}''';
 		}
-		else if ("${operator}" == "not contains") {
+		else if (${operator} == "not contains") {
 			var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"((not (contains(${field}, %27${text}%27))))","typeValue":"model"}},"filterStrings":{"model":"((not (contains(${field}, %27${text}%27))))"}}''';
 		}
-		else if (("${operator}" == "greater than") || ("${operator}" == "greater than or equals") || ("${operator}" == "less than") || ("${operator}" == "less than or equals")) {
-			if ("${operator}" == "greater than") {
+		else if ((${operator} == "greater than") || (${operator} == "greater than or equals") || (${operator} == "less than") || (${operator} == "less than or equals")) {
+			if (${operator} == "greater than") {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} gt ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} gt ${date})"}}''';
 			}
-			else if ("${operator}" == "greater than or equals") {
+			else if (${operator} == "greater than or equals") {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} ge ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} ge ${date})"}}''';
 			}
-			else if ("${operator}" == "less than") {
+			else if (${operator} == "less than") {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} lt ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} lt ${date})"}}''';
 			}
-			else if ("${operator}" == "less than or equals") {
+			else if (${operator} == "less than or equals") {
 				var criteria = '''{"criteria":{"user":{"conjunction":"and","filterString":"(${field} le ${date})","typeValue":"model"}},"filterStrings":{"model":"(${field} le ${date})"}}''';
 			}
 		}
 
-		return "${criteria}";
+		return ${criteria};
 	}
 
 	macro setDescriptionMap {
@@ -52,143 +52,143 @@ definition {
 			var descriptionMap = "{}";
 		}
 
-		return "${descriptionMap}";
+		return ${descriptionMap};
 	}
 
 	macro setField {
-		Variables.assertDefined(parameterList = "${fieldName}");
+		Variables.assertDefined(parameterList = ${fieldName});
 
-		if ("${fieldName}" == "Browser") {
+		if (${fieldName} == "Browser") {
 			var field = "browser";
 		}
-		else if ("${fieldName}" == "Cookies") {
+		else if (${fieldName} == "Cookies") {
 			var field = "cookies";
 		}
-		else if ("${fieldName}" == "Country") {
+		else if (${fieldName} == "Country") {
 			var field = "country";
 		}
-		else if ("${fieldName}" == "Date Modified") {
+		else if (${fieldName} == "Date Modified") {
 			var field = "dateModified";
 		}
-		else if ("${fieldName}" == "Date of Birth") {
+		else if (${fieldName} == "Date of Birth") {
 			var field = "birthDate";
 		}
-		else if ("${fieldName}" == "Device Brand") {
+		else if (${fieldName} == "Device Brand") {
 			var field = "deviceBrand";
 		}
-		else if ("${fieldName}" == "Device Model") {
+		else if (${fieldName} == "Device Model") {
 			var field = "deviceModel";
 		}
-		else if ("${fieldName}" == "Device Screen Resolution Height") {
+		else if (${fieldName} == "Device Screen Resolution Height") {
 			var field = "deviceScreenResolutionHeight";
 		}
-		else if ("${fieldName}" == "Device Screen Resolution Width") {
+		else if (${fieldName} == "Device Screen Resolution Width") {
 			var field = "deviceScreenResolutionWidth";
 		}
-		else if ("${fieldName}" == "Email Address") {
+		else if (${fieldName} == "Email Address") {
 			var field = "emailAddress";
 		}
-		else if ("${fieldName}" == "First Name") {
+		else if (${fieldName} == "First Name") {
 			var field = "firstName";
 		}
-		else if ("${fieldName}" == "IP Geocoder Country") {
+		else if (${fieldName} == "IP Geocoder Country") {
 			var field = "customContext\/ipGeocoderCountry";
 		}
-		else if ("${fieldName}" == "Hierarchy Path") {
+		else if (${fieldName} == "Hierarchy Path") {
 			var field = "nameTreePath";
 		}
-		else if ("${fieldName}" == "Hostname") {
+		else if (${fieldName} == "Hostname") {
 			var field = "hostname";
 		}
-		else if ("${fieldName}" == "Job Title") {
+		else if (${fieldName} == "Job Title") {
 			var field = "jobTitle";
 		}
-		else if ("${fieldName}" == "Language") {
+		else if (${fieldName} == "Language") {
 			var field = "languageId";
 		}
-		else if ("${fieldName}" == "Last Name") {
+		else if (${fieldName} == "Last Name") {
 			var field = "lastName";
 		}
-		else if ("${fieldName}" == "Last Sign In Date") {
+		else if (${fieldName} == "Last Sign In Date") {
 			var field = "lastSignInDateTime";
 		}
-		else if ("${fieldName}" == "Local Date") {
+		else if (${fieldName} == "Local Date") {
 			var field = "localDate";
 		}
-		else if ("${fieldName}" == "Name") {
+		else if (${fieldName} == "Name") {
 			var field = "name";
 		}
-		else if ("${fieldName}" == "Organization") {
+		else if (${fieldName} == "Organization") {
 			var field = "organizationId";
 		}
-		else if ("${fieldName}" == "Parent Organization") {
+		else if (${fieldName} == "Parent Organization") {
 			var field = "parentOrganizationId";
 		}
-		else if ("${fieldName}" == "Referrer URL") {
+		else if (${fieldName} == "Referrer URL") {
 			var field = "referrerURL";
 		}
-		else if ("${fieldName}" == "Region") {
+		else if (${fieldName} == "Region") {
 			var field = "region";
 		}
-		else if ("${fieldName}" == "Regular Role") {
+		else if (${fieldName} == "Regular Role") {
 			var field = "roleIds";
 		}
-		else if ("${fieldName}" == "Request Parameters") {
+		else if (${fieldName} == "Request Parameters") {
 			var field = "requestParameters";
 		}
-		else if ("${fieldName}" == "Screen Name") {
+		else if (${fieldName} == "Screen Name") {
 			var field = "screenName";
 		}
-		else if ("${fieldName}" == "Signed In") {
+		else if (${fieldName} == "Signed In") {
 			var field = "signedIn";
 		}
-		else if ("${fieldName}" == "Site") {
+		else if (${fieldName} == "Site") {
 			var field = "groupIds";
 		}
-		else if ("${fieldName}" == "Site and Organization Role") {
+		else if (${fieldName} == "Site and Organization Role") {
 			var field = "userGroupRoleIds";
 		}
-		else if ("${fieldName}" == "Tag") {
+		else if (${fieldName} == "Tag") {
 			var field = "assetTagIds";
 		}
-		else if ("${fieldName}" == "Team") {
+		else if (${fieldName} == "Team") {
 			var field = "teamIds";
 		}
-		else if ("${fieldName}" == "Type") {
+		else if (${fieldName} == "Type") {
 			var field = "type";
 		}
-		else if ("${fieldName}" == "URL") {
+		else if (${fieldName} == "URL") {
 			var field = "url";
 		}
-		else if ("${fieldName}" == "User") {
+		else if (${fieldName} == "User") {
 			var field = "userId";
 		}
-		else if ("${fieldName}" == "User Agent") {
+		else if (${fieldName} == "User Agent") {
 			var field = "userAgent";
 		}
-		else if ("${fieldName}" == "User Group") {
+		else if (${fieldName} == "User Group") {
 			var field = "userGroupIds";
 		}
-		else if ("${fieldName}" == "User Name") {
+		else if (${fieldName} == "User Name") {
 			var field = "userName";
 		}
 
-		return "${field}";
+		return ${field};
 	}
 
 	macro setNameMap {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
 
-		return "${nameMap}";
+		return ${nameMap};
 	}
 
 	@summary = "Sets the criteria when the criteria type is Session"
 	macro setOrganizationCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
-		if ("${operator}" == "equals") {
+		if (${operator} == "equals") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
 			}
@@ -196,7 +196,7 @@ definition {
 				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
 			}
 		}
-		else if ("${operator}" == "not equals") {
+		else if (${operator} == "not equals") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
 			}
@@ -204,63 +204,63 @@ definition {
 				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
 			}
 		}
-		else if ("${operator}" == "contains") {
+		else if (${operator} == "contains") {
 			var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
 		}
 
-		return "${criteria}";
+		return ${criteria};
 	}
 
 	macro setSegmentCriteria {
 		Variables.assertDefined(parameterList = "${conjunctionOperator},${firstSegmentId},${secondSegmentId}");
 
-		var conjunctionOperator = StringUtil.toLowerCase("${conjunctionOperator}");
+		var conjunctionOperator = StringUtil.toLowerCase(${conjunctionOperator});
 
 		var criteria = '''{"criteria":{"segments":{"conjunction":"and","filterString":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)","typeValue":"referred"}},"filterStrings":{"model":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)","referred":"(segmentsEntryIds eq %27${firstSegmentId}%27 ${conjunctionOperator} segmentsEntryIds eq %27${secondSegmentId}%27)"}}''';
 
-		return "${criteria}";
+		return ${criteria};
 	}
 
 	macro setSelectedOptionId {
 		Variables.assertDefined(parameterList = "${fieldName},${selectedOption}");
 
-		if ("${fieldName}" == "roleIds") {
-			var text = JSONRoleSetter.setRoleId(name = "${selectedOption}");
+		if (${fieldName} == "roleIds") {
+			var text = JSONRoleSetter.setRoleId(name = ${selectedOption});
 		}
-		else if ("${fieldName}" == "groupIds") {
-			var text = JSONGroupSetter.setGroupId(groupName = "${selectedOption}");
+		else if (${fieldName} == "groupIds") {
+			var text = JSONGroupSetter.setGroupId(groupName = ${selectedOption});
 		}
-		else if ("${fieldName}" == "userGroupRoleIds") {
-			var text = JSONRoleSetter.setRoleId(name = "${selectedOption}");
+		else if (${fieldName} == "userGroupRoleIds") {
+			var text = JSONRoleSetter.setRoleId(name = ${selectedOption});
 		}
-		else if ("${fieldName}" == "userId") {
-			var text = JSONUserSetter.setUserId(userEmailAddress = "${selectedOption}");
+		else if (${fieldName} == "userId") {
+			var text = JSONUserSetter.setUserId(userEmailAddress = ${selectedOption});
 		}
-		else if ("${fieldName}" == "userGroupIds") {
-			var text = JSONUserGroupSetter.setUserGroupId(userGroupName = "${selectedOption}");
+		else if (${fieldName} == "userGroupIds") {
+			var text = JSONUserGroupSetter.setUserGroupId(userGroupName = ${selectedOption});
 		}
-		else if ("${fieldName}" == "customContext\/ipGeocoderCountry") {
-			var text = JSONCountry.getCountryAbbreviation(countryName = "${selectedOption}");
+		else if (${fieldName} == "customContext\/ipGeocoderCountry") {
+			var text = JSONCountry.getCountryAbbreviation(countryName = ${selectedOption});
 		}
-		else if ("${fieldName}" == "assetTagIds") {
+		else if (${fieldName} == "assetTagIds") {
 			var text = JSONAssettag.getTagId(
 				groupName = "Global",
-				tagName = "${selectedOption}");
+				tagName = ${selectedOption});
 		}
-		else if ("${fieldName}" == "teamIds") {
+		else if (${fieldName} == "teamIds") {
 			var text = JSONTeam.getTeamId(
 				site = "False",
-				siteName = "${groupName}",
-				teamName = "${selectedOption}");
+				siteName = ${groupName},
+				teamName = ${selectedOption});
 		}
-		else if (("${fieldName}" == "organizationId") || ("${fieldName}" == "parentOrganizationId")) {
-			var text = JSONOrganization.getOrganizationIdByName(organizationName = "${selectedOption}");
+		else if ((${fieldName} == "organizationId") || (${fieldName} == "parentOrganizationId")) {
+			var text = JSONOrganization.getOrganizationIdByName(organizationName = ${selectedOption});
 		}
-		else if (("${fieldName}" == "country") || ("${fieldName}" == "region")) {
-			var text = StringUtil.lowerCase("${selectedOption}");
+		else if ((${fieldName} == "country") || (${fieldName} == "region")) {
+			var text = StringUtil.lowerCase(${selectedOption});
 		}
 
-		return "${text}";
+		return ${text};
 	}
 
 	macro setServiceContext {
@@ -268,30 +268,30 @@ definition {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
 				addGuestPermissions = "true",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				groupName = "${groupName}",
-				site = "${site}",
-				workflowAction = "${workflowAction}");
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				site = ${site},
+				workflowAction = ${workflowAction});
 		}
 		else {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
 				addGuestPermissions = "true",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
 				groupName = "Guest",
-				workflowAction = "${workflowAction}");
+				workflowAction = ${workflowAction});
 		}
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 	@summary = "Sets the criteria when the criteria type is Session"
 	macro setSessionCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
-		if ("${operator}" == "equals") {
+		if (${operator} == "equals") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"context"}},"filterStrings":{"context":"(${field} eq %27${text}%27)"}}''';
 			}
@@ -305,7 +305,7 @@ definition {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} eq ${date})"}}''';
 			}
 		}
-		else if ("${operator}" == "not equals") {
+		else if (${operator} == "not equals") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"context"}},"filterStrings":{"context":"((not (${field} eq %27${text}%27)))"}}''';
 			}
@@ -319,7 +319,7 @@ definition {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"context"}},"filterStrings":{"context":"((not (${field} eq ${date})))"}}''';
 			}
 		}
-		else if ("${operator}" == "contains") {
+		else if (${operator} == "contains") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"context"}},"filterStrings":{"context":"(contains(${field}, %27${text}%27))"}}''';
 			}
@@ -327,7 +327,7 @@ definition {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field}%5C/any(c:contains(c,%27${key}=${value}%27)))","typeValue":"context"}},"filterStrings":{"context":"(${field}%5C/any(c:contains(c,%27${key}=${value}%27)))"}}''';
 			}
 		}
-		else if ("${operator}" == "not contains") {
+		else if (${operator} == "not contains") {
 			if (isSet(text)) {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (contains(${field}, %27${text}%27))))","typeValue":"context"}},"filterStrings":{"context":"((not (contains(${field}, %27${text}%27))))"}}''';
 			}
@@ -335,22 +335,22 @@ definition {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"((not (${field}%5C/any(c:contains(c,%27${key}=${value}%27)))))","typeValue":"context"}},"filterStrings":{"context":"((not (${field}%5C/any(c:contains(c,%27${key}=${value}%27)))))"}}''';
 			}
 		}
-		else if (("${operator}" == "greater than") || ("${operator}" == "greater than or equals") || ("${operator}" == "less than") || ("${operator}" == "less than or equals")) {
-			if ("${operator}" == "greater than") {
+		else if ((${operator} == "greater than") || (${operator} == "greater than or equals") || (${operator} == "less than") || (${operator} == "less than or equals")) {
+			if (${operator} == "greater than") {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} gt ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} gt ${date})"}}''';
 			}
-			else if ("${operator}" == "greater than or equals") {
+			else if (${operator} == "greater than or equals") {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} ge ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} ge ${date})"}}''';
 			}
-			else if ("${operator}" == "less than") {
+			else if (${operator} == "less than") {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} lt ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} lt ${date})"}}''';
 			}
-			else if ("${operator}" == "less than or equals") {
+			else if (${operator} == "less than or equals") {
 				var criteria = '''{"criteria":{"context":{"conjunction":"and","filterString":"(${field} le ${date})","typeValue":"context"}},"filterStrings":{"context":"(${field} le ${date})"}}''';
 			}
 		}
 
-		return "${criteria}";
+		return ${criteria};
 	}
 
 }

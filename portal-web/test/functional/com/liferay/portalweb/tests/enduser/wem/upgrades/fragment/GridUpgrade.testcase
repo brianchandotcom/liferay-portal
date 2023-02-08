@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133390."
-	@priority = "5"
+	@priority = 5
 	test ViewCardsInsideModuleAfterUpgrade721 {
 		property data.archive.type = "data-archive-layout-section-with-three-columns";
 		property database.types = "mariadb,mysql,postgresql";
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133390."
-	@priority = "5"
+	@priority = 5
 	test ViewCardsInsideModuleAfterUpgrade72104 {
 		property data.archive.type = "data-archive-layout-section-with-three-columns";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146029. The old Grid should keep previous layout styles in non-desktop viewports and changes back to default after editing."
-	@priority = "4"
+	@priority = 4
 	test ViewDefinedGridLayoutAfterUpgrade7413 {
 		property data.archive.type = "data-archive-grid-layout-style";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146029. The old Grid should keep previous layout styles in non-desktop viewports and changes back to default after editing."
-	@priority = "4"
+	@priority = 4
 	test ViewDefinedGridLayoutAfterUpgrade740321 {
 		property data.archive.type = "data-archive-grid-layout-style";
 		property database.types = "mariadb,mysql,postgresql";

@@ -1,7 +1,7 @@
 definition {
 
 	macro addAccountGroup {
-		Variables.assertDefined(parameterList = "${accountGroupName}");
+		Variables.assertDefined(parameterList = ${accountGroupName});
 
 		if (!(isSet(creatorEmailAddress))) {
 			var creatorEmailAddress = "test@liferay.com";
@@ -16,10 +16,10 @@ definition {
 		}
 
 		JSONAccountGroupAPI._addAccountGroup(
-			accountGroupDescription = "${accountGroupDescription}",
-			accountGroupName = "${accountGroupName}",
-			creatorEmailAddress = "${creatorEmailAddress}",
-			creatorPassword = "${creatorPassword}");
+			accountGroupDescription = ${accountGroupDescription},
+			accountGroupName = ${accountGroupName},
+			creatorEmailAddress = ${creatorEmailAddress},
+			creatorPassword = ${creatorPassword});
 	}
 
 }

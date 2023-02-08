@@ -1,11 +1,11 @@
 definition {
 
 	macro _selectUser {
-		var key_inviteUserFullName = "${inviteUserFullName}";
+		var key_inviteUserFullName = ${inviteUserFullName};
 
 		AssertClick(
 			locator1 = "InviteMembers#INVITE_USER_FULL_NAME",
-			value1 = "${inviteUserFullName}");
+			value1 = ${inviteUserFullName});
 	}
 
 	macro inviteMembers {
@@ -15,7 +15,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#INVITE_MEMBERS");
 
-		InviteMembers._selectUser(inviteUserFullName = "${inviteUserFullName}");
+		InviteMembers._selectUser(inviteUserFullName = ${inviteUserFullName});
 
 		AssertClick(
 			locator1 = "Button#SEND_INVITATIONS",

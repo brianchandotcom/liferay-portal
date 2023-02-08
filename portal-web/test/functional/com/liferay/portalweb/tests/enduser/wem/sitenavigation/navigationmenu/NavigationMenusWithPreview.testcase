@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144089. The navigation menu admin cannot view empty vocabulary on preview menu."
-	@priority = "4"
+	@priority = 4
 	test CannotViewEmptyVocabularyOnPreviewMenu {
 		task ("Given a navigation menu admin has a navigation menu") {
 			task ("Add a category under the first vocabulary") {
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144089. The navigation menu admin could choose display template when preview navigation menu."
-	@priority = "5"
+	@priority = 5
 	test ConfigureDisplayTemplateOnPreviewMenu {
 		property portal.acceptance = "true";
 
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144089. The navigation menu admin could preview menu in navigation menu editor."
-	@priority = "5"
+	@priority = 5
 	test PreviewMenuInNavigationMenuEditor {
 		property portal.acceptance = "true";
 
@@ -358,7 +358,7 @@ definition {
 
 			for (var itemName : list "Submenu Name,Test Page Name,Web Content Title,Blogs Entry Title,Document Title,Category Name") {
 				AssertVisible(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE");
 			}
 

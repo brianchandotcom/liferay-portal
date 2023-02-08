@@ -37,9 +37,9 @@ definition {
 			http://www.able.com:8080/api/jsonws/user/get-current-user
 		''';
 
-		var reponse = JSONCurlUtil.get("${curl}");
+		var reponse = JSONCurlUtil.get(${curl});
 
-		if (contains("${reponse}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
+		if (contains(${reponse}, "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
 			echo("Instance admin is able to disable Basic Authentication.");
 		}
 		else {
@@ -58,16 +58,16 @@ definition {
 	}
 
 	macro configureIPAddress {
-		if ("${enableIp}" == "true") {
+		if (${enableIp} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
 			if (isSet(allowedIp)) {
 				Type(
 					locator1 = "MultiFactorAuthentication#IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1",
-					value1 = "${allowedIp}");
+					value1 = ${allowedIp});
 			}
 		}
-		else if ("${enableIp}" == "false") {
+		else if (${enableIp} == "false") {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
@@ -75,12 +75,12 @@ definition {
 	}
 
 	macro configureMFAOnSystemLevel {
-		if ("${disabledMfa}" == "true") {
+		if (${disabledMfa} == "true") {
 			MultiFactorAuthentication.openToConfigInSystemSettings();
 
 			FormFields.enableCheckbox(fieldName = "Disable Multi-Factor Authentication");
 		}
-		else if ("${disabledMfa}" == "false") {
+		else if (${disabledMfa} == "false") {
 			MultiFactorAuthentication.openToConfigInSystemSettings();
 
 			FormFields.disableCheckbox(fieldName = "Disable Multi-Factor Authentication");
@@ -90,10 +90,10 @@ definition {
 	}
 
 	macro configureOTP {
-		if ("${enableOtp}" == "true") {
+		if (${enableOtp} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
-		else if ("${enableOtp}" == "false") {
+		else if (${enableOtp} == "false") {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
@@ -101,7 +101,7 @@ definition {
 			Type(
 				key_fieldName = "order",
 				locator1 = "MultiFactorAuthentication#ORDER_FIELD",
-				value1 = "${order}");
+				value1 = ${order});
 		}
 
 		MultiFactorAuthentication.saveConfiguration();
@@ -110,65 +110,65 @@ definition {
 	macro configureOTPEmailSender {
 		Type(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		Type(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
-			value1 = "${emailSenderName}");
+			value1 = ${emailSenderName});
 
 		MultiFactorAuthentication.saveConfiguration();
 	}
 
 	macro configureTOTP {
-		if ("${enableTotp}" == "true") {
+		if (${enableTotp} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
-		else if ("${enableTotp}" == "false") {
+		else if (${enableTotp} == "false") {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
 		Type(
 			locator1 = "MultiFactorAuthentication#TOTP_CLOCK_SKEW",
-			value1 = "10000");
+			value1 = 10000);
 
 		MultiFactorAuthentication.saveConfiguration();
 	}
 
 	macro emailOTPConfiguration {
-		var failedAttemptsAllowed = "${failedAttemptsAllowed}";
+		var failedAttemptsAllowed = ${failedAttemptsAllowed};
 
 		if (isSet(failedAttemptsAllowed)) {
 			Type(
 				key_fieldName = "failedAttemptsAllowed",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD",
-				value1 = "${failedAttemptsAllowed}");
+				value1 = ${failedAttemptsAllowed});
 		}
 
-		var retryTimeout = "${retryTimeout}";
+		var retryTimeout = ${retryTimeout};
 
 		if (isSet(retryTimeout)) {
 			Type(
 				key_fieldName = "retryTimeout",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD",
-				value1 = "${retryTimeout}");
+				value1 = ${retryTimeout});
 		}
 
-		var emailOtpSentSubject = "${emailOtpSentSubject}";
+		var emailOtpSentSubject = ${emailOtpSentSubject};
 
 		if (isSet(emailOtpSentSubject)) {
 			Type(
 				key_fieldName = "emailOTPSentSubject",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD",
-				value1 = "${emailOtpSentSubject}");
+				value1 = ${emailOtpSentSubject});
 		}
 
-		var emailOtpSentBody = "${emailOtpSentBody}";
+		var emailOtpSentBody = ${emailOtpSentBody};
 
 		if (isSet(emailOtpSentBody)) {
 			Type(
 				key_fieldName = "emailOTPSentBody",
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD",
-				value1 = "${emailOtpSentBody}");
+				value1 = ${emailOtpSentBody});
 		}
 
 		MultiFactorAuthentication.saveConfiguration();
@@ -176,11 +176,11 @@ definition {
 
 	macro getTOTP {
 		if (isSet(secretKeyUnchanged)) {
-			var totp = AuthenticationUtil.generateTimeBasedOTP("${secretKeyUnchanged}");
+			var totp = AuthenticationUtil.generateTimeBasedOTP(${secretKeyUnchanged});
 
 			Type(
 				locator1 = "MultiFactorAuthentication#TOTP_VERIFY_FIELD",
-				value1 = "${totp}");
+				value1 = ${totp});
 
 			Button.click(button = "Submit");
 
@@ -193,11 +193,11 @@ definition {
 
 			echo("secretKey is: ${secretKey}");
 
-			var totp = AuthenticationUtil.generateTimeBasedOTP("${secretKey}");
+			var totp = AuthenticationUtil.generateTimeBasedOTP(${secretKey});
 
 			Type(
 				locator1 = "MultiFactorAuthentication#TOTP_FIELD",
-				value1 = "${totp}");
+				value1 = ${totp});
 
 			takeScreenshot();
 
@@ -219,19 +219,19 @@ definition {
 			var portlet = "Email OTP";
 		}
 
-		if ("${portlet}" == "Email OTP") {
+		if (${portlet} == "Email OTP") {
 			var portletId = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration";
 		}
 
-		if ("${portlet}" == "FIDO2") {
+		if (${portlet} == "FIDO2") {
 			var portletId = "com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration";
 		}
 
-		if ("${portlet}" == "IP Address") {
+		if (${portlet} == "IP Address") {
 			var portletId = "com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration";
 		}
 
-		if ("${portlet}" == "Time-Based OTP") {
+		if (${portlet} == "Time-Based OTP") {
 			var portletId = "com.liferay.multi.factor.authentication.timebased.otp.web.internal.configuration.MFATimeBasedOTPConfiguration";
 		}
 
@@ -269,7 +269,7 @@ definition {
 		Type(
 			key_fieldName = "serviceRanking",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD",
-			value1 = "${orderValue}");
+			value1 = ${orderValue});
 
 		MultiFactorAuthentication.saveConfiguration();
 	}
@@ -277,7 +277,7 @@ definition {
 	macro tryWrongTOTP {
 		Type(
 			locator1 = "MultiFactorAuthentication#TOTP_VERIFY_FIELD",
-			value1 = "${wrongValue}");
+			value1 = ${wrongValue});
 
 		Button.click(button = "Submit");
 
@@ -286,15 +286,15 @@ definition {
 
 	macro verifyCustomOTP {
 		if (isSet(specificURL)) {
-			Navigator.openSpecificURL(url = "${specificURL}");
+			Navigator.openSpecificURL(url = ${specificURL});
 		}
 		else {
 			Navigator.openURL();
 		}
 
 		User.firstLoginUI(
-			password = "${userPassword}",
-			userEmailAddress = "${userEmailAddress}");
+			password = ${userPassword},
+			userEmailAddress = ${userEmailAddress});
 
 		AssertElementPresent(locator1 = "MultiFactorAuthentication#CUSTOM_MFA_TITLE");
 
@@ -304,7 +304,7 @@ definition {
 
 		Type(
 			locator1 = "MultiFactorAuthentication#CUSTOM_MFA_VERIFY_FIELD",
-			value1 = "${verificationText}");
+			value1 = ${verificationText});
 
 		Button.click(button = "Submit");
 
@@ -314,7 +314,7 @@ definition {
 	}
 
 	macro verifyOTP {
-		if ("${validOtp}" == "false") {
+		if (${validOtp} == "false") {
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",
 				value1 = "InvalidOTP");
@@ -332,26 +332,26 @@ definition {
 				asset = "${portalURL}: Your One-Time Password",
 				content = "Your one-time password is:",
 				enableOtp = "true",
-				recipient = "${recipient}",
+				recipient = ${recipient},
 				sender = "Joe Bloggs",
 				specificText = "Your one-time password is: <pre>",
 				subject = "${portalURL}: Your One-Time Password");
 
 			if (isSet(specificURL)) {
 				User.firstLoginUI(
-					password = "${userPassword}",
-					specificURL = "${specificURL}",
-					userEmailAddress = "${userEmailAddress}");
+					password = ${userPassword},
+					specificURL = ${specificURL},
+					userEmailAddress = ${userEmailAddress});
 			}
 			else {
 				User.firstLoginUI(
-					password = "${userPassword}",
-					userEmailAddress = "${userEmailAddress}");
+					password = ${userPassword},
+					userEmailAddress = ${userEmailAddress});
 			}
 
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",
-				value1 = "${bodySpecificText}");
+				value1 = ${bodySpecificText});
 
 			Button.click(button = "Submit");
 
@@ -362,10 +362,10 @@ definition {
 	}
 
 	macro viewConfigurationPresent {
-		for (var configurationName : list "${configurationNameList}") {
+		for (var configurationName : list ${configurationNameList}) {
 			AssertElementPresent(
-				key_configurationName = "${configurationName}",
-				key_configurationScope = "${configurationScope}",
+				key_configurationName = ${configurationName},
+				key_configurationScope = ${configurationScope},
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 	}
@@ -377,7 +377,7 @@ definition {
 	macro viewMFAOrderValue {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#ORDER_FIELD",
-			value1 = "${orderValue}");
+			value1 = ${orderValue});
 	}
 
 	macro viewNoTOTPField {
@@ -387,11 +387,11 @@ definition {
 	macro viewOTPEmailSenderCP {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
-			value1 = "${emailSenderName}");
+			value1 = ${emailSenderName});
 	}
 
 	macro viewOTPOrderFieldAvailable {
@@ -405,9 +405,9 @@ definition {
 	}
 
 	macro viewOTPSentElements {
-		for (var element : list "${elementList}") {
+		for (var element : list ${elementList}) {
 			AssertElementPresent(
-				key_fieldName = "${element}",
+				key_fieldName = ${element},
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD");
 		}
 	}

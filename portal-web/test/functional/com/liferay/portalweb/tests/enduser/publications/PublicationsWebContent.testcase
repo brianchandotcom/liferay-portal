@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-165437."
-	@priority = "3"
+	@priority = 3
 	test CanPublishPublicationWithDeletedWCFolder {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-161035."
-	@priority = "4"
+	@priority = 4
 	test CanViewWebContentTimelineOverMultiplePublications {
 		property custom.properties = "feature.flag.LPS-161038=true";
 
@@ -83,7 +83,7 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			WebContent.viewPublicationTimelineEntry(
-				index = "1",
+				index = 1,
 				publicationName = "Publication Name 1");
 		}
 
@@ -112,11 +112,11 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
 
 			WebContent.viewPublicationTimelineEntry(
-				index = "1",
+				index = 1,
 				publicationName = "Production");
 
 			WebContent.viewPublicationTimelineEntry(
-				index = "2",
+				index = 2,
 				publicationName = "Publication Name 1");
 		}
 
@@ -126,17 +126,17 @@ definition {
 			Refresh();
 
 			WebContent.viewPublicationTimelineEntry(
-				index = "1",
+				index = 1,
 				publicationName = "Publication Name 2");
 
 			WebContent.viewPublicationTimelineEntry(
-				index = "2",
+				index = 2,
 				publicationName = "Publication Name 1");
 		}
 	}
 
 	@description = "This is use case for LPS-159561. Making the changes in the description doesn't yield a missing requirement conflict."
-	@priority = "3"
+	@priority = 3
 	test MakingChangesInDescriptionCannotYieldConflict {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
-	@priority = "4"
+	@priority = 4
 	test ManageConflictingWebContentFolderChanges {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -294,7 +294,7 @@ definition {
 			value1 = "Web Content Folder");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishExpiredWebContentViaWCD {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -349,7 +349,7 @@ definition {
 		WebContentDisplayPortlet.viewMessage(expiredWebContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWebContentWithCategory {
 
 		// Workaround LPS-148719
@@ -404,13 +404,13 @@ definition {
 			layoutName = "Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			widgetName = "Search Bar");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Test Page",
 			widgetName = "Search Results");
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test PublishWebContentWithDMAndImageFields {
 		property test.assert.warning.exceptions = "true";
 
@@ -522,7 +522,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Document",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Site Name",
 			changeTitle = "Document_1.jpg",
 			changeType = "Added",
@@ -539,7 +539,7 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWebContentWithFriendlyURL {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -609,7 +609,7 @@ definition {
 			value1 = "WC WebContent Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ReviewChangesCanProcessWebContentsWithThemeDisplayInTemplate {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -677,7 +677,7 @@ definition {
 	}
 
 	@description = "This is the use case for LPS-161841. The order of the versions is not reversed When resolving web content article version conflicts during publication."
-	@priority = "4"
+	@priority = 4
 	test WebContentArticleVersionCannotBeReversedWhenResolvingTheConflicts {
 		task ("Add new web content on new added site") {
 			JSONGroup.addGroup(groupName = "Site Name");

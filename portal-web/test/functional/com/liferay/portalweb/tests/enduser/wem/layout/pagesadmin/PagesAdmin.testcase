@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
-	@priority = "5"
+	@priority = 5
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
 		property portal.acceptance = "true";
 
@@ -86,12 +86,12 @@ definition {
 		}
 
 		task ("View the Blogs entry is shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var titleName : list "Blogs Entry Title,Web Content Title") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${titleName}",
-					row = "${n}");
+					assetTitle = ${titleName},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -112,12 +112,12 @@ definition {
 		}
 
 		task ("View the document is shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var titleName : list "Document Title,Blogs Entry Title,Web Content Title") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${titleName}",
-					row = "${n}");
+					assetTitle = ${titleName},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107776. Only can add specific type collection items in a collection page based on manual collection with single item type."
-	@priority = "4"
+	@priority = 4
 	test AddCollectionItemsInCollectionPageBasedOnManualCollection {
 		task ("Add a manual collection with Web Content Article item type") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from pages admin."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddCollectionViaAddingCollectionPage {
 		property portal.acceptance = "true";
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. Can view the draft label of a page in pages admin."
-	@priority = "4"
+	@priority = 4
 	test AddDraftContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. Can add a fourth level of child page and view it on Pages admin."
-	@priority = "5"
+	@priority = 5
 	test AddFourthLevelChildPage {
 		property portal.acceptance = "true";
 
@@ -267,11 +267,11 @@ definition {
 		task ("View the children pages are shown in pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			var n = "2";
+			var n = 2;
 
 			for (var i : list "1,2,3,4") {
 				PagesAdmin.viewPageItemPresent(
-					depth = "${n}",
+					depth = ${n},
 					pageName = "Child Page Name ${i}");
 
 				var n = ${n} + 1;
@@ -280,7 +280,7 @@ definition {
 	}
 
 	@description = "This is for LPS-150849."
-	@priority = "5"
+	@priority = 5
 	test ChooseColumnTypeAndViewSelectedIcon {
 		property portal.acceptance = "true";
 
@@ -303,13 +303,13 @@ definition {
 
 		echo("background color: ${backgroundColorStyle} ");
 
-		if ("${backgroundColorStyle}" != "rgb(11, 95, 255)") {
+		if (${backgroundColorStyle} != "rgb(11, 95, 255)") {
 			fail("Select icon is not shown");
 		}
 	}
 
 	@description = "This is a test for LPS-145215. View alert message when delete a page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeletePage {
 		property portal.acceptance = "true";
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145215. View alert message when delete a page with child page."
-	@priority = "4"
+	@priority = 4
 	test DeletePageWithChildPage {
 		task ("Add a page") {
 			JSONLayout.addPublicLayout(
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145215. View alert message when delete a page with scoped content."
-	@priority = "4"
+	@priority = 4
 	test DeletePageWithScopedContent {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145215. View alert message when delete a page with scoped content and child page."
-	@priority = "4"
+	@priority = 4
 	test DeletePageWithScopedContentAndChildPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -445,7 +445,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
-	@priority = "4"
+	@priority = 4
 	test GoToCollectionItemEditModeViaViewCollectionItemsModal {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -494,9 +494,9 @@ definition {
 
 				Page.gotoCollectionEntryEllipsisItem(
 					item = "Edit Content",
-					tableEntry = "${title}");
+					tableEntry = ${title});
 
-				ControlMenu.viewHeaderTitle(headerTitle = "${title}");
+				ControlMenu.viewHeaderTitle(headerTitle = ${title});
 
 				Navigator.gotoBack();
 			}
@@ -516,9 +516,9 @@ definition {
 
 				Page.gotoCollectionEntryEllipsisItem(
 					item = "Edit Content",
-					tableEntry = "${title}");
+					tableEntry = ${title});
 
-				ControlMenu.viewHeaderTitle(headerTitle = "${title}");
+				ControlMenu.viewHeaderTitle(headerTitle = ${title});
 
 				PageEditor.clickBack();
 
@@ -530,7 +530,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
-	@priority = "5"
+	@priority = 5
 	test MouseOverNonRootPageAndViewPage {
 		property portal.acceptance = "true";
 
@@ -562,7 +562,7 @@ definition {
 		task ("Select the first page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = 2);
 
 			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
 		}
@@ -597,7 +597,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. Move child page to parent page level via drag and drop."
-	@priority = "4"
+	@priority = 4
 	test MoveChildPageToParentLevel {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -616,7 +616,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
-				depth = "2",
+				depth = 2,
 				pageName = "Child Page Name");
 		}
 
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114527. Can move multiple different level pages to the same level via dragging in Pages admin."
-	@priority = "4"
+	@priority = 4
 	test MoveMultipleDifferentLevelsPagesToTheSameLevel {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -677,7 +677,7 @@ definition {
 			}
 
 			for (var pageName : list "Test Page Name 2,Child Child Page Name 1") {
-				PagesAdmin.selectPageItem(pageName = "${pageName}");
+				PagesAdmin.selectPageItem(pageName = ${pageName});
 			}
 
 			PagesAdmin.movePageItemUp(
@@ -687,13 +687,13 @@ definition {
 
 		task ("View Test Page Name 2 and Child Child Page Name 1 are moved to the same level with Child Page Name 1") {
 			PagesAdmin.viewPagesOrder(
-				depth = "2",
+				depth = 2,
 				pageNameList = "Test Page Name 2,Child Child Page Name 1,Child Page Name 1");
 		}
 	}
 
 	@description = "This is a test for LPS-114527. Can move multiple same level pages at the same level via dragging in Pages admin."
-	@priority = "5"
+	@priority = 5
 	test MoveMultiplePagesInSameLevel {
 		property portal.acceptance = "true";
 
@@ -718,7 +718,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
@@ -734,13 +734,13 @@ definition {
 
 		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1") {
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
 	}
 
 	@description = "This is a test for LPS-114527. Can move multiple same level pages to different level via dragging in Pages admin."
-	@priority = "4"
+	@priority = 4
 	test MoveMultipleSameLevelPagesToChildLevel {
 		task ("Add two widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
@@ -779,13 +779,13 @@ definition {
 
 		task ("View Test Page Name 1 and 2 are moved to child level of Test Page Name 3") {
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2");
 		}
 	}
 
 	@description = "This is a test for LPS-110108. Reorder pages in same level via drag and drop."
-	@priority = "5"
+	@priority = 5
 	test MovePageInSameLevel {
 		property portal.acceptance = "true";
 
@@ -806,7 +806,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2");
 		}
 
@@ -818,13 +818,13 @@ definition {
 
 		task ("View new pages order in Pages admin") {
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 2,Test Page Name 1");
 		}
 	}
 
 	@description = "This is a test for LPS-110108. Move parent page to child page level via drag and drop."
-	@priority = "4"
+	@priority = 4
 	test MoveParentPageToChildLevel {
 		task ("Add two content pages then publish") {
 			for (var n : list "1,2") {
@@ -855,7 +855,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPageItemPresent(
-				depth = "2",
+				depth = 2,
 				pageName = "Child Page Name 1");
 		}
 
@@ -866,11 +866,11 @@ definition {
 		}
 
 		task ("View moved page is at the same level than child page") {
-			var n = "1";
+			var n = 1;
 
 			for (var name : list "Child,Test") {
 				PagesAdmin.viewPageItemPresent(
-					depth = "2",
+					depth = 2,
 					pageName = "${name} Page Name ${n}");
 
 				var n = ${n} + 1;
@@ -879,7 +879,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user with edit permissions clicks a content page in page administration, the page editor is opened with the selected page ready to be edited."
-	@priority = "5"
+	@priority = 5
 	test NavigateToPageEditorWhenClickOnContentPageItem {
 		property portal.acceptance = "true";
 
@@ -919,7 +919,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user with edit permissions searches for a content page in pages administration, and then clicks on it in the results, the page editor is opened with the selected page ready to be edited."
-	@priority = "5"
+	@priority = 5
 	test NavigateToPageEditorWhenClickOnContentPageTitleFromSearchResults {
 		property portal.acceptance = "true";
 
@@ -961,7 +961,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154130. Given I'm in Page Administration When I search for a page Then relative path is clickable."
-	@priority = "3"
+	@priority = 3
 	test NavigateToPageItemViaRelativePathFromSearchResults {
 		task ("Given a page creator has a page hierary") {
 			JSONLayout.addPublicLayout(
@@ -999,7 +999,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-139064. Users can preview draft for a collection page from Pages admin when they exist."
-	@priority = "3"
+	@priority = 3
 	test PreviewDraftCollectionPage {
 		task ("Add a collection page based on Highest Rated Assets collection provider") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -1031,7 +1031,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-139064. Users can preview draft for a content page from Pages admin when they exist."
-	@priority = "5"
+	@priority = 5
 	test PreviewDraftContentPage {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -1113,7 +1113,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163801. The page designer could save page changes after changing the site default language."
-	@priority = "3"
+	@priority = 3
 	test SavePageChangesAfterChangingSiteDefaultLanguage {
 		task ("Given a page designer has a page") {
 			JSONLayout.addPublicLayout(
@@ -1149,7 +1149,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-76825 and LPS-149161. A user can search for a page from pages admin."
-	@priority = "5"
+	@priority = 5
 	test SearchPages {
 		property portal.acceptance = "true";
 
@@ -1177,14 +1177,14 @@ definition {
 			Search.searchCP(searchTerm = "one");
 
 			AssertElementPresent(
-				index = "1",
+				index = 1,
 				key_tableEntry = "Page One",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			for (var pageName : list "Page Two,Page Three") {
 				AssertElementNotPresent(
-					index = "2",
-					key_tableEntry = "${pageName}",
+					index = 2,
+					key_tableEntry = ${pageName},
 					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 			}
 		}
@@ -1193,14 +1193,14 @@ definition {
 			Search.searchCP(searchTerm = "three");
 
 			AssertElementPresent(
-				index = "1",
+				index = 1,
 				key_tableEntry = "Page Three",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			for (var pageName : list "Page One,Page Two") {
 				AssertElementNotPresent(
-					index = "2",
-					key_tableEntry = "${pageName}",
+					index = 2,
+					key_tableEntry = ${pageName},
 					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 			}
 		}
@@ -1210,12 +1210,12 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "Create Date");
 
-			var i = "1";
+			var i = 1;
 
 			for (var pageName : list "Page One,Page Two,Page Three") {
 				AssertElementPresent(
-					index = "${i}",
-					key_tableEntry = "${pageName}",
+					index = ${i},
+					key_tableEntry = ${pageName},
 					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 				var i = ${i} + 1;
@@ -1230,13 +1230,13 @@ definition {
 			Search.clearSearchResult();
 
 			for (var pageName : list "Page One,Page Two") {
-				PagesAdmin.viewPageItemPresent(pageName = "${pageName}");
+				PagesAdmin.viewPageItemPresent(pageName = ${pageName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-152949. View widget type pages' name and navigate to the page in search widget."
-	@priority = "5"
+	@priority = 5
 	test SearchWidgetTypePages {
 		property portal.acceptance = "true";
 
@@ -1342,7 +1342,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144559. The breadcrumb should be unavailable to Link to a Page of This Site."
-	@priority = "4"
+	@priority = 4
 	test ViewBreadcrumbUnavailableToLinkToAPageOfThisSite {
 		task ("Given a page creator has a site with a page") {
 			JSONLayout.addPublicLayout(
@@ -1382,7 +1382,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
-	@priority = "4"
+	@priority = 4
 	test ViewChildPage {
 		task ("Add a content page then publish") {
 			JSONLayout.addPublicLayout(
@@ -1410,7 +1410,7 @@ definition {
 		task ("View the plus icon is shown after check the page in Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.expandPageTree(depth = "2");
+			PagesAdmin.expandPageTree(depth = 2);
 
 			PagesAdmin.selectPageItem(pageName = "Child Page Name");
 
@@ -1429,7 +1429,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page via Pages admin."
-	@priority = "5"
+	@priority = 5
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
 		property portal.acceptance = "true";
 
@@ -1486,18 +1486,18 @@ definition {
 
 			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 				AssertElementPresent(
-					key_tableHeader = "${tableHeader}",
+					key_tableHeader = ${tableHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 
 		task ("View assets are shown in collection items via page tree") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				Page.viewCollectionItem(
-					itemName = "${title}",
-					key_rowNumber = "${n}");
+					itemName = ${title},
+					key_rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1516,18 +1516,18 @@ definition {
 
 			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 				AssertElementPresent(
-					key_tableHeader = "${tableHeader}",
+					key_tableHeader = ${tableHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 
 		task ("View assets are shown in collection items via Pages admin") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				Page.viewCollectionItem(
-					itemName = "${title}",
-					key_rowNumber = "${n}");
+					itemName = ${title},
+					key_rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1535,7 +1535,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110183. Can view more collection items use pagination in Collection Items modal."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionItemWithPagination {
 		task ("Add five web contents") {
 			for (var n : list "5,4,3,2,1") {
@@ -1569,19 +1569,19 @@ definition {
 			for (var rowNumber : list "1,2,3,4,5") {
 				Page.viewCollectionItem(
 					itemName = "Web Content Title ${rowNumber}",
-					key_rowNumber = "${rowNumber}");
+					key_rowNumber = ${rowNumber});
 			}
 		}
 
 		task ("Change the pagination to four items per page") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 		}
 
 		task ("View four web contents are shown in collecion items") {
 			for (var rowNumber : list "1,2,3,4") {
 				Page.viewCollectionItem(
 					itemName = "Web Content Title ${rowNumber}",
-					key_rowNumber = "${rowNumber}");
+					key_rowNumber = ${rowNumber});
 			}
 
 			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
@@ -1595,7 +1595,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
-	@priority = "5"
+	@priority = 5
 	test ViewDisplayPageTemplateViaCollectionItems {
 		property portal.acceptance = "true";
 
@@ -1728,7 +1728,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page in pages admin."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInPagesAdmin {
 		task ("Given a Page designer has a widget page with a custom portlet") {
 			JSONLayout.addPublicLayout(
@@ -1776,7 +1776,7 @@ definition {
 		task ("Then the Page designer can see the new icon icon on orphan widget entries") {
 			for (var entryName : list "Menu Display,Search Bar,User Personal Bar") {
 				AssertVisible(
-					key_listEntry = "${entryName}",
+					key_listEntry = ${entryName},
 					key_text = "trash",
 					locator1 = "LexiconList#ANY_ICON");
 			}
@@ -1805,7 +1805,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159631. Page opens in new tab when selecting New Tab in advanced tab."
-	@priority = "4"
+	@priority = 4
 	test ViewLinkToURLTypePageWhichSelectingNewTabInAdvancedTab {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
@@ -1844,7 +1844,7 @@ definition {
 			Click(
 				key_pageName = "Test Link to URL Page Name",
 				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -1867,7 +1867,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159631. Page opens in new tab when setting Target in advanced tab."
-	@priority = "4"
+	@priority = 4
 	test ViewLinkToURLTypePageWhichSettingTargetInAdvancedTab {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
@@ -1906,7 +1906,7 @@ definition {
 			Click(
 				key_pageName = "Test Link to URL Page Name",
 				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -1929,7 +1929,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159631. Page opens in current page in default setting."
-	@priority = "4"
+	@priority = 4
 	test ViewLinkToURLTypePageWithDefaultSetting {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
@@ -1963,7 +1963,7 @@ definition {
 			Click(
 				key_pageName = "Test Link to URL Page Name",
 				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
 
@@ -1978,7 +1978,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
-	@priority = "5"
+	@priority = 5
 	test ViewNumberOfSelectedPagesOnManagementToolbar {
 		property portal.acceptance = "true";
 

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,24 +29,24 @@ definition {
 	}
 
 	@description = "This test ensures that the locale selector is displayed and functional on the fieldset modal."
-	@priority = "5"
+	@priority = 5
 	test CheckLanguageSelector {
 		var structureTitle = "Test Structure";
 		var key_fieldLabel = "Text";
 		var fieldsetLabel = "Test Fieldset";
 		var fieldsetName = "Test Fieldset";
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.createNewFieldset(
-			fieldNameList = "${key_fieldLabel}",
-			fieldsetName = "${fieldsetName}");
+			fieldNameList = ${key_fieldLabel},
+			fieldsetName = ${fieldsetName});
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetName}");
+		DataEngine.addFieldsetToBuilder(fieldsetName = ${fieldsetName});
 
 		Button.clickSave();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This test ensures default title is carried to a new locale on the fieldsets modal."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This test ensures the default title persists after translating to another locale."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		WebContentStructures.addCP();
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This test ensures its possible to translate the Fieldset to N languages."
-	@priority = "5"
+	@priority = 5
 	test TranslateFieldsetToNLanguages {
 		var fieldsetNameEn = "Fieldset Name";
 
@@ -178,16 +178,16 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEn}");
+			fieldsetName = ${fieldsetNameEn});
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetNameEn}");
+		DataEngine.addFieldsetToBuilder(fieldsetName = ${fieldsetNameEn});
 
 		Translations.addLanguageManageTranslations(key_language = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEn}",
+			fieldsetLabel = ${fieldsetNameEn},
 			fieldsetLabelEdit = "Fieldset Name pt-BR");
 
 		Translations.addLanguageManageTranslations(key_language = "de-DE");
@@ -195,7 +195,7 @@ definition {
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEn}",
+			fieldsetLabel = ${fieldsetNameEn},
 			fieldsetLabelEdit = "Fieldset Name de-DE");
 
 		Translations.addLanguageManageTranslations(key_language = "es-ES");
@@ -203,12 +203,12 @@ definition {
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "${fieldsetNameEn}",
+			fieldsetLabel = ${fieldsetNameEn},
 			fieldsetLabelEdit = "Fieldset Name es-ES");
 
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEn}",
+			fieldsetName = ${fieldsetNameEn},
 			localeList = "pt-BR,de-DE,es-ES");
 
 		WebContentStructures.saveCP();
@@ -217,12 +217,12 @@ definition {
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEn}",
+			fieldsetName = ${fieldsetNameEn},
 			localeList = "pt-BR,de-DE,es-ES");
 	}
 
 	@description = "This test ensures that translations on a fieldset with nested fields persists."
-	@priority = "5"
+	@priority = 5
 	test TranslateFieldsetWithNestedNTranslations {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
@@ -332,7 +332,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Rich Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -355,7 +355,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Texto,Rico Texto") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de Campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -378,7 +378,7 @@ definition {
 
 		for (var fieldFieldLabel : list "el texto,Rica Texto") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -401,14 +401,14 @@ definition {
 
 		for (var fieldFieldLabel : list "テキスト,リッチテキスト") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "フィールドグループ",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures that translations on a fieldset with n-level field groups persists."
-	@priority = "5"
+	@priority = 5
 	test TranslateFieldsetWithNNestedNTranslation {
 		var fieldsetName = "Fieldset EN";
 		var structureTitle = "Structure name";
@@ -417,30 +417,30 @@ definition {
 		var dateField = "Date";
 		var numericField = "Numeric";
 
-		WebContentStructures.addCP(structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = ${structureTitle});
 
 		DataEngine.gotoCreateNewFieldset();
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "${fieldsetName}");
+			value1 = ${fieldsetName});
 
-		DataEngine.addFields(fieldNameList = "${textField}");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "${richTextField}",
-			fieldName = "${richTextField}",
-			targetFieldLabel = "${textField}");
+		DataEngine.addFields(fieldNameList = ${textField});
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "${dateField}",
-			fieldName = "${dateField}",
-			targetFieldLabel = "${richTextField}");
+			fieldFieldLabel = ${richTextField},
+			fieldName = ${richTextField},
+			targetFieldLabel = ${textField});
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "${numericField}",
-			fieldName = "${numericField}",
-			targetFieldLabel = "${dateField}");
+			fieldFieldLabel = ${dateField},
+			fieldName = ${dateField},
+			targetFieldLabel = ${richTextField});
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = ${numericField},
+			fieldName = ${numericField},
+			targetFieldLabel = ${dateField});
 
 		for (var prefix : list "First Level,Second Level,Third Level") {
 			DataEngine.editFieldsGroupLabel(
@@ -473,22 +473,22 @@ definition {
 			fieldsGroupLabelEdit = "Grupo de campos de terceiro nível");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${textField}",
+			fieldFieldLabel = ${textField},
 			fieldFieldLabelEdit = "Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${richTextField}",
+			fieldFieldLabel = ${richTextField},
 			fieldFieldLabelEdit = "Rico Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${dateField}",
+			fieldFieldLabel = ${dateField},
 			fieldFieldLabelEdit = "Data",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${numericField}",
+			fieldFieldLabel = ${numericField},
 			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
 
@@ -516,22 +516,22 @@ definition {
 			fieldsGroupLabelEdit = "Grupo de campos de tercer nivel");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${textField}",
+			fieldFieldLabel = ${textField},
 			fieldFieldLabelEdit = "el texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${richTextField}",
+			fieldFieldLabel = ${richTextField},
 			fieldFieldLabelEdit = "Rica Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${dateField}",
+			fieldFieldLabel = ${dateField},
 			fieldFieldLabelEdit = "Fecha",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${numericField}",
+			fieldFieldLabel = ${numericField},
 			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
 
@@ -559,22 +559,22 @@ definition {
 			fieldsGroupLabelEdit = "Feldgruppe der dritten Ebene");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${textField}",
+			fieldFieldLabel = ${textField},
 			fieldFieldLabelEdit = "der Text",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${richTextField}",
+			fieldFieldLabel = ${richTextField},
 			fieldFieldLabelEdit = "Reich der Text",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${dateField}",
+			fieldFieldLabel = ${dateField},
 			fieldFieldLabelEdit = "Datum",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "${numericField}",
+			fieldFieldLabel = ${numericField},
 			fieldFieldLabelEdit = "Numerisch",
 			fieldsetModal = "true");
 
@@ -582,18 +582,18 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "${fieldsetName}");
+		DataEngine.addFieldsetToBuilder(fieldsetName = ${fieldsetName});
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitle}");
+			value1 = ${structureTitle});
 
 		AssertVisible(
-			key_fieldsetLabel = "${fieldsetName}",
+			key_fieldsetLabel = ${fieldsetName},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		for (var prefix : list "First Level,Second Level,Third Level") {
@@ -603,18 +603,18 @@ definition {
 		}
 
 		AssertVisible(
-			key_fieldFieldLabel = "${textField}",
+			key_fieldFieldLabel = ${textField},
 			key_fieldsGroupLabel = "First Level Fields Group",
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		AssertVisible(
-			key_fieldFieldLabel = "${richTextField}",
+			key_fieldFieldLabel = ${richTextField},
 			key_fieldsGroupLabel = "Second Level Fields Group",
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		for (var fieldFieldLabel : list "${dateField},${numericField}") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Third Level Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -625,7 +625,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitle}");
+			value1 = ${structureTitle});
 
 		AssertVisible(
 			key_fieldsetLabel = "Novo Fieldset",
@@ -655,7 +655,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Data,Numérico") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de campos de terceiro nível",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -666,7 +666,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitle}");
+			value1 = ${structureTitle});
 
 		AssertVisible(
 			key_fieldsetLabel = "Nueva Fieldset",
@@ -696,7 +696,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Fecha,Numérico") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de campos de tercer nivel",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -707,7 +707,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${structureTitle}");
+			value1 = ${structureTitle});
 
 		AssertVisible(
 			key_fieldsetLabel = "Neues Feldset",
@@ -737,14 +737,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Datum,Numerisch") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Feldgruppe der dritten Ebene",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures translations on a structure with a fieldset on a fieldgroup persists."
-	@priority = "5"
+	@priority = 5
 	test TranslateStructureWithFieldsetAndNested {
 		property portal.acceptance = "true";
 
@@ -956,7 +956,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Third Text,Fourth Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Third Level Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -997,7 +997,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Terceiro Texto,Quarto Texto") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de campos de terceiro nível",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -1038,7 +1038,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Tercero Texto,Cuarto Texto") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de campos de tercer nivel",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -1079,14 +1079,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Dritte Text,Vierte Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Feldgruppe der dritten Ebene",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures that the default language is the first show on the fieldset modal."
-	@priority = "5"
+	@priority = 5
 	test VerifyDefaultLanguageIsFirstShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1127,7 +1127,7 @@ definition {
 	}
 
 	@description = "This test ensures it's not possible to edit a fieldset inside a field group on a structure."
-	@priority = "4"
+	@priority = 4
 	test VerifyNestedFieldsetEditionOnStructure {
 		property portal.upstream = "quarantine";
 
@@ -1164,7 +1164,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Upload,New Fieldset") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -1187,7 +1187,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Upload,New Fieldset pt-BR") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}

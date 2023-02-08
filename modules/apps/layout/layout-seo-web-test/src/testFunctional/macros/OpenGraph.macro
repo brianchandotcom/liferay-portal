@@ -2,11 +2,11 @@ definition {
 
 	macro changeLocale {
 		Click.clickNoMouseOver(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "Button#LOCALIZATION_OPEN_GRAPH");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
@@ -27,7 +27,7 @@ definition {
 
 			Type(
 				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
-				value1 = "${customTitle}");
+				value1 = ${customTitle});
 		}
 
 		if (isSet(customDescription)) {
@@ -40,11 +40,11 @@ definition {
 			Type(
 				key_text = "openGraphDescription",
 				locator1 = "TextArea#ANY",
-				value1 = "${customDescription}");
+				value1 = ${customDescription});
 		}
 
 		if (isSet(customImage)) {
-			var key_uploadFileName = "${uploadFileName}";
+			var key_uploadFileName = ${uploadFileName};
 
 			WaitForVisible(
 				key_fieldLabel = "Image",
@@ -64,14 +64,14 @@ definition {
 
 			if (isSet(depotName)) {
 				ItemSelector.selectRepositoryImage(
-					customImage = "${customImage}",
-					depotName = "${depotName}",
-					imageFileName = "${uploadFileName}");
+					customImage = ${customImage},
+					depotName = ${depotName},
+					imageFileName = ${uploadFileName});
 			}
 			else {
 				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 					locator1 = "TextInput#FILE",
-					value1 = "${uploadFileName}");
+					value1 = ${uploadFileName});
 
 				WaitForVisible(
 					locator1 = "ItemSelector#ADD_BUTTON",
@@ -87,7 +87,7 @@ definition {
 			if (isSet(altDescription)) {
 				Type(
 					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION",
-					value1 = "${altDescription}");
+					value1 = ${altDescription});
 			}
 		}
 
@@ -95,10 +95,10 @@ definition {
 			Button.click(button = "Save");
 
 			if (isSet(customImage)) {
-				var uploadFileName = StringUtil.extractFirst("${uploadFileName}", ".");
+				var uploadFileName = StringUtil.extractFirst(${uploadFileName}, ".");
 
 				AssertElementPresent.assertVisible(
-					key_dmDocumentURL = "${uploadFileName}",
+					key_dmDocumentURL = ${uploadFileName},
 					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
 			}
 		}
@@ -137,34 +137,34 @@ definition {
 	}
 
 	macro mapEditableTextToField {
-		if ("${textType}" == "TextInput") {
+		if (${textType} == "TextInput") {
 			Type(
-				key_text = "${mappedField}",
+				key_text = ${mappedField},
 				locator1 = "TextInput#ANY",
-				value1 = "${mappedFieldText}");
+				value1 = ${mappedFieldText});
 		}
-		else if ("${textType}" == "TextArea") {
+		else if (${textType} == "TextArea") {
 			Type(
-				key_text = "${mappedField}",
+				key_text = ${mappedField},
 				locator1 = "TextArea#ANY",
-				value1 = "${mappedFieldText}");
+				value1 = ${mappedFieldText});
 		}
 
 		Click(
-			key_fieldLabel = "${mappedFieldName}",
+			key_fieldLabel = ${mappedFieldName},
 			key_text = "bolt",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 
-		for (var field : list "${field}") {
-			if ("${textType}" == "TextInput") {
+		for (var field : list ${field}) {
+			if (${textType} == "TextInput") {
 				Type.sendKeys(
-					key_text = "${mappedField}",
+					key_text = ${mappedField},
 					locator1 = "TextInput#ANY",
 					value1 = "${field}:");
 			}
-			else if ("${textType}" == "TextArea") {
+			else if (${textType} == "TextArea") {
 				Type.sendKeys(
-					key_text = "${mappedField}",
+					key_text = ${mappedField},
 					locator1 = "TextArea#ANY",
 					value1 = "${field}:");
 			}
@@ -172,9 +172,9 @@ definition {
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${field}");
+				value1 = ${field});
 
-			if ("${mappedFieldName}" == "Image") {
+			if (${mappedFieldName} == "Image") {
 				Click(
 					key_text = "Map Content",
 					locator1 = "Button#ANY");
@@ -190,7 +190,7 @@ definition {
 	macro openToConfigInSystemSettings {
 		var baseURL = PropsUtil.get("portal.url");
 
-		if ("${portlet}" == "SEO") {
+		if (${portlet} == "SEO") {
 			var portletId = "com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration";
 		}
 
@@ -244,17 +244,17 @@ definition {
 	}
 
 	macro viewDefaultMappedField {
-		if ("${portlet}" == "Open Graph") {
+		if (${portlet} == "Open Graph") {
 			AssertAttributeValue(
 				attribute1 = "value",
 				key_mappedField = "Title",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "${title}");
+				value1 = ${title});
 
 			AssertTextEquals(
 				key_mappedField = "Description",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "${description}");
+				value1 = ${description});
 
 			AssertAttributeValue(
 				attribute1 = "value",
@@ -268,7 +268,7 @@ definition {
 				value1 = "");
 		}
 
-		if ("${portlet}" == "SEO") {
+		if (${portlet} == "SEO") {
 			AssertElementPresent(
 				key_text = "Title",
 				locator1 = "TextInput#ANY",
@@ -294,22 +294,22 @@ definition {
 	macro viewMappedField {
 		if (isSet(textType)) {
 			AssertTextEquals(
-				key_mappedField = "${mappedField}",
+				key_mappedField = ${mappedField},
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "${mappedFieldValue}");
+				value1 = ${mappedFieldValue});
 		}
 		else {
 			AssertAttributeValue(
 				attribute1 = "value",
-				key_mappedField = "${mappedField}",
+				key_mappedField = ${mappedField},
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "${mappedFieldValue}");
+				value1 = ${mappedFieldValue});
 		}
 	}
 
 	macro viewNoOpenGraphProperties {
-		for (var ogProperty : list "${ogPropertyList}") {
-			AssertHTMLSourceTextNotPresent(value1 = "${ogProperty}");
+		for (var ogProperty : list ${ogPropertyList}) {
+			AssertHTMLSourceTextNotPresent(value1 = ${ogProperty});
 		}
 	}
 
@@ -321,7 +321,7 @@ definition {
 
 	macro viewNoPreviewImage {
 		AssertElementNotPresent(
-			key_imageName = "${imageName}",
+			key_imageName = ${imageName},
 			locator1 = "PagesAdmin#PREVIEW_IMAGE");
 	}
 
@@ -332,14 +332,14 @@ definition {
 	}
 
 	macro viewOpenGraphProperties {
-		for (var ogProperty : list "${ogPropertyList}") {
-			AssertHTMLSourceTextPresent(value1 = "${ogProperty}");
+		for (var ogProperty : list ${ogPropertyList}) {
+			AssertHTMLSourceTextPresent(value1 = ${ogProperty});
 		}
 	}
 
 	macro viewPreviewImage {
 		AssertVisible(
-			key_imageName = "${imageName}",
+			key_imageName = ${imageName},
 			locator1 = "PagesAdmin#PREVIEW_IMAGE");
 	}
 

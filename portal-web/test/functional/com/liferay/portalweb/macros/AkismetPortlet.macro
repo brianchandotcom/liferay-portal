@@ -1,13 +1,13 @@
 definition {
 
 	macro configure {
-		if ("${enableSpamModerationFor}" == "Message Boards") {
+		if (${enableSpamModerationFor} == "Message Boards") {
 			Check(locator1 = "Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX");
 		}
-		else if ("${enableSpamModerationFor}" == "Discussions") {
+		else if (${enableSpamModerationFor} == "Discussions") {
 			Check(locator1 = "Akismet#ENABLED_FOR_DISCUSSIONS_CHECKBOX");
 		}
-		else if ("${enableSpamModerationFor}" == "Wiki") {
+		else if (${enableSpamModerationFor} == "Wiki") {
 			Check(locator1 = "Akismet#ENABLED_FOR_WIKI_CHECKBOX");
 		}
 
@@ -36,11 +36,11 @@ definition {
 
 		Type(
 			locator1 = "Akismet#REPORTABLE_TIME_FIELD",
-			value1 = "30");
+			value1 = 30);
 
 		Type(
 			locator1 = "Akismet#CHECK_THRESHOLD_FIELD",
-			value1 = "50");
+			value1 = 50);
 
 		Button.clickSave();
 	}

@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,21 +56,21 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-52517."
-	@priority = "3"
+	@priority = 3
 	test ViewCorrectNumberOfWeeksMonthView {
 		property portal.upstream = "quarantine";
 
 		Calendar.viewMonth(dateMonth = "April 2016");
 
-		Calendar.viewWeekCountViaMonthView(weekNumber = "5");
+		Calendar.viewWeekCountViaMonthView(weekNumber = 5);
 
 		Calendar.viewMonth(dateMonth = "July 2016");
 
-		Calendar.viewWeekCountViaMonthView(weekNumber = "6");
+		Calendar.viewWeekCountViaMonthView(weekNumber = 6);
 	}
 
 	@description = "This is a use case for LPS-67400."
-	@priority = "3"
+	@priority = 3
 	test ViewCreatedEventVisibleOnScheduler {
 		CalendarNavigator.gotoAddEvent();
 
@@ -78,8 +78,8 @@ definition {
 		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
 
 		CalendarEvent.viewTimes(
-			endDateTime = "${endDateTime}",
-			startDateTime = "${startDateTime}");
+			endDateTime = ${endDateTime},
+			startDateTime = ${startDateTime});
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event");
 
@@ -90,7 +90,7 @@ definition {
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ViewDefaultDurationsViaScheduler {
 		for (var minutes : list "15,30,60,120") {
 			Navigator.gotoPage(pageName = "Calendar Page");
@@ -109,19 +109,19 @@ definition {
 
 			CalendarScheduler.viewEventDuration(
 				eventTitle = "Calendar Event ${minutes} Minutes Title",
-				minutes = "${minutes}");
+				minutes = ${minutes});
 
 			CalendarEvent.tearDownNoCloseMessage();
 		}
 	}
 
 	@description = "This is a use case for LPS-59251."
-	@priority = "3"
+	@priority = 3
 	test ViewDisplayedSiteCalendarEventsAsGuest {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarScheduler#ViewDisplayedSiteCalendarEventsAsGuest";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -131,7 +131,7 @@ definition {
 			endDateTime = "04:00 AM",
 			startDateTime = "03:00 AM");
 
-		CalendarEvent.selectCalendar(calendarName = "${siteName}");
+		CalendarEvent.selectCalendar(calendarName = ${siteName});
 
 		CalendarEvent.publish();
 
@@ -164,10 +164,10 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.viewSiteCalendarEventWithDefaultPermissions(
-			calendarName = "${siteName}",
+			calendarName = ${siteName},
 			endDateTime = "04:00 AM",
 			eventTitle = "Liferay Calendar Event Title",
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			startDateTime = "03:00 AM");
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
@@ -188,7 +188,7 @@ definition {
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
 			endDateTime = "04:00 AM",
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			startDateTime = "03:00 AM");
 	}
 

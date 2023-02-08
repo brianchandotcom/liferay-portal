@@ -22,8 +22,27 @@ definition {
 	@description = "Check for errors in the minified browser console"
 	@priority = 3
 	test SmokeMinifiedEnabled {
+		task ("Givine Minified property set to true") {
+			property custom.properties = "minified.enabled=true";
+			property test.assert.warning.exceptions = "true";
+		}
+		task ("When Restart portal") {
+			Portlet.shutdownServer();
 
-		// TODO LPS-171621 SmokeMinifiedEnabled pending implementation JQuery enabled
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("And When login") {
+			User.firstLoginPG();
+		}
+
+		task ("Then No liferay log or js console log errors") {
+			User.viewLoggedInPG();
+     	}
+
+		task ("And Then Smoke test passes") {
+			Smoke.runSmoke();
+		}
 
 	}
 

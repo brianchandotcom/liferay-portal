@@ -1,0 +1,55 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property app.server.types = "tomcat";
+	property configure.read.write.database = "jdbc";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Deployment";
+
+	setUp {
+		SignIn.signInTestSetup();
+	}
+
+    @priority = 3
+	test SmokeWithJDBC {
+		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithJDBC";
+
+		Smoke.viewWelcomeContentPage();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "ALL",
+			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
+
+		Smoke.runSmoke();
+
+		AssertConsoleTextPresent(value1 = "Returning write data source");
+
+		AssertConsoleTextPresent(value1 = "Returning read data source");
+	}
+
+	@priority = 3
+	test SmokeWithJNDI {
+		property configure.read.write.database = "jndi";
+		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithJNDI";
+
+		Smoke.viewWelcomeContentPage();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "ALL",
+			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
+
+		Smoke.runSmoke();
+
+		AssertConsoleTextPresent(value1 = "Returning write data source");
+
+		AssertConsoleTextPresent(value1 = "Returning read data source");
+	}
+
+}

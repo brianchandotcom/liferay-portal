@@ -111,56 +111,6 @@ definition {
 			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
 	}
 
-	@priority = 3
-	test SmokeWithReadWriteDatabaseConfigurationJDBC {
-		property app.server.types = "tomcat";
-		property configure.read.write.database = "jdbc";
-		property database.types = "mysql";
-		property portal.smoke = "false";
-		property test.assert.warning.exceptions = "true";
-
-		SignIn.signInTestSetup();
-
-		Smoke.viewWelcomeContentPage();
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.addCategoryLogLevels(
-			categoryLevel = "ALL",
-			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
-
-		Smoke.runSmoke();
-
-		AssertConsoleTextPresent(value1 = "Returning write data source");
-
-		AssertConsoleTextPresent(value1 = "Returning read data source");
-	}
-
-	@priority = 3
-	test SmokeWithReadWriteDatabaseConfigurationJNDI {
-		property app.server.types = "tomcat";
-		property configure.read.write.database = "jndi";
-		property database.types = "mysql";
-		property portal.smoke = "false";
-		property test.assert.warning.exceptions = "true";
-
-		SignIn.signInTestSetup();
-
-		Smoke.viewWelcomeContentPage();
-
-		ServerAdministration.openServerAdmin();
-
-		ServerAdministration.addCategoryLogLevels(
-			categoryLevel = "ALL",
-			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
-
-		Smoke.runSmoke();
-
-		AssertConsoleTextPresent(value1 = "Returning write data source");
-
-		AssertConsoleTextPresent(value1 = "Returning read data source");
-	}
-
 	@priority = 5
 	test SmokeWithRewriteBatchedStatements {
 		property database.types = "mariadb,mysql,postgresql,sqlserver";

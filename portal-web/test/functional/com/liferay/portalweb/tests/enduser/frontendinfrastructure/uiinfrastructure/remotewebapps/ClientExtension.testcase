@@ -827,4 +827,12 @@ definition {
 		}
 	}
 
+	@description = "Add Client Extension with DB Partitioning enabled."
+	@priority = "5"
+	test CanBeDisplayedWithDBPartitioning {
+
+		// TODO LPS-153746 CanBeDisplayedWithDBPartitioning pending implementation
+
+	}
+
 }

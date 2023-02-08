@@ -17,8 +17,6 @@ package com.liferay.portal.proxy.internal;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DelegateProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -66,10 +64,6 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 						asmWrapperClassName);
 				}
 				catch (ClassNotFoundException classNotFoundException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(classNotFoundException);
-					}
-
 					byte[] classData = _generateASMWrapperClassData(
 						StringUtil.replace(asmWrapperClassName, '.', '/'),
 						interfaceClass, delegateObject, defaultObject);
@@ -180,10 +174,6 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 					_getClassBinaryName(delegateObjectClass));
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchMethodException);
-				}
-
 				_generateMethod(
 					classWriter, method, asmWrapperClassBinaryName, "_default",
 					defaultObjectClassDescriptor,
@@ -262,9 +252,6 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 
 		return StringUtil.replace(className, '.', '/');
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ASMDelegateProxyFactory.class);
 
 	private static final Method _defineClassMethod;
 	private static final Method _equalsMethod;

@@ -10,3 +10,7 @@ ${id}:
     urls:
         - index.js
     useESM: false
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static

@@ -3,3 +3,7 @@ ${id}:
     mainURL: css/main.css
     name: ${name}
     type: themeCSS
+assemble:
+    - from: build/buildTheme
+      include: "css/*.css"
+      into: static

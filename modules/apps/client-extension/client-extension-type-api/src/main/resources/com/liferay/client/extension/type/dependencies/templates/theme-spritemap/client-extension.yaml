@@ -2,3 +2,7 @@ ${id}:
     name: ${name}
     type: themeSpritemap
     url: spritemap.svg
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static

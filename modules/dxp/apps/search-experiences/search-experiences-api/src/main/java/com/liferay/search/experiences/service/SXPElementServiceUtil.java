@@ -51,6 +51,19 @@ public class SXPElementServiceUtil {
 			titleMap, type, serviceContext);
 	}
 
+	public static SXPElement addSXPElement(
+			Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean readOnly, String schemaVersion,
+			Map<java.util.Locale, String> titleMap, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSXPElement(
+			descriptionMap, elementDefinitionJSON, externalReferenceCode,
+			readOnly, schemaVersion, titleMap, type, serviceContext);
+	}
+
 	public static SXPElement deleteSXPElement(long sxpElementId)
 		throws PortalException {
 

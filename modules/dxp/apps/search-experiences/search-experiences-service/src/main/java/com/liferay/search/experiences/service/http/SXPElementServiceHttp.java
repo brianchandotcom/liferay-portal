@@ -96,6 +96,53 @@ public class SXPElementServiceHttp {
 		}
 	}
 
+	public static com.liferay.search.experiences.model.SXPElement addSXPElement(
+			HttpPrincipal httpPrincipal,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean readOnly, String schemaVersion,
+			java.util.Map<java.util.Locale, String> titleMap, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SXPElementServiceUtil.class, "addSXPElement",
+				_addSXPElementParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, descriptionMap, elementDefinitionJSON,
+				externalReferenceCode, readOnly, schemaVersion, titleMap, type,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.search.experiences.model.SXPElement)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.search.experiences.model.SXPElement
 			deleteSXPElement(HttpPrincipal httpPrincipal, long sxpElementId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -103,7 +150,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "deleteSXPElement",
-				_deleteSXPElementParameterTypes1);
+				_deleteSXPElementParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId);
@@ -143,7 +190,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "getSXPElement",
-				_getSXPElementParameterTypes2);
+				_getSXPElementParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId);
@@ -189,7 +236,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "updateSXPElement",
-				_updateSXPElementParameterTypes3);
+				_updateSXPElementParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
@@ -232,11 +279,17 @@ public class SXPElementServiceHttp {
 			java.util.Map.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSXPElementParameterTypes1 =
+	private static final Class<?>[] _addSXPElementParameterTypes1 =
+		new Class[] {
+			java.util.Map.class, String.class, String.class, boolean.class,
+			String.class, java.util.Map.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteSXPElementParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSXPElementParameterTypes2 =
+	private static final Class<?>[] _getSXPElementParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateSXPElementParameterTypes3 =
+	private static final Class<?>[] _updateSXPElementParameterTypes4 =
 		new Class[] {
 			long.class, java.util.Map.class, String.class, String.class,
 			boolean.class, java.util.Map.class,

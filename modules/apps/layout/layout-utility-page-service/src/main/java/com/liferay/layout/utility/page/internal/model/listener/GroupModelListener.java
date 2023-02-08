@@ -68,12 +68,19 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
+		_addLayoutUtilityPageEntry(
+			404, group, "404 Error",
+			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND);
+	}
+
+	private void _addLayoutUtilityPageEntry(
+		int errorCode, Group group, String name, String type) {
+
 		try {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-					"LFR-404-ERROR", group.getCreatorUserId(),
-					group.getGroupId(), 0, 0, true, "404 Error",
-					LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0);
+					"LFR-" + errorCode + "-ERROR", group.getCreatorUserId(),
+					group.getGroupId(), 0, 0, true, name, type, 0);
 
 			JSONObject errorCodeI18nJSONObject =
 				_jsonFactory.createJSONObject();
@@ -92,7 +99,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			for (Locale locale : locales) {
 				errorCodeI18nJSONObject.put(
 					LocaleUtil.toLanguageId(locale),
-					_language.format(locale, "error-code-x", "404"));
+					_language.format(locale, "error-code-x", errorCode));
 				instructionsI18nJSONObject.put(
 					LocaleUtil.toLanguageId(locale),
 					_language.get(locale, "instructions"));
@@ -100,18 +107,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					LocaleUtil.toLanguageId(locale),
 					_language.get(
 						locale,
-						"layout-utility-page-entry-description[SC_NOT_FOUND]"));
+						"layout-utility-page-entry-description[" + type + "]"));
 				layoutUtilityPageEntryInstructionsI18nJSONObject.put(
 					LocaleUtil.toLanguageId(locale),
 					_language.get(
 						locale,
-						"layout-utility-page-entry-instructions" +
-							"[SC_NOT_FOUND]"));
+						"layout-utility-page-entry-instructions[" + type +
+							"]"));
 				layoutUtilityPageEntryTitleI18nJSONObject.put(
 					LocaleUtil.toLanguageId(locale),
 					_language.get(
 						locale,
-						"layout-utility-page-entry-title[SC_NOT_FOUND]"));
+						"layout-utility-page-entry-title[" + type + "]"));
 			}
 
 			String pageElementJSON = StringUtil.replace(

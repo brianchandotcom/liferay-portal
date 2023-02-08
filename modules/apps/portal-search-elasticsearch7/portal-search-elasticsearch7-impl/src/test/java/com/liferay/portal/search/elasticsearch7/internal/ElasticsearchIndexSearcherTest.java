@@ -125,9 +125,9 @@ public class ElasticsearchIndexSearcherTest {
 
 		int end = startAndEnd[1];
 
-		Assert.assertEquals(expectedStart, end);
+		Assert.assertEquals(expectedEnd, end);
 
-		Assert.assertEquals(expectedEnd, start);
+		Assert.assertEquals(expectedStart, start);
 	}
 
 	private ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(

@@ -398,6 +398,26 @@ public class JournalConverterUtilTest {
 		Assert.assertEquals(expectedFields, actualFields);
 	}
 
+	@Test
+	public void testGetFieldsFromRemovedNestedField() throws Exception {
+		String structureDefinition = read(
+			"test-ddm-structure-removed-nested-field.json");
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			"Test Structure", jsonDeserialize(structureDefinition),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		Fields expectedFields = _getRemovedNestedFields(
+			ddmStructure.getStructureId());
+
+		Fields actualFields = _journalConverter.getDDMFields(
+			ddmStructure,
+			read("test-journal-content-removed-nested-field.xml"));
+
+		Assert.assertEquals(expectedFields, actualFields);
+	}
+
 	protected void assertEquals(
 		DDMForm expectedDDMForm, DDMForm actualDDMForm) {
 
@@ -764,6 +784,37 @@ public class JournalConverterUtilTest {
 		}
 
 		fields.put(field);
+	}
+
+	private Fields _getRemovedNestedFields(long ddmStructureId) {
+		Fields fields = new Fields();
+
+		_addField(
+			ddmStructureId, null, fields, "backgroundcolor",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("#FFF")
+			).build());
+
+		_addField(
+			ddmStructureId, null, fields, "titulo",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("Servicios")
+			).build());
+
+		_addField(
+			ddmStructureId, null, fields, "subtitulo",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("")
+			).build());
+
+		Field fieldsDisplayField = new Field(
+			ddmStructureId, DDM.FIELDS_DISPLAY_NAME,
+			"backgroundcolor_INSTANCE_koamvduz,titulo_INSTANCE_ieaastyz," +
+				"subtitulo_INSTANCE_lsamnmcz");
+
+		fields.put(fieldsDisplayField);
+
+		return fields;
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")

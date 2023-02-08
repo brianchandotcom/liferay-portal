@@ -1,0 +1,135 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "backgroundcolor",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "backgroundcolor"
+			},
+			"localizable": true,
+			"name": "backgroundcolor",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		},
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "titulo",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "titulo"
+			},
+			"localizable": true,
+			"name": "titulo",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		},
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "subtitulo",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "subtitulo"
+			},
+			"localizable": true,
+			"name": "subtitulo",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		}
+	]
+}

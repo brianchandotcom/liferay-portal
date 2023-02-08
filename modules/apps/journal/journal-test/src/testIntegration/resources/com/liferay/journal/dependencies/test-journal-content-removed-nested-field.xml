@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="koamvduz" name="backgroundcolor" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[#FFF]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="u9MTHblQ" name="tituloFieldSet">
+		<dynamic-element index-type="keyword" instance-id="ieaastyz" name="titulo" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Servicios]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element index-type="keyword" instance-id="nswxzfrk" name="padding_bottom" type="select">
+			<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="lsamnmcz" name="subtitulo" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -106,10 +106,10 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			WorkspacePlugin.PROPERTY_PREFIX + NAME + ".jsp.precompile.enabled",
 			_DEFAULT_JSP_PRECOMPILE_ENABLED);
 		_modulesExcludeDirs = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "modules.excludes.dir",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + NAME + ".excludes.dir",
 			null);
 		_moduleDirs = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "modules.dir",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + NAME + ".dir",
 			_DEFAULT_MODULES_DIR);
 
 		_moduleExcludeProjectPathMap = _getModuleExcludeProjectPathMap(
@@ -658,15 +658,23 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				File moduleDirFile = new File(
 					settings.getRootDir(), moduleDirString);
 
-				Path excludeMoudleParentPath = excludeMoudlePath.getParent();
+				Path excludeParentMoudlePath = excludeMoudlePath.getParent();
 
-				if (!Objects.equals(
-						excludeMoudleParentPath, moduleDirFile.toPath())) {
+				boolean findParentModule = false;
 
+				while (!Objects.equals(
+							excludeParentMoudlePath, moduleDirFile.toPath())) {
+
+					excludeMoudlePath = excludeParentMoudlePath;
+
+					excludeParentMoudlePath = excludeMoudlePath.getParent();
+
+					findParentModule = true;
+				}
+
+				if (findParentModule) {
 					moduleExcludeProjectPathMap.put(
-						excludeMoudleName, excludeMoudleParentPath);
-
-					break;
+						excludeMoudleName, excludeMoudlePath);
 				}
 			}
 		}

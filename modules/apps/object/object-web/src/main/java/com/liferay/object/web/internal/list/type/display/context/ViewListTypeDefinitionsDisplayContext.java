@@ -20,6 +20,7 @@ import com.liferay.list.type.constants.ListTypeActionKeys;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -27,10 +28,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.List;
 
@@ -102,7 +101,7 @@ public class ViewListTypeDefinitionsDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-167536")) {
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					ResourceURLBuilder.createResourceURL(

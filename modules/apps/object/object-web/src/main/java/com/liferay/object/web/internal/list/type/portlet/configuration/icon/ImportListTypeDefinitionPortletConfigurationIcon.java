@@ -15,12 +15,11 @@
 package com.liferay.object.web.internal.list.type.portlet.configuration.icon;
 
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
 
@@ -68,7 +67,7 @@ public class ImportListTypeDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167536")) {
 			return false;
 		}
 

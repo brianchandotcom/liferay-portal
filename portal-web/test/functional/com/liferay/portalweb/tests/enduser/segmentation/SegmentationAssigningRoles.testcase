@@ -760,6 +760,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the user creates a new role
+	When the user clicks on Control Panel > Users > Segments
+	Then in General Permissions, the check Access in Control Panel permission is displayed"
+	@priority = "4"
+	test SegmentsPermissionsHaveAccessToControlPanel {
+		property portal.acceptance = "true";
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Create a new role through Roles Admin Portlet") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Regular Roles");
+
+			Role.add(roleTitle = "SegmentsPermissionsHaveAccessToControlPanel Role");
+		}
+
+		task ("Define permissions and check Access in Control Panel permission is displayed") {
+			Role.editPermissionCP(
+				define = "true",
+				permissionNavHeader = "Users",
+				permissionNavItem = "Segments",
+				permissionSheetSubtitle = "Application Permissions",
+				permissionValues = "Access in Control Panel");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "View Control Panel Menu",
+				permissionNavigationValue = "Portal");
+		}
+	}
+
 	@description = "LPS-167023 Given the Roles portlet
 	When the user tries to add a new role
 	And the user wants to add segments permissions

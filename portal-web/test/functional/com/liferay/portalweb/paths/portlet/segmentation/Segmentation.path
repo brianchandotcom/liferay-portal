@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE_TABLE_SITE</td>
+	<td>//*[contains(@class,'lfr-name-column')]//*[contains(.,'${segmentName}')]/../../*[contains(@class,'lfr-scope-column') and normalize-space(text())='${siteScope}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_FIELDS_TYPE</td>
 	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'${key_typeName}')]</td>
 	<td></td>

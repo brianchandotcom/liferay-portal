@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 
 	@description = "This test ensures that the description can be displayed on the KB section widget after enabling it in the configuration."
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
 
 		// TODO LPS-172372

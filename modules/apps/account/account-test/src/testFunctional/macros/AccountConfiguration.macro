@@ -2,35 +2,35 @@ definition {
 
 	macro addAccountManager {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 
-		JSONOrganization.addOrganization(organizationName = "${orgName}");
+		JSONOrganization.addOrganization(organizationName = ${orgName});
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "${orgName}",
-			userEmailAddress = "${userEmailAddress}");
+			organizationName = ${orgName},
+			userEmailAddress = ${userEmailAddress});
 
 		User.openUsersAdmin();
 
 		User.assignOrgRoleCP(
-			roleTitle = "${orgRoleTitle}",
-			userScreenName = "${userScreenName}");
+			roleTitle = ${orgRoleTitle},
+			userScreenName = ${userScreenName});
 
 		Account.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Account.assignOrganizations(
-			accountName = "${accountName}",
-			assigneeName = "${orgName}");
+			accountName = ${accountName},
+			assigneeName = ${orgName});
 	}
 
 	macro addBlockedEmailDomain {
@@ -41,7 +41,7 @@ definition {
 
 		SystemSettings.editTextAreaSettingMultiLines(
 			settingName = "Blocked Email Domains",
-			settingValues = "${settingValues}");
+			settingValues = ${settingValues});
 
 		SystemSettings.saveConfiguration();
 	}

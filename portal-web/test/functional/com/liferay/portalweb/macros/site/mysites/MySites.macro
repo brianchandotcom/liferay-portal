@@ -2,20 +2,20 @@ definition {
 
 	macro gotoPagesPG {
 		LexiconList.clickEllipsisItem(
-			item = "${item}",
-			listEntry = "${siteName}");
+			item = ${item},
+			listEntry = ${siteName});
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
-		Navigator._gotoPage(pageName = "${pageName}");
+		Navigator._gotoPage(pageName = ${pageName});
 
 		Close.closeWindow(locator1 = "null");
 	}
 
 	macro viewMembershipRequested {
 		LexiconList.clickEllipsis(
-			listEntry = "${siteName}",
-			userRole = "${userRole}");
+			listEntry = ${siteName},
+			userRole = ${userRole});
 
 		MenuItem.viewPresent(menuItem = "Membership Requested");
 
@@ -23,19 +23,19 @@ definition {
 	}
 
 	macro viewNoOptions {
-		Navigator.gotoNavItem(navItem = "${navItem}");
+		Navigator.gotoNavItem(navItem = ${navItem});
 
 		AssertElementNotPresent(
-			key_listEntry = "${siteName}",
+			key_listEntry = ${siteName},
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 	}
 
 	macro viewTags {
-		for (var tagName : list "${tagNameList}") {
+		for (var tagName : list ${tagNameList}) {
 			AssertTextEquals(
-				key_tagName = "${tagName}",
+				key_tagName = ${tagName},
 				locator1 = "Tags#VIEW_TAGS_VIA_MY_SITES",
-				value1 = "${tagName}");
+				value1 = ${tagName});
 		}
 	}
 

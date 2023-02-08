@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "The user can choose which languages will be available to site via Language Selector widget."
-	@priority = "4"
+	@priority = 4
 	test ChooseCurrentLanguagesViaLanguageSelector {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ChooseCurrentLanguagesViaLanguageSelector";
 
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Display Language Selector templates."
-	@priority = "4"
+	@priority = 4
 	test DisplayTemplatesViaLanguageSelector {
 		task ("View available languages are shown with Icon Menu template") {
 			Navigator.gotoSitePage(
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "View current languages via Language Selector after being removed in the portal settings."
-	@priority = "4"
+	@priority = 4
 	test ViewRemovedCurrentPortalLanguagesViaLanguageSelector {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguageSelector";
 
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "View current languages via Language Selector after being removed in the site settings."
-	@priority = "4"
+	@priority = 4
 	test ViewRemovedCurrentSiteLanguagesViaLanguageSelector {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentSiteLanguagesViaLanguageSelector";
 

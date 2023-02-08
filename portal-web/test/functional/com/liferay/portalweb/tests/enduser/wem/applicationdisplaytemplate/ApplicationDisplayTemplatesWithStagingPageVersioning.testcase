@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130051. The user could apply widget template to Navigation Menu on content page when enable local live with page versioning."
-	@priority = "4"
+	@priority = 4
 	test ApplyWidgetTemplateToNavigationMenuOnContentPage {
 		task ("Add a content page") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
@@ -54,7 +54,7 @@ definition {
 				siteName = "Test Site Name Staging");
 
 			PageEditor.addWidget(
-				indexItem = "2",
+				indexItem = 2,
 				portletName = "Menu Display");
 		}
 

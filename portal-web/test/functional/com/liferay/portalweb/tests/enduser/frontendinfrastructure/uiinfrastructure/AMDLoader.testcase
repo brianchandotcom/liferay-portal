@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-165439. I'm able to see references to import map by default on DOM"
-	@priority = "5"
+	@priority = 5
 	test CanGenerateTheAMDToESMBridge {
 		task ("When navigate to home page") {
 			Navigator.gotoPage(pageName = "Home");
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "Verify user can configure AMD loader log level"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test LogLevelCanBeConfigured {
 		property test.name.skip.portal.instance = "AMDLoader#LogLevelCanBeConfigured";
@@ -56,11 +56,11 @@ definition {
 			selectOption = "Warn");
 
 		for (var logLevelOptionName : list "Off,Error,Info,Debug,Warn") {
-			var logLevelOption = "${logLevelOptionName}";
+			var logLevelOption = ${logLevelOptionName};
 
-			AMDLoader.setLogLevelOption(selectOption = "${logLevelOption}");
+			AMDLoader.setLogLevelOption(selectOption = ${logLevelOption});
 
-			AMDLoader.confirmLogLevelOptionSetCorrectly(selectOption = "${logLevelOption}");
+			AMDLoader.confirmLogLevelOptionSetCorrectly(selectOption = ${logLevelOption});
 		}
 	}
 

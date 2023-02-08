@@ -5,15 +5,15 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 
 		Type(
 			locator1 = "TextInput#TARGET_PAGE_FRIENDLY_URL",
-			value1 = "${pageFriendlyURL}");
+			value1 = ${pageFriendlyURL});
 
 		Panel.expandPanel(panel = "Web Content Constraints");
 
-		WebContentFeeds.selectStructure(structureName = "${structureName}");
+		WebContentFeeds.selectStructure(structureName = ${structureName});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -21,7 +21,7 @@ definition {
 	}
 
 	macro selectStructure {
-		var key_ddlDataDefinitionName = "${structureName}";
+		var key_ddlDataDefinitionName = ${structureName};
 
 		Click(
 			buttonId = "selectDDMStructure",
@@ -31,18 +31,18 @@ definition {
 
 		ClickNoError(
 			key_columnName = "title",
-			key_tableEntry = "${structureName}",
+			key_tableEntry = ${structureName},
 			locator1 = "LexiconTable#TABLE_ENTRY_INFO");
 
 		AssertConfirm(value1 = "Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?");
 	}
 
 	macro viewTableEntryCP {
-		var key_feedName = "${feedName}";
+		var key_feedName = ${feedName};
 
 		AssertTextEquals(
 			locator1 = "DDMSelectFeed#FEED_TABLE_NAME",
-			value1 = "${feedName}");
+			value1 = ${feedName});
 	}
 
 }

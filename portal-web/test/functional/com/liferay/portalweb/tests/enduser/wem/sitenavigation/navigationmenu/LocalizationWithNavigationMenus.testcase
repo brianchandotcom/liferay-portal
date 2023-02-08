@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-85566. A user can enter translations for navigation menu items."
-	@priority = "5"
+	@priority = 5
 	test TranslateItemName {
 		property portal.acceptance = "true";
 
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-85566. A navigation menu page item will be prepopulated with existing translations for a page."
-	@priority = "5"
+	@priority = 5
 	test ViewPageItemPrepopulatedWithTranslation {
 		property portal.acceptance = "true";
 

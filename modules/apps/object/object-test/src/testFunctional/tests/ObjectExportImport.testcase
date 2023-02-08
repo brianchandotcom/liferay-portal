@@ -16,14 +16,14 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-142175 - Verify it is possible to cancel importing an object"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanCancelImport {
 		ObjectAdmin.openObjectAdmin();
 
@@ -35,7 +35,7 @@ definition {
 
 		UploadFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${filePath}");
+			value1 = ${filePath});
 
 		Button.clickCancel();
 
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to clear the JSON file on the import dialog"
-	@priority = "4"
+	@priority = 4
 	test CanClearJsonFile {
 		ObjectAdmin.openObjectAdmin();
 
@@ -57,7 +57,7 @@ definition {
 
 		UploadFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${filePath}");
+			value1 = ${filePath});
 
 		Button.click(button = "Clear");
 
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to export the data structure from a custom objects"
-	@priority = "5"
+	@priority = 5
 	test CanExportDataStructure {
 		property portal.acceptance = "true";
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to export an object with Actions"
-	@priority = "4"
+	@priority = 4
 	test CanExportObjectWithAction {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 184",
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "LPS-161893 - Verify that it's possible to export an object entry with aggregation field"
-	@priority = "4"
+	@priority = 4
 	test CanExportObjectWithAggregationField {
 		task ("Given: A custom object with a self-relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to export imported object with custom views"
-	@priority = "4"
+	@priority = 4
 	test CanImportAndExportCustomViewsStructure {
 		task ("When import object with custom views") {
 			ObjectExportImport.importObject(
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to export imported object with state"
-	@priority = "4"
+	@priority = 4
 	test CanImportAndExportStateManagerStructure {
 		task ("When import object with state") {
 			ObjectExportImport.importObject(
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to export imported object with validation structure"
-	@priority = "4"
+	@priority = 4
 	test CanImportAndExportValidationStructure {
 		task ("When import object with validation") {
 			ObjectExportImport.importObject(
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
-	@priority = "5"
+	@priority = 5
 	test CanImportDataStructure {
 		property portal.acceptance = "true";
 
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Fields after importing an Object"
-	@priority = "4"
+	@priority = 4
 	test CanImportFields {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithField",
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Layouts after importing an Object"
-	@priority = "4"
+	@priority = 4
 	test CanImportLayouts {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithLayout",
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to import object with Actions"
-	@priority = "4"
+	@priority = 4
 	test CanImportObjectWithAction {
 		task ("When import object with action") {
 			ObjectExportImport.importObject(
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to import the same object more then one time"
-	@priority = "4"
+	@priority = 4
 	test CanImportSameObjectMoreThanOnce {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedSimpleObject",
@@ -287,16 +287,16 @@ definition {
 			objectName = "ImportedSimpleObject146367B");
 
 		CreateObject.assertCustomObjectWithIndex(
-			index = "1",
+			index = 1,
 			labelName = "Imported Simple Object");
 
 		CreateObject.assertCustomObjectWithIndex(
-			index = "2",
+			index = 2,
 			labelName = "Imported Simple Object");
 	}
 
 	@description = "LPS-142175 - Verify it's possible to maintain Scope after importing an Object"
-	@priority = "4"
+	@priority = 4
 	test CanImportScope {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithScope",
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is not possible to maintain Relationships after importing an Object"
-	@priority = "4"
+	@priority = 4
 	test CannotImportRelationships {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithRelationship",
@@ -333,7 +333,7 @@ definition {
 
 	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanPublishImportedObject {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithField",
@@ -353,7 +353,7 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"
-	@priority = "4"
+	@priority = 4
 	test ImportedObjectIsDraft {
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedSimpleObject",

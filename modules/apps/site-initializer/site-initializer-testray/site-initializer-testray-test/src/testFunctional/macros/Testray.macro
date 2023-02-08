@@ -7,13 +7,13 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${componentName}");
+			value1 = ${componentName});
 
 		if (isSet(teamName)) {
 			Select(
 				key_fieldLabel = "Team",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${teamName}");
+				value1 = ${teamName});
 		}
 
 		Button.clickSave();
@@ -45,69 +45,69 @@ definition {
 
 	macro assertItemName {
 		AssertElementPresent(
-			key_projectName = "${key_name}",
+			key_projectName = ${key_name},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro assertItemNotPresent {
 		AssertElementNotPresent(
-			key_projectName = "${key_name}",
+			key_projectName = ${key_name},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro assertItemsPerPageValue {
 		AssertElementPresent(
-			key_value = "${itemValue}",
+			key_value = ${itemValue},
 			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
 	}
 
 	macro assertNameTitle {
 		AssertElementPresent(
-			key_title = "${key_name}",
+			key_title = ${key_name},
 			locator1 = "Testray#NAME_TITLE");
 	}
 
 	macro assertPageNumber {
 		AssertElementPresent(
-			key_pageNumber = "${pageNumber}",
+			key_pageNumber = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
 	macro assertProjectDescription {
 		AssertElementPresent(
-			key_value = "${value}",
+			key_value = ${value},
 			locator1 = "Testray#DESCRIPTION_PROJECT");
 	}
 
 	macro assertProjectTitleHeader {
 		AssertElementPresent(
-			key_projectName = "${projectName}",
+			key_projectName = ${projectName},
 			locator1 = "Testray#PROJECT_NAME_HEADER");
 	}
 
 	macro assertShowedItems {
 		AssertElementPresent(
-			key_text = "${itemsText}",
+			key_text = ${itemsText},
 			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
 	}
 
 	macro changePagination {
 		Click(
-			key_numberItems = "${numberItems}",
+			key_numberItems = ${numberItems},
 			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
 		Click(
-			key_value = "${valuePagination}",
+			key_value = ${valuePagination},
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
 	macro changePaginationInModal {
 		Click(
-			key_numberItems = "${numberItems}",
+			key_numberItems = ${numberItems},
 			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_MODAL");
 
 		Click(
-			key_value = "${valuePagination}",
+			key_value = ${valuePagination},
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
@@ -121,13 +121,13 @@ definition {
 
 	macro clickOnPageNumber {
 		Click(
-			key_pageNumber = "${pageNumber}",
+			key_pageNumber = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
 	macro clickOnPageNumberModal {
 		Click(
-			key_pageDirection = "${pageNumber}",
+			key_pageDirection = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
@@ -138,11 +138,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -154,11 +154,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -169,8 +169,8 @@ definition {
 		Refresh();
 
 		Testray.changePagination(
-			numberItems = "20",
-			valuePagination = "150");
+			numberItems = 20,
+			valuePagination = 150);
 
 		while (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_");
@@ -183,7 +183,7 @@ definition {
 
 	macro deleteComponent {
 		RightClick.rightClick(
-			key_projectName = "${itemName}",
+			key_projectName = ${itemName},
 			locator1 = "Testray#ITEM_NAME");
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -197,28 +197,28 @@ definition {
 		TestrayLayout.clickResultsOnSidebar();
 
 		Testray.changePagination(
-			numberItems = "20",
-			valuePagination = "150");
+			numberItems = 20,
+			valuePagination = 150);
 
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameProject}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${nameProject});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 	}
 
 	macro editComponent {
-		TestrayContextMenu.clickContextMenuProjects(name = "${componentName}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${componentName});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${newComponentName}");
+			value1 = ${newComponentName});
 
 		if (isSet(newTeamName)) {
 			Select(
 				key_fieldLabel = "Team",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${newTeamName}");
+				value1 = ${newTeamName});
 		}
 
 		Button.clickSave();
@@ -229,11 +229,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${name}");
+			value1 = ${name});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -244,13 +244,13 @@ definition {
 
 	macro goToNextAndPreviousPage {
 		Click(
-			key_pageDirection = "${pageDirection}",
+			key_pageDirection = ${pageDirection},
 			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
 	}
 
 	macro goToProjectPage {
 		Click(
-			key_projectName = "${projectName}",
+			key_projectName = ${projectName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
@@ -262,13 +262,13 @@ definition {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
-			key_kebabOption = "${kebabOption}",
+			key_kebabOption = ${kebabOption},
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
 	macro projectTabNavigator {
 		Click(
-			key_navTabName = "${navTabName}",
+			key_navTabName = ${navTabName},
 			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 	}
 
@@ -304,25 +304,25 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${projectName}");
+			value1 = ${projectName});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = "${description}");
+			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro viewErrorMessage {
 		AssertElementPresent(
-			key_fieldLabel = "${fieldLabel}",
-			key_warningMessage = "${warningMessage}",
+			key_fieldLabel = ${fieldLabel},
+			key_warningMessage = ${warningMessage},
 			locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
 	}
 
 	macro viewOverviewTab {
 		AssertElementPresent(
-			key_rowValue = "${rowValue}",
+			key_rowValue = ${rowValue},
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 

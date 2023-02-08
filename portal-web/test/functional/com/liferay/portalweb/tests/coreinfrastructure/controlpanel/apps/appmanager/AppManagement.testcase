@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "This test asserts that apps in App Management do not display in non default instances"
-	@priority = "4"
+	@priority = 4
 	test AppManagementAppsAreNotInDefaultInstances {
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -34,18 +34,18 @@ definition {
 			Portlet.viewNoPortletsPresentCP(
 				category = "System",
 				panel = "Control Panel",
-				portlet = "${portlet}");
+				portlet = ${portlet});
 		}
 
 		for (var portlet : list "Purchased,Store") {
 			Portlet.viewNoPortletsPresentCP(
 				category = "Marketplace",
 				panel = "Control Panel",
-				portlet = "${portlet}");
+				portlet = ${portlet});
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AppManagerFilterAndOrder {
 		property test.name.skip.portal.instance = "AppManagement#AppManagerFilterAndOrder";
 
@@ -80,7 +80,7 @@ definition {
 			value1 = "Account");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AppManagerLocalization {
 		property test.name.skip.portal.instance = "AppManagement#AppManagerLocalization";
 
@@ -105,14 +105,14 @@ definition {
 
 	@description = "This is a test for LPS-102506."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AppsCanBeActivatedAfterUninstalling {
 
 		// TODO LPS-102506 Unable to activate an app (lpkg) after uninstalling it via the app manager, waiting for fix
 
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AppShouldNotBeNestedWithinItself {
 		property test.name.skip.portal.instance = "AppManagement#AppShouldNotBeNestedWithinItself";
 
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateAdaptiveMedia {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAdaptiveMedia";
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateAssetLibraries {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAssetLibraries";
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateBlogs {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateBlogs";
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateComment {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateComment";
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateDocumentLibraryOpener {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateDocumentLibraryOpener";
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateKnowledgeBase {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateKnowledgeBase";
@@ -329,7 +329,7 @@ definition {
 	}
 
 	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateMessageBoards {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateMessageBoards";
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateNotifications {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateNotifications";
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateQuestions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateQuestions";
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateRatings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateRatings";
@@ -461,7 +461,7 @@ definition {
 	}
 
 	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateSharing {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateSharing";
@@ -494,7 +494,7 @@ definition {
 	}
 
 	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateTranslation {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateTranslation";
@@ -527,7 +527,7 @@ definition {
 	}
 
 	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAndActivateWiki {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateWiki";
@@ -560,7 +560,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by Category in marketplace store."
-	@priority = "3"
+	@priority = 3
 	test CanFilterMarketplaceStoreAppsByCategory {
 		property test.name.skip.portal.instance = "AppManagement#CanFilterMarketplaceStoreAppsByCategory";
 
@@ -603,7 +603,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by liferay version in marketplace store."
-	@priority = "3"
+	@priority = 3
 	test CanFilterMarketplaceStoreAppsByLiferayVersion {
 		property test.name.skip.portal.instance = "AppManagement#CanFilterMarketplaceStoreAppsByLiferayVersion";
 
@@ -646,7 +646,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by Price in marketplace store."
-	@priority = "3"
+	@priority = 3
 	test CanFilterMarketplaceStoreAppsByPrice {
 		property test.name.skip.portal.instance = "AppManagement#CanFilterMarketplaceStoreAppsByPrice";
 
@@ -688,7 +688,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InstallViaUploadIsSuccessful {
 		property test.name.skip.portal.instance = "AppManagement#InstallViaUploadIsSuccessful";
 
@@ -700,16 +700,16 @@ definition {
 		var appName = "test-app-portlet";
 
 		AppManager.uploadApp(
-			appName = "${appName}",
+			appName = ${appName},
 			warFileName = "${appName}-7.2.0.war");
 
 		AppManager.viewApp(
-			appName = "${appName}",
+			appName = ${appName},
 			appStatus = "Active");
 	}
 
 	@description = "This test attempts to install an app by uploading a file that is invalid. Error message is asserted."
-	@priority = "3"
+	@priority = 3
 	test InvalidFileShouldNotBeUploaded {
 		property test.name.skip.portal.instance = "AppManagement#InvalidFileShouldNotBeUploaded";
 
@@ -738,7 +738,7 @@ definition {
 	}
 
 	@description = "This test check search apps in marketplace store and check sign in and sign out."
-	@priority = "3"
+	@priority = 3
 	test SearchMarketplaceStore {
 		property test.name.skip.portal.instance = "AppManagement#SearchMarketplaceStore";
 
@@ -789,7 +789,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UninstallAppIsSuccessful {
 		property test.name.skip.portal.instance = "AppManagement#UninstallAppIsSuccessful";
 
@@ -801,26 +801,26 @@ definition {
 			portlet = "App Manager");
 
 		AppManager.uploadApp(
-			appName = "${appName}",
+			appName = ${appName},
 			warFileName = "${appName}-7.2.0.war");
 
 		AppManager.viewApp(
-			appName = "${appName}",
+			appName = ${appName},
 			appStatus = "Active");
 
-		AppManager.uninstallApp(appName = "${appName}");
+		AppManager.uninstallApp(appName = ${appName});
 
 		WaitForConsoleTextPresent(value1 = "STOPPED ${appName}");
 
-		Search.searchCP(searchTerm = "${appName}");
+		Search.searchCP(searchTerm = ${appName});
 
 		AssertElementNotPresent(
-			key_appName = "${appName}",
+			key_appName = ${appName},
 			locator1 = "AppManager#APP_NAME");
 	}
 
 	@description = "This is a use case for LPS-99031."
-	@priority = "5"
+	@priority = 5
 	test ViewLicenseManager {
 		property test.name.skip.portal.instance = "AppManagement#ViewLicenseManager";
 
@@ -835,7 +835,7 @@ definition {
 	}
 
 	@description = "This test view purchased apps in marketplace purchased page."
-	@priority = "3"
+	@priority = 3
 	test ViewPurchasedApp {
 		property test.name.skip.portal.instance = "AppManagement#ViewPurchasedApp";
 

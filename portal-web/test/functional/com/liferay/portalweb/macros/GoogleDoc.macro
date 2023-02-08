@@ -16,13 +16,13 @@ definition {
 
 			Type(
 				locator1 = "GoogleDoc#INSERT_LINK_LINK",
-				value1 = "${linkAddress}");
+				value1 = ${linkAddress});
 
 			Click(locator1 = "GoogleDoc#INSERT_LINK_TEXT");
 
 			Type(
 				locator1 = "GoogleDoc#INSERT_LINK_TEXT",
-				value1 = "${linkText}");
+				value1 = ${linkText});
 
 			Click(locator1 = "GoogleDoc#INSERT_LINK_APPLY_BUTTON");
 		}
@@ -47,7 +47,7 @@ definition {
 
 		Type(
 			locator1 = "GoogleDoc#TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		KeyPress(
 			locator1 = "GoogleDoc#TITLE",
@@ -59,13 +59,13 @@ definition {
 	}
 
 	macro gotoEdit {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit in ${dmDocumentTypeName}");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WaitForPageLoad();
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	macro saveAndExit {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		var key_text = "Save and Return to ${siteName}";
 

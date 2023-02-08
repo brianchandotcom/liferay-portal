@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162031. The site administrator could add a JS remote app."
-	@priority = "3"
+	@priority = 3
 	test JSCanBeCreated {
 		task ("Given a site administrator accesses to the Remote Apps admin") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
@@ -47,7 +47,7 @@ definition {
 
 			ClientExtensionGeneral.addApp(
 				entryName = "Text Color",
-				entryURL = "${url}");
+				entryURL = ${url});
 		}
 
 		task ("Then the site administrator sees the created JS remote app") {
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162031. The site administrator could add a Theme CSS remote app."
-	@priority = "3"
+	@priority = 3
 	test ThemeCSSCanBeCreated {
 		task ("Given a site administrator accesses to the Remote Apps admin") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
@@ -81,7 +81,7 @@ definition {
 
 			ClientExtensionGeneral.addApp(
 				entryName = "Font Family",
-				mainURL = "${url}");
+				mainURL = ${url});
 		}
 
 		task ("Then the site administrator sees the created Theme CSS remote app") {

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.bare.enabled = "true";
@@ -57,7 +57,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "log4j:ERROR");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SmokeWithDeveloperProperties {
 		property custom.properties = "include-and-override=portal-developer.properties";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration";
@@ -71,7 +71,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SmokeWithEmbeddedHypersonic {
 		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "passwords.default.policy.change.required=true";
@@ -91,7 +91,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SmokeWithJNDI {
 		property app.server.types = "tomcat,wildfly,weblogic,websphere";
 		property database.jndi.enabled = "true";
@@ -111,7 +111,7 @@ definition {
 			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test SmokeWithReadWriteDatabaseConfigurationJDBC {
 		property app.server.types = "tomcat";
 		property configure.read.write.database = "jdbc";
@@ -136,7 +136,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "Returning read data source");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test SmokeWithReadWriteDatabaseConfigurationJNDI {
 		property app.server.types = "tomcat";
 		property configure.read.write.database = "jndi";
@@ -161,7 +161,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "Returning read data source");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SmokeWithRewriteBatchedStatements {
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.smoke = "false";
@@ -174,7 +174,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SmokeWithRuntimeJSPCompile {
 		property delete.precompiled.jsps = "true";
 		property portal.smoke = "false";
@@ -186,7 +186,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SmokeWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";

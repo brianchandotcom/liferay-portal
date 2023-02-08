@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAccessAdminWithRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -67,7 +67,7 @@ definition {
 		BlogsConfiguration.viewNoPermissionCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAccessAdminWithSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-143574. It validates that a user with permissions can view and delete a Blogs image."
-	@priority = "3"
+	@priority = 3
 	test CanDeleteImageWithRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -128,7 +128,7 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
 				roleTitle = "Test Regrole Name");
 		}
@@ -168,7 +168,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Document_1.jpg");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotAddEntryAsGuestByDefault {
 		JSONLayout.addPublicLayout(
@@ -176,7 +176,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -188,7 +188,7 @@ definition {
 		BlogsEntry.viewNoAddPermissions();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenOrgRoleHasNoPermissions {
 		Permissions.setUpOrgRoleLoginUserPG(
@@ -277,7 +277,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -346,7 +346,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -424,7 +424,7 @@ definition {
 		BlogsEntry.viewNoAddPermissions();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenTeamRoleHasNoPermissions {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -519,7 +519,7 @@ definition {
 	}
 
 	@description = "This checks that a guest cannot comment on an entry when permissions are removed."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotCommentAsGuestAfterRemovingPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
@@ -532,7 +532,7 @@ definition {
 				layoutName = "Blogs Page");
 
 			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
+				column = 1,
 				groupName = "Guest",
 				layoutName = "Blogs Page",
 				widgetName = "Blogs");
@@ -559,7 +559,7 @@ definition {
 				siteURLKey = "guest");
 
 			Comments.viewPG(
-				commentCount = "1",
+				commentCount = 1,
 				entryComment = "Guest Blogs Entry Comment",
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -595,7 +595,7 @@ definition {
 				siteURLKey = "guest");
 
 			Comments.viewPG(
-				commentCount = "1",
+				commentCount = 1,
 				entryComment = "Guest Blogs Entry Comment",
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -606,7 +606,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryAsGuestByDefault {
 		ProductMenu.gotoPortlet(
@@ -632,7 +632,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenOrgRoleHasNoPermissions {
 		Permissions.setUpOrgRoleLoginUserPG(
@@ -732,7 +732,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenOwnerHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -805,7 +805,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -881,7 +881,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -974,7 +974,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenTeamRoleHasNoPermissions {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1071,7 +1071,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CannotDeleteEntryWithOrgRoleByDefault {
 		Permissions.setUpOrgRoleLoginUserPG(
@@ -1107,7 +1107,7 @@ definition {
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotEditEntryWhenOwnerHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -1194,7 +1194,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136783. It checks that a normal site member cannot edit someone else's blog."
-	@priority = "3"
+	@priority = 3
 	test CannotEditEntryWhenUserHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1203,7 +1203,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1235,7 +1235,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136784. It checks that a user cannot edit his own comment."
-	@priority = "3"
+	@priority = 3
 	test CannotEditOwnComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Comment";
@@ -1245,7 +1245,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1284,14 +1284,14 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136785. It checks that a guest cannot rate an entry without permissions."
-	@priority = "3"
+	@priority = 3
 	test CannotRateEntryAsGuest {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1315,7 +1315,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136786. It checks that a user cannot reply to a comment without permissions."
-	@priority = "3"
+	@priority = 3
 	test CannotReplyToCommentWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1335,7 +1335,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1370,7 +1370,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136787. It checks that a user cannot subscribe to a comment without permissions."
-	@priority = "3"
+	@priority = 3
 	test CannotSubscribeToCommentWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1390,7 +1390,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1419,7 +1419,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#SUBSCRIBE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CannotSubscribeToEntryWhenRegRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1505,7 +1505,7 @@ definition {
 		LexiconCard.viewCardTitle(card = "Blogs Entry Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotSubscribeToEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1570,7 +1570,7 @@ definition {
 	}
 
 	@description = "This checks that a user without permissions cannot view a draft entry from an admin."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotViewDraftWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1580,7 +1580,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1614,7 +1614,7 @@ definition {
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CannotViewEntryAfterOwnerRoleInlinePermissionsAreRemoved {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -1695,7 +1695,7 @@ definition {
 	}
 
 	@description = "This checks that an entry cannot be viewed by a guest once permissions are removed."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotViewEntryAsGuestWhenPermissionsAreRemoved {
 		JSONLayout.addPublicLayout(
@@ -1703,7 +1703,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1733,7 +1733,7 @@ definition {
 			entryTitle = "Blogs Entry1 Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotViewEntryWhenRegRoleHasNoPermissions {
 		Permissions.setUpRegRoleLoginUserPG(
@@ -1824,7 +1824,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotViewEntryWhenSiteRoleHasNoPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1906,7 +1906,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test NoWidgetActionsDisplayForGuestByDefault {
 		JSONLayout.addPublicLayout(
@@ -1914,7 +1914,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -1926,7 +1926,7 @@ definition {
 		BlogsConfiguration.viewNoPermissionPG();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SubscribeBlogsRegRoleInline {
 		Permissions.setUpRegRoleLoginUserPG(

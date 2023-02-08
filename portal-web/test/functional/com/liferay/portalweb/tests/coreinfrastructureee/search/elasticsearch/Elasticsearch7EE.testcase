@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test LearningToRankSmoke {
 		property elasticsearch.ltr.enabled = "true";
 		property minimum.slave.ram = "24";
@@ -51,19 +51,19 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
 		var assetEntryTitleListNoLtr = "";
-		var iterator = "1";
+		var iterator = 1;
 
-		while (("${iterator}" != "21") && (maxIterations = "20")) {
+		while ((${iterator} != 21) && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
 
-			var assetEntryTitleListNoLtr = StringUtil.add("${assetEntryTitleListNoLtr}", "${assetEntryTitle}");
+			var assetEntryTitleListNoLtr = StringUtil.add(${assetEntryTitleListNoLtr}, ${assetEntryTitle});
 			var iterator = ${iterator} + 1;
 		}
 
@@ -90,16 +90,16 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "alien");
 
 		var assetEntryTitleListLtr = "";
-		var iterator = "1";
+		var iterator = 1;
 
-		while (("${iterator}" != "21") && (maxIterations = "20")) {
+		while ((${iterator} != 21) && (maxIterations = "20")) {
 			var assetEntryTitle = selenium.getText("//div[contains(@id,'SearchResultsPortlet')]//li[${iterator}]/div//a");
 
-			var assetEntryTitleListLtr = StringUtil.add("${assetEntryTitleListLtr}", "${assetEntryTitle}");
+			var assetEntryTitleListLtr = StringUtil.add(${assetEntryTitleListLtr}, ${assetEntryTitle});
 			var iterator = ${iterator} + 1;
 		}
 
-		if ("${assetEntryTitleListNoLtr}" != "${assetEntryTitleListLtr}") {
+		if (${assetEntryTitleListNoLtr} != ${assetEntryTitleListLtr}) {
 			echo("Assertion succeeded: Search result rankings were different with and without LTR");
 
 			echo("Rankings without LTR: ${assetEntryTitleListNoLtr}");
@@ -111,7 +111,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -121,8 +121,8 @@ definition {
 		property test.name.skip.portal.instance = "Elasticsearch7EE#PortalClusterSmokeTest";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
-			nodePort = "9200",
-			numberOfNodes = "1");
+			nodePort = 9200,
+			numberOfNodes = 1);
 
 		Navigator.openURL();
 
@@ -178,7 +178,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Clustering.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = 8080);
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
@@ -203,7 +203,7 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test XPackPkiAuthenticationSmokeTest {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
@@ -227,7 +227,7 @@ definition {
 		ElasticsearchMonitoring.viewPG();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test XPackPkiAuthenticationWithJDK11 {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
@@ -256,7 +256,7 @@ definition {
 		ElasticsearchMonitoring.viewPG();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
@@ -300,7 +300,7 @@ definition {
 		ElasticsearchMonitoring.viewAsGuestPG();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test XPackWithJDK11 {
 		property elastic.xpack.enabled = "true";
 		property elasticsearch.jdk11.enabled = "true";
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-151205."
-	@priority = "5"
+	@priority = 5
 	test XPackWithRestrictedCipherSuitesAndTLSVersions {
 		property elastic.xpack.configure.tls.cipher.suites = "true";
 		property elastic.xpack.enabled = "true";

@@ -2,14 +2,14 @@ definition {
 
 	macro activatePaymentMethod {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${paymentMethod}",
+			entryName = ${paymentMethod},
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${paymentMethod}");
+			value1 = ${paymentMethod});
 
 		Type(
 			locator1 = "TextInput#DESCRIPTION",
@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro addCategory {
-		if ("${edit}" != "true") {
+		if (${edit} != "true") {
 			Click(locator1 = "Button#PLUS");
 		}
 
@@ -35,14 +35,14 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${multipleVocabularies}" == "true") {
+		if (${multipleVocabularies} == "true") {
 			Click(
 				key_site = "Minium",
 				locator1 = "CommerceEntry#TREEVIEW_NODE_COLLAPSED_PAGES");
 		}
 
 		Click(
-			key_nodeName = "${key_card}",
+			key_nodeName = ${key_card},
 			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
@@ -66,7 +66,7 @@ definition {
 			locator1 = "CommerceEntry#TREEVIEW_NODE_COLLAPSED_PAGES");
 
 		Click(
-			key_nodeName = "${key_card}",
+			key_nodeName = ${key_card},
 			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
@@ -77,7 +77,7 @@ definition {
 	}
 
 	macro addProduct {
-		if ("${edit}" != "true") {
+		if (${edit} != "true") {
 			Click(locator1 = "Button#PLUS");
 		}
 
@@ -91,10 +91,10 @@ definition {
 			key_title = "Select Product",
 			locator1 = "IFrame#MODAL_ANY");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
 		Click(
-			key_entryName = "${product}",
+			key_entryName = ${product},
 			locator1 = "CommerceEntry#CHOOSE_ENTRY_BUTTON");
 
 		SelectFrame.selectFrameTop();
@@ -104,11 +104,11 @@ definition {
 		Type(
 			key_fieldLabel = "Tracking URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${trackingURL}");
+			value1 = ${trackingURL});
 	}
 
 	macro addShippingOption {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		Click(locator1 = "Button#PLUS");
 
@@ -116,32 +116,32 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${name}");
+			value1 = ${name});
 
 		if (isSet(description)) {
 			Type(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(amount)) {
 			Type(
 				key_fieldLabel = "Amount",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${amount}");
+				value1 = ${amount});
 		}
 
 		if (isSet(priority)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
 		if (isSet(key)) {
 			Type(
 				key_fieldLabel = "Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${key}");
+				value1 = ${key});
 		}
 
 		Button.clickSave();
@@ -156,50 +156,50 @@ definition {
 	}
 
 	macro addShippingOptions {
-		for (var shippingOption : list "${shippingOptions}") {
-			if ("${shippingMethod}" == "Flat Rate") {
-				var shippingOptionName = StringUtil.extractFirst("${shippingOption}", ":");
-				var shippingOptionAmount = StringUtil.extractLast("${shippingOption}", ":");
+		for (var shippingOption : list ${shippingOptions}) {
+			if (${shippingMethod} == "Flat Rate") {
+				var shippingOptionName = StringUtil.extractFirst(${shippingOption}, ":");
+				var shippingOptionAmount = StringUtil.extractLast(${shippingOption}, ":");
 			}
-			else if ("${shippingMethod}" == "Variable Rate") {
-				var shippingOptionName = "${shippingOption}";
+			else if (${shippingMethod} == "Variable Rate") {
+				var shippingOptionName = ${shippingOption};
 			}
 
-			var shippingOptionKey = CommerceUtilities.convertStringToKey(string = "${shippingOptionName}");
+			var shippingOptionKey = CommerceUtilities.convertStringToKey(string = ${shippingOptionName});
 
 			CommerceChannels.addShippingOption(
-				amount = "${shippingOptionAmount}",
-				key = "${shippingOptionKey}",
-				name = "${shippingOptionName}");
+				amount = ${shippingOptionAmount},
+				key = ${shippingOptionKey},
+				name = ${shippingOptionName});
 		}
 	}
 
 	macro assertDefaultAccountShippingOption {
 		AssertElementPresent(
-			key_columnNumber = "1",
-			key_productName = "${channelName}",
-			key_value = "${shippingMethod}",
+			key_columnNumber = 1,
+			key_productName = ${channelName},
+			key_value = ${shippingMethod},
 			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 		AssertElementPresent(
-			key_columnNumber = "2",
-			key_productName = "${channelName}",
-			key_value = "${shippingOption}",
+			key_columnNumber = 2,
+			key_productName = ${channelName},
+			key_value = ${shippingOption},
 			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 
 		if (isSet(active)) {
 			AssertTextEquals(
-				key_columnNumber = "3",
-				key_productName = "${channelName}",
-				key_value = "${active}",
+				key_columnNumber = 3,
+				key_productName = ${channelName},
+				key_value = ${active},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${active}");
+				value1 = ${active});
 		}
 	}
 
 	macro assertMercanetConfigurationEnvironment {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${paymentMethod}",
+			entryName = ${paymentMethod},
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -211,7 +211,7 @@ definition {
 		Select(
 			key_fieldLabel = "Environment",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_value}");
+			value1 = ${key_value});
 
 		Button.clickSave();
 
@@ -219,7 +219,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Environment",
-			key_value = "${key_value}",
+			key_value = ${key_value},
 			locator1 = "CommerceEntry#SELECT_ASSERT_SELECTED_VALUE");
 
 		Click(locator1 = "Icon#CLOSE");
@@ -263,14 +263,14 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${pageType}" == "Private") {
+		if (${pageType} == "Private") {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		CommerceNavigator.searchEntry(entryName = "${pageName}");
+		CommerceNavigator.searchEntry(entryName = ${pageName});
 
 		Click.mouseDownMouseUp(
-			key_nodeName = "${pageName}",
+			key_nodeName = ${pageName},
 			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
@@ -297,7 +297,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${pageType}" == "Private") {
+		if (${pageType} == "Private") {
 			if (IsElementNotPresent(key_menuTab = "Private Pages", locator1 = "CommerceEntry#MENU_TAB")) {
 				Click(
 					key_panel = "Public Pages",
@@ -307,12 +307,12 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		if (IsElementNotPresent(key_nodeName = "${pageName}", locator1 = "Treeview#NODE_ITEM")) {
-			CommerceNavigator.searchEntry(entryName = "${pageName}");
+		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM")) {
+			CommerceNavigator.searchEntry(entryName = ${pageName});
 		}
 
 		Click.mouseDownMouseUp(
-			key_nodeName = "${pageName}",
+			key_nodeName = ${pageName},
 			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
@@ -346,7 +346,7 @@ definition {
 		Select(
 			key_fieldLabel = "Mode",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${mode}");
+			value1 = ${mode});
 
 		Button.clickSave();
 
@@ -354,14 +354,14 @@ definition {
 	}
 
 	macro createCategoryDisplayPage {
-		CommerceChannels.addCategory(key_card = "${vocabulary}");
+		CommerceChannels.addCategory(key_card = ${vocabulary});
 
-		CommerceChannels.addCategoryDiplayPage(key_card = "${page}");
+		CommerceChannels.addCategoryDiplayPage(key_card = ${page});
 	}
 
 	macro disablePaymentMethod {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${paymentMethod}",
+			entryName = ${paymentMethod},
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -377,7 +377,7 @@ definition {
 
 	macro editCategoryDisplayPage {
 		Click(
-			key_value = "${name}",
+			key_value = ${name},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		ClickNoError(
@@ -390,7 +390,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${tabName}" == "Private+Pages") {
+		if (${tabName} == "Private+Pages") {
 			if (IsElementNotPresent(key_tabName = "Private+Pages", locator1 = "AppBuilderAppAdmin#APP_TAB")) {
 				Click(
 					key_text = "Public Pages",
@@ -407,7 +407,7 @@ definition {
 			locator1 = "CommerceEntry#TREEVIEW_NODE_COLLAPSED_PAGES");
 
 		Click(
-			key_nodeName = "${key_card}",
+			key_nodeName = ${key_card},
 			locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrame.selectFrameTop();
@@ -419,7 +419,7 @@ definition {
 
 	macro editOverrideCategoryDisplayPage {
 		Click(
-			key_value = "${category}",
+			key_value = ${category},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Edit");
@@ -427,13 +427,13 @@ definition {
 		if (isSet(newCategory)) {
 			CommerceChannels.addCategory(
 				edit = "true",
-				key_card = "${newCategory}");
+				key_card = ${newCategory});
 		}
 
 		if (isSet(newPageName) && isSet(newPageType)) {
 			CommerceChannels.chooseDisplayPageFromSidePanel(
-				pageName = "${newPageName}",
-				pageType = "${newPageType}");
+				pageName = ${newPageName},
+				pageType = ${newPageType});
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -449,7 +449,7 @@ definition {
 
 	macro editOverrideProductDisplayPage {
 		Click(
-			key_value = "${product}",
+			key_value = ${product},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Edit");
@@ -457,13 +457,13 @@ definition {
 		if (isSet(newProduct)) {
 			CommerceChannels.addProduct(
 				edit = "true",
-				product = "${newProduct}");
+				product = ${newProduct});
 		}
 
 		if (isSet(newPageName) && isSet(newPageType)) {
 			CommerceChannels.chooseDisplayPageFromSidePanel(
-				pageName = "${newPageName}",
-				pageType = "${newPageType}");
+				pageName = ${newPageName},
+				pageType = ${newPageType});
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -479,7 +479,7 @@ definition {
 
 	macro editPaymentMethod {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${paymentMethod}",
+			entryName = ${paymentMethod},
 			table = "Payment Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -487,26 +487,26 @@ definition {
 		if (isSet(name)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			Type(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(priority)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
-		if ("${active}" == "true") {
+		if (${active} == "true") {
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 		}
 
-		if ("${active}" == "false") {
+		if (${active} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 		}
 
@@ -521,7 +521,7 @@ definition {
 
 	macro editShippingMethod {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${shippingMethod}",
+			entryName = ${shippingMethod},
 			table = "Shipping Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -529,30 +529,30 @@ definition {
 		if (isSet(name)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			Type(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(trackingURL)) {
-			CommerceChannels.addShippingMethodTrackingURL(trackingURL = "${trackingURL}");
+			CommerceChannels.addShippingMethodTrackingURL(trackingURL = ${trackingURL});
 		}
 
 		if (isSet(priority)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
-		if ("${active}" == "true") {
+		if (${active} == "true") {
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 		}
 
-		if ("${active}" == "false") {
+		if (${active} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 		}
 
@@ -560,30 +560,30 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		if ("${active}" == "true") {
+		if (${active} == "true") {
 			if (isSet(shippingOptions)) {
 				CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
 
 				CommerceChannels.addShippingOptions(
-					shippingMethod = "${shippingMethod}",
-					shippingOptions = "${shippingOptions}");
+					shippingMethod = ${shippingMethod},
+					shippingOptions = ${shippingOptions});
 			}
 
-			if (isSet(configureShippingOption) && ("${configureShippingOption}" == "true")) {
+			if (isSet(configureShippingOption) && (${configureShippingOption} == "true")) {
 				CommerceEntry.gotoMenuTab(menuTab = "Shipping Option Settings");
 
-				for (var shippingOption : list "${shippingOptions}") {
+				for (var shippingOption : list ${shippingOptions}) {
 					CommerceEntry.addShippingOptionSettingsVariableRate(
-						country = "${shippingOptionSettingsCountry}",
-						fixedPrice = "${shippingOptionSettingsFixedPrice}",
-						priceUnitWeight = "${shippingOptionSettingsPriceUnitWeight}",
-						region = "${shippingOptionSettingsRegion}",
-						shippingOption = "${shippingOption}",
-						subtotal = "${shippingOptionSettingsSubtotal}",
-						warehouse = "${shippingOptionSettingsWarehouse}",
-						weightFrom = "${shippingOptionSettingsWeightFrom}",
-						weightTo = "${shippingOptionSettingsWeightTo}",
-						zip = "${shippingOptionSettingsZip}");
+						country = ${shippingOptionSettingsCountry},
+						fixedPrice = ${shippingOptionSettingsFixedPrice},
+						priceUnitWeight = ${shippingOptionSettingsPriceUnitWeight},
+						region = ${shippingOptionSettingsRegion},
+						shippingOption = ${shippingOption},
+						subtotal = ${shippingOptionSettingsSubtotal},
+						warehouse = ${shippingOptionSettingsWarehouse},
+						weightFrom = ${shippingOptionSettingsWeightFrom},
+						weightTo = ${shippingOptionSettingsWeightTo},
+						zip = ${shippingOptionSettingsZip});
 				}
 			}
 		}
@@ -594,40 +594,40 @@ definition {
 	}
 
 	macro editShippingOption {
-		CommerceNavigator.gotoEntry(entryName = "${shippingOption}");
+		CommerceNavigator.gotoEntry(entryName = ${shippingOption});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(name)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			Type(
 				locator1 = "TextInput#DESCRIPTION",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(amount)) {
 			Type(
 				key_fieldLabel = "Amount",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${amount}");
+				value1 = ${amount});
 		}
 
 		if (isSet(priority)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
 		if (isSet(key)) {
 			Type(
 				key_fieldLabel = "Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${key}");
+				value1 = ${key});
 		}
 
 		Button.clickSave();
@@ -643,7 +643,7 @@ definition {
 
 	macro gotoShippingMethodShippingOptions {
 		CommerceEntry.clickTableEntryEditButton(
-			entryName = "${shippingMethod}",
+			entryName = ${shippingMethod},
 			table = "Shipping Methods");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -653,16 +653,16 @@ definition {
 
 	macro openChannelsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet");
 	}
 
 	macro overrideCategoryDisplayPage {
-		CommerceChannels.addCategory(key_card = "${category}");
+		CommerceChannels.addCategory(key_card = ${category});
 
 		CommerceChannels.chooseDisplayPageFromSidePanel(
-			pageName = "${pageName}",
-			pageType = "${pageType}");
+			pageName = ${pageName},
+			pageType = ${pageType});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -676,11 +676,11 @@ definition {
 	}
 
 	macro overrideProductDisplayPage {
-		CommerceChannels.addProduct(product = "${product}");
+		CommerceChannels.addProduct(product = ${product});
 
 		CommerceChannels.chooseDisplayPageFromSidePanel(
-			pageName = "${pageName}",
-			pageType = "${pageType}");
+			pageName = ${pageName},
+			pageType = ${pageType});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -712,7 +712,7 @@ definition {
 
 		SelectFrameTop();
 
-		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+		CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
 
 		Button.clickSave();
 	}

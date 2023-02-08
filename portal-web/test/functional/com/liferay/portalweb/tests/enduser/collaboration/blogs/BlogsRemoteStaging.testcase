@@ -18,7 +18,7 @@ definition {
 			layoutName = "Staging Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging Blogs Page",
 			widgetName = "Blogs");
@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-74206."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishApprovedEntry {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72461."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishEntry {
 		property app.server.bundles.size = "1";
@@ -123,7 +123,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-57484. It ensures that a scheduled blog entry can be published when remote staging is enabled."
-	@priority = "3"
+	@priority = 3
 	test CanPublishScheduledEntry {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}company.default.time.zone=America/Los_Angeles";
@@ -174,14 +174,14 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONBlog.addEntry(
 			displayDate = "true",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name",
-			increaseMinutes = "3");
+			increaseMinutes = 3);
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",
@@ -200,7 +200,7 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -213,7 +213,7 @@ definition {
 
 		// We need to wait for the system time to pass by 2.5 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "150000");
+		Pause(locator1 = 150000);
 
 		Refresh();
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154403. It asserts that an image with a custom friendlyURL added in the Blog small image field can be published on a site"
-	@priority = "3"
+	@priority = 3
 	test CanPublishSmallImage {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -233,7 +233,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-92488. It asserts that a replaced cover image displays properly in the remote site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishUpdatedCoverImage {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154428. It asserts that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "5"
+	@priority = 5
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -383,7 +383,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -457,7 +457,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154402. It asserts that an external video with a custom friendlyURL added in the Blog content field can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideotInContentFieldAfterPublish {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -467,7 +467,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -524,7 +524,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154427. It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "5"
+	@priority = 5
 	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -534,7 +534,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -615,7 +615,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154429. It asserts that an image with a custom friendlyURL added in the Blog small image field can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "5"
+	@priority = 5
 	test CanViewSmallImageAfterFriendlyURLIsUpdated {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -625,7 +625,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

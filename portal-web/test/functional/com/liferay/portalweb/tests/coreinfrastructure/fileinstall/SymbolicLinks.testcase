@@ -8,12 +8,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SetLiferayHomeToASymbolicLink {
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";

@@ -1,98 +1,98 @@
 definition {
 
 	macro addOrganization {
-		Variables.assertDefined(parameterList = "${organizationName}");
+		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${parentOrganizationName});
 		}
 
 		JSONOrganizationAPI._addOrganization(
-			organizationCountry = "${organizationCountry}",
-			organizationName = "${organizationName}",
-			organizationRegion = "${organizationRegion}",
-			organizationSite = "${organizationSite}",
-			organizationType = "${organizationType}",
-			parentOrganizationId = "${parentOrganizationId}");
+			organizationCountry = ${organizationCountry},
+			organizationName = ${organizationName},
+			organizationRegion = ${organizationRegion},
+			organizationSite = ${organizationSite},
+			organizationType = ${organizationType},
+			parentOrganizationId = ${parentOrganizationId});
 	}
 
 	macro addOrganizationToDepot {
 		Variables.assertDefined(parameterList = "${organizationName},${depotName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
 		var depotId = JSONUserSetter.setGroupId(
-			groupName = "${depotName}",
+			groupName = ${depotName},
 			site = "false");
 
 		JSONOrganizationAPI._addOrganizationToSite(
-			groupId = "${depotId}",
-			organizationId = "${organizationId}");
+			groupId = ${depotId},
+			organizationId = ${organizationId});
 	}
 
 	macro addOrganizationToSite {
 		Variables.assertDefined(parameterList = "${organizationName},${siteName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
-		var groupId = JSONUserSetter.setGroupId(groupName = "${siteName}");
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
+		var groupId = JSONUserSetter.setGroupId(groupName = ${siteName});
 
 		JSONOrganizationAPI._addOrganizationToSite(
-			groupId = "${groupId}",
-			organizationId = "${organizationId}");
+			groupId = ${groupId},
+			organizationId = ${organizationId});
 	}
 
 	macro assignPasswordPolicyToOrganization {
 		Variables.assertDefined(parameterList = "${organizationName},${passwordPolicyName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
-		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "${passwordPolicyName}");
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
+		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = ${passwordPolicyName});
 
 		JSONOrganizationAPI._assignPasswordPolicyToOrganization(
-			organizationId = "${organizationId}",
-			passwordPolicyId = "${passwordPolicyId}");
+			organizationId = ${organizationId},
+			passwordPolicyId = ${passwordPolicyId});
 	}
 
 	macro assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${parentOrganizationName});
 		}
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "${organizationName}",
-			parentOrganizationId = "${parentOrganizationId}");
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+			organizationName = ${organizationName},
+			parentOrganizationId = ${parentOrganizationId});
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
 
 		JSONOrganizationAPI._assignUserToOrganization(
-			organizationId = "${organizationId}",
-			userId = "${userId}");
+			organizationId = ${organizationId},
+			userId = ${userId});
 	}
 
 	macro deleteOrganizationByName {
-		Variables.assertDefined(parameterList = "${organizationName}");
+		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
-			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${parentOrganizationName}");
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${parentOrganizationName});
 
 			var organizationId = JSONOrganization.getOrganizationIdByName(
-				organizationName = "${organizationName}",
-				parentOrganizationId = "${parentOrganizationId}");
+				organizationName = ${organizationName},
+				parentOrganizationId = ${parentOrganizationId});
 		}
 		else {
-			var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
+			var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
 		}
 
-		JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
+		JSONOrganizationAPI._deleteOrganization(organizationId = ${organizationId});
 	}
 
 	macro getOrganizationIdByName {
-		Variables.assertDefined(parameterList = "${organizationName}");
+		Variables.assertDefined(parameterList = ${organizationName});
 
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentOrganizationId))) {
-			var parentOrganizationId = "0";
+			var parentOrganizationId = 0;
 		}
 
 		var curl = '''
@@ -100,13 +100,13 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
+		var organizationId = JSONCurlUtil.get(${curl}, "$.[?(@['name'] == '${organizationName}')]['organizationId']");
 
-		return "${organizationId}";
+		return ${organizationId};
 	}
 
 	macro getOrganizationName {
-		Variables.assertDefined(parameterList = "${organizationId}");
+		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -115,30 +115,30 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var organizationName = JSONCurlUtil.get("${curl}", "$['name']");
+		var organizationName = JSONCurlUtil.get(${curl}, "$['name']");
 
-		return "${organizationName}";
+		return ${organizationName};
 	}
 
 	@summary = "Delete the organizations and its first level children organizations"
 	macro tearDownOrganizations {
 		var organizationsIds = ListUtil.newList();
-		var parentOrganizationIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = "0");
+		var parentOrganizationIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = 0);
 
-		for (var parentOrganizationId : list "${parentOrganizationIds}") {
-			var numberOfChildren = JSONOrganizationAPI._getChildOrganizationCount(parentOrganizationId = "${parentOrganizationId}");
+		for (var parentOrganizationId : list ${parentOrganizationIds}) {
+			var numberOfChildren = JSONOrganizationAPI._getChildOrganizationCount(parentOrganizationId = ${parentOrganizationId});
 
-			if ("${numberOfChildren}" != "0") {
-				var childrenOrganizationsIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = "${parentOrganizationId}");
+			if (${numberOfChildren} != 0) {
+				var childrenOrganizationsIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = ${parentOrganizationId});
 
-				ListUtil.add("${organizationsIds}", "${childrenOrganizationsIds}");
+				ListUtil.add(${organizationsIds}, ${childrenOrganizationsIds});
 			}
 		}
 
-		ListUtil.add("${organizationsIds}", "${parentOrganizationIds}");
+		ListUtil.add(${organizationsIds}, ${parentOrganizationIds});
 
-		for (var organizationId : list "${organizationsIds}") {
-			JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
+		for (var organizationId : list ${organizationsIds}) {
+			JSONOrganizationAPI._deleteOrganization(organizationId = ${organizationId});
 		}
 	}
 

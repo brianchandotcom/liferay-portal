@@ -24,7 +24,7 @@ definition {
 	function isTextEqual {
 		WaitForSPARefresh();
 
-		if (contains("${locator1}", "/input")) {
+		if (contains(${locator1}, "/input")) {
 			IsTextEqual.isValue();
 		}
 		else {

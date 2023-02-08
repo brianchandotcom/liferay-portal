@@ -25,14 +25,14 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8671 | Test Summary: Account firmographics shows details about the account"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FirmographicsShowAccountDetails {
 
 		// TODO LRAC-8671 FirmographicsShowAccountDetails pending implementation

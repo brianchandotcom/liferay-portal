@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test adds an account user via Account Users portlet"
-	@priority = "5"
+	@priority = 5
 	test CanAddAccountUser {
 		property portal.acceptance = "true";
 
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This test adds an account user to an account via Edit User page"
-	@priority = "4"
+	@priority = 4
 	test CanAddUserToAccountViaEditUser {
 		for (var accountNumber : list "1,2") {
 			JSONAccountEntry.addAccountEntry(
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "This test adds more than 4 account users and asserts correct pagination."
-	@priority = "3"
+	@priority = 3
 	test CanChangePaginationInAccountUsersList {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
@@ -123,7 +123,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var accountUser : list "1,2,3,4") {
 			LexiconEntry.viewEntryName(rowEntry = "userfn${accountUser} userln${accountUser}");
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "This test deactivates an active user"
-	@priority = "4"
+	@priority = 4
 	test CanDeactivateUser {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This test edits a user via Account Users portlet"
-	@priority = "5"
+	@priority = 5
 	test CanEditAccountUser {
 		Account.openAccountsAdmin();
 
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107598 and LPS-129713"
-	@priority = "3"
+	@priority = 3
 	test CanFilterAccountUserInTheUsersAdminPortlet {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@description = "The filter by Any Account filters all users that assigned account"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByAnyAccount {
 		for (var newEntryNum : list "1,2,3") {
 			JSONAccountEntry.addAccountEntry(
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This filters users that do not have any assigned account"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByNoAssignedAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "This filters users by Selected Accounts, choosing a specific account to view"
-	@priority = "3"
+	@priority = 3
 	test CanFilterBySelectedAccounts {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "This filters users by status: active and inactive"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByStatus {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Filter Account User",
@@ -432,9 +432,9 @@ definition {
 	}
 
 	@description = "This test impersonates an account user via Account Users portlet"
-	@priority = "4"
+	@priority = 4
 	test CanImpersonateUser {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -454,12 +454,12 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 
 		User.impersonateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userName = "userfn");
 	}
 
 	@description = "This test asserts that a person account cannot be selected in Edit User when a user is already assigned to a Person Account."
-	@priority = "4"
+	@priority = 4
 	test CannotSelectPersonAccountWithUserAssigned {
 		task ("Given there is a Person account with a user assigned") {
 			JSONAccountEntry.addAccountEntry(
@@ -492,7 +492,7 @@ definition {
 	}
 
 	@description = "Assert searching for account user in Account Users portlet will yield accurate results"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccountUser {
 		task ("Given an account with account users") {
 			JSONAccountEntry.addAccountEntry(
@@ -538,7 +538,7 @@ definition {
 	}
 
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
-	@priority = "3"
+	@priority = 3
 	test ClickingCancelOrBackWillNotSaveAccountUser {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",

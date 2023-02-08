@@ -23,13 +23,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Automation ID: LRAC-9093 | Test Summary: Admin can add data sources"
-	@priority = "4"
+	@priority = 4
 	test AdminCanAddDataSources {
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
@@ -54,7 +54,7 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 		}
 
 		task ("Login in AC, go to settings then go to data sources") {
@@ -66,9 +66,9 @@ definition {
 		}
 
 		task ("Assert that a data source is searchable and found") {
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 
 			ACSettings.assertDataSourceStatus(
 				section = "Current Status",
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"
-	@priority = "3"
+	@priority = 3
 	test AdminCanChangeUserPermissions {
 		task ("SingOut and Login as administrator") {
 			ACWorkspace.signOut();
@@ -120,7 +120,7 @@ definition {
 
 	@description = "Automation ID: LRAC-9094 | Test Summary: Admin can remove data sources"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AdminCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
@@ -148,7 +148,7 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
 			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
@@ -158,9 +158,9 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 
 			ACSettings.assertDataSourceStatus(
 				section = "Current Status",
@@ -170,16 +170,16 @@ definition {
 		task ("Assert that the data source was removed") {
 			ACSettings.goToDataSources();
 
-			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
+			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
 
 			Refresh();
 
-			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+			ACUtils.assertItemsNameNotPresent(itemList = ${dataSource});
 		}
 	}
 
 	@description = "Automation ID: LRAC-9085 | Test Summary: Change a member to an admin and assert new permissions"
-	@priority = "3"
+	@priority = 3
 	test AssertNewAdminPermissions {
 		var userEmail = "user@liferay.com";
 
@@ -190,20 +190,20 @@ definition {
 		}
 
 		task ("Invite user") {
-			ACSettings.addUser(userInvite = "${userEmail}");
+			ACSettings.addUser(userInvite = ${userEmail});
 		}
 
 		task ("Change user permission") {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Assert user permission") {
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Delete Pending All Users") {
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9086 | Test Summary: Change an admin to a member and assert new permissions"
-	@priority = "3"
+	@priority = 3
 	test AssertNewMemberPermissions {
 		var userEmail = "user@liferay.com";
 
@@ -223,27 +223,27 @@ definition {
 		}
 
 		task ("Invite user") {
-			ACSettings.addUser(userInvite = "${userEmail}");
+			ACSettings.addUser(userInvite = ${userEmail});
 		}
 
 		task ("Change and assert the permission") {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 
 			ACSettings.changeUserRole(
 				newRole = "Member",
 				permissionType = "Administrator",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 
 			ACSettings.assertUserPermission(
 				permissionType = "Member",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Delete Pending All Users") {
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9089 | Test Summary: Select multiple users to change permissions at once."
-	@priority = "3"
+	@priority = 3
 	test ChangeMultipleUserPermissions {
 		var firstUser = "ac@liferay.com";
 		var secondUser = "ac2@liferay.com";
@@ -265,7 +265,7 @@ definition {
 
 		task ("Invite user") {
 			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.addUser(userInvite = "${users}");
+				ACSettings.addUser(userInvite = ${users});
 			}
 		}
 
@@ -273,7 +273,7 @@ definition {
 			for (var users : list "${firstUser},${secondUser}") {
 				ACSettings.assertUserPermission(
 					permissionType = "Member",
-					userEmail = "${users}");
+					userEmail = ${users});
 			}
 		}
 
@@ -287,7 +287,7 @@ definition {
 			for (var users : list "${firstUser},${secondUser}") {
 				ACSettings.assertUserPermission(
 					permissionType = "Administrator",
-					userEmail = "${users}");
+					userEmail = ${users});
 			}
 		}
 
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9084 | Test Summary: [AC] Change the user role and check if the Properties creation handles the mofification successfully"
-	@priority = "3"
+	@priority = 3
 	test ChangeUserRoleAndAssertSuccessNotification {
 		var userEmail = "user@liferay.com";
 
@@ -306,14 +306,14 @@ definition {
 
 			ACSettings.goToUserManagement();
 
-			ACSettings.addUser(userInvite = "${userEmail}");
+			ACSettings.addUser(userInvite = ${userEmail});
 		}
 
 		task ("Change user permission") {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Assert that the role was changed") {
@@ -321,13 +321,13 @@ definition {
 
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9080 | Test Summary: 1st user access and no property was selected yet"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test FirstUserAccessNopropertySelected {
 
 		// TODO LRAC-9080 FirstUserAccessNopropertySelected pending implementation
@@ -336,7 +336,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9078 | Test Summary: The logged in user accesses directly an authorized workspace but a data source which the user does not have access "
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test LoggedUserAccessesDirectlyAuthorizedWorkspaceWithoutAccess {
 
 		// TODO LRAC-9078 LoggedUserAccessesDirectlyAuthorizedWorkspaceWithoutAccess pending implementation
@@ -344,18 +344,18 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9076 | Test Summary: The logged in user accesses directly an inexistent workspace"
-	@priority = "3"
+	@priority = 3
 	test LoggedUserAcessesDirectlyInexistentWorkspace {
 		task ("Change URL to a workspace that doesn't exist") {
 			var workspaceURL = Navigator.getCurrentURL();
 
-			var workspaceURL = StringUtil.extractFirst("${workspaceURL}", "workspace");
+			var workspaceURL = StringUtil.extractFirst(${workspaceURL}, "workspace");
 
-			var workspaceURL = StringUtil.add("${workspaceURL}", "workspace/0000", "");
+			var workspaceURL = StringUtil.add(${workspaceURL}, "workspace/0000", "");
 		}
 
 		task ("Open an inexistent workspace in a new tab") {
-			Open.openNoError(locator1 = "${workspaceURL}");
+			Open.openNoError(locator1 = ${workspaceURL});
 		}
 
 		task ("Assert the error message") {
@@ -367,7 +367,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9075 | Test Summary: The logged in user does not have access to the workspace"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test LoggedUserDoesNotHaveAccessWorkspace {
 
 		// TODO LRAC-9075 LoggedUserDoesNotHaveAccessWorkspace pending implementation
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9096 | Test Summary: Member cannot add data sources"
-	@priority = "4"
+	@priority = 4
 	test MemberCannotAddDataSources {
 		task ("Login as user with member role") {
 			ACWorkspace.signOut();
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9098 | Test Summary: Member cannot change user permissions"
-	@priority = "4"
+	@priority = 4
 	test MemberCannotChangeUserPermissions {
 		task ("Go to AC and Login as user with member role") {
 			ACWorkspace.signOut();
@@ -423,7 +423,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9097 | Test Summary: Member cannot remove data sources"
-	@priority = "4"
+	@priority = 4
 	test MemberCannotRemoveDataSources {
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -436,7 +436,7 @@ definition {
 		}
 
 		task ("Get the Data Source name") {
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 		}
 
 		task ("Go to AC and Login as user with member role") {
@@ -456,7 +456,7 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert that the button 'Delete Data Source' is not present") {
@@ -465,16 +465,16 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9083 | Test Summary: [AC] Only admin or owner users are able to add properties on AC"
-	@priority = "3"
+	@priority = 3
 	test OnlyAdminOrOwnerUsersCanAddPropertiesOnAC {
 		var userList = "michelle.hoshi@faro.io,bryan.cheung@faro.io";
 
-		for (var userEmail : list "${userList}") {
+		for (var userEmail : list ${userList}) {
 			task ("Logout AC and login as an admin/owner user") {
 				ACWorkspace.signOut();
 
 				ACLogin.loginAs(
-					emailAddress = "${userEmail}",
+					emailAddress = ${userEmail},
 					password = "test");
 			}
 
@@ -489,7 +489,7 @@ definition {
 			task ("Add a New Property and Assert The New Property was Created") {
 				ACProperties.addNewProperty(propertyName = "Name of property");
 
-				if ("${userEmail}" == "michelle.hoshi@faro.io") {
+				if (${userEmail} == "michelle.hoshi@faro.io") {
 					ACProperties.assertNewCreatedProperty(propertyName = "Name of property");
 				}
 				else {
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"
-	@priority = "5"
+	@priority = 5
 	test OwnerCanAddDataSources {
 		task ("Logout AC and login as an owner user") {
 			ACWorkspace.signOut();
@@ -545,7 +545,7 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 		}
 
 		task ("Login in AC, go to settings then go to data sources") {
@@ -557,9 +557,9 @@ definition {
 		}
 
 		task ("Assert that a data source is searchable and found") {
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 
 			ACSettings.assertDataSourceStatus(
 				section = "Current Status",
@@ -568,7 +568,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9092 | Test Summary: Owner can change user permissions"
-	@priority = "5"
+	@priority = 5
 	test OwnerCanChangeUserPermissions {
 		var userEmail = "ac@liferay.com";
 
@@ -589,20 +589,20 @@ definition {
 		}
 
 		task ("Invite user") {
-			ACSettings.addUser(userInvite = "${userEmail}");
+			ACSettings.addUser(userInvite = ${userEmail});
 		}
 
 		task ("Change user permission") {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Assert user permission") {
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${userEmail}");
+				userEmail = ${userEmail});
 		}
 
 		task ("Delete Pending All Users") {
@@ -612,7 +612,7 @@ definition {
 
 	@description = "Automation ID: LRAC-9091 | Test Summary: Owner can remove data sources"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test OwnerCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
@@ -628,7 +628,7 @@ definition {
 		}
 
 		task ("Get the Data Source name") {
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 		}
 
 		task ("Go to AC and login with another Owner User") {
@@ -636,16 +636,16 @@ definition {
 		}
 
 		task ("Delete the data source and check if it has been deleted") {
-			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
+			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
 
 			TestUtils.hardRefresh();
 
-			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+			ACUtils.assertItemsNameNotPresent(itemList = ${dataSource});
 		}
 	}
 
 	@description = "Automation ID: LRAC-9088 | Test Summary: Select and change an admin + member to admins"
-	@priority = "3"
+	@priority = 3
 	test SelectandChangeAnAdminAndMemberToAdmins {
 		var firstUser = "ac@liferay.com";
 		var secondUser = "ac2@liferay.com";
@@ -658,7 +658,7 @@ definition {
 
 		task ("Invite user") {
 			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.addUser(userInvite = "${users}");
+				ACSettings.addUser(userInvite = ${users});
 			}
 		}
 
@@ -666,13 +666,13 @@ definition {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${firstUser}");
+				userEmail = ${firstUser});
 		}
 
 		task ("Assert user permission") {
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${firstUser}");
+				userEmail = ${firstUser});
 		}
 
 		task ("Change permission for all selected users") {
@@ -685,7 +685,7 @@ definition {
 			for (var users : list "${firstUser},${secondUser}") {
 				ACSettings.assertUserPermission(
 					permissionType = "Administrator",
-					userEmail = "${users}");
+					userEmail = ${users});
 			}
 		}
 
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9087 | Test Summary: Select and change an admin + member to members"
-	@priority = "3"
+	@priority = 3
 	test SelectAndChangeAnAdminAndMembertoMembers {
 		var firstUser = "ac@liferay.com";
 		var secondUser = "ac2@liferay.com";
@@ -708,7 +708,7 @@ definition {
 
 		task ("Invite user") {
 			for (var users : list "${firstUser},${secondUser}") {
-				ACSettings.addUser(userInvite = "${users}");
+				ACSettings.addUser(userInvite = ${users});
 			}
 		}
 
@@ -716,13 +716,13 @@ definition {
 			ACSettings.changeUserRole(
 				newRole = "Administrator",
 				permissionType = "Member",
-				userEmail = "${firstUser}");
+				userEmail = ${firstUser});
 		}
 
 		task ("Assert user permission") {
 			ACSettings.assertUserPermission(
 				permissionType = "Administrator",
-				userEmail = "${firstUser}");
+				userEmail = ${firstUser});
 		}
 
 		task ("Change permission for all selected users") {
@@ -735,7 +735,7 @@ definition {
 			for (var users : list "${firstUser},${secondUser}") {
 				ACSettings.assertUserPermission(
 					permissionType = "Member",
-					userEmail = "${users}");
+					userEmail = ${users});
 			}
 		}
 
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9082 | Test Summary: A user lost access to a given property (because the admin removed the user's access of the system)"
-	@priority = "3"
+	@priority = 3
 	test UserLostAccessToProperty {
 		task ("Go to settings then go to properties") {
 			ACNavigation.goToSettings();
@@ -835,7 +835,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9079 | Test Summary: An user not logged in accessing the AC URL by passing workspace parameter"
-	@priority = "3"
+	@priority = 3
 	test UserNotLoggedAccessACURLPassingWorkspaceParameter {
 		task ("Copy current URL and SignOut") {
 			var workspaceURL = Navigator.getCurrentURL();
@@ -844,7 +844,7 @@ definition {
 		}
 
 		task ("Open URL and LogIn") {
-			Open.openNoError(locator1 = "${workspaceURL}");
+			Open.openNoError(locator1 = ${workspaceURL});
 
 			ACLogin.loginAs(
 				emailAddress = "test@liferay.com",
@@ -857,7 +857,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9044 | Test Summary: Users list can be ordered"
-	@priority = "3"
+	@priority = 3
 	test UsersListCanBeOrdered {
 		task ("Go to User Management") {
 			ACNavigation.goToSettings();
@@ -871,12 +871,12 @@ definition {
 
 		task ("Assert that the first item on the list was changed") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_keywordName = "test test",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 
 			AssertElementPresent(
-				key_index = "5",
+				key_index = 5,
 				key_keywordName = "bryan cheung",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 		}
@@ -887,19 +887,19 @@ definition {
 
 		task ("Assert that the first item on the list was changed") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_keywordName = "bryan cheung",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 
 			AssertElementPresent(
-				key_index = "5",
+				key_index = 5,
 				key_keywordName = "Test Test",
 				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9045	 | Test Summary: Users list can be paginated"
-	@priority = "3"
+	@priority = 3
 	test UsersListCanBePaginated {
 		task ("Go to User Management") {
 			ACNavigation.goToSettings();
@@ -912,12 +912,12 @@ definition {
 		}
 
 		task ("Select the 5 Items in Pagination") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 		}
 
 		task ("View only 5 users are shown in page 1") {
 			for (var emailList : list "bryan.cheung@faro.io,corbin.murakami@faro.io,michelle.hoshi@faro.io,test@faro.io,ac@liferay.com") {
-				ACSettings.assertUsersListByEmail(userEmail = "${emailList}");
+				ACSettings.assertUsersListByEmail(userEmail = ${emailList});
 			}
 
 			AssertElementNotPresent(
@@ -926,7 +926,7 @@ definition {
 		}
 
 		task ("Navigate to the page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 		}
 
 		task ("View the test@liferay.com is shown in page 2") {
@@ -935,7 +935,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8142 | Test Summary: Users list can be searched"
-	@priority = "5"
+	@priority = 5
 	test UsersListCanBeSearched {
 		ACNavigation.goToSettings();
 
@@ -951,7 +951,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"
-	@priority = "5"
+	@priority = 5
 	test ViewOwnerCanDeleteUser {
 		ACWorkspace.signOut();
 

@@ -20,7 +20,7 @@ definition {
 
 		Depot.remoteStagingSetUpViaJson(
 			groupName = "Test Depot Name",
-			remotePort = "9080",
+			remotePort = 9080,
 			site = "false");
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -31,7 +31,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -41,7 +41,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be deleted and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishDeletedImage";
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be deleted and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedImageFromFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishDeletedImageFromFolder";
 
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be edited and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishEditedImage";
 
@@ -315,7 +315,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedImageFromFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishEditedImageFromFolder";
 
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be published in Media Gallery when remote staging is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImage";
 
@@ -469,7 +469,7 @@ definition {
 	}
 
 	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageAfterChangingDepot";
 
@@ -480,7 +480,7 @@ definition {
 		Depot.remoteStagingSetUpViaJson(
 			groupName = "Test Depot Name 2",
 			remoteDepotName = "Remote Depot 2",
-			remotePort = "9080",
+			remotePort = 9080,
 			site = "false");
 
 		JSONDepot.connectSite(
@@ -580,7 +580,7 @@ definition {
 	}
 
 	@description = "This ensures that the folders stored in an asset library can be changed and republished in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageAfterChangingRootFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageAfterChangingRootFolder";
 
@@ -672,7 +672,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM Folder asset library can be published in Media Gallery when remote staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageFromFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanPublishImageFromFolder";
 
@@ -738,7 +738,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154442. This ensures that an external video with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanViewExternalVideoAfterFriendlyURLIsUpdated";
 
@@ -811,7 +811,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154441. This ensures that an image with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DepotRemoteStagingMG#CanViewImageAfterFriendlyURLIsUpdated";
 

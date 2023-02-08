@@ -1,15 +1,15 @@
 definition {
 
 	macro addFragment {
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${siteURLKey}");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = ${displayPageName});
 
 		PageEditor.addFragment(
-			collectionName = "${collectionName}",
-			fragmentName = "${fragmentName}");
+			collectionName = ${collectionName},
+			fragmentName = ${fragmentName});
 
-		if ("${publish}" != "false") {
+		if (${publish} != "false") {
 			Button.clickPublish();
 		}
 	}
@@ -21,37 +21,37 @@ definition {
 	macro clickPencilItem {
 		DisplayPageTemplate.clickPencil();
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.clickNoError(menuItem = ${item});
 	}
 
 	macro selectDisplayPageTemplateForAsset {
-		if ("${assetType}" == "Blogs Entry") {
+		if (${assetType} == "Blogs Entry") {
 			BlogsNavigator.openToEditEntryInSite(
-				entryTitle = "${entryTitle}",
-				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}");
+				entryTitle = ${entryTitle},
+				groupName = ${groupName},
+				siteURLKey = ${siteURLKey});
 		}
-		else if ("${assetType}" == "Document") {
+		else if (${assetType} == "Document") {
 			DMNavigator.openToEditEntryInSite(
-				dmDocumentTitle = "${entryTitle}",
-				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}");
+				dmDocumentTitle = ${entryTitle},
+				groupName = ${groupName},
+				siteURLKey = ${siteURLKey});
 		}
-		else if ("${assetType}" == "Knowledge Base") {
+		else if (${assetType} == "Knowledge Base") {
 			KBArticle.openToEditKBArticleInSite(
-				groupName = "${groupName}",
-				kbArticleTitle = "${entryTitle}",
-				kbChildArticleTitle = "${kbChildArticleTitle}",
-				siteURLKey = "${siteURLKey}");
+				groupName = ${groupName},
+				kbArticleTitle = ${entryTitle},
+				kbChildArticleTitle = ${kbChildArticleTitle},
+				siteURLKey = ${siteURLKey});
 		}
-		else if ("${assetType}" == "Web Content") {
+		else if (${assetType} == "Web Content") {
 			WebContentNavigator.openToEditWCInSite(
-				groupName = "${groupName}",
-				siteURLKey = "${siteURLKey}",
-				webContentTitle = "${entryTitle}");
+				groupName = ${groupName},
+				siteURLKey = ${siteURLKey},
+				webContentTitle = ${entryTitle});
 		}
 
-		WebContent.editDisplayPage(pageName = "${pageName}");
+		WebContent.editDisplayPage(pageName = ${pageName});
 
 		PortletEntry.publish();
 	}
@@ -62,18 +62,18 @@ definition {
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
 
 		if (isSet(item)) {
-			DropdownMenuItem.click(menuItem = "${item}");
+			DropdownMenuItem.click(menuItem = ${item});
 		}
 		else {
 			DropdownMenuItem.click(menuItem = "Select Other Item");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			if ("${assetType}" == "Web Content Article") {
+			if (${assetType} == "Web Content Article") {
 				if (isSet(searchTerm)) {
 					Search.searchCP(
 						modal = "true",
-						searchTerm = "${searchTerm}");
+						searchTerm = ${searchTerm});
 
 					AssertTextEquals(
 						locator1 = "Search#SEARCH_INFO",
@@ -81,17 +81,17 @@ definition {
 				}
 
 				Click(
-					key_listEntry = "${assetTitle}",
+					key_listEntry = ${assetTitle},
 					locator1 = "LexiconList#LIST_ENTRY_TITLE");
 			}
-			else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
-				LexiconCard.clickCardTitle(card = "${assetTitle}");
+			else if ((${assetType} == "Blogs Entry") || (${assetType} == "Document")) {
+				LexiconCard.clickCardTitle(card = ${assetTitle});
 			}
-			else if ("${assetType}" == "Category") {
+			else if (${assetType} == "Category") {
 				Portlet.expandTree();
 
 				Click(
-					key_nodeName = "${assetTitle}",
+					key_nodeName = ${assetTitle},
 					locator1 = "Treeview#NODE_UNSELECTED");
 			}
 
@@ -100,7 +100,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
-			value1 = "${assetTitle}");
+			value1 = ${assetTitle});
 	}
 
 }

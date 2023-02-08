@@ -27,7 +27,7 @@ definition {
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
-			kfFieldSetName = "${kfFieldSetName}",
+			kfFieldSetName = ${kfFieldSetName},
 			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
@@ -54,7 +54,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "Verify that user can insert especial caracter in the submission."
-	@priority = "3"
+	@priority = 3
 	test CanInsertEspecialCaracter {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "Verify that the details page shows the process Status is Approved after the user approve."
-	@priority = "4"
+	@priority = 4
 	test CanViewProcessStatusApproved {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "Verify that the details page shows the process Status is Pending before the user approve."
-	@priority = "4"
+	@priority = 4
 	test CanViewProcessStatusPending {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "Verify that the basic structure of workflow track approval is available."
-	@priority = "5"
+	@priority = 5
 	test CanViewTrackApprovalBasicStructure {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "Verify that the fields filled on submissions appears on the details page."
-	@priority = "5"
+	@priority = 5
 	test FieldsAppearsOnTheDetailsPage {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -218,7 +218,7 @@ definition {
 
 	@description = "Verify that the details page shows the version."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test VersionOnDetailsPage {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 

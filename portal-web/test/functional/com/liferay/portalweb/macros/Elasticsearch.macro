@@ -28,21 +28,21 @@ definition {
 
 		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/build.gradle");
 
-		var clientVersion = RegexUtil.replace("${fileContent}", "elasticsearchClientVersion = \"(\d+\.\d+\.\d+)", "1");
+		var clientVersion = RegexUtil.replace(${fileContent}, "elasticsearchClientVersion = \"(\d+\.\d+\.\d+)", 1);
 
 		echo("Elasticsearch client version: ${clientVersion}");
 
-		return "${clientVersion}";
+		return ${clientVersion};
 	}
 
 	macro getServerPort {
 		var remoteEnabled = Elasticsearch.isRemoteMode();
 
-		if ("${remoteEnabled}" == "true") {
-			return "9200";
+		if (${remoteEnabled} == "true") {
+			return 9200;
 		}
 		else {
-			return "9201";
+			return 9201;
 		}
 	}
 
@@ -55,13 +55,13 @@ definition {
 
 		var curl = "http://${portalHostname}:${port}";
 
-		var serverInfo = JSONCurlUtil.get("${curl}");
+		var serverInfo = JSONCurlUtil.get(${curl});
 
-		var serverVersion = RegexUtil.replace("${serverInfo}", "number\" : \"(\d+\.\d+\.\d+)", "1");
+		var serverVersion = RegexUtil.replace(${serverInfo}, "number\" : \"(\d+\.\d+\.\d+)", 1);
 
 		echo("Version of the Elasticsearch server on port ${port}: ${serverVersion}");
 
-		return "${serverVersion}";
+		return ${serverVersion};
 	}
 
 	macro isRemoteMode {
@@ -69,15 +69,15 @@ definition {
 
 		var fileLocation = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 
-		var fileExists = FileUtil.exists("${fileLocation}");
+		var fileExists = FileUtil.exists(${fileLocation});
 
-		if ("${fileExists}" == "true") {
-			var fileContent = FileUtil.read("${fileLocation}");
+		if (${fileExists} == "true") {
+			var fileContent = FileUtil.read(${fileLocation});
 
-			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=\"(.*)\"", "1");
-			var updatedProductionMode = RegexUtil.replace("${fileContent}", "productionModeEnabled=B\"(.*)\"", "1");
+			var productionModeEnabled = RegexUtil.replace(${fileContent}, "productionModeEnabled=\"(.*)\"", 1);
+			var updatedProductionMode = RegexUtil.replace(${fileContent}, "productionModeEnabled=B\"(.*)\"", 1);
 
-			if (("${productionModeEnabled}" == "true") || ("${updatedProductionMode}" == "true")) {
+			if ((${productionModeEnabled} == "true") || (${updatedProductionMode} == "true")) {
 				return "true";
 			}
 			else {
@@ -92,7 +92,7 @@ definition {
 	macro viewClusterStatus {
 		AssertTextPresent(
 			locator1 = "//pre",
-			value1 = "${clusterStatus}");
+			value1 = ${clusterStatus});
 	}
 
 	@description = "Elasticsearch provides a Cluster Health API (http://localhost:${nodePort}/_cluster/health?pretty=true) to easily view the current status of the cluster."

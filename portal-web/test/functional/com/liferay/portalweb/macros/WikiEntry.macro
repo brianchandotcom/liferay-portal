@@ -7,7 +7,7 @@ definition {
 			Type(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",
-				value1 = "${externalLink}");
+				value1 = ${externalLink});
 		}
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
@@ -18,7 +18,7 @@ definition {
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -35,7 +35,7 @@ definition {
 		Type(
 			key_text = "Summary",
 			locator1 = "TextInput#ANY",
-			value1 = "${wikiPageSummary}");
+			value1 = ${wikiPageSummary});
 
 		Button.clickPublish();
 
@@ -44,15 +44,15 @@ definition {
 
 	macro addPageTitle {
 		if (isSet(wikiPageTitle)) {
-			var title = "${wikiPageTitle}";
+			var title = ${wikiPageTitle};
 		}
 		else if (isSet(wikiChildPageTitle)) {
-			var title = "${wikiChildPageTitle}";
+			var title = ${wikiChildPageTitle};
 		}
 
 		Type(
 			locator1 = "Wiki#ENTRY_TITLE",
-			value1 = "${title}");
+			value1 = ${title});
 	}
 
 	macro cancel {
@@ -79,19 +79,19 @@ definition {
 
 			SelectNoError(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${pageFormat}");
+				value1 = ${pageFormat});
 		}
 		else if (IsVisible(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN")) {
 			SelectNoError(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
-				value1 = "${pageFormat}");
+				value1 = ${pageFormat});
 		}
 	}
 
 	macro viewPageContentBody {
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
-			value1 = "${wikiPageContent}");
+			value1 = ${wikiPageContent});
 	}
 
 }

@@ -5,12 +5,12 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			WebContentNavigator.gotoEditCP(
-				webContentTitle = "${webContentTitle}",
-				webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+				webContentTitle = ${webContentTitle},
+				webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
-				value1 = "${webContentTitle}");
+				value1 = ${webContentTitle});
 
 			if (isSet(description)) {
 				SelectFrame.selectFrameNoLoading(
@@ -19,7 +19,7 @@ definition {
 
 				AssertTextEquals(
 					locator1 = "CKEditor#BODY",
-					value1 = "${description}");
+					value1 = ${description});
 
 				SelectFrameTop(value1 = "relative=top");
 			}
@@ -31,12 +31,12 @@ definition {
 			}
 
 			AssertTextEquals(
-				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				key_fieldFieldLabel = ${webContentImageFieldLabel},
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = "${webContentImage}");
+				value1 = ${webContentImage});
 
 			AssertElementPresent(
-				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				key_fieldFieldLabel = ${webContentImageFieldLabel},
 				key_image = "/documents/",
 				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 		}

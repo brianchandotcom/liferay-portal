@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the Applications can be set in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableApps {
 		property portal.acceptance = "true";
@@ -41,7 +41,7 @@ definition {
 
 		for (var application : list "Collections,Documents and Media,Translation Processes,Web Content") {
 			AssertChecked(
-				checkboxName = "${application}",
+				checkboxName = ${application},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-133904. It asserts that users can navigate via the breadcrumb."
-	@priority = "3"
+	@priority = 3
 	test CanNavigateViaBreadcrumb {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "This ensures that disabled DM and WC assets from a depot do not appear when using the item selector on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotSelectDisabledAssetsFromItemSelector {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CollectionsRemainAfterReactivating {
 		JSONAssetlist.addManualAssetListEntry(
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DisabledAssetsRemainInCollections {
 		JSONWebcontent.addWebContent(
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image persists in a site blog entry even after the depot DM application is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DisabledImageRemainsInBlogs {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -285,7 +285,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot WC persists in the WCD even after the depot WC application is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DisabledWCRemainsInWCD {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DMRemainsAfterReactivating {
 		JSONDocument.addFile(
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "This ensures that the WC application can be viewed after reactivating in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test WCRemainsAfterReactivating {
 		JSONWebcontent.addWebContent(

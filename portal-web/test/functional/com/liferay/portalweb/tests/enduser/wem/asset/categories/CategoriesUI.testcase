@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Add three categories in a vocabulary."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddCategories {
 		property portal.acceptance = "true";
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "Add one subcategory in each category."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddSubcategories {
 		property portal.acceptance = "true";
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131984. Add three vocabularies in Categories admin."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddVocabularies {
 		property portal.acceptance = "true";
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118305. The user cannot add a category to a vocabulary if the limit was exceeded."
-	@priority = "5"
+	@priority = 5
 	test CannotAddCategoriesWhenReachTheLimit {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CategoriesUI#CannotAddCategoriesWhenReachTheLimit";
@@ -151,7 +151,7 @@ definition {
 
 			SystemSettings.editTextSetting(
 				settingName = "Maximum Number of Categories per Vocabulary",
-				settingValue = "3");
+				settingValue = 3);
 
 			SystemSettings.saveConfiguration();
 		}
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118305. The user could change the maximum number of categories per vocabuary."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureMaximumNumberOfCategoriesPerVocabulary {
 		property portal.acceptance = "true";
@@ -231,7 +231,7 @@ definition {
 
 			SystemSettings.editTextSetting(
 				settingName = "Maximum Number of Categories per Vocabulary",
-				settingValue = "300");
+				settingValue = 300);
 
 			SystemSettings.saveConfiguration();
 		}
@@ -242,10 +242,10 @@ definition {
 
 		task ("View the Maximum Number of categories of existing vocabularies is 300") {
 			for (var vocabularyName : list "Topic,Audience,Stage") {
-				Navigator.gotoNavNested(navNested = "${vocabularyName}");
+				Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 				AssertVisible(
-					assetTitle = "${vocabularyName}",
+					assetTitle = ${vocabularyName},
 					info = "The maximum number of categories per vocabulary is 300.",
 					locator1 = "Message#ASSET_INFO");
 			}
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@description = "Delete a category by icon."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteCategoryByIcon {
 		property portal.acceptance = "true";
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "Delete a category by menu."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DeleteCategoryByMenu {
 		task ("Add a vocabulary") {
@@ -318,7 +318,7 @@ definition {
 	}
 
 	@description = "Delete a subcategory by icon."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DeleteSubcategoryByIcon {
 		task ("Add a vocabulary") {
@@ -353,7 +353,7 @@ definition {
 	}
 
 	@description = "Delete a subcategory by menu."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteSubcategoryByMenu {
 		property portal.acceptance = "true";
@@ -390,7 +390,7 @@ definition {
 	}
 
 	@description = "Delete a vocabulary by icon."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteVocabularyByIcon {
 		property portal.acceptance = "true";
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "Delete a vocabulary by menu."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DeleteVocabularyByMenu {
 		task ("Add a vocabulary") {
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@description = "Edit a category."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditCategory {
 		property portal.acceptance = "true";
@@ -461,7 +461,7 @@ definition {
 	}
 
 	@description = "Edit a subcategory."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSubcategory {
 		property portal.acceptance = "true";
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "Edit a vocabulary."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditVocabulary {
 		property portal.acceptance = "true";
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@description = "When the user accesses to Categorization > Categories, he can navigate from one to another"
-	@priority = "3"
+	@priority = 3
 	test MoveBetweenVocabularies {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118305. The maximum number of categories per vocabulary is 150 shown below vocabulary name in Categories admin by default."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewDefaultMaximumNumberOfCategoriesPerVocabulary {
 		property portal.acceptance = "true";
@@ -560,10 +560,10 @@ definition {
 
 		task ("View the default Maximum Number of categories of existing vocabularies") {
 			for (var vocabularyName : list "Topic,Audience,Stage") {
-				Navigator.gotoNavNested(navNested = "${vocabularyName}");
+				Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 				AssertVisible(
-					assetTitle = "${vocabularyName}",
+					assetTitle = ${vocabularyName},
 					info = "The maximum number of categories per vocabulary is 150.",
 					locator1 = "Message#ASSET_INFO");
 			}
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131984. The user could view the description of vocabulary in Categories admin."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewDescriptionOfVocabulary {
 		property portal.acceptance = "true";

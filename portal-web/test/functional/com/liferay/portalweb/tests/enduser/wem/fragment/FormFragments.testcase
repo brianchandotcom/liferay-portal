@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162848. The page creator without view permission for custom object cannot see Form Components in page editor."
-	@priority = "4"
+	@priority = 4
 	test CannotSeeFormComponentsInPageEditorAsUserWithoutViewPermissionForCustomObject {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162848. The page creator cannot see Form Components in page editor when no approved custom objects exist."
-	@priority = "5"
+	@priority = 5
 	test CannotSeeFormComponentsInPageEditorWhenNoApprovedCustomObjectExist {
 		property portal.acceptance = "true";
 
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169924. The user without View permission for object cannot see Form Container at view and perview mode."
-	@priority = "5"
+	@priority = 5
 	test CannotSeeFormContainerAtViewAndPreviewModeAsUserWithoutViewPermissionForObject {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
 
@@ -349,7 +349,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Page Designer");
 			}
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162848. The Form Components should be available to Fragments admin and style book by default."
-	@priority = "4"
+	@priority = 4
 	test ViewFormComponentsInFragmentsAdminAndStyleBook {
 		task ("Given a site designer doesn't have any custom object") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
@@ -399,7 +399,7 @@ definition {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Numeric Input,Select from List,Submit Button,Text Input") {
-				FragmentsAdmin.viewEntryPresent(entry = "${fragmentName}");
+				FragmentsAdmin.viewEntryPresent(entry = ${fragmentName});
 			}
 		}
 
@@ -428,20 +428,20 @@ definition {
 			ScrollBy(value1 = "0, 500");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_CAPTCHA_BODY");
 
 			ScrollBy(value1 = "0, 300");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "checkbox");
 
 			ScrollBy(value1 = "0, 300");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "date");
 
@@ -452,28 +452,28 @@ definition {
 			ScrollBy(value1 = "0, 300");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "numeric-input");
 
 			ScrollBy(value1 = "0, 300");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
 			ScrollBy(value1 = "0, 300");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "text-input");
 		}
 	}
 
 	@description = "This is a test for LPS-162848. The page creator with view permission for custom object can see Form Components in page editor."
-	@priority = "4"
+	@priority = 4
 	test ViewFormComponentsInPageEditorAsUserWithViewPermissionForCustomObject {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -550,7 +550,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169924. The user with Add Object Entry but without View permission for object should see Form Container at view and preview mode."
-	@priority = "4"
+	@priority = 4
 	test ViewFormContainerAtViewAndPreviewModeAsUserWithAddObjectEntryPermissionWithoutViewPermissionForObject {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169923=true";
 
@@ -610,7 +610,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Page Designer");
 			}
@@ -665,7 +665,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151157. The fragment admin could see the supported field types in read-only mode."
-	@priority = "4"
+	@priority = 4
 	test ViewSupportedFieldTypesInReadOnlyMode {
 		task ("Given a fragment admin has a read-only fragment with field type") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");

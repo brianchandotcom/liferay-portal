@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-113731. It ensures that roles and permissions from a library are removed after membership is revoked."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAccessALAfterRevokingMembership {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -55,7 +55,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Depot Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddSiteMemberWithPermissionsAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -241,7 +241,7 @@ definition {
 
 		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_UPDATE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
 			Role.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionDefinitionKey = ${permissionDefinitionKey},
 				roleTitle = "asset-library-connected-site-member");
 		}
 
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can perform CRUD operations with an AL role that has all WC permissions."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAssignALRoleWithAllWCPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -272,7 +272,7 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 				roleTitle = "AL Role Name",
 				roleType = "asset library");
@@ -280,7 +280,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.journal",
 				roleTitle = "AL Role Name",
 				roleType = "asset library");
@@ -288,7 +288,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.journal.model.JournalArticle",
 				roleTitle = "AL Role Name",
 				roleType = "asset library");
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can edit documents with an AL role that has edit documents permissions."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAssignALRoleWithDMEditPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -399,7 +399,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 				roleTitle = "AL Role Name",
 				roleType = "asset library");
@@ -450,7 +450,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library role can be deleted."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteALRole {
 		JSONRole.addDepotRole(roleTitle = "AL Role Name");
@@ -475,7 +475,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library role can be edited."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditALRole {
 		Role.openRolesAdmin();
@@ -513,7 +513,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library role can be edited."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewALAdminRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -575,7 +575,7 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to an existing site member after connecting site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewExistingSiteMemberAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -645,7 +645,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot owner can assign specific roles to a user."
-	@priority = "5"
+	@priority = 5
 	test OwnerCanAssignSpecificRolesToUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -676,7 +676,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var roleTitle : list "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer") {
-			LexiconEntry.viewEntryName(rowEntry = "${roleTitle}");
+			LexiconEntry.viewEntryName(rowEntry = ${roleTitle});
 		}
 
 		LexiconCard.clickCardTitle(card = "Asset Library Owner");

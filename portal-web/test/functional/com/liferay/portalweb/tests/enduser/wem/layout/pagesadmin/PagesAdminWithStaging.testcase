@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114527. Can move multiple pages via dragging in Pages admin of Staging site but cannot in Live site."
-	@priority = "3"
+	@priority = 3
 	test CanMoveMultiplePagesInStagingSiteButCannotInLiveSite {
 		task ("Add 2 widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
@@ -69,7 +69,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
@@ -85,7 +85,7 @@ definition {
 
 		task ("View Test Page Name 2 and 3 are moved to top of Test Page Name 1 in Staging site") {
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 2,Test Page Name 3,Test Page Name 1");
 		}
 
@@ -93,7 +93,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 
@@ -111,13 +111,13 @@ definition {
 			Alert.closeMessage(messageType = "ERROR");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Test Page Name 1,Test Page Name 2,Test Page Name 3");
 		}
 	}
 
 	@description = "This is a test for LPS-152446. When a user with edit permissions clicks a content page in page administration of staging site, the page editor is opened with the selected page ready to be edited."
-	@priority = "4"
+	@priority = 4
 	test NavigateToPageEditorWhenClickOnContentPageItemInStagingSite {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user with edit permissions clicks a content page in page administration of live site, the page is opened in view mode."
-	@priority = "4"
+	@priority = 4
 	test NavigateToViewModeWhenClickOnContentPageItemInLiveSite {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration of live site, the page is opened in view mode."
-	@priority = "3"
+	@priority = 3
 	test NavigateToViewModeWhenClickOnContentPageItemInLiveSiteAsUserWithoutEditPermission {
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
@@ -310,7 +310,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration of staging site, the page is opened in view mode."
-	@priority = "3"
+	@priority = 3
 	test NavigateToViewModeWhenClickOnContentPageItemInStagingSiteAsUserWithoutEditPermission {
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
@@ -340,7 +340,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
 					roleTitle = "Marketer",
 					roleType = "site");
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
-	@priority = "3"
+	@priority = 3
 	test ViewCollectionItemInformationInStaging {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -480,18 +480,18 @@ definition {
 
 			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 				AssertElementPresent(
-					key_tableHeader = "${tableHeader}",
+					key_tableHeader = ${tableHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 
 		task ("View assets are shown in collection items via page tree in staging site") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				Page.viewCollectionItem(
-					itemName = "${title}",
-					key_rowNumber = "${n}");
+					itemName = ${title},
+					key_rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -510,18 +510,18 @@ definition {
 
 			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 				AssertElementPresent(
-					key_tableHeader = "${tableHeader}",
+					key_tableHeader = ${tableHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 
 		task ("View assets are shown in collection items via Pages admin in staging site") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				Page.viewCollectionItem(
-					itemName = "${title}",
-					key_rowNumber = "${n}");
+					itemName = ${title},
+					key_rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159631. Page opens in new tab when selecting New Tab in advanced tab on staging."
-	@priority = "3"
+	@priority = 3
 	test ViewLinkToURLTypePageWhichSelectingNewTabInAdvancedTab {
 		task ("Given a page creator has a widget page in staging") {
 			JSONLayout.addPublicLayout(
@@ -571,7 +571,7 @@ definition {
 			Click(
 				key_pageName = "Test Link to URL Page Name",
 				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -621,7 +621,7 @@ definition {
 			Click(
 				key_pageName = "Test Link to URL Page Name",
 				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -644,7 +644,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140253. View no private page in staging."
-	@priority = "4"
+	@priority = 4
 	test ViewNoPrivatePageInStaging {
 		task ("Go to Publishing > Staging, enable page versioning, assert no public and private page inside to select") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");

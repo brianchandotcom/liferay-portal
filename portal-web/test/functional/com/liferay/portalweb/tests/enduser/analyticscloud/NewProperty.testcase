@@ -17,13 +17,13 @@ definition {
 
 		ACUtils.tearDownAC();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9126 | Test Summary: [AC] It is not allowed create a property with its name in blank or null"
-	@priority = "3"
+	@priority = 3
 	test CantCreateAPropertyWithNameInBlankOrNull {
 		task ("Go to settings and go to properties page") {
 			ACNavigation.goToSettings();

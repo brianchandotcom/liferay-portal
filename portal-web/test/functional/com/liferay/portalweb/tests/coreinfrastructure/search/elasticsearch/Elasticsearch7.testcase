@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssertIndexOnStartup {
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
@@ -73,7 +73,7 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
 		Portlet.shutdownServer();
 
@@ -133,7 +133,7 @@ definition {
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AssertSearchAdmin {
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
 
@@ -146,9 +146,9 @@ definition {
 		var serverVersion = Elasticsearch.getServerVersion();
 
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "${clientVersion}",
+			clientVersion = ${clientVersion},
 			engineVendor = "Elasticsearch",
-			serverVersion = "${serverVersion}");
+			serverVersion = ${serverVersion});
 
 		Navigator.gotoNavItem(navItem = "Field Mappings");
 
@@ -166,16 +166,16 @@ definition {
 		var liferayIndexName = "liferay-${companyId}";
 
 		Click(
-			key_navNested = "${liferayIndexName}",
+			key_navNested = ${liferayIndexName},
 			locator1 = "NavNested#NAV_NESTED_LINK");
 
 		AssertTextEquals.assertPartialText(
-			indexName = "${liferayIndexName}",
+			indexName = ${liferayIndexName},
 			locator1 = "Search#FIELD_MAPPINGS_EDITOR",
-			value1 = "${liferayIndexName}");
+			value1 = ${liferayIndexName});
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssertSearchInsightsExplain {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -233,7 +233,7 @@ definition {
 			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AssertSidecarAutoInstall {
 		property delete.sidecar.bundle = "true";
 		property embedded.elasticsearch.only = "true";
@@ -257,7 +257,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssertSidecarDoesNotCluster {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -271,19 +271,19 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Sidecar Elasticsearch liferay started",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Sidecar Elasticsearch liferay started",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
-			nodePort = "9201",
-			numberOfNodes = "1");
+			nodePort = 9201,
+			numberOfNodes = 1);
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
-			nodePort = "9202",
-			numberOfNodes = "1");
+			nodePort = 9202,
+			numberOfNodes = 1);
 
 		Navigator.openURL();
 
@@ -300,7 +300,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertTextEquals.assertPartialText(
 			key_connectionId = "__SIDECAR__",
@@ -323,7 +323,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -335,7 +335,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertTextEquals.assertPartialText(
 			key_connectionId = "__SIDECAR__",
@@ -356,7 +356,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test BulkExecutionFailuresAreLoggedCorrectly {
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#BulkExecutionFailuresAreLoggedCorrectly";
@@ -386,7 +386,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "Limit of total fields \[100\] has been exceeded");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReindexSelectedInstance {
 		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexSelectedInstance";
 
@@ -413,7 +413,7 @@ definition {
 		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";
 		property minimum.slave.ram = "24";
@@ -423,8 +423,8 @@ definition {
 		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
-			nodePort = "9200",
-			numberOfNodes = "2");
+			nodePort = 9200,
+			numberOfNodes = 2);
 
 		Navigator.openURL();
 
@@ -472,7 +472,7 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test MultipleConnectionsSmokeTest {
 		property elasticsearch.multiple.connections = "true";
 		property remote.elasticsearch.enabled = "true";
@@ -482,7 +482,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
-			value1 = "2");
+			value1 = 2);
 
 		AssertTextEquals.assertPartialText(
 			key_connectionId = "__REMOTE__",
@@ -507,7 +507,7 @@ definition {
 				-d '{"connection2_field" : "multiple connections is cool"}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curlSecondConnection}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curlSecondConnection});
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -521,25 +521,25 @@ definition {
 			layoutTemplate = "3 Columns");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
 			widgetName = "Custom Filter");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
 			widgetName = "Search Results");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
+			column = 3,
 			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
 			widgetName = "Search Options");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "3",
+			column = 3,
 			groupName = "Guest",
 			layoutName = "Multiple Connections Page",
 			widgetName = "Low Level Search Options");
@@ -573,7 +573,7 @@ definition {
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test OSGiConfigSmokeTest {
 		property embedded.elasticsearch.only = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@description = "Assert search is functional after Elasticsearch connector is redeployed from GogoShell"
-	@priority = "3"
+	@priority = 3
 	test SearchAfterRedeployingElasticsearchConnector {
 		property remote.elasticsearch.enabled = "true";
 		property test.assert.warning.exceptions = "true";
@@ -599,13 +599,13 @@ definition {
 
 		var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.portal.search.elasticsearch7.impl");
 
-		GogoShell.stopModule(moduleId = "${moduleId}");
+		GogoShell.stopModule(moduleId = ${moduleId});
 
 		GogoShell.viewModuleStatus(
 			moduleName = "com.liferay.portal.search.elasticsearch7.impl",
 			moduleStatus = "Resolved");
 
-		GogoShell.startModule(moduleId = "${moduleId}");
+		GogoShell.startModule(moduleId = ${moduleId});
 
 		GogoShell.viewModuleStatus(
 			moduleName = "com.liferay.portal.search.elasticsearch7.impl",
@@ -622,7 +622,7 @@ definition {
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
@@ -678,7 +678,7 @@ definition {
 			value1 = "1 result for bicycle");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SwitchSidecarToRemote {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
@@ -722,9 +722,9 @@ definition {
 		var serverVersion = Elasticsearch.getServerVersion();
 
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "${clientVersion}",
+			clientVersion = ${clientVersion},
 			engineVendor = "Elasticsearch",
-			serverVersion = "${serverVersion}");
+			serverVersion = ${serverVersion});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#CONNECTION_ID",
@@ -754,7 +754,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-57894."
-	@priority = "3"
+	@priority = 3
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property embedded.elasticsearch.only = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
@@ -792,7 +792,7 @@ definition {
 
 		// LRCI-2401
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = 30000);
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 

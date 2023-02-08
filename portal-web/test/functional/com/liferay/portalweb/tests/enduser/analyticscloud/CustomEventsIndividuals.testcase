@@ -34,9 +34,9 @@ definition {
 			for (var username : list "ac1,ac2") {
 				JSONUser.addUser(
 					userEmailAddress = "${username}@liferay.com",
-					userFirstName = "${username}",
-					userLastName = "${username}",
-					userScreenName = "${username}");
+					userFirstName = ${username},
+					userLastName = ${username},
+					userScreenName = ${username});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -69,7 +69,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -79,7 +79,7 @@ definition {
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10512 | Test Summary: Individual activities chart tooltip events and sessions shown"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AssertChartTooltipEventsAndSessions {
 
 		// AC Bug ticket: LRAC-10734
@@ -90,8 +90,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -101,7 +101,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -111,12 +111,12 @@ definition {
 		}
 
 		task ("Get the total number of user activities and navigate to the new individual's page") {
-			ACUtils.viewNameList(nameList = "${username}");
+			ACUtils.viewNameList(nameList = ${username});
 
-			var key_userName = "${username}";
+			var key_userName = ${username};
 			var currentTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
-			ACNavigation.openItem(itemName = "${username}");
+			ACNavigation.openItem(itemName = ${username});
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -141,8 +141,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -152,7 +152,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -162,10 +162,10 @@ definition {
 		}
 
 		task ("Get the total number of user activities and navigate to the new individual's page") {
-			var key_userName = "${username}";
+			var key_userName = ${username};
 			var newTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
-			ACNavigation.openItem(itemName = "${username}");
+			ACNavigation.openItem(itemName = ${username});
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -176,14 +176,14 @@ definition {
 
 		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
 			ACIndividualsDashboard.viewActivitiesOnGraph(
-				notEquals = "${currentTotalActivities}",
+				notEquals = ${currentTotalActivities},
 				typeList = "Events,Sessions",
 				valueList = "${newTotalActivities},2");
 		}
 	}
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10513 | Test Summary: Empty individual events state"
-	@priority = "3"
+	@priority = 3
 	test AssertEmptyIndividualEvents {
 		property analytics.cloud.upstream = "false";
 
@@ -191,8 +191,8 @@ definition {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 		}
@@ -204,7 +204,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -230,14 +230,14 @@ definition {
 		}
 
 		task ("Assert empty state") {
-			ACUtils.searchBar(searchItem = "${customEventName2}");
+			ACUtils.searchBar(searchItem = ${customEventName2});
 
 			ACUtils.viewGenericText(textValueList = "There are no events found.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 		}
 	}
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10509 | Test Summary: Individual activities with session attributes"
-	@priority = "5"
+	@priority = 5
 	test ViewIndividualActivitiesWithSessionAttributes {
 		property analytics.cloud.upstream = "false";
 
@@ -245,8 +245,8 @@ definition {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 
 			ACUtils.logInPause();
 		}
@@ -267,8 +267,8 @@ definition {
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName2}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName2},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -278,7 +278,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -301,12 +301,12 @@ definition {
 
 		task ("Check if events appear in user history") {
 			for (var eventName : list "${customEventName1},webContentClicked") {
-				ACUtils.assertPageTitle(pageTitle = "${eventName}");
+				ACUtils.assertPageTitle(pageTitle = ${eventName});
 			}
 		}
 
 		task ("Check that the event generated by another user does not appear for ac1") {
-			ACUtils.assertPageTitleNotPresent(pageTitle = "${customEventName2}");
+			ACUtils.assertPageTitleNotPresent(pageTitle = ${customEventName2});
 		}
 
 		task ("Navigate to the individuals page of new user") {
@@ -325,12 +325,12 @@ definition {
 
 		task ("Check if events appear in user history") {
 			for (var eventName : list "${customEventName2},webContentClicked") {
-				ACUtils.assertPageTitle(pageTitle = "${eventName}");
+				ACUtils.assertPageTitle(pageTitle = ${eventName});
 			}
 		}
 
 		task ("Check that the event generated by another user does not appear for ac2") {
-			ACUtils.assertPageTitleNotPresent(pageTitle = "${customEventName1}");
+			ACUtils.assertPageTitleNotPresent(pageTitle = ${customEventName1});
 		}
 	}
 

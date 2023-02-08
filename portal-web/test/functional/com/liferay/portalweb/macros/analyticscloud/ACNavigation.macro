@@ -3,11 +3,11 @@ definition {
 	macro assertPageHeader {
 		AssertTextEquals(
 			locator1 = "ACHeader#HEADER_TITLE",
-			value1 = "${headerTitle}");
+			value1 = ${headerTitle});
 	}
 
 	macro backNavigation {
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		Click(locator1 = "ACNavigation#BACK_NAVIGATION");
 	}
@@ -18,7 +18,7 @@ definition {
 
 	macro clickHeaderTab {
 		Click(
-			key_tabName = "${tabName}",
+			key_tabName = ${tabName},
 			locator1 = "ACHeader#GENERIC_HEADER_TAB");
 	}
 
@@ -63,7 +63,7 @@ definition {
 	}
 
 	macro goToSidebarOption {
-		var key_sidebarOption = "${sidebarOption}";
+		var key_sidebarOption = ${sidebarOption};
 
 		Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
 	}
@@ -77,7 +77,7 @@ definition {
 	}
 
 	macro openItem {
-		var key_itemName = "${itemName}";
+		var key_itemName = ${itemName};
 
 		while ((IsElementNotPresent(locator1 = "ACNavigation#OPEN_ITEM")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
@@ -87,13 +87,13 @@ definition {
 	}
 
 	macro switchTab {
-		var key_tabName = "${tabName}";
+		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACNavigation#TAB_NAME");
 	}
 
 	macro switchTabInCard {
-		var key_tabName = "${tabName}";
+		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACNavigation#CARD_TAB_NAME");
 	}
@@ -101,14 +101,14 @@ definition {
 	macro viewActiveSwitchTab {
 		AssertTextEquals(
 			locator1 = "ACNavigation#ACTIVE_TAB_NAME",
-			value1 = "${tabName}");
+			value1 = ${tabName});
 	}
 
 	macro viewActiveSwitchTabInCard {
 		AssertTextEquals(
-			key_tabName = "${tabName}",
+			key_tabName = ${tabName},
 			locator1 = "ACNavigation#ACTIVE_CARD_TAB_NAME",
-			value1 = "${tabName}");
+			value1 = ${tabName});
 	}
 
 }

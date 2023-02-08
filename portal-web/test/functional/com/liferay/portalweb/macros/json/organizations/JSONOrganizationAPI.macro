@@ -1,42 +1,42 @@
 definition {
 
 	macro _addOrganization {
-		Variables.assertDefined(parameterList = "${organizationName}");
+		Variables.assertDefined(parameterList = ${organizationName});
 
-		var organizationNameEncoded = URLUtil.encodeUTF8("${organizationName}");
+		var organizationNameEncoded = URLUtil.encodeUTF8(${organizationName});
 
 		if (!(isSet(organizationSite))) {
 			var organizationSite = "false";
 		}
 
 		if (isSet(parentOrganizationId)) {
-			var parentOrganizationId = "${parentOrganizationId}";
+			var parentOrganizationId = ${parentOrganizationId};
 		}
 		else {
-			var parentOrganizationId = "0";
+			var parentOrganizationId = 0;
 		}
 
 		if (isSet(organizationType)) {
-			var organizationType = "${organizationType}";
+			var organizationType = ${organizationType};
 		}
 		else {
 			var organizationType = "organization";
 		}
 
 		if (isSet(organizationCountry)) {
-			var countryId = JSONCountry.getCountryId(countryName = "${organizationCountry}");
+			var countryId = JSONCountry.getCountryId(countryName = ${organizationCountry});
 		}
 		else {
-			var countryId = "0";
+			var countryId = 0;
 		}
 
 		if (isSet(organizationRegion)) {
 			var regionId = JSONCountry.getRegionId(
-				countryName = "${organizationCountry}",
-				regionName = "${organizationRegion}");
+				countryName = ${organizationCountry},
+				regionName = ${organizationRegion});
 		}
 		else {
-			var regionId = "0";
+			var regionId = 0;
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -54,7 +54,7 @@ definition {
 				-d site=${organizationSite}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addOrganizationToSite {
@@ -67,7 +67,7 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _assignPasswordPolicyToOrganization {
@@ -82,7 +82,7 @@ definition {
 				-d passwordPolicyId=${passwordPolicyId}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _assignUserToOrganization {
@@ -97,11 +97,11 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteOrganization {
-		Variables.assertDefined(parameterList = "${organizationId}");
+		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -111,12 +111,12 @@ definition {
 				-d organizationId=${organizationId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Get the number of childs organizations based on its parent organization id"
 	macro _getChildOrganizationCount {
-		Variables.assertDefined(parameterList = "${parentOrganizationId}");
+		Variables.assertDefined(parameterList = ${parentOrganizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -128,16 +128,16 @@ definition {
 				-d parentOrganizationId=${parentOrganizationId}
 		''';
 
-		var numberOfChildren = JSONCurlUtil.post("${curl}");
+		var numberOfChildren = JSONCurlUtil.post(${curl});
 
-		var numberOfChildren = StringUtil.extractDigits("${numberOfChildren}");
+		var numberOfChildren = StringUtil.extractDigits(${numberOfChildren});
 
-		return "${numberOfChildren}";
+		return ${numberOfChildren};
 	}
 
 	@summary = "Get the childs organizations ids based on its parent organization id"
 	macro _getOrganization {
-		Variables.assertDefined(parameterList = "${parentOrganizationId}");
+		Variables.assertDefined(parameterList = ${parentOrganizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -149,9 +149,9 @@ definition {
 				-d parentOrganizationId=${parentOrganizationId}
 		''';
 
-		var organizationIds = JSONCurlUtil.post("${curl}", "$..['organizationId']");
+		var organizationIds = JSONCurlUtil.post(${curl}, "$..['organizationId']");
 
-		return "${organizationIds}";
+		return ${organizationIds};
 	}
 
 }

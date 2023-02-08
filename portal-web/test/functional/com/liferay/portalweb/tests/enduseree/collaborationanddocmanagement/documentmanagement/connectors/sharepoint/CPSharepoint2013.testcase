@@ -60,7 +60,7 @@ definition {
 			dmRepositoryLibraryPath = "Shared Documents",
 			dmRepositoryName = "Sharepoint",
 			dmRepositorySiteURL = "http://${sharepointVmHostName}",
-			dmServerVersion = "2013");
+			dmServerVersion = 2013);
 
 		PortletEntry.save();
 	}
@@ -68,7 +68,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -99,7 +99,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CheckinDocument {
 		property test.name.skip.portal.instance = "CPSharepoint2013#CheckinDocument";
@@ -149,7 +149,7 @@ definition {
 			dmRepositoryName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DeleteDocumentInSubfolder {
 		property test.name.skip.portal.instance = "CPSharepoint2013#DeleteDocumentInSubfolder";
@@ -207,7 +207,7 @@ definition {
 		DMDocument.viewDefault();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DeleteSubfolder {
 		property test.name.skip.portal.instance = "CPSharepoint2013#DeleteSubfolder";
@@ -233,7 +233,7 @@ definition {
 		DMFolder.viewDefaultCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test EditDocumentFile {
 		property test.name.skip.portal.instance = "CPSharepoint2013#EditDocumentFile";
@@ -285,7 +285,7 @@ definition {
 			metadataLabel = "Content Encoding");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test EditRepository {
 		property test.name.skip.portal.instance = "CPSharepoint2013#EditRepository";
@@ -352,7 +352,7 @@ definition {
 			value1 = "Sharepoint Repository Name Edit");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "CPSharepoint2013#MoveCheckedoutDocumentToFolder";
@@ -423,7 +423,7 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveDocumentToHome {
 		property test.name.skip.portal.instance = "CPSharepoint2013#MoveDocumentToHome";
@@ -459,7 +459,7 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "CPSharepoint2013#SearchDocumentViaHome";
@@ -483,7 +483,7 @@ definition {
 			dmRepositoryName = "Sharepoint Repository Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewEditedCheckedoutDocument {
 		property test.name.skip.portal.instance = "CPSharepoint2013#ViewEditedCheckedoutDocument";
@@ -533,7 +533,7 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.name.skip.portal.instance = "CPSharepoint2013#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
@@ -571,7 +571,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.name.skip.portal.instance = "CPSharepoint2013#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";

@@ -23,7 +23,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This ensures that a translator without permissions cannot translate a content page to Chinese."
-	@priority = "5"
+	@priority = 5
 	test CannotTranslateToChineseWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "This ensures that a translator can modify languages in translations when he has permissions for."
-	@priority = "5"
+	@priority = 5
 	test CanOnlyTranslateToSpanishWithExperience {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "This ensures that a heading on a content page with a new experience can be translated and published properly."
-	@priority = "5"
+	@priority = 5
 	test CanPublishTranslatedHeadingWithExperience {
 		JSONSegmentsentry.addSegment(
 			fieldName = "Email Address",
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This ensures that a button on a content page can be translated and published properly."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateAndPublishButtonFragment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -321,7 +321,7 @@ definition {
 	}
 
 	@description = "This ensures that an HTML fragment on a content page can be translated and published properly."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateAndPublishHTMLFragment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@description = "This ensures that the translated page field can be inherited by new experience."
-	@priority = "5"
+	@priority = 5
 	test TranslatedPageFieldCanBeInherited {
 		JSONSegmentsentry.addSegment(
 			fieldName = "Email Address",

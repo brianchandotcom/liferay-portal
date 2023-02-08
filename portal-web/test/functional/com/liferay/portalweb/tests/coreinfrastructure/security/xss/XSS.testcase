@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45254. View URL validate."
-	@priority = "4"
+	@priority = 4
 	test MaliciousURLScriptsAreNotValidated {
 		property test.name.skip.portal.instance = "XSS#MaliciousURLScriptsAreNotValidated";
 
@@ -45,7 +45,7 @@ definition {
 					http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
 				''';
 
-			Navigator.openSpecificURL(url = "${maliciousUrl1}");
+			Navigator.openSpecificURL(url = ${maliciousUrl1});
 
 			AssertAlertNotPresent();
 
@@ -54,7 +54,7 @@ definition {
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 			for (var maliciousURL : list "${maliciousUrl2},${maliciousUrl3},${maliciousUrl4}") {
-				Navigator.openSpecificURL(url = "${maliciousURL}");
+				Navigator.openSpecificURL(url = ${maliciousURL});
 
 				AssertAlertNotPresent();
 			}
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-7595. Validate XSS vulnerabilities."
-	@priority = "4"
+	@priority = 4
 	test MaliciousURLScriptsDoNotExecute {
 		task ("Visit malicious urls and request error message") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -84,8 +84,8 @@ definition {
 				''';
 			var maliciousUrLsList = "${maliciousUrl1},${maliciousUrl2},${maliciousUrl3},${maliciousUrl4}";
 
-			for (var maliciousURL : list "${maliciousUrLsList}") {
-				Navigator.openSpecificURL(url = "${maliciousURL}");
+			for (var maliciousURL : list ${maliciousUrLsList}) {
+				Navigator.openSpecificURL(url = ${maliciousURL});
 
 				AssertTextEquals(
 					locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
@@ -98,7 +98,7 @@ definition {
 				AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
 			}
 
-			Navigator.openSpecificURL(url = "${maliciousUrl5}");
+			Navigator.openSpecificURL(url = ${maliciousUrl5});
 
 			AssertTextEquals(
 				locator1 = "Message#INFO",
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-92264. Assert no XSS pop up in asset publisher content."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInAssetPublisherContent {
 		task ("Add web content") {
 			JSONWebcontent.addWebContent(
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInControlPanel {
 		property portal.acceptance = "true";
 
@@ -168,7 +168,7 @@ definition {
 
 			var currentURL = Navigator.getCurrentURL();
 
-			var p_p_authParam = StringUtil.extractLast("${currentURL}", "=");
+			var p_p_authParam = StringUtil.extractLast(${currentURL}, "=");
 		}
 
 		task ("Go to url with p_p_authParam and assert no dialog box appears") {
@@ -179,7 +179,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83273. View forms entry with XSS."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInForms {
 		var formDescription = '''<script>alert(222)</script>''';
 		var formName = '''<script>alert(111)</script>''';
@@ -187,11 +187,11 @@ definition {
 		task ("Add a form") {
 			FormsAdmin.addForm();
 
-			Form.editName(formName = "${formName}");
+			Form.editName(formName = ${formName});
 
-			Form.editDescription(formDescription = "${formDescription}");
+			Form.editDescription(formDescription = ${formDescription});
 
-			Form.addTextField(fieldPositionNumber = "0");
+			Form.addTextField(fieldPositionNumber = 0);
 
 			Form.publishForm();
 		}
@@ -214,7 +214,7 @@ definition {
 
 			FormPortletNavigator.gotoSelectForm();
 
-			FormPortletConfiguration.selectForm(formName = "${formName}");
+			FormPortletConfiguration.selectForm(formName = ${formName});
 
 			PortletEntry.save();
 		}
@@ -229,21 +229,21 @@ definition {
 			var actualDescriptionScript = '''<script>alert(222)</script>''';
 			var escapedDescriptionScript = '''&lt;script&gt;alert(222)&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualDescriptionScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualDescriptionScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedDescriptionScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedDescriptionScript});
 
 			var actualNameScript = '''<script>alert(111)</script>''';
 			var escapedNameScript = '''&lt;script&gt;alert(111)&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualNameScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualNameScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedNameScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedNameScript});
 		}
 	}
 
 	@description = "This is a use case for LPS-72807. View google analytics ID."
-	@priority = "3"
+	@priority = 3
 	test NoXSSVulnerabilityInGoogleAnalyticsID {
 		task ("Edit google analytics Id successfully") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10563. View JSONWS."
-	@priority = "3"
+	@priority = 3
 	test NoXSSVulnerabilityInJSONWS {
 		task ("Access JSONWS successfully") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-59198. View LDAP."
-	@priority = "3"
+	@priority = 3
 	test NoXSSVulnerabilityInLDAP {
 		task ("Add LDAP server successfully") {
 			PortalSettings.gotoConfiguration(
@@ -286,14 +286,14 @@ definition {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 
 	@description = "This is a use case for LRQA-10563. View liferay portlet list."
-	@priority = "4"
+	@priority = 4
 	test NoXSSVulnerabilityInLiferayPortletList {
 		task ("Add public page") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-10472. View, look and feel."
-	@priority = "4"
+	@priority = 4
 	test NoXSSVulnerabilityInLookAndFeel {
 		task ("Add public page") {
 			JSONLayout.addPublicLayout(
@@ -357,14 +357,14 @@ definition {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 
 	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Matomo."
-	@priority = "3"
+	@priority = 3
 	test NoXSSVulnerabilityInMatomo {
 		property test.name.skip.portal.instance = "XSS#NoXSSVulnerabilityInMatomo";
 
@@ -374,39 +374,39 @@ definition {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 			Site.editMatomoCP(
-				confirmationText = "123",
+				confirmationText = 123,
 				matomo = '''<script>alert(123);</script>''');
 		}
 
 		task ("Assert confirm 123") {
-			Open.openNoError(locator1 = "${portalURL}");
+			Open.openNoError(locator1 = ${portalURL});
 
-			AssertConfirm(value1 = "123");
+			AssertConfirm(value1 = 123);
 		}
 	}
 
 	@description = "This is a use case for LRQA-10472. View Recycle bin."
-	@priority = "4"
+	@priority = 4
 	test NoXSSVulnerabilityInRecycleBin {
 		var entryTitle = '''<script>alert(123);</script>''';
 
 		task ("Add Blog entry") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
-				entryTitle = "${entryTitle}");
+				entryTitle = ${entryTitle});
 		}
 
 		task ("Move entry to recycle bin") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-			BlogsNavigator.moveToRecycleBinCP(entryTitle = "${entryTitle}");
+			BlogsNavigator.moveToRecycleBinCP(entryTitle = ${entryTitle});
 		}
 
 		task ("Restore blogs entry from recycle bin") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 			RecycleBin.restoreCP(
-				assetName = "${entryTitle}",
+				assetName = ${entryTitle},
 				assetRestoreLocation = "Blogs",
 				assetType = "Blogs Entry");
 		}
@@ -421,14 +421,14 @@ definition {
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 
 	@description = "This is a use case for LPS-48990. View roles."
-	@priority = "4"
+	@priority = 4
 	test NoXSSVulnerabilityInRoles {
 		task ("Add role") {
 			Role.openRolesAdmin();
@@ -456,21 +456,21 @@ definition {
 		}
 
 		task ("Assert role has the right name") {
-			PageEditor.viewNotPresentInPermissionsIframeBody(elementValue = "123");
+			PageEditor.viewNotPresentInPermissionsIframeBody(elementValue = 123);
 		}
 
 		task ("Assert correct HTML source text") {
 			var actualScript = ''' <script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 
 	@description = "This is a use case for LRQA-30154. View search results."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInSearchResults {
 		property portal.acceptance = "true";
 
@@ -479,31 +479,31 @@ definition {
 		task ("Add blank CP") {
 			Site.openSitesAdmin();
 
-			Site.addBlankCP(siteName = "${siteName}");
+			Site.addBlankCP(siteName = ${siteName});
 		}
 
 		task ("Search for CP and assert name didnt corrupt") {
 			Site.openSitesAdmin();
 
-			Search.searchCP(searchTerm = "${siteName}");
+			Search.searchCP(searchTerm = ${siteName});
 
 			Search.viewNotPresentInContentBody(
 				elementValue = "XSS",
-				siteName = "${siteName}");
+				siteName = ${siteName});
 		}
 
 		task ("Assert correct HTML source text") {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInWebContent {
 		task ("Given: A Web Content is created with a script in the title") {
 			JSONWebcontent.addWebContent(
@@ -563,7 +563,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45254. View wiki."
-	@priority = "5"
+	@priority = 5
 	test NoXSSVulnerabilityInWiki {
 		task ("Edit user information") {
 			Navigator.openURL();
@@ -599,9 +599,9 @@ definition {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 

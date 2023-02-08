@@ -30,7 +30,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8490 | Test Summary: Order a Dynamic Segment's Membership Preview Modal"
-	@priority = "3"
+	@priority = 3
 	test OrderDynamicSegmentMembershipPreview {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsOverViewMembership#OrderDynamicSegmentMembershipPreview";
@@ -48,12 +48,12 @@ definition {
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
 		task ("Add 3 new users in DXP") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -66,7 +66,7 @@ definition {
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -78,7 +78,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -113,22 +113,22 @@ definition {
 			ACSegments.filterKnownSegmentMembersList();
 
 			ACUtils.viewNameListInOrder(
-				index = "1",
+				index = 1,
 				name = "user3 user3");
 
 			ACUtils.viewNameListInOrder(
-				index = "2",
+				index = 2,
 				name = "user2 user2");
 
 			ACUtils.viewNameListInOrder(
-				index = "3",
+				index = 3,
 				name = "user1 user1");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8486 | Test Summary: Membership card exists and shows members added"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ViewMembershipCardExistsShowsMembersAdded {
 
 		// AC Refactor: members are not appearing
@@ -139,7 +139,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -205,9 +205,9 @@ definition {
 
 		task ("Show members added") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+				anonymousNumber = 0,
+				knownNumber = 1,
+				totalNumber = 1);
 
 			// Fails here due to members not showing in segments
 
@@ -216,7 +216,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8489 | Test Summary: Points on membership card can be hovered for more details"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ViewMembershipCardHoverDetails {
 
 		// AC Refactor: timing issue for membership card
@@ -227,7 +227,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -287,9 +287,9 @@ definition {
 			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+				anonymousNumber = 0,
+				knownNumber = 1,
+				totalNumber = 1);
 		}
 
 		// Timing issue will cause this test to fail
@@ -297,15 +297,15 @@ definition {
 
 		task ("View membership card when hovering") {
 			ACSegments.viewSegmentMembershipChartNumbers(
-				addedMember = "1",
-				netChange = "0",
-				removedMember = "0");
+				addedMember = 1,
+				netChange = 0,
+				removedMember = 0);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8488 | Test Summary: Membership card shows anonymous users"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ViewMembershipCardShowsAnonymousUsers {
 
 		// AC Refactor: timing issue for membership card
@@ -316,7 +316,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment that includes anonymous users") {
@@ -368,15 +368,15 @@ definition {
 
 		task ("Show anonymous users") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "1",
-				knownNumber = "0",
-				totalNumber = "1");
+				anonymousNumber = 1,
+				knownNumber = 0,
+				totalNumber = 1);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8487 | Test Summary: Membership card shows members removed"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ViewMembershipCardShowsMembersRemoved {
 
 		// AC Refactor: timing issue for membership card
@@ -388,12 +388,12 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add new users in DXP") {
-			for (var n : list "${userList}") {
+			for (var n : list ${userList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${n}@liferay.com",
-					userFirstName = "${n}",
-					userLastName = "${n}",
-					userScreenName = "${n}");
+					userFirstName = ${n},
+					userLastName = ${n},
+					userScreenName = ${n});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -408,7 +408,7 @@ definition {
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -420,7 +420,7 @@ definition {
 		task ("Open AC and create new segment with members") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSegments();
 
@@ -428,7 +428,7 @@ definition {
 
 			ACUtils.setItemName(itemName = "Static Segment Test");
 
-			ACSegments.addStaticMultiMember(tableMember = "${nameList}");
+			ACSegments.addStaticMultiMember(tableMember = ${nameList});
 
 			ACSegments.saveSegment();
 		}
@@ -437,9 +437,9 @@ definition {
 
 		task ("Show members added") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "2",
-				totalNumber = "2");
+				anonymousNumber = 0,
+				knownNumber = 2,
+				totalNumber = 2);
 		}
 
 		task ("Go to Segment and remove a user") {
@@ -454,18 +454,18 @@ definition {
 
 		task ("Show updated numbers") {
 			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+				anonymousNumber = 0,
+				knownNumber = 1,
+				totalNumber = 1);
 		}
 
 		// Data takes to long to appear
 
 		task ("View membership card when hovering") {
 			ACSegments.viewSegmentMembershipChartNumbers(
-				addedMember = "0",
-				netChange = "0",
-				removedMember = "1");
+				addedMember = 0,
+				netChange = 0,
+				removedMember = 1);
 		}
 	}
 

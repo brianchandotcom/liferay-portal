@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-92222."
-	@priority = "5"
+	@priority = 5
 	test AddFormWithSpanishAsOnlyLocale {
 		property custom.properties = "company.default.locale=es_ES${line.separator}locales.enabled=es_ES${line.separator}locales=es_ES";
 		property test.name.skip.portal.instance = "Locale#AddFormWithSpanishAsOnlyLocale";
@@ -63,7 +63,7 @@ definition {
 		Form.save(localeSaveForm = "Guardar");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanChangeDefaultCompanyLocale {
 		property test.name.skip.portal.instance = "Locale#CanChangeDefaultCompanyLocale";
 
@@ -94,7 +94,7 @@ definition {
 			text = "Bienvenido a Liferay");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CannotAccessDisabledLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,es_ES,fr_FR";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
@@ -126,7 +126,7 @@ definition {
 			value1 = "Non trouvé");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ChangesToInstanceTimeZoneDoNotPropagateToExistingUsers {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
@@ -182,7 +182,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ConfigureURLToAlwaysShowLocale {
 		property custom.properties = "locales.enabled=fr_FR,en_US,zh_CN,es_ES${line.separator}locale.prepend.friendly.url.style=2";
 		property custom.system.properties = "user.country=FR${line.separator}user.language=fr";
@@ -197,7 +197,7 @@ definition {
 		AssertLocation(value1 = "http://localhost:8080/fr/web/guest");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test EnableRedirectToDefaultLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
@@ -233,7 +233,7 @@ definition {
 
 	@description = "This is a use case for LPS-103369."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test GuestUserViewSiteChangedLocalePersistsFriendlyURL {
 		property portal.acceptance = "true";
 
@@ -269,7 +269,7 @@ definition {
 		Portlet.viewTitle(portletName = "IFrame");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test InstanceCreatedOnRestartPickUpNewCompanyLocale {
 		property test.name.skip.portal.instance = "Locale#InstanceCreatedOnRestartPickUpNewCompanyLocale";
 
@@ -315,7 +315,7 @@ definition {
 			text = "Bienvenido a Liferay");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test LocaleNotAppendedToAlternateDefaultLocaleURL {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -344,7 +344,7 @@ definition {
 		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PrependFriendlyURLStyle {
 		property custom.properties = "locale.prepend.friendly.url.style=3";
 		property test.name.skip.portal.instance = "Locale#PrependFriendlyURLStyle";
@@ -437,7 +437,7 @@ definition {
 		AssertLocation(value1 = "${portalURL}/en/web/test-site-name/test-page");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RestrictAvailableLocales {
 		property custom.properties = "locales=ca_ES,zh_CN,nl_NL,en_AU,en_GB,en_US,fi_FI,fr_FR,de_DE,it_IT,iw_IL,hu_HU,ja_JP,pt_BR,es_ES";
 		property test.name.skip.portal.instance = "Locale#RestrictAvailableLocales";
@@ -457,13 +457,13 @@ definition {
 			for (var language : list "English (Australia),English (United Kingdom),Italian (Italy)") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-					value1 = "${language}");
+					value1 = ${language});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-134072. View the Home page when start up with Spanish as the default instance language."
-	@priority = "5"
+	@priority = 5
 	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
 		property portal.acceptance = "true";
@@ -511,7 +511,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RestrictEnabledLocales {
 		property custom.properties = "locales.enabled=zh_CN,en_US,fr_FR,de_DE,es_ES${line.separator}locales=zh_CN,en_US,fr_FR,de_DE,es_ES,pt_BR,hu_HU";
 		property test.name.skip.portal.instance = "Locale#RestrictEnabledLocales";
@@ -527,7 +527,7 @@ definition {
 			for (var language : list "Hungarian (Hungary),Portuguese (Brazil)") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-					value1 = "${language}");
+					value1 = ${language});
 			}
 		}
 
@@ -535,13 +535,13 @@ definition {
 			for (var language : list "Chinese (China),English (United States),French (France),German (Germany),Spanish (Spain)") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-					value1 = "${language}");
+					value1 = ${language});
 			}
 		}
 	}
 
 	@description = "This is a use case for LRQA-67974 for user available time zones restricted by instance available time zones."
-	@priority = "3"
+	@priority = 3
 	test RestrictInstanceAvailableTimeZones {
 		property custom.properties = "time.zones=America/Phoenix,UTC,Asia/Tokyo";
 		property test.name.skip.portal.instance = "Locale#RestrictInstanceAvailableTimeZones";
@@ -564,13 +564,13 @@ definition {
 			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -10:00) Hawaii Standard Time") {
 				AssertTextNotPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 
 			for (var timeZone : list "(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
 				AssertTextPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 		}
 
@@ -589,18 +589,18 @@ definition {
 			for (var timeZone : list "(UTC -11:00) Samoa Standard Time,(UTC -10:00) Hawaii Standard Time") {
 				AssertTextNotPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 
 			for (var timeZone : list "(UTC -07:00) Mountain Standard Time (America/Phoenix),(UTC) Coordinated Universal Time,(UTC +09:00) Japan Standard Time") {
 				AssertTextPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test UserLockoutShowsTimezoneInformation {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";
@@ -643,7 +643,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserInvalidPG(
-				loginAttempts = "3",
+				loginAttempts = 3,
 				password = "INVALID",
 				userEmailAddress = "userea@liferay.com");
 
@@ -665,7 +665,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.name.skip.portal.instance = "Locale#ViewDefaultAvailableTimeZonesForInstancesAndUsers";
 
@@ -680,7 +680,7 @@ definition {
 			for (var timeZone : list "(UTC) Coordinated Universal Time,(UTC +08:00) China Standard Time") {
 				AssertElementPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 		}
 
@@ -697,12 +697,12 @@ definition {
 			for (var timeZone : list "(UTC) Coordinated Universal Time,(UTC +08:00) China Standard Time") {
 				AssertElementPresent(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewDefaultEnabledLocales {
 		User.firstLoginPG();
 
@@ -714,7 +714,7 @@ definition {
 
 		task ("Assert the default language options radio box is checked") {
 			AssertChecked.assertCheckedNotVisible(
-				index = "1",
+				index = 1,
 				locator1 = "SiteSettingsDisplaySettings#LANGUAGES_RADIO");
 		}
 
@@ -727,13 +727,13 @@ definition {
 
 			for (var language : list "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE") {
 				AssertElementPresent(
-					key_locale = "${language}",
+					key_locale = ${language},
 					locator1 = "Translation#LOCALIZATION_NAME");
 			}
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewLocaleInNewVirtualInstance {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -772,7 +772,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewSiteLocaleWithoutUserPreferredLocale {
 		property portal.acceptance = "true";
 
@@ -799,7 +799,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewTimeZoneIDInNonEnglishLocale {
 		property test.name.skip.portal.instance = "Locale#ViewTimeZoneIDInNonDefaultLocale";
 
@@ -843,7 +843,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewUserPreferredLocale {
 		property portal.acceptance = "true";
 
@@ -906,17 +906,17 @@ definition {
 
 			var dropdownItem = "我的个人资料";
 
-			var key_dropdownItem = "${dropdownItem}";
+			var key_dropdownItem = ${dropdownItem};
 
 			AssertTextEquals(
 				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-				value1 = "${dropdownItem}");
+				value1 = ${dropdownItem});
 		}
 	}
 
 	@description = "This is a use case for LPS-103369."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ViewUserPreferredLocalePersistsFriendlyURL {
 		property portal.acceptance = "true";
 
@@ -964,7 +964,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-157252."
-	@priority = "3"
+	@priority = 3
 	test VirtualHostLanguageCanBeChangedWithUserDefaultLanguage {
 		property test.name.skip.portal.instance = "Locale#VirtualHostLanguageCanBeChangedWithUserDefaultLanguage";
 

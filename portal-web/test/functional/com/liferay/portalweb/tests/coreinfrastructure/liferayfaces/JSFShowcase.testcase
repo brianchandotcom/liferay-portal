@@ -35,7 +35,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ButtonSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/button/general");
 
@@ -62,7 +62,7 @@ definition {
 		JSFShowcase.viewVariousStylesButton();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CommandButtonSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandbutton/general");
 
@@ -102,7 +102,7 @@ definition {
 		JSFShowcase.clickButtonValueAttribute(attribute = "Carter Braxton");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CommandLinkSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/commandlink/general");
 
@@ -123,14 +123,14 @@ definition {
 			message2 = "INVOKE_APPLICATION");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test DataTableSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/datatable/general");
 
 		JSFShowcase.viewDataTable();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test FormSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/form/general");
 
@@ -141,7 +141,7 @@ definition {
 		JSFShowcase.viewFromButtonResult(message = "The form was submitted as a full page postback and the entire page was re-rendered.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ImageSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/graphicimage/general");
 
@@ -149,12 +149,12 @@ definition {
 
 		for (var link : list "JSR 362,JSR 378") {
 			JSFShowcase.viewLink(
-				link = "${link}",
+				link = ${link},
 				linkURL = "jcp.org");
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InputFileSmoke {
 
 		// BridgeInputFileGeneral
@@ -197,7 +197,7 @@ definition {
 			instantAjax = "true");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InputHiddenSmoke {
 
 		// InputHiddenConversion
@@ -219,15 +219,15 @@ definition {
 
 		JSFShowcase.submitHiddenValue(
 			key_text = "Copy ",
-			message1 = "1234");
+			message1 = 1234);
 
-		JSFShowcase.clearHiddenValue(message1 = "1234");
+		JSFShowcase.clearHiddenValue(message1 = 1234);
 
 		JSFShowcase.validateRequiredCheckbox();
 
 		JSFShowcase.submitHiddenValue(
 			key_text = "Copy ",
-			message1 = "1234");
+			message1 = 1234);
 
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 
@@ -238,18 +238,18 @@ definition {
 		JSFShowcase.submitHiddenValue(
 			immediate = "true",
 			key_text = "Copy ",
-			message1 = "1234",
+			message1 = 1234,
 			messageImmediate1 = "APPLY_REQUEST_VALUES");
 
-		JSFShowcase.clearHiddenValue(message1 = "1234");
+		JSFShowcase.clearHiddenValue(message1 = 1234);
 
 		JSFShowcase.submitHiddenValue(
 			immediate = "true",
 			key_text = "Copy ",
-			message2 = "1234",
+			message2 = 1234,
 			messageImmediate2 = "PROCESS_VALIDATIONS");
 
-		JSFShowcase.clearHiddenValue(message2 = "1234");
+		JSFShowcase.clearHiddenValue(message2 = 1234);
 
 		// InputHiddenValidation
 
@@ -282,7 +282,7 @@ definition {
 			messageinvalid2 = "Invalid E-Mail Address");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InputSecretSmoke {
 
 		// InputSecretGeneral
@@ -361,7 +361,7 @@ definition {
 			textResult = "Hello@World.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InputTextareaSmoke {
 
 		// InputTextareaGeneral
@@ -478,7 +478,7 @@ definition {
 			textResult = "Hello@World.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InputTextSmoke {
 
 		// InputTextGeneral
@@ -569,7 +569,7 @@ definition {
 			textResult = "Hello@World.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test LinkSmoke {
 
 		// LinkGeneral
@@ -599,7 +599,7 @@ definition {
 			locator1 = "JSFShowcase#LINK_PARAMETER_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test MessageSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/message/general");
 
@@ -620,7 +620,7 @@ definition {
 			textValue3 = "Hello World");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test OutputSmoke {
 
 		// OutputFormatGeneral
@@ -670,8 +670,8 @@ definition {
 
 		for (var link : list "liferay-projects/liferay-faces,liferay+faces") {
 			JSFShowcase.viewLink(
-				link = "${link}",
-				linkURL = "${link}");
+				link = ${link},
+				linkURL = ${link});
 		}
 
 		// OutputScriptResource
@@ -704,7 +704,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "JSFShowcase#EXAMPLE_TEXT",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		// OutputTextConversionTester
 
@@ -723,7 +723,7 @@ definition {
 			value1 = "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָֽרֶץ");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PanelSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/panelgrid/general");
 
@@ -740,7 +740,7 @@ definition {
 			value1 = "This text is inside a <div> HTML tag");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PortletSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/portlet/actionurl/general");
 
@@ -772,7 +772,7 @@ definition {
 		AssertElementPresent(locator1 = "JSFShowcase#EXAMPLE_TEXT");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectBooleanCheckboxSmoke {
 
 		// SelectBooleanCheckboxGeneral
@@ -828,7 +828,7 @@ definition {
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectManyCheckboxSmoke {
 
 		// SelectManyCheckboxConversion
@@ -864,7 +864,7 @@ definition {
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyCheckboxDefault-value
@@ -872,11 +872,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanycheckbox/default-value");
 
 		AssertElementPresent(
-			key_attribute = "2",
+			key_attribute = 2,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementPresent(
-			key_attribute = "4",
+			key_attribute = 4,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.selectCheckbox(
@@ -888,7 +888,7 @@ definition {
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyCheckBoxGeneral
@@ -906,7 +906,7 @@ definition {
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyCheckBoxImmediate
@@ -938,11 +938,11 @@ definition {
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectManyCheckBoxInstant-ajax
@@ -958,11 +958,11 @@ definition {
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectManyListboxSmoke {
 
 		// SelectManyListBoxConversion
@@ -997,7 +997,7 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyListBoxDefault-value
@@ -1005,11 +1005,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanylistbox/default-value");
 
 		AssertElementPresent(
-			key_attribute = "2",
+			key_attribute = 2,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementPresent(
-			key_attribute = "4",
+			key_attribute = 4,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.select(
@@ -1021,7 +1021,7 @@ definition {
 			textValue = "2,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyListBoxGeneral
@@ -1039,7 +1039,7 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyListBoxImmediate
@@ -1071,11 +1071,11 @@ definition {
 			textResult = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectManyListBoxInstant-ajax
@@ -1091,11 +1091,11 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectManyMenuSmoke {
 
 		// SelectManyMenuConversion
@@ -1130,7 +1130,7 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyMenuDefault-value
@@ -1138,11 +1138,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectmanymenu/default-value");
 
 		AssertElementPresent(
-			key_attribute = "2",
+			key_attribute = 2,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementPresent(
-			key_attribute = "4",
+			key_attribute = 4,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.select(
@@ -1154,7 +1154,7 @@ definition {
 			textValue = "2,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyMenuGeneral
@@ -1172,7 +1172,7 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectManyMenuImmediate
@@ -1204,11 +1204,11 @@ definition {
 			textResult = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectManyMenuInstant-ajax
@@ -1224,11 +1224,11 @@ definition {
 			textValue = "3,4");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectOneListboxSmoke {
 
 		// SelectOneListboxConversion
@@ -1257,14 +1257,14 @@ definition {
 
 		JSFShowcase.select(
 			listboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.select(
 			listboxNameList = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneListboxDefault-value
@@ -1272,15 +1272,15 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonelistbox/default-value");
 
 		AssertElementPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.select(
 			listboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneListboxGeneral
@@ -1291,14 +1291,14 @@ definition {
 
 		JSFShowcase.select(
 			listboxNameList = "Select,Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		JSFShowcase.select(
 			listboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneListboxImmediate
@@ -1309,32 +1309,32 @@ definition {
 			immediate = "true",
 			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			listboxNameList = "Powerful Integration",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textResult = "3");
+			textResult = 3);
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Powerful Integration",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textResult = "3");
+			textResult = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectOneListboxInstant-ajax
@@ -1343,18 +1343,18 @@ definition {
 
 		JSFShowcase.selectInstantAjax(
 			listboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.selectInstantAjax(
 			listboxNameList = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectOneMenuSmoke {
 
 		// SelectOneRadioConversion
@@ -1383,14 +1383,14 @@ definition {
 
 		JSFShowcase.select(
 			oneMenuName = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.select(
 			oneMenuName = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneMenuDefault-value
@@ -1398,15 +1398,15 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectonemenu/default-value");
 
 		AssertElementPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.select(
 			oneMenuName = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneMenuGeneral
@@ -1417,14 +1417,14 @@ definition {
 
 		JSFShowcase.select(
 			oneMenuName = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		JSFShowcase.select(
 			oneMenuName = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneMenuImmediate
@@ -1435,32 +1435,32 @@ definition {
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
 			oneMenuName = "Compatible",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
 			oneMenuName = "Compatible",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
 			oneMenuName = "Powerful Integration",
-			textResult = "3");
+			textResult = 3);
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
 			oneMenuName = "Powerful Integration",
-			textResult = "3");
+			textResult = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectOneMenuInstant-ajax
@@ -1469,18 +1469,18 @@ definition {
 
 		JSFShowcase.selectInstantAjax(
 			oneMenuName = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		JSFShowcase.selectInstantAjax(
 			oneMenuName = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SelectOneRadioSmoke {
 
 		// SelectOneRadioConversion
@@ -1509,14 +1509,14 @@ definition {
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneRadioDefault-value
@@ -1524,15 +1524,15 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/selectoneradio/default-value");
 
 		AssertElementPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		AssertElementNotPresent(
-			key_attribute = "3",
+			key_attribute = 3,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneRadioImmediate
@@ -1543,32 +1543,32 @@ definition {
 			checkboxNameList = "Compatible",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Compatible",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textResult = "1");
+			textResult = 1);
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Powerful Integration",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textResult = "3");
+			textResult = 3);
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Powerful Integration",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textResult = "3");
+			textResult = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE_2");
 
 		// SelectOneRadioGeneral
@@ -1579,14 +1579,14 @@ definition {
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.selectCheckbox(
 			checkboxNameList = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 
 		// SelectOneRadioInstant-ajax
@@ -1595,14 +1595,14 @@ definition {
 
 		JSFShowcase.selectInstantAjax(
 			checkboxNameList = "Compatible",
-			textValue = "1");
+			textValue = 1);
 
 		JSFShowcase.selectInstantAjax(
 			checkboxNameList = "Powerful Integration",
-			textValue = "3");
+			textValue = 3);
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = 1,
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 

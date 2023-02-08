@@ -19,13 +19,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Automation ID: LRAC-9065 | Test Summary: Admin can delete users"
-	@priority = "3"
+	@priority = 3
 	test AdminCanDeleteUser {
 		task ("Create a new user and check if it is present in the table") {
 			ACNavigation.goToSettings();
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9064 | Test Summary: Select multiple users to delete at once"
-	@priority = "3"
+	@priority = 3
 	test CanSelectAndDeleteUsers {
 		task ("Create two new user and select both") {
 			ACNavigation.goToSettings();
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9063 | Test Summary: Delete button to manage user permissions"
-	@priority = "5"
+	@priority = 5
 	test DeleteButtonToDeleteUserPermissions {
 		task ("Create two new users") {
 			ACNavigation.goToSettings();
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
-	@priority = "3"
+	@priority = 3
 	test MemberCantDeleteUser {
 		task ("Login with a member user and go to settings") {
 			ACWorkspace.signOut();

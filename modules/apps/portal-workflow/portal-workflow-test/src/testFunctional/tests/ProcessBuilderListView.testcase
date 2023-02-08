@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a Not Published process"
-	@priority = "4"
+	@priority = 4
 	test CanDuplicateNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateNonPublishedProcess";
 
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab menu for a particular row"
-	@priority = "4"
+	@priority = 4
 	test CanDuplicateProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanDuplicateProcess";
 
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"
-	@priority = "4"
+	@priority = 4
 	test CanEditTitleOfDuplicatedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanEditTitleOfDuplicatedProcess";
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to filter by Not Published processes"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByNonPublishedProcesses {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanFilterByNonPublishedProcesses";
 
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to filter by Published processes"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByPublishedProcesses {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanFilterByPublishedProcesses";
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "Verify that the user can not delete a published process"
-	@priority = "5"
+	@priority = 5
 	test CanNotDeletePublishedProcess {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow is in use and system displays an error message"
-	@priority = "5"
+	@priority = 5
 	test CanNotUnpublishWorkflowInUse {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Last Modified"
-	@priority = "2"
+	@priority = 2
 	test CanOrderByLastModified {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanOrderByLastModified";
 
@@ -194,18 +194,18 @@ definition {
 		Workflow.processBuilderFilterAndOrder(optionOrder = "Last Modified");
 
 		AssertElementPresent(
-			key_order = "2",
+			key_order = 2,
 			key_title = "Single Approver",
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
 
 		AssertElementPresent(
-			key_order = "3",
+			key_order = 3,
 			key_title = "Copy of Single Approver",
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
 	}
 
 	@description = "Verify that the user is able to order by Title"
-	@priority = "3"
+	@priority = 3
 	test CanOrderByTitle {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanOrderByTitle";
 
@@ -229,26 +229,26 @@ definition {
 			locator1 = "ProcessBuilderListView#DROPDOWN_ITEM");
 
 		AssertElementPresent(
-			key_index = "1",
+			key_index = 1,
 			key_processName = "A Workflow",
 			key_section = "Published",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			key_processName = "Single Approver",
 			key_section = "Published",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
 
 		AssertElementPresent(
-			key_index = "3",
+			key_index = 3,
 			key_processName = "Z Workflow",
 			key_section = "Published",
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"
-	@priority = "2"
+	@priority = 2
 	test CanReverseSortDirection {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanReverseSortDirection";
 
@@ -259,18 +259,18 @@ definition {
 		Workflow.clickRevertSortDirection();
 
 		AssertTextEquals(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Copy of Single Approver");
 
 		AssertTextEquals(
-			key_rowNumber = "3",
+			key_rowNumber = 3,
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver");
 	}
 
 	@description = "Verify that the user is not able to search by Workflow description"
-	@priority = "3"
+	@priority = 3
 	test CanSearchByDescription {
 		Workflow.openWorkflowListView();
 
@@ -278,7 +278,7 @@ definition {
 			ProcessBuilderListView.searchForWorkflow(workflowName = "workflow content");
 
 			ProcessBuilderListView.validateIfSearchItem(
-				numberResults = "1",
+				numberResults = 1,
 				singleResult = "true",
 				workflowName = "\"workflow content\"");
 
@@ -291,7 +291,7 @@ definition {
 			ProcessBuilderListView.searchForWorkflow(workflowName = "new process");
 
 			ProcessBuilderListView.validateIfSearchItem(
-				numberResults = "0",
+				numberResults = 0,
 				workflowName = "\"new process\"");
 
 			AssertTextEquals(
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to search by Workflow title"
-	@priority = "4"
+	@priority = 4
 	test CanSearchByTitle {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -311,7 +311,7 @@ definition {
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
 
 		ProcessBuilderListView.validateIfSearchItem(
-			numberResults = "1",
+			numberResults = 1,
 			singleResult = "true",
 			workflowName = "\"Approver\"");
 
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "Verify that search can be done using non-ASCII character"
-	@priority = "4"
+	@priority = 4
 	test CanSearchNonAsciiChar {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSearchNonAsciiChar";
 
@@ -330,13 +330,13 @@ definition {
 		ProcessBuilderListView.searchForWorkflow(workflowName = "単一");
 
 		AssertTextEquals(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "単一承認者");
 	}
 
 	@description = "Verify that the user can select Edit option in the kebab menu for a particular row"
-	@priority = "4"
+	@priority = 4
 	test CanSelectEditOption {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOption";
 
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Edit option in the kebab menu for a Not Published process"
-	@priority = "4"
+	@priority = 4
 	test CanSelectEditOptionForNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectEditOptionForNonPublishedProcess";
 		property test.run.environment = "EE";
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab menu for a particular row"
-	@priority = "4"
+	@priority = 4
 	test CanSelectPermissionsOption {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOption";
 		property test.run.environment = "EE";
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Permissions option in the kebab menu for a Not Published process"
-	@priority = "4"
+	@priority = 4
 	test CanSelectPermissionsOptionForNonPublishedProcess {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanSelectPermissionsOptionForNonPublishedProcess";
 		property test.run.environment = "EE";
@@ -417,7 +417,7 @@ definition {
 
 	@description = "Verify that the user can select View option in the kebab menu for a particular row"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanSelectViewOption {
 		property test.run.environment = "EE";
 
@@ -434,7 +434,7 @@ definition {
 	}
 
 	@description = "Verify that a duplicated definition can be Unpublished"
-	@priority = "3"
+	@priority = 3
 	test CanUnpublishDuplicatedDefinition {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanUnpublishDuplicatedDefinition";
 
@@ -449,7 +449,7 @@ definition {
 
 	@description = "Verify that the user can select View option in the kebab menu for a Not Published process"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanViewNonPublishedProcess {
 		property test.run.environment = "EE";
 
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "Verify that the Clear option cleans the search results"
-	@priority = "3"
+	@priority = 3
 	test ClearSearchResults {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "Verify that the correct columns are displayed: Title, Description, Last Modified"
-	@priority = "5"
+	@priority = 5
 	test DisplaysColumnsTitleDescriptionLastModified {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "Verify that Not Published processes are displayed on table"
-	@priority = "4"
+	@priority = 4
 	test DisplaysNonPublishedProcessesOnTable {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -528,7 +528,7 @@ definition {
 	}
 
 	@description = "Verify that hovering the + button will display the text New Workflow"
-	@priority = "2"
+	@priority = 2
 	test DisplaysText {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#DisplaysText";
 
@@ -543,7 +543,7 @@ definition {
 	}
 
 	@description = "Verify that the pagination component is displayed when the table has 5 items or more"
-	@priority = "3"
+	@priority = 3
 	test PaginationComponentIsDisplayed {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#PaginationComponentIsDisplayed";
 
@@ -552,9 +552,9 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		var count = "2";
+		var count = 2;
 
-		while ("${count}" != "6") {
+		while (${count} != 6) {
 			Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver ${count}");
 
 			Navigator.gotoBack();
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "Verify that the users are able to click on the + button and be directed to the New Workflow page"
-	@priority = "5"
+	@priority = 5
 	test RedirectToNewWorkflowPage {
 		property test.name.skip.portal.instance = "ProcessBuilderListView#RedirectToNewWorkflowPage";
 

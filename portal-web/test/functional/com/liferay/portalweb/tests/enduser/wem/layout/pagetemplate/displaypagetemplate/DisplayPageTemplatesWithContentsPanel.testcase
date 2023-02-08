@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153356. View Page Content tab on sidebar of display page template."
-	@priority = "4"
+	@priority = 4
 	test ViewPageContentOnSidebarOfDisplayPageTemplate {
 		task ("Given a page creator has a display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");

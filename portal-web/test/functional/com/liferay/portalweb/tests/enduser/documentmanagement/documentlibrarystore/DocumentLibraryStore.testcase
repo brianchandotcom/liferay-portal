@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AdvancedFileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";
@@ -50,7 +50,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DBStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
@@ -75,7 +75,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test FileSystemStoreSmoke {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore";
@@ -98,7 +98,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ImportDocumentWithDBStore {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";

@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,11 +27,11 @@ definition {
 	}
 
 	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the Maximum File Size in that instance."
-	@priority = "4"
+	@priority = 4
 	test CanLimitMaxFileSizeForDepotAtInstanceScope {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeForDepotAtInstanceScope";
 
-		DMDocument.updateMaximumFileSize(fieldValue = "65536");
+		DMDocument.updateMaximumFileSize(fieldValue = 65536);
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "This test ensures that a file that exceed the set maximum size cannot be uploaded via Media Gallery."
-	@priority = "3"
+	@priority = 3
 	test CanLimitMaxFileSizeInMediaGallery {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeInMediaGallery";
 
@@ -59,7 +59,7 @@ definition {
 			layoutName = "Media Gallery Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Media Gallery Page",
 			widgetName = "Media Gallery");
@@ -68,7 +68,7 @@ definition {
 
 		MGPortlet.configureShowAllPG(pageName = "Media Gallery Page");
 
-		DMDocument.updateMaximumFileSize(fieldValue = "2000");
+		DMDocument.updateMaximumFileSize(fieldValue = 2000);
 
 		DMDocument.addPGViaMG(
 			groupName = "Guest",
@@ -87,12 +87,12 @@ definition {
 
 	@description = "This test ensures that the size limit setting only take effects in current site."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "20480",
+			fieldValue = 20480,
 			siteSettings = "true",
 			siteURLKey = "site-name");
 
@@ -130,20 +130,20 @@ definition {
 
 	@description = "This test ensures that when setting the Maximum File Size at different levels(Site, System Settings and Instance Settings), the lower limit from instance settings will take effect."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	test InstanceSizeLimitTakesEffectOverSiteAndSystemSettings {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#InstanceSizeLimitTakesEffectOverSiteAndSystemSettings";
 
-		DMDocument.updateMaximumFileSize(fieldValue = "51200");
+		DMDocument.updateMaximumFileSize(fieldValue = 51200);
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
 		SystemSettings.viewInputText(
 			fieldLabel = "File Max Size",
-			fieldValue = "51200");
+			fieldValue = 51200);
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "20480",
+			fieldValue = 20480,
 			instanceSettings = "true");
 
 		DMNavigator.openToConfigInSiteSettings(
@@ -152,10 +152,10 @@ definition {
 
 		SystemSettings.viewInputText(
 			fieldLabel = "File Max Size",
-			fieldValue = "20480");
+			fieldValue = 20480);
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "30720",
+			fieldValue = 30720,
 			siteSettings = "true",
 			siteURLKey = "guest");
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This test ensures that the size limits in the servlet take effect when the instance setting is default."
-	@priority = "4"
+	@priority = 4
 	test WhenInstanceIsDefaultItIsOverriddenByServlet {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenInstanceIsDefaultItIsOverriddenByServlet";
 
@@ -181,12 +181,12 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = 102400);
 
-		DMDocument.updateMaximumFileSize(fieldValue = "409600");
+		DMDocument.updateMaximumFileSize(fieldValue = 409600);
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "0",
+			fieldValue = 0,
 			instanceSettings = "true");
 
 		DMDocument.addCP(
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This test ensures that the size limits in the servlet take effect when it is not bigger than the limits in the instance."
-	@priority = "4"
+	@priority = 4
 	test WhenServletIsSmallerItOverridesInstance {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenServletIsSmallerItOverridesInstance";
 
@@ -213,12 +213,12 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = 102400);
 
-		DMDocument.updateMaximumFileSize(fieldValue = "409600");
+		DMDocument.updateMaximumFileSize(fieldValue = 409600);
 
 		DMDocument.updateMaximumFileSize(
-			fieldValue = "204800",
+			fieldValue = 204800,
 			instanceSettings = "true");
 
 		DMDocument.addCP(

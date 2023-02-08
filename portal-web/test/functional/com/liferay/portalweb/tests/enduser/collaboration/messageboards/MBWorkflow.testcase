@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136940. It checks that a comment in a thread submission can be modified."
-	@priority = "3"
+	@priority = 3
 	test CanModifyCommentInThreadSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Comment";
@@ -87,13 +87,13 @@ definition {
 		Panel.expandPanel(panel = "Comments");
 
 		Comments.viewPG(
-			commentCount = "1",
+			commentCount = 1,
 			entryComment = "Can you update the entry title and description",
 			userFullName = "Test Test");
 	}
 
 	@description = "This is a test for LPS-136941. It checks that a thread submission can be updated."
-	@priority = "3"
+	@priority = 3
 	test CanModifyThreadSubmission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

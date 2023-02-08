@@ -14,13 +14,13 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var companies = JSONCurlUtil.get("${curl}", "$..['mx']");
+		var companies = JSONCurlUtil.get(${curl}, "$..['mx']");
 
-		return "${companies}";
+		return ${companies};
 	}
 
 	macro getCompanyId {
-		if (!(isSet(portalInstanceName)) || ("${portalInstanceName}" == "liferay.com")) {
+		if (!(isSet(portalInstanceName)) || (${portalInstanceName} == "liferay.com")) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
@@ -29,12 +29,12 @@ definition {
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
-			if ("${authenticationMethod}" == "By Screen Name") {
+			if (${authenticationMethod} == "By Screen Name") {
 				if (!(isSet(userScreenName))) {
 					var creatorEmailAddress = "test";
 				}
 				else {
-					var creatorEmailAddress = "${userScreenName}";
+					var creatorEmailAddress = ${userScreenName};
 				}
 			}
 			else {
@@ -51,9 +51,9 @@ definition {
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
-		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
+		var companyId = JSONCurlUtil.get(${curl}, "$['companyId']");
 
-		return "${companyId}";
+		return ${companyId};
 	}
 
 	macro getCompanyIdNoSelenium {
@@ -66,12 +66,12 @@ definition {
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
-			if ("${authenticationMethod}" == "By Screen Name") {
+			if (${authenticationMethod} == "By Screen Name") {
 				if (!(isSet(userScreenName))) {
 					var creatorEmailAddress = "test";
 				}
 				else {
-					var creatorEmailAddress = "${userScreenName}";
+					var creatorEmailAddress = ${userScreenName};
 				}
 			}
 			else {
@@ -88,31 +88,31 @@ definition {
 				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
-		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
+		var companyId = JSONCurlUtil.get(${curl}, "$['companyId']");
 
-		return "${companyId}";
+		return ${companyId};
 	}
 
 	macro getDefaultPortalURL {
 		var portalURL = PropsUtil.get("default.portal.url");
 
-		if (!(contains("${portalURL}", "http"))) {
+		if (!(contains(${portalURL}, "http"))) {
 			var portalURL = "http://${portalURL}";
 		}
 
-		return "${portalURL}";
+		return ${portalURL};
 	}
 
 	macro getPortalInstanceName {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
+		if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
 			var portalURL = JSONCompany.getPortalURL();
 
-			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${portalURL});
 
-			return "${portalInstanceName}";
+			return ${portalInstanceName};
 		}
 		else {
 			return "localhost";
@@ -122,12 +122,12 @@ definition {
 	macro getPortalInstanceNameNoSelenium {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			var portalURL = JSONCompany.getPortalURL();
 
-			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${portalURL});
 
-			return "${portalInstanceName}";
+			return ${portalInstanceName};
 		}
 		else {
 			return "localhost";
@@ -137,17 +137,17 @@ definition {
 	macro getPortalURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		return "${portalURL}";
+		return ${portalURL};
 	}
 
 	macro parsePortalInstanceURL {
-		Variables.assertDefined(parameterList = "${portalURL}");
+		Variables.assertDefined(parameterList = ${portalURL});
 
-		var portalInstanceName = StringUtil.replace("${portalURL}", "http://", "");
+		var portalInstanceName = StringUtil.replace(${portalURL}, "http://", "");
 
-		var portalInstanceName = StringUtil.replace("${portalInstanceName}", ":8080", "");
+		var portalInstanceName = StringUtil.replace(${portalInstanceName}, ":8080", "");
 
-		return "${portalInstanceName}";
+		return ${portalInstanceName};
 	}
 
 }

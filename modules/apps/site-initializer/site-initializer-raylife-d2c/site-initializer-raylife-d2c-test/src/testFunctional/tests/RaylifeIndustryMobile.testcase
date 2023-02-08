@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,11 +31,11 @@ definition {
 	}
 
 	@description = "LPS-146175 - Check if I can follow the flow in phone by clicking on the continue button"
-	@priority = "5"
+	@priority = 5
 	test CanClickInContinueButtonPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -47,11 +47,11 @@ definition {
 	}
 
 	@description = "LPS-146177 - Check if I can follow the flow in tablet by clicking on the continue button"
-	@priority = "5"
+	@priority = 5
 	test CanClickInContinueButtonTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -63,11 +63,11 @@ definition {
 	}
 
 	@description = "LPS-147176 - Check if I can go back to the previous page"
-	@priority = "5"
+	@priority = 5
 	test CanViewBackPagePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 

@@ -5,68 +5,68 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		JSONLayout.addPrivateLayout(
-			groupName = "${groupName}",
-			layoutName = "${layoutName}",
-			parentLayoutName = "${parentLayoutName}",
+			groupName = ${groupName},
+			layoutName = ${layoutName},
+			parentLayoutName = ${parentLayoutName},
 			site = "false");
 	}
 
 	macro addSiteFromSiteTemplate {
 		Variables.assertDefined(parameterList = "${groupName},${siteTemplateName}");
 
-		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
-		var layoutSetPrototypeUuid = JSONSiteTemplateAPI._getSiteTemplateUuidByName(siteTemplateName = "${siteTemplateName}");
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
+		var layoutSetPrototypeUuid = JSONSiteTemplateAPI._getSiteTemplateUuidByName(siteTemplateName = ${siteTemplateName});
 
-		JSONGroup.addGroup(groupName = "${groupName}");
+		JSONGroup.addGroup(groupName = ${groupName});
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		JSONSiteTemplateAPI._applyTemplateToSite(
-			groupId = "${groupId}",
-			layoutSetPrototypeUuid = "${layoutSetPrototypeUuid}",
-			privateLayout = "${privateLayout}");
+			groupId = ${groupId},
+			layoutSetPrototypeUuid = ${layoutSetPrototypeUuid},
+			privateLayout = ${privateLayout});
 	}
 
 	macro addSiteTemplate {
-		Variables.assertDefined(parameterList = "${siteTemplateName}");
+		Variables.assertDefined(parameterList = ${siteTemplateName});
 
-		var description = JSONSiteTemplateSetter.setTemplateDescription(description = "${description}");
-		var active = JSONSiteTemplateSetter.setTemplateStatus(active = "${active}");
-		var layoutsUpdateable = JSONSiteTemplateSetter.setTemplateIsUpdateable(layoutsUpdateable = "${layoutsUpdateable}");
-		var readyForPropagation = JSONSiteTemplateSetter.setTemplatePropagation(readyForPropagation = "${readyForPropagation}");
+		var description = JSONSiteTemplateSetter.setTemplateDescription(description = ${description});
+		var active = JSONSiteTemplateSetter.setTemplateStatus(active = ${active});
+		var layoutsUpdateable = JSONSiteTemplateSetter.setTemplateIsUpdateable(layoutsUpdateable = ${layoutsUpdateable});
+		var readyForPropagation = JSONSiteTemplateSetter.setTemplatePropagation(readyForPropagation = ${readyForPropagation});
 
 		JSONSiteTemplateAPI._addSiteTemplateByName(
-			active = "${active}",
-			description = "${description}",
-			layoutsUpdateable = "${layoutsUpdateable}",
-			readyForPropagation = "${readyForPropagation}",
-			siteTemplateName = "${siteTemplateName}");
+			active = ${active},
+			description = ${description},
+			layoutsUpdateable = ${layoutsUpdateable},
+			readyForPropagation = ${readyForPropagation},
+			siteTemplateName = ${siteTemplateName});
 	}
 
 	macro deleteNonDefaultTemplates {
 		var companyId = JSONCompany.getCompanyId();
 
-		JSONSiteTemplateAPI._deleteNonDefaultSiteTemplates(companyId = "${companyId}");
+		JSONSiteTemplateAPI._deleteNonDefaultSiteTemplates(companyId = ${companyId});
 	}
 
 	macro deleteSiteTemplateByName {
-		Variables.assertDefined(parameterList = "${siteTemplateName}");
+		Variables.assertDefined(parameterList = ${siteTemplateName});
 
-		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(companyId = "${companyId}");
+		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(companyId = ${companyId});
 
-		JSONSiteTemplateAPI._deleteSiteTemplateById(layoutSetPrototypeId = "${layoutSetPrototypeId}");
+		JSONSiteTemplateAPI._deleteSiteTemplateById(layoutSetPrototypeId = ${layoutSetPrototypeId});
 	}
 
 	macro getSiteTemplateIdByName {
-		Variables.assertDefined(parameterList = "${siteTemplateName}");
+		Variables.assertDefined(parameterList = ${siteTemplateName});
 
-		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = "${siteTemplateName}");
+		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 
 		var siteTemplateID = "template-${layoutSetPrototypeId}";
 
 		echo("siteTemplateID: ${siteTemplateID}");
 
-		return "${siteTemplateID}";
+		return ${siteTemplateID};
 	}
 
 }

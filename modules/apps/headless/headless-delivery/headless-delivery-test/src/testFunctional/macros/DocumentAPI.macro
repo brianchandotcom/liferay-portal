@@ -1,7 +1,7 @@
 definition {
 
 	macro _addDocument {
-		Variables.assertDefined(parameterList = "${filePath}");
+		Variables.assertDefined(parameterList = ${filePath});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -24,13 +24,13 @@ definition {
 				-F file=@${filePath}
 		''';
 
-		var curl = JSONCurlUtil.post("${curl}");
+		var curl = JSONCurlUtil.post(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _deleteDocumentsByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -47,9 +47,9 @@ definition {
 				-H accept: application/json
 		''';
 
-		var curl = JSONCurlUtil.delete("${curl}");
+		var curl = JSONCurlUtil.delete(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _filterDocumentInAssetLibrary {
@@ -63,13 +63,13 @@ definition {
 				-H accept: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getDocumentsByDifferentParameters {
-		Variables.assertDefined(parameterList = "${documentId}");
+		Variables.assertDefined(parameterList = ${documentId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -86,9 +86,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getDocumentsByErcInAssetLibrary {
@@ -102,13 +102,13 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _updateDocumentByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		if (!(isSet(filePath) || isSet(title) || isSet(updateExternalReferenceCode))) {
 			TestUtils.fail(message = "Please set at least one property to update the document.");
@@ -132,7 +132,7 @@ definition {
 		if (isSet(filePath)) {
 			var fileBody = "-F file=@\"${filePath}\"";
 
-			var curl = StringUtil.add("${curl}", "${fileBody}", "${delimiter}");
+			var curl = StringUtil.add(${curl}, ${fileBody}, ${delimiter});
 		}
 
 		if (isSet(title) && isSet(updateExternalReferenceCode)) {
@@ -140,7 +140,7 @@ definition {
 				-F document={"externalReferenceCode": "${updateExternalReferenceCode}", "title": "${title}"}
 			''';
 
-			var curl = StringUtil.add("${curl}", "${documentBody}", "${delimiter}");
+			var curl = StringUtil.add(${curl}, ${documentBody}, ${delimiter});
 		}
 		else {
 			if (isSet(title)) {
@@ -154,122 +154,122 @@ definition {
 				''';
 			}
 
-			var curl = StringUtil.add("${curl}", "${documentBody}", "${delimiter}");
+			var curl = StringUtil.add(${curl}, ${documentBody}, ${delimiter});
 		}
 
-		var curl = JSONCurlUtil.put("${curl}");
+		var curl = JSONCurlUtil.put(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro addDocumentInAssetLibraryByUploadFile {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
 
 		var response = DocumentAPI._addDocument(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}",
-			filePath = "${filePath}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode},
+			filePath = ${filePath});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro assertExternalReferenceCodeWithCorrectValue {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
-			var expectedExternalReferenceCodeValue = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${responseToParse}");
+			var expectedExternalReferenceCodeValue = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${responseToParse});
 		}
 
-		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
 
 		TestUtils.assertEquals(
-			actual = "${actualExternalReferenceCodeValue}",
-			expected = "${expectedExternalReferenceCodeValue}");
+			actual = ${actualExternalReferenceCodeValue},
+			expected = ${expectedExternalReferenceCodeValue});
 	}
 
 	macro assertProperDocumentTotalCount {
-		Variables.assertDefined(parameterList = "${expectedDocumentTotalCount}");
+		Variables.assertDefined(parameterList = ${expectedDocumentTotalCount});
 
 		var response = DocumentAPI._filterDocumentInAssetLibrary(
-			assetLibraryId = "${assetLibraryId}",
-			filtervalue = "${filtervalue}");
+			assetLibraryId = ${assetLibraryId},
+			filtervalue = ${filtervalue});
 
-		var actualDocumentTotalCount = JSONUtil.getWithJSONPath("${response}", "$..['totalCount']");
+		var actualDocumentTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
 
 		TestUtils.assertEquals(
-			actual = "${actualDocumentTotalCount}",
-			expected = "${expectedDocumentTotalCount}");
+			actual = ${actualDocumentTotalCount},
+			expected = ${expectedDocumentTotalCount});
 	}
 
 	macro deleteDocumentInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
 		if (!(isSet(externalReferenceCode))) {
-			Variables.assertDefined(parameterList = "${responseToParse}");
+			Variables.assertDefined(parameterList = ${responseToParse});
 
-			var externalReferenceCode = DocumentAPI.getUuidOfCreatedDocument(responseToParse = "${responseToParse}");
+			var externalReferenceCode = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${responseToParse});
 		}
 
 		DocumentAPI._deleteDocumentsByErcInAssetLibrary(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode});
 	}
 
 	macro getDocumentsByDifferentParameters {
 		var response = DocumentAPI._getDocumentsByDifferentParameters(
-			documentId = "${documentId}",
-			parameter = "${parameter}",
-			parameterValue = "${parameterValue}");
+			documentId = ${documentId},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getDocumentsByErcInAssetLibrary {
 		var response = DocumentAPI._getDocumentsByErcInAssetLibrary(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getIdOfCreatedDocument {
 		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}",
-			filePath = "${filePath}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode},
+			filePath = ${filePath});
 
-		var documentId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
+		var documentId = JSONUtil.getWithJSONPath(${response}, "$.['id']");
 
-		return "${documentId}";
+		return ${documentId};
 	}
 
 	macro getTitleOfDocument {
-		var documentTitle = JSONUtil.getWithJSONPath("${responseToParse}", "$.['title']");
+		var documentTitle = JSONUtil.getWithJSONPath(${responseToParse}, "$.['title']");
 
-		return "${documentTitle}";
+		return ${documentTitle};
 	}
 
 	macro getUuidOfCreatedDocument {
-		Variables.assertDefined(parameterList = "${responseToParse}");
+		Variables.assertDefined(parameterList = ${responseToParse});
 
-		var contentURL = JSONUtil.getWithJSONPath("${responseToParse}", "$.['contentUrl']");
+		var contentURL = JSONUtil.getWithJSONPath(${responseToParse}, "$.['contentUrl']");
 
-		var contentURLSubString = StringUtil.extractFirst("${contentURL}", "?");
+		var contentURLSubString = StringUtil.extractFirst(${contentURL}, "?");
 
-		var documentUuid = StringUtil.extractLast("${contentURLSubString}", "/");
+		var documentUuid = StringUtil.extractLast(${contentURLSubString}, "/");
 
-		return "${documentUuid}";
+		return ${documentUuid};
 	}
 
 	macro updateDocumentByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
 		var response = DocumentAPI._updateDocumentByErc(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}",
-			filePath = "${filePath}",
-			title = "${title}",
-			updateExternalReferenceCode = "${updateExternalReferenceCode}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode},
+			filePath = ${filePath},
+			title = ${title},
+			updateExternalReferenceCode = ${updateExternalReferenceCode});
 
-		return "${response}";
+		return ${response};
 	}
 
 }

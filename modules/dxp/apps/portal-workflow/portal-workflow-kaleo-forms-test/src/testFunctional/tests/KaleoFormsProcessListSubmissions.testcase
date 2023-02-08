@@ -27,7 +27,7 @@ definition {
 		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
-			kfFieldSetName = "${kfFieldSetName}",
+			kfFieldSetName = ${kfFieldSetName},
 			kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsAdmin.next();
@@ -54,7 +54,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@description = "Verify that the user can clear the result bar after the user use  the search bar ."
-	@priority = "5"
+	@priority = 5
 	test CanClearSearchBar {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "Verify that the user can create a new submission without filling in the fields."
-	@priority = "4"
+	@priority = 4
 	test CanCreateANewSubmissionWithFieldsEmpty {
 		KaleoFormsAdmin.viewProcessRecord(kfProcessName = "Kaleo Forms Process");
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "Verify that user can delete all submissions in the page."
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAllSubmissions {
 		for (var contactNumber : list "1,2,3") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "Verify that the user can filter by Create Date."
-	@priority = "3"
+	@priority = 3
 	test CanFilterByCreateDate {
 		for (var processName : list "A,B") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "Verify that the user can filter by Modified Date ."
-	@priority = "4"
+	@priority = 4
 	test CanFilterByModifiedDate {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@description = "Verify that the user can modify the quantity of items view per page."
-	@priority = "3"
+	@priority = 3
 	test CanModifyQuantityOfItemsPerPage {
 		for (var kfProcessName : list "1,2,3,4") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
@@ -236,13 +236,13 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
 	}
 
 	@description = "Verify that user can nagivate through pages."
-	@priority = "3"
+	@priority = 3
 	test CanNavigateThroughPages {
 		for (var kfProcessName : list "1,2,3,4") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
@@ -262,17 +262,17 @@ definition {
 
 		KaleoFormsAdmin.saveProcessRecord();
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		KaleoFormsAdmin.viewNextFieldSetPage();
 
 		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
 
-		KaleoFormsNewSubmissions.viewPaginationNumber(pageNumberList = "2");
+		KaleoFormsNewSubmissions.viewPaginationNumber(pageNumberList = 2);
 	}
 
 	@description = "Verify that the user can reverse the order of submissions."
-	@priority = "3"
+	@priority = 3
 	test CanOrderSubmissions {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Reject a submission."
-	@priority = "5"
+	@priority = 5
 	test CanRejectASubmission {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -312,8 +312,8 @@ definition {
 			ddlFirstName = "Test",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		KaleoFormsAdmin.saveProcessRecord();
 
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "Verify that user can search by Column Value and view the search result."
-	@priority = "3"
+	@priority = 3
 	test CanSearchByColumnValue {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to track the workflow through the Kebab Menu."
-	@priority = "5"
+	@priority = 5
 	test CanViewTrackApprovalThroughKebabMenu {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "Verify that the user can view the column values on the page after submit the process."
-	@priority = "5"
+	@priority = 5
 	test CanViewValuesAfterSubmitAProcess {
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
@@ -404,8 +404,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		KaleoFormsAdmin.saveProcessRecord();
 

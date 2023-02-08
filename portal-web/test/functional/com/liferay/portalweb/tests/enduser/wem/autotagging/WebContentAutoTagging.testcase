@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This test ensures that a web content can be autotagged on a staging site and that the tags will be published to live successfully."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAssertAutoTagAfterPublishingToLive {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#CanAssertAutoTagAfterPublishingToLive";
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This test asserts that a webcontent is auto tagged when OpenNLP Text Auto Tagging is enabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAssertAutoTagViaAP {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#CanAssertAutoTagViaAP";
@@ -80,7 +80,7 @@ definition {
 			layoutName = "Asset Publisher Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "This test asserts that an auto-tagged web content can be deleted when OpenNLP Auto-Tagging is enabled."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteAssetWithTag {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#CanDeleteAssetWithTag";
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This test ensures that if a user manually adds a tag when adding a web content, the entry will not be autotagged."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotAutoTagForManuallyAddedEntry {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#CannotAutoTagForManuallyAddedEntry";
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "This test asserts that a webcontent is auto tagged when it is published from draft status. "
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanPublishAutoTaggedDraft {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#CanPublishAutoTaggedDraft";
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a web content."
-	@priority = "4"
+	@priority = 4
 	test NoTagUpdatesAfterDisablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#NoTagUpdatesAfterDisablingUpdateAutoTags";
 
@@ -221,16 +221,16 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "dxp,herbert") {
-			AssetCategorization.viewTag(tagName = "${tagName}");
+			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 
 		for (var tagName : list "adventures,alice") {
-			AssetCategorization.viewNoTag(tagName = "${tagName}");
+			AssetCategorization.viewNoTag(tagName = ${tagName});
 		}
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a web content."
-	@priority = "4"
+	@priority = 4
 	test TagUpdatesAfterEnablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#TagUpdatesAfterEnablingUpdateAutoTags";
 
@@ -258,7 +258,7 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "adventures,alice,dxp,herbert") {
-			AssetCategorization.viewTag(tagName = "${tagName}");
+			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 	}
 

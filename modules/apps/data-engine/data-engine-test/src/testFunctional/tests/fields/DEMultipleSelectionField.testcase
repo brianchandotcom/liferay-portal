@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that is possible to change inline layout setting."
-	@priority = "3"
+	@priority = 3
 	test CanBeInlined {
 		NavItem.gotoStructures();
 
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that editing chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanEditChosenOptions {
 		NavItem.gotoStructures();
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -233,12 +233,12 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Multiple Selection");
 
 		DERenderer.inputDataInMultipleSelectionField(
-			fieldIndex = "1",
+			fieldIndex = 1,
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 1");
 
 		DERenderer.inputDataInMultipleSelectionField(
-			fieldIndex = "2",
+			fieldIndex = 2,
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 2");
 
@@ -247,18 +247,18 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertDataInMultipleSelectionField(
-			fieldIndex = "1",
+			fieldIndex = 1,
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 1");
 
 		DERenderer.assertDataInMultipleSelectionField(
-			fieldIndex = "2",
+			fieldIndex = 2,
 			fieldLabel = "Multiple Selection",
 			optionValue = "Option 2");
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that is not possible to publish the Web Content with a blank required field."
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that is possible to remove a duplicated field (repeatable)."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -318,11 +318,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Multiple Selection",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanSelectOptions {
 		NavItem.gotoStructures();
 
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEMultipleSelectionField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -392,7 +392,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEMultipleSelectionField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -481,7 +481,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that multiple options can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetMultipleOptions {
 		NavItem.gotoStructures();
 
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68572. This test verifies that is possible to change inline layout setting."
-	@priority = "3"
+	@priority = 3
 	test CanShowAsSwitch {
 		NavItem.gotoStructures();
 
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69038. This test verifies that is possible to uncheck a chosen option and it persists."
-	@priority = "4"
+	@priority = 4
 	test CanUncheckChosenOptions {
 		NavItem.gotoStructures();
 
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@description = "Check if Multiple Selection Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewMultipleSelectionFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -604,7 +604,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Multiple Selection",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -628,7 +628,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Multiple Selection",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

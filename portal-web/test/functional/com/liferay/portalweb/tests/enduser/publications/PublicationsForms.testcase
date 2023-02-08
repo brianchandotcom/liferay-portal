@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Assert the form with Data Provider is published to production and submit successfully."
-	@priority = "4"
+	@priority = 4
 	test PublishPublicationWithDataProviderInForm {
 		property test.name.skip.portal.instance = "PublicationsForms#PublishPublicationWithDataProviderInForm";
 
@@ -57,7 +57,7 @@ definition {
 			outputParameterPath = "nameCurrentValue",
 			outputParameterType = "List",
 			password = "test",
-			timeout = "10000",
+			timeout = 10000,
 			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 
@@ -120,10 +120,10 @@ definition {
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Data Provider Select Field",
-			fieldName = "${fieldNameDataProvider}");
+			fieldName = ${fieldNameDataProvider});
 
 		FormFields.selectSelectOption(
-			fieldName = "${fieldNameDataProvider}",
+			fieldName = ${fieldNameDataProvider},
 			selectOption = "China");
 
 		FormPortlet.submitSuccessfully();
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "Assert the form with edited Element Set is published to production"
-	@priority = "4"
+	@priority = 4
 	test PublishPublicationWithEditedElementSetInForm {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -165,7 +165,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Image");
 
 		Form.closeSidebar();
@@ -189,7 +189,7 @@ definition {
 			rowEntry = "Element Set Name");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "2",
+			fieldPositionNumber = 2,
 			fieldType = "Upload");
 
 		Form.closeSidebar();
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "Assert the conflict needs manually resolved on Forms within Publications."
-	@priority = "4"
+	@priority = 4
 	test ResolveConflictingPublicationsByDiscarding {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -241,7 +241,7 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Created Form Page Name",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		Form.addTextField();
 
@@ -266,7 +266,7 @@ definition {
 		Form.editName(formName = "Created Form Name Edited");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Single Selection");
 
 		Form.closeSidebar();
@@ -329,7 +329,7 @@ definition {
 	}
 
 	@description = "Assert the form with mutiple pages can be submited successfully within publications and the entry can be published to production."
-	@priority = "4"
+	@priority = 4
 	test SubmitFormWithMultiplePagesWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -349,7 +349,7 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Page 1",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		Form.addTextField();
 
@@ -359,15 +359,15 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page 2",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
 		Form.gotoAddField(
 			fieldType = "Single Selection",
-			formPageNumber = "1");
+			formPageNumber = 1);
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
 
@@ -380,19 +380,19 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.closeSidebar();
 
-		Form.addPage(formAddNewPageNumber = "2");
+		Form.addPage(formAddNewPageNumber = 2);
 
 		Form.editPageTitle(
 			formPageName = "Page 3",
-			formTitleNumber = "3");
+			formTitleNumber = 3);
 
 		Form.gotoAddField(
 			fieldType = "Upload",
-			formPageNumber = "2");
+			formPageNumber = 2);
 
 		var fieldUploadField = FormFields.getFieldName();
 
@@ -434,7 +434,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Single Line Text");
 
 		FormPortlet.nextPage(
@@ -443,10 +443,10 @@ definition {
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio Field",
-			fieldName = "${fieldSingleSelectionField}");
+			fieldName = ${fieldSingleSelectionField});
 
 		FormFields.selectRadioOption(
-			fieldName = "${fieldSingleSelectionField}",
+			fieldName = ${fieldSingleSelectionField},
 			radioOption = "Option 1");
 
 		FormPortlet.nextPage(
@@ -455,7 +455,7 @@ definition {
 
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
-			fieldName = "${fieldUploadField}");
+			fieldName = ${fieldUploadField});
 
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
@@ -501,7 +501,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Form Record",
 			changeSite = "Site Name",
-			changeTitle = "${changeTitle}",
+			changeTitle = ${changeTitle},
 			changeType = "Added",
 			changeUser = "Test Test");
 
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@description = "Assert the form with rule can be submited successfully within publications and published to production."
-	@priority = "4"
+	@priority = 4
 	test SubmitFormWithRuleWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -558,7 +558,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Date");
 
 		var fieldNameDateField = FormFields.getFieldName();
@@ -574,11 +574,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text Field",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Date Field");
 
 		FormRules.save();
@@ -601,21 +601,21 @@ definition {
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldNameDateField}");
+			fieldName = ${fieldNameDateField});
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
+			fieldName = ${fieldNameTextField},
 			fieldValue = "Test");
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldNameDateField}");
+			fieldName = ${fieldNameDateField});
 
-		FormFields.editTextWithBackspace(fieldName = "${fieldNameTextField}");
+		FormFields.editTextWithBackspace(fieldName = ${fieldNameTextField});
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldNameDateField}");
+			fieldName = ${fieldNameDateField});
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -638,7 +638,7 @@ definition {
 			actionTarget = "Date Field",
 			conditionField = "Text Field",
 			conditionOperator = "Is Not Empty",
-			ruleNumber = "1");
+			ruleNumber = 1);
 	}
 
 }

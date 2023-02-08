@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142485. A draft content page with page versioning enabled should not have a main variation button after upgrade."
-	@priority = "4"
+	@priority = 4
 	test NavigateToDraftContentPageAtViewModeInStagingSiteAfterUpgrade713 {
 		property data.archive.type = "data-archive-draft-page-with-page-versioning";
 		property database.types = "mariadb,mysql,postgresql";
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142485. A draft content page with page versioning enabled should not have a main variation button after upgrade."
-	@priority = "4"
+	@priority = 4
 	test NavigateToDraftContentPageAtViewModeInStagingSiteAfterUpgrade71105 {
 		property data.archive.type = "data-archive-draft-page-with-page-versioning";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

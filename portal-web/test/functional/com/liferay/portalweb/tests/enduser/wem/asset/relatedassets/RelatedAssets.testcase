@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155247. The Related Assets Widget should display the assets related to all contents placed on content page."
-	@priority = "4"
+	@priority = 4
 	test DisplayAllRelatedAssetsOnContentPage {
 		task ("Given a page designer has a displayed related assets and Web Content Display on content page") {
 			task ("Add a web content") {
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155247. The Related Assets Widget should display the assets related to all contents placed on display page template."
-	@priority = "4"
+	@priority = 4
 	test DisplayAllRelatedAssetsOnDisplayPageTemplate {
 		property testray.component.names = "Display Pages,Related Assets";
 
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "Folders should not be shown as related assets"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test DontShowFolders {
 		property testray.component.names = "Related Assets";
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72472. When an article has related asset from the global site, the related asset is not displayed in live after publication"
-	@priority = "4"
+	@priority = 4
 	test ShouldBeDisplayedWithGlobalWebContentAfterPublishToLive {
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@description = "Related assets should be displayed with category."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ShouldBeDisplayWithCategory {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -495,7 +495,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content 2",
 				groupName = "Site Name (Staging)",
 				site = "false",
@@ -573,7 +573,7 @@ definition {
 	}
 
 	@description = "View related assets in Related Assets widget."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ShouldBeShownInRelatedAssetsWidget {
 		task ("Add a widget page") {

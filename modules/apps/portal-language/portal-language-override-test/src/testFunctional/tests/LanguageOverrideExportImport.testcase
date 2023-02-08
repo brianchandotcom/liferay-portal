@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This test asserts that Cancel button works as expected in Import Translations page."
-	@priority = "5"
+	@priority = 5
 	test CanCancelImportTranslation {
 		task ("Given assert the Import Translations page display") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This test ensures that separate language keys with overridden translation of the same locale will export successfully"
-	@priority = "4"
+	@priority = 4
 	test CanExportMultipleLanguageKeysWithOverride {
 		task ("Given that there are two language keys with en-US override") {
 			LanguageOverride.addLanguageKey(
@@ -95,7 +95,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This test ensures that a user can export overridden translations for a single language key"
-	@priority = "5"
+	@priority = 5
 	test CanExportOverriddenTranslations {
 		task ("Given that by default, Export function does not display") {
 			Portlet.viewPortletOptions(optionsName = "Import Translations");
@@ -120,19 +120,19 @@ this-is-a-language-key=This is a language key''',
 				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
 
 			for (var fileName : list "Language_en_US.properties,Language_fr_FR.properties,Language_pt_BR.properties,Language_es_ES.properties") {
-				DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
+				DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
 
-				if ("${fileName}" == "Language_en_US.properties") {
+				if (${fileName} == "Language_en_US.properties") {
 					DMDocument.assertDownloadedFileContent(
 						downloadedContent = "hello-world=Hello world",
 						fileName = "Language_en_US.properties");
 				}
-				else if ("${fileName}" == "Language_fr_FR.properties") {
+				else if (${fileName} == "Language_fr_FR.properties") {
 					DMDocument.assertDownloadedFileContent(
 						downloadedContent = "hello-world=bonjour le monde",
 						fileName = "Language_fr_FR.properties");
 				}
-				else if ("${fileName}" == "Language_pt_BR.properties") {
+				else if (${fileName} == "Language_pt_BR.properties") {
 					DMDocument.assertDownloadedFileContent(
 						downloadedContent = "hello-world=ola mundo",
 						fileName = "Language_pt_BR.properties");
@@ -147,7 +147,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This test ensures that the exported properties file works and can be imported to portal"
-	@priority = "4"
+	@priority = 4
 	test CanImportExportedPropertiesFile {
 		task ("Given a properties file for overridden translations was already exported") {
 			LanguageOverride.addLanguageKey(
@@ -193,7 +193,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This test asserts that translation is imported based on the language selected in the Import Translations page."
-	@priority = "5"
+	@priority = 5
 	test CanImportTranslations {
 		task ("Given a user has a property file to import in Translations") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");
@@ -227,7 +227,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This is a use case for LPS-149558. It assert the .properties with wrong format like language key value is empty can not be imported into Language Override Admin."
-	@priority = "4"
+	@priority = 4
 	test CannotImportFileWithWrongDataFormat {
 		task ("Given navigate to the language override Import Translations page") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");
@@ -247,7 +247,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This test asserts that a user cannot import translations that has more than 1000 characters"
-	@priority = "3"
+	@priority = 3
 	test CannotImportTranslationsWithMoreThan1000Characters {
 		task ("Given that a user can import translations") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");
@@ -279,7 +279,7 @@ this-is-a-language-key=This is a language key''',
 	}
 
 	@description = "This test asserts that the File Upload field is required in Import Translations page."
-	@priority = "4"
+	@priority = 4
 	test CanViewFileUploadFieldIsRequired {
 		task ("Given go to the Import Translations page") {
 			Portlet.gotoPortletOptions(portletOption = "Import Translations");

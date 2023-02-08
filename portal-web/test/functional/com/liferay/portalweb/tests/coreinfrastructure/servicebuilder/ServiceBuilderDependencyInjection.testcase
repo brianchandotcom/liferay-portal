@@ -13,13 +13,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Upgrades a Service Builder module using Spring to use Declarative Services instead"
-	@priority = "4"
+	@priority = 4
 	test UpgradeSpringModuleToDeclarativeServices {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ServiceBuilder#UpgradeSpringModuleToDeclarativeServices";

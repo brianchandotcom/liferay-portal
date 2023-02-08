@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "View the XSS is escaped when store it in widget page name."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewWidgetPage {
 		var pageName = '''<script>alert(123);</script>''';
@@ -37,12 +37,12 @@ definition {
 		task ("Add a widget page with XSS page name") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPage(pageName = "${pageName}");
+			PagesAdmin.addPage(pageName = ${pageName});
 		}
 
 		task ("Navigate to the widget page") {
 			Navigator.gotoSitePage(
-				pageName = "${pageName}",
+				pageName = ${pageName},
 				siteName = "Test Site Name");
 		}
 
@@ -54,9 +54,9 @@ definition {
 			var actualScript = '''<script>alert(123);</script>''';
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 
 		task ("Navigate to the Pages admin") {
@@ -68,9 +68,9 @@ definition {
 		}
 
 		task ("View the XSS is escaped") {
-			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = ${escapedScript});
 		}
 	}
 

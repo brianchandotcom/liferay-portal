@@ -20,7 +20,7 @@ definition {
 	function isTextNotEqual {
 		WaitForSPARefresh();
 
-		if (contains("${locator1}", "/input")) {
+		if (contains(${locator1}, "/input")) {
 			IsTextNotEqual.isNotValue();
 		}
 		else {

@@ -19,7 +19,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test Faces1470And1478PortletSmoke {
 
 		// FACES_1470
@@ -143,7 +143,7 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test Faces1618And1638PortletSmoke {
 
 		// FACES-1618
@@ -156,7 +156,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#RESOURCE_SIZE",
-			value1 = "2");
+			value1 = 2);
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#RESOURCE",
@@ -172,7 +172,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#RESOURCE_SIZE",
-			value1 = "3");
+			value1 = 3);
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#RESOURCE",
@@ -210,42 +210,42 @@ definition {
 
 		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
-				liIndex = "1",
+				liIndex = 1,
 				paramLink = "First-Item",
-				ulIndex = "${index}");
+				ulIndex = ${index});
 
 			BridgeIssues.verifyParam(
-				liIndex = "1",
-				paramValue = "1",
-				ulIndex = "${index}");
+				liIndex = 1,
+				paramValue = 1,
+				ulIndex = ${index});
 		}
 
 		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
-				liIndex = "2",
+				liIndex = 2,
 				paramLink = "Second-Item",
-				ulIndex = "${index}");
+				ulIndex = ${index});
 
 			BridgeIssues.verifyParam(
-				liIndex = "2",
-				paramValue = "2",
-				ulIndex = "${index}");
+				liIndex = 2,
+				paramValue = 2,
+				ulIndex = ${index});
 		}
 
 		for (var index : list "1,2") {
 			BridgeIssues.verifyParam(
-				liIndex = "3",
+				liIndex = 3,
 				paramLink = "Third-Item",
-				ulIndex = "${index}");
+				ulIndex = ${index});
 
 			BridgeIssues.verifyParam(
-				liIndex = "3",
-				paramValue = "3",
-				ulIndex = "${index}");
+				liIndex = 3,
+				paramValue = 3,
+				ulIndex = ${index});
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test Faces1635And1433PortletSmoke {
 
 		// FACES_1635Resources
@@ -264,10 +264,10 @@ definition {
 
 		AssertElementPresent(locator1 = "BridgeIssues#LIFERAY_LOGO_P");
 
-		var key_blcount = "1";
-		var key_bscount = "1";
-		var key_hlcount = "1";
-		var key_hscount = "1";
+		var key_blcount = 1;
+		var key_bscount = 1;
+		var key_hlcount = 1;
+		var key_hscount = 1;
 
 		while ((IsElementPresent(locator1 = "BridgeIssues#HEAD_SCRIPT")) && (maxIterations = "50")) {
 			var key_hsrc = selenium.getAttribute("//head//script[${key_hscount}]@scr");
@@ -318,7 +318,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test FacesIssuesPortletSmoke {
 
 		// FACES_224
@@ -366,31 +366,31 @@ definition {
 		AssertElementPresent(locator1 = "BridgeIssues#REQUESTED_URL");
 
 		BridgeIssues.urlParameters(
-			alpha = "1",
-			beta = "2",
+			alpha = 1,
+			beta = 2,
 			buttonName = "alpha=1 beta=2 gamma=0",
-			gamma = "0",
+			gamma = 0,
 			urlEnd = "/-/FACES-257/1/my-friendly-action/2");
 
 		BridgeIssues.urlParameters(
-			alpha = "1",
-			beta = "2",
+			alpha = 1,
+			beta = 2,
 			buttonName = "alpha=1 beta=2 gamma=3",
-			gamma = "3",
+			gamma = 3,
 			urlEnd = "/-/FACES-257/1/my-friendly-action/2/3");
 
 		BridgeIssues.urlParameters(
-			alpha = "4",
-			beta = "5",
+			alpha = 4,
+			beta = 5,
 			buttonName = "alpha=4 beta=5 gamma=0",
-			gamma = "0",
+			gamma = 0,
 			urlEnd = "/-/FACES-257/4/my-friendly-action/5");
 
 		BridgeIssues.urlParameters(
-			alpha = "4",
-			beta = "5",
+			alpha = 4,
+			beta = 5,
 			buttonName = "alpha=4 beta=5 gamma=6",
-			gamma = "6",
+			gamma = 6,
 			urlEnd = "/-/FACES-257/4/my-friendly-action/5/6");
 
 		// FACES_2958
@@ -404,7 +404,7 @@ definition {
 		for (var resourceActionIndex : list "link.xhtml,commandLinkAjax.xhtml,commandLinkNonAjax.xhtml,link.xhtml via Ajax,commandLinkAjax.xhtml via Ajax,commandLinkNonAjax.xhtml via Ajax") {
 			BridgeIssues.verifyValue(
 				detailValue = "All special URL characters were correctly encoded.",
-				link = "${resourceActionIndex}",
+				link = ${resourceActionIndex},
 				statusValue = "SUCCESS",
 				textValue = "FACES-2958",
 				toPageLink = "success.xhtml");
@@ -415,7 +415,7 @@ definition {
 		for (var resourceActionIndex : list "resource.xhtml,resourceViaAjax.xhtml") {
 			BridgeIssues.verifyValue(
 				detailValue = "All special URL characters were correctly encoded.",
-				link = "${resourceActionIndex}",
+				link = ${resourceActionIndex},
 				restoreState = "true",
 				statusValue = "SUCCESS",
 				textValue = "FACES-2958");
@@ -451,13 +451,13 @@ definition {
 				detailValue = "Successfully navigated to",
 				statusValue = "SUCCESS",
 				textValue = "FACES-3300",
-				validURL = "${resourceActionIndex}");
+				validURL = ${resourceActionIndex});
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
 		}
 
 		for (var resourceActionIndex : list "1,2,3,4,5,6") {
-			BridgeIssues.verifyValue(inValidURL = "${resourceActionIndex}");
+			BridgeIssues.verifyValue(inValidURL = ${resourceActionIndex});
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/faces-3300");
 		}
@@ -488,7 +488,7 @@ definition {
 		for (var resourceActionIndex : list "result.xhtml via GET,result.xhtml via Ajax") {
 			BridgeIssues.verifyValue(
 				detailValue = "Liferay parameter was properly encoded in Render",
-				link = "${resourceActionIndex}",
+				link = ${resourceActionIndex},
 				restoreState = "true",
 				statusValue = "SUCCESS",
 				textValue = "FACES-3404");
@@ -527,7 +527,7 @@ definition {
 			textValue = "MOJARRA-4340-workaround");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PrimefacesIssuesSmoke {
 
 		// FACES_1513_2185

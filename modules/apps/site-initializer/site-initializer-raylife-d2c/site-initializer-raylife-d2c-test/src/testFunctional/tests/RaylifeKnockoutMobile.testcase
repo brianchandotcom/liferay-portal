@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,11 +31,11 @@ definition {
 	}
 
 	@description = "LPS-146140 - Verify if the message 'We need to ask you for more information about your employees.' is present. (Tablet)"
-	@priority = "2"
+	@priority = 2
 	test IfAboutYourBusinessMessageIsPresentInBusinessTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -53,11 +53,11 @@ definition {
 	}
 
 	@description = "LPS-146147 - Verify if the message 'We need to ask you for more information about your employees.' is present. (Tablet)"
-	@priority = "3"
+	@priority = 3
 	test IfAboutYourBusinessMessageIsPresentInPropertyTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.getAQuote();
 
@@ -101,11 +101,11 @@ definition {
 	}
 
 	@description = "LPS-146142 - Verify if the message 'We need to ask you for more information about your Employees.' is present. (Smartphone)"
-	@priority = "3"
+	@priority = 3
 	test IfAboutYourEmployeesMessageIsPresentPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -127,11 +127,11 @@ definition {
 	}
 
 	@description = "LPS-146132 - Verify if Application ID was generated after the user saved their Contact Info. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test IfContactInfoWasGeneratedInBusinessPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -147,11 +147,11 @@ definition {
 	}
 
 	@description = "LPS-146143 - Verify if Application ID was generated after the user saved their Contact Info. (Tablet)"
-	@priority = "5"
+	@priority = 5
 	test IfContactInfoWasGeneratedInEmployeesTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -171,11 +171,11 @@ definition {
 	}
 
 	@description = "LPS-146144 - Verify if Application ID was generated after the user saved their Contact Info. (Smartphone)"
-	@priority = "5"
+	@priority = 5
 	test IfContactInfoWasGeneratedInPropertyPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.getAQuote();
 
@@ -195,7 +195,7 @@ definition {
 
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.yearsOfExperience",
-			value = "3");
+			value = 3);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -223,7 +223,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -241,7 +241,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "2015");
+			value = 2015);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

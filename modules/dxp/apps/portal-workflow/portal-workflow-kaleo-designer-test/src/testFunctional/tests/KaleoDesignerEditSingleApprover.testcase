@@ -28,12 +28,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test DeleteTaskNode {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#DeleteTaskNode";
@@ -54,29 +54,29 @@ definition {
 		Workflow.viewDefinitionPublished(
 			workflowDefinitionName = "Single Approver",
 			workflowDefinitionTitle = "Edited Workflow Definition",
-			workflowDefinitionVersionNumber = "2");
+			workflowDefinitionVersionNumber = 2);
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "update");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
 		KaleoDesigner.editSourceXML(
 			kdSourceXml = "INVALID",
-			line = "9");
+			line = 9);
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewSourceXMLLine(
 			invalid = "true",
 			kdSourceXml = "INVALID",
-			line = "9");
+			line = 9);
 	}
 
 	@description = "This is a use case for LPS-46657."
-	@priority = "4"
+	@priority = 4
 	test ViewNodeNotificationRecipientPersistsAfterSwitchingTabs {
 		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#ViewNodeNotificationRecipientPersistsAfterSwitchingTabs";
 
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-46605."
-	@priority = "3"
+	@priority = 3
 	test ViewUserNotificationOption {
 		KaleoDesigner.selectNode(nodeNodeLabel = "review");
 

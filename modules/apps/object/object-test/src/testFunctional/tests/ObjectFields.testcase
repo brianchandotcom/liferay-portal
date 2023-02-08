@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Long Text the Maximum Number of Characters field has the 65,000 value as default"
-	@priority = "4"
+	@priority = 4
 	test 65000IsDefaultMaximumCharacterLongText {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151572",
@@ -47,11 +47,11 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = "65000");
+		ObjectField.assertValueOnLimitCharacters(maxValue = 65000);
 	}
 
 	@description = "LPS-146523 - Verify if the scope of the object is Virtual Instance (Company) I will be able to add from any folders I have access to"
-	@priority = "4"
+	@priority = 4
 	test CanAddFromAnyFolderWhenScopedByCompany {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151564",
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "LPS-146523 - Verify if the scope of the object is Site, I will be able to add from the site I'm in or Asset Libraries connected to that site I have access to"
-	@priority = "4"
+	@priority = 4
 	test CanAddFromSiteAssetLibrariesWhenScopedBySite {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151566",
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "LPS-159151 - Verify that it's possible to create an Action with a custom field in a System Object"
-	@priority = "4"
+	@priority = 4
 	test CanCreateActionWithCustomFieldInSystemObjects {
 		task ("Add a Custom Object and Custom Field (API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify it is possible to create a Clob field"
-	@priority = "4"
+	@priority = 4
 	test CanCreateClobField {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 206",
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "LPS-135404 - Verify that it's possible to create new custom fields in a System Object"
-	@priority = "5"
+	@priority = 5
 	test CanCreateCustomFieldInSystemObject {
 		property portal.acceptance = "true";
 
@@ -339,7 +339,7 @@ definition {
 	}
 
 	@description = "LPS-149625 - Verify that it's possible to create an object entry with aggregation field"
-	@priority = "5"
+	@priority = 5
 	test CanCreateEntryWithAggregationField {
 		property portal.acceptance = "true";
 
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that it's possible to create an object entry with every field"
-	@priority = "5"
+	@priority = 5
 	test CanCreateObjectEntryWithEveryField {
 		property portal.acceptance = "true";
 
@@ -601,11 +601,11 @@ definition {
 
 			ObjectPortlet.typeCustomField(
 				customField = "Custom Integer",
-				entry = "1234");
+				entry = 1234);
 
 			ObjectPortlet.typeCustomField(
 				customField = "Custom Long Integer",
-				entry = "1122334455");
+				entry = 1122334455);
 
 			ObjectPortlet.typeCustomField(
 				customField = "Precision Decimal",
@@ -637,7 +637,7 @@ definition {
 
 			UploadFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${filePath}");
+				value1 = ${filePath});
 
 			PortletEntry.save();
 		}
@@ -646,7 +646,7 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject162140");
 
 			for (var asserts : list "Yes,12.34,1234,1122334455,1.5,Text written on long text,Text written on simple text,Text written on rich text,Picklist Item Test 1,LiferayLogo") {
-				ObjectPortlet.viewEntry(entry = "${asserts}");
+				ObjectPortlet.viewEntry(entry = ${asserts});
 			}
 
 			ObjectPortlet.viewEntry(entry = "Jan 1, 2022");
@@ -654,7 +654,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify that File Size and Format defined by admin are working correctly when using the 'Show Files' option"
-	@priority = "4"
+	@priority = 4
 	test CanDefineMaximumFileSizeOnShowFilesOption {
 		task ("Add new Custom Object (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -682,7 +682,7 @@ definition {
 
 			Type(
 				locator1 = "ObjectField#INPUT_MAXIMUM_FILE_SIZE",
-				value1 = "1");
+				value1 = 1);
 
 			PortletEntry.save();
 		}
@@ -719,7 +719,7 @@ definition {
 	}
 
 	@description = "LPS-149625 - Verify that it's possible to delete an aggregation field"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAggregationField {
 		task ("Create Custom Object and Custom Relationship itself (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@description = "LPS-135404 - Verify that it's possible to delete created custom fields in a System Object"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteCustomFieldInSystemObject {
 		task ("Create Custom Fields (via API)") {
 			for (var systemNames : list "AccountEntry,CPDefinition,CommercePricingClass,CommerceOrder,Address,User") {
@@ -769,7 +769,7 @@ definition {
 					fieldName = "customText",
 					fieldType = "String",
 					isRequired = "false",
-					objectName = "${systemNames}");
+					objectName = ${systemNames});
 			}
 		}
 
@@ -777,7 +777,7 @@ definition {
 			for (var systemNames : list "Account,Commerce Product,Commerce Product Group,Commerce Order,Postal Address,User") {
 				ObjectAdmin.openObjectAdmin();
 
-				ObjectPortlet.selectSystemObject(label = "${systemNames}");
+				ObjectPortlet.selectSystemObject(label = ${systemNames});
 
 				ObjectAdmin.goToFieldsTab();
 
@@ -789,7 +789,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if turn off the 'Show files' option on field settings"
-	@priority = "4"
+	@priority = 4
 	test CanDisableShowFilesOptionOnFieldSettings {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -818,7 +818,7 @@ definition {
 	}
 
 	@description = "LPS-149625 - Verify that it's possible to edit an aggregation field"
-	@priority = "4"
+	@priority = 4
 	test CanEditAggregationField {
 		task ("Create Custom Object and Custom Relationship itself (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -900,7 +900,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"
-	@priority = "4"
+	@priority = 4
 	test CanEditPublishedObjectStorageFolder {
 		task ("Add new Custom Object scoped by site (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -967,7 +967,7 @@ definition {
 	}
 
 	@description = "LPS-154872 - Verify that it's possible to filter and sort entries using metadata fields"
-	@priority = "4"
+	@priority = 4
 	test CanFilterAndSortEntriesViaMetadataFields {
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1013,15 +1013,15 @@ definition {
 		task ("Set order to ERC on Default Sort") {
 			ObjectCustomViews.goToDefaultSortTab();
 
-			for (var columnName : list "${listMetaData}") {
+			for (var columnName : list ${listMetaData}) {
 				ObjectCustomViews.addDefaultSort(
-					columnOption = "${columnName}",
+					columnOption = ${columnName},
 					sortOption = "Ascending");
 			}
 
-			for (var columnName : list "${listMetaData}") {
+			for (var columnName : list ${listMetaData}) {
 				ObjectCustomViews.assertColumnPresentOnDefaultSort(
-					columnName = "${columnName}",
+					columnName = ${columnName},
 					sortingLabel = "Ascending");
 			}
 
@@ -1040,19 +1040,19 @@ definition {
 		task ("Go to the Custom Object entries and assert the columns are present") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject161889");
 
-			for (var columnName : list "${listMetaData}") {
-				ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+			for (var columnName : list ${listMetaData}) {
+				ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
 			}
 		}
 
 		task ("Click on arrows and assert the entries change the position") {
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry A",
-				position = "1");
+				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry B",
-				position = "2");
+				position = 2);
 
 			Click(
 				key_orderColumn = "Create Date",
@@ -1060,16 +1060,16 @@ definition {
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry B",
-				position = "1");
+				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry A",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "LPS-154872 - Verify that it's possible to import and export metadata fields"
-	@priority = "4"
+	@priority = 4
 	test CanImportAndExportMetadataFields {
 		task ("Given a power user") {
 			task ("Create Custom Object and Custom Field") {
@@ -1115,16 +1115,16 @@ definition {
 
 			var listMetaData = "Author,Create Date,Modified Date,Status,ID";
 
-			for (var metadata : list "${listMetaData}") {
+			for (var metadata : list ${listMetaData}) {
 				AssertVisible(
-					key_label = "${metadata}",
+					key_label = ${metadata},
 					locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 			}
 		}
 	}
 
 	@description = "LPS-165995 - Verify that a message is displayed when the user tries to add more than 16 digits to a long integer field"
-	@priority = "4"
+	@priority = 4
 	test CanNotAddMoreThan16DigitsToLongIntField {
 		task ("Given an object with an attachment field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1147,7 +1147,7 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject165995");
 
 			ObjectPortlet.addSingleFieldEntryViaUI(
-				entry = "11111111111111111",
+				entry = 11111111111111111,
 				invalidEntry = "true");
 		}
 
@@ -1159,7 +1159,7 @@ definition {
 	}
 
 	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
-	@priority = "5"
+	@priority = 5
 	test CannotCreateEmptyObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -1184,7 +1184,7 @@ definition {
 	}
 
 	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."
-	@priority = "5"
+	@priority = 5
 	test CannotEditERCField {
 		property portal.acceptance = "true";
 
@@ -1213,7 +1213,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-156704 - Verify that the user cannot insert an invalid date in an object field."
-	@priority = "2"
+	@priority = 2
 	test CannotInsertInvalidDate {
 		task ("Given an object is created with a date field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1260,7 +1260,7 @@ definition {
 	}
 
 	@description = "LPS-156704 - Verify that the user is not able to order the object entry's table by the aggregation field column"
-	@priority = "4"
+	@priority = 4
 	test CanNotOrderByAggregationFieldColumn {
 		task ("Create Custom Object and Custom Relationship with Account (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1316,7 +1316,7 @@ definition {
 	}
 
 	@description = " LPS-162175 - Verify that the ERC field is not displayed on the Objects entry table"
-	@priority = "4"
+	@priority = 4
 	test CannotSeeERCFieldOnObjectEntryTable {
 		property portal.acceptance = "true";
 
@@ -1364,7 +1364,7 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
-	@priority = "4"
+	@priority = 4
 	test CannotTypeValueOutsideRange {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151573",
@@ -1389,17 +1389,17 @@ definition {
 
 		ObjectField.checkLimitCharacters();
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = "280");
+		ObjectField.assertValueOnLimitCharacters(maxValue = 280);
 
-		ObjectField.typeValueOnLimitCharacters(newValue = "281");
+		ObjectField.typeValueOnLimitCharacters(newValue = 281);
 
-		ObjectField.assertValueOnLimitCharactersNotPresent(maxValue = "281");
+		ObjectField.assertValueOnLimitCharactersNotPresent(maxValue = 281);
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = "28");
+		ObjectField.assertValueOnLimitCharacters(maxValue = 28);
 	}
 
 	@description = "LPS-148112 - Verify that attchment field is working fine to the selecting Request Files: Directly from User's Computer when 'Show files' option is off"
-	@priority = "4"
+	@priority = 4
 	test CanSaveDirectlyFromUsersComputerOptionWithShowFilesDisable {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153414",
@@ -1443,7 +1443,7 @@ definition {
 	}
 
 	@description = "LPS-162177 - Verify the ERC element is included in Actions - Expression Builder"
-	@priority = "5"
+	@priority = 5
 	test CanSeeERCFieldOnActionSidebar {
 		property portal.acceptance = "true";
 
@@ -1484,7 +1484,7 @@ definition {
 	}
 
 	@description = "LPS-162176 - Verify that the ERC is displayed on the object definition page"
-	@priority = "5"
+	@priority = 5
 	test CanSeeERCFieldOnObjectPage {
 		task ("Given an object is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1505,7 +1505,7 @@ definition {
 	}
 
 	@description = "Verify that it's possible to see the custom field label and system field label"
-	@priority = "5"
+	@priority = 5
 	test CanSeeFieldLabel {
 		property custom.properties = "feature.flag.LPS-158456=true";
 		property portal.acceptance = "true";
@@ -1539,7 +1539,7 @@ definition {
 	}
 
 	@description = "LPS-158821 - Verify that the user is able to set the ERC field as a Title Field"
-	@priority = "4"
+	@priority = 4
 	test CanSetERCFieldAsTitleField {
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1603,13 +1603,13 @@ definition {
 			ObjectPortlet.viewEntry(entry = "Entry Test");
 
 			for (var columnName : list "Custom Field,External Reference Code") {
-				ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+				ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
 			}
 		}
 	}
 
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Sort, on the Custom Views tab"
-	@priority = "4"
+	@priority = 4
 	test CanSortWithERCField {
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1682,11 +1682,11 @@ definition {
 		task ("Click on arrows and assert the entries change the position") {
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry A",
-				position = "1");
+				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry B",
-				position = "2");
+				position = 2);
 
 			Click(
 				key_orderColumn = "External Reference Code",
@@ -1694,16 +1694,16 @@ definition {
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry B",
-				position = "1");
+				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
 				entryName = "Entry A",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "LPS-135404 - Verify that it's possible to update created custom fields in a System Object"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateCustomFieldInSystemObject {
 		task ("Create Custom Fields (via API)") {
 			for (var systemNames : list "AccountEntry,CPDefinition,CommercePricingClass,CommerceOrder,Address,User") {
@@ -1713,7 +1713,7 @@ definition {
 					fieldName = "customText",
 					fieldType = "String",
 					isRequired = "false",
-					objectName = "${systemNames}");
+					objectName = ${systemNames});
 			}
 		}
 
@@ -1721,7 +1721,7 @@ definition {
 			for (var systemNames : list "Account,Commerce Product,Commerce Product Group,Commerce Order,Postal Address,User") {
 				ObjectAdmin.openObjectAdmin();
 
-				ObjectPortlet.selectSystemObject(label = "${systemNames}");
+				ObjectPortlet.selectSystemObject(label = ${systemNames});
 
 				ObjectAdmin.goToFieldsTab();
 
@@ -1745,7 +1745,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateShowFilesOptionBeforePublished {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153420",
@@ -1785,7 +1785,7 @@ definition {
 	}
 
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in View Builder, on the Custom Views tab"
-	@priority = "5"
+	@priority = 5
 	test CanUseERCFieldWithCustomView {
 		property portal.acceptance = "true";
 
@@ -1847,7 +1847,7 @@ definition {
 	}
 
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Expression Builder, on the Validations tab"
-	@priority = "4"
+	@priority = 4
 	test CanUseERCFieldWithExpressionBuilder {
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1925,7 +1925,7 @@ definition {
 	}
 
 	@description = "LPS-162178 - Verify that the user is able to use the ERC field in Groovy Scripts, on the Validations tab"
-	@priority = "5"
+	@priority = 5
 	test CanUseERCFieldWithGroovyScript {
 		property portal.acceptance = "true";
 
@@ -2003,7 +2003,7 @@ definition {
 			ObjectPortlet.updateEntry(
 				entry = "Entry Test",
 				invalidEntry = "true",
-				updateEntry = "${externalReferenceCodeId}");
+				updateEntry = ${externalReferenceCodeId});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -2012,7 +2012,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
-	@priority = "4"
+	@priority = 4
 	test CanValidOnlyPathsDefinedOnShowFilesOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153421",
@@ -2071,7 +2071,7 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if the 'Attachment' option is shown on the 'Type' dropdown"
-	@priority = "5"
+	@priority = 5
 	test CanViewAttachmentOption {
 		property portal.acceptance = "true";
 
@@ -2096,7 +2096,7 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if there is an option on Request Files: Directly from User's Computer"
-	@priority = "4"
+	@priority = 4
 	test CanViewDirectlyFromUsersComputerOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151559",
@@ -2121,7 +2121,7 @@ definition {
 	}
 
 	@description = "LPS-146523 - Verify if there's an option on Request Files: Upload and Select from Documents and Media Item Selector"
-	@priority = "5"
+	@priority = 5
 	test CanViewDocumentsAndMediaOption {
 		property portal.acceptance = "true";
 
@@ -2148,7 +2148,7 @@ definition {
 	}
 
 	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"
-	@priority = "4"
+	@priority = 4
 	test CanViewMoreThan20Picklists {
 		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist ${numberPicklist}");
@@ -2181,7 +2181,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer the toggle is OFF by default"
-	@priority = "4"
+	@priority = 4
 	test CanViewOptionsDisableWhenSelectDirectlyFromUsersComputerOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2208,7 +2208,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a Toggle"
-	@priority = "4"
+	@priority = 4
 	test CanViewOptionsWhenSelectDirectlyFromUsersComputerOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2237,7 +2237,7 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
-	@priority = "5"
+	@priority = 5
 	test CanViewSetMaximumCharactersOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151569",
@@ -2274,7 +2274,7 @@ definition {
 
 		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 280");
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = "280");
+		ObjectField.assertValueOnLimitCharacters(maxValue = 280);
 
 		ObjectField.save();
 
@@ -2286,7 +2286,7 @@ definition {
 
 		ObjectField.assertHelpText(helpText = "Set the maximum number of characters accepted. This value cannot be less than 1 or greater than 65,000");
 
-		ObjectField.assertValueOnLimitCharacters(maxValue = "65000");
+		ObjectField.assertValueOnLimitCharacters(maxValue = 65000);
 
 		ObjectField.save();
 
@@ -2306,7 +2306,7 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"
-	@priority = "4"
+	@priority = 4
 	test CanViewSidePanelOptions {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151560",
@@ -2334,7 +2334,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if after create a attachment field with option Request Files: Directly from User's Computer selected and when the 'Show files' is enabled there is a new configuration field called Storage Folder"
-	@priority = "4"
+	@priority = 4
 	test CanViewStorageFolderWhenShowFilesIsEnable {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2361,7 +2361,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if when selecting the option on Request Files: Directly from User's Computer there is a tooltip on the Toggle"
-	@priority = "4"
+	@priority = 4
 	test CanViewTootipWhenSelectDirectlyFromUsersComputerOption {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2388,7 +2388,7 @@ definition {
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"
-	@priority = "4"
+	@priority = 4
 	test DescriptionForEachFieldType {
 		property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectFieldBusinessTypeConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -2412,7 +2412,7 @@ definition {
 	}
 
 	@description = "LPS-145661 - Verify that the field type names are displayed on the Layout Builder when a field is added"
-	@priority = "4"
+	@priority = 4
 	test DisplayFieldTypesOnLayoutBuilder {
 		task ("Given that an object and fields are created for that object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2455,7 +2455,7 @@ definition {
 			for (var valueField : list "A,B") {
 				ObjectAdmin.addTabFieldsOnLayout(
 					blockName = "Block Test",
-					columnsNumber = "1",
+					columnsNumber = 1,
 					fieldList = "Custom Field ${valueField}",
 					tabName = "Tab Test");
 			}
@@ -2464,16 +2464,16 @@ definition {
 		task ("Then the field type names are displayed on the Layout Builder when a field is added") {
 			for (var fieldLabelName : list "Custom Field A,Custom Field B") {
 				AssertElementPresent(
-					key_fieldLabelName = "${fieldLabelName}",
+					key_fieldLabelName = ${fieldLabelName},
 					locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 			}
 		}
 	}
 
 	@description = "LPS-146523 - Verify if the default folder will be the Documents and Media Home Folder of that specific site"
-	@priority = "4"
+	@priority = 4
 	test DocumentsAndMediaHomeFolderIsDefaultWhenScopedBySite {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151568",
@@ -2507,11 +2507,11 @@ definition {
 
 		ObjectField.assertDocumentsAndMediaHomeFolderBySite(
 			imageName = "tree.png",
-			viewHomeFolder = "${siteName}");
+			viewHomeFolder = ${siteName});
 	}
 
 	@description = "LPS-156704 - Verify that the Excludes to operator is available when adding filters for the picklist fields to select data from the object"
-	@priority = "4"
+	@priority = 4
 	test ExcludesIsAvailableForPicklistFields {
 		task ("Add a Custom Picklist and Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -2598,7 +2598,7 @@ definition {
 	}
 
 	@description = "LPS-146523 - Verify if the default folder will be the Global Documents and Media Home Folder"
-	@priority = "4"
+	@priority = 4
 	test GlobalDocumentsAndMediaHomeFolderIsDefaultWhenScopedByCompany {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151565",
@@ -2634,7 +2634,7 @@ definition {
 	}
 
 	@description = "LPS-156704 - Verify that the Includes operator is available when adding filters for the picklist fields to select data from the object"
-	@priority = "4"
+	@priority = 4
 	test IncludesIsAvailableForPicklistFields {
 		task ("Add a Custom Picklist and Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -2721,7 +2721,7 @@ definition {
 	}
 
 	@description = "Verify that the Is Equals to operator is available when adding filters for the long integer fields to select data from the object"
-	@priority = "4"
+	@priority = 4
 	test IsEqualToIsAvailableForLongIntegerFields {
 		task ("Given: A custom object with a long integer field type") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2777,7 +2777,7 @@ definition {
 			Type(
 				key_text = "Value",
 				locator1 = "TextInput#ANY",
-				value1 = "1");
+				value1 = 1);
 
 			ObjectCustomViews.clickSaveOnModal();
 		}
@@ -2785,12 +2785,12 @@ definition {
 		task ("Then: The new filter is created") {
 			ObjectCustomViews.assertPresentEntriesOnFilters(
 				filterBy = "Custom Long Integer",
-				filterValue = "1");
+				filterValue = 1);
 		}
 	}
 
 	@description = "LPS-143065 - Change the Maximum File Size to 0 (zero) and verify if the Maximum File Size is now set by the System configurations"
-	@priority = "4"
+	@priority = 4
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
 		property test.name.skip.portal.instance = "ObjectFields#MaximumFileSizeIsSetBySystemConfigurationsWhenZero";
 
@@ -2816,7 +2816,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectField#INPUT_MAXIMUM_FILE_SIZE",
-			value1 = "0");
+			value1 = 0);
 
 		ObjectField.save();
 
@@ -2829,7 +2829,7 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = 102400);
 
 		Navigator.openURL();
 
@@ -2843,7 +2843,7 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify that the Request Files option is a required field"
-	@priority = "4"
+	@priority = 4
 	test RequestFilesIsRequired {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151558",
@@ -2868,7 +2868,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have a default value"
-	@priority = "4"
+	@priority = 4
 	test StorageFolderFieldHaveDefaultValue {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2897,7 +2897,7 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have help text"
-	@priority = "4"
+	@priority = 4
 	test StorageFolderFieldHaveHelpText {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -2921,13 +2921,13 @@ definition {
 		var helpText = "Input the path of the chosen folder in Documents and Media. An example of a valid path is: \"/myDocumentsAndMediaFolder\".";
 
 		AssertElementPresent(
-			key_helpText = "${helpText}",
+			key_helpText = ${helpText},
 			locator1 = "ObjectField#HELP_TEXT",
-			value1 = "${key_helpText}");
+			value1 = ${key_helpText});
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder is required"
-	@priority = "4"
+	@priority = 4
 	test StorageFolderFieldIsRequired {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632."
-	@priority = "3"
+	@priority = 3
 	test AddWCWithFirstComplexStructure {
 		property data.archive.type = "data-archive-web-content-first-complex-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -85,25 +85,25 @@ definition {
 
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,Destino,DescricaoOpPar,CompanhiaOperadora") {
 				FormFields.addRepeatableField(
-					key_fieldName = "${fieldName}",
-					key_repeatableFieldNumber = "1");
+					key_fieldName = ${fieldName},
+					key_repeatableFieldNumber = 1);
 			}
 
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,Destino,DescricaoOpPar,CompanhiaOperadora") {
 				DataEngine.assertFieldRepeated(
-					fieldName = "${fieldName}",
-					index = "1");
+					fieldName = ${fieldName},
+					index = 1);
 
 				DataEngine.assertFieldRepeated(
-					fieldName = "${fieldName}",
-					index = "2");
+					fieldName = ${fieldName},
+					index = 2);
 			}
 		}
 
 		task ("Duplicate fields and then remove duplicates") {
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar") {
 				Click(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
 
@@ -111,13 +111,13 @@ definition {
 
 			for (var fieldName : list "Destino,DescricaoOpPar") {
 				Click(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
 
 			for (var fieldName : list "Logo,Beneficio,Companhia,JeitoIdentificar,CompanhiaOperadora,DescricaoOpPar,Destino") {
 				AssertElementNotPresent(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
 		}
@@ -149,9 +149,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "31") {
+			while (${i} != 31) {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'container-fluid-max')]",
 					value1 = "text${i}");
@@ -162,7 +162,7 @@ definition {
 			for (var fieldValue : list "Link Pagina Origem,Link Pagina Atual") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'container-fluid-max')]",
-					value1 = "${fieldValue}");
+					value1 = ${fieldValue});
 			}
 
 			for (var i : list "1,2,3,4") {
@@ -181,9 +181,9 @@ definition {
 
 			IFrame.closeFrame();
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "31") {
+			while (${i} != 31) {
 				WebContentDisplayPortlet.viewContent(
 					webContentContent = "text${i}",
 					webContentTitle = "Web Content Complex Title 1");
@@ -193,7 +193,7 @@ definition {
 
 			for (var displayText : list "Link Pagina Origem,Link Pagina Atual") {
 				AssertElementPresent(
-					key_displayText = "${displayText}",
+					key_displayText = ${displayText},
 					key_webContentTitle = "Web Content Complex Title 1",
 					locator1 = "WCD#WEB_CONTENT_LINK");
 			}
@@ -255,7 +255,7 @@ definition {
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
-				DataEngine.moveNestedField(nestedFieldLabel = "${nestedFieldLabel}");
+				DataEngine.moveNestedField(nestedFieldLabel = ${nestedFieldLabel});
 			}
 
 			for (var nestedFieldLabel : list "Imagem Aba 01,Descricao Aba 01") {
@@ -378,14 +378,14 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "value",
-				index = "1",
+				index = 1,
 				key_fieldFieldLabel = "PaginaOrigem",
 				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 				value1 = "text1");
 
 			AssertAttributeValue(
 				attribute1 = "value",
-				index = "1",
+				index = 1,
 				key_fieldFieldLabel = "Pagina Atual",
 				locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 				value1 = "text2");
@@ -421,7 +421,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632."
-	@priority = "3"
+	@priority = 3
 	test AddWCWithSecondComplexStructure {
 		property data.archive.type = "data-archive-web-content-second-complex-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -490,14 +490,14 @@ definition {
 
 			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,ItemPais,Estado") {
 				FormFields.addRepeatableField(
-					fieldName = "${fieldName}",
-					index = "1",
-					key_fieldName = "${fieldName}",
-					key_repeatableFieldNumber = "1");
+					fieldName = ${fieldName},
+					index = 1,
+					key_fieldName = ${fieldName},
+					key_repeatableFieldNumber = 1);
 
 				DataEngine.assertFieldRepeated(
-					fieldName = "${fieldName}",
-					index = "2");
+					fieldName = ${fieldName},
+					index = 2);
 			}
 
 			PortletEntry.publish();
@@ -510,13 +510,13 @@ definition {
 
 			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
 				Click(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
 
 			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
 				AssertElementNotPresent(
-					key_fieldName = "${fieldName}",
+					key_fieldName = ${fieldName},
 					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
 			}
 
@@ -550,9 +550,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "121") {
+			while (${i} != 121) {
 				AssertTextEquals.assertPartialText(
 					locator1 = "//div[@class='portlet-body']/div[contains(@class,'container-fluid-max')]",
 					value1 = "text${i}");
@@ -574,9 +574,9 @@ definition {
 
 			IFrame.closeFrame();
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "121") {
+			while (${i} != 121) {
 				WebContentDisplayPortlet.viewContent(
 					webContentContent = "text${i}",
 					webContentTitle = "Web Content Complex Title 1");
@@ -855,7 +855,7 @@ definition {
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Copy Name");
 
 			for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informe Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
-				DataEngine.editFieldRequired(fieldFieldLabel = "${fieldName}");
+				DataEngine.editFieldRequired(fieldFieldLabel = ${fieldName});
 			}
 
 			WebContentStructures.saveCP();
@@ -872,7 +872,7 @@ definition {
 
 			for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
 				AssertTextEquals(
-					key_fieldFieldLabel = "${fieldName}",
+					key_fieldFieldLabel = ${fieldName},
 					locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 					value1 = "Este campo é obrigatório.");
 			}
@@ -914,7 +914,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishDraftWebContentAfterUpgrade625 {
 		property data.archive.type = "data-archive-web-content-draft";
 		property database.types = "mariadb,mysql,postgresql";
@@ -925,7 +925,7 @@ definition {
 		Upgrade.publishWCDraft();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishDraftWebContentAfterUpgrade621015 {
 		property data.archive.type = "data-archive-web-content-draft";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -936,7 +936,7 @@ definition {
 		Upgrade.publishWCDraft();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test PublishDraftWebContentAfterUpgrade621021 {
 		property data.archive.type = "data-archive-web-content-draft";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -948,7 +948,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher704 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
@@ -962,7 +962,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher713 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
@@ -976,7 +976,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher721 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
@@ -990,7 +990,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher735 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1004,7 +1004,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher7310 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -1018,7 +1018,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71103 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -1032,7 +1032,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72101 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1046,7 +1046,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher701014 {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -1060,7 +1060,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123590."
-	@priority = "4"
+	@priority = 4
 	test ViewSpecificDisplayPageTemplateArchive721 {
 		property data.archive.type = "data-archive-display-page-templates";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1070,7 +1070,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123590."
-	@priority = "4"
+	@priority = 4
 	test ViewSpecificDisplayPageTemplateArchive72104 {
 		property data.archive.type = "data-archive-display-page-templates";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1080,7 +1080,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62720. View web content with all fields and value after upgrade from 6.2."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithAllFieldsArchive621021 {
 		property data.archive.type = "data-archive-web-content-with-all-fields";
 		property database.types = "mysql,oracle,postgresql,sybase";
@@ -1090,7 +1090,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98619."
-	@priority = "3"
+	@priority = 3
 	test ViewWebContentWithImageArchive704 {
 		property data.archive.type = "data-archive-web-content-with-image";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1108,7 +1108,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-147234. View web content with image field after upgrade from 7.1.10 GA1."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithImageArchive7110 {
 		property data.archive.type = "data-archive-web-content-with-image";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1124,7 +1124,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98619."
-	@priority = "3"
+	@priority = 3
 	test ViewWebContentWithImageArchive70106 {
 		property data.archive.type = "data-archive-web-content-with-image";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -1143,7 +1143,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-130915."
-	@priority = "5"
+	@priority = 5
 	test ViewWebContentWithNoDisplayPageTemplateArchive735 {
 		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1153,7 +1153,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-130915."
-	@priority = "5"
+	@priority = 5
 	test ViewWebContentWithNoDisplayPageTemplateArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1163,7 +1163,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62830."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive713 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1173,7 +1173,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62834."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive721 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1183,7 +1183,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62836."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive730 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "mariadb,mysql,postgresql";
@@ -1193,7 +1193,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62830."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive71103 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1204,7 +1204,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62834."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive72101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1215,7 +1215,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62836."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1226,7 +1226,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-62801."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive701014 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

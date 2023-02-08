@@ -19,12 +19,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PersistentAndMemoryJobs {
 		property test.name.skip.portal.instance = "ClusteringScheduler#PersistentAndMemoryJobs";
 
@@ -34,7 +34,7 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Persistent job 2 is added",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-scheduler-persistent-2.groovy");
 
 		Groovy.runScriptViaGogoShell(
@@ -43,7 +43,7 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory job 2 is added",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-scheduler-memory-2.groovy");
 
 		Groovy.runScriptViaGogoShell(
@@ -52,7 +52,7 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory clustered job 2 is added",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");
 	}
 

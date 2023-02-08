@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120693."
-	@priority = "3"
+	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade721 {
 		property data.archive.type = "data-archive-section-with-fragments";
 		property database.types = "mariadb,mysql,postgresql";
@@ -44,12 +44,12 @@ definition {
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the outer Container to Flex Row") {
@@ -66,7 +66,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "row",
 				justifyContent = "center",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the outer Container to Flex Column") {
@@ -83,18 +83,18 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "column",
 				justifyContent = "between",
-				position = "1");
+				position = 1);
 		}
 
 		task ("View the inner Container styles in edit mode") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fixed Width",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Configure the inner Container to Flex Row") {
@@ -103,7 +103,7 @@ definition {
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
 				panel = "General",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the inner Container styles") {
@@ -112,7 +112,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "row",
 				justifyContent = "end",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Configure the inner Container to Flex Column") {
@@ -121,7 +121,7 @@ definition {
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
 				panel = "General",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the inner Container styles") {
@@ -130,12 +130,12 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "column",
 				justifyContent = "around",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "This is a use case for LPS-120693."
-	@priority = "3"
+	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade735 {
 		property data.archive.type = "data-archive-container-with-fragments";
 		property database.types = "mariadb,mysql,postgresql";
@@ -162,12 +162,12 @@ definition {
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Flex Row") {
@@ -184,7 +184,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "row",
 				justifyContent = "center",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Flex Column") {
@@ -201,7 +201,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "column",
 				justifyContent = "between",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Fixed Width and Flex Row") {
@@ -219,7 +219,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "row",
 				justifyContent = "end",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Fixed Width Container to Flex Column") {
@@ -236,12 +236,12 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "column",
 				justifyContent = "around",
-				position = "1");
+				position = 1);
 		}
 	}
 
 	@description = "This is a use case for LPS-120693."
-	@priority = "3"
+	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade72104 {
 		property data.archive.type = "data-archive-section-with-fragments";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -268,12 +268,12 @@ definition {
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the outer Container to Flex Row") {
@@ -290,7 +290,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "row",
 				justifyContent = "center",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the outer Container to Flex Column") {
@@ -307,18 +307,18 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "column",
 				justifyContent = "between",
-				position = "1");
+				position = 1);
 		}
 
 		task ("View the inner Container styles in edit mode") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fixed Width",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Configure the inner Container to Flex Row") {
@@ -327,7 +327,7 @@ definition {
 				contentDisplay = "Flex Row",
 				justifyContent = "End",
 				panel = "General",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the inner Container styles") {
@@ -336,7 +336,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "row",
 				justifyContent = "end",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Configure the inner Container to Flex Column") {
@@ -345,7 +345,7 @@ definition {
 				contentDisplay = "Flex Column",
 				justifyContent = "Around",
 				panel = "General",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the inner Container styles") {
@@ -354,12 +354,12 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "column",
 				justifyContent = "around",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "This is a use case for LPS-120693."
-	@priority = "3"
+	@priority = 3
 	test ConfigureContainerStylesAfterUpgrade73101 {
 		property data.archive.type = "data-archive-container-with-fragments";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -386,12 +386,12 @@ definition {
 
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Flex Row") {
@@ -408,7 +408,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "row",
 				justifyContent = "center",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Flex Column") {
@@ -425,7 +425,7 @@ definition {
 				containerWidth = "Fluid",
 				contentDisplay = "column",
 				justifyContent = "between",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container to Fixed Width and Flex Row") {
@@ -443,7 +443,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "row",
 				justifyContent = "end",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Fixed Width Container to Flex Column") {
@@ -460,7 +460,7 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "column",
 				justifyContent = "around",
-				position = "1");
+				position = 1);
 		}
 	}
 

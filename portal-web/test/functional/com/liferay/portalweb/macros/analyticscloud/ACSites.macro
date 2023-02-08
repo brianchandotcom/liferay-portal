@@ -7,7 +7,7 @@ definition {
 
 		var current = selenium.getText("ACSites#SITE_METRIC_VALUE");
 
-		return "${current}";
+		return ${current};
 	}
 
 	macro getPopoverDateAndTime {
@@ -23,30 +23,30 @@ definition {
 
 		var dateAndTime = selenium.getText("ACSites#POPOVER_ACTIVITIES_DATE_AND_TIME");
 
-		return "${dateAndTime}";
+		return ${dateAndTime};
 	}
 
 	macro viewActivitiesDuration {
 		var valueNumber = "";
 		var timeUnit = "";
-		var flag = "1";
+		var flag = 1;
 
-		for (var current : list "${date}") {
-			var valueNumber = StringUtil.extractFirst("${current}", "-");
-			var timeUnit = StringUtil.extractLast("${current}", "-");
+		for (var current : list ${date}) {
+			var valueNumber = StringUtil.extractFirst(${current}, "-");
+			var timeUnit = StringUtil.extractLast(${current}, "-");
 
-			if ("${flag}" == "1") {
+			if (${flag} == 1) {
 				AssertElementPresent(
-					key_number = "${valueNumber}",
-					key_unit = "${timeUnit}",
+					key_number = ${valueNumber},
+					key_unit = ${timeUnit},
 					locator1 = "ACSites#ACTIVITIES_CARD_SESSION_DURATION_FIRST_VALUE");
 
 				var flag = ${flag} - 1;
 			}
 			else {
 				AssertElementPresent(
-					key_number = "${valueNumber}",
-					key_unit = "${timeUnit}",
+					key_number = ${valueNumber},
+					key_unit = ${timeUnit},
 					locator1 = "ACSites#ACTIVITIES_CARD_SESSION_DURATION_FOLLOWING_VALUE");
 			}
 		}
@@ -54,15 +54,15 @@ definition {
 
 	macro viewActivitiesPercentage {
 		AssertElementPresent(
-			key_entry = "${entryName}",
-			key_number = "${valueNumber}",
+			key_entry = ${entryName},
+			key_number = ${valueNumber},
 			locator1 = "ACSites#ACTIVITIES_CARD_ATRIBUTE_AND_VALUE");
 	}
 
 	macro viewGeomapAnalyticsLocationNames {
-		for (var locationName : list "${locationList}") {
+		for (var locationName : list ${locationList}) {
 			AssertElementPresent(
-				key_entry = "${locationName}",
+				key_entry = ${locationName},
 				locator1 = "ACSites#GEOMAP_ANALYTICS_LOCATIONS_NAME");
 		}
 	}
@@ -88,16 +88,16 @@ definition {
 	}
 
 	macro viewVisitedTopPages {
-		var list1 = ListUtil.newListFromString("${pageNameList}");
-		var list2 = ListUtil.newListFromString("${positionList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${pageNameList});
+		var list2 = ListUtil.newListFromString(${positionList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var pageName = ListUtil.get("${list1}", "${i}");
-			var position = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var pageName = ListUtil.get(${list1}, ${i});
+			var position = ListUtil.get(${list2}, ${i});
 
-			while ((IsElementNotPresent(key_index = "${position}", key_pageName = "${pageName}", locator1 = "ACSites#VISITED_TOP_PAGES_CARD")) && (maxIterations = "50")) {
+			while ((IsElementNotPresent(key_index = ${position}, key_pageName = ${pageName}, locator1 = "ACSites#VISITED_TOP_PAGES_CARD")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
 				ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
@@ -106,13 +106,13 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_index = "${position}",
-				key_pageName = "${pageName}",
+				key_index = ${position},
+				key_pageName = ${pageName},
 				locator1 = "ACSites#VISITED_TOP_PAGES_CARD");
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
@@ -131,16 +131,16 @@ definition {
 
 		Click.mouseDownMouseUp(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 
-		var list1 = ListUtil.newListFromString("${visitorsTypeList}");
-		var list2 = ListUtil.newListFromString("${valueVisitorsList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${visitorsTypeList});
+		var list2 = ListUtil.newListFromString(${valueVisitorsList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var visitorsType = ListUtil.get("${list1}", "${i}");
-			var valueVisitors = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var visitorsType = ListUtil.get(${list1}, ${i});
+			var valueVisitors = ListUtil.get(${list2}, ${i});
 
-			while ((IsElementNotPresent(key_value = "${valueVisitors}", key_visitors = "${visitorsType}", locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS")) && (maxIterations = "50")) {
+			while ((IsElementNotPresent(key_value = ${valueVisitors}, key_visitors = ${visitorsType}, locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
 				ACTimeFilter.clickTimeFilterButton();
@@ -151,13 +151,13 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_value = "${valueVisitors}",
-				key_visitors = "${visitorsType}",
+				key_value = ${valueVisitors},
+				key_visitors = ${visitorsType},
 				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 

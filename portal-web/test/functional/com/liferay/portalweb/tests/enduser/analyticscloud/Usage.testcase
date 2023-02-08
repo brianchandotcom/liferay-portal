@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8147 | Test Summary: Anonymous individuals are not counted towards usage"
-	@priority = "5"
+	@priority = 5
 	test AnonymousIndividualsDoNotCountAsIndividualsForUsage {
 		ACUtils.addSiteAndPage();
 
@@ -46,7 +46,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSettings();
 
@@ -71,12 +71,12 @@ definition {
 		ACSettings.goToUsage();
 
 		ACSettings.assertOverviewUsage(
-			current = "${currentIndividuals}",
+			current = ${currentIndividuals},
 			metricName = "Individuals");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
-	@priority = "3"
+	@priority = 3
 	test CollapseCurrentPlan {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
@@ -120,13 +120,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8156 | Test Summary: Current AC plan level is shown in a card"
-	@priority = "5"
+	@priority = 5
 	test CurrentACPlanLevelShownInCard {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSettings();
 
@@ -144,13 +144,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8157 | Test Summary: Current add-ons are displayed in a card"
-	@priority = "5"
+	@priority = 5
 	test CurrentAddonsDisplayedInCard {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSettings();
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
-	@priority = "3"
+	@priority = 3
 	test IndividualsCardShowCurrentPlanLimitAndAddOnInfo {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9179 | Test Summary: Bar graph and percentage of individuals displays percentage of plan used."
-	@priority = "3"
+	@priority = 3
 	test IndividualsCardShowOverviewUsageOfPlan {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
@@ -229,29 +229,29 @@ definition {
 			var current = ACSettings.getCurrentNumber(metricName = "Individuals");
 
 			TestUtils.assertNotEquals(
-				actual = "${current}",
-				expected = "0");
+				actual = ${current},
+				expected = 0);
 		}
 
 		task ("View the usage percentage on Individuals card") {
 			var percentage = ACSettings.getUsagePercentage(metricName = "Individuals");
-			var result = MathUtil.isGreaterThan("${current}", "550");
+			var result = MathUtil.isGreaterThan(${current}, 550);
 
-			if ("${result}" == "true") {
+			if (${result} == "true") {
 				TestUtils.assertNotEquals(
-					actual = "${percentage}",
+					actual = ${percentage},
 					expected = "0%");
 			}
 			else {
 				TestUtils.assertEquals(
-					actual = "${percentage}",
+					actual = ${percentage},
 					expected = "0%");
 			}
 		}
 
 		task ("View the oveview usage on Individuals card") {
 			ACSettings.assertOverviewUsage(
-				current = "${current}",
+				current = ${current},
 				limit = "110,000",
 				metricName = "Individuals",
 				usageSince = "${percentage} since");
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8148 | Test Summary: Individuals usage update in real time"
-	@priority = "5"
+	@priority = 5
 	test IndividualsUpdatesInRealTime {
 		property analytics.cloud.upstream = "false";
 		property portal.acceptance = "false";
@@ -283,7 +283,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to settings and get the individuals number") {
@@ -297,19 +297,19 @@ definition {
 		task ("Add 3 new users and sync the Contact Data") {
 			ACUtils.launchDXP();
 
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 
 				ACDXPSettings.syncNewContactData();
 			}
 		}
 
 		task ("View the page as different users") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				ACUtils.navigateToSitePageWithUser(
 					emailList = "${name}@liferay.com",
 					pageName = "AC Page",
@@ -328,12 +328,12 @@ definition {
 
 			ACSettings.assertOverviewUsage(
 				metricName = "Individuals",
-				notEquals = "${currentIndividuals}");
+				notEquals = ${currentIndividuals});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
-	@priority = "3"
+	@priority = 3
 	test PageViewsCardShowCurrentPlanLimitAndAddOnInfo {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9181 | Test Summary: Bar graph and percentage of page views displays percentage of plan used."
-	@priority = "3"
+	@priority = 3
 	test PageViewsCardShowOverviewUsageOfPlan {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
@@ -392,29 +392,29 @@ definition {
 			var current = ACSettings.getCurrentNumber(metricName = "Page Views");
 
 			TestUtils.assertNotEquals(
-				actual = "${current}",
-				expected = "0");
+				actual = ${current},
+				expected = 0);
 		}
 
 		task ("View the usage percentage on Page Views") {
 			var percentage = ACSettings.getUsagePercentage(metricName = "Page Views");
-			var result = MathUtil.isGreaterThan("${current}", "375,000");
+			var result = MathUtil.isGreaterThan(${current}, "375,000");
 
-			if ("${result}" == "true") {
+			if (${result} == "true") {
 				TestUtils.assertNotEquals(
-					actual = "${percentage}",
+					actual = ${percentage},
 					expected = "0%");
 			}
 			else {
 				TestUtils.assertEquals(
-					actual = "${percentage}",
+					actual = ${percentage},
 					expected = "0%");
 			}
 		}
 
 		task ("View the oveview usage on Page Views card") {
 			ACSettings.assertOverviewUsage(
-				current = "${current}",
+				current = ${current},
 				limit = "75,000,000",
 				metricName = "Page Views",
 				usageSince = "${percentage} since");
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8150 | Test Summary: Page views update in real time"
-	@priority = "5"
+	@priority = 5
 	test PageViewsUpdateInRealTime {
 		task ("Add a new site and page, then add a blog and connect ac to dxp") {
 			ACUtils.addSiteAndPage();
@@ -441,7 +441,7 @@ definition {
 		task ("Go to Usage, save the value of Page Views at that moment and save the next value of page views") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSettings();
 
@@ -449,7 +449,7 @@ definition {
 
 			var oldPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 
-			var pageViewsNumber = StringUtil.replace("${oldPageViews}", ",", "");
+			var pageViewsNumber = StringUtil.replace(${oldPageViews}, ",", "");
 
 			var sumPageViews = ${pageViewsNumber} + 1;
 		}
@@ -475,31 +475,31 @@ definition {
 
 			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 
-			while (("${currentPageViews}" == "${oldPageViews}") && (maxIterations = "15")) {
+			while ((${currentPageViews} == ${oldPageViews}) && (maxIterations = "15")) {
 				Refresh();
 
 				var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
 			}
 
-			var newPageViewsNumber = StringUtil.replace("${currentPageViews}", ",", "");
+			var newPageViewsNumber = StringUtil.replace(${currentPageViews}, ",", "");
 		}
 
 		task ("Compare the values") {
 			TestUtils.assertEquals(
-				actual = "${sumPageViews}",
-				expected = "${newPageViewsNumber}");
+				actual = ${sumPageViews},
+				expected = ${newPageViewsNumber});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
-	@priority = "5"
+	@priority = 5
 	test PlanLimitNumberOfIndividualsIsShown {
 		task ("Go to Usage and assert that the plan number of individuals is '110,000'") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSettings();
 
@@ -512,13 +512,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
-	@priority = "5"
+	@priority = 5
 	test PlanLimitNumberOfPageViewsIsShown {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSettings();
 

@@ -67,7 +67,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10223 | Test Summary: Able to access hidden event"
-	@priority = "4"
+	@priority = 4
 	test CanAccessHiddenEvent {
 		property test.name.skip.portal.instance = "CustomEventsHiden#CanAccessHiddenEvent";
 
@@ -90,7 +90,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to default events tab") {
@@ -104,20 +104,20 @@ definition {
 		}
 
 		task ("Check that the default event was hidden") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${defaultEventName});
 		}
 
 		task ("Navigation to assetDepthReached") {
-			ACNavigation.openItem(itemName = "${defaultEventName}");
+			ACNavigation.openItem(itemName = ${defaultEventName});
 		}
 
 		task ("Check the attribute appears") {
-			ACCustomEvents.viewDataAttribute(attributeValueList = "${defaultEventName}");
+			ACCustomEvents.viewDataAttribute(attributeValueList = ${defaultEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10232 | Test Summary: Hide a default event and hide a custom event"
-	@priority = "5"
+	@priority = 5
 	test CanHideDefaultAndCustomEvent {
 		property test.name.skip.portal.instance = "CustomEventsHiden#CanHideDefaultAndCustomEvent";
 
@@ -129,8 +129,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -140,7 +140,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to default events tab") {
@@ -154,11 +154,11 @@ definition {
 		}
 
 		task ("Hide default event") {
-			ACCustomEvents.hideCustomEvent(customEventName = "${defaultEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${defaultEventName});
 		}
 
 		task ("Check that the default event was hidden") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${defaultEventName});
 		}
 
 		task ("Hide all default events") {
@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("Check that the all default events were hidden") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${defaultEventNameList});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -174,25 +174,25 @@ definition {
 		}
 
 		task ("Hide custom event") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Check that the custom event was hidden") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${customEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${customEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10235 | Test Summary: Search for a hidden event "
-	@priority = "3"
+	@priority = 3
 	test CanSearchForAHiddenEvent {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -202,7 +202,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -216,20 +216,20 @@ definition {
 		}
 
 		task ("Hide custom event") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Check that the custom event was hidden") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${customEventName}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${customEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10233 | Test Summary: Unhide a default event and unhide a custom event"
-	@priority = "5"
+	@priority = 5
 	test CanUnhideDefaultAndCustomEvent {
 		property test.name.skip.portal.instance = "CustomEventsHidden#CanUnhideDefaultAndCustomEvent";
 
@@ -241,8 +241,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -252,7 +252,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to default events tab") {
@@ -266,11 +266,11 @@ definition {
 		}
 
 		task ("Unhide default event") {
-			ACDefinitions.unhideEvent(customEventName = "${defaultEventName}");
+			ACDefinitions.unhideEvent(customEventName = ${defaultEventName});
 		}
 
 		task ("Check that the default event was hidden") {
-			ACDefinitions.viewUnhideEvent(customEventNameList = "${defaultEventName}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = ${defaultEventName});
 		}
 
 		task ("Unhide all default events") {
@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Check that the all default events were hidden") {
-			ACDefinitions.viewUnhideEvent(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = ${defaultEventNameList});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -290,22 +290,22 @@ definition {
 		}
 
 		task ("Hide custom event") {
-			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Unhide custom event") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACDefinitions.unhideEvent(customEventName = "${customEventName}");
+			ACDefinitions.unhideEvent(customEventName = ${customEventName});
 		}
 
 		task ("Check that the custom event was unhide") {
-			ACDefinitions.viewUnhideEvent(customEventNameList = "${customEventName}");
+			ACDefinitions.viewUnhideEvent(customEventNameList = ${customEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10228 | Test Summary: Hidden default event and custom event should not be visible on the Event Analysis list"
-	@priority = "5"
+	@priority = 5
 	test CheckDefaultAndCustomEventIsNotVisibleOnEventAnalysisList {
 		var defaultEventName = "blogViewed";
 
@@ -313,8 +313,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -324,7 +324,7 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
@@ -334,15 +334,15 @@ definition {
 
 			ACNavigation.switchTabInCard(tabName = "Default");
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${defaultEventName});
 
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${defaultEventName}");
+			ACEventAnalysis.viewEventAnalysisList(eventList = ${defaultEventName});
 
 			ACNavigation.switchTabInCard(tabName = "Custom");
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${customEventName});
 
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+			ACEventAnalysis.viewEventAnalysisList(eventList = ${customEventName});
 		}
 
 		task ("Navigation to default events tab") {
@@ -356,7 +356,7 @@ definition {
 		}
 
 		task ("Hide default event") {
-			ACCustomEvents.hideCustomEvent(customEventName = "${defaultEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${defaultEventName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -364,7 +364,7 @@ definition {
 		}
 
 		task ("Hide custom event") {
-			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Navigation to event analysis") {
@@ -378,27 +378,27 @@ definition {
 
 			ACNavigation.switchTabInCard(tabName = "Default");
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${defaultEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${defaultEventName});
 
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${defaultEventName}");
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = ${defaultEventName});
 
 			ACNavigation.switchTabInCard(tabName = "Custom");
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${customEventName});
 
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = ${customEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10234 | Test Summary: Non-admin cannot hide events"
-	@priority = "5"
+	@priority = 5
 	test NonAdminUserCannotHideEvents {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -408,7 +408,7 @@ definition {
 		task ("Login as a non-admin user and switch the property in AC") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Open(locator1 = "${analyticsCloudURL}");
+			Open(locator1 = ${analyticsCloudURL});
 
 			if (IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 				ACWorkspace.signOut();
@@ -416,7 +416,7 @@ definition {
 
 			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -430,10 +430,10 @@ definition {
 		}
 
 		task ("Assert hidden event icon is not present") {
-			var key_nameList = "${customEventName}";
+			var key_nameList = ${customEventName};
 
 			if (IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) {
-				ACUtils.searchBar(searchItem = "${customEventName}");
+				ACUtils.searchBar(searchItem = ${customEventName});
 			}
 
 			MouseOver(locator1 = "ACUtils#NAME_LIST");
@@ -447,14 +447,14 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10227 | Test Summary: Hidden custom event should not be visible on the Segment > Event criteria list"
-	@priority = "5"
+	@priority = 5
 	test ViewIfCustomEventIsNotVisibleOnSegmentEventCriteriaList {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -464,7 +464,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -478,9 +478,9 @@ definition {
 		}
 
 		task ("Hide custom event") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACCustomEvents.hideCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.hideCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Navigation to segments") {
@@ -492,7 +492,7 @@ definition {
 		task ("Create a new dynamic segment and check that the custom event that has been hidden does not appear") {
 			ACSegments.createDynamicSegment();
 
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
 			AssertElementPresent(
 				key_segmentField = "No results were found.",
@@ -501,7 +501,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7943 | Automation ID: LRAC-10222 | Test Summary: Check if some default events are set as hidden"
-	@priority = "5"
+	@priority = 5
 	test ViewIfDefaultEventsAreHidden {
 		property test.name.skip.portal.instance = "CustomEventsHiden#ViewIfDefaultEventsAreHidden";
 
@@ -514,7 +514,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to default events tab") {
@@ -528,11 +528,11 @@ definition {
 		}
 
 		task ("Change the pagination to "75"") {
-			ACUtils.changePagination(itemsPerPage = "75");
+			ACUtils.changePagination(itemsPerPage = 75);
 		}
 
 		task ("Assert certain events hidden by default") {
-			ACDefinitions.viewHiddenEvents(customEventNameList = "${defaultEventNameList}");
+			ACDefinitions.viewHiddenEvents(customEventNameList = ${defaultEventNameList});
 		}
 	}
 

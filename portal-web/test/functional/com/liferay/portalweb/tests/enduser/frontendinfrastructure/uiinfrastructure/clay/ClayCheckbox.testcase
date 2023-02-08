@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "Verify clay checkbox API options can be configured"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBeConfigured {
 		Navigator.gotoNavTab(navTab = "Form Elements");
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "LRQA-65496: Validate that a parent checkbox is a checked state when all nested checkboxes are checked."
-	@priority = "3"
+	@priority = 3
 	test ParentMustBeCheckedIfAllChildrenAreChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
 			Navigator.gotoNavTab(navTab = "Form Elements");
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "LRQA-65496: Validate that a parent checkbox is an indeterminate state when some nested checkboxes are checked."
-	@priority = "3"
+	@priority = 3
 	test ParentMustBeIndeterminateIfSomeChildrenChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
 			Navigator.gotoNavTab(navTab = "Form Elements");
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@description = "LRQA-65496: Validate that a parent checkbox is an unchecked state when all nested checkboxes are unchecked."
-	@priority = "3"
+	@priority = 3
 	test ParentMustBeUncheckedIfNoChildrenChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
 			Navigator.gotoNavTab(navTab = "Form Elements");
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "Verify clay checkbox UI looks ok"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test VerifyDefaultUI {
 		Navigator.gotoNavTab(navTab = "Form Elements");

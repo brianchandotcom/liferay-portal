@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "LPS-170678 - Assert if 'Custom Element' can be categorized as 'Client Extension'"
-	@priority = "3"
+	@priority = 3
 	test CanBeCategorizedInAddWidgetList {
 		property app.server.types = "tomcat";
 		property database.types = "mysql";

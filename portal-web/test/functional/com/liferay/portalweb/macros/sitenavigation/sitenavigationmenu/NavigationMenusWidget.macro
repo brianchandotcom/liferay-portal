@@ -18,7 +18,7 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_rowEntry = "${menuName}",
+			key_rowEntry = ${menuName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		SelectFrame(value1 = "relative=top");
@@ -27,7 +27,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "NavigationMenusWidget#CHOOSE_MENU_SELECTED_MENU_NAME",
-			value1 = "${menuName}");
+			value1 = ${menuName});
 	}
 
 	macro gotoEditNavigationMenuEntry {
@@ -51,20 +51,20 @@ definition {
 	}
 
 	macro gotoSublevel {
-		if ("${type}" == "Drop Down") {
+		if (${type} == "Drop Down") {
 			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
 			MouseOver.javaScriptMouseOver(
-				key_pageName = "${pageName}",
+				key_pageName = ${pageName},
 				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
 			Click(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
 		}
-		else if ("${type}" == "List") {
+		else if (${type} == "List") {
 			Click(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
 		}
 	}
@@ -72,30 +72,30 @@ definition {
 	macro selectDisplayTemplate {
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 	}
 
 	macro selectLevelsToDisplay {
 		Select(
 			key_selectFieldLabel = "Levels to Display",
 			locator1 = "Select#ANY",
-			value1 = "${levels}");
+			value1 = ${levels});
 	}
 
 	macro selectNavigation {
 		Select(
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
-			value1 = "${menuType}");
+			value1 = ${menuType});
 	}
 
 	macro viewMenuItemsOrder {
-		var index = "1";
+		var index = 1;
 
-		for (var menuItem : list "${menuItemList}") {
+		for (var menuItem : list ${menuItemList}) {
 			AssertTextEquals(
-				key_index = "${index}",
+				key_index = ${index},
 				locator1 = "NavigationMenusWidget#MENU_ITEM",
-				value1 = "${menuItem}");
+				value1 = ${menuItem});
 
 			var index = ${index} + 1;
 		}

@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
-	@priority = "4"
+	@priority = 4
 	test AddAllThreeContentFragmentsToOneCell {
 		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
@@ -70,12 +70,12 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "WC WebContent Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -101,28 +101,28 @@ definition {
 		task ("View above fragments also shown in other cells of Collection Display") {
 			for (var i : list "1,2,3") {
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
 					value1 = "-");
 
 				AssertVisible(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					key_fragmentName = "Content Flags",
 					locator1 = "Fragment#FRAGMENT_CONTENT",
 					value1 = "Report");
 			}
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "WC WebContent Content ${i}");
 
 				var n = ${n} + 1;
@@ -131,7 +131,7 @@ definition {
 
 		task ("View the title of collection item shown in Item field") {
 			for (var fragmentName : list "Content Flags,Content Ratings,Content Display") {
-				PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
+				PageEditor.gotoConfiguration(fragmentName = ${fragmentName});
 
 				InputField.viewText(
 					fieldLabel = "Item",
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86141 and for LPS-107665. The fragment should be added to all cells of the Collection Display when add it to one cell."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddFragmentToOneCell {
 		property portal.acceptance = "true";
@@ -151,7 +151,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = ${entryTitle});
 			}
 		}
 
@@ -192,13 +192,13 @@ definition {
 					editableText = "Go Somewhere",
 					fragmentName = "Button",
 					id = "link",
-					position = "${n}");
+					position = ${n});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-157740. View error message when dropping a fragment to unmapped Collection Display fragment."
-	@priority = "3"
+	@priority = 3
 	test CannotAddFragmentToUnmappedCollectionDisplay {
 		task ("Given a page creator has a content page with an unmapped Collection Display") {
 			ContentPagesNavigator.openEditContentPage(
@@ -228,14 +228,14 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86141. The mapped content of asset entries in selected collection should be respectively shown in each cell of the Collection Display when map content to editable field of one fragment in one cell."
-	@priority = "4"
+	@priority = 4
 	test MapContentToTextFragment {
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = ${entryTitle});
 			}
 		}
 
@@ -278,14 +278,14 @@ definition {
 		}
 
 		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
 				PageEditor.viewFragmentEditableText(
-					editableText = "${title}",
+					editableText = ${title},
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116034. The custom ddmfields of single type collection items are available for mapping in editable field."
-	@priority = "4"
+	@priority = 4
 	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -460,7 +460,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127706. Assert the mapped image to background image of Container in collection display is shown in view mode."
-	@priority = "3"
+	@priority = 3
 	test MapImageToBackgroundImageOfContainer {
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -544,7 +544,7 @@ definition {
 		task ("Assert the mapping image is shown in Container") {
 			PageEditor.viewContainerStyle(
 				backgroundImage = "Document_1\.jpg",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Assert the image is shown in view mode") {
@@ -564,7 +564,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
-	@priority = "4"
+	@priority = 4
 	test MapImageToImageFragment {
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -665,13 +665,13 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
-	@priority = "4"
+	@priority = 4
 	test PropagateChangesOfInlineContentToOtherCells {
 		task ("Add three documents") {
 			for (var entryTitle : list "First Document,Second Document,Third Document") {
 				JSONDocument.addFile(
 					dmDocumentDescription = "DM Description",
-					dmDocumentTitle = "${entryTitle}",
+					dmDocumentTitle = ${entryTitle},
 					groupName = "Test Site Name");
 			}
 		}
@@ -721,13 +721,13 @@ definition {
 					editableText = "Modified Text",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
-	@priority = "4"
+	@priority = 4
 	test ViewBlogEntryInContentDisplay {
 		task ("Add three blog entries") {
 			for (var i : list "1,2,3") {
@@ -762,12 +762,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Blogs Entry Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -781,13 +781,13 @@ definition {
 		}
 
 		task ("View the content of blogs entries shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "widget-content",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "Blogs Entry Content ${i}");
 
 				var n = ${n} + 1;
@@ -805,7 +805,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewDocumentInContentDisplay {
 		property portal.acceptance = "true";
@@ -846,12 +846,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Document Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -865,12 +865,12 @@ definition {
 		}
 
 		task ("View the images shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var image : list "Document_3.jpg,Document_2.jpg,Document_1.jpg") {
 				ContentPages.viewFragmentBackgroundImage(
-					image = "${image}",
-					position = "${n}");
+					image = ${image},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -887,7 +887,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewDynamicCollectionWithAnyAssetType {
 		property portal.acceptance = "true";
@@ -933,12 +933,12 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${title}",
-					row = "${n}");
+					assetTitle = ${title},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -946,7 +946,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Select More Than One asset type."
-	@priority = "4"
+	@priority = 4
 	test ViewDynamicCollectionWithMoreThanOneAssetType {
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
@@ -998,12 +998,12 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${title}",
-					row = "${n}");
+					assetTitle = ${title},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1011,7 +1011,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewFlagsInContentFlags {
 		property portal.acceptance = "true";
@@ -1050,12 +1050,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "WC WebContent Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1071,7 +1071,7 @@ definition {
 		task ("View the Content Flags are shown in each cell") {
 			for (var i : list "1,2,3") {
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					key_fragmentName = "Content Flags",
 					locator1 = "Fragment#FRAGMENT_CONTENT",
 					value1 = "Report");
@@ -1079,12 +1079,12 @@ definition {
 		}
 
 		task ("View the web content title shown in Item field") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.gotoConfiguration(
 					fragmentName = "Content Flags",
-					index = "${n}");
+					index = ${n});
 
 				InputField.viewText(
 					fieldLabel = "Item",
@@ -1096,7 +1096,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."
-	@priority = "4"
+	@priority = 4
 	test ViewItemTypeLabelMappedInCollectionWithMultipleItemTypes {
 		task ("Add a web content, blog entry and document") {
 			JSONWebcontent.addWebContent(
@@ -1198,7 +1198,7 @@ definition {
 			for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}
@@ -1228,14 +1228,14 @@ definition {
 			for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field fragment in Collection Display based on collection with single itemType and specific subType, the Item Type and Item Subtype label will be shown in mapping panel."
-	@priority = "4"
+	@priority = 4
 	test ViewItemTypeLabelMappedInCollectionWithSingleAndSpecificItemType {
 		task ("Add a web content and document") {
 			JSONWebcontent.addWebContent(
@@ -1344,7 +1344,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
-	@priority = "4"
+	@priority = 4
 	test ViewItemTypeLabelMappedInCollectionWithSingleItemType {
 		task ("Add a web content, blog entry and document") {
 			JSONWebcontent.addWebContent(
@@ -1478,7 +1478,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a manual collection with multiple asset types."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewManualCollectionWithAssetTypes {
 		property portal.acceptance = "true";
@@ -1545,12 +1545,12 @@ definition {
 				assetListName = "Manual Collection",
 				fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${title}",
-					row = "${n}");
+					assetTitle = ${title},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1558,7 +1558,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in Collection Display based on single type collection."
-	@priority = "4"
+	@priority = 4
 	test ViewMappableFieldsAreGroupedByFieldsetBasedOnSingleTypeCollection {
 		task ("Add a web content article based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -1648,17 +1648,17 @@ definition {
 
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//div[@aria-label='Heading']",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			Click(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			WaitForElementPresent(
@@ -1676,7 +1676,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1702,7 +1702,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1710,7 +1710,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Schedule",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1723,17 +1723,17 @@ definition {
 
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//div[@aria-label='Heading']",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			Click(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			WaitForElementPresent(
@@ -1751,7 +1751,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1759,7 +1759,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Content",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1767,7 +1767,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Configuration",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1775,7 +1775,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1788,17 +1788,17 @@ definition {
 
 		task ("Access to the mapping panel of Heading") {
 			Click.clickNoWaitForVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//div[@aria-label='Heading']",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			Click(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_element = "//*[contains(@class,'heading') and contains(@data-lfr-editable-id,'element-text')]",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
 			WaitForElementPresent(
@@ -1816,7 +1816,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1824,7 +1824,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "File Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1838,14 +1838,14 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewRatingsInContentRatings {
 		property portal.acceptance = "true";
@@ -1884,12 +1884,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "WC WebContent Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1905,23 +1905,23 @@ definition {
 		task ("View the Content Ratings shown in each cell") {
 			for (var i : list "1,2,3") {
 				AssertTextEquals(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR_RESULT",
 					value1 = "-");
 
 				AssertVisible(
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_AVERAGE_STAR");
 			}
 		}
 
 		task ("View the web content title shown in Item field") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.gotoConfiguration(
 					fragmentName = "Content Ratings",
-					index = "${n}");
+					index = ${n});
 
 				InputField.viewText(
 					fieldLabel = "Item",
@@ -1933,7 +1933,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewTitleListItemStyleInDifferentListStyles {
 		property environment.acceptance = "true";
@@ -1985,13 +1985,13 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Bordered List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
 
 				var n = ${n} + 1;
@@ -2005,13 +2005,13 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2029,13 +2029,13 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Bulleted List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
 
 				var n = ${n} + 1;
@@ -2045,13 +2045,13 @@ definition {
 		task ("Assert the Title of collection items are shown in Bulleted List at view mode") {
 			PageEditor.publish();
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2069,13 +2069,13 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Inline List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST");
 
 				var n = ${n} + 1;
@@ -2085,13 +2085,13 @@ definition {
 		task ("Assert the Title of collection items are shown in Inline List at view mode") {
 			PageEditor.publish();
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_INLINE_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2109,13 +2109,13 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Numbered List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST");
 
 				var n = ${n} + 1;
@@ -2125,13 +2125,13 @@ definition {
 		task ("Assert the Title of collection items are shown in Numbered List at view mode") {
 			PageEditor.publish();
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_NUMBERED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2149,13 +2149,13 @@ definition {
 		}
 
 		task ("Assert the Title of collection items are shown in Unstyled List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST");
 
 				var n = ${n} + 1;
@@ -2165,13 +2165,13 @@ definition {
 		task ("Assert the Title of collection items are shown in Unstyled List at view mode") {
 			PageEditor.publish();
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_UNSTYLED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -2180,7 +2180,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86141 and for LPS-107665. The title of asset entries in selected collection should be shown as a list in the Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewTitleOfCollectionItems {
 		property portal.acceptance = "true";
@@ -2190,7 +2190,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = ${entryTitle});
 			}
 		}
 
@@ -2199,7 +2199,7 @@ definition {
 				HeadlessBlog.addBlogEntry(
 					content = "Blogs Entry Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = ${entryTitle});
 			}
 		}
 
@@ -2226,7 +2226,7 @@ definition {
 
 			for (var title : list "Second Blogs Entry,Third Blogs Entry") {
 				AssetListsAdmin.selectAsset(
-					assetName = "${title}",
+					assetName = ${title},
 					assetType = "Blogs Entry");
 			}
 		}
@@ -2248,12 +2248,12 @@ definition {
 		}
 
 		task ("Assert the title of three Web Content Articles are shown as a list in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${title}",
-					row = "${n}");
+					assetTitle = ${title},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -2266,12 +2266,12 @@ definition {
 		}
 
 		task ("Assert the title of three Blogs Entry are shown as a list in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "First Blogs Entry,Second Blogs Entry,Third Blogs Entry") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${title}",
-					row = "${n}");
+					assetTitle = ${title},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -2279,7 +2279,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150318 and LPS-152245. Fragments used in nested elements and nested tabs within collection display are not given unique fragment ids."
-	@priority = "3"
+	@priority = 3
 	test ViewUniqueFragmentIdsInNestedElementsAndNestedTabs {
 		task ("Given a fragment is given unique ID") {
 			task ("Add a fragment collection via JSON") {
@@ -2308,7 +2308,7 @@ definition {
 
 				var htmlContent = '''<div class="fragment_name">${fragmentElementId}</div>''';
 
-				FragmentsEditor.typeHtmlEditor(content = "${htmlContent}");
+				FragmentsEditor.typeHtmlEditor(content = ${htmlContent});
 
 				FragmentsEditor.waitForAutoSave();
 
@@ -2387,10 +2387,10 @@ definition {
 				PageEditor.addElementToTab(
 					collectionName = "Collection Name",
 					fragmentName = "Fragment Name",
-					index = "2",
+					index = 2,
 					navItem = "Tab 1",
 					navTab = "Fragments",
-					position = "1");
+					position = 1);
 			}
 		}
 
@@ -2402,18 +2402,18 @@ definition {
 			var fragmentId = selenium.getText("//div[@aria-label='Fragment Name']");
 
 			AssertTextNotEquals(
-				key_columnNumber = "1",
-				key_position = "1",
-				key_rowNumber = "2",
+				key_columnNumber = 1,
+				key_position = 1,
+				key_rowNumber = 2,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-				value1 = "${fragmentId}");
+				value1 = ${fragmentId});
 
 			AssertTextNotEquals(
-				key_columnNumber = "1",
-				key_position = "1",
-				key_rowNumber = "3",
+				key_columnNumber = 1,
+				key_position = 1,
+				key_rowNumber = 3,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-				value1 = "${fragmentId}");
+				value1 = ${fragmentId});
 
 			PageEditor.publish();
 
@@ -2424,18 +2424,18 @@ definition {
 			var fragmentId2 = selenium.getText("//div[@aria-label='Fragment Name']//div[contains(@id,'fragment-')]");
 
 			AssertTextNotEquals.assertNotPartialText(
-				key_columnNumber = "1",
-				key_position = "1",
-				key_rowNumber = "2",
+				key_columnNumber = 1,
+				key_position = 1,
+				key_rowNumber = 2,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-				value1 = "${fragmentId2}");
+				value1 = ${fragmentId2});
 
 			AssertTextNotEquals.assertNotPartialText(
-				key_columnNumber = "1",
-				key_position = "1",
-				key_rowNumber = "3",
+				key_columnNumber = 1,
+				key_position = 1,
+				key_rowNumber = 3,
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
-				value1 = "${fragmentId2}");
+				value1 = ${fragmentId2});
 
 			PageEditor.publish();
 
@@ -2446,22 +2446,22 @@ definition {
 			var fragmentElementId = selenium.getText("//div[contains(@class,'fragment-name')]//div[contains(@id,'fragment-')]");
 
 			AssertTextEquals(
-				key_colPosition = "1",
-				key_rowPosition = "1",
+				key_colPosition = 1,
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 
 			AssertTextNotEquals(
-				key_colPosition = "1",
-				key_rowPosition = "2",
+				key_colPosition = 1,
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 
 			AssertTextNotEquals(
-				key_colPosition = "1",
-				key_rowPosition = "3",
+				key_colPosition = 1,
+				key_rowPosition = 3,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name 2",
@@ -2470,27 +2470,27 @@ definition {
 			var fragmentElementId = selenium.getText("//div[contains(@class,'fragment-name')]//div[contains(@id,'fragment-')]");
 
 			AssertTextEquals.assertPartialText(
-				key_colPosition = "1",
-				key_rowPosition = "1",
+				key_colPosition = 1,
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 
 			AssertTextNotEquals.assertNotPartialText(
-				key_colPosition = "1",
-				key_rowPosition = "2",
+				key_colPosition = 1,
+				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 
 			AssertTextNotEquals.assertNotPartialText(
-				key_colPosition = "1",
-				key_rowPosition = "3",
+				key_colPosition = 1,
+				key_rowPosition = 3,
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentElementId}");
+				value1 = ${fragmentElementId});
 		}
 	}
 
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewWebContentInContentDisplay {
 		property portal.acceptance = "true";
@@ -2529,12 +2529,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "WC WebContent Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -2548,13 +2548,13 @@ definition {
 		}
 
 		task ("View the contents shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "WC WebContent Content ${i}");
 
 				var n = ${n} + 1;
@@ -2572,7 +2572,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewWebContentWithCustomTemplateInContentDisplay {
 		property portal.acceptance = "true";
@@ -2604,7 +2604,7 @@ definition {
 				structureName = "WC Structure Name",
 				templateDescription = "WC Template Description",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add three web contents based on new structure") {
@@ -2647,12 +2647,12 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "WC WebContent Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -2666,13 +2666,13 @@ definition {
 		}
 
 		task ("View the displayed content in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					assetType = "journal",
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "WC WebContent Text ${i} Text");
 
 				var n = ${n} + 1;
@@ -2703,12 +2703,12 @@ definition {
 		}
 
 		task ("View the web content title shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "Content Display",
-					position = "${n}",
+					position = ${n},
 					text = "WC WebContent Title ${i}");
 
 				var n = ${n} + 1;

@@ -35,7 +35,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8942 | Test Summary: Assert that a User can't create a Custom Range past 365 days max for Individuals"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test AssertIndividualsTimeFIlterInvalidCustom {
 		property portal.upstream = "quarantine";
 
@@ -69,7 +69,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual > KnownIndividual > Overview") {
@@ -82,13 +82,13 @@ definition {
 
 		task ("Select a Custom Range time period in Active Individuals chart") {
 			ACTimeFilter.setCustomRange(
-				endDay = "2",
+				endDay = 2,
 				endMonth = "July",
-				endYear = "2020",
+				endYear = 2020,
 				invalid = "true",
-				startDay = "1",
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2019");
+				startYear = 2019);
 		}
 
 		task ("Assert that a user can't create a Custom Range past 365 days max for Individuals") {
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LLRAC-8940 | Test Summary: Assert Chart ticks for Individuals Metrics standardized"
-	@priority = "3"
+	@priority = 3
 	test AssertIndividualTicksDateFormat {
 		property portal.upstream = "quarantine";
 
@@ -122,7 +122,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual > KnownIndividual > Details") {
@@ -151,7 +151,7 @@ definition {
 				cardName = "Individual Events");
 
 			ACUtils.assertDatePattern(
-				date = "${date}",
+				date = ${date},
 				format = "MMM d");
 		}
 
@@ -166,16 +166,16 @@ definition {
 				axis = "xAxis",
 				cardName = "Individual Events");
 
-			var dateLength = StringUtil.length("${date}");
+			var dateLength = StringUtil.length(${date});
 
-			if (("${dateLength}" == "9") || ("${dateLength}" == "10") || ("${dateLength}" == "11")) {
+			if ((${dateLength} == 9) || (${dateLength} == 10) || (${dateLength} == 11)) {
 				ACUtils.assertDatePattern(
-					date = "${date}",
+					date = ${date},
 					format = "MMM d - d");
 			}
 			else {
 				ACUtils.assertDatePattern(
-					date = "${date}",
+					date = ${date},
 					format = "MMM d - MMM d");
 			}
 		}
@@ -192,7 +192,7 @@ definition {
 				cardName = "Individual Events");
 
 			ACUtils.assertDatePattern(
-				date = "${date}",
+				date = ${date},
 				format = "MMM");
 		}
 
@@ -205,14 +205,14 @@ definition {
 		task ("View the interval option buttons are disabled") {
 			for (var interval : list "D,W,M") {
 				AssertVisible(
-					key_text = "${interval}",
+					key_text = ${interval},
 					locator1 = "Button#ANY_DISABLED");
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
-	@priority = "3"
+	@priority = 3
 	test AssertKnownIndividualChartPopover {
 		property portal.upstream = "quarantine";
 
@@ -235,7 +235,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual > KnownIndividual > Overview") {
@@ -250,13 +250,13 @@ definition {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDateWithoutBar();
 
 			ACUtils.assertDatePattern(
-				date = "${formattedDate}",
+				date = ${formattedDate},
 				format = "yyyy MMM dd");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8124 | Test Summary: Individual activities graph shows activities from today when switched to 24 hour view"
-	@priority = "5"
+	@priority = 5
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {
 		property portal.upstream = "quarantine";
 
@@ -287,7 +287,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to the Individual and KnownIndividuals tab") {

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 
 	@description = "LPS-135888 - Verify that is possible to assign Account role type for role assignments trough XML Source"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanAssignAccoutRoleTroughtSource {
 
 		// TODO LRQA-69112 CanAssignAccoutRoleTroughtSource pending implementation
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a Not Published process"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteUnpublishedWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"
-	@priority = "4"
+	@priority = 4
 	test CanEditDuplicatedWorkflowTitle {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanEditDuplicatedWorkflowTitle";
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"
-	@priority = "4"
+	@priority = 4
 	test CanImportNonXMLFile {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanImportNonXMLFile";
 
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to import a XML file"
-	@priority = "4"
+	@priority = 4
 	test CanImportXMLFile {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanImportXMLFile";
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "Verify that, when the definition is published, the Delete option is not present in kebab menu"
-	@priority = "4"
+	@priority = 4
 	test CanNotDeletePublishedWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "Verify that the Workflow is not published without title"
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishWithoutTitle {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanNotPublishWithoutTitle";
 
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a Workflow is in use and system displays an error message"
-	@priority = "4"
+	@priority = 4
 	test CanNotUnpublishWorkflowInUse {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Verify that, when entering valid content, the Workflow is published"
-	@priority = "5"
+	@priority = 5
 	test CanPublishWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanPublishWorkflow";
 
@@ -243,7 +243,7 @@ definition {
 
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore option, on kebab menu"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanRestorePreviousVersionOnMenu {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnMenu";
 		property test.run.environment = "EE";
@@ -278,7 +278,7 @@ definition {
 
 	@description = "Verify that the user is able to restore a previous version of definition by clicking on Restore button, on Preview modal"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanRestorePreviousVersionOnModal {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanRestorePreviousVersionOnModal";
 		property test.run.environment = "EE";
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to save a untitled Workflow"
-	@priority = "2"
+	@priority = 2
 	test CanSaveUntitledWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSaveUntitledWorkflow";
 
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to save a Workflow without publishing it"
-	@priority = "3"
+	@priority = 3
 	test CanSaveWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSaveWorkflow ";
 
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Duplicate option in the kebab for a particular definition"
-	@priority = "3"
+	@priority = 3
 	test CanSelectDuplicate {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSelectDuplicate";
 
@@ -396,7 +396,7 @@ definition {
 
 	@description = "Verify that the user can select Permissions option in the kebab for a particular definition"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanSelectPermissions {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanSelectPermissions";
 		property test.run.environment = "EE";
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select Unpublish option in the kebab menu for a particular definition"
-	@priority = "3"
+	@priority = 3
 	test CanSelectUnpublish {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@description = "Verify that when clicking the info icon, the process details and revision history are displayed"
-	@priority = "3"
+	@priority = 3
 	test CanViewDetailsAndHistory {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -459,7 +459,7 @@ definition {
 
 	@description = "Verify that the user is able to view a previous version of definition by clicking on Preview option, on kebab menu"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanViewPreviousVersion {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#CanViewPreviousVersion";
 		property test.run.environment = "EE";
@@ -481,13 +481,13 @@ definition {
 
 		KaleoDesigner.showRevisionHistory();
 
-		KaleoDesigner.restoreDraft(rowIndexNumber = "1");
+		KaleoDesigner.restoreDraft(rowIndexNumber = 1);
 
 		KaleoDesigner.viewNodePresent(nodeNodeLabel = "update");
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified date and Total Modifications"
-	@priority = "3"
+	@priority = 3
 	test DisplaysCreatedDateLastModifiedTotalModifications {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#DisplaysCreatedDateLastModifiedTotalModifications";
 
@@ -512,7 +512,7 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab displays the list of modification dates"
-	@priority = "3"
+	@priority = 3
 	test DisplaysModificationDates {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#DisplaysModificationDates";
 
@@ -532,7 +532,7 @@ definition {
 		Navigator.gotoNavTab(navTab = "Revision History");
 
 		AssertElementPresent(
-			key_ruleNumber = "1",
+			key_ruleNumber = 1,
 			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
 
 		PortletEntry.inputTitle(title = "New Workflow Definition Title 2");
@@ -544,16 +544,16 @@ definition {
 		Navigator.gotoNavTab(navTab = "Revision History");
 
 		AssertElementPresent(
-			key_ruleNumber = "1",
+			key_ruleNumber = 1,
 			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
 
 		AssertElementPresent(
-			key_ruleNumber = "2",
+			key_ruleNumber = 2,
 			locator1 = "ProcessBuilderSource#REVISION_HISTORY_ITEM");
 	}
 
 	@description = "Verify that revision history is not copied to the duplicated definition"
-	@priority = "4"
+	@priority = 4
 	test RevisionHistoryIsNotCopied {
 		property test.name.skip.portal.instance = "ProcessBuilderSource#RevisionHistoryIsNotCopied";
 
@@ -573,11 +573,11 @@ definition {
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
 		AssertElementPresent(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		AssertElementPresent(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		Click(locator1 = "ProcessBuilderSource#PROCESS_DETAILS_ELLIPSIS");
@@ -593,13 +593,13 @@ definition {
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
 		AssertElementNotPresent(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test SingleApproverSourceComesWithAccountMemberAndAdminAssigned {
 
 		// TODO LRQA-69111 SingleApproverSourceComesWithAccountMemberAndAdminAssigned pending implementation
@@ -608,7 +608,7 @@ definition {
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test SingleApproverSourceComesWithAccountRoleAssigned {
 
 		// TODO LRQA-69110 SingleApproverSourceComesWithAccountRoleAssigned pending implementation
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@description = "Verify that the time format in Details tab is following the system language"
-	@priority = "3"
+	@priority = 3
 	test TimeFormatFollowsSystemLanguageInDetails {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -674,7 +674,7 @@ definition {
 	}
 
 	@description = "Verify that the time format in Revision History tab is following the system language"
-	@priority = "4"
+	@priority = 4
 	test TimeFormatFollowsSystemLanguageInRevision {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -694,7 +694,7 @@ definition {
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
 		AssertElementPresent(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
@@ -721,7 +721,7 @@ definition {
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_TAB");
 
 		AssertElementNotPresent(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "ProcessBuilderSource#PROCESS_DETAILS_REVISION_BY_ROW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Configurações da Conta");
@@ -733,7 +733,7 @@ definition {
 
 	@description = "LPS-135888 - Verify that the XML source version is updated for a new workflow"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test XMLSourceVersionIsUpdatedForNewWorkfow {
 
 		// TODO LRQA-69114 XMLSourceVersionIsUpdatedForNewWorkfow pending implementation
@@ -742,7 +742,7 @@ definition {
 
 	@description = "LPS-135888 - Verify that the XML source version is updated for Single Approver"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test XMLSourceVersionIsUpdatedForSingleApprover {
 
 		// TODO LRQA-69113 XMLSourceVersionIsUpdatedForSingleApprover pending implementation

@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115218. Can choose to a site in Product Menu when disable Applications Menu. Can navigate to site-scope applications in Product Menu when disable Global Apps Menu."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test NavigateToSiteAndSiteScopeApplicationsInProductMenuWhenDisableApplicationsMenu {
 		property portal.acceptance = "true";
@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Navigate to the default site via Product Menu panel") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			ProductMenuHelper.openWorkspace();
 
@@ -49,11 +49,11 @@ definition {
 
 			Navigator.gotoNavItem(navItem = "All Sites");
 
-			SiteSelector.selectSite(site = "${siteName}");
+			SiteSelector.selectSite(site = ${siteName});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-				value1 = "${siteName}");
+				value1 = ${siteName});
 		}
 
 		task ("Assert site administration toggle works") {
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112989 and LPS-112993. View All link will be shown in Applications Menu when the total amount of Recently Visited and My Sites more than 7."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
 		property portal.acceptance = "true";
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112990, LPS-112992 and LPS-112989. The Applications Menu icon and User Avatar icon buttons are located in Control Menu when user is in application admin. The Applications Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in site page. The Global Menu icon is not shown but User Avatar icon is located in Nav Bar when user is in page editor. The Global Menu icon is located in Control Menu but User Avatar icon is located in Nav Bar when user is in Staging site page and Live site page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewLocationOfApplicationsMenuIconAndUserAvatarIcon {
 		property portal.acceptance = "true";
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115218, LPS-112994 and LPS-112992. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in default instance."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInDefaultInstance {
 		property portal.acceptance = "true";
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115218. Both Applications and Control Panel categories are shown in Product Menu when disable Applications Menu in virtual instance."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewProductMenuWhenDisableApplicationsMenuInVirtualInstance {
 		property test.name.skip.portal.instance = "ApplicationsMenu#ViewProductMenuWhenDisableApplicationsMenuInVirtualInstance";

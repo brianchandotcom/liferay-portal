@@ -1,7 +1,7 @@
 definition {
 
 	macro _addCatalog {
-		Variables.assertDefined(parameterList = "${catalogName}");
+		Variables.assertDefined(parameterList = ${catalogName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -22,11 +22,11 @@ definition {
 				-d catalogDefaultLanguageId=${catalogLanguage}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteAllNoSystemCommerceCatalogs {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -34,15 +34,15 @@ definition {
 
 		var catalogIds = CommerceJSONCatalogsAPI._getCommerceNoSystemCatalogIds();
 
-		if ("${catalogIds}" != "") {
-			for (var catalogId : list "${catalogIds}") {
+		if (${catalogIds} != "") {
+			for (var catalogId : list ${catalogIds}) {
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId} \
 						-u test@liferay.com:test \
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -51,9 +51,9 @@ definition {
 	}
 
 	macro _getCommerceCatalogIdByName {
-		Variables.assertDefined(parameterList = "${catalogName}");
+		Variables.assertDefined(parameterList = ${catalogName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var masterCatalogName = "Master";
 
 		if (!(isSet(baseURL))) {
@@ -61,10 +61,10 @@ definition {
 		}
 
 		if (isSet(catalogCount)) {
-			var catalogsCount = "${catalogCount}";
+			var catalogsCount = ${catalogCount};
 		}
 		else {
-			var catalogsCount = "100";
+			var catalogsCount = 100;
 		}
 
 		var curl = '''
@@ -74,14 +74,14 @@ definition {
 		''';
 
 		if (isSet(catalogName)) {
-			var catalogIds = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${catalogName}')].['id']");
+			var catalogIds = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${catalogName}')].['id']");
 		}
 
-		return "${catalogIds}";
+		return ${catalogIds};
 	}
 
 	macro _getCommerceNoSystemCatalogIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var masterCatalogName = "Master";
 
 		if (!(isSet(baseURL))) {
@@ -89,10 +89,10 @@ definition {
 		}
 
 		if (isSet(catalogCount)) {
-			var catalogsCount = "${catalogCount}";
+			var catalogsCount = ${catalogCount};
 		}
 		else {
-			var catalogsCount = "100";
+			var catalogsCount = 100;
 		}
 
 		var curl = '''
@@ -101,9 +101,9 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var catalogIds = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)].['id']");
+		var catalogIds = JSONCurlUtil.get(${curl}, "$.items[?(@['system'] == false)].['id']");
 
-		return "${catalogIds}";
+		return ${catalogIds};
 	}
 
 }

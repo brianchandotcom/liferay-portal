@@ -2,13 +2,13 @@ definition {
 
 	macro assertWorkflowColumnPresent {
 		AssertElementPresent(
-			key_workflowColumnName = "${workflowColumnName}",
+			key_workflowColumnName = ${workflowColumnName},
 			locator1 = "AppBuilder#WORKFLOW_COLUMN");
 	}
 
 	macro assertWorkflowSelected {
 		AssertElementPresent(
-			key_itemName = "${workflowName}",
+			key_itemName = ${workflowName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_SELECTED");
 	}
 
@@ -40,7 +40,7 @@ definition {
 
 	macro selectFormView {
 		Click(
-			key_itemName = "${formViewName}",
+			key_itemName = ${formViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();
@@ -50,19 +50,19 @@ definition {
 		App.openProductMenuPlaceItDropdown();
 
 		Click(
-			key_dropdownOption = "${menuOption}",
+			key_dropdownOption = ${menuOption},
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 	macro selectProductMenuSiteOption {
 		Click(
-			key_dropdownOption = "${siteOption}",
+			key_dropdownOption = ${siteOption},
 			locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN_OPTION");
 	}
 
 	macro selectTableView {
 		Click(
-			key_itemName = "${tableViewName}",
+			key_itemName = ${tableViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();
@@ -70,13 +70,13 @@ definition {
 
 	macro selectTableViewWithoutClickNext {
 		Click(
-			key_itemName = "${tableViewName}",
+			key_itemName = ${tableViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
 	macro selectWorkflow {
 		Click(
-			key_itemName = "${workflowName}",
+			key_itemName = ${workflowName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();
@@ -84,7 +84,7 @@ definition {
 
 	macro toggleDeploy {
 		Check.checkToggleSwitch(
-			key_deployOption = "${deployOption}",
+			key_deployOption = ${deployOption},
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
@@ -94,19 +94,19 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_deployOption = "${deployOption}",
+			key_deployOption = ${deployOption},
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
 	macro validateDeployedAs {
 		AssertTextEquals(
 			locator1 = "AppBuilder#DEPLOYED_AS",
-			value1 = "${title}");
+			value1 = ${title});
 	}
 
 	macro validateProductMenuPlaceItDropdownList {
 		AssertElementPresent(
-			key_dropdownOption = "${menuOption}",
+			key_dropdownOption = ${menuOption},
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 

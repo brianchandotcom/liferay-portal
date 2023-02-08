@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
-	@priority = "3"
+	@priority = 3
 	test SitesTemplatePermissionPersistence {
 		property testray.component.names = "Permissions,Site Administration";
 
@@ -36,11 +36,11 @@ definition {
 		}
 
 		task ("Add widgets to Home page of the new site template") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -50,11 +50,11 @@ definition {
 				fragmentName = "Grid");
 
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 
 			PageEditor.addElementToColumn(
-				columnNumber = "1",
+				columnNumber = 1,
 				navTab = "Widgets",
 				portletName = "Message Boards");
 
@@ -96,7 +96,7 @@ definition {
 			IFrame.closeFrame();
 
 			PageEditor.addElementToColumn(
-				columnNumber = "2",
+				columnNumber = 2,
 				height = "Tall",
 				navTab = "Widgets",
 				portletName = "Asset Publisher");
@@ -139,7 +139,7 @@ definition {
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
 
@@ -157,7 +157,7 @@ definition {
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "This is the message boards thread.",
 				threadSubject = "Thread");
 

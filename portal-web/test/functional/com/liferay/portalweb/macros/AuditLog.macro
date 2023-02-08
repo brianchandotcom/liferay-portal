@@ -5,7 +5,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/liferay.audit.log");
 
-		if (contains("${fileContent}", "${logString}")) {
+		if (contains(${fileContent}, ${logString})) {
 			echo("Found ${logString} in portal log.");
 		}
 		else {

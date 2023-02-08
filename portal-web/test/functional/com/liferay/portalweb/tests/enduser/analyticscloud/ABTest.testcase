@@ -38,7 +38,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8084 | Automation ID: LRAC-11512 | Test Summary: It is possible to create an AB test"
-	@priority = "5"
+	@priority = 5
 	test CanCreateStartABTest {
 		var nameABTest = "Create AB test";
 
@@ -64,7 +64,7 @@ definition {
 		task ("Start an AB test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
-				testTitle = "${nameABTest}");
+				testTitle = ${nameABTest});
 
 			ABTest.createVariant(variantName = "Variant name");
 
@@ -74,18 +74,18 @@ definition {
 		task ("Go to Tests") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToTests();
 		}
 
 		task ("Assert AB test") {
-			ACUtils.viewGenericText(textValueList = "${nameABTest}");
+			ACUtils.viewGenericText(textValueList = ${nameABTest});
 		}
 	}
 
 	@description = "Bug: LRAC-7750 | Automation ID: LRAC-11513 | Test Summary: It is possible to delete an AB test"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteABTest {
 		var nameABTest = "Delete AB test";
 
@@ -102,7 +102,7 @@ definition {
 		task ("Start an AB test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",
-				testTitle = "${nameABTest}");
+				testTitle = ${nameABTest});
 
 			ABTest.createVariant(variantName = "Variant name");
 
@@ -112,19 +112,19 @@ definition {
 		task ("Go to Tests") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToTests();
 		}
 
 		task ("Assert AB test Running") {
-			ACUtils.viewGenericText(textValueList = "${nameABTest}");
+			ACUtils.viewGenericText(textValueList = ${nameABTest});
 
 			ACTests.statusABTest(status = "RUNNING");
 		}
 
 		task ("Terminate AB Test") {
-			ACTests.terminateABTest(testName = "${nameABTest}");
+			ACTests.terminateABTest(testName = ${nameABTest});
 		}
 
 		task ("Go to Tests") {
@@ -132,13 +132,13 @@ definition {
 		}
 
 		task ("Assert AB test Terminated") {
-			ACUtils.viewGenericText(textValueList = "${nameABTest}");
+			ACUtils.viewGenericText(textValueList = ${nameABTest});
 
 			ACTests.statusABTest(status = "TERMINATED");
 		}
 
 		task ("Delete AB Test") {
-			ACTests.deleteABTest(testName = "${nameABTest}");
+			ACTests.deleteABTest(testName = ${nameABTest});
 		}
 
 		task ("Go to Tests") {

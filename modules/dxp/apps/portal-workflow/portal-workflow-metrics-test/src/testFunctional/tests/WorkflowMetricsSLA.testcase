@@ -19,27 +19,27 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-89082 - Verify that a blocked SLA can be fixed"
-	@priority = "5"
+	@priority = 5
 	test BlockedSLACanBeFixed {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#BlockedSLACanBeFixed";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionHours = "00:01",
@@ -85,7 +85,7 @@ definition {
 		WorkflowMetrics.goToEditSLA(slaName = "SLA Name");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Leaves Task: Review",
 			slaDefinitionHours = "00:01",
@@ -100,7 +100,7 @@ definition {
 
 	@description = "LPS-89014 - Verify the system allow users to navigate between fields and buttons by pressing tab key considering the following order: Name > Description > Start > Pause > Stop > Days > Hours > Save button > Cancel button"
 	@ignore = "Test Stub"
-	@priority = "2"
+	@priority = 2
 	test CanNavigateByTabKeyBetweenFields {
 
 		// TODO LRQA-67863 CanNavigateByTabKeyBetweenFields pending implementation
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that creating a SLA will not be reflected in completed instances"
-	@priority = "4"
+	@priority = 4
 	test CreatingSLANotReflectCompletedInstances {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -149,7 +149,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -170,21 +170,21 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
-	@priority = "4"
+	@priority = 4
 	test DeletingSLANotReflectCompletedInstances {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLANotReflectCompletedInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -220,10 +220,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "1",
-			key_ontime = "1",
-			key_overdue = "0",
-			key_untracked = "0");
+			key_completed = 1,
+			key_ontime = 1,
+			key_overdue = 0,
+			key_untracked = 0);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -234,30 +234,30 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "1",
-			key_ontime = "1",
-			key_overdue = "0",
-			key_untracked = "0");
+			key_completed = 1,
+			key_ontime = 1,
+			key_overdue = 0,
+			key_untracked = 0);
 	}
 
 	@description = "LPS-89014 - Verify that deleting a SLA will be reflected in all instances In Progress"
-	@priority = "5"
+	@priority = 5
 	test DeletingSLAReflectInProgressInstances {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLAReflectInProgressInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0100",
+			slaDefinitionHours = 0100,
 			slaDefinitionName = "SLA Name",
 			slaDefinitionStart = "Process Begins");
 
@@ -275,15 +275,15 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
 			Refresh();
 		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "1",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "0");
+			key_ontime = 1,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 0);
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
@@ -296,27 +296,27 @@ definition {
 		Navigator.gotoBack();
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 	}
 
 	@description = "LPS-89082 - Verify that the error alert will be displayed again when user enters the metrics page again after closing it"
-	@priority = "2"
+	@priority = 2
 	test ErrorAlertIsDisplayedAgainWhenClosed {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorAlertIsDisplayedAgainWhenClosed";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionHours = "00:01",
@@ -363,21 +363,21 @@ definition {
 	}
 
 	@description = "LPS-89082 - Verify and click (if possible) the error messages (at metrics, SLA list, and SLA defintion page) when SLA is blocked due to workflow changes"
-	@priority = "4"
+	@priority = 4
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorMessagesAreDisplayedAndClickableWhenSLABlocked";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionHours = "00:01",
@@ -430,7 +430,7 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the field Name should be in focus at the SLA page when the user selects to edit or to create a new SLA"
-	@priority = "3"
+	@priority = 3
 	test FieldNameInFocusAtSLAPage {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -439,7 +439,7 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TITLE_FOCUS");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -456,9 +456,9 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to hit enter key to select an option from the dropdown list"
-	@priority = "2"
+	@priority = 2
 	test MultiSelectFieldsAllowHitEnterKeyToSelectOption {
-		var key_testSlaDefinitionDays = "1";
+		var key_testSlaDefinitionDays = 1;
 		var key_testSlaDefinitionHours = "00:00";
 		var key_testSlaDefinitionDescription = "SLA Description";
 		var key_testSlaDefinitionEnd = "Process Ends: Approved";
@@ -470,36 +470,36 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "${key_testSlaDefinitionDays}",
-			slaDefinitionDescription = "${key_testSlaDefinitionDescription}",
-			slaDefinitionEnd = "${key_testSlaDefinitionEnd}",
-			slaDefinitionHours = "${key_testSlaDefinitionHours}",
-			slaDefinitionName = "${key_testSlaDefinitionName}",
-			slaDefinitionStart = "${key_testSlaDefinitionStart}");
+			slaDefinitionDays = ${key_testSlaDefinitionDays},
+			slaDefinitionDescription = ${key_testSlaDefinitionDescription},
+			slaDefinitionEnd = ${key_testSlaDefinitionEnd},
+			slaDefinitionHours = ${key_testSlaDefinitionHours},
+			slaDefinitionName = ${key_testSlaDefinitionName},
+			slaDefinitionStart = ${key_testSlaDefinitionStart});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
-			value1 = "${key_testSlaDefinitionName}");
+			value1 = ${key_testSlaDefinitionName});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
-			value1 = "${key_testSlaDefinitionDescription}");
+			value1 = ${key_testSlaDefinitionDescription});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
-			value1 = "${key_testSlaDefinitionStart}");
+			value1 = ${key_testSlaDefinitionStart});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
-			value1 = "${key_testSlaDefinitionEnd}");
+			value1 = ${key_testSlaDefinitionEnd});
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
-			value1 = "${key_testSlaDefinitionDays}");
+			value1 = ${key_testSlaDefinitionDays});
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"
-	@priority = "2"
+	@priority = 2
 	test MultiSelectFieldsAllowNavigationByUpDownKeys {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"
-	@priority = "4"
+	@priority = 4
 	test MultiSelectFieldsFilterDropdownListAccordingSearchTerms {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the multi-select-fields provide feedback when typing terms that doesn't exist"
-	@priority = "3"
+	@priority = 3
 	test MultiSelectFieldsProvideFeedbackWhenTypingNotExistentTerms {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -609,7 +609,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
-	@priority = "2"
+	@priority = 2
 	test MultiSelectFieldsProvideFocusWhenFieldActive {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the option for pause field is: On task: [task-name]"
-	@priority = "4"
+	@priority = 4
 	test PauseFieldOptions {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -647,7 +647,7 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the popover is displayed when hovering the pointer on the add button"
-	@priority = "2"
+	@priority = 2
 	test PopoverIsDisplayedWhenHoveringAddButton {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -661,7 +661,7 @@ definition {
 	}
 
 	@description = "LPS-89416 - Verity the propagating info alert when updating a SLA"
-	@priority = "3"
+	@priority = 3
 	test PropagatingInfoAlertDisplayedWhenUpdatingSLA {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -672,10 +672,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0005",
+			slaDefinitionHours = 0005,
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
@@ -710,9 +710,9 @@ definition {
 		WorkflowMetrics.goToEditSLA(slaName = "SLAName");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "SLAName");
 
 		Button.clickUpdate();
@@ -721,14 +721,14 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the same option can't be selected in Start and Stop fields simultaneously"
-	@priority = "5"
+	@priority = 5
 	test SameOptionCantBeSelectedInStartStopFields {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:03",
@@ -743,14 +743,14 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify that the same task can't be selected in Start or Stop and Pause fields simultaneously"
-	@priority = "5"
+	@priority = 5
 	test SameTaskCantBeSelectedInStartStopPauseFields {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionHours = "00:01",
 			slaDefinitionName = "Test",
@@ -767,7 +767,7 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_PAUSE_OPTION");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionHours = "00:01",
 			slaDefinitionName = "Test",
@@ -785,14 +785,14 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the SLA infos are correctly displayed on the table view"
-	@priority = "5"
+	@priority = 5
 	test SLAInfosAreCorrectlyDisplayed {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -822,23 +822,23 @@ definition {
 	}
 
 	@description = "LPS-89082 - Verify that the SLA list should group SLAs into Blocked and Running sections when there is at least 1 blocked SLA"
-	@priority = "4"
+	@priority = 4
 	test SLAListIsGroupedWhenSLABlocked {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAListIsGroupedWhenSLABlocked";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "SLA1",
 			slaDefinitionStart = "Process Begins");
 
@@ -847,10 +847,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description2",
 			slaDefinitionEnd = "Leaves Task: Update",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "SLA2",
 			slaDefinitionStart = "Enters Task: Update");
 
@@ -890,7 +890,7 @@ definition {
 
 	@description = "LPS-94760 - Verify that date format abbreviates the month and doesn't show year. (Example: Apr 25)"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test SLAProcessingDateAbbreviatesMonth {
 
 		// TODO LRQA-67848 SLAProcessingDateAbbreviatesMonth pending implementation
@@ -899,7 +899,7 @@ definition {
 
 	@description = "LPS-94760 - Verify that when there is an alert message on the page, the update date should be displayed below it"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test SLAProcessingDateIsDisplayedUnderAlertMessage {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAProcessingDateIsDisplayedUnderAlertMessage";
 
@@ -908,7 +908,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Leaves Task: Update",
 			slaDefinitionHours = "00:01",
@@ -951,7 +951,7 @@ definition {
 	}
 
 	@description = "LPS-94760 - Verify that when there is no SLA defined to the process, the message is not displayed"
-	@priority = "3"
+	@priority = 3
 	test SLAProcessingDateIsNotDisplayedWhenNoSLA {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -961,7 +961,7 @@ definition {
 	}
 
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
-	@priority = "3"
+	@priority = 3
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
 		var slaName = "SLAName";
 
@@ -970,11 +970,11 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
-			slaDefinitionName = "${slaName}",
+			slaDefinitionHours = 0000,
+			slaDefinitionName = ${slaName},
 			slaDefinitionStart = "Process Begins");
 
 		Button.clickSave();
@@ -999,14 +999,14 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while ((IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT")) && (maxIterations = "45")) {
+		while ((IsElementNotPresent(key_slaName = ${slaName}, locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT")) && (maxIterations = "45")) {
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 		}
 
 		AssertElementPresent(
-			key_slaName = "${slaName}",
+			key_slaName = ${slaName},
 			locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT");
 
 		Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
@@ -1036,14 +1036,14 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"
-	@priority = "3"
+	@priority = 3
 	test SLAsAreOrderedByLasModifiedDesc {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:02",
@@ -1055,7 +1055,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -1065,13 +1065,13 @@ definition {
 		Button.clickSave();
 
 		WorkflowMetrics.assertSlaPosition(
-			slaPosition = "1",
+			slaPosition = 1,
 			slaTitle = "SLA Name 2");
 
 		WorkflowMetrics.goToEditSLA(slaName = "SLA Name 1");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description Updated",
 			slaDefinitionHours = "00:02",
 			slaDefinitionName = "SLA Name 1");
@@ -1079,12 +1079,12 @@ definition {
 		Button.clickUpdate();
 
 		WorkflowMetrics.assertSlaPosition(
-			slaPosition = "1",
+			slaPosition = 1,
 			slaTitle = "SLA Name 1");
 	}
 
 	@description = "LPS-89014 - Verify that the SLA settings is available when accessing the metrics page of a process"
-	@priority = "5"
+	@priority = 5
 	test SLASettingsAvailableOnMetricsPage {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -1094,7 +1094,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the options for start field are: Process begins, Enters task: [task-name], and Leaves task: [task-name]"
-	@priority = "4"
+	@priority = 4
 	test StartFieldOptions {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1124,7 +1124,7 @@ definition {
 	}
 
 	@description = "LPS-89015 - Verify the options for stop field are: Process ends: [task-name], Enters task: [task-name], and Leaves task: [task-name]"
-	@priority = "4"
+	@priority = 4
 	test StopFieldOptions {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1154,14 +1154,14 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify the successful message when creating a SLA"
-	@priority = "2"
+	@priority = 2
 	test SuccessfulMessageDisplayedWhenCreatingSLA {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -1174,14 +1174,14 @@ definition {
 	}
 
 	@description = "LPS-89014 - Verify the successful message when deleting a SLA"
-	@priority = "2"
+	@priority = 2
 	test SuccessfulMessageDisplayedWhenDeletingSLA {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -1206,23 +1206,23 @@ definition {
 	}
 
 	@description = "LPS-89416 - Verify that updating a SLA will not be reflected in completed instances"
-	@priority = "4"
+	@priority = 4
 	test UpdatingSLANotReflectCompletedInstances {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLANotReflectCompletedInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "Test",
 			slaDefinitionStart = "Process Begins");
 
@@ -1267,19 +1267,19 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "1",
-			key_ontime = "1",
-			key_overdue = "0",
-			key_untracked = "0");
+			key_completed = 1,
+			key_ontime = 1,
+			key_overdue = 0,
+			key_untracked = 0);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToEditSLA(slaName = "Test");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "Test Description",
-			slaDefinitionHours = "0001",
+			slaDefinitionHours = 0001,
 			slaDefinitionName = "Test");
 
 		Button.clickUpdate();
@@ -1289,20 +1289,20 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "1",
-			key_ontime = "1",
-			key_overdue = "0",
-			key_untracked = "0");
+			key_completed = 1,
+			key_ontime = 1,
+			key_overdue = 0,
+			key_untracked = 0);
 	}
 
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
-	@priority = "5"
+	@priority = 5
 	test UpdatingSLARecalculateTimeInProgressInstances {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLARecalculateTimeInProgressInstances";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -1317,7 +1317,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -1332,7 +1332,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -1345,16 +1345,16 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		WorkflowMetrics.validateDueDateBySLA(
-			daysLeft = "0",
-			hoursLeft = "00",
-			minutesLeft = "00");
+			daysLeft = 0,
+			hoursLeft = 00,
+			minutesLeft = 00);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToEditSLA(slaName = "Test");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionHours = "01:00",
 			slaDefinitionName = "Test");
@@ -1363,7 +1363,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
 			Refresh();
 		}
 
@@ -1372,9 +1372,9 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		WorkflowMetrics.validateDueDateBySLA(
-			daysLeft = "0",
-			hoursLeft = "00",
-			minutesLeft = "58");
+			daysLeft = 0,
+			hoursLeft = 00,
+			minutesLeft = 58);
 	}
 
 }

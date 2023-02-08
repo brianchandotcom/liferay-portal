@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241 and LPS-128667 and LPS-106776. The user could configure the Button fragment in page editor."
-	@priority = "4"
+	@priority = 4
 	test ConfigureBasicComponentButton {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241 and LPS-99749. The user could configure the Card fragment in page editor."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureBasicComponentCard {
 		property portal.acceptance = "true";
@@ -197,7 +197,7 @@ definition {
 				alignment = "Align Center",
 				borderRadius = "Border Radius Small",
 				boxShadow = "Box Shadow Large",
-				marginBottom = "5");
+				marginBottom = 5);
 		}
 
 		task ("View the Card styles") {
@@ -206,8 +206,8 @@ definition {
 				borderRadius = "border-radius-sm",
 				boxShadow = "box-shadow-lg",
 				fragmentName = "Card",
-				imageSize = "100",
-				marginBottom = "5");
+				imageSize = 100,
+				marginBottom = 5);
 		}
 
 		task ("Remove the Card") {
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241, LPS-115224 and LPS-141412. The user could configure the Heading fragment in page editor."
-	@priority = "5"
+	@priority = 5
 	test ConfigureBasicComponentHeading {
 		property portal.acceptance = "true";
 
@@ -251,14 +251,14 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Align Right",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
+				marginBottom = 2,
+				marginLeft = 2,
+				marginRight = 2,
+				marginTop = 2,
+				paddingBottom = 2,
+				paddingLeft = 2,
+				paddingRight = 2,
+				paddingTop = 2,
 				textColor = "Blockquote Small Color");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -271,14 +271,14 @@ definition {
 				alignment = "right",
 				fragmentName = "Heading",
 				headingLevel = "h2",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
+				marginBottom = 2,
+				marginLeft = 2,
+				marginRight = 2,
+				marginTop = 2,
+				paddingBottom = 2,
+				paddingLeft = 2,
+				paddingRight = 2,
+				paddingTop = 2,
 				textColor = "blockquote-small-color");
 
 			PageEditor.publish();
@@ -324,7 +324,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241, LPS-128667 and LPS-158084. The user could configure the Image fragment in page editor."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureBasicComponentImage {
 		property portal.acceptance = "true";
@@ -360,15 +360,15 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Align Center",
-				marginBottom = "2");
+				marginBottom = 2);
 		}
 
 		task ("View the Image styles") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				fragmentName = "Image",
-				imageSize = "0",
-				marginBottom = "2");
+				imageSize = 0,
+				marginBottom = 2);
 		}
 
 		task ("Remove the Image") {
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241 and LPS-128667. The user could configure the Paragraph fragment in page editor."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureBasicComponentParagraph {
 		property portal.acceptance = "true";
@@ -488,7 +488,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(39, 40, 51, 1)");
@@ -523,7 +523,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241. The user could configure the Separator fragment in page editor."
-	@priority = "4"
+	@priority = 4
 	test ConfigureBasicComponentSeparator {
 		task ("Add a basic component") {
 			ContentPagesNavigator.openEditContentPage(
@@ -540,14 +540,14 @@ definition {
 
 			PageEditor.configureFragment(
 				borderColor = "Gray 100",
-				bottomSpacing = "1",
+				bottomSpacing = 1,
 				separatorColor = "danger");
 		}
 
 		task ("View the Separator styles") {
 			PageEditor.viewFragmentStyle(
 				borderColor = "gray-100",
-				bottomSpacing = "1",
+				bottomSpacing = 1,
 				fragmentName = "Separator",
 				separatorColor = "danger");
 		}
@@ -574,7 +574,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98241. The user could configure the Spacer fragment in page editor."
-	@priority = "4"
+	@priority = 4
 	test ConfigureBasicComponentSpacer {
 		task ("Add a Spacer fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -589,11 +589,11 @@ definition {
 		task ("Configure the Spacer") {
 			PageEditor.gotoConfiguration(fragmentName = "Spacer");
 
-			PageEditor.configureFragment(height = "4");
+			PageEditor.configureFragment(height = 4);
 		}
 
 		task ("View the Spacer styles") {
-			PageEditor.viewFragmentStyle(height = "4");
+			PageEditor.viewFragmentStyle(height = 4);
 		}
 
 		task ("Remove the Spacer") {

@@ -2,7 +2,7 @@ definition {
 
 	macro click {
 		Click.mouseDownMouseUp(
-			key_text = "${button}",
+			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
@@ -40,7 +40,7 @@ definition {
 
 	macro clickCollapse {
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
 	}
 
@@ -90,7 +90,7 @@ definition {
 
 	macro clickNoError {
 		ClickNoError.mouseDownMouseUp(
-			key_text = "${button}",
+			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
@@ -158,13 +158,13 @@ definition {
 
 	macro viewNotPresent {
 		AssertElementNotPresent(
-			key_text = "${button}",
+			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
 	macro viewPresent {
 		AssertElementPresent(
-			key_text = "${button}",
+			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 

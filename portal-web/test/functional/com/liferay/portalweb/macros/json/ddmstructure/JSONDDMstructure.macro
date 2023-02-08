@@ -18,13 +18,13 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
+		var structureId = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
 
-		if ("${structureId}" == "") {
+		if (${structureId} == "") {
 			fail("FAIL. Cannot find structureId.");
 		}
 
-		return "${structureId}";
+		return ${structureId};
 	}
 
 	@summary = "Get structureId of ddmStructures in specific group."
@@ -45,9 +45,9 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var structureIds = JSONCurlUtil.post("${curl}", "$..structureId");
+		var structureIds = JSONCurlUtil.post(${curl}, "$..structureId");
 
-		return "${structureIds}";
+		return ${structureIds};
 	}
 
 }

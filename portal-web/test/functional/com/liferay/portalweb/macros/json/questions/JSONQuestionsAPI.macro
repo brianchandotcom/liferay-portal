@@ -38,7 +38,7 @@ definition {
 
 		echo("## * CategoryID: ${categoryId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Directly calls the JSON WS API to add a question"
@@ -79,7 +79,7 @@ definition {
 
 		echo("## * CategoryID: ${categoryId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 }

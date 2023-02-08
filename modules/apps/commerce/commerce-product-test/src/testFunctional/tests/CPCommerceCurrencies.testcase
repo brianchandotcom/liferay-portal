@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5839. As a system admin i want to be able to create / update and delete a new currency"
-	@priority = "3"
+	@priority = 3
 	test CreateAndUpdateNewCurrency {
 		property portal.acceptance = "true";
 
@@ -40,13 +40,13 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Test Currency");
 
 		for (var current : list "Name/Test Currency Edited,Code/TCYE,Exchange Rate with US Dollar/1") {
-			var fieldLabel = StringUtil.extractFirst("${current}", "/");
-			var value = StringUtil.extractLast("${current}", "/");
+			var fieldLabel = StringUtil.extractFirst(${current}, "/");
+			var value = StringUtil.extractLast(${current}, "/");
 
 			Type(
-				key_fieldLabel = "${fieldLabel}",
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${value}");
+				value1 = ${value});
 		}
 
 		Button.clickSave();
@@ -55,7 +55,7 @@ definition {
 			key_columnClassName = "exchange-rate",
 			key_entryName = "Test Currency Edited",
 			locator1 = "CommerceEntry#CURRENCY_COLUMN_VALUE",
-			value1 = "1");
+			value1 = 1);
 
 		Click(
 			key_itemName = "Test Currency Edited",
@@ -68,7 +68,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5843. As a system administrator I want disabled currencies not to be available in Price Lists, Catalogs and Channels"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test DeactivateCurrency {
 		property portal.acceptance = "false";
 
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5842. As a system administrator I want currencies to be sorted by priority"
-	@priority = "3"
+	@priority = 3
 	test SortCurrenciesByPriority {
 		property portal.acceptance = "false";
 
@@ -87,7 +87,7 @@ definition {
 
 		AssertTextEquals(
 			key_entryName = "US Dollar",
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "CommerceEntry#ANY_CURRENCY_PRIORITY_ELEMENT",
 			value1 = "1.0");
 
@@ -105,19 +105,19 @@ definition {
 
 		AssertTextEquals(
 			key_entryName = "Euro",
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "CommerceEntry#ANY_CURRENCY_PRIORITY_ELEMENT",
 			value1 = "0.9");
 
 		AssertTextEquals(
 			key_entryName = "US Dollar",
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "CommerceEntry#ANY_CURRENCY_PRIORITY_ELEMENT",
 			value1 = "1.0");
 
 		AssertTextEquals(
 			key_entryName = "Canadian Dollar",
-			key_rowNumber = "5",
+			key_rowNumber = 5,
 			locator1 = "CommerceEntry#ANY_CURRENCY_PRIORITY_ELEMENT",
 			value1 = "4.0");
 
@@ -127,7 +127,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
-			value1 = "12");
+			value1 = 12);
 
 		Button.click(button = "Save");
 

@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
-	@priority = "4"
+	@priority = 4
 	test CannotAddPendingFileToAsset {
 		property portal.acceptance = "true";
 
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-84593. It ensures that a user cannot delete the dismissed notification after deleting the pending file."
-	@priority = "5"
+	@priority = 5
 	test CannotDeleteDismissedNotificationAfterDeletingPendingFile {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -100,7 +100,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."
-	@priority = "3"
+	@priority = 3
 	test CanRemoveWorkflowFromFolder {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136853. It checks that a file can be resubmitted after it has been rejected."
-	@priority = "4"
+	@priority = 4
 	test CanResubmitRejectedDocument {
 		property portal.acceptance = "true";
 

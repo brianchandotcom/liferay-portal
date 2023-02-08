@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This test checks that a document using a document type with a custom metadata set can be created successfully."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddEntryWithMetadataSet {
 		property portal.acceptance = "true";
@@ -60,7 +60,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Type Contract Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "123");
+			numericField = 123);
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Document Type Contract Title",
@@ -70,7 +70,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Contract Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddMultipleEntries {
 		property portal.acceptance = "true";
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-129777. It ensures that a predefined image can be added via image field."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddPredefinedImageViaImageField {
 		property portal.acceptance = "true";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127602. It ensures that a predefined image can be added."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddPredefinedImageViaRichText {
 		property portal.acceptance = "true";
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can create a document using edited image field inside document type."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCreateDocumentwithEditedImageField {
 		property portal.acceptance = "true";
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can create a document using edited text field inside document type."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCreateDocumentWithEditedTextField {
 		property portal.acceptance = "true";
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can create a document using edited upload field inside document type."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCreateDocumentwithEditedUploadField {
 		property portal.acceptance = "true";
@@ -356,7 +356,7 @@ definition {
 			uploadFile = "Document_1.doc");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteEntry {
 		property portal.acceptance = "true";
@@ -375,7 +375,7 @@ definition {
 		DMDocumentType.viewDefaultCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditEntry {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
@@ -398,7 +398,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddEntryWithoutTitle {
 		property portal.acceptance = "true";
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
-	@priority = "4"
+	@priority = 4
 	test CannotDeleteWhenBeingUsed {
 		property portal.acceptance = "true";
 
@@ -459,7 +459,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127131. It ensures that a user can view document with repeatable Image field when editing."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentwithRepeatableImageField {
 		property portal.acceptance = "true";
@@ -508,7 +508,7 @@ definition {
 
 		for (var imageName : list "Document_1.jpg,Document_2.jpg") {
 			AssertVisible(
-				key_imageName = "${imageName}",
+				key_imageName = ${imageName},
 				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_IMAGE");
 		}
 
@@ -516,7 +516,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-109066. It ensures that the localizable field available languages can be displayed correctly."
-	@priority = "3"
+	@priority = 3
 	test CanViewLocalizableFieldCorrectAvailableLanguages {
 		CustomFields.addCP(
 			customFieldName = "Document Text Field",
@@ -544,7 +544,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-128182. It ensures that the translated document field can be localized properly."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewLocalizedDocumentField {
 		property custom.properties = "dl.actions.visible=true";
@@ -554,7 +554,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -605,7 +605,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127092. It ensures that the translated document type can be localized properly."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewLocalizedDocumentType {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
@@ -637,7 +637,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127049. A document can be created with duplicate fields is covered in DMFieldsets#FieldsetSetAsRepeatable."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test DuplicateFieldCanBeRemoved {
 		property portal.acceptance = "true";
@@ -669,7 +669,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_fieldName = "Numeric",
-			key_repeatableFieldNumber = "2",
+			key_repeatableFieldNumber = 2,
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 

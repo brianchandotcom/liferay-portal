@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanTriggerJobWithClusterMode {
 		property portal.acceptance = "true";
 		property portal.release = "true";
@@ -70,7 +70,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ClusterModeTaskExecutionIsAvailable {
 		property portal.acceptance = "true";
 		property portal.release = "true";
@@ -100,7 +100,7 @@ definition {
 		task ("Then All Nodes, Single Node (Persisted), and Single Node (Memory clustered) options are available") {
 			for (var option : list "All Nodes,Single Node (Memory Clustered),Single Node (Persisted)") {
 				AssertElementPresent(
-					key_option = "${option}",
+					key_option = ${option},
 					locator1 = "JobScheduler#DISPATCH_CLUSTER_MODE_OPTION");
 			}
 		}

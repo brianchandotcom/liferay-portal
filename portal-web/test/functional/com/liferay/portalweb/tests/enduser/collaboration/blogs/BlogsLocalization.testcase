@@ -16,7 +16,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136776. It checks that a blog can be properly displayed in Arabic in the Blogs widget."
-	@priority = "3"
+	@priority = 3
 	test CanViewBlogInArabic {
 		JSONBlog.addEntry(
 			entryContent = "محتوى دخول المدونات",
@@ -48,10 +48,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136774. It checks that a blog can be properly displayed in Arabic in the Blogs Aggregator."
-	@priority = "3"
+	@priority = 3
 	test CanViewBlogInArabicViaBlogsAggregator {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs Aggregator");
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136777. It checks that a blog can be properly displayed in Japanese in the Blogs widget."
-	@priority = "3"
+	@priority = 3
 	test CanViewBlogInJapanese {
 		JSONBlog.addEntry(
 			entryContent = "ブログエントリコンテンツ",
@@ -82,10 +82,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136775. It checks that a blog can be properly displayed in Japanese in the Blogs Aggregator."
-	@priority = "3"
+	@priority = 3
 	test CanViewBlogInJapaneseViaBlogsAggregator {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs Aggregator");
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136778. It checks that social bookmarks for a Blog can be viewed in Japanese."
-	@priority = "3"
+	@priority = 3
 	test CanViewSocialBookmarksInJapanese {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

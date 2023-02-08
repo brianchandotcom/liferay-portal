@@ -1,7 +1,7 @@
 definition {
 
 	macro _addSubfolderInAnExistingStructuredContentFolder {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -28,13 +28,13 @@ definition {
 				}
 		''';
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro _addWebcontentFolder {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -68,35 +68,35 @@ definition {
 				}
 		''';
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro _assertResponseHasCorrectStructuredContentFolderId {
 		var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 			element = "$.id",
-			responseToParse = "${response}");
-		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+			responseToParse = ${response});
+		var actualStructuredContentFolderId = JSONUtil.getWithJSONPath(${responseToParse}, "$.id");
 
 		TestUtils.assertEquals(
-			actual = "${actualStructuredContentFolderId}",
-			expected = "${structuredContentFolderId}");
+			actual = ${actualStructuredContentFolderId},
+			expected = ${structuredContentFolderId});
 	}
 
 	macro _assertResponseHasCorrectStructuredContentFolderName {
 		var structuredContentFolderName = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 			element = "$.name",
-			responseToParse = "${response}");
-		var actualStructuredContentFolderName = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
+			responseToParse = ${response});
+		var actualStructuredContentFolderName = JSONUtil.getWithJSONPath(${responseToParse}, "$.name");
 
 		TestUtils.assertEquals(
-			actual = "${actualStructuredContentFolderName}",
-			expected = "${structuredContentFolderName}");
+			actual = ${actualStructuredContentFolderName},
+			expected = ${structuredContentFolderName});
 	}
 
 	macro _deleteStructuredContentFolderByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -113,13 +113,13 @@ definition {
 				-H accept: application/json
 		''';
 
-		var curl = JSONCurlUtil.delete("${curl}");
+		var curl = JSONCurlUtil.delete(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _filterStructuredContentFolders {
-		Variables.assertDefined(parameterList = "${filterValue}");
+		Variables.assertDefined(parameterList = ${filterValue});
 
 		if (isSet(assetLibraryId)) {
 			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
@@ -136,9 +136,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getSiteStructuredContentFoldersByErc {
@@ -152,13 +152,13 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getStructuredContentFolderById {
-		Variables.assertDefined(parameterList = "${structuredContentFolderId}");
+		Variables.assertDefined(parameterList = ${structuredContentFolderId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -168,9 +168,9 @@ definition {
 				-H accept: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getStructuredContentFoldersByErcInAssetLibrary {
@@ -184,9 +184,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getStructuredContentFoldersWithDifferentParameters {
@@ -194,7 +194,7 @@ definition {
 		var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
 
 		if (isSet(parameter)) {
-			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+			var api = StringUtil.add(${api}, "?${parameter}=${parameterValue}", "");
 		}
 
 		var curl = '''
@@ -203,9 +203,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _updateStructureContentFolderByErc {
@@ -234,216 +234,216 @@ definition {
 				}
 		''';
 
-		var curl = JSONCurlUtil.put("${curl}");
+		var curl = JSONCurlUtil.put(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro assertExternalReferenceCodeWithCorrectValue {
-		Variables.assertDefined(parameterList = "${expectedExternalReferenceCodeValue}");
+		Variables.assertDefined(parameterList = ${expectedExternalReferenceCodeValue});
 
-		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
 
 		TestUtils.assertEquals(
-			actual = "${actualExternalReferenceCodeValue}",
-			expected = "${expectedExternalReferenceCodeValue}");
+			actual = ${actualExternalReferenceCodeValue},
+			expected = ${expectedExternalReferenceCodeValue});
 	}
 
 	macro assertProperTotalCountOfStructuredContentFoldersInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${expectedStructuredContentFolderTotalCount}");
 
 		var response = HeadlessWebcontentFolderAPI._filterStructuredContentFolders(
-			assetLibraryId = "${assetLibraryId}",
-			filterValue = "${filterValue}");
+			assetLibraryId = ${assetLibraryId},
+			filterValue = ${filterValue});
 
-		var actualTotalCount = JSONUtil.getWithJSONPath("${response}", "$..['totalCount']");
+		var actualTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
 
 		TestUtils.assertEquals(
-			actual = "${actualTotalCount}",
-			expected = "${expectedStructuredContentFolderTotalCount}");
+			actual = ${actualTotalCount},
+			expected = ${expectedStructuredContentFolderTotalCount});
 	}
 
 	macro assertResponseHasCorrectDetails {
 		HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-			expectedExternalReferenceCodeValue = "${expectedExternalReferenceCodeValue}",
-			responseToParse = "${responseFromGet}");
+			expectedExternalReferenceCodeValue = ${expectedExternalReferenceCodeValue},
+			responseToParse = ${responseFromGet});
 
 		HeadlessWebcontentFolderAPI._assertResponseHasCorrectStructuredContentFolderId(
-			response = "${responseFromCreate}",
-			responseToParse = "${responseFromGet}");
+			response = ${responseFromCreate},
+			responseToParse = ${responseFromGet});
 
 		HeadlessWebcontentFolderAPI._assertResponseHasCorrectStructuredContentFolderName(
-			response = "${responseFromCreate}",
-			responseToParse = "${responseFromGet}");
+			response = ${responseFromCreate},
+			responseToParse = ${responseFromGet});
 	}
 
 	macro assertStructuredContentFolderDeleted {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
 
-		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
+		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = ${structuredContentFolderId});
 
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.title");
+		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.title");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedValue}");
+			actual = ${actual},
+			expected = ${expectedValue});
 	}
 
 	macro assertStructuredContentFolderUpdated {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentFolderId}");
 
-		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = "${structuredContentFolderId}");
+		var responseToParse = HeadlessWebcontentFolderAPI._getStructuredContentFolderById(structuredContentFolderId = ${structuredContentFolderId});
 
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.name");
+		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.name");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedValue}");
+			actual = ${actual},
+			expected = ${expectedValue});
 	}
 
 	macro assetProperNumberOfStructuredContentFolders {
-		var actualNumbers = JSONUtil.getWithJSONPath("${responseToParse}", "$..['numberOfStructuredContentFolders']");
+		var actualNumbers = JSONUtil.getWithJSONPath(${responseToParse}, "$..['numberOfStructuredContentFolders']");
 
 		TestUtils.assertEquals(
-			actual = "${actualNumbers}",
-			expected = "${expectedNumbers}");
+			actual = ${actualNumbers},
+			expected = ${expectedNumbers});
 	}
 
 	macro createStructuredContentFolder {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
 
 		var response = HeadlessWebcontentFolderAPI._addWebcontentFolder(
-			description = "${description}",
-			externalReferenceCode = "${externalReferenceCode}",
-			name = "${name}",
-			siteId = "${siteId}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			viewableBy = "${viewableBy}");
+			description = ${description},
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			siteId = ${siteId},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro createStructuredContentFolderInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
 
 		var response = HeadlessWebcontentFolderAPI._addWebcontentFolder(
-			assetLibraryId = "${assetLibraryId}",
-			description = "${description}",
-			externalReferenceCode = "${externalReferenceCode}",
-			name = "${name}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			viewableBy = "${viewableBy}");
+			assetLibraryId = ${assetLibraryId},
+			description = ${description},
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
 
 		if (isSet(setUpGlobalFolderId)) {
-			var folderId = JSONUtil.getWithJSONPath("${response}", "$.id");
+			var folderId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
-			static var staticStructuredContentFolderId = "${folderId}";
+			static var staticStructuredContentFolderId = ${folderId};
 
-			return "${staticStructuredContentFolderId}";
+			return ${staticStructuredContentFolderId};
 		}
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro createSubfolderInStructuredContentFolder {
 		Variables.assertDefined(parameterList = "${parentStructuredContentFolderId},${name}");
 
 		var response = HeadlessWebcontentFolderAPI._addSubfolderInAnExistingStructuredContentFolder(
-			description = "${description}",
-			externalReferenceCode = "${externalReferenceCode}",
-			name = "${name}",
-			parentStructuredContentFolderId = "${parentStructuredContentFolderId}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			viewableBy = "${viewableBy}");
+			description = ${description},
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			parentStructuredContentFolderId = ${parentStructuredContentFolderId},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteStructuredContentFolderByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
 		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode});
 	}
 
 	macro deleteWebContentFolder {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
 
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
 
 		HeadlessWebcontentFolderAPI._deleteStructuredContentFolderByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			siteId = "${siteId}");
+			externalReferenceCode = ${externalReferenceCode},
+			siteId = ${siteId});
 	}
 
 	macro getElementOfCreatedStructuredContentFolder {
 		Variables.assertDefined(parameterList = "${responseToParse},${element}");
 
-		var elementValue = JSONUtil.getWithJSONPath("${responseToParse}", "${element}");
+		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
 
-		return "${elementValue}";
+		return ${elementValue};
 	}
 
 	macro getSiteStructuredContentFoldersByErc {
 		Variables.assertDefined(parameterList = "${groupName},${externalReferenceCode}");
 
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
 
 		var response = HeadlessWebcontentFolderAPI._getSiteStructuredContentFoldersByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			siteId = "${siteId}");
+			externalReferenceCode = ${externalReferenceCode},
+			siteId = ${siteId});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getStructuredContentFoldersByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
 		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersByErcInAssetLibrary(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getStructuredContentFoldersWithDifferentParameters {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
 		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersWithDifferentParameters(
-			assetLibraryId = "${assetLibraryId}",
-			parameter = "${parameter}",
-			parameterValue = "${parameterValue}");
+			assetLibraryId = ${assetLibraryId},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro updateStructureContentFolderByErcInAssetLibrary {
-		Variables.assertDefined(parameterList = "${assetLibraryId}");
+		Variables.assertDefined(parameterList = ${assetLibraryId});
 
 		var response = HeadlessWebcontentFolderAPI._updateStructureContentFolderByErc(
-			assetLibraryId = "${assetLibraryId}",
-			externalReferenceCode = "${externalReferenceCode}",
-			externalReferenceCodeInBody = "${externalReferenceCodeInBody}",
-			name = "${name}");
+			assetLibraryId = ${assetLibraryId},
+			externalReferenceCode = ${externalReferenceCode},
+			externalReferenceCodeInBody = ${externalReferenceCodeInBody},
+			name = ${name});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro updateWebContentFolder {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName},${name}");
 
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
 
 		HeadlessWebcontentFolderAPI._updateStructureContentFolderByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			name = "${name}",
-			siteId = "${siteId}");
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			siteId = ${siteId});
 	}
 
 }

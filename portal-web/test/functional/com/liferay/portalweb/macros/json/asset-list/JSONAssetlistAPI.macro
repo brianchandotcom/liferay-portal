@@ -14,9 +14,9 @@ definition {
 				-d type=${type}
 		''';
 
-		var assetListEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['assetListEntryId']");
+		var assetListEntryId = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${title}')]['assetListEntryId']");
 
-		return "${assetListEntryId}";
+		return ${assetListEntryId};
 	}
 
 	@summary = "Directly creates an Dynamic Asset List Entry using the JSON API"
@@ -26,9 +26,9 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 		var typeSettings = JSONAssetlistSetter.setTypeSettings(
-			groupId = "${groupId}",
-			itemSubtype = "${itemSubtype}",
-			itemType = "${itemType}",
+			groupId = ${groupId},
+			itemSubtype = ${itemSubtype},
+			itemType = ${itemType},
 			selectionType = "dynamic");
 
 		var curl = '''
@@ -40,7 +40,7 @@ definition {
 				-d typeSettings=${typeSettings}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Directly create a Manual Asset List Entry using the JSON API"
@@ -48,19 +48,19 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
 		var assetListEntryId = JSONAssetlistAPI._addAssetListEntry(
-			groupId = "${groupId}",
-			title = "${title}",
-			type = "1");
+			groupId = ${groupId},
+			title = ${title},
+			type = 1);
 		var typeSettings = JSONAssetlistSetter.setTypeSettings(
-			groupId = "${groupId}",
-			itemSubtype = "${itemSubtype}",
-			itemType = "${itemType}",
+			groupId = ${groupId},
+			itemSubtype = ${itemSubtype},
+			itemType = ${itemType},
 			selectionType = "manual");
 
 		JSONAssetlistAPI._updateAssetListEntryTypeSettings(
-			assetListEntryId = "${assetListEntryId}",
-			segmentsEntryId = "0",
-			typeSettings = "${typeSettings}");
+			assetListEntryId = ${assetListEntryId},
+			segmentsEntryId = 0,
+			typeSettings = ${typeSettings});
 	}
 
 	@summary = "Directly update the typeSettings of an Asset List Entry using the JSON API"
@@ -77,7 +77,7 @@ definition {
 				-d typeSettings=${typeSettings}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

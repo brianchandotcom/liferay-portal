@@ -7,15 +7,15 @@ definition {
 
 		MenuItem.click(menuItem = "Folder");
 
-		PortletEntry.inputName(name = "${folderName}");
+		PortletEntry.inputName(name = ${folderName});
 
-		PortletEntry.inputDescription(description = "${folderDescription}");
+		PortletEntry.inputDescription(description = ${folderDescription});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${folderDescription}",
-			folderName = "${folderName}");
+			folderDescription = ${folderDescription},
+			folderName = ${folderName});
 	}
 
 	macro addNullCP {
@@ -31,16 +31,16 @@ definition {
 	}
 
 	macro addNullSubfolderCP {
-		var key_assetName = "${folderName}";
-		var key_folderName = "${folderName}";
+		var key_assetName = ${folderName};
+		var key_folderName = ${folderName};
 
 		AssertClick(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		LexiconEntry.gotoAdd();
 
@@ -58,47 +58,47 @@ definition {
 
 		MenuItem.click(menuItem = "Folder");
 
-		PortletEntry.inputName(name = "${folderName}");
+		PortletEntry.inputName(name = ${folderName});
 
-		PortletEntry.inputDescription(description = "${folderDescription}");
+		PortletEntry.inputDescription(description = ${folderDescription});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${folderDescription}",
-			folderName = "${folderName}");
+			folderDescription = ${folderDescription},
+			folderName = ${folderName});
 	}
 
 	macro addSubfolderCP {
-		var key_assetName = "${folderName}";
+		var key_assetName = ${folderName};
 
 		AssertClick(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Folder");
 
-		var key_folderName = "${subfolderName}";
+		var key_folderName = ${subfolderName};
 
-		PortletEntry.inputName(name = "${subfolderName}");
+		PortletEntry.inputName(name = ${subfolderName});
 
-		PortletEntry.inputDescription(description = "${subfolderDescription}");
+		PortletEntry.inputDescription(description = ${subfolderDescription});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${subfolderDescription}",
-			folderName = "${subfolderName}");
+			folderDescription = ${subfolderDescription},
+			folderName = ${subfolderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 	}
 
 	macro addSubfolderPG {
@@ -106,22 +106,22 @@ definition {
 
 		MenuItem.click(menuItem = "Folder");
 
-		PortletEntry.inputName(name = "${folderName}");
+		PortletEntry.inputName(name = ${folderName});
 
-		PortletEntry.inputDescription(description = "${folderDescription}");
+		PortletEntry.inputDescription(description = ${folderDescription});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${folderDescription}",
-			folderName = "${folderName}");
+			folderDescription = ${folderDescription},
+			folderName = ${folderName});
 	}
 
 	macro deletePG {
 		AssertTextEquals(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS");
 
@@ -135,106 +135,106 @@ definition {
 	macro editCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${folderName}");
+			rowEntry = ${folderName});
 
-		PortletEntry.inputName(name = "${folderNameEdit}");
+		PortletEntry.inputName(name = ${folderNameEdit});
 
-		PortletEntry.inputDescription(description = "${folderDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${folderDescriptionEdit});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${folderDescriptionEdit}",
-			folderName = "${folderNameEdit}");
+			folderDescription = ${folderDescriptionEdit},
+			folderName = ${folderNameEdit});
 	}
 
 	macro editPG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${folderName}");
+			rowEntry = ${folderName});
 
-		PortletEntry.inputName(name = "${folderNameEdit}");
+		PortletEntry.inputName(name = ${folderNameEdit});
 
-		PortletEntry.inputDescription(description = "${folderDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${folderDescriptionEdit});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${folderDescriptionEdit}",
-			folderName = "${folderNameEdit}");
+			folderDescription = ${folderDescriptionEdit},
+			folderName = ${folderNameEdit});
 	}
 
 	macro editSubfolderCP {
 		AssertClick(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${subfolderName}");
+			rowEntry = ${subfolderName});
 
-		PortletEntry.inputName(name = "${editSubfolderName}");
+		PortletEntry.inputName(name = ${editSubfolderName});
 
-		PortletEntry.inputDescription(description = "${editSubfolderDescription}");
+		PortletEntry.inputDescription(description = ${editSubfolderDescription});
 
 		PortletEntry.save();
 
 		BookmarksFolder.viewFolder(
-			folderDescription = "${editSubfolderDescription}",
-			folderName = "${editSubfolderName}");
+			folderDescription = ${editSubfolderDescription},
+			folderName = ${editSubfolderName});
 	}
 
 	macro gotoPG {
 		AssertClick.assertPartialTextClickAt(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
-		Breadcrumb.viewActiveEntry(breadcrumbName = "${folderName}");
+		Breadcrumb.viewActiveEntry(breadcrumbName = ${folderName});
 	}
 
 	macro gotoSubfolderPG {
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		while (IsElementPresent(locator1 = "Icon#BACK")) {
 			Click(locator1 = "Icon#BACK");
 		}
 
-		var key_assetName = "${folderName}";
+		var key_assetName = ${folderName};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
-		var key_assetName = "${subfolderName}";
+		var key_assetName = ${subfolderName};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${subfolderName}");
+			value1 = ${subfolderName});
 
-		Breadcrumb.viewActiveEntry(breadcrumbName = "${subfolderName}");
+		Breadcrumb.viewActiveEntry(breadcrumbName = ${subfolderName});
 	}
 
 	macro mergeSubfolderToFolderCP {
 		AssertClick(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${subfolderName}");
+			rowEntry = ${subfolderName});
 
 		Click(locator1 = "Bookmarks#PARENT_FOLDER_PANEL");
 
@@ -245,15 +245,15 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${bookmarkName}",
-			bookmarkURL = "${bookmarkURL}",
-			folderName = "${bookmarkName}");
+			bookmarkName = ${bookmarkName},
+			bookmarkURL = ${bookmarkURL},
+			folderName = ${bookmarkName});
 	}
 
 	macro moveSubfolderToRecycleBinPG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${subfolderName}");
+			rowEntry = ${subfolderName});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -264,13 +264,13 @@ definition {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
 
 		AssertTextEquals(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${folderName}");
+			rowEntry = ${folderName});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -293,14 +293,14 @@ definition {
 
 	macro viewFolder {
 		AssertTextEquals(
-			key_assetName = "${folderName}",
+			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		AssertTextEquals(
-			key_assetDescription = "${folderDescription}",
+			key_assetDescription = ${folderDescription},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_DESCRIPTION",
-			value1 = "${folderDescription}");
+			value1 = ${folderDescription});
 	}
 
 }

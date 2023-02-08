@@ -10,7 +10,7 @@ definition {
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test DowngradeToLatest7413Update {
 		User.firstLoginPG();
 

@@ -17,16 +17,16 @@ definition {
 				-u test@liferay.com:test \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro createObjectFieldByObjectDefinitionId {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${dbType},${name}");
 
-		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = "${objectDefinitionId}");
+		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = ${objectDefinitionId});
 
 		if (!(isSet(label))) {
-			var label = "${name}";
+			var label = ${name};
 		}
 
 		var body = '''
@@ -41,49 +41,49 @@ definition {
 			}
 		''';
 
-		var curl = StringUtil.add("${curl}", "${body}", " ");
+		var curl = StringUtil.add(${curl}, ${body}, " ");
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteObjectField {
-		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = "${staticObjectFieldId}");
+		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = ${staticObjectFieldId});
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro getIdOfCreatedObjectField {
 		var response = ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
-			dbType = "${dbType}",
-			name = "${name}",
-			objectDefinitionId = "${objectDefinitionId}");
+			dbType = ${dbType},
+			name = ${name},
+			objectDefinitionId = ${objectDefinitionId});
 
-		var objectFieldId = JSONUtil.getWithJSONPath("${response}", "$.id");
+		var objectFieldId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
-		return "${objectFieldId}";
+		return ${objectFieldId};
 	}
 
 	macro getObjectFieldsByObjectId {
-		Variables.assertDefined(parameterList = "${objectDefinitionId}");
+		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
-		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = "${objectDefinitionId}");
+		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = ${objectDefinitionId});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro setUpGlobalObjectFieldId {
 		var objectFieldId = ObjectFieldAPI.getIdOfCreatedObjectField(
-			dbType = "${dbType}",
-			name = "${name}",
-			objectDefinitionId = "${objectDefinitionId}");
+			dbType = ${dbType},
+			name = ${name},
+			objectDefinitionId = ${objectDefinitionId});
 
-		static var staticObjectFieldId = "${objectFieldId}";
+		static var staticObjectFieldId = ${objectFieldId};
 
-		return "${staticObjectFieldId}";
+		return ${staticObjectFieldId};
 	}
 
 }

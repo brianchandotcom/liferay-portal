@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66585. This test validates the creation, edition and persistence of fields with Options on the Web Content Admin."
-	@priority = "5"
+	@priority = 5
 	test AddAndEditTranslatedFieldsWithOptions {
 		property portal.acceptance = "true";
 
@@ -52,8 +52,8 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
-					fieldFieldLabel = "${fieldName}",
-					index = "${index}",
+					fieldFieldLabel = ${fieldName},
+					index = ${index},
 					optionValue = "Option ${index}");
 			}
 		}
@@ -66,7 +66,7 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				fieldFieldLabelEdit = "${fieldName} - pt-BR");
 		}
 
@@ -74,7 +74,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - pt-BR",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - pt-BR");
 			}
 		}
@@ -85,13 +85,13 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
-				fieldFieldLabel = "${fieldName}",
-				fieldName = "${fieldName}");
+				fieldFieldLabel = ${fieldName},
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DEBuilder.assertFieldOptionLabels(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				optionLabelList = "Option 1,Option 2,Option 3");
 		}
 
@@ -100,7 +100,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - pt-BR",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -113,7 +113,7 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				fieldFieldLabelEdit = "${fieldName} - edited");
 		}
 
@@ -121,7 +121,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - edited",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - edited");
 			}
 		}
@@ -138,7 +138,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - pt-BR edited",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - pt-BR edited");
 			}
 		}
@@ -150,7 +150,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - edited",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -164,7 +164,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - pt-BR edited",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@description = "This test ensures translations persists for a repeatable duplicated field group."
-	@priority = "5"
+	@priority = 5
 	test CheckDuplicatedRepeatableStructureOnWebContent {
 		NavItem.gotoStructures();
 
@@ -341,20 +341,20 @@ definition {
 		for (var n : list "1,2") {
 			for (var label : list "Fields Group,Text,Numeric") {
 				AssertVisible(
-					key_fieldFieldLabel = "${label}",
-					key_index = "${n}",
+					key_fieldFieldLabel = ${label},
+					key_index = ${n},
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
 			}
 		}
 
 		AssertElementNotPresent(
 			key_fieldName = "FieldsGroup",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "FormFields#FIELD_REMOVE");
 
 		AssertVisible(
 			key_fieldName = "FieldsGroup",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "FormFields#FIELD_REMOVE");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -362,25 +362,25 @@ definition {
 		for (var n : list "1,2") {
 			for (var label : list "Grupo de Campos,Texto,Numérico") {
 				AssertVisible(
-					key_fieldFieldLabel = "${label}",
-					key_index = "${n}",
+					key_fieldFieldLabel = ${label},
+					key_index = ${n},
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
 			}
 		}
 
 		AssertElementNotPresent(
 			key_fieldName = "FieldsGroup",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "FormFields#FIELD_REMOVE");
 
 		AssertVisible(
 			key_fieldName = "FieldsGroup",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
 	@description = "This test ensures that the language selector is successfully displayed and functional on the Web Content."
-	@priority = "4"
+	@priority = 4
 	test CheckLanguageSelector {
 		NavItem.gotoStructures();
 
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This test ensures structures translations are displayed on a Web Content."
-	@priority = "5"
+	@priority = 5
 	test CheckStructureTranslationsOnWebContent {
 		NavItem.gotoStructures();
 
@@ -455,7 +455,7 @@ definition {
 
 		for (var label : list "Fields Group,Text,Date") {
 			AssertVisible(
-				key_fieldFieldLabel = "${label}",
+				key_fieldFieldLabel = ${label},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -463,13 +463,13 @@ definition {
 
 		for (var label : list "Grupo de Campos,Texto,Data") {
 			AssertVisible(
-				key_fieldFieldLabel = "${label}",
+				key_fieldFieldLabel = ${label},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}
 
 	@description = "This test ensures that the default values persists after translating the Web Content for another locale."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		NavItem.gotoStructures();
 
@@ -530,7 +530,7 @@ definition {
 	}
 
 	@description = "This test ensures that the default language values are carried to a new locale before translating it."
-	@priority = "4"
+	@priority = 4
 	test DefaultValuesAreCarriedToNewLocale {
 		NavItem.gotoStructures();
 
@@ -552,14 +552,14 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "8",
+			webContentNumeric = 8,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Título do conteúdo da web");
 
@@ -579,12 +579,12 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
-			webContentNumeric = "8",
+			webContentNumeric = 8,
 			webContentText = "This is a Text field");
 	}
 
 	@description = "This test ensures translations persists for N languages and N field groups levels."
-	@priority = "5"
+	@priority = 5
 	test TranslateWebContentFromStructureWithNLevelNestedFieldsAndToNLanguages {
 		NavItem.gotoStructures();
 
@@ -693,7 +693,7 @@ definition {
 		WebContent.addWithStructureCP(webContentTitle = "WC Title");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentRichText = "This is a Rich Text field",
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
@@ -701,7 +701,7 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "5",
+			webContentNumeric = 5,
 			webContentNumericFieldLabel = "Numérico",
 			webContentRichText = "Este é um campo de Texto Rico",
 			webContentRichTextFieldLabel = "Texto Rico",
@@ -712,7 +712,7 @@ definition {
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "543",
+			webContentNumeric = 543,
 			webContentNumericFieldLabel = "Numeric German",
 			webContentRichText = "This is a Rich Text field in German",
 			webContentRichTextFieldLabel = "Rich Text German",
@@ -723,7 +723,7 @@ definition {
 		PortletEntry.changeLocale(locale = "ja-JP");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "321",
+			webContentNumeric = 321,
 			webContentNumericFieldLabel = "Numeric Japan",
 			webContentRichText = "This is a Rich Text field in Japan",
 			webContentRichTextFieldLabel = "Rich Text Japan",
@@ -734,14 +734,14 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentRichText = "This is a Rich Text field",
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
 		for (var fieldsGroupLabel : list "First Level Fields Group,Second Level Fields Group") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -753,7 +753,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
-			webContentNumeric = "5",
+			webContentNumeric = 5,
 			webContentNumericFieldLabel = "Numérico",
 			webContentRichText = "Este é um campo de Texto Rico",
 			webContentRichTextFieldLabel = "Texto Rico",
@@ -762,7 +762,7 @@ definition {
 
 		for (var fieldsGroupLabel : list "Grupo de campos de primeiro nível,Grupo de Campos de Segundo Nível") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -774,7 +774,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
-			webContentNumeric = "543",
+			webContentNumeric = 543,
 			webContentNumericFieldLabel = "Numeric German",
 			webContentRichText = "This is a Rich Text field in German",
 			webContentRichTextFieldLabel = "Rich Text German",
@@ -783,7 +783,7 @@ definition {
 
 		for (var fieldsGroupLabel : list "First Level Fields Group German,Second Level Fields Group German") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -795,7 +795,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
-			webContentNumeric = "321",
+			webContentNumeric = 321,
 			webContentNumericFieldLabel = "Numeric Japan",
 			webContentRichText = "This is a Rich Text field in Japan",
 			webContentRichTextFieldLabel = "Rich Text Japan",
@@ -804,13 +804,13 @@ definition {
 
 		for (var fieldsGroupLabel : list "First Level Fields Group Japan,Second Level Fields Group Japan") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}
 
 	@description = "This test ensures that the translations persists for all fields nested."
-	@priority = "5"
+	@priority = 5
 	test TranslateWebContentWithAllFieldsNested {
 		NavItem.gotoStructures();
 
@@ -828,7 +828,7 @@ definition {
 			webContentColor = "FF0D0D",
 			webContentDate = "02/19/2021",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "17",
+			webContentNumeric = 17,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
 			webContentSingleSelection = "Option 1",
@@ -838,10 +838,10 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentColor = "000000",
+			webContentColor = 000000,
 			webContentDate = "03/02/2021",
 			webContentMultipleSelection = "Option 2",
-			webContentNumeric = "13",
+			webContentNumeric = 13,
 			webContentRichText = "Este é um campo de texto completo",
 			webContentSelectFromList = "Option 1",
 			webContentSingleSelection = "Option 2",
@@ -851,11 +851,11 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			webContentColor = "000000",
+			webContentColor = 000000,
 			webContentDate = "03/02/2021",
 			webContentLocaleFieldLabel = "pt-BR",
 			webContentMultipleSelection = "Option 2",
-			webContentNumeric = "13",
+			webContentNumeric = 13,
 			webContentRichText = "Este é um campo de texto completo",
 			webContentSelectFromList = "Option 1",
 			webContentSingleSelection = "Option 2",
@@ -865,7 +865,7 @@ definition {
 	}
 
 	@description = "This test ensures Web Content translations do not modify previously translated content."
-	@priority = "5"
+	@priority = 5
 	test TranslationDoesNotChangeAnother {
 		NavItem.gotoStructures();
 
@@ -936,7 +936,7 @@ definition {
 	}
 
 	@description = "This test ensures Web Content translations persists."
-	@priority = "5"
+	@priority = 5
 	test TranslationsRemainsUponSavingWebContent {
 		property portal.acceptance = "true";
 
@@ -993,7 +993,7 @@ definition {
 
 		for (var fieldFieldLabel : list "First Rich Text,Second Rich Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -1016,14 +1016,14 @@ definition {
 
 		for (var fieldFieldLabel : list "First Rich Text,Second Rich Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 	}
 
 	@description = "This test ensures that the first language displayed to the user is the default language."
-	@priority = "4"
+	@priority = 4
 	test VerifyDefaultLanguageIsFirstShown {
 		NavItem.gotoStructures();
 
@@ -1077,7 +1077,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Image,Numeric,Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}

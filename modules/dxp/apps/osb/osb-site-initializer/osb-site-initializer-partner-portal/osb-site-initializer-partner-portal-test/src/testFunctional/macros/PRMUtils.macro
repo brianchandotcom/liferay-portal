@@ -10,7 +10,7 @@ definition {
 
 	macro assertPageTitle {
 		AssertElementPresent(
-			key_title = "${pageTitle}",
+			key_title = ${pageTitle},
 			locator1 = "Header#H1_TITLE");
 	}
 
@@ -19,16 +19,16 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "${objectName}");
+			portlet = ${objectName});
 
-		ObjectCustomViews.gotoPermissions(entryName = "${itemName}");
+		ObjectCustomViews.gotoPermissions(entryName = ${itemName});
 
-		var roleName = StringUtil.lowerCase("${roleName}");
-		var permissionName = StringUtil.upperCase("${permissionName}");
+		var roleName = StringUtil.lowerCase(${roleName});
+		var permissionName = StringUtil.upperCase(${permissionName});
 
 		Click.javaScriptClick(
-			key_permissionName = "${permissionName}",
-			key_roleName = "${roleName}",
+			key_permissionName = ${permissionName},
+			key_roleName = ${roleName},
 			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
 
 		Button.clickSave();
@@ -42,18 +42,18 @@ definition {
 
 		echo("curl = ${curl}");
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.get("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
 	@summary = "Go to Folder"
 	macro gotoFolder {
-		var key_dmFolderName = "${folderName}";
+		var key_dmFolderName = ${folderName};
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 	}
 
 	macro gotoPRM {
@@ -68,7 +68,7 @@ definition {
 	macro publishObject {
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "${objectName}");
+		ObjectPortlet.selectCustomObject(label = ${objectName});
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 

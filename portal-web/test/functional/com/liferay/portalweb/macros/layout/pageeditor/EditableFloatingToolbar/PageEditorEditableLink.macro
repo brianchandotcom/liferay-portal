@@ -20,12 +20,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		NavItem.click(navItem = "${navItem}");
+		NavItem.click(navItem = ${navItem});
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		Click(
-			key_card = "${entryTitle}",
+			key_card = ${entryTitle},
 			locator1 = "Card#CARD_TITLE");
 
 		SelectFrameTop();
@@ -36,22 +36,22 @@ definition {
 
 		Select(
 			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "${field}");
+			value1 = ${field});
 	}
 
 	macro gotoEditableFieldLink {
 		PageEditor.clickEditableField(
-			contributed = "${contributed}",
-			fragmentName = "${fragmentName}",
-			id = "${id}");
+			contributed = ${contributed},
+			fragmentName = ${fragmentName},
+			id = ${id});
 
 		Navigator.gotoNavTab(navTab = "Link");
 	}
 
 	macro mapEditableFieldToPage {
 		PageEditorEditableLink.gotoEditableFieldLink(
-			fragmentName = "${fragmentName}",
-			id = "${id}");
+			fragmentName = ${fragmentName},
+			id = ${id});
 
 		Select(
 			key_fieldLabel = "Link",
@@ -74,22 +74,22 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(navItem)) {
-			Navigator.gotoNavItem(navItem = "${navItem}");
+			Navigator.gotoNavItem(navItem = ${navItem});
 		}
 
 		if (isSet(keywords)) {
 			Type(
 				locator1 = "TextInput#SEARCH",
-				value1 = "${keywords}");
+				value1 = ${keywords});
 		}
 		else {
 			Portlet.expandTree();
 		}
 
 		AssertClick.assertPartialTextClickAt(
-			key_nodeName = "${pageName}",
+			key_nodeName = ${pageName},
 			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		SelectFrameTop();
 
@@ -104,8 +104,8 @@ definition {
 
 		if (isSet(entryTitle)) {
 			PageEditorEditableLink._selectContent(
-				entryTitle = "${entryTitle}",
-				navItem = "${navItem}");
+				entryTitle = ${entryTitle},
+				navItem = ${navItem});
 		}
 
 		if (isSet(source)) {
@@ -116,30 +116,30 @@ definition {
 			Select(
 				key_fieldLabel = "Source",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${source}");
+				value1 = ${source});
 		}
 
-		PageEditorEditableLink._selectField(field = "${field}");
+		PageEditorEditableLink._selectField(field = ${field});
 	}
 
 	macro updateURL {
-		Variables.assertDefined(parameterList = "${url}");
+		Variables.assertDefined(parameterList = ${url});
 
 		Type(
 			key_text = "URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${url}");
+			value1 = ${url});
 
 		Click(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-		if ("${target}" == "Blank") {
+		if (${target} == "Blank") {
 			Check.checkToggleSwitch(
 				checkboxName = "Open in a new tab.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-		else if ("${target}" == "Self") {
+		else if (${target} == "Self") {
 			Uncheck.uncheckToggleSwitch(
 				checkboxName = "Open in a new tab.",
 				locator1 = "Checkbox#ANY_CHECKBOX");

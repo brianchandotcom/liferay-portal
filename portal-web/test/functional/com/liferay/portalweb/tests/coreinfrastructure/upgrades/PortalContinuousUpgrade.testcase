@@ -9,7 +9,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
-	@priority = "4"
+	@priority = 4
 	test AutoUpgradeFromLatest7413Update {
 		property database.bare.enabled = "true";
 		property skip.start.app.server = "true";
@@ -78,7 +78,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AutoUpgradeFromLatest7413UpdateWithDBPartitionEnabled {
 		property database.bare.enabled = "true";
 		property database.partition.enabled = "true";
@@ -158,7 +158,7 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "lpartition%",
 			databaseSubstring = "lpartition",
-			expectedCount = "1");
+			expectedCount = 1);
 	}
 
 }

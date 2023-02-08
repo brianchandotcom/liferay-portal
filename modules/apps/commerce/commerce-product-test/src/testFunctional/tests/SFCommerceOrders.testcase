@@ -19,7 +19,7 @@ definition {
 	}
 
 	@description = "Verify the order time is shown in the order date when the Show Order Creation Time toggle is checked in the Placed Orders widget."
-	@priority = "3"
+	@priority = 3
 	test AssertDateAndTimeAreDisplayedAsOrderDate {
 		property portal.acceptance = "false";
 
@@ -42,7 +42,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -53,8 +53,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -68,7 +68,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_orderId = "",
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("When the user views the order from the placed orders details page") {
@@ -78,12 +78,12 @@ definition {
 		task ("Then the order date and time is shown") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 	}
 
 	@description = "Verify the order time isn't shown in the order date when the Show Order Creation Time toggle is unchecked in the Placed Orders widget."
-	@priority = "3"
+	@priority = 3
 	test AssertDateIsDisplayedAsOrderDate {
 		property portal.acceptance = "false";
 
@@ -110,7 +110,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -121,8 +121,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -136,7 +136,7 @@ definition {
 			AssertTextEquals(
 				key_orderId = "",
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("When the user views the order from the placed orders details page") {
@@ -146,12 +146,12 @@ definition {
 		task ("Then the order date is shown without the time") {
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 	}
 
 	@description = "Verify the external reference code (ERC) of an order is present in the placed order details."
-	@priority = "3"
+	@priority = 3
 	test AssertERCInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -179,7 +179,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -190,8 +190,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Verify the shipping and billing addresses of an order are present in the placed order details."
-	@priority = "3"
+	@priority = 3
 	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -239,7 +239,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -255,8 +255,8 @@ definition {
 				newAddressName = "Shipping Address Name",
 				newAddressZipCode = "Test Shipping Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "Verify the Order Date Display configuration section is displayed in the Placed Orders widget."
-	@priority = "3"
+	@priority = 3
 	test AssertOrderDateDisplayIsPresent {
 		property portal.acceptance = "false";
 
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "Verify the status of an order is shown in the placed order details."
-	@priority = "3"
+	@priority = 3
 	test AssertOrderStatusInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -334,7 +334,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -345,8 +345,8 @@ definition {
 				newAddressName = "Shipping Address Name",
 				newAddressZipCode = "Test Shipping Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "Verify the selected order type for an order is displayed in the Open Carts widget."
-	@priority = "3"
+	@priority = 3
 	test AssertOrderTypeInOpenCartsWidgetList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "Verify the selected order type for an order is displayed in the Placed Orders list."
-	@priority = "3"
+	@priority = 3
 	test AssertOrderTypeInPlacedOrdersList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -462,7 +462,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -473,8 +473,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -491,7 +491,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9877. A user can search orders by account name"
-	@priority = "3"
+	@priority = 3
 	test CanReturnOrdersBySearchForAccountName {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -533,7 +533,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -553,7 +553,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -573,7 +573,7 @@ definition {
 		task ("Then the search of orders by account works properly") {
 			var searchAccount1 = '''"Commerce Account 1"''';
 
-			CommerceNavigator.searchEntry(entryName = "${searchAccount1}");
+			CommerceNavigator.searchEntry(entryName = ${searchAccount1});
 
 			AssertElementPresent(
 				key_orderAccount = "Commerce Account 1",
@@ -586,7 +586,7 @@ definition {
 	}
 
 	@description = "This is a use case for COMMERCE-3111. Assert that user can see an open order after deleting the product, and the product is no longer in the order."
-	@priority = "3"
+	@priority = 3
 	test CanSeeAPlacedOrderWithDeletedProduct {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -613,7 +613,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Bushings",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -624,8 +624,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "Bushings",
-				productQuantity = "1",
-				productUnitPrice = "18",
+				productQuantity = 1,
+				productUnitPrice = 18,
 				shippingMethod = "Standard");
 		}
 
@@ -638,9 +638,9 @@ definition {
 
 			var product = "Bushings";
 
-			CommerceNavigator.searchEntry(entryName = "${product}");
+			CommerceNavigator.searchEntry(entryName = ${product});
 
-			CommerceProducts.deleteProductsEntry(key_value = "${product}");
+			CommerceProducts.deleteProductsEntry(key_value = ${product});
 		}
 
 		task ("Then assert that user can see the open order, but the product is no longer in the order on minium site") {
@@ -652,7 +652,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Bushings",
 				productPrice = "18.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN38795",
 				productUnitPrice = "18.00");
 
@@ -667,7 +667,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
-	@priority = "3"
+	@priority = 3
 	test CreateNewOrderFromPendingOrdersPage {
 		property portal.acceptance = "true";
 
@@ -689,7 +689,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6380. As a buyer, I want to be able to delete an Order in Pending Order details page"
-	@priority = "3"
+	@priority = 3
 	test DeleteOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "Intern Test";
 
@@ -699,7 +699,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -719,7 +719,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6379. As a buyer, I want to be able to edit the order in Pending Order details page and I want to view the changes I made applied to order"
-	@priority = "3"
+	@priority = 3
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "true";
 
@@ -755,11 +755,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#POSTAL_CODE",
-			value1 = "00100");
+			value1 = 00100);
 
 		Type(
 			locator1 = "TextInput#NUMBER",
-			value1 = "1234");
+			value1 = 1234);
 
 		Button.clickSave();
 
@@ -769,7 +769,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -815,19 +815,19 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_titleName = "Billing Address",
 				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-				value1 = "${address}");
+				value1 = ${address});
 		}
 
 		for (var address : list "${street},${city}") {
 			AssertTextEquals.assertPartialText(
 				key_titleName = "Shipping Address",
 				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-				value1 = "${address}");
+				value1 = ${address});
 		}
 	}
 
 	@description = "Verify the order time is shown in the order date when the Show Order Creation Time checkbox is checked in global settings."
-	@priority = "3"
+	@priority = 3
 	test GlobalSettingsForOrderDateConfiguration {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -869,7 +869,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -880,8 +880,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -894,7 +894,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("Given the Show Order Creation Time checkbox is unchecked in global settings") {
@@ -936,12 +936,12 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 	}
 
 	@description = "Verify the order date formats shown in the Placed Orders list and details pages are localized."
-	@priority = "3"
+	@priority = 3
 	test LocalDateFormat {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration.config";
@@ -977,7 +977,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -988,8 +988,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1011,7 +1011,7 @@ definition {
 			AssertTextEquals(
 				key_orderId = "",
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("When the buyer views the order from the placed orders details page") {
@@ -1021,7 +1021,7 @@ definition {
 		task ("Then the order date is shown in yyyy.MM.dd. format") {
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("Given the buyer changes the language to German") {
@@ -1042,7 +1042,7 @@ definition {
 			AssertTextEquals(
 				key_orderId = "",
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("When the buyer views the order from the placed orders details page") {
@@ -1052,7 +1052,7 @@ definition {
 		task ("Then the order date is shown in dd.MM.yyyy format") {
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("Given the buyer changes the language to English") {
@@ -1073,7 +1073,7 @@ definition {
 			AssertTextEquals(
 				key_orderId = "",
 				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 
 		task ("When the buyer views the order from the placed orders details page") {
@@ -1083,12 +1083,12 @@ definition {
 		task ("Then the order date is shown in MMM d, yyyy format") {
 			AssertTextEquals(
 				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 		}
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
-	@priority = "3"
+	@priority = 3
 	test ReorderFromPlacedOrdersDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1098,7 +1098,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -1109,8 +1109,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Click(
@@ -1122,7 +1122,7 @@ definition {
 			locator1 = "Button#ANY");
 
 		for (var iterator : list "1,2,3,4,5") {
-			if ("${iterator}" == "2") {
+			if (${iterator} == 2) {
 				Click(
 					key_radioOption = "Standard",
 					locator1 = "CommerceEntry#RADIO_BUTTON");
@@ -1140,7 +1140,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"
-	@priority = "3"
+	@priority = 3
 	test SearchOrderInPendingOrdersPage {
 		property portal.acceptance = "true";
 
@@ -1170,19 +1170,19 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
-		CommerceNavigator.searchEntry(entryName = "${firstOrderId}");
+		CommerceNavigator.searchEntry(entryName = ${firstOrderId});
 
 		AssertElementPresent(
-			key_errorMessage = "${firstOrderId}",
+			key_errorMessage = ${firstOrderId},
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementNotPresent(
-			key_errorMessage = "${secondOrderId}",
+			key_errorMessage = ${secondOrderId},
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	@description = "COMMERCE-6381. As a buyer, I want to be able to search for one placed order using the search bar"
-	@priority = "3"
+	@priority = 3
 	test SearchOrderInPlacedOrdersPage {
 		property portal.acceptance = "true";
 
@@ -1198,7 +1198,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -1209,8 +1209,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -1225,7 +1225,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -1236,27 +1236,27 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "2",
-			productUnitPrice = "15",
+			productQuantity = 2,
+			productUnitPrice = 15,
 			shippingMethod = "Standard");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
 
-		CommerceNavigator.searchEntry(entryName = "${firstOrderId}");
+		CommerceNavigator.searchEntry(entryName = ${firstOrderId});
 
 		AssertElementPresent(
-			key_entryName = "${firstOrderId}",
+			key_entryName = ${firstOrderId},
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		AssertElementNotPresent(
-			key_entryName = "${secondOrderId}",
+			key_entryName = ${secondOrderId},
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "COMMERCE-6665. I want to be able to select a Display Template in Pending Orders widget and see it applied to the widget"
-	@priority = "3"
+	@priority = 3
 	test UseADTInPendingOrdersWidget {
 		property portal.acceptance = "false";
 
@@ -1276,7 +1276,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -1289,11 +1289,11 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Open Carts",
 			locator1 = "Portlet#BODY",
-			value1 = "${orderId}");
+			value1 = ${orderId});
 	}
 
 	@description = "COMMERCE-6666. I want to be able to select a Display Template in Placed Orders widget and see it applied to the widget"
-	@priority = "3"
+	@priority = 3
 	test UseADTInPlacedOrdersWidget {
 		property portal.acceptance = "false";
 
@@ -1313,7 +1313,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -1326,8 +1326,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
@@ -1339,11 +1339,11 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_portletName = "Placed Orders",
 			locator1 = "Portlet#BODY",
-			value1 = "${orderId}");
+			value1 = ${orderId});
 	}
 
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
-	@priority = "3"
+	@priority = 3
 	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1353,7 +1353,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -1364,8 +1364,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoPortlet(
@@ -1405,14 +1405,14 @@ definition {
 			locator1 = "Header#H2_TITLE");
 
 		for (var currentRow : list "status;Delivered,carrier;Test Carrier,tracking-number;Test Tracking Number") {
-			var currentColumn = StringUtil.extractFirst("${currentRow}", ";");
-			var currentValue = StringUtil.extractLast("${currentRow}", ";");
+			var currentColumn = StringUtil.extractFirst(${currentRow}, ";");
+			var currentValue = StringUtil.extractLast(${currentRow}, ";");
 
 			AssertTextEquals(
-				key_columnName = "${currentColumn}",
+				key_columnName = ${currentColumn},
 				key_tableEntry = "",
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "${currentValue}");
+				value1 = ${currentValue});
 		}
 	}
 

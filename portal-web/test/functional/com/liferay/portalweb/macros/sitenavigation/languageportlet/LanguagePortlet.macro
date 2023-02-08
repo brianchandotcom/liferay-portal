@@ -7,15 +7,15 @@ definition {
 			Select(
 				key_selectFieldLabel = "Display Template",
 				locator1 = "Select#ANY",
-				value1 = "${displayTemplate}");
+				value1 = ${displayTemplate});
 
 			AssertSelectedLabel(
 				key_selectFieldLabel = "Display Template",
 				locator1 = "Select#ANY",
-				value1 = "${displayTemplate}");
+				value1 = ${displayTemplate});
 		}
 
-		if ("${displayCurrentLocale}" == "true") {
+		if (${displayCurrentLocale} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Display Current Locale",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -38,42 +38,42 @@ definition {
 			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
 		}
 
-		for (var currentLanguage : list "${currentLanguageList}") {
-			var key_currentLanguage = "${currentLanguage}";
+		for (var currentLanguage : list ${currentLanguageList}) {
+			var key_currentLanguage = ${currentLanguage};
 
 			Select(
 				locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
-				value1 = "${currentLanguage}");
+				value1 = ${currentLanguage});
 
 			Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentLanguage}");
+				value1 = ${currentLanguage});
 		}
 
 		PortletEntry.save();
 	}
 
 	macro selectLanguagePG {
-		var portletName = "${portletName}";
+		var portletName = ${portletName};
 
 		if (!(isSet(portletName))) {
 			var portletName = "LanguagePortlet";
 		}
 
-		if (IsElementNotPresent(key_locale = "${locale}", key_portletName = "${portletName}", locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE")) {
+		if (IsElementNotPresent(key_locale = ${locale}, key_portletName = ${portletName}, locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE")) {
 			Click(
-				key_portletName = "${portletName}",
+				key_portletName = ${portletName},
 				locator1 = "Language#DROPDOWN");
 
 			// Workaround for LPS-87409
 
-			if (("${locale}" == "ar_SA") && (IsElementNotPresent(key_menuItem = "${textIcon}", locator1 = "MenuItem#ANY_MENU_ITEM"))) {
+			if ((${locale} == "ar_SA") && (IsElementNotPresent(key_menuItem = ${textIcon}, locator1 = "MenuItem#ANY_MENU_ITEM"))) {
 				MenuItem.click(menuItem = "العربية-المملكة العربية السعودية");
 			}
 			else {
-				MenuItem.click(menuItem = "${textIcon}");
+				MenuItem.click(menuItem = ${textIcon});
 			}
 		}
 	}
@@ -86,78 +86,78 @@ definition {
 
 	macro viewCurrentLanguage {
 		AssertElementPresent(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			key_portletName = "LanguagePortlet",
 			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE");
 	}
 
 	macro viewLanguages {
-		if ("${displayTemplate}" == "Icon") {
-			for (var availableIcon : list "${availableIconList}") {
+		if (${displayTemplate} == "Icon") {
+			for (var availableIcon : list ${availableIconList}) {
 				AssertElementPresent(
-					key_text = "${availableIcon}",
+					key_text = ${availableIcon},
 					locator1 = "Icon#ANY");
 			}
 
-			for (var unavailableIcon : list "${unavailableIconList}") {
+			for (var unavailableIcon : list ${unavailableIconList}) {
 				AssertElementNotPresent(
-					key_text = "${unavailableIcon}",
+					key_text = ${unavailableIcon},
 					locator1 = "Icon#ANY");
 			}
 		}
-		else if ("${displayTemplate}" == "Icon Menu") {
+		else if (${displayTemplate} == "Icon Menu") {
 			Click(
 				key_portletName = "LanguagePortlet",
 				locator1 = "Language#DROPDOWN");
 
-			for (var availableLanguage : list "${availableLanguageList}") {
-				MenuItem.viewPresent(menuItem = "${availableLanguage}");
+			for (var availableLanguage : list ${availableLanguageList}) {
+				MenuItem.viewPresent(menuItem = ${availableLanguage});
 			}
 
-			for (var unavailableLanguage : list "${unavailableLanguageList}") {
-				MenuItem.viewNotPresent(menuItem = "${unavailableLanguage}");
+			for (var unavailableLanguage : list ${unavailableLanguageList}) {
+				MenuItem.viewNotPresent(menuItem = ${unavailableLanguage});
 			}
 		}
-		else if ("${displayTemplate}" == "Long Text") {
-			for (var availableLanguage : list "${availableLanguageList}") {
+		else if (${displayTemplate} == "Long Text") {
+			for (var availableLanguage : list ${availableLanguageList}) {
 				AssertTextEquals(
-					key_language = "${availableLanguage}",
+					key_language = ${availableLanguage},
 					locator1 = "Language#LONG_TEXT_LINK",
-					value1 = "${availableLanguage}");
+					value1 = ${availableLanguage});
 			}
 
-			for (var unavailableLanguage : list "${unavailableLanguageList}") {
+			for (var unavailableLanguage : list ${unavailableLanguageList}) {
 				AssertElementNotPresent(
-					key_language = "${unavailableLanguage}",
+					key_language = ${unavailableLanguage},
 					locator1 = "Language#LONG_TEXT_LINK");
 			}
 		}
-		else if ("${displayTemplate}" == "Select Box") {
-			for (var availableLanguage : list "${availableLanguageList}") {
+		else if (${displayTemplate} == "Select Box") {
+			for (var availableLanguage : list ${availableLanguageList}) {
 				AssertElementPresent(
 					locator1 = "Select#SELECT_VALUE_ID",
-					option = "${availableLanguage}",
+					option = ${availableLanguage},
 					selectFieldId = "LanguagePortlet");
 			}
 
-			for (var unavailableLanguage : list "${unavailableLanguageList}") {
+			for (var unavailableLanguage : list ${unavailableLanguageList}) {
 				AssertElementNotPresent(
 					locator1 = "Select#SELECT_VALUE_ID",
-					option = "${unavailableLanguage}",
+					option = ${unavailableLanguage},
 					selectFieldId = "LanguagePortlet");
 			}
 		}
-		else if ("${displayTemplate}" == "Short Text") {
-			for (var availableLanguage : list "${availableLanguageList}") {
+		else if (${displayTemplate} == "Short Text") {
+			for (var availableLanguage : list ${availableLanguageList}) {
 				AssertTextEquals(
-					key_language = "${availableLanguage}",
+					key_language = ${availableLanguage},
 					locator1 = "Language#SHORT_TEXT_LINK",
-					value1 = "${availableLanguage}");
+					value1 = ${availableLanguage});
 			}
 
-			for (var unavailableLanguage : list "${unavailableLanguageList}") {
+			for (var unavailableLanguage : list ${unavailableLanguageList}) {
 				AssertElementNotPresent(
-					key_language = "${unavailableLanguage}",
+					key_language = ${unavailableLanguage},
 					locator1 = "Language#SHORT_TEXT_LINK");
 			}
 		}
@@ -166,10 +166,10 @@ definition {
 	macro viewLanguagesSettings {
 		Panel.expandPanel(panel = "Languages");
 
-		for (var currentLanguage : list "${currentLanguageList}") {
+		for (var currentLanguage : list ${currentLanguageList}) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentLanguage}");
+				value1 = ${currentLanguage});
 		}
 
 		SelectFrame(value1 = "relative=top");

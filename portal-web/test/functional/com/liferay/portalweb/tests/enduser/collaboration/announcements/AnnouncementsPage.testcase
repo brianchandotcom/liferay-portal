@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -46,7 +46,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddAnnouncementsEntry {
 		JSONAnnouncement.addAnnouncement(
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddAnnouncementsEntryFutureDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
@@ -91,7 +91,7 @@ definition {
 
 		// We need to wait for the system time to pass by 2 minutes in order to verify the announcement display date. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = 120000);
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -102,7 +102,7 @@ definition {
 			entryURL = "http://www.liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddAnnouncementsEntryPriorityImportant {
 		JSONAnnouncement.addAnnouncement(
@@ -123,7 +123,7 @@ definition {
 			priority = "Important");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteAnnouncementsEntry {
 		property portal.acceptance = "true";
@@ -143,7 +143,7 @@ definition {
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditAnnouncementsEntry {
 		property portal.acceptance = "true";
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotAddAnnouncementsEntryPastExpirationDate {
 		AnnouncementsNavigator.openToEntriesTab(
@@ -203,7 +203,7 @@ definition {
 		AnnouncementsEntry.viewNoAdmin();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewAnnouncementsEntryWithDistributedScope {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -285,7 +285,7 @@ definition {
 			entryTitle = "Announcements Entry2 Scoped Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewAnnouncementsPagination {
 		for (var entryCount : list "1,2,3,4,5,6,7") {
@@ -299,7 +299,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
-		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "4");
+		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = 4);
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",
@@ -357,7 +357,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var viewEntryCount : list "1,2,3,4") {
 			AnnouncementsEntry.viewList(
@@ -400,7 +400,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewPreviousAnnouncementEntries {
 		property portal.acceptance = "true";
@@ -431,7 +431,7 @@ definition {
 
 	@description = "This test ensures that the announcement widget follows W3C accessibility standards."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test WidgetFollowsAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-147716. It checks that the javascript in the user name will not be executed when viewing an announcement on page."
-	@priority = "3"
+	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInAnnouncement {
 		Navigator.openURL();
 

@@ -22,7 +22,7 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add user to the Liferay Staff organization and a account") {
@@ -32,9 +32,9 @@ definition {
 		}
 
 		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
 		}
 	}
 
@@ -43,21 +43,21 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation Ticket: LPS-147800 | Test Summary: Verify if the card displays (SLA Card - SLA Name - Start Date - End Date - SLA Status)"
-	@priority = "4"
+	@priority = 4
 	test AssertAllTitlesOnTheSLACard {
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount1}");
+			CustomerPortal.search(searchItem = ${testAccount1});
 
-			CustomerPortal.enterOnProject(title = "${testAccount1}");
+			CustomerPortal.enterOnProject(title = ${testAccount1});
 		}
 
 		task ("Then I should be able to view SLA Title, Status, Start Date and End Date for Platinum Support License.") {
@@ -100,14 +100,14 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-147803 | Test Summary: Verify the message 'The project's Support Level is displayed here for projects with ticketing support.' if there is no SLA on the project"
-	@priority = "4"
+	@priority = 4
 	test CanViewErrorMessageIfThereIsNoSLAInTheProject {
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount2}");
+			CustomerPortal.search(searchItem = ${testAccount2});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "${testAccount2}");
+				title = ${testAccount2});
 		}
 
 		task ("The I message at SLA Card should be equal to 'The project's Support Level is displayed here for projects with ticketing support.'") {
@@ -116,32 +116,32 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-147804 | Test Summary: Check if when cards have the same support level the previous deadline date is extended."
-	@priority = "4"
+	@priority = 4
 	test CardsAtTheSameSupportLevelThePreviousDeadlineIsExtended {
 		task ("Given I get the start date of oldest license") {
 			var startDate = CustomerPortal.getValueFieldKoroneikiByAccountName(
-				accountName = "${testAccount3}",
+				accountName = ${testAccount3},
 				field = "SLA Expired Start Date");
 		}
 
 		task ("And I get the end date of the newest license") {
 			var endDate = CustomerPortal.getValueFieldKoroneikiByAccountName(
-				accountName = "${testAccount3}",
+				accountName = ${testAccount3},
 				field = "SLA Future End Date");
 		}
 
 		task ("And to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			Refresh();
 
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
 		}
 
 		task ("And I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount3}");
+			CustomerPortal.search(searchItem = ${testAccount3});
 
-			CustomerPortal.enterOnProject(title = "${testAccount3}");
+			CustomerPortal.enterOnProject(title = ${testAccount3});
 		}
 
 		task ("Then I should be able to view SLA Start and End Date of Current") {
@@ -150,12 +150,12 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-147801 | Test Summary: Verify if when user has multiple statuses, the status order went from highest to lowest (Current > Future > Expired)."
-	@priority = "5"
+	@priority = 5
 	test StatusOrderFromHighestToLowest {
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount1}");
+			CustomerPortal.search(searchItem = ${testAccount1});
 
-			CustomerPortal.enterOnProject(title = "${testAccount1}");
+			CustomerPortal.enterOnProject(title = ${testAccount1});
 		}
 
 		task ("Then I should be able to view SLA Status Current") {
@@ -180,12 +180,12 @@ definition {
 	}
 
 	@description = "Automation Ticket: LPS-147802 | Test Summary: Check if the user can switch between SLA cards."
-	@priority = "5"
+	@priority = 5
 	test UserCanSwitchBetweenSLACards {
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount1}");
+			CustomerPortal.search(searchItem = ${testAccount1});
 
-			CustomerPortal.enterOnProject(title = "${testAccount1}");
+			CustomerPortal.enterOnProject(title = ${testAccount1});
 		}
 
 		task ("And I should be able to view SLA Title Platinum") {

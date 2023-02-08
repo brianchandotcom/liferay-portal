@@ -9,7 +9,7 @@ definition {
 
 		Select(
 			locator1 = "Configuration#SELECTION_METHOD_SELECT",
-			value1 = "${selectionMethod}");
+			value1 = ${selectionMethod});
 
 		PortletEntry.save();
 
@@ -23,7 +23,7 @@ definition {
 
 		Select(
 			locator1 = "Select#DISPLAY_STYLE",
-			value1 = "${displayStyle}");
+			value1 = ${displayStyle});
 
 		IFrame.saveConfiguration();
 	}
@@ -42,7 +42,7 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
-			key_roleTitle = "${organizationName}",
+			key_roleTitle = ${organizationName},
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON");
 
 		SelectFrame(value1 = "relative=top");
@@ -54,28 +54,28 @@ definition {
 
 	macro viewBlogsEntryViaBAPortletPG {
 		AssertTextEquals(
-			key_entryTitle = "${entryTitle}",
+			key_entryTitle = ${entryTitle},
 			locator1 = "BlogsAggregator#ENTRY_TITLE",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		if (isSet(entryContent)) {
 			AssertTextEquals.assertPartialText(
-				key_entryContent = "${entryContent}",
+				key_entryContent = ${entryContent},
 				locator1 = "BlogsAggregator#ENTRY_CONTENT",
-				value1 = "${entryContent}");
+				value1 = ${entryContent});
 		}
 
 		if (isSet(entryQuoteContent)) {
 			AssertTextEquals.assertPartialText(
-				key_entryContent = "${entryQuoteContent}",
+				key_entryContent = ${entryQuoteContent},
 				locator1 = "BlogsAggregator#ENTRY_QUOTE_CONTENT",
-				value1 = "${entryQuoteContent}");
+				value1 = ${entryQuoteContent});
 		}
 	}
 
 	macro viewParentOrganizationPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -86,15 +86,15 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		var key_orgName = "${orgName}";
+		var key_orgName = ${orgName};
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
+			value1 = ${orgName});
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ORGANIZATION_TABLE_NAME_SECOND_COLUMN",
-			value1 = "${parentOrgName}");
+			value1 = ${parentOrgName});
 
 		SelectFrame(value1 = "relative=top");
 	}

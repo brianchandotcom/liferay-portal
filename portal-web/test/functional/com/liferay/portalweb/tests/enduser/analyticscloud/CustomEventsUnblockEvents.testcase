@@ -67,7 +67,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -76,26 +76,26 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10195 | Test Summary: Unblock single custom event and unblock custom events in bulk"
-	@priority = "5"
+	@priority = 5
 	test CanUnblockCustomEvent {
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName2}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName2},
+				timeToSendCustomEvent = 1);
 
 			var customEventName3 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName3}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName3},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -105,7 +105,7 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -127,11 +127,11 @@ definition {
 		}
 
 		task ("Unblock custom event") {
-			ACCustomEvents.unblockCustomEvent(customEventName = "${customEventName1}");
+			ACCustomEvents.unblockCustomEvent(customEventName = ${customEventName1});
 		}
 
 		task ("Search for the name of the custom event that was unblocked in block list") {
-			ACUtils.searchBar(searchItem = "${customEventName1}");
+			ACUtils.searchBar(searchItem = ${customEventName1});
 
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
 		}
@@ -143,9 +143,9 @@ definition {
 		}
 
 		task ("Search for the name of the custom event that was unblocked in custom event list") {
-			ACUtils.searchBar(searchItem = "${customEventName1}");
+			ACUtils.searchBar(searchItem = ${customEventName1});
 
-			ACUtils.viewNameList(nameList = "${customEventName1}");
+			ACUtils.viewNameList(nameList = ${customEventName1});
 		}
 
 		task ("Navigation to block custom event list") {
@@ -166,22 +166,22 @@ definition {
 
 		task ("Search for the name of the custom event that was unblocked in custom event list") {
 			for (var customEventName : list "${customEventName2},${customEventName3}") {
-				ACUtils.searchBar(searchItem = "${customEventName}");
+				ACUtils.searchBar(searchItem = ${customEventName});
 
-				ACUtils.viewNameList(nameList = "${customEventName}");
+				ACUtils.viewNameList(nameList = ${customEventName});
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10194 | Test Summary: Blocked event is hidden in the Event Analysis events lists and Unblocked event is visible in the Event Analysis events lists"
-	@priority = "4"
+	@priority = 4
 	test ViewEventIsVisibleOrNotInEventAnalysisWhenBlockedOrUnblocked {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -191,7 +191,7 @@ definition {
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToEventAnalysis();
 		}
@@ -199,9 +199,9 @@ definition {
 		task ("Click to add the custom event and check if it is present") {
 			ACEventAnalysis.clickToAddEventButton();
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${customEventName});
 
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+			ACEventAnalysis.viewEventAnalysisList(eventList = ${customEventName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("Block custom event") {
-			ACCustomEvents.blockCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.blockCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Navigation to event analysis") {
@@ -227,9 +227,9 @@ definition {
 		task ("Click to add the custom event and check if it is not present") {
 			ACEventAnalysis.clickToAddEventButton();
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${customEventName});
 
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${customEventName}");
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = ${customEventName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -247,7 +247,7 @@ definition {
 		}
 
 		task ("Unblock custom event") {
-			ACCustomEvents.unblockCustomEvent(customEventName = "${customEventName}");
+			ACCustomEvents.unblockCustomEvent(customEventName = ${customEventName});
 		}
 
 		task ("Navigation to event analysis") {
@@ -259,9 +259,9 @@ definition {
 		task ("Click to add the custom event and check if it is present") {
 			ACEventAnalysis.clickToAddEventButton();
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "${customEventName}");
+			ACEventAnalysis.searchEventAnalysis(searchItem = ${customEventName});
 
-			ACEventAnalysis.viewEventAnalysisList(eventList = "${customEventName}");
+			ACEventAnalysis.viewEventAnalysisList(eventList = ${customEventName});
 		}
 	}
 

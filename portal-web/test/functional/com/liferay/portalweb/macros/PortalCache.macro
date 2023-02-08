@@ -2,7 +2,7 @@ definition {
 
 	macro getCache {
 		if (!(isSet(companyId))) {
-			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		}
 
 		var getCacheGroovy = '''
@@ -17,16 +17,16 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${getCacheGroovy}");
+			script = ${getCacheGroovy});
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "${cacheValue}");
+			value1 = ${cacheValue});
 	}
 
 	macro putCache {
 		if (!(isSet(companyId))) {
-			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		}
 
 		var putCacheGroovy = '''
@@ -43,11 +43,11 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${putCacheGroovy}");
+			script = ${putCacheGroovy});
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "${cacheValue}");
+			value1 = ${cacheValue});
 	}
 
 }

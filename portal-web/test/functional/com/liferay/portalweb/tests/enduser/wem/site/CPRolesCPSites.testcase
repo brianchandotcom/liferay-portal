@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Assert could add site with Add Site	regular role and could not after removing."
-	@priority = "4"
+	@priority = 4
 	test AddSiteRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -48,7 +48,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 
 			Permissions.definePermissionViaJSONAPI(
@@ -80,7 +80,7 @@ definition {
 		task ("Add add site permisssion to the role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ADD_COMMUNITY",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 		}
 
@@ -96,7 +96,7 @@ definition {
 		task ("Remove add site permisssion to the role") {
 			Permissions.removePermissionViaAPI(
 				resourceAction = "ADD_COMMUNITY",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 		}
 
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "Assert could find site by site name and view Site Administrator role permissions."
-	@priority = "5"
+	@priority = 5
 	test SearchParenetAndChildSiteAndViewPermissions {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -125,7 +125,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Roles Regrole Name");
 		}
 
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "Assert could manage child site with Manage Subsites	site role and could not after removing."
-	@priority = "4"
+	@priority = 4
 	test ViewSiteManageChildSiteSiteRole {
 		task ("Log out and log in user with assigned site role and created site and page") {
 			Permissions.setUpSiteRoleLoginUserCP(
@@ -275,12 +275,12 @@ definition {
 		task ("Give permissions to regular role to add site in site admin") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ADD_COMMUNITY",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 
 			Permissions.definePermissionViaJSONAPI(
@@ -454,13 +454,13 @@ definition {
 	}
 
 	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
-	@priority = "4"
+	@priority = 4
 	test ViewSiteManagePagesRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "CPRolesCPSites#ViewSiteManagePagesRegRole";
 
 		task ("Get site name") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 		}
 
 		task ("Log out and log in user with assigned regular role") {
@@ -488,7 +488,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 		}
 
@@ -533,11 +533,11 @@ definition {
 				panel = "Control Panel",
 				portlet = "Sites");
 
-			var key_site = "${siteName}";
+			var key_site = ${siteName};
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "${siteName}");
+				value1 = ${siteName});
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

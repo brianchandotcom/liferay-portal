@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96187. When there is a Language Selector widget on a display page template, change locale should not redirect the user to a different place."
-	@priority = "4"
+	@priority = 4
 	test ChangeLocaleViaLanguageSelector {
 		task ("Add a Language Selector widget to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");

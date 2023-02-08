@@ -5,69 +5,69 @@ definition {
 			Type(
 				key_field = "company",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlCompany}");
+				value1 = ${ddlCompany});
 		}
 
 		if (isSet(ddlEmail)) {
 			Type(
 				key_field = "email",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlEmail}");
+				value1 = ${ddlEmail});
 		}
 
 		if (isSet(ddlFirstName)) {
 			Type(
 				key_field = "firstName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlFirstName}");
+				value1 = ${ddlFirstName});
 		}
 
 		if (isSet(ddlRecordFieldData)) {
 			Select(
 				locator1 = "DDMField#SELECT",
-				value1 = "${ddlRecordFieldData}");
+				value1 = ${ddlRecordFieldData});
 		}
 
 		if (isSet(ddlUserName)) {
 			Type(
 				key_field = "imUserName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlUserName}");
+				value1 = ${ddlUserName});
 		}
 
 		if (isSet(ddlJobTitle)) {
 			Type(
 				key_field = "jobTitle",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlJobTitle}");
+				value1 = ${ddlJobTitle});
 		}
 
 		if (isSet(ddlLastName)) {
 			Type(
 				key_field = "lastName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlLastName}");
+				value1 = ${ddlLastName});
 		}
 
 		if (isSet(ddlnotes)) {
 			Type(
 				key_fieldName = "notes",
 				locator1 = "DDLEditRecord#TEXT_BOX_FIELD",
-				value1 = "${ddlnotes}");
+				value1 = ${ddlnotes});
 		}
 
 		if (isSet(ddlPhoneMobile)) {
 			Type(
 				key_field = "phoneMobile",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlPhoneMobile}");
+				value1 = ${ddlPhoneMobile});
 		}
 
 		if (isSet(ddlPhoneOffice)) {
 			Type(
 				key_field = "phoneOffice",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlPhoneOffice}");
+				value1 = ${ddlPhoneOffice});
 		}
 	}
 
@@ -90,30 +90,30 @@ definition {
 	}
 
 	macro editDLLRecordContacts {
-		DDLRecord.editPG(ddlListName = "${ddlListName}");
+		DDLRecord.editPG(ddlListName = ${ddlListName});
 
 		if (isSet(ddlCompanyEdit)) {
 			Type(
 				key_field = "company",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlCompanyEdit}");
+				value1 = ${ddlCompanyEdit});
 		}
 
 		if (isSet(ddlFirstNameEdit)) {
 			Type(
 				key_field = "firstName",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_DEFINITION",
-				value1 = "${ddlFirstNameEdit}");
+				value1 = ${ddlFirstNameEdit});
 		}
 	}
 
 	macro gotoStatusLabel {
 		MouseOver(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
 
 		Click(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
 	}
 
@@ -122,84 +122,84 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Company",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlCompany}");
+				value1 = ${ddlCompany});
 		}
 
 		if (isSet(ddlEmail)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Email",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlEmail}");
+				value1 = ${ddlEmail});
 		}
 
 		if (isSet(ddlFirstName)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "First Name",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlFirstName}");
+				value1 = ${ddlFirstName});
 		}
 
 		if (isSet(ddlimService)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Instant Messenger Service",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlimService}");
+				value1 = ${ddlimService});
 		}
 
 		if (isSet(ddlUserName)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Instant Messenger",
 				locator1 = "KaleoFormsNewSubmissions#FIELD_USERNAME",
-				value1 = "${ddlUserName}");
+				value1 = ${ddlUserName});
 		}
 
 		if (isSet(ddlJobTitle)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Job Title",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlJobTitle}");
+				value1 = ${ddlJobTitle});
 		}
 
 		if (isSet(ddlLastName)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Last Name",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlLastName}");
+				value1 = ${ddlLastName});
 		}
 
 		if (isSet(ddlnotes)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Notes",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlnotes}");
+				value1 = ${ddlnotes});
 		}
 
 		if (isSet(ddlPhoneMobile)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Phone (Mobile)",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlPhoneMobile}");
+				value1 = ${ddlPhoneMobile});
 		}
 
 		if (isSet(ddlPhoneOffice)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Phone (Office)",
 				locator1 = "DDLRecord#FIELD",
-				value1 = "${ddlPhoneOffice}");
+				value1 = ${ddlPhoneOffice});
 		}
 	}
 
 	macro viewEllipsisMenu {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "${menuItem}");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = ${menuItem});
 	}
 
 	macro viewOrderTable {
-		var rowNumber = "1";
+		var rowNumber = 1;
 
-		for (var fieldName : list "${fieldNameList}") {
+		for (var fieldName : list ${fieldNameList}) {
 			AssertElementPresent(
-				key_fieldName = "${fieldName}",
-				key_rowNumber = "${rowNumber}",
+				key_fieldName = ${fieldName},
+				key_rowNumber = ${rowNumber},
 				locator1 = "KaleoFormsAdmin#TABLE_ORDER_SUBMISSIONS");
 
 			var rowNumber = ${rowNumber} + 1;
@@ -207,8 +207,8 @@ definition {
 	}
 
 	macro viewPaginationNumber {
-		for (var pageNumber : list "${pageNumberList}") {
-			var key_pageNumber = "${pageNumber}";
+		for (var pageNumber : list ${pageNumberList}) {
+			var key_pageNumber = ${pageNumber};
 
 			AssertElementPresent(locator1 = "KaleoFormsNewSubmissions#PAGINATION_NUMBER");
 		}
@@ -216,13 +216,13 @@ definition {
 
 	macro viewStatusDDL {
 		AssertElementPresent(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
 	}
 
 	macro viewStatusLabel {
 		AssertElementPresent(
-			key_status = "${lbstatus}",
+			key_status = ${lbstatus},
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
 	}
 
@@ -249,14 +249,14 @@ definition {
 	macro viewVersionOnDetails {
 		AssertElementPresent(
 			locator1 = "KaleoFormsAdmin#WORKFLOW_VERSION",
-			value1 = "${workflowVersion}");
+			value1 = ${workflowVersion});
 	}
 
 	macro viewWorkflowInProcessMessage {
 		AssertTextEquals(
-			key_errorMessage = "${errorMessage}",
+			key_errorMessage = ${errorMessage},
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",
-			value1 = "${errorMessage}");
+			value1 = ${errorMessage});
 	}
 
 }

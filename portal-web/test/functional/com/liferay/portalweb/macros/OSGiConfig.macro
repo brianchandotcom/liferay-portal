@@ -5,7 +5,7 @@ definition {
 
 		var osgiConfigExists = FileUtil.exists("${liferayHome}/osgi/configs/${osgiConfigFileName}");
 
-		if ("${osgiConfigExists}" == "true") {
+		if (${osgiConfigExists} == "true") {
 			fail("File ${osgiConfigFileName} exists");
 		}
 	}
@@ -15,7 +15,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
 
-		if (contains("${fileContent}", "${text}")) {
+		if (contains(${fileContent}, ${text})) {
 			echo("File ${osgiConfigFileName} contains text ${text}");
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
 
-		if (contains("${fileContent}", "${text}")) {
+		if (contains(${fileContent}, ${text})) {
 			fail("File ${osgiConfigFileName} contains text ${text}");
 		}
 		else {
@@ -42,11 +42,11 @@ definition {
 		var configs = FileUtil.read("${osgiConfigFileBaseDir}/${osgiConfigFileName}");
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", "${configs}");
+		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configs});
 	}
 
 	macro deleteOSGiConfigFile {
-		Variables.assertDefined(parameterList = "${osgiConfigFileName}");
+		Variables.assertDefined(parameterList = ${osgiConfigFileName});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -58,14 +58,14 @@ definition {
 
 		var configList = "";
 
-		for (var osgiConfig : list "${osgiConfigs}") {
+		for (var osgiConfig : list ${osgiConfigs}) {
 			var configList = '''${osgiConfig}
 ${configList}''';
 		}
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", "${configList}");
+		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configList});
 	}
 
 	macro editOSGiConfigFileFromTempFolder {
@@ -77,7 +77,7 @@ ${configList}''';
 
 		var filePath = "${filePath}/${osgiConfigFileName}";
 
-		FileUtil.replaceStringInFile("${filePath}", "${oldValue}", "${newValue}");
+		FileUtil.replaceStringInFile(${filePath}, ${oldValue}, ${newValue});
 	}
 
 	@description = "Wait for OSGi Configuration to update in the Database"
@@ -85,7 +85,7 @@ ${configList}''';
 
 		// LRQA-78134 Current workaround to wait for OSGi configurations until we get a reliable way of waiting for them to update in the database
 
-		Pause(locator1 = "8000");
+		Pause(locator1 = 8000);
 	}
 
 }

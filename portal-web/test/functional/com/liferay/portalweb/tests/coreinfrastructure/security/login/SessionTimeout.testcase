@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-75977. Redirect on expire."
-	@priority = "5"
+	@priority = 5
 	test RedirectOnExpire {
 		property custom.properties = "session.timeout=2${line.separator}session.timeout.redirect.on.expire=true";
 		property test.name.skip.portal.instance = "SessionTimeout#RedirectOnExpire";
@@ -48,7 +48,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the warning message of a session expiring soon.
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 		}
 
 		task ("Assert expired session error message") {
@@ -59,7 +59,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 
 			User.viewSignInPresent();
 		}
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This is a use cae for LRQA-7765. Remember me checked."
-	@priority = "4"
+	@priority = 4
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
 		property test.name.skip.portal.instance = "SessionTimeout#RememberMeChecked";
@@ -86,7 +86,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = "120000");
+			Pause(locator1 = 120000);
 		}
 
 		task ("Assert session expired message") {
@@ -109,7 +109,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = "120000");
+			Pause(locator1 = 120000);
 
 			User.viewSessionNotExpired(sigin = "False");
 		}
@@ -134,7 +134,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = "120000");
+			Pause(locator1 = 120000);
 
 			User.viewExpiredSessionErrorMessage(message = "Danger:Due to inactivity, your session has expired. Before you continue, make sure your entered data is saved locally.");
 		}

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121979 and LPS-120005. Change the configuration of page won't break the connection with its style book."
-	@priority = "5"
+	@priority = 5
 	test ChangeConfigurationOfPageBasedOnStyleBook {
 		property portal.acceptance = "true";
 		property testray.component.names = "Frontend Token";
@@ -90,10 +90,10 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
-				value1 = "${fontFamily}");
+				value1 = ${fontFamily});
 
 			PageEditor.publish();
 		}
@@ -106,10 +106,10 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
-				value1 = "${fontFamily}");
+				value1 = ${fontFamily});
 		}
 
 		task ("Modify the page name") {
@@ -124,15 +124,15 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-family",
-				value1 = "${fontFamily}");
+				value1 = ${fontFamily});
 		}
 	}
 
 	@description = "This is a test for LPS-116106. Page Creator can change style book of content page via Look and Feel settings."
-	@priority = "4"
+	@priority = 4
 	test ChangeStyleBookOfContentPageViaLookAndFeel {
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
@@ -162,7 +162,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 5 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -244,7 +244,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(0, 255, 0, 1)");
@@ -252,7 +252,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "32px");
@@ -315,7 +315,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(107, 108, 126, 1)");
@@ -323,7 +323,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "14px");
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116106. Page Creator can change style book of widget page via Look and Feel settings."
-	@priority = "4"
+	@priority = 4
 	test ChangeStyleBookOfWidgetPageViaLookAndFeel {
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
@@ -492,7 +492,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142050. In style books, selecting Custom in units could insert any type of character."
-	@priority = "3"
+	@priority = 3
 	test ConfigureCustomUnit {
 		task ("Given a site designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -541,12 +541,12 @@ definition {
 			AssertTextEquals(
 				key_text = "Spacer 1",
 				locator1 = "TextInput#ANY",
-				value1 = "2");
+				value1 = 2);
 		}
 	}
 
 	@description = "This is a test for LPS-147705. A warning message appears when users try to delete a style book."
-	@priority = "4"
+	@priority = 4
 	test DeleteStyleBook {
 		task ("Given a site designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142078. The user could mark a new style book as default."
-	@priority = "4"
+	@priority = 4
 	test MarkNewStyleBookAsDefault {
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140834. The user could select style book in master page when use public pages theme."
-	@priority = "4"
+	@priority = 4
 	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {
 		property portal.release = "false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -669,7 +669,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142078. The user could view the default style book in Style Books admin but cannot delete and edit it."
-	@priority = "5"
+	@priority = 5
 	test ViewDefaultStyleBook {
 		property portal.acceptance = "true";
 
@@ -697,7 +697,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of style book."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInStyleBooksAdmin {
 		task ("Given a Style books designer has a new style book") {
 			JSONStylebooks.addStyleBookEntry(

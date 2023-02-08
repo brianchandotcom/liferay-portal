@@ -13,9 +13,9 @@ definition {
 				}
 		''';
 
-		var curl = JSONCurlUtil.post("${curl}");
+		var curl = JSONCurlUtil.post(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _curlTaxonomyCategoryByErc {
@@ -30,11 +30,11 @@ definition {
 				-H accept: application/json \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getTaxonomyCategory {
-		Variables.assertDefined(parameterList = "${taxonomyCategoryId}");
+		Variables.assertDefined(parameterList = ${taxonomyCategoryId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -44,9 +44,9 @@ definition {
 				-H Content-Type: application/json \
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro createTaxonomyCategory {
@@ -57,70 +57,70 @@ definition {
 		}
 
 		var response = TaxonomyCategoryAPI._createTaxonomyCategory(
-			externalReferenceCode = "${externalReferenceCode}",
-			name = "${name}",
-			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			taxonomyVocabularyId = ${taxonomyVocabularyId});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteTaxonomyCategoryByErc {
 		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+			externalReferenceCode = ${externalReferenceCode},
+			taxonomyVocabularyId = ${taxonomyVocabularyId});
 
-		var response = JSONCurlUtil.delete("${curl}");
+		var response = JSONCurlUtil.delete(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getElementOfCreatedCategory {
 		Variables.assertDefined(parameterList = "${responseToParse},${element}");
 
-		var elementValue = JSONUtil.getWithJSONPath("${responseToParse}", "${element}");
+		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
 
-		return "${elementValue}";
+		return ${elementValue};
 	}
 
 	macro getTaxonomyCategory {
-		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = ${taxonomyCategoryId});
 
-		return "${getTaxonomyCategoryDetails}";
+		return ${getTaxonomyCategoryDetails};
 	}
 
 	macro getTaxonomyCategoryByErc {
 		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+			externalReferenceCode = ${externalReferenceCode},
+			taxonomyVocabularyId = ${taxonomyVocabularyId});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro setUpGlobalResponse {
 		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 		var response = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-			assetLibraryId = "${assetLibraryId}",
+			assetLibraryId = ${assetLibraryId},
 			name = "Vocabulary Name");
 
-		static var responseOfCreated = "${response}";
+		static var responseOfCreated = ${response};
 
-		return "${responseOfCreated}";
+		return ${responseOfCreated};
 	}
 
 	macro updateTaxonomyCategoryByErc {
 		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
-			externalReferenceCode = "${externalReferenceCode}",
-			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+			externalReferenceCode = ${externalReferenceCode},
+			taxonomyVocabularyId = ${taxonomyVocabularyId});
 		var body = '''-d {"name": "${name}"}''';
 
-		var curl = StringUtil.add("${curl}", "${body}", " ");
+		var curl = StringUtil.add(${curl}, ${body}, " ");
 
-		var response = JSONCurlUtil.put("${curl}");
+		var response = JSONCurlUtil.put(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 }

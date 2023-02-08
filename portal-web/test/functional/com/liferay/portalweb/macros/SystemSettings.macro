@@ -7,9 +7,9 @@ definition {
 			${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
 		''';
 
-		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
+		var buildNumberOutput = JSONCurlUtil.post(${buildNumberCurl});
 
-		if (!(contains("${buildNumberOutput}", "${portalBuild}"))) {
+		if (!(contains(${buildNumberOutput}, ${portalBuild}))) {
 			fail("JSON-WS call failed to return build number");
 		}
 	}
@@ -21,9 +21,9 @@ definition {
 			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
 		''';
 
-		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
+		var portalVersionOutput = JSONCurlUtil.post(${portalVersionCurl});
 
-		if (!(contains("${portalVersionOutput}", "${portalVersion}"))) {
+		if (!(contains(${portalVersionOutput}, ${portalVersion}))) {
 			fail("JSON-WS call failed to return Portal version");
 		}
 	}
@@ -31,11 +31,11 @@ definition {
 	macro configureDisplayStyle {
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		DropdownMenuItem.click(menuItem = "${displayStyle}");
+		DropdownMenuItem.click(menuItem = ${displayStyle});
 
 		AssertTextEquals(
 			locator1 = "Dropdown#SELECTED_VALUE",
-			value1 = "${displayStyle}");
+			value1 = ${displayStyle});
 
 		SystemSettings.saveConfiguration();
 	}
@@ -43,28 +43,28 @@ definition {
 	macro configureDynamicExportLimit {
 		Type(
 			locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_LIMIT",
-			value1 = "${exportLimitNumber}");
+			value1 = ${exportLimitNumber});
 
 		SystemSettings.saveConfiguration();
 	}
 
 	macro configureSystemSetting {
-		var key_settingFieldName = "${settingFieldName}";
+		var key_settingFieldName = ${settingFieldName};
 
-		if ("${enableSetting}" == "true") {
+		if (${enableSetting} == "true") {
 			Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
 			if (isSet(settingValue)) {
 				SystemSettings.editTextAreaSetting(
-					settingName = "${settingName}",
-					settingValue = "${settingValue}");
+					settingName = ${settingName},
+					settingValue = ${settingValue});
 			}
 
 			SystemSettings.saveConfiguration();
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 		}
-		else if ("${enableSetting}" == "false") {
+		else if (${enableSetting} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
 			SystemSettings.saveConfiguration();
@@ -74,9 +74,9 @@ definition {
 	}
 
 	macro configureSystemSettingWithRefresh {
-		var key_settingFieldName = "${settingFieldName}";
+		var key_settingFieldName = ${settingFieldName};
 
-		if ("${enableSetting}" == "true") {
+		if (${enableSetting} == "true") {
 			Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
 			SystemSettings.saveConfiguration();
@@ -85,7 +85,7 @@ definition {
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 		}
-		else if ("${enableSetting}" == "false") {
+		else if (${enableSetting} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
 			SystemSettings.saveConfiguration();
@@ -106,7 +106,7 @@ definition {
 
 	macro deleteConfigurationEntry {
 		Click(
-			key_entryName = "${configurationEntry}",
+			key_entryName = ${configurationEntry},
 			locator1 = "CommerceEntry#ENTRY_ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
@@ -117,7 +117,7 @@ definition {
 	macro editSecurityCredential {
 		Type(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
-			value1 = "${securityCredential}");
+			value1 = ${securityCredential});
 
 		var key_fieldName = "securityPrincipal";
 
@@ -132,20 +132,20 @@ definition {
 
 	macro editTextAreaSetting {
 		Type(
-			key_label = "${settingName}",
+			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
-			value1 = "${settingValue}");
+			value1 = ${settingValue});
 	}
 
 	macro editTextAreaSettingMultiLines {
-		for (var settingValue : list "${settingValues}") {
+		for (var settingValue : list ${settingValues}) {
 			Type.sendKeys(
-				key_label = "${settingName}",
+				key_label = ${settingName},
 				locator1 = "TextArea#ANY_LABELED",
-				value1 = "${settingValue}");
+				value1 = ${settingValue});
 
 			KeyPress(
-				key_label = "${settingName}",
+				key_label = ${settingName},
 				locator1 = "TextArea#ANY_LABELED",
 				value1 = "\RETURN");
 		}
@@ -153,9 +153,9 @@ definition {
 
 	macro editTextSetting {
 		Type(
-			key_fieldLabel = "${settingName}",
+			key_fieldLabel = ${settingName},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${settingValue}");
+			value1 = ${settingValue});
 	}
 
 	macro exitEditConfiguration {
@@ -175,13 +175,13 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${configFileName}");
 
-		return "${fileContent}";
+		return ${fileContent};
 	}
 
 	macro getCurrentUserEmailResquestDenied {
-		var output = JSONCurlUtil.post("${curl}");
+		var output = JSONCurlUtil.post(${curl});
 
-		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
+		if (contains(${output}, "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
 			echo("Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser");
 		}
 		else {
@@ -190,9 +190,9 @@ definition {
 	}
 
 	macro getUserEmailAddressRequestDenied {
-		var output = JSONCurlUtil.post("${curl}");
+		var output = JSONCurlUtil.post(${curl});
 
-		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress")) {
+		if (contains(${output}, "Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress")) {
 			echo("Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress");
 		}
 		else {
@@ -203,12 +203,12 @@ definition {
 	macro getUserEmailSuccessfully {
 		Variables.assertDefined(parameterList = "${curl},${companyId}");
 
-		var output = JSONCurlUtil.post("${curl}");
+		var output = JSONCurlUtil.post(${curl});
 
-		var result1 = JSONUtil.getWithJSONPath("${output}", "$.agreedToTermsOfUse");
-		var result2 = JSONUtil.getWithJSONPath("${output}", "$.companyId");
+		var result1 = JSONUtil.getWithJSONPath(${output}, "$.agreedToTermsOfUse");
+		var result2 = JSONUtil.getWithJSONPath(${output}, "$.companyId");
 
-		if (("${result1}" == "true") && ("${result2}" == "${companyId}")) {
+		if ((${result1} == "true") && (${result2} == ${companyId})) {
 			echo("Get current user successful.");
 		}
 		else {
@@ -219,48 +219,48 @@ definition {
 	macro getViewUserEmailPermissionDenied {
 		Variables.assertDefined(parameterList = "${curl},${userId}");
 
-		var output = JSONCurlUtil.post("${curl}");
+		var output = JSONCurlUtil.post(${curl});
 
-		if (!(contains("${output}", "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}"))) {
+		if (!(contains(${output}, "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}"))) {
 			fail("FAIL! Cannot find the current user.");
 		}
 	}
 
 	macro gotoConfiguration {
 		Click(
-			key_itemName = "${configurationCategory}",
+			key_itemName = ${configurationCategory},
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Click(
-			key_configurationName = "${configurationName}",
-			key_configurationScope = "${configurationScope}",
+			key_configurationName = ${configurationName},
+			key_configurationScope = ${configurationScope},
 			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 
 		AssertElementPresent(
-			key_title = "${configurationName}",
+			key_title = ${configurationName},
 			locator1 = "Header#H2_TITLE");
 	}
 
 	macro gotoConfigurationEntry {
 		Click(
-			key_configurationEntry = "${configurationEntry}",
+			key_configurationEntry = ${configurationEntry},
 			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 	}
 
 	macro openSystemSettingsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet");
 	}
 
 	macro openToConfigInSystemSettings {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "Applications Menu") {
+		if (${portlet} == "Applications Menu") {
 			var portletId = "com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration";
 		}
 
@@ -288,70 +288,70 @@ definition {
 
 	macro selectOptionSetting {
 		Click(
-			key_fieldLabel = "${fieldName}",
+			key_fieldLabel = ${fieldName},
 			locator1 = "SystemSettings#DROPDOWN_MENU");
 
 		Click(
-			key_selectOption = "${selectOption}",
+			key_selectOption = ${selectOption},
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
 	macro viewConfigurationNotAvailable {
 		AssertElementNotPresent(
-			key_configurationName = "${configurationName}",
-			key_configurationScope = "${configurationScope}",
+			key_configurationName = ${configurationName},
+			key_configurationScope = ${configurationScope},
 			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 	}
 
 	macro viewInputText {
 		AssertTextEquals(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldValue}");
+			value1 = ${fieldValue});
 	}
 
 	macro viewNumberInputText {
 		AssertTextEquals(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "${fieldValue}");
+			value1 = ${fieldValue});
 	}
 
 	macro viewSettingsText {
 		AssertTextEquals.assertPartialText(
-			key_settingsText = "${settingsText}",
+			key_settingsText = ${settingsText},
 			locator1 = "SystemSettings#SETTINGS_TEXT",
-			value1 = "${settingsText}");
+			value1 = ${settingsText});
 	}
 
 	macro viewTextareaPartialText {
 		AssertTextEquals.assertPartialText(
-			key_label = "${settingName}",
+			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
-			value1 = "${settingValue}");
+			value1 = ${settingValue});
 	}
 
 	macro viewTextareaValue {
 		if (isSet(repeatableFieldNumber)) {
 			AssertTextEquals.assertValue(
-				key_fieldName = "${fieldName}",
-				key_repeatableFieldNumber = "${repeatableFieldNumber}",
+				key_fieldName = ${fieldName},
+				key_repeatableFieldNumber = ${repeatableFieldNumber},
 				locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
-				value1 = "${fieldValue}");
+				value1 = ${fieldValue});
 		}
 		else {
 			AssertTextEquals.assertValue(
-				key_fieldName = "${fieldName}",
+				key_fieldName = ${fieldName},
 				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
-				value1 = "${fieldValue}");
+				value1 = ${fieldValue});
 		}
 	}
 
 	macro viewTextLabel {
 		AssertTextEquals.assertText(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "SystemSettings#LABEL",
-			value1 = "${fieldLabel}");
+			value1 = ${fieldLabel});
 	}
 
 	macro viewUserAvatarImage {

@@ -1,7 +1,7 @@
 definition {
 
 	macro gotoNavTab {
-		var key_tab = "${navTab}";
+		var key_tab = ${navTab};
 
 		if (IsElementNotPresent(locator1 = "Modal#ACTIVE_TAB_LINK")) {
 			Click(locator1 = "Modal#TAB_LINK");
@@ -13,14 +13,14 @@ definition {
 	macro publish {
 		AssertTextEquals(
 			locator1 = "Modal#BODY_MESSAGE",
-			value1 = "${warningMessage}");
+			value1 = ${warningMessage});
 
-		if ("${action}" == "Cancel") {
+		if (${action} == "Cancel") {
 			Click(
 				key_text = "Cancel",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
-		else if ("${action}" == "Continue") {
+		else if (${action} == "Continue") {
 			Click(
 				key_text = "Continue",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");

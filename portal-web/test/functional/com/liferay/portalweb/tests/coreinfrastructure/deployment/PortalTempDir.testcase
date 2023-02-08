@@ -6,16 +6,16 @@ definition {
 	property testray.main.component.name = "Deployment";
 
 	@description = "Check the temp folder after portal shutdown."
-	@priority = "4"
+	@priority = 4
 	test TempDirShouldBeEmptyAfterPortalShutdown {
 		property test.name.skip.portal.instance = "PortalTempDir#TempDirShouldBeEmptyAfterPortalShutdown";
 
 		var tempDir = PropsUtil.get("app.server.temp.dir");
 
-		var filesInTempDir = FileUtil.listFiles("${tempDir}");
+		var filesInTempDir = FileUtil.listFiles(${tempDir});
 
 		TestUtils.assertNotEquals(
-			actual = "${filesInTempDir}",
+			actual = ${filesInTempDir},
 			expected = "");
 
 		Portlet.shutdownServer();
@@ -24,10 +24,10 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
 
-		var filesInTempDir = FileUtil.listFiles("${tempDir}");
+		var filesInTempDir = FileUtil.listFiles(${tempDir});
 
 		TestUtils.assertEquals(
-			actual = "${filesInTempDir}",
+			actual = ${filesInTempDir},
 			expected = "");
 	}
 

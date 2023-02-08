@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-97666 - Verify that the names inside the steps filter component from Performance by Assignee card are breaking into another line when the component width exceeds 240px"
-	@priority = "3"
+	@priority = 3
 	test AssigneeNamesBreaksIntoAnotherLine {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByAssignee#AssigneeNamesBreaksIntoAnotherLine";
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that the Performance by Assignee card are also considering inactive users"
-	@priority = "5"
+	@priority = 5
 	test CardConsideresInactiveUser {
 		JSONUser.addUser(
 			userEmailAddress = "user2@liferay.com",
@@ -159,7 +159,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "LPS-99441 - Verify that the roles and Process Steps filters values inside Performance by Assignee page are alphabetically sorted"
-	@priority = "3"
+	@priority = 3
 	test FiltersValuesAreAlphabeticallyOrdered {
 		var currentText = "";
 		var currentPosition = "";
@@ -223,10 +223,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
@@ -264,46 +264,46 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ROLE");
 
 		for (var filterOption : list "Administrator-1,Power User-2,User-3") {
-			var currentText = StringUtil.extractFirst("${filterOption}", "-");
-			var currentPosition = StringUtil.extractLast("${filterOption}", "-");
+			var currentText = StringUtil.extractFirst(${filterOption}, "-");
+			var currentPosition = StringUtil.extractLast(${filterOption}, "-");
 
 			AssertTextEquals(
-				key_rowNumber = "${currentPosition}",
+				key_rowNumber = ${currentPosition},
 				locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTIONS",
-				value1 = "${currentText}");
+				value1 = ${currentText});
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
 		for (var filterOption : list "Review-1,Update-2") {
-			var currentText = StringUtil.extractFirst("${filterOption}", "-");
-			var currentPosition = StringUtil.extractLast("${filterOption}", "-");
+			var currentText = StringUtil.extractFirst(${filterOption}, "-");
+			var currentPosition = StringUtil.extractLast(${filterOption}, "-");
 
 			AssertTextEquals(
-				key_rowNumber = "${currentPosition}",
+				key_rowNumber = ${currentPosition},
 				locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTIONS",
-				value1 = "${currentText}");
+				value1 = ${currentText});
 		}
 	}
 
 	@description = "LPS-99441 - Verify that the Performance by Assignee page functionalities are working when the portal is set to a non-en_US locale"
-	@priority = "3"
+	@priority = 3
 	test FunctionalitiesWorksProperlyWhenThePortalIsSetToANonEnUsLocale {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
@@ -354,7 +354,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Desempenho");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			key_newLangText = "Ver Todos Destinatários",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK_NEW_LANGUAGE");
 
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
-	@priority = "2"
+	@priority = 2
 	test InfoIconDisplaysMessageOnHover {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -392,23 +392,23 @@ definition {
 	}
 
 	@description = "LPS-99441 - Verify that when there are no completed items, the table inside Performance by Assignee page is displaying the specific empty state"
-	@priority = "3"
+	@priority = 3
 	test PageDisplaysSpecificEmptyStateWhenThereAreNoCompletedItems {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		WorkflowMetrics.checkCompletedWorkflowValues(
-			key_completed = "0",
-			key_ontime = "0",
-			key_overdue = "0",
-			key_untracked = "0");
+			key_completed = 0,
+			key_ontime = 0,
+			key_overdue = 0,
+			key_untracked = 0);
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByAssignee#METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS");
 	}
 
 	@description = "LPS-97666 - Verify that the steps filter inside the card Performance by Assignee has All Steps as the first option from the dropdown menu"
-	@priority = "3"
+	@priority = 3
 	test StepsFilterHasAllStepsAsFirstOption {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -418,7 +418,7 @@ definition {
 			slaDefinitionDays = "O",
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0100",
+			slaDefinitionHours = 0100,
 			slaDefinitionName = "SLA Name",
 			slaDefinitionStart = "Process Begins");
 
@@ -459,14 +459,14 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that the steps filter inside the card Performance by Assignee is ordered alphabetically"
-	@priority = "3"
+	@priority = 3
 	test StepsFilterIsOrderedAlphabetivally {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -475,12 +475,12 @@ definition {
 
 		Button.clickSave();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -509,19 +509,19 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
 
 		WorkflowMetrics.assertFilterOrder(
-			start = "2",
+			start = 2,
 			taskList = "Review,Update");
 	}
 
 	@description = "LPS-97666 - Verify that, after deleting a completed task, the Performance by Assignee results are updated accordingly"
-	@priority = "4"
+	@priority = 4
 	test TableIsUpdatedAfterACompletedTaskIsDeleted {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -530,12 +530,12 @@ definition {
 
 		Button.clickSave();
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -564,7 +564,7 @@ definition {
 		AssertTextEquals(
 			key_assignee = "Test Test",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_TASK_COUNT",
-			value1 = "1");
+			value1 = 1);
 
 		Navigator.openURL();
 
@@ -592,14 +592,14 @@ definition {
 	}
 
 	@description = "LPS-103760 - Verify that the user can filter the results inside Performance by Assignee by assignee names that contain non-ascii chars such as ç,é,コン, etc using the search field"
-	@priority = "3"
+	@priority = 3
 	test UserCanSearchNamesContainingNoAsciiChars {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "Test Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -647,7 +647,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "ç, é, コン");

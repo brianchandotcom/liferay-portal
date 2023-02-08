@@ -5,7 +5,7 @@ definition {
 
 		Type(
 			locator1 = "KnowledgeBaseSuggestions#CONTENT_INPUT",
-			value1 = "${kbSuggestionBody}");
+			value1 = ${kbSuggestionBody});
 
 		AssertClick(
 			locator1 = "Button#MAIN_CONTENT_SUBMIT",
@@ -15,15 +15,15 @@ definition {
 	}
 
 	macro deleteCP {
-		var key_kbArticleTitle = "${kbArticleTitle}";
-		var key_kbSuggestionBody = "${kbSuggestionBody}";
-		var key_rowEntry = "${kbSuggestionBody}";
+		var key_kbArticleTitle = ${kbArticleTitle};
+		var key_kbSuggestionBody = ${kbSuggestionBody};
+		var key_rowEntry = ${kbSuggestionBody};
 
 		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseSuggestions#CONTENT",
-			value1 = "${kbSuggestionBody}");
+			value1 = ${kbSuggestionBody});
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -33,7 +33,7 @@ definition {
 	}
 
 	macro gotoSuggestionStatusNew {
-		var key_kbArticleTitle = "${kbArticleTitle}";
+		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseSuggestions#NAVIGATION_NEW",
@@ -43,7 +43,7 @@ definition {
 	macro moveToInProgressStatus {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move to In Progress",
-			rowEntry = "${kbSuggestionBody}");
+			rowEntry = ${kbSuggestionBody});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -51,29 +51,29 @@ definition {
 	macro moveToResolvedStatus {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Resolve",
-			rowEntry = "${kbSuggestionBody}");
+			rowEntry = ${kbSuggestionBody});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro viewNoDuplicatePG {
-		var key_kbSuggestionBody = "${kbSuggestionBody}";
+		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
-			value1 = "${kbThereAreSuggestionsLink}");
+			value1 = ${kbThereAreSuggestionsLink});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseSuggestions#USER_NAME",
-			value1 = "${kbSuggestionUserName}");
+			value1 = ${kbSuggestionUserName});
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseSuggestions#CONTENT",
-			value1 = "${kbSuggestionBody}");
+			value1 = ${kbSuggestionBody});
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseSuggestions#STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 
 		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#CONTENT_DUPLICATE");
 	}
@@ -83,27 +83,27 @@ definition {
 	}
 
 	macro viewPG {
-		var key_kbSuggestionBody = "${kbSuggestionBody}";
+		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseSuggestions#USER_NAME",
-			value1 = "${kbSuggestionUserName}");
+			value1 = ${kbSuggestionUserName});
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseSuggestions#CONTENT",
-			value1 = "${kbSuggestionBody}");
+			value1 = ${kbSuggestionBody});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseSuggestions#STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 	macro viewSubmittedSuggestionCountNoPermissionPG {
-		var kbSuggestionCount = "${kbSuggestionCount}";
+		var kbSuggestionCount = ${kbSuggestionCount};
 
 		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#NAVIGATION_BAR");
 
-		if ("${kbSuggestionCount}" == "1") {
+		if (${kbSuggestionCount} == 1) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS",
 				value1 = "You sent one suggestion for this article.");
@@ -116,11 +116,11 @@ definition {
 	}
 
 	macro viewSuggestionStatus {
-		var key_kbSuggestionBody = "${kbSuggestionBody}";
+		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseSuggestions#STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 }

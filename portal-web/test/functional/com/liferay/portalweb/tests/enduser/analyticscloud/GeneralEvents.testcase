@@ -33,7 +33,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,14 +42,14 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8152 | Test Summary: Check all applicable events trigger for unknown users (Page, Blog, Form, Web Content, Documents & Media, Social)"
-	@priority = "5"
+	@priority = 5
 	test CheckGeneralEventsForUnknownUser {
 		property proxy.server.enabled = "true";
 		property test.name.skip.portal.instance = "GeneralEvents#CheckGeneralEventsForUnknownUser";
 
 		task ("Add widget pages") {
 			for (var layoutName : list "WebContent,Blog,Document,Form") {
-				ACUtils.addPage(layoutName = "${layoutName}");
+				ACUtils.addPage(layoutName = ${layoutName});
 			}
 		}
 
@@ -133,15 +133,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${propertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${propertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${propertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${propertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Sign in DXP") {
@@ -177,8 +177,8 @@ definition {
 				property = "pageLoadTime");
 
 			TestUtils.isGreaterThan(
-				actual = "${pageLoadTime}",
-				expected = "0");
+				actual = ${pageLoadTime},
+				expected = 0);
 		}
 
 		task ("View the WebContent events triggered for guest") {
@@ -186,7 +186,7 @@ definition {
 				applicationId = "WebContent",
 				eventId = "webContentViewed",
 				property = "articleId",
-				value = "${articleId}");
+				value = ${articleId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "WebContent",
@@ -198,7 +198,7 @@ definition {
 				applicationId = "WebContent",
 				eventId = "webContentViewed",
 				property = "numberOfWords",
-				value = "4");
+				value = 4);
 
 			Click(
 				key_content = '''//h1[normalize-space(text())="What's your favorite portal?"]''',
@@ -210,7 +210,7 @@ definition {
 				applicationId = "WebContent",
 				eventId = "webContentClicked",
 				property = "articleId",
-				value = "${articleId}");
+				value = ${articleId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "WebContent",
@@ -227,8 +227,8 @@ definition {
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 
 		task ("Stop the recording") {
@@ -252,7 +252,7 @@ definition {
 				applicationId = "Blog",
 				eventId = "blogViewed",
 				property = "entryId",
-				value = "${entryId}");
+				value = ${entryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Blog",
@@ -264,7 +264,7 @@ definition {
 				applicationId = "Blog",
 				eventId = "blogViewed",
 				property = "numberOfWords",
-				value = "20");
+				value = 20);
 
 			Click(
 				key_entryContent = "This is the blog test for AC",
@@ -276,7 +276,7 @@ definition {
 				applicationId = "Blog",
 				eventId = "blogClicked",
 				property = "entryId",
-				value = "${entryId}");
+				value = ${entryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Blog",
@@ -314,7 +314,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryId",
-				value = "${fileEntryId}");
+				value = ${fileEntryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -326,13 +326,13 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "groupId",
-				value = "${groupId}");
+				value = ${groupId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryUUID",
-				value = "${fileEntryUuid}");
+				value = ${fileEntryUuid});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -348,7 +348,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "fileEntryId",
-				value = "${fileEntryId}");
+				value = ${fileEntryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -360,7 +360,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "groupId",
-				value = "${groupId}");
+				value = ${groupId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -384,7 +384,7 @@ definition {
 		}
 
 		task ("View the Form page as guest") {
-			Navigator.openSpecificURL(url = "${publishedFormURL}");
+			Navigator.openSpecificURL(url = ${publishedFormURL});
 		}
 
 		task ("View the Form events triggered for guest") {
@@ -394,7 +394,7 @@ definition {
 				applicationId = "Form",
 				eventId = "formViewed",
 				property = "formId",
-				value = "${formId}");
+				value = ${formId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -406,13 +406,13 @@ definition {
 				applicationId = "Form",
 				eventId = "pageViewed",
 				property = "formId",
-				value = "${formId}");
+				value = ${formId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
 				eventId = "pageViewed",
 				property = "page",
-				value = "0");
+				value = 0);
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -430,7 +430,7 @@ definition {
 				applicationId = "Form",
 				eventId = "fieldFocused",
 				property = "formId",
-				value = "${formId}");
+				value = ${formId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -442,7 +442,7 @@ definition {
 				applicationId = "Form",
 				eventId = "fieldFocused",
 				property = "page",
-				value = "0");
+				value = 0);
 
 			Click(
 				key_fieldLabel = "Text",
@@ -454,7 +454,7 @@ definition {
 				applicationId = "Form",
 				eventId = "fieldBlurred",
 				property = "formId",
-				value = "${formId}");
+				value = ${formId});
 
 			var focusDuration = ACUtils.getEventPropertyValue(
 				applicationId = "Form",
@@ -462,8 +462,8 @@ definition {
 				property = "focusDuration");
 
 			TestUtils.isGreaterThan(
-				actual = "${focusDuration}",
-				expected = "0");
+				actual = ${focusDuration},
+				expected = 0);
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -475,7 +475,7 @@ definition {
 				applicationId = "Form",
 				eventId = "fieldBlurred",
 				property = "page",
-				value = "0");
+				value = 0);
 
 			ProxyUtil.stopHarRecording();
 
@@ -493,7 +493,7 @@ definition {
 				applicationId = "Form",
 				eventId = "formSubmitted",
 				property = "formId",
-				value = "${formId}");
+				value = ${formId});
 		}
 
 		task ("Stop the recording") {
@@ -529,7 +529,7 @@ definition {
 				applicationId = "SocialBookmarks",
 				eventId = "shared",
 				property = "classPK",
-				value = "${entryId}");
+				value = ${entryId});
 		}
 	}
 

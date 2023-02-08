@@ -17,14 +17,14 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AssertCompanyLogsIsolated {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -41,20 +41,20 @@ definition {
 		task ("Then the logs of one company should not appear in the logs of the other") {
 			for (var portalInstanceName : list "www.able.com,www.baker.com") {
 				HeadlessPortalInstanceAPI.addPortalInstance(
-					domain = "${portalInstanceName}",
-					portalInstanceId = "${portalInstanceName}",
-					virtualHost = "${portalInstanceName}");
+					domain = ${portalInstanceName},
+					portalInstanceId = ${portalInstanceName},
+					virtualHost = ${portalInstanceName});
 
 				Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
 
-				CompanyLogging.assertCompanyLogIsolated(portalInstanceName = "${portalInstanceName}");
+				CompanyLogging.assertCompanyLogIsolated(portalInstanceName = ${portalInstanceName});
 			}
 		}
 	}
 
 	@description = "If company.log.enabled=false, there should not be additional logging files created for each company and the UI access point should be unavailable"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CompanyLoggingDisabled {
 		property custom.properties = "company.log.enabled=false";
 
@@ -82,7 +82,7 @@ definition {
 
 			var companiesFolderExists = FileUtil.exists("${homeDir}/logs/companies");
 
-			if ("${companiesFolderExists}" == "true") {
+			if (${companiesFolderExists} == "true") {
 				fail("logs/companies folder exists");
 			}
 		}
@@ -90,7 +90,7 @@ definition {
 
 	@description = "An Omniadmin can get log names from all companies and download logs from all companies though the UI"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test GetAllCompanyLogs {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CompanyLogging#GetAllCompanyLogs";
@@ -106,9 +106,9 @@ definition {
 		task ("And given two new virtual instances are created") {
 			for (var portalInstanceName : list "www.able.com,www.baker.com") {
 				HeadlessPortalInstanceAPI.addPortalInstance(
-					domain = "${portalInstanceName}",
-					portalInstanceId = "${portalInstanceName}",
-					virtualHost = "${portalInstanceName}");
+					domain = ${portalInstanceName},
+					portalInstanceId = ${portalInstanceName},
+					virtualHost = ${portalInstanceName});
 			}
 		}
 
@@ -119,27 +119,27 @@ definition {
 		task ("Then log files are present for all companies") {
 			var portalInstanceNames = JSONCompany.getAllCompanyNames();
 
-			for (var portalInstanceName : list "${portalInstanceNames}") {
+			for (var portalInstanceName : list ${portalInstanceNames}) {
 				AssertElementPresent(
-					key_virtualHost = "${portalInstanceName}",
+					key_virtualHost = ${portalInstanceName},
 					locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
 			}
 		}
 
 		task ("And the log files can be downloaded and viewed for each company") {
-			for (var portalInstanceName : list "${portalInstanceNames}") {
-				var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${portalInstanceName}");
+			for (var portalInstanceName : list ${portalInstanceNames}) {
+				var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = ${portalInstanceName});
 
 				CompanyLogging.assertCompanyLogContent(
-					logContent = "${logContent}",
-					portalInstanceName = "${portalInstanceName}");
+					logContent = ${logContent},
+					portalInstanceName = ${portalInstanceName});
 			}
 		}
 	}
 
 	@description = "A company admin should only be able to see the logs from the company they are an admin of"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test GetCompanyAdminLogs {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -202,7 +202,7 @@ definition {
 
 	@description = "A company admin that tries to directly download the logs of a company they do not have access to should get a permissions error"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test GetCompanyAdminLogsFromDifferentCompany {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CompanyLogging#GetCompanyAdminLogsFromDifferentCompany";
@@ -259,13 +259,13 @@ definition {
 				locator1 = "//body",
 				value1 = "You don't have authorization to view this page.");
 
-			CompanyLogging.assertNoLogDownloaded(logName = "${logName}");
+			CompanyLogging.assertNoLogDownloaded(logName = ${logName});
 		}
 	}
 
 	@description = "A non-administrative user should get a permissions denied error when trying to access the UI to get company logging information"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test GetCompanyLogsAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property test.assert.warning.exceptions = "true";
@@ -303,13 +303,13 @@ definition {
 				locator1 = "//body",
 				value1 = "HTTP ERROR 403");
 
-			CompanyLogging.assertNoLogDownloaded(logName = "${logName}");
+			CompanyLogging.assertNoLogDownloaded(logName = ${logName});
 		}
 	}
 
 	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test GetEmptyCompanyLogs {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "CompanyLogging#GetEmptyCompanyLogs";
@@ -333,7 +333,7 @@ definition {
 
 	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test GetInvalidCompanyLogs {
 		task ("When the user tries to download a log via an http request where the log name is invalid") {
 			var companyId = JSONCompany.getCompanyId();

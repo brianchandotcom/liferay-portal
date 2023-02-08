@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the DM type from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapDMWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapDMWithSEO {
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapWCWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can map the display page with SEO when using the WC structure from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapWCWithSEO {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCustomizeDMFromConnectedSite {
 		property portal.acceptance = "true";
@@ -504,7 +504,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can view the web content using display page template with WC structure from AL on a connect site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCustomizeWCFromConnectedSite {
 		property portal.acceptance = "true";
@@ -587,7 +587,7 @@ definition {
 	}
 
 	@description = "This test ensures that an asset library custom document entry can be displayed with the default display page template on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanViewDepotDMUsingDepotType {
 		property portal.upstream = "true";
 
@@ -681,7 +681,7 @@ definition {
 	}
 
 	@description = "This test ensures that an asset library document entry created with a type stored in the global site can be displayed with the default display page template on the generic site."
-	@priority = "5"
+	@priority = 5
 	test CanViewDepotDMUsingGlobalType {
 		property portal.upstream = "true";
 
@@ -770,7 +770,7 @@ definition {
 	}
 
 	@description = "This test ensures that an asset library custom article can be displayed with the default display page template on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanViewDepotWCUsingDepotStructure {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -867,7 +867,7 @@ definition {
 	}
 
 	@description = "This test ensures that an asset library article created with a structure stored in the global site can be displayed with the default display page template on the generic site."
-	@priority = "5"
+	@priority = 5
 	test CanViewDepotWCUsingGlobalStructure {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -959,7 +959,7 @@ definition {
 	}
 
 	@description = "This test ensures that a site document entry created with a type stored in an asset library can be displayed with the default display page template on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanViewSiteDMUsingDepotType {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -1051,7 +1051,7 @@ definition {
 	}
 
 	@description = "This test ensures that a site article created with a structure stored in an asset library can be displayed with the default display page template on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanViewSiteWCUsingDepotStructure {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

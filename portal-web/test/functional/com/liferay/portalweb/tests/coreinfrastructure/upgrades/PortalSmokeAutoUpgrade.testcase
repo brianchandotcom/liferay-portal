@@ -17,7 +17,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewPortalSmokeArchiveAutoUpgrade730 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -27,7 +27,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewPortalSmokeArchiveAutoUpgrade740 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "LPS-158183: This is a smoke test to directly upgrade from 6.1 to 7.4 version using Auto Upgrade."
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade6130 {
 		property custom.properties = "feature.flag.LPS-157670=true${line.separator}upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-portal";
@@ -48,7 +48,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -57,7 +57,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -67,7 +67,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7310 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -77,7 +77,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade7413 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -87,7 +87,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -96,7 +96,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade71103 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";
@@ -105,7 +105,7 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewPortalSmokeArchiveAutoUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upstream = "quarantine";

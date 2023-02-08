@@ -14,13 +14,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a use case for LPS-153486."
-	@priority = "3"
+	@priority = 3
 	test ServletMultipartConfigInShieldedContainer {
 		property configure.servlet.multipart = "true";
 		property test.assert.warning.exceptions = "true";
@@ -37,7 +37,7 @@ definition {
 				-F 0=@${dependencyFilePath}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

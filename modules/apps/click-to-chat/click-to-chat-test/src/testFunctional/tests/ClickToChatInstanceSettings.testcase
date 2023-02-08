@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145280. Verify if the widget's chat is hidden in the control panel if the user enable this option"
-	@priority = "4"
+	@priority = 4
 	test CanHideChatWidgetInControlPanel {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -49,7 +49,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatJivochatPassword}");
+			value1 = ${clickToChatJivochatPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
-	@priority = "4"
+	@priority = 4
 	test CanHubspotAccessRequiredScopes {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Chatwoot provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test ChatwootCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -97,7 +97,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatChatwootPassword}");
+			value1 = ${clickToChatChatwootPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Chatwoot Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test ChatwootProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -125,7 +125,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatChatwootPassword}");
+			value1 = ${clickToChatChatwootPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test ChatwootProviderKeepsEnabledAfterLogoutAndLogin {
 		property solutions.acceptance = "true";
 
@@ -155,7 +155,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatChatwootPassword}");
+			value1 = ${clickToChatChatwootPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Crisp provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test CrispCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -183,7 +183,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatCrispPassword}");
+			value1 = ${clickToChatCrispPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Crisp Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test CrispProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -211,7 +211,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatCrispPassword}");
+			value1 = ${clickToChatCrispPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test CrispProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -239,7 +239,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatCrispPassword}");
+			value1 = ${clickToChatCrispPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify if it is possible to hide the chat provider"
-	@priority = "4"
+	@priority = 4
 	test HideChatProvider {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Hubspot provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test HubspotCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -279,7 +279,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatHubspotPassword}");
+			value1 = ${clickToChatHubspotPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Hubspot Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test HubspotProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -307,7 +307,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatHubspotPassword}");
+			value1 = ${clickToChatHubspotPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -321,7 +321,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test HubspotProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -335,7 +335,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatHubspotPassword}");
+			value1 = ${clickToChatHubspotPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137169. Verify if API key is invalid for hubspot"
-	@priority = "4"
+	@priority = 4
 	test IsApiKeyInvalidForHubspot {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify JivoChat provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test JivoChatCanBeEnabledAndDisabled {
 		property portal.acceptance = "true";
 
@@ -385,7 +385,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatJivochatPassword}");
+			value1 = ${clickToChatJivochatPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if JivoChat Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test JivoChatProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -413,7 +413,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatJivochatPassword}");
+			value1 = ${clickToChatJivochatPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test JivoChatProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -441,7 +441,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatJivochatPassword}");
+			value1 = ${clickToChatJivochatPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -455,7 +455,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify LiveChat provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test LiveChatCanBeEnabledAndDisabled {
 		property solutions.acceptance = "true";
 
@@ -471,7 +471,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivechatPassword}");
+			value1 = ${clickToChatLivechatPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -485,7 +485,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if LiveChat Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test LiveChatProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -499,7 +499,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivechatPassword}");
+			value1 = ${clickToChatLivechatPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -513,7 +513,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test LiveChatProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -527,7 +527,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivechatPassword}");
+			value1 = ${clickToChatLivechatPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -541,7 +541,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify LivePerson provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test LivePersonCanBeEnabledAndDisabled {
 		property portal.acceptance = "true";
 
@@ -557,7 +557,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivepersonPassword}");
+			value1 = ${clickToChatLivepersonPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if LivePerson Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test LivePersonProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -585,7 +585,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivepersonPassword}");
+			value1 = ${clickToChatLivepersonPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -599,7 +599,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test LivePersonProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -613,7 +613,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatLivepersonPassword}");
+			value1 = ${clickToChatLivepersonPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -627,7 +627,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Smartsupp provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test SmartsuppCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -641,7 +641,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatSmartsuppPassword}");
+			value1 = ${clickToChatSmartsuppPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -655,7 +655,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Smartsupp Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test SmartsuppProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -669,7 +669,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatSmartsuppPassword}");
+			value1 = ${clickToChatSmartsuppPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -683,7 +683,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Smartsupp provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test SmartsuppProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -697,7 +697,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatSmartsuppPassword}");
+			value1 = ${clickToChatSmartsuppPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -711,7 +711,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify TawkTo provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test TawkToCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -725,7 +725,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTawktoPassword}");
+			value1 = ${clickToChatTawktoPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -739,7 +739,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if TawkTo Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test TawkToProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -753,7 +753,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTawktoPassword}");
+			value1 = ${clickToChatTawktoPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -767,7 +767,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify TawkTo provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test TawkToProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -781,7 +781,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTawktoPassword}");
+			value1 = ${clickToChatTawktoPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -795,7 +795,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Tidio provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test TidioCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -809,7 +809,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTidioPassword}");
+			value1 = ${clickToChatTidioPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -823,7 +823,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Tidio Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test TidioProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -837,7 +837,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTidioPassword}");
+			value1 = ${clickToChatTidioPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -851,7 +851,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test TidioProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -865,7 +865,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTidioPassword}");
+			value1 = ${clickToChatTidioPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -880,7 +880,7 @@ definition {
 
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test TolvnowCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -894,7 +894,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTolvnowPassword}");
+			value1 = ${clickToChatTolvnowPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -909,7 +909,7 @@ definition {
 
 	@description = "This is a test for LPS-133453. Verify if Tolvnow Provider Keeps Enabled After Logout"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test TolvnowProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -923,7 +923,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTolvnowPassword}");
+			value1 = ${clickToChatTolvnowPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -938,7 +938,7 @@ definition {
 
 	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test TolvnowProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -952,7 +952,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatTolvnowPassword}");
+			value1 = ${clickToChatTolvnowPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -966,7 +966,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Zendesk provider can be enabled and disabled."
-	@priority = "5"
+	@priority = 5
 	test ZendeskCanBeEnabledAndDisabled {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -980,7 +980,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		SystemSettings.saveConfiguration();
 
@@ -994,7 +994,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Zendesk Provider Keeps Enabled After Logout"
-	@priority = "5"
+	@priority = 5
 	test ZendeskProviderKeepsEnabledAfterLogout {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1008,7 +1008,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
@@ -1022,7 +1022,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
-	@priority = "5"
+	@priority = 5
 	test ZendeskProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1036,7 +1036,7 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
+			value1 = ${clickToChatZendeskPassword});
 
 		SystemSettings.saveConfiguration();
 

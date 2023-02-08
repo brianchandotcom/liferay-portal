@@ -3,21 +3,21 @@ definition {
 	@summary = "Asserts that the currently selected Time Filter range matches the specified range \  @param cardName optional argument that is supplied when you want to assert the Time Filter within a specific card \  @param timeFilterRange the currently set range of the Time Filter, as displayed on the Time Filter dropdown button"
 	macro assertCurrentTimeFilterRange {
 		if (isSet(cardName)) {
-			var key_cardName = "${cardName}";
+			var key_cardName = ${cardName};
 
 			AssertTextEquals(
 				locator1 = "ACTimeFilter#CARD_TIME_FILTER_DROPDOWN",
-				value1 = "${timeFilterRange}");
+				value1 = ${timeFilterRange});
 		}
 		else if (isSet(invalid)) {
 			AssertTextEquals(
 				locator1 = "ACTimeFilter#DATE_PICKER_RANGE_WARNING",
-				value1 = "${timeFilterRangeWarning}");
+				value1 = ${timeFilterRangeWarning});
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN",
-				value1 = "${timeFilterRange}");
+				value1 = ${timeFilterRange});
 		}
 	}
 
@@ -31,7 +31,7 @@ definition {
 	@summary = "Clicks the Time Filter dropdown button. If `cardName` argument is provided, it clicks the TimeFilter within a card specified by name \  @param cardName name of the card who's Time Filter you want to click"
 	macro clickTimeFilterButton {
 		if (isSet(cardName)) {
-			var key_cardName = "${cardName}";
+			var key_cardName = ${cardName};
 
 			Click(locator1 = "ACTimeFilter#CARD_TIME_FILTER_DROPDOWN");
 		}
@@ -45,7 +45,7 @@ definition {
 		var key_dropdownOption = "Custom Range";
 
 		if (isSet(cardName)) {
-			ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
+			ACTimeFilter.clickTimeFilterButton(cardName = ${cardName});
 		}
 		else {
 			ACTimeFilter.clickTimeFilterButton();
@@ -55,27 +55,27 @@ definition {
 
 		WaitForElementPresent(locator1 = "ACTimeFilter#DATE_PICKER");
 
-		var key_day = "${startDay}";
+		var key_day = ${startDay};
 
 		Select(
 			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
-			value1 = "${startYear}");
+			value1 = ${startYear});
 
 		Select(
 			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
-			value1 = "${startMonth}");
+			value1 = ${startMonth});
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
-		var key_day = "${endDay}";
+		var key_day = ${endDay};
 
 		Select(
 			locator1 = "ACTimeFilter#DATE_PICKER_YEAR_DROPDOWN",
-			value1 = "${endYear}");
+			value1 = ${endYear});
 
 		Select(
 			locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN",
-			value1 = "${endMonth}");
+			value1 = ${endMonth});
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 

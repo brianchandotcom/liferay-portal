@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124620. Assert no pop up when viewing membership request detail."
-	@priority = "4"
+	@priority = 4
 	test AddXSSRequestMembershipComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Site Administration,XSS";
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135079. View no pop up when select user card with XSS name in memberships."
-	@priority = "4"
+	@priority = 4
 	test SelectUserWithXSSNameInMemberships {
 		var firstName = '''"><script>alert(1)</script>''';
 		var lastName = '''"><script>alert(2)</script>''';
@@ -142,8 +142,8 @@ definition {
 
 			User.addCP(
 				userEmailAddress = "userea@liferay.com",
-				userFirstName = "${firstName}",
-				userLastName = "${lastName}",
+				userFirstName = ${firstName},
+				userLastName = ${lastName},
 				userScreenName = "usersn");
 		}
 
@@ -151,8 +151,8 @@ definition {
 			Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 			Site.assignUserAsMemberCP(
-				userFirstName = "${firstName}",
-				userLastName = "${lastName}",
+				userFirstName = ${firstName},
+				userLastName = ${lastName},
 				userScreenName = "usersn");
 		}
 

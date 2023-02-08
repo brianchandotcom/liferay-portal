@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70110. This test verifies that is possible to clear the link"
-	@priority = "5"
+	@priority = 5
 	test CanClearInput {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -118,12 +118,12 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertLinktoPageIsClear(
-			index = "1",
+			index = 1,
 			linkToPageFieldLabel = "Link to Page");
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70110. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -187,12 +187,12 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Link to Page");
 
 		DERenderer.inputDataInLinkToPageField(
-			index = "1",
+			index = 1,
 			linkToPageContent = "Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 
 		DERenderer.inputDataInLinkToPageField(
-			index = "2",
+			index = 2,
 			linkToPageContent = "Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 
@@ -201,18 +201,18 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertContentInLinktoPageField(
-			index = "1",
+			index = 1,
 			linkToPageContent = "Pages > Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 
 		DERenderer.assertContentInLinktoPageField(
-			index = "2",
+			index = 2,
 			linkToPageContent = "Pages > Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 	}
 
 	@description = "This is a test for LRQA-70110. This test verifies that the Link to Page persists"
-	@priority = "5"
+	@priority = 5
 	test CanInputLink {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140253. View no private page in link to page structure."
-	@priority = "4"
+	@priority = 4
 	test CanInputLinkFF {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70110. This test verifies that is not possible to publish the Web Content with a required field blank"
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -310,7 +310,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70110. This test verifies that is possible to remove a duplicated field (repeatable)"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -344,11 +344,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Link to Page",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DELinkToPageField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DELinkToPageField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68680. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@description = "Check if Link to Page Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewLinkToPageFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -486,7 +486,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Link to Page",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -508,7 +508,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Link to Page",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

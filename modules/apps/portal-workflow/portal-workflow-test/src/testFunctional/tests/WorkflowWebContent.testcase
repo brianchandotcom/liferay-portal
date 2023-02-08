@@ -23,7 +23,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "Verify that the user can assign a a different Workflow to a Subfolder"
-	@priority = "4"
+	@priority = 4
 	test CanAssignDifferentWorkflowToSubfolder {
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Verify that the user can assign a Workflow to the Home folder"
-	@priority = "3"
+	@priority = 3
 	test CanAssignWorkflowToHomeFolder {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "LRQA-70845 Verify that cannot bypass workflow by duplicating article."
-	@priority = "5"
+	@priority = 5
 	test CannotBypassWorkflowByduplicatingArticle {
 		property portal.upstream = "quarantine";
 
@@ -221,7 +221,7 @@ definition {
 			value1 = "APPROVED");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ConfigureFolderWorkflow {
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
@@ -250,7 +250,7 @@ definition {
 			workflowRestriction = "Default Workflow");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test EditWebContentInReviewProcess {
 		Navigator.gotoNavItem(navItem = "Structures");
 
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "Verify that, when a Web Content is moved to a Folder, it's Workflow changes"
-	@priority = "4"
+	@priority = 4
 	test MoveWebContentToFolderChangeItsWorkflow {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowWebContent#MoveWebContentToFolderChangeItsWorkflow";
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@description = "Verify that the Subfolder can use the Workflow of the Parent Folder"
-	@priority = "4"
+	@priority = 4
 	test SubfolderCanUseWorkflowOfParentFolder {
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",

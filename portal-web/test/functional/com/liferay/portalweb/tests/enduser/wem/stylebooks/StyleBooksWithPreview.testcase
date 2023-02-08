@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116078 and LPS-143302. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
-	@priority = "4"
+	@priority = 4
 	test CanNavigateToPreviewPageViaPagePreviewInfoBarButNotAllowInteractWithPreviewPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -84,7 +84,7 @@ definition {
 			AssertCssValue(
 				locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED",
 				locator2 = "z-index",
-				value1 = "100000");
+				value1 = 100000);
 
 			SelectFrameTop();
 		}
@@ -112,14 +112,14 @@ definition {
 			AssertCssValue(
 				locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED",
 				locator2 = "z-index",
-				value1 = "100000");
+				value1 = 100000);
 
 			SelectFrameTop();
 		}
 	}
 
 	@description = "This is a test for LPS-137065. The user cannot preview the effects of styles on draft changes."
-	@priority = "4"
+	@priority = 4
 	test CannotPreviewStyleBookOnDraftChanges {
 		task ("Add a Heading fragment to a master page without publish") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -207,11 +207,11 @@ definition {
 			StyleBooks.viewCurrentPreviewType(previewType = "Fragments");
 
 			Click(
-				index = "1",
+				index = 1,
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			for (var previewType : list "Masters,Pages,Page Templates,Display Page Templates") {
-				MenuItem.viewNotPresent(menuItem = "${previewType}");
+				MenuItem.viewNotPresent(menuItem = ${previewType});
 			}
 		}
 
@@ -365,7 +365,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140774. The user can preview the effects on current site fragments in styles book editor."
-	@priority = "4"
+	@priority = 4
 	test PreviewEffectOnCurrentSiteFragment {
 		property portal.release = "false";
 
@@ -409,7 +409,7 @@ definition {
 
 		task ("View the help text is shown in dropdown list of preview item selector") {
 			Click(
-				index = "2",
+				index = 2,
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
@@ -425,7 +425,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -447,7 +447,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140774. The user can preview the effects on default fragments in styles book editor."
-	@priority = "4"
+	@priority = 4
 	test PreviewEffectOnDefaultFragment {
 		property portal.release = "false";
 
@@ -481,7 +481,7 @@ definition {
 
 			for (var text : list "Header Dark,Header Light") {
 				AssertVisible(
-					key_title = "${text}",
+					key_title = ${text},
 					locator1 = "Header#H3_TITLE");
 			}
 
@@ -515,7 +515,7 @@ definition {
 				AssertCssValue(
 					fragmentName = "button",
 					id = "link",
-					index = "${i}",
+					index = ${i},
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 					locator2 = "color",
 					value1 = "rgba(0, 255, 0, 1)");
@@ -524,7 +524,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140774. The user can preview the effects on global fragments in styles book editor."
-	@priority = "4"
+	@priority = 4
 	test PreviewEffectOnGlobalFragment {
 		property portal.release = "false";
 
@@ -568,7 +568,7 @@ definition {
 
 		task ("View the help text is shown in dropdown list of preview item selector") {
 			Click(
-				index = "2",
+				index = 2,
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
@@ -584,7 +584,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all display page templates."
-	@priority = "5"
+	@priority = 5
 	test PreviewStyleBookOnDisplayPageTemplates {
 		property portal.acceptance = "true";
 
@@ -781,7 +781,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(34, 119, 119, 1)");
@@ -811,7 +811,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(85, 102, 34, 1)");
@@ -841,7 +841,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(153, 85, 17, 1)");
@@ -871,7 +871,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(102, 102, 102, 1)");
@@ -903,7 +903,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(0, 85, 102, 1)");
@@ -913,7 +913,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on master page."
-	@priority = "5"
+	@priority = 5
 	test PreviewStyleBookOnMasterPage {
 		property portal.acceptance = "true";
 
@@ -989,7 +989,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all pages."
-	@priority = "5"
+	@priority = 5
 	test PreviewStyleBookOnPages {
 		property portal.acceptance = "true";
 
@@ -1108,7 +1108,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(34, 119, 119, 1)");
@@ -1142,7 +1142,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(136, 0, 34, 1)");
@@ -1176,7 +1176,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(153, 85, 17, 1)");
@@ -1247,7 +1247,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137065. The designer could preview the effects of styles on all page templates."
-	@priority = "5"
+	@priority = 5
 	test PreviewStyleBookOnPageTemplates {
 		property portal.acceptance = "true";
 
@@ -1339,7 +1339,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(136, 0, 34, 1)");
@@ -1365,7 +1365,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116078 and LPS-119898. Can preview the effect on page when edit the style book."
-	@priority = "5"
+	@priority = 5
 	test PreviewStyleBookWhenEditStyleBook {
 		property portal.acceptance = "true";
 
@@ -1448,7 +1448,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -1509,7 +1509,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when the site is empty."
-	@priority = "4"
+	@priority = 4
 	test ViewEmptyStateWhenSiteIsEmpty {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "StyleBooksWithPreview#ViewEmptyStateWhenSiteIsEmpty";
@@ -1539,7 +1539,7 @@ definition {
 			AssertVisible(locator1 = "StyleBookEditor#EMPTY_MESSAGE");
 
 			AssertElementNotPresent(
-				index = "1",
+				index = 1,
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertVisible(
@@ -1549,7 +1549,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140253. View no private page in style book."
-	@priority = "4"
+	@priority = 4
 	test ViewNoPrivatePageInStyleBooks {
 		task ("Add 4 public pages") {
 			for (var i : list "1,2,3,4") {
@@ -1577,7 +1577,7 @@ definition {
 
 		task ("View the Public Pages and Private Pages nav items are not shown in select preview item modal") {
 			Click(
-				index = "2",
+				index = 2,
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
@@ -1589,7 +1589,7 @@ definition {
 			for (var navItem : list "Public Pages,Private Pages") {
 				AssertElementNotPresent(
 					locator1 = "NavBar#NAV_ITEM_LINK",
-					value1 = "${navItem}");
+					value1 = ${navItem});
 			}
 		}
 	}

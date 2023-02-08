@@ -3,15 +3,15 @@ definition {
 	macro convertPG {
 		Type(
 			locator1 = "CurrencyConverter#NUMBER_FIELD",
-			value1 = "${currencyValue}");
+			value1 = ${currencyValue});
 
 		Select(
 			locator1 = "CurrencyConverter#FROM_SELECT",
-			value1 = "${currencyFrom}");
+			value1 = ${currencyFrom});
 
 		Select(
 			locator1 = "CurrencyConverter#TO_SELECT",
-			value1 = "${currencyTo}");
+			value1 = ${currencyTo});
 
 		AssertClick(
 			locator1 = "Button#CONVERT",
@@ -19,11 +19,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CurrencyConverter#DATA_TABLE_FROM",
-			value1 = "${currencyDataFrom}");
+			value1 = ${currencyDataFrom});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CurrencyConverter#DATA_TABLE_TO",
-			value1 = "${currencyDataTo}");
+			value1 = ${currencyDataTo});
 
 		AssertElementPresent(locator1 = "CurrencyConverter#DATA_GRAPH");
 	}

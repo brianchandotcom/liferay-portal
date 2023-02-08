@@ -14,7 +14,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_FOLDER");
 
-			var key_folderName = "${bookmarkFolderName}";
+			var key_folderName = ${bookmarkFolderName};
 
 			AssertClick(
 				locator1 = "Bookmarks#FOLDER_TABLE_CHOOSE",
@@ -23,13 +23,13 @@ definition {
 
 		SelectFrameTop();
 
-		PortletEntry.inputName(name = "${bookmarkName}");
+		PortletEntry.inputName(name = ${bookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
-		PortletEntry.inputDescription(description = "${bookmarkDescription}");
+		PortletEntry.inputDescription(description = ${bookmarkDescription});
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -39,46 +39,46 @@ definition {
 	macro addCategoryCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addCategory(
-			categoryName = "${categoryName}",
-			vocabularyName = "${vocabularyName}");
+			categoryName = ${categoryName},
+			vocabularyName = ${vocabularyName});
 
 		PortletEntry.save();
 	}
 
 	macro addCP {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
 
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
 
 		if (isSet(bookmarkName)) {
-			PortletEntry.inputName(name = "${bookmarkName}");
+			PortletEntry.inputName(name = ${bookmarkName});
 		}
 		else {
-			var bookmarkName = "${bookmarkURL}";
+			var bookmarkName = ${bookmarkURL};
 		}
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
 		if (isSet(bookmarkDescription)) {
-			PortletEntry.inputDescription(description = "${bookmarkDescription}");
+			PortletEntry.inputDescription(description = ${bookmarkDescription});
 		}
 
 		PortletEntry.save();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${bookmarkName}",
-			bookmarkURL = "${bookmarkURL}",
-			key_assetName = "${bookmarkName}");
+			bookmarkName = ${bookmarkName},
+			bookmarkURL = ${bookmarkURL},
+			key_assetName = ${bookmarkName});
 	}
 
 	macro addIncorrectURLCP {
@@ -86,13 +86,13 @@ definition {
 
 		MenuItem.click(menuItem = "Bookmark");
 
-		PortletEntry.inputName(name = "${bookmarkName}");
+		PortletEntry.inputName(name = ${bookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURLInvalid}");
+			value1 = ${bookmarkURLInvalid});
 
-		PortletEntry.inputDescription(description = "${bookmarkDescription}");
+		PortletEntry.inputDescription(description = ${bookmarkDescription});
 
 		Button.clickSave();
 
@@ -106,13 +106,13 @@ definition {
 
 		MenuItem.click(menuItem = "Bookmark");
 
-		PortletEntry.inputName(name = "${bookmarkName}");
+		PortletEntry.inputName(name = ${bookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURLInvalid}");
+			value1 = ${bookmarkURLInvalid});
 
-		PortletEntry.inputDescription(description = "${bookmarkDescription}");
+		PortletEntry.inputDescription(description = ${bookmarkDescription});
 
 		Button.clickSave();
 
@@ -129,11 +129,11 @@ definition {
 		MenuItem.click(menuItem = "Bookmark");
 
 		if (isSet(bookmarkName)) {
-			PortletEntry.inputName(name = "${bookmarkName}");
+			PortletEntry.inputName(name = ${bookmarkName});
 		}
 
 		if (isSet(bookmarkDescription)) {
-			PortletEntry.inputDescription(description = "${bookmarkDescription}");
+			PortletEntry.inputDescription(description = ${bookmarkDescription});
 		}
 
 		Button.clickSave();
@@ -144,26 +144,26 @@ definition {
 	}
 
 	macro addPG {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
 
 		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
 		MenuItem.click(menuItem = "Bookmark");
 
 		if (isSet(bookmarkName)) {
-			PortletEntry.inputName(name = "${bookmarkName}");
+			PortletEntry.inputName(name = ${bookmarkName});
 		}
 		else {
-			var bookmarkName = "${bookmarkURL}";
+			var bookmarkName = ${bookmarkURL};
 		}
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
 		if (isSet(bookmarkDescription)) {
-			PortletEntry.inputDescription(description = "${bookmarkDescription}");
+			PortletEntry.inputDescription(description = ${bookmarkDescription});
 		}
 
 		if (isSet(bookmarkViewableBy)) {
@@ -171,15 +171,15 @@ definition {
 
 			Select(
 				locator1 = "AssetPermissions#VIEWABLE_AS_SELECT",
-				value1 = "${bookmarkViewableBy}");
+				value1 = ${bookmarkViewableBy});
 		}
 
 		PortletEntry.save();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${bookmarkName}",
-			bookmarkURL = "${bookmarkURL}",
-			key_assetName = "${bookmarkName}");
+			bookmarkName = ${bookmarkName},
+			bookmarkURL = ${bookmarkURL},
+			key_assetName = ${bookmarkName});
 	}
 
 	macro addRelatedAssetBookmarksEntryPG {
@@ -187,11 +187,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${bookmarkName}");
+		PortletEntry.inputName(name = ${bookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
 		Button.clickSave();
 
@@ -199,94 +199,94 @@ definition {
 	}
 
 	macro addToSubfolderCP {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
-		var key_assetName = "${folderName}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
+		var key_assetName = ${folderName};
 
 		AssertClick(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
-		var key_assetName = "${subfolderName}";
+		var key_assetName = ${subfolderName};
 
 		AssertClick(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${subfolderName}");
+			value1 = ${subfolderName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${subfolderName}");
+			value1 = ${subfolderName});
 
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
 
-		PortletEntry.inputName(name = "${bookmarkName}");
+		PortletEntry.inputName(name = ${bookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
-		PortletEntry.inputDescription(description = "${bookmarkDescription}");
+		PortletEntry.inputDescription(description = ${bookmarkDescription});
 
 		PortletEntry.save();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${bookmarkName}",
-			bookmarkURL = "${bookmarkURL}",
-			key_bookmarkName = "${bookmarkName}");
+			bookmarkName = ${bookmarkName},
+			bookmarkURL = ${bookmarkURL},
+			key_bookmarkName = ${bookmarkName});
 	}
 
 	macro addWithTagCP {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
-		var tagNameList = "${tagNameList}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
+		var tagNameList = ${tagNameList};
 
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
 
 		if (isSet(bookmarkName)) {
-			PortletEntry.inputName(name = "${bookmarkName}");
+			PortletEntry.inputName(name = ${bookmarkName});
 		}
 		else {
-			var bookmarkName = "${bookmarkURL}";
+			var bookmarkName = ${bookmarkURL};
 		}
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 
 		if (isSet(bookmarkDescription)) {
-			PortletEntry.inputDescription(description = "${bookmarkDescription}");
+			PortletEntry.inputDescription(description = ${bookmarkDescription});
 		}
 
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "${tagNameList}") {
-			AssetCategorization.addTag(tagName = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			AssetCategorization.addTag(tagName = ${tagName});
 		}
 
 		PortletEntry.save();
 
 		if (!(isSet(skipViewBookmark))) {
 			Bookmark.viewBookmark(
-				bookmarkName = "${bookmarkName}",
-				bookmarkURL = "${bookmarkURL}",
-				key_assetName = "${bookmarkName}");
+				bookmarkName = ${bookmarkName},
+				bookmarkURL = ${bookmarkURL},
+				key_assetName = ${bookmarkName});
 		}
 	}
 
 	macro deletePG {
-		var key_assetName = "${bookmarkName}";
+		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
@@ -294,69 +294,69 @@ definition {
 	}
 
 	macro editCP {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
-		PortletEntry.inputName(name = "${editBookmarkName}");
+		PortletEntry.inputName(name = ${editBookmarkName});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${editBookmarkURL}");
+			value1 = ${editBookmarkURL});
 
 		if (isSet(bookmarkDescription)) {
-			PortletEntry.inputDescription(description = "${editBookmarkDescription}");
+			PortletEntry.inputDescription(description = ${editBookmarkDescription});
 		}
 
 		PortletEntry.save();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${editBookmarkName}",
-			bookmarkURL = "${editBookmarkURL}",
-			key_assetName = "${editBookmarkName}");
+			bookmarkName = ${editBookmarkName},
+			bookmarkURL = ${editBookmarkURL},
+			key_assetName = ${editBookmarkName});
 	}
 
 	macro editPG {
-		var bookmarkName = "${bookmarkName}";
-		var bookmarkURL = "${bookmarkURL}";
+		var bookmarkName = ${bookmarkName};
+		var bookmarkURL = ${bookmarkURL};
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
-		PortletEntry.inputName(name = "${bookmarkNameEdit}");
+		PortletEntry.inputName(name = ${bookmarkNameEdit});
 
 		Type(
 			locator1 = "TextInput#URL",
-			value1 = "${bookmarkURLEdit}");
+			value1 = ${bookmarkURLEdit});
 
 		PortletEntry.save();
 
 		Bookmark.viewBookmark(
-			bookmarkName = "${bookmarkNameEdit}",
-			bookmarkURL = "${bookmarkURLEdit}",
-			key_assetName = "${bookmarkNameEdit}");
+			bookmarkName = ${bookmarkNameEdit},
+			bookmarkURL = ${bookmarkURLEdit},
+			key_assetName = ${bookmarkNameEdit});
 	}
 
 	macro gotoPG {
-		var key_assetName = "${bookmarkName}";
+		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 	}
 
 	macro moveToFolderPG {
 		if (isSet(folderName)) {
-			BookmarksFolder.gotoPG(folderName = "${folderName}");
+			BookmarksFolder.gotoPG(folderName = ${folderName});
 		}
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		AssertClick(
 			locator1 = "Button#SELECT",
@@ -364,7 +364,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		var key_folderName = "${folderName2}";
+		var key_folderName = ${folderName2};
 
 		AssertClick(
 			locator1 = "Bookmarks#FOLDER_TABLE_CHOOSE",
@@ -384,27 +384,27 @@ definition {
 	}
 
 	macro moveToHomeCP {
-		var key_assetName = "${folderName}";
+		var key_assetName = ${folderName};
 
 		AssertClick(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		if (isSet(subfolderName)) {
-			var key_assetName = "${subfolderName}";
+			var key_assetName = ${subfolderName};
 
 			AssertClick(
 				locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-				value1 = "${subfolderName}");
+				value1 = ${subfolderName});
 
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "${subfolderName}");
+				value1 = ${subfolderName});
 		}
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -438,59 +438,59 @@ definition {
 
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
 
-		var key_assetName = "${bookmarkName}";
+		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 	}
 
 	macro moveToRecycleBinCP {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
 
-		var key_assetName = "${bookmarkName}";
+		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		AssertTextNotPresent(
 			locator1 = "Bookmarks#BOOKMARKS_TABLE_URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 	}
 
 	macro moveToRecycleBinPG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${bookmarkName}");
+			rowEntry = ${bookmarkName});
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro openBookmarksAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet");
 	}
 
 	macro searchNullCP {
-		Search.searchCP(searchTerm = "${nullBookmarkName}");
+		Search.searchCP(searchTerm = ${nullBookmarkName});
 
-		var key_bookmarkName = "${nullBookmarkName}";
-
-		AssertTextNotPresent(
-			locator1 = "Bookmarks#SEARCH_TABLE_ENTRY_NAME",
-			value1 = "${bookmarkName}");
+		var key_bookmarkName = ${nullBookmarkName};
 
 		AssertTextNotPresent(
 			locator1 = "Bookmarks#SEARCH_TABLE_ENTRY_NAME",
-			value1 = "${bookmar2Name}");
+			value1 = ${bookmarkName});
+
+		AssertTextNotPresent(
+			locator1 = "Bookmarks#SEARCH_TABLE_ENTRY_NAME",
+			value1 = ${bookmar2Name});
 	}
 
 	macro tearDownCP {
@@ -510,28 +510,28 @@ definition {
 	}
 
 	macro viewBookmark {
-		var key_assetName = "${bookmarkName}";
+		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		AssertClick.assertTextClickAtNoJavaScript(
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		AssertLocation(value1 = "${bookmarkURL}/");
 	}
 
 	macro viewBookmarkViaAP {
-		var key_assetTitle = "${bookmarkName}";
-		var key_bookmarkName = "${bookmarkName}";
+		var key_assetTitle = ${bookmarkName};
+		var key_bookmarkName = ${bookmarkName};
 
-		AssetPublisherPortlet.clickAssetTitle(assetTitle = "${bookmarkName}");
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = ${bookmarkName});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		Click(locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK");
 
@@ -545,16 +545,16 @@ definition {
 	macro viewEntry {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		var key_bookmarkName = "${bookmarkName}";
-		var key_bookmarkURL = "${bookmarkURL}";
+		var key_bookmarkName = ${bookmarkName};
+		var key_bookmarkURL = ${bookmarkURL};
 
 		AssertTextEquals(
 			locator1 = "Bookmarks#BOOKMARKS_TABLE_NAME",
-			value1 = "${bookmarkName}");
+			value1 = ${bookmarkName});
 
 		AssertTextEquals(
 			locator1 = "Bookmarks#BOOKMARKS_TABLE_URL",
-			value1 = "${bookmarkURL}");
+			value1 = ${bookmarkURL});
 	}
 
 	macro viewNoCategoryCP {
@@ -568,9 +568,9 @@ definition {
 	}
 
 	macro viewNoPG {
-		AssertTextNotPresent(value1 = "${bookmarkName}");
+		AssertTextNotPresent(value1 = ${bookmarkName});
 
-		AssertTextNotPresent(value1 = "${bookmarkURL}");
+		AssertTextNotPresent(value1 = ${bookmarkURL});
 	}
 
 }

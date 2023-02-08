@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133319. Change master of display page template when preview item selected."
-	@priority = "3"
+	@priority = 3
 	test ChangeMasterOfDisplayPageTemplateWhenPreviewItemSelected {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-128904. The page editor should still work when select a preview item."
-	@priority = "4"
+	@priority = 4
 	test EditPageContentWhenPreviewItemSelected {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -222,12 +222,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-128904. Look for the item via scroll bar when there are lots of items shown in Preview With dropdown list."
-	@priority = "4"
+	@priority = 4
 	test ViewItemInDropdownListViaScrollBar {
 		task ("Add 21 web contents based on Basic Web Content") {
-			var n = "1";
+			var n = 1;
 
-			while (("${n}" != "22") && (maxIterations = "30")) {
+			while ((${n} != 22) && (maxIterations = "30")) {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
 					groupName = "Test Site Name",
@@ -263,9 +263,9 @@ definition {
 		}
 
 		task ("Preview 16 different web contents via preview item selector") {
-			var n = "1";
+			var n = 1;
 
-			while (("${n}" != "17") && (maxIterations = "30")) {
+			while ((${n} != 17) && (maxIterations = "30")) {
 				DisplayPageTemplate.selectPreviewItem(
 					assetTitle = "Web Content Title ${n}",
 					assetType = "Web Content Article",
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131040 and LPS-132081. View mapped content of selected category and subcategory preview items."
-	@priority = "5"
+	@priority = 5
 	test ViewMappedContentOfPreviewCategoryItem {
 		property portal.acceptance = "true";
 
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132081. View mapped content in Collection Display with Items with This Category when select preview category item in display page template for Category."
-	@priority = "4"
+	@priority = 4
 	test ViewMappedContentOfPreviewCategoryItemInCollectionDisplayWithItemsWithThisCategory {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -548,7 +548,7 @@ definition {
 
 		task ("Add a web content with the category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -556,7 +556,7 @@ definition {
 
 		task ("Add a blogs entry with the category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -564,7 +564,7 @@ definition {
 
 		task ("Add a document entry with the category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -608,13 +608,13 @@ definition {
 		}
 
 		task ("View the title of collection items are shown as Bulleted List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
 
 				var n = ${n} + 1;
@@ -644,13 +644,13 @@ definition {
 		}
 
 		task ("View the title of collection items are shown as Bulleted List") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -676,7 +676,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
-	@priority = "5"
+	@priority = 5
 	test ViewMappedContentOfPreviewItem {
 		property portal.acceptance = "true";
 
@@ -968,16 +968,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131040. Only the public vocabularies are available in preview item selector."
-	@priority = "4"
+	@priority = 4
 	test ViewOnlyPublicVocabulariesAvailableToItemSelector {
 		task ("Add a category in Topic, Audience and Stage") {
-			var n = "1";
+			var n = 1;
 
 			for (var vocabularyName : list "Topic,Audience,Stage") {
 				JSONCategory.addCategory(
 					groupName = "Global",
 					title = "Category Name ${n}",
-					vocabularyName = "${vocabularyName}");
+					vocabularyName = ${vocabularyName});
 
 				var n = ${n} + 1;
 			}
@@ -1028,7 +1028,7 @@ definition {
 		task ("View Audience and Stage vocabularies are not present") {
 			for (var vocabularyName : list "Audience(Global),Stage(Global)") {
 				AssertElementNotPresent(
-					key_nodeName = "${vocabularyName}",
+					key_nodeName = ${vocabularyName},
 					locator1 = "Treeview#NODE_UNSELECTED");
 			}
 		}
@@ -1038,13 +1038,13 @@ definition {
 		}
 
 		task ("Delete the global categories") {
-			var n = "1";
+			var n = 1;
 
 			for (var vocabularyName : list "Topic,Audience,Stage") {
 				JSONCategory.deleteCategory(
 					categoryName = "Category Name ${n}",
 					groupName = "Global",
-					vocabularyName = "${vocabularyName}");
+					vocabularyName = ${vocabularyName});
 
 				var n = ${n} + 1;
 			}
@@ -1052,7 +1052,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132081. View related categories when select preview item in display page template for non-category assets."
-	@priority = "4"
+	@priority = 4
 	test ViewRelatedCategoriesOfPreviewItemInCollectionDisplayWithCategoriesForThisItem {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1131,12 +1131,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${categoryName}",
-					row = "${n}");
+					assetTitle = ${categoryName},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1150,12 +1150,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1182,12 +1182,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in modal") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1205,9 +1205,9 @@ definition {
 			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
-				column = "1",
+				column = 1,
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-				row = "1");
+				row = 1);
 
 			Close.closeWindow();
 		}
@@ -1242,12 +1242,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${categoryName}",
-					row = "${n}");
+					assetTitle = ${categoryName},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1261,12 +1261,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1293,12 +1293,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in modal") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1316,9 +1316,9 @@ definition {
 			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
-				column = "1",
+				column = 1,
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-				row = "1");
+				row = 1);
 
 			Close.closeWindow();
 		}
@@ -1354,12 +1354,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				PageEditor.viewCollectionItem(
-					assetTitle = "${categoryName}",
-					row = "${n}");
+					assetTitle = ${categoryName},
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1373,12 +1373,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in Content Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1405,12 +1405,12 @@ definition {
 		}
 
 		task ("View all three categories name are shown in modal") {
-			var n = "1";
+			var n = 1;
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${categoryName}");
+					row = ${n},
+					text = ${categoryName});
 
 				var n = ${n} + 1;
 			}
@@ -1428,9 +1428,9 @@ definition {
 			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
-				column = "1",
+				column = 1,
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-				row = "1");
+				row = 1);
 		}
 	}
 

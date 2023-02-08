@@ -12,7 +12,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 
@@ -23,7 +23,7 @@ definition {
 		JSONDepot.deleteDepot(depotName = "Test Depot Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveABodyWithNameOnlyInResponse {
 		property portal.acceptance = "true";
 
@@ -33,29 +33,29 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "Liferay");
 		}
 
 		task ("When with curl I request getAssetLibraryKeywordsPage with fields=name") {
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				parameter = "fields",
 				parameterValue = "name");
 
 			var name = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$..name",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("Then in a response I receive a body with name values only") {
 			TaxonomyVocabularyAPI.assertResponseHasNameFieldValueOnly(
 				expectedValue = "{name=${name}}",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveCorrectValueOfAggregationTermsInResponse {
 		property portal.acceptance = "true";
 
@@ -74,18 +74,18 @@ definition {
 
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$..[0]['id']",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("Then in a response I receive numberOfOccurrences and term with correct value in facets fields") {
 			TaxonomyVocabularyAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "1",
-				responseToParse = "${response}",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				expectedValue = 1,
+				responseToParse = ${response},
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
@@ -95,29 +95,29 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "liferay");
 		}
 
 		task ("When with curl I request getKeyword with restrictFields equal all fields except id field") {
-			var keywordId = JSONUtil.getWithJSONPath("${responseFromCreate}", "$.id");
+			var keywordId = JSONUtil.getWithJSONPath(${responseFromCreate}, "$.id");
 
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
-				keywordId = "${keywordId}",
+				keywordId = ${keywordId},
 				parameter = "restrictFields",
 				parameterValue = "actions,assetLibraryKey,creator,dateCreated,dateModified,name,keywordUsageCount,subscribed");
 		}
 
 		task ("Then in a response I receive a body with id field values only") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "{id=${keywordId}}");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveNameFieldValuesOnlyInResponse {
 		property portal.acceptance = "true";
 
@@ -127,30 +127,30 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Vocabulary Name");
 		}
 
 		task ("When with curl I request getAssetLibraryTaxonomyVocabulariesPage with restrictFields equal all fields except name field") {
 			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				parameter = "restrictFields",
 				parameterValue = "actions,assetLibraryKey,assetTypes,availableLanguages,creator,dateCreated,dateModified,description,externalReferenceCode,id,numberOfTaxonomyCategories");
 
 			var taxonomyVocabularyName = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$..name",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("Then in a response I receive a with name field values only") {
 			TaxonomyVocabularyAPI.assertResponseHasNameFieldValueOnly(
 				expectedValue = "{name=${taxonomyVocabularyName}}",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanReceiveNameFieldValuesOnlyInResponseForIndividualElement {
 		property portal.acceptance = "true";
 
@@ -160,24 +160,24 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "liferay");
 		}
 
 		task ("When with curl I request getKeyword with fields=name") {
-			var keywordId = JSONUtil.getWithJSONPath("${responseFromCreate}", "$.id");
+			var keywordId = JSONUtil.getWithJSONPath(${responseFromCreate}, "$.id");
 
 			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
-				keywordId = "${keywordId}",
+				keywordId = ${keywordId},
 				parameter = "fields",
 				parameterValue = "name");
 		}
 
 		task ("Then in a response I receive a body with name values only") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "{name=liferay}");
 		}
 	}

@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109555. Can bulk restore multiple items from recycle bin."
-	@priority = "5"
+	@priority = 5
 	test BulkRestoreMultipleAssetsFromRecycleBin {
 		property portal.acceptance = "true";
 
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "Restore blog entry from recycle bin."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinBlogs {
 		task ("Add a blogs widget to page and an entry to blogs") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "Restore MB attachment from recycle bin."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinMBAttachment {
 		task ("Add a message and attachement to mb") {
 			JSONMBMessage.addMessage(
@@ -194,7 +194,7 @@ definition {
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 			MessageboardsThread.viewCP(
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "MB Body Edit",
 				threadSubject = "MB Subject",
 				userName = "Test Test");
@@ -211,7 +211,7 @@ definition {
 
 			MessageboardsThread.viewCP(
 				mbAttachmentFile = "Document_1.doc",
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "MB Body Edit",
 				threadSubject = "MB Subject",
 				userName = "Test Test");
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "Assert scheduled clean up in recycle bin works."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinScheduledCleanup {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
@@ -258,7 +258,7 @@ definition {
 			// We need this pause to check issue due trash.entry.check.interval=1
 			// To be investigated in LPS-157883
 
-			Pause(locator1 = "120000");
+			Pause(locator1 = 120000);
 		}
 
 		task ("Refresh and assert no blog entry") {
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "Assert 3 blog entries moved to recycle bin are searchable."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinSearchBlogsEntries {
 		task ("Add blogs to page and 3 blog entries") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -302,7 +302,7 @@ definition {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 			for (var n : list "1,2,3") {
-				Search.searchCP(searchTerm = "${n}");
+				Search.searchCP(searchTerm = ${n});
 
 				RecycleBin.viewCP(
 					assetName = "Blogs Entry Title ${n}",
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "Assert 2 documents moved to recycle bin are searchable."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinSearchDMEntriesInFolder {
 		property custom.properties = "default.layout.template.id=1_column";
 
@@ -379,7 +379,7 @@ definition {
 		task ("Assert 2 documents are moved to recycle bin") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
-			Search.searchCP(searchTerm = "1");
+			Search.searchCP(searchTerm = 1);
 
 			RecycleBin.viewCP(
 				assetName = "DM Document Title 1",
@@ -388,7 +388,7 @@ definition {
 
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
-			Search.searchCP(searchTerm = "2");
+			Search.searchCP(searchTerm = 2);
 
 			RecycleBin.viewCP(
 				assetName = "DM Document Title 2",
@@ -398,7 +398,7 @@ definition {
 	}
 
 	@description = "Restore Wiki node and Wiki page in recycle bin."
-	@priority = "3"
+	@priority = 3
 	test RecycleBinWiki {
 		task ("Add 2 wiki node and a wiki page") {
 			JSONWiki.addWikiNode(
@@ -468,7 +468,7 @@ definition {
 			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
 
 			WikiNode.viewCP(
-				numberOfWikiPages = "2",
+				numberOfWikiPages = 2,
 				wikiNodeName = "Wiki Node Name");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -482,7 +482,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109555. Automatically rename documents when bulk restore them from recycle bin if document names already exist in the destination."
-	@priority = "5"
+	@priority = 5
 	test RenameBulkRestoreDocumentsAutomaticallyWhenDocumentNamesAlreadyExistInTheDestination {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -526,7 +526,7 @@ definition {
 
 			for (var entryName : list "Document_1.png,Document_1.txt") {
 				RecycleBin.viewCP(
-					assetName = "${entryName}",
+					assetName = ${entryName},
 					assetType = "Document",
 					deleteUser = "Test Test");
 			}
@@ -538,13 +538,13 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			for (var assetName : list "Document_1.png,Document_1.txt,Document_1 (1).png,Document_1 (1).txt") {
-				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
+				DMDocument.viewCardTitle(dmDocumentTitle = ${assetName});
 			}
 		}
 	}
 
 	@description = "Restore DM document in DM folder in recycle bin."
-	@priority = "5"
+	@priority = 5
 	test RestoreDMDocumentFromFolderCP {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -590,7 +590,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-44099. The blogs entry moved to the recycle bin shouldn't be searchable by its comments."
-	@priority = "4"
+	@priority = 4
 	test SearchBlogsEntryByComments {
 		task ("Add a Blogs widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -638,7 +638,7 @@ definition {
 				value1 = "2 Results for \"Comment\"");
 
 			for (var title : list "Blogs Entry Title 1,Blogs Entry Title 2") {
-				Blogs.viewEntryTitle(entryTitle = "${title}");
+				Blogs.viewEntryTitle(entryTitle = ${title});
 			}
 		}
 
@@ -662,7 +662,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-109555 and LPS-33785. The error message should be shown when restore a document from recycle bin when it has the same name as existing document. Keep both document entries and rename the document entry from the Recycle Bin."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenRestoreDocumentHasTheSameNameWithExistingOne {
 		task ("Add a document entry named DM Document Title") {
 			JSONDocument.addFileWithUploadedFile(
@@ -703,13 +703,13 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			for (var assetName : list "DM Document Title,Previous Document Title") {
-				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
+				DMDocument.viewCardTitle(dmDocumentTitle = ${assetName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-44554. View restored document in subfolder after restore parent folder from the recycle bin."
-	@priority = "4"
+	@priority = 4
 	test ViewRestoredDocumentInSubFolderAfterRestoreParentFolder {
 		task ("Add a dm folder") {
 			JSONFolder.addFolder(
@@ -754,7 +754,7 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			for (var folderName : list "DM Folder Name,DM Subfolder Name") {
-				DMFolder.gotoEntry(dmFolderName = "${folderName}");
+				DMFolder.gotoEntry(dmFolderName = ${folderName});
 			}
 
 			DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");

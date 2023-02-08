@@ -1,20 +1,20 @@
 definition {
 
 	macro click {
-		var key_menuBar = "${menuBar}";
+		var key_menuBar = ${menuBar};
 
 		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK")) {
 			AssertClick(
 				locator1 = "MenuBar#NAV_LINK",
-				value1 = "${menuBar}");
+				value1 = ${menuBar});
 		}
 
-		MenuBar.viewActive(menuBar = "${menuBar}");
+		MenuBar.viewActive(menuBar = ${menuBar});
 	}
 
 	macro clickInStack {
-		var key_menuBar = "${menuBar}";
-		var key_stackName = "${stackName}";
+		var key_menuBar = ${menuBar};
+		var key_stackName = ${stackName};
 
 		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK_IN_STACK")) {
 			Click(locator1 = "MenuBar#NAV_LINK_IN_STACK");
@@ -49,7 +49,7 @@ definition {
 
 	macro viewActive {
 		AssertElementPresent(
-			key_menuBar = "${menuBar}",
+			key_menuBar = ${menuBar},
 			locator1 = "MenuBar#ACTIVE_NAV_LINK");
 	}
 

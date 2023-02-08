@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-117985. Select the web content based on template name with XSS on WCD."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test SelectWebContentBasedOnTemplateNameWithXSS {
 		task ("Add a web content template with a XSS name") {
@@ -41,7 +41,7 @@ definition {
 
 			WebContentTemplates.addCP(
 				structureName = "Basic Web Content",
-				templateName = "${actualScript}");
+				templateName = ${actualScript});
 		}
 
 		task ("View the alert not shown") {
@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("View the XSS is not escaped") {
-			WebContentTemplates.viewCardsEntryCP(templateName = "${actualScript}");
+			WebContentTemplates.viewCardsEntryCP(templateName = ${actualScript});
 		}
 
 		task ("Add a web content based on new template") {
@@ -63,7 +63,7 @@ definition {
 
 			WebContent.selectTemplateCP(
 				structureName = "Basic Web Content",
-				templateName = "${actualScript}");
+				templateName = ${actualScript});
 
 			PortletEntry.publish();
 		}

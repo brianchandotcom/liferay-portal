@@ -5,9 +5,9 @@ definition {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var messageId = JSONQuestions.getQuestionIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}",
-			titleField = "${titleField}");
+			categoryName = ${categoryName},
+			groupName = ${groupName},
+			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -39,7 +39,7 @@ definition {
 
 		echo("## * Body: ${replyBody}");
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Add a question without a tag."
@@ -47,15 +47,15 @@ definition {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName});
 
 		JSONQuestionsAPI._addQuestion(
-			bodyField = "${bodyField}",
-			categoryId = "${categoryId}",
-			titleField = "${titleField}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			bodyField = ${bodyField},
+			categoryId = ${categoryId},
+			titleField = ${titleField},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	@summary = "Add a question with a tag."
@@ -63,29 +63,29 @@ definition {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName});
 
 		JSONQuestionsAPI._addQuestionWithTag(
-			bodyField = "${bodyField}",
-			categoryId = "${categoryId}",
-			tagField = "${tagField}",
-			titleField = "${titleField}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			bodyField = ${bodyField},
+			categoryId = ${categoryId},
+			tagField = ${tagField},
+			titleField = ${titleField},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	@summary = "Get the answer title"
 	macro getAnswerTitle {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName});
 		var threadId = JSONMBMessage.getThreadIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}",
-			threadSubject = "${titleField}");
+			categoryName = ${categoryName},
+			groupName = ${groupName},
+			threadSubject = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbmessage/get-thread-messages \
@@ -98,11 +98,11 @@ definition {
 				-d "end=-1"
 		''';
 
-		var commentTitle = JSONCurlUtil.post("${curl}", "$.[?(@['subject'] == 'RE: ${replyTitle}')]['subject']");
+		var commentTitle = JSONCurlUtil.post(${curl}, "$.[?(@['subject'] == 'RE: ${replyTitle}')]['subject']");
 
 		echo("## ${commentTitle}");
 
-		if ("${commentTitle}" == "RE: ${replyTitle}") {
+		if (${commentTitle} == "RE: ${replyTitle}") {
 			echo("This question has an answer.");
 		}
 		else {
@@ -113,9 +113,9 @@ definition {
 	@summary = "Get the approve status of question"
 	macro getApprovedStatus {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}",
-			titleField = "${titleField}");
+			categoryName = ${categoryName},
+			groupName = ${groupName},
+			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -124,11 +124,11 @@ definition {
 				-u 'test@liferay.com:test'
 		''';
 
-		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
+		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");
 
 		echo("## ${status}");
 
-		if ("${status}" == "approved") {
+		if (${status} == "approved") {
 			echo("This is a approved question.");
 		}
 		else {
@@ -139,10 +139,10 @@ definition {
 	@summary = "Get the pending status of question"
 	macro getPendingStatus {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}",
-			pending = "1",
-			titleField = "${titleField}");
+			categoryName = ${categoryName},
+			groupName = ${groupName},
+			pending = 1,
+			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -151,11 +151,11 @@ definition {
 				-u 'test@liferay.com:test'
 		''';
 
-		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
+		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");
 
 		echo("## ${status}");
 
-		if ("${status}" == "pending") {
+		if (${status} == "pending") {
 			echo("This is a pending question.");
 		}
 		else {
@@ -168,10 +168,10 @@ definition {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName});
 		var portalURL = JSONCompany.getPortalURL();
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/mb.mbthread/get-threads \
@@ -183,13 +183,13 @@ definition {
 				-d "end=-1"
 		''';
 
-		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
+		var questionId = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
 
-		if ("${questionId}" == "") {
+		if (${questionId} == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
-		return "${questionId}";
+		return ${questionId};
 	}
 
 	@summary = "Get the questionId through threadId"
@@ -197,16 +197,16 @@ definition {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName});
 		var portalURL = JSONCompany.getPortalURL();
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		if (isSet(pending)) {
-			var status = "1";
+			var status = 1;
 		}
 		else {
-			var status = "0";
+			var status = 0;
 		}
 
 		var curl = '''
@@ -219,13 +219,13 @@ definition {
 				-d "end=-1"
 		''';
 
-		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['threadId']");
+		var questionId = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${titleField}')]['threadId']");
 
-		if ("${questionId}" == "") {
+		if (${questionId} == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
-		return "${questionId}";
+		return ${questionId};
 	}
 
 }

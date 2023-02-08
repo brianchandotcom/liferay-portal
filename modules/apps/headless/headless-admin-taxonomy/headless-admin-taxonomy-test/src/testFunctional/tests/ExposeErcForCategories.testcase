@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,169 +26,169 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanDeleteCategoryByErc {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
-				responseToParse = "${responseOfCreated}");
+				responseToParse = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 
 			var siteId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
 				element = "$.siteId",
-				responseToParse = "${responseOfCategory}");
+				responseToParse = ${responseOfCategory});
 		}
 
 		task ("When using a DELETE request deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
 			TaxonomyCategoryAPI.deleteTaxonomyCategoryByErc(
 				externalReferenceCode = "erc",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("Then I can delete the category") {
 			var response = TaxonomyCategoryAPI.getTaxonomyCategoryByErc(
 				externalReferenceCode = "erc",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.title");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "No AssetCategory exists with the key {externalReferenceCode=erc, groupId=${siteId}}");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanRecieveCorrectCategoryIdByErc {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
-				responseToParse = "${responseOfCreated}");
+				responseToParse = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("When using a GET request getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
 			var response = TaxonomyCategoryAPI.getTaxonomyCategoryByErc(
 				externalReferenceCode = "erc",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("Then I can receive the correct id in the response") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.id");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.id");
 			var taxonomyCategoryId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
 				element = "$.id",
-				responseToParse = "${responseOfCategory}");
+				responseToParse = ${responseOfCategory});
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
-				expected = "${taxonomyCategoryId}");
+				actual = ${actualValue},
+				expected = ${taxonomyCategoryId});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanRecieveCorrectErcValueInCategory {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
-				responseToParse = "${responseOfCreated}");
+				responseToParse = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("When with GET request getTaxonomyCategory") {
 			var taxonomyCategoryId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
 				element = "$.id",
-				responseToParse = "${responseOfCategory}");
+				responseToParse = ${responseOfCategory});
 
-			var response = TaxonomyCategoryAPI.getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+			var response = TaxonomyCategoryAPI.getTaxonomyCategory(taxonomyCategoryId = ${taxonomyCategoryId});
 		}
 
 		task ("Then I can receive the correct custom external reference code value in the response") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "erc");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanRecieveErrorMessageByNotExistErcInCategory {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
-				responseToParse = "${responseOfCreated}");
+				responseToParse = ${responseOfCreated});
 
 			var responseOfCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("When using a GET request getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with not exist erc value") {
 			var response = TaxonomyCategoryAPI.getTaxonomyCategoryByErc(
 				externalReferenceCode = "liferay",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("Then I can receive the error message in the response") {
 			var siteId = TaxonomyCategoryAPI.getElementOfCreatedCategory(
 				element = "$.siteId",
-				responseToParse = "${responseOfCategory}");
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.title");
+				responseToParse = ${responseOfCategory});
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "No AssetCategory exists with the key {externalReferenceCode=liferay, groupId=${siteId}}");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUpdateCategoryByErc {
 		property portal.acceptance = "true";
 
 		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
-				responseToParse = "${responseOfCreated}");
+				responseToParse = ${responseOfCreated});
 
 			TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("When updating the category name value with a PUT request putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
 			var response = TaxonomyCategoryAPI.updateTaxonomyCategoryByErc(
 				externalReferenceCode = "erc",
 				name = "New Category Name",
-				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
 		}
 
 		task ("Then I can receive the updated name value in the response") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.name");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.name");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "New Category Name");
 		}
 	}

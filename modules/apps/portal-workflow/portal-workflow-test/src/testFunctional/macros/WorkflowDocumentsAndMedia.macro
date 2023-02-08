@@ -1,46 +1,46 @@
 definition {
 
 	macro addFileWithWorkflow {
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = ${dmDocumentTypeName});
 
 		WorkflowDocumentsAndMedia.editImageFileDocument(
-			dmDocumentDescription = "${dmDocumentDescription}",
-			dmDocumentTitle = "${dmDocumentTitle}",
-			workflowPngFile = "${workflowPngFile}");
+			dmDocumentDescription = ${dmDocumentDescription},
+			dmDocumentTitle = ${dmDocumentTitle},
+			workflowPngFile = ${workflowPngFile});
 
 		ScrollWebElementIntoView(locator1 = "Button#SUBMIT_FOR_PUBLICATION");
 
 		Button.clickSubmitForPublication();
 
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+		var key_dmDocumentTitle = ${dmDocumentTitle};
 
-		DMDocument.viewCardTitle(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewCardTitle(dmDocumentTitle = ${dmDocumentTitle});
 	}
 
 	macro addMultipleCP {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Multiple Files Upload");
 
 		if (isSet(dmDocumentFileList)) {
-			for (var dmDocumentFile : list "${dmDocumentFileList}") {
-				var key_dmDocumentFile = "${dmDocumentFile}";
+			for (var dmDocumentFile : list ${dmDocumentFileList}) {
+				var key_dmDocumentFile = ${dmDocumentFile};
 
 				AssertElementPresent(locator1 = "Button#SELECT_FILES");
 
-				if ("${uploadTempFile}" == "true") {
+				if (${uploadTempFile} == "true") {
 					UploadTempFile.uploadTempFileHiddenNoMouseOver(
 						locator1 = "TextInput#FILE",
-						value1 = "${dmDocumentFile}");
+						value1 = ${dmDocumentFile});
 				}
 				else {
 					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 						locator1 = "TextInput#FILE",
-						value1 = "${dmDocumentFile}");
+						value1 = ${dmDocumentFile});
 				}
 
 				AssertChecked(locator1 = "DynamicUploader#SELECT_ALL_CHECKBOX");
 
 				AssertElementPresent(
-					key_documentName = "${dmDocumentFile}",
+					key_documentName = ${dmDocumentFile},
 					locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE");
 			}
 		}
@@ -50,7 +50,7 @@ definition {
 
 			if (isSet(currentDocumentType)) {
 				Click(
-					key_toggleButtonName = "${currentDocumentType}",
+					key_toggleButtonName = ${currentDocumentType},
 					locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON");
 			}
 			else {
@@ -60,15 +60,15 @@ definition {
 			}
 
 			Click(
-				key_menuItem = "${documentType}",
+				key_menuItem = ${documentType},
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 			Panel.expandPanel(panel = "Document Type");
 
 			AssertTextEquals.assertPartialText(
-				key_toggleButtonName = "${documentType}",
+				key_toggleButtonName = ${documentType},
 				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON",
-				value1 = "${documentType}");
+				value1 = ${documentType});
 
 			if (isSet(dateValue)) {
 				if (!(isSet(dateFieldLabel))) {
@@ -76,9 +76,9 @@ definition {
 				}
 
 				Type(
-					key_fieldFieldLabel = "${dateFieldLabel}",
+					key_fieldFieldLabel = ${dateFieldLabel},
 					locator1 = "WCEditWebContent#DATE_INPUT",
-					value1 = "${dateValue}");
+					value1 = ${dateValue});
 			}
 		}
 
@@ -90,17 +90,17 @@ definition {
 	macro editImageFileDocument {
 		var projectDir = PropsUtil.get("project.dir");
 
-		UploadDependencyFile.uploadFile(fileName = "${workflowPngFile}");
+		UploadDependencyFile.uploadFile(fileName = ${workflowPngFile});
 
 		if (isSet(useCurrentTitle)) {
 			echo("Use the title automatically added after uploading a file.");
 		}
 		else {
-			PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+			PortletEntry.inputTitle(title = ${dmDocumentTitle});
 		}
 
 		if (isSet(dmDocumentDescription)) {
-			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
+			PortletEntry.inputDescription(description = ${dmDocumentDescription});
 		}
 	}
 
@@ -112,18 +112,18 @@ definition {
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${videoURL}");
+			value1 = ${videoURL});
 
 		if (isSet(videoShortcutPreview)) {
 			AssertVisible(
-				key_videoShortcutPreview = "${videoShortcutPreview}",
+				key_videoShortcutPreview = ${videoShortcutPreview},
 				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 		}
 
 		if (isSet(extractedVideoShortcutTitle)) {
 			var titleText = selenium.getElementValue("TextInput#TITLE");
 
-			if ("${extractedVideoShortcutTitle}" == "${titleText}") {
+			if (${extractedVideoShortcutTitle} == ${titleText}) {
 				echo("This is a correct title.");
 			}
 			else {
@@ -132,28 +132,28 @@ definition {
 		}
 
 		if (isSet(videoShortcutTitle)) {
-			PortletEntry.inputTitle(title = "${videoShortcutTitle}");
+			PortletEntry.inputTitle(title = ${videoShortcutTitle});
 		}
 
 		if (isSet(videoShortcutDescription)) {
-			PortletEntry.inputDescription(description = "${videoShortcutDescription}");
+			PortletEntry.inputDescription(description = ${videoShortcutDescription});
 		}
 
 		if (isSet(categoryName)) {
-			var key_categoryName = "${categoryName}";
+			var key_categoryName = ${categoryName};
 
 			Panel.expandPanel(panel = "Categorization");
 
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(tagNameList)) {
 			Panel.expandPanel(panel = "Categorization");
 
-			for (var tagName : list "${tagNameList}") {
-				AssetCategorization.addTag(tagName = "${tagName}");
+			for (var tagName : list ${tagNameList}) {
+				AssetCategorization.addTag(tagName = ${tagName});
 			}
 		}
 
@@ -162,9 +162,9 @@ definition {
 
 	macro viewWorkflowInProcessMessage {
 		AssertTextEquals(
-			key_errorMessage = "${errorMessage}",
+			key_errorMessage = ${errorMessage},
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE",
-			value1 = "${errorMessage}");
+			value1 = ${errorMessage});
 	}
 
 }

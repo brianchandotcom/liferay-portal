@@ -45,13 +45,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "3"
+	@priority = 3
 	test CanGetObjectEndponitsFromCurrentInstance {
 		task ("When requesting GET "/o/c/subjects" from www.baker.com instance") {
 			var response = ObjectDefinitionAPI.getObjectEntries(
@@ -60,10 +60,10 @@ definition {
 		}
 
 		task ("Then I can get a correct response with www.baker.com:8080/o/c/subjects href in actions") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.actions.create.href");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.actions.create.href");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "http://www.baker.com:8080/o/c/subjects/");
 		}
 
@@ -73,13 +73,13 @@ definition {
 				virtualHost = "www.baker.com");
 
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "NOT_FOUND");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotGetObjectEndponitsFromOtherInstance {
 		property portal.acceptance = "true";
 
@@ -90,10 +90,10 @@ definition {
 		}
 
 		task ("Then I can get a correct response with www.able.com:8080/o/c/universities href in actions") {
-			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.actions.create.href");
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.actions.create.href");
 
 			TestUtils.assertEquals(
-				actual = "${actualValue}",
+				actual = ${actualValue},
 				expected = "http://www.able.com:8080/o/c/universities/");
 		}
 
@@ -103,13 +103,13 @@ definition {
 				virtualHost = "www.able.com");
 
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "NOT_FOUND");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotGetObjectEntryFromOtherInstance {
 		property portal.acceptance = "true";
 
@@ -123,7 +123,7 @@ definition {
 			ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
 				dbType = "String",
 				name = "secondField",
-				objectDefinitionId = "${objectDefinitionId}");
+				objectDefinitionId = ${objectDefinitionId});
 		}
 
 		task ("And Given Subject entry created in default instance") {
@@ -147,24 +147,24 @@ definition {
 		}
 
 		task ("Then I can see one Subject entry with its name correctly related") {
-			var actualName = JSONUtil.getWithJSONPath("${response}", "$.items[*].name");
+			var actualName = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
 
 			TestUtils.assertEquals(
-				actual = "${actualName}",
+				actual = ${actualName},
 				expected = "Object Entry in Second Instance");
 
-			var totoalCount = JSONUtil.getWithJSONPath("${response}", "$.totalCount");
+			var totoalCount = JSONUtil.getWithJSONPath(${response}, "$.totalCount");
 
 			TestUtils.assertEquals(
-				actual = "${totoalCount}",
-				expected = "1");
+				actual = ${totoalCount},
+				expected = 1);
 		}
 
 		task ("And Then I can not see the Subject entry with secondField in default instance") {
-			var actualSecondFieldValue = JSONUtil.getWithJSONPath("${response}", "$..secondField");
+			var actualSecondFieldValue = JSONUtil.getWithJSONPath(${response}, "$..secondField");
 
 			TestUtils.assertPartialEquals(
-				actual = "${actualSecondFieldValue}",
+				actual = ${actualSecondFieldValue},
 				expected = "");
 		}
 	}

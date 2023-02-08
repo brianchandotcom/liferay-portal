@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-71487."
-	@priority = "5"
+	@priority = 5
 	test ViewMultiWCDAfterUpgrade625 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";
 		property database.types = "mysql";
@@ -27,11 +27,11 @@ definition {
 
 		Portlet.viewDuplicatePG(
 			portletName = "Web Content Display",
-			totalPortletCount = "3");
+			totalPortletCount = 3);
 	}
 
 	@description = "This is a use case for LPS-71487."
-	@priority = "5"
+	@priority = 5
 	test ViewMultiWCDArchive621015 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";
 		property database.types = "db2,mysql,oracle,sybase";
@@ -41,11 +41,11 @@ definition {
 
 		Portlet.viewDuplicatePG(
 			portletName = "Web Content Display",
-			totalPortletCount = "3");
+			totalPortletCount = 3);
 	}
 
 	@description = "This is a use case for LPS-71487."
-	@priority = "5"
+	@priority = 5
 	test ViewMultiWCDArchive621021 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -55,7 +55,7 @@ definition {
 
 		Portlet.viewDuplicatePG(
 			portletName = "Web Content Display",
-			totalPortletCount = "3");
+			totalPortletCount = 3);
 	}
 
 }

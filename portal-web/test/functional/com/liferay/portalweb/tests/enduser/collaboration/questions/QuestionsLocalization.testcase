@@ -15,7 +15,7 @@ definition {
 			layoutName = "Questions Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add multiple subtopics with non-Latin characters."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddMultipleSubTopics {
 		property solutions.acceptance = "true";
@@ -58,16 +58,16 @@ definition {
 
 			Questions.addSubTopic(
 				subTopicDescription = "トピック記述",
-				subTopicName = "${subTopicName}");
+				subTopicName = ${subTopicName});
 
 			Questions.changeTopic(
 				parentTopicName = "質問トピック",
-				subTopicName = "${subTopicName}");
+				subTopicName = ${subTopicName});
 		}
 	}
 
 	@description = "Validate if the user can post a question with non-Latin characters via subtopic."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddQuestionViaSubTopic {
 		JSONMBMessage.addCategory(
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddQuestionWithMultipleTags {
 		JSONMBMessage.addCategory(
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	@uitest
 	test CanAddQuestionWithNonLatinCharacters {
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "Validate if the user can cancel the deletions that contain non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCancelDeletions {
 		JSONMBMessage.addCategory(
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteCommentWithNonLatinCharacters {
 		JSONMBMessage.addCategory(
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete an edited answer that contains non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteEditedAnswer {
 		JSONMBMessage.addCategory(
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a question that contains non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteQuestionWithComment {
 		JSONMBMessage.addCategory(
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a topic that contains non-Latin characters."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteTopicWithNonLatinCharacters {
 		JSONMBMessage.addCategory(
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanReplyToAnAnswerWithNonLatinCharacters {
 		JSONMBMessage.addCategory(
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSortedTags {
 		JSONMBMessage.addCategory(
@@ -362,18 +362,18 @@ definition {
 			siteURLKey = "guest");
 
 		Questions.viewTagsFilterResults(
-			position = "1",
+			position = 1,
 			tagName = "おおさか",
 			usedTimes = "Used 2 Times");
 
 		Questions.viewTagsFilterResults(
-			position = "2",
+			position = 2,
 			tagName = "とうきょう",
 			usedTimes = "Used 1 Times");
 	}
 
 	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test QuestionCanBeViewedAfterEditingTopic {
 		JSONMBMessage.addCategory(
@@ -406,7 +406,7 @@ definition {
 	}
 
 	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test QuestionCanBeViewedViaTag {
 		property portal.acceptance = "true";
@@ -430,7 +430,7 @@ definition {
 
 		for (var tagName : list "おおさか,とうきょう") {
 			AssertElementPresent(
-				key_tagName = "${tagName}",
+				key_tagName = ${tagName},
 				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 		}
 

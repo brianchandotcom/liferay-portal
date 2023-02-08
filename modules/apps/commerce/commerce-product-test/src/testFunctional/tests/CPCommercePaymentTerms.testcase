@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "Verify users can add new payment terms."
-	@priority = "3"
+	@priority = 3
 	test AddANewPaymentTerm {
 		property portal.acceptance = "false";
 
@@ -27,7 +27,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 		}
 
 		task ("And the sales manager goes back to the Terms and Conditions Page") {
@@ -39,7 +39,7 @@ definition {
 				termsAndConditionActiveStatus = "No",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 		}
 
 		task ("When the Sales Manager opens the new payment term entry") {
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8295. Assert Payment terms are automatically sorted by Priority by default"
-	@priority = "4"
+	@priority = 4
 	test AssertPaymentTermIsSortedByPriority {
 		property portal.acceptance = "false";
 
@@ -66,7 +66,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "2");
+				valuePosition = 2);
 
 			Click(locator1 = "Button#BACK");
 		}
@@ -75,21 +75,21 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry 2",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}
 
 		task ("Then after the redirect if the Sales Manager return on the dashboard the second entry that we created it's the first.") {
 			CommercePaymentTerms.viewTermsAndConditionEntrySortByPriority(
-				rowNumber = "1",
+				rowNumber = 1,
 				termsAndConditionName = "Terms and Condition Entry 2",
-				valuePosition = "1");
+				valuePosition = 1);
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8283. Payment Term Name needs to be unique"
-	@priority = "4"
+	@priority = 4
 	test AssertPaymentTermNameIsUnique {
 		property portal.acceptance = "false";
 
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8293. Assert payment term priority using different field types."
-	@priority = "4"
+	@priority = 4
 	test AssertPaymentTermPriority {
 		property portal.acceptance = "false";
 
@@ -135,7 +135,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 		}
 
 		task ("Then I am redirected to the details page, and the number value of the priority field is correctly shown") {
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8296. Payment Term Priority needs to be unique"
-	@priority = "4"
+	@priority = 4
 	test AssertPaymentTermPriorityIsUnique {
 		property portal.acceptance = "false";
 
@@ -203,7 +203,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Test",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}
@@ -212,7 +212,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 		}
 
 		task ("Then the Sales Manager receives an error because the priority is not unique.") {
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8286. Cancel the creation of a new entry and return to the dashboard view"
-	@priority = "4"
+	@priority = 4
 	test CanCancelTheCreationOfANewEntry {
 		property portal.acceptance = "false";
 
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8281. Delete a new payment term to Terms and Conditions."
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -273,7 +273,7 @@ definition {
 				termsAndConditionActiveStatus = "Yes",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 		}
 
 		task ("When I delete the terms and conditions") {
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8282. Verify can edit payment term"
-	@priority = "4"
+	@priority = 4
 	test CanEditAPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8291. The Sales Manager can use the search bar to search a specific entry."
-	@priority = "4"
+	@priority = 4
 	test CanSearchForSpecificEntry {
 		property portal.acceptance = "false";
 
@@ -345,7 +345,7 @@ definition {
 			CommercePaymentTerms.addTermsAndCondition(
 				termsAndConditionName = "Terms2",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 		}
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8284. The Sales Manager can use the localization to change the entry's name based on a language."
-	@priority = "4"
+	@priority = 4
 	test CanUseLocalization {
 		property portal.acceptance = "false";
 
@@ -379,7 +379,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 		}
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "Verify the sales manager is able to change the status of payment terms."
-	@priority = "3"
+	@priority = 3
 	test ChangeTheStatus {
 		property portal.acceptance = "true";
 
@@ -427,7 +427,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 
 			CommerceOrders.openTermsAndConditionsAdmin();
 		}
@@ -447,7 +447,7 @@ definition {
 				termsAndConditionActiveStatus = "No",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 		}
 
 		task ("When the sales manager opens the payment term entry and enables the active switch") {
@@ -465,7 +465,7 @@ definition {
 				termsAndConditionActiveStatus = "Yes",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "0");
+				valuePosition = 0);
 		}
 	}
 

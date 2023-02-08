@@ -2,28 +2,28 @@ definition {
 
 	macro definePermissionViaJSONAPI {
 		JSONPermission.addPermission(
-			actionId = "${resourceAction}",
-			groupName = "${groupName}",
-			name = "${resourceName}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
+			actionId = ${resourceAction},
+			groupName = ${groupName},
+			name = ${resourceName},
+			roleTitle = ${roleTitle},
+			roleType = ${roleType});
 	}
 
 	macro removePermissionViaAPI {
 		JSONPermission.removePermission(
-			actionId = "${resourceAction}",
-			groupName = "${groupName}",
-			name = "${resourceName}",
-			roleTitle = "${roleTitle}",
-			roleType = "${roleType}");
+			actionId = ${resourceAction},
+			groupName = ${groupName},
+			name = ${resourceName},
+			roleTitle = ${roleTitle},
+			roleType = ${roleType});
 	}
 
 	macro setUpOrgRoleCP {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -31,41 +31,41 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			currentPassword = "${currentPassword}",
-			newPassword = "${newPassword}",
-			userEmailAddress = "${userEmailAddress}",
-			userScreenName = "${userScreenName}");
+			currentPassword = ${currentPassword},
+			newPassword = ${newPassword},
+			userEmailAddress = ${userEmailAddress},
+			userScreenName = ${userScreenName});
 
 		JSONOrganization.addOrganization(
-			organizationName = "${orgName}",
+			organizationName = ${orgName},
 			organizationSite = "true");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "${orgName}",
-			userEmailAddress = "${userEmailAddress}");
+			organizationName = ${orgName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONLayout.addPublicLayout(
-			groupName = "${orgName}",
-			layoutName = "${pageName}");
+			groupName = ${orgName},
+			layoutName = ${pageName});
 
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
+			pageName = ${pageName},
 			siteName = "Organization Name");
 
-		JSONRole.addOrganizationRole(roleTitle = "${roleTitle}");
+		JSONRole.addOrganizationRole(roleTitle = ${roleTitle});
 
 		JSONGroup.assignGroupRoleToUser(
-			groupName = "${orgName}",
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${orgName},
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro setUpOrgRoleLoginUserPG {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -73,109 +73,109 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			currentPassword = "${currentPassword}",
-			newPassword = "${newPassword}",
-			userEmailAddress = "${userEmailAddress}",
-			userScreenName = "${userScreenName}");
+			currentPassword = ${currentPassword},
+			newPassword = ${newPassword},
+			userEmailAddress = ${userEmailAddress},
+			userScreenName = ${userScreenName});
 
 		JSONOrganization.addOrganization(
-			organizationName = "${orgName}",
+			organizationName = ${orgName},
 			organizationSite = "true");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "${orgName}",
-			userEmailAddress = "${userEmailAddress}");
+			organizationName = ${orgName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONLayout.addPublicLayout(
-			groupName = "${orgName}",
-			layoutName = "${pageName}");
+			groupName = ${orgName},
+			layoutName = ${pageName});
 
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
+			pageName = ${pageName},
 			siteName = "Organization Name");
 
 		Portlet.addPG(
-			i = "${i}",
-			pageName = "${pageName}",
-			portletName = "${portletName}",
+			i = ${i},
+			pageName = ${pageName},
+			portletName = ${portletName},
 			siteName = "Organization Name",
 			siteURL = "true");
 
-		JSONRole.addOrganizationRole(roleTitle = "${roleTitle}");
+		JSONRole.addOrganizationRole(roleTitle = ${roleTitle});
 
 		JSONGroup.assignGroupRoleToUser(
-			groupName = "${orgName}",
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${orgName},
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpRegRoleLoginUserCP {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 
-		JSONRole.addRegularRole(roleTitle = "${roleTitle}");
+		JSONRole.addRegularRole(roleTitle = ${roleTitle});
 
 		JSONRole.assignRoleToUser(
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro setUpRegRoleLoginUserPG {
 		Permissions.setUpRegRolePG(
-			pageName = "${pageName}",
-			portletName = "${portletName}",
-			roleTitle = "${roleTitle}",
-			siteName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			pageName = ${pageName},
+			portletName = ${portletName},
+			roleTitle = ${roleTitle},
+			siteName = ${siteName},
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpRegRolePG {
 		JSONUserAPI._disablePasswordChangeRequired();
 
 		if (isSet(siteName)) {
-			var siteName = "${siteName}";
+			var siteName = ${siteName};
 		}
 		else {
 			var siteName = "Guest";
 		}
 
 		JSONLayout.addPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}");
+			groupName = ${siteName},
+			layoutName = ${pageName});
 
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}",
-			widgetName = "${portletName}");
+			groupName = ${siteName},
+			layoutName = ${pageName},
+			widgetName = ${portletName});
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -183,48 +183,48 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			currentPassword = "${currentPassword}",
-			newPassword = "${newPassword}",
-			userEmailAddress = "${userEmailAddress}",
-			userScreenName = "${userScreenName}");
+			currentPassword = ${currentPassword},
+			newPassword = ${newPassword},
+			userEmailAddress = ${userEmailAddress},
+			userScreenName = ${userScreenName});
 
-		JSONRole.addRegularRole(roleTitle = "${roleTitle}");
+		JSONRole.addRegularRole(roleTitle = ${roleTitle});
 
 		JSONRole.assignRoleToUser(
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro setUpSiteMemberRoleLoginUserPG {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 
-		JSONGroup.addGroup(groupName = "${siteName}");
+		JSONGroup.addGroup(groupName = ${siteName});
 
 		JSONGroup.assignUserToGroup(
-			groupName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONLayout.addPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}");
+			groupName = ${siteName},
+			layoutName = ${pageName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}",
-			widgetName = "${portletName}");
+			groupName = ${siteName},
+			layoutName = ${pageName},
+			widgetName = ${portletName});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpSiteRoleCP {
@@ -236,10 +236,10 @@ definition {
 		Portlet.waitForForm();
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -247,135 +247,135 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			currentPassword = "${currentPassword}",
-			newPassword = "${newPassword}",
-			userEmailAddress = "${userEmailAddress}",
-			userScreenName = "${userScreenName}");
+			currentPassword = ${currentPassword},
+			newPassword = ${newPassword},
+			userEmailAddress = ${userEmailAddress},
+			userScreenName = ${userScreenName});
 
-		JSONGroup.addGroup(groupName = "${siteName}");
+		JSONGroup.addGroup(groupName = ${siteName});
 
 		JSONGroup.assignUserToGroup(
-			groupName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONLayout.addPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}");
+			groupName = ${siteName},
+			layoutName = ${pageName});
 
-		JSONRole.addSiteRole(roleTitle = "${roleTitle}");
+		JSONRole.addSiteRole(roleTitle = ${roleTitle});
 
 		JSONGroup.assignGroupRoleToUser(
-			groupName = "${siteName}",
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpSiteRoleLoginUserCP {
 		Permissions.setUpSiteRoleCP(
-			newPassword = "${newPassword}",
-			pageName = "${pageName}",
-			roleTitle = "${roleTitle}",
-			siteName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			newPassword = ${newPassword},
+			pageName = ${pageName},
+			roleTitle = ${roleTitle},
+			siteName = ${siteName},
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpSiteRoleLoginUserPG {
 		JSONUser.addUser(
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 
-		JSONGroup.addGroup(groupName = "${siteName}");
+		JSONGroup.addGroup(groupName = ${siteName});
 
 		JSONGroup.assignUserToGroup(
-			groupName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONLayout.addPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}");
+			groupName = ${siteName},
+			layoutName = ${pageName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "${siteName}",
-			layoutName = "${pageName}",
-			widgetName = "${portletName}");
+			groupName = ${siteName},
+			layoutName = ${pageName},
+			widgetName = ${portletName});
 
 		JSONRole.addSiteRole(
-			roleDescription = "${roleDescription}",
-			roleKey = "${roleKey}",
-			roleTitle = "${roleTitle}");
+			roleDescription = ${roleDescription},
+			roleKey = ${roleKey},
+			roleTitle = ${roleTitle});
 
 		JSONGroup.assignGroupRoleToUser(
-			groupName = "${siteName}",
-			roleTitle = "${roleTitle}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro setUpSiteTeamRoleLoginUserPG {
 		JSONUser.addUser(
-			userBirthday = "${userBirthday}",
-			userEmailAddress = "${userEmailAddress}",
-			userEmailAddressVariation = "${userEmailAddressVariation}",
-			userFirstName = "${userFirstName}",
-			userGender = "${userGender}",
-			userLastName = "${userLastName}",
-			userMiddleName = "${userMiddleName}",
-			userScreenName = "${userScreenName}");
+			userBirthday = ${userBirthday},
+			userEmailAddress = ${userEmailAddress},
+			userEmailAddressVariation = ${userEmailAddressVariation},
+			userFirstName = ${userFirstName},
+			userGender = ${userGender},
+			userLastName = ${userLastName},
+			userMiddleName = ${userMiddleName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 
-		JSONGroup.addGroup(groupName = "${siteName}");
+		JSONGroup.addGroup(groupName = ${siteName});
 
 		JSONGroup.assignUserToGroup(
-			groupName = "${siteName}",
-			userEmailAddress = "${userEmailAddress}");
+			groupName = ${siteName},
+			userEmailAddress = ${userEmailAddress});
 
 		JSONTeam.addTeam(
-			siteName = "${siteName}",
-			teamDescription = "${teamDescription}",
-			teamName = "${teamName}");
+			siteName = ${siteName},
+			teamDescription = ${teamDescription},
+			teamName = ${teamName});
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "${siteName}");
+		PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Teams");
 
 		Team.assignMembersCP(
-			siteName = "${siteName}",
-			teamName = "${teamName}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userNameIsNotFound = "${userNameIsNotFound}",
-			userScreenName = "${userScreenName}");
+			siteName = ${siteName},
+			teamName = ${teamName},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userNameIsNotFound = ${userNameIsNotFound},
+			userScreenName = ${userScreenName});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 }

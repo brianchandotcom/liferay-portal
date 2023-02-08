@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Login";
 
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
-	@priority = "5"
+	@priority = 5
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
 		property portal.acceptance = "true";
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile."
-	@priority = "4"
+	@priority = 4
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
@@ -52,7 +52,7 @@ definition {
 		task ("Login and edit facebook authentication") {
 			User.firstLoginPG();
 
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			PortalSettings.gotoConfiguration(
 				baseURL = "http://localhost:8080",
@@ -61,17 +61,17 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			PortalSettings.editConfigurationAuthenticationFacebook(
-				facebookApplicationId = "${facebookApplicationId}",
-				facebookApplicationSecret = "${facebookApplicationSecret}");
+				facebookApplicationId = ${facebookApplicationId},
+				facebookApplicationSecret = ${facebookApplicationSecret});
 		}
 
 		task ("Logout and login with facebook SSO") {
 			User.logoutPG();
 
 			User.loginUserWithFacebookSSOEnabledPG(
-				facebookEmail = "${facebookEmail}",
-				facebookPassword = "${facebookPassword}",
-				siteName = "${siteName}");
+				facebookEmail = ${facebookEmail},
+				facebookPassword = ${facebookPassword},
+				siteName = ${siteName});
 		}
 
 		task ("Logout and login") {
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-72398. Users could login to Portal when the default language is not English."
-	@priority = "5"
+	@priority = 5
 	test LoginWithSpanishOnlyEnabledLocale {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@description = "Users could login through the UI."
-	@priority = "5"
+	@priority = 5
 	test LoginWithUI {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150234. Login page not breaks visually when user enters his credentials incorrectly."
-	@priority = "5"
+	@priority = 5
 	test LoginWithUIUsingWrongCredentials {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150234. Login page not breaks visually when user enters his credentials incorrectly and one MFA verifier is enabled. Blocked by LPS-150234."
-	@priority = "5"
+	@priority = 5
 	test LoginWithUIUsingWrongCredentialsAndMFAIsEnabled {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -197,7 +197,7 @@ definition {
 
 	@description = "This is a use case for LRQA-43015. Ignore test due to OpenAM 12 doesn't support Tomcat 9."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test OpenSSOSmoke {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property dummy.socket.proxy.disabled = "true";
@@ -213,21 +213,21 @@ definition {
 		}
 
 		task ("Wait for OpenAM setup") {
-			var pauseCount = "0";
+			var pauseCount = 0;
 
-			while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && ("${pauseCount}" != "20")) {
+			while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && (${pauseCount} != 20)) {
 				Refresh();
 
 				// Wait for OpenAM configuration to finish. See LRQA-28959 for more details.
 
-				Pause(locator1 = "30000");
+				Pause(locator1 = 30000);
 
 				var pauseCount = ${pauseCount} + 1;
 
 				echo("Pause count: ${pauseCount}");
 			}
 
-			if ("${pauseCount}" == "20") {
+			if (${pauseCount} == 20) {
 				fail("OpenAM setup timed out after 10 minutes.");
 			}
 		}
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
-	@priority = "5"
+	@priority = 5
 	test RedirectToDefaultPortalLandingPageOnLogin {
 		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
 
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-27622. Users could login using Token Based SSO."
-	@priority = "5"
+	@priority = 5
 	test TokenBasedSSOSmoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
@@ -374,7 +374,7 @@ definition {
 
 	@description = "This is a use case for LPS-150388 TC-1/5: Admin password need to be set on first startup if the default admin password property is not set."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test UserSetNewPasswordWithoutPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "OnDemandAdmin#UserSetNewPasswordWithoutPasswordProperty";
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-27619. Verify that LDAP and OpenSSO portlets are present at Instance Settings."
-	@priority = "3"
+	@priority = 3
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";
 
@@ -424,7 +424,7 @@ definition {
 
 	@description = "This is a use case for LPS-150388 TC-3: If the default admin password property is not given, virtual instances need to be defined with 3 extra informations: screen name, admin email and password."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
 		property custom.properties = "default.admin.password=";
 		property test.name.skip.portal.instance = "OnDemandAdmin#VirtualInstancesNeedExtraInformationWithoutPasswordProperty";
@@ -469,7 +469,7 @@ definition {
 
 	@description = "This is a use case for LPS-150388 TC-2: If the default admin password property is set, user doesn't need to define screen name, admin email and password upon virtual instance creation."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test VirtualInstancesNeedNoExtraInformationWithPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false";
 		property test.name.skip.portal.instance = "OnDemandAdmin#VirtualInstancesNeedNoExtraInformationWithPasswordProperty";

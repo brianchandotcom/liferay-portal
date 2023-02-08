@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization role with the create redirections permission set can create a new redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddRedirectOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "This ensures that a regular role with the create redirections permission set can create a new redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddRedirectRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "This ensures that a site role with the create redirections permission set can create a new redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddRedirectSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization role with the delete redirections permission set can delete a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteRedirectOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This ensures that a regular role with the delete redirections permission set can delete a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteRedirectRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@description = "This ensures that a site role with the delete redirections permission set can delete a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteRedirectSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization role with the update redirections permission set can edit a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanUpdateRedirectOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@description = "This ensures that a regular role with the update redirections permission set can edit a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanUpdateRedirectRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This ensures that a site role with the update redirections permission set can edit a redirection entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanUpdateRedirectSiteRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -650,7 +650,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization role with the view redirections permission set can view redirection entries."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRedirectPortletOrgRole {
 		var portalURL = PropsUtil.get("portal.url");
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "This ensures that a regular role with the view redirections permission set can view redirection entries."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRedirectPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -769,7 +769,7 @@ definition {
 	}
 
 	@description = "This ensures that a site role with the view redirections permission set can view redirection entries."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRedirectPortletSiteRole {
 		var portalURL = PropsUtil.get("portal.url");

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on display page template."
-	@priority = "4"
+	@priority = 4
 	test PersistInteractionStatesForRelease {
 		property portal.upstream = "false";
 
@@ -49,7 +49,7 @@ definition {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Display");
@@ -57,7 +57,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			for (var sectionName : list "Highlighted,Accounts") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Management");
@@ -74,7 +74,7 @@ definition {
 
 			for (var sectionName : list "Highlighted,Accounts") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
@@ -86,7 +86,7 @@ definition {
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on display page template."
-	@priority = "4"
+	@priority = 4
 	test PersistInteractionStatesForUpstream {
 		property portal.release = "false";
 
@@ -117,7 +117,7 @@ definition {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Display");
@@ -125,7 +125,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Management");
@@ -142,7 +142,7 @@ definition {
 
 			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
@@ -154,7 +154,7 @@ definition {
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 

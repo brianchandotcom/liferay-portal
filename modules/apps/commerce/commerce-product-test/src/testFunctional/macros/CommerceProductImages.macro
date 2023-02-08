@@ -1,15 +1,15 @@
 definition {
 
 	macro addAttachmentImages {
-		for (var imageTitle : list "${imageTitles}") {
+		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 
-			var image = StringUtil.extractFirst("${imageTitle}", ":");
-			var number = StringUtil.extractLast("${imageTitle}", ":");
-			var count = "0";
+			var image = StringUtil.extractFirst(${imageTitle}, ":");
+			var number = StringUtil.extractLast(${imageTitle}, ":");
+			var count = 0;
 
-			if ("${image}" == "") {
-				var image = "${imageTitle}";
+			if (${image} == "") {
+				var image = ${imageTitle};
 			}
 
 			var uploadFileName = "Commerce_${image}.jpg";
@@ -24,20 +24,20 @@ definition {
 
 			SelectFrameTop();
 
-			CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+			CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
 
 			SelectFrameTop();
 
 			if (isSet(optionValues)) {
-				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
+				var optionValue = StringUtil.extractFirst(${optionValues}, ",");
 
-				if ("${optionValue}" == "") {
-					var optionValue = "${optionValues}";
+				if (${optionValue} == "") {
+					var optionValue = ${optionValues};
 				}
 
-				CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+				CommerceEntry.selectAssociatedOptionsValue(optionValue = ${optionValue});
 
-				var optionValues = StringUtil.replaceFirst("${optionValues}", "${optionValue},", "");
+				var optionValues = StringUtil.replaceFirst(${optionValues}, "${optionValue},", "");
 			}
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -48,11 +48,11 @@ definition {
 
 			Refresh();
 
-			if (isSet(validationImage) && ("${validationImage}" == "true")) {
+			if (isSet(validationImage) && (${validationImage} == "true")) {
 				CommerceEntry.checkImageName(
-					image = "${image}",
-					number = "${number}",
-					uploadFileName = "${uploadFileName}");
+					image = ${image},
+					number = ${number},
+					uploadFileName = ${uploadFileName});
 			}
 		}
 
@@ -60,9 +60,9 @@ definition {
 	}
 
 	macro addAttachments {
-		Variables.assertDefined(parameterList = "${fileNames}");
+		Variables.assertDefined(parameterList = ${fileNames});
 
-		for (var fileName : list "${fileNames}") {
+		for (var fileName : list ${fileNames}) {
 			Click(locator1 = "CommerceEntry#ATTACHMENT_PLUS_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -77,25 +77,25 @@ definition {
 				SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 				Click(
-					key_mgDocumentTitle = "${fileName}",
+					key_mgDocumentTitle = ${fileName},
 					locator1 = "MediaGallery#IMAGE_TITLE");
 			}
 			else {
-				CommerceItemSelector.uploadSingleFile(uploadFileName = "${fileName}");
+				CommerceItemSelector.uploadSingleFile(uploadFileName = ${fileName});
 			}
 
 			SelectFrameTop();
 
 			if (isSet(optionValues)) {
-				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
+				var optionValue = StringUtil.extractFirst(${optionValues}, ",");
 
-				if ("${optionValue}" == "") {
-					var optionValue = "${optionValues}";
+				if (${optionValue} == "") {
+					var optionValue = ${optionValues};
 				}
 
-				CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+				CommerceEntry.selectAssociatedOptionsValue(optionValue = ${optionValue});
 
-				var optionValues = StringUtil.replaceFirst("${optionValues}", "${optionValue},", "");
+				var optionValues = StringUtil.replaceFirst(${optionValues}, "${optionValue},", "");
 			}
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -109,18 +109,18 @@ definition {
 	}
 
 	macro addDiagramImages {
-		for (var imageTitle : list "${imageTitles}") {
+		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 
-			var image = StringUtil.extractFirst("${imageTitle}", ":");
-			var number = StringUtil.extractLast("${imageTitle}", ":");
-			var count = "0";
+			var image = StringUtil.extractFirst(${imageTitle}, ":");
+			var number = StringUtil.extractLast(${imageTitle}, ":");
+			var count = 0;
 
-			if ("${image}" == "") {
-				var image = "${imageTitle}";
+			if (${image} == "") {
+				var image = ${imageTitle};
 			}
 
-			if ("${imageType}" == "svg") {
+			if (${imageType} == "svg") {
 				var uploadFileName = "commerce_${image}.svg";
 			}
 			else {
@@ -130,21 +130,21 @@ definition {
 			Refresh();
 
 			CommerceEntry.uploadCatalogEntrySingleImage(
-				productType = "${productType}",
-				uploadFileName = "${uploadFileName}");
+				productType = ${productType},
+				uploadFileName = ${uploadFileName});
 		}
 	}
 
 	macro addProductImages {
-		for (var imageTitle : list "${imageTitles}") {
+		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 
-			var image = StringUtil.extractFirst("${imageTitle}", ":");
-			var number = StringUtil.extractLast("${imageTitle}", ":");
-			var count = "0";
+			var image = StringUtil.extractFirst(${imageTitle}, ":");
+			var number = StringUtil.extractLast(${imageTitle}, ":");
+			var count = 0;
 
-			if ("${image}" == "") {
-				var image = "${imageTitle}";
+			if (${image} == "") {
+				var image = ${imageTitle};
 			}
 
 			var uploadFileName = "Commerce_${image}.jpg";
@@ -155,20 +155,20 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.uploadCatalogEntrySingleImage(uploadFileName = "${uploadFileName}");
+			CommerceEntry.uploadCatalogEntrySingleImage(uploadFileName = ${uploadFileName});
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			if (isSet(optionValues)) {
-				var optionValue = StringUtil.extractFirst("${optionValues}", ",");
+				var optionValue = StringUtil.extractFirst(${optionValues}, ",");
 
-				if ("${optionValue}" == "") {
-					var optionValue = "${optionValues}";
+				if (${optionValue} == "") {
+					var optionValue = ${optionValues};
 				}
 
-				CommerceEntry.selectAssociatedOptionsValue(optionValue = "${optionValue}");
+				CommerceEntry.selectAssociatedOptionsValue(optionValue = ${optionValue});
 
-				var optionValues = StringUtil.replaceFirst("${optionValues}", "${optionValue},", "");
+				var optionValues = StringUtil.replaceFirst(${optionValues}, "${optionValue},", "");
 			}
 
 			CommerceEntry.publishProductImage();
@@ -177,11 +177,11 @@ definition {
 
 			Refresh();
 
-			if (isSet(validationImage) && ("${validationImage}" == "true")) {
+			if (isSet(validationImage) && (${validationImage} == "true")) {
 				CommerceEntry.checkImageName(
-					image = "${image}",
-					number = "${number}",
-					uploadFileName = "${uploadFileName}");
+					image = ${image},
+					number = ${number},
+					uploadFileName = ${uploadFileName});
 			}
 		}
 
@@ -193,21 +193,21 @@ definition {
 
 		var productMediaId = selenium.getText("CommerceEntry#SIDE_PANEL_IFRAME_TITLE");
 
-		var productMediaId = StringUtil.extractDigits("${productMediaId}");
+		var productMediaId = StringUtil.extractDigits(${productMediaId});
 
 		Click(locator1 = "Icon#CLOSE");
 
 		IFrame.selectTopFrame();
 
-		return "${productMediaId}";
+		return ${productMediaId};
 	}
 
 	macro getProductMediaSrc {
-		var image = "${imagePath}";
+		var image = ${imagePath};
 
 		var image_src = selenium.getAttribute("${image}@src");
 
-		return "${image_src}";
+		return ${image_src};
 	}
 
 }

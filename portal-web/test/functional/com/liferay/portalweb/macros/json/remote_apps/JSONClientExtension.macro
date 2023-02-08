@@ -4,20 +4,20 @@ definition {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
 		JSONClientExtensionAPI._addCustomElementRemoteAppEntry(
-			customElementCssurl = "${customElementCssurl}",
-			customElementHtmlName = "${customElementHtmlName}",
-			customElementName = "${customElementName}",
-			customElementProperties = "${customElementProperties}",
-			customElementURL = "${customElementURL}",
-			customElementUseESM = "${customElementUseESM}");
+			customElementCssurl = ${customElementCssurl},
+			customElementHtmlName = ${customElementHtmlName},
+			customElementName = ${customElementName},
+			customElementProperties = ${customElementProperties},
+			customElementURL = ${customElementURL},
+			customElementUseESM = ${customElementUseESM});
 	}
 
 	macro addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
 		JSONClientExtensionAPI._addIFrameRemoteAppEntry(
-			iFrameURL = "${iFrameURL}",
-			name = "${name}");
+			iFrameURL = ${iFrameURL},
+			name = ${name});
 	}
 
 	macro addRemoteAppEntry {
@@ -31,23 +31,23 @@ definition {
 			var properties = "";
 		}
 
-		var nameMap = JSONClientExtensionSetter.setNameMap(name = "${name}");
+		var nameMap = JSONClientExtensionSetter.setNameMap(name = ${name});
 		var typeSettings = JSONClientExtensionSetter.setTypeSettings(
-			mainURL = "${mainURL}",
-			url = "${url}");
+			mainURL = ${mainURL},
+			url = ${url});
 
 		JSONClientExtensionAPI._addRemoteAppEntry(
-			description = "${description}",
-			nameMap = "${nameMap}",
-			properties = "${properties}",
-			type = "${type}",
-			typeSettings = "${typeSettings}");
+			description = ${description},
+			nameMap = ${nameMap},
+			properties = ${properties},
+			type = ${type},
+			typeSettings = ${typeSettings});
 	}
 
 	macro deleteIFrameRemoteAppEntry {
-		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
-		JSONClientExtensionAPI._deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCode}");
+		JSONClientExtensionAPI._deleteIFrameRemoteAppEntry(externalReferenceCode = ${externalReferenceCode});
 	}
 
 }

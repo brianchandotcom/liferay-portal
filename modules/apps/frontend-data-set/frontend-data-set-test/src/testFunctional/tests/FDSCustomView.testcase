@@ -36,7 +36,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "LPS-159575 Automation Test Creation - Allow users to delete their custom views"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		task ("Given A custom view is created") {
 			FDSCustomView.createNewView(key_nameView = "New View");
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "LPS-164617. Assert it is possible to edit the view settings of a custom view"
-	@priority = "4"
+	@priority = 4
 	test CanBeEdited {
 		task ("And Given a custom view is created and selected") {
 			FDSCustomView.createNewView(key_nameView = "New View");
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
-	@priority = "4"
+	@priority = 4
 	test CanBeSaved {
 		task ("When Make some changes to dataset display") {
 			FDSFilters.editFilters(
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "LPS-160159. Assert that it's possible to select a new custom view and selected the default view"
-	@priority = "4"
+	@priority = 4
 	test CanBeSelected {
 		task ("And Given FDS sample portlet deployed and given customized tab active") {
 			AssertElementPresent(
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
-	@priority = "4"
+	@priority = 4
 	test CanCreateMultiple {
 		task ("And Given A custom view is created and selected") {
 			FDSCustomView.createNewView(entryName = "FrontendDataSet View");
@@ -233,14 +233,14 @@ definition {
 			FDSCustomView.assertColumnNotPresent(key_field = "Description");
 
 			FDSCustomView.compareValue(
-				key_columnIndex = "2",
-				key_valueIndex1 = "1",
-				key_valueIndex2 = "2");
+				key_columnIndex = 2,
+				key_valueIndex1 = 1,
+				key_valueIndex2 = 2);
 		}
 	}
 
 	@description = "LPS-168120. Allow users to rename a custom view"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateName {
 		task ("And Given created custom view") {
 			FDSCustomView.createNewView(entryName = "TEST");
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "LPS-165672 - Simplify how actions are shown in the custom views section"
-	@priority = "3"
+	@priority = 3
 	test HasActionsOnlyOnEllipsis {
 		task ("And Given created custom view") {
 			FDSCustomView.createNewView(key_nameView = "New View");
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
-	@priority = "4"
+	@priority = 4
 	test HasOptionToEditName {
 		task ("And Given created custom view") {
 			FDSCustomView.createNewView(key_nameView = "TEST");
@@ -310,7 +310,7 @@ definition {
 	}
 
 	@description = "LPS-164602 Frontend Dataset - column labels are not localized "
-	@priority = "4"
+	@priority = 4
 	test ManagementBarCanBeLocalized {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {
 			var portalURL = PropsUtil.get("portal.url");

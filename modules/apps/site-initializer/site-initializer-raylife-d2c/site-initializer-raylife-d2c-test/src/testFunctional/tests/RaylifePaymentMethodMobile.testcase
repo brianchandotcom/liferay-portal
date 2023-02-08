@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,11 +31,11 @@ definition {
 	}
 
 	@description = "LPS-148200 - Check if at the end of the document upload session the paypal payment button is disabled"
-	@priority = "4"
+	@priority = 4
 	test CanPaypalPaymentButtonDisabledTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -77,11 +77,11 @@ definition {
 	}
 
 	@description = "LPS-148199 - Make sure the Pay now button is enabled after selecting the terms and conditions"
-	@priority = "5"
+	@priority = 5
 	test CanViewPayButtonEnabledPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "360,720");
 
@@ -113,11 +113,11 @@ definition {
 	}
 
 	@description = "LPS-148201 - Make sure the Pay now button is enabled after selecting the terms and conditions"
-	@priority = "5"
+	@priority = 5
 	test CanViewPayButtonEnabledTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -163,11 +163,11 @@ definition {
 	}
 
 	@description = "LPS-148197 - Verify if after you finish uploading the documents the payment section is expanded"
-	@priority = "5"
+	@priority = 5
 	test CanViewPaymentSectionPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "360,720");
 

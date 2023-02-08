@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of site-scoped in that site."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite {
 		property portal.acceptance = "true";
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of system-scoped in Global site of the default virtual instance."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance {
 		property portal.acceptance = "true";
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of virtual instance-scoped in Global site of that virtual instance."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance {
 		property portal.acceptance = "true";
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of virtual instance-scoped and system-scoped in normal site."
-	@priority = "3"
+	@priority = 3
 	test CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite {
 		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite";
 
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of system-scoped in other virtual instances."
-	@priority = "3"
+	@priority = 3
 	test CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance";
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific site. Fragments deployed to a specific site are not available in other sites."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeployFragmentsToSpecificSite {
 		property portal.acceptance = "true";
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific virtual instance"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeployFragmentsToSpecificVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
@@ -381,7 +381,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105625. A system administrator can deploy a zip file of fragments in the deploy folder that are available system wide for future and existing site instances"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureSite {
 		property portal.acceptance = "true";
@@ -432,7 +432,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-105625. A system administrator can deploy a zip file of fragments in the deploy folder that are available system wide for future and existing virtual instances"
-	@priority = "3"
+	@priority = 3
 	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "FragmentsDeploy#ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance";

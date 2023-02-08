@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ExportUserGroupMembers {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG UserGroup Name Description",
@@ -53,7 +53,7 @@ definition {
 		LAR.exportUserGroups(larFileName = "User_Group_Members.lar");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PredefinedPagesCanBeAdded {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG User Group Description",
@@ -74,7 +74,7 @@ definition {
 			menuItem = "Go to Profile Pages",
 			rowEntry = "UG User Group");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		SelectWindow(locator1 = "title=UG Public Page - UG User Group - ${siteName}");
 
@@ -88,14 +88,14 @@ definition {
 			menuItem = "Go to Dashboard Pages",
 			rowEntry = "UG User Group");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		SelectWindow(locator1 = "title=UG Private Page - UG User Group - ${siteName}");
 
 		Page.viewCurrentPage(pageName = "UG Private Page");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test UserGroupSiteTemplates {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteTemplates";

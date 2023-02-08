@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can see translation options after move all available languages to current."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewOptionsWithAllLanguages {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can see translation options after move one more available language to current."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewOptionsWithOneMoreLanguage {
 		JSONWebcontent.addWebContent(
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-128546. It ensures that the translated field content can be displayed correctly after editing by different translation ways."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewTranslatedFieldContentAfterEditing {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-142659 - Verify it is possible to display a specific entry of Clob type for a specific Object"
-	@priority = "4"
+	@priority = 4
 	test DisplaySpecificEntryClob {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 203",
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to display a specific entry of Picklist type for a specific Object"
-	@priority = "4"
+	@priority = 4
 	test DisplaySpecificEntryPicklist {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 

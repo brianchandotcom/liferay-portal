@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Add multiple Asset Publisher to page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddAssetPublisherWidgetsToPage {
 		property portal.acceptance = "true";
@@ -44,9 +44,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var i = "0";
+			var i = 0;
 
-			while ("${i}" != "3") {
+			while (${i} != 3) {
 				Portlet.addPG(portletName = "Asset Publisher");
 
 				var i = ${i} + 1;
@@ -56,12 +56,12 @@ definition {
 		task ("View the Asset Publisher widgets") {
 			Portlet.viewDuplicatePG(
 				portletName = "Asset Publisher",
-				totalPortletCount = "4");
+				totalPortletCount = 4);
 		}
 	}
 
 	@description = "This is a use case for LPS-47619 and LPS-67326. Add assets via Asset Publisher then add associated widgets to page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddAssetsViaAssetPublisherThenAddAssociatedWidgetsToPage {
 		property portal.acceptance = "true";
@@ -187,13 +187,13 @@ definition {
 				siteName = "Test Site Name");
 
 			for (var portletName : list "Blogs,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display") {
-				Portlet.addPG(portletName = "${portletName}");
+				Portlet.addPG(portletName = ${portletName});
 			}
 		}
 	}
 
 	@description = "LPS-96038 - Global Categories do not appear as filters in Asset Publisher Configuration."
-	@priority = "4"
+	@priority = 4
 	test ConfigureAPPortletDisplaysGlobalCategoriesAsFilters {
 		Category.openCategoriesAdmin(siteURLKey = "global");
 
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Configure scope of Asset Publisher with multiple sites."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureScopeWithMultipleSites {
 		property portal.acceptance = "true";
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@description = "Configure the Select More Than One asset types."
-	@priority = "4"
+	@priority = 4
 	test ConfigureSelectMoreThanOneAssetTypes {
 		property testray.component.names = "Asset Publisher";
 
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@description = "Enable Ratings in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test EnableRatings {
 		task ("Add a web content") {
@@ -324,18 +324,18 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Ratings.rateStar(ratingStarCount = "4");
+			Ratings.rateStar(ratingStarCount = 4);
 		}
 
 		task ("View the rate of web content") {
 			Ratings.viewRateStar(
 				averageRatingStarCount = "4.0",
-				ratingStarCount = "4");
+				ratingStarCount = 4);
 		}
 	}
 
 	@description = "This is a test for LPS-93357. The subscribe button can be enabled/disabled."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test EnableSubscribeButton {
 		task ("Assert the subscribe button is disabled by default") {
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "Filter assets in Asset Publisher by tags."
-	@priority = "4"
+	@priority = 4
 	test FilterAssetsByTags {
 		property testray.component.names = "Asset Publisher,Tags";
 
@@ -430,7 +430,7 @@ definition {
 	}
 
 	@description = "Order web contents by modified date in Asset Publisher."
-	@priority = "3"
+	@priority = 3
 	test OrderWebContentsByModifiedDate {
 		task ("Add three web contents") {
 			for (var n : list "1,2,3") {
@@ -456,12 +456,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -482,12 +482,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WebContent Title 2,WebContent Title 3,WebContent Title 1 Edit") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -495,7 +495,7 @@ definition {
 	}
 
 	@description = "Order web contents by priority in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test OrderWebContentsByPriority {
 		task ("Add three web contents with different priority") {
 			for (var i : list "1,5,3") {
@@ -507,7 +507,7 @@ definition {
 					webContentContent = "WC WebContent Content",
 					webContentTitle = "WC Priority ${i} Title");
 
-				WebContent.addPriority(priority = "${i}");
+				WebContent.addPriority(priority = ${i});
 
 				PortletEntry.publish();
 			}
@@ -518,12 +518,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WC Priority 3 Title,WC Priority 5 Title,WC Priority 1 Title") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -550,12 +550,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WC Priority 1 Title,WC Priority 3 Title,WC Priority 5 Title") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -572,12 +572,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WC Priority 5 Title,WC Priority 3 Title,WC Priority 1 Title") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -585,7 +585,7 @@ definition {
 	}
 
 	@description = "Order web contents by publish date."
-	@priority = "3"
+	@priority = 3
 	test OrderWebContentsByPublishDate {
 		task ("Add three web contents") {
 			for (var n : list "1,2,3") {
@@ -621,12 +621,12 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "WebContent Title 1,WebContent Title 2,WebContent Title 3") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "Restore configuration template in Asset Publisher."
-	@priority = "5"
+	@priority = 5
 	test RestoreConfigurationTemplate {
 		property portal.acceptance = "true";
 
@@ -689,7 +689,7 @@ definition {
 	}
 
 	@description = "Search site in scope selector."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test SearchSiteInScopeSelector {
 		task ("Add a new site") {
@@ -706,7 +706,7 @@ definition {
 	}
 
 	@description = "Select the Blogs Entry as asset type."
-	@priority = "4"
+	@priority = 4
 	test SelectBlogsEntryAsAssetType {
 		task ("Select the Blogs Entry in Asset Publisher") {
 			Navigator.gotoSitePage(
@@ -728,7 +728,7 @@ definition {
 	}
 
 	@description = "Select the Document as asset type."
-	@priority = "4"
+	@priority = 4
 	test SelectDocumentAsAssetType {
 		task ("Select the Document in Asset Publisher") {
 			Navigator.gotoSitePage(
@@ -750,7 +750,7 @@ definition {
 	}
 
 	@description = "Select the Web Content Article as asset type."
-	@priority = "5"
+	@priority = 5
 	test SelectWebContentArticleAsAssetType {
 		property portal.acceptance = "true";
 
@@ -777,7 +777,7 @@ definition {
 	}
 
 	@description = "View the barebone decorator in Asset Publisher."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ViewBareboneDecoratorInAssetPublisher {
 		task ("View Asset Publisher title") {
@@ -808,7 +808,7 @@ definition {
 	}
 
 	@description = "View the custom title of Asset Publisher."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ViewCustomTitleOfAssetPublisher {
 		task ("View Asset Publisher title") {
@@ -837,7 +837,7 @@ definition {
 	}
 
 	@description = "View the decorate decorator in Asset Publisher."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ViewDecorateDecoratorInAssetPublisher {
 		task ("View Asset Publisher title") {
@@ -868,7 +868,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86192. The default asset link behavior should be 'View in Context'."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewDefaultAssetLinkBehavior {
 		task ("Navigate to Asset Publisher widget display settings") {
@@ -889,7 +889,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135881. View the order of fieldsets in Asset Selection settings when selection style is dynamic."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewOrderOfFieldsetsInAssetSelectionWhenSelectionStyleIsDynamic {
 		property asset.publisher.selection.style = "asset-list";
@@ -909,12 +909,12 @@ definition {
 		}
 
 		task ("View the order of fieldsets") {
-			var i = "1";
+			var i = 1;
 
 			for (var fieldset : list "Asset Selection,Scope,Source,Filter,Custom User Attributes,Ordering") {
 				AssertVisible(
-					index = "${i}",
-					key_panel = "${fieldset}",
+					index = ${i},
+					key_panel = ${fieldset},
 					locator1 = "Panel#PANEL_BY_INDEX");
 
 				var i = ${i} + 1;
@@ -923,7 +923,7 @@ definition {
 	}
 
 	@description = "LPS-135554 This test asserts that the Web Content Article Structures should appear after uncheck Search With Index configuration."
-	@priority = "4"
+	@priority = 4
 	test WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration {
 		property test.name.skip.portal.instance = "AssetPublisher#WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration";
 

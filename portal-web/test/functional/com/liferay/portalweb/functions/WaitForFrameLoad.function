@@ -3,7 +3,7 @@ definition {
 
 	function waitForFrameLoad {
 		if (!(isSet(locator1))) {
-			var locator1 = "0";
+			var locator1 = 0;
 		}
 
 		var javascript = '''
@@ -19,7 +19,7 @@ definition {
 			);
 		''';
 
-		selenium.runScript("${javascript}");
+		selenium.runScript(${javascript});
 	}
 
 }

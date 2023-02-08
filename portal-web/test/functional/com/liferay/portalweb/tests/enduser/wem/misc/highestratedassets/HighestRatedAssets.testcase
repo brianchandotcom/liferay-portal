@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "View rating score in Highest Rated Assets widget."
-	@priority = "4"
+	@priority = 4
 	test ViewHighestRatedAsset {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
@@ -41,20 +41,20 @@ definition {
 		}
 
 		task ("Add a widget to each page") {
-			var i = "1";
+			var i = 1;
 
 			for (var widgetName : list "Asset Publisher,Highest Rated Assets") {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}",
-					widgetName = "${widgetName}");
+					widgetName = ${widgetName});
 
 				var i = ${i} + 1;
 			}
 		}
 
 		task ("Enable ratings to each widget") {
-			var i = "1";
+			var i = 1;
 
 			for (var portletName : list "Asset Publisher,Highest Rated Assets") {
 				Navigator.gotoSitePage(
@@ -63,7 +63,7 @@ definition {
 
 				AssetPublisherPortlet.configureDisplaySettings(
 					displaySettings = "Ratings",
-					portletName = "${portletName}");
+					portletName = ${portletName});
 
 				var i = ${i} + 1;
 			}
@@ -87,7 +87,7 @@ definition {
 				assetContent = "Web Content Content",
 				assetTitle = "Web Content Title 1");
 
-			Ratings.rateStar(ratingStarCount = "3");
+			Ratings.rateStar(ratingStarCount = 3);
 		}
 
 		task ("Add five stars to second web content on the second page") {
@@ -99,11 +99,11 @@ definition {
 				assetContent = "Web Content Content",
 				assetTitle = "Web Content Title 2");
 
-			Ratings.rateStar(ratingStarCount = "5");
+			Ratings.rateStar(ratingStarCount = 5);
 		}
 
 		task ("View rating stars are shown on Highest Rated Assets") {
-			var i = "1";
+			var i = 1;
 
 			for (var starCount : list "3,5") {
 				Navigator.gotoSitePage(
@@ -116,7 +116,7 @@ definition {
 
 				Ratings.viewRateStar(
 					averageRatingStarCount = "${starCount}.0",
-					ratingStarCount = "${starCount}");
+					ratingStarCount = ${starCount});
 
 				var i = ${i} + 1;
 			}

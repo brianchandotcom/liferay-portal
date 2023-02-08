@@ -24,7 +24,7 @@ definition {
 				portlet = "Sites");
 
 			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
+				siteName = ${testSiteName},
 				siteTemplateName = "Team Extranet");
 		}
 	}
@@ -32,21 +32,21 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "This is a test for LPS-142641. Create a Site based on Team-Extranet"
-	@priority = "5"
+	@priority = 5
 	test AddTeamExtranetSite {
 		property portal.acceptance = "true";
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Assert the Team Extranet Welcome Page is present") {
@@ -57,12 +57,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-148459. Background image changed from the page editor"
-	@priority = "3"
+	@priority = 3
 	test BackgroundImageChangedFromPageEditor {
 		task ("Open to Edit the Home Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Change the Image of Parallax Container") {
@@ -83,10 +83,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Desktop Size"
-	@priority = "4"
+	@priority = 4
 	test BlogEntryDPTOnDesktopSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Blog Entry") {
@@ -104,18 +104,18 @@ definition {
 		task ("Assert the Elements are Visible in Frame") {
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Landscape Phone Size"
-	@priority = "4"
+	@priority = 4
 	test BlogEntryDPTOnLandscapePhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Blog Entry") {
@@ -139,18 +139,18 @@ definition {
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Portrait Phone Size"
-	@priority = "4"
+	@priority = 4
 	test BlogEntryDPTOnPortraitPhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Blog Entry") {
@@ -174,18 +174,18 @@ definition {
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Tablet Size"
-	@priority = "4"
+	@priority = 4
 	test BlogEntryDPTOnTabletSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Blog Entry") {
@@ -209,27 +209,27 @@ definition {
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-143304. Can add a Related Item Collection to a Display Page Template"
-	@priority = "4"
+	@priority = 4
 	test CanAddAnItemCollectionToADPT {
 		task ("Add a New Display Page Template to Team Extranet Site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${testSiteURL}");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${testSiteURL});
 
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Template Name",
-				groupName = "${testSiteName}");
+				groupName = ${testSiteName});
 		}
 
 		task ("Add The Blog Entries Collections to the New DPT") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${testSiteURL}");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${testSiteURL});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
@@ -242,7 +242,7 @@ definition {
 		}
 
 		task ("Export the Display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${testSiteURL}");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${testSiteURL});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Template Name",
@@ -273,12 +273,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144161. Can do a search in the Search bar in Mobile Size"
-	@priority = "3"
+	@priority = 3
 	test CanDoASearchInMobileSize {
 		task ("Go to Blog Page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Blog",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Preview the Page with Mobile Size") {
@@ -297,10 +297,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144161. Can do a search in the Search bar"
-	@priority = "3"
+	@priority = 3
 	test CanDoASearchInTeamExtranetSearchBar {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Search for Careers in Search Bar") {
@@ -313,13 +313,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144156. Can Set a Hosted Video URL on a Team Extranet Fragment Video"
-	@priority = "4"
+	@priority = 4
 	test CanSetAHostedVideoURL {
 		property test.name.skip.portal.instance = "TeamExtranet#CanSetAHostedVideoURL";
 
 		task ("Create a new Page by Json") {
 			JSONLayout.addPublicLayout(
-				groupName = "${testSiteName}",
+				groupName = ${testSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -327,7 +327,7 @@ definition {
 		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Components",
@@ -344,11 +344,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144156. Can Set a Non-Hosted Video URL on a Team Extranet Fragment Video"
-	@priority = "4"
+	@priority = 4
 	test CanSetANonHostedVideoURL {
 		task ("Create a new Page by Json") {
 			JSONLayout.addPublicLayout(
-				groupName = "${testSiteName}",
+				groupName = ${testSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -356,7 +356,7 @@ definition {
 		task ("Drag and Drop the Video fragment and Set the Hosted URL") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Components",
@@ -375,18 +375,18 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146967. Collections are not created correctly for extranet site initializer"
-	@priority = "4"
+	@priority = 4
 	test CollectionsAreNotCreatedCorrectly {
 		task ("Create a Dynamic Collection") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "${testSiteName}",
+				groupName = ${testSiteName},
 				itemSubtype = "Entry",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection Test");
 		}
 
 		task ("Create a New Collection Page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${testSiteURL});
 
 			ContentPages.addPublicCollectionPage(
 				collectionName = "Dynamic Collection Test",
@@ -406,7 +406,7 @@ definition {
 
 			for (var title : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with marketing") {
 				AssertElementPresent(
-					key_title = "${title}",
+					key_title = ${title},
 					locator1 = "TeamExtranet#COLLECTION_DISPLAY_LIST");
 			}
 		}
@@ -414,7 +414,7 @@ definition {
 		task ("Edit the Dynamic Collection") {
 			Close.closeWindow();
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "${testSiteURL}");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${testSiteURL});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
 
@@ -426,7 +426,7 @@ definition {
 		task ("Edit the Collection Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Collection Page Name",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
@@ -439,38 +439,38 @@ definition {
 
 			for (var title : list "Jerome Bell,Jane Cooper,Esther Howard,Kristin Watson,Jacob Jones") {
 				AssertElementPresent(
-					key_title = "${title}",
+					key_title = ${title},
 					locator1 = "TeamExtranet#COLLECTION_DISPLAY_LIST");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Home page on Desktop Size"
-	@priority = "4"
+	@priority = 4
 	test HomePageOnDesktopSize {
 		task ("Open to Edit the Home Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Home page on Landscape Phone Size"
-	@priority = "4"
+	@priority = 4
 	test HomePageOnLandscapePhoneSize {
 		task ("Open to Edit the Home Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Go to Landscape Phone") {
@@ -482,20 +482,20 @@ definition {
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Home page on Portrait Phone Size"
-	@priority = "4"
+	@priority = 4
 	test HomePageOnPortraitPhoneSize {
 		task ("Open to Edit the Home Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Go to Portrait Phone") {
@@ -507,20 +507,20 @@ definition {
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Home page on Tablet Size"
-	@priority = "4"
+	@priority = 4
 	test HomePageOnTabletSize {
 		task ("Open to Edit the Home Page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 		}
 
 		task ("Go to Tablet") {
@@ -532,18 +532,18 @@ definition {
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Desktop Size"
-	@priority = "4"
+	@priority = 4
 	test JobPositionDPTOnDesktopSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Job Position") {
@@ -561,18 +561,18 @@ definition {
 		task ("Assert the Elements are Visible in Frame") {
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Landscape Phone Size"
-	@priority = "4"
+	@priority = 4
 	test JobPositionDPTOnLandscapePhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Job Position") {
@@ -596,18 +596,18 @@ definition {
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Portrait Phone Size"
-	@priority = "4"
+	@priority = 4
 	test JobPositionDPTOnPortraitPhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Job Position") {
@@ -631,18 +631,18 @@ definition {
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Job Position DPT on Tablet Size"
-	@priority = "4"
+	@priority = 4
 	test JobPositionDPTOnTabletSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Job Position") {
@@ -666,18 +666,18 @@ definition {
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. Verify the Stylebook One is marked as default and includes a thumbnail"
-	@priority = "4"
+	@priority = 4
 	test StylebookOneIsDefaultAndIncludesAThumbnail {
 		task ("Go to Style Books and Assert the Stylebook One Card") {
-			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "${testSiteURL}");
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = ${testSiteURL});
 
 			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Stylebook One");
 		}
@@ -690,10 +690,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Desktop Size"
-	@priority = "4"
+	@priority = 4
 	test TeamMemberDPTOnDesktopSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Team Member") {
@@ -711,18 +711,18 @@ definition {
 		task ("Assert the Elements are Visible in Frame") {
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Landscape Phone Size"
-	@priority = "4"
+	@priority = 4
 	test TeamMemberDPTOnLandscapePhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Team Member") {
@@ -746,18 +746,18 @@ definition {
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Portrait Phone Size"
-	@priority = "4"
+	@priority = 4
 	test TeamMemberDPTOnPortraitPhoneSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Team Member") {
@@ -781,18 +781,18 @@ definition {
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144166. Verify the Team Member DPT on Tablet Size"
-	@priority = "4"
+	@priority = 4
 	test TeamMemberDPTOnTabletSize {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Display Page Templates and Team Member") {
@@ -816,18 +816,18 @@ definition {
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
-					fragmentName = "${fragmentName}",
-					index = "1",
+					fragmentName = ${fragmentName},
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Components Collection"
-	@priority = "4"
+	@priority = 4
 	test VerifyFragmentComponentsCollection {
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${testSiteURL});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Components");
 		}
@@ -835,17 +835,17 @@ definition {
 		task ("Assert the Fragments names on Components Collection") {
 			for (var key_card : list "Border,Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
 				AssertElementPresent(
-					key_card = "${key_card}",
+					key_card = ${key_card},
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Compositions Collection"
-	@priority = "4"
+	@priority = 4
 	test VerifyFragmentCompositionsCollection {
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${testSiteURL});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Compositions");
 		}
@@ -853,21 +853,21 @@ definition {
 		task ("Assert the Fragments names on Compositions Collection") {
 			for (var key_card : list "Filter Bar,Job Positions Collection,Blog Entries Collection,Page header,Team Members Collection,Section Heading") {
 				AssertElementPresent(
-					key_card = "${key_card}",
+					key_card = ${key_card},
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-144835. Verify the search Bar Widget can be embedded in a Custom Fragment"
-	@priority = "3"
+	@priority = 3
 	test VerifySearchBarEmbeddedInACustomFragment {
 		task ("Add a Fragment Collection and go to Team Extranet Fragments Admin") {
 			JSONFragment.addFragmentCollection(
-				groupName = "${testSiteName}",
+				groupName = ${testSiteName},
 				name = "Collection Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
@@ -879,17 +879,17 @@ definition {
 
 		FragmentsEditor.autocompleteFragmentHTML(
 			autocompleteField = "lfr-widget-search-bar",
-			fragmentHtml = "${fragmentHtml}",
-			htmlSnippet = "${htmlSnippet}");
+			fragmentHtml = ${fragmentHtml},
+			htmlSnippet = ${htmlSnippet});
 
 		PortletEntry.publish();
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "${testSiteName}",
+			groupName = ${testSiteName},
 			title = "WC WebContent Title");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+		PagesAdmin.openPagesAdmin(siteURLKey = ${testSiteURL});
 
 		ContentPages.addPrivatePage(pageName = "Test Page");
 
@@ -903,15 +903,15 @@ definition {
 	}
 
 	@description = "This is a test for LPS-144161. Verify the Search Bar on Team Extranet Pages"
-	@priority = "4"
+	@priority = 4
 	test VerifySearchBarOnPages {
 		task ("Go to Team Extranet Site Pages and Assert the Search Bar presence") {
 			for (var pageName : list "Home,Team,Careers,Blog,Resources,Privacy Policy,Cookie Settings,Search") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+				PagesAdmin.openPagesAdmin(siteURLKey = ${testSiteURL});
 
 				PagesAdmin.gotoPageEllipsisMenuItem(
 					menuItem = "View",
-					pageName = "${pageName}");
+					pageName = ${pageName});
 
 				AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 			}
@@ -919,16 +919,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify the 'All articles' in Blog Entry link to Blog page"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheAllArticlesLinkInBlogEntryLinkToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
 			Navigator.gotoSitePage(
 				pageName = "Blog",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			Masterclass.goToLink(
 				key_buttonName = "Read More",
@@ -944,16 +944,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify the 'All articles' in Team Member Page link to Blog Page"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheAllArticlesLinkInTeamMemberLinkToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
 			Navigator.gotoSitePage(
 				pageName = "Team",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			Click(
 				key_imageName = "member",
@@ -969,16 +969,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify the 'All open positions' link to Careers page"
-	@priority = "3"
+	@priority = 3
 	test VerifyTheAllOpenPositionsLinkRedirectsToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Go to Blog and Open a Blog Entry") {
 			Navigator.gotoSitePage(
 				pageName = "Careers",
-				siteName = "${testSiteName}");
+				siteName = ${testSiteName});
 
 			Click(
 				key_entryTitle = "Growth Product Manager",
@@ -994,10 +994,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify all the links present in the Home Page redirect to their respective pages"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheLinksRedirectsToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click in The 'All blog articles' link and assert it redirects to Blog Page") {
@@ -1008,7 +1008,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click in The 'All job positions' link and assert it redirects to Careers Page") {
@@ -1019,7 +1019,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click in The 'All team members' link and assert it redirects to Team Page") {
@@ -1031,10 +1031,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify the Page Titles redirect to their respective pages"
-	@priority = "4"
+	@priority = 4
 	test VerifyThePageTitlesRedirectsToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on the Careers Card Title and Assert it is redirected to Careers Page") {
@@ -1048,7 +1048,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on the Team Card Title and Assert it is redirected to Team Page") {
@@ -1062,7 +1062,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on the Blog Card Title and Assert it is redirected to Blog Page") {
@@ -1077,10 +1077,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143303. Verify the 'View More' links redirect to their respective pages"
-	@priority = "4"
+	@priority = 4
 	test VerifyTheViewMoreRedirectsToItsPage {
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on 'View more' in Careers card and assert it is redirected to Careers Page") {
@@ -1091,7 +1091,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on 'View more' in Team card and assert it is redirected to Team Page") {
@@ -1102,7 +1102,7 @@ definition {
 		}
 
 		task ("Go to Team Extranet Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 
 		task ("Click on 'View more' in Blog card and assert it is redirected to Blog Page") {
@@ -1114,16 +1114,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Categories"
-	@priority = "3"
+	@priority = 3
 	test ViewTeamExtranetCategories {
 		task ("Go to Team Extranet Categories") {
-			Category.openCategoriesAdmin(siteURLKey = "${testSiteURL}");
+			Category.openCategoriesAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the Regions Categories are present") {
 			for (var categoryName : list "Asia Pacific,Europe,Latin America,Middle East & Africa,North America") {
 				Category.viewCP(
-					categoryName = "${categoryName}",
+					categoryName = ${categoryName},
 					vocabularyName = "Regions");
 			}
 		}
@@ -1135,117 +1135,117 @@ definition {
 
 			for (var categoryName : list "Product Management,Marketing,Product Design") {
 				Category.viewCP(
-					categoryName = "${categoryName}",
+					categoryName = ${categoryName},
 					vocabularyName = "Roles");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Collections"
-	@priority = "3"
+	@priority = 3
 	test ViewTeamExtranetCollections {
 		task ("Go to Team Extranet Collections") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "${testSiteURL}");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the Collections are present") {
 			for (var title : list "Blog Entries,Featured Blog Entries,Team Members,Job Positions") {
 				AssertElementPresent(
-					key_title = "${title}",
+					key_title = ${title},
 					locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test ViewTeamExtranetDocumentsAndMedia {
 		property portal.acceptance = "true";
 
 		task ("Go to Team Extranet Documents and Media") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${testSiteURL}");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the 22 Documents are present") {
-			Pagination.changePagination(itemsPerPage = "40");
+			Pagination.changePagination(itemsPerPage = 40);
 
 			for (var key_card : list "site_logo_i.svg,member_peter_doe.jpg,member_kristin_watson.jpg,member_jerome_bell.jpg,member_jacob_jones.jpg,member_esther_howard.jpg,member_brooklyn_simmons.jpg,member_arlene_maccoy.jpg,member_albert_frank.jpg,home_video.mp4,entry_10.jpg,entry_09.jpg,entry_08.jpg,entry_07.jpg,entry_06.jpg,entry_05.jpg,entry_04.jpg,entry_03.jpg,entry_02.jpg,entry_01.jpg,arrow_down.svg") {
 				AssertElementPresent(
-					key_card = "${key_card}",
+					key_card = ${key_card},
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Fragments"
-	@priority = "4"
+	@priority = 4
 	test ViewTeamExtranetFragments {
 		property portal.acceptance = "true";
 
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the Fragments Collections are present") {
 			for (var key_card : list "Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
 				AssertElementPresent(
-					key_card = "${key_card}",
+					key_card = ${key_card},
 					locator1 = "Card#CARD_TITLE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Pages"
-	@priority = "4"
+	@priority = 4
 	test ViewTeamExtranetPages {
 		property portal.acceptance = "true";
 
 		task ("Go to Team Extranet Pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the Team Extranet Pages are present") {
 			for (var pageName : list "Home,Team,Careers,Blog,Resources,Privacy Policy,Cookie Settings") {
 				AssertVisible(
-					key_itemName = "${pageName}",
+					key_itemName = ${pageName},
 					locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
-	@priority = "4"
+	@priority = 4
 	test ViewTeamExtranetPageTemplates {
 		property portal.acceptance = "true";
 
 		task ("Go to Masters Page Templates in Team Extranet Site") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "${testSiteURL}");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert Masters Page Templates are present") {
 			for (var masterLayoutName : list "Blank,Master") {
-				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "${masterLayoutName}");
+				MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = ${masterLayoutName});
 			}
 		}
 
 		task ("Go to Display Page Templates in Team Extranet Site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${testSiteURL}");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert Display Page Templates are present") {
 			for (var displayPageName : list "Blog Entry,Job Position,Team Member") {
-				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "${displayPageName}");
+				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = ${displayPageName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-142641. View the Team Extranet Web Content"
-	@priority = "4"
+	@priority = 4
 	test ViewTeamExtranetWebContent {
 		property portal.acceptance = "true";
 
 		task ("Go to Team Extranet Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "${testSiteURL}");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${testSiteURL});
 		}
 
 		task ("Assert the 8 Team Members in Web Content are present") {
@@ -1254,31 +1254,31 @@ definition {
 				webContentTitle = "Team Members");
 
 			for (var webContentTitle : list "Jerome Bell,Jane Cooper,Esther Howard,Kristin Watson,Jacob Jones,Arlene MacCoy,Jacob Jones,Brooklyn Simmons") {
-				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}
 		}
 
 		task ("Assert the 9 Job Positions in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "${testSiteURL}");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${testSiteURL});
 
 			WebContentFolder.gotoCP(
 				folderName = "Job Positions",
 				webContentTitle = "Job Positions");
 
 			for (var webContentTitle : list "Senior Design Manager,SEO Specialist,Banking Product Manager,Junior Visual Designer,Marketing Lead,Principal Product Manager,Senior Product Designer,E-Commerce Marketing Specialist,Growth Product Manager") {
-				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}
 		}
 
 		task ("Assert the 9 Blog Entries in Web Content are present") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "${testSiteURL}");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${testSiteURL});
 
 			WebContentFolder.gotoCP(
 				folderName = "Blog Entries",
 				webContentTitle = "Blog Entries");
 
 			for (var webContentTitle : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with marketing,5 tools everyone in the design industry should be using,Meet the Steve Jobs of the marketing industry") {
-				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}
 
 			WebContent.viewTitle(
@@ -1294,7 +1294,7 @@ definition {
 			NavItem.gotoStructures();
 
 			for (var webContentTitle : list "Position,Member,Entry") {
-				WebContentStructures.viewCP(structureName = "${structureName}");
+				WebContentStructures.viewCP(structureName = ${structureName});
 			}
 		}
 
@@ -1302,7 +1302,7 @@ definition {
 			Navigator.gotoNavItem(navItem = "Templates");
 
 			for (var templateName : list "Position,Member,Entry") {
-				WebContentTemplates.viewCardsEntryCP(templateName = "${templateName}");
+				WebContentTemplates.viewCardsEntryCP(templateName = ${templateName});
 			}
 		}
 	}

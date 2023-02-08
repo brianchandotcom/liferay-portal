@@ -3,12 +3,12 @@ definition {
 	macro configureScope {
 		ClassicSearch.gotoOptions(portletOption = "Configuration");
 
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+		if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 			Select(
 				locator1 = "Select#SCOPE_CONFIGURATION",
-				value1 = "${searchScope}");
+				value1 = ${searchScope});
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
@@ -20,11 +20,11 @@ definition {
 	}
 
 	macro gotoModifiedRangeFacetPG {
-		var key_searchModifiedRange = "${searchModifiedRange}";
+		var key_searchModifiedRange = ${searchModifiedRange};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "SearchResults#MODIFIED_RANGE_FACET_TIME_RANGE",
-			value1 = "${searchModifiedRange}");
+			value1 = ${searchModifiedRange});
 	}
 
 	macro gotoOptions {
@@ -33,16 +33,16 @@ definition {
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
 
 		if (isSet(portletOption)) {
-			MenuItem.click(menuItem = "${portletOption}");
+			MenuItem.click(menuItem = ${portletOption});
 		}
 	}
 
 	macro gotoSearchResultPG {
-		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
 			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 	}
 
 	macro removeUserFacetDisplayPG {
@@ -62,7 +62,7 @@ definition {
 
 		Type(
 			locator1 = "Search#CLASSIC_SEARCH_BAR",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		KeyPress(
 			locator1 = "Search#CLASSIC_SEARCH_BAR",
@@ -70,10 +70,10 @@ definition {
 	}
 
 	macro selectScopeInput {
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Click.clickNoMouseOver(
 				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT_OPTION",
-				searchScope = "${searchScope}");
+				searchScope = ${searchScope});
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|This Site).");
@@ -85,7 +85,7 @@ definition {
 	}
 
 	macro viewAssetTypeFacetPG {
-		var key_searchAssetType = "${searchAssetType}";
+		var key_searchAssetType = ${searchAssetType};
 
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_TYPE_FACET_ANY_ASSET",
@@ -93,26 +93,26 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#ASSET_TYPE_FACET_FREQUENCY",
-			value1 = "${facetFrequency}");
+			value1 = ${facetFrequency});
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "SearchResults#ASSET_TYPE_FACET_ASSET",
-			value1 = "${searchAssetType}");
+			value1 = ${searchAssetType});
 
 		ClassicSearch.viewSearchResultPG(
-			searchAssetSummary = "${searchAssetSummary}",
-			searchAssetTitle = "${searchAssetTitle}",
-			searchAssetType = "${searchAssetType}");
+			searchAssetSummary = ${searchAssetSummary},
+			searchAssetTitle = ${searchAssetTitle},
+			searchAssetType = ${searchAssetType});
 	}
 
 	macro viewSearchAssetDetailPage {
 		AssertTextEquals(
 			locator1 = "SearchResults#CLASSIC_ASSET_DETAILS_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 	}
 
 	macro viewSearchNoPG {
-		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 
@@ -122,7 +122,7 @@ definition {
 			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_SUMMARY");
 		}
 
-		if ("${searchNoResults}" == "true") {
+		if (${searchNoResults} == "true") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No results were found that matched the keywords: ${searchTerm}.");
@@ -130,47 +130,47 @@ definition {
 	}
 
 	macro viewSearchResultPG {
-		var key_searchAssetTitle = "${searchAssetTitle}";
-		var key_searchAssetType = "${searchAssetType}";
+		var key_searchAssetTitle = ${searchAssetTitle};
+		var key_searchAssetType = ${searchAssetType};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
-			value1 = "${searchAssetType}");
+			value1 = ${searchAssetType});
 
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
-				value1 = "${searchAssetSummary}");
+				value1 = ${searchAssetSummary});
 		}
 	}
 
 	macro viewUserFacetPG {
-		var key_facetFrequency = "${facetFrequency}";
+		var key_facetFrequency = ${facetFrequency};
 
 		AssertTextEquals(
 			locator1 = "SearchResults#USER_FACET_ANY_USER",
 			value1 = "Any User");
 
-		var userLoginFullName = StringUtil.lowerCase("${userLoginFullName}");
+		var userLoginFullName = StringUtil.lowerCase(${userLoginFullName});
 
-		var key_userLoginFullName = "${userLoginFullName}";
+		var key_userLoginFullName = ${userLoginFullName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#USER_FACET_FREQUENCY",
-			value1 = "${facetFrequency}");
+			value1 = ${facetFrequency});
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "SearchResults#USER_FACET_USER_NAME",
-			value1 = "${userLoginFullName}");
+			value1 = ${userLoginFullName});
 
 		ClassicSearch.viewSearchResultPG(
-			searchAssetSummary = "${searchAssetSummary}",
-			searchAssetTitle = "${searchAssetTitle}",
-			searchAssetType = "${searchAssetType}");
+			searchAssetSummary = ${searchAssetSummary},
+			searchAssetTitle = ${searchAssetTitle},
+			searchAssetType = ${searchAssetType});
 	}
 
 }

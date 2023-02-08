@@ -14,12 +14,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanOverrideValueSetInConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
@@ -71,7 +71,7 @@ definition {
 			locator1 = "Portlet#CONFIGURATION_CHECKBOX");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanOverrideValueWithoutConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
 		property test.name.skip.portal.instance = "SystemSettings#CanOverrideValueWithoutConfigFile";
@@ -93,7 +93,7 @@ definition {
 			fieldText = "Set this to true to enable comments for journal articles. This field has been set by a portal property and cannot be changed here.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUpdateConfigValueViaUI {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
@@ -148,7 +148,7 @@ definition {
 				Comments.addPG(entryComment = "WC WebContent Content Comment");
 
 				Comments.viewPG(
-					commentCount = "1",
+					commentCount = 1,
 					entryComment = "WC WebContent Content Comment",
 					userFullName = "Test Test (You)");
 			}
@@ -180,7 +180,7 @@ definition {
 			var fileContent = SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
 			var expectedText = "articleCommentsEnabled=B\"false\"";
 
-			if (contains("${fileContent}", "${expectedText}")) {
+			if (contains(${fileContent}, ${expectedText})) {
 				echo("Config file shows updated value: ${expectedText}");
 			}
 			else {
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "This test asserts that Site OSGi configurations can be used across different systems."
-	@priority = "3"
+	@priority = 3
 	test CanUseSiteConfigurationAcrossDifferentSitesInSameCompany {
 		property custom.properties = "feature.flag.LPS-155284=true";
 
@@ -222,11 +222,11 @@ definition {
 			OSGiConfig.editOSGiConfigFileFromTempFolder(
 				newValue = "liferay.com--site name",
 				oldValue = "liferay.com--Guest",
-				osgiConfigFileName = "${exportConfigFileName}");
+				osgiConfigFileName = ${exportConfigFileName});
 
 			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "${exportFileDirectory}",
-				osgiConfigFileName = "${exportConfigFileName}");
+				osgiConfigFileBaseDir = ${exportFileDirectory},
+				osgiConfigFileName = ${exportConfigFileName});
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -256,17 +256,17 @@ definition {
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			OSGiConfig.assertTextNotInOSGiConfig(
-				osgiConfigFileName = "${exportConfigFileName}",
+				osgiConfigFileName = ${exportConfigFileName},
 				text = "groupKey");
 
 			OSGiConfig.assertTextInOSGiConfig(
-				osgiConfigFileName = "${exportConfigFileName}",
+				osgiConfigFileName = ${exportConfigFileName},
 				text = "groupId");
 		}
 	}
 
 	@description = "This test asserts that Site OSGi configurations can be used across different systems."
-	@priority = "3"
+	@priority = 3
 	test CanUseSiteConfigurationAcrossDifferentSystems {
 		property custom.properties = "feature.flag.LPS-155284=true";
 		property test.name.skip.portal.instance = "SystemSettings#CanUseSiteConfigurationAcrossDifferentSystems";
@@ -319,11 +319,11 @@ definition {
 			OSGiConfig.editOSGiConfigFileFromTempFolder(
 				newValue = "www.able.com--site name",
 				oldValue = "liferay.com--Guest",
-				osgiConfigFileName = "${exportConfigFileName}");
+				osgiConfigFileName = ${exportConfigFileName});
 
 			OSGiConfig.copyOSGiConfigFile(
-				osgiConfigFileBaseDir = "${exportFileDirectory}",
-				osgiConfigFileName = "${exportConfigFileName}");
+				osgiConfigFileBaseDir = ${exportFileDirectory},
+				osgiConfigFileName = ${exportConfigFileName});
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -353,17 +353,17 @@ definition {
 				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
 
 			OSGiConfig.assertTextNotInOSGiConfig(
-				osgiConfigFileName = "${exportConfigFileName}",
+				osgiConfigFileName = ${exportConfigFileName},
 				text = "groupKey");
 
 			OSGiConfig.assertTextInOSGiConfig(
-				osgiConfigFileName = "${exportConfigFileName}",
+				osgiConfigFileName = ${exportConfigFileName},
 				text = "groupId");
 		}
 	}
 
 	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
-	@priority = "5"
+	@priority = 5
 	test CheckSystemSettingsScopeIsCorrected {
 		property test.name.skip.portal.instance = "SystemSettings#CheckSystemSettingsScopeIsCorrected";
 

@@ -1,7 +1,7 @@
 definition {
 
 	macro clickFilterAndOrderBy {
-		var filterOption = "${filterOption}";
+		var filterOption = ${filterOption};
 
 		Click(
 			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -11,25 +11,25 @@ definition {
 	}
 
 	macro createNewFieldSet {
-		PortletEntry.inputName(name = "${fieldSetName}");
+		PortletEntry.inputName(name = ${fieldSetName});
 
 		DynamicDataMapping.addField(
-			field = "${fieldType}",
-			fieldFieldLabel = "${fieldType}",
-			fieldName = "${fieldType}");
+			field = ${fieldType},
+			fieldFieldLabel = ${fieldType},
+			fieldName = ${fieldType});
 
 		KaleoFormsAdmin.saveFieldSet();
 
 		AssertElementPresent(
-			key_ddlDataDefinitionName = "${fieldSetName}",
+			key_ddlDataDefinitionName = ${fieldSetName},
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
 	}
 
 	macro deleteOneFieldSet {
-		Search.searchCP(searchTerm = "${fieldSetName}");
+		Search.searchCP(searchTerm = ${fieldSetName});
 
 		Click.waitForMenuToggleJSClick(
-			key_kfFieldSetName = "${fieldSetName}",
+			key_kfFieldSetName = ${fieldSetName},
 			locator1 = "KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -42,9 +42,9 @@ definition {
 	macro editFieldSets {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
-			rowEntry = "${nameFieldset}");
+			rowEntry = ${nameFieldset});
 
-		PortletEntry.inputName(name = "${newNameFieldset}");
+		PortletEntry.inputName(name = ${newNameFieldset});
 
 		if (isSet(newDescription)) {
 			if (IsElementPresent(locator1 = "KaleoFormsManageFieldSets#DETAILS_PANEL_HEADER_COLLAPSED")) {
@@ -52,12 +52,12 @@ definition {
 
 				Type(
 					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
-					value1 = "${newDescription}");
+					value1 = ${newDescription});
 			}
 			else {
 				Type(
 					locator1 = "KaleoFormsManageFieldSets#DESCRIPTION_FIELD",
-					value1 = "${newDescription}");
+					value1 = ${newDescription});
 			}
 		}
 
@@ -65,18 +65,18 @@ definition {
 	}
 
 	macro searchFieldSet {
-		Search.searchCP(searchTerm = "${fieldSetName}");
+		Search.searchCP(searchTerm = ${fieldSetName});
 
 		AssertElementPresent(
-			key_submissionName = "${fieldSetName}",
+			key_submissionName = ${fieldSetName},
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
 	macro viewFieldSetCannotBeDeleted {
-		Search.searchCP(searchTerm = "${fieldSetName}");
+		Search.searchCP(searchTerm = ${fieldSetName});
 
 		Click.waitForMenuToggleJSClick(
-			key_kfFieldSetName = "${fieldSetName}",
+			key_kfFieldSetName = ${fieldSetName},
 			locator1 = "KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -87,7 +87,7 @@ definition {
 	}
 
 	macro viewFieldSetCannotBeFound {
-		Search.searchCP(searchTerm = "${fieldSetName}");
+		Search.searchCP(searchTerm = ${fieldSetName});
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -95,12 +95,12 @@ definition {
 	}
 
 	macro viewFieldSetOrder {
-		var rowNumber = "1";
+		var rowNumber = 1;
 
-		for (var nameFieldset : list "${fieldSetList}") {
+		for (var nameFieldset : list ${fieldSetList}) {
 			AssertElementPresent(
-				key_nameFieldset = "${nameFieldset}",
-				key_rowNumber = "${rowNumber}",
+				key_nameFieldset = ${nameFieldset},
+				key_rowNumber = ${rowNumber},
 				locator1 = "KaleoFormsManageFieldSets#NAME_ROW_FROM_MANAGE_FIELD");
 
 			var rowNumber = ${rowNumber} + 1;
@@ -108,8 +108,8 @@ definition {
 	}
 
 	macro viewPageNumber {
-		for (var pageNumber : list "${pageNumberList}") {
-			var key_pageNumber = "${pageNumber}";
+		for (var pageNumber : list ${pageNumberList}) {
+			var key_pageNumber = ${pageNumber};
 
 			AssertElementPresent(locator1 = "KaleoFormsManageFieldSets#PAGINATION_NUMBER");
 		}
@@ -125,19 +125,19 @@ definition {
 	}
 
 	macro viewValuesOnColumns {
-		var key_rowNumber = "${rowNumber}";
+		var key_rowNumber = ${rowNumber};
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsManageFieldSets#COLUMN_NAME_VALUE",
-			value1 = "${nameField}");
+			value1 = ${nameField});
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsManageFieldSets#COLUMN_DESCRIPTION_VALUE",
-			value1 = "${descriptionField}");
+			value1 = ${descriptionField});
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsManageFieldSets#COLUMN_MODIFIED_DATE_VALUE",
-			value1 = "${modifiedDateField}");
+			value1 = ${modifiedDateField});
 	}
 
 }

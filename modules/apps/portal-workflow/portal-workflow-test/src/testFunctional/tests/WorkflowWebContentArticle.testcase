@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "Verify that the user can modify the Web Content's workflow"
-	@priority = "3"
+	@priority = 3
 	test CanChangeWorkflowWebContent {
 		property test.name.skip.portal.instance = "WorkflowWebContentArticle#CanChangeWorkflowWebContent";
 
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "Verify that a workflow can be assigned to Web Content in the DXP Configuration > Workflow"
-	@priority = "4"
+	@priority = 4
 	test CanConfigureWorkflowWebContent {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@description = "Verify that the user can reject a Web Content Article"
-	@priority = "3"
+	@priority = 3
 	test CanRejectWebContentArticle {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "Verify that a Web Content draft is not submitted as a Workflow task"
-	@priority = "3"
+	@priority = 3
 	test CanSaveAsDraft {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

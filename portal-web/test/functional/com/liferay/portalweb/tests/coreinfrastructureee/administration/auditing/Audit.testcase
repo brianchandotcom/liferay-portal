@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-1: Verify that information is present in the logs after enabling log context & Incoming X-Request-ID."
-	@priority = "5"
+	@priority = 5
 	test AssertAuditConsoleInformationIsPresentAfterEnabledLog {
 		property test.name.skip.portal.instance = "Audit#AssertAuditConsoleInformationIsPresentAfterEnabledLog";
 
@@ -38,16 +38,16 @@ definition {
 
 			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
 
-			var runGet = JSONCurlUtil.get("${curl}");
+			var runGet = JSONCurlUtil.get(${curl});
 
 			for (var logString : list "xRequestId,companyId=${companyId},virtualHostName,clientIP,userEmailAddress,serverName,userId=${userId}") {
-				AuditLog.viewLogFileContent(logString = "${logString}");
+				AuditLog.viewLogFileContent(logString = ${logString});
 			}
 		}
 	}
 
 	@description = "This is a use case for LPS-155728. TC-1: Assert the email address is present in the audit log context in a human-readable format."
-	@priority = "2"
+	@priority = 2
 	test AssertEmailAddressIsPresentInReadable {
 		property test.name.skip.portal.instance = "Audit#AssertEmailAddressIsPresentInReadable";
 
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-2: Verify that Console outputs a different X-Request-ID if an invalid X-Request-ID was inputted."
-	@priority = "5"
+	@priority = 5
 	test AssertInvalidXRequestId {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
@@ -87,16 +87,16 @@ definition {
 
 			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
 
-			var userId = JSONCurlUtil.get("${curl}");
+			var userId = JSONCurlUtil.get(${curl});
 
-			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
+			AssertConsoleTextNotPresent(value1 = ${invalidXRequestId});
 
 			AuditLog.viewLogFileContent(logString = "xRequestId");
 		}
 	}
 
 	@description = "This is a use case for LPS-140258. TC-1: Assert that sessionId is not present in the audit log context."
-	@priority = "2"
+	@priority = 2
 	test AssertSessionIdIsNotPresentInAuditLogContext {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogContext";
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140258. TC-2: Assert that sessionId is not present in the Audit Log portlet's UI."
-	@priority = "2"
+	@priority = 2
 	test AssertSessionIdIsNotPresentInAuditLogPortlet {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Audit#AssertSessionIdIsNotPresentInAuditLogPortlet";
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "LPS-133646 and LPS-133653 TC-3: Verify that Console outputs the same X-Request-ID as inputted X-Request-ID."
-	@priority = "5"
+	@priority = 5
 	test AssertValidXRequestId {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
@@ -174,18 +174,18 @@ definition {
 		task ("Assert that console outputs the same X-Request-ID as inputted X-Request-ID") {
 			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-			var validXRequestId = StringUtil.randomString("40");
+			var validXRequestId = StringUtil.randomString(40);
 
 			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
 
-			var userId = JSONCurlUtil.get("${curl}");
+			var userId = JSONCurlUtil.get(${curl});
 
-			AuditLog.viewLogFileContent(logString = "${validXRequestId}");
+			AuditLog.viewLogFileContent(logString = ${validXRequestId});
 		}
 	}
 
 	@description = "This is a use case for LPS-150300. Verify that Console outputs the correct clientIP when reading of the X-Forwarded-For http header."
-	@priority = "5"
+	@priority = 5
 	test VerifyCorrectClientIP {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}useIncomingXRequestId=\"true\"";
@@ -209,7 +209,7 @@ definition {
 
 			echo("## * Read of the X-Forwarded-For http header:");
 
-			var runGet = JSONCurlUtil.get("${curl}");
+			var runGet = JSONCurlUtil.get(${curl});
 
 			AuditLog.viewLogFileContent(logString = "clientIP=127.0.0.1");
 		}

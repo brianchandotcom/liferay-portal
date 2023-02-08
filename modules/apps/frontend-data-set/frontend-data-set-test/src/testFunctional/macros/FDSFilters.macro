@@ -1,8 +1,8 @@
 definition {
 
 	macro addDateRangeFilters {
-		var key_fromDate = StringUtil.extractDigits("${key_fromDate}");
-		var key_toDate = StringUtil.extractDigits("${key_toDate}");
+		var key_fromDate = StringUtil.extractDigits(${key_fromDate});
+		var key_toDate = StringUtil.extractDigits(${key_toDate});
 
 		if (IsElementPresent(key_filter = "Date Range", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
@@ -13,12 +13,12 @@ definition {
 		Type.sendKeys(
 			key_dateId = "from-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
-			value1 = "${key_fromDate}");
+			value1 = ${key_fromDate});
 
 		Type.sendKeys(
 			key_dateId = "to-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
-			value1 = "${key_toDate}");
+			value1 = ${key_toDate});
 
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 	}
@@ -41,9 +41,9 @@ definition {
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
 
-		for (var status : list "${key_status}") {
+		for (var status : list ${key_status}) {
 			Uncheck.uncheckNotVisible(
-				key_status = "${status}",
+				key_status = ${status},
 				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 		}
 	}
@@ -51,15 +51,15 @@ definition {
 	macro editFilters {
 		FDSFilters.openFilters();
 
-		FDSFilters.searchFilter(searchTerm = "${key_filter}");
+		FDSFilters.searchFilter(searchTerm = ${key_filter});
 
 		Click(
-			key_filter = "${key_filter}",
+			key_filter = ${key_filter},
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 
-		FDSFilters.disableStatusFilters(key_status = "${key_disableFilters}");
+		FDSFilters.disableStatusFilters(key_status = ${key_disableFilters});
 
-		FDSFilters.enableStatusFilters(key_status = "${key_enableFilters}");
+		FDSFilters.enableStatusFilters(key_status = ${key_enableFilters});
 
 		Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
 
@@ -75,9 +75,9 @@ definition {
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
 
-		for (var status : list "${key_status}") {
+		for (var status : list ${key_status}) {
 			Check.checkNotVisibleNoErrors(
-				key_status = "${status}",
+				key_status = ${status},
 				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 		}
 	}
@@ -97,7 +97,7 @@ definition {
 	macro removeFilter {
 		Click(
 			locator1 = "FrontendDataSet#REMOVE_FILTER",
-			value1 = "${key_filter}");
+			value1 = ${key_filter});
 	}
 
 	macro resetFilter {
@@ -109,7 +109,7 @@ definition {
 		else {
 			ClickNoError(
 				locator1 = "FrontendDataSet#RESET_FILTERS",
-				reset_filter = "${reset_filter}");
+				reset_filter = ${reset_filter});
 		}
 	}
 
@@ -120,7 +120,7 @@ definition {
 
 		Type(
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		ClickNoError(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
 	}

@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This test adds the Add Account Entry permission to Account Admin and assert user can add an account."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanAddAccount {
 		property portal.acceptance = "true";
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can add a billing address to an Account."
-	@priority = "5"
+	@priority = 5
 	test AccountAdminCanAddBillingAddressToAccount {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can add a new user to an account"
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanAddNewUserToAccount {
 		property portal.acceptance = "true";
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can add a shipping address to an Account."
-	@priority = "5"
+	@priority = 5
 	test AccountAdminCanAddShippingAddressToAccount {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -263,7 +263,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Shipping",
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can assign roles to users."
-	@priority = "5"
+	@priority = 5
 	test AccountAdminCanAssignRolesToUsers {
 		property portal.acceptance = "true";
 
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account can be deactivated and will show Active and Inactive filters."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AccountAdminCanDeactivateAccount {
 		task ("Given add an user as Account Administrator assigned to a Business Account with delete permission") {
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account can be deleted."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AccountAdminCanDeleteAccount {
 		property portal.acceptance = "true";
@@ -469,7 +469,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
-	@priority = "5"
+	@priority = 5
 	test AccountAdminCanEditAccount {
 		property portal.acceptance = "true";
 
@@ -532,7 +532,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Administrator can edit the info of users who belong to that account."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AccountAdminCanEditOtherUserInfo {
 		task ("Given add two users userea as Account Administrator with update view permision and userea1 assigned to a Business Account") {
@@ -571,7 +571,7 @@ definition {
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.User",
 					roleTitle = "Edit User Role");
 			}
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin cannot add a user wtih an email domain that is blocked."
-	@priority = "4"
+	@priority = 4
 	test AccountAdminCannotAddUserWithBlockedDomain {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -679,7 +679,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can set a billing address to an Account."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanSetDefaultBillingAddress {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -725,7 +725,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing",
@@ -745,7 +745,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				phoneNumber = "+1-877-543-3729");
@@ -753,7 +753,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can set a shipping address to an Account."
-	@priority = "5"
+	@priority = 5
 	test AccountAdminCanSetDefaultShippingAddress {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -828,7 +828,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can add and unassign organization in bulk"
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanUnassignOrganizationsInBulk {
 		task ("Given add an Account Administrator with manage org permission assigned to a Business Account") {
@@ -903,7 +903,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can add and unassign organization to an account"
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanUnassignOrganizationToAccount {
 		task ("Given add an Account Administrator with manage org permission assigned to a Business Account") {
@@ -976,7 +976,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can unassign roles to users."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AccountAdminCanUnassignRolesToUsers {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -1054,7 +1054,7 @@ definition {
 	}
 
 	@description = "This test searches for an Account within the list by Account Name and Account ID."
-	@priority = "5"
+	@priority = 5
 	test AccountMemberCanSearchForAccountViaNameAndID {
 		task ("Given a user assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -1103,7 +1103,7 @@ definition {
 	}
 
 	@description = "This test asserts an account member can search accounts they belong to"
-	@priority = "3"
+	@priority = 3
 	test AccountMemberCanSearchForAnAccount {
 		task ("Given an account user assigned to two accounts") {
 			JSONUser.addUser(
@@ -1162,7 +1162,7 @@ definition {
 	}
 
 	@description = "This test asserts that account users can be ordered by First Name, Last Name, Email."
-	@priority = "4"
+	@priority = 4
 	test AdminCanOrderUsers {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -1222,17 +1222,17 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "First Name");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn userln");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn1 userln5");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn5 userln2");
 		}
@@ -1241,17 +1241,17 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Last Name");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn userln");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn5 userln2");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn1 userln5");
 		}
@@ -1260,24 +1260,24 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Email Address");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn1 userln5");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn5 userln2");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userfn userln");
 		}
 	}
 
 	@description = "This test asserts Account Administrators can search for account users"
-	@priority = "5"
+	@priority = 5
 	test AdminCanSearchForAccountUsers {
 		property portal.acceptance = "true";
 
@@ -1334,12 +1334,12 @@ definition {
 
 				LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 
-				if ("${userNum}" == "2") {
+				if (${userNum} == 2) {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn3 userln3");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
 				}
-				else if ("${userNum}" == "3") {
+				else if (${userNum} == 3) {
 					LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
@@ -1362,12 +1362,12 @@ definition {
 
 				LexiconEntry.viewNoEntry(rowEntry = "userea@liferay.com");
 
-				if ("${userNum}" == "2") {
+				if (${userNum} == 2) {
 					LexiconEntry.viewNoEntry(rowEntry = "userea3@liferay.com");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userea4@liferay.com");
 				}
-				else if ("${userNum}" == "3") {
+				else if (${userNum} == 3) {
 					LexiconEntry.viewNoEntry(rowEntry = "userea2@liferay.com");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userea4@liferay.com");
@@ -1382,7 +1382,7 @@ definition {
 	}
 
 	@description = "This test asserts Account Administrators can view all account users"
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AdminCanViewAllAccountUsers {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -1446,7 +1446,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-73702 and asserts that a user can see all accounts that they belong to"
-	@priority = "5"
+	@priority = 5
 	test CanAccessAListOfAccountsTheUserBelongsTo {
 		task ("Given a user") {
 			JSONUser.addUser(
@@ -1497,7 +1497,7 @@ definition {
 	}
 
 	@description = "This test checks that the size of the pagination list can be changed."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanChangePaginationInAccounts {
 		task ("Given add an Account Administrator assigned to five Business Accounts") {
@@ -1534,10 +1534,10 @@ definition {
 			for (var accountNames : list "Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
 				Account.openAccountsAdmin();
 
-				LexiconEntry.gotoEntry(rowEntry = "${accountNames}");
+				LexiconEntry.gotoEntry(rowEntry = ${accountNames});
 
 				Account.assignUsers(
-					accountName = "${accountNames}",
+					accountName = ${accountNames},
 					assigneeName = "userfn userln");
 			}
 		}
@@ -1552,9 +1552,9 @@ definition {
 			AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
 
 			for (var listEntries : list "4,8,20,60") {
-				Pagination.changePagination(itemsPerPage = "${listEntries}");
+				Pagination.changePagination(itemsPerPage = ${listEntries});
 
-				if ("${listEntries}" == "4") {
+				if (${listEntries} == 4) {
 					Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
 					LexiconEntry.viewNoEntry(rowEntry = "Account Name 4");
@@ -1562,7 +1562,7 @@ definition {
 					LexiconEntry.viewNoEntry(rowEntry = "Account Name 5");
 
 					for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
-						LexiconEntry.viewEntryName(rowEntry = "${accountEntries}");
+						LexiconEntry.viewEntryName(rowEntry = ${accountEntries});
 					}
 
 					Click(locator1 = "Pagination#NEXT_LINK");
@@ -1574,14 +1574,14 @@ definition {
 					LexiconEntry.viewEntryName(rowEntry = "Account Name 5");
 
 					for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
-						LexiconEntry.viewNoEntry(rowEntry = "${accountEntries}");
+						LexiconEntry.viewNoEntry(rowEntry = ${accountEntries});
 					}
 				}
 				else {
 					Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
 					for (var allAccounts : list "Account Name,Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
-						LexiconEntry.viewEntryName(rowEntry = "${allAccounts}");
+						LexiconEntry.viewEntryName(rowEntry = ${allAccounts});
 					}
 				}
 			}
@@ -1589,7 +1589,7 @@ definition {
 	}
 
 	@description = "This test asserts that account users can be filtered by status."
-	@priority = "4"
+	@priority = 4
 	test CanFilterAccountUsersByStatus {
 		task ("Given an account with active and inactive users") {
 			JSONAccountEntry.addAccountEntry(
@@ -1666,7 +1666,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
-	@priority = "5"
+	@priority = 5
 	test CannotViewOtherAccounts {
 		property portal.acceptance = "true";
 
@@ -1718,7 +1718,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Admin can remove a user from an account."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CanRemoveUserFromAccount {
 		property portal.acceptance = "true";
@@ -1780,7 +1780,7 @@ definition {
 		for (var users : list "user1 user1,user2 user2") {
 			Account.goToEntryMenuItem(
 				menuItem = "Remove",
-				rowEntry = "${users}");
+				rowEntry = ${users});
 
 			AssertConfirm(value1 = "Are you sure you want to remove this user?");
 		}
@@ -1801,7 +1801,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user with Update permission for account entries can successfully update an account entry"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateAccountWithUpdatePermissions {
 		task ("Given a user who is a member of an account and has permissions to update account") {
 			JSONAccountEntry.addAccountEntry(
@@ -1854,7 +1854,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user with View permission for account entries can view, but not be able to perform any other actions"
-	@priority = "5"
+	@priority = 5
 	test CanViewAccountWithViewPermissions {
 		task ("Given a user with View permissions for AccountEntry and a business account") {
 			JSONRole.addRegularRole(
@@ -1899,13 +1899,13 @@ definition {
 			MenuItem.viewPresent(menuItem = "Select Account");
 
 			for (var menuItem : list "Edit,Manage Users,Manage Organizations,Deactivate,Delete") {
-				MenuItem.viewNotPresent(menuItem = "${menuItem}");
+				MenuItem.viewNotPresent(menuItem = ${menuItem});
 			}
 		}
 	}
 
 	@description = "This test filters Accounts by status."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test FilterByStatus {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -1976,7 +1976,7 @@ definition {
 	}
 
 	@description = "This test filters Accounts by Account Type."
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test FilterByType {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -2020,18 +2020,18 @@ definition {
 		Navigator.gotoPage(pageName = "2B Account Page");
 
 		for (var allAccounts : list "Account Name,Person Account") {
-			LexiconEntry.viewEntryName(rowEntry = "${allAccounts}");
+			LexiconEntry.viewEntryName(rowEntry = ${allAccounts});
 		}
 
 		for (var filter : list "Business,Person") {
-			ManagementBar.setFilterAndOrder(filterBy = "${filter}");
+			ManagementBar.setFilterAndOrder(filterBy = ${filter});
 
-			if ("${filter}" == "Business") {
+			if (${filter} == "Business") {
 				LexiconEntry.viewEntryName(rowEntry = "Account Name");
 
 				LexiconEntry.viewNoEntry(rowEntry = "Person Account");
 			}
-			else if ("${filter}" == "Person") {
+			else if (${filter} == "Person") {
 				LexiconEntry.viewEntryName(rowEntry = "Person Account");
 
 				LexiconEntry.viewNoEntry(rowEntry = "Account Name");
@@ -2040,7 +2040,7 @@ definition {
 	}
 
 	@description = "This test asserts that multiple users can be assigned to roles simultaneously."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ManyToManyRelationshipAssignmentIsPossible {
 		task ("Given there is an Account Administrator assigned to a Business Account") {
@@ -2102,7 +2102,7 @@ definition {
 
 				Account.addAssigneeToRoleViaUsersTab(
 					accountRoleTitle = "Test Account Role",
-					accountUserName = "${accountUserName}");
+					accountUserName = ${accountUserName});
 			}
 		}
 
@@ -2110,7 +2110,7 @@ definition {
 			for (var user : list "userfn userln,userfn2 userln2") {
 				AssertTextEquals(
 					key_columnName = "lfr-account-roles-column",
-					key_rowEntry = "${user}",
+					key_rowEntry = ${user},
 					locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 					value1 = "Account Administrator, Test Account Role");
 			}

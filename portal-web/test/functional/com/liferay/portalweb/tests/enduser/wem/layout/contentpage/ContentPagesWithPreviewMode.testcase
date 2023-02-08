@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158527. The guest shouldn't be allowed to preview changes."
-	@priority = "4"
+	@priority = 4
 	test CannotPreviewChangesAsGuest {
 		task ("Given a guest has a content pages with draft changes") {
 			JSONLayout.addPublicLayout(
@@ -55,7 +55,7 @@ definition {
 		task ("When the guest access to the content page at preview mode") {
 			User.logoutPG();
 
-			Navigator.openSpecificURL(url = "${previewURL}");
+			Navigator.openSpecificURL(url = ${previewURL});
 		}
 
 		task ("Then the guest should see not found") {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153367. The page creator could preview changes in a new tab."
-	@priority = "5"
+	@priority = 5
 	test PreviewChangesInANewTab {
 		property portal.acceptance = "true";
 

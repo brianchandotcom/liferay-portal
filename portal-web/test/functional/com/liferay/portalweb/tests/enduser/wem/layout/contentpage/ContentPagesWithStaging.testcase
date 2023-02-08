@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140136. As a page viewer with only page view permission, the draft actions are invisible in staging and live site."
-	@priority = "4"
+	@priority = 4
 	test CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -70,7 +70,7 @@ definition {
 		task ("Define the permissions of new role") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -90,7 +90,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_LAYOUT,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -161,7 +161,7 @@ definition {
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			for (var itemName : list "Preview Draft,Discard Draft") {
-				MenuItem.viewNotPresent(menuItem = "${itemName}");
+				MenuItem.viewNotPresent(menuItem = ${itemName});
 			}
 		}
 
@@ -176,7 +176,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -196,7 +196,7 @@ definition {
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			for (var itemName : list "Preview Draft,Discard Draft") {
-				MenuItem.viewNotPresent(menuItem = "${itemName}");
+				MenuItem.viewNotPresent(menuItem = ${itemName});
 			}
 		}
 
@@ -211,7 +211,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
-	@priority = "4"
+	@priority = 4
 	test CannotViewSiteMapOfStagingSiteAsGuest {
 		property test.name.skip.portal.instance = "ContentPagesWithStaging#CannotViewSiteMapOfStagingSiteAsGuest";
 
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements in staging site."
-	@priority = "4"
+	@priority = 4
 	test CreatePageTemplateFromContentPageInStagingSite {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -323,13 +323,13 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Page Name - Page Template");
 
 			for (var elementName : list "Heading,Asset Publisher") {
-				PageEditor.viewFragment(fragmentName = "${elementName}");
+				PageEditor.viewFragment(fragmentName = ${elementName});
 			}
 		}
 	}
 
 	@description = "Published content pages should remain if staging is deactivated."
-	@priority = "4"
+	@priority = 4
 	test DeactivateStagingAfterPublish {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -392,7 +392,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97189. Editing a web content in the contents panel in a content page editor survives staging."
-	@priority = "2"
+	@priority = 2
 	test EditWebContentViaContentsPanel {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -447,7 +447,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120198. Link page to fragment works on Staging and Live site."
-	@priority = "4"
+	@priority = 4
 	test MapPageToTextFragment {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98030. A mapped editable background image of a fragment survives local staging."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
@@ -635,7 +635,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112030. Can return to a specific interaction state via Undo History list in Staging site."
-	@priority = "3"
+	@priority = 3
 	test NavigateToSpecificInteractionStateViaUndoHistoryInStagingSite {
 		task ("Add a content page in staging site") {
 			JSONLayout.addPublicLayout(
@@ -683,7 +683,7 @@ definition {
 			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
 			for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.click(menuItem = "Add Container");
@@ -691,14 +691,14 @@ definition {
 			PageEditor.viewFragment(fragmentName = "Container");
 
 			for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.click(menuItem = "Add Heading");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			MenuItem.click(menuItem = "Update Heading Editable Values");
@@ -709,23 +709,23 @@ definition {
 				id = "element-text");
 
 			for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.click(menuItem = "Update Container Configuration");
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
-				position = "1");
+				position = 1);
 
 			for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-140136. As a page creator with page update permissions, the draft actions are only visible in staging site."
-	@priority = "4"
+	@priority = 4
 	test PreviewAndDiscardDraftInStagingSite {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -772,7 +772,7 @@ definition {
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
 			for (var itemName : list "Preview Draft,Discard Draft") {
-				MenuItem.viewNotPresent(menuItem = "${itemName}");
+				MenuItem.viewNotPresent(menuItem = ${itemName});
 			}
 		}
 
@@ -787,7 +787,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -875,7 +875,7 @@ definition {
 	}
 
 	@description = "Content pages only appear in live view after being published and should appear properly."
-	@priority = "5"
+	@priority = 5
 	test PublishContentPageToLive {
 		property portal.acceptance = "true";
 
@@ -964,7 +964,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-125564. Publish the draft content page to live site."
-	@priority = "4"
+	@priority = 4
 	test PublishDraftContentPageToLive {
 		task ("Add a draft content page") {
 			JSONLayout.addPublicLayout(
@@ -1030,7 +1030,7 @@ definition {
 	}
 
 	@description = "Changes of content pages should not appear in the live site until after published."
-	@priority = "5"
+	@priority = 5
 	test PublishEditedContentPageToLive {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1142,7 +1142,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -1181,7 +1181,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133933. The user can resize the displayed image via image editor on Page Content panel in staging site."
-	@priority = "4"
+	@priority = 4
 	test ResizeDisplayedImageViaImageEditorOnPageContentPanelInStagingSite {
 		task ("Add a content page based on Blank") {
 			JSONLayout.addPublicLayout(
@@ -1245,14 +1245,14 @@ definition {
 
 		task ("View the naturalWidth doesn't change") {
 			TestUtils.assertEquals(
-				actual = "${editedNaturalWidth}",
-				expected = "${naturalWidth}");
+				actual = ${editedNaturalWidth},
+				expected = ${naturalWidth});
 		}
 
 		task ("View the naturalHeight becomes smaller") {
 			TestUtils.isGreaterThan(
-				actual = "${naturalHeight}",
-				expected = "${editedNaturalHeight}");
+				actual = ${naturalHeight},
+				expected = ${editedNaturalHeight});
 
 			PageEditor.publish();
 		}
@@ -1273,14 +1273,14 @@ definition {
 
 		task ("View the naturalWidth doesn't change") {
 			TestUtils.assertEquals(
-				actual = "${editedNaturalWidth}",
-				expected = "${naturalWidth}");
+				actual = ${editedNaturalWidth},
+				expected = ${naturalWidth});
 		}
 
 		task ("View the naturalHeight becomes smaller") {
 			TestUtils.isGreaterThan(
-				actual = "${naturalHeight}",
-				expected = "${editedNaturalHeight}");
+				actual = ${naturalHeight},
+				expected = ${editedNaturalHeight});
 		}
 
 		task ("Publish to Live via page") {
@@ -1305,19 +1305,19 @@ definition {
 
 		task ("View the naturalWidth doesn't change") {
 			TestUtils.assertEquals(
-				actual = "${editedNaturalWidth}",
-				expected = "${naturalWidth}");
+				actual = ${editedNaturalWidth},
+				expected = ${naturalWidth});
 		}
 
 		task ("View the naturalHeight becomes smaller") {
 			TestUtils.isGreaterThan(
-				actual = "${naturalHeight}",
-				expected = "${editedNaturalHeight}");
+				actual = ${naturalHeight},
+				expected = ${editedNaturalHeight});
 		}
 	}
 
 	@description = "This is a test for LPS-133933. The user can rotate the displayed image via image editor on Page Content panel in staging site."
-	@priority = "4"
+	@priority = 4
 	test RotateDisplayedImageViaImageEditorOnPageContentPanelInStagingSite {
 		task ("Add a content page based on Blank") {
 			JSONLayout.addPublicLayout(
@@ -1356,7 +1356,7 @@ definition {
 			AssertVisible(
 				backgroundImageStyle = "version\=1\.0",
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
@@ -1381,7 +1381,7 @@ definition {
 			AssertVisible(
 				backgroundImageStyle = "version\=2\.0",
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				position = "1");
+				position = 1);
 
 			PageEditor.publish();
 		}
@@ -1399,7 +1399,7 @@ definition {
 			AssertVisible(
 				backgroundImageStyle = "version=2.0",
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Publish to Live via page") {
@@ -1421,12 +1421,12 @@ definition {
 			AssertVisible(
 				backgroundImageStyle = "version=2.0",
 				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				position = "1");
+				position = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."
-	@priority = "3"
+	@priority = 3
 	test UndoDeletedFragmentInStagingSite {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -1493,7 +1493,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130482. View the custom CSS of content page in staging site."
-	@priority = "4"
+	@priority = 4
 	test ViewCustomCSSOfContentPageInStagingSite {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -1543,7 +1543,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(255, 255, 255, 1)");
@@ -1553,7 +1553,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(255, 0, 0, 1)");
@@ -1593,7 +1593,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(0, 0, 0, 1)");
@@ -1603,7 +1603,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "paragraph",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(0, 0, 255, 1)");
@@ -1611,7 +1611,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141773 and LPS-142348. Able to land in the experience selected at view mode in page editor in staging site."
-	@priority = "4"
+	@priority = 4
 	test ViewExperienceInViewMode {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -1686,7 +1686,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
-	@priority = "4"
+	@priority = 4
 	test ViewExperienceSelectedInPreviewDraftPage {
 		task ("Given a page creator has a draft content page with new experience on staging site") {
 			task ("Add a content page") {

@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-3: Assert error message when add invalid auth server local metadata."
-	@priority = "3"
+	@priority = 3
 	test AssertErrorMessageWhenAddInvalidAuthServerLocalMetadata {
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertErrorMessageWhenAddInvalidAuthServerLocalMetadata";
 
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC2: Verify OAuth client configurations could be removed and readded."
-	@priority = "4"
+	@priority = 4
 	test AssertOAuthClientCanBeRemovedAndReadded {
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertOAuthClientCouldBeRemovedAndReadded";
 
@@ -53,12 +53,12 @@ definition {
 		}
 
 		task ("When: Delete the OAuth Client") {
-			OAuthClient.deleteClient(rowIndexNumber = "1");
+			OAuthClient.deleteClient(rowIndexNumber = 1);
 		}
 
 		task ("Then: Verify that the OAuth Client entry is removed from the UI") {
 			AssertElementNotPresent(
-				key_rowIndexNumber = "1",
+				key_rowIndexNumber = 1,
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 		}
 
@@ -72,13 +72,13 @@ definition {
 
 		task ("Then: Verify that the entry is readded in the UI") {
 			AssertElementPresent(
-				key_rowIndexNumber = "1",
+				key_rowIndexNumber = 1,
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 		}
 	}
 
 	@description = "This is a use case for LPS-139642 TC7: Verify OAuth client cannot be created with duplicate client ID."
-	@priority = "4"
+	@priority = 4
 	test AssertOAuthClientCannotBeAddedWithDuplicateClientID {
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertOAuthClientCannotBeAddedWithDuplicateClientID";
 
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC-10: A regular role is assigned to OIDC user if a regular role is defined through the property."
-	@priority = "5"
+	@priority = 5
 	test AssertRegularRoleIsAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=Administrator";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -134,7 +134,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -148,8 +148,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Then: Verify that administrator role is assigned to OIDC user") {
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-6: Verify Refresh Token Offset is not existing in the Instance Settings."
-	@priority = "4"
+	@priority = 4
 	test AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel {
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel";
 
@@ -176,7 +176,7 @@ definition {
 
 	@description = "This is a use case for LPS-124900 TC-4 and LPS-139642 TC-5: Users should be logged out when they don't have a valid access token because a misconfigured refresh token lifetime at Portal. Blocked by LRQA-77889."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test AssertUserIsLoggedOutWithHigherRefreshToken {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -201,7 +201,7 @@ definition {
 
 			OAuthClient.addClient(
 				jsonFileName = "keycloak.json",
-				wellknownURI = "${wellknownURI}");
+				wellknownURI = ${wellknownURI});
 		}
 
 		User.logoutPG();
@@ -213,10 +213,10 @@ definition {
 
 			// This pause is required to allow the test to wait for the access token to expire.
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 
 			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 			}
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-2: Cannot add OAuth client with empty configuration."
-	@priority = "3"
+	@priority = 3
 	test CannotAddOAuthClientWithEmptyConfiguration {
 		property test.name.skip.portal.instance = "OpenIDConnect#CannotAddOAuthClientWithEmptyConfiguration";
 
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-1: Cannot add OAuth client with invalid configurations."
-	@priority = "3"
+	@priority = 3
 	test CannotAddOAuthClientWithInvalidConfigurations {
 		property test.name.skip.portal.instance = "OpenIDConnect#CannotAddOAuthClientWithInvalidConfigurations";
 
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-3: Users could configure multiple OpenID Connect providers."
-	@priority = "4"
+	@priority = 4
 	test ConfigureMultipleOpenIDConnectProviders {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "This is a workaround usecase for LPS-139642 TC-11: Verify the OAuth client of System level should apply to OAuth client of virtual instance."
-	@priority = "5"
+	@priority = 5
 	test ConfigureOnSystemLevelShouldApplyToInstanceLevel {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#ConfigureOnSystemLevelShouldApplyToInstanceLevel";
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-162080 TC-4: Existing OIDC connection can be edited."
-	@priority = "5"
+	@priority = 5
 	test ExistedUserMapperCanBeEdited {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -413,7 +413,7 @@ definition {
 			OAuthClient.addClient(
 				jsonFileName = "keycloak.json",
 				userMapperJSON = "OAuth2_User_mapping.json",
-				wellknownURI = "${wellknownURI}");
+				wellknownURI = ${wellknownURI});
 		}
 
 		task ("And: Logs in through OIDC to verify user informations") {
@@ -441,23 +441,23 @@ definition {
 
 			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
-			var editedUserMapperInfo = StringUtil.replace("${userMapperInfo}", "family_name", "changed");
+			var editedUserMapperInfo = StringUtil.replace(${userMapperInfo}, "family_name", "changed");
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
+				fieldValue = ${editedUserMapperInfo});
 
-			var editedUserMapperInfo = StringUtil.replace("${editedUserMapperInfo}", "given_name", "family_name");
-
-			FormFields.editTextMultiline(
-				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
-
-			var editedUserMapperInfo = StringUtil.replace("${editedUserMapperInfo}", "changed", "given_name");
+			var editedUserMapperInfo = StringUtil.replace(${editedUserMapperInfo}, "given_name", "family_name");
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
+				fieldValue = ${editedUserMapperInfo});
+
+			var editedUserMapperInfo = StringUtil.replace(${editedUserMapperInfo}, "changed", "given_name");
+
+			FormFields.editTextMultiline(
+				fieldName = "OIDCUserInfo",
+				fieldValue = ${editedUserMapperInfo});
 
 			Click(
 				key_text = "Save",
@@ -500,7 +500,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154744. TC4-1: The OIDC user is assigned the regular role which contains multiple spaces given through the property."
-	@priority = "4"
+	@priority = 4
 	test MultipleSpacesRoleNameCanBeAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=My Custom Regular Role";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -529,7 +529,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -549,8 +549,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Then: Multiple spaces role name can be assigned to OKTA user") {
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
-	@priority = "4"
+	@priority = 4
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property portal.acceptance = "true";
 		property portal.ssl.enabled = "true";
@@ -606,8 +606,8 @@ definition {
 
 			User.loginUserWithOpenIDConnectEnabledPG(
 				specificURL = "https://www.able.com:8443",
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Sign out and Login") {
@@ -621,7 +621,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
-	@priority = "4"
+	@priority = 4
 	test OpenIDConnectSmoke {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmoke";
@@ -648,8 +648,8 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				openIdConnectClientId = "${openIdConnectClientId}",
-				openIdConnectClientSecret = "${openIdConnectClientSecret}",
+				openIdConnectClientId = ${openIdConnectClientId},
+				openIdConnectClientSecret = ${openIdConnectClientSecret},
 				providerName = "Google");
 		}
 
@@ -657,8 +657,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Logout and login") {
@@ -667,7 +667,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-72792. Users could login and logout using Auth0 as OpenID Connect provider."
-	@priority = "5"
+	@priority = 5
 	test OpenIDConnectSmokeWithAuth0 {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -696,7 +696,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -710,8 +710,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Logout and login") {
@@ -720,7 +720,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-72792. Users could login and logout using Azure as OpenID Connect provider."
-	@priority = "5"
+	@priority = 5
 	test OpenIDConnectSmokeWithAzure {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -749,7 +749,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -763,8 +763,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Logout and login") {
@@ -773,7 +773,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-72792 and LPS-139642 TC1: Users could login and logout using Okta as OpenID Connect provider."
-	@priority = "5"
+	@priority = 5
 	test OpenIDConnectSmokeWithOkta {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -795,8 +795,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		task ("Logout and login") {
@@ -806,7 +806,7 @@ definition {
 
 	@description = "This is a use case for LRQA-72792. Users could login and logout using PingOne as OpenID Connect provider. Blocked by ISIT-28728."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test OpenIDConnectSmokeWithPingOne {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -837,7 +837,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -851,8 +851,8 @@ definition {
 			User.logoutPG();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userName}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userName},
+				userPassword = ${userPassword});
 		}
 
 		task ("Logout and login") {
@@ -896,10 +896,10 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
-				customAuthorizationRequestParameters = "${customAuthorizationRequestParameters}",
-				customTokenRequestParameters = "${customTokenRequestParameters}",
-				openIdConnectClientId = "${openIdConnectClientId}",
-				openIdConnectClientSecret = "${openIdConnectClientSecret}",
+				customAuthorizationRequestParameters = ${customAuthorizationRequestParameters},
+				customTokenRequestParameters = ${customTokenRequestParameters},
+				openIdConnectClientId = ${openIdConnectClientId},
+				openIdConnectClientSecret = ${openIdConnectClientSecret},
 				providerName = "Google");
 		}
 
@@ -907,10 +907,10 @@ definition {
 			UserBar.signOut();
 
 			User.loginUserWithOpenIDConnectEnabledPG(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 
-			AssertConsoleTextPresent(value1 = "${customAuthorizationRequestParameters}");
+			AssertConsoleTextPresent(value1 = ${customAuthorizationRequestParameters});
 
 			AssertConsoleTextPresent(value1 = "resource");
 		}
@@ -919,7 +919,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the new access token to be generated.
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 
 			Refresh();
 
@@ -928,19 +928,19 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-1: Verify Instance admin can set the token refresh offset via System settings."
-	@priority = "4"
+	@priority = 4
 	test TokenRefreshOffsetCanBeSetAtSystemLevel {
 		property test.name.skip.portal.instance = "OpenIDConnect#TokenRefreshOffsetCanBeSetAtSystemLevel";
 
 		task ("Enable and set the OpenID connect token refresh offset time") {
 			OpenIDConnect.enableOpenIdConnect();
 
-			OpenIDConnect.setTokenRefreshOffset(expirationTime = "60");
+			OpenIDConnect.setTokenRefreshOffset(expirationTime = 60);
 		}
 	}
 
 	@description = "This is a use case for LPS-162080 TC-2/2: User attributes can be mapped in OpenID Connection."
-	@priority = "5"
+	@priority = 5
 	test UserAttributesCanBeMappedInOIDCOnInstanceLevel {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -984,7 +984,7 @@ definition {
 			OAuthClient.addClient(
 				jsonFileName = "keycloak.json",
 				userMapperJSON = "OAuth2_User_mapping.json",
-				wellknownURI = "${wellknownURI}");
+				wellknownURI = ${wellknownURI});
 
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 		}
@@ -1008,7 +1008,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-162080 TC-2/1: User attributes can be mapped in OpenID Connection."
-	@priority = "5"
+	@priority = 5
 	test UserAttributesCanBeMappedInOIDCOnSystemLevel {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -1038,7 +1038,7 @@ definition {
 			OAuthClient.addClient(
 				jsonFileName = "keycloak.json",
 				userMapperJSON = "OAuth2_User_mapping.json",
-				wellknownURI = "${wellknownURI}");
+				wellknownURI = ${wellknownURI});
 
 			User.logoutPG();
 		}
@@ -1065,7 +1065,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-162080 TC-3: User information should be synced towards Keycloak too. Verify that User role can be imported to an existing User on Keycloak from Portal."
-	@priority = "5"
+	@priority = 5
 	test UserRoleCanBeSyncedToKeycloak {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=http://127.0.0.1:18080/auth/realms/master${line.separator}open.id.connect.user.info.processor.impl.regular.role=Power User";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -1095,7 +1095,7 @@ definition {
 
 			OAuthClient.addClient(
 				jsonFileName = "keycloak.json",
-				wellknownURI = "${wellknownURI}");
+				wellknownURI = ${wellknownURI});
 		}
 
 		task ("When: User login as keycloak user") {
@@ -1115,7 +1115,7 @@ definition {
 
 	@description = "This is a use case for LPS-162080 TC-1: OpenID configuration mandatory fields should work with unique error messages. Blocked by LPS-164921."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test VerifyOIDCMandatoryFields {
 		property test.name.skip.portal.instance = "OpenIDConnect#VerifyOIDCMandatoryFields";
 
@@ -1137,8 +1137,8 @@ definition {
 			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
 
 			OAuthClient.addClient(
-				jsonFileName = "${jsonFileName}",
-				wellknownURI = "${wellknownURI}");
+				jsonFileName = ${jsonFileName},
+				wellknownURI = ${wellknownURI});
 		}
 
 		task ("When: User save without Well-known URL") {
@@ -1160,13 +1160,13 @@ definition {
 		task ("When: User save without client ID") {
 			FormFields.editText(
 				fieldName = "authServerWellKnownURI",
-				fieldValue = "${wellknownURI}");
+				fieldValue = ${wellknownURI});
 
-			var editedClientInfo = StringUtil.replace("${clientInfo}", "liferay-system-level", " ");
+			var editedClientInfo = StringUtil.replace(${clientInfo}, "liferay-system-level", " ");
 
 			FormFields.editTextMultiline(
 				fieldName = "infoJSON",
-				fieldValue = "${editedClientInfo}");
+				fieldValue = ${editedClientInfo});
 
 			Click(
 				key_text = "Save",
@@ -1180,13 +1180,13 @@ definition {
 		task ("When: User save without mapping User first name") {
 			FormFields.editTextMultiline(
 				fieldName = "infoJSON",
-				fieldValue = "${clientInfo}");
+				fieldValue = ${clientInfo});
 
-			var editedUserMapperInfo = StringUtil.replace("${userMapperInfo}", "given_name", " ");
+			var editedUserMapperInfo = StringUtil.replace(${userMapperInfo}, "given_name", " ");
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
+				fieldValue = ${editedUserMapperInfo});
 
 			Click(
 				key_text = "Save",
@@ -1198,11 +1198,11 @@ definition {
 		}
 
 		task ("When: User save without mapping User last name") {
-			var editedUserMapperInfo = StringUtil.replace("${userMapperInfo}", "family_name", " ");
+			var editedUserMapperInfo = StringUtil.replace(${userMapperInfo}, "family_name", " ");
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
+				fieldValue = ${editedUserMapperInfo});
 
 			Click(
 				key_text = "Save",
@@ -1214,11 +1214,11 @@ definition {
 		}
 
 		task ("When: User try to save without mapping User email address") {
-			var editedUserMapperInfo = StringUtil.replace("${userMapperInfo}", "email", " ");
+			var editedUserMapperInfo = StringUtil.replace(${userMapperInfo}, "email", " ");
 
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${editedUserMapperInfo}");
+				fieldValue = ${editedUserMapperInfo});
 
 			Click(
 				key_text = "Save",
@@ -1232,7 +1232,7 @@ definition {
 		task ("When: User save with correct data") {
 			FormFields.editTextMultiline(
 				fieldName = "OIDCUserInfo",
-				fieldValue = "${userMapperInfo}");
+				fieldValue = ${userMapperInfo});
 
 			Click(
 				key_text = "Save",
@@ -1245,7 +1245,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-5: Verify Token Refresh Offset cannot be saved with a value under 30 second. Blocked by LPS-138193."
-	@priority = "4"
+	@priority = 4
 	test VerifyTokenRefreshOffsetMinimum {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config";
 		property portal.release = "quarantine";
@@ -1254,17 +1254,17 @@ definition {
 
 		OpenIDConnect.enableOpenIdConnect();
 
-		OpenIDConnect.setTokenRefreshOffset(expirationTime = "20");
+		OpenIDConnect.setTokenRefreshOffset(expirationTime = 20);
 
 		WaitForConsoleTextPresent(value1 = "Token refresh offset needs to be at least 30 seconds");
 
 		AssertTextEquals(
 			locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET",
-			value1 = "30");
+			value1 = 30);
 	}
 
 	@description = "This is a use case for LPS-167751 TC-1: User could login using OIDC with PKCE."
-	@priority = "5"
+	@priority = 5
 	test VerifyUserCouldLoginWithPKCE {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -1296,7 +1296,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -1318,7 +1318,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124900 TC-2: User is still logged in after the first access token's lifetime is over and they receive a new access token in the background."
-	@priority = "5"
+	@priority = 5
 	test VerifyUserIsStillLoggedInAfterAccessTokenExpiresAndRenew {
 		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -1351,7 +1351,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = "1000");
+				Pause(locator1 = 1000);
 
 				Refresh();
 
@@ -1370,7 +1370,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the new access token to be generated.
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 
 			Refresh();
 

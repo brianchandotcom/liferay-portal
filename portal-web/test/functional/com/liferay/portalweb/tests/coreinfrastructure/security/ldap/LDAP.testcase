@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-143257. LDAP credentials should not expose in URL."
-	@priority = "5"
+	@priority = 5
 	test AssertLDAPCredentialsDoesNotExposeInURL {
 		property apacheds.multiple.users.enabled = "true";
 		property portal.acceptance = "true";
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
-	@priority = "5"
+	@priority = 5
 	test CanImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property app.server.types = "tomcat";
@@ -68,9 +68,9 @@ definition {
 		task ("Configure LDAP settings") {
 			var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
-			PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
+			PortalSettings.configureLDAPSetting(enableSettingList = ${enableSettingList});
 
-			PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
+			PortalSettings.viewEnabledLDAPSetting(enableSettingList = ${enableSettingList});
 		}
 
 		task ("shutdown and start server") {
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-151394. User can be unassigned from groups through LDAP. Blocked by LPS-153043"
-	@priority = "3"
+	@priority = 3
 	test CanRemoveUserFromGroupThroughLDAP {
 		property apacheds.enabled = "true";
 		property portal.release = "quarantine";
@@ -115,11 +115,11 @@ definition {
 
 			LDAP.addLDAPServerAndTestConnection();
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 
 			PortalSettings.changeGroupImportMethod(groupImportMethod = "Group");
 
-			PortalSettings.setImportIntervalTime(importIntervalTime = "1");
+			PortalSettings.setImportIntervalTime(importIntervalTime = 1);
 		}
 
 		task ("When: User adds 2 user and to a group on LDAP, from which only one have the mandatory fields to be imported") {
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-121705. User status remain unchanged after LDAP imports."
-	@priority = "3"
+	@priority = 3
 	test DeactivatedUserStayDeactivatedAfterLDAPImport {
 		property apacheds.enabled = "true";
 		property test.name.skip.portal.instance = "LDAP#DeactivatedUserStayDeactivatedAfterLDAPImport";
@@ -164,7 +164,7 @@ definition {
 		task ("And: Configure LDAP settings") {
 			var enableSettingList = "enabled,ldapImportEnabled";
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 		}
 
 		task ("When: User adds a new user") {
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-30529. User fields are not reset to default when signing in with imported LDAP user."
-	@priority = "4"
+	@priority = 4
 	test FieldValuesNotResetForImportedLDAPUser {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
@@ -223,9 +223,9 @@ definition {
 		task ("Configure LDAP settings") {
 			var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
-			PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
+			PortalSettings.configureLDAPSetting(enableSettingList = ${enableSettingList});
 
-			PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
+			PortalSettings.viewEnabledLDAPSetting(enableSettingList = ${enableSettingList});
 		}
 
 		task ("Shutdown and start server") {
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78606 and LPS-64800. Users who have SHA-384 encrypted password and are imported from LDAP are able to log in."
-	@priority = "5"
+	@priority = 5
 	test LDAPAuthenticationWorksWithDifferentPasswordAlgorithm {
 		property apacheds.enabled = "true";
 		property test.name.skip.portal.instance = "LDAP#LDAPAuthenticationWorksWithDifferentPasswordAlgorithm";
@@ -320,7 +320,7 @@ definition {
 
 			LDAP.addLDAPServerAndTestConnection();
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 
 			LDAP.setGeneralMethod(generalMethod = "Password Compare");
 
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-75138. User can set the Import Interval time manually."
-	@priority = "3"
+	@priority = 3
 	test LDAPImportIntervalCanBeSetManually {
 		property apacheds.enabled = "true";
 		property test.name.skip.portal.instance = "LDAP#LDAPImportIntervalCanBeSetManually";
@@ -361,9 +361,9 @@ definition {
 		task ("When: User configure LDAP settings with Import Interval set to 1 minute") {
 			var enableSettingList = "enabled,ldapImportEnabled";
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 
-			PortalSettings.setImportIntervalTime(importIntervalTime = "1");
+			PortalSettings.setImportIntervalTime(importIntervalTime = 1);
 		}
 
 		task ("And: Adds a new user in LDAP") {
@@ -378,7 +378,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73381. LDAP instance settings do not affect system settings."
-	@priority = "3"
+	@priority = 3
 	test LDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";
 
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
-	@priority = "4"
+	@priority = 4
 	test LDAPSecurityCredentialsAreHidden {
 		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
 
@@ -422,12 +422,12 @@ definition {
 
 			Button.clickAdd();
 
-			SystemSettings.editSecurityCredential(securityCredential = "123456");
+			SystemSettings.editSecurityCredential(securityCredential = 123456);
 		}
 	}
 
 	@description = "This is a use case for LRQA-42764. Changes in the User informations will be exported into the LDAP database."
-	@priority = "3"
+	@priority = 3
 	test UserChangesCanBeExportedToLDAP {
 		property apacheds.enabled = "true";
 		property test.name.skip.portal.instance = "LDAP#UserChangesCanBeExportedToLDAP";
@@ -437,7 +437,7 @@ definition {
 
 			LDAP.addLDAPServerAndTestConnection();
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 		}
 
 		task ("And: creates a new user on LDAP and import it") {
@@ -466,7 +466,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-42766. Users can be imported with group import method."
-	@priority = "3"
+	@priority = 3
 	test UsersCanBeImportedFromLDAPByGroups {
 		property apacheds.enabled = "true";
 		property test.name.skip.portal.instance = "LDAP#UsersCanBeImportedFromLDAPByGroups";
@@ -476,7 +476,7 @@ definition {
 
 			LDAP.addLDAPServerAndTestConnection();
 
-			LDAP.enableLDAPSettings(enableSettingList = "${enableSettingList}");
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
 
 			PortalSettings.changeGroupImportMethod(groupImportMethod = "Group");
 		}

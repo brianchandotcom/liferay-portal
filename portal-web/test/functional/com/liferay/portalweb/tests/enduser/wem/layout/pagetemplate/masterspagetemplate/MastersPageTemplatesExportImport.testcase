@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. Can not export a master page template when it doesn't has published version."
-	@priority = "5"
+	@priority = 5
 	test CannotExportMastersPageTemplateWithoutPublishedVersion {
 		property portal.acceptance = "true";
 
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. Can export a master page template containing the layout elements and nested elements and import."
-	@priority = "5"
+	@priority = 5
 	test ExportImportMastersPageTemplateWithCompositionOfFragments {
 		property portal.acceptance = "true";
 
@@ -101,9 +101,9 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Basic Components",
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_fragmentName = "Button",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
@@ -111,9 +111,9 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Button']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 			MastersPageTemplates.publishMaster();
@@ -146,21 +146,21 @@ definition {
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.viewFragment(fragmentName = "Grid");
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Button']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a use case for LPS-102207. Can export a master page template containing the custom configuration settings of fragments and import."
-	@priority = "5"
+	@priority = 5
 	test ExportImportMastersPageTemplateWithCustomConfigurationSettingOfFragments {
 		property portal.acceptance = "true";
 
@@ -190,7 +190,7 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "document_1-png",
-				position = "1");
+				position = 1);
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -242,7 +242,7 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				backgroundImage = "document_1-png",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. Can export a master page template with the custom Look and Feel and import."
-	@priority = "4"
+	@priority = 4
 	test ExportImportMastersPageTemplateWithCustomLookAndFeel {
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. Can export a master page template containing the edited inline content of fragments and import."
-	@priority = "4"
+	@priority = 4
 	test ExportImportMastersPageTemplateWithEditedInlineContentOfFragments {
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -436,7 +436,7 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			for (var fragmentName : list "Heading,HTML,Image") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragment(fragmentName = ${fragmentName});
 			}
 
 			PageEditor.viewFragmentEditableText(
@@ -457,7 +457,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106815. The Organization Role permission settings of widgets will be exported and imported with master page template."
-	@priority = "4"
+	@priority = 4
 	test ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets {
 		task ("Add a organization and organization site") {
 			JSONOrganization.addOrganization(
@@ -560,7 +560,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. Can export a master page template with the thumbnail and import."
-	@priority = "4"
+	@priority = 4
 	test ExportImportMastersPageTemplateWithThumbnail {
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -614,7 +614,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. The existing entry will be overwriten when import a master page template with thumbnail if check Overwrite Existing Entries."
-	@priority = "4"
+	@priority = 4
 	test OverwriteExistingEntryWithThumbnailIfCheckOverwriteExistingEntries {
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -665,7 +665,7 @@ definition {
 
 			UploadTempFile(
 				locator1 = "TextInput#FILE",
-				value1 = "${mastersZipFileName}");
+				value1 = ${mastersZipFileName});
 
 			AssertChecked(
 				checkboxName = "Overwrite Existing Page Templates",
@@ -686,7 +686,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102207. The specific error message should be shown when import a master page template with invalid value in json file."
-	@priority = "4"
+	@priority = 4
 	test ShowSpecificErrorMessageWhenImportMastersPageTemplateWithInvalidValue {
 		task ("Import masters page template with invalid value") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");

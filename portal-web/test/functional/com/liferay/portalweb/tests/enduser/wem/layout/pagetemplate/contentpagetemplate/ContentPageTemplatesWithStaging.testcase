@@ -69,7 +69,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -77,7 +77,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AssertPageTemplatesAreOnlyEditableInStagingView {
 		property portal.acceptance = "true";
 
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "Publish content pages based on page templates to live."
-	@priority = "5"
+	@priority = 5
 	test PublishContentPageBasedOnContentPageTemplateToLive {
 		property portal.acceptance = "true";
 
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "This is a use case for for LPS-111548. Undo can make the content page template editor come back to previous state in Staging site."
-	@priority = "4"
+	@priority = 4
 	test UndoChangesOfContentPageTemplateInStagingSite {
 		task ("View Undo button is disabled when no changes") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
@@ -218,7 +218,7 @@ definition {
 
 			AssertCssValue(
 				fragmentName = "button",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				locator2 = "text-align",
 				value1 = "start");

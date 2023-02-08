@@ -4,24 +4,24 @@ definition {
 		var portletName = "Web Content Display";
 
 		if (isSet(portletNameScoped)) {
-			var portletName = "${portletNameScoped}";
+			var portletName = ${portletNameScoped};
 		}
 
 		if (isSet(portletNameTranslation)) {
-			var portletName = "${portletNameTranslation}";
+			var portletName = ${portletNameTranslation};
 		}
 
-		Portlet.clickPortletPlusIconPG(portletName = "${portletName}");
+		Portlet.clickPortletPlusIconPG(portletName = ${portletName});
 
 		if (isSet(structureName)) {
-			var structureName = "${structureName}";
+			var structureName = ${structureName};
 		}
 		else {
 			var structureName = "Basic Web Content";
 		}
 
 		Click(
-			key_menuItem = "${structureName}",
+			key_menuItem = ${structureName},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		AssertVisible(locator1 = "TextInput#TITLE");
@@ -30,36 +30,36 @@ definition {
 	}
 
 	macro gotoArticleEllipsisMenu {
-		if (IsElementPresent(index = "1", locator1 = "WCD#WEB_CONTENT_CONTENT")) {
+		if (IsElementPresent(index = 1, locator1 = "WCD#WEB_CONTENT_CONTENT")) {
 			MouseOver(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT");
 		}
 
 		if (isSet(contentPage)) {
 			MouseOver.mouseOverNotVisible(
-				key_webContentTitle = "${webContentTitle}",
+				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#ARTICLE_BAREBONE_ELLIPSIS_ICON");
 
 			Click(
-				key_webContentTitle = "${webContentTitle}",
+				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#ARTICLE_BAREBONE_ELLIPSIS_ICON");
 		}
 		else {
 			MouseOver.mouseOverNotVisible(
-				key_webContentTitle = "${webContentTitle}",
+				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 
 			Click(
-				key_webContentTitle = "${webContentTitle}",
+				key_webContentTitle = ${webContentTitle},
 				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 		}
 	}
 
 	macro gotoEdit {
-		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = ${menuItem});
 
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}

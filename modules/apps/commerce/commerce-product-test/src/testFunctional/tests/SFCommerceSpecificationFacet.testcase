@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8403"
-	@priority = "4"
+	@priority = 4
 	test VerifyDisplayFrequencies {
 		property portal.acceptance = "false";
 
@@ -29,15 +29,15 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var facetValueName : list "${facetValueNameList}") {
+		for (var facetValueName : list ${facetValueNameList}) {
 			AssertElementNotPresent(
-				facetValueName = "${facetValueName}",
+				facetValueName = ${facetValueName},
 				locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8401"
-	@priority = "4"
+	@priority = 4
 	test VerifyDisplayTemplate {
 		property portal.acceptance = "false";
 
@@ -52,16 +52,16 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var tagName : list "${warrantyTagNameList}") {
+		for (var tagName : list ${warrantyTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_CLOUD_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 
-		for (var tagName : list "${materialTagNameList}") {
+		for (var tagName : list ${materialTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_CLOUD_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 
 		CommerceWidget.updateFacetConfiguration(
@@ -70,16 +70,16 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var tagName : list "${warrantyTagNameList}") {
+		for (var tagName : list ${warrantyTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 
-		for (var tagName : list "${materialTagNameList}") {
+		for (var tagName : list ${materialTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 
 		CommerceWidget.updateFacetConfiguration(
@@ -88,21 +88,21 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var tagName : list "${warrantyTagNameList}") {
+		for (var tagName : list ${warrantyTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 
-		for (var tagName : list "${materialTagNameList}") {
+		for (var tagName : list ${materialTagNameList}) {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8401"
-	@priority = "4"
+	@priority = 4
 	test VerifyFrequencyThreshold {
 		property portal.acceptance = "false";
 
@@ -111,7 +111,7 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceWidget.updateFacetConfiguration(
-			frequencyThreshold = "30",
+			frequencyThreshold = 30,
 			portletName = "Specification Facet");
 
 		IFrame.closeFrame();
@@ -120,20 +120,20 @@ definition {
 			key_facetLabel = "1 Year Unlimited Mileage Warranty",
 			locator1 = "CommerceWidget#FACET_DEFAULT_LABEL");
 
-		for (var facetLabel : list "${warrantyLabelNameList}") {
+		for (var facetLabel : list ${warrantyLabelNameList}) {
 			AssertElementNotPresent(
-				key_facetLabel = "${facetLabel}",
+				key_facetLabel = ${facetLabel},
 				locator1 = "CommerceWidget#FACET_DEFAULT_LABEL");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8399."
-	@priority = "3"
+	@priority = 3
 	test VerifyMaxTermsFieldValue {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceWidget.updateFacetConfiguration(
-			maxTerms = "101",
+			maxTerms = 101,
 			portletName = "Specification Facet");
 
 		AssertElementPresent(
@@ -176,13 +176,13 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceWidget.updateFacetConfiguration(
-			maxTerms = "100",
+			maxTerms = 100,
 			portletName = "Specification Facet");
 
 		IFrame.closeFrame();
 
 		CommerceWidget.assertSpecificationPanel2FacetsCount(
-			expectedLabels = "100",
+			expectedLabels = 100,
 			specificationGroup = "Material");
 	}
 

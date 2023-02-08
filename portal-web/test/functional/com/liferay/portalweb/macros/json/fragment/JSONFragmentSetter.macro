@@ -4,10 +4,10 @@ definition {
 		Variables.assertDefined(parameterList = "${collectionName},${groupId}");
 
 		var collectionId = JSONFragmentAPI._getCollectionIdByName(
-			collectionName = "${collectionName}",
-			groupId = "${groupId}");
+			collectionName = ${collectionName},
+			groupId = ${groupId});
 
-		return "${collectionId}";
+		return ${collectionId};
 	}
 
 	macro setConfiguration {
@@ -15,13 +15,13 @@ definition {
 			var configuration = "";
 		}
 
-		return "${configuration}";
+		return ${configuration};
 	}
 
 	macro setGroupId {
 		JSONUtil2._exclusiveOrCheck(
-			a = "${groupName}",
-			b = "${groupKey}",
+			a = ${groupName},
+			b = ${groupKey},
 			failMessage = "Please only set 'groupName' or 'groupKey' but not both or none.");
 
 		if (isSet(groupName)) {
@@ -30,8 +30,8 @@ definition {
 			}
 
 			var groupId = JSONGroupAPI._getGroupIdByName(
-				groupName = "${groupName}",
-				site = "${site}");
+				groupName = ${groupName},
+				site = ${site});
 		}
 		else if (isSet(groupKey)) {
 			if (!(isSet(site))) {
@@ -39,11 +39,11 @@ definition {
 			}
 
 			var groupId = JSONGroupAPI._getGroupIdByGroupKey(
-				groupKey = "${groupKey}",
-				site = "${site}");
+				groupKey = ${groupKey},
+				site = ${site});
 		}
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setHTML {
@@ -51,7 +51,7 @@ definition {
 			var html = "test";
 		}
 
-		return "${html}";
+		return ${html};
 	}
 
 	macro setStatus {
@@ -59,25 +59,25 @@ definition {
 			var fragmentStatus = "Draft";
 		}
 
-		if ("${fragmentStatus}" == "Draft") {
-			var status = "2";
+		if (${fragmentStatus} == "Draft") {
+			var status = 2;
 		}
-		else if ("${fragmentStatus}" == "Approved") {
-			var status = "0";
+		else if (${fragmentStatus} == "Approved") {
+			var status = 0;
 		}
 		else {
 			fail("'fragmentStatus' is either invalid or not yet set.");
 		}
 
-		return "${status}";
+		return ${status};
 	}
 
 	macro setType {
 		if (!(isSet(type))) {
-			var type = "0";
+			var type = 0;
 		}
 
-		return "${type}";
+		return ${type};
 	}
 
 }

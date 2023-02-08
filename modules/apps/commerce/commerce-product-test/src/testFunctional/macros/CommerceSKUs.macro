@@ -3,14 +3,14 @@ definition {
 	macro addPriceToSKU {
 		Type(
 			locator1 = "CommerceEntry#PRICE_FIELD",
-			value1 = "${price}");
+			value1 = ${price});
 	}
 
 	macro addSKU {
-		for (var optionValues : list "${optionValuesList}") {
-			var optionValue = StringUtil.extractFirst("${optionValues}", ":");
-			var price = StringUtil.extractLast("${optionValues}", ":");
-			var optionValueUppercase = StringUtil.upperCase("${optionValue}");
+		for (var optionValues : list ${optionValuesList}) {
+			var optionValue = StringUtil.extractFirst(${optionValues}, ":");
+			var price = StringUtil.extractLast(${optionValues}, ":");
+			var optionValueUppercase = StringUtil.upperCase(${optionValue});
 
 			Refresh();
 
@@ -20,14 +20,14 @@ definition {
 				AssertClick(
 					key_menuItem = "Add SKU",
 					locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
-					value1 = "${key_menuItem}");
+					value1 = ${key_menuItem});
 			}
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.addSKUsEntry(
-				noOption = "${noOption}",
-				optionValue = "${optionValue}",
+				noOption = ${noOption},
+				optionValue = ${optionValue},
 				productSku = "${optionValueUppercase}SKU");
 
 			WaitForElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
@@ -36,7 +36,7 @@ definition {
 				key_toggleSwitchLabel = "Purchasable",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			CommerceSKUs.addPriceToSKU(price = "${price}");
+			CommerceSKUs.addPriceToSKU(price = ${price});
 
 			Button.clickPublish();
 
@@ -53,7 +53,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#SKU_ERC_FIELD",
-			value1 = "${skuERC}");
+			value1 = ${skuERC});
 
 		if (isSet(publish)) {
 			Button.clickPublish();
@@ -73,21 +73,21 @@ definition {
 			Type(
 				key_text = "Base Price",
 				locator1 = "TextInput#ANY",
-				value1 = "${basePrice}");
+				value1 = ${basePrice});
 		}
 
 		if (isSet(promoPrice)) {
 			Type(
 				key_text = "Promotion Price",
 				locator1 = "TextInput#ANY",
-				value1 = "${promoPrice}");
+				value1 = ${promoPrice});
 		}
 
 		if (isSet(cost)) {
 			Type(
 				key_text = "Cost",
 				locator1 = "TextInput#ANY",
-				value1 = "${cost}");
+				value1 = ${cost});
 		}
 
 		Button.clickPublish();

@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,13 +31,13 @@ definition {
 	}
 
 	@description = "LPS-142556 - Verify error message 'This field is required' in the 'How many square feet of the building does your business occupy?' field"
-	@priority = "4"
+	@priority = 4
 	test BuildingSquareFeetOccupiedIsRequired {
 		property test.name.skip.portal.instance = "RaylifeProperty#BuildingSquareFeetOccupiedIsRequired";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -59,11 +59,11 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
-			value = "1");
+			value = 1);
 
 		Type(
 			label = "property.buildingSquareFeetOccupied",
@@ -82,13 +82,13 @@ definition {
 	}
 
 	@description = "LPS-142548 - Verify if Continue Button is only enabled when all required fields have been filled in."
-	@priority = "4"
+	@priority = 4
 	test CanContinueOnPropertyInfoWithAllFilled {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanContinueOnPropertyInfoWithAllFilled";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -118,13 +118,13 @@ definition {
 	}
 
 	@description = "LPS-142573 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many square feet of the building does your business occupy?')"
-	@priority = "3"
+	@priority = 3
 	test CanDismissBuildingSquareFeetOccupiedInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanDismissBuildingSquareFeetOccupiedInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -146,7 +146,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
@@ -164,13 +164,13 @@ definition {
 	}
 
 	@description = "LPS-142577 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Is this the primary location you conduct business?')"
-	@priority = "3"
+	@priority = 3
 	test CanDismissPrimaryBusinessLocationInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanDismissPrimaryBusinessLocationInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -192,7 +192,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -204,7 +204,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "2015");
+			value = 2015);
 
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
@@ -222,13 +222,13 @@ definition {
 	}
 
 	@description = "LPS-142575 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'What year was the building constructed?')"
-	@priority = "3"
+	@priority = 3
 	test CanDismissYearBuildingInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanDismissYearBuildingInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -250,7 +250,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -276,13 +276,13 @@ definition {
 	}
 
 	@description = "LPS-142550 - Verify if clicking on Previous returns to Previous Screen (Employee Info/'Tell us about your employees!') and all information is maintained in the Property Info page"
-	@priority = "5"
+	@priority = 5
 	test CanGoBackOnPropertyInfoKeepingAllData {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanGoBackOnPropertyInfoKeepingAllData";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -314,13 +314,13 @@ definition {
 	}
 
 	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on 'Do you own the building at <Business Street Address>?'"
-	@priority = "4"
+	@priority = 4
 	test CanViewAddressInDoOwnBuildingAtAddress {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanViewAddressInDoOwnBuildingAtAddress";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -346,13 +346,13 @@ definition {
 	}
 
 	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on the page's title (On Property's page's title: More about <Address>)."
-	@priority = "4"
+	@priority = 4
 	test CanViewAddressInTitle {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanViewAddressInTitle";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -378,13 +378,13 @@ definition {
 	}
 
 	@description = "LPS-142572 - Verify clicking 'More Info' in the 'How many square feet of the building does your business occupy?' field opens an Information Panel"
-	@priority = "3"
+	@priority = 3
 	test CanViewBuildingSquareFeetOccupiedInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanViewBuildingSquareFeetOccupiedInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -406,7 +406,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
@@ -422,13 +422,13 @@ definition {
 	}
 
 	@description = "LPS-142576 - Verify clicking 'More Info' in the 'Is this the primary location you conduct business?' field opens an Information Panel"
-	@priority = "3"
+	@priority = 3
 	test CanViewPrimaryBusinessLocationInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanViewPrimaryBusinessLocationInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -450,7 +450,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -462,7 +462,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "2015");
+			value = 2015);
 
 		Click(
 			locator1 = "Raylife#BUTTON_MORE_INFO_FORMS",
@@ -478,13 +478,13 @@ definition {
 	}
 
 	@description = "LPS-142574 -  Verify clicking 'More Info' in the 'What year was the building constructed?' field opens an Information Panel."
-	@priority = "3"
+	@priority = 3
 	test CanViewYearBuildingInfoPanel {
 		property test.name.skip.portal.instance = "RaylifeProperty#CanViewYearBuildingInfoPanel";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -506,7 +506,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -530,13 +530,13 @@ definition {
 	}
 
 	@description = "LPS-142565 - Verify 'Are there diving boards or slides?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
-	@priority = "4"
+	@priority = 4
 	test DoesIsThereDivingBoardsShowUp {
 		property test.name.skip.portal.instance = "RaylifeProperty#DoesIsThereDivingBoardsShowUp";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.getAQuote();
 
@@ -589,13 +589,13 @@ definition {
 	}
 
 	@description = "LPS-142564 - Verify 'Are there swimming pool(s) on the premises?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
-	@priority = "4"
+	@priority = 4
 	test DoesIsThereSwimmingShowUp {
 		property test.name.skip.portal.instance = "RaylifeProperty#DoesIsThereSwimmingShowUp";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.getAQuote();
 
@@ -640,13 +640,13 @@ definition {
 	}
 
 	@description = "LPS-142551 - Verify error message 'This field is required' in the 'How many stories is this building?' field"
-	@priority = "4"
+	@priority = 4
 	test StoriesIsRequired {
 		property test.name.skip.portal.instance = "RaylifeProperty#StoriesIsRequired";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -668,7 +668,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		Type(
 			label = "property.stories",
@@ -688,13 +688,13 @@ definition {
 
 	@description = "LPS-142554 - Verify error message 'Must be equal or greater than 0.' in the 'How many stories is this building?' field"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test StoriesNotBelowZero {
 		property test.name.skip.portal.instance = "RaylifeProperty#StoriesNotBelowZero";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -730,13 +730,13 @@ definition {
 	}
 
 	@description = "LPS-142559 - Verify error message 'This field is required' in the 'How many total square feet is the building?' field"
-	@priority = "4"
+	@priority = 4
 	test TotalBuildingSquareFeetIsRequired {
 		property test.name.skip.portal.instance = "RaylifeProperty#TotalBuildingSquareFeetIsRequired";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -758,7 +758,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -766,7 +766,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.totalBuildingSquareFeet",
-			value = "8");
+			value = 8);
 
 		Type(
 			label = "property.totalBuildingSquareFeet",
@@ -785,13 +785,13 @@ definition {
 	}
 
 	@description = "LPS-142563 - Verify error message 'You cannot enter a future year.' in the 'What year was the building constructed?' field"
-	@priority = "4"
+	@priority = 4
 	test YearBuildingIsNotFuture {
 		property test.name.skip.portal.instance = "RaylifeProperty#YearBuildingIsNotFuture";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -813,7 +813,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -825,7 +825,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "3000");
+			value = 3000);
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
@@ -839,13 +839,13 @@ definition {
 	}
 
 	@description = "LPS-142561 - Verify error message 'This field is required' in the 'What year was the building constructed?' field"
-	@priority = "4"
+	@priority = 4
 	test YearBuildingIsRequired {
 		property test.name.skip.portal.instance = "RaylifeProperty#YearBuildingIsRequired";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -867,7 +867,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -879,7 +879,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "2");
+			value = 2);
 
 		Type(
 			label = "property.yearBuilding",
@@ -898,13 +898,13 @@ definition {
 	}
 
 	@description = "LPS-142562 - Verify error message 'Must be a valid year.' in the 'What year was the building constructed?' field"
-	@priority = "4"
+	@priority = 4
 	test YearBuildingIsValid {
 		property test.name.skip.portal.instance = "RaylifeProperty#YearBuildingIsValid";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -926,7 +926,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.buildingSquareFeetOccupied",
@@ -938,7 +938,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "12");
+			value = 12);
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",

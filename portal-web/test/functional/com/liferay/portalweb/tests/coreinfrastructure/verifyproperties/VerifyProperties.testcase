@@ -12,7 +12,7 @@ definition {
 	}
 
 	@description = "LRQA-78467: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when enable AutoUpgrade on startup"
-	@priority = "3"
+	@priority = 3
 	test VerifyPropertiesIsExecutedUsingAutoUpgrade {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-portal";
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "LRQA-78466: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when running upgrade tool"
-	@priority = "4"
+	@priority = 4
 	test VerifyPropertiesIsOnlyExecutedInUpgradeProcess {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
@@ -40,25 +40,25 @@ definition {
 		var upgradeLogContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
 		var upgradeOnlyLogging = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties,Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties,Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess";
 
-		for (var expectedLogString : list "${upgradeOnlyLogging}") {
-			if (!(contains("${upgradeLogContent}", "${expectedLogString}"))) {
+		for (var expectedLogString : list ${upgradeOnlyLogging}) {
+			if (!(contains(${upgradeLogContent}, ${expectedLogString}))) {
 				fail("${expectedLogString} is not found in upgrade.log.");
 			}
 
-			AssertConsoleTextPresent(value1 = "${expectedLogString}");
+			AssertConsoleTextPresent(value1 = ${expectedLogString});
 		}
 
 		Portlet.shutdownServer();
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		for (var unexpectedLogString : list "${upgradeOnlyLogging}") {
-			AssertConsoleTextNotPresent(value1 = "${unexpectedLogString}");
+		for (var unexpectedLogString : list ${upgradeOnlyLogging}) {
+			AssertConsoleTextNotPresent(value1 = ${unexpectedLogString});
 		}
 	}
 
 	@description = "LRQA-78468: Verify Properties not run when start portal with empty database"
-	@priority = "3"
+	@priority = 3
 	test VerifyPropertiesNotRunWithEmptyDatabase {
 		property test.name.skip.portal.instance = "VerifyProperties#VerifyPropertiesNotRunWithEmptyDatabase";
 

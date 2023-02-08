@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that is possible to delete Options from the field."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteOptions {
 		NavItem.gotoStructures();
 
@@ -109,7 +109,7 @@ definition {
 
 		DataEngine.removeFieldOption(
 			fieldFieldLabel = "Select from List",
-			index = "5");
+			index = 5);
 
 		DataEngine.waitForAutoSave();
 
@@ -117,7 +117,7 @@ definition {
 
 		DataEngine.removeFieldOption(
 			fieldFieldLabel = "Select from List",
-			index = "4");
+			index = 4);
 
 		DataEngine.waitForAutoSave();
 
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69036. This test verifies that editing chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanEditChosenOptions {
 		NavItem.gotoStructures();
 
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69036. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -242,12 +242,12 @@ definition {
 
 		DERenderer.inputDataInSelectFromListField(
 			fieldLabel = "Select from List",
-			index = "1",
+			index = 1,
 			optionValue = "Option 1");
 
 		DERenderer.inputDataInSelectFromListField(
 			fieldLabel = "Select from List",
-			index = "2",
+			index = 2,
 			optionValue = "Option 2");
 
 		Button.clickPublish();
@@ -256,17 +256,17 @@ definition {
 
 		DERenderer.assertDataInSelectFromListField(
 			fieldLabel = "Select from List",
-			index = "1",
+			index = 1,
 			optionValue = "Option 1");
 
 		DERenderer.assertDataInSelectFromListField(
 			fieldLabel = "Select from List",
-			index = "2",
+			index = 2,
 			optionValue = "Option 2");
 	}
 
 	@description = "This is a test for LRQA-69036. This test verifies that is not possible to publish the Web Content with a blank required field."
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69036. This test verifies that is possible to remove a duplicated field (repeatable)."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -326,11 +326,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Select from List",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-69036. This test verifies that chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanSelectOptions {
 		NavItem.gotoStructures();
 
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DESelectFromListField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DESelectFromListField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -434,7 +434,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -459,7 +459,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that multiple options can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetMultipleOptions {
 		NavItem.gotoStructures();
 
@@ -517,7 +517,7 @@ definition {
 	}
 
 	@description = "Check if Select from List Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewSelectFromListFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -532,7 +532,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Select from List",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -558,7 +558,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Select from List",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ViewCacheConfiguration {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

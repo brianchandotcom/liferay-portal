@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5866. Verify buyers can add products to their wish list from the product card."
-	@priority = "3"
+	@priority = 3
 	test AddProductToWishListFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5859. Verify the default channel currency is applied to product cards."
-	@priority = "3"
+	@priority = 3
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6657. The user is unable to add a bundled product(Price Type Dynamic) to cart directly as an admin and a buyer."
-	@priority = "3"
+	@priority = 3
 	test AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
-	@priority = "3"
+	@priority = 3
 	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6160. As a buyer, I want to be able to select only the allowed quantities of a product, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyAllowedQuantitiesAreSelectable {
 		property portal.acceptance = "false";
 
@@ -364,36 +364,36 @@ definition {
 
 		for (var number : list "1,4,5,7,11") {
 			AssertElementPresent(
-				key_optionValue = "${number}",
+				key_optionValue = ${number},
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_OPTION_VALUE");
 		}
 	}
 
 	@description = "COMMERCE-6162. As a buyer, I want to be able to select the quantity of a product by multiple value, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyMultipleValuesAreSelectableQuantities {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var multipleQuantity = "3";
+		var multipleQuantity = 3;
 		var product = "U-Joint";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_text = "Multiple Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -406,45 +406,45 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertTextEquals(
-			key_productName = "${product}",
+			key_productName = ${product},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		for (var quantity : list "1,3,4,6,300") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "4")) {
+			if ((${quantity} == 1) || (${quantity} == 4)) {
 				var conditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 			else {
 				var conditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${conditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${conditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-6164. As a buyer I want to be able to add a product to the cart regardless of the availability, if back ordererabilty of that product is enabled"
-	@priority = "3"
+	@priority = 3
 	test AssertProductCanBeAddedToCartIfBackOrderIsEnabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -483,9 +483,9 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			AssertTextEquals(
-				key_productQuantity = "0",
+				key_productQuantity = 0,
 				locator1 = "CommerceEntry#PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY",
-				value1 = "0");
+				value1 = 0);
 
 			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6163. As a buyer I don't want to be able to add a product to the cart if the product is not purchasable"
-	@priority = "3"
+	@priority = 3
 	test AssertProductCannotBeAddedToCartIfProductIsNotPurchasable {
 		property portal.acceptance = "true";
 
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5860. As a buyer, I want to change the channel currency and view the product price with the changed currency"
-	@priority = "3"
+	@priority = 3
 	test AssertProductCardCurrencyAfterChannelCurrencyChanged {
 		property portal.acceptance = "false";
 
@@ -633,14 +633,14 @@ definition {
 		Select(
 			key_title = "Currency",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
+			value1 = ${currencyName});
 
 		Button.clickSave();
 
 		AssertSelectedLabel(
 			key_title = "Currency",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
+			value1 = ${currencyName});
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -651,7 +651,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5856. Verify buyers are redirected to the product details page when they click on a product card image."
-	@priority = "3"
+	@priority = 3
 	test AssertProductCardImageRedirectsToProductDetailsPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -696,7 +696,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5858. Verify the product card for a new product shows the default catalog image if it is set."
-	@priority = "3"
+	@priority = 3
 	test AssertProductCardShowsCatalogDefaultImage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -725,8 +725,8 @@ definition {
 			var comparisonProductId = CommerceJSONProductsAPI._getProductId(productName = "Transmission Cooler Line Assembly");
 
 			var catalogDefaultImgSrc = CommerceJSONProductsAPI._getCommerceProductImageURL(
-				channelId = "${miniumChannelId}",
-				productId = "${comparisonProductId}");
+				channelId = ${miniumChannelId},
+				productId = ${comparisonProductId});
 		}
 
 		task ("And given a new product") {
@@ -751,13 +751,13 @@ definition {
 			var miniumCatalogDefaultImgSrc = selenium.getAttribute("${miniumCatalogDefaultImg}@src");
 
 			TestUtils.assertEquals(
-				actual = "${miniumCatalogDefaultImgSrc}",
-				expected = "${catalogDefaultImgSrc}");
+				actual = ${miniumCatalogDefaultImgSrc},
+				expected = ${catalogDefaultImgSrc});
 		}
 	}
 
 	@description = "COMMERCE-5857. Verify buyers can view the custom image that has been set for a product in the product card."
-	@priority = "3"
+	@priority = 3
 	test AssertProductCardShowsCustomImageIfSet {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -813,14 +813,14 @@ definition {
 
 		task ("Then the product card contains the custom image") {
 			AssertElementPresent(
-				key_fileEntryId = "${fileEntryId}",
+				key_fileEntryId = ${fileEntryId},
 				key_itemName = "Blue T-Shirt",
 				locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
 		}
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"
-	@priority = "3"
+	@priority = 3
 	test AssertProductIsAvailable {
 		property portal.acceptance = "true";
 
@@ -835,7 +835,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
-	@priority = "3"
+	@priority = 3
 	test AssertProductIsUnavailable {
 		property portal.acceptance = "false";
 
@@ -851,7 +851,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
-	@priority = "3"
+	@priority = 3
 	test AssertProductNameIsTranslated {
 		property portal.acceptance = "false";
 
@@ -895,27 +895,27 @@ definition {
 	}
 
 	@description = "COMMERCE-6318. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertQuantityCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "true";
 
-		var maximumQuantity = "4";
+		var maximumQuantity = 4;
 		var product = "U-Joint";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceProducts.searchProduct(search = "${product}");
+		CommerceProducts.searchProduct(search = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_fieldLabel = "Maximum Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${maximumQuantity}");
+			value1 = ${maximumQuantity});
 
 		Button.clickPublish();
 
@@ -928,63 +928,63 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertTextEquals(
-			key_productName = "${product}",
+			key_productName = ${product},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "1");
+			value1 = 1);
 
 		for (var quantity : list "4,5,10") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "5") || ("${quantity}" == "10")) {
+			if ((${quantity} == 5) || (${quantity} == 10)) {
 				AssertElementPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 
 				FrontStore.viewQuantitySelectorPopoverListItem(
 					conditionNotSatisfied = "true",
-					quantity = "${maximumQuantity}",
+					quantity = ${maximumQuantity},
 					quantityConfiguration = "max");
 			}
 			else {
 				AssertElementNotPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 		}
 	}
 
 	@description = "COMMERCE-6161. As a buyer, I want to be able to select the quantity of a product starting from a minimum quantity, if set"
-	@priority = "3"
+	@priority = 3
 	test AssertSelectableQuantitiesStartFromMinimumQuantitySet {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var minimumQuantity = "3";
+		var minimumQuantity = 3;
 		var product = "U-Joint";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_text = "Minimum Order Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Button.clickPublish();
 
@@ -997,56 +997,56 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertTextEquals(
-			key_productName = "${product}",
+			key_productName = ${product},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		task ("On the product card, assert that the add to cart button is disabled if the quantity selector is empty") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
 				value1 = "");
 
 			AssertElementPresent(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 		}
 
 		for (var quantity : list "1,2,3") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "2")) {
+			if ((${quantity} == 1) || (${quantity} == 2)) {
 				var conditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 			else {
 				var conditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${conditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${conditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 		}
 	}
 
 	@description = "COMMERCE-6656. As a buyer, I want to be unable to add a bundled product(Price Type Static) to cart directly"
-	@priority = "3"
+	@priority = 3
 	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1186,7 +1186,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"
-	@priority = "3"
+	@priority = 3
 	test AssertViewAllVariantsButtonRedirectsToProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -1206,7 +1206,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5868. Verify buyers can compare products by selecting which products to compare from the catalog product cards."
-	@priority = "3"
+	@priority = 3
 	test CompareProductFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1245,7 +1245,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5869. Verify buyers can remove a product from a product comparison items list, by unchecking the product via checkbox"
-	@priority = "3"
+	@priority = 3
 	test RemoveProductFromComparisonItems {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1290,7 +1290,7 @@ definition {
 			var productImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "Transmission Fluid");
 
 			AssertElementNotPresent(
-				key_productMediaId = "${productImageId}",
+				key_productMediaId = ${productImageId},
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
 			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
@@ -1302,7 +1302,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5867. Verify buyers can remove a product from a wish list."
-	@priority = "3"
+	@priority = 3
 	test RemoveProductFromWishList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1379,35 +1379,35 @@ definition {
 	}
 
 	@description = "COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = "3"
+	@priority = 3
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "true";
 
 		// TODO Review
 
-		var minimumQuantity = "6";
-		var multipleQuantity = "5";
+		var minimumQuantity = 6;
+		var multipleQuantity = 5;
 		var product = "U-Joint";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 
-		AppBuilderAdmin.searchByItem(itemName = "${product}");
+		AppBuilderAdmin.searchByItem(itemName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_fieldLabel = "Minimum Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Type(
 			key_fieldLabel = "Multiple Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -1420,26 +1420,26 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertTextEquals(
-			key_productName = "${product}",
+			key_productName = ${product},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "10");
+			value1 = 10);
 
 		for (var quantity : list "5,20") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if ("${quantity}" == "5") {
+			if (${quantity} == 5) {
 				var minimumConditionNotSatisfied = "true";
 
 				AssertElementPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 			else {
@@ -1447,52 +1447,52 @@ definition {
 				var multipleConditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${minimumConditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${minimumConditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${multipleConditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${multipleConditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-6194. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@priority = "3"
+	@priority = 3
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		var minimumQuantity = "4";
-		var multipleQuantity = "5";
+		var minimumQuantity = 4;
+		var multipleQuantity = 5;
 		var product = "U-Joint";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
 
-		CommerceNavigator.searchEntry(entryName = "${product}");
+		CommerceNavigator.searchEntry(entryName = ${product});
 
-		CommerceNavigator.gotoEntry(entryName = "${product}");
+		CommerceNavigator.gotoEntry(entryName = ${product});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
 		Type(
 			key_fieldLabel = "Minimum Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${minimumQuantity}");
+			value1 = ${minimumQuantity});
 
 		Type(
 			key_fieldLabel = "Multiple Order Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		Button.clickPublish();
 
@@ -1505,25 +1505,25 @@ definition {
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		AssertTextEquals(
-			key_productName = "${product}",
+			key_productName = ${product},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-			value1 = "${multipleQuantity}");
+			value1 = ${multipleQuantity});
 
 		for (var quantity : list "1,4,5,20") {
 			Type(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
 			AssertTextEquals(
-				key_productName = "${product}",
+				key_productName = ${product},
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "${quantity}");
+				value1 = ${quantity});
 
-			if (("${quantity}" == "1") || ("${quantity}" == "4")) {
+			if ((${quantity} == 1) || (${quantity} == 4)) {
 				var multipleConditionNotSatisfied = "true";
 
-				if ("${quantity}" == "1") {
+				if (${quantity} == 1) {
 					var minimumConditionNotSatisfied = "true";
 				}
 				else {
@@ -1531,7 +1531,7 @@ definition {
 				}
 
 				AssertElementPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 			else {
@@ -1539,24 +1539,24 @@ definition {
 				var multipleConditionNotSatisfied = "false";
 
 				AssertElementNotPresent(
-					key_productName = "${product}",
+					key_productName = ${product},
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_HAS_ERROR");
 			}
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${minimumConditionNotSatisfied}",
-				quantity = "${minimumQuantity}",
+				conditionNotSatisfied = ${minimumConditionNotSatisfied},
+				quantity = ${minimumQuantity},
 				quantityConfiguration = "min");
 
 			FrontStore.viewQuantitySelectorPopoverListItem(
-				conditionNotSatisfied = "${multipleConditionNotSatisfied}",
-				quantity = "${multipleQuantity}",
+				conditionNotSatisfied = ${multipleConditionNotSatisfied},
+				quantity = ${multipleQuantity},
 				quantityConfiguration = "multiple");
 		}
 	}
 
 	@description = "COMMERCE-5864. Verify buyers can view a product's price on the product card."
-	@priority = "3"
+	@priority = 3
 	test ViewProductCardPrice {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1601,12 +1601,12 @@ definition {
 			AssertTextEquals(
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
-				value1 = "${productPrice}");
+				value1 = ${productPrice});
 		}
 	}
 
 	@description = "COMMERCE-6158. Verify buyers can see the barred list price and discount price of a product if a discount is set."
-	@priority = "3"
+	@priority = 3
 	test ViewProductCardPriceWithDiscount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1637,7 +1637,7 @@ definition {
 
 			CommerceEntry.addNewDiscountsEntry(
 				channelsEligibility = "Minium Portal",
-				discountAmount = "20",
+				discountAmount = 20,
 				discountName = "Test Discount",
 				discountTarget = "Products",
 				discountType = "Percentage");
@@ -1672,7 +1672,7 @@ definition {
 			AssertTextEquals(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_INACTIVE",
-				value1 = "${basePrice}");
+				value1 = ${basePrice});
 
 			AssertTextEquals(
 				key_productName = "ABS Sensor",
@@ -1682,7 +1682,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a promo price of a product if a promotion is set."
-	@priority = "3"
+	@priority = 3
 	test ViewProductCardPriceWithPromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1737,17 +1737,17 @@ definition {
 			AssertTextEquals(
 				key_productName = "Brake Pads",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
-				value1 = "${promoPrice}");
+				value1 = ${promoPrice});
 
 			AssertTextEquals(
 				key_productName = "Brake Pads",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
-				value1 = "${basePrice}");
+				value1 = ${basePrice});
 		}
 	}
 
 	@description = "COMMERCE-5862. Verify buyers can view the SKU of a product on the product card if it set."
-	@priority = "3"
+	@priority = 3
 	test ViewProductCardSKU {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -1791,13 +1791,13 @@ definition {
 		task ("Then the product card shows the product SKU") {
 			AssertElementPresent(
 				key_productName = "U-Joint",
-				key_productSku = "${productSku}",
+				key_productSku = ${productSku},
 				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 		}
 	}
 
 	@description = "COMMERCE-5865. Verify buyers can view the starting price on a product card when the product has different SKUs with different prices"
-	@priority = "3"
+	@priority = 3
 	test ViewProductCardStartingPrice {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1825,17 +1825,17 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 			for (var product : list "MIN93016A:20,MIN93016B:40,MIN93016C:60") {
-				var productSku = StringUtil.extractFirst("${product}", ":");
-				var basePrice = StringUtil.extractLast("${product}", ":");
+				var productSku = StringUtil.extractFirst(${product}, ":");
+				var basePrice = StringUtil.extractLast(${product}, ":");
 
-				CommerceNavigator.gotoEntry(entryName = "${productSku}");
+				CommerceNavigator.gotoEntry(entryName = ${productSku});
 
 				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 				Type(
 					key_text = "Base Price",
 					locator1 = "TextInput#ANY",
-					value1 = "${basePrice}");
+					value1 = ${basePrice});
 
 				Button.clickPublish();
 

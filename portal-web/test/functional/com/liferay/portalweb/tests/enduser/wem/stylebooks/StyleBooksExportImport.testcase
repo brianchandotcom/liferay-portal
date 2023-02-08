@@ -20,18 +20,18 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			for (var groupName : list "Test Site Name,New Site Name") {
-				JSONGroup.deleteGroupByName(groupName = "${groupName}");
+				JSONGroup.deleteGroupByName(groupName = ${groupName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-134860. The user could export and import a style book."
-	@priority = "3"
+	@priority = 3
 	test ExportImportStyleBook {
 		task ("Add a style book with times as Font Family Base") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");

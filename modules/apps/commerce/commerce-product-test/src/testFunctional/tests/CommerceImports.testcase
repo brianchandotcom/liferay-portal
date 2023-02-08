@@ -16,7 +16,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanExcludeFieldsFromImport {
 		property portal.acceptance = "false";
 
@@ -26,7 +26,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanFilterAndOrderExecutions {
 		property portal.acceptance = "false";
 
@@ -36,7 +36,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanImportFileWithHeaders {
 		property portal.acceptance = "false";
 
@@ -46,7 +46,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanSaveTemplateDuringImport {
 		property portal.acceptance = "false";
 
@@ -56,7 +56,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CanScheduleImport {
 		property portal.acceptance = "false";
 
@@ -66,7 +66,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test CSVFieldsAreAutoMapped {
 		property portal.acceptance = "false";
 
@@ -76,7 +76,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test JSONFieldsAreAutoMapped {
 		property portal.acceptance = "false";
 
@@ -86,7 +86,7 @@ definition {
 
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test JSONLFieldsAreAutoMapped {
 		property portal.acceptance = "false";
 

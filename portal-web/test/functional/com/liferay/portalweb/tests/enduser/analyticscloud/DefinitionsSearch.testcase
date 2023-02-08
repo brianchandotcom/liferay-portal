@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
-	@priority = "5"
+	@priority = 5
 	test CanAddSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8780 | Test Summary: Delete search query parameters"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8781 | Test Summary: Edit search query parameters"
-	@priority = "4"
+	@priority = 4
 	test CanEditSearchQueryParameters {
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
@@ -65,11 +65,11 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
-	@priority = "4"
+	@priority = 4
 	test CantSearchMoreThanFiveSearchQueryStrings {
 		var varList = "Test Query 1,Test Query 2,Test Query 3,Test Query 4,Test Query 5";
 
-		ACDefinitions.addMultipleSearchQuerySuccessfully(query_list = "${varList}");
+		ACDefinitions.addMultipleSearchQuerySuccessfully(query_list = ${varList});
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 

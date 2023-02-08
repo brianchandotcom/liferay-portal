@@ -15,7 +15,7 @@ definition {
 			ObjectFieldAPI.setUpGlobalObjectFieldId(
 				dbType = "String",
 				name = "passportNumber",
-				objectDefinitionId = "${userObjectId}");
+				objectDefinitionId = ${userObjectId});
 		}
 
 		task ("When with post request postUserAccount to create a user with the new field") {
@@ -26,33 +26,33 @@ definition {
 	}
 
 	tearDown {
-		JSONUser.deleteUserByUserId(userId = "${staticUserAccountId}");
+		JSONUser.deleteUserByUserId(userId = ${staticUserAccountId});
 
 		ObjectFieldAPI.deleteObjectField();
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CanCreateUserAndSetValueOfPropertyAddedtoSystemObject {
 		property portal.acceptance = "true";
 
 		task ("Then the value of the added field is set successfully in response") {
-			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${staticResponse}", "$.passportNumber");
+			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath(${staticResponse}, "$.passportNumber");
 
 			TestUtils.assertEquals(
-				actual = "${actualValueOfPassportNumber}",
+				actual = ${actualValueOfPassportNumber},
 				expected = "passportNum2022");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateValueOfPropertyAddedToSystemObjectWithPatchRequest {
 		property portal.acceptance = "true";
 
@@ -60,18 +60,18 @@ definition {
 			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPatchRequest(
 				fieldName = "passportNumber",
 				updatedFieldValue = "updateByPatch-passportNum2022",
-				userAccountId = "${staticUserAccountId}");
+				userAccountId = ${staticUserAccountId});
 		}
 
 		task ("Then the value of the added filed is updated successfully") {
 			TestUtils.assertEquals(
-				actual = "${actualValueOfPassportNumber}",
+				actual = ${actualValueOfPassportNumber},
 				expected = "updateByPatch-passportNum2022");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateValueOfPropertyAddedToSystemObjectWithPutRequest {
 		property portal.acceptance = "true";
 
@@ -83,12 +83,12 @@ definition {
 				fieldName = "passportNumber",
 				givenName = "usergn",
 				updatedFieldValue = "updateByPut-passportNum2022",
-				userAccountId = "${staticUserAccountId}");
+				userAccountId = ${staticUserAccountId});
 		}
 
 		task ("Then the value of the added filed is replaced successfully in response") {
 			TestUtils.assertEquals(
-				actual = "${actualValueOfPassportNumber}",
+				actual = ${actualValueOfPassportNumber},
 				expected = "updateByPut-passportNum2022");
 		}
 	}

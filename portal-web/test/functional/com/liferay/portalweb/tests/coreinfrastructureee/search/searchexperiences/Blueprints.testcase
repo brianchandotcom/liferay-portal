@@ -17,13 +17,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Can add a blueprint in a non-root portal context."
-	@priority = "4"
+	@priority = 4
 	test AddBlueprintInNonRootContext {
 		property portal.context = "liferay";
 		property search.environment.suite.exclude = "true";
@@ -92,7 +92,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elasticsearchQueryJson}");
+			value1 = ${elasticsearchQueryJson});
 
 		PortletEntry.save();
 
@@ -115,7 +115,7 @@ definition {
 
 		SearchPortlets.configureLowLevelSearchOptions(
 			attributesKey = "search.experiences.blueprint.id",
-			attributesValue = "${blueprintId}");
+			attributesValue = ${blueprintId});
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
@@ -135,7 +135,7 @@ definition {
 
 		SearchPortlets.configureLowLevelSearchOptions(
 			attributesKey = "search.experiences.blueprint.json",
-			attributesValue = "${blueprintJson}");
+			attributesValue = ${blueprintJson});
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
@@ -168,7 +168,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		PortletEntry.save();
 
@@ -231,7 +231,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		PortletEntry.save();
 
@@ -259,7 +259,7 @@ definition {
 
 		SearchPortlets.configureLowLevelSearchOptions(
 			attributesKey = "search.experiences.blueprint.id",
-			attributesValue = "${blueprintId}");
+			attributesValue = ${blueprintId});
 
 		PageEditor.publish();
 
@@ -287,7 +287,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		PortletEntry.save();
 
@@ -396,7 +396,7 @@ definition {
 		''';
 
 		Blueprints.createElement(
-			elementSourceJson = "${elementSourceJson}",
+			elementSourceJson = ${elementSourceJson},
 			title = "Test Element");
 
 		Blueprints.gotoElement(element = "Test Element");
@@ -484,7 +484,7 @@ definition {
 			elementName = "Boost Longer Contents",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		PortletEntry.save();
 
@@ -541,7 +541,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
-			serviceContext = "${webContentserviceContext}",
+			serviceContext = ${webContentserviceContext},
 			title = "gala");
 
 		Blueprints.openBlueprintsAdmin();
@@ -554,7 +554,7 @@ definition {
 			elementName = "Boost Tags Match",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "3000");
+			value1 = 3000);
 
 		PortletEntry.save();
 
@@ -689,7 +689,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		Blueprints.selectAddedElementMenuItem(
 			element = "Boost Asset Type",
@@ -703,7 +703,7 @@ definition {
 
 		var fileContent = FileUtil.read("${outputDir}/sxpElement.json");
 
-		var customElementJson = StringUtil.replace("${fileContent}", "Boost Asset Type", "Boost Results of Web Content Articles");
+		var customElementJson = StringUtil.replace(${fileContent}, "Boost Asset Type", "Boost Results of Web Content Articles");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
@@ -714,7 +714,7 @@ definition {
 		Confirm();
 
 		Blueprints.createElement(
-			elementSourceJson = "${customElementJson}",
+			elementSourceJson = ${customElementJson},
 			title = "Test Element");
 
 		Navigator.gotoNavItem(navItem = "Blueprints");
@@ -758,7 +758,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		Blueprints.selectAddedElementMenuItem(
 			element = "Boost Asset Type",
@@ -778,7 +778,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementJson}");
+			value1 = ${elementJson});
 
 		Blueprints.selectAddedElementMenuItem(
 			element = "Boost Asset Type",
@@ -876,13 +876,13 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "red apple");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1",
+			resultRanking = 1,
 			value1 = "reddish apple");
 
 		PortletEntry.save();
@@ -927,7 +927,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elasticsearchQueryJson}");
+			value1 = ${elasticsearchQueryJson});
 
 		Blueprints.configureElementDropdown(
 			dropdownName = "Occur",
@@ -980,7 +980,7 @@ definition {
 		Type.typeCodeMirrorEditorNoError(
 			configurationField = "Aggregation Configuration",
 			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
-			value1 = "${aggregationConfigurationJson}");
+			value1 = ${aggregationConfigurationJson});
 
 		ClickNoError(
 			key_text = "Cancel",
@@ -1046,7 +1046,7 @@ definition {
 		''';
 
 		Blueprints.createElement(
-			elementSourceJson = "${elementSourceJson}",
+			elementSourceJson = ${elementSourceJson},
 			title = "Test Element");
 
 		Blueprints.gotoEntryMenuItem(
@@ -1241,28 +1241,28 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet",
 				roleTitle = "Search Blueprints Admin");
 		}
 
 		for (var resourceActionIndex : list "ADD_SXP_BLUEPRINT") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.search.experiences",
 				roleTitle = "Search Blueprints Admin");
 		}
 
 		for (var resourceActionIndex : list "APPLY_SXP_BLUEPRINT,DELETE,PERMISSIONS,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.search.experiences.model.SXPBlueprint",
 				roleTitle = "Search Blueprints Admin");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Search Blueprints Admin");
 
 		JSONUser.addUser(
@@ -1310,28 +1310,28 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_search_experiences_web_internal_blueprint_admin_portlet_SXPBlueprintAdminPortlet",
 				roleTitle = "Search Elements Admin");
 		}
 
 		for (var resourceActionIndex : list "ADD_SXP_ELEMENT") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.search.experiences",
 				roleTitle = "Search Elements Admin");
 		}
 
 		for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.search.experiences.model.SXPElement",
 				roleTitle = "Search Elements Admin");
 		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Search Elements Admin");
 
 		JSONUser.addUser(
@@ -1371,7 +1371,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		PortletEntry.save();
 
@@ -1571,7 +1571,7 @@ definition {
 		Type.typeCodeMirrorEditorNoError(
 			configurationField = "Aggregation Configuration",
 			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
-			value1 = "${aggregationConfigurationJson}");
+			value1 = ${aggregationConfigurationJson});
 
 		PortletEntry.save();
 
@@ -1641,7 +1641,7 @@ definition {
 			''';
 
 		Blueprints.createElement(
-			elementSourceJson = "${elementSourceJson}",
+			elementSourceJson = ${elementSourceJson},
 			title = "Test Element");
 
 		Blueprints.gotoEntryMenuItem(
@@ -1701,7 +1701,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elasticsearchQueryJson}");
+			value1 = ${elasticsearchQueryJson});
 
 		Blueprints.configureElementDropdown(
 			dropdownName = "Occur",
@@ -1829,7 +1829,7 @@ definition {
 			''';
 
 		Blueprints.createElement(
-			elementSourceJson = "${elementSourceJson}",
+			elementSourceJson = ${elementSourceJson},
 			title = "Hide Content with Tag");
 
 		Navigator.gotoNavItem(navItem = "Blueprints");
@@ -1872,17 +1872,17 @@ definition {
 
 		for (var field : list "Description,ID,Author,Created,Modified") {
 			AssertElementPresent(
-				fieldName = "${field}",
+				fieldName = ${field},
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
 
 			Click(
-				fieldName = "${field}",
+				fieldName = ${field},
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
 		}
 
 		for (var field : list "Description,ID,Author,Created,Modified") {
 			AssertElementNotPresent(
-				fieldName = "${field}",
+				fieldName = ${field},
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
 		}
 
@@ -1908,7 +1908,7 @@ definition {
 
 		for (var field : list "Title,ID,Author,Created,Modified") {
 			AssertElementNotPresent(
-				fieldName = "${field}",
+				fieldName = ${field},
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
 		}
 	}
@@ -1985,11 +1985,11 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
@@ -1997,11 +1997,11 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 5 of 5");
 
 		AssertElementPresent(
-			index = "1",
+			index = 1,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "2",
+			index = 2,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Blueprints#PAGINATION_PREVIOUS_LINK");
@@ -2009,39 +2009,39 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
-			key_pageNumber = "2",
+			key_pageNumber = 2,
 			locator1 = "Pagination#ANY_PAGE");
 
 		Pagination.viewResults(results = "Showing 5 to 5 of 5");
 
 		AssertElementPresent(
-			index = "1",
+			index = 1,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "2",
+			index = 2,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
-			key_pageNumber = "1",
+			key_pageNumber = 1,
 			locator1 = "Pagination#ANY_PAGE");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Pagination.changePagination(itemsPerPage = "8 items");
@@ -2049,7 +2049,7 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 5 of 5");
 
 		AssertElementPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 	}
 
@@ -2071,11 +2071,11 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "10");
+			resultRanking = 10);
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "11");
+			resultRanking = 11);
 
 		Click(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
 
@@ -2083,11 +2083,11 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1");
+			resultRanking = 1);
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "2");
+			resultRanking = 2);
 
 		Click(locator1 = "Blueprints#PAGINATION_PREVIOUS_LINK");
 
@@ -2095,19 +2095,19 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "10");
+			resultRanking = 10);
 
 		AssertElementNotPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "11");
+			resultRanking = 11);
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = 20);
 
 		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 
 		AssertElementPresent(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "11");
+			resultRanking = 11);
 	}
 
 	test PaginateElementsAdmin {
@@ -2117,20 +2117,20 @@ definition {
 
 		var paginationResults = selenium.getText("Pagination#RESULTS");
 
-		echo("${paginationResults}");
+		echo(${paginationResults});
 
-		var totalElements = StringUtil.extractLast("${paginationResults}", " ");
+		var totalElements = StringUtil.extractLast(${paginationResults}, " ");
 
 		Pagination.changePagination(itemsPerPage = "4 items");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
@@ -2138,11 +2138,11 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 8 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Blueprints#PAGINATION_PREVIOUS_LINK");
@@ -2150,39 +2150,39 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
-			key_pageNumber = "3",
+			key_pageNumber = 3,
 			locator1 = "Pagination#ANY_PAGE");
 
 		Pagination.viewResults(results = "Showing 9 to 12 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
-			key_pageNumber = "1",
+			key_pageNumber = 1,
 			locator1 = "Pagination#ANY_PAGE");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "4",
+			index = 4,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "5",
+			index = 5,
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Pagination.changePagination(itemsPerPage = "60 items");
@@ -2190,7 +2190,7 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to ${totalElements} of ${totalElements}");
 
 		AssertElementPresent(
-			index = "${totalElements}",
+			index = ${totalElements},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 	}
 
@@ -2230,7 +2230,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
-			serviceContext = "${webContentserviceContext}",
+			serviceContext = ${webContentserviceContext},
 			title = "gala");
 
 		Blueprints.openBlueprintsAdmin();
@@ -2273,7 +2273,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${customJson}");
+			value1 = ${customJson});
 
 		PortletEntry.save();
 
@@ -2287,7 +2287,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1",
+			resultRanking = 1,
 			value1 = "gala");
 
 		var customJsonEdited = '''
@@ -2300,7 +2300,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${customJsonEdited}");
+			value1 = ${customJsonEdited});
 
 		PortletEntry.save();
 
@@ -2394,7 +2394,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "apple",
 			groupName = "Guest",
-			serviceContext = "${webContentserviceContext}",
+			serviceContext = ${webContentserviceContext},
 			title = "gala");
 
 		JSONWebcontent.addWebContent(
@@ -2419,7 +2419,7 @@ definition {
 			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "Asset Category ID",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "${categoryId}");
+			value1 = ${categoryId});
 
 		var segmentId = JSONSegmentsentry.getSegmentId(segmentName = "Test Segment");
 
@@ -2427,13 +2427,13 @@ definition {
 			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "User Segment IDs",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "${segmentId}");
+			value1 = ${segmentId});
 
 		Type(
 			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "2000");
+			value1 = 2000);
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -2441,12 +2441,12 @@ definition {
 
 		Blueprints.searchBlueprintsPreview(
 			attributesKey = "search.experiences.scope.group.id",
-			attributesValue = "${groupId}",
+			attributesValue = ${groupId},
 			searchTerm = "apple");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1",
+			resultRanking = 1,
 			value1 = "gala");
 	}
 
@@ -2484,7 +2484,7 @@ definition {
 			elementName = "Boost Asset Type",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1000");
+			value1 = 1000);
 
 		PortletEntry.save();
 
@@ -2498,12 +2498,12 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1",
+			resultRanking = 1,
 			value1 = "WC Title");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "2",
+			resultRanking = 2,
 			value1 = "apple apple apple");
 	}
 
@@ -2713,7 +2713,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		PortletEntry.save();
 
@@ -2823,7 +2823,7 @@ definition {
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 		}
 
-		Search.searchCP(searchTerm = "2");
+		Search.searchCP(searchTerm = 2);
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
@@ -2868,13 +2868,13 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = 2,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Blueprint");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = 3,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Description");
@@ -2882,13 +2882,13 @@ definition {
 		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
 
 		AssertTextEquals(
-			cellPosition = "4",
+			cellPosition = 4,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${blueprintId}");
+			value1 = ${blueprintId});
 
 		AssertTextEquals(
-			cellPosition = "5",
+			cellPosition = 5,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
@@ -2896,16 +2896,16 @@ definition {
 		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "6",
+			cellPosition = 6,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${currentDate}");
+			value1 = ${currentDate});
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "7",
+			cellPosition = 7,
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${currentDate}");
+			value1 = ${currentDate});
 	}
 
 	test ViewBlueprintsConfigurationValidation {
@@ -3036,7 +3036,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${customJson}");
+			value1 = ${customJson});
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "test");
 
@@ -3253,14 +3253,14 @@ definition {
 		Button.click(button = "Clear");
 
 		AssertTextEquals.assertPartialText(
-			index = "1",
+			index = 1,
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM",
 			value1 = "Account Entry Keyword Query Contributor");
 
 		Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_SORT_BUTTON");
 
 		AssertTextEquals.assertPartialText(
-			index = "1",
+			index = 1,
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM",
 			value1 = "User Keyword Query Contributor");
 	}
@@ -3349,7 +3349,7 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
 
 		AssertElementNotPresent(
-			index = "2",
+			index = 2,
 			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM");
 	}
 
@@ -3441,7 +3441,7 @@ definition {
 		Type.typeCodeMirrorEditorNoError(
 			configurationField = "Aggregation Configuration",
 			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
-			value1 = "${aggregationConfigurationJson}");
+			value1 = ${aggregationConfigurationJson});
 
 		PortletEntry.save();
 
@@ -3588,7 +3588,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		Button.clickSave();
 
@@ -3620,7 +3620,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		Button.clickSave();
 
@@ -3637,7 +3637,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		Button.clickSave();
 
@@ -3673,7 +3673,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		Button.clickSave();
 
@@ -3719,7 +3719,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		Button.clickSave();
 
@@ -3838,7 +3838,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		WaitForElementPresent(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
@@ -3865,13 +3865,13 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = 2,
 			entryTitle = "Title in English",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Title in English");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = 3,
 			entryTitle = "Title in English",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Description in English");
@@ -3879,13 +3879,13 @@ definition {
 		Navigator.ensureLocaleURL(locale = "es");
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = 2,
 			entryTitle = "Título en Español",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Título en Español");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = 3,
 			entryTitle = "Título en Español",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Descripción en Español");
@@ -3895,13 +3895,13 @@ definition {
 		Navigator.gotoNavItem(navItem = "Elemente");
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = 2,
 			entryTitle = "Titel auf Deutsch",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Titel auf Deutsch");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = 3,
 			entryTitle = "Titel auf Deutsch",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Beschreibung auf Deutsch");
@@ -3994,7 +3994,7 @@ definition {
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 		}
 
-		Search.searchCP(searchTerm = "2");
+		Search.searchCP(searchTerm = 2);
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
@@ -4061,13 +4061,13 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = 2,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Element");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = 3,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Element Description");
@@ -4075,13 +4075,13 @@ definition {
 		var elementId = Blueprints.getElementID(title = "Test Element");
 
 		AssertTextEquals(
-			cellPosition = "4",
+			cellPosition = 4,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${elementId}");
+			value1 = ${elementId});
 
 		AssertTextEquals(
-			cellPosition = "5",
+			cellPosition = 5,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
@@ -4089,16 +4089,16 @@ definition {
 		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "6",
+			cellPosition = 6,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${currentDate}");
+			value1 = ${currentDate});
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "7",
+			cellPosition = 7,
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
-			value1 = "${currentDate}");
+			value1 = ${currentDate});
 	}
 
 	test ViewExpandedAndCollapsedBlueprintsPreviewResult {
@@ -4143,7 +4143,7 @@ definition {
 
 		SelectWindow(locator1 = "Search Blueprints Elements Reference — Liferay Learn");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
 
@@ -4302,7 +4302,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonText = "${categoryId}",
+			key_jsonText = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -4322,7 +4322,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertElementNotPresent(
-			key_jsonText = "${categoryId}",
+			key_jsonText = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -4347,7 +4347,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonText = "${categoryId}",
+			key_jsonText = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -4361,7 +4361,7 @@ definition {
 			elementName = "Boost Contents in a Category",
 			fieldLabel = "Asset Category IDs",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "${categoryId}");
+			value1 = ${categoryId});
 
 		Click(
 			assetCategory = "Test Category (ID: ${categoryId})",
@@ -4384,7 +4384,7 @@ definition {
 		Select(
 			locator1 = "Select#ANY_ID",
 			selectId = "selectSite",
-			value1 = "${siteName}");
+			value1 = ${siteName});
 
 		Click(
 			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM",
@@ -4406,7 +4406,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonText = "${categoryId}",
+			key_jsonText = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 
 		PortletEntry.save();
@@ -4451,7 +4451,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonNumber = "${categoryId}",
+			key_jsonNumber = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -4485,7 +4485,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonNumber = "${categoryId}",
+			key_jsonNumber = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
@@ -4503,7 +4503,7 @@ definition {
 		Select(
 			locator1 = "Select#ANY_ID",
 			selectId = "selectSite",
-			value1 = "${siteName}");
+			value1 = ${siteName});
 
 		Click(
 			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM",
@@ -4524,7 +4524,7 @@ definition {
 			menuItem = "View Element JSON");
 
 		AssertVisible(
-			key_jsonNumber = "${categoryId}",
+			key_jsonNumber = ${categoryId},
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
 
 		PortletEntry.save();
@@ -4586,7 +4586,7 @@ definition {
 		''';
 
 		Blueprints.createElement(
-			elementSourceJson = "${elementSourceJson}",
+			elementSourceJson = ${elementSourceJson},
 			title = "Test Element");
 
 		Blueprints.openBlueprintsAdmin();
@@ -4627,7 +4627,7 @@ definition {
 			elementName = "Test Element",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "1");
+			value1 = 1);
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
@@ -4681,7 +4681,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		PortletEntry.save();
 
@@ -4921,7 +4921,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		ClickNoError(
 			key_text = "Cancel",
@@ -4947,7 +4947,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+			value1 = ${elementSourceJson});
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 

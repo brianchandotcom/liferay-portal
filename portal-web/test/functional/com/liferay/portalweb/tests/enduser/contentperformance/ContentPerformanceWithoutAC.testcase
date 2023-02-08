@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,10 +29,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132406: Given the Content Performance Panel
-	When the users leave the page because the session expires or s/he does log out
-	Then they find the panel closed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ContentPerformanceClosed {
 		task ("Open Content Performance panel") {
 			ContentPerformance.openContentPerformance();
@@ -50,7 +48,7 @@ definition {
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
-	@priority = "3"
+	@priority = 3
 	test DontShowButton {
 		task ("Open Content Performance") {
 			ContentPerformance.openContentPerformance();
@@ -64,7 +62,7 @@ definition {
 	}
 
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
-	@priority = "5"
+	@priority = 5
 	test FreeTrialButtonPresent {
 		task ("Open Content Performance") {
 			ContentPerformance.openContentPerformance();
@@ -78,7 +76,7 @@ definition {
 	}
 
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
-	@priority = "5"
+	@priority = 5
 	test HideContentPerformancePanel {
 		task ("Open Content Performance") {
 			ContentPerformance.openContentPerformance();
@@ -94,7 +92,7 @@ definition {
 	}
 
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the blog display page in the view mode"
-	@priority = "3"
+	@priority = 3
 	test MetricsIconNotVisibleInBlogDisplayPageWithoutAC {
 		task ("Create a Blog Entry") {
 			JSONBlog.addEntry(
@@ -128,13 +126,13 @@ definition {
 				pageName = "DM Document Title");
 
 			AssertElementNotPresent(
-				key_numberViews = "0",
+				key_numberViews = 0,
 				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 		}
 	}
 
 	@description = "LPS-126044: When DXP is not connected to AC, the metrics icon is shown in the bar above the document display page in the view mode"
-	@priority = "3"
+	@priority = 3
 	test MetricsIconNotVisibleInDocumentDisplayPageWithoutAC {
 		task ("Create a Document") {
 			JSONDocument.addFile(
@@ -168,13 +166,13 @@ definition {
 				pageName = "DM Document Title");
 
 			AssertElementNotPresent(
-				key_numberViews = "0",
+				key_numberViews = 0,
 				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 		}
 	}
 
 	@description = "LPS-126047: When DXP is not connected to AC, the metrics icon is shown in the bar above the widget page in the view mode"
-	@priority = "3"
+	@priority = 3
 	test MetricsIconNotVisibleInWidgetPageWithoutAC {
 		task ("Create Widget Page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -194,7 +192,7 @@ definition {
 	}
 
 	@description = "LPS-127220: When DXP is not connected to AC, the metrics icon is shown in the bar above the content page in the view mode"
-	@priority = "3"
+	@priority = 3
 	test MetricsIconVisibleInContentPageWithoutAC {
 		task ("Open content performance panel") {
 			ContentPerformance.openContentPerformance();
@@ -202,7 +200,7 @@ definition {
 	}
 
 	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"
-	@priority = "4"
+	@priority = 4
 	test MetricsInContentDashboardACDisabled {
 		task ("Create a Web Content and set a Display Page") {
 			JSONWebcontent.addWebContent(
@@ -239,7 +237,7 @@ definition {
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected but not synced, the Content Performance panel displays instructions to sync to AC (Dont show me this again button and the message is not displayed)"
-	@priority = "3"
+	@priority = 3
 	test NotSyncedPanel {
 		task ("Launch AC and get Token") {
 			ACUtils.launchAC();

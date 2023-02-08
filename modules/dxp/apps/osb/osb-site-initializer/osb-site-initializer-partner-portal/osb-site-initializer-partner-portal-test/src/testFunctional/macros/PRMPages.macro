@@ -2,7 +2,7 @@ definition {
 
 	macro assertPageTitle {
 		AssertElementPresent(
-			key_title = "${pageTitle}",
+			key_title = ${pageTitle},
 			locator1 = "Header#H1_TITLE");
 	}
 
@@ -12,7 +12,7 @@ definition {
 
 	macro clickBannerLink {
 		Click(
-			key_linkText = "${linkText}",
+			key_linkText = ${linkText},
 			locator1 = "PRMPages#BANNER_LINK");
 	}
 

@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewSharedAssetsArchive72101 {
 		property data.archive.type = "data-archive-asset-sharing";
@@ -37,7 +37,7 @@ definition {
 		Upgrade.viewNoShareOptionAfterDisabled();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewSharedAssetsArchive73101 {
 		property data.archive.type = "data-archive-asset-sharing";

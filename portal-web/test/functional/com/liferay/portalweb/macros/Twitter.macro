@@ -13,7 +13,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TWITTER",
-			value1 = "${twitterProfileName}");
+			value1 = ${twitterProfileName});
 
 		PortletEntry.save();
 
@@ -31,7 +31,7 @@ definition {
 	macro viewFeedEntry {
 		AssertTextEquals(
 			locator1 = "Activities#ENTRY_CONTENT",
-			value1 = "${entryContent}");
+			value1 = ${entryContent});
 	}
 
 }

@@ -12,7 +12,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewCalendarArchive625 {
 		property data.archive.type = "data-archive-calendar";
 		property database.types = "mariadb,mysql,postgresql";
@@ -23,7 +23,7 @@ definition {
 		Upgrade.viewCalendar();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewCalendarArchive621015 {
 		property data.archive.type = "data-archive-calendar";
 		property portal.upstream = "quarantine";
@@ -33,7 +33,7 @@ definition {
 		Upgrade.viewCalendar();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewCalendarArchive621021 {
 		property data.archive.type = "data-archive-calendar";
 		property portal.upstream = "quarantine";

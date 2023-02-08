@@ -2,18 +2,18 @@ definition {
 
 	macro addAccountAndChildToOrganization {
 		Navigator.openSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
-			key_nodeName = "${key_nodeName}",
+			key_nodeName = ${key_nodeName},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
 
 		DragAndDrop.dragAndDropPortletToPortletNoError(
-			key_nodeDestination = "${key_nodeDestination}",
-			key_nodeOrigin = "${key_nodeOrigin}",
+			key_nodeDestination = ${key_nodeDestination},
+			key_nodeOrigin = ${key_nodeOrigin},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
 			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
 			value1 = "Commerce Account");
@@ -32,45 +32,45 @@ definition {
 
 	macro addAccountViaOrganizationManagementWidget {
 		Click.clickAtNotVisible(
-			key_radioOption = "${key_radioOption}",
+			key_radioOption = ${key_radioOption},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${value}");
+			value1 = ${value});
 
 		Button.clickSave();
 	}
 
 	macro addRootCategory {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		Type(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "AssetCategorization#CATEGORIES_FIELD",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		Click.mouseDownMouseUp(locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
 
 		AssertElementPresent(
 			locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
-			tagName = "${categoryName}");
+			tagName = ${categoryName});
 	}
 
 	macro addUserViaOrganizationManagementWidget {
 		Type(
 			locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
-			value1 = "${value}");
+			value1 = ${value});
 
 		Click(
-			key_roleOption = "${key_roleOption}",
+			key_roleOption = ${key_roleOption},
 			locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
 
 		Button.clickSave();
 	}
 
 	macro assertOptionFacetsCount {
-		var optionName = "${optionName}";
+		var optionName = ${optionName};
 
 		var javaScriptCountElement = '''
 		
@@ -80,25 +80,25 @@ definition {
 
 		''';
 
-		var count = selenium.getEval("${javaScriptCountElement}");
+		var count = selenium.getEval(${javaScriptCountElement});
 
-		return "${count}";
+		return ${count};
 
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
-		if ("${count}" != "${expectedLabels}") {
+		if (${count} != ${expectedLabels}) {
 			fail("Labels number is not correct");
 		}
 	}
 
 	macro assertOrganizationManagementWigetTitlePresent {
 		AssertElementPresent(
-			key_nodeName = "${key_nodeName}",
+			key_nodeName = ${key_nodeName},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
 	}
 
 	macro assertSpecificationPanel2FacetsCount {
-		var specificationGroup = "${specificationGroup}";
+		var specificationGroup = ${specificationGroup};
 
 		var javaScriptCountElement = '''
 
@@ -108,25 +108,25 @@ definition {
 
 		''';
 
-		var count = selenium.getEval("${javaScriptCountElement}");
+		var count = selenium.getEval(${javaScriptCountElement});
 
-		return "${count}";
+		return ${count};
 
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
-		if ("${count}" != "${expectedLabels}") {
+		if (${count} != ${expectedLabels}) {
 			fail("Labels number is not correct");
 		}
 	}
 
 	macro associateAccountWithOrganization {
 		Click.clickAtNotVisible(
-			key_radioOption = "${key_radioOption}",
+			key_radioOption = ${key_radioOption},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Type(
 			locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
-			value1 = "${value}");
+			value1 = ${value});
 
 		KeyPress(
 			locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
@@ -138,7 +138,7 @@ definition {
 	macro canCreateChildOrganization {
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${value}");
+			value1 = ${value});
 
 		Button.clickSave();
 	}
@@ -147,24 +147,24 @@ definition {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
-			key_nodeName = "${key_nodeName}",
+			key_nodeName = ${key_nodeName},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
 
 		DragAndDrop.dragAndDropPortletToPortletNoError(
-			key_nodeDestination = "${key_nodeDestination}",
-			key_nodeOrigin = "${key_nodeOrigin}",
+			key_nodeDestination = ${key_nodeDestination},
+			key_nodeOrigin = ${key_nodeOrigin},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
 			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
-			value1 = "${key_nodeOrigin}");
+			value1 = ${key_nodeOrigin});
 
 		AssertConfirm(value1 = "${key_nodeOrigin} will be moved into ${key_nodeDestination}.");
 
 		DragAndDrop.dragAndDropPortletToPortletNoError(
 			key_nodeDestination = "Organization 1",
-			key_nodeOrigin = "${key_nodeChild}",
+			key_nodeOrigin = ${key_nodeChild},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
 			locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
-			value1 = "${key_nodeChild}");
+			value1 = ${key_nodeChild});
 
 		AssertConfirm(value1 = "${key_nodeChild} will be moved into ${key_nodeDestination}.");
 
@@ -175,13 +175,13 @@ definition {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
-			key_nodeName = "${key_nodeName}",
+			key_nodeName = ${key_nodeName},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
 
 		Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
 
 		Click(
-			key_orgType = "${key_orgType}",
+			key_orgType = ${key_orgType},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
 	}
 
@@ -197,11 +197,11 @@ definition {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
-			key_nodeName = "${key_nodeName}",
+			key_nodeName = ${key_nodeName},
 			locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
 
 		Click(
-			key_nodeName = "${key_nodeChild}",
+			key_nodeName = ${key_nodeChild},
 			locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
 
 		ClickNoError(
@@ -217,7 +217,7 @@ definition {
 
 	macro updateFacetConfiguration {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -230,28 +230,28 @@ definition {
 			Select(
 				key_fieldLabel = "Display Template",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${displayTemplate}");
+				value1 = ${displayTemplate});
 		}
 
 		if (isSet(parameterName)) {
 			FormFields.editText(
 				fieldName = "parameterName",
-				fieldValue = "${parameterName}");
+				fieldValue = ${parameterName});
 		}
 
 		if (isSet(maxTerms)) {
 			FormFields.editText(
 				fieldName = "maxTerms",
-				fieldValue = "${maxTerms}");
+				fieldValue = ${maxTerms});
 		}
 
 		if (isSet(frequencyThreshold)) {
 			FormFields.editText(
 				fieldName = "frequencyThreshold",
-				fieldValue = "${frequencyThreshold}");
+				fieldValue = ${frequencyThreshold});
 		}
 
-		if ("${displayFrequencies}" == "disable") {
+		if (${displayFrequencies} == "disable") {
 			FormFields.disableCheckbox(fieldName = "frequenciesVisible");
 		}
 

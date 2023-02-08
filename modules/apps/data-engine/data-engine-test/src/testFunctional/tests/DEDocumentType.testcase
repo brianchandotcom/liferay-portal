@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to add multiple options for Grid field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleOptionsInGridField {
 		DMNavigator.gotoDocumentType();
 
@@ -38,7 +38,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "Option ${index}");
 		}
@@ -46,7 +46,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index}");
 		}
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to add multiple options for Multiple Selection field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleOptionsInMultipleSelectionField {
 		DMNavigator.gotoDocumentType();
 
@@ -78,7 +78,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
+				index = ${index},
 				optionValue = "Option ${index}");
 		}
 
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to add multiple options for Select From List field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleOptionsInSelectFromListField {
 		DMNavigator.gotoDocumentType();
 
@@ -103,7 +103,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Select from List",
-				index = "${index}",
+				index = ${index},
 				optionValue = "Option ${index}");
 		}
 
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to add multiple options for Single Selection field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleOptionsInSingleSelectionField {
 		DMNavigator.gotoDocumentType();
 
@@ -128,7 +128,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Single Selection",
-				index = "${index}",
+				index = ${index},
 				optionValue = "Option ${index}");
 		}
 
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to create a Fields Group on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanCreateFieldsGroup {
 		DMNavigator.gotoDocumentType();
 
@@ -160,13 +160,13 @@ definition {
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to delete a Fields Group on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteFieldsGroup {
 		DMNavigator.gotoDocumentType();
 
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Color Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInColorField {
 		DMNavigator.gotoDocumentType();
 
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that that is possible to edit Label and Help text of Date Field on the Document Type builder."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelPlaceholderAndHelpTextInDateField {
 		DMNavigator.gotoDocumentType();
 
@@ -277,7 +277,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Geolocation Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInGeolocationField {
 		DMNavigator.gotoDocumentType();
 
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Image Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInImageField {
 		DMNavigator.gotoDocumentType();
 
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Link to Page Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInLinkToPageField {
 		DMNavigator.gotoDocumentType();
 
@@ -397,7 +397,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label, Placeholder and Help text of Numeric Field on the Document Type builder."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelPlaceholderAndHelpTextInNumericField {
 		DMNavigator.gotoDocumentType();
 
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Rich Text Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInRichTextField {
 		DMNavigator.gotoDocumentType();
 
@@ -481,7 +481,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Separator Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInSeparatorField {
 		DMNavigator.gotoDocumentType();
 
@@ -521,7 +521,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label, Placeholder and Help text of Text Field on the Document Type builder."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelPlaceholderAndHelpTextInTextField {
 		DMNavigator.gotoDocumentType();
 
@@ -565,7 +565,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69030. This test verifies that is possible to edit Label and Help text of Upload Field on the Document Type builder."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextInUploadField {
 		DMNavigator.gotoDocumentType();
 

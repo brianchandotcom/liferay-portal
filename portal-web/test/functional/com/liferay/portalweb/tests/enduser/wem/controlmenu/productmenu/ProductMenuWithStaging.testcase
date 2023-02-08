@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112994. The Product Menu icon should not be shown when the user is in the Control Panel Apps even though enable Live"
-	@priority = "4"
+	@priority = 4
 	test ViewProductMenuIconInvisibleInGlobalAppAfterEnableLive {
 		task ("View product menu icon is not shown in Control Panel apps") {
 			ApplicationsMenu.gotoPortlet(

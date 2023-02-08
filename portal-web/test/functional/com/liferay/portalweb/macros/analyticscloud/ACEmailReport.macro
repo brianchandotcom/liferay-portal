@@ -21,7 +21,7 @@ definition {
 
 		ACEmailReport.enableEmailReportToggle();
 
-		ACUtils.selectGenericOption(optionValue = "${frequency}");
+		ACUtils.selectGenericOption(optionValue = ${frequency});
 
 		Button.clickSave();
 	}
@@ -31,20 +31,20 @@ definition {
 	}
 
 	macro viewEmailReportDetails {
-		var list1 = ListUtil.newListFromString("${metricNameList}");
-		var list2 = ListUtil.newListFromString("${metricValueList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${metricNameList});
+		var list2 = ListUtil.newListFromString(${metricValueList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var key_metricName = ListUtil.get("${list1}", "${i}");
-			var key_metricValue = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var key_metricName = ListUtil.get(${list1}, ${i});
+			var key_metricValue = ListUtil.get(${list2}, ${i});
 
 			AssertElementPresent(locator1 = "ACEmailReport#EMAIL_REPORT_METRICS");
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 

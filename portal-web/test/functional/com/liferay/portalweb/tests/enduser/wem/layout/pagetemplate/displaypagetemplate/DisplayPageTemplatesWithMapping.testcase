@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to editable fields in a display page template."
-	@priority = "5"
+	@priority = 5
 	test MapAuthorInfoToEditableField {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -103,7 +103,7 @@ definition {
 
 			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
 
-			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}
 
 		task ("Add a web content and select the display page template") {
@@ -132,12 +132,12 @@ definition {
 				id = "element-text",
 				text = "userfn1 userln1");
 
-			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
+			ContentPages.viewFragmentBackgroundImage(image = ${userPortrait});
 		}
 	}
 
 	@description = "This is a test for LPS-128645. Map custom field to text fragment."
-	@priority = "4"
+	@priority = 4
 	test MapCustomFieldToTextFragment {
 		task ("Add a custom field for Document") {
 			ApplicationsMenu.gotoPortlet(
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86550. Users should be able to map last editor name and author profile image to editable fields in a display page template."
-	@priority = "5"
+	@priority = 5
 	test MapLastEditorInfoToEditableField {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -258,7 +258,7 @@ definition {
 
 			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
 
-			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}
 
 		task ("Navigate to the display page template at view mode") {
@@ -271,7 +271,7 @@ definition {
 				id = "element-text",
 				text = "Test Test");
 
-			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
+			ContentPages.viewFragmentBackgroundImage(image = ${userPortrait});
 		}
 
 		task ("Add a new user with Administrator role") {
@@ -306,7 +306,7 @@ definition {
 
 			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
 
-			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}
 
 		task ("Edit the web content") {
@@ -329,12 +329,12 @@ definition {
 				id = "element-text",
 				text = "userfn1 userln1");
 
-			ContentPages.viewFragmentBackgroundImage(image = "${userPortrait}");
+			ContentPages.viewFragmentBackgroundImage(image = ${userPortrait});
 		}
 	}
 
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
-	@priority = "4"
+	@priority = 4
 	test MapManualURLToImageFragment {
 		task ("Add an Image fragment to the Display Page Name") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -411,7 +411,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map manual URL to link fragment."
-	@priority = "5"
+	@priority = 5
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
 
@@ -448,7 +448,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map manual URL to text fragment."
-	@priority = "4"
+	@priority = 4
 	test MapManualURLToTextFragment {
 		task ("Add a Heading fragment to the Display Page Name") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "Map multiple custom ddm fields to text editable fields."
-	@priority = "4"
+	@priority = 4
 	test MapMultipleCustomDDMFieldsToTextFragment {
 		task ("Add a web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -601,7 +601,7 @@ definition {
 	}
 
 	@description = "Map multiple fields to text editable fields."
-	@priority = "4"
+	@priority = 4
 	test MapMultipleFieldsToTextFragment {
 		task ("Import fragment collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
@@ -620,14 +620,14 @@ definition {
 		}
 
 		task ("Map multiple fields to editable fields") {
-			var n = "1";
+			var n = 1;
 
 			for (var fieldName : list "Title,Content,Author Name,Display Page URL,Tags") {
 				PageEditorMapping.mapEditableTextToField(
 					contributed = "false",
-					field = "${fieldName}",
+					field = ${fieldName},
 					fragmentName = "Multiple Editables",
-					index = "${n}");
+					index = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -653,14 +653,14 @@ definition {
 
 		task ("View mapped content in display page template") {
 			var portalURL = PropsUtil.get("portal.url");
-			var n = "1";
+			var n = 1;
 
 			for (var content : list "Webcontent Title,Webcontent Content,Test Test,${portalURL}/web/test-site-name/w/webcontent-title") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "multiple-editables",
-					position = "${n}",
-					text = "${content}");
+					position = ${n},
+					text = ${content});
 
 				var n = ${n} + 1;
 			}
@@ -668,13 +668,13 @@ definition {
 			ContentPages.viewFragmentText(
 				contributed = "false",
 				fragmentName = "multiple-editables",
-				position = "5",
+				position = 5,
 				text = "tag1, tag2, tag3");
 		}
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentFieldWithURLToImageFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentFieldWithURLToLinkFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -844,7 +844,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentFieldWithURLToTextFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -929,7 +929,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98030. Can map the editable background images of a fragment to an existing image content in a display page template."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentImageToBackgoundImageOfBannerCenter {
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1006,7 +1006,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in display page template."
-	@priority = "4"
+	@priority = 4
 	test ViewMappableFieldsAreGroupedByFieldset {
 		task ("Add a custom Document type") {
 			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
@@ -1042,7 +1042,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1068,7 +1068,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1076,7 +1076,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Schedule",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1113,7 +1113,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1121,7 +1121,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Content",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1129,7 +1129,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Configuration",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1137,7 +1137,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1172,7 +1172,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1180,7 +1180,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "File Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1194,14 +1194,14 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-120504. View mapped image after sort documents in display page template."
-	@priority = "4"
+	@priority = 4
 	test ViewMappedImageAfterSortDocumentsInDisplayPageTemplate {
 		task ("Add a display page template based on Document and Basic Document") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1277,9 +1277,9 @@ definition {
 
 			for (var title : list "Document Title 1,Document Title 2") {
 				AssertTextEquals(
-					key_assetTitle = "${title}",
+					key_assetTitle = ${title},
 					locator1 = "AP#ASSET_ABSTRACT_TITLE",
-					value1 = "${title}");
+					value1 = ${title});
 			}
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title 1");
@@ -1294,12 +1294,12 @@ definition {
 		}
 
 		task ("Assert the order of documents in Documents and Media") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title 2,Document Title 1") {
 				LexiconCard.viewCardOrder(
-					card = "${title}",
-					index = "${n}");
+					card = ${title},
+					index = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1310,12 +1310,12 @@ definition {
 		}
 
 		task ("Assert the order of documents in Documents and Media") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title 1,Document Title 2") {
 				LexiconCard.viewCardOrder(
-					card = "${title}",
-					index = "${n}");
+					card = ${title},
+					index = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -1331,7 +1331,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118060. The contributed content types and their subtypes are available when creating a display page template."
-	@priority = "5"
+	@priority = 5
 	test ViewTypesDuringCreation {
 		property portal.acceptance = "true";
 
@@ -1372,7 +1372,7 @@ definition {
 			for (var contentType : list "Web Content Article,Document,Blogs Entry") {
 				AssertElementPresent(
 					key_fieldLabel = "Content Type",
-					key_value = "${contentType}",
+					key_value = ${contentType},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 
@@ -1393,7 +1393,7 @@ definition {
 			for (var subtype : list "Basic Web Content,WC Structure Name") {
 				AssertElementPresent(
 					key_fieldLabel = "Subtype",
-					key_value = "${subtype}",
+					key_value = ${subtype},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 
@@ -1409,7 +1409,7 @@ definition {
 			for (var subtype : list "Basic Document,Google Drive Shortcut,DM Document Type Name") {
 				AssertElementPresent(
 					key_fieldLabel = "Subtype",
-					key_value = "${subtype}",
+					key_value = ${subtype},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}

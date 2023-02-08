@@ -5,17 +5,17 @@ definition {
 			var accountEntryStatus = "Active";
 		}
 
-		if ("${accountEntryStatus}" == "Active") {
-			var status = "0";
+		if (${accountEntryStatus} == "Active") {
+			var status = 0;
 		}
-		else if ("${accountEntryStatus}" == "Inactive") {
-			var status = "5";
+		else if (${accountEntryStatus} == "Inactive") {
+			var status = 5;
 		}
 		else {
 			fail("'accountEntryStatus' is either invalid or not yet set.");
 		}
 
-		return "${status}";
+		return ${status};
 	}
 
 	macro setType {
@@ -23,9 +23,9 @@ definition {
 			var accountEntryType = "Business";
 		}
 
-		var type = StringUtil.lowerCase("${accountEntryType}");
+		var type = StringUtil.lowerCase(${accountEntryType});
 
-		return "${type}";
+		return ${type};
 	}
 
 }

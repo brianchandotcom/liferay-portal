@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-76817. Can namespace the CSS of a Web Fragment to avoid affecting the rest of the page."
-	@priority = "3"
+	@priority = 3
 	test CanCheckTheNamespaceOfCSSInFragments {
 		task ("Edit this fragment with the following codes") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
@@ -68,9 +68,9 @@ NO CSS
 { font-size: 40px; }
 		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
-			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+			FragmentsEditor.typeCssEditor(content = ${cssSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 		}
@@ -89,7 +89,7 @@ NO CSS
 	}
 
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test MarkFragmentCreatedInPortalAsCacheable {
 		property portal.acceptance = "true";
@@ -116,7 +116,7 @@ NO CSS
 	}
 
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments without Read-Only label imported to portal and they are non-Cachable by default."
-	@priority = "4"
+	@priority = 4
 	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
 		task ("Import a fragment collection without Read-Only") {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
@@ -148,7 +148,7 @@ NO CSS
 	}
 
 	@description = "This is a test for LPS-111657. Can save Container and nested elements as a new composition when the Container is inside a column of Row."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test SaveContainerAsCompositionInModuleOfGrid {
 		property portal.acceptance = "true";
@@ -173,7 +173,7 @@ NO CSS
 		task ("Add a Container to the first module of grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Layout Elements",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Container",
 				navTab = "Fragments");
 		}
@@ -193,7 +193,7 @@ NO CSS
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Asset Publisher']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.waitForAutoSave();
@@ -219,7 +219,7 @@ NO CSS
 			for (var elementName : list "Image,Asset Publisher") {
 				AssertElementPresent(
 					key_elementHeader = "//div[@aria-label='${elementName}']",
-					key_position = "2",
+					key_position = 2,
 					locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 			}
 		}

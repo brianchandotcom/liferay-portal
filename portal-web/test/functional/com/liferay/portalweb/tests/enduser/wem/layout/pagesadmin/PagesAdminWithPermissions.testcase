@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136413. The global page template is invisible to user without permission in page creation."
-	@priority = "4"
+	@priority = 4
 	test GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation {
 		property test.name.skip.portal.instance = "PagesAdminWithPermissions#GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation";
 
@@ -64,21 +64,21 @@ definition {
 		task ("Define permission to new regular role") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Roles Regrole Name");
 			}
 
 			for (var resourceActionIndex : list "ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
 					roleTitle = "Roles Regrole Name");
 			}
 
 			for (var resourceActionIndex : list "ADD_DISCUSSION,ADD_LAYOUT,CONFIGURE_PORTLETS,CUSTOMIZE,DELETE,DELETE_DISCUSSION,PERMISSIONS,UPDATE,UPDATE_DISCUSSION,UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Regrole Name");
 			}
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration, the page is opened in view mode."
-	@priority = "4"
+	@priority = 4
 	test NavigateToViewModeWhenClickOnContentPageItemAsUserWithoutEditPermission {
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions searches for a content page in pages administration, and then clicks on it in the results, the page is opened in view mode."
-	@priority = "4"
+	@priority = 4
 	test NavigateToViewModeWhenClickOnContentPageTitleFromSearchResultsAsUserWithoutEditPermission {
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@description = "Can remove inline view permission for Guest."
-	@priority = "5"
+	@priority = 5
 	test RemoveViewPermissionForGuest {
 		property portal.acceptance = "true";
 		property testray.component.names = "Roles";

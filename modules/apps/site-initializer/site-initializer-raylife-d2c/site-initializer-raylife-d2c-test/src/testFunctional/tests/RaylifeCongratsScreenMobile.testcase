@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,11 +31,11 @@ definition {
 	}
 
 	@description = "LPS-148203 - Verify if the title of the page corresponds to 'You did it!'"
-	@priority = "4"
+	@priority = 4
 	test CanViewTitleCongratsPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "360,720");
 
@@ -65,11 +65,11 @@ definition {
 	}
 
 	@description = "LPS-148206 - Verify if the title of the page corresponds to 'Congrats'"
-	@priority = "4"
+	@priority = 4
 	test CanViewTitleCongratsTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -113,11 +113,11 @@ definition {
 	}
 
 	@description = "LPS-148205 - Check if there is no page description corresponding to 'We will e-mail you the policy contract for signing via DocuSign'"
-	@priority = "4"
+	@priority = 4
 	test IfDocusignMessageNotAppearPhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "360,720");
 
@@ -151,11 +151,11 @@ definition {
 	}
 
 	@description = "LPS-148207 - Verify if the policy number is generated"
-	@priority = "4"
+	@priority = 4
 	test IfPolicyNumberGeneratedTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -201,11 +201,11 @@ definition {
 	}
 
 	@description = "LPS-148204 - Verify if the product corresponds to the one you selected at the beginning of the flow"
-	@priority = "4"
+	@priority = 4
 	test IfProductEqualsInTitlePhone {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "360,720");
 
@@ -237,11 +237,11 @@ definition {
 	}
 
 	@description = "LPS-148208 - Check that the quote price is the same as on the Quote Comparison page"
-	@priority = "4"
+	@priority = 4
 	test IfQuoteValueEqualsTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		SetWindowSize(value1 = "800,1024");
 

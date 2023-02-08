@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133105. Verify if its possible add more than 1 valid documents in a new Envelope"
-	@priority = "5"
+	@priority = 5
 	test CanAddMoreThan1Document {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddOnly10Recipients {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if its possible delete any additional recipients"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteRecipients {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133105. Verify if adding more than 1 valid and 1 invalid documents will prevent collecting the digital signature"
-	@priority = "5"
+	@priority = 5
 	test CanInvalidDocumentPreventCollectingDS {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -128,7 +128,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
-			value1 = "${modalTitle}");
+			value1 = ${modalTitle});
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
-	@priority = "5"
+	@priority = 5
 	test CanViewErrorMessageForUnsuporttedFiles {
 		property solutions.acceptance = "true";
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Success Message appear"
-	@priority = "5"
+	@priority = 5
 	test CanViewSuccessMessage {
 		property solutions.acceptance = "true";
 
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"
-	@priority = "4"
+	@priority = 4
 	test EmailSubjectIsRequired {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Envelope Name field is required"
-	@priority = "4"
+	@priority = 4
 	test EnvelopeNameIsRequired {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Recipient Email field is required"
-	@priority = "4"
+	@priority = 4
 	test RecipentEmailIsRequired {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -256,7 +256,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Recipient Full Name field is required"
-	@priority = "4"
+	@priority = 4
 	test RecipentNameIsRequired {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 

@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "LPS-142107. Verifies a11y tool can be disabled."
-	@priority = "5"
+	@priority = 5
 	test CanBeDisabledWithDevelopment {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -80,7 +80,7 @@ definition {
 
 	@description = "LPS-142329. Verifies 2 occurrences of the same violation are listed in the side panel."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanDetectMultipleOccurencesOfSameViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -109,22 +109,22 @@ definition {
 
 		task ("Assert the 2 occurrences are highlighted with an icon") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 		}
@@ -135,12 +135,12 @@ definition {
 				locator1 = "A11yTool#VIOLATION_PANEL_OCCURRENCE_LIST_ITEM");
 
 			AssertElementNotPresent(
-				key_index = "3",
+				key_index = 3,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementNotPresent(
-				key_index = "3",
+				key_index = 3,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 		}
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "LPS-140736. Ensures there is no accessibility side panel on a page with no violations."
-	@priority = "5"
+	@priority = 5
 	test CanDetectNoViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -181,7 +181,7 @@ definition {
 
 	@description = "Verifies a11y tool can be deployed and detect an a11y violation"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanDetectViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -209,7 +209,7 @@ definition {
 
 	@description = "LPS-142325. Verifies a rule violation will be detected when a fragment with a violation is added to a page with no violations."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanDetectViolationInDynamicPage {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -261,7 +261,7 @@ definition {
 
 	@description = "LPS-142324. Verifies the correct target and code is displayed."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanDisplayTargetCode {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -317,7 +317,7 @@ definition {
 
 	@description = "LPS-142330. Verifies the correct target and code is displayed for the second occurrence."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanDisplayTargetCodeOfSecondViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -365,7 +365,7 @@ definition {
 
 	@description = "LPS-142327. Verifies the pop up displays detail information about the violation."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanDisplayViolationDetailsInPopUp {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -417,7 +417,7 @@ definition {
 
 	@description = "LPS-142323. Verifies the side panel shows the violation occurrence when clicked from pop up."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanDisplayViolationDetailsInSidePanel {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -453,7 +453,7 @@ definition {
 
 	@description = "LPS-142322. Verifies side panel displays information about a violation rule."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanDisplayViolationRuleDetails {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -513,7 +513,7 @@ definition {
 
 	@description = "LPS-142331 Assert that user can filter violations by all impact."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanFilterViolationsByAllImpact {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -551,7 +551,7 @@ definition {
 
 	@description = "LPS-141820. Verifies violations can be filtered by 'Critical' only. Also verifies all violations are present when unfiltered."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanFilterViolationsByCriticalImpactOnly {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -616,11 +616,11 @@ definition {
 
 		task ("Close critical violations popovers") {
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 
 			Click(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 		}
 
@@ -649,7 +649,7 @@ definition {
 
 	@description = "LPS-141734. Verifies impact and category filters are available."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanFilterViolationsByImpactAndCategory {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -679,7 +679,7 @@ definition {
 
 	@description = "LPS-142318. Verifies multiple violations are highlighted with an icon."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanHighlightMultipleViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -692,48 +692,48 @@ definition {
 
 		task ("Verify there are 3 different a11y violations") {
 			VerifyElementPresent(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 
 			VerifyElementPresent(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 
 			VerifyElementPresent(
-				key_index = "3",
+				key_index = 3,
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 		}
 
 		task ("Assert all 3 violations are highlighted") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "3",
+				key_index = 3,
 				key_text = "a11y-backdrop",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 		}
 
 		task ("Assert all 3 violations have an icon") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 
 			AssertElementPresent(
-				key_index = "3",
+				key_index = 3,
 				key_text = "a11y-indicator",
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_OVERLAY");
 		}
@@ -743,7 +743,7 @@ definition {
 
 	@description = "LPS-142328. Verifies the popup panel will close when click outside of it."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanViewViolations {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -771,7 +771,7 @@ definition {
 
 	@description = "LPS-142333. To assert that filters reset to default after page refresh."
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test FiltersAreResetToDefaultAfterPageRefresh {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -809,7 +809,7 @@ definition {
 
 	@description = "LPS-142271. Verifies violations are sorted by descending impact."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test OrdersViolationsByDescendingImpact {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";
@@ -837,22 +837,22 @@ definition {
 		task ("Asserts the list of rules are sorted in descending impact") {
 			AssertElementPresent(
 				key_impact = "critical",
-				key_index = "1",
+				key_index = 1,
 				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_INDEX");
 
 			AssertElementPresent(
 				key_impact = "serious",
-				key_index = "2",
+				key_index = 2,
 				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_INDEX");
 
 			AssertElementPresent(
 				key_impact = "moderate",
-				key_index = "3",
+				key_index = 3,
 				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_INDEX");
 
 			AssertElementPresent(
 				key_impact = "minor",
-				key_index = "4",
+				key_index = 4,
 				locator1 = "A11yTool#VIOLATION_PANEL_RULE_LIST_INDEX");
 		}
 
@@ -861,7 +861,7 @@ definition {
 
 	@description = "LPS-141455. Verifies the side panel appears with violation(s)."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ShowsSidePanelWithViolation {
 		property osgi.module.configuration.file.names = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration.config";
 		property osgi.module.configurations = "enable=B\"true\"";

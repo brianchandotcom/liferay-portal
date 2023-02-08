@@ -26,7 +26,7 @@ definition {
 
 		echo("## * File Name: ${fileName}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to add a wiki child page via JSON"
@@ -36,14 +36,14 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
-			var viewableBy = "${viewableBy}";
+			var viewableBy = ${viewableBy};
 		}
 		else {
 			var viewableBy = "Anyone";
 		}
 
 		if (isSet(encodingFormat)) {
-			var encodingFormat = "${encodingFormat}";
+			var encodingFormat = ${encodingFormat};
 		}
 		else {
 			var encodingFormat = "creole";
@@ -57,10 +57,10 @@ definition {
 		}
 
 		if (isSet(assetCategoryIds)) {
-			var assetCategoryIds = "${assetCategoryIds}";
+			var assetCategoryIds = ${assetCategoryIds};
 		}
 		else {
-			var assetCategoryIds = "0";
+			var assetCategoryIds = 0;
 		}
 
 		var curl = '''
@@ -79,17 +79,17 @@ definition {
 				}'
 		''';
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to add a wiki node via JSON"
 	macro _addWikiNode {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
-			var description = "${description}";
+			var description = ${description};
 		}
 		else {
 			var description = "";
@@ -103,7 +103,7 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to add a wiki page via JSON"
@@ -113,14 +113,14 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
-			var viewableBy = "${viewableBy}";
+			var viewableBy = ${viewableBy};
 		}
 		else {
 			var viewableBy = "Anyone";
 		}
 
 		if (isSet(encodingFormat)) {
-			var encodingFormat = "${encodingFormat}";
+			var encodingFormat = ${encodingFormat};
 		}
 		else {
 			var encodingFormat = "creole";
@@ -134,10 +134,10 @@ definition {
 		}
 
 		if (isSet(assetCategoryIds)) {
-			var assetCategoryIds = "${assetCategoryIds}";
+			var assetCategoryIds = ${assetCategoryIds};
 		}
 		else {
-			var assetCategoryIds = "0";
+			var assetCategoryIds = 0;
 		}
 
 		var curl = '''
@@ -155,13 +155,13 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro _deleteWikiPageById {
-		Variables.assertDefined(parameterList = "${wikiPageId}");
+		Variables.assertDefined(parameterList = ${wikiPageId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -171,9 +171,9 @@ definition {
 				-u 'test@liferay.com:test' \
 		''';
 
-		var response = JSONCurlUtil.delete("${curl}");
+		var response = JSONCurlUtil.delete(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "Get the nodeId from any existing site by using groupName"
@@ -189,15 +189,15 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
+		var nodeId = JSONCurlUtil.get(${curl}, "$.[?(@['name'] == '${name}')]['nodeId']");
 
-		if ("${nodeId}" == "") {
+		if (${nodeId} == "") {
 			fail("FAIL. Cannot find node.");
 		}
 
 		echo("## * NodeId: ${nodeId}");
 
-		return "${nodeId}";
+		return ${nodeId};
 	}
 
 	@summary = "Get the pageId from any existing node by nodeName"
@@ -215,15 +215,15 @@ definition {
 				-d title=${title}
 		''';
 
-		var pageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['pageId']");
+		var pageId = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${title}')]['pageId']");
 
-		if ("${pageId}" == "") {
+		if (${pageId} == "") {
 			fail("FAIL. Cannot find wiki page.");
 		}
 
 		echo("## * PageId: ${pageId}");
 
-		return "${pageId}";
+		return ${pageId};
 	}
 
 	@summary = "Get the resourcePrimKey by pagename"
@@ -241,19 +241,19 @@ definition {
 				-d title=${title}
 		''';
 
-		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['resourcePrimKey']");
+		var resourcePrimKey = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${title}')]['resourcePrimKey']");
 
-		if ("${resourcePrimKey}" == "[]") {
+		if (${resourcePrimKey} == "[]") {
 			fail("FAIL. Cannot find wiki page resourcePrimKey.");
 		}
 
 		echo("## * resourcePrimKey: ${resourcePrimKey}");
 
-		return "${resourcePrimKey}";
+		return ${resourcePrimKey};
 	}
 
 	macro _getWikiPageById {
-		Variables.assertDefined(parameterList = "${wikiPageId}");
+		Variables.assertDefined(parameterList = ${wikiPageId});
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
@@ -264,9 +264,9 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var wikiPage = JSONCurlUtil.get("${curl}");
+		var wikiPage = JSONCurlUtil.get(${curl});
 
-		return "${wikiPage}";
+		return ${wikiPage};
 	}
 
 	@summary = "Helper function to move the wiki page to trash via JSON."
@@ -282,24 +282,24 @@ definition {
 				-d title=${title}
 		''';
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to update the existing wiki page via JSON."
 	macro _updateWikiPage {
-		Variables.assertDefined(parameterList = "${resourcePrimKey}");
+		Variables.assertDefined(parameterList = ${resourcePrimKey});
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(viewableBy)) {
-			var viewableBy = "${viewableBy}";
+			var viewableBy = ${viewableBy};
 		}
 		else {
 			var viewableBy = "Anyone";
 		}
 
 		if (isSet(encodingFormat)) {
-			var encodingFormat = "${encodingFormat}";
+			var encodingFormat = ${encodingFormat};
 		}
 		else {
 			var encodingFormat = "creole";
@@ -313,10 +313,10 @@ definition {
 		}
 
 		if (isSet(assetCategoryIds)) {
-			var assetCategoryIds = "${assetCategoryIds}";
+			var assetCategoryIds = ${assetCategoryIds};
 		}
 		else {
-			var assetCategoryIds = "0";
+			var assetCategoryIds = 0;
 		}
 
 		var curl = '''
@@ -335,7 +335,7 @@ definition {
 				}'
 		''';
 
-		var messageId = JSONCurlUtil.put("${curl}");
+		var messageId = JSONCurlUtil.put(${curl});
 	}
 
 }

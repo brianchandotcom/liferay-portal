@@ -3,7 +3,7 @@ definition {
 	macro addStyleBooks {
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${styleBookName}");
+		PortletEntry.inputName(name = ${styleBookName});
 
 		Button.clickSave();
 	}
@@ -11,7 +11,7 @@ definition {
 	macro deleteStyleBook {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
 			item = "Delete",
-			styleBookName = "${styleBookName}");
+			styleBookName = ${styleBookName});
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -23,13 +23,13 @@ definition {
 	}
 
 	macro gotoStyleBook {
-		LexiconCard.clickCardTitle(card = "${styleBookName}");
+		LexiconCard.clickCardTitle(card = ${styleBookName});
 	}
 
 	macro gotoStyleBookEllipsisItem {
 		LexiconCard.clickEllipsisItem(
-			card = "${styleBookName}",
-			item = "${item}");
+			card = ${styleBookName},
+			item = ${item});
 	}
 
 	macro importStyleBookFromTempFolder {
@@ -43,7 +43,7 @@ definition {
 
 		UploadTempFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${stylebookZipFileName}");
+			value1 = ${stylebookZipFileName});
 
 		Button.clickImport();
 
@@ -55,12 +55,12 @@ definition {
 	macro markStyleBookAsDefault {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
 			item = "Mark as Default",
-			styleBookName = "${styleBookName}");
+			styleBookName = ${styleBookName});
 
-		AssertConfirm(value1 = "${confirmMessage}");
+		AssertConfirm(value1 = ${confirmMessage});
 
 		LexiconCard.viewCardSticker(
-			card = "${styleBookName}",
+			card = ${styleBookName},
 			icon = "check-circle");
 	}
 
@@ -69,7 +69,7 @@ definition {
 	}
 
 	macro viewStyleBooksPresent {
-		LexiconCard.viewCardPresent(card = "${styleBookName}");
+		LexiconCard.viewCardPresent(card = ${styleBookName});
 	}
 
 }

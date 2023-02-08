@@ -4,19 +4,19 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		AssertClick(
-			key_plusMenu = "${plusMenu}",
+			key_plusMenu = ${plusMenu},
 			locator1 = "CommerceEntry#PLUS_MENU",
-			value1 = "${plusMenu}");
+			value1 = ${plusMenu});
 
 		CommerceEntry.addProductsEntry(
-			productFullDescription = "${productFullDescription}",
-			productShortDescription = "${productShortDescription}",
-			productTitle = "${productTitle}");
+			productFullDescription = ${productFullDescription},
+			productShortDescription = ${productShortDescription},
+			productTitle = ${productTitle});
 	}
 
 	macro openCatalogsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet");
 	}
 

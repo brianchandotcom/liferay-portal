@@ -6,7 +6,7 @@ definition {
 
 		selenium.sikuliClick();
 
-		selenium.pause("2000");
+		selenium.pause(2000);
 
 		selenium.assertJavaScriptErrors();
 

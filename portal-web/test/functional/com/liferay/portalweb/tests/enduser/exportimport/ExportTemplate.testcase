@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Verify is possible delete an export template."
-	@priority = "4"
+	@priority = 4
 	test DeleteExportTemplate {
 		task ("Given: An export template is created") {
 			LAR.addExportTemplateCP(
@@ -83,12 +83,12 @@ definition {
 	}
 
 	@description = "Verify is possible relaunch the exported process."
-	@priority = "3"
+	@priority = 3
 	test ExportWithRelaunchedProcess {
 		task ("Given: An export template is created") {
 			LAR.exportSiteCP(siteScopeName = "Guest");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -98,7 +98,7 @@ definition {
 
 			echo("value name ${valueName}");
 
-			var larFileName = RegexUtil.replace("${valueName}", "([a-zA-z0-9_.-]*)[(0-9KB)]*", "1");
+			var larFileName = RegexUtil.replace(${valueName}, "([a-zA-z0-9_.-]*)[(0-9KB)]*", 1);
 
 			echo("lar file name ${larFileName}");
 		}
@@ -106,7 +106,7 @@ definition {
 		task ("When: I relaunch this template") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Relaunch",
-				rowEntry = "${larFileName}");
+				rowEntry = ${larFileName});
 		}
 
 		task ("Then: I will see the successful process") {
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "Verify is possible search an export template."
-	@priority = "4"
+	@priority = 4
 	test SearchExportTemplate {
 		task ("Given: An export template is created") {
 			LAR.addExportTemplateCP(

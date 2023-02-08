@@ -9,7 +9,7 @@ definition {
 
 		Select(
 			locator1 = "Select#PAGE_DELTA",
-			value1 = "${maxDisplayItems}");
+			value1 = ${maxDisplayItems});
 
 		PortletEntry.save();
 
@@ -19,7 +19,7 @@ definition {
 	macro configurePaginationCP {
 		Click(locator1 = "Dropdown#ENTRIES");
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
 }

@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-161924 - Verify that it's possible to add attachments to the notification template"
-	@priority = "3"
+	@priority = 3
 	test CanAddAttachment {
 		task ("Given an object with an attachment field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "LPS-161917 - Verify that it's possible to create an e-mail notification template"
-	@priority = "5"
+	@priority = 5
 	test CanCreateEmailTemplate {
 		property portal.acceptance = "true";
 
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "LPS-161928 - Verify that it's possible to delete attachments to the notification template"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAttachment {
 		task ("Given an object with an attachment field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "LPS-161919 - Verify that it's possible to delete an e-mail notification template"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteEmailTemplate {
 		task ("Go to Templates and add a new Notification Template") {
 			ApplicationsMenu.gotoPortlet(
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "LPS-161922 - Verify that it's possible to delete a notification"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteNotification {
 		task ("Given a notification template is created") {
 			ApplicationsMenu.gotoPortlet(
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
-	@priority = "3"
+	@priority = 3
 	test CanEditEmailTemplate {
 		task ("Given a user creates an email notification template") {
 			ApplicationsMenu.gotoPortlet(
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "LPS-161923 - Verify that it's possible to search for notifications"
-	@priority = "3"
+	@priority = 3
 	test CanSearchForNotifications {
 		task ("Go to Templates and add Notification Templates") {
 			ApplicationsMenu.gotoPortlet(
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
-	@priority = "3"
+	@priority = 3
 	test CanSendEmailViaAction {
 		task ("Go to Templates and add a new Notification Template") {
 			ApplicationsMenu.gotoPortlet(

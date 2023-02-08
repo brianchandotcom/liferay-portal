@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "Check if each nav section of clay sample portlet looks normal from screenshot"
-	@priority = "3"
+	@priority = 3
 	test CanRenderUI {
 		task ("Set browser window size") {
 			SetWindowSize(value1 = "800,800");

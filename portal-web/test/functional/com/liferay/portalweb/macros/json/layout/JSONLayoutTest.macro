@@ -2,34 +2,34 @@ definition {
 
 	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		// Layout
 
 		JSONLayout.addPrivateLayout(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			layoutName = "private 1");
 
 		JSONLayout.addPublicLayout(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			layoutName = "public 1");
 
 		// Widget
 
 		JSONLayout.addWidgetToPrivateLayout(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			layoutName = "private 1",
 			widgetName = "Asset Publisher");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			layoutName = "public 1",
 			widgetName = "Asset Publisher");
 
 		// Layout template
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			layoutName = "public 1",
 			layoutTemplate = "1 Column");
 	}

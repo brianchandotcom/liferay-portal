@@ -2,15 +2,15 @@ definition {
 
 	macro addPG {
 		AssertClick(
-			key_dmDocumentTitle = "${dmDocumentTitle}",
+			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${commentBody}");
+			value1 = ${commentBody});
 
 		SelectFrame(value1 = "relative=top");
 
@@ -23,14 +23,14 @@ definition {
 
 	macro viewPG {
 		AssertClick(
-			key_dmDocumentTitle = "${dmDocumentTitle}",
+			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		AssertTextEquals.assertPartialText(
-			key_entryComment = "${commentBody}",
+			key_entryComment = ${commentBody},
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${commentBody}");
+			value1 = ${commentBody});
 	}
 
 }

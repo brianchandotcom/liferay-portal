@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,22 +27,22 @@ definition {
 	}
 
 	@description = "This test ensures that user is not able to upload the mimetypes files that bigger than the limit set when the admin sets a size limit for multiple mimetypes."
-	@priority = "4"
+	@priority = 4
 	test CanLimitMultipleMimeTypesSize {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitMultipleMimeTypesSize";
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "40960",
+			maximumFileSizeValue = 40960,
 			mimeTypeValue = "image/jpeg");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			indexNumber = "2",
-			maximumFileSizeValue = "30720",
+			indexNumber = 2,
+			maximumFileSizeValue = 30720,
 			mimeTypeValue = "application/pdf");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			indexNumber = "2",
-			maximumFileSizeValue = "20480",
+			indexNumber = 2,
+			maximumFileSizeValue = 20480,
 			mimeTypeValue = "application/msword");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -55,22 +55,22 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		for (var fileName : list "Document_1,large_file,Commerce_Blue") {
-			LexiconCard.viewCardNotPresent(card = "${fileName}");
+			LexiconCard.viewCardNotPresent(card = ${fileName});
 		}
 
 		for (var fileName : list "Commerce_Black,Document_3,Document_2") {
-			LexiconCard.viewCardTitle(card = "${fileName}");
+			LexiconCard.viewCardTitle(card = ${fileName});
 		}
 	}
 
 	@description = "This test ensures that the mime typy size limit setting only take effects in current site."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	test CanLimitSizeOnlyInCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "20480",
+			maximumFileSizeValue = 20480,
 			mimeTypeValue = "image/jpeg",
 			siteSettings = "true",
 			siteURLKey = "site-name");
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This test ensures that uploaded files will be limited in size in a depot when setting the limit of a mimetype using the type and a wildcard."
-	@priority = "4"
+	@priority = 4
 	test CanLimitSizeUsingWildcardInDepot {
 		OSGiConfig.copyOSGiConfigFile(
 			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This test ensures that uploaded files will be limited in size in a site when setting the limit of a mimetype using the type and a wildcard."
-	@priority = "4"
+	@priority = 4
 	test CanLimitSizeUsingWildcardInSite {
 		OSGiConfig.copyOSGiConfigFile(
 			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
@@ -166,20 +166,20 @@ definition {
 	}
 
 	@description = "This test ensures that users can not save the size limits settings when one of the fields is empty."
-	@priority = "3"
+	@priority = 3
 	test CannotSaveFileSizeLimitsWithEmptyValue {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotSaveFileSizeLimitsWithEmptyValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "",
 			validateInvalidValue = "true",
 			viewErrorAlert = "true");
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
-				key_text = "${fieldName}",
+				key_text = ${fieldName},
 				locator1 = "TextInput#ANY",
 				value1 = "");
 		}
@@ -193,26 +193,26 @@ definition {
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
-				key_text = "${fieldName}",
+				key_text = ${fieldName},
 				locator1 = "TextInput#ANY",
 				value1 = "");
 		}
 	}
 
 	@description = "This test ensures that an error alert will be displayed when saving a new file size limits settings with an invalid value."
-	@priority = "3"
+	@priority = 3
 	test CannotSaveFileSizeLimitsWithInvalidValue {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotSaveFileSizeLimitsWithInvalidValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "invalid",
 			validateInvalidValue = "true",
 			viewErrorAlert = "true");
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
-				key_text = "${fieldName}",
+				key_text = ${fieldName},
 				locator1 = "TextInput#ANY",
 				value1 = "");
 		}
@@ -226,25 +226,25 @@ definition {
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
-				key_text = "${fieldName}",
+				key_text = ${fieldName},
 				locator1 = "TextInput#ANY",
 				value1 = "");
 		}
 	}
 
 	@description = "This test ensures that an error alert will be displayed when updating an existing file size limits settings with an invalid value."
-	@priority = "3"
+	@priority = 3
 	test CannotUpdateFileSizeLimitsWithInvalidValue {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CannotUpdateFileSizeLimitsWithInvalidValue";
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "image/png");
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "invalid",
 			validateInvalidValue = "true",
 			viewErrorAlert = "true");
@@ -257,7 +257,7 @@ definition {
 		AssertValue(
 			key_text = "Maximum File Size",
 			locator1 = "TextInput#ANY",
-			value1 = "10240");
+			value1 = 10240);
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
@@ -275,16 +275,16 @@ definition {
 		AssertValue(
 			key_text = "Maximum File Size",
 			locator1 = "TextInput#ANY",
-			value1 = "10240");
+			value1 = 10240);
 	}
 
 	@description = "This test ensures that the configured file size limites can be removed."
-	@priority = "3"
+	@priority = 3
 	test CanRemoveConfiguredFileSizeLimits {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#CanRemoveConfiguredFileSizeLimits";
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "image/png");
 
 		DMDocument.updateMimeTypeSizeLimit(
@@ -293,7 +293,7 @@ definition {
 
 		for (var fieldName : list "Mime Type,Maximum File Size") {
 			AssertValue(
-				key_text = "${fieldName}",
+				key_text = ${fieldName},
 				locator1 = "TextInput#ANY",
 				value1 = "");
 		}
@@ -301,19 +301,19 @@ definition {
 
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Instance Settings and System Settings), the lower limit from Instance Settings will take effect."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	test InstanceTakesEffectOverSystemLimit {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#InstanceTakesEffectOverSystemLimit";
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "30720",
+			maximumFileSizeValue = 30720,
 			mimeTypeValue = "application/pdf");
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "10240",
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "application/pdf");
 
 		JSONDepot.addDepot(
@@ -333,28 +333,28 @@ definition {
 	}
 
 	@description = "This test ensures that when setting the multiple mime type size limit at site and instance levels, the lower limit from the site will take effect."
-	@priority = "3"
+	@priority = 3
 	test SiteSizeLimitTakesEffectOverInstanceSettingsWithMultipleLimits {
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "40960",
+			maximumFileSizeValue = 40960,
 			mimeTypeValue = "image/jpeg");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			indexNumber = "2",
+			indexNumber = 2,
 			instanceSettings = "true",
-			maximumFileSizeValue = "40960",
+			maximumFileSizeValue = 40960,
 			mimeTypeValue = "image/gif");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "20480",
+			maximumFileSizeValue = 20480,
 			mimeTypeValue = "image/png",
 			siteSettings = "true",
 			siteURLKey = "guest");
 
 		DMDocument.updateMimeTypeSizeLimit(
-			indexNumber = "2",
-			maximumFileSizeValue = "10240",
+			indexNumber = 2,
+			maximumFileSizeValue = 10240,
 			mimeTypeValue = "image/*",
 			siteSettings = "true",
 			siteURLKey = "guest");
@@ -373,12 +373,12 @@ definition {
 
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Site, System Settings and Instance Settings), the lower limit from the site will take effect."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	test SiteSizeLimitTakesEffectOverSystemAndInstanceSettings {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverSystemAndInstanceSettings";
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "51200",
+			maximumFileSizeValue = 51200,
 			mimeTypeValue = "image/jpeg");
 
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
@@ -389,11 +389,11 @@ definition {
 
 		SystemSettings.viewNumberInputText(
 			fieldLabel = "Maximum File Size",
-			fieldValue = "51200");
+			fieldValue = 51200);
 
 		DMDocument.updateMimeTypeSizeLimit(
 			instanceSettings = "true",
-			maximumFileSizeValue = "30720",
+			maximumFileSizeValue = 30720,
 			mimeTypeValue = "image/jpeg");
 
 		DMNavigator.openToConfigInSiteSettings(
@@ -406,10 +406,10 @@ definition {
 
 		SystemSettings.viewNumberInputText(
 			fieldLabel = "Maximum File Size",
-			fieldValue = "30720");
+			fieldValue = 30720);
 
 		DMDocument.updateMimeTypeSizeLimit(
-			maximumFileSizeValue = "20480",
+			maximumFileSizeValue = 20480,
 			mimeTypeValue = "image/jpeg",
 			siteSettings = "true",
 			siteURLKey = "guest");

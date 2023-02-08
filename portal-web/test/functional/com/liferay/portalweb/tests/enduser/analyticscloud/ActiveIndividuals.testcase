@@ -33,7 +33,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8913 | Test Summary: Assert Individual Activities Chart popover follows format"
-	@priority = "3"
+	@priority = 3
 	test AssertIndividualActivitiesChartPopover {
 		property portal.upstream = "quarantine";
 
@@ -84,7 +84,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Navigate to the Individual Activity Overview") {
@@ -102,12 +102,12 @@ definition {
 			var previousDay = DateUtil.getFormattedDate("-1", "d");
 
 			ACTimeFilter.setCustomRange(
-				endDay = "${displayDateDay}",
-				endMonth = "${displayDateMonth}",
-				endYear = "${displayDateYear}",
-				startDay = "${previousDay}",
-				startMonth = "${displayDateMonth}",
-				startYear = "${displayDateYear}");
+				endDay = ${displayDateDay},
+				endMonth = ${displayDateMonth},
+				endYear = ${displayDateYear},
+				startDay = ${previousDay},
+				startMonth = ${displayDateMonth},
+				startYear = ${displayDateYear});
 
 			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
 		}
@@ -115,16 +115,16 @@ definition {
 		task ("Assert chart popover date formatted") {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
 
-			var formattedDate = StringUtil.extractFirst("${formattedDate}", ",");
+			var formattedDate = StringUtil.extractFirst(${formattedDate}, ",");
 
 			ACUtils.assertDatePattern(
-				date = "${formattedDate}",
+				date = ${formattedDate},
 				format = "MMM d");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
-	@priority = "3"
+	@priority = 3
 	test AssertIndividualActivitiesOverviewClearDate {
 		property analytics.cloud.upstream = "false";
 
@@ -163,7 +163,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Individual Activity Overview") {
@@ -194,13 +194,13 @@ definition {
 			var displayDateYear = DateUtil.getCurrentYear();
 			var individualCurrentDate = selenium.getText("ACIndividualsDashboard#INDIVIDUALS_EVENTS_DATE");
 
-			var monthAndDay = StringUtil.extractFirst("${individualCurrentDate}", ",");
+			var monthAndDay = StringUtil.extractFirst(${individualCurrentDate}, ",");
 
-			var currentDay = StringUtil.extractLast("${monthAndDay}", " ");
+			var currentDay = StringUtil.extractLast(${monthAndDay}, " ");
 
-			var result = MathUtil.isGreaterThan("${currentDay}", "${displayDateDay}");
+			var result = MathUtil.isGreaterThan(${currentDay}, ${displayDateDay});
 
-			if ("${result}" == "true") {
+			if (${result} == "true") {
 				var displayDateDay = ${displayDateDay} + 1;
 			}
 
@@ -208,7 +208,7 @@ definition {
 		}
 
 		task ("Assert the display time range") {
-			ACIndividualsDashboard.assertIndividualsActivitiesTimeRange(timeRange = "${displayDate}");
+			ACIndividualsDashboard.assertIndividualsActivitiesTimeRange(timeRange = ${displayDate});
 		}
 
 		task ("Clear the time range") {
@@ -229,7 +229,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8914 | Test Summary: Assert Individual Activities time filter 180 Days"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertIndividualActivitiesTimeFilter180Days {
 
 		// AC Refactor: data doesn't appear on time and the test needs data from a past date
@@ -270,7 +270,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Navigate to the Individual Activity Overview") {
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "Assert an Individual's Segments"
-	@priority = "5"
+	@priority = 5
 	test CanAssertIndividualSegment {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -313,7 +313,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSegments();
 
@@ -338,7 +338,7 @@ definition {
 
 	@description = "Assert Individual Activities Custom Range (when changing to an valida data time period)"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
 
 		// Tests with custom range are not possible to automate now. These cases will be automated on personas.
@@ -357,7 +357,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToIndividuals();
 
@@ -368,17 +368,17 @@ definition {
 		var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
 
 		ACUtils.assertActiveIndividualChart(
-			endDay = "${displayDateDay}",
-			endMonth = "${displayDateMonth}",
-			endYear = "${displayDateYear}",
-			startDay = "${previousDay}",
-			startMonth = "${previousMonth}",
-			startYear = "${displayDateYear}",
+			endDay = ${displayDateDay},
+			endMonth = ${displayDateMonth},
+			endYear = ${displayDateYear},
+			startDay = ${previousDay},
+			startMonth = ${previousMonth},
+			startYear = ${displayDateYear},
 			timeFilter = "Custom Range");
 	}
 
 	@description = "Set custom range filter with empty data for individual activity"
-	@priority = "5"
+	@priority = 5
 	test CanSetEmptyDataCustomRangeOnIndividualActivitiesCard {
 		ACUtils.createDMAndAddToPage();
 
@@ -394,17 +394,17 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToIndividuals();
 
 		ACTimeFilter.setCustomRange(
-			endDay = "13",
+			endDay = 13,
 			endMonth = "July",
-			endYear = "2020",
-			startDay = "1",
+			endYear = 2020,
+			startDay = 1,
 			startMonth = "July",
-			startYear = "2020");
+			startYear = 2020);
 
 		ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
 
@@ -412,7 +412,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8139 | Test Summary: Active individual graph shows activities from today when switched to the 24hr filter"
-	@priority = "5"
+	@priority = 5
 	test GraphShowsActivitiesFromTodayWhenSwitchedTo24HrFilter {
 		ACUtils.createDMAndAddToPage();
 
@@ -440,7 +440,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToIndividuals();
 

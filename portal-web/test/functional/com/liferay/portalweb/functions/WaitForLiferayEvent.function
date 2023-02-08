@@ -77,7 +77,7 @@ definition {
 			}
 		''';
 
-		selenium.runScript("${javascript}");
+		selenium.runScript(${javascript});
 	}
 
 	function waitForLiferayEvent {
@@ -93,9 +93,9 @@ definition {
 		''';
 		var message = '''Event "${eventName}" with attribute "${attributeName}" and value "${attributeValue}" not fired.''';
 
-		selenium.waitForJavaScriptNoError("${javascript}", "${message}", "");
+		selenium.waitForJavaScriptNoError(${javascript}, ${message}, "");
 
-		selenium.verifyJavaScript("${javascript}", "${message}", "");
+		selenium.verifyJavaScript(${javascript}, ${message}, "");
 	}
 
 }

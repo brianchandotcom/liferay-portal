@@ -1,14 +1,14 @@
 definition {
 
 	macro addPublication {
-		Variables.assertDefined(parameterList = "${publicationName}");
+		Variables.assertDefined(parameterList = ${publicationName});
 
-		var publicationDescription = JSONPublicationsSetter.setPublicationDescription(publicationDescription = "${publicationDescription}");
-		var publicationName = JSONPublicationsSetter.setPublicationName(publicationName = "${publicationName}");
+		var publicationDescription = JSONPublicationsSetter.setPublicationDescription(publicationDescription = ${publicationDescription});
+		var publicationName = JSONPublicationsSetter.setPublicationName(publicationName = ${publicationName});
 
 		JSONPublicationsAPI._addPublication(
-			publicationDescription = "${publicationDescription}",
-			publicationName = "${publicationName}");
+			publicationDescription = ${publicationDescription},
+			publicationName = ${publicationName});
 	}
 
 	macro enablePublications {
@@ -16,15 +16,15 @@ definition {
 	}
 
 	macro publishPublication {
-		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = "${publicationName}");
+		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = ${publicationName});
 
-		JSONPublicationsAPI._publishPublication(ctCollectionId = "${ctCollectionId}");
+		JSONPublicationsAPI._publishPublication(ctCollectionId = ${ctCollectionId});
 	}
 
 	macro selectPublication {
-		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = "${publicationName}");
+		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = ${publicationName});
 
-		JSONPublicationsAPI._selectPublication(ctCollectionId = "${ctCollectionId}");
+		JSONPublicationsAPI._selectPublication(ctCollectionId = ${ctCollectionId});
 	}
 
 }

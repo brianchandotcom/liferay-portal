@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-165850 - Verify it's possible to add a new entry in the related object without leaving the current context (OneToMany)"
-	@priority = "5"
+	@priority = 5
 	test CanAddEntryOnRelationshipTabFor1toM {
 		property portal.acceptance = "true";
 
@@ -73,7 +73,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify it's possible to add a new entry in the related object without leaving the current context (ManyToMany)"
-	@priority = "5"
+	@priority = 5
 	test CanAddEntryOnRelationshipTabForMtoM {
 		property portal.acceptance = "true";
 
@@ -170,7 +170,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "LPS-168228 - Verify it's possible to add many custom fields in the custom layout"
-	@priority = "4"
+	@priority = 4
 	test CanAddManyFieldsOnLayout {
 		task ("Given an object with 20 fields is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -260,7 +260,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field1,Custom Field2,Custom Field3,Custom Field4,Custom Field5,Custom Field6,Custom Field7,Custom Field8,Custom Field9,Custom Field10,Custom Field11,Custom Field12,Custom Field13,Custom Field14,Custom Field15,Custom Field16,Custom Field17,Custom Field18,Custom Field19,Custom Field20",
 				tabName = "Field Tab");
 
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify it's possible to cancel a new entry"
-	@priority = "3"
+	@priority = 3
 	test CanCancelNewEntryOnRelationshipTab {
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(
@@ -339,7 +339,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@description = "LPS-161884 - Verify that it's possible to create an object with a categorization section in the layout"
-	@priority = "3"
+	@priority = 3
 	test CanCreateObjectWithCategorizationSection {
 		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanCreateObjectWithCategorizationSection";
 
@@ -420,7 +420,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@description = "LPS-161886 - Verify that it's possible to delete a categorization section"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteCategorizationSection {
 		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanDeleteCategorizationSection";
 
@@ -474,7 +474,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldLabelName = "Custom Field",
 				tabName = "Field Tab");
 
@@ -511,7 +511,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify when a new entry is created, it is possible to delete this entry"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteNewEntryAddedOnRelationshipTab {
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(
@@ -560,7 +560,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@description = "LPS-161885 - Verify that it's possible to edit a categorization section"
-	@priority = "3"
+	@priority = 3
 	test CanEditCategorizationSection {
 		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanEditCategorizationSection";
 
@@ -637,7 +637,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -679,7 +679,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify the user can edit the entry when there is permission to edit"
-	@priority = "5"
+	@priority = 5
 	test CanEditEntryWhenAllowedToEdit {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanEditEntryWhenAllowedToEdit";
@@ -731,7 +731,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -761,7 +761,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW,UPDATE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.object.model.ObjectDefinition#${objectId}",
 					roleTitle = "Regular Role",
 					roleType = "regular");
@@ -807,7 +807,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify user cannot edit an entry without permissions"
-	@priority = "5"
+	@priority = 5
 	test CannotEditEntryWhenNotAllowedToEdit {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectCustomLayouts#CannotEditEntryWhenNotAllowedToEdit";
@@ -859,7 +859,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -935,7 +935,7 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveAnotherLayoutAsDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",
@@ -972,7 +972,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -990,7 +990,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 2",
-			columnsNumber = "1",
+			columnsNumber = 1,
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 
@@ -1004,7 +1004,7 @@ definition {
 	}
 
 	@description = "LPS-165850 - Verify if you can 'select existing one' and add existing entries"
-	@priority = "5"
+	@priority = 5
 	test CanSelectExistingEntriesOnRelationshipTab {
 		property portal.acceptance = "true";
 
@@ -1055,7 +1055,7 @@ definition {
 
 			ObjectAdmin.addTabFieldsOnLayout(
 				blockName = "Block 1",
-				columnsNumber = "1",
+				columnsNumber = 1,
 				fieldList = "Custom Field",
 				tabName = "Field Tab");
 
@@ -1107,7 +1107,7 @@ definition {
 	}
 
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"
-	@priority = "4"
+	@priority = 4
 	test CanViewDateEntry {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",

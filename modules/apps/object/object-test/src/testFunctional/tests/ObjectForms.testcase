@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-139472 - Verify that 'Allow Multiple Selections' option is not available for Select From List field when a form is mapped to an object"
-	@priority = "4"
+	@priority = 4
 	test AllowMultipleSelectionsNotAvailable {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "LPS-139464 - Verify that it is possible to delete a form mapped to an object after adding entries on it"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteFormMappedToObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 208",
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "LPS-143064 - Verify that, when using objects as storage type, the user must be able to map to this field type to Rich Text Field and view its entries"
-	@priority = "4"
+	@priority = 4
 	test CanMapAndViewEntriesForRichTextField {
 		property test.name.skip.portal.instance = "ObjectForms#CanMapAndViewEntriesForRichTextField";
 
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Multiple Lines)"
-	@priority = "4"
+	@priority = 4
 	test CanMapClobTypeAndViewEntriesMultipleLines {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 209",
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Single Line)"
-	@priority = "4"
+	@priority = 4
 	test CanMapClobTypeAndViewEntriesSingleLine {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 210",
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "LPS-136456 - Verify that workflows cannot be added to forms that are mapped to an object"
-	@priority = "4"
+	@priority = 4
 	test CannotAddWorkflow {
 		FormsAdmin.addForm();
 
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "LPS-138495 - Verify that Picklist entries cannot be edited in the Forms Sidebar"
-	@priority = "4"
+	@priority = 4
 	test CannotEditPicklistEntries {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
@@ -330,7 +330,7 @@ definition {
 	}
 
 	@description = "LPS-137316 - Verify it is not possible to select an unpublished Object"
-	@priority = "4"
+	@priority = 4
 	test CannotSelectUnpublishedObject {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 212",
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
-	@priority = "4"
+	@priority = 4
 	test CanRetrieveDataProvidersOnSelectFromListField {
 		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnSelectFromListField";
 
@@ -423,7 +423,7 @@ definition {
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
-	@priority = "4"
+	@priority = 4
 	test CanRetrieveDataProvidersOnTextField {
 		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnTextField";
 
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "LPS-139692 - Verify that 'Select Object' field is required"
-	@priority = "4"
+	@priority = 4
 	test SelectObjectFieldRequired {
 		FormsAdmin.addForm();
 

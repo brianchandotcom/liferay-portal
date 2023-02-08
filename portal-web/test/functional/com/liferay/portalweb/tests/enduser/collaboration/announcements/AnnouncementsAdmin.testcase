@@ -13,7 +13,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "Checks if user can access, create and add announcement"
-	@priority = "5"
+	@priority = 5
 	test CanAddEntry {
 		AnnouncementsNavigator.opentoAdmin(
 			groupName = "Guest",

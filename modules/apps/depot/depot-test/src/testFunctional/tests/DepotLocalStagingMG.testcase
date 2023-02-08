@@ -38,7 +38,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be deleted and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be deleted and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDeletedImageFromFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be edited and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be edited and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedImageFromFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in an asset library can be published in Media Gallery when local staging is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -419,7 +419,7 @@ definition {
 	}
 
 	@description = "This ensures that the folders stored in different asset libraries can be changed and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "This ensures that the folders stored in an asset library can be changed and republished in Media Gallery when local staging is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageAfterChangingRootFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -603,7 +603,7 @@ definition {
 	}
 
 	@description = "This ensures that an image stored in a DM folder of asset library can be published in Media Gallery when local staging is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageFromFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -660,7 +660,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154424. It ensures that an external video with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -725,7 +725,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154400. It ensures that an external video with a custom friendlyURL can be published from an asset library and rendered correctly in the Media Gallery widget on a site"
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoAfterPublish {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name (Staging)",
@@ -780,7 +780,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154397.It ensures that an image with a custom friendlyURL can be published from an asset library and rendered correctly in MG on a connected site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageAfterFriendlyURLIsUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -837,7 +837,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154423. It ensures that an image with a custom friendlyURL can be displayed properly in the Media Gallery Display widget after its friendlyURL is edited and published from an asset library."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageAfterPublishingEditedFriendlyURL {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

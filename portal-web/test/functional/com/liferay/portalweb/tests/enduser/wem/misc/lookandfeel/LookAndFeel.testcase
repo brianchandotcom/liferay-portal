@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "The user could define the look and feel of widgets."
-	@priority = "5"
+	@priority = 5
 	test ConfigureLookAndFeelOfWidget {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -111,11 +111,11 @@ definition {
 
 				IFrame.selectConfigurationFrame();
 
-				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = "${decoratorName}");
+				Portlet.configureGeneralViaLookAndFeelPG(applicationDecorators = ${decoratorName});
 
 				IFrame.closeFrame();
 
-				Portlet.viewApplicationDecorator(decorator = "${decoratorName}");
+				Portlet.viewApplicationDecorator(decorator = ${decoratorName});
 			}
 		}
 	}

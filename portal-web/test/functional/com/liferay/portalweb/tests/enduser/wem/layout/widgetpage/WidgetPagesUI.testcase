@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Can add and delete a web content display widget on page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddAndDeleteWidget {
 		property portal.acceptance = "true";
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "The user can add a child page."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddChildPage {
 		property portal.acceptance = "true";
@@ -88,13 +88,13 @@ definition {
 
 		task ("View child page in Pages admin") {
 			PagesAdmin.viewPageItemPresent(
-				depth = "2",
+				depth = 2,
 				pageName = "Test Child Page");
 		}
 	}
 
 	@description = "The user can add multiple public pages."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test AddMultiplePages {
 		task ("Add three widget pages") {
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "The user can add a private page."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
-	@priority = "3"
+	@priority = 3
 	test ViewOrderOfPageActions {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(

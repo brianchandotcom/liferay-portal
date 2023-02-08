@@ -19,7 +19,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154459. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.1.10.5."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageInMGAfterUpgradeFrom71105Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.1.10.5";
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154458. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.2.10.4."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageInMGAfterUpgradeFrom72104Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.2.10.4";
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154457. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.3.10.1."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.3.10.1";
@@ -88,7 +88,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154460. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.0.10.15."
-	@priority = "4"
+	@priority = 4
 	test CanPublishImageInMGAfterUpgradeFrom701015Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.0.10.15";

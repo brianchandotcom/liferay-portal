@@ -48,7 +48,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8969 | Test Summary: Check documentDownloaded triggers when a file is downloaded in a DXP site and check its properties (see reference document in comments)"
-	@priority = "5"
+	@priority = 5
 	test CheckDocumentDownloadedInSiteAndCheckProperties {
 		property proxy.server.enabled = "true";
 
@@ -66,15 +66,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Get groupId of new site") {
@@ -114,7 +114,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "fileEntryId",
-				value = "${fileEntryId}");
+				value = ${fileEntryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -138,18 +138,18 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "groupId",
-				value = "${groupId}");
+				value = ${groupId});
 		}
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8944 | Test Summary: Check documentPreviewed is triggered when viewing the document on a page and has the right parameters"
-	@priority = "3"
+	@priority = 3
 	test CheckDocumentPreviewedWhenViewOnPageAndCheckParameters {
 		property proxy.server.enabled = "true";
 
@@ -158,15 +158,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Get articleId of document") {
@@ -204,7 +204,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryId",
-				value = "${fileEntryId}");
+				value = ${fileEntryId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -216,13 +216,13 @@ definition {
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "groupId",
-				value = "${groupId}");
+				value = ${groupId});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
 				eventId = "documentPreviewed",
 				property = "fileEntryUUID",
-				value = "${fileEntryUuid}");
+				value = ${fileEntryUuid});
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -233,8 +233,8 @@ definition {
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 	}
 

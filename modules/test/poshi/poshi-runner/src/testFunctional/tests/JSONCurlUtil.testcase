@@ -5,7 +5,7 @@ definition {
 	property testray.main.component.name = "Smoke";
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test AvailablePhysicalMemory {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
@@ -15,10 +15,10 @@ definition {
 		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.computer[0].monitorData.['hudson.node_monitors.SwapSpaceMonitor'].availablePhysicalMemory";
 
-		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
-		var expected = "2054144000";
+		var actual = JSONCurlUtil.get(${curl}, ${jsonPath});
+		var expected = 2054144000;
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value found from '${jsonPath}' was a match to the expected value.");
 
 			echo("action: '${actual}'");
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test BusyExecutors {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
@@ -47,10 +47,10 @@ definition {
 		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.busyExecutors";
 
-		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
-		var expected = "25";
+		var actual = JSONCurlUtil.get(${curl}, ${jsonPath});
+		var expected = 25;
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value found from '${jsonPath}' was a match to the expected value.");
 
 			echo("action: '${actual}'");
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test DisplayName {
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
@@ -79,10 +79,10 @@ definition {
 		var curl = "file://${jsonFilePath}";
 		var jsonPath = "$.computer[2].displayName";
 
-		var actual = JSONCurlUtil.get("${curl}", "${jsonPath}");
+		var actual = JSONCurlUtil.get(${curl}, ${jsonPath});
 		var expected = "cloud-10-0-12-172";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value found from '${jsonPath}' was a match to the expected value.");
 
 			echo("action: '${actual}'");

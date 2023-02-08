@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This test ensures default Web Content title is displayed on Web content list for a web content created from a structure with a fieldset."
-	@priority = "5"
+	@priority = 5
 	test CheckDefaultWebContentTitleOnWebContentList {
 		NavItem.gotoStructures();
 
@@ -85,7 +85,7 @@ definition {
 
 	@description = "This test ensures locale selector is displayed and is functional on the fieldsets modal."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CheckLanguageSelectorAndFieldsetSummaryLocalization {
 		NavItem.gotoStructures();
 
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This test validates the fieldset translations are displayed on the Web Content."
-	@priority = "5"
+	@priority = 5
 	test CheckStructureTranslationOnWebContent {
 		NavItem.gotoStructures();
 
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test CheckTranslationOfDuplicatedFieldsetOnWebContent {
 		NavItem.gotoStructures();
 
@@ -285,23 +285,23 @@ definition {
 		for (var i : list "1,2") {
 			AssertElementPresent(
 				key_fieldFieldLabel = "New Fieldset pt-BR",
-				key_index = "${i}",
+				key_index = ${i},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
 
 			AssertElementPresent(
 				key_fieldFieldLabel = "Text pt-BR",
-				key_index = "${i}",
+				key_index = ${i},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
 
 			AssertElementPresent(
 				key_fieldFieldLabel = "Color pt-BR",
-				key_index = "${i}",
+				key_index = ${i},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
 		}
 	}
 
 	@description = "This test ensures add fields, translate, edit fieldset, check propagation, translate from different language."
-	@priority = "5"
+	@priority = 5
 	test CreateEditAndDeleteLocalizedFieldset {
 		property portal.acceptance = "true";
 
@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Add a Fieldset with Text and Numeric fields") {
-			WebContentStructures.addCP(structureName = "${newStructureName}");
+			WebContentStructures.addCP(structureName = ${newStructureName});
 
 			DataEngine.createNewFieldset(
 				fieldNameList = "Text,Numeric",
@@ -326,7 +326,7 @@ definition {
 		}
 
 		task ("Edit the created fieldset by adding a Data field") {
-			WebContentNavigator.gotoEditStructure(structureName = "${newStructureName}");
+			WebContentNavigator.gotoEditStructure(structureName = ${newStructureName});
 
 			DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
@@ -344,7 +344,7 @@ definition {
 		}
 
 		task ("Edit the fieldset by adding a Translation to brazilian portuguese") {
-			WebContentNavigator.gotoEditStructure(structureName = "${newStructureName}");
+			WebContentNavigator.gotoEditStructure(structureName = ${newStructureName});
 
 			DataEngine.addTranslationToFieldset(
 				fieldNameList = "Text,Numeric,Date",
@@ -361,13 +361,13 @@ definition {
 		}
 
 		task ("Assert that the fields and translations were created correctly") {
-			WebContentNavigator.gotoEditStructure(structureName = "${newStructureName}");
+			WebContentNavigator.gotoEditStructure(structureName = ${newStructureName});
 
 			Refresh();
 
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
-				value1 = "${newStructureName}");
+				value1 = ${newStructureName});
 
 			DataEngine.viewFieldset(
 				fieldNameList = "Text,Numeric,Date",
@@ -384,11 +384,11 @@ definition {
 		task ("Add a web content using the created fieldset") {
 			NavItem.click(navItem = "Web Content");
 
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "${newStructureName}");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = ${newStructureName});
 
 			WebContent.addWithStructureCP(
 				webContentDate = "02/22/2021",
-				webContentNumeric = "1",
+				webContentNumeric = 1,
 				webContentText = "Text",
 				webContentTitle = "Web Content Title");
 
@@ -397,7 +397,7 @@ definition {
 			WebContent.addWithStructureCP(
 				webContentDate = "23/02/2021",
 				webContentDateFieldLabel = "Date pt-BR",
-				webContentNumeric = "2",
+				webContentNumeric = 2,
 				webContentNumericFieldLabel = "Numeric pt-BR",
 				webContentText = "Text - pt-BR",
 				webContentTextFieldLabel = "Text pt-BR",
@@ -409,7 +409,7 @@ definition {
 		task ("Assert that the web content was created correctly using the fieldset") {
 			WebContent.viewWithStructureCP(
 				webContentDate = "02/22/2021",
-				webContentNumeric = "1",
+				webContentNumeric = 1,
 				webContentText = "Text",
 				webContentTitle = "Web Content Title");
 
@@ -418,7 +418,7 @@ definition {
 				webContentDate = "23/02/2021",
 				webContentDateFieldLabel = "Date pt-BR",
 				webContentLocaleFieldLabel = "pt-BR",
-				webContentNumeric = "2",
+				webContentNumeric = 2,
 				webContentNumericFieldLabel = "Numeric pt-BR",
 				webContentText = "Text - pt-BR",
 				webContentTextFieldLabel = "Text pt-BR",
@@ -430,7 +430,7 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentNavigator.gotoEditStructure(structureName = "${newStructureName}");
+			WebContentNavigator.gotoEditStructure(structureName = ${newStructureName});
 
 			DataEngine.delete(fieldsetLabel = "New Fieldset");
 
@@ -444,7 +444,7 @@ definition {
 
 			Button.clickCancel();
 
-			WebContentNavigator.gotoEditStructure(structureName = "${newStructureName}");
+			WebContentNavigator.gotoEditStructure(structureName = ${newStructureName});
 
 			AssertElementNotPresent(
 				key_fieldsetName = "New Fieldset",
@@ -460,7 +460,7 @@ definition {
 
 			for (var fieldName : list "Text,Numeric,Date") {
 				AssertElementNotPresent(
-					key_fieldsetName = "${fieldName}",
+					key_fieldsetName = ${fieldName},
 					locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 			}
 
@@ -475,7 +475,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
-	@priority = "4"
+	@priority = 4
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		NavItem.gotoStructures();
 
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "This test checks when user translates the title, the default language title persists"
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@description = "This test ensures the default fieldset title persists upon translating it on a Web Content."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		NavItem.gotoStructures();
 
@@ -615,7 +615,7 @@ definition {
 	}
 
 	@description = "This test ensures create, translate and edit with different instance language."
-	@priority = "5"
+	@priority = 5
 	test LocalizedFieldsetWithDifferentInstanceLanguage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -700,7 +700,7 @@ definition {
 		WebContent.addWithStructureCP(
 			webContentDate = "02/02/2021",
 			webContentDateFieldLabel = "Date",
-			webContentNumeric = "1",
+			webContentNumeric = 1,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "Text",
 			webContentTextFieldLabel = "Text",
@@ -711,7 +711,7 @@ definition {
 		WebContent.addWithStructureCP(
 			webContentDate = "02/03/2021",
 			webContentDateFieldLabel = "Date en-US",
-			webContentNumeric = "2",
+			webContentNumeric = 2,
 			webContentNumericFieldLabel = "Numeric en-US",
 			webContentText = "Text - en-US",
 			webContentTextFieldLabel = "Text en-US",
@@ -722,7 +722,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentDate = "02/02/2021",
 			webContentDateFieldLabel = "Date",
-			webContentNumeric = "1",
+			webContentNumeric = 1,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "Text",
 			webContentTextFieldLabel = "Text",
@@ -734,7 +734,7 @@ definition {
 			webContentDate = "02/03/2021",
 			webContentDateFieldLabel = "Date en-US",
 			webContentLocaleFieldLabel = "en-US",
-			webContentNumeric = "2",
+			webContentNumeric = 2,
 			webContentNumericFieldLabel = "Numeric en-US",
 			webContentText = "Text - en-US",
 			webContentTextFieldLabel = "Text en-US",
@@ -773,7 +773,7 @@ definition {
 
 		for (var fieldName : list "Text,Numeric,Date") {
 			AssertElementNotPresent(
-				key_fieldsetName = "${fieldName}",
+				key_fieldsetName = ${fieldName},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 		}
 
@@ -803,7 +803,7 @@ definition {
 	}
 
 	@description = "This test ensures is possible to translate a web content from a structure with a fieldset with a field group."
-	@priority = "5"
+	@priority = 5
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
 		NavItem.gotoStructures();
 
@@ -896,14 +896,14 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Rich Text") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
 		for (var fieldFieldLabel : list "Text,Rich Text") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "${fieldFieldLabel} Field Help");
 		}
@@ -924,7 +924,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Texto,Texto Rico") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				key_fieldsGroupLabel = "Grupo de Campos",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
@@ -941,7 +941,7 @@ definition {
 	}
 
 	@description = "This test ensures translation of a web content from a structure with a fieldset persists after translating for another locale."
-	@priority = "5"
+	@priority = 5
 	test TranslationPersistsAfterEditingAnother {
 		NavItem.gotoStructures();
 

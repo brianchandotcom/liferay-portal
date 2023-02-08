@@ -1,7 +1,7 @@
 definition {
 
 	macro commerceAdminTearDown {
-		var emptyCount = "0";
+		var emptyCount = 0;
 
 		Navigator.openURL();
 
@@ -10,8 +10,8 @@ definition {
 		var shipmentsCount = CommerceJSONShipmentsAPI._getCommerceShipmentsCount();
 
 		TestUtils.assertEquals(
-			actual = "${shipmentsCount}",
-			expected = "${emptyCount}");
+			actual = ${shipmentsCount},
+			expected = ${emptyCount});
 
 		JSONUser.tearDownNonAdminUsers();
 
@@ -20,71 +20,71 @@ definition {
 		var accountsCount = CommerceJSONAccountsAPI._getCommerceAccountsCount();
 
 		TestUtils.assertEquals(
-			actual = "${accountsCount}",
-			expected = "${emptyCount}");
+			actual = ${accountsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
 
 		var accountGroupsCount = CommerceJSONAccountGroupsAPI._getCommerceAccountGroupsCount();
 
 		TestUtils.assertEquals(
-			actual = "${accountGroupsCount}",
-			expected = "${emptyCount}");
+			actual = ${accountGroupsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONOrganizationsAPI._deleteAllOrganizations();
 
 		var organizationsCount = CommerceJSONOrganizationsAPI._getOrganizationsCount();
 
 		TestUtils.assertEquals(
-			actual = "${organizationsCount}",
-			expected = "${emptyCount}");
+			actual = ${organizationsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONProductsAPI._deleteAllCommerceProducts();
 
 		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
 
 		TestUtils.assertEquals(
-			actual = "${productsCount}",
-			expected = "${emptyCount}");
+			actual = ${productsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONOptionsAPI._deleteAllCommerceOptions();
 
 		var optionsCount = CommerceJSONOptionsAPI._getCommerceOptionsCount();
 
 		TestUtils.assertEquals(
-			actual = "${optionsCount}",
-			expected = "${emptyCount}");
+			actual = ${optionsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONSpecificationGroupsAPI._deleteAllCommerceSpecificationGroups();
 
 		var specificationGroupsCount = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupsCount();
 
 		TestUtils.assertEquals(
-			actual = "${specificationGroupsCount}",
-			expected = "${emptyCount}");
+			actual = ${specificationGroupsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONSpecificationsAPI._deleteAllCommerceSpecifications();
 
 		var specificationsCount = CommerceJSONSpecificationsAPI._getCommerceSpecificationsCount();
 
 		TestUtils.assertEquals(
-			actual = "${specificationsCount}",
-			expected = "${emptyCount}");
+			actual = ${specificationsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 
 		var channelsCount = CommerceJSONChannelsAPI._getCommerceChannelsCount();
 
 		TestUtils.assertEquals(
-			actual = "${channelsCount}",
-			expected = "${emptyCount}");
+			actual = ${channelsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONCatalogsAPI._deleteAllNoSystemCommerceCatalogs();
 
 		var noSystemCatalogIds = CommerceJSONCatalogsAPI._getCommerceNoSystemCatalogIds();
 
 		TestUtils.assertEquals(
-			actual = "${noSystemCatalogIds}",
+			actual = ${noSystemCatalogIds},
 			expected = "");
 
 		CommerceJSONPriceListsAndPromotionsAPI._deleteAllNoMasterPriceListsAndPromotions();
@@ -92,7 +92,7 @@ definition {
 		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
 
 		TestUtils.assertEquals(
-			actual = "${priceListAndPromotionIds}",
+			actual = ${priceListAndPromotionIds},
 			expected = "");
 
 		CommerceJSONDiscountsAPI._deleteAllCommerceDiscounts();
@@ -100,48 +100,48 @@ definition {
 		var discountsCount = CommerceJSONDiscountsAPI._getCommerceDiscountsCount();
 
 		TestUtils.assertEquals(
-			actual = "${discountsCount}",
-			expected = "${emptyCount}");
+			actual = ${discountsCount},
+			expected = ${emptyCount});
 
 		CommerceJSONAvailableEstimatesAPI._deleteCommerceAvailableEstimates();
 
 		var availableEstimatesCount = CommerceJSONAvailableEstimatesAPI._getAvailableEstimatesCount();
 
 		TestUtils.assertEquals(
-			actual = "${availableEstimatesCount}",
-			expected = "${emptyCount}");
+			actual = ${availableEstimatesCount},
+			expected = ${emptyCount});
 
 		CommerceJSONMeasurementUnitsAPI._deleteCommerceMeasurementUnits();
 
 		var availableMeasurementUnits = CommerceJSONMeasurementUnitsAPI._getCommerceAvailableMeasurementUnitsCount();
 
 		TestUtils.assertEquals(
-			actual = "${availableMeasurementUnits}",
-			expected = "${emptyCount}");
+			actual = ${availableMeasurementUnits},
+			expected = ${emptyCount});
 
 		CommerceJSONTaxCategoriesAPI._deleteCommerceTaxCategories();
 
 		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommereTaxCategoriesCount();
 
 		TestUtils.assertEquals(
-			actual = "${commerceTaxCategoriesIds}",
-			expected = "${emptyCount}");
+			actual = ${commerceTaxCategoriesIds},
+			expected = ${emptyCount});
 
 		CommerceJSONWarehousesAndInventoriesAPI._deleteAllWarehouseItems();
 
 		var warehousesCount = CommerceJSONWarehousesAndInventoriesAPI._getCommerceWarehousesCount();
 
 		TestUtils.assertEquals(
-			actual = "${warehousesCount}",
-			expected = "${emptyCount}");
+			actual = ${warehousesCount},
+			expected = ${emptyCount});
 
 		CommerceJSONTermsAndConditionsAPI._deleteAllCommerceTermsAndConditions();
 
 		var commerceTermsAndConditionsCount = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsCount();
 
 		TestUtils.assertEquals(
-			actual = "${commerceTermsAndConditionsCount}",
-			expected = "${emptyCount}");
+			actual = ${commerceTermsAndConditionsCount},
+			expected = ${emptyCount});
 
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
@@ -167,7 +167,7 @@ definition {
 		if (isSet(minium)) {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-			if (isSet(moneyOrder) && ("${moneyOrder}" == "true")) {
+			if (isSet(moneyOrder) && (${moneyOrder} == "true")) {
 				CommerceChannels.openChannelsAdmin();
 
 				CommerceNavigator.gotoEntry(entryName = "Minium Portal");
@@ -185,14 +185,14 @@ definition {
 			portlet = "Health Check");
 
 		for (var buttonRowName : list "Service Access Policy,Commerce Countries,Commerce Currencies,Commerce Product Measurement Units,Account Roles,Catalog Base Price Lists/Promotions") {
-			if (!(IsElementPresent(key_buttonRowName = "${buttonRowName}", key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME"))) {
+			if (!(IsElementPresent(key_buttonRowName = ${buttonRowName}, key_buttonStatus = "disabled", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME"))) {
 				Click(
-					key_buttonRowName = "${buttonRowName}",
+					key_buttonRowName = ${buttonRowName},
 					key_buttonStatus = "",
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 				WaitForElementPresent(
-					key_value = "${buttonRowName}",
+					key_value = ${buttonRowName},
 					locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 			}
 		}
@@ -218,9 +218,9 @@ definition {
 			locator1 = "CommerceEntry#MENU_TAB");
 
 		for (var fixIssueButtonName : list "Product Detail,Product Compare,Commerce Cart,Checkout") {
-			if (IsElementPresent(key_fixIssueButtonName = "${fixIssueButtonName}", locator1 = "CommerceEntry#FIX_ISSUE_BUTTON")) {
+			if (IsElementPresent(key_fixIssueButtonName = ${fixIssueButtonName}, locator1 = "CommerceEntry#FIX_ISSUE_BUTTON")) {
 				Click(
-					key_fixIssueButtonName = "${fixIssueButtonName}",
+					key_fixIssueButtonName = ${fixIssueButtonName},
 					locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
 				Alert.viewSuccessMessage();
@@ -233,7 +233,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {

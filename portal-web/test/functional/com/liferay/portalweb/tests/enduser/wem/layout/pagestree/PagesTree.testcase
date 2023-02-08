@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
-	@priority = "3"
+	@priority = 3
 	test AddAllTypesOfPages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -41,14 +41,14 @@ definition {
 			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
 				PagesFinder.addPublicPage(
 					pageName = "Test ${pageType}",
-					sitePageType = "${pageType}");
+					sitePageType = ${pageType});
 			}
 
 			for (var pageType : list "Embedded,Link to URL") {
 				PagesFinder.addPublicPage(
 					pageName = "Test ${pageType}",
 					pageTypeURL = "https://www.google.com",
-					sitePageType = "${pageType}");
+					sitePageType = ${pageType});
 			}
 
 			PagesFinder.addPublicContentPage(pageName = "Test Content Page");
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104, LPS-140253, and LPS-164377. The page creator can add pages of different types via page tree panel when the private page is disabled. The page creator could identify the page type according to icon in page tree."
-	@priority = "5"
+	@priority = 5
 	test AddAllTypesOfPagesWithoutPrivatePage {
 		property portal.acceptance = "true";
 
@@ -92,14 +92,14 @@ definition {
 			for (var pageType : list "Widget Page,Panel,Page Set,Link to a Page of This Site,Full Page Application") {
 				PagesFinder.addPage(
 					pageName = "Test ${pageType}",
-					sitePageType = "${pageType}");
+					sitePageType = ${pageType});
 			}
 
 			for (var pageType : list "Embedded,Link to URL") {
 				PagesFinder.addPage(
 					pageName = "Test ${pageType}",
 					pageTypeURL = "https://www.google.com",
-					sitePageType = "${pageType}");
+					sitePageType = ${pageType});
 			}
 
 			PagesFinder.addContentPage(pageName = "Test Content Page");
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104 and LPS-102544. Can add a child page via page tree panel."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddChildPage {
 		property portal.acceptance = "true";
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddCollectionPage {
 		property portal.acceptance = "true";
@@ -220,19 +220,19 @@ definition {
 		task ("View the collection name shown in Heading fragment") {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Dynamic Collection') and contains(@id,'fragment-')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("View web contents are shown in Collection Display") {
-			var i = "1";
+			var i = 1;
 
 			for (var n : list "3,2,1") {
 				AssertVisible(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_entryTitle = "Web Content Title ${n}",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
+					key_rowPosition = ${i},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var i = ${i} + 1;
@@ -259,19 +259,19 @@ definition {
 		task ("View the collection name shown in Heading fragment") {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'Highest Rated Assets') and contains(@id,'fragment-')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("View web contents are shown in Collection Display") {
-			var i = "1";
+			var i = 1;
 
 			for (var n : list "3,2,1") {
 				AssertVisible(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_entryTitle = "Web Content Title ${n}",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
+					key_rowPosition = ${i},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var i = ${i} + 1;
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from page tree panel."
-	@priority = "5"
+	@priority = 5
 	test AddCollectionWhenAddingCollectionPage {
 		property portal.acceptance = "true";
 
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-103104 and LPS-112989. Can add a widget page via page tree panel."
-	@priority = "5"
+	@priority = 5
 	test AddWidgetPage {
 		property portal.acceptance = "true";
 
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116618 and LPS-112992. Configure page via Page Tree panel."
-	@priority = "4"
+	@priority = 4
 	test ConfigurePage {
 		task ("Assert Test Page Name is shown in Pages admin") {
 			JSONLayout.addPublicLayout(
@@ -390,7 +390,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
-	@priority = "5"
+	@priority = 5
 	test NavigateToBothPageTypes {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -423,16 +423,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with page tree."
-	@priority = "4"
+	@priority = 4
 	test NavigateToDifferentPages {
 		task ("Add different types of pages") {
-			var i = "1";
+			var i = 1;
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}",
-					type = "${pageType}");
+					type = ${pageType});
 
 				var i = ${i} + 1;
 			}
@@ -454,7 +454,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
-	@priority = "4"
+	@priority = 4
 	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenu {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -547,13 +547,13 @@ definition {
 			for (var pageName : list "Test Parent Page 1,Test Parent Page 2,Test Child Page 1,Test Child Page 2") {
 				Portlet.expandTree();
 
-				PagesFinder.navigateToPage(pageName = "${pageName}");
+				PagesFinder.navigateToPage(pageName = ${pageName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-133709. The user can navigate to public pages defined in navigation menu via the Page Tree."
-	@priority = "4"
+	@priority = 4
 	test NavigateToPublicPagesDefinedInNavigationMenu {
 		task ("Add two public widget pages") {
 			for (var n : list "1,2") {
@@ -618,13 +618,13 @@ definition {
 			for (var pageName : list "Test Parent Page 1,Test Parent Page 2,Test Child Page 1,Test Child Page 2") {
 				Portlet.expandTree();
 
-				PagesFinder.navigateToPage(pageName = "${pageName}");
+				PagesFinder.navigateToPage(pageName = ${pageName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-139064. Users can preview draft for a content page from page tree when they exist."
-	@priority = "4"
+	@priority = 4
 	test PreviewDraftContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -664,7 +664,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-139064. Users can see the preview draft when the content page at draft status."
-	@priority = "5"
+	@priority = 5
 	test PreviewDraftWhenContentPageAtDraftStatus {
 		property portal.acceptance = "true";
 
@@ -763,7 +763,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116428. Can reorganize the pages via Page Tree panel."
-	@priority = "4"
+	@priority = 4
 	test ReorganizePages {
 		task ("Access to Page Tree panel in Test Site Name") {
 			JSONLayout.addPublicLayout(
@@ -787,12 +787,12 @@ definition {
 		}
 
 		task ("Assert the order of Pages in Page Tree panel") {
-			var n = "1";
+			var n = 1;
 
 			for (var pageName : list "Test Portlet Page,Test Content Page*,Test Embedded Page") {
 				AssertVisible(
-					key_index = "${n}",
-					key_pageName = "${pageName}",
+					key_index = ${n},
+					key_pageName = ${pageName},
 					locator1 = "PagesFinder#TREE_NODE_ITEM");
 
 				var n = ${n} + 1;
@@ -806,12 +806,12 @@ definition {
 		}
 
 		task ("Assert the order of Pages in Page Tree panel") {
-			var n = "1";
+			var n = 1;
 
 			for (var pageName : list "Test Content Page*,Test Portlet Page,Test Embedded Page") {
 				AssertVisible(
-					key_index = "${n}",
-					key_pageName = "${pageName}",
+					key_index = ${n},
+					key_pageName = ${pageName},
 					locator1 = "PagesFinder#TREE_NODE_ITEM");
 
 				var n = ${n} + 1;
@@ -820,18 +820,18 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
-	@priority = "5"
+	@priority = 5
 	test SearchAllPageTypes {
 		property portal.acceptance = "true";
 
 		task ("Add different types of pages") {
-			var i = "1";
+			var i = 1;
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}",
-					type = "${pageType}");
+					type = ${pageType});
 
 				var i = ${i} + 1;
 			}
@@ -863,16 +863,16 @@ definition {
 	}
 
 	@description = "This is a test for LPS-102544. Can search for a page in sidebar."
-	@priority = "4"
+	@priority = 4
 	test SearchPageAndViewViaSidebar {
 		task ("Add a widget and content pages") {
-			var i = "1";
+			var i = 1;
 
 			for (var pageType : list "portlet,content") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}",
-					type = "${pageType}");
+					type = ${pageType});
 
 				var i = ${i} + 1;
 			}
@@ -900,7 +900,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
-	@priority = "4"
+	@priority = 4
 	test SwitchNavigationMenusViaPageTypeSelector {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -964,7 +964,7 @@ definition {
 
 		task ("Navigate to each page via Page Tree") {
 			for (var pageName : list "Test Public Page 1,Test Public Page 2") {
-				PagesFinder.navigateToPage(pageName = "${pageName}");
+				PagesFinder.navigateToPage(pageName = ${pageName});
 			}
 		}
 
@@ -978,13 +978,13 @@ definition {
 
 		task ("Navigate to each page via Page Tree") {
 			for (var pageName : list "Test Private Page 1,Test Private Page 2") {
-				PagesFinder.navigateToPage(pageName = "${pageName}");
+				PagesFinder.navigateToPage(pageName = ${pageName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-152360. View behaviors after deleting a page with and without siblings from page tree."
-	@priority = "4"
+	@priority = 4
 	test ViewBehaviorsAfterDeletingAPageWithAndWithoutSiblings {
 		task ("Given adding some content pages") {
 			for (var i : list "1,2,3") {
@@ -1164,7 +1164,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152360. There are Copy Page, Permissions, Delete options in page tree and no Permission ellipsis button and Permissions option in configuration view."
-	@priority = "4"
+	@priority = 4
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {
 		task ("Given a content page") {
 			JSONLayout.addPublicLayout(

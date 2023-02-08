@@ -3,66 +3,66 @@ definition {
 	macro addConnector {
 		if (isSet(selectedNode)) {
 			MouseOver.mouseOverInvisible(
-				key_direction = "${direction}",
-				key_nodeType = "${connectorOut}",
+				key_direction = ${direction},
+				key_nodeType = ${connectorOut},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_SELECTED",
 				value1 = "0,0");
 
 			MouseDown.mouseDownAt(
-				key_direction = "${direction}",
-				key_nodeType = "${connectorOut}",
+				key_direction = ${direction},
+				key_nodeType = ${connectorOut},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_SELECTED",
 				value1 = "0,0");
 		}
 
 		if (isSet(connectorOutLabel)) {
 			MouseOver.mouseOverInvisible(
-				key_direction = "${direction}",
-				key_nodeLabel = "${connectorOutLabel}",
+				key_direction = ${direction},
+				key_nodeLabel = ${connectorOutLabel},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_BY_LABEL",
 				value1 = "0,0");
 
 			MouseDown.mouseDownAt(
-				key_direction = "${direction}",
-				key_nodeLabel = "${connectorOutLabel}",
+				key_direction = ${direction},
+				key_nodeLabel = ${connectorOutLabel},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_BY_LABEL",
 				value1 = "0,0");
 		}
 		else {
 			MouseOver.mouseOverInvisible(
-				key_direction = "${direction}",
-				key_nodeType = "${connectorOut}",
+				key_direction = ${direction},
+				key_nodeType = ${connectorOut},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE",
 				value1 = "0,0");
 
 			MouseDown.mouseDownAt(
-				key_direction = "${direction}",
-				key_nodeType = "${connectorOut}",
+				key_direction = ${direction},
+				key_nodeType = ${connectorOut},
 				locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE",
 				value1 = "0,0");
 		}
 
 		if (isSet(connectorInLabel)) {
 			MouseMove(
-				key_nodeLabel = "${connectorInLabel}",
-				key_nodeType = "${nodeType}",
+				key_nodeLabel = ${connectorInLabel},
+				key_nodeType = ${nodeType},
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
 				value1 = "0,47");
 
 			MouseUp.mouseUpAt(
-				key_nodeLabel = "${connectorInLabel}",
-				key_nodeType = "${nodeType}",
+				key_nodeLabel = ${connectorInLabel},
+				key_nodeType = ${nodeType},
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_TYPE_LABEL",
 				value1 = "0,47");
 		}
 		else {
 			MouseMove(
-				key_nodeType = "${connectorIn}",
+				key_nodeType = ${connectorIn},
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
 				value1 = "0,47");
 
 			MouseUp.mouseUpAt(
-				key_nodeType = "${connectorIn}",
+				key_nodeType = ${connectorIn},
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
 				value1 = "0,47");
 		}
@@ -71,36 +71,36 @@ definition {
 			Type(
 				key_connectorLabel = "TRANSITION LABEL",
 				locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
-				value1 = "${connectorLabel}");
+				value1 = ${connectorLabel});
 		}
 	}
 
 	macro addIncomingConnectorNotPossible {
 		MouseOver.mouseOverInvisible(
-			key_direction = "${direction}",
-			key_nodeType = "${connectorOut}",
+			key_direction = ${direction},
+			key_nodeType = ${connectorOut},
 			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_SELECTED",
 			value1 = "0,0");
 
 		MouseDown.mouseDownAt(
-			key_direction = "${direction}",
-			key_nodeType = "${connectorOut}",
+			key_direction = ${direction},
+			key_nodeType = ${connectorOut},
 			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE_SELECTED",
 			value1 = "0,0");
 
 		MouseMove(
-			key_nodeType = "${connectorIn}",
+			key_nodeType = ${connectorIn},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
 			value1 = "0,47");
 
 		MouseUp.mouseUpAt(
-			key_nodeType = "${connectorIn}",
+			key_nodeType = ${connectorIn},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE",
 			value1 = "0,47");
 
 		AssertNotVisible(
-			key_direction = "${direction}",
-			key_nodeType = "${connectorIn}",
+			key_direction = ${direction},
+			key_nodeType = ${connectorIn},
 			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE");
 	}
 
@@ -108,21 +108,21 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
-			key_translationOptionSelected = "${translationOptionSelected}",
+			key_translationOptionSelected = ${translationOptionSelected},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_MANAGE_TRANSLATIONS_BUTTON");
 	}
 
 	macro addMultiplesActionsOnTimers {
 		Click(
-			key_buttonName = "${newSection}",
+			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 
 		if (isSet(sectionOptionList)) {
-			for (var sectionOption : list "${sectionOptionList}") {
+			for (var sectionOption : list ${sectionOptionList}) {
 				if (isSet(actionName)) {
 					Type(
 						key_inputOption = "Name*",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 						value1 = "${actionName} ${sectionOption}");
 				}
@@ -130,30 +130,30 @@ definition {
 				if (isSet(actionDescription)) {
 					Type(
 						key_inputOption = "Description",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 						value1 = "${actionDescription} ${sectionOption}");
 				}
 
 				if (isSet(actionsTemplateValue)) {
 					Type(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
-						value1 = "${actionsTemplateValue}");
+						value1 = ${actionsTemplateValue});
 				}
 
 				if (isSet(priorityValue)) {
 					Type(
 						key_inputOption = "Priority",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-						value1 = "${priorityValue}");
+						value1 = ${priorityValue});
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
-						key_sectionOption = "${sectionOption}",
+						key_buttonName = ${newSection},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
 				}
 			}
@@ -162,45 +162,45 @@ definition {
 
 	macro addRoleTypeByPositionOnAssignments {
 		Click(
-			key_buttonName = "${newSection}",
+			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 
 		if (isSet(sectionOptionList)) {
-			for (var sectionOption : list "${sectionOptionList}") {
-				if ("${assignmentType}" == "Role Type") {
+			for (var sectionOption : list ${sectionOptionList}) {
+				if (${assignmentType} == "Role Type") {
 					Type(
 						key_inputOption = "Role",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-						value1 = "${roleTypeName}");
+						value1 = ${roleTypeName});
 
 					Click.mouseOverClick(
-						key_optionRoleName = "${roleTypeName}",
-						key_sectionOption = "${sectionOption}",
+						key_optionRoleName = ${roleTypeName},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 					Type(
 						key_inputOption = "Role Name",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-						value1 = "${roleTypeRoleName}");
+						value1 = ${roleTypeRoleName});
 
 					Click.mouseOverClick(
-						key_optionRoleName = "${roleTypeRoleName}",
-						key_sectionOption = "${sectionOption}",
+						key_optionRoleName = ${roleTypeRoleName},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
-					if ("${autoCreate}" == "true") {
+					if (${autoCreate} == "true") {
 						Click(
-							key_sectionOption = "${sectionOption}",
+							key_sectionOption = ${sectionOption},
 							locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
 					}
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
-						key_sectionOption = "${sectionOption}",
+						key_buttonName = ${newSection},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
 				}
 			}
@@ -209,22 +209,22 @@ definition {
 
 	macro addRoleTypeInNotifications {
 		Click(
-			key_buttonName = "${newSection}",
+			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 
 		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD_EMPTY");
 
 		Click(
-			key_optionRoleName = "${roleType}",
+			key_optionRoleName = ${roleType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS",
-			value1 = "${roleType}");
+			value1 = ${roleType});
 
 		Click.mouseOverClick(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD_EMPTY");
 
 		Click(
-			key_optionRoleName = "${roleName}",
+			key_optionRoleName = ${roleName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS",
-			value1 = "${roleName}");
+			value1 = ${roleName});
 	}
 
 	macro backArrowOnSidebar {
@@ -236,10 +236,10 @@ definition {
 	}
 
 	macro clickDefaultToggle {
-		if ("${defaultConnector}" == "False") {
+		if (${defaultConnector} == "False") {
 			Uncheck.uncheckToggleSwitch(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
 		}
-		else if ("${defaultConnector}" == "True") {
+		else if (${defaultConnector} == "True") {
 			Check.checkToggleSwitch(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
 		}
 	}
@@ -260,30 +260,30 @@ definition {
 
 	macro deleteByIconTrashSidebar {
 		Click(
-			key_propertyValue = "${propertyValue}",
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY_BY_VALUE");
 	}
 
 	macro deleteBySidebarCard {
 		Click(
-			key_propertyName = "${sidebarCardName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${sidebarCardName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 
 		Click(
 			locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN",
-			sidebarCard = "${sidebarCardName}");
+			sidebarCard = ${sidebarCardName});
 
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 	}
 
 	macro deleteByTrashTopSidebar {
 		Click(
-			key_propertyName = "${sidebarPropertyName}",
+			key_propertyName = ${sidebarPropertyName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_TOP_RIGHT_SIDEBAR");
 
 		AssertElementPresent(
-			key_modalMessage = "${modalMessage}",
+			key_modalMessage = ${modalMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#MODAL_MESSAGE");
 
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
@@ -291,19 +291,19 @@ definition {
 
 	macro deleteLanguage {
 		Click(
-			key_language = "${translationOption}",
+			key_language = ${translationOption},
 			locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
 	}
 
 	macro deleteNodeByDeleteKey {
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = "${nodeType}");
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = ${nodeType});
 
 		KeyPress.keyPressNoError(
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_BODY",
 			value1 = "\DELETE");
 
 		AssertElementPresent(
-			key_title = "${title}",
+			key_title = ${title},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DELETE_MODAL");
 
 		AssertElementPresent(
@@ -313,19 +313,19 @@ definition {
 		if (isSet(delete)) {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 
-			ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(key_nodeType = "${nodeType}");
+			ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(key_nodeType = ${nodeType});
 		}
 
 		if (isSet(close)) {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CLOSE_MODAL");
 
-			ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = "${nodeType}");
+			ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = ${nodeType});
 		}
 
 		if (isSet(cancel)) {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CANCEL_MODAL");
 
-			ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = "${nodeType}");
+			ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = ${nodeType});
 		}
 	}
 
@@ -333,12 +333,12 @@ definition {
 		Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
 
 		AssertElementPresent(
-			key_title = "${title}",
+			key_title = ${title},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DELETE_MODAL");
 
 		if (isSet(modalMessage)) {
 			AssertElementPresent(
-				key_modalMessage = "${modalMessage}",
+				key_modalMessage = ${modalMessage},
 				locator1 = "ProcessBuilderKaleoDesignerReact#MODAL_MESSAGE");
 		}
 
@@ -355,52 +355,52 @@ definition {
 
 	macro dragAndDropDiagramNode {
 		DragAndDrop.dragAndDrop(
-			key_nodeLabel = "${nodeLabel}",
+			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
-			value1 = "${nodePosition}");
+			value1 = ${nodePosition});
 	}
 
 	macro dragSidebarNodeAndMove {
-		var key_nodeLabel = "${nodeLabel}";
+		var key_nodeLabel = ${nodeLabel};
 
 		AssertClick.pauseAssertTextClickAt(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
-			value1 = "${nodeLabel}");
+			value1 = ${nodeLabel});
 
 		DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE",
 			locator2 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL",
-			nodeLabel = "${nodeLabel}");
+			nodeLabel = ${nodeLabel});
 
 		if (isSet(nodePosition)) {
 			DragAndDrop.dragAndDrop(
 				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
-				nodeLabel = "${nodeLabel}",
-				value1 = "${nodePosition}");
+				nodeLabel = ${nodeLabel},
+				value1 = ${nodePosition});
 		}
 	}
 
 	macro editConnector {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		Type(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
-			value1 = "${newConnectorLabel}");
+			value1 = ${newConnectorLabel});
 	}
 
 	macro editConnectorTransitionField {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		Type(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_ID",
-			value1 = "${nodeId}");
+			value1 = ${nodeId});
 	}
 
 	macro editNodeInformationField {
 		Type(
-			key_infoOption = "${infoOption}",
+			key_infoOption = ${infoOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO_INPUT",
-			value1 = "${infoValue}");
+			value1 = ${infoValue});
 	}
 
 	macro editNotification {
@@ -408,27 +408,27 @@ definition {
 			Type(
 				key_inputOption = "Name",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			Type(
 				key_inputOption = "Description",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(templateLanguageOption)) {
 			Select(
 				key_selectorField = "Template Language",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${templateLanguageOption}");
+				value1 = ${templateLanguageOption});
 		}
 
 		if (isSet(notificationTemplateValue)) {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-				value1 = "${notificationTemplateValue}");
+				value1 = ${notificationTemplateValue});
 		}
 
 		if (isSet(notificationTypeOption)) {
@@ -437,7 +437,7 @@ definition {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN");
 
 			Check.checkNotVisibleNoErrors(
-				key_checkboxValue = "${notificationTypeOption}",
+				key_checkboxValue = ${notificationTypeOption},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS");
 		}
 
@@ -445,63 +445,63 @@ definition {
 			Select(
 				key_selectorField = "Execution Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${executionTypeOption}");
+				value1 = ${executionTypeOption});
 		}
 
 		if (isSet(recipientTypeOption)) {
 			Select(
 				key_selectorField = "Recipient Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${recipientTypeOption}");
+				value1 = ${recipientTypeOption});
 
-			if ("${recipientTypeOption}" == "Role") {
+			if (${recipientTypeOption} == "Role") {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-					value1 = "${notificationsRecipientTypeRoleName}");
+					value1 = ${notificationsRecipientTypeRoleName});
 
 				Click.mouseOverClick(
-					key_optionRoleName = "${notificationsRecipientTypeRoleName}",
+					key_optionRoleName = ${notificationsRecipientTypeRoleName},
 					locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 			}
 
-			if ("${recipientTypeOption}" == "Role Type") {
+			if (${recipientTypeOption} == "Role Type") {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
-					value1 = "${notificationsRoleType}");
+					value1 = ${notificationsRoleType});
 
 				Click.mouseOverClick(
-					key_optionRoleName = "${notificationsRoleType}",
+					key_optionRoleName = ${notificationsRoleType},
 					locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-					value1 = "${notificationsRoleTypeRoleName}");
+					value1 = ${notificationsRoleTypeRoleName});
 
 				Click.mouseOverClick(
-					key_optionRoleName = "${notificationsRoleTypeRoleName}",
+					key_optionRoleName = ${notificationsRoleTypeRoleName},
 					locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
-				if ("${autoCreate}" == "true") {
+				if (${autoCreate} == "true") {
 					Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
 				}
 			}
 
-			if ("${recipientTypeOption}" == "Scripted Recipient") {
+			if (${recipientTypeOption} == "Scripted Recipient") {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_SCRIPTED_RECIPIENT_VALUE",
-					value1 = "${notificationScript}");
+					value1 = ${notificationScript});
 			}
 
 			if (isSet(newSection)) {
 				Click(
-					key_buttonName = "${newSection}",
+					key_buttonName = ${newSection},
 					locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 			}
 		}
 	}
 
 	macro editWorkflowTitle {
-		PortletEntry.inputTitle(title = "${title}");
+		PortletEntry.inputTitle(title = ${title});
 	}
 
 	macro gotoInfoWorkflowDefinition {
@@ -513,71 +513,71 @@ definition {
 	}
 
 	macro gotoNotification {
-		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "${notificationName}");
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = ${notificationName});
 
 		Click(
-			key_nodeNotificationName = "${notificationName}",
+			key_nodeNotificationName = ${notificationName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
 	macro gotoSideBarProperty {
 		Click(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${propertyName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
-			value1 = "${propertyValue}");
+			value1 = ${propertyValue});
 	}
 
 	macro hideSidebarFields {
 		Click(
-			key_property = "${property}",
+			key_property = ${property},
 			locator1 = "ProcessBuilderKaleoDesignerReact#HIDE_ANGLE_ICON");
 	}
 
 	macro restorePreviousVersion {
 		Click(
-			key_number = "${number}",
+			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#RESTORE_VERSION_ICON");
 	}
 
 	macro searchLanguage {
 		Type(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SEARCH_BAR_INPUT",
-			value1 = "${languageName}");
+			value1 = ${languageName});
 	}
 
 	macro selectConnector {
 		Click(
-			key_connectorLabel = "${connectorLabel}",
+			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
 	}
 
 	macro selectNode {
 		Click(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE");
 	}
 
 	macro selectNodeByLabel {
 		Click(
-			key_nodeLabel = "${nodeLabel}",
+			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
 	}
 
 	macro selectTranslationLanguage {
-		var key_translationOptionSelected = "${translationOptionSelected}";
-		var key_translationOption = "${newTranslationOption}";
-		var key_translationStatus = "${translationStatus}";
+		var key_translationOptionSelected = ${translationOptionSelected};
+		var key_translationOption = ${newTranslationOption};
+		var key_translationStatus = ${translationStatus};
 
 		Click(
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY",
-			translationOption = "${translationOptionSelected}");
+			translationOption = ${translationOptionSelected});
 
 		if (isSet(translationOption)) {
 			Click(
 				locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL",
-				translationOption = "${newTranslationOption}",
-				translationStatus = "${translationStatus}");
+				translationOption = ${newTranslationOption},
+				translationStatus = ${translationStatus});
 		}
 	}
 
@@ -586,7 +586,7 @@ definition {
 			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 		}
 
-		UploadDependencyFile.uploadFile(fileName = "${workflowDefinitionFile}");
+		UploadDependencyFile.uploadFile(fileName = ${workflowDefinitionFile});
 
 		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 
@@ -595,7 +595,7 @@ definition {
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");
 
-			Alert.viewErrorMessage(errorMessage = "${errorMessage}");
+			Alert.viewErrorMessage(errorMessage = ${errorMessage});
 		}
 	}
 
@@ -604,49 +604,49 @@ definition {
 			AssertElementPresent(
 				key_inputOption = "Name",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			AssertElementPresent(
 				key_inputOption = "Description",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(type)) {
 			AssertElementPresent(
 				key_inputOption = "Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TYPE_TEXTAREA",
-				value1 = "${type}");
+				value1 = ${type});
 		}
 
 		if (isSet(script)) {
 			AssertElementPresent(
 				key_inputOption = "Script",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SCRIPT_TEXTAREA",
-				value1 = "${script}");
+				value1 = ${script});
 		}
 
 		if (isSet(executionTypeOption)) {
 			AssertElementPresent(
 				key_selectorField = "Execution Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${executionTypeOption}");
+				value1 = ${executionTypeOption});
 		}
 
 		if (isSet(priorityValue)) {
 			AssertElementPresent(
 				key_inputOption = "Priority",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${priorityValue}");
+				value1 = ${priorityValue});
 		}
 	}
 
 	macro viewActionsInsideTimersPresent {
 		if (isSet(actionName)) {
 			AssertElementPresent(
-				key_actionName = "${actionName}",
+				key_actionName = ${actionName},
 				locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 		}
 
@@ -654,24 +654,24 @@ definition {
 			AssertElementPresent(
 				key_selectorField = "Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${actionTypeOption}");
+				value1 = ${actionTypeOption});
 		}
 	}
 
 	macro viewActiveNodeHighlighted {
 		AssertElementPresent(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
 	macro viewAndDeleteBySidebarProperty {
 		AssertElementPresent(
-			key_propertyName = "${sidebarPropertyName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${sidebarPropertyName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 
 		Click(
-			key_propertyName = "${sidebarPropertyName}",
+			key_propertyName = ${sidebarPropertyName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY");
 	}
 
@@ -707,57 +707,57 @@ definition {
 				Type(
 					key_inputOption = "Name",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${name}");
+					value1 = ${name});
 			}
 
 			if (isSet(description)) {
 				Type(
 					key_inputOption = "Description",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${description}");
+					value1 = ${description});
 			}
 
 			if (isSet(type)) {
 				Select(
 					key_inputOption = "Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TYPE_TEXTAREA",
-					value1 = "${type}");
+					value1 = ${type});
 			}
 
 			if (isSet(script)) {
 				Type(
 					key_inputOption = "Script",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SCRIPT_TEXTAREA",
-					value1 = "${script}");
+					value1 = ${script});
 			}
 
 			if (isSet(executionTypeOption)) {
 				Select(
 					key_selectorField = "Execution Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${executionTypeOption}");
+					value1 = ${executionTypeOption});
 			}
 
 			if (isSet(priorityValue)) {
 				Type(
 					key_inputOption = "Priority",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${priorityValue}");
+					value1 = ${priorityValue});
 			}
 
 			if (isSet(newSection)) {
 				Click(
-					key_buttonName = "${newSection}",
+					key_buttonName = ${newSection},
 					locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 			}
 		}
 
 		if (isSet(sectionOptionList)) {
-			for (var sectionOption : list "${sectionOptionList}") {
+			for (var sectionOption : list ${sectionOptionList}) {
 				if (isSet(name)) {
 					Type(
 						key_inputOption = "Name",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 						value1 = "${name} ${sectionOption}");
 				}
@@ -765,38 +765,38 @@ definition {
 				if (isSet(description)) {
 					Type(
 						key_inputOption = "Description",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 						value1 = "${description} ${sectionOption}");
 				}
 
 				if (isSet(actionsTemplateValue)) {
 					Type(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
 						value1 = "${actionsTemplateValue} ${sectionOption}");
 				}
 
 				if (isSet(executionTypeOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Execution Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_ACTIONS_BY_POSITION",
-						value1 = "${executionTypeOption}");
+						value1 = ${executionTypeOption});
 				}
 
 				if (isSet(priorityValue)) {
 					Type(
 						key_inputOption = "Priority",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 						value1 = "${priorityValue} ${sectionOption}");
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
-						key_sectionOption = "${sectionOption}",
+						key_buttonName = ${newSection},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
 				}
 			}
@@ -809,72 +809,72 @@ definition {
 		Select(
 			key_selectorField = "Assignment Type",
 			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-			value1 = "${assignmentType}");
+			value1 = ${assignmentType});
 
-		if ("${assignmentType}" == "Asset Creator") {
+		if (${assignmentType} == "Asset Creator") {
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentType}" == "Resource Actions") {
+		if (${assignmentType} == "Resource Actions") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#RESOURCE_ACTIONS_TEXTAREA",
-				value1 = "${resourceActionsText}");
+				value1 = ${resourceActionsText});
 
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentType}" == "Role") {
+		if (${assignmentType} == "Role") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-				value1 = "${roleName}");
+				value1 = ${roleName});
 
 			Click.mouseOverClick(
-				key_optionRoleName = "${roleName}",
+				key_optionRoleName = ${roleName},
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentType}" == "Scripted Assignment") {
+		if (${assignmentType} == "Scripted Assignment") {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_ADD_SOURCE_CODE");
 
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
-				value1 = "${groovyScript}");
+				value1 = ${groovyScript});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
-				value1 = "${groovyScript}");
+				value1 = ${groovyScript});
 		}
 
-		if ("${assignmentType}" == "Role Type") {
+		if (${assignmentType} == "Role Type") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
-				value1 = "${roleTypeName}");
+				value1 = ${roleTypeName});
 
 			Click.mouseOverClick(
-				key_optionRoleName = "${roleTypeName}",
+				key_optionRoleName = ${roleTypeName},
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-				value1 = "${roleTypeRoleName}");
+				value1 = ${roleTypeRoleName});
 
 			Click.mouseOverClick(
-				key_optionRoleName = "${roleTypeRoleName}",
+				key_optionRoleName = ${roleTypeRoleName},
 				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
-			if ("${autoCreate}" == "true") {
+			if (${autoCreate} == "true") {
 				Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
 			}
 
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
-		if ("${assignmentType}" == "User") {
+		if (${assignmentType} == "User") {
 			Type(
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${userScreenName}");
+				value1 = ${userScreenName});
 
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#ASSIGNMENT_TYPE_USER_SELECT_OPTION");
 
@@ -920,34 +920,34 @@ definition {
 				Type(
 					key_inputOption = "Name",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${name}");
+					value1 = ${name});
 			}
 
 			if (isSet(description)) {
 				Type(
 					key_inputOption = "Description",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${description}");
+					value1 = ${description});
 			}
 
 			if (isSet(templateLanguageOption)) {
 				Select(
 					key_selectorField = "Template Language",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${templateLanguageOption}");
+					value1 = ${templateLanguageOption});
 			}
 
 			if (isSet(notificationTemplateValue)) {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-					value1 = "${notificationTemplateValue}");
+					value1 = ${notificationTemplateValue});
 			}
 
 			if (isSet(notificationTypeOption)) {
 				Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN");
 
 				Check.checkNotVisibleNoErrors(
-					key_checkboxValue = "${notificationTypeOption}",
+					key_checkboxValue = ${notificationTypeOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS");
 			}
 
@@ -955,67 +955,67 @@ definition {
 				Select(
 					key_selectorField = "Execution Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${executionTypeOption}");
+					value1 = ${executionTypeOption});
 			}
 
 			if (isSet(recipientTypeOption)) {
 				Select(
 					key_selectorField = "Recipient Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${recipientTypeOption}");
+					value1 = ${recipientTypeOption});
 
-				if ("${recipientTypeOption}" == "Role") {
+				if (${recipientTypeOption} == "Role") {
 					Type(
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-						value1 = "${notificationsRecipientTypeRoleName}");
+						value1 = ${notificationsRecipientTypeRoleName});
 
 					Click.mouseOverClick(
-						key_optionRoleName = "${notificationsRecipientTypeRoleName}",
+						key_optionRoleName = ${notificationsRecipientTypeRoleName},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 				}
 
-				if ("${recipientTypeOption}" == "Role Type") {
+				if (${recipientTypeOption} == "Role Type") {
 					Type(
 						locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
-						value1 = "${notificationsRoleType}");
+						value1 = ${notificationsRoleType});
 
 					Click.mouseOverClick(
-						key_optionRoleName = "${notificationsRoleType}",
+						key_optionRoleName = ${notificationsRoleType},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 					Type(
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-						value1 = "${notificationsRoleTypeRoleName}");
+						value1 = ${notificationsRoleTypeRoleName});
 
 					Click.mouseOverClick(
-						key_optionRoleName = "${notificationsRoleTypeRoleName}",
+						key_optionRoleName = ${notificationsRoleTypeRoleName},
 						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
-					if ("${autoCreate}" == "true") {
+					if (${autoCreate} == "true") {
 						Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
 					}
 				}
 
-				if ("${recipientTypeOption}" == "Scripted Recipient") {
+				if (${recipientTypeOption} == "Scripted Recipient") {
 					Type(
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_SCRIPTED_RECIPIENT_VALUE",
-						value1 = "${notificationScript}");
+						value1 = ${notificationScript});
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
+						key_buttonName = ${newSection},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 				}
 			}
 		}
 
 		if (isSet(sectionOptionList)) {
-			for (var sectionOption : list "${sectionOptionList}") {
+			for (var sectionOption : list ${sectionOptionList}) {
 				if (isSet(name)) {
 					Type(
 						key_inputOption = "Name",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
 						value1 = "${name} ${sectionOption}");
 				}
@@ -1023,94 +1023,94 @@ definition {
 				if (isSet(description)) {
 					Type(
 						key_inputOption = "Description",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
 						value1 = "${description} ${sectionOption}");
 				}
 
 				if (isSet(templateLanguageOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Template Language",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-						value1 = "${templateLanguageOption}");
+						value1 = ${templateLanguageOption});
 				}
 
 				if (isSet(notificationTemplateValue)) {
 					Type(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION",
 						value1 = "${notificationTemplateValue} ${sectionOption}");
 				}
 
 				if (isSet(notificationTypeOption)) {
 					Click(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
 
 					Check.checkNotVisibleNoErrors(
-						key_checkboxValue = "${notificationTypeOption}",
+						key_checkboxValue = ${notificationTypeOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION");
 				}
 
 				if (isSet(executionTypeOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Execution Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-						value1 = "${executionTypeOption}");
+						value1 = ${executionTypeOption});
 				}
 
 				if (isSet(recipientTypeOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Recipient Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-						value1 = "${recipientTypeOption}");
+						value1 = ${recipientTypeOption});
 
-					if ("${recipientTypeOption}" == "Role") {
+					if (${recipientTypeOption} == "Role") {
 						Type(
 							locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-							value1 = "${notificationsRecipientTypeRoleName}");
+							value1 = ${notificationsRecipientTypeRoleName});
 
 						Click.mouseOverClick(
-							key_optionRoleName = "${notificationsRecipientTypeRoleName}",
+							key_optionRoleName = ${notificationsRecipientTypeRoleName},
 							locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 					}
 
-					if ("${recipientTypeOption}" == "Role Type") {
+					if (${recipientTypeOption} == "Role Type") {
 						Type(
 							locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
-							value1 = "${notificationsRoleType}");
+							value1 = ${notificationsRoleType});
 
 						Click.mouseOverClick(
-							key_optionRoleName = "${notificationsRoleType}",
+							key_optionRoleName = ${notificationsRoleType},
 							locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
 						Type(
 							locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
-							value1 = "${notificationsRoleTypeRoleName}");
+							value1 = ${notificationsRoleTypeRoleName});
 
 						Click.mouseOverClick(
-							key_optionRoleName = "${notificationsRoleTypeRoleName}",
+							key_optionRoleName = ${notificationsRoleTypeRoleName},
 							locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
 
-						if ("${autoCreate}" == "true") {
+						if (${autoCreate} == "true") {
 							Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
 						}
 					}
 
-					if ("${recipientTypeOption}" == "Scripted Recipient") {
+					if (${recipientTypeOption} == "Scripted Recipient") {
 						Type(
 							locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_SCRIPTED_RECIPIENT_VALUE",
-							value1 = "${notificationScript}");
+							value1 = ${notificationScript});
 					}
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
-						key_sectionOption = "${sectionOption}",
+						key_buttonName = ${newSection},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
 				}
 			}
@@ -1144,7 +1144,7 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA")) {
 			Click(
-				key_selectType = "${selectType}",
+				key_selectType = ${selectType},
 				locator1 = "ProcessBuilderKaleoDesignerReact#TIMERS_BUTTON_CHOOSE_SCRIPT_LANGUAGE");
 
 			AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
@@ -1159,153 +1159,153 @@ definition {
 				Type(
 					key_inputOption = "Name",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${name}");
+					value1 = ${name});
 			}
 
 			if (isSet(description)) {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_DESCRIPTION_TEXTAREA",
-					value1 = "${description}");
+					value1 = ${description});
 			}
 
 			if (isSet(scaleTypeOption)) {
 				Select(
 					key_selectorField = "Scale",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${scaleTypeOption}");
+					value1 = ${scaleTypeOption});
 			}
 
 			if (isSet(durationValue)) {
 				Type(
 					key_inputOption = "Duration",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${durationValue}");
+					value1 = ${durationValue});
 			}
 
 			if (isSet(actionTypeOption)) {
 				Select(
 					key_selectorField = "Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-					value1 = "${actionTypeOption}");
+					value1 = ${actionTypeOption});
 			}
 
 			if (isSet(actionName)) {
 				Type(
 					key_inputOption = "Name*",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${actionName}");
+					value1 = ${actionName});
 			}
 
 			if (isSet(actionDescription)) {
 				Type(
 					key_inputOption = "Description",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${actionDescription}");
+					value1 = ${actionDescription});
 			}
 
 			if (isSet(actionsTemplateValue)) {
 				Type(
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-					value1 = "${actionsTemplateValue}");
+					value1 = ${actionsTemplateValue});
 			}
 
 			if (isSet(priorityValue)) {
 				Type(
 					key_inputOption = "Priority",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-					value1 = "${priorityValue}");
+					value1 = ${priorityValue});
 			}
 
 			if (isSet(newSection)) {
 				Click(
-					key_buttonName = "${newSection}",
+					key_buttonName = ${newSection},
 					locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
 			}
 		}
 
 		if (isSet(sectionOptionList)) {
-			for (var sectionOption : list "${sectionOptionList}") {
+			for (var sectionOption : list ${sectionOptionList}) {
 				if (isSet(name)) {
 					Type(
 						key_inputOption = "Name",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
-						value1 = "${name}");
+						value1 = ${name});
 				}
 
 				if (isSet(description)) {
 					Type(
 						key_inputOption = "Description",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
-						value1 = "${description}");
+						value1 = ${description});
 				}
 
 				if (isSet(scaleTypeOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Scale",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_TIMERS_BY_POSITION",
-						value1 = "${scaleTypeOption}");
+						value1 = ${scaleTypeOption});
 				}
 
 				if (isSet(durationValue)) {
 					Type(
 						key_inputOption = "Duration",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
 						value1 = "${durationValue} ${sectionOption}");
 				}
 
 				if (isSet(actionTypeOption)) {
 					Select(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						key_selectorField = "Type",
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_TIMERS_BY_POSITION",
-						value1 = "${actionTypeOption}");
+						value1 = ${actionTypeOption});
 				}
 
 				if (isSet(actionName)) {
 					Type(
 						key_inputOption = "Name*",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
-						value1 = "${actionName}");
+						value1 = ${actionName});
 				}
 
 				if (isSet(actionDescription)) {
 					Type(
 						key_inputOption = "Description",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
-						value1 = "${actionDescription}");
+						value1 = ${actionDescription});
 				}
 
 				if (isSet(actionsTemplateValue)) {
 					Type(
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_TIMERS_BY_POSITION",
-						value1 = "${actionsTemplateValue}");
+						value1 = ${actionsTemplateValue});
 				}
 
 				if (isSet(priorityValue)) {
 					Type(
 						key_inputOption = "Priority",
-						key_sectionOption = "${sectionOption}",
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_TIMERS_BY_POSITION",
-						value1 = "${priorityValue}");
+						value1 = ${priorityValue});
 				}
 
 				if (isSet(newSection)) {
 					Click(
-						key_buttonName = "${newSection}",
-						key_sectionOption = "${sectionOption}",
+						key_buttonName = ${newSection},
+						key_sectionOption = ${sectionOption},
 						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
 				}
 			}
 		}
 
-		if ("${recurrenceOption}" == "True") {
+		if (${recurrenceOption} == "True") {
 			Check.checkToggleSwitch(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
 		}
 
@@ -1313,61 +1313,61 @@ definition {
 			Select(
 				key_selectorField = "Scale",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_WITHOUT_TEXT_WARNING",
-				value1 = "${recurrenceScaleTypeOption}");
+				value1 = ${recurrenceScaleTypeOption});
 		}
 
 		if (isSet(recurrenceDurationValue)) {
 			Type(
 				key_inputOption = "Duration",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_WITHOUT_TEXT_WARNING",
-				value1 = "${recurrenceDurationValue}");
+				value1 = ${recurrenceDurationValue});
 		}
 	}
 
 	macro viewConnectorID {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		AssertTextEquals(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_ID",
-			value1 = "${nodeId}");
+			value1 = ${nodeId});
 	}
 
 	macro viewConnectorNotPresent {
 		AssertElementNotPresent(
-			key_connectorLabel = "${connectorLabel}",
+			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
 	}
 
 	macro viewConnectorPresent {
 		AssertTextEquals(
-			key_connectorLabel = "${connectorLabel}",
+			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL",
-			value1 = "${connectorLabel}");
+			value1 = ${connectorLabel});
 	}
 
 	macro viewCurrentVersionAtRevisionHistoryTab {
 		AssertVisible(
-			key_number = "${number}",
+			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
 	}
 
 	macro viewDefaultToggleStatus {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		AssertElementPresent(
-			key_defaultStatus = "${defaultStatus}",
+			key_defaultStatus = ${defaultStatus},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH_STATUS");
 
-		if ("${defaultStatus}" == "True") {
+		if (${defaultStatus} == "True") {
 			AssertElementPresent(
-				key_connectorLabel = "${connectorLabel}",
-				key_transitionStyle = "0",
+				key_connectorLabel = ${connectorLabel},
+				key_transitionStyle = 0,
 				locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TRANSITION_STYLE");
 		}
 		else {
 			AssertElementPresent(
-				key_connectorLabel = "${connectorLabel}",
-				key_transitionStyle = "5",
+				key_connectorLabel = ${connectorLabel},
+				key_transitionStyle = 5,
 				locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TRANSITION_STYLE");
 		}
 	}
@@ -1375,7 +1375,7 @@ definition {
 	macro viewDefinitionTitle {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "${definitionTitle}");
+			value1 = ${definitionTitle});
 	}
 
 	macro viewDetailsFieldsPresent {
@@ -1428,41 +1428,41 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_NODE");
 
 		if (isSet(startLabelList)) {
-			for (var nodeLabel : list "${startLabelList}") {
+			for (var nodeLabel : list ${startLabelList}) {
 				ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
-					nodeLabel = "${nodeLabel}",
+					nodeLabel = ${nodeLabel},
 					nodeType = "start");
 			}
 		}
 
 		if (isSet(endLabelList)) {
-			for (var nodeLabel : list "${endLabelList}") {
+			for (var nodeLabel : list ${endLabelList}) {
 				ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
-					nodeLabel = "${nodeLabel}",
+					nodeLabel = ${nodeLabel},
 					nodeType = "end");
 			}
 		}
 
 		if (isSet(joinLabelList)) {
-			for (var nodeLabel : list "${joinLabelList}") {
+			for (var nodeLabel : list ${joinLabelList}) {
 				ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
-					nodeLabel = "${nodeLabel}",
+					nodeLabel = ${nodeLabel},
 					nodeType = "join");
 			}
 		}
 
 		if (isSet(taskLabelList)) {
-			for (var nodeLabel : list "${taskLabelList}") {
+			for (var nodeLabel : list ${taskLabelList}) {
 				ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
-					nodeLabel = "${nodeLabel}",
+					nodeLabel = ${nodeLabel},
 					nodeType = "task");
 			}
 		}
 
 		if (isSet(forkLabelList)) {
-			for (var nodeLabel : list "${forkLabelList}") {
+			for (var nodeLabel : list ${forkLabelList}) {
 				ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
-					nodeLabel = "${nodeLabel}",
+					nodeLabel = ${nodeLabel},
 					nodeType = "fork");
 			}
 		}
@@ -1476,50 +1476,50 @@ definition {
 
 	macro viewFieldNotPresentOnSideBar {
 		AssertElementNotPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_FIELD_LABEL");
 	}
 
 	macro viewFieldPresentOnSideBar {
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_FIELD_LABEL");
 	}
 
 	macro viewInactiveNodeNotHighlighted {
 		AssertElementNotPresent(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
 	macro viewInformationDetailsPresent {
 		AssertVisible(
-			key_fieldInformation = "${fieldInformation}",
-			key_fieldOption = "${fieldOption}",
+			key_fieldInformation = ${fieldInformation},
+			key_fieldOption = ${fieldOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#INFORMATION_DETAILS");
 	}
 
 	macro viewLanguageNotPresentAtManageTranslations {
 		AssertElementNotPresent(
-			key_language = "${languageName}",
+			key_language = ${languageName},
 			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
 	}
 
 	macro viewLanguageOptionNotPresent {
 		AssertElementNotPresent(
-			key_language = "${languageOption}",
+			key_language = ${languageOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
 	}
 
 	macro viewLanguageOptionPresent {
 		AssertElementPresent(
-			key_language = "${languageOption}",
+			key_language = ${languageOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
 	}
 
 	macro viewLanguagePresentAtManageTranslations {
 		AssertElementPresent(
-			key_language = "${languageName}",
+			key_language = ${languageName},
 			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
 	}
 
@@ -1529,22 +1529,22 @@ definition {
 
 	macro viewModalNotPresent {
 		AssertElementNotPresent(
-			key_modalTitle = "${modalTitle}",
+			key_modalTitle = ${modalTitle},
 			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
 	}
 
 	macro viewModalPresent {
 		AssertElementPresent(
-			key_modalTitle = "${modalTitle}",
+			key_modalTitle = ${modalTitle},
 			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
 	}
 
 	macro viewMultipleActionPresent {
-		for (var sectionOption : list "${sectionOptionList}") {
+		for (var sectionOption : list ${sectionOptionList}) {
 			if (isSet(name)) {
 				AssertTextEquals(
 					key_inputOption = "Name",
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 					value1 = "${name} ${sectionOption}");
 			}
@@ -1552,30 +1552,30 @@ definition {
 			if (isSet(description)) {
 				AssertTextEquals(
 					key_inputOption = "Description",
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 					value1 = "${description} ${sectionOption}");
 			}
 
 			if (isSet(actionsTemplateValue)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
 					value1 = "${actionsTemplateValue} ${sectionOption}");
 			}
 
 			if (isSet(executionTypeOption)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					key_selectorField = "Execution Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_ACTIONS_BY_POSITION",
-					value1 = "${executionTypeOption}");
+					value1 = ${executionTypeOption});
 			}
 
 			if (isSet(priorityValue)) {
 				AssertTextEquals(
 					key_inputOption = "Priority",
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
 					value1 = "${priorityValue} ${sectionOption}");
 			}
@@ -1583,11 +1583,11 @@ definition {
 	}
 
 	macro viewMultipleNotificationPresent {
-		for (var sectionOption : list "${sectionOptionList}") {
+		for (var sectionOption : list ${sectionOptionList}) {
 			if (isSet(name)) {
 				AssertTextEquals(
 					key_inputOption = "Name",
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
 					value1 = "${name} ${sectionOption}");
 			}
@@ -1595,14 +1595,14 @@ definition {
 			if (isSet(description)) {
 				AssertTextEquals(
 					key_inputOption = "Description",
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_BY_POSITION",
 					value1 = "${description} ${sectionOption}");
 			}
 
 			if (isSet(templateLanguageOption)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					key_selectorField = "Template Language",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
 					value1 = "${templateLanguageOption} ${sectionOption}");
@@ -1610,55 +1610,55 @@ definition {
 
 			if (isSet(notificationTemplateValue)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_BY_POSITION",
 					value1 = "${notificationTemplateValue} ${sectionOption}");
 			}
 
 			if (isSet(notificationTypeOption)) {
 				Click(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION");
 
 				AssertElementPresent(
-					key_checkboxValue = "${notificationTypeOption}",
+					key_checkboxValue = ${notificationTypeOption},
 					locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_TYPE_OPTIONS_BY_POSITION");
 			}
 
 			if (isSet(executionTypeOption)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					key_selectorField = "Execution Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-					value1 = "${executionTypeOption}");
+					value1 = ${executionTypeOption});
 			}
 
 			if (isSet(recipientTypeOption)) {
 				AssertTextEquals(
-					key_sectionOption = "${sectionOption}",
+					key_sectionOption = ${sectionOption},
 					key_selectorField = "Recipient Type",
 					locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS_BY_POSITION",
-					value1 = "${recipientTypeOption}");
+					value1 = ${recipientTypeOption});
 			}
 		}
 	}
 
 	macro viewNodeInfo {
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeType});
 
 		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
 
 		if (isSet(labelValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeLabel",
-				key_infoValue = "${labelValue}",
+				key_infoValue = ${labelValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(defaultIdValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeId",
-				key_infoValue = "${nodeIdValue}",
+				key_infoValue = ${nodeIdValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 
 			AssertElementNotPresent(
@@ -1670,60 +1670,60 @@ definition {
 		if (isSet(idValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeId",
-				key_infoValue = "${idValue}",
+				key_infoValue = ${idValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(descriptionValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeDescription",
-				key_infoValue = "${descriptionValue}",
+				key_infoValue = ${descriptionValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(scriptValue)) {
 			AssertElementPresent(
 				key_infoOption = "nodeScript",
-				key_infoValue = "${scriptValue}",
+				key_infoValue = ${scriptValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 	}
 
 	macro viewNodeInfoNotVisible {
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "${nodeType}");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeType});
 
 		if (isSet(labelValue)) {
 			AssertNotVisible(
 				key_infoOption = "nodeLabel",
-				key_infoValue = "${labelValue}",
+				key_infoValue = ${labelValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(idValue)) {
 			AssertNotVisible(
 				key_infoOption = "nodeId",
-				key_infoValue = "${idValue}",
+				key_infoValue = ${idValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(descriptionValue)) {
 			AssertNotVisible(
 				key_infoOption = "nodeDescription",
-				key_infoValue = "${descriptionValue}",
+				key_infoValue = ${descriptionValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
 		if (isSet(scriptValue)) {
 			AssertNotVisible(
 				key_infoOption = "nodeScript",
-				key_infoValue = "${scriptValue}",
+				key_infoValue = ${scriptValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 	}
 
 	macro viewNodeLabel {
 		AssertElementPresent(
-			key_nodeLabel = "${nodeLabel}",
+			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
 	}
 
@@ -1732,16 +1732,16 @@ definition {
 		var nodeYPositionChaged = selenium.getAttribute("//div[contains(@class,'node ${nodeType}-node selected')]@ypos");
 
 		AssertElementPresent(
-			key_nodeLabel = "${nodeLabel}",
-			key_nodeXPosition = "${nodeXPosition}",
-			key_nodeYPosition = "${nodeYPosition}",
+			key_nodeLabel = ${nodeLabel},
+			key_nodeXPosition = ${nodeXPosition},
+			key_nodeYPosition = ${nodeYPosition},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_POSITION");
 
-		if (isSet(newPosition) && ("${nodeXPositionChaged}" != "${firstNodeXPosition}") && ("${nodeYPositionChaged}" != "${firstNodeYPosition}")) {
+		if (isSet(newPosition) && (${nodeXPositionChaged} != ${firstNodeXPosition}) && (${nodeYPositionChaged} != ${firstNodeYPosition})) {
 			AssertElementNotPresent(
-				key_nodeLabel = "${nodeLabel}",
-				key_nodeXPosition = "${firstNodeXPosition}",
-				key_nodeYPosition = "${firstNodeYPosition}",
+				key_nodeLabel = ${nodeLabel},
+				key_nodeXPosition = ${firstNodeXPosition},
+				key_nodeYPosition = ${firstNodeYPosition},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_POSITION");
 		}
 	}
@@ -1751,32 +1751,32 @@ definition {
 			AssertTextEquals(
 				key_inputOption = "Name",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${notificationName}");
+				value1 = ${notificationName});
 		}
 
 		if (isSet(notificationTemplateValue)) {
 			AssertTextEquals(
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-				value1 = "${notificationTemplateValue}");
+				value1 = ${notificationTemplateValue});
 		}
 
 		if (isSet(notificationDescription)) {
 			AssertTextEquals(
 				key_inputOption = "Description",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${notificationDescription}");
+				value1 = ${notificationDescription});
 		}
 
 		if (isSet(notificationTemplateLanguage)) {
 			AssertSelectedLabel(
 				key_selectorField = "Template Language",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${notificationTemplateLanguage}");
+				value1 = ${notificationTemplateLanguage});
 		}
 
 		if (isSet(notificationTypeOption)) {
 			AssertElementPresent(
-				key_notificationTypeName = "${notificationTypeName}",
+				key_notificationTypeName = ${notificationTypeName},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_LABEL");
 		}
 
@@ -1784,61 +1784,61 @@ definition {
 			AssertSelectedLabel(
 				key_selectorField = "Execution Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${notificationExecutionType}");
+				value1 = ${notificationExecutionType});
 		}
 
 		if (isSet(notificationRecipientType)) {
 			AssertSelectedLabel(
 				key_selectorField = "Recipient Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${notificationRecipientType}");
+				value1 = ${notificationRecipientType});
 		}
 	}
 
 	macro viewNotificationNotPresent {
 		AssertElementNotPresent(
-			key_nodeNotificationName = "${notificationName}",
+			key_nodeNotificationName = ${notificationName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
 	macro viewNotificationPresent {
 		AssertElementPresent(
-			key_nodeNotificationName = "${notificationName}",
+			key_nodeNotificationName = ${notificationName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
 	macro viewPanelNodeNotPresent {
 		AssertElementNotPresent(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#PANEL_NODE");
 	}
 
 	macro viewPanelNodePresent {
 		AssertElementPresent(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#PANEL_NODE");
 	}
 
 	macro viewPropertyNotPresentOnSideBar {
 		AssertElementNotPresent(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${propertyName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
 	macro viewPropertyPresentOnSideBar {
 		AssertElementPresent(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${propertyName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
 	macro viewPropertyValue {
 		AssertTextEquals(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
+			key_propertyName = ${propertyName},
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
-			value1 = "${propertyValue}");
+			value1 = ${propertyValue});
 	}
 
 	macro viewPublishButtonNotPresent {
@@ -1853,11 +1853,11 @@ definition {
 
 	macro viewRequiredField {
 		AssertElementPresent(
-			key_requiredField = "${requiredField}",
+			key_requiredField = ${requiredField},
 			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
 
 		AssertElementPresent(
-			key_requiredField = "${requiredField}",
+			key_requiredField = ${requiredField},
 			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FEEDBACK_MESSAGE");
 
 		if (isSet(save)) {
@@ -1875,7 +1875,7 @@ definition {
 
 	macro viewRevisionHistoryVersion {
 		AssertVisible(
-			key_number = "${number}",
+			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
 	}
 
@@ -1885,13 +1885,13 @@ definition {
 
 	macro viewRoleNamePresentInSidebar {
 		AssertVisible(
-			key_roleName = "${roleName}",
+			key_roleName = ${roleName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD");
 	}
 
 	macro viewRoleTypeNotPresentInSidebar {
 		AssertElementNotPresent(
-			key_roleType = "${roleType}",
+			key_roleType = ${roleType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_NAME_FIELD");
 	}
 
@@ -1901,39 +1901,39 @@ definition {
 
 	macro viewSearchTranslationResultPresent {
 		AssertElementPresent(
-			key_result = "${result}",
+			key_result = ${result},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_NAME_RESULT");
 	}
 
 	macro viewSelectedAssignments {
 		AssertTextEquals(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE",
-			value1 = "${selectedAssignments}");
+			value1 = ${selectedAssignments});
 	}
 
 	macro viewSelectedNode {
 		AssertElementPresent(
-			key_nodeType = "${nodeType}",
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
 	macro viewSelectedRoleAssignmentsByPosition {
 		AssertElementPresent(
-			key_inputOption = "${inputOption}",
-			key_positonOption = "${positonOption}",
+			key_inputOption = ${inputOption},
+			key_positonOption = ${positonOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD_ASSIGNMENTS_BY_POSITON",
-			value1 = "${selectedRole}");
+			value1 = ${selectedRole});
 	}
 
 	macro viewSidebarFeedback {
 		AssertElementPresent(
-			key_sidebarMessage = "${sidebarMessage}",
+			key_sidebarMessage = ${sidebarMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_MESSAGE_FEEDBACK");
 	}
 
 	macro viewSidebarHeaderPresent {
 		AssertElementPresent(
-			key_header = "${header}",
+			key_header = ${header},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
 	}
 
@@ -1943,7 +1943,7 @@ definition {
 			value1 = "");
 
 		AssertElementPresent(
-			key_content = "${content}",
+			key_content = ${content},
 			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
 
@@ -1953,16 +1953,16 @@ definition {
 
 	macro viewSpecificNodeLabel {
 		AssertTextEquals(
-			key_nodeLabel = "${nodeLabel}",
-			key_nodeType = "${nodeType}",
+			key_nodeLabel = ${nodeLabel},
+			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC",
-			value1 = "${nodeLabel}");
+			value1 = ${nodeLabel});
 	}
 
 	macro viewTimerNotPresent {
 		AssertElementNotPresent(
 			key_propertyName = "Timers",
-			key_propertyValue = "${propertyValue}",
+			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
@@ -1971,62 +1971,62 @@ definition {
 			AssertElementPresent(
 				key_inputOption = "Name",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			AssertTextEquals(
 				key_textareaName = "Description",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_DESCRIPTION_TEXTAREA",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(scaleTypeOption)) {
 			AssertElementPresent(
 				key_selectorField = "Scale",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${scaleTypeOption}");
+				value1 = ${scaleTypeOption});
 		}
 
 		if (isSet(durationValue)) {
 			AssertElementPresent(
 				key_inputOption = "Duration",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${durationValue}");
+				value1 = ${durationValue});
 		}
 
 		if (isSet(actionTypeOption)) {
 			AssertElementPresent(
 				key_selectorField = "Type",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
-				value1 = "${actionTypeOption}");
+				value1 = ${actionTypeOption});
 		}
 
 		if (isSet(actionName)) {
 			AssertElementPresent(
 				key_inputOption = "Name*",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${actionName}");
+				value1 = ${actionName});
 		}
 
 		if (isSet(actionDescription)) {
 			AssertTextEquals(
 				key_inputOption = "Description",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${actionDescription}");
+				value1 = ${actionDescription});
 		}
 
 		if (isSet(actionsTemplateValue)) {
 			AssertElementPresent(
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
-				value1 = "${actionsTemplateValue}");
+				value1 = ${actionsTemplateValue});
 		}
 
 		if (isSet(priorityValue)) {
 			AssertElementPresent(
 				key_inputOption = "Priority",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
-				value1 = "${priorityValue}");
+				value1 = ${priorityValue});
 		}
 	}
 
@@ -2050,17 +2050,17 @@ definition {
 
 	macro viewToolTip {
 		MouseOver(
-			key_tooltipMessage = "${tooltipMessage}",
+			key_tooltipMessage = ${tooltipMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_PROPERTY_TOOLTIP");
 
 		AssertVisible(
-			key_tooltipMessage = "${tooltipMessage}",
+			key_tooltipMessage = ${tooltipMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_PROPERTY_TOOLTIP");
 	}
 
 	macro viewTranslationDropdown {
 		Click(
-			key_translationOptionSelected = "${translationOptionSelected}",
+			key_translationOptionSelected = ${translationOptionSelected},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
 
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
@@ -2072,38 +2072,38 @@ definition {
 
 	macro viewTranslationLanguageOptionNotPresent {
 		Click(
-			key_translationOptionSelected = "${currentTranslationOption}",
+			key_translationOptionSelected = ${currentTranslationOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
 
 		AssertElementNotPresent(
-			key_translationOption = "${translationOption}",
+			key_translationOption = ${translationOption},
 			key_translationStatus = "warning",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
 	macro viewTranslationLanguageOptionPresent {
 		AssertElementPresent(
-			key_translationOption = "${translationOption}",
-			key_translationStatus = "${translationStatus}",
+			key_translationOption = ${translationOption},
+			key_translationStatus = ${translationStatus},
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
 	macro viewTranslationLanguageStatus {
 		AssertElementPresent(
-			key_translationOption = "${newTranslationOption}",
-			key_translationStatus = "${translationStatus}",
+			key_translationOption = ${newTranslationOption},
+			key_translationStatus = ${translationStatus},
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
 	macro viewXMLSourceCodeSnippet {
 		AssertTextEquals.assertPartialText(
-			key_codeSnippet = "${codeSnippet}",
+			key_codeSnippet = ${codeSnippet},
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SNIPPET",
-			value1 = "${codeSnippet}");
+			value1 = ${codeSnippet});
 
 		if (isSet(codeSnippetNotPresent)) {
 			AssertElementNotPresent(
-				key_codeSnippet = "${codeSnippetNotPresent}",
+				key_codeSnippet = ${codeSnippetNotPresent},
 				locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SNIPPET");
 		}
 	}
@@ -2113,19 +2113,19 @@ definition {
 
 		AssertTextEquals.assertPartialTextAceEditor(
 			key_elementOption = " ",
-			key_elementValue = "${nodeLabel}",
+			key_elementValue = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SPECIFIC_ELEMENT",
-			value1 = "${nodeLabel}");
+			value1 = ${nodeLabel});
 
 		AssertTextEquals.assertPartialTextAceEditor(
-			key_line = "${lineX}",
+			key_line = ${lineX},
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
-			value1 = "${coordinateX}");
+			value1 = ${coordinateX});
 
 		AssertTextEquals.assertPartialTextAceEditor(
-			key_line = "${lineY}",
+			key_line = ${lineY},
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
-			value1 = "${coordinateY}");
+			value1 = ${coordinateY});
 	}
 
 }

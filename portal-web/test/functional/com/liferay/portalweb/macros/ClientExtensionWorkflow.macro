@@ -4,8 +4,8 @@ definition {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
 		ClientExtensionEntry.addEntry(
-			entryName = "${entryName}",
-			entryURL = "${entryURL}");
+			entryName = ${entryName},
+			entryURL = ${entryURL});
 
 		AssertClick(
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
@@ -15,7 +15,7 @@ definition {
 	macro addUserPermissions {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "New Regular Role");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -44,11 +44,11 @@ definition {
 
 	macro assertTableStatus {
 		AssertElementPresent(
-			key_tableEntryName = "${entryName}",
+			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
 
 		AssertElementPresent(
-			key_tableEntryStatus = "${entryStatus}",
+			key_tableEntryStatus = ${entryStatus},
 			locator1 = "ClientExtension#TABLE_ENTRY_STATUS_REMOTE_TABLE");
 	}
 

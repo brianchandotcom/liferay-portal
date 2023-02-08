@@ -10,7 +10,7 @@
 
 ### Other
 
-* [LPS-171976](https://issues.liferay.com/browse/LPS-171976) - SF rule: Simply return statement when in else statement 
+* [LPS-171976](https://issues.liferay.com/browse/LPS-171976) - SF rule: Simply return statement when in else statement
 
 ### Runner
 

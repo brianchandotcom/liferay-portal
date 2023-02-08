@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test RunAllJSONMacros {
 		JSONAssetlistTest.runSmoke(groupName = "Test Site Name");
 

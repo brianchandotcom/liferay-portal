@@ -8,7 +8,7 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Setup Wizard";
 
-	@priority = "3"
+	@priority = 3
 	test MySQLtoEmptyMySQL {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoEmptyMySQL";
@@ -29,7 +29,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "3"
+	@priority = 3
 	test MySQLtoHSQL {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoHSQL";
@@ -49,7 +49,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "3"
+	@priority = 3
 	test MySQLtoHSQLDeleteLiferayHome {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoHSQLDeleteLiferayHome";
@@ -57,7 +57,7 @@ definition {
 		Portlet.shutdownServer();
 
 		Portlet.startServer(
-			base_branch = "${base_branch}",
+			base_branch = ${base_branch},
 			deleteLiferayHome = "true");
 
 		SetupWizard.configurePG(
@@ -75,7 +75,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test MySQLtoMySQLEditedAdministratorUser {
 		property test.name.skip.portal.instance = "SetupWizardMySQL#MySQLtoMySQLEditAdministratorUser";
 
@@ -101,13 +101,13 @@ definition {
 		Portlet.shutdownServer();
 
 		Portlet.startServer(
-			base_branch = "${base_branch}",
+			base_branch = ${base_branch},
 			deleteLiferayHome = "false");
 
-		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
+		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = ${databaseType});
 
 		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			Navigator.openSpecificURL(url = ${virtualHostsURL});
 		}
 		else {
 			Navigator.openURL();

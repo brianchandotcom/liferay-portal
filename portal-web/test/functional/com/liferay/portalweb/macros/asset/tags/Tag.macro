@@ -5,15 +5,15 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${tagName}");
+		PortletEntry.inputName(name = ${tagName});
 	}
 
 	macro addAutoAssertionTagViaBlogsPG {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}");
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
 
 		Panel.expandPanel(panel = "Categorization");
 
@@ -22,15 +22,15 @@ definition {
 			value1 = "tag ");
 
 		AssertClick(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 
 		PortletEntry.publish();
 	}
 
 	macro addCP {
-		Tag._addCP(tagName = "${tagName}");
+		Tag._addCP(tagName = ${tagName});
 
 		PortletEntry.save();
 	}
@@ -42,8 +42,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Categorization");
 
-		for (var tagName : list "${tagNameList}") {
-			AssetCategorization.addTag(tagName = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			AssetCategorization.addTag(tagName = ${tagName});
 		}
 
 		PortletEntry.save();
@@ -52,7 +52,7 @@ definition {
 	}
 
 	macro addWithNullTitleCP {
-		Tag._addCP(tagName = "${tagName}");
+		Tag._addCP(tagName = ${tagName});
 
 		Button.clickSave();
 
@@ -66,16 +66,16 @@ definition {
 	macro cancelEditCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${tagMenuName}");
+			rowEntry = ${tagMenuName});
 
-		PortletEntry.inputName(name = "${tagNameEdit}");
+		PortletEntry.inputName(name = ${tagNameEdit});
 
 		Button.clickCancel();
 	}
 
 	macro deleteByIconCP {
-		for (var tagName : list "${tagNameList}") {
-			LexiconEntry.selectEntry(key_rowEntry = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			LexiconEntry.selectEntry(key_rowEntry = ${tagName});
 		}
 
 		Click(locator1 = "Icon#DELETE");
@@ -92,10 +92,10 @@ definition {
 	}
 
 	macro deleteCP {
-		for (var tagName : list "${tagNameList}") {
+		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Delete",
-				rowEntry = "${tagName}");
+				rowEntry = ${tagName});
 
 			AssertTextEquals(
 				locator1 = "Modal#BODY",
@@ -112,22 +112,22 @@ definition {
 	macro editCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${tagMenuName}");
+			rowEntry = ${tagMenuName});
 
-		PortletEntry.inputName(name = "${tagNameEdit}");
+		PortletEntry.inputName(name = ${tagNameEdit});
 
 		PortletEntry.save();
 	}
 
 	macro gotoMerge {
-		if ("${mergeMethod}" == "menuItem") {
+		if (${mergeMethod} == "menuItem") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Merge",
-				rowEntry = "${tagName}");
+				rowEntry = ${tagName});
 		}
 		else {
-			for (var tagName : list "${tagNameList}") {
-				LexiconEntry.selectEntry(rowEntry = "${tagName}");
+			for (var tagName : list ${tagNameList}) {
+				LexiconEntry.selectEntry(rowEntry = ${tagName});
 			}
 
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -148,13 +148,13 @@ definition {
 		Select(
 			key_fieldLabel = "Into This Tag:",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${mergedTag}");
+			value1 = ${mergedTag});
 
 		ClickNoError(locator1 = "Button#SAVE");
 
 		var message = "Are you sure you want to merge \"${tagNameList}\" into \"${mergedTag}\"? This will change all items tagged with \"${tagNameList}\" to instead be tagged with \"${mergedTag}\".";
 
-		AssertConfirm(value1 = "${message}");
+		AssertConfirm(value1 = ${message});
 
 		Alert.viewSuccessMessage();
 	}
@@ -168,8 +168,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		for (var tagName : list "${tagNameList}") {
-			LexiconEntry.selectEntry(rowEntry = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			LexiconEntry.selectEntry(rowEntry = ${tagName});
 		}
 
 		SelectFrameTop();
@@ -179,13 +179,13 @@ definition {
 
 	macro openTagsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/tags_admin/");
 	}
 
 	macro tearDownCP {
-		if ("${stagingSite}" == "true") {
-			ProductMenu.gotoStagingSite(site = "${site}");
+		if (${stagingSite} == "true") {
+			ProductMenu.gotoStagingSite(site = ${site});
 		}
 		else {
 			Navigator.openURL();
@@ -217,14 +217,14 @@ definition {
 	}
 
 	macro viewCP {
-		for (var tagName : list "${tagNameList}") {
-			LexiconEntry.viewEntryName(rowEntry = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			LexiconEntry.viewEntryName(rowEntry = ${tagName});
 		}
 	}
 
 	macro viewNotPresentCP {
-		for (var tagName : list "${tagNameList}") {
-			LexiconEntry.viewNoEntry(rowEntry = "${tagName}");
+		for (var tagName : list ${tagNameList}) {
+			LexiconEntry.viewNoEntry(rowEntry = ${tagName});
 		}
 	}
 

@@ -22,7 +22,7 @@ definition {
 			Site.openSitesAdmin();
 
 			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
+				siteName = ${testSiteName},
 				siteTemplateName = "Raylife AP");
 		}
 	}
@@ -32,7 +32,7 @@ definition {
 
 		RaylifeAP.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Verify if Raylife AP can be created"
-	@priority = "5"
+	@priority = 5
 	test CanRaylifeAPCreated {
 		property portal.acceptance = "true";
 		property solutions.acceptance = "true";

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 
 				JSONLayout.deletePublicLayout(
 					groupName = "Guest",
-					layoutName = "${layoutName}");
+					layoutName = ${layoutName});
 
 				Navigator.gotoPage(pageName = "Home");
 
@@ -37,7 +37,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanUseOsgiClientExtensionIframeAsPortlet {
 		property iframe.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionUsingConfigFile#CanUseOsgiClientExtensionIframeAsPortlet";
@@ -59,7 +59,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test OsgiClientExtensionOfTypeCustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionUsingConfigFile#CanUseOsgiClientExtensionCustomElementAsPortlet";

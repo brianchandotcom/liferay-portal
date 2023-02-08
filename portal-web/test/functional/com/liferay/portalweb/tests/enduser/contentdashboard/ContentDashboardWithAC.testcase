@@ -39,7 +39,7 @@ definition {
 
 		AnalyticsCloud.teardownAnalyticsCloud();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,10 +51,8 @@ definition {
 		JSONRole.deleteTestRoles();
 	}
 
-	@description = "LPS-136512 Given The Content Performance panel of a document is opened
-	When the user clicks on the times icon ( X )
-	Then the Content Performance panel is closed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CloseMetricsPanel {
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -95,10 +93,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-136512 Given A blog associated with a Display Page
-	When the user clicks on the option "View metrics" in the kebab menu
-	Then the Content Performance panel is displayed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewMetricsButtonKebabWhenBlogHasDPT {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -137,10 +133,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-136512 Given A document associated with a Display Page
-	When the user clicks on the option "View metrics" in the kebab menu
-	Then the Content Performance panel is displayed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewMetricsButtonKebabWhenDocumentHasDPT {
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -178,7 +172,7 @@ definition {
 	}
 
 	@description = "LPS-152076 Bug: Content Performance Panel is not visible form Content dashboard if the user doesn't have Control Access Permission"
-	@priority = "4"
+	@priority = 4
 	test ViewMetricsButtonUserWithoutControlAccessPermission {
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -223,35 +217,35 @@ definition {
 		task ("Add all Content Dashboard permissions to role") {
 			for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,ACCESS_IN_CONTROL_PANEL") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
 					roleTitle = "Test Role Name");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Test Role Name");
 		}
 
 		task ("Add all Web Content permissions to role") {
 			for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
 					roleTitle = "Test Role Name");
 			}
 
 			for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalArticle",
 					roleTitle = "Test Role Name");
 			}
 
 			for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalFolder",
 					roleTitle = "Test Role Name");
 			}
@@ -263,7 +257,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 					roleTitle = "Test Role Name");
 			}
@@ -300,10 +294,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-136512 Given A document associated with a Display Page
-	When the user clicks on the "Metrics" button in the hover action
-	Then the Content Performance panel is displayed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewMetricsButtonWhenDocumentHasDPT {
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

@@ -4,15 +4,15 @@ definition {
 		Variables.assertDefined(parameterList = "${element},${expectedElement}");
 
 		if (isSet(responseFromSite)) {
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..${element}");
+			var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.items..navigationMenuItems..${element}");
 		}
 		else {
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..${element}");
+			var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.navigationMenuItems..${element}");
 		}
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedElement}");
+			actual = ${actual},
+			expected = ${expectedElement});
 	}
 
 	macro assertResponseHasCorrectInformations {
@@ -20,21 +20,21 @@ definition {
 
 		NavigationMenuAPI._assertResponseIncludeCorrectElement(
 			element = "contentURL",
-			expectedElement = "${expectedURL}",
-			responseFromSite = "${responseFromSite}",
-			responseToParse = "${responseToParse}");
+			expectedElement = ${expectedURL},
+			responseFromSite = ${responseFromSite},
+			responseToParse = ${responseToParse});
 
 		NavigationMenuAPI._assertResponseIncludeCorrectElement(
 			element = "type",
-			expectedElement = "${expectedType}",
-			responseFromSite = "${responseFromSite}",
-			responseToParse = "${responseToParse}");
+			expectedElement = ${expectedType},
+			responseFromSite = ${responseFromSite},
+			responseToParse = ${responseToParse});
 
 		NavigationMenuAPI._assertResponseIncludeCorrectElement(
 			element = "useCustomName",
-			expectedElement = "${expectedUseCustomName}",
-			responseFromSite = "${responseFromSite}",
-			responseToParse = "${responseToParse}");
+			expectedElement = ${expectedUseCustomName},
+			responseFromSite = ${responseFromSite},
+			responseToParse = ${responseToParse});
 	}
 
 	macro getNavigationMenu {
@@ -53,9 +53,9 @@ definition {
 				-H accept: application/json
 		''';
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 }

@@ -15,7 +15,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -24,7 +24,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -33,7 +33,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade713 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -42,7 +42,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
@@ -50,7 +50,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
@@ -58,7 +58,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -67,7 +67,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddFormAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -76,7 +76,7 @@ definition {
 		Upgrade.addForm(site = "Guest");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanSubmitFormEntryAfterUpgrade7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -88,7 +88,7 @@ definition {
 		Upgrade.submitFormEntry7010();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanSubmitFormEntryAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -100,7 +100,7 @@ definition {
 		Upgrade.submitFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanSubmitFormEntryAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -112,7 +112,7 @@ definition {
 		Upgrade.submitFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanSubmitFormEntryAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -124,7 +124,7 @@ definition {
 		Upgrade.submitFormEntry7310();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UpdateFieldNameToFieldReference7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -136,7 +136,7 @@ definition {
 		Upgrade.viewUpdateFieldNameToFieldReference7010();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UpdateFieldNameToFieldReference7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -148,7 +148,7 @@ definition {
 		Upgrade.viewUpdateFieldNameToFieldReference();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UpdateFieldNameToFieldReference7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -160,7 +160,7 @@ definition {
 		Upgrade.viewUpdateFieldNameToFieldReference();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UploadFieldKeepsAllFilesAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -172,7 +172,7 @@ definition {
 		Upgrade.viewUploadFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UploadFieldKeepsAllFilesAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -184,7 +184,7 @@ definition {
 		Upgrade.viewUploadFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test UploadFieldKeepsAllFilesAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -196,7 +196,7 @@ definition {
 		Upgrade.viewUploadFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAndDeleteFormEntryAfterUpgrade704 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mariadb,mysql,postgresql";
@@ -208,7 +208,7 @@ definition {
 		Upgrade.viewAndDeleteFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAndDeleteFormEntryAfterUpgrade70106 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -220,7 +220,7 @@ definition {
 		Upgrade.viewAndDeleteFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewFormEntryAfterUpgrade7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -232,7 +232,7 @@ definition {
 		Upgrade.viewFormEntry7010();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewFormEntryAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -244,7 +244,7 @@ definition {
 		Upgrade.viewFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewFormEntryAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
@@ -256,7 +256,7 @@ definition {
 		Upgrade.viewFormEntry();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewFormEntryAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";

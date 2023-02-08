@@ -24,14 +24,14 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-130215 - Verify that the filter offers an option for each existing version"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanChooseEspecifcVersionOnPage {
 		Workflow.openWorkflowListView();
 
@@ -48,7 +48,7 @@ definition {
 		WorkflowMetricsPerformanceByStep.viewPerformanceByStepTooltip();
 
 		WorkflowMetricsPerformanceByStep.clickViewAllSteps(
-			stepsNumber = "1",
+			stepsNumber = 1,
 			valueSteps = "View All Steps (1)");
 
 		Click(
@@ -71,7 +71,7 @@ definition {
 
 	@description = "LPS-101075 - Verify that the filter offers an option for each existing version"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanFilterByEachExistingVersion {
 		Workflow.openWorkflowListView();
 
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the filter is available on the card in the Performance tab"
-	@priority = "5"
+	@priority = 5
 	test CanFilterTopStepsByWorkflowVersion {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the user can not insert a future date"
-	@priority = "2"
+	@priority = 2
 	test CannotInsertFutureDate {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -140,7 +140,7 @@ definition {
 
 	@description = "LPS-130215 - Verify that the user is not able so select more than one version"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanNotSelectMoreThanOneVersion {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -163,7 +163,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		WorkflowMetricsPerformanceByStep.clickViewAllSteps(
-			stepsNumber = "1",
+			stepsNumber = 1,
 			valueSteps = "View All Steps (1)");
 
 		WorkflowMetricsPerformanceByStep.selectProcessVersion(versionOption = "1.0");
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the filter offers an option to see all version together"
-	@priority = "4"
+	@priority = 4
 	test CanSeeAllVersionsTogether {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CanSeeAllVersionsTogether";
 
@@ -307,14 +307,14 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that the filter allows to see all version together"
-	@priority = "5"
+	@priority = 5
 	test CanSeeAllVersionsTogetherOnPage {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
 		Click(
-			key_stepsNumber = "2",
+			key_stepsNumber = 2,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		Click(
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that when a specific version is chosen, the card only considers closed instances that are in the version chosen"
-	@priority = "4"
+	@priority = 4
 	test CardConsidersClosedInstancesInChosenVersion {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
-	@priority = "3"
+	@priority = 3
 	test CardDoesNotDisplayMoreThan10Entries {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CardDoesNotDisplayMoreThan10Entries";
 
@@ -379,12 +379,12 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		AssertElementNotPresent(
-			key_rowNumber = "11",
+			key_rowNumber = 11,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ROW");
 	}
 
 	@description = "LPS-100674 - Verify that the card Performance by Steps works as designed when the portal is set to a non-en-US locale"
-	@priority = "3"
+	@priority = 3
 	test CardWorksAsDesignedWhenPortalIsSetToNonEnUsLocale {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -432,7 +432,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the default value for the filter is All Versions"
-	@priority = "4"
+	@priority = 4
 	test DefalutFilterValueIsAllVersions {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -444,7 +444,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-	@priority = "3"
+	@priority = 3
 	test DefaultDateFormatIsMMDDYYYY {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -465,7 +465,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that the All Versions filter considers only the steps touched by the task"
-	@priority = "4"
+	@priority = 4
 	test FilterConsidersStepsTouchedByTaks {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaks";
 
@@ -558,7 +558,7 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that, selecting all versions, the filter considers only the steps touched by the task"
-	@priority = "4"
+	@priority = 4
 	test FilterConsidersStepsTouchedByTaksOnPage {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#FilterConsidersStepsTouchedByTaksOnPage";
 
@@ -659,7 +659,7 @@ definition {
 			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
 			Click(
-				key_stepsNumber = "3",
+				key_stepsNumber = 3,
 				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 			AssertElementNotPresent(
@@ -669,7 +669,7 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that the Process Version filter is available on the Performance by Step page"
-	@priority = "5"
+	@priority = 5
 	test FilterIsAvailableOnPage {
 		task ("Go to Performance by Step Page") {
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
@@ -677,7 +677,7 @@ definition {
 			WorkflowMetricsPerformanceByStep.goToPerformanceTab();
 
 			Click(
-				key_stepsNumber = "2",
+				key_stepsNumber = 2,
 				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 		}
 
@@ -687,7 +687,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 7 Days time period, the result and filter options displayed in accordance with reference"
-	@priority = "4"
+	@priority = 4
 	test FilterItemsFromLast7Days {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -701,7 +701,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 90 Days time period the result and filter options displayed in accordance with reference"
-	@priority = "4"
+	@priority = 4
 	test FilterItemsFromLast90Days {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -715,7 +715,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last 180 Days time period the result and filter options are displayed in accordance with reference"
-	@priority = "4"
+	@priority = 4
 	test FilterItemsFromLast180Days {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -729,7 +729,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Last Year time period the result and filter options displayed in accordance with reference"
-	@priority = "4"
+	@priority = 4
 	test FilterItemsFromLastYear {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when the user selects Today time period the result and filter options are displayed in accordance with reference"
-	@priority = "4"
+	@priority = 4
 	test FilterItemsFromToday {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -757,14 +757,14 @@ definition {
 	}
 
 	@description = "LPS-100679 - Verify that users are able to filter the Performance by Step page by period: Today, Yesterday, Last 7 Days, Last 30 Days, Last 90 Days, Last 180 Days, Last Year, Custom Range"
-	@priority = "3"
+	@priority = 3
 	test FilterPerformanceByStepPagePerTimeRange {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			key_stepsNumber = "2",
+			key_stepsNumber = 2,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		WorkflowMetricsPerformanceByStep.selectDateRangeFilter(dateRange = "Today");
@@ -822,7 +822,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the fields From and To are required"
-	@priority = "3"
+	@priority = 3
 	test FromAndToAreRequiredFields {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that hovering the info icon next to Performance by Step card will display a tooltip"
-	@priority = "2"
+	@priority = 2
 	test InfoIconDisplaysMessageOnHover {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -845,7 +845,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that at the custom range modal, the oldest date accepted is 1970"
-	@priority = "2"
+	@priority = 2
 	test OldestDataAcceptedIs1970 {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -875,7 +875,7 @@ definition {
 	}
 
 	@description = "LPS-130215 - Verify that when a specific version is chosen, the page only considers closed instances that are in the version chosen"
-	@priority = "4"
+	@priority = 4
 	test PageConsidersClosedInstancesInChosenVersion {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#PageConsidersClosedInstancesInChosenVersion";
 
@@ -895,7 +895,7 @@ definition {
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "${documentTitle1}");
+			entryTitle = ${documentTitle1});
 
 		Navigator.openURL();
 
@@ -904,14 +904,14 @@ definition {
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "${documentTitle1}",
+			workflowAssetTitle = ${documentTitle1},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "${documentTitle1}",
+			workflowAssetTitle = ${documentTitle1},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
@@ -950,21 +950,21 @@ definition {
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "${documentTitle2}");
+			entryTitle = ${documentTitle2});
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "${documentTitle2}",
+			workflowAssetTitle = ${documentTitle2},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "review2");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "${documentTitle2}",
+			workflowAssetTitle = ${documentTitle2},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "review2");
 
@@ -973,29 +973,29 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_stepsNumber = "3",
+			key_stepsNumber = 3,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		for (var stepName : list "Review,review2,update2") {
 			AssertElementPresent(
-				key_stepName = "${stepName}",
+				key_stepName = ${stepName},
 				locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
 		}
 
 		WorkflowMetricsPerformanceByStep.assertStepNameByProcessVersion(
 			rowName = "Review",
-			rowNumber = "1",
+			rowNumber = 1,
 			version = "1.0");
 
 		WorkflowMetricsPerformanceByStep.assertStepNameByProcessVersion(
 			rowName = "review2",
-			rowNumber = "1",
+			rowNumber = 1,
 			version = "2.0");
 	}
 
 	@description = "LPS-101075 - Verify that when the user clicks on View All Steps the Performance by Step page displays the same steps displayed in the card"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test PageDisplaysSameStepsAsCard {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -1038,7 +1038,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			key_stepsNumber = "3",
+			key_stepsNumber = 3,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		AssertElementPresent(
@@ -1062,7 +1062,7 @@ definition {
 			locator1 = "WorkflowMetricsPerformanceByStep#ALL_VERSIONS_DROPDOWN_OPTION");
 
 		Click(
-			key_stepsNumber = "1",
+			key_stepsNumber = 1,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		AssertElementPresent(
@@ -1079,14 +1079,14 @@ definition {
 	}
 
 	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"
-	@priority = "3"
+	@priority = 3
 	test SearchIsAnApproximateMatch {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			key_stepsNumber = "2",
+			key_stepsNumber = 2,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		WorkflowMetricsPerformanceByStep.searchForStep(stepName = "view");
@@ -1107,7 +1107,7 @@ definition {
 	}
 
 	@description = "LPS-101075 - Verify that, when a task do not touch the workflow task, the step is not displayed for the specific version"
-	@priority = "5"
+	@priority = 5
 	test StepIsNotDisplayedForSpecificVersion {
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#StepIsNotDisplayedForSpecificVersion";
 
@@ -1213,17 +1213,17 @@ definition {
 	}
 
 	@description = "LPS-97667 - Verify that when there are tasks with average time smaller than 1 minute the average completion time is displayed"
-	@priority = "4"
+	@priority = 4
 	test TasksWithAverageTimeSmallerThan1MinAreDisplayed {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0000",
+			slaDefinitionHours = 0000,
 			slaDefinitionName = "Test SLA",
 			slaDefinitionStart = "Process Begins");
 
@@ -1295,7 +1295,7 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that the To date is greater than the From date"
-	@priority = "3"
+	@priority = 3
 	test ToDateMustBeGreaterThanFromDate {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -1314,7 +1314,7 @@ definition {
 	}
 
 	@description = "LPS-100677 - Verify that searching steps containing non-ascii chars is possible"
-	@priority = "3"
+	@priority = 3
 	test UserCanSearchNonAsciiChars {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#UserCanSearchNonAsciiChars";
@@ -1339,7 +1339,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		Click(
-			key_stepsNumber = "11",
+			key_stepsNumber = 11,
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS");
 
 		WorkflowMetricsPerformanceByStep.searchForStep(stepName = "新");
@@ -1350,14 +1350,14 @@ definition {
 	}
 
 	@description = "LPS-100674 - Verify that when an SLA is deleted, the data in Performance by Step is still part of the average calculation"
-	@priority = "4"
+	@priority = 4
 	test WhenSlaIsDeletedDataInCardIsStillPartOfTheCalculation {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",

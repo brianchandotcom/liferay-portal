@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This test ensures that a document with text in a depot can be auto-tagged after enabling GCNL."
-	@priority = "4"
+	@priority = 4
 	test CanAutoTagDocumentInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagDocumentInDepot";
 
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This test ensures that an Image in a depot can be auto-tagged after enabling GCV."
-	@priority = "4"
+	@priority = 4
 	test CanAutoTagImageInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagImageInDepot";
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "This test ensures that a web content article with text in a depot can be auto-tagged after enabling GCNL."
-	@priority = "4"
+	@priority = 4
 	test CanAutoTagWebContentInDepot {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanAutoTagWebContentInDepot";
 
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This test ensures that a blog entry with a tag added by manual can not be auto-tagged after publishing."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewBlogManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewBlogManualTag";
 
@@ -122,7 +122,7 @@ definition {
 			enableClassificationEndpoint = "true");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Test AutoTagging Page",
 			widgetName = "Blogs");
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@description = "This test ensures that a document with a tag added by manual can not be auto-tagged after publishing."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewDocumentManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewDocumentManualTag";
 
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This test ensures that an image with a tag added by manual can not be auto-tagged after publishing."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewImageManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewImageManualTag";
 
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This test ensures that a WC article with a tag added by manual can not be auto-tagged after publishing."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewWebContentManualTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanOnlyViewWebContentManualTag";
 
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "This test ensures that a tag added in a blog entry through GCNL can be removed."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveBlogTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveBlogTag";
 
@@ -246,7 +246,7 @@ definition {
 			enableClassificationEndpoint = "true");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Test AutoTagging Page",
 			widgetName = "Blogs");
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This test ensures that a tag added in a document through GCNL can be removed."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveDocumentTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveDocumentTag";
 
@@ -303,7 +303,7 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "computers,electronics") {
-			AssetCategorization.removeTag(tagName = "${tagName}");
+			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
 		Button.clickPublish();
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "This test ensures that a tag added in an image through GCVI can be removed."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveImageTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveImageTag";
 
@@ -341,7 +341,7 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "pattern,carmine") {
-			AssetCategorization.removeTag(tagName = "${tagName}");
+			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
 		Button.clickPublish();
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "This test ensures that a tag added in a WC article through GCNL can be removed."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveWebContentTag {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanRemoveWebContentTag";
 
@@ -381,7 +381,7 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "electronics,programming") {
-			AssetCategorization.removeTag(tagName = "${tagName}");
+			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
 		PortletEntry.publish();
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the blog entry."
-	@priority = "4"
+	@priority = 4
 	test CanViewBlogAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewBlogAutoTagsAfterPublishing";
 
@@ -406,7 +406,7 @@ definition {
 			enableClassificationEndpoint = "true");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Test AutoTagging Page",
 			widgetName = "Blogs");
@@ -438,7 +438,7 @@ definition {
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the document entry."
-	@priority = "4"
+	@priority = 4
 	test CanViewDocumentAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewDocumentAutoTagsAfterPublishing";
 
@@ -474,7 +474,7 @@ definition {
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the Image."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewImageAutoTagsAfterPublishing";
 
@@ -504,12 +504,12 @@ definition {
 			siteURLKey = "site-name");
 
 		for (var tagName : list "sleeve,t-shirt,pattern") {
-			DMDocument.viewTagInfo(tagName = "${tagName}");
+			DMDocument.viewTagInfo(tagName = ${tagName});
 		}
 	}
 
 	@description = "This test ensures that auto tags can be published to live with the WC article."
-	@priority = "4"
+	@priority = 4
 	test CanViewWebContentAutoTagsAfterPublishing {
 		property test.name.skip.portal.instance = "GoogleCloudAutoTagging#CanViewWebContentAutoTagsAfterPublishing";
 

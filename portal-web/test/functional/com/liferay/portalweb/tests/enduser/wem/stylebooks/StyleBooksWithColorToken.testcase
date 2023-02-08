@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141568. The reference will be autocompleted as 6 digit characters, if the user fill out 3 digit characters when clicking on the tab, intro or outside the output."
-	@priority = "4"
+	@priority = 4
 	test AutocompleteColorReference {
 		task ("Add a Container to a content page") {
 			JSONLayout.addPublicLayout(
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145650. The user could cancel publish process in style book editor if link invalid color token."
-	@priority = "4"
+	@priority = 4
 	test CancelPublishProcessInStyleBookEditorIfLinkInvalidColorToken {
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141568. The user cannot refer two tokens mutually."
-	@priority = "4"
+	@priority = 4
 	test CannotReferTwoTokensMutually {
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145650 and LPS-149218. The user could continue publish process in style book editor if link invalid color token. The tokens groups should be collapsed by default except the first one."
-	@priority = "5"
+	@priority = 5
 	test ContinuePublishProcessInStyleBookEditorIfLinkInvalidColorToken {
 		property portal.acceptance = "true";
 
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136199. The user could detach the linked token."
-	@priority = "5"
+	@priority = 5
 	test DetachLinkedColorTokenInPageEditor {
 		property portal.acceptance = "true";
 
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141568. The previous reference will be maintained, if the user fill out wrong digit characters when clicking on the tab, intro or outside the output."
-	@priority = "4"
+	@priority = 4
 	test PersistPreviousColorReferenceWhenPopulateWrongDigitCharacters {
 		task ("Add a Container to a content page") {
 			JSONLayout.addPublicLayout(
@@ -332,7 +332,7 @@ definition {
 				Type(
 					key_text = "Background Color",
 					locator1 = "TextInput#ANY",
-					value1 = "${colorReference}");
+					value1 = ${colorReference});
 
 				Click(
 					key_sidebarButton = "Browser",
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160000. When the page creator types an invalid color token in page editor, the previous value is restored."
-	@priority = "4"
+	@priority = 4
 	test RestorePreviousValueInPageEditorWhenTypeInvalidColorToken {
 		task ("Given a page creator has a Heading fragment on a content page") {
 			JSONLayout.addPublicLayout(
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160000. When the style book designer types an invalid color token in style book editor, the previous value is restored."
-	@priority = "4"
+	@priority = 4
 	test RestorePreviousValueInStyleBookEditorWhenTypeInvalidColorToken {
 		task ("Given a style book designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136199. The token changes from style book should be applied to the usages."
-	@priority = "4"
+	@priority = 4
 	test ViewColorTokenChangesAppliedToUsages {
 		task ("Add a Heading fragment to a content page") {
 			JSONLayout.addPublicLayout(
@@ -503,7 +503,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "color",
 				value1 = "rgba(52, 247, 135, 1)");

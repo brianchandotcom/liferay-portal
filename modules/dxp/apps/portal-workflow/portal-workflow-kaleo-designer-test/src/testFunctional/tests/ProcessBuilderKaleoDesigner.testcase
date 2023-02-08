@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Verify that Action can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddAction {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddAction";
 
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "Verify that multiple Assignment can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleAssignment {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddMultipleAssignment";
 
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "Verify that Notification can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddNotification {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddNotification";
 
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "Verify that Timers can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddTimers {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddTimers";
 
@@ -178,8 +178,8 @@ definition {
 			blockerScript = "Test Script",
 			durationScale1 = "Hour",
 			durationScale2 = "Hour",
-			durationTime1 = "5",
-			durationTime2 = "6",
+			durationTime1 = 5,
+			durationTime2 = 6,
 			timerDescription = "Timer Description",
 			timerName = "Timer Name");
 
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
-	@priority = "4"
+	@priority = 4
 	test CanAddTranslations {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAddTranslations";
 
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that is possible to select Account role type for role assignments"
-	@priority = "5"
+	@priority = 5
 	test CanAssignAccountRole {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanAssignAccountRole";
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"
-	@priority = "5"
+	@priority = 5
 	test CanCreateTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanCreateTransition";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "Verify that user can delete selected Node"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanDeleteNode";
 
@@ -320,7 +320,7 @@ definition {
 	}
 
 	@description = "Verify that properties can be modified"
-	@priority = "5"
+	@priority = 5
 	test CanModifyProperties {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanModifyProperties";
 
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
-	@priority = "4"
+	@priority = 4
 	test CanMoveNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -370,7 +370,7 @@ definition {
 	}
 
 	@description = "Verify that the user can rename a Node"
-	@priority = "4"
+	@priority = 4
 	test CanRenameNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanRenameNode";
 
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@description = "Verify that user can Save workflow as Draft"
-	@priority = "4"
+	@priority = 4
 	test CanSaveAsDraft {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanSaveAsDraft";
 
@@ -424,7 +424,7 @@ definition {
 	}
 
 	@description = "Verify that the user can select each node in Diagram"
-	@priority = "4"
+	@priority = 4
 	test CanSelectNodeOnDiagram {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanSelectNodeOnDiagram";
 
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@description = "Verify that the user can set transition Default"
-	@priority = "4"
+	@priority = 4
 	test CanSetDefaultTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#CanSetDefaultTransition";
 
@@ -479,7 +479,7 @@ definition {
 	}
 
 	@description = "Verify that Condition Node do not have Timers property"
-	@priority = "4"
+	@priority = 4
 	test ConditionHasNoTimersProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConditionHasNoTimersProperty";
 
@@ -502,7 +502,7 @@ definition {
 	}
 
 	@description = "Verify that the user can rename connector"
-	@priority = "4"
+	@priority = 4
 	test ConnectorCanBeRenamed {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConnectorCanBeRenamed";
 
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@description = "Verify that newly created transition has default name -connector#-"
-	@priority = "3"
+	@priority = 3
 	test ConnectorHasDefaultName {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ConnectorHasDefaultName";
 
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@description = "Verify that default names for nodes are provided"
-	@priority = "4"
+	@priority = 4
 	test DefaultNamesAreProvided {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#DefaultNamesAreProvided";
 
@@ -565,7 +565,7 @@ definition {
 	}
 
 	@description = "Verify that If user selects node, cross on top right appear"
-	@priority = "3"
+	@priority = 3
 	test DisplaysCrossOnTopRight {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#DisplaysCrossOnTopRight";
 
@@ -584,7 +584,7 @@ definition {
 	}
 
 	@description = "Verify that a pop up message is displayed when deleting Node"
-	@priority = "4"
+	@priority = 4
 	test DisplaysMessageOnDeletingNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#DisplaysMessageOnDeletingNode";
 
@@ -605,7 +605,7 @@ definition {
 	}
 
 	@description = "Verify that the Fork node must have at least two outgoing transitions."
-	@priority = "4"
+	@priority = 4
 	test ForkNodeMustHaveMoreThanOneTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#ForkNodeMustHaveMoreThanOneTransition";
 
@@ -652,7 +652,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Actions property"
-	@priority = "4"
+	@priority = 4
 	test HasActionsProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasActionsProperty";
 
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Description property"
-	@priority = "4"
+	@priority = 4
 	test HasDescriptionProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasDescriptionProperty";
 
@@ -736,7 +736,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Name property"
-	@priority = "5"
+	@priority = 5
 	test HasNameProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasNameProperty";
 
@@ -777,7 +777,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Notifications property"
-	@priority = "4"
+	@priority = 4
 	test HasNotificationsProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasNotificationsProperty";
 
@@ -804,7 +804,7 @@ definition {
 	}
 
 	@description = "Verify that the Task node has Timers property"
-	@priority = "4"
+	@priority = 4
 	test HasTimersProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasTimersProperty";
 
@@ -831,7 +831,7 @@ definition {
 	}
 
 	@description = "Verify that each type of Node has Type property"
-	@priority = "5"
+	@priority = 5
 	test HasTypeProperty {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#HasTypeProperty";
 
@@ -872,7 +872,7 @@ definition {
 	}
 
 	@description = "Verify that the user can rename connector"
-	@priority = "4"
+	@priority = 4
 	test NodeCanBeRenamed {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#NodeCanBeRenamed";
 
@@ -903,7 +903,7 @@ definition {
 	}
 
 	@description = "Verify that the transition can be dropped on plain field, pop up menu will appear, user can select new node, new node is created correctly"
-	@priority = "5"
+	@priority = 5
 	test NodeIsCreatedWhenTransitionIsDroppedOnPlainField {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#NodeIsCreatedWhenTransitionIsDroppedOnPlainField";
 
@@ -942,7 +942,7 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
-	@priority = "4"
+	@priority = 4
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -967,7 +967,7 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the Single Approver Workflow comes with the Account role assigned"
-	@priority = "5"
+	@priority = 5
 	test SingleApproverComesWithAccountRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -984,7 +984,7 @@ definition {
 	}
 
 	@description = "Verify that the Start Node must have an outgoing transition"
-	@priority = "4"
+	@priority = 4
 	test StartNodeMustHaveOutgoingTransition {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#StartNodeMustHaveOutgoingTransition";
 
@@ -1001,7 +1001,7 @@ definition {
 	}
 
 	@description = "Verify that transition can be connected to another edge of node, orange circle will appear"
-	@priority = "5"
+	@priority = 5
 	test TransitionCanBeConnectedToNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesigner#TransitionCanBeConnectedToNode";
 

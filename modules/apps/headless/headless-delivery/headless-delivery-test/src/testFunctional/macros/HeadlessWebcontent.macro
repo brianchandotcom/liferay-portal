@@ -5,13 +5,13 @@ definition {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentSetter.setFolderId(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
+				folderName = ${folderName},
+				groupId = ${groupId});
 		}
 
 		var globalGroupId = JSONWebcontentSetter.setGroupId(
@@ -20,35 +20,35 @@ definition {
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 
 		var structureId = JSONDDMstructure._getStructureId(
-			classNameId = "${classNameId}",
-			groupId = "${globalGroupId}",
+			classNameId = ${classNameId},
+			groupId = ${globalGroupId},
 			structureName = "Basic Web Content");
 
-		if ("${source}" != "true") {
+		if (${source} != "true") {
 			var content = '''<p>${content}</p>''';
 		}
 
-		var titleMap = HeadlessWebcontentSetter.setTitleMap(titleMap = "${titleMap}");
-		var contentMap = HeadlessWebcontentSetter.setContentMap(contentMap = "${contentMap}");
-		var descriptionMap = HeadlessWebcontentSetter.setDescriptionMap(descriptionMap = "${descriptionMap}");
+		var titleMap = HeadlessWebcontentSetter.setTitleMap(titleMap = ${titleMap});
+		var contentMap = HeadlessWebcontentSetter.setContentMap(contentMap = ${contentMap});
+		var descriptionMap = HeadlessWebcontentSetter.setDescriptionMap(descriptionMap = ${descriptionMap});
 
 		var articleId = HeadlessWebcontentAPI._addWebContent(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			content = "${content}",
-			contentMap = "${contentMap}",
-			description = "${description}",
-			descriptionMap = "${descriptionMap}",
-			folderId = "${folderId}",
-			groupId = "${groupId}",
-			structureId = "${structureId}",
-			title = "${title}",
-			titleMap = "${titleMap}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			viewableBy = "${viewableBy}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			content = ${content},
+			contentMap = ${contentMap},
+			description = ${description},
+			descriptionMap = ${descriptionMap},
+			folderId = ${folderId},
+			groupId = ${groupId},
+			structureId = ${structureId},
+			title = ${title},
+			titleMap = ${titleMap},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			viewableBy = ${viewableBy});
 
-		return "${articleId}";
+		return ${articleId};
 	}
 
 }

@@ -7,34 +7,34 @@ definition {
 			Type(
 				key_fieldLabel = "Summary",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${requirementName}");
+				value1 = ${requirementName});
 		}
 
 		if (isSet(linkURL)) {
 			Type(
 				key_fieldLabel = "Link URL",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${linkURL}");
+				value1 = ${linkURL});
 		}
 
 		if (isSet(linkTitle)) {
 			Type(
 				key_fieldLabel = "Link Title",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${linkTitle}");
+				value1 = ${linkTitle});
 		}
 
 		if (isSet(componentId)) {
 			Select(
 				locator1 = "TestrayCases#MAIN_COMPONENT",
-				value1 = "${componentId}");
+				value1 = ${componentId});
 		}
 
 		if (isSet(requirementDescription)) {
 			Type(
 				key_text = "description",
 				locator1 = "TextArea#ANY",
-				value1 = "${requirementDescription}");
+				value1 = ${requirementDescription});
 		}
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
@@ -42,15 +42,15 @@ definition {
 
 	macro addRequirementCase {
 		Click(
-			key_text = "${linkText}",
+			key_text = ${linkText},
 			locator1 = "Button#ANY");
 
 		Click.clickAtNotVisible(
-			key_checkboxOption = "${caseName}",
+			key_checkboxOption = ${caseName},
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 		Click(
-			key_text = "${buttonText}",
+			key_text = ${buttonText},
 			locator1 = "Button#ANY");
 	}
 
@@ -58,53 +58,53 @@ definition {
 		Type(
 			key_fieldLabel = "Summary",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${requirementName}");
+			value1 = ${requirementName});
 
 		Type(
 			key_fieldLabel = "Link URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${linkURL}");
+			value1 = ${linkURL});
 
 		Type(
 			key_fieldLabel = "Link Title",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${linkTitle}");
+			value1 = ${linkTitle});
 
 		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = "${componentId}");
+			value1 = ${componentId});
 
 		Type(
 			key_text = "description",
 			locator1 = "TextArea#ANY",
-			value1 = "${requirementDescription}");
+			value1 = ${requirementDescription});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro goToRequirement {
-		var key_requirementSummary = "${requirementSummary}";
+		var key_requirementSummary = ${requirementSummary};
 		var key = selenium.getText("TestrayRequirements#REQUIREMENT_SUMMARY");
 
 		Click(
-			key_projectName = "${key}",
+			key_projectName = ${key},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro verifyRequirement {
 		AssertElementPresent(
-			key_linkTitle = "${linkTitle}",
-			key_requirementComponent = "${requirementComponent}",
-			key_requirementSummary = "${requirementSummary}",
-			key_requirementTeam = "${requirementTeam}",
+			key_linkTitle = ${linkTitle},
+			key_requirementComponent = ${requirementComponent},
+			key_requirementSummary = ${requirementSummary},
+			key_requirementTeam = ${requirementTeam},
 			locator1 = "TestrayRequirements#REQUIREMENT_DETAIL");
 	}
 
 	macro verifyRequirementCase {
 		AssertElementPresent(
-			key_requirementCaseName = "${requirementCaseName}",
-			key_requirementComponent = "${requirementComponent}",
-			key_requirementPriority = "${requirementPriority}",
+			key_requirementCaseName = ${requirementCaseName},
+			key_requirementComponent = ${requirementComponent},
+			key_requirementPriority = ${requirementPriority},
 			locator1 = "TestrayRequirements#REQUIREMENT_CASE_DETAIL");
 	}
 

@@ -27,7 +27,7 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentAdmin#TITLE");
 
 		if (isSet(cookiePolicyLink)) {
-			CookieConsentAdmin.setCookiePolicyLink(cookiePolicyLink = "${cookiePolicyLink}");
+			CookieConsentAdmin.setCookiePolicyLink(cookiePolicyLink = ${cookiePolicyLink});
 		}
 
 		if (isSet(precheck)) {
@@ -45,7 +45,7 @@ definition {
 	macro setCookiePolicyLink {
 		Type(
 			locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK",
-			value1 = "${cookiePolicyLink}");
+			value1 = ${cookiePolicyLink});
 
 		AssertClick.assertTextClickNoMouseOver(
 			locator1 = "Button#SAVE",
@@ -58,7 +58,7 @@ definition {
 
 	@description = "Set custom text for all fields at Instance level"
 	macro setCustomTextForAllFields {
-		Variables.assertDefined(parameterList = "${text}");
+		Variables.assertDefined(parameterList = ${text});
 
 		CookieNavigator.gotoInstanceSettings(portlet = "Consent Panel");
 
@@ -113,9 +113,9 @@ definition {
 		Variables.assertDefined(parameterList = "${text},${webSiteText}");
 
 		CookieNavigator.gotoSiteSettings(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			portlet = "Consent Panel",
-			siteURLKey = "${siteURLKey}");
+			siteURLKey = ${siteURLKey});
 
 		Type(
 			locator1 = "CookieConsentAdmin#TITLE",
@@ -167,41 +167,41 @@ definition {
 	macro verifyAllConfigurationElementsAreConfigured {
 		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_TITLE");
 
-		while ((IsTextNotEqual(locator1 = "CookieConsentAdmin#TITLE", value1 = "${text}")) && (maxIterations = "10")) {
+		while ((IsTextNotEqual(locator1 = "CookieConsentAdmin#TITLE", value1 = ${text})) && (maxIterations = "10")) {
 			Refresh();
 		}
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#DESCRIPTION",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#LINK_DISPLAY_TEXT",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#STRICTLY_NECESSARY_COOKIES_DESCRIPTION",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertElementPresent(locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION_PRE_CHECKED");
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#PERFORMANCE_COOKIES_DESCRIPTION",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertElementPresent(locator1 = "CookieConsentAdmin#PREFROMANCE_COOKIES_DESCRIPTION_PRE_CHECKED");
 
 		AssertTextEquals(
 			locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION",
-			value1 = "${text}");
+			value1 = ${text});
 
 		AssertElementPresent(locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION_PRE_CHECKED");
 	}

@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "Verify once created, users can navigate to the Payment Methods page where new Offline Payment Methods can be Edited and Activated."
-	@priority = "3"
+	@priority = 3
 	test ActivateOfflinePaymentMethodsAndAddDescription {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#ActivateOfflinePaymentMethodsAndAddDescription";
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "Verify an offline payment method can be added, edited, and deleted from system settings"
-	@priority = "3"
+	@priority = 3
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AddEditAndDeleteOfflinePaymentMethod";
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "Verify an activated offline payment method can be used for an order."
-	@priority = "3"
+	@priority = 3
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AnOfflinePaymentMethodCanBeUsedForAnOrder";
@@ -164,7 +164,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -178,14 +178,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Test Offline Payment Method",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "Verify offline payment methods display in the orders page for orders placed with a new offline payment method. Verify this payment method can be changed to another offline payment method."
-	@priority = "3"
+	@priority = 3
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AssertAndEditNewPaymentMethodInOrdersPage";
@@ -231,7 +231,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -243,8 +243,8 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Test Offline Payment Method 1",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -264,7 +264,7 @@ definition {
 				paymentMethod = "Test Offline Payment Method",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "Verify an activated offline payment method can be selected for an order when multiple payment methods are active."
-	@priority = "3"
+	@priority = 3
 	test CreateOrderWithMultipleActivePaymentMethods {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#CreateOrderWithMultipleActivePaymentMethods";
@@ -327,7 +327,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 		}
@@ -341,8 +341,8 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Test Offline Payment Method",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}

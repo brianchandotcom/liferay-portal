@@ -1,7 +1,7 @@
 definition {
 
 	macro _getImportTaskById {
-		Variables.assertDefined(parameterList = "${importTaskId}");
+		Variables.assertDefined(parameterList = ${importTaskId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
@@ -13,9 +13,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var curl = JSONCurlUtil.get("${curl}");
+		var curl = JSONCurlUtil.get(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _updateSitePage {
@@ -34,33 +34,33 @@ definition {
 				]
 		''';
 
-		var curl = JSONCurlUtil.put("${curl}");
+		var curl = JSONCurlUtil.put(${curl});
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro getErrorMessageOfImportTaskById {
-		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
+		var response = ImportTask._getImportTaskById(importTaskId = ${importTaskId});
 
-		var errorMessage = JSONUtil.getWithJSONPath("${response}", "$.errorMessage");
+		var errorMessage = JSONUtil.getWithJSONPath(${response}, "$.errorMessage");
 
-		return "${errorMessage}";
+		return ${errorMessage};
 	}
 
 	macro getIdOfUpdateSitePageBatchEngineImportTask {
 		var response = ImportTask._updateSitePage();
 
-		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+		var importTaskId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
-		return "${importTaskId}";
+		return ${importTaskId};
 	}
 
 	macro getStatusOfImportTaskById {
-		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
+		var response = ImportTask._getImportTaskById(importTaskId = ${importTaskId});
 
-		var importTaskStatus = JSONUtil.getWithJSONPath("${response}", "$.executeStatus");
+		var importTaskStatus = JSONUtil.getWithJSONPath(${response}, "$.executeStatus");
 
-		return "${importTaskStatus}";
+		return ${importTaskStatus};
 	}
 
 }

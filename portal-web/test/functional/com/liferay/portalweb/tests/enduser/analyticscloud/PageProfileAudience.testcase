@@ -25,7 +25,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8351 | Test Summary: Page profile audience card shows known and anonymous individuals as well as segmented/unsegmented individuals"
-	@priority = "5"
+	@priority = 5
 	test ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals {
 
 		// AC Refactor: Timing issues may happen on this test case
@@ -54,18 +54,18 @@ definition {
 		task ("Add users and interact with the page to get data from known and unsegmented users") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 
 			ACDXPSettings.syncNewContactData();
 
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -85,7 +85,7 @@ definition {
 		task ("Go to AC and create segment for the user") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSegments();
 
@@ -134,9 +134,9 @@ definition {
 
 			var portalURL = PropsUtil.get("portal.url");
 
-			var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
-			var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+			var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
 
 			ACNavigation.openItem(itemName = "AC Page - Site Name - ${portalURL}");
 
@@ -146,11 +146,11 @@ definition {
 
 		task ("Assert that Known, Anonymous, Segmented and Unsegmented Individuals are displayed") {
 			ACUtils.assertAudienceCard(
-				index = "1",
+				index = 1,
 				percentageList = "66.67%,33.33%");
 
 			ACUtils.assertAudienceCard(
-				index = "2",
+				index = 2,
 				percentageList = "66.67%,33.33%");
 		}
 	}

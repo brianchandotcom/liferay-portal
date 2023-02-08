@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106776. Add a translation to inline content."
-	@priority = "5"
+	@priority = 5
 	test AddTranslationToInlineContent {
 		property portal.acceptance = "true";
 
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page with translation."
-	@priority = "4"
+	@priority = 4
 	test CreatePageTemplateFromContentPageWithTranslation {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153367. The page creator could preview current localization in a new tab."
-	@priority = "4"
+	@priority = 4
 	test PreviewCurrentLocalizationInANewTab {
 		task ("Given a page creator has a Heading fragment on a content page") {
 			JSONLayout.addPublicLayout(
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-139064. Users can preview localized draft for a content page."
-	@priority = "3"
+	@priority = 3
 	test PreviewLocalizedDraftContentPage {
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122148. Search localized inline text items in Page Content panel."
-	@priority = "4"
+	@priority = 4
 	test SearchLocalizedInlineTextItemsInPageContentPanel {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -283,7 +283,7 @@ definition {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				index = "2",
+				index = 2,
 				text = "Edited Title");
 		}
 
@@ -311,7 +311,7 @@ definition {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				index = "2",
+				index = 2,
 				text = "Título editado");
 		}
 
@@ -326,7 +326,7 @@ definition {
 
 			for (var itemName : list "Edited Text,Edited Title,Edited Subtitle") {
 				AssertVisible(
-					key_itemName = "${itemName}",
+					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 			}
 		}
@@ -340,7 +340,7 @@ definition {
 		task ("View the inline texts in Page Content tab") {
 			for (var itemName : list "Texto editado,Título editado,Edited Subtitle") {
 				AssertVisible(
-					key_itemName = "${itemName}",
+					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 			}
 		}
@@ -354,7 +354,7 @@ definition {
 
 			for (var itemName : list "Título editado,Edited Subtitle") {
 				AssertElementNotPresent(
-					key_itemName = "${itemName}",
+					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 			}
 
@@ -366,7 +366,7 @@ definition {
 
 			for (var itemName : list "Texto editado,Edited Subtitle") {
 				AssertElementNotPresent(
-					key_itemName = "${itemName}",
+					key_itemName = ${itemName},
 					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
 			}
 		}

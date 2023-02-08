@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141351. The site admin could find display page type items in dropdown menu."
-	@priority = "5"
+	@priority = 5
 	test AddDisplayPageTypeNavigationMenuItems {
 		property portal.acceptance = "true";
 
@@ -205,7 +205,7 @@ definition {
 
 		task ("View the Display Page items") {
 			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
-				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+				NavigationMenusAdmin.viewItem(itemName = ${itemName});
 			}
 		}
 
@@ -232,7 +232,7 @@ definition {
 		task ("View the items shown in Navigation Menu widget") {
 			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
 				AssertVisible(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE");
 			}
 		}
@@ -245,7 +245,7 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 
@@ -280,7 +280,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141352. The navigation menu admin could add a global or asset library vocabulary item to navigation menu."
-	@priority = "4"
+	@priority = 4
 	test AddGlobalOrAssetLibraryVocabularyNavigationMenuItem {
 		task ("Given a navigation menu admin has a navigation menu") {
 			task ("Add an asset library") {
@@ -321,7 +321,7 @@ definition {
 				item = "Vocabulary");
 
 			for (var itemName : list "Topic,Vocabulary Name") {
-				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+				NavigationMenusAdmin.viewItem(itemName = ${itemName});
 			}
 
 			task ("Delete the asset library") {
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-77912. The user could add page, submenu, and URL items to a navigation menu."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddNavigationMenuEntriesAllTypes {
 		property portal.acceptance = "true";
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-140253. View no private page in navigation menu."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddPageToNavigationMenuAndViewPageStatus {
 		property portal.acceptance = "true";
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120277. When add an URL type item, the blank target is set up after checking Open in a new tab."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddURLTypeNavigationMenuItemWithBlankTarget {
 		property portal.acceptance = "true";
@@ -485,14 +485,14 @@ definition {
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			SelectWindow(locator1 = "title=Test Page Name - Test Site Name - ${siteName}");
 		}
 	}
 
 	@description = "This is a test for LPS-75059 and LPS-120277. When add an URL type item, the self target is defined by default."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddURLTypeNavigationMenuItemWithSelfTarget {
 		property portal.acceptance = "true";
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141352. The navigation menu admin could add a vocabulary item to navigation menu."
-	@priority = "5"
+	@priority = 5
 	test AddVocabularyTypeNavigationMenuItem {
 		property portal.acceptance = "true";
 
@@ -578,13 +578,13 @@ definition {
 		}
 
 		task ("Then the navigation menu admin could view both Vocabulary and Dynamic labels are shown on item") {
-			var i = "1";
+			var i = 1;
 
 			for (var label : list "Vocabulary,Dynamic") {
 				NavigationMenusAdmin.viewItemStatus(
-					index = "${i}",
+					index = ${i},
 					itemName = "Vocabulary Name",
-					itemStatus = "${label}");
+					itemStatus = ${label});
 
 				var i = ${i} + 1;
 			}
@@ -600,7 +600,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107833. Don't support Add page to Global Navigation Menu when creating a new page."
-	@priority = "5"
+	@priority = 5
 	test CannotAddPageToGlobalNavigationMenuWhenCreatingPageInNormalSite {
 		property portal.acceptance = "true";
 
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107833. Assert no option to add displayed page in Global Navigation Menu."
-	@priority = "5"
+	@priority = 5
 	test CannotAddPageTypeItemInGlobalNavigationMenu {
 		property portal.acceptance = "true";
 
@@ -663,7 +663,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143841. The warning message won't be shown in contextual menu once change to an item with associated display page template."
-	@priority = "4"
+	@priority = 4
 	test CannotViewWarningMessageInContextualMenuOnceChangeToAnItemWithoutAssociatedDisplayPage {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -754,7 +754,7 @@ definition {
 	}
 
 	@description = "This is a test case for LPS-141462. The user could change same type asset with selected one in an existing item."
-	@priority = "4"
+	@priority = 4
 	test ChangeSameAssetTypeItem {
 		task ("Add two Categories with different asset types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -813,7 +813,7 @@ definition {
 	}
 
 	@description = "LPS-78049 - Multiple Navigation Menus can be deleted Filter by All."
-	@priority = "3"
+	@priority = 3
 	test DeleteMultipleNavigationMenus {
 		property portal.acceptance = "true";
 
@@ -843,7 +843,7 @@ definition {
 	}
 
 	@description = "Navigation menus can be deleted."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteNavigationMenu {
 		property portal.acceptance = "true";
@@ -866,7 +866,7 @@ definition {
 	}
 
 	@description = "Navigation menus can be marked as Primary Navigation. At any given time, only one navigation menu can be Primary Navigation."
-	@priority = "4"
+	@priority = 4
 	test MarkNavigationMenuAsPrimary {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
@@ -907,7 +907,7 @@ definition {
 	}
 
 	@description = "Navigation menus can be marked as Secondary Navigation. At any given time, only one navigation menu can be Secondary Navigation."
-	@priority = "4"
+	@priority = 4
 	test MarkNavigationMenuAsSecondary {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
@@ -935,7 +935,7 @@ definition {
 	}
 
 	@description = "Navigation menus can be marked as Social Navigation. At any given time, only one navigation menu can be Social Navigation."
-	@priority = "4"
+	@priority = 4
 	test MarkNavigationMenuAsSocial {
 		task ("Add two navigation menus") {
 			for (var n : list "1,2") {
@@ -963,12 +963,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164113. The navigation menu preserves scroll position when saving."
-	@priority = "4"
+	@priority = 4
 	test PersistScrollPositionAfterSavingItem {
 		task ("Given a site designer has a navigation menu with multiple items") {
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "16") {
+			while (${i} != 16) {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}");
@@ -980,9 +980,9 @@ definition {
 				groupName = "Test Site Name",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "16") {
+			while (${i} != 16) {
 				JSONSitenavigation.addSiteNavigationMenuItem(
 					groupName = "Test Site Name",
 					privateLayout = "false",
@@ -1019,13 +1019,13 @@ definition {
 				property = "scrollTop");
 
 			TestUtils.assertEquals(
-				actual = "${scrollTop}",
-				expected = "${persistenceScrollTop}");
+				actual = ${scrollTop},
+				expected = ${persistenceScrollTop});
 		}
 	}
 
 	@description = "User can rename a navigation menu."
-	@priority = "5"
+	@priority = 5
 	test RenameNavigationMenu {
 		property portal.acceptance = "true";
 
@@ -1053,7 +1053,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-76658 and LPS-67191. A user can rename the page items in a navigation menu."
-	@priority = "5"
+	@priority = 5
 	test RenamePageTypeNavigationMenuItem {
 		property portal.acceptance = "true";
 
@@ -1076,7 +1076,7 @@ definition {
 				JSONSitenavigation.addSiteNavigationMenuItem(
 					groupName = "Test Site Name",
 					privateLayout = "false",
-					siteNavigationMenuItemName = "${layoutName}",
+					siteNavigationMenuItemName = ${layoutName},
 					siteNavigationMenuName = "Navigation Menu Name",
 					type = "layout");
 			}
@@ -1133,12 +1133,12 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164113. The navigation menu does not preserve scroll position when navigating to another page then coming back or reloading page."
-	@priority = "4"
+	@priority = 4
 	test ResetScrollPositionAfterReloadingPageOrNavigatingToAnotherPage {
 		task ("Given a site designer has a navigation menu with multiple items") {
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "16") {
+			while (${i} != 16) {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name ${i}");
@@ -1150,9 +1150,9 @@ definition {
 				groupName = "Test Site Name",
 				siteNavigationMenuName = "Navigation Menu Name");
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "16") {
+			while (${i} != 16) {
 				JSONSitenavigation.addSiteNavigationMenuItem(
 					groupName = "Test Site Name",
 					privateLayout = "false",
@@ -1182,8 +1182,8 @@ definition {
 				property = "scrollTop");
 
 			TestUtils.assertEquals(
-				actual = "${scrollTop}",
-				expected = "0");
+				actual = ${scrollTop},
+				expected = 0);
 
 			ScrollWebElementIntoView(
 				key_itemName = "Test Page Name 15",
@@ -1198,13 +1198,13 @@ definition {
 				property = "scrollTop");
 
 			TestUtils.assertEquals(
-				actual = "${scrollTop}",
-				expected = "0");
+				actual = ${scrollTop},
+				expected = 0);
 		}
 	}
 
 	@description = "This is a test for LPS-87134. We assert that the option to automatically add new pages to a navigation menu works as expected."
-	@priority = "5"
+	@priority = 5
 	test ToggleAutomaticallyAddNewPagesToNavigationMenu {
 		property portal.acceptance = "true";
 
@@ -1283,7 +1283,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137577. The category should be added under the nearest ancestor selected."
-	@priority = "4"
+	@priority = 4
 	test ViewCategoryAddedToNearestAncestor {
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
@@ -1335,7 +1335,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of navigation menu."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInNavigationAdmin {
 		task ("Given a Navigation menu creator has a new navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
@@ -1365,7 +1365,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125802. View the hierarchy of items when change the order."
-	@priority = "4"
+	@priority = 4
 	test ViewHierarchyOfItemsWhenChangeOrder {
 		task ("Add three content pages") {
 			for (var n : list "1,2,3") {
@@ -1466,7 +1466,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137577. The modal confirmation is displayed when delete a item with children."
-	@priority = "4"
+	@priority = 4
 	test ViewModalWhenDeleteItemWithChildren {
 		task ("Add three hierarchy levels categories to a vocabulary within a site") {
 			JSONCategory.addVocabulary(
@@ -1538,7 +1538,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-87134. View no navigation menus are automatically created after adding pages."
-	@priority = "3"
+	@priority = 3
 	test ViewNoNavigationMenuAfterAddingPages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -1564,7 +1564,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164269. The navigation menu creator could view a tooltip with the page URL on selection modal."
-	@priority = "4"
+	@priority = 4
 	test ViewPageURLOnTooltipWhenSelectPageItem {
 		task ("Given a navigation menu opens the select pages modal") {
 			task ("Add a Navigation menu") {

@@ -4,21 +4,21 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		TestrayTestflow.editBreadcrumb(
-			build = "${selectBuild}",
-			project = "${selectProject}",
-			routine = "${selectRoutine}");
+			build = ${selectBuild},
+			project = ${selectProject},
+			routine = ${selectRoutine});
 
 		Button.click(button = "Analyze");
 
 		if (isSet(taskName)) {
 			Type(
 				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${taskName}");
+				value1 = ${taskName});
 		}
 
 		if (isSet(checkCaseType)) {
 			Click(
-				key_checkboxOption = "${checkCaseType}",
+				key_checkboxOption = ${checkCaseType},
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 		}
 
@@ -26,7 +26,7 @@ definition {
 
 		if (isSet(userName)) {
 			Click.clickAtNotVisible(
-				key_checkboxOption = "${userName}",
+				key_checkboxOption = ${userName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
 
@@ -39,32 +39,32 @@ definition {
 
 	macro assertAssignTask {
 		AssertElementPresent(
-			key_email = "${email}",
-			key_userName = "${userName}",
+			key_email = ${email},
+			key_userName = ${userName},
 			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
 	}
 
 	macro assertStatus {
 		AssertElementPresent(
-			key_label = "${label}",
-			key_status = "${status}",
+			key_label = ${label},
+			key_status = ${status},
 			locator1 = "TestrayTestflow#TESTFLOW_STATUS");
 	}
 
 	macro assertTaskDetails {
 		AssertElementPresent(
-			key_build = "${build}",
-			key_nameTask = "${nameTask}",
-			key_project = "${project}",
-			key_routine = "${routine}",
-			key_status = "${status}",
+			key_build = ${build},
+			key_nameTask = ${nameTask},
+			key_project = ${project},
+			key_routine = ${routine},
+			key_status = ${status},
 			locator1 = "TestrayTestflow#TASK_DETAILS");
 	}
 
 	macro assignUsers {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Testray.goToProjectPage(projectName = "${userName}");
+		Testray.goToProjectPage(projectName = ${userName});
 
 		Alert.viewSuccessMessage();
 	}
@@ -74,7 +74,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "${project}");
+			value1 = ${project});
 
 		if (isSet(project)) {
 			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
@@ -82,7 +82,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "${routine}");
+			value1 = ${routine});
 
 		if (isSet(routine)) {
 			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
@@ -90,7 +90,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "${build}");
+			value1 = ${build});
 
 		if (isSet(build)) {
 			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
@@ -100,18 +100,18 @@ definition {
 	macro editStatus {
 		Select(
 			locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
-			value1 = "${selectStatus}");
+			value1 = ${selectStatus});
 
 		if (isSet(issues)) {
 			Type(
 				locator1 = "TestrayTestflow#INPUT_ISSUES",
-				value1 = "${issues}");
+				value1 = ${issues});
 		}
 
 		if (isSet(comment)) {
 			Type(
 				locator1 = "TestrayTestflow#INPUT_COMMENT",
-				value1 = "${comment}");
+				value1 = ${comment});
 		}
 
 		Button.click(button = "Save");
@@ -119,7 +119,7 @@ definition {
 
 	macro goToTask {
 		Click(
-			key_projectName = "${taskName}",
+			key_projectName = ${taskName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
@@ -131,7 +131,7 @@ definition {
 		if (isSet(taskName)) {
 			Type(
 				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${taskName}");
+				value1 = ${taskName});
 		}
 
 		Button.click(button = "Save");
@@ -139,13 +139,13 @@ definition {
 
 	macro userAvatarNotPresent {
 		AssertElementNotPresent(
-			label = "${label}",
+			label = ${label},
 			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
 	macro userAvatarPresent {
 		AssertElementPresent(
-			label = "${label}",
+			label = ${label},
 			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 

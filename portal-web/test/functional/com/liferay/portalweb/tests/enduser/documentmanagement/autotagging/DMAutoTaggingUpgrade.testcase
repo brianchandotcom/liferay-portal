@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewDMArchive72101 {
 		property data.archive.type = "data-archive-auto-tagging";
@@ -64,17 +64,17 @@ definition {
 		Upgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
 			blogTagName = "dxp,business services",
-			blogTagNum = "5",
+			blogTagNum = 5,
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",
-			dmTagNum = "11",
+			dmTagNum = 11,
 			wcTagName = "herbert,industrial",
-			wcTagNum = "5",
+			wcTagNum = 5,
 			webContentTitle = "WC Without Autotagging",
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewDMArchive73101 {
 		property data.archive.type = "data-archive-auto-tagging";
@@ -120,12 +120,12 @@ definition {
 		Upgrade.addAutoTagViaGogoShell(
 			blogEntryTitle = "Blogs Without Autotagging",
 			blogTagName = "dxp,business services",
-			blogTagNum = "5",
+			blogTagNum = 5,
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",
-			dmTagNum = "11",
+			dmTagNum = 11,
 			wcTagName = "herbert,industrial",
-			wcTagNum = "5",
+			wcTagNum = 5,
 			webContentTitle = "WC Without Autotagging",
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
 	}

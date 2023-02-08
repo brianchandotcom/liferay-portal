@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,21 +56,21 @@ definition {
 	}
 
 	@description = "LRQA-71890 - Verify that the user can change the number of entries on the permission page"
-	@priority = "4"
+	@priority = 4
 	test CanChangeTheNumberOfEntriesDIsplayed {
 		CalendarPermissions.gotoPermissions();
 
-		CalendarPermissions.changePaginationPermissions(itemsPerPage = "4");
+		CalendarPermissions.changePaginationPermissions(itemsPerPage = 4);
 
 		CalendarPermissions.viewResultsEntries(results = "Showing 1 to 4 of 9 entries.");
 
-		CalendarPermissions.changePaginationPermissions(itemsPerPage = "8");
+		CalendarPermissions.changePaginationPermissions(itemsPerPage = 8);
 
 		CalendarPermissions.viewResultsEntries(results = "Showing 1 to 8 of 9 entries.");
 	}
 
 	@description = "LRQA-71890 - Verify that the user can clear the result bar after a search"
-	@priority = "3"
+	@priority = 3
 	test CanClearTheResultsOfASearch {
 		CalendarPermissions.gotoPermissions();
 
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "LRQA-71890 - Verify that the user can search for a existent permission"
-	@priority = "4"
+	@priority = 4
 	test CanSearchOnPermissionsPage {
 		CalendarPermissions.gotoPermissions();
 
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"
-	@priority = "3"
+	@priority = 3
 	test SystemDisplaysMessageWhenNoRoleIsFound {
 		CalendarPermissions.gotoPermissions();
 

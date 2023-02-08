@@ -43,7 +43,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "LPS-155465. Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu."
-	@priority = "5"
+	@priority = 5
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -79,12 +79,12 @@ definition {
 		}
 
 		task ("Then browser URL matches copied URL (#test-pencil)") {
-			AssertLocation(value1 = "${browserURL}");
+			AssertLocation(value1 = ${browserURL});
 		}
 	}
 
 	@description = "LPS-155457. Assert that hover over mouse off of the table body quick action menu is not visible."
-	@priority = "5"
+	@priority = 5
 	test CanDisappearWhenNotHovered {
 		task ("When hover mouse off of the table body") {
 			MouseOver(locator1 = "FrontendDataSet#TABLE_BODY");
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "LPS-155455: When hovering over the first line item and the quick action menu is displayed on the 1st line"
-	@priority = "5"
+	@priority = 5
 	test CanDisplayOnHover {
 		task ("Then the quick action menu is displayed on the 1st line") {
 			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
@@ -105,7 +105,7 @@ definition {
 
 	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanDisplayOnMultipleActiveRows {
 		task ("When click on ellipsis button 2nd row item") {
 			Click(
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@description = "LPS-155458. Assert can be displayed on one an active row."
-	@priority = "4"
+	@priority = 4
 	test CanDisplayOnOneActiveRow {
 		task ("When hover over 3rd row item") {
 			MouseOver(
@@ -153,33 +153,33 @@ definition {
 	}
 
 	@description = "LPS-155463. Assert that Quick actions icons list should be limited to three actions."
-	@priority = "4"
+	@priority = 4
 	test CanDisplayUpToThreeIcons {
 		task ("Then quick action menu only has 3 actions icons available") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_title = "Sample1",
 				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_title = "Sample1",
 				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
 
 			AssertElementPresent(
-				key_index = "3",
+				key_index = 3,
 				key_title = "Sample1",
 				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
 
 			AssertElementNotPresent(
-				key_index = "4",
+				key_index = 4,
 				key_title = "Sample1",
 				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
 		}
 	}
 
 	@description = "LPS-155466. Assert that test-pencil is appended to browser URL after clicking."
-	@priority = "5"
+	@priority = 5
 	test CanExecuteAnAction {
 		task ("When click on Pencil Icon ") {
 			ClickNoError(
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "LPS-155467. Assert the quick action is not visible when the row checkbox is checked."
-	@priority = "3"
+	@priority = 3
 	test IsNotVisibleOnCheckedRow {
 		task ("When mark a row checkbox as checked") {
 			Check.checkToggleSwitch(

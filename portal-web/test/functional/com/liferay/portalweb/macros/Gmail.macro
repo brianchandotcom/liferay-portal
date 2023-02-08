@@ -1,8 +1,8 @@
 definition {
 
 	macro deleteSpecificMail {
-		for (var gmailMessageTitle : list "${gmailMessageTitleList}") {
-			var key_gmailMessageTitle = "${gmailMessageTitle}";
+		for (var gmailMessageTitle : list ${gmailMessageTitleList}) {
+			var key_gmailMessageTitle = ${gmailMessageTitle};
 
 			if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX")) {
 				Check(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX");
@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro gotoMail {
-		var key_gmailAssetType = "${gmailAssetType}";
+		var key_gmailAssetType = ${gmailAssetType};
 
 		if (IsElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME")) {
 			Click(
@@ -33,17 +33,17 @@ definition {
 				value1 = "Refresh");
 		}
 
-		while (!(IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = "${emailFromUserName}"))) {
+		while (!(IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = ${emailFromUserName}))) {
 			WaitForPageLoad();
 		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME",
-			value1 = "${emailFromUserName}");
+			value1 = ${emailFromUserName});
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE",
-			value1 = "${gmailMessageTitle}");
+			value1 = ${gmailMessageTitle});
 
 		WaitForElementPresent.waitForLastScript();
 	}
@@ -53,20 +53,20 @@ definition {
 
 		WaitForPageLoad();
 
-		var key_userEmailAddress = "${userEmailAddress}";
+		var key_userEmailAddress = ${userEmailAddress};
 
 		if ((IsElementNotPresent(locator1 = "Gmail#GMAIL_NORMAL_MODE_USER_SCREENNAME")) && (IsElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_USER_SCREENNAME"))) {
 			if (IsElementPresent(locator1 = "Gmail#LOGIN_EMAIL_FIELD")) {
 				Type(
 					locator1 = "Gmail#LOGIN_EMAIL_FIELD",
-					value1 = "${userEmailAddress}");
+					value1 = ${userEmailAddress});
 
 				Click(locator1 = "Gmail#LOGIN_NEXT_BUTTON");
 			}
 
 			Type(
 				locator1 = "Gmail#LOGIN_PASSWORD_FIELD",
-				value1 = "${userPassword}");
+				value1 = ${userPassword});
 
 			if (IsElementPresent(locator1 = "Gmail#LOGIN_SIGN_IN_BUTTON")) {
 				Check(locator1 = "Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX");
@@ -111,13 +111,13 @@ definition {
 
 		Type(
 			locator1 = "Gmail#LOGIN_EMAIL_FIELD",
-			value1 = "${userEmailAddress}");
+			value1 = ${userEmailAddress});
 
 		Click(locator1 = "Gmail#LOGIN_NEXT_BUTTON");
 
 		Type(
 			locator1 = "Gmail#LOGIN_PASSWORD_FIELD",
-			value1 = "${userPassword}");
+			value1 = ${userPassword});
 
 		if (IsElementPresent(locator1 = "Gmail#LOGIN_SIGN_IN_BUTTON")) {
 			Check(locator1 = "Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX");
@@ -136,7 +136,7 @@ definition {
 	}
 
 	macro openMessageContinueReadingButton {
-		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
 		var pageNameURL = StringUtil.lowerCase("/${pageNameURL}");
 
@@ -153,21 +153,21 @@ definition {
 	}
 
 	macro openMessageLink {
-		var key_gmailAssetType = "${gmailAssetType}";
-		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+		var key_gmailAssetType = ${gmailAssetType};
+		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
 		var pageNameURL = StringUtil.lowerCase("/${pageNameURL}");
 
-		var key_pageNameURL = "${pageNameURL}";
+		var key_pageNameURL = ${pageNameURL};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
-			value1 = "${pageNameURL}");
+			value1 = ${pageNameURL});
 
 		if (isSet(contentTitle)) {
 			SelectWindow(locator1 = "title=${contentTitle} - ${pageName} - ${siteName}");
 		}
-		else if ("${pageName}" == "update_password") {
+		else if (${pageName} == "update_password") {
 			var pageName = "New Password";
 
 			SelectWindow(locator1 = "title=${pageName} - ${siteName}");
@@ -180,7 +180,7 @@ definition {
 	macro replyMail {
 		Type(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
-			value1 = "${gmailReplyMessage}");
+			value1 = ${gmailReplyMessage});
 
 		AssertClick(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON",
@@ -193,15 +193,15 @@ definition {
 
 	macro viewMail {
 		Gmail.gotoMail(
-			emailFromUserName = "${emailFromUserName}",
-			gmailAssetType = "${gmailAssetType}",
-			gmailMessageTitle = "${gmailMessageTitle}");
+			emailFromUserName = ${emailFromUserName},
+			gmailAssetType = ${gmailAssetType},
+			gmailMessageTitle = ${gmailMessageTitle});
 
-		var key_gmailAssetType = "${gmailAssetType}";
+		var key_gmailAssetType = ${gmailAssetType};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_TITLE",
-			value1 = "${gmailMessageTitle}");
+			value1 = ${gmailMessageTitle});
 
 		if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK")) {
 			Click(locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK");
@@ -209,22 +209,22 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_GREETING",
-			value1 = "${gmailMessageBody}");
+			value1 = ${gmailMessageBody});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY",
-			value1 = "${gmailMessageBody}");
+			value1 = ${gmailMessageBody});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING",
-			value1 = "${gmailMessageBody}");
+			value1 = ${gmailMessageBody});
 
 		if (isSet(gmailMessageAttachment)) {
-			var key_gmailMessageAttachment = "${gmailMessageAttachment}";
+			var key_gmailMessageAttachment = ${gmailMessageAttachment};
 
 			AssertTextEquals(
 				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT",
-				value1 = "${gmailMessageAttachment}");
+				value1 = ${gmailMessageAttachment});
 		}
 	}
 

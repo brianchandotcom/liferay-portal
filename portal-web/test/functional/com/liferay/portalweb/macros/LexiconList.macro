@@ -1,103 +1,103 @@
 definition {
 
 	macro clickEllipsis {
-		if ("${userRole}" == "Guest") {
+		if (${userRole} == "Guest") {
 			Click(
-				key_listEntry = "${listEntry}",
+				key_listEntry = ${listEntry},
 				locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 		}
 		else {
 			Click.waitForMenuToggleJSClick(
-				key_listEntry = "${listEntry}",
+				key_listEntry = ${listEntry},
 				locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 		}
 	}
 
 	macro clickEllipsisItem {
 		LexiconList.clickEllipsis(
-			listEntry = "${listEntry}",
-			userRole = "${userRole}");
+			listEntry = ${listEntry},
+			userRole = ${userRole});
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.clickNoError(menuItem = ${item});
 	}
 
 	macro clickListEntryTitle {
 		Click(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
 	}
 
 	macro delete {
 		LexiconList.clickEllipsisItem(
 			item = "Delete",
-			listEntry = "${listEntry}");
+			listEntry = ${listEntry});
 
 		Confirm();
 	}
 
 	macro viewAnyList {
 		AssertTextEquals.assertPartialText(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#ANY_LIST",
-			value1 = "${listEntry}");
+			value1 = ${listEntry});
 	}
 
 	macro viewListEntryLabel {
 		AssertTextEquals(
-			key_listEntry = "${listEntry}",
-			key_listEntryLabel = "${listEntryLabel}",
+			key_listEntry = ${listEntry},
+			key_listEntryLabel = ${listEntryLabel},
 			locator1 = "LexiconList#LIST_ENTRY_LABEL",
-			value1 = "${listEntryLabel}");
+			value1 = ${listEntryLabel});
 	}
 
 	macro viewListEntryNotPresent {
 		AssertElementNotPresent(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
 	macro viewListEntryPresent {
 		AssertVisible(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
 	macro viewListEntrySpecific {
 		AssertTextEquals.assertPartialText(
-			key_listEntry = "${listEntry}",
-			key_position = "${position}",
+			key_listEntry = ${listEntry},
+			key_position = ${position},
 			locator1 = "LexiconList#LIST_ENTRY_SPECIFIC",
-			value1 = "${listEntry}");
+			value1 = ${listEntry});
 	}
 
 	macro viewListEntrySubtitle {
 		AssertTextEquals(
-			key_listEntry = "${listEntry}",
-			key_listEntrySubtitle = "${listEntrySubtitle}",
+			key_listEntry = ${listEntry},
+			key_listEntrySubtitle = ${listEntrySubtitle},
 			locator1 = "LexiconList#LIST_ENTRY_SUBTITLE",
-			value1 = "${listEntrySubtitle}");
+			value1 = ${listEntrySubtitle});
 	}
 
 	macro viewListEntryTitle {
 		AssertTextEquals(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE",
-			value1 = "${listEntry}");
+			value1 = ${listEntry});
 	}
 
 	macro viewListEntryTitleLink {
 		AssertTextEquals(
-			key_listEntry = "${listEntry}",
+			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
-			value1 = "${listEntry}");
+			value1 = ${listEntry});
 	}
 
 	macro viewListEntryTitleLinkSpecific {
 		AssertTextEquals.assertPartialText(
-			key_listEntry = "${listEntry}",
-			key_position = "${position}",
+			key_listEntry = ${listEntry},
+			key_position = ${position},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK_SPECIFIC",
-			value1 = "${listEntry}");
+			value1 = ${listEntry});
 	}
 
 }

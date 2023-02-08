@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to created project and add a new team") {
@@ -59,8 +59,8 @@ definition {
 
 		task ("Go to project page and add a new Requirement") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -78,8 +78,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -92,13 +92,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160546 - Verify if as an Administrator, I should be able to delete Requirements"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteRequirements {
 		task ("Given that the user goes to project page") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160545 - Verify if as an Administrator, I should be able to edit Requirements"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditRequirements {
 		task ("Given that the user goes to project page") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link and unlink a Case to a Requirement"
-	@priority = "5"
+	@priority = 5
 	test AdminCanLinkAndUnlinkCaseToRequirement {
 		task ("Given that the user goes to project page") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -165,8 +165,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "ATF_Requirements Case Description",
-				duration = "10",
-				priority = "5",
+				duration = 10,
+				priority = 5,
 				steps = "ATF_Requirements Case Steps");
 		}
 
@@ -185,7 +185,7 @@ definition {
 			TestrayRequirements.verifyRequirementCase(
 				requirementCaseName = "ATF_Requirements Case",
 				requirementComponent = "Components_1 Project 1",
-				requirementPriority = "5");
+				requirementPriority = 5);
 		}
 
 		task ("When the user goes to requirements and unlink a case") {
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166833 - Verify that as an administrator I cannot create requirements with an invalid URL link"
-	@priority = "4"
+	@priority = 4
 	test AdminCanNotAddRequirementsWithInvalidUrl {
 		task ("Given the user tries to create a requirement with an invalid URL") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164143 - Verify that the user can not create a requirement if all the required fields are not filled in"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewRequiredField {
 		task ("Given the user tries to create a requirements without filling out the required fields") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");

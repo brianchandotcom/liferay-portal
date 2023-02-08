@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This test ensures data on a field group persists for a new Document Type."
-	@priority = "3"
+	@priority = 3
 	test CheckIfFieldGroupDataPersists {
 		property portal.acceptance = "false";
 
@@ -51,7 +51,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentTitle = "DM Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "123",
+			numericField = 123,
 			textField = "Test Text");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -65,11 +65,11 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Numeric",
 			locator1 = "TextInput#NUMERIC",
-			value1 = "123");
+			value1 = 123);
 	}
 
 	@description = "LPS-134038. This test ensures data on a field group persists after a new nested field group is added to the document type."
-	@priority = "3"
+	@priority = 3
 	test CheckIfFieldGroupDataPersistsAfterEditDocumentType {
 		property portal.acceptance = "false";
 
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "This test ensures its possible to delete a field group inside another field group."
-	@priority = "5"
+	@priority = 5
 	test DeleteNestedFieldGroupOnDocumentType {
 		property portal.acceptance = "false";
 
@@ -144,13 +144,13 @@ definition {
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertElementNotPresent(
-			index = "1",
+			index = 1,
 			key_fieldLabel = "Fields Group",
 			locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
 	}
 
 	@description = "This test ensures it's possible to duplicate a field group."
-	@priority = "5"
+	@priority = 5
 	test DuplicateAFieldGroup {
 		property portal.acceptance = "false";
 
@@ -168,13 +168,13 @@ definition {
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertTextEquals(
-			key_fieldFieldLabel = "${formGroupLabel}",
+			key_fieldFieldLabel = ${formGroupLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${formGroupLabel}");
+			value1 = ${formGroupLabel});
 	}
 
 	@description = "This test ensures its possible to duplicate a field group that is inside another field group."
-	@priority = "5"
+	@priority = 5
 	test DuplicateANestedFieldGroup {
 		property portal.acceptance = "false";
 
@@ -199,13 +199,13 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "2",
+			fieldGroupDepth = 2,
 			fieldGroupLabel = "Copy of Fields Group",
 			fieldsLabelList = "Copy of Date,Copy of Numeric");
 	}
 
 	@description = "This test ensure user can edit the field group label."
-	@priority = "4"
+	@priority = 4
 	test EditFieldGroupLabel {
 		property portal.acceptance = "false";
 
@@ -223,13 +223,13 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group Edited",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This test ensures it's possible to edit a field's property for a field inside a field group."
-	@priority = "3"
+	@priority = 3
 	test EditFieldOnDuplicatedFieldGroup {
 		var dmDocumentTypeName = "DM Document Type Name";
 
@@ -248,7 +248,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTypeName});
 
 		AssertElementPresent(
 			key_fieldsGroupLabel = "Copy of Fields Group",
@@ -257,12 +257,12 @@ definition {
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.viewField(
 				fieldFieldLabel = "Duplicated ${fieldName}",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 	}
 
 	@description = "This test validates that upon removing all fields of a field group, the field group is deleted."
-	@priority = "4"
+	@priority = 4
 	test EmptyAFieldGroup {
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -291,13 +291,13 @@ definition {
 
 		for (var label : list "Text,Numeric") {
 			AssertElementNotPresent(
-				key_fieldFieldLabel = "${label}",
+				key_fieldFieldLabel = ${label},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}
 
 	@description = "This test ensures it's possible to create a field group inside another field group."
-	@priority = "5"
+	@priority = 5
 	test NestAFieldGroupOnAnotherFieldGroup {
 		property portal.acceptance = "false";
 
@@ -320,18 +320,18 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group Edited",
 			fieldsLabelList = "Text");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "2",
+			fieldGroupDepth = 2,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Numeric,Date");
 	}
 
 	@description = "This test validates that a collapsible field group can be collapsed when uploading a Document and Media."
-	@priority = "4"
+	@priority = 4
 	test SetFieldGroupAsCollapsibleAndExecuteOnUpload {
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "This test validates that a repeatable field group can be duplicated when uploading a document and media."
-	@priority = "4"
+	@priority = 4
 	test SetFieldGroupAsRepeatableAndExecuteOnUpload {
 		property portal.acceptance = "false";
 
@@ -377,7 +377,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+		PortletEntry.inputTitle(title = ${dmDocumentTitle});
 
 		DataEngine.addRepeatableField(fieldLabel = "Fields Group");
 
@@ -385,11 +385,11 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${dmDocumentTitle}");
+			rowEntry = ${dmDocumentTitle});
 
 		WebContent.viewDuplicatedField(
 			fieldLabel = "Fields Group",
-			totalPortletCount = "2");
+			totalPortletCount = 2);
 	}
 
 }

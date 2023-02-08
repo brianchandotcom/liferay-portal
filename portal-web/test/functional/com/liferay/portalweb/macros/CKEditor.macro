@@ -6,12 +6,12 @@ definition {
 		if (isSet(kbArticleContentEdit)) {
 			Type(
 				locator1 = "CKEditor#BODY",
-				value1 = "${kbArticleContentEdit}");
+				value1 = ${kbArticleContentEdit});
 		}
 		else {
 			KeyPress.keyPressCKEditorWaitForCKEditor(
 				locator1 = "CKEditor#BODY",
-				value1 = "${content}");
+				value1 = ${content});
 		}
 
 		SelectFrame(value1 = "relative=top");
@@ -19,39 +19,39 @@ definition {
 
 	macro addContentInWebContent {
 		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${content}");
+			value1 = ${content});
 
 		SelectFrame(value1 = "relative=top");
 	}
 
 	macro addEntryExternalURL {
 		Click(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
 
 		if (isSet(displayText)) {
 			Type(
 				key_text = "Display Text",
 				locator1 = "TextInput#ANY",
-				value1 = "${displayText}");
+				value1 = ${displayText});
 		}
 
 		Type(
 			key_text = "URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryExternalURL}");
+			value1 = ${entryExternalURL});
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
 	macro addEntryExternalURLToExistingText {
 		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		SelectFieldText(locator1 = "CKEditor#BODY");
@@ -59,8 +59,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		CKEditor.addEntryExternalURL(
-			entryExternalURL = "${entryExternalURL}",
-			fieldLabel = "${fieldLabel}");
+			entryExternalURL = ${entryExternalURL},
+			fieldLabel = ${fieldLabel});
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -70,17 +70,17 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro addTextWithLink {
 		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		Type(
 			locator1 = "CKEditor#BODY",
-			value1 = "${displayText}");
+			value1 = ${displayText});
 
 		SelectFieldText(locator1 = "CKEditor#BODY");
 
@@ -91,7 +91,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
 
 		Click(
@@ -103,7 +103,7 @@ definition {
 		if (isSet(dmDocumentTitle)) {
 			Navigator.gotoNavItem(navItem = "Documents and Media");
 
-			LexiconCard.clickCard(card = "${dmDocumentTitle}");
+			LexiconCard.clickCard(card = ${dmDocumentTitle});
 
 			SelectFrameTop();
 		}
@@ -113,7 +113,7 @@ definition {
 			Portlet.expandTree();
 
 			Click(
-				key_nodeName = "${pageName}",
+				key_nodeName = ${pageName},
 				locator1 = "Treeview#NODE_UNSELECTED");
 
 			SelectFrameTop();
@@ -123,7 +123,7 @@ definition {
 			AssertTextEquals(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",
-				value1 = "${entryExternalURL}");
+				value1 = ${entryExternalURL});
 		}
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
@@ -144,20 +144,20 @@ definition {
 
 		AssertValue(
 			locator1 = "CKEditor#BODY_SOURCE_VALUE",
-			value1 = "${sourceValue}");
+			value1 = ${sourceValue});
 	}
 
 	macro viewEntryContent {
 		AssertTextEquals(
 			locator1 = "CKEditor#BODY",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro viewEntryContentImage {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertVisible(
-			key_contentImageName = "${contentImageName}",
+			key_contentImageName = ${contentImageName},
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 
 		SelectFrame(value1 = "relative=top");

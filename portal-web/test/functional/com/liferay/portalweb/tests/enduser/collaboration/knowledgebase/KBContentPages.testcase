@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This test ensures that the mapped author name field with KB article can be displayed on the content page."
-	@priority = "5"
+	@priority = 5
 	test CanMapAuthorNameToHeadingFragment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Test Site Name",
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "This test ensures that the mapped author profile image field with KB article can be displayed on the content page."
-	@priority = "5"
+	@priority = 5
 	test CanMapAuthorProfileToImageFragment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Test Site Name",
@@ -89,7 +89,7 @@ definition {
 
 		var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
 
-		var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+		var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -121,12 +121,12 @@ definition {
 
 		AssertVisible(
 			fragmentId = "image-square",
-			key_authorProfileImage = "${userPortrait}",
+			key_authorProfileImage = ${userPortrait},
 			locator1 = "Fragment#FRAGMENT_AUTHOR_PROFILE_IMAGE");
 	}
 
 	@description = "This test ensures that the mapped content field with KB article can be displayed on the content page."
-	@priority = "5"
+	@priority = 5
 	test CanMapContentToHeadingFragment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Test Site Name",
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "This test ensures that the mapped title field with KB article can be displayed on the content page."
-	@priority = "5"
+	@priority = 5
 	test CanMapTitleToHeadingFragment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Test Site Name",

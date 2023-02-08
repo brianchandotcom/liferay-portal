@@ -1023,7 +1023,7 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/form@3.86.1", "@clayui/form@^3.86.0", "@clayui/form@^3.86.1":
+"@clayui/form@3.86.1", "@clayui/form@^3.86.1":
   version "3.86.1"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.86.1.tgz#48a9cfe60c78042561f57ace5aa4e619e6b435bd"
   integrity sha512-/zdk6muZcglwbxCITtXJVBLe0HDKO+udXCAqJmjS9jyo9yjBLYvxy7f2WPWt/kh73Jpkn9H6D94JsJrOzSG56A==
@@ -1108,7 +1108,7 @@
     "@clayui/layout" "^3.65.1"
     classnames "^2.2.6"
 
-"@clayui/modal@3.86.1", "@clayui/modal@^3.86.0", "@clayui/modal@^3.86.1":
+"@clayui/modal@3.86.1", "@clayui/modal@^3.86.1":
   version "3.86.1"
   resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.86.1.tgz#50da4ae0d88e5db4a4b9bd3bbd66f1c5c252788c"
   integrity sha512-03Xn+NPInxfXwCK0IoslQpiwZNdTvFHWFP8LMDHAy4oA8z5a5I6T+UdAVth9yc7q7L53VjgsBhSL+2xe3x8enw==
@@ -1868,10 +1868,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@47.12.0":
-  version "47.12.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.12.0.tgz#1d4da69e69899fc5d6dd2be3e74b0f81381dd252"
-  integrity sha512-Q+WY8sxDha8sypJES35/yKEpCHsH5KITo4l1hHNFIG322VEW0uIr/z84tphE72NI0hPgK7Fytne6I4n96O3Zuw==
+"@liferay/npm-scripts@47.14.2":
+  version "47.14.2"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.14.2.tgz#f135a265f5d448a6be1ea6a66fcc0b4041b96e9e"
+  integrity sha512-1AgwwIsxiFbke6ROrSBF3zJJhuVPWUdY04Wwo8jgqfqGmLKm6m7SdaY0zbayDReYhnYHcpc8jqQRZSMdNgoZ/g==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

@@ -18,18 +18,17 @@ import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
@@ -101,7 +100,7 @@ public class SemanticSearchConfigurationFormRenderer
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
 			PrintWriter writer = httpServletResponse.getWriter();
 
 			writer.print(

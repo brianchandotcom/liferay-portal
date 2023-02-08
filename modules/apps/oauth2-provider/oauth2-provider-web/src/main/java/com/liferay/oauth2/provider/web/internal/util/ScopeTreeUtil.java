@@ -19,15 +19,15 @@ import com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory;
 import com.liferay.oauth2.provider.web.internal.tree.Tree;
 import com.liferay.oauth2.provider.web.internal.tree.util.TreeUtil;
 import com.liferay.oauth2.provider.web.internal.tree.visitor.TreeVisitor;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Carlos Sierra
@@ -70,20 +70,14 @@ public class ScopeTreeUtil {
 
 			@Override
 			public Tree.Node<String> visitNode(Tree.Node<String> node) {
-				List<Tree<String>> trees = node.getTrees();
-
-				Stream<Tree<String>> stream = trees.stream();
-
 				return new Tree.Node<>(
 					node.getValue(),
-					stream.sorted(
-						Comparator.comparing(
-							Tree::getValue, String.CASE_INSENSITIVE_ORDER)
-					).map(
-						tree -> tree.accept(this)
-					).collect(
-						Collectors.toList()
-					));
+					TransformUtil.transform(
+						ListUtil.sort(
+							node.getTrees(),
+							Comparator.comparing(
+								Tree::getValue, String.CASE_INSENSITIVE_ORDER)),
+						tree -> tree.accept(this)));
 			}
 
 		};

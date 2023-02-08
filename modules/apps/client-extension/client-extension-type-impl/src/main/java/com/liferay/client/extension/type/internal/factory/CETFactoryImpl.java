@@ -24,11 +24,10 @@ import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
@@ -166,7 +165,7 @@ public class CETFactoryImpl implements CETFactory {
 		if ((cetImplFactory != null) &&
 			(!Objects.equals(
 				type, ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP) ||
-			 GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166479")))) {
+			 FeatureFlagManagerUtil.isEnabled("LPS-166479"))) {
 
 			return cetImplFactory;
 		}

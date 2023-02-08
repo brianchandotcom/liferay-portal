@@ -25,9 +25,15 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
@@ -52,6 +58,8 @@ public class FragmentEntryLinkModelListener
 		}
 
 		_updateNPMRegistry(MethodType.ADD, null, fragmentEntryLink);
+
+		_notifyCluster(MethodType.ADD, null, fragmentEntryLink);
 	}
 
 	@Override
@@ -61,6 +69,8 @@ public class FragmentEntryLinkModelListener
 		}
 
 		_updateNPMRegistry(MethodType.REMOVE, fragmentEntryLink, null);
+
+		_notifyCluster(MethodType.REMOVE, fragmentEntryLink, null);
 	}
 
 	@Override
@@ -73,6 +83,9 @@ public class FragmentEntryLinkModelListener
 		}
 
 		_updateNPMRegistry(
+			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
+
+		_notifyCluster(
 			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
 	}
 
@@ -143,6 +156,31 @@ public class FragmentEntryLinkModelListener
 			});
 	}
 
+	private void _notifyCluster(
+		MethodType methodType, FragmentEntryLink oldFragmentEntryLink,
+		FragmentEntryLink newFragmentEntryLink) {
+
+		if (!_clusterExecutor.isEnabled()) {
+			return;
+		}
+
+		try {
+			MethodHandler methodHandler = new MethodHandler(
+				_updateNPMRegistryMethodKey, methodType, oldFragmentEntryLink,
+				newFragmentEntryLink);
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(methodHandler, true);
+
+			clusterRequest.setFireAndForget(true);
+
+			_clusterExecutor.execute(clusterRequest);
+		}
+		catch (Throwable throwable) {
+			_log.error(throwable);
+		}
+	}
+
 	private void _updateNPMRegistry(
 		MethodType methodType, FragmentEntryLink oldFragmentEntryLink,
 		FragmentEntryLink newFragmentEntryLink) {
@@ -174,8 +212,17 @@ public class FragmentEntryLinkModelListener
 	private static final String _DEPENDENCY_PORTAL_REACT =
 		"liferay!frontend-js-react-web$react";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkModelListener.class.getName());
+
 	private static final List<String> _dependencies = Collections.singletonList(
 		_DEPENDENCY_PORTAL_REACT);
+	private static final MethodKey _updateNPMRegistryMethodKey = new MethodKey(
+		FragmentEntryLinkModelListener.class, "_updateNPMRegistry",
+		MethodType.class, FragmentEntryLink.class, FragmentEntryLink.class);
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

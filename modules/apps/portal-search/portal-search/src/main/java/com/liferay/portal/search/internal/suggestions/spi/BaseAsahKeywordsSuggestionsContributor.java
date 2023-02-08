@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal.suggestions.spi;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
 import com.liferay.portal.search.internal.util.AsahUtil;
@@ -60,7 +60,7 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 		SuggestionsContributorResultsBuilderFactory
 			suggestionsContributorResultsBuilderFactory) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159643")) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-159643") ||
 			!AsahUtil.isAnalyticsEnabled(searchContext.getCompanyId())) {
 
 			return null;

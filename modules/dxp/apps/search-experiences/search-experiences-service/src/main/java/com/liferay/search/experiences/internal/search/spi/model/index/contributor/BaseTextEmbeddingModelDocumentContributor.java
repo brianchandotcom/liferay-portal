@@ -17,6 +17,7 @@ package com.liferay.search.experiences.internal.search.spi.model.index.contribut
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,9 +26,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
@@ -149,7 +148,7 @@ public abstract class BaseTextEmbeddingModelDocumentContributor
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
 		T baseModel) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled() ||
 			!_isIndexableStatus(baseModel)) {
 

@@ -16,14 +16,13 @@ package com.liferay.portal.search.internal.web.cache;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -42,7 +41,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 		long companyId, int count, String displayLanguageId, long groupId,
 		int size, String sort) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159643")) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-159643") ||
 			!AsahUtil.isAnalyticsEnabled(companyId)) {
 
 			return JSONFactoryUtil.createJSONObject();

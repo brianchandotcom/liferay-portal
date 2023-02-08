@@ -25,10 +25,9 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -65,7 +64,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		_entityFieldsMap = _getStringEntityFieldMap(objectFields);
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154672"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-154672")) {
 			return;
 		}
 

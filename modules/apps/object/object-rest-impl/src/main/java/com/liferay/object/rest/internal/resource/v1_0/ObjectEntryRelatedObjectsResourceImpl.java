@@ -23,10 +23,9 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -81,9 +80,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (relatedObjectDefinition.isSystem()) {
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-162966"))) {
-
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-162966")) {
 				throw new NotFoundException();
 			}
 
@@ -127,9 +124,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (relatedObjectDefinition.isSystem()) {
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-162966"))) {
-
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-162966")) {
 				throw new NotFoundException();
 			}
 
@@ -172,9 +167,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (relatedObjectDefinition.isSystem()) {
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-162966"))) {
-
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-162966")) {
 				throw new NotFoundException();
 			}
 

@@ -26,9 +26,8 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -125,8 +124,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					String relatedSchemaName = null;
 
 					if (!relatedObjectDefinition.isSystem() ||
-						GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-162966"))) {
+						FeatureFlagManagerUtil.isEnabled("LPS-162966")) {
 
 						relatedSchemaName = getSchemaName(
 							relatedObjectDefinition);

@@ -23,7 +23,7 @@ definition {
 
 		Segmentation.resetSegmentationAtInstanceSettings();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,10 +31,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-153084 Given the 'Enable Assign Roles by Segment' is disable at Instance Settings And enabled at System Settings
-    When user navigates to Regular Roles > Assignees > Segments
-    Then the warning alert explains how to re-enable it"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckRoleDisabledAlertAtInstanceSettings {
 		property test.name.skip.portal.instance = "SegmentationDisabled#CheckRoleDisabledAlertAtInstanceSettings";
 
@@ -63,11 +61,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ClickToReEnableAlertLinkAtAtExperiencesMenu {
 		task ("Open the Experience menu") {
 			Navigator.openURL();
@@ -87,11 +82,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Dynamic Collection editor
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ClickToReEnableAlertLinkAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -115,11 +107,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Manual Collection editor
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ClickToReEnableAlertLinkAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -145,11 +134,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user clicks at breadcrumb's link at Segments Admin
-	Then should be forwarded to Segments Service at Instance Settings "
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ClickToReEnableAlertLinkAtSegmentsList {
 		task ("Open the Segments List, click at warning with link and confirm Instance Settings is open") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
@@ -163,10 +149,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
-    When user clicks at Close button
-    Then the alert disappears from page"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CloseDisabledSegmentationAlertAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -189,10 +173,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Experience page
-    When user clicks at Close button
-    Then the alert disappears from page"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CloseDisabledSegmentationAlertAtExperiencesMenu {
 		task ("Create and navigate to the page") {
 			JSONLayout.addPublicLayout(
@@ -218,10 +200,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Manual Collection Editor page
-    When user clicks at Close button
-    Then the alert disappears from page"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CloseDisabledSegmentationAlertAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -246,10 +226,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Segments page
-    When user clicks at Close button
-    Then the alert disappears from page"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CloseDisabledSegmentationAlertAtSegments {
 		task ("Navigate to Segments Admin") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
@@ -272,10 +250,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Simulation page
-    When user clicks at Close button
-    Then the alert disappears from page"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CloseDisabledSegmentationAlertAtSimulationPanel {
 		task ("Create a layout page") {
 			JSONLayout.addPublicLayout(
@@ -312,10 +288,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Dynamic Collection Editor Page And the page is reloaded
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterRefreshAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -342,10 +316,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Segments Page And the page is reloaded
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterRefreshAtExperiences {
 		task ("Navigate to Segments Admin") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
@@ -380,10 +352,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Experience menu And the page is reloaded
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterRefreshAtExperiencesMenu {
 		task ("Create and navigate to the page") {
 			JSONLayout.addPublicLayout(
@@ -415,10 +385,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Manual Collection Editor Page And the page is reloaded
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterRefreshAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -447,10 +415,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Simulation panel And the page is reloaded
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterRefreshAtSimulationPanel {
 		task ("Create a layout page") {
 			JSONLayout.addPublicLayout(
@@ -495,10 +461,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Dynamic Collection Editor Page And user leaves and returns to page
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterReturnsAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -529,10 +493,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Segments Page And user leaves and returns to page
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterReturnsAtExperiences {
 		task ("Navigate to Segments Admin") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
@@ -571,10 +533,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Experience menu And user leaves and returns to page
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterReturnsAtExperiencesMenu {
 		task ("Create and navigate to the page") {
 			JSONLayout.addPublicLayout(
@@ -610,10 +570,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Manual Collection Editor Page And user leaves and returns to page
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterReturnsAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -646,10 +604,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
-    When user clicks at Close button at Simulation panel And user leaves and returns to page
-    Then the alert reappears"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisabledAlertAfterReturnsAtSimulationPanel {
 		task ("Create a layout page") {
 			JSONLayout.addPublicLayout(
@@ -698,10 +654,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given the 'Enable Segmentation'
-	When the 'Enable Segmentation' is disabled
-	Then segmentation is disabled for Experiences"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test ViewDisabledAlertAtExperiencesMenu {
 		task ("Open the Experience menu and check if warning appears") {
 			Navigator.openURL();
@@ -716,10 +670,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given the 'Enable Segmentation'
-    When the 'Enable Segmentation' is disabled
-    Then segmentation is disabled for Collections"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewDisabledSegmentationAlertAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -740,10 +692,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Dynamic Collection editor
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnableAlertAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -764,10 +714,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Manual Collection editor
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnableAlertAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -790,10 +738,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Segments page
-	Then the warning alert explains how to re-enable it"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewReEnableAlertAtSegmentsList {
 		task ("Open the Segments List and check if warning appears") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
@@ -804,11 +750,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Dynamic Collection editor
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnableAlertLinkAtDynamicCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addDynamicAssetListEntry(
@@ -829,11 +772,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Manual Collection editor
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnableAlertLinkAtManualCollectionEditor {
 		task ("Create a Collection via JSONWS") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -856,11 +796,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Segments Admin
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewReEnableAlertLinkAtSegmentsList {
 		task ("Open the Segments List and check if warning with link appears") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
@@ -871,10 +808,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Experience simulation sidepanel
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnabledAlertAtExperienceSimulationSidepanel {
 		task ("Create a layout page") {
 			JSONLayout.addPublicLayout(
@@ -909,10 +844,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Experience menu
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnabledAlertAtExperiencesMenu {
 		task ("Open the Experience menu and check if warning appears") {
 			Navigator.openURL();
@@ -927,11 +860,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user has permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown including breadcrumb link to segments service"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewReEnabledAlertLinkAtExperiencesMenu {
 		task ("Open the Experience menu and check if warning with link appears") {
 			Navigator.openURL();
@@ -946,11 +876,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Dynamic Collection editor
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutPermissionAtDynamicCollectionEditor {
 		task ("Create an User") {
 			JSONUser.addUser(
@@ -1026,11 +953,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Experiences menu
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutPermissionAtExperienceMenu {
 		task ("Create an User") {
 			JSONUser.addUser(
@@ -1090,11 +1014,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Manual Collection editor
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutPermissionAtManualCollectionEditor {
 		task ("Create an User") {
 			JSONUser.addUser(
@@ -1172,11 +1093,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152539: Given segmentation is disabled at Instance Settings
-	And user does not have permissions to Instance Settings
-	When user navigates to Segments Admin
-	Then alert is shown informing to contact system administrator"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ViewSegmentationDisabledWarningUserWithoutPermissionAtSegmentsList {
 		task ("Add user") {
 			JSONUser.addUser(

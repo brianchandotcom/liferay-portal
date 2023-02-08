@@ -17,13 +17,13 @@ definition {
 
 		ACUtils.tearDownAC();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Automation ID: LRAC-8129 | Test Summary: Show data source lists"
-	@priority = "5"
+	@priority = 5
 	test DataSourceListShowsAllDataSources {
 		property portal.acceptance = "false";
 		property portal.release = "false";
@@ -39,9 +39,9 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
-			var dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
+			var dataSourceList = StringUtil.add(${dataSourceList}, ${dataSource});
 
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
@@ -49,16 +49,16 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
 		}
 
-		for (var dataSourceName : list "${dataSourceList}") {
-			ACUtils.assertDataSourceName(dataSourceName = "${dataSourceName}");
+		for (var dataSourceName : list ${dataSourceList}) {
+			ACUtils.assertDataSourceName(dataSourceName = ${dataSourceName});
 		}
 	}
 
 	@description = "Bug: LRAC-10507 | Automation ID: LRAC-12349 | Test Summary: The data source list has pagination"
-	@priority = "3"
+	@priority = 3
 	test PaginateDataSourceList {
 		var dataSourceList = "";
 
@@ -71,9 +71,9 @@ definition {
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
-			var dataSourceList = StringUtil.add("${dataSourceList}", "${dataSource}");
+			var dataSourceList = StringUtil.add(${dataSourceList}, ${dataSource});
 
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
@@ -83,29 +83,29 @@ definition {
 		}
 
 		task ("Remove the last data source from the list to iterate just the first five") {
-			var newDataSourceList = ListUtil.newListFromString("${dataSourceList}");
+			var newDataSourceList = ListUtil.newListFromString(${dataSourceList});
 
-			ListUtil.remove("${newDataSourceList}", "${dataSource}");
+			ListUtil.remove(${newDataSourceList}, ${dataSource});
 		}
 
 		task ("Change data source pagination to 5 items per page and assert the data sources on the page") {
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 
-			for (var dataSourceName : list "${newDataSourceList}") {
-				ACUtils.assertDataSourceName(dataSourceName = "${dataSourceName}");
+			for (var dataSourceName : list ${newDataSourceList}) {
+				ACUtils.assertDataSourceName(dataSourceName = ${dataSourceName});
 			}
 
-			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+			ACUtils.assertItemsNameNotPresent(itemList = ${dataSource});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
 		}
 
 		task ("Go to the second page and assert the last data source and assert that the other data sources are not in this page") {
-			ACUtils.checkAnyPage(pageNumber = "2");
+			ACUtils.checkAnyPage(pageNumber = 2);
 
-			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
 
-			ACUtils.assertItemsNameNotPresent(itemList = "${newDataSourceList}");
+			ACUtils.assertItemsNameNotPresent(itemList = ${newDataSourceList});
 
 			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
 		}

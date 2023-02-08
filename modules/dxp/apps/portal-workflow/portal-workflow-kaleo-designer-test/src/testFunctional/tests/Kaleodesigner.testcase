@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -50,7 +50,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Condition");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -75,7 +75,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "TestEndNode");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -99,7 +99,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Fork");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -124,7 +124,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Join");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -149,7 +149,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Join XOR");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddJoinXORWorkflowDefinitionViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORWorkflowDefinitionViaViewTab";
 
@@ -233,7 +233,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddNewWorkflowDefinitionViaViewTab {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddNewWorkflowDefinitionViaViewTab";
@@ -295,7 +295,7 @@ definition {
 		KaleoDesigner.viewConnectorPresent(connectorLabel = "Approve");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -321,7 +321,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "TestStartNode");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-53992."
-	@priority = "5"
+	@priority = 5
 	test AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab";
@@ -400,7 +400,7 @@ definition {
 		KaleoDesigner.deleteNode(nodeNodeLabel = "Task");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test AddTaskNodeViaSourceTabAndEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#AddTaskNodeViaSourceTabAndEditNameAndDesciptionAndDeleteViaViewTab";
 
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124984."
-	@priority = "5"
+	@priority = 5
 	test AssertReceiveNotificationAfterEditSingleApprover {
 		property test.name.skip.portal.instance = "Kaleodesigner#AssertReceiveNotificationAfterEditSingleApprover";
 
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-37209."
-	@priority = "4"
+	@priority = 4
 	test ConfigureTaskTimersViaSourceTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaSourceTab";
 
@@ -492,13 +492,13 @@ definition {
 		KaleoDesigner.viewNodeTimer(
 			blockerName = "timer 1 action",
 			blocking = "false",
-			durationTime1 = "1",
-			durationTime2 = "2",
+			durationTime1 = 1,
+			durationTime2 = 2,
 			timerName = "timer 1");
 	}
 
 	@description = "This is a use case for LPS-37209."
-	@priority = "4"
+	@priority = 4
 	test ConfigureTaskTimersViaViewTab {
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaViewTab";
 
@@ -531,67 +531,67 @@ definition {
 			blockerScript = "Test Script",
 			durationScale1 = "Hour",
 			durationScale2 = "Hour",
-			durationTime1 = "5",
-			durationTime2 = "6",
+			durationTime1 = 5,
+			durationTime2 = 6,
 			timerDescription = "Timer Description",
 			timerName = "Timer Name");
 
 		for (var iterator : list "1,2,3,4,5,6,7,8,9,10") {
 			KaleoDesigner.editSourceXML(
 				kdSourceXml = " ",
-				line = "12");
+				line = 12);
 		}
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<name>Timer Name</name>''',
-			line = "17");
+			line = 17);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<description>Timer Description</description>''',
-			line = "18");
+			line = 18);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<duration>5</duration>''',
-			line = "20");
+			line = 20);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<scale>hour</scale>''',
-			line = "21");
+			line = 21);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<duration>6</duration>''',
-			line = "24");
+			line = 24);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<scale>hour</scale>''',
-			line = "25");
+			line = 25);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<blocking>true</blocking>''',
-			line = "27");
+			line = 27);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<timer-action>''',
-			line = "29");
+			line = 29);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<name>Blocker Name</name>''',
-			line = "30");
+			line = 30);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<description>Blocker Description</description>''',
-			line = "31");
+			line = 31);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''Test Script''',
-			line = "33");
+			line = 33);
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<script-language>groovy</script-language>''',
-			line = "35");
+			line = 35);
 	}
 
-	@priority = "5"
+	@priority = 5
 	test DeleteConnectors {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteConnectors";
@@ -663,7 +663,7 @@ definition {
 		KaleoDesigner.viewConnectorNotPresent(connectorLabel = "Approve");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test DeleteWorkflowDefinitionDraft {
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteWorkflowDefinitionDraft";
 
@@ -690,7 +690,7 @@ definition {
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test EditAssignmentsForTaskNodeKDCP {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#EditAssignmentsForTaskNodeKDCP";
@@ -724,7 +724,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-71924."
-	@priority = "5"
+	@priority = 5
 	test PublishDefaultWorkflowDefinition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
@@ -739,29 +739,29 @@ definition {
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14") {
-			var isLessThan10 = MathUtil.isLessThanOrEqualTo("${iterator}", "10");
+			var isLessThan10 = MathUtil.isLessThanOrEqualTo(${iterator}, 10);
 
-			if ("${isLessThan10}" == "true") {
+			if (${isLessThan10} == "true") {
 				KaleoDesigner.editSourceXML(
 					kdSourceXml = " ",
-					line = "11");
+					line = 11);
 			}
 			else {
 				KaleoDesigner.editSourceXML(
 					kdSourceXml = " ",
-					line = "26");
+					line = 26);
 			}
 		}
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<script-language>groovy</script-language>''',
-			line = "36");
+			line = 36);
 
 		PortletEntry.publish();
 	}
 
 	@description = "This is a use case for LPS-43214 and LPS-50269."
-	@priority = "3"
+	@priority = 3
 	test PublishFromSourceTabAndViewNameChange {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishFromSourceTabAndViewNameChange";
 
@@ -774,7 +774,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXml = '''<name>NAME EDIT''',
-			line = "8");
+			line = 8);
 
 		PortletEntry.publish();
 
@@ -791,10 +791,10 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXml = '''<name>NAME EDIT</name>''',
-			line = "8");
+			line = 8);
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage";
@@ -831,7 +831,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Start node cannot have an incoming transition.");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage";
 
@@ -846,7 +846,7 @@ definition {
 			workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage";
 
@@ -900,12 +900,12 @@ definition {
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "Condition");
 
-		KaleoDesigner.editNodeScript(nodeScript = "${nodeScript}");
+		KaleoDesigner.editNodeScript(nodeScript = ${nodeScript});
 
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The Condition node must have at least two outgoing transitions.");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage";
 
@@ -949,7 +949,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage";
 
@@ -993,7 +993,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage";
 
@@ -1037,7 +1037,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage {
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage";
 
@@ -1057,7 +1057,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The workflow has too many start nodes (state nodes StartNode and TestStartNode).");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage";
@@ -1074,7 +1074,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node must have an outgoing transition.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage";
@@ -1093,7 +1093,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "The StartNode node must have an outgoing transition.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage";
@@ -1112,7 +1112,7 @@ definition {
 		Workflow.publishInvalidWorkflowDefinition(errorMessage = "You must define a start node.");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test SaveInvalidWorkflowDefinitionAsDraft {
 		property test.name.skip.portal.instance = "Kaleodesigner#SaveInvalidWorkflowDefinitionAsDraft";
 
@@ -1130,7 +1130,7 @@ definition {
 		Workflow.saveDefinition();
 	}
 
-	@priority = "3"
+	@priority = 3
 	test UndoDraftDefinition {
 		property test.name.skip.portal.instance = "Kaleodesigner#UndoDraftDefinition";
 
@@ -1179,11 +1179,11 @@ definition {
 
 		KaleoDesigner.showRevisionHistory();
 
-		KaleoDesigner.restoreDraft(rowIndexNumber = "1");
+		KaleoDesigner.restoreDraft(rowIndexNumber = 1);
 
 		KaleoDesigner.showDetails();
 
-		KaleoDesigner.viewTotalModifications(totalModifications = "4");
+		KaleoDesigner.viewTotalModifications(totalModifications = 4);
 
 		Refresh();
 
@@ -1206,11 +1206,11 @@ definition {
 
 		KaleoDesigner.showRevisionHistory();
 
-		KaleoDesigner.restoreDraft(rowIndexNumber = "3");
+		KaleoDesigner.restoreDraft(rowIndexNumber = 3);
 
 		KaleoDesigner.showDetails();
 
-		KaleoDesigner.viewTotalModifications(totalModifications = "5");
+		KaleoDesigner.viewTotalModifications(totalModifications = 5);
 
 		Refresh();
 
@@ -1227,7 +1227,7 @@ definition {
 		Workflow.saveDefinition();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewAndPublishWorkflowDefinitionDraft {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewAndPublishWorkflowDefinitionDraft";
 
@@ -1271,7 +1271,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48590."
-	@priority = "4"
+	@priority = 4
 	test ViewSourceXMLNotErasedWhenInvalid {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
@@ -1285,7 +1285,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXml = " ",
-			line = "27");
+			line = 27);
 
 		KaleoDesigner.viewViewTab();
 
@@ -1293,7 +1293,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXml = '''</transition></transitions>''',
-			line = "27");
+			line = 27);
 
 		KaleoDesigner.viewViewTab();
 
@@ -1303,7 +1303,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-47352 and LPS-48912."
-	@priority = "3"
+	@priority = 3
 	test ViewWorkflowDefinitionButtons {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtons";
 
@@ -1318,7 +1318,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-47352 and LPS-48912."
-	@priority = "3"
+	@priority = 3
 	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin";
 

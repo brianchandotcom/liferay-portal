@@ -17,7 +17,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAdaptImageInBlogsEntry {
 		JSONDocument.addFileWithUploadedFile(
@@ -42,7 +42,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAdaptImageInWebContent {
 		JSONDocument.addFileWithUploadedFile(
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAdaptSVGImageInBlogsEntry {
 		JSONDocument.addFileWithUploadedFile(
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddEntryWithHighDensityResolution {
 		ApplicationsMenu.gotoPortlet(
@@ -109,20 +109,20 @@ definition {
 			addHighDensityDisplay = "true",
 			description = "Low resolution variant",
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320");
+			maxHeight = 480,
+			maxWidth = 320);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320",
-			percentAdapted = "0");
+			maxHeight = 480,
+			maxWidth = 320,
+			percentAdapted = 0);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution-2x",
-			maxHeight = "960",
-			maxWidth = "640",
-			percentAdapted = "0");
+			maxHeight = 960,
+			maxWidth = 640,
+			percentAdapted = 0);
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Low Resolution");
 
@@ -135,7 +135,7 @@ definition {
 		AdaptiveMedia.viewImageVariantDescription(description = "2x Low resolution variant");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddImageResolutionWithSingleDimension {
 		AdaptiveMedia.openToAddImageResolution();
@@ -143,29 +143,29 @@ definition {
 		AdaptiveMedia.addImageResolution(
 			description = "Image Resolution Width",
 			imageName = "testResolutionWidth",
-			maxHeight = "0",
-			maxWidth = "1000");
+			maxHeight = 0,
+			maxWidth = 1000);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionWidth",
 			maxHeight = "Auto",
-			maxWidth = "1000");
+			maxWidth = 1000);
 
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			description = "Image Resolution Height",
 			imageName = "testResolutionHeight",
-			maxHeight = "1000",
-			maxWidth = "0");
+			maxHeight = 1000,
+			maxWidth = 0);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolutionHeight",
-			maxHeight = "1000",
+			maxHeight = 1000,
 			maxWidth = "Auto");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanBulkAdaptImageResolutions {
 		JSONDocument.addFileWithUploadedFile(
@@ -179,45 +179,45 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
-			maxHeight = "100",
-			maxWidth = "100");
+			maxHeight = 100,
+			maxWidth = 100);
 
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Medium Image Variant",
-			maxHeight = "500",
-			maxWidth = "500");
+			maxHeight = 500,
+			maxWidth = 500);
 
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Large Image Variant",
-			maxHeight = "1000",
-			maxWidth = "1000");
+			maxHeight = 1000,
+			maxWidth = 1000);
 
 		AdaptiveMedia.adaptAllImages();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteDisabledResolution {
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
-			maxHeight = "100",
-			maxWidth = "100");
+			maxHeight = 100,
+			maxWidth = 100);
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Small Image Variant",
 			imageState = "Disabled",
-			percentAdapted = "0");
+			percentAdapted = 0);
 
 		AdaptiveMedia.deleteImageResolution(imageName = "Small Image Variant");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditEntryWithSpecialCharacters {
 		AdaptiveMedia.openToAddImageResolution();
@@ -225,8 +225,8 @@ definition {
 		AdaptiveMedia.addImageResolution(
 			description = '''1234567890!@#$%^&amp;*()~`''',
 			imageName = '''1234567890!@#$%^&amp;*()~`''',
-			maxHeight = "25",
-			maxWidth = "25");
+			maxHeight = 25,
+			maxWidth = 25);
 
 		AdaptiveMedia.editImageResolution(
 			imageName = '''1234567890!@#$%^&amp;*()~`''',
@@ -237,22 +237,22 @@ definition {
 		AdaptiveMedia.viewImageVariantDescription(description = '''1234567890!@#$%^&amp;*()~`''');
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanGenerateAutomaticImageVariantID {
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Small Image Variant",
-			maxHeight = "100",
-			maxWidth = "100");
+			maxHeight = 100,
+			maxWidth = 100);
 
 		AdaptiveMedia.gotoImageVariantEntry(imageName = "Small Image Variant");
 
 		AdaptiveMedia.viewImageVariantID(imageVariantId = "small-image-variant");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddDuplicateImageResolution {
 		property portal.acceptance = "false";
@@ -262,8 +262,8 @@ definition {
 		AdaptiveMedia.addImageResolution(
 			customId = "custom-id",
 			imageName = "Image Variant With Custom ID",
-			maxHeight = "350",
-			maxWidth = "450");
+			maxHeight = 350,
+			maxWidth = 450);
 
 		AdaptiveMedia.openToAddImageResolution();
 
@@ -271,15 +271,15 @@ definition {
 			customId = "custom-id",
 			duplicate = "true",
 			imageName = "Image Variant With Duplicate Custom ID",
-			maxHeight = "350",
-			maxWidth = "450");
+			maxHeight = 350,
+			maxWidth = 450);
 
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
 		AdaptiveMedia.viewNoImageResolution();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotAddImageResolutionWithNoDimensions {
 		AdaptiveMedia.openToAddImageResolution();
@@ -295,7 +295,7 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionNoDimensions");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotAddNonNumericWidthOrHeight {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
@@ -310,26 +310,26 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "Small Image Variant");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotUpdateResolutionWithNullValues {
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "testResolution",
-			maxHeight = "1000",
-			maxWidth = "1000");
+			maxHeight = 1000,
+			maxWidth = 1000);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "testResolution",
-			maxHeight = "1000",
-			maxWidth = "1000");
+			maxHeight = 1000,
+			maxWidth = 1000);
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "testResolution",
 			imageNameEdit = "testResolutionEdit",
-			maxHeightEdit = "0",
-			maxWidthEdit = "0",
+			maxHeightEdit = 0,
+			maxWidthEdit = 0,
 			zero = "true");
 
 		AdaptiveMedia.openAdaptiveMediaAdmin();
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78626. It ensures that a reloaded image can be viewed after changing the screen resolution."
-	@priority = "5"
+	@priority = 5
 	test CanRenderImageAfterChangingScreenResolution {
 		var fileEntryId = JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -356,7 +356,7 @@ definition {
 			roleList = "Guest");
 
 		JSONBlog.addEntryWithImage(
-			coverImageId = "${fileEntryId}",
+			coverImageId = ${fileEntryId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest");
@@ -375,7 +375,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.adaptive.media.exception.AMRuntimeException");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DisabledResolutionsWillNotAdaptNewImages {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -384,14 +384,14 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320");
+			maxHeight = 480,
+			maxWidth = 320);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320",
-			percentAdapted = "0");
+			maxHeight = 480,
+			maxWidth = 320,
+			percentAdapted = 0);
 
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -424,21 +424,21 @@ definition {
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "7/8");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ImageMustBeReadaptedForUpdatedResolutionToTakeEffect {
 		AdaptiveMedia.openToAddImageResolution();
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320");
+			maxHeight = 480,
+			maxWidth = 320);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320",
-			percentAdapted = "0");
+			maxHeight = 480,
+			maxWidth = 320,
+			percentAdapted = 0);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.jpg",
@@ -452,14 +452,14 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "High Resolution",
-			maxHeight = "1280",
-			maxWidth = "1440");
+			maxHeight = 1280,
+			maxWidth = 1440);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "High Resolution",
-			maxHeight = "1280",
-			maxWidth = "1440",
-			percentAdapted = "0");
+			maxHeight = 1280,
+			maxWidth = 1440,
+			percentAdapted = 0);
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution");
 
@@ -468,15 +468,15 @@ definition {
 		AdaptiveMedia.editImageResolution(
 			imageName = "High Resolution",
 			imageNameEdit = "High Resolution Edited",
-			maxHeightEdit = "1080",
-			maxWidthEdit = "1920");
+			maxHeightEdit = 1080,
+			maxWidthEdit = 1920);
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution Edited");
 
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/6");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test ImageResolutionIsScopedToInstance {
 		property test.name.skip.portal.instance = "AdaptiveMedia#ImageResolutionIsScopedToInstance";
@@ -495,8 +495,8 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "This should not appear on new virtual instance",
-			maxHeight = "300",
-			maxWidth = "300");
+			maxHeight = 300,
+			maxWidth = 300);
 
 		User.firstLoginPG(
 			password = "test",
@@ -514,7 +514,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-136280. It validates that an image can be adapted in a web content after it is updated."
-	@priority = "4"
+	@priority = 4
 	test ImageVariantsAreGeneratedAfterEditingWebContentWithImage {
 		property portal.acceptance = "false";
 
@@ -547,7 +547,7 @@ definition {
 
 		for (var imageVariantContent : list "(max-width:300px),(max-width:1000px) and (min-width:300px)") {
 			AssertElementPresent(
-				key_mediaContent = "${imageVariantContent}",
+				key_mediaContent = ${imageVariantContent},
 				locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_TAG");
 		}
 	}

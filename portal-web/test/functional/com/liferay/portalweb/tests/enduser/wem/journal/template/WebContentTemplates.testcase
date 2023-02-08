@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddTemplateWithStructure {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Administration";
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116515. The Add FreeMarker button should be hidden when disable template creation in Dynamic Data Mapping."
-	@priority = "5"
+	@priority = 5
 	test CannotAddTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentTemplates#CannotAddTemplateWhenDisableTemplateCreation";
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134063. The template can be copied."
-	@priority = "5"
+	@priority = 5
 	test CopyTemplate {
 		property portal.acceptance = "true";
 
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
-	@priority = "5"
+	@priority = 5
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentTemplates#SaveChangesInExistingTemplateWhenDisableTemplateCreation";
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Template based on a Structure with all possible fields."
-	@priority = "4"
+	@priority = 4
 	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -236,8 +236,8 @@ definition {
 		PortletEntry.inputName(name = "WC Template Name Edit");
 
 		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation") {
-			var key_fieldFieldLabel = "${fieldFieldLabel}";
-			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+			var key_fieldFieldLabel = ${fieldFieldLabel};
+			var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."
-	@priority = "4"
+	@priority = 4
 	test ViewTemplateCreationFailureWhenDisableTemplateCreation {
 		property test.name.skip.portal.instance = "WebContentTemplates#ViewTemplateCreationFailureWhenDisableTemplateCreation";
 
@@ -296,7 +296,7 @@ definition {
 		}
 
 		task ("View template creation failure") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			Close.closeAndSelectWindow(locator1 = "title=New Template - Test Site Name - ${siteName}");
 

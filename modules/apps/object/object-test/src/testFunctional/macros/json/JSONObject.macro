@@ -38,16 +38,16 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a field in an object"
 	macro addObjectField {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -58,13 +58,13 @@ definition {
 		}
 
 		if (!(isSet(picklistName))) {
-			var picklistId = "0";
+			var picklistId = 0;
 		}
 		else {
 			var picklistId = JSONObject.getPicklistId(
-				picklistName = "${picklistName}",
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
+				picklistName = ${picklistName},
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
 		}
 
 		if (!(isSet(indexed))) {
@@ -80,13 +80,13 @@ definition {
 		}
 
 		if (!(isSet(storageDLFolderPath))) {
-			var storageDLFolderPath = StringUtil.removeSpaces("${objectName}");
+			var storageDLFolderPath = StringUtil.removeSpaces(${objectName});
 
 			var storageDLFolderPath = "/${storageDLFolderPath}";
 		}
 
-		if ("${fileSource}" == "userComputer") {
-			if ("${showFilesInDocumentsAndMedia}" == "false") {
+		if (${fileSource} == "userComputer") {
+			if (${showFilesInDocumentsAndMedia} == "false") {
 				var curl = '''
 					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
 						-H 'Content-Type: application/json' \
@@ -165,7 +165,7 @@ definition {
 				''';
 			}
 		}
-		else if ("${fileSource}" == "documentsAndMedia") {
+		else if (${fileSource} == "documentsAndMedia") {
 			var curl = '''
 				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
 					-H 'Content-Type: application/json' \
@@ -218,16 +218,16 @@ definition {
 			''';
 		}
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a layout in an object"
 	macro addObjectLayout {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -250,20 +250,20 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a relationship in an object"
 	macro addObjectRelationship {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectID_1 = JSONObject.getObjectId(
-			objectName = "${objectName_1}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName_1},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 		var objectID_2 = JSONObject.getObjectId(
-			objectName = "${objectName_2}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName_2},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -294,7 +294,7 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a single field entry in an object"
@@ -309,7 +309,7 @@ definition {
 			var userPassword = "test";
 		}
 
-		var objectName = StringUtil.toLowerCase("${objectName}");
+		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
@@ -321,7 +321,7 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a picklist"
@@ -348,16 +348,16 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a picklist item"
 	macro addPicklistItem {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			picklistName = ${picklistName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -380,7 +380,7 @@ definition {
 				}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to delete all custom objects"
@@ -400,16 +400,16 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var objectIdList = JSONCurlUtil.get("${curl}", "$.items[?(@['system'] == false)]['id']");
+		var objectIdList = JSONCurlUtil.get(${curl}, "$.items[?(@['system'] == false)]['id']");
 
-		if ("${objectIdList}" != "") {
-			for (var objectId : list "${objectIdList}") {
+		if (${objectIdList} != "") {
+			for (var objectId : list ${objectIdList}) {
 				var curl = '''
 					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 	}
@@ -431,16 +431,16 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var picklistIdList = JSONCurlUtil.get("${curl}", "$.items..id");
+		var picklistIdList = JSONCurlUtil.get(${curl}, "$.items..id");
 
-		if ("${picklistIdList}" != "") {
-			for (var picklistId : list "${picklistIdList}") {
+		if (${picklistIdList} != "") {
+			for (var picklistId : list ${picklistIdList}) {
 				var curl = '''
 					${portalURL}/o/headless-admin-list-type/v1.0/list-type-definitions/${picklistId} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 	}
@@ -449,7 +449,7 @@ definition {
 	macro deleteObject {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
-				var port = "8080";
+				var port = 8080;
 			}
 
 			var portalURL = "http://${virtualHost}:${port}";
@@ -459,9 +459,9 @@ definition {
 		}
 
 		var objectId = JSONObject.getObjectId(
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -476,18 +476,18 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to delete an entry in an object"
 	macro deleteObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
-			entryValue = "${value}",
-			fieldName = "${fieldName}",
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			entryValue = ${value},
+			fieldName = ${fieldName},
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -497,23 +497,23 @@ definition {
 			var userPassword = "test";
 		}
 
-		var objectName = StringUtil.toLowerCase("${objectName}");
+		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to delete a picklist"
 	macro deletePicklist {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			picklistName = ${picklistName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -528,18 +528,18 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to filter an entry in an object"
 	macro filterObjectEntry {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
-			entryValue = "${value}",
-			fieldName = "${fieldName}",
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			entryValue = ${value},
+			fieldName = ${fieldName},
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -549,7 +549,7 @@ definition {
 			var userPassword = "test";
 		}
 
-		var objectName = StringUtil.toLowerCase("${objectName}");
+		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s/${entryId} \
@@ -559,7 +559,7 @@ definition {
 
 	@summary = "Get a objectDefinitionId by name"
 	macro getObjectDefinitionId {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -570,13 +570,13 @@ definition {
 				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
 
-		var objectDefinitionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['objectDefinitionId']");
+		var objectDefinitionId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${name}')]['objectDefinitionId']");
 
-		if ("${objectDefinitionId}" == "") {
+		if (${objectDefinitionId} == "") {
 			echo("The ${name} doesn't exist.");
 		}
 
-		return "${objectDefinitionId}";
+		return ${objectDefinitionId};
 	}
 
 	macro getObjectEntryFieldValue {
@@ -590,27 +590,27 @@ definition {
 			var userPassword = "test";
 		}
 
-		var objectName = StringUtil.toLowerCase("${objectName}");
+		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		if (("${type}" == "Attachment") || ("${type}" == "Picklist")) {
-			var fieldValue = JSONCurlUtil.get("${curl}", "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}'].name");
+		if ((${type} == "Attachment") || (${type} == "Picklist")) {
+			var fieldValue = JSONCurlUtil.get(${curl}, "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}'].name");
 		}
 		else {
-			var fieldValue = JSONCurlUtil.get("${curl}", "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}']");
+			var fieldValue = JSONCurlUtil.get(${curl}, "$.items[?(@['${attribute}'] == '${attributeValue}')]['${fieldName}']");
 		}
 
-		return "${fieldValue}";
+		return ${fieldValue};
 	}
 
 	macro getObjectEntryId {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
-				var port = "8080";
+				var port = 8080;
 			}
 
 			var portalURL = "http://${virtualHost}:${port}";
@@ -627,16 +627,16 @@ definition {
 			var userPassword = "test";
 		}
 
-		var objectName = StringUtil.toLowerCase("${objectName}");
+		var objectName = StringUtil.toLowerCase(${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${objectName}s \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var entryId = JSONCurlUtil.get("${curl}", "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
+		var entryId = JSONCurlUtil.get(${curl}, "$.items[?(@['${fieldName}'] == '${entryValue}')]['id']");
 
-		return "${entryId}";
+		return ${entryId};
 	}
 
 	macro getObjectId {
@@ -655,9 +655,9 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${objectName}')]['id']");
+		var objectId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${objectName}')]['id']");
 
-		return "${objectId}";
+		return ${objectId};
 	}
 
 	macro getPicklistId {
@@ -676,18 +676,18 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var picklistId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${picklistName}')]['id']");
+		var picklistId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${picklistName}')]['id']");
 
-		return "${picklistId}";
+		return ${picklistId};
 	}
 
 	@summary = "This calls the JSON WS API to publish an object"
 	macro publishObject {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
-			objectName = "${objectName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -703,7 +703,7 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 }

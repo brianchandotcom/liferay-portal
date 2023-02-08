@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124704. No alert popup on view asset in Asset Publisher when replace the value of assetEntryId by XSS in URL."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewAssetWhenReplaceValueOfAssetEntryIdByXSSInURL {
 		task ("Add three web contents") {
@@ -73,12 +73,12 @@ definition {
 
 			var url = selenium.getLocation();
 
-			var value = StringUtil.extractLast("${url}", "assetEntryId=");
+			var value = StringUtil.extractLast(${url}, "assetEntryId=");
 			var script = '''</script> <script> alert (1) </script>''';
 
-			var url = StringUtil.replace("${url}", "${value}", "${script}");
+			var url = StringUtil.replace(${url}, ${value}, ${script});
 
-			Navigator.openSpecificURL(url = "${url}");
+			Navigator.openSpecificURL(url = ${url});
 		}
 
 		task ("View the alert not shown") {

@@ -1,8 +1,8 @@
 definition {
 
 	macro changeLanguage {
-		var key_languageOption = "${languageOption}";
-		var key_language = "${language}";
+		var key_languageOption = ${languageOption};
+		var key_language = ${language};
 
 		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
 			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
@@ -10,9 +10,9 @@ definition {
 
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
-		ACUtils.clickAnyButton(button = "${key_language}");
+		ACUtils.clickAnyButton(button = ${key_language});
 
-		ACUtils.clickAnyButton(button = "${key_languageOption}");
+		ACUtils.clickAnyButton(button = ${key_languageOption});
 
 		TestUtils.hardRefresh();
 	}
@@ -22,18 +22,18 @@ definition {
 			Type(
 				key_text = "Workspace Name",
 				locator1 = "TextInput#ANY",
-				value1 = "${workspaceName}");
+				value1 = ${workspaceName});
 		}
 
 		if (isSet(timezone)) {
 			Select(
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_FIELD",
-				value1 = "${timezone}");
+				value1 = ${timezone});
 
 			Select(
 				locator1 = "Select#SELECT_ID",
 				selectFieldId = "timeZoneId",
-				value1 = "${timezoneId}");
+				value1 = ${timezoneId});
 		}
 
 		Click(
@@ -73,12 +73,12 @@ definition {
 
 		Type(
 			locator1 = "ACUtils#NAME_FIELD",
-			value1 = "${workspaceName}");
+			value1 = ${workspaceName});
 
-		for (var email : list "${emailList}") {
+		for (var email : list ${emailList}) {
 			Type(
 				locator1 = "ACWorkspace#INVITE_USERS_INPUT",
-				value1 = "${email}");
+				value1 = ${email});
 
 			KeyPress(
 				locator1 = "ACWorkspace#INVITE_USERS_INPUT",
@@ -96,7 +96,7 @@ definition {
 
 	macro openWorkspace {
 		if (isSet(workspaceName)) {
-			var key_workspaceName = "${workspaceName}";
+			var key_workspaceName = ${workspaceName};
 
 			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
 		}
@@ -109,11 +109,11 @@ definition {
 	}
 
 	macro setFriendlyURL {
-		var key_friendlyURL = "${friendlyURL}";
+		var key_friendlyURL = ${friendlyURL};
 
 		Type(
 			locator1 = "ACWorkspace#FRIENDLY_URL",
-			value1 = "${urlName}");
+			value1 = ${urlName});
 
 		Click(
 			key_text = "Add Incident Report Contacts",
@@ -166,7 +166,7 @@ definition {
 
 		Click(locator1 = "ACWorkspace#SWITCH_WORKSPACE_OPTION");
 
-		ACWorkspace.openWorkspace(workspaceName = "${workspaceName}");
+		ACWorkspace.openWorkspace(workspaceName = ${workspaceName});
 	}
 
 	macro viewWorkspaceSettings {
@@ -174,18 +174,18 @@ definition {
 			AssertTextEquals(
 				key_text = "Workspace Name",
 				locator1 = "TextInput#ANY",
-				value1 = "${workspaceName}");
+				value1 = ${workspaceName});
 		}
 
 		if (isSet(timezone)) {
 			AssertSelectedLabel(
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_FIELD",
-				value1 = "${timezone}");
+				value1 = ${timezone});
 
 			AssertSelectedLabel(
 				locator1 = "Select#SELECT_ID",
 				selectFieldId = "timeZoneId",
-				value1 = "${timezoneId}");
+				value1 = ${timezoneId});
 		}
 	}
 

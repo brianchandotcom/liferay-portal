@@ -6,7 +6,7 @@ definition {
 
 	macro assertTitleBreadcrumbs {
 		AssertElementPresent(
-			key_projectName = "${key_projectName}",
+			key_projectName = ${key_projectName},
 			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 	}
 
@@ -18,13 +18,13 @@ definition {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
 		Click(
-			key_project = "${project}",
+			key_project = ${project},
 			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
 	}
 
 	macro selectTheProjectFromDropdown {
 		Click(
-			key_itemvalue = "${key_value}",
+			key_itemvalue = ${key_value},
 			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 

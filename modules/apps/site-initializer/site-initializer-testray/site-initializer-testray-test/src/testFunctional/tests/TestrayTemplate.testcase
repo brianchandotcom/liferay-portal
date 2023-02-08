@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to project and create a new Routine") {
@@ -41,8 +41,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -53,13 +53,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-168472 - Verify if as an Administrator I should not be able to add a duplicate template"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateTemplate {
 		task ("Given that the user adds a Template") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -81,7 +81,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 		}
 
@@ -90,7 +90,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 		}
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163909 - Verify if that can Activate Disabled Template"
-	@priority = "5"
+	@priority = 5
 	test CanActivateDisabledTemplate {
 		task ("Given that the user adds a Template with status active") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -122,7 +122,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163905 - Verify that when creating a build with template, it comes with 'Active' status by default"
-	@priority = "4"
+	@priority = 4
 	test CanCreateTemplateWithActiveDefault {
 		task ("Given that the user adds a Template") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -178,7 +178,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 		}
 
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163908 - Verify if can delete an deactived template"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteDeactiveTemplate {
 		task ("Given that the user adds a Template with status deactive") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -214,7 +214,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
@@ -247,7 +247,7 @@ definition {
 
 	@description = "This is a test for LPS-163906 - Verify that can filter out activated models"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanFilterActiveTemplate {
 
 		// TODO LPS-163906 CanFilterActiveTemplate pending implementation
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166570 - Verify that as an administrator cannot add a new template without enviroments"
-	@priority = "5"
+	@priority = 5
 	test CanNotAddTemplateWithoutEnviroments {
 		task ("Given that the user tries to add a model without enviroments") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166569 - Verify if As an administrator can search for the new template created"
-	@priority = "3"
+	@priority = 3
 	test CanSeachTemplate {
 		task ("Given the user adds a template") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -295,7 +295,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 		}
 
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166567 - Verify if As an administrator can use a new template in a build"
-	@priority = "3"
+	@priority = 3
 	test CanUseTemplateInBuild {
 		task ("Given that the user add a new component, enviroments and cases") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -338,8 +338,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			Testray.projectTabNavigator(navTabName = "Routine");
@@ -352,7 +352,7 @@ definition {
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
-				gitHash = "12345",
+				gitHash = 12345,
 				routine = "Routines_1 Routine");
 		}
 
@@ -366,7 +366,7 @@ definition {
 				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.4",
 				routine = "Routines_1 Routine");
 
@@ -376,7 +376,7 @@ definition {
 
 	@description = "This is a test for LPS-163907 - Verify that can see the activated templates in the filter"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanViewActiveInFilter {
 
 		// TODO LPS-163907 CanViewActiveInFilter pending implementation
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166571 - Verify if, as an Administrator, can see the required field message"
-	@priority = "3"
+	@priority = 3
 	test CanViewRequiredField {
 		task ("Given the user tries to add a new template without filling out the required fields") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");

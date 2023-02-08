@@ -21,20 +21,20 @@ definition {
 			layoutName = "Staging DM Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Documents and Media");
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-83426. It ensures repository actions are all available after enabling remote staging."
-	@priority = "5"
+	@priority = 5
 	test AllActionsAreAvailableInRepository {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMRemoteStaging#AllActionsAreAvailableInRepository";
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
-	@priority = "5"
+	@priority = 5
 	test CanNavigateToRemoteLiveViaToolbar {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanNavigateToRemoteLiveViaToolbar";
 
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154433. It ensures that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterFriendlyURLIsUpdated";
 
@@ -92,7 +92,7 @@ definition {
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Media Gallery");
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154407. This ensures that a Media Gallery widget containing an external video with a custom friendlyURL can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoInMGAfterPublish {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInMGAfterPublish";
 
@@ -162,7 +162,7 @@ definition {
 			friendlyURLEdit = "custom-url");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Media Gallery");
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154408. It ensures that an external video with a custom friendlyURL added to the Web content field can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoInWCAfterPublish {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideoInWCAfterPublish";
 
@@ -230,7 +230,7 @@ definition {
 		PortletEntry.publish();
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Web Content Display");
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154435. It ensures that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewExternalVideotInWCAfterFriendlyURLIsUpdated";
 
@@ -282,7 +282,7 @@ definition {
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Web Content Display");
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154431. It ensures that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated";
 
@@ -359,7 +359,7 @@ definition {
 			title = "Dynamic Collection");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Asset Publisher");
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154405. It ensures that an image with a custom friendlyURL added to a dynamic collection rendered in an Asset Publisher can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInDynamicCollectionViaAPAfterPublish";
 
@@ -436,7 +436,7 @@ definition {
 			title = "Dynamic Collection");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Asset Publisher");
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154430. It ensures that an image with a custom friendlyURL added to a manual collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated";
 
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154404. It ensures that an image with a custom friendlyURL added to a manual collection rendered in an Asset Publisher can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterPublish {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInManualCollectionViaAPAfterPublish";
 
@@ -555,7 +555,7 @@ definition {
 
 		Depot.remoteStagingSetUpViaJson(
 			groupName = "Test Depot Name",
-			remotePort = "9080",
+			remotePort = 9080,
 			site = "false");
 
 		JSONDepot.connectSite(
@@ -600,7 +600,7 @@ definition {
 		Staging.publishToLive(remoteStaging = "true");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Asset Publisher");
@@ -637,7 +637,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154432. It ensures that an image displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInMGAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInMGAfterFriendlyURLIsUpdated";
 
@@ -649,7 +649,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Media Gallery");
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154406. This ensures that a Media Gallery widget containing an image with a custom friendlyURL can be published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInMGAfterPublish {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImageInMGAfterPublish";
 
@@ -716,7 +716,7 @@ definition {
 			friendlyURLEdit = "custom-url");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Media Gallery");
@@ -751,7 +751,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154434. It ensures that an image with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
-	@priority = "4"
+	@priority = 4
 	test CanViewImagetInWCAfterFriendlyURLIsUpdated {
 		property test.name.skip.portal.instance = "DMRemoteStaging#CanViewImagetInWCAfterFriendlyURLIsUpdated";
 
@@ -763,7 +763,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Web Content Display");
@@ -824,7 +824,7 @@ definition {
 	}
 
 	@description = "This ensures that the document using custom document type can be deleted and republished."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DeleteDocumentWithCustomType {
 		property portal.acceptance = "true";
@@ -870,7 +870,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -901,7 +901,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-99853. It ensures that a user can republish a document that has been checked out again when enabling remote staging."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DocumentCanBeRepublishedAfterCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
@@ -953,7 +953,7 @@ definition {
 			userScreenName = "usersn");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1018,7 +1018,7 @@ definition {
 	}
 
 	@description = "This ensures that the document using custom document type can be edited and republished."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test EditDocumentWithCustomType {
 		property portal.acceptance = "true";
@@ -1068,7 +1068,7 @@ definition {
 			previewImage = "Document_1.jpg");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1110,7 +1110,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-155795. It ensures that an image that was published on a site can still be accessed after remote staging is disabled."
-	@priority = "5"
+	@priority = 5
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.name.skip.portal.instance = "DMRemoteStaging#ImageIsStillAccessibleAfterDisablingStaging";
 
@@ -1154,7 +1154,7 @@ definition {
 		var latestVersionURL = DMDocument.getLatestVersionURL();
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1169,7 +1169,7 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.openSpecificURL(url = "${latestVersionURL}");
+		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertVisible(
 			key_imageSourceURL = "document_2_edit",
@@ -1177,7 +1177,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom document type being used by document can be edited and republished."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test PublishEditsToDocumentType {
 		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToDocumentType";
@@ -1229,7 +1229,7 @@ definition {
 		DMDocument.viewDocumentTypePG(imageName = "document_1");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1282,7 +1282,7 @@ definition {
 	}
 
 	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test PublishEditsToDocumentUsingCustomTypeAndSet {
 		property portal.acceptance = "true";
@@ -1353,7 +1353,7 @@ definition {
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1395,7 +1395,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test PublishEditsToMetadataSet {
 		property test.name.skip.portal.instance = "DMRemoteStaging#PublishEditsToMetadataSet";
@@ -1426,7 +1426,7 @@ definition {
 			dmDocumentFileName = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "123",
+			numericField = 123,
 			textField = "DM Document Text");
 
 		Navigator.gotoSitePage(
@@ -1469,11 +1469,11 @@ definition {
 			dmDocumentType = "DM Document Type Name");
 
 		DMDocument.viewDocumentTypePG(
-			numericValue = "123",
+			numericValue = 123,
 			textContent = "DM Document Text");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1513,13 +1513,13 @@ definition {
 			dmDocumentType = "DM Document Type Name");
 
 		DMDocument.viewDocumentTypePG(
-			numericValue = "123",
+			numericValue = 123,
 			textContent = "DM Document Text",
 			textFieldLabel = "Company");
 	}
 
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
@@ -1597,7 +1597,7 @@ definition {
 			metadataLabel = "Content Type");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1662,7 +1662,7 @@ definition {
 	}
 
 	@description = "This ensures that the image can be deleted and republished in web content."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
@@ -1742,7 +1742,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -1783,7 +1783,7 @@ definition {
 	}
 
 	@description = "This ensures that the image can be edited and republished in web content."
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
 		property portal.acceptance = "true";
@@ -1863,7 +1863,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 

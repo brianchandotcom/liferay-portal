@@ -3,17 +3,17 @@ definition {
 	macro addPortletToWidgetPage {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "${widgetPageName}");
+			layoutName = ${widgetPageName});
 
-		Navigator.gotoPage(pageName = "${widgetPageName}");
+		Navigator.gotoPage(pageName = ${widgetPageName});
 
 		Click(locator1 = "ControlMenu#ADD");
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-			value1 = "${portletName}");
+			value1 = ${portletName});
 
-		Portlet._clickAddPortlet(portletName = "${portletName}");
+		Portlet._clickAddPortlet(portletName = ${portletName});
 
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -21,7 +21,7 @@ definition {
 	macro checkConfigFileCreatedProperly {
 		var configFileIsCreated = ClientExtension.configFileCreated();
 
-		if ("${configFileIsCreated}" == "true") {
+		if (${configFileIsCreated} == "true") {
 			echo("Config file created successfully.");
 		}
 		else {
@@ -34,17 +34,17 @@ definition {
 
 		var booleanValue = FileUtil.exists("${liferayHome}/osgi/configs/com.liferay.client.extension.type.configuration.CETConfiguration~${staticExtensionType}.config");
 
-		return "${booleanValue}";
+		return ${booleanValue};
 	}
 
 	macro createGlobalVariableClientExtensionType {
-		static var staticExtensionType = "${type}";
+		static var staticExtensionType = ${type};
 
-		return "${staticExtensionType}";
+		return ${staticExtensionType};
 	}
 
 	macro tearDownConfig {
-		Variables.assertDefined(parameterList = "${staticExtensionType}");
+		Variables.assertDefined(parameterList = ${staticExtensionType});
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 

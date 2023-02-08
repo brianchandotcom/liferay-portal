@@ -9,7 +9,7 @@ definition {
 	}
 
 	macro expandCategory {
-		var key_category = "${category}";
+		var key_category = ${category};
 
 		if (IsElementPresent(locator1 = "ProductMenu#CATEGORY_COLLAPSED")) {
 			Click(locator1 = "ProductMenu#CATEGORY_COLLAPSED");
@@ -21,26 +21,26 @@ definition {
 	macro expandPanel {
 		ProductMenuHelper.openProductMenu();
 
-		var key_panel = StringUtil.toLowerCase("${panel}");
+		var key_panel = StringUtil.toLowerCase(${panel});
 
-		var key_panel = StringUtil.replace("${key_panel}", " ", "_");
+		var key_panel = StringUtil.replace(${key_panel}, " ", "_");
 
-		if (IsElementPresent(key_panel = "${key_panel}", locator1 = "ProductMenu#PANEL_COLLAPSED")) {
+		if (IsElementPresent(key_panel = ${key_panel}, locator1 = "ProductMenu#PANEL_COLLAPSED")) {
 			Click(
-				key_panel = "${key_panel}",
+				key_panel = ${key_panel},
 				locator1 = "ProductMenu#PANEL_COLLAPSED");
 		}
 
 		AssertElementPresent(
-			key_panel = "${key_panel}",
+			key_panel = ${key_panel},
 			locator1 = "ProductMenu#PANEL_EXPANDED");
 	}
 
 	macro gotoPortlet {
 		AssertClick.assertPartialTextClickAt(
-			key_portlet = "${portlet}",
+			key_portlet = ${portlet},
 			locator1 = "ProductMenu#PORTLET",
-			value1 = "${portlet}");
+			value1 = ${portlet});
 	}
 
 	macro openProductMenu {
@@ -73,12 +73,12 @@ definition {
 		Click(locator1 = "SiteNavigationMenu#SCOPE_COG");
 
 		Click(
-			key_scope = "${scope}",
+			key_scope = ${scope},
 			locator1 = "ProductMenu#SCOPE");
 	}
 
 	macro viewNoSite {
-		var key_site = "${site}";
+		var key_site = ${site};
 
 		AssertElementNotPresent(locator1 = "ProductMenu#SITE");
 	}

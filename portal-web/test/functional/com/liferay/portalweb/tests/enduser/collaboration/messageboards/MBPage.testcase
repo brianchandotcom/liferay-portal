@@ -19,7 +19,7 @@ definition {
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddCategoryWithDescription {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -59,7 +59,7 @@ definition {
 			categoryName = "MB Category Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddCategoryWithUTF8Characters {
 		JSONMBMessage.addCategory(
@@ -72,7 +72,7 @@ definition {
 		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddMBThreadWithMultipleAttachments {
 		MessageboardsThread.addPG(
@@ -86,22 +86,22 @@ definition {
 		MessageboardsThread.viewThreadAttachment(mbAttachmentFileList = "Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddMultipleCategories {
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "MB Category Description",
-				categoryName = "${categoryName}",
+				categoryName = ${categoryName},
 				userEmailAddress = "test@liferay.com");
 
 			Navigator.gotoPage(pageName = "Message Boards Page");
 
-			MessageboardsCategory.viewPG(categoryName = "${categoryName}");
+			MessageboardsCategory.viewPG(categoryName = ${categoryName});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddThreadInCategoryAsQuestion {
 		JSONMBMessage.addCategory(
@@ -118,13 +118,13 @@ definition {
 			categoryName = "MB Category Name",
 			lastPostUserName = "Test Test",
 			pageName = "Message Boards Page",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -133,7 +133,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanConfigureWidgetToAddThreadAsQuestionByDefault {
 		property portal.acceptance = "false";
@@ -168,11 +168,11 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.viewAnswerPG(
-			answerCount = "1",
+			answerCount = 1,
 			threadSubject = "Thread Subject");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteCategory {
 		JSONMBMessage.addCategory(
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteThread {
 		JSONMBMessage.addMessage(
@@ -203,7 +203,7 @@ definition {
 		MessageboardsThread.deletePG(threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditCategory {
 		JSONMBMessage.addCategory(
@@ -223,7 +223,7 @@ definition {
 		MessageboardsCategory.viewPG(categoryName = "MB Category Name Edit");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67722."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanReplyAfterDownloadingMBThreadAttachmentTwice {
 		JSONMBMessage.addMessage(
@@ -279,7 +279,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanReplyToThreadAsGuest {
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -306,14 +306,14 @@ definition {
 		MessageboardsThread.viewReplyPG(
 			guestReply = "true",
 			loggedOut = "true",
-			replyCount = "1",
+			replyCount = 1,
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body As Guest",
 			threadSubject = "MB Thread Message Subject",
 			userName = "Anonymous");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSaveThreadAsDraft {
 		MessageboardsThread.openToAddThread(
@@ -331,7 +331,7 @@ definition {
 		MessageboardsThread.viewDraftThread(threadSubject = "Message Boards Thread Draft");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSearchForAttachment {
 		property portal.acceptance = "false";
@@ -341,7 +341,7 @@ definition {
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "This ensures that an MB thread can be searched via category."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForThreadWithCategory {
 		JSONCategory.addVocabulary(
@@ -409,7 +409,7 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSplitThread {
 		property portal.acceptance = "false";
@@ -450,7 +450,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMBThreadReplyViaMoreMessages {
 		property custom.properties = "discussion.comments.delta.value=5";
@@ -471,7 +471,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "7",
+			replyCount = 7,
 			threadSubject = "Message Boards Thread Subject");
 
 		for (var replyCount : list "1,2,3,4") {
@@ -502,10 +502,10 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMessageBoardsRSS {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -549,13 +549,13 @@ definition {
 	}
 
 	@description = "This test covers LPS-132060, LPS-77252 and LPS-86797. It ensures that Categories group and Threads group are listed independently with their own pager."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewPagersForCategoriesAndThreads {
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name,MB Category4 Name,MB Category5 Name,MB Category6 Name") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "${categoryName} Description",
-				categoryName = "${categoryName}",
+				categoryName = ${categoryName},
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -568,7 +568,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
@@ -581,7 +581,7 @@ definition {
 
 		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
 
-		MenuItem.click(menuItem = "4");
+		MenuItem.click(menuItem = 4);
 
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 
@@ -606,9 +606,9 @@ definition {
 
 			JSONMBMessage.addCategory(
 				categoryDescription = "MB Subcategory Description",
-				categoryName = "${categoryName}",
+				categoryName = ${categoryName},
 				groupName = "Guest",
-				parentCategoryId = "${parentCategoryId}",
+				parentCategoryId = ${parentCategoryId},
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -639,13 +639,13 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
 			value1 = "MB Thread Message");
 
-		Pagination.changePagination(itemsPerPage = "8");
+		Pagination.changePagination(itemsPerPage = 8);
 
 		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 	}
 
 	@description = "This ensures that users can view subcategory subscription Via My Subscriptions, also covers LPS-127707."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSubcategorySubscriptionViaMySubscriptionsPage {
 		property database.types = "oracle";
@@ -663,7 +663,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "MB Subcategory Name",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
@@ -674,7 +674,7 @@ definition {
 			categoryDescription = "MB Subcategory 2 Description",
 			categoryName = "MB Subcategory Name 2",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -683,7 +683,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadCount = "0");
+			threadCount = 0);
 
 		MessageboardsCategory.openToCategory(
 			categoryName = "MB Subcategory Name",
@@ -701,7 +701,7 @@ definition {
 			subscribedThread = "MB Subcategory Name 2");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewThread {
 		JSONMBMessage.addMessage(
@@ -721,7 +721,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewThreadInSubcategory {
 		JSONMBMessage.addCategory(
@@ -737,7 +737,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "MB Subcategory Name",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -760,7 +760,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -769,7 +769,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewThreadStatistics {
 		JSONMBMessage.addMessage(
@@ -780,7 +780,7 @@ definition {
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			layoutName = "message-boards-page",
 			siteURLKey = "guest",
-			threadPostNumber = "1",
+			threadPostNumber = 1,
 			userName = "Test Test");
 
 		MessageboardsThread.openToThread(
@@ -808,7 +808,7 @@ definition {
 			layoutName = "message-boards-page",
 			siteURLKey = "guest",
 			startedByUserName = "Test Test",
-			threadPostNumber = "1");
+			threadPostNumber = 1);
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -820,7 +820,7 @@ definition {
 			layoutName = "message-boards-page",
 			siteURLKey = "guest",
 			startedByUserName = "Test Test",
-			threadPostNumber = "2");
+			threadPostNumber = 2);
 
 		JSONMBMessage.deleteMessage(
 			groupName = "Guest",
@@ -829,12 +829,12 @@ definition {
 		MessageboardsThread.viewStatisticsPostsCountPG(
 			layoutName = "message-boards-page",
 			siteURLKey = "guest",
-			threadPostNumber = "1",
+			threadPostNumber = 1,
 			userName = "Test Test");
 	}
 
 	@description = "This is a use case for LPS-77263."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewVisualStateOfReadMBThread {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -882,7 +882,7 @@ definition {
 			unReadMBthread = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test MBCategoryCannotBeAddedWithoutName {
 		MessageboardsCategory.addPG(
@@ -900,7 +900,7 @@ definition {
 
 	@description = "This test ensures that the MB widget follows W3C accessibility standards"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test WidgetFollowsAccessibilityStandards {
 		Navigator.openSitePage(
 			pageName = "Message Boards Page",
@@ -910,7 +910,7 @@ definition {
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a thread on page."
-	@priority = "3"
+	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInThread {
 		Navigator.openURL();
 

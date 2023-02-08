@@ -2,7 +2,7 @@ definition {
 
 	macro assertOptionsInShipmentSteps {
 		AssertElementPresent(
-			key_ercColumnValue = "${key_ercColumnValue}",
+			key_ercColumnValue = ${key_ercColumnValue},
 			locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN");
 
 		AssertElementNotPresent(
@@ -12,16 +12,16 @@ definition {
 
 	macro assertShipmentItemWarehouseAndQuantityInShipment {
 		AssertTextEquals(
-			key_columnNumber = "4",
-			key_entryName = "${shipmentItemSku}",
+			key_columnNumber = 4,
+			key_entryName = ${shipmentItemSku},
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-			value1 = "${warehouseName}");
+			value1 = ${warehouseName});
 
 		AssertTextEquals(
-			key_columnNumber = "6",
-			key_entryName = "${shipmentItemSku}",
+			key_columnNumber = 6,
+			key_entryName = ${shipmentItemSku},
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-			value1 = "${quantityInShipment}");
+			value1 = ${quantityInShipment});
 	}
 
 	macro editShipmentCarrierDetails {
@@ -30,13 +30,13 @@ definition {
 		Type(
 			key_fieldLabel = "Carrier",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${carrierDetail}");
+			value1 = ${carrierDetail});
 
 		if (isSet(trackingNumber)) {
 			Type(
 				key_fieldLabel = "Tracking Number",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${trackingNumber}");
+				value1 = ${trackingNumber});
 		}
 		else {
 			Type(
@@ -49,13 +49,13 @@ definition {
 			Select(
 				key_fieldLabel = "Shipping Method",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${shippingMethod}");
+				value1 = ${shippingMethod});
 		}
 
 		if (isSet(trackingURL)) {
 			Type(
 				locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
-				value1 = "${trackingURL}");
+				value1 = ${trackingURL});
 		}
 
 		Button.clickSubmitButton();
@@ -63,12 +63,12 @@ definition {
 
 	macro editShipmentCustomFields {
 		Click(
-			key_customFieldType = "${customFieldType}",
+			key_customFieldType = ${customFieldType},
 			locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
 
 		Type(
 			locator1 = "TextInput#CUSTOM_FIELD",
-			value1 = "${textValue}");
+			value1 = ${textValue});
 
 		Button.clickSave();
 
@@ -78,17 +78,17 @@ definition {
 	macro moveItemQuantitiesInShipment {
 		Variables.assertDefined(parameterList = "${productSkuList},${warehouseName}");
 
-		for (var productSku : list "${productSkuList}") {
+		for (var productSku : list ${productSkuList}) {
 			WaitForPageLoad();
 
-			CommerceNavigator.gotoEntry(entryName = "${productSku}");
+			CommerceNavigator.gotoEntry(entryName = ${productSku});
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			Type(
-				key_warehouseName = "${warehouseName}",
+				key_warehouseName = ${warehouseName},
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 
 			Button.click(button = "Save");
 
@@ -101,15 +101,15 @@ definition {
 	}
 
 	macro moveOrderItemsInShipment {
-		Variables.assertDefined(parameterList = "${productSkuList}");
+		Variables.assertDefined(parameterList = ${productSkuList});
 
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		for (var productSku : list "${productSkuList}") {
+		for (var productSku : list ${productSkuList}) {
 			Check.checkToggleSwitch(
-				key_productSku = "${productSku}",
+				key_productSku = ${productSku},
 				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
 		}
 

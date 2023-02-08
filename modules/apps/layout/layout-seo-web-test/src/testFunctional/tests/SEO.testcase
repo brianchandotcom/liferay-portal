@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,10 +26,10 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the blogs with SEO meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapBlogsToDisplayPage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
@@ -89,10 +89,10 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the document with SEO meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapDocumentToDisplayPage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
@@ -171,10 +171,10 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the web content with SEO meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapWebContentToDisplayPage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",

@@ -9,9 +9,9 @@ var aE = document.activeElement;
 return	aE.isEqualNode(e).toString();
 		''';
 
-		var focused = selenium.getEval("${javascript}");
+		var focused = selenium.getEval(${javascript});
 
-		if ("${focused}" != "true") {
+		if (${focused} != "true") {
 			TestUtils.fail(message = "FAILED: Element is not focused");
 		}
 	}
@@ -25,19 +25,19 @@ var aE = document.activeElement;
 return	aE.isEqualNode(e).toString();
 		''';
 
-		var focused = selenium.getEval("${javascript}");
+		var focused = selenium.getEval(${javascript});
 
-		if ("${focused}" != "false") {
+		if (${focused} != "false") {
 			TestUtils.fail(message = "FAILED: Element is focused");
 		}
 	}
 
 	macro assertEquals {
-		echo("${expected}");
+		echo(${expected});
 
-		echo("${actual}");
+		echo(${actual});
 
-		if ("${expected}" == "${actual}") {
+		if (${expected} == ${actual}) {
 			echo("PASSED");
 		}
 		else {
@@ -46,11 +46,11 @@ return	aE.isEqualNode(e).toString();
 	}
 
 	macro assertNotEquals {
-		echo("${expected}");
+		echo(${expected});
 
-		echo("${actual}");
+		echo(${actual});
 
-		if ("${expected}" != "${actual}") {
+		if (${expected} != ${actual}) {
 			echo("PASSED");
 		}
 		else {
@@ -61,7 +61,7 @@ return	aE.isEqualNode(e).toString();
 	macro assertPartialAttributeValue {
 		var attributeValue = selenium.getAttribute("${element}@${attribute}");
 
-		if (contains("${attributeValue}", "${value}")) {
+		if (contains(${attributeValue}, ${value})) {
 			echo("PASSED");
 		}
 		else {
@@ -70,11 +70,11 @@ return	aE.isEqualNode(e).toString();
 	}
 
 	macro assertPartialEquals {
-		echo("${expected}");
+		echo(${expected});
 
-		echo("${actual}");
+		echo(${actual});
 
-		if (contains("${actual}", "${expected}")) {
+		if (contains(${actual}, ${expected})) {
 			echo("PASSED");
 		}
 		else {
@@ -92,9 +92,9 @@ return (element.offsetWidth < element.scrollWidth).toString();
 
 		''';
 
-		var isTruncated = selenium.getEval("${javascript}");
+		var isTruncated = selenium.getEval(${javascript});
 
-		if ("${isTruncated}" != "true") {
+		if (${isTruncated} != "true") {
 			TestUtils.fail(message = "FAILED: The text is not truncated");
 		}
 	}
@@ -104,11 +104,11 @@ return (element.offsetWidth < element.scrollWidth).toString();
 			var message = "FAIL";
 		}
 
-		echo("${message}");
+		echo(${message});
 
 		takeScreenshot();
 
-		fail("${message}");
+		fail(${message});
 	}
 
 	macro getElementTextContent {
@@ -120,9 +120,9 @@ var element = document.evaluate("${element}", document, null, XPathResult.FIRST_
 return element.textContent;
 		''';
 
-		var textContent = selenium.getEval("${javascript}");
+		var textContent = selenium.getEval(${javascript});
 
-		return "${textContent}";
+		return ${textContent};
 	}
 
 	macro getScreenHeight {
@@ -130,7 +130,7 @@ return element.textContent;
 
 		var screenHeight = selenium.getEval("return	screen.height.toString();");
 
-		return "${screenHeight}";
+		return ${screenHeight};
 	}
 
 	macro getScreenWidth {
@@ -138,13 +138,13 @@ return element.textContent;
 
 		var screenWidth = selenium.getEval("return screen.width.toString();");
 
-		return "${screenWidth}";
+		return ${screenWidth};
 	}
 
 	macro hardRefresh {
 		var mac = OSDetector.isApple();
 
-		if ("${mac}" == "true") {
+		if (${mac} == "true") {
 			RobotType.robotTypeShortcut(locator1 = "Shift + Command + r");
 		}
 		else {
@@ -155,13 +155,13 @@ return element.textContent;
 	}
 
 	macro isGreaterThan {
-		echo("${expected}");
+		echo(${expected});
 
-		echo("${actual}");
+		echo(${actual});
 
-		var result = MathUtil.isGreaterThan("${actual}", "${expected}");
+		var result = MathUtil.isGreaterThan(${actual}, ${expected});
 
-		if ("${result}" == "true") {
+		if (${result} == "true") {
 			echo("PASSED");
 		}
 		else {
@@ -170,13 +170,13 @@ return element.textContent;
 	}
 
 	macro isLessThan {
-		echo("${expected}");
+		echo(${expected});
 
-		echo("${actual}");
+		echo(${actual});
 
-		var result = MathUtil.isLessThan("${actual}", "${expected}");
+		var result = MathUtil.isLessThan(${actual}, ${expected});
 
-		if ("${result}" == "true") {
+		if (${result} == "true") {
 			echo("PASSED");
 		}
 		else {
@@ -196,7 +196,7 @@ return element.textContent;
 			var message = "PASS";
 		}
 
-		echo("${message}");
+		echo(${message});
 	}
 
 	macro typeIntoField {

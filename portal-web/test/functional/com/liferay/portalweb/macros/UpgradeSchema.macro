@@ -9,8 +9,8 @@ definition {
 
 		var result = FileUtil.read("${projectDir}/validate-db-upgrade-schemas.txt");
 
-		if (!(contains("${result}", "Database schemas match"))) {
-			echo("${result}");
+		if (!(contains(${result}, "Database schemas match"))) {
+			echo(${result});
 
 			fail("Failed to validate DB schemas.");
 		}

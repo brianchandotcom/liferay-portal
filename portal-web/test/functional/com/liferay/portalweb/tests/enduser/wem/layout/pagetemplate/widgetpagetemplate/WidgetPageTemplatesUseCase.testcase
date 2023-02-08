@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143456. The site designer could reset failure count and reenable propagation when merge fail count reaches the configured threshold."
-	@priority = "4"
+	@priority = 4
 	test ResetFailureCountAndReenablePropagation {
 		property test.name.skip.portal.instance = "WidgetPageTemplatesUseCase#ResetFailureCountAndReenablePropagation";
 
@@ -64,7 +64,7 @@ definition {
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
-				script = "${script}");
+				script = ${script});
 		}
 
 		task ("Then the site designer could reset the failure count and reenable propagation") {
@@ -87,12 +87,12 @@ definition {
 	}
 
 	@description = "Assert could not add page via page template action."
-	@priority = "3"
+	@priority = 3
 	test ViewNoAddPageTabViaPageTemplatesCP {
 		property test.name.skip.portal.instance = "WidgetPageTemplatesUseCase#ViewNoAddPageTabViaPageTemplatesCP";
 
 		task ("Get site name and go to page template in global site") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 		}

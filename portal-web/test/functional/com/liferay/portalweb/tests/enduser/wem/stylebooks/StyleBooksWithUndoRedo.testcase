@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142363. The history will be cleared when publishing the style book or leaving style book editor or reloading page."
-	@priority = "4"
+	@priority = 4
 	test ClearInteractionStatesHistory {
 		task ("Given a style book designer has a style book with interaction states") {
 			JSONStylebooks.addStyleBookEntry(
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142363. The History dropdown menu could list up to the last 100 interaction states."
-	@priority = "4"
+	@priority = 4
 	test ListUpToLastHundredInteractionStatesOnHistoryDropdownMenu {
 		property custom.properties = "session.timeout=30";
 		property web.xml.timeout = "30";
@@ -192,24 +192,24 @@ definition {
 			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
 				value1 = "Update Gray 600");
 
 			AssertTextEquals(
-				index = "100",
+				index = 100,
 				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
 				value1 = "Update Brand Color 1");
 
 			AssertTextEquals(
-				index = "102",
+				index = 102,
 				locator1 = "MenuItem#MENU_ITEM_BY_INDEX",
 				value1 = "Undo All");
 		}
 	}
 
 	@description = "This is a test for LPS-142363. The style book designer could undo all interaction states at one time."
-	@priority = "5"
+	@priority = 5
 	test UndoAllInteractionStates {
 		property portal.acceptance = "true";
 
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142363. The style book designer could undo or redo interaction states."
-	@priority = "5"
+	@priority = 5
 	test UndoAndRedoInteractionStates {
 		property portal.acceptance = "true";
 

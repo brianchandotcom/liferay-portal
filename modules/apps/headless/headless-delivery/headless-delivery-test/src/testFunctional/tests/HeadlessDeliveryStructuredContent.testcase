@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "StructuredContent is created with defined priority"
-	@priority = "5"
+	@priority = 5
 	test CanCreateStructuredContentWithDefinedPriorityValue {
 		property portal.acceptance = "true";
 
@@ -48,7 +48,7 @@ definition {
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "6.1",
@@ -58,12 +58,12 @@ definition {
 		task ("Then the response body includes the defined priority value") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "6.1",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "StructuredContent can be modified priority value"
-	@priority = "5"
+	@priority = 5
 	test CanModifyStructuredContentPriorityValue {
 		property portal.acceptance = "true";
 
@@ -72,7 +72,7 @@ definition {
 
 			var responseToParse = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
@@ -81,23 +81,23 @@ definition {
 		task ("when edit priority value is modified to 3.0") {
 			var response = HeadlessWebcontentAPI.editStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "3.0",
-				responseToParse = "${responseToParse}",
+				responseToParse = ${responseToParse},
 				title = "WC WebContent Title");
 		}
 
 		task ("Then the response body includes the modified priority value") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "3.0",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "StructuredContent can be sorted with a set priority"
-	@priority = "5"
+	@priority = 5
 	test CanSortDescendingStructuredContentsByPriority {
 		property portal.acceptance = "true";
 
@@ -106,21 +106,21 @@ definition {
 
 			var responseToParse1 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.2",
 				title = "WC WebContent Title 1");
 			var responseToParse2 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.3",
 				title = "WC WebContent Title 2");
 			var responseToParse3 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.4",
@@ -134,12 +134,12 @@ definition {
 		task ("Then the response body includes a list with descending priority") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "1.4,1.3,1.2",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "StructuredContent can be filtered with default priority"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentContainsPriorityField {
 		property portal.acceptance = "true";
 
@@ -148,7 +148,7 @@ definition {
 
 			var responseToParse = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
@@ -161,12 +161,12 @@ definition {
 		task ("Then the response body includes the default priority field") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "0.0",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "StructuredContent can be filtered with a set priority"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentContainsUpdatedPriorityValueFilteredByEqualTo {
 		property portal.acceptance = "true";
 
@@ -175,19 +175,19 @@ definition {
 
 			var responseToParse1 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title 1");
 			var responseToParse2 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title 2");
 			var responseToParse3 = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title 3");
@@ -196,11 +196,11 @@ definition {
 		task ("Given edit a web content with different priorities") {
 			var editStructuredContentId = HeadlessWebcontentAPI.editStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.3",
-				responseToParse = "${responseToParse2}",
+				responseToParse = ${responseToParse2},
 				title = "WC WebContent Title 2");
 		}
 
@@ -211,20 +211,20 @@ definition {
 		task ("Then the response body only includes items with priority 1.3") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "1.3",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 
 			HeadlessWebcontentAPI.assertStructuredContentIdIsFilteredWithCorrectValue(
-				editStructuredContentId = "${editStructuredContentId}",
-				responseToParse = "${response}");
+				editStructuredContentId = ${editStructuredContentId},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "StructuredContent is created with priority field"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedWithPriorityField {
 		property portal.acceptance = "true";
 
@@ -233,7 +233,7 @@ definition {
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
@@ -242,7 +242,7 @@ definition {
 		task ("Then the response body includes the default priority field") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "0.0",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 

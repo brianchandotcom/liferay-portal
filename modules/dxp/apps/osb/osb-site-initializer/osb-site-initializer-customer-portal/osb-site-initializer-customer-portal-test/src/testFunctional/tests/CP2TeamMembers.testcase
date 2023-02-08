@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-144966 | Test Summary: Verify if trying to send invitation to members with a banned email shows a error"
-	@priority = "5"
+	@priority = 5
 	test CanViewErrorMessageForBannedEmail {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -65,8 +65,8 @@ definition {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "0-mail.com",
 				rowRole = "Requester");
 		}
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144958 | Test Summary: Verify if when a Project has reached or is reaching the limit, the admin roles should be disabled in drop down"
-	@priority = "4"
+	@priority = 4
 	test IfMaxAdminDropDisabled {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -102,22 +102,22 @@ definition {
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
 				addMembers = "true",
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "test01@project.com",
 				rowRole = "Administrator");
 		}
 
 		task ("Assert that administrative functions are disabled in the drop-down") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "CP2TeamMembers#ROLE_DISABLED",
 				role = "Administrator");
 		}
 	}
 
 	@description = "Automation ID: LPS-144956 | Test Summary: Verify if when a Project has reached or is reaching the limit, the ticket requestor role should be disabled in drop down"
-	@priority = "4"
+	@priority = 4
 	test IfMaxRequestorDropDisabled {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -142,22 +142,22 @@ definition {
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
 				addMembers = "true",
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "test01@project.com",
 				rowRole = "Requester");
 		}
 
 		task ("Assert that Requester functions are disabled in the drop-down") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "CP2TeamMembers#ROLE_DISABLED",
 				role = "Requester");
 		}
 	}
 
 	@description = "Automation ID: LPS-144960 | Test Summary: Verify if when the user selects 'Skip for Now' he is taken to the next step"
-	@priority = "5"
+	@priority = 5
 	test IfSkipForNowJumpToNextStep {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144961 | Test Summary: Verify max number of admin/ticket requestor"
-	@priority = "2"
+	@priority = 2
 	test IsMaxNumberCorrect {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -222,13 +222,13 @@ definition {
 		task ("Assert that object Koroneiki reflects the same number as modal team members displays") {
 			CustomerPortal.viewValueFieldKoroneiki(
 				field = "Max Requestors",
-				index = "3",
-				value = "2");
+				index = 3,
+				value = 2);
 		}
 	}
 
 	@description = "Automation ID: LPS-144964 | Test Summary: Verify if partner = true, show 'Partner Manager' on Roles"
-	@priority = "4"
+	@priority = 4
 	test IsPartnerManagerShowingUp {
 		task ("Activate the Partner role via Koroneiki") {
 			CP2TeamMembers.activePartnersRole();
@@ -260,7 +260,7 @@ definition {
 
 		task ("Assert that the Partner Manager role is present in the drop-down") {
 			AssertElementPresent(
-				key_rowNumber = "0",
+				key_rowNumber = 0,
 				locator1 = "CP2TeamMembers#ROLE_SELECT",
 				value1 = "Partner Manager");
 		}
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144963 | Test Summary: Verify if partner = true, show 'Partner Member' on Roles"
-	@priority = "4"
+	@priority = 4
 	test IsPartnerMemberShowingUp {
 		task ("Activate the Partner role via Koroneiki") {
 			CP2TeamMembers.activePartnersRole();
@@ -303,7 +303,7 @@ definition {
 
 		task ("Assert that the Partner Member role is present in the drop-down") {
 			AssertElementPresent(
-				key_rowNumber = "0",
+				key_rowNumber = 0,
 				locator1 = "CP2TeamMembers#ROLE_SELECT",
 				value1 = "Partner Member");
 		}
@@ -314,12 +314,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144962 | Test Summary: Verify if slaCurrent = 'Gold' (or Platinum), show 'Requestor' on Roles"
-	@priority = "4"
+	@priority = 4
 	test IsRequestorShowingUp {
 		task ("Assert the current SLA via Koroneiki") {
 			CustomerPortal.viewValueFieldKoroneiki(
 				field = "SLA Current",
-				index = "1",
+				index = 1,
 				value = "Platinum Subscription");
 		}
 
@@ -345,14 +345,14 @@ definition {
 
 		task ("Assert that the Requester role is present in the drop-down") {
 			AssertElementPresent(
-				key_rowNumber = "0",
+				key_rowNumber = 0,
 				locator1 = "CP2TeamMembers#ROLE_SELECT",
 				value1 = "Requester");
 		}
 	}
 
 	@description = "Automation ID: LPS-144968 | Test Summary: Verify if when the fields are empty the button 'Send Invitations' is disabled"
-	@priority = "3"
+	@priority = 3
 	test IsSendInvitationsButtonDisabled {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -376,8 +376,8 @@ definition {
 
 		task ("Fill in the extra fields") {
 			CP2TeamMembers.addFieldsTeamMembersExtra(
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "test",
 				rowRole = "User");
 		}
@@ -388,7 +388,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144953 | Test Summary: Verify if the user can invite multiple emails with roles on team members on the same screen"
-	@priority = "4"
+	@priority = 4
 	test MultipleEmailsWithRoleAtOnce {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
@@ -413,14 +413,14 @@ definition {
 		task ("Fill in the fields by inviting two users") {
 			CP2TeamMembers.addFieldsTeamMembersExtra(
 				addMembers = "true",
-				position = "0",
-				positionNumber = "0",
+				position = 0,
+				positionNumber = 0,
 				rowEmail = "test01@project.com",
 				rowRole = "Administrator");
 
 			CP2TeamMembers.addFieldsTeamMembersExtra(
-				position = "1",
-				positionNumber = "1",
+				position = 1,
+				positionNumber = 1,
 				rowEmail = "test02@project.com",
 				rowRole = "User");
 

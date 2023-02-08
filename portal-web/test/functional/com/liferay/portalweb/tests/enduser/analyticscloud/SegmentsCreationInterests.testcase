@@ -51,7 +51,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9273 | Test Summary: Create a Segment of Individuals Interested And Another One Not Interest In a Topic"
-	@priority = "5"
+	@priority = 5
 	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
 		property portal.upstream = "quarantine";
 
@@ -87,7 +87,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Add a new dynamic segment using Interests") {

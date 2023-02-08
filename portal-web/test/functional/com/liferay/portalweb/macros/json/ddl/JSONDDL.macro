@@ -4,10 +4,10 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
 		var recordSetId = JSONDDLAPI._getRecordSetId(
-			ddlListName = "${ddlListName}",
-			groupName = "${groupName}");
+			ddlListName = ${ddlListName},
+			groupName = ${groupName});
 
-		JSONDDLAPI._getRecordId(recordSetId = "${recordSetId}");
+		JSONDDLAPI._getRecordId(recordSetId = ${recordSetId});
 	}
 
 }

@@ -1,7 +1,7 @@
 definition {
 
 	macro _addUserGroup {
-		Variables.assertDefined(parameterList = "${userGroupName}");
+		Variables.assertDefined(parameterList = ${userGroupName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -12,7 +12,7 @@ definition {
 				-d description=${userGroupDescription}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Directly calls the JSON WS API to assign a user group a role"
@@ -29,12 +29,12 @@ definition {
 				-d userGroupIds=${userGroupId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Get the userGroupId from any existing site by using userGroupName"
 	macro _getUserGroupIdByName {
-		Variables.assertDefined(parameterList = "${userGroupName}");
+		Variables.assertDefined(parameterList = ${userGroupName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -44,13 +44,13 @@ definition {
 				-d name=${userGroupName}
 		''';
 
-		var userGroupId = JSONCurlUtil.post("${curl}", "$.userGroupId");
+		var userGroupId = JSONCurlUtil.post(${curl}, "$.userGroupId");
 
-		if ("${groupId}" == "") {
+		if (${groupId} == "") {
 			fail("FAIL. Cannot find user group.");
 		}
 
-		return "${userGroupId}";
+		return ${userGroupId};
 	}
 
 }

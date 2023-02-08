@@ -6,19 +6,19 @@ definition {
 
 		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
-		var matches = StringUtil.count("${sqlResults}", "${databaseSubstring}");
+		var matches = StringUtil.count(${sqlResults}, ${databaseSubstring});
 
-		if ("${matches}" != "${expectedCount}") {
+		if (${matches} != ${expectedCount}) {
 			fail("Expected ${expectedCount} matches of ${databaseSubstring}, found ${matches}.");
 		}
 	}
 
 	macro assertTextInMySQLStatementResult {
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
-		if (!(contains("${sqlResults}", "${text}"))) {
+		if (!(contains(${sqlResults}, ${text}))) {
 			fail("The MySql query result does not contain text: ${text}");
 		}
 	}
@@ -28,21 +28,21 @@ definition {
 
 		SQL.executeMySQLStatement(mysqlStatement = "drop index ${indexName} on ${tableName};");
 
-		var hasMySQLIndex = SQL.hasMySQLIndex(indexName = "${indexName}");
+		var hasMySQLIndex = SQL.hasMySQLIndex(indexName = ${indexName});
 
-		if ("${hasMySQLIndex}" == "true") {
+		if (${hasMySQLIndex} == "true") {
 			fail("Index ${indexName} wasn't dropped");
 		}
 	}
 
 	macro executeMySQLStatement {
-		Variables.assertDefined(parameterList = "${mysqlStatement}");
+		Variables.assertDefined(parameterList = ${mysqlStatement});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var inputFile = "mysqltemp.sql";
 		var outputFile = "mysqltemp.txt";
 
-		FileUtil.write("${liferayHome}/${inputFile}", "${mysqlStatement}");
+		FileUtil.write("${liferayHome}/${inputFile}", ${mysqlStatement});
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -50,17 +50,17 @@ definition {
 
 		var output = FileUtil.read("${liferayHome}/${outputFile}");
 
-		return "${output}";
+		return ${output};
 	}
 
 	macro hasMySQLIndex {
-		Variables.assertDefined(parameterList = "${indexName}");
+		Variables.assertDefined(parameterList = ${indexName});
 
 		var indexQuery = "SELECT COUNT(DISTINCT(index_name)) FROM information_schema.statistics WHERE index_schema = database() AND index_name = '${indexName}';";
 
-		var index = SQL.executeMySQLStatement(mysqlStatement = "${indexQuery}");
+		var index = SQL.executeMySQLStatement(mysqlStatement = ${indexQuery});
 
-		if (contains("${index}", "1")) {
+		if (contains(${index}, 1)) {
 			return "true";
 		}
 		else {

@@ -34,12 +34,12 @@ definition {
 		Type(
 			key_text = "Client ID",
 			locator1 = "TextInput#ANY",
-			value1 = "${raylifePaypalClientId}");
+			value1 = ${raylifePaypalClientId});
 
 		Type(
 			key_text = "Client Secret",
 			locator1 = "TextInput#ANY",
-			value1 = "${raylifePaypalClientSecret}");
+			value1 = ${raylifePaypalClientSecret});
 
 		Select(
 			key_fieldLabel = "Mode",
@@ -155,13 +155,13 @@ definition {
 
 		Type(
 			locator1 = "RaylifePaymentMethod#FIELD_EMAIL_PAYPAL",
-			value1 = "${raylifePaypalEmail}");
+			value1 = ${raylifePaypalEmail});
 
 		Click(locator1 = "RaylifePaymentMethod#BUTTON_NEXT_PAYPAL");
 
 		Type(
 			locator1 = "RaylifePaymentMethod#FIELD_PASSWORD_PAYPAL",
-			value1 = "${raylifePaypalPassword}");
+			value1 = ${raylifePaypalPassword});
 
 		Click(locator1 = "RaylifePaymentMethod#BUTTON_LOGIN_PAYPAL");
 

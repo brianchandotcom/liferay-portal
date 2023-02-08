@@ -39,7 +39,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8911 | Test Summary: Enriched profiles increases by 1 when an anonymous individual converted to a known individual"
-	@priority = "5"
+	@priority = 5
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
 		property analytics.cloud.upstream = "false";
 		property portal.acceptance = "false";
@@ -83,7 +83,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview on the Individuals dashboard") {
@@ -95,15 +95,15 @@ definition {
 		task ("View the number of Total Individuals, Known, Anonymous and Enriched Profiles") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Known",
-				count = "0");
+				count = 0);
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Enriched Profiles",
@@ -133,7 +133,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview on the Individuals dashboard") {
@@ -145,15 +145,15 @@ definition {
 		task ("View the number of Total Individuals, Known and Anonymous") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Known",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "0");
+				count = 0);
 
 			ACCards.viewTotalCount(
 				cardName = "Enriched Profiles",

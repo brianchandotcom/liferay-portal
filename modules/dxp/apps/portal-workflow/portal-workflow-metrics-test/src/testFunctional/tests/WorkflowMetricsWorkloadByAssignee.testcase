@@ -24,25 +24,25 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-97669 - Verify that the filter options are (All Steps) is the first option in the dropdown and the following fields are sorted alphabetically"
-	@priority = "3"
+	@priority = 3
 	test AllStepsIsTheFirstOptionInDropdown {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
 
 		AssertElementPresent(
-			key_order = "1",
+			key_order = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_ORDER");
 	}
 
 	@description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"
-	@priority = "3"
+	@priority = 3
 	test AssigneeImagesRetrievedFromGlobalUserProfile {
 		property portal.upstream = "quarantine";
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify the user can search for a assignee with name containing non-ASCII chars (eg: japanese chars) using the search bar"
-	@priority = "3"
+	@priority = 3
 	test CanSearchNonAsciiChars {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -182,16 +182,16 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that when editing a user name with pending instances, the Workload by Assignee card is updated accordingly"
-	@priority = "3"
+	@priority = 3
 	test CardIsUpdatedWhenUserNameIsEdited {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserNameIsEdited";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
-			numberOfBlogInstances = "1",
-			numberOfUsers = "1",
-			site = "${siteName}");
+			numberOfBlogInstances = 1,
+			numberOfUsers = 1,
+			site = ${siteName});
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -221,16 +221,16 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
-	@priority = "4"
+	@priority = 4
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserWithPendingInstanceIsDeleted";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
-			numberOfBlogInstances = "1",
-			numberOfUsers = "1",
-			site = "${siteName}");
+			numberOfBlogInstances = 1,
+			numberOfUsers = 1,
+			site = ${siteName});
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"
-	@priority = "2"
+	@priority = 2
 	test FiltersAreAlphabeticallySorted {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -287,7 +287,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		Click(
@@ -295,17 +295,17 @@ definition {
 			locator1 = "Button#ANY");
 
 		AssertTextEquals(
-			key_index = "1",
+			key_index = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "Administrator");
 
 		AssertTextEquals(
-			key_index = "2",
+			key_index = 2,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "Power User");
 
 		AssertTextEquals(
-			key_index = "3",
+			key_index = 3,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "User");
 
@@ -314,18 +314,18 @@ definition {
 			locator1 = "Button#ANY");
 
 		AssertTextEquals(
-			key_index = "1",
+			key_index = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "Review");
 
 		AssertTextEquals(
-			key_index = "2",
+			key_index = 2,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_ALL_ASSIGNEES_DROPDOWN_INDEX",
 			value1 = "Update");
 	}
 
 	@description = "LPS-98518 - Verify that the filters inside (Workload by Assignee) are applied only after the user moves the cursor out of the dropdown card"
-	@priority = "3"
+	@priority = 3
 	test FiltersAreAppliedAfterUserMovesCursorOutOfDropdownCard {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -352,7 +352,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Administrator");
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that info icon hover state and tooltip message"
-	@priority = "2"
+	@priority = 2
 	test InfoIconDisplaysMessageOnHover {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that a long username is placed in more than one line, respecting the alignment of the field inside Workload by Assignee card"
-	@priority = "3"
+	@priority = 3
 	test LongUsernameIsPlacedInMoreThanOneLine {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab On Time is selected"
-	@priority = "5"
+	@priority = 5
 	test PercentageIndicationOnOnTimeTab {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -449,10 +449,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0100",
+			slaDefinitionHours = 0100,
 			slaDefinitionName = "SLA Name",
 			slaDefinitionStart = "Process Begins");
 
@@ -479,7 +479,7 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab Overdue is selected"
-	@priority = "5"
+	@priority = 5
 	test PercentageIndicationOnOverdueTab {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -497,10 +497,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "1",
+			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0001",
+			slaDefinitionHours = 0001,
 			slaDefinitionName = "SLA1",
 			slaDefinitionStart = "Process Begins");
 
@@ -531,11 +531,11 @@ definition {
 		WorkflowMetrics.viewWorkloadByAssigneeCard(
 			assigneeName = "Test Test",
 			tabName = "Overdue",
-			taskCount = "0");
+			taskCount = 0);
 	}
 
 	@description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"
-	@priority = "3"
+	@priority = 3
 	test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsIncludedWhenDropdownIsHigherThan496Px";
 
@@ -592,7 +592,7 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that a search bar is present in the step filter when the dropdown is higher than 496px"
-	@priority = "3"
+	@priority = 3
 	test SearchBarIsPresentInStepFilter {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SearchBarIsPresentInStepFilter";
 
@@ -639,7 +639,7 @@ definition {
 	}
 
 	@description = "LPS-103368 - Verify that the user can filter the results inside (Workload by Assignee) page by assignee names that contain non-ascii chars (such as ç,é,コン, etc) using the search field"
-	@priority = "3"
+	@priority = 3
 	test SearchFieldAcceptsNonAsciiChars {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -684,7 +684,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "更新");
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@description = "LPS-98518 - Verify that, in (Workload by Assignee) page, the search field has a hint with the message: (Search for assignee name...)"
-	@priority = "3"
+	@priority = 3
 	test SearchFieldContainsHintMessage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -722,20 +722,20 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
 	}
 
 	@description = "LPS-97669 - Verify that the sum of items Overdue and On time of 'Workload by Assignee' page are never bigger than the Total items"
-	@priority = "3"
+	@priority = 3
 	test SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -753,10 +753,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0002",
+			slaDefinitionHours = 0002,
 			slaDefinitionName = "SLAName",
 			slaDefinitionStart = "Process Begins");
 
@@ -794,7 +794,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.waitForSLA(
-			key_expectedValue = "1",
+			key_expectedValue = 1,
 			key_status = "ONTIME");
 
 		Click(
@@ -802,7 +802,7 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
 
 		AssertElementPresent(
-			key_taskCount = "2",
+			key_taskCount = 2,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 
 		Click(
@@ -810,11 +810,11 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
 
 		AssertElementPresent(
-			key_taskCount = "2",
+			key_taskCount = 2,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 
 		WorkflowMetrics.waitForSLA(
-			key_expectedValue = "0",
+			key_expectedValue = 0,
 			key_status = "OVERDUE");
 
 		Click(
@@ -822,7 +822,7 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
 
 		AssertElementPresent(
-			key_taskCount = "1",
+			key_taskCount = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 
 		Click(
@@ -830,7 +830,7 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
 
 		AssertElementPresent(
-			key_taskCount = "1",
+			key_taskCount = 1,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 
 		Click(
@@ -838,12 +838,12 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB");
 
 		AssertElementPresent(
-			key_taskCount = "2",
+			key_taskCount = 2,
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT");
 	}
 
 	@description = "LPS-97669 - Verify there is no percentage indication out of the total amount of assigned tasks when the tab Total is selected"
-	@priority = "4"
+	@priority = 4
 	test ThereIsNoPercentageIndicationOnTotalTab {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -877,7 +877,7 @@ definition {
 	}
 
 	@description = "LPS-103365 - Verify that when the user clicks on the username or item number of the table inside (Workload by Assignee) page, the user is directed to the All Items page with the appropriate filters applied"
-	@priority = "4"
+	@priority = 4
 	test UserIsDirectedToAllItemsPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -909,7 +909,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(
-			key_assigneesNumber = "1",
+			key_assigneesNumber = 1,
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
 
 		Click(
@@ -920,18 +920,18 @@ definition {
 	}
 
 	@description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"
-	@priority = "4"
+	@priority = 4
 	test WorkloadByAssigneeCardDisplaysUpTo10Users {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#WorkloadByAssigneeCardDisplaysUpTo10Users";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WorkflowMetrics.createUsersAndAssignInstances(
-			numberOfBlogInstances = "11",
-			numberOfUsers = "11",
-			site = "${siteName}");
+			numberOfBlogInstances = 11,
+			numberOfUsers = 11,
+			site = ${siteName});
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

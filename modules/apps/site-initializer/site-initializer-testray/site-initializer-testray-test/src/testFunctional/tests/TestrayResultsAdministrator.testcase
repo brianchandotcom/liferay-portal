@@ -39,8 +39,8 @@ definition {
 
 		task ("Change pagination and create Team") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -77,8 +77,8 @@ definition {
 				caseTypeId = "Case_Type",
 				componentId = "Components_1 Project",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -106,7 +106,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -115,8 +115,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -133,13 +133,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160701 - Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
-	@priority = "4"
+	@priority = 4
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -162,7 +162,7 @@ definition {
 
 	@description = "This is a test for LPS-160707 - Verify if as Add and Delete a Result by kebab button"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteResultByKebab {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160690 - Verify if as an Administrator I am able to Delete Results"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteResults {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160689 - Verify if as an Administrator I am able to execute Tests and mark them as Failed"
-	@priority = "5"
+	@priority = 5
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160687 - Verify if as an Administrator I am able to Quick Edit Tests"
-	@priority = "4"
+	@priority = 4
 	test AdminCanQuickEditTests {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160686 - Verify if as an Administrator I am able to Reopen Tests"
-	@priority = "4"
+	@priority = 4
 	test AdminCanReopenTests {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -322,7 +322,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167470 - Verify if as an Administrator I am able to reset Tests"
-	@priority = "4"
+	@priority = 4
 	test AdminCanResetTests {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -354,7 +354,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160685 - Verify if as an Administrator I am able to Unassign Tests"
-	@priority = "4"
+	@priority = 4
 	test AdminCanUnassignTests {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160684 - Verify if as an Administrator I am able to Unassign Tests through the context menu"
-	@priority = "3"
+	@priority = 3
 	test AdminCanUnassignTestsThroughTheContextMenu {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -413,7 +413,7 @@ definition {
 
 	@description = "This is a test for LPS-160691 - Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -424,12 +424,12 @@ definition {
 		}
 
 		task ("Then can view test total in metrics of case results") {
-			TestrayResults.caseResultsMetrics(totalTestCases = "1");
+			TestrayResults.caseResultsMetrics(totalTestCases = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-160683 - Verify if as an Administrator I am able to view Results grouped by Component"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewResultsGroupedByComponent {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -443,15 +443,15 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Components");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.assertItemName(key_name = "Components_1 Project");
 		}
 	}
 
 	@description = "This is a test for LPS-160682 - Verify if as an Administrator I am able to view Results grouped by Team"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewResultsGroupedByTeam {
 		task ("Given that the user add a new case results") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -465,8 +465,8 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Teams");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.assertItemName(key_name = "Teams_1 Team");
 		}

@@ -15,7 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -23,7 +23,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,19 +32,19 @@ definition {
 	}
 
 	@description = "LPS-146535 - Verify if Continue Button is only enabled when all required fields have been filled in 'Your Name'. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test CanContinueWithBasicsPageFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 	}
 
 	@description = "LPS-146557 - Verify if Continue Button is only enabled when has a valid email in 'Business Email'. Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test CanContinueWithBusinessEmailFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -70,11 +70,11 @@ definition {
 	}
 
 	@description = "LPS-146558 - Verify if Continue Button is only enabled when has a valid phone number in 'Phone'.(Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test CanContinueWithPhoneEmailFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -106,11 +106,11 @@ definition {
 	}
 
 	@description = "LPS-146561 - Verify if Continue Button is only enabled when all required fields have been filled in 'Physical Address'. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test CanContinueWithPhysicalAddressFilledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -150,7 +150,7 @@ definition {
 
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.business.location.zip",
-			value = "12345");
+			value = 12345);
 
 		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -158,11 +158,11 @@ definition {
 	}
 
 	@description = "LPS-146562 - Verify if Continue Button is only enabled when all required fields have been filled in 'Physical Address'. (Tablet)"
-	@priority = "5"
+	@priority = 5
 	test CanContinueWithPhysicalAddressFilledTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -176,11 +176,11 @@ definition {
 	}
 
 	@description = "LPS-146560 - Verify if the Continue button is enabled without a business webkey_site inserted in 'Business Website'. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test ContinueEnableWithoutWebsiteInsertedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -212,11 +212,11 @@ definition {
 	}
 
 	@description = "LPS-146559 - Verify if Previous button works from 'Phone'. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test IfPreviousButtonOfPhoneWorksPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -246,11 +246,11 @@ definition {
 	}
 
 	@description = "Verify if Previous button works from 'Physical Address' page. (Smartphone)"
-	@priority = "5"
+	@priority = 5
 	test IfPreviousButtonWorksFromPhysicalAddressPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -288,11 +288,11 @@ definition {
 	}
 
 	@description = "LPS-146556 - Verify if Previous button works from 'Your Name'. (Smartphone)"
-	@priority = "4"
+	@priority = 4
 	test PreviousButtonOfYourNamePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 

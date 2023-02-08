@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91552."
-	@priority = "5"
+	@priority = 5
 	test CanViewPaginationContentViaAP {
 		property portal.acceptance = "true";
 
@@ -62,7 +62,7 @@ definition {
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "2",
+				paginationNumber = 2,
 				paginationType = "Regular");
 
 			Portlet.saveAndCloseConfig();
@@ -106,7 +106,7 @@ definition {
 
 			AssetPublisherPortlet.changePagination(
 				currentPageNumber = "2 of 2",
-				paginationItem = "2");
+				paginationItem = 2);
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC Content 1",
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "Change a fragment's editable image field."
-	@priority = "5"
+	@priority = 5
 	test ChangeEditableImage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "Change a fragment's editable text field."
-	@priority = "5"
+	@priority = 5
 	test ChangeEditableText {
 		property portal.acceptance = "true";
 
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110144. Configure the Heading fragment in content page template."
-	@priority = "5"
+	@priority = 5
 	test ConfigureBasicComponentHeading {
 		property portal.acceptance = "true";
 
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "Delete a page template collection."
-	@priority = "5"
+	@priority = 5
 	test DeleteCollection {
 		property portal.acceptance = "true";
 
@@ -324,7 +324,7 @@ definition {
 	}
 
 	@description = "Delete a page template."
-	@priority = "5"
+	@priority = 5
 	test DeletePageTemplate {
 		property portal.acceptance = "true";
 
@@ -355,7 +355,7 @@ definition {
 	}
 
 	@description = "Rename a page template collection."
-	@priority = "4"
+	@priority = 4
 	test RenameCollection {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "Rename a page template."
-	@priority = "4"
+	@priority = 4
 	test RenamePageTemplate {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -410,7 +410,7 @@ definition {
 	}
 
 	@description = "An unpublished fragment should not show up in the fragments sidebar."
-	@priority = "4"
+	@priority = 4
 	test ViewDraftFragmentDoesNotDisplayInSidebar {
 		task ("Add a fragment without publishing it") {
 			JSONFragment.addFragmentCollection(

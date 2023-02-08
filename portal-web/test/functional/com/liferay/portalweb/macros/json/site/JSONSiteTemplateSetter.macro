@@ -5,15 +5,15 @@ definition {
 			var privateLayout = "false";
 		}
 
-		return "${privateLayout}";
+		return ${privateLayout};
 	}
 
 	macro setTemplateDescription {
 		if (isSet(description)) {
-			var description = URLUtil.encodeUTF8("${description}");
+			var description = URLUtil.encodeUTF8(${description});
 		}
 
-		return "${description}";
+		return ${description};
 	}
 
 	macro setTemplateIsUpdateable {
@@ -21,7 +21,7 @@ definition {
 			var layoutsUpdateable = "true";
 		}
 
-		return "${layoutsUpdateable}";
+		return ${layoutsUpdateable};
 	}
 
 	macro setTemplatePropagation {
@@ -29,7 +29,7 @@ definition {
 			var readyForPropagation = "true";
 		}
 
-		return "${readyForPropagation}";
+		return ${readyForPropagation};
 	}
 
 	macro setTemplateStatus {
@@ -37,7 +37,7 @@ definition {
 			var active = "true";
 		}
 
-		return "${active}";
+		return ${active};
 	}
 
 }

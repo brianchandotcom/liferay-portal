@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121571. A user can map Reading Time of blogs entry to editable field."
-	@priority = "4"
+	@priority = 4
 	test MapReadingTimeToEditableField {
 		property test.name.skip.portal.instance = "DisplayPageTemplatesForBlogsEntry#MapReadingTimeToEditableField";
 

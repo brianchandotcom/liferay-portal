@@ -5,9 +5,9 @@ definition {
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
 
-		var key_buttonRowIndexNumber = "${buttonRowIndexNumber}";
-		var key_feedRowIndexNumber = "${feedRowIndexNumber}";
-		var key_feedTitle = "${feedTitle}";
+		var key_buttonRowIndexNumber = ${buttonRowIndexNumber};
+		var key_feedRowIndexNumber = ${feedRowIndexNumber};
+		var key_feedTitle = ${feedTitle};
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -17,13 +17,13 @@ definition {
 
 		Type(
 			locator1 = "RSSFeed#FEEDS_TITLE_NAME_FIELD",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 
-		if ("${feedType}" == "file") {
+		if (${feedType} == "file") {
 			var projectDir = PropsUtil.get("project.dir");
-			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${feedURLLink}");
+			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${feedURLLink});
 
-			if (contains("${dependencyFilePath}", "tests")) {
+			if (contains(${dependencyFilePath}, "tests")) {
 				Type(
 					locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
 					value1 = "file:////${dependencyFilePath}");
@@ -37,7 +37,7 @@ definition {
 		else {
 			Type(
 				locator1 = "RSSFeed#FEEDS_URL_NAME_FIELD",
-				value1 = "${feedURLLink}");
+				value1 = ${feedURLLink});
 		}
 
 		if (isSet(viewWarningMessage)) {
@@ -47,7 +47,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "${viewWarningMessage}");
+				value1 = ${viewWarningMessage});
 		}
 		else {
 			PortletEntry.save();
@@ -55,13 +55,13 @@ definition {
 	}
 
 	macro changeFeedsOrder {
-		var key_fromRowNumber = "${fromRowNumber}";
-		var key_toRowNumber = "${toRowNumber}";
+		var key_fromRowNumber = ${fromRowNumber};
+		var key_toRowNumber = ${toRowNumber};
 
 		DragAndDrop.dragAndDropReorganizeObjects(
 			locator1 = "RSSFeed#FEEDS_1",
 			locator2 = "RSSFeed#FEEDS_2",
-			position = "${offset}");
+			position = ${offset});
 	}
 
 	macro configureDisplaySettings {
@@ -77,13 +77,13 @@ definition {
 			Type(
 				key_fieldLabel = "# of Entries Per Feed",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "${numberOfEntriesPerFeed}");
+				value1 = ${numberOfEntriesPerFeed});
 		}
 
 		if (isSet(feedDisplayStyle)) {
 			Select(
 				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "${feedDisplayStyle}");
+				value1 = ${feedDisplayStyle});
 		}
 
 		if (!(isSet(configureWithoutSave))) {
@@ -98,9 +98,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		for (var buttonRowIndexNumber : list "${buttonRowIndexNumberList}") {
+		for (var buttonRowIndexNumber : list ${buttonRowIndexNumberList}) {
 			Click(
-				key_buttonRowIndexNumber = "${buttonRowIndexNumber}",
+				key_buttonRowIndexNumber = ${buttonRowIndexNumber},
 				locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
 
 			AssertTextEquals.assertPartialText(
@@ -132,11 +132,11 @@ definition {
 	}
 
 	macro openFeed {
-		var key_feedTitle = "${feedTitle}";
+		var key_feedTitle = ${feedTitle};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "RSSFeed#FEEDS_TITLE",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 
 		SelectWindow(locator1 = "title=Site Page Name 2 - Site Name - ${siteName}");
 	}
@@ -144,7 +144,7 @@ definition {
 	macro updateFeedTime {
 		Type(
 			locator1 = "RSSFeed#FEED_TIME",
-			value1 = "${feedTime}");
+			value1 = ${feedTime});
 
 		SystemSettings.saveConfiguration();
 	}
@@ -156,58 +156,58 @@ definition {
 	}
 
 	macro viewCustomADT {
-		var key_feedContentTitle = "${feedContentTitle}";
+		var key_feedContentTitle = ${feedContentTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_CUSTOM_ADT_TITLE",
-			value1 = "${feedContentTitle}");
+			value1 = ${feedContentTitle});
 	}
 
 	macro viewDeleteFeed {
-		var key_feedTitle = "${feedTitle}";
+		var key_feedTitle = ${feedTitle};
 
 		AssertTextNotPresent(
 			locator1 = "RSSFeed#FEEDS_TITLE",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 	}
 
 	macro viewDisplayFeedTitle {
-		var key_feedTitle = "${feedTitle}";
+		var key_feedTitle = ${feedTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_TITLE",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 	}
 
 	macro viewFeedContent {
-		Panel.expandPanel(panel = "${feedEntryTitle}");
+		Panel.expandPanel(panel = ${feedEntryTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "RSSFeed#FEEDS_CONTENT",
-			value1 = "${feedEntryContent}");
+			value1 = ${feedEntryContent});
 	}
 
 	macro viewNavigationDisplayFeedTitle {
-		var key_feedTitle = "${feedTitle}";
+		var key_feedTitle = ${feedTitle};
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEED_NAVIGATION_DISPLAY_STYLE",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 
-		if ("${navigationNullAdt}" == "true") {
+		if (${navigationNullAdt} == "true") {
 			AssertElementNotPresent(locator1 = "RSSFeed#FEED_PANEL_TOGGLE");
 		}
 	}
 
 	macro viewNoFeedTitle {
-		var key_feedTitle = "${feedTitle}";
+		var key_feedTitle = ${feedTitle};
 
 		AssertElementNotPresent(locator1 = "RSSFeed#FEEDS_TITLE");
 	}
 
 	macro viewPG {
-		var key_feedRowIndexNumber = "${feedRowIndexNumber}";
-		var key_rowIndexNumber = "${rowIndexNumber}";
+		var key_feedRowIndexNumber = ${feedRowIndexNumber};
+		var key_rowIndexNumber = ${rowIndexNumber};
 
 		SelectFrame(value1 = "relative=top");
 
@@ -217,7 +217,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEEDS_TITLE_NAME_FIELD",
-			value1 = "${feedTitle}");
+			value1 = ${feedTitle});
 	}
 
 	macro viewPortletConfigurationInfo {
@@ -227,20 +227,20 @@ definition {
 	}
 
 	macro viewUpdateFeedTitle {
-		var key_feedHeading = "${feedHeading}";
+		var key_feedHeading = ${feedHeading};
 
 		if (isSet(updateFeed)) {
 
 			// We need this pause to check issue due to the minimum feed time is 1 min
 
-			Pause(locator1 = "60000");
+			Pause(locator1 = 60000);
 
-			Navigator._gotoPage(pageName = "${pageName}");
+			Navigator._gotoPage(pageName = ${pageName});
 		}
 
 		AssertTextEquals(
 			locator1 = "RSSFeed#FEED_PANEL_HEADING",
-			value1 = "${feedHeading}");
+			value1 = ${feedHeading});
 	}
 
 	macro waitForRSSLoad {

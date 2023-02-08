@@ -4,7 +4,7 @@ definition {
 	function selectPopUp {
 		WaitForSPARefresh();
 
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		selenium.selectPopUp();
 
@@ -16,7 +16,7 @@ definition {
 	function selectWindow {
 		WaitForSPARefresh();
 
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		selenium.selectWindow();
 
@@ -26,7 +26,7 @@ definition {
 	}
 
 	function selectWindowNoSPARefresh {
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		selenium.selectWindow();
 
@@ -36,7 +36,7 @@ definition {
 	}
 
 	function selectWindowTopNoSPARefresh {
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		selenium.selectWindow("null");
 
@@ -48,7 +48,7 @@ definition {
 	function waitForSelectPopUp {
 		WaitForSPARefresh();
 
-		selenium.waitForPopUp("${locator1}", "${value1}");
+		selenium.waitForPopUp(${locator1}, ${value1});
 
 		selenium.selectPopUp();
 

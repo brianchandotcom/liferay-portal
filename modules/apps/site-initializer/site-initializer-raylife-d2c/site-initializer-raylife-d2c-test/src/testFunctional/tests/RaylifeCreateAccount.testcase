@@ -14,7 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -22,7 +22,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,11 +31,11 @@ definition {
 	}
 
 	@description = "LPS-144339 - Verify if in the Re-enter Password field the passwords must be the same"
-	@priority = "4"
+	@priority = 4
 	test ArePasswordTheSame {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#ArePasswordTheSame";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -75,11 +75,11 @@ definition {
 	}
 
 	@description = "LPS-144342 - Verify if when users complete the account creation section, that completed section is indicated with a green checkmark"
-	@priority = "3"
+	@priority = 3
 	test CreateAccountSectionCompleted {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#CreateAccountSectionCompleted";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -125,11 +125,11 @@ definition {
 	}
 
 	@description = "LPS-144331 - Verify e-mail validation is required (Must have '@' and a '.' )"
-	@priority = "5"
+	@priority = 5
 	test ErrorMessageAppearInEmailField {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#ErrorMessageAppearInEmailField";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -161,12 +161,12 @@ definition {
 	}
 
 	@description = "LPS-144334 - Verify if after filling in the password and the email with all correct information, the create account button is active"
-	@priority = "5"
+	@priority = 5
 	test IsCreateAccountButtonActive {
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsAccountButtonActive";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -208,11 +208,11 @@ definition {
 	}
 
 	@description = "LPS-144333 - Verify if the create account button is disabled"
-	@priority = "3"
+	@priority = 3
 	test IsCreateAccountButtonDisabled {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsCreateAccountButtonDisabled";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -244,11 +244,11 @@ definition {
 	}
 
 	@description = "LPS-144335 - Verify that when entering a 7-character password the message 'At least 8 characters' is highlighted"
-	@priority = "4"
+	@priority = 4
 	test IsEightCharactersRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsEightCharactersRequired";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -288,11 +288,11 @@ definition {
 	}
 
 	@description = "LPS-144336 - Verify that when entering a password with repeated numbers and letters the message 'At least 5 unique characters' is highlighted"
-	@priority = "4"
+	@priority = 4
 	test IsFiveUniqueCharactersRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsFiveUniqueCharactersRequired";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -332,11 +332,11 @@ definition {
 	}
 
 	@description = "LPS-144337 - Verify that when entering a password with only letters and numbers the message 'At least 1 symbol' is highlighted"
-	@priority = "4"
+	@priority = 4
 	test IsOneSymbolRequired {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#IsOneSymbolRequired";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -376,11 +376,11 @@ definition {
 	}
 
 	@description = "LPS-144338 - Verify that when entering the password with spaces the message 'No spaces allowed' is highlighted"
-	@priority = "4"
+	@priority = 4
 	test NoSpacesAreAllowed {
 		property test.name.skip.portal.instance = "RaylifeCreateAccount#NoSpacesAreAllowed";
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 

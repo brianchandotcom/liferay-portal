@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6066. AddANewProductGroup"
-	@priority = "3"
+	@priority = 3
 	test AddANewProductGroup {
 		property portal.acceptance = "false";
 
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
-	@priority = "3"
+	@priority = 3
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "true";
 
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6068. EditAProductGroup"
-	@priority = "3"
+	@priority = 3
 	test EditAProductGroup {
 		property portal.acceptance = "true";
 
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6067. RemoveAProductGroup"
-	@priority = "3"
+	@priority = 3
 	test RemoveAProductGroup {
 		property portal.acceptance = "false";
 

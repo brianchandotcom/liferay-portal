@@ -37,7 +37,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
 
-		CustomerPortal.viewObjectInfo(index = "${index}");
+		CustomerPortal.viewObjectInfo(index = ${index});
 
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "activationStatus",
@@ -51,11 +51,11 @@ definition {
 	macro activeStatusViaDropdown {
 		Click(locator1 = "CustomerPortalSite#DROPDOWN_STATUS");
 
-		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "${dropdownItem}");
+		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = ${dropdownItem});
 
 		Type(
 			locator1 = "CustomerPortalSite#ID_CONFIRMATION",
-			value1 = "${value}");
+			value1 = ${value});
 
 		CustomerPortal.clickAtButton(text = "Confirm");
 	}
@@ -66,7 +66,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		ObjectPortlet.selectObject(label = "${title}");
+		ObjectPortlet.selectObject(label = ${title});
 
 		CreateObject.checkToggleActive();
 
@@ -81,7 +81,7 @@ definition {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 	}
 
@@ -92,24 +92,24 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_NAME_FIELD",
-			value1 = "${idpNameId}");
+			value1 = ${idpNameId});
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
 
 		if (isSet(idpMetadataURL)) {
 			Type(
 				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-				value1 = "${idpMetadataURL}");
+				value1 = ${idpMetadataURL});
 		}
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "${nameIdentifierFormat}");
+				value1 = ${nameIdentifierFormat});
 		}
 		else {
 			Select(
@@ -119,18 +119,18 @@ definition {
 
 		if (isSet(idpAttributeMappingText)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
-				idpAttributeMapping = "${idpAttributeMapping}",
-				idpAttributeMappingText = "${idpAttributeMappingText}");
+				idpAttributeMapping = ${idpAttributeMapping},
+				idpAttributeMappingText = ${idpAttributeMappingText});
 		}
 		else if (isSet(idpAttributeMapping)) {
-			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = ${idpAttributeMapping});
 		}
 	}
 
 	macro addUserToAllAccounts {
 		var accountsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
-		CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${accountsList}");
+		CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${accountsList});
 	}
 
 	macro addUserToOneOrMoreAccounts {
@@ -138,65 +138,65 @@ definition {
 			var userEmailAddress = "test@liferay.com";
 		}
 
-		for (var account : list "${accountsList}") {
+		for (var account : list ${accountsList}) {
 			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "${account}",
-				userEmailAddress = "${userEmailAddress}");
+				accountEntryName = ${account},
+				userEmailAddress = ${userEmailAddress});
 		}
 	}
 
 	macro assertAlertInfoMessage {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#ALERT_INFO_MESSAGE",
-			value1 = "${messageText}");
+			value1 = ${messageText});
 	}
 
 	macro assertButtonIsActive {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON");
 	}
 
 	macro assertButtonIsDisabled {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
 	}
 
 	macro assertButtonIsVisible {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
 
 	macro assertButtonNotPresent {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertElementNotPresent(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro assertErrorMessageIsNotVisible {
-		var key_errorMessage = "${errorMessage}";
+		var key_errorMessage = ${errorMessage};
 
 		AssertElementNotPresent(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
 	macro assertErrorMessageIsVisible {
-		var key_errorMessage = "${errorMessage}";
+		var key_errorMessage = ${errorMessage};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
 	macro assertPageTitle {
 		AssertElementPresent(
-			key_title = "${title}",
+			key_title = ${title},
 			locator1 = "CustomerPortalSite#PAGE_TITLE");
 	}
 
 	macro assertQuickLinksPanelInfo {
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#QUICK_LINKS",
-			title = "${title}");
+			title = ${title});
 	}
 
 	macro assertQuickLinksPanelIsHidden {
@@ -206,27 +206,27 @@ definition {
 	macro assertSlaCard {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#SLA_CARD",
-			type = "${type}");
+			type = ${type});
 	}
 
 	macro assertSlaCardNotAppears {
 		AssertElementNotPresent(
 			locator1 = "CustomerPortalSite#SLA_CARD",
-			typeCard = "${typeCard}");
+			typeCard = ${typeCard});
 	}
 
 	macro assertThatLinkIsVisible {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_LINK");
 	}
 
 	macro assertThatTheProjectListIsNotPresent {
-		for (var project : list "${projectList}") {
+		for (var project : list ${projectList}) {
 			AssertElementNotPresent(
-				key_project = "${project}",
+				key_project = ${project},
 				locator1 = "CP2LiferayContact#PROJECT_TABLE",
-				title = "${project}");
+				title = ${project});
 		}
 	}
 
@@ -240,14 +240,14 @@ definition {
 		}
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "${organizationName}",
-			userEmailAddress = "${userEmailAddress}");
+			organizationName = ${organizationName},
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro cannotAppearsQuickLinksPanelInfo {
 		AssertElementNotPresent(
 			locator1 = "CP2NavigationMenu#QUICK_LINKS",
-			title = "${title}");
+			title = ${title});
 	}
 
 	macro changeUserRole {
@@ -257,21 +257,21 @@ definition {
 			portlet = "Accounts");
 
 		Click(
-			key_accountName = "${accountName}",
+			key_accountName = ${accountName},
 			locator1 = "CustomerPortalSite#ACCOUNT_NAME");
 
 		Navigator.gotoNavTab(navTab = "Users");
 
 		Account.goToEntryMenuItem(
 			menuItem = "Assign Roles",
-			rowEntry = "${accountUserName}");
+			rowEntry = ${accountUserName});
 
 		SelectFrame(
 			key_title = "Assign Roles",
 			locator1 = "IFrame#MODAL_ANY");
 
 		Check(
-			key_tableEntry = "${accountRoleTitle}",
+			key_tableEntry = ${accountRoleTitle},
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
 		SelectFrameTop();
@@ -291,10 +291,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
 
-		var key_status = "${status}";
+		var key_status = ${status};
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectCustomInfo(position = "${position}");
+			CustomerPortal.viewCPObjectCustomInfo(position = ${position});
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "activationStatus",
@@ -311,13 +311,13 @@ definition {
 	}
 
 	macro clickAtButton {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro clickAtLink {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#ANY_LINK");
 	}
@@ -333,7 +333,7 @@ definition {
 	}
 
 	macro clickOnModal {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
@@ -347,7 +347,7 @@ definition {
 	}
 
 	macro clickOnTheCloseButton {
-		var key_modalTitle = "${modalTitle}";
+		var key_modalTitle = ${modalTitle};
 
 		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL");
 	}
@@ -361,9 +361,9 @@ definition {
 	macro createUserForCP {
 		JSONUser.addUser(
 			userEmailAddress = "test.user@liferay.com",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
@@ -372,11 +372,11 @@ definition {
 
 		Account.openAccountsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Account.assignUsers(
-			accountName = "${accountName}",
-			assigneeName = "${userName}");
+			accountName = ${accountName},
+			assigneeName = ${userName});
 	}
 
 	macro customerPortalApisTearDown {
@@ -416,7 +416,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		ObjectPortlet.selectObject(label = "${title}");
+		ObjectPortlet.selectObject(label = ${title});
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
 
@@ -431,7 +431,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Flags");
 
-		ObjectPortlet.deleteEntry(entry = "${entry}");
+		ObjectPortlet.deleteEntry(entry = ${entry});
 	}
 
 	macro enterOnProject {
@@ -441,7 +441,7 @@ definition {
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
-			title = "${title}");
+			title = ${title});
 	}
 
 	macro enterOnSubscription {
@@ -461,20 +461,20 @@ definition {
 	}
 
 	macro getValueFieldKoroneikiByAccountName {
-		var key_label = "${field}";
+		var key_label = ${field};
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewCPObjectCustomInfoByAccountName(accountName = "${accountName}");
+		CustomerPortal.viewCPObjectCustomInfoByAccountName(accountName = ${accountName});
 
 		WaitForElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
 
 		var value = selenium.getElementValue("CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
 
-		return "${value}";
+		return ${value};
 	}
 
 	macro loginOktaToUpdateCP {
@@ -485,11 +485,11 @@ definition {
 
 		Type(
 			locator1 = "CustomerPortalSite#OKTA_USERNAME",
-			value1 = "${userEmailAddress}");
+			value1 = ${userEmailAddress});
 
 		Type(
 			locator1 = "CustomerPortalSite#OKTA_PASSWORD",
-			value1 = "${userPassword}");
+			value1 = ${userPassword});
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
 
@@ -499,11 +499,11 @@ definition {
 	}
 
 	macro notViewProduct {
-		for (var product : list "${productTab}") {
+		for (var product : list ${productTab}) {
 			AssertElementNotPresent(
-				key_product = "${productTab}",
+				key_product = ${productTab},
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
-				value = "${product}");
+				value = ${product});
 		}
 	}
 
@@ -535,7 +535,7 @@ definition {
 	}
 
 	macro putMouseOverButton {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		MouseOver(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
@@ -544,7 +544,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertClick(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE",
 			value1 = "Replace Certificate");
 
@@ -562,7 +562,7 @@ definition {
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
 			value1 = "USA");
 
-		if ("${certificateUsage}" == "SIGNING") {
+		if (${certificateUsage} == "SIGNING") {
 			Select(
 				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
 				value1 = "RSA");
@@ -570,11 +570,11 @@ definition {
 
 		Select(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
-			value1 = "2048");
+			value1 = 2048);
 
 		Type(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD",
-			value1 = "${samlKeyPassword}");
+			value1 = ${samlKeyPassword});
 
 		AssertClick(
 			locator1 = "Button#SUBMIT",
@@ -585,11 +585,11 @@ definition {
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
 
 		AssertElementPresent(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
 	}
 
@@ -597,7 +597,7 @@ definition {
 		if (IsElementPresent(locator1 = "CustomerPortalSite#SEARCH_BAR")) {
 			Type(
 				locator1 = "CustomerPortalSite#SEARCH_BAR",
-				value1 = "${searchItem}");
+				value1 = ${searchItem});
 		}
 	}
 
@@ -664,8 +664,8 @@ definition {
 
 			CustomerPortal.addIdPCForCustomerPortal(
 				idpAttributeMapping = "emailAddress,UUID,screenName,lastName,firstName",
-				idpEntityId = "${entityId}",
-				idpMetadataURL = "${metadataURL}",
+				idpEntityId = ${entityId},
+				idpMetadataURL = ${metadataURL},
 				idpNameId = "CP2",
 				nameIdentifierFormat = "Unspecified");
 
@@ -679,7 +679,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		ObjectPortlet.selectObject(label = "${title}");
+		ObjectPortlet.selectObject(label = ${title});
 
 		CreateObject.checkToggleActive();
 
@@ -691,20 +691,20 @@ definition {
 	}
 
 	macro tableListInAccountsAdmin {
-		for (var tableEntry : list "${projectsList}") {
+		for (var tableEntry : list ${projectsList}) {
 			AssertElementPresent(
-				key_tableEntry = "${tableEntry}",
+				key_tableEntry = ${tableEntry},
 				locator1 = "CustomerPortalSite#TABLE_ENTRY",
-				value1 = "${tableEntry}");
+				value1 = ${tableEntry});
 		}
 	}
 
 	macro tableListInHomepage {
-		for (var project : list "${projectList}") {
+		for (var project : list ${projectList}) {
 			AssertElementPresent(
-				key_project = "${project}",
+				key_project = ${project},
 				locator1 = "CP2LiferayContact#PROJECT_TABLE",
-				title = "${project}");
+				title = ${project});
 		}
 	}
 
@@ -719,7 +719,7 @@ definition {
 
 			SAMLNavigation.gotoIdentityProviderConnections();
 
-			SAMLPortlet.deleteSAMLConnection(samlEntityId = "${entityId}");
+			SAMLPortlet.deleteSAMLConnection(samlEntityId = ${entityId});
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
@@ -745,43 +745,43 @@ definition {
 	macro viewActivationStatusCardChange {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			title = "${subtitle}");
+			title = ${subtitle});
 
 		AssertElementPresent(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
 	macro viewActivationStatusCardValue {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-			title = "${subtitle}");
+			title = ${subtitle});
 
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_LOGO",
-			product = "${productIcon}");
+			product = ${productIcon});
 
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#CARD_TITLE",
-			project = "${project}");
+			project = ${project});
 
 		AssertElementPresent(
-			date = "${dates}",
+			date = ${dates},
 			locator1 = "CustomerPortalSite#CARD_DATES");
 
 		AssertElementPresent(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
 	macro viewAlert {
-		var key_alertText = "${alertText}";
+		var key_alertText = ${alertText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
 	}
 
 	macro viewAlertInfo {
-		var key_alertText = "${alertText}";
+		var key_alertText = ${alertText};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ALERT_INFO");
 	}
@@ -791,7 +791,7 @@ definition {
 	}
 
 	macro viewButton {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
@@ -806,9 +806,9 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
 		AssertElementPresent(
-			key_index = "2",
+			key_index = 2,
 			locator1 = "CustomerPortalSite#CARD_INSTANCE",
-			title = "1");
+			title = 1);
 
 		AssertElementPresent(
 			date = "03/31/2021 - 03/30/2022",
@@ -817,17 +817,17 @@ definition {
 	}
 
 	macro viewConfirmationModal {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
 
 	macro viewCPObjectCustomInfo {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
-		var key_index = "${position}";
+		var key_index = ${position};
 
 		Click(
 			key_text = "",
@@ -838,7 +838,7 @@ definition {
 
 	macro viewCPObjectCustomInfoByAccountName {
 		Click(
-			key_accountName = "${accountName}",
+			key_accountName = ${accountName},
 			locator1 = "CustomerPortalSite#KORONEIKI_ACCOUNT_ELLIPSIS_BUTTON");
 
 		MenuItem.click(menuItem = "View");
@@ -862,7 +862,7 @@ definition {
 
 	macro viewObjectInfo {
 		Click(
-			key_index = "${index}",
+			key_index = ${index},
 			key_text = "",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
@@ -879,22 +879,22 @@ definition {
 
 	macro viewSubscriptionManagementList {
 		Click(
-			key_dropdownLabel = "${dropDownLabel}",
+			key_dropdownLabel = ${dropDownLabel},
 			locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN");
 
-		for (var dropDownItem : list "${dropDownItems}") {
+		for (var dropDownItem : list ${dropDownItems}) {
 			AssertVisible(
-				key_text = "${dropDownItem}",
+				key_text = ${dropDownItem},
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN_ITEM");
 		}
 	}
 
 	macro viewSubscriptionManagementTab {
-		for (var product : list "${productTab}") {
+		for (var product : list ${productTab}) {
 			AssertElementPresent(
-				key_product = "${productTab}",
+				key_product = ${productTab},
 				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
-				value = "${product}");
+				value = ${product});
 		}
 	}
 
@@ -906,8 +906,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#TABLE_VALUE",
-			value = "1",
-			value1 = "1");
+			value = 1,
+			value1 = 1);
 
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#TABLE_HEAD",
@@ -921,34 +921,34 @@ definition {
 	}
 
 	macro viewValueFieldKoroneiki {
-		var key_label = "${field}";
-		var key_value = "${value}";
+		var key_label = ${field};
+		var key_value = ${value};
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewObjectInfo(index = "${index}");
+		CustomerPortal.viewObjectInfo(index = ${index});
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
 	macro viewVersions {
 		Click(
-			key_dropdownLabel = "${dropDownLabel}",
+			key_dropdownLabel = ${dropDownLabel},
 			locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
 
-		for (var dropDownItem : list "${dropDownItems}") {
+		for (var dropDownItem : list ${dropDownItems}) {
 			AssertVisible(
-				key_text = "${dropDownItem}",
+				key_text = ${dropDownItem},
 				locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
 		}
 	}
 
 	macro waitCP20PageToLoad {
 		WaitForVisible(
-			key_userFirstName = "${userFirstName}",
+			key_userFirstName = ${userFirstName},
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
 	}
 

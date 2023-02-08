@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78284."
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive625 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -26,7 +26,7 @@ definition {
 		Upgrade.viewAssetPublisher();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive706 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -37,7 +37,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive713 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -48,7 +48,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive721 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -59,7 +59,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive730 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -70,7 +70,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive7310 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -79,7 +79,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive7413 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -88,7 +88,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive70106 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -99,7 +99,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive71103 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -110,7 +110,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive72101 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -121,7 +121,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive74321 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
@@ -130,7 +130,7 @@ definition {
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive621015 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78284."
-	@priority = "5"
+	@priority = 5
 	test ViewAssetPublisherArchive621021 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";

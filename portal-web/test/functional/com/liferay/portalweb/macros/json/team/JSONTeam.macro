@@ -5,7 +5,7 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${siteName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = ${siteName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/add-team \
@@ -21,17 +21,17 @@ definition {
 
 		echo("## * Description: ${teamDescription}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	macro addUserToTeam {
 		Variables.assertDefined(parameterList = "${teamName},${userEmailAddress}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = ${userEmailAddress});
 		var teamId = JSONTeam.getTeamId(
-			siteName = "${siteName}",
-			teamName = "${teamName}");
+			siteName = ${siteName},
+			teamName = ${teamName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-team-users \
@@ -40,15 +40,15 @@ definition {
 				-d userIds=[${userId}]
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro getTeamId {
-		Variables.assertDefined(parameterList = "${teamName}");
+		Variables.assertDefined(parameterList = ${teamName});
 
 		var portalURL = JSONCompany.getPortalURL();
-		var key_teamName = StringUtil.replace("${teamName}", " ", "%20");
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${siteName}");
+		var key_teamName = StringUtil.replace(${teamName}, " ", "%20");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = ${siteName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/get-team \
@@ -57,9 +57,9 @@ definition {
 				-d name=${key_teamName}
 		''';
 
-		var teamId = JSONCurlUtil.post("${curl}", "$.teamId");
+		var teamId = JSONCurlUtil.post(${curl}, "$.teamId");
 
-		return "${teamId}";
+		return ${teamId};
 	}
 
 }

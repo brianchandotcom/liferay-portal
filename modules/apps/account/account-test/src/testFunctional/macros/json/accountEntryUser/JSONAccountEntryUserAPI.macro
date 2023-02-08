@@ -1,11 +1,11 @@
 definition {
 
 	macro _addAccountEntryUser {
-		Variables.assertDefined(parameterList = "${accountEntryName}");
+		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
-		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = ${creatorEmailAddress});
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rel \
@@ -23,7 +23,7 @@ definition {
 				-d jobTitle=
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addExistUsertoAccount {
@@ -47,7 +47,7 @@ definition {
 				-d accountUserIds=${userId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

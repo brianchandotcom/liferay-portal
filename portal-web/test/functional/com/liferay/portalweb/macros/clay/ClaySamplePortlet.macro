@@ -1,16 +1,16 @@
 definition {
 
 	macro assertNavTabVisualContent {
-		var tabName = StringUtil.replace("${tab}", " ", "_");
+		var tabName = StringUtil.replace(${tab}, " ", "_");
 
-		var tabName = StringUtil.toLowerCase("${tabName}");
+		var tabName = StringUtil.toLowerCase(${tabName});
 
-		Navigator.gotoNavTab(navTab = "${tab}");
+		Navigator.gotoNavTab(navTab = ${tab});
 
 		OcularAssertElementImage(
 			locator1 = "ClaySamplePortlet#CLAY_SECTION",
 			value1 = "clay_smoke/can_render_ui/${tabName}.png",
-			value2 = "70");
+			value2 = 70);
 	}
 
 }

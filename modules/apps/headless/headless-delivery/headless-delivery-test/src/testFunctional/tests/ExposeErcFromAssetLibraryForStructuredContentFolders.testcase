@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "Structured content folder is deleted by custom erc in an asset library"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStructuredContentFolderInAssetLibraryByCustomErc {
 		property portal.acceptance = "true";
 
@@ -35,27 +35,27 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When I make a DELETE request by erc") {
 			var response = HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then the structured content folder is correctly deleted") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 0,
 				filterValue = "name%20eq%20%27Test%20Folder%27");
 		}
 	}
 
 	@description = "Structured content folder is deleted by custom erc in an asset library"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStructuredContentFolderInAssetLibraryByDefaultErc {
 		property portal.acceptance = "true";
 
@@ -63,7 +63,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "Test Folder");
 		}
 
@@ -74,20 +74,20 @@ definition {
 				site = "false");
 
 			var response = HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${folderUuid}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${folderUuid});
 		}
 
 		task ("Then the structured content folder is correctly deleted") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 0,
 				filterValue = "name%20eq%20%27Test%20Folder%27");
 		}
 	}
 
 	@description = "Get structured content folder with erc of parent folder in an asset library"
-	@priority = "5"
+	@priority = 5
 	test CanGetParentStructuredContentFolderInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -95,7 +95,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -103,29 +103,29 @@ definition {
 		task ("Given a subfolder with another custom erc is create with a POST request") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("When I make a GET request by the erc of the parent structured content folder") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then I receive a correct body response with numberOfStructuredContentFolders is 1") {
 			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
-				expectedNumbers = "1",
-				responseToParse = "${response}");
+				expectedNumbers = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get structured content folder in asset library by existing custom erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetStructuredContentFolderInAssetLibraryByExistingCustomErc {
 		property portal.acceptance = "true";
 
@@ -133,26 +133,26 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When I make a GET request by assetLibraryId and erc") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then I receive a correct body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get structured content folder in asset library by existing uuid as erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetStructuredContentFolderInAssetLibraryByExistingDefaultErc {
 		property portal.acceptance = "true";
 
@@ -160,7 +160,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "Test Folder");
 		}
 
@@ -171,19 +171,19 @@ definition {
 				site = "false");
 
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${folderUuid}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${folderUuid});
 		}
 
 		task ("Then I receive a correct body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${folderUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${folderUuid},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get subfolder of structured content folder with erc in an asset library"
-	@priority = "5"
+	@priority = 5
 	test CanGetSubStructuredContentFolderInAssetLibraryWithErc {
 		property portal.acceptance = "true";
 
@@ -191,7 +191,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -199,39 +199,39 @@ definition {
 		task ("Given a subfolder with another custom erc is create with a POST request") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("When I make a GET request by the erc of subfolder") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "subfolder-erc");
 		}
 
 		task ("Then I receive a correct body response with id of parent structured content folder") {
 			var parentFolderIdInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.parentStructuredContentFolderId",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${parentFolderIdInResponse}",
-				expected = "${folderId}");
+				actual = ${parentFolderIdInResponse},
+				expected = ${folderId});
 		}
 
 		task ("And Then numberOfStructuredContentFolders in body response is 0") {
 			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
-				expectedNumbers = "0",
-				responseToParse = "${response}");
+				expectedNumbers = 0,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content folder is not able to create with existing erc in asset library"
-	@priority = "5"
+	@priority = 5
 	test CannotCreateStructuredContentFolderInAssetLibraryWithExistingErc {
 		property portal.acceptance = "true";
 
@@ -239,34 +239,34 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When with POST request I create a structured content folder with an already existing custom erc") {
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Second Folder");
 		}
 
 		task ("Then I receive an error code response about duplicate folder erc") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "Duplicate journal folder external reference code erc");
 		}
 
 		task ("And Then another folder with same erc is not being created") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 0,
 				filterValue = "name%20eq%20%27Second%20Folder%27");
 		}
 	}
 
 	@description = "Structured content folder erc is not able to update with erc in body in an asset library"
-	@priority = "5"
+	@priority = 5
 	test CannotUpdateStructuredContentFolderErcInAssetLibraryWithErcInBody {
 		property portal.acceptance = "true";
 
@@ -274,14 +274,14 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When I make a PUT request by previous custom erc and updated erc in body") {
 			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				externalReferenceCodeInBody = "update-erc",
 				name = "Update Test Folder");
@@ -290,22 +290,22 @@ definition {
 		task ("Then the erc in response body is still the previous erc") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then another folder with updated erc is not being created") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "update-erc");
 
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "No JournalFolder exists with the key");
 		}
 	}
 
 	@description = "Unable to get structured content folder by nonexistent assetLibraryId"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetStructuredContentFolderInAssetLibraryByNonexistentAssetLibraryId {
 		property portal.acceptance = "true";
 
@@ -317,7 +317,7 @@ definition {
 
 		task ("Then I receive not found error response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "NOT_FOUND");
 		}
 
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@description = "Unable to get structured content folder by nonexistent erc"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetStructuredContentFolderInAssetLibraryByNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -335,19 +335,19 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then I receive error message in response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "No JournalFolder exists with the key");
 		}
 	}
 
 	@description = "Update structured content folder name by erc with put request in an asset library"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateStructuredContentFolderNameInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -355,14 +355,14 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When I make a PUT request by erc to update folder name") {
 			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Update Test Folder");
 		}
@@ -370,23 +370,23 @@ definition {
 		task ("Then I receive a correct body response with updated data") {
 			var nameInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.name",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${nameInResponse}",
+				actual = ${nameInResponse},
 				expected = "Update Test Folder");
 		}
 
 		task ("And Then the structured content folder is correctly updated") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 1,
 				filterValue = "name%20eq%20%27Update%20Test%20Folder%27");
 		}
 	}
 
 	@description = "Update structured content folder subfolder name by erc with put request in an asset library"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateSubfolderNameOfStructuredContentFolderInAssetLibraryByPutErc {
 		property portal.acceptance = "true";
 
@@ -394,7 +394,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -402,17 +402,17 @@ definition {
 		task ("Given a subfolder is created with a POST request") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("When I make a PUT request by subfolder erc and a new subfolder name in the body") {
 			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "subfolder-erc",
 				name = "Update Sub Folder");
 		}
@@ -420,16 +420,16 @@ definition {
 		task ("Then subfolder of structured content folder is correctly updated") {
 			var nameInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.name",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${nameInResponse}",
+				actual = ${nameInResponse},
 				expected = "Update Sub Folder");
 		}
 	}
 
 	@description = "Get structured content folder with deletion of subfolder in an asset library"
-	@priority = "5"
+	@priority = 5
 	test GetStructuredContentFolderInAssetLibraryWithSubfolderDeletionByErc {
 		property portal.acceptance = "true";
 
@@ -437,7 +437,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -445,39 +445,39 @@ definition {
 		task ("Given a subfolder with another custom erc is created with a POST reqeust") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("Given I make a DELETE request by erc of subfolder") {
 			HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "subfolder-erc");
 		}
 
 		task ("When I make a GET request by parent erc") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then I receive a correct body response with numberOfStructuredContentFolders is 0") {
 			var numberOfStructuredContentFoldersInResponse = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.numberOfStructuredContentFolders",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${numberOfStructuredContentFoldersInResponse}",
-				expected = "0");
+				actual = ${numberOfStructuredContentFoldersInResponse},
+				expected = 0);
 		}
 	}
 
 	@description = "Structured content folder is not able to delete by nonexistent erc in an asset library"
-	@priority = "3"
+	@priority = 3
 	test StructruedContentFolderDeletionImpossibleByNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -485,27 +485,27 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
 
 		task ("When I make a DELETE request by a non-existent erc") {
 			HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then the structured content folder with erc created earlier still exists") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 1,
 				filterValue = "name%20eq%20%27Test%20Folder%27");
 		}
 	}
 
 	@description = "Structured content folder is created with custom erc in an asset library"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentFolderIsCreatedInAssetLibraryWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -513,7 +513,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -521,12 +521,12 @@ definition {
 		task ("Then a new folder is being created with the custom erc in the body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content folder is created in an asset library with erc equals to uuid by default"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentFolderIsCreatedInAssetLibraryWithErcByDefault {
 		property portal.acceptance = "true";
 
@@ -534,7 +534,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				name = "Test Folder");
 		}
 
@@ -545,13 +545,13 @@ definition {
 				site = "false");
 
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${folderUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${folderUuid},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structure content folder is created with same name of subfolder with put request in an asset library"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentFolderIsCreatedInAssetLibraryWithSameNameOfSubfolderByPutNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -559,7 +559,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -567,31 +567,31 @@ definition {
 		task ("Given a subfolder is created with a POST request") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			var response = HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("When I make a PUT request by nonexistent erc with subfolder name in the body") {
 			var response = HeadlessWebcontentFolderAPI.updateStructureContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc",
 				name = "Sub Folder");
 		}
 
 		task ("And Then a new structured content folder is created") {
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "1",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 1,
 				filterValue = "name%20eq%20%27Sub%20Folder%27");
 		}
 	}
 
 	@description = "Sub folder is created with a custom erc in structured content folder in asset library"
-	@priority = "5"
+	@priority = 5
 	test SubfolderIsCreatedInStructuredContentFolderInAssetLibraryWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -599,7 +599,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -607,33 +607,33 @@ definition {
 		task ("When with POST request I create a child folder with another custom erc") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			var response = HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("Then I can see the custom erc in the body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "subfolder-erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then a child folder is being created properly") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 
 			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
-				expectedNumbers = "1",
-				responseToParse = "${response}");
+				expectedNumbers = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Sub folder is created with erc equals to uuid by default in structured content folder in asset library"
-	@priority = "5"
+	@priority = 5
 	test SubfolderIsCreatedInStructuredContentInAssetLibraryWithErcByDefault {
 		property portal.acceptance = "true";
 
@@ -641,7 +641,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -649,11 +649,11 @@ definition {
 		task ("When with POST request I create a child folder without custom erc") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			var response = HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("Then I can see the erc equals to uuid in the body response") {
@@ -663,23 +663,23 @@ definition {
 				site = "false");
 
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${folderUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${folderUuid},
+				responseToParse = ${response});
 		}
 
 		task ("And Then a child folder is being created properly") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 
 			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
-				expectedNumbers = "1",
-				responseToParse = "${response}");
+				expectedNumbers = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Sub folder is deleted by erc of parent structured content folder in asset library"
-	@priority = "4"
+	@priority = 4
 	test SubStructuredContentFolderIsDeletedInAssetLibraryWithParentStructuredContentErc {
 		property portal.acceptance = "true";
 
@@ -687,7 +687,7 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc",
 				name = "Test Folder");
 		}
@@ -695,32 +695,32 @@ definition {
 		task ("Given a subfolder with another custom erc is created with a POST reqeust") {
 			var folderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
 				externalReferenceCode = "subfolder-erc",
 				name = "Sub Folder",
-				parentStructuredContentFolderId = "${folderId}");
+				parentStructuredContentFolderId = ${folderId});
 		}
 
 		task ("When I make a DELETE request by erc of parent folder") {
 			HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then both parent and sub structured content folders are deleted") {
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "subfolder-erc");
 
 			ObjectDefinitionAPI.assertStatusInResponse(
 				expectedValue = "NOT_FOUND",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				expectedStructuredContentFolderTotalCount = "0",
+				assetLibraryId = ${assetLibraryId},
+				expectedStructuredContentFolderTotalCount = 0,
 				filterValue = "name%20eq%20%27Test%20Folder%27");
 		}
 	}

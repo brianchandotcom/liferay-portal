@@ -3,24 +3,24 @@ definition {
 	macro addEmailTestray {
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "${key_itemvalue}");
+			value1 = ${key_itemvalue});
 	}
 
 	macro addPasswordTestray {
 		Type(
 			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = "${key_itemvalue}");
+			value1 = ${key_itemvalue});
 	}
 
 	macro assertTitleFailed {
 		AssertElementPresent(
-			key_fieldName = "${key_title}",
+			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_FAILED");
 	}
 
 	macro assertTitleSucess {
 		AssertElementPresent(
-			key_fieldName = "${key_title}",
+			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_SUCCESS");
 	}
 

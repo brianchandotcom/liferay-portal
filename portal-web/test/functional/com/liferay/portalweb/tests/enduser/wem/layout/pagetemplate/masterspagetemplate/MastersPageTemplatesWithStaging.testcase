@@ -36,7 +36,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This is for LPS-116106. Page Creator can quickly change master page via Page Design Options panel in Staging site."
-	@priority = "4"
+	@priority = 4
 	test ChangeMasterOfContentPageViaPageDesignOptionsPanelInStagingSite {
 		task ("Add a header and footer fragment to master page") {
 			PageEditor.addFragment(
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111549. Redo can make the master page editor rollback the previous undo state up to X that is the number of undo interactions in Staging site."
-	@priority = "4"
+	@priority = 4
 	test UndoMasterPageChangesInStagingSite {
 		AssertElementPresent(
 			key_text = "redo",
@@ -254,7 +254,7 @@ definition {
 			locator1 = "Icon#ANY");
 
 		AssertElementNotPresent(
-			index = "2",
+			index = 2,
 			key_fragmentName = "Container",
 			locator1 = "Fragment#FRAGMENT_LABEL");
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-124104. The page editor of content page based on custom master should be available in staging site."
-	@priority = "4"
+	@priority = 4
 	test ViewPageEditorOfContentPageBasedOnCustomMasterInStagingSite {
 		task ("Add a Heading fragment to custom master") {
 			PageEditor.addFragment(

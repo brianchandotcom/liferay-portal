@@ -78,7 +78,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -178,7 +178,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -187,9 +187,9 @@ definition {
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
 			cartItemSkUs = "SPEED55861,",
-			cartSummaryQuantity = "1",
-			cartSummarySubtotal = "24",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 1,
+			cartSummarySubtotal = 24,
+			cartSummaryTotal = ${cartSummarySubtotal});
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 
@@ -201,7 +201,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "5");
+			productQuantity = 5);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -210,9 +210,9 @@ definition {
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "5,",
 			cartItemSkUs = "SPEED55861,",
-			cartSummaryQuantity = "5",
-			cartSummarySubtotal = "120",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 5,
+			cartSummarySubtotal = 120,
+			cartSummaryTotal = ${cartSummarySubtotal});
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 
@@ -230,9 +230,9 @@ definition {
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
 			cartItemSkUs = "SPEED55861,",
-			cartSummaryQuantity = "1",
-			cartSummarySubtotal = "24",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 1,
+			cartSummarySubtotal = 24,
+			cartSummaryTotal = ${cartSummarySubtotal});
 	}
 
 	test AssertGuestCartItemIsTransferredToExistingCart {
@@ -302,7 +302,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -311,9 +311,9 @@ definition {
 			cartItemPriceValues = "24,",
 			cartItemQuantities = "1,",
 			cartItemSkUs = "SPEED55861,",
-			cartSummaryQuantity = "1",
-			cartSummarySubtotal = "24",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 1,
+			cartSummarySubtotal = 24,
+			cartSummaryTotal = ${cartSummarySubtotal});
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 
@@ -325,7 +325,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "5");
+			productQuantity = 5);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -334,9 +334,9 @@ definition {
 			cartItemPriceValues = "15,",
 			cartItemQuantities = "5,",
 			cartItemSkUs = "SPEED55860,",
-			cartSummaryQuantity = "5",
-			cartSummarySubtotal = "75",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 5,
+			cartSummarySubtotal = 75,
+			cartSummaryTotal = ${cartSummarySubtotal});
 
 		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
 
@@ -354,9 +354,9 @@ definition {
 			cartItemPriceValues = "24,15,",
 			cartItemQuantities = "1,5,",
 			cartItemSkUs = "SPEED55861,SPEED55860,",
-			cartSummaryQuantity = "6",
-			cartSummarySubtotal = "99",
-			cartSummaryTotal = "${cartSummarySubtotal}");
+			cartSummaryQuantity = 6,
+			cartSummarySubtotal = 99,
+			cartSummaryTotal = ${cartSummarySubtotal});
 	}
 
 	test AssertGuestCheckoutAuthenticationPage {
@@ -398,7 +398,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -446,7 +446,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -463,8 +463,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell");
@@ -473,7 +473,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -490,8 +490,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Navigator.openURL();
@@ -563,7 +563,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -580,8 +580,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Navigator.openURL();
@@ -602,7 +602,7 @@ definition {
 			accountType = "Guest");
 
 		TestUtils.assertEquals(
-			actual = "${guestAccountEmail}",
+			actual = ${guestAccountEmail},
 			expected = "buyer@liferay.com");
 	}
 
@@ -673,7 +673,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -687,8 +687,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -699,7 +699,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -716,8 +716,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceLogin.speedwellLogin(
@@ -836,7 +836,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -853,8 +853,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		AssertTextEquals(
@@ -891,7 +891,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -905,8 +905,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 	}
 
@@ -961,7 +961,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -982,8 +982,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24");
+			productQuantity = 1,
+			productUnitPrice = 24);
 	}
 
 	test GuestCheckoutWithShippableProduct {
@@ -1021,7 +1021,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1040,8 +1040,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 	}
 
@@ -1101,7 +1101,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1118,8 +1118,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell");
@@ -1128,7 +1128,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1161,8 +1161,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "My Account");

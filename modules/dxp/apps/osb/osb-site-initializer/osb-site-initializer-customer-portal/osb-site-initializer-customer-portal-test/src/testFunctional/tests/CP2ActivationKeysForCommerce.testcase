@@ -23,19 +23,19 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 
 		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${userFirstName}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${userFirstName});
 
 			CustomerPortal.assignUserToOrganization();
 
@@ -46,17 +46,17 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Verify that after clicking the 'Download Key' button the user downloads the appropriate Commerce license"
-	@priority = "4"
+	@priority = 4
 	test CanDownloadTheKeyWhenASubscriptionIsSelected {
 		property portal.upstream = "quarantine";
 
@@ -75,7 +75,7 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Select DropDown list of LES subscription"
@@ -97,11 +97,11 @@ definition {
 	}
 
 	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"
-	@priority = "4"
+	@priority = 4
 	test CanViewActivationKeysPage {
 		var accountsList = "7.4,7.3,7.2,7.1,7.0";
 
-		for (var account : list "${accountsList}") {
+		for (var account : list ${accountsList}) {
 			task ("Go to Test Account") {
 				CustomerPortal.enterOnProject(title = "Test Account QA ${account}");
 
@@ -111,19 +111,19 @@ definition {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-				CP2ActivationKeys.assertDropdownSelection(option = "${account}");
+				CP2ActivationKeys.assertDropdownSelection(option = ${account});
 			}
 
 			task ("Assert access to Commerce Activation Key Page") {
 				CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-				CustomerPortal.assertPageTitle(title = "${pageTitle}");
+				CustomerPortal.assertPageTitle(title = ${pageTitle});
 			}
 
 			task ("Go to Customer Portal") {
-				ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+				ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-				CustomerPortal.waitCP20PageToLoad(userFirstName = "${userFirstName}");
+				CustomerPortal.waitCP20PageToLoad(userFirstName = ${userFirstName});
 			}
 		}
 	}
@@ -131,7 +131,7 @@ definition {
 	test CanViewActivationTextWhenTheVersionHasNoValue {
 		var accountsList = "7.4,7.3";
 
-		for (var account : list "${accountsList}") {
+		for (var account : list ${accountsList}) {
 			task ("Go to Test Account") {
 				CustomerPortal.enterOnProject(title = "Test Account QA ${account}");
 
@@ -141,38 +141,38 @@ definition {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-				CP2ActivationKeys.assertDropdownSelection(option = "${account}");
+				CP2ActivationKeys.assertDropdownSelection(option = ${account});
 			}
 
 			task ("Assert access to Commerce Activation Key Page") {
 				CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-				CustomerPortal.assertPageTitle(title = "${pageTitle}");
+				CustomerPortal.assertPageTitle(title = ${pageTitle});
 			}
 
 			task ("Assert Commerce Activation Key Page") {
 				CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-				CustomerPortal.assertPageTitle(title = "${pageTitle}");
+				CustomerPortal.assertPageTitle(title = ${pageTitle});
 
 				var versions = "DXP 7.4 GA1+,DXP 7.3 FP3/SP2+,DXP 7.3 FP2/SP1";
 				var instructions = "All Commerce modules are enabled by default.,Commerce is activated using a portal property.,Commerce requires an activation key.";
 
-				CP2ActivationKeys.assertInstructionsTable(textList = "${versions}");
+				CP2ActivationKeys.assertInstructionsTable(textList = ${versions});
 
-				CP2ActivationKeys.assertInstructionsTable(textList = "${instructions}");
+				CP2ActivationKeys.assertInstructionsTable(textList = ${instructions});
 			}
 
 			task ("Go to Customer Portal") {
-				ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+				ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-				CustomerPortal.waitCP20PageToLoad(userFirstName = "${userFirstName}");
+				CustomerPortal.waitCP20PageToLoad(userFirstName = ${userFirstName});
 			}
 		}
 	}
 
 	@description = "Verify that once a subscription is selected, the next drop-down is populated with a list of start and end dates."
-	@priority = "4"
+	@priority = 4
 	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
 		property portal.upstream = "quarantine";
 
@@ -191,7 +191,7 @@ definition {
 		task ("Assert Access Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Assert DropDown list of LES subscription is populated"
@@ -210,7 +210,7 @@ definition {
 		task ("Assert Access Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		task ("Assert that project has DXP 7.1") {
@@ -226,7 +226,7 @@ definition {
 		task ("Assert Access Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Assert DropDown list of LES subscription is populated")
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@description = "Verify that when the DXP version of the project is below 7.3, clicking on subscriptions the user can select from a drop-down list their LES subscriptions."
-	@priority = "5"
+	@priority = 5
 	test CanViewTheDropdownListWhenTheVersionIsLowerThanTheCurrentOne {
 		property portal.upstream = "quarantine";
 
@@ -254,13 +254,13 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Assert DropDown list of LES subscription")
 
 		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Assert that project has DXP 7.1") {
@@ -276,15 +276,15 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Assert DropDown list of LES subscription"
 
 		task ("Go to Customer Portal") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${userFirstName}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${userFirstName});
 		}
 
 		task ("Assert that project has DXP 7.0") {
@@ -300,7 +300,7 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Assert DropDown list of LES subscription"
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "Verify that after choosing a subscription the 'Download Key' button is enabled."
-	@priority = "4"
+	@priority = 4
 	test SelectingASubscriptionTheDownloadSearchButtonIsEnabled {
 		property portal.upstream = "quarantine";
 
@@ -327,7 +327,7 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Select DropDown list of LES subscription"
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "Verify that the active subscription terms with the list of dates, is as follows (Dec 01, 2020 - Dec 01, 2021)."
-	@priority = "4"
+	@priority = 4
 	test SetTheDateFormatOfTheActivationList {
 		property portal.upstream = "quarantine";
 
@@ -360,7 +360,7 @@ definition {
 		task ("Assert Access to Commerce Activation Key Page") {
 			CP2NavigationMenu.clickOnProductButton(product = "Commerce");
 
-			CustomerPortal.assertPageTitle(title = "${pageTitle}");
+			CustomerPortal.assertPageTitle(title = ${pageTitle});
 		}
 
 		// "Select DropDown list of LES subscription"

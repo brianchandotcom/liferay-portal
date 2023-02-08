@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132482."
-	@priority = "5"
+	@priority = 5
 	test AssertSelectAllCheckboxDisplayPorperlyUnderDefinePermissionsTab {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -43,7 +43,7 @@ definition {
 			locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanAddRoleWithSameNameDifferentKey {
 		Role.openRolesAdmin();
 
@@ -76,7 +76,7 @@ definition {
 			value1 = "Role Name-2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanEditTheRoleTitle {
 		JSONRole.addRegularRole(
 			roleKey = "Update Role Title",
@@ -103,7 +103,7 @@ definition {
 			roleTitle = "This is an updated Role Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CannotAddRoleIfSimilarKeyExists {
 		Role.openRolesAdmin();
 
@@ -136,7 +136,7 @@ definition {
 			value1 = "No roles were found.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanRemoveSiteInScope {
 		property test.name.skip.portal.instance = "RolesAdmin#CanRemoveSiteInScope";
 
@@ -150,7 +150,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Permission Scope");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		// The define permission via json macro is not able to change the permission scope
 
@@ -160,12 +160,12 @@ definition {
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",
 			permissionValues = "View",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
 			permissionNavigationValue = "Documents and Media > Document",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.openRolesAdmin();
 
@@ -180,7 +180,7 @@ definition {
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Documents",
 			permissionValues = "View",
-			removeSiteScope = "${siteName}");
+			removeSiteScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can search role with different title and key."
-	@priority = "3"
+	@priority = 3
 	test CanSearchRoleWithDifferentTitleAndKey {
 		task ("Given a new role with different title and key is created") {
 			Role.openRolesAdmin();
@@ -229,11 +229,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116055."
-	@priority = "5"
+	@priority = 5
 	test ChangeScope {
 		property test.name.skip.portal.instance = "RolesAdmin#ChangeScope";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addRegularRole(
 			roleKey = "Permission Scope",
@@ -251,18 +251,18 @@ definition {
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "Document",
 			permissionValues = "View",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
 			permissionNavigationValue = "Documents and Media > Document",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NumberFormatException");
 	}
 
 	@description = "This test automates LPS-141903 and asserts that a deactivated user is not counted in Site Roles"
-	@priority = "3"
+	@priority = 3
 	test DeactivatedUserIsNotCountedInSiteRoles {
 		task ("Given two users are assigned to corresponding sites as a Site Content Reviewer") {
 			for (var userNum : list "1,2") {
@@ -317,7 +317,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ExistingSegmentCanBeAssignedToARegularRole {
 		ProductMenu.gotoSite(site = "Global");
 
@@ -358,7 +358,7 @@ definition {
 			roleTitle = "Roles Regrole Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test NewSegmentCanBeAssignedToARegularRole {
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
@@ -404,7 +404,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns an organization to a regular role via UI."
-	@priority = "5"
+	@priority = 5
 	test OrganizationCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -433,7 +433,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Remove Org Assignee");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -489,7 +489,7 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test OrganizationRoleCanBeDeleted {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -519,7 +519,7 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Orgrole Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test RegularRoleCanBeDeleted {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -546,11 +546,11 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RolesCanBeOrderedByTitle {
 		Role.openRolesAdmin();
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		AssertElementPresent(
 			key_itemName = "Administrator",
@@ -577,7 +577,7 @@ definition {
 			value1 = "Administrator");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test RolesCanBeViewedInTableView {
 		Role.openRolesAdmin();
 
@@ -598,10 +598,10 @@ definition {
 			key_columnName = "assignees",
 			key_tableEntry = "Administrators",
 			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
-			value1 = "1");
+			value1 = 1);
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SegmentCanBeRemovedFromRegularRole {
 		ProductMenu.gotoSite(site = "Global");
 
@@ -643,7 +643,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a site to a regular role via UI."
-	@priority = "5"
+	@priority = 5
 	test SiteCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -672,7 +672,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Remove Site Assignee");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -728,7 +728,7 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SiteRoleCanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -758,7 +758,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105001 and LPS-104999."
-	@priority = "3"
+	@priority = 3
 	test UserCanAddARoleWithoutATitle {
 		Role.openRolesAdmin();
 
@@ -774,7 +774,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109572."
-	@priority = "5"
+	@priority = 5
 	test UserCanBeAssignedToARegularRole {
 		property portal.acceptance = "true";
 
@@ -803,7 +803,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a user to a regular role via UI."
-	@priority = "5"
+	@priority = 5
 	test UserCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -824,7 +824,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Remove User Assignee");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -881,7 +881,7 @@ definition {
 	}
 
 	@description = "This test asserts that Organization Role table is empty and select button does not display if user is not a member of an organization."
-	@priority = "3"
+	@priority = 3
 	test UserCanNotSelectOrgRoleIfUserIsNotAnOrgMember {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -906,7 +906,7 @@ definition {
 	}
 
 	@description = "This test asserts that Site Role table is empty and select button does not display if user is not a member of a site."
-	@priority = "3"
+	@priority = 3
 	test UserCanNotSelectSiteRoleIfUserIsNotASiteMember {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -931,7 +931,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a user group to a regular role via UI."
-	@priority = "5"
+	@priority = 5
 	test UserGroupCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -958,7 +958,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Remove User Group Assignee");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -1015,9 +1015,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-97321. All subdirectories in Define Permissions should display."
-	@priority = "4"
+	@priority = 4
 	test ViewDefinePermissionsSubdirectoriesDisplay {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addRegularRole(
 			roleKey = "User Permission",

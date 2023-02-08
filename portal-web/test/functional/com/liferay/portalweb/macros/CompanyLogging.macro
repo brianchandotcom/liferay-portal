@@ -1,30 +1,30 @@
 definition {
 
 	macro assertCompanyLogContent {
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 
-		if (!(contains("${logContent}", "companyId=${companyId}")) && !(contains("${logContent}", "#${companyId}"))) {
+		if (!(contains(${logContent}, "companyId=${companyId}")) && !(contains(${logContent}, "#${companyId}"))) {
 			fail("The ${portalInstanceName} company log file content does not contain the company ID.");
 		}
 	}
 
 	macro assertCompanyLogIsolated {
-		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = "${portalInstanceName}");
+		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = ${portalInstanceName});
 
 		CompanyLogging.assertCompanyLogContent(
-			logContent = "${logContent}",
-			portalInstanceName = "${portalInstanceName}");
+			logContent = ${logContent},
+			portalInstanceName = ${portalInstanceName});
 
 		var portalInstanceNames = JSONCompany.getAllCompanyNames();
 
-		var portalInstanceNames = ListUtil.newListFromString("${portalInstanceNames}");
+		var portalInstanceNames = ListUtil.newListFromString(${portalInstanceNames});
 
-		ListUtil.remove("${portalInstanceNames}", "${portalInstanceName}");
+		ListUtil.remove(${portalInstanceNames}, ${portalInstanceName});
 
-		for (var additionalPortalInstanceName : list "${portalInstanceNames}") {
-			var companyId = JSONCompany.getCompanyId(portalInstanceName = "${additionalPortalInstanceName}");
+		for (var additionalPortalInstanceName : list ${portalInstanceNames}) {
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${additionalPortalInstanceName});
 
-			if (contains("${logContent}", "companyId=${companyId}")) {
+			if (contains(${logContent}, "companyId=${companyId}")) {
 				fail("The ${portalInstanceName} company log file contains logs from the ${additionalPortalInstanceName} company");
 			}
 		}
@@ -33,49 +33,49 @@ definition {
 	macro assertNoLogDownloaded {
 		DownloadTempFile();
 
-		DMDocument.assertNoFileNameFromTempFolder(fileName = "${logName}");
+		DMDocument.assertNoFileNameFromTempFolder(fileName = ${logName});
 	}
 
 	macro downloadCompanyLog {
-		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "${portalInstanceName}");
+		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = ${portalInstanceName});
 
 		Click(
-			key_virtualHost = "${portalInstanceName}",
+			key_virtualHost = ${portalInstanceName},
 			locator1 = "CompanyLogging#COMPANY_LOG_NAME");
 
 		DownloadTempFile();
 
-		DMDocument.assertFileNameFromTempFolder(fileName = "${logName}");
+		DMDocument.assertFileNameFromTempFolder(fileName = ${logName});
 
-		var logContent = TestCase.getTempFileContent(fileName = "${logName}");
+		var logContent = TestCase.getTempFileContent(fileName = ${logName});
 
-		return "${logContent}";
+		return ${logContent};
 	}
 
 	macro getCompanyLogDirPath {
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		var homeDir = PropsUtil.get("liferay.home.dir.name");
 
 		var logsDir = "${homeDir}/logs/companies/${companyId}";
 		var pattern = StringUtil.split("**/*.log");
 
-		var filePath = FileUtil.getIncludedResourceURLs("${pattern}", "${logsDir}");
+		var filePath = FileUtil.getIncludedResourceURLs(${pattern}, ${logsDir});
 
-		var filePath = StringUtil.valueOf("${filePath}");
+		var filePath = StringUtil.valueOf(${filePath});
 
-		var filePath = RegexUtil.replace("${filePath}", "\[(.*)\]", "1");
+		var filePath = RegexUtil.replace(${filePath}, "\[(.*)\]", 1);
 
-		var filePath = StringUtil.replace("${filePath}", "file:/", "");
+		var filePath = StringUtil.replace(${filePath}, "file:/", "");
 
-		return "${filePath}";
+		return ${filePath};
 	}
 
 	macro getCompanyLogName {
-		var companyLogDirPath = CompanyLogging.getCompanyLogDirPath(portalInstanceName = "${portalInstanceName}");
+		var companyLogDirPath = CompanyLogging.getCompanyLogDirPath(portalInstanceName = ${portalInstanceName});
 
-		var logName = FileUtil.getFileName("${companyLogDirPath}");
+		var logName = FileUtil.getFileName(${companyLogDirPath});
 
-		return "${logName}";
+		return ${logName};
 	}
 
 }

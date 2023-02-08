@@ -37,7 +37,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -47,7 +47,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8419 | Test Summary: Document asset appears on list shows pages that the document exists on"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AssertAppearsOnListShowsPagesDocumentsExists {
 
 		// AC Refactor: This test fails because of timing issues.
@@ -70,7 +70,7 @@ definition {
 		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -90,7 +90,7 @@ definition {
 				dmDocumentTitle = "DM AC Title",
 				groupName = "Site Name");
 			var portalURL = PropsUtil.get("portal.url");
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
@@ -105,7 +105,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8394 | Test Summary: Assert 180 day time filter in Documents and Media"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertDocumentsAndMediaPageTImeFilter180Days {
 
 		// AC Refactor: Need past data.
@@ -116,7 +116,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Documents and Media assets") {
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8402 | Test Summary: Documents audience card shows expected amount of know and anonymous individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInDM {
 		property analytics.cloud.upstream = "false";
 
@@ -145,12 +145,12 @@ definition {
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Add 2 more new users") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 		}
 
@@ -162,7 +162,7 @@ definition {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "Download DM",
 				documentTitleList = "DM AC Title",
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -184,7 +184,7 @@ definition {
 		task ("Switch to new property in AC and go to Documents and Media tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -203,13 +203,13 @@ definition {
 
 		task ("Assert views by download number of know and anoymous users") {
 			ACUtils.assertAudienceCard(
-				index = "1",
+				index = 1,
 				percentageList = "66.67%,33.33%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
 
 		// AC Quarantine reason: The percentage of the downloads does not match the correct one
@@ -221,12 +221,12 @@ definition {
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
 
 		task ("Create new users and connect the DXP to AC") {
-			for (var name : list "${userNames}") {
+			for (var name : list ${userNames}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 			}
 
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -236,7 +236,7 @@ definition {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "Download DM",
 				documentTitleList = "DM AC Title",
-				emailList = "${emailList}",
+				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -244,7 +244,7 @@ definition {
 		task ("Create segment") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSegments();
 
@@ -276,7 +276,7 @@ definition {
 		}
 
 		task ("Assert segmented and unsegmented in documents and media") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -291,14 +291,14 @@ definition {
 
 		task ("Assert views by download number of know and anoymous users") {
 			ACUtils.assertAudienceCard(
-				index = "2",
+				index = 2,
 				percentageList = "66.67%,33.33%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8395 | Test Summary: Custom Range time filter in Documents and Media assets page"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanAssertDocumentsAndMediaTimeFilterCustom {
 
 		// AC Refactor: Need past data.
@@ -309,7 +309,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Documents and Media assets") {
@@ -320,12 +320,12 @@ definition {
 
 		task ("Assert custom time filter") {
 			ACTimeFilter.setCustomRange(
-				endDay = "13",
+				endDay = 13,
 				endMonth = "July",
-				endYear = "2020",
-				startDay = "1",
+				endYear = 2020,
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2020");
+				startYear = 2020);
 
 			// Can't assert that the custom time filter is working correctly without past data
 
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8396 | Test Summary: Documents list is searchable"
-	@priority = "4"
+	@priority = 4
 	test CanDocumentsAndMediaListSearchable {
 		var documentNameList = "DM AC Title,New Document";
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -348,7 +348,7 @@ definition {
 		task ("Visit the two documents") {
 			ACUtils.navigateToSitePage(
 				actionType = "View DM",
-				documentTitleList = "${documentNameList}",
+				documentTitleList = ${documentNameList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -360,7 +360,7 @@ definition {
 		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -372,10 +372,10 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			for (var documentName : list "${documentNameList}") {
-				ACUtils.searchBar(searchItem = "${documentName}");
+			for (var documentName : list ${documentNameList}) {
+				ACUtils.searchBar(searchItem = ${documentName});
 
-				ACUtils.viewNameList(nameList = "${documentName}");
+				ACUtils.viewNameList(nameList = ${documentName});
 			}
 
 			ACUtils.searchBar(searchItem = "Should not be here");
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8116 | Test Summary: Assert clicking a document in the documents and media list navigates to the documents overview page"
-	@priority = "5"
+	@priority = 5
 	test CanNavigatesToDocumentsOverviewPage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -411,7 +411,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -428,18 +428,18 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		for (var cardTitle : list "Visitors Behavior,Audience,Downloads by Location,Downloads by Technology,Asset Appears On") {
-			ACCards.viewCards(cardTitle = "${cardTitle}");
+			ACCards.viewCards(cardTitle = ${cardTitle});
 		}
 
 		for (var metric : list "Previews,Downloads") {
 			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "${metric}",
-				metricValue = "3");
+				metricTitle = ${metric},
+				metricValue = 3);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-12352 | Test Summary: The number of documents & media comments show the expected value"
-	@priority = "4"
+	@priority = 4
 	test CheckDocumentsAndMediaCommentsShowExpectedValue {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -458,7 +458,7 @@ definition {
 		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -478,12 +478,12 @@ definition {
 		task ("Check DM comment in visitor behavior") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Comments",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 
 	@description = "Bug: LRAC-11450 | Automation ID: LRAC-11509 | Test Summary: The number of documents and media rating show the expected value"
-	@priority = "4"
+	@priority = 4
 	test CheckDocumentsAndMediaRatingShowExpectedValue {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -500,7 +500,7 @@ definition {
 		task ("Choose a rating star for the DM") {
 			DMDocument.expandInfo();
 
-			Ratings.rateStar(ratingStarCount = "4");
+			Ratings.rateStar(ratingStarCount = 4);
 		}
 
 		task ("Close sessions") {
@@ -510,7 +510,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -541,7 +541,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10590 | Test Summary: Number of Documents and Media ratings is not getting negative when we delete a vote"
-	@priority = "3"
+	@priority = 3
 	test DocumentsAndMediaRatingsNotGettingNegativeWhenDeleteVote {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -558,7 +558,7 @@ definition {
 		task ("Choose a rating star for the DM") {
 			DMDocument.expandInfo();
 
-			Ratings.rateStar(ratingStarCount = "4");
+			Ratings.rateStar(ratingStarCount = 4);
 		}
 
 		task ("Close sessions") {
@@ -568,7 +568,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -614,7 +614,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -638,7 +638,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8412 | Test Summary: Documents location card shows downloads by the expected location"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test DocumentsLocationCardShowsDownloadsByExpectedLocation {
 
 		// AC Refactor: The location data should show the name of the country but it's actually showing "Local network"
@@ -668,7 +668,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Navigate to Documents and Media tab in Asset dashboard") {
@@ -700,13 +700,13 @@ definition {
 
 			ACCards.viewGeomapTableText(
 				cardTitle = "Downloads by Location",
-				leftText = "${country}",
+				leftText = ${country},
 				rightText = "1 100%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"
-	@priority = "5"
+	@priority = 5
 	test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -725,7 +725,7 @@ definition {
 		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -756,7 +756,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
-	@priority = "5"
+	@priority = 5
 	test DocumentsTechnologyCardShowsViewsByExpectedDevice {
 		var documentNameList = "DM AC Title,DM AC Title";
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -764,7 +764,7 @@ definition {
 		task ("Download the document") {
 			ACUtils.navigateToSitePage(
 				actionType = "Download DM",
-				documentTitleList = "${documentNameList}",
+				documentTitleList = ${documentNameList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -776,7 +776,7 @@ definition {
 		task ("Switch to new property in AC and go to DM tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -801,7 +801,7 @@ definition {
 	}
 
 	@description = "Bug: ACP-274 | Automation ID: LRAC-10672 | Test Summary: Download a document by download button (enabled through show actions portlet configuration)"
-	@priority = "4"
+	@priority = 4
 	test DownloadDocumentByDownloadButton {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -830,7 +830,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -848,7 +848,7 @@ definition {
 		task ("Check the number of downloads and previews in the documents and media assets list") {
 			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
-				numberValueList = "1");
+				numberValueList = 1);
 		}
 
 		task ("Navigate to the overview tab in document report entry") {
@@ -858,12 +858,12 @@ definition {
 		task ("Check the number of downloads and previews in the overview tab") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 
 	@description = "Bug: ACP-274 | Automation ID: LRAC-10671 | Test Summary: Download a document by info button"
-	@priority = "4"
+	@priority = 4
 	test DownloadDocumentByInfoButton {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -892,7 +892,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -910,7 +910,7 @@ definition {
 		task ("Check the number of downloads and previews in the documents and media assets list") {
 			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
-				numberValueList = "1");
+				numberValueList = 1);
 		}
 
 		task ("Navigate to the overview tab in document report entry") {
@@ -920,12 +920,12 @@ definition {
 		task ("Check the number of downloads and previews in the overview tab") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 
 	@description = "Bug: ACP-274 | Automation ID: LRAC-10673 | Test Summary: Download a document by the three dots (enabled through show actions portlet configuration)"
-	@priority = "4"
+	@priority = 4
 	test DownloadDocumentByThreeDots {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -956,7 +956,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -974,7 +974,7 @@ definition {
 		task ("Check the number of downloads and previews in the documents and media assets list") {
 			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
-				numberValueList = "2");
+				numberValueList = 2);
 		}
 
 		task ("Navigate to the overview tab in document report entry") {
@@ -984,12 +984,12 @@ definition {
 		task ("Check the number of downloads and previews in the overview tab") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
-				metricValue = "2");
+				metricValue = 2);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
-	@priority = "5"
+	@priority = 5
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
 		property analytics.cloud.upstream = "false";
 
@@ -997,12 +997,12 @@ definition {
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -1010,7 +1010,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Download DM",
 			documentTitleList = "DM AC Title",
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1031,7 +1031,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -1051,7 +1051,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.viewNameList(nameList = "${nameList}");
+		ACUtils.viewNameList(nameList = ${nameList});
 
 		AssertElementNotPresent(
 			key_userName = "userac userac",
@@ -1059,7 +1059,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
-	@priority = "5"
+	@priority = 5
 	test ViewAllDocumentsAndMediaShownInAssetList {
 		property portal.acceptance = "true";
 
@@ -1075,7 +1075,7 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Download DM",
-			documentTitleList = "${assetName}",
+			documentTitleList = ${assetName},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1083,7 +1083,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -1093,11 +1093,11 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.viewNameList(nameList = "${assetName}");
+		ACUtils.viewNameList(nameList = ${assetName});
 	}
 
 	@description = "Documents visitor behavior card shows expected amount of views"
-	@priority = "5"
+	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
 
 		//property portal.acceptance = "true";
@@ -1123,7 +1123,7 @@ definition {
 		task ("View the documents and media page") {
 			ACUtils.navigateToSitePage(
 				actionType = "Download DM",
-				documentTitleList = "${documentNameList}",
+				documentTitleList = ${documentNameList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -1135,7 +1135,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to documents and media assets list") {
@@ -1153,11 +1153,11 @@ definition {
 		task ("Check the number of downloads and previews in the documents and media assets list") {
 			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
-				numberValueList = "3");
+				numberValueList = 3);
 
 			ACUtils.viewTableInformation(
 				nameList = "DM AC Title",
-				numberValueList = "2");
+				numberValueList = 2);
 		}
 
 		task ("Navigate to the overview tab in document report entry") {
@@ -1167,11 +1167,11 @@ definition {
 		task ("Check the number of downloads and previews in the overview tab") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Previews",
-				metricValue = "3");
+				metricValue = 3);
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
-				metricValue = "2");
+				metricValue = 2);
 		}
 	}
 

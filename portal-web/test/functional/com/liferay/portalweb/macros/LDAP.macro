@@ -2,16 +2,16 @@ definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
 	macro addLDAPServerAndTestConnection {
-		PortalSettings.addLDAPServer(ldapServerName = "${ldapServerName}");
+		PortalSettings.addLDAPServer(ldapServerName = ${ldapServerName});
 
-		PortalSettings.editLDAPServer(ldapServerName = "${ldapServerName}");
+		PortalSettings.editLDAPServer(ldapServerName = ${ldapServerName});
 
 		PortalSettings.testLDAPConnection();
 	}
 
 	@description = "Assert no pagination display in the LDAP connection page"
 	macro assertNoPagination {
-		PortalSettings.editLDAPServer(ldapServerName = "${ldapServerName}");
+		PortalSettings.editLDAPServer(ldapServerName = ${ldapServerName});
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON",
@@ -26,7 +26,7 @@ definition {
 
 	@description = "Enable LDAP debug logs"
 	macro enableLDAPDebugLogs {
-		ServerAdministration.openServerAdmin(baseURL = "${baseURL}");
+		ServerAdministration.openServerAdmin(baseURL = ${baseURL});
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
@@ -43,21 +43,21 @@ definition {
 
 	@description = "Enable various LDAP related settings"
 	macro enableLDAPSettings {
-		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
+		PortalSettings.configureLDAPSetting(enableSettingList = ${enableSettingList});
 
-		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
+		PortalSettings.viewEnabledLDAPSetting(enableSettingList = ${enableSettingList});
 	}
 
 	@description = "Import an LDIF file on LDAP then trigger the import manually with a groovy script"
 	macro importLDIFOnLDAPAndTriggerSync {
-		LDAP.updateLDAPDatabaseWithLDIFFile(ldifName = "${ldifName}");
+		LDAP.updateLDAPDatabaseWithLDIFFile(ldifName = ${ldifName});
 
 		if (!(isSet(nodePort))) {
-			var nodePort = "8080";
+			var nodePort = 8080;
 		}
 
 		Groovy.runScriptViaGogoShell(
-			nodePort = "${nodePort}",
+			nodePort = ${nodePort},
 			scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
 	}
 
@@ -76,7 +76,7 @@ definition {
 	}
 
 	macro setGeneralMethod {
-		Variables.assertDefined(parameterList = "${generalMethod}");
+		Variables.assertDefined(parameterList = ${generalMethod});
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
@@ -86,13 +86,13 @@ definition {
 		Select(
 			locator1 = "Select#SELECT_ID",
 			selectFieldId = "method",
-			value1 = "${generalMethod}");
+			value1 = ${generalMethod});
 
 		PortletEntry.save();
 	}
 
 	macro setPasswordEncryption {
-		Variables.assertDefined(parameterList = "${passwordEncryption}");
+		Variables.assertDefined(parameterList = ${passwordEncryption});
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "LDAP",
@@ -102,7 +102,7 @@ definition {
 		Select(
 			locator1 = "Select#SELECT_ID",
 			selectFieldId = "passwordEncryptionAlgorithm",
-			value1 = "${passwordEncryption}");
+			value1 = ${passwordEncryption});
 
 		PortletEntry.save();
 	}
@@ -119,7 +119,7 @@ definition {
 		UserGroup.openUserGroupsAdmin();
 
 		AssertElementPresent(
-			key_userGroupName = "${userGroupName}",
+			key_userGroupName = ${userGroupName},
 			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
 	}
 
@@ -128,13 +128,13 @@ definition {
 		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewRemoveMemberCP(
-			userFirstName = "${userFirstName}",
-			userGroupName = "${userGroupName}");
+			userFirstName = ${userFirstName},
+			userGroupName = ${userGroupName});
 	}
 
 	@description = "Verify that the user's first name has changed in the LDAP database after sync"
 	macro verifyUserFirstNameIsChangedInLDAP {
-		Variables.assertDefined(parameterList = "${userFirstName}");
+		Variables.assertDefined(parameterList = ${userFirstName});
 
 		LDAP.searchLDAPDatabaseForUsersAndGroups();
 
@@ -142,8 +142,8 @@ definition {
 
 		var result = FileUtil.read("${projectDir}/LDAPSearchResult.txt");
 
-		if (!(contains("${result}", "${userFirstName}"))) {
-			echo("${result}");
+		if (!(contains(${result}, ${userFirstName}))) {
+			echo(${result});
 
 			fail("Failed to find LDAP contact in LDAP database");
 		}
@@ -155,23 +155,23 @@ definition {
 	@description = "Verify that the user is imported on localhost after LDAP sync, after a specified interval time."
 	macro verifyUserImportAfterImportIntervalTime {
 		if (!(isSet(intervalTime))) {
-			var intervalTime = "60000";
+			var intervalTime = 60000;
 		}
 
 		// Wait for the amount of the import interval time. Needed for LRQA-75138.
 
-		Pause(locator1 = "${intervalTime}");
+		Pause(locator1 = ${intervalTime});
 
 		User.openUsersAdmin();
 
-		Search.searchCP(searchTerm = "${userScreenName}");
+		Search.searchCP(searchTerm = ${userScreenName});
 	}
 
 	@description = "Verify that the user is imported on localhost after LDAP sync"
 	macro verifyUserIsImported {
 		User.openUsersAdmin();
 
-		Search.searchCP(searchTerm = "${userScreenName}");
+		Search.searchCP(searchTerm = ${userScreenName});
 
 		AssertElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_1");
 	}

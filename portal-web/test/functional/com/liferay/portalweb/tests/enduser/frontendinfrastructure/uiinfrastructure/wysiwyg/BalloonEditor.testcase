@@ -17,15 +17,15 @@ definition {
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
-			groupName = "${groupName}",
-			layoutName = "${layoutName}");
+			groupName = ${groupName},
+			layoutName = ${layoutName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "${groupName}",
-			layoutName = "${layoutName}",
+			groupName = ${groupName},
+			layoutName = ${layoutName},
 			widgetName = "CKEditor Sample");
 
-		Navigator.gotoPage(pageName = "${layoutName}");
+		Navigator.gotoPage(pageName = ${layoutName});
 
 		Refresh();
 	}
@@ -33,18 +33,18 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			JSONLayout.deletePublicLayout(
-				groupName = "${groupName}",
-				layoutName = "${layoutName}");
+				groupName = ${groupName},
+				layoutName = ${layoutName});
 		}
 	}
 
 	@description = "Assert alignment options with an image"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAlignImage {
 		task ("Invoke the image toolbar") {
@@ -88,11 +88,11 @@ definition {
 	}
 
 	@description = "Assert alignment options with a video"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAlignVideo {
 		task ("Invoke the video toolbar") {
-			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = 2);
 
 			BalloonEditor.goToAddVideo();
 
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@description = "Assert toolbar with hyperlink icon is present"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditHyperlink {
 		task ("Click the hyperlinked text") {
@@ -168,7 +168,7 @@ definition {
 		task ("Link") {
 			TripleClick(
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 
 			Click(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON_BALLOON");
 
@@ -183,11 +183,11 @@ definition {
 	}
 
 	@description = "Assert table option enabled in the toolbar"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditTable {
 		task ("Create a table") {
-			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = 2);
 
 			BalloonEditor.addTable();
 
@@ -211,11 +211,11 @@ definition {
 
 			Type.sendKeys(
 				locator1 = "CKEditorBalloonEditorSample#TABLE_CELL",
-				value1 = "${textSample}");
+				value1 = ${textSample});
 
 			AssertTextEquals(
 				locator1 = "CKEditorBalloonEditorSample#TABLE_CELL",
-				value1 = "${textSample}");
+				value1 = ${textSample});
 		}
 
 		task ("Remove the table") {
@@ -228,11 +228,11 @@ definition {
 	}
 
 	@description = "Assert text edition enabled in the table"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditTextInTable {
 		task ("Create a table") {
-			BalloonEditor.clearParagraphWithBackspace(paragraph_number = "2");
+			BalloonEditor.clearParagraphWithBackspace(paragraph_number = 2);
 
 			BalloonEditor.addTable();
 		}
@@ -255,133 +255,133 @@ definition {
 	}
 
 	@description = "Assert text edit function (bold, italic, underline, numbered/bulleted list, block styles)"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFormatText {
 		var paragraphText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus. Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh. Gravida quis blandit turpis cursus. Proin libero nunc consequat interdum varius. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Neque volutpat ac tincidunt vitae semper quis lectus nulla at. Odio euismod lacinia at quis risus sed vulputate odio ut. Augue lacus viverra vitae congue eu consequat ac. Elementum sagittis vitae et leo duis ut diam. Diam quis enim lobortis scelerisque fermentum dui faucibus.";
 
 		task ("Check that text can be bolded") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bold");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BOLD");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bold");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 		}
 
 		task ("Check that text can be italicized") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Italic");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_ITALIC");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Italic");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 		}
 
 		task ("Check that text can be underlined") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Underline");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_UNDERLINE");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Underline");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 		}
 
 		task ("Check that text can be listed with bullets") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bulleted");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BULLET_LIST");
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bulleted");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 		}
 
 		task ("Check that text can be listed with numbers") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Numbered");
 
 			AssertTextEquals(
 				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_CONTENT_NUMBERED_LIST",
-				value1 = "${paragraphText}");
+				value1 = ${paragraphText});
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Numbered");
 
 			AssertElementPresent(
-				key_textName = "${paragraphText}",
+				key_textName = ${paragraphText},
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1");
+				paragraph_number = 1);
 		}
 
 		task ("Check that text can be centered") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Center");
 
 			AssertAttributeValue(
 				attribute1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1",
+				paragraph_number = 1,
 				value1 = "text-align: center;");
 
 			takeScreenshot();
 		}
 
 		task ("Check that text can be aligned right") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Align Right");
 
 			AssertAttributeValue(
 				attribute1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1",
+				paragraph_number = 1,
 				value1 = "text-align: right;");
 
 			takeScreenshot();
 		}
 
 		task ("Check that text can be justified") {
-			BalloonEditor.highlightText(paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = 1);
 
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Justify");
 
 			AssertAttributeValue(
 				attribute1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
-				paragraph_number = "1",
+				paragraph_number = 1,
 				value1 = "text-align: justify;");
 
 			takeScreenshot();

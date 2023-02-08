@@ -14,13 +14,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Verify if no osgi config file exists, when a config is updated via UI, then the config is added to the database and a config file is not created."
-	@priority = "3"
+	@priority = 3
 	test ConfigAddedViaUIDoesNotCreateNewConfigFile {
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigAddedViaUIDoesNotCreateNewConfigFile";
 
@@ -41,7 +41,7 @@ definition {
 			Type(
 				key_text = "Check Interval",
 				locator1 = "TextInput#ANY",
-				value1 = "44");
+				value1 = 44);
 
 			Button.clickSave();
 
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "Verify if an osgi config file exists, when a config is updated via UI, then the config file is updated with the new values."
-	@priority = "3"
+	@priority = 3
 	test ConfigAddedViaUIUpdatesExistingOSGIConfigFile {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"33\"";
@@ -85,7 +85,7 @@ definition {
 			Type(
 				key_text = "Check Interval",
 				locator1 = "TextInput#ANY",
-				value1 = "44");
+				value1 = 44);
 
 			Button.clickUpdate();
 
@@ -101,7 +101,7 @@ definition {
 		task ("And a second config entry is not added to the database") {
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
-				text = "1");
+				text = 1);
 		}
 
 		task ("And the OSGI config file is updated to match the database entry") {
@@ -113,7 +113,7 @@ definition {
 
 	@description = "Verify OSGI config files added to auto deploy directories other than osgi/configs are not read."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test ConfigFilesReadOnlyFromOSGIConfigs {
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigFilesReadOnlyFromOSGIConfigs";
 
@@ -126,7 +126,7 @@ definition {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-			FileUtil.write("${liferayHome}/osgi/modules/${configName}.config", "${config}");
+			FileUtil.write("${liferayHome}/osgi/modules/${configName}.config", ${config});
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -134,12 +134,12 @@ definition {
 		task ("Then the config should not be added to the database") {
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
-				text = "0");
+				text = 0);
 		}
 	}
 
 	@description = "Verify multiple factory configurations can be created."
-	@priority = "3"
+	@priority = 3
 	test DeployFactoryConfigs {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config:com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test2.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/test1\":urlsIncludes=\"/api/liferay/test2\"";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "Verify an existing factory config can be modified."
-	@priority = "3"
+	@priority = 3
 	test ModifyFactoryConfig {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/original\"";
@@ -187,7 +187,7 @@ definition {
 	}
 
 	@description = "Verify if a config exists only in the database, when a OSGI config file is added, the databse entry is updated."
-	@priority = "3"
+	@priority = 3
 	test OSGIConfigFileUpdatesExistingConfigInDatabase {
 		property test.name.skip.portal.instance = "OSGIConfiguration#OSGIConfigFileUpdatesExistingConfigInDatabase";
 
@@ -208,7 +208,7 @@ definition {
 			Type(
 				key_text = "Check Interval",
 				locator1 = "TextInput#ANY",
-				value1 = "33");
+				value1 = 33);
 
 			Button.clickSave();
 
@@ -234,12 +234,12 @@ definition {
 		task ("And a second config entry is not added to the database") {
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
-				text = "1");
+				text = 1);
 		}
 	}
 
 	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be overriden by an OSGI config file."
-	@priority = "3"
+	@priority = 3
 	test OverrideDefaultFactoryConfig {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/new\"";
@@ -253,11 +253,11 @@ definition {
 
 		SQL.assertTextInMySQLStatementResult(
 			mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
-			text = "1");
+			text = 1);
 	}
 
 	@description = "LPS-132645 Verify the default factory config created by the OSGI configurator can be recreated using an OSGI config file if it is deleted."
-	@priority = "3"
+	@priority = 3
 	test RecreateDefaultFactoryConfig {
 		property test.name.skip.portal.instance = "FileInstall#OverrideDefaultFactoryConfig";
 
@@ -297,12 +297,12 @@ definition {
 		task ("And a second default config entry is not added to the database") {
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
-				text = "1");
+				text = 1);
 		}
 	}
 
 	@description = "Verify when an existing factory config is renamed, the old entry is removed and the new one is added."
-	@priority = "3"
+	@priority = 3
 	test RenameFactoryConfig {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~original.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -331,7 +331,7 @@ definition {
 
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}~original%'",
-				text = "0");
+				text = 0);
 		}
 
 		task ("And the new one is added") {
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169760. Verify the tika configurations in custom tika.xml file can be loaded."
-	@priority = "3"
+	@priority = 3
 	test TikaConfigurationWithCustomTikaXML {
 		property test.name.skip.portal.instance = "OSGIConfiguration#TikaConfigurationWithCustomTikaXML";
 
@@ -350,16 +350,16 @@ definition {
 
 		var resourceTikaFilePath = "${projectDir}/modules/apps/portal/portal-tika/src/main/resources/com/liferay/portal/tika/internal/configuration/helper/dependencies/tika.xml";
 
-		var fileContent = FileUtil.read("${resourceTikaFilePath}");
+		var fileContent = FileUtil.read(${resourceTikaFilePath});
 		var appServerDir = PropsUtil.get("app.server.dir");
 
 		var targetTikaFilePath = "${appServerDir}/webapps/ROOT/WEB-INF/classes/tika.xml";
 
-		FileUtil.write("${targetTikaFilePath}", "${fileContent}");
+		FileUtil.write(${targetTikaFilePath}, ${fileContent});
 
 		var replaceToken = '''<parser class="org.apache.tika.parser.odf.OpenDocumentParser" />''';
 
-		FileUtil.replaceStringInFile("${targetTikaFilePath}", "${replaceToken}", "");
+		FileUtil.replaceStringInFile(${targetTikaFilePath}, ${replaceToken}, "");
 
 		SystemSettings.openSystemSettingsAdmin();
 

@@ -20,7 +20,7 @@ definition {
 			enableSetting = "true",
 			settingFieldName = "Enabled",
 			settingName = "Service Account Private Key",
-			settingValue = "${valueReference}");
+			settingValue = ${valueReference});
 
 		JSONWebcontent.addWebContent(
 			content = "This is the content of a web article",
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "This ensures that an invalid Google translation service key cannot be saved."
-	@priority = "5"
+	@priority = 5
 	test CannotSaveWhenConfigurationIsInvalid {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CannotSaveWhenConfigurationIsBlank";
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that the web content content can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateContentFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentFieldIndependently";
 
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This ensures that google translation can be used to auto-translate a content page."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateContentPage {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPage";
 
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This ensures that the fragment filed on content page can be translated independently."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateContentPageFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateContentPageFieldIndependently";
 
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "This ensures that the web content description can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateDescriptionFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateDescriptionFieldIndependently";
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "This ensures that the numeric and decimal fields of a customized web content can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateNumericAndDecimalFieldsIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateNumericAndDecimalFieldsIndependently";
 
@@ -308,7 +308,7 @@ definition {
 			webContentNumericFieldLabel = "Decimal");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentTitle = "This is the title of the numeric field");
 
 		PortletEntry.publish();
@@ -327,18 +327,18 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentDecimal = "1.0",
-				webContentNumber = "10");
+				webContentNumber = 10);
 
 			Click(
 				key_fieldName = "Numeric",
 				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
-				value1 = "10");
+				value1 = 10);
 
 			Translations.translateSpecificField(fieldName = "Numeric");
 
 			Translations.viewTargetFields(
 				webContentDecimal = "1.0",
-				webContentNumber = "10");
+				webContentNumber = 10);
 
 			PortletEntry.publish();
 
@@ -351,7 +351,7 @@ definition {
 
 			Translations.viewTargetFields(
 				webContentDecimal = "1,0",
-				webContentNumber = "10");
+				webContentNumber = 10);
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");
@@ -359,7 +359,7 @@ definition {
 	}
 
 	@description = "This ensures that the rich text field of a customized web content can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateRichTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateRichTextFieldIndependently";
 
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "This ensures that the text box field of a customized web content can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateTextBoxFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextBoxFieldIndependently";
 
@@ -500,7 +500,7 @@ definition {
 	}
 
 	@description = "This ensures that the text field of a customized web content can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateTextFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTextFieldIndependently";
 
@@ -569,7 +569,7 @@ definition {
 	}
 
 	@description = "This ensures that the web content title can be translated independently"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateTitleFieldIndependently {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateTitleFieldIndependently";
 
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@description = "This ensures that Google Translation can be used to auto-translate a Web Content into Japanese"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateWCToJapaneseWithGoogle {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanTranslateWCToJapaneseWithGoogle";
@@ -654,7 +654,7 @@ definition {
 	}
 
 	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"
-	@priority = "5"
+	@priority = 5
 	test CanViewTranslationAfterDisablingGoogleConfiguration {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#CanViewTranslationAfterDisablingGoogleConfiguration";
 
@@ -704,7 +704,7 @@ definition {
 	}
 
 	@description = "The Auto Translate button should be disabled when the fields are null."
-	@priority = "4"
+	@priority = 4
 	test TranslateButtonIsDisabledWhenFieldIsNull {
 		property test.name.skip.portal.instance = "AutoTranslationGoogle#TranslateButtonIsDisabledWhenFieldIsNull";
 

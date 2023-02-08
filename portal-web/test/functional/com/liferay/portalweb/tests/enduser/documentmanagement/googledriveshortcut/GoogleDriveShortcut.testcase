@@ -21,16 +21,16 @@ definition {
 		var googlePickerApiKey = PropsUtil.get("google.api.key.4");
 
 		PortalSettings.configureGoogleDrive(
-			googleClientId = "${googleClientId}",
-			googleClientSecret = "${googleClientSecret}",
-			googlePickerApiKey = "${googlePickerApiKey}");
+			googleClientId = ${googleClientId},
+			googleClientSecret = ${googleClientSecret},
+			googlePickerApiKey = ${googlePickerApiKey});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -43,7 +43,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -58,11 +58,11 @@ definition {
 	}
 
 	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteGoogleDocInDepot {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanDeleteGoogleDocInDepot";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -88,11 +88,11 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "liferay");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanDeleteGoogleDocInSite {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#EditAndDeleteGoogleDoc";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -117,12 +117,12 @@ definition {
 	}
 
 	@description = "This test makes sure that the Google Drive Shortcut can be added in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditGoogleDocInDepot {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInDepot";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -166,12 +166,12 @@ definition {
 			dmDocumentTitle = "liferay");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditGoogleDocInSite {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#CanEditGoogleDocInSite";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -210,12 +210,12 @@ definition {
 	}
 
 	@description = "This ensures that a user can move a Google Doc to a folder in a content page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMoveGoogleDocToFolder {
 		property test.name.skip.portal.instance = "GoogleDriveShortcut#MoveGoogleDocToFolder";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

@@ -2,11 +2,11 @@ definition {
 
 	macro checkCardCheckbox {
 		Click.clickNoWaitForVisible(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_CHECKBOX");
 
 		AssertChecked.assertCheckedNotVisible(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_CHECKBOX");
 	}
 
@@ -16,25 +16,25 @@ definition {
 		WaitForPageLoad();
 
 		Click(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD");
 	}
 
 	macro clickCardTitle {
 		Click.waitForMenuToggleJSClick(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_TITLE");
 	}
 
 	macro clickCardTitleLink {
 		Click.waitForMenuToggleJSClick(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_TITLE_LINK");
 	}
 
 	macro clickCardWithConfirmation {
 		ClickNoError(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD");
 
 		Confirm();
@@ -42,15 +42,15 @@ definition {
 
 	macro clickEllipsisItem {
 		Click.waitForMenuToggleJSClick(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.clickNoError(menuItem = ${item});
 	}
 
 	macro delete {
 		LexiconCard.clickEllipsisItem(
-			card = "${card}",
+			card = ${card},
 			item = "Delete");
 
 		Confirm();
@@ -58,80 +58,80 @@ definition {
 
 	macro viewCardLabel {
 		AssertTextEquals(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_LABEL",
-			value1 = "${cardLabel}");
+			value1 = ${cardLabel});
 	}
 
 	macro viewCardNotPresent {
 		AssertElementNotPresent(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD");
 	}
 
 	macro viewCardOrder {
 		AssertElementPresent(
-			key_card = "${card}",
-			key_index = "${index}",
+			key_card = ${card},
+			key_index = ${index},
 			locator1 = "Card#CARD_PAGE_ITEM");
 	}
 
 	macro viewCardPresent {
 		AssertVisible(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD");
 	}
 
 	macro viewCardSticker {
 		AssertVisible(
-			key_card = "${card}",
-			key_icon = "${icon}",
+			key_card = ${card},
+			key_icon = ${icon},
 			locator1 = "Card#CARD_STICKER");
 	}
 
 	macro viewCardSubtitle {
 		AssertTextEquals(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_SUBTITLE",
-			value1 = "${cardSubtitle}");
+			value1 = ${cardSubtitle});
 	}
 
 	macro viewCardThumbnail {
 		AssertVisible(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_THUMBNAIL");
 	}
 
 	macro viewCardTitle {
 		AssertTextEquals(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_TITLE",
-			value1 = "${card}");
+			value1 = ${card});
 	}
 
 	macro viewMenuItemDisabled {
 		Click(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
 
 		AssertElementPresent(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#DISABLED_MENU_ITEM");
 	}
 
 	macro viewMenuItemNotPresent {
 		Click(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
 
 		AssertElementNotPresent(
-			key_menuItem = "${item}",
+			key_menuItem = ${item},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewNoCardThumbnail {
 		AssertElementNotPresent(
-			key_card = "${card}",
+			key_card = ${card},
 			locator1 = "Card#CARD_THUMBNAIL");
 	}
 

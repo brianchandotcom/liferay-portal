@@ -5,25 +5,25 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${name},${url}");
 
 		var groupId = JSONBookmarksSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var folderId = JSONBookmarksSetter.setFolderId(
-			folderName = "${folderName}",
-			groupId = "${groupId}");
-		var url = StringUtil.replace("${url}", ":", "%3A");
+			folderName = ${folderName},
+			groupId = ${groupId});
+		var url = StringUtil.replace(${url}, ":", "%3A");
 		var serviceContext = JSONBookmarksSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			workflowAction = ${workflowAction});
 
 		JSONBookmarksAPI._addBookmarks(
-			description = "${description}",
-			folderId = "${folderId}",
-			groupId = "${groupId}",
-			name = "${name}",
-			serviceContext = "${serviceContext}",
-			url = "${url}");
+			description = ${description},
+			folderId = ${folderId},
+			groupId = ${groupId},
+			name = ${name},
+			serviceContext = ${serviceContext},
+			url = ${url});
 	}
 
 	@summary = "Add a Bookmarks Folder with Folder Name '${folderName}' to the Site '${groupName}'"
@@ -31,34 +31,34 @@ definition {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONBookmarksSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var parentFolderId = JSONBookmarksSetter.setFolderId(
-			folderName = "${parentFolderName}",
-			groupId = "${groupId}");
+			folderName = ${parentFolderName},
+			groupId = ${groupId});
 
-		if ("${groupName}" == "Guest") {
+		if (${groupName} == "Guest") {
 			var serviceContext = JSONBookmarksSetter.setServiceContext(
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
 				groupName = "Guest",
-				workflowAction = "${workflowAction}");
+				workflowAction = ${workflowAction});
 		}
 		else {
 			var serviceContext = JSONBookmarksSetter.setServiceContext(
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				groupName = "${groupName}",
-				site = "${site}",
-				workflowAction = "${workflowAction}");
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				site = ${site},
+				workflowAction = ${workflowAction});
 		}
 
 		JSONBookmarksAPI._addFolder(
-			folderDescription = "${folderDescription}",
-			folderName = "${folderName}",
-			parentFolderId = "${parentFolderId}",
-			serviceContext = "${serviceContext}");
+			folderDescription = ${folderDescription},
+			folderName = ${folderName},
+			parentFolderId = ${parentFolderId},
+			serviceContext = ${serviceContext});
 	}
 
 }

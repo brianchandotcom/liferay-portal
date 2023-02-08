@@ -1,7 +1,7 @@
 definition {
 
 	macro deleteABTest {
-		ACNavigation.openItem(itemName = "${testName}");
+		ACNavigation.openItem(itemName = ${testName});
 
 		Click(locator1 = "ACTests#AB_ELLIPSIS");
 
@@ -13,11 +13,11 @@ definition {
 	macro statusABTest {
 		AssertTextEquals(
 			locator1 = "ACTests#LABEL_STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 	macro terminateABTest {
-		ACNavigation.openItem(itemName = "${testName}");
+		ACNavigation.openItem(itemName = ${testName});
 
 		Button.click(button = "Terminate Test");
 

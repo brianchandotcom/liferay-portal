@@ -3,7 +3,7 @@ definition {
 	macro resizeImage {
 		Select(
 			locator1 = "Select#IMAGE_RATIO",
-			value1 = "${dimension}");
+			value1 = ${dimension});
 	}
 
 	macro rotateImage {

@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test DisplayStyleOptions {
 		property portal.acceptance = "true";
 
@@ -58,9 +58,9 @@ definition {
 			pageName = "Site Page",
 			siteName = "Site Name");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		SitesDirectory.viewDescriptivePG(siteName = "${siteName}");
+		SitesDirectory.viewDescriptivePG(siteName = ${siteName});
 
 		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
 
@@ -83,7 +83,7 @@ definition {
 			siteName = "Site Name");
 
 		SitesDirectory.viewListHierarchyPG(
-			availableSiteName = "${siteName}",
+			availableSiteName = ${siteName},
 			childSiteName1 = "Child SiteName 1",
 			childSiteName2 = "Child SiteName 2",
 			childSiteName3 = "Child SiteName 3",

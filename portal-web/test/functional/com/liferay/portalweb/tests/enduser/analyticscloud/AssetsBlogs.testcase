@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8387 | Test Summary: Blogs asset appears on list shows pages that the blog exists on"
-	@priority = "5"
+	@priority = 5
 	test AssertAppearsOnListShowsPagesBlogExists {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -57,7 +57,7 @@ definition {
 		task ("Switch to new property in AC and go to Blogs tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToAssets();
 
@@ -74,7 +74,7 @@ definition {
 
 		task ("Assert appears on metric") {
 			var portalURL = PropsUtil.get("portal.url");
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/blogs/blogs-ac-title",
@@ -85,7 +85,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8384 | Test Summary: Assert 180 day time filter in Blogs"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertBlogsPageTImeFilter180Days {
 
 		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
@@ -108,7 +108,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Blogs assets") {
@@ -140,19 +140,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8374 | Test Summary: Blogs audience card shows expected amount of know and anonymous individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
 		property analytics.cloud.upstream = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -160,7 +160,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -176,7 +176,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -193,24 +193,24 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		ACUtils.assertAudienceCard(
-			index = "1",
+			index = 1,
 			percentageList = "66.67%,33.33%");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8375 | Test Summary: Blogs audience card shows expected amount of segmented and unsegmented individuals"
-	@priority = "5"
+	@priority = 5
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
 		property analytics.cloud.upstream = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -218,7 +218,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -234,7 +234,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSegments();
 
@@ -269,13 +269,13 @@ definition {
 		ACNavigation.openItem(itemName = "Blogs AC Title");
 
 		ACUtils.assertAudienceCard(
-			index = "2",
+			index = 2,
 			percentageList = "66.67%,33.33%");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8378 | Test Summary: Blogs location card shows views by the expected location"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test BlogsLocationCardShowsViewsByExpectedLocation {
 
 		// AC Refactor: The location data should show the name of the country but it's actually showing "Local network"
@@ -305,7 +305,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Navigate to Blogs tab in Asset dashboard") {
@@ -337,13 +337,13 @@ definition {
 
 			ACCards.viewGeomapTableText(
 				cardTitle = "Views by Location",
-				leftText = "${country}",
+				leftText = ${country},
 				rightText = "1 100%");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8386 | Test Summary: Blogs views by technology card shows views by the expected browser"
-	@priority = "5"
+	@priority = 5
 	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -362,7 +362,7 @@ definition {
 		task ("Switch to new property in AC and go to Blogs tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8385 | Test Summary: Blogs views by technology card shows views by the expected device"
-	@priority = "5"
+	@priority = 5
 	test BlogsTechnologyCardShowsViewsByExpectedDevice {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -412,7 +412,7 @@ definition {
 		task ("Switch to new property in AC and go to Blogs tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
-	@priority = "5"
+	@priority = 5
 	test CanBlogsListSearchable {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -453,7 +453,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
-	@priority = "5"
+	@priority = 5
 	test CanNavigatesToBlogsOverviewPage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -503,7 +503,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -520,17 +520,17 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Asset Appears On") {
-			ACCards.viewCards(cardTitle = "${cardTitle}");
+			ACCards.viewCards(cardTitle = ${cardTitle});
 		}
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",
-			metricValue = "4");
+			metricValue = 4);
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8383 | Test Summary: Custom Range time filter in Blogs assets page"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUseCustomRangeBlogsAssetsPage {
 
 		// AC Refactor: It is not possible to perform the assert because this test needs data from the past.
@@ -553,7 +553,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Blogs assets") {
@@ -572,12 +572,12 @@ definition {
 
 		task ("Assert custom time filter") {
 			ACTimeFilter.setCustomRange(
-				endDay = "13",
+				endDay = 13,
 				endMonth = "July",
-				endYear = "2020",
-				startDay = "1",
+				endYear = 2020,
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2020");
+				startYear = 2020);
 
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
 
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-12347 | Test Summary: The number of blog comments show the expected value"
-	@priority = "4"
+	@priority = 4
 	test CheckBlogCommentsShowExpectedValue {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -608,7 +608,7 @@ definition {
 		task ("Switch to new property in AC and go to Blogs tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToAssets();
 
@@ -628,12 +628,12 @@ definition {
 		task ("Check blog comment in visitor behavior") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Comments",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-11508 | Test Summary: Check Blog Rating show expected value"
-	@priority = "4"
+	@priority = 4
 	test CheckBlogRatingShowExpectedValue {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -656,7 +656,7 @@ definition {
 		}
 
 		task ("Choose a rating star for the blog") {
-			Ratings.rateStar(ratingStarCount = "4");
+			Ratings.rateStar(ratingStarCount = 4);
 		}
 
 		task ("Close sessions") {
@@ -666,7 +666,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to blog assets list") {
@@ -697,7 +697,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Blogs known individuals list shows individuals who have viewed the blog"
-	@priority = "5"
+	@priority = 5
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
 		property analytics.cloud.upstream = "false";
 
@@ -706,12 +706,12 @@ definition {
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		for (var name : list "${usernameList}") {
+		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
 				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
 		}
 
 		ACDXPSettings.syncNewContactData();
@@ -719,7 +719,7 @@ definition {
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
 			documentTitleList = "Blogs AC Title",
-			emailList = "${emailList}",
+			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -740,7 +740,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 
@@ -760,7 +760,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACUtils.viewNameList(nameList = "${nameList}");
+		ACUtils.viewNameList(nameList = ${nameList});
 
 		AssertElementNotPresent(
 			key_userName = "userac userac",
@@ -768,7 +768,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-7848 | Automation ID: LRAC-10601 | Test Summary: Number of Blog ratings is not getting negative when we delete a vote"
-	@priority = "3"
+	@priority = 3
 	test RatingsNotGettingNegativeWhenDeleteVote {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -791,7 +791,7 @@ definition {
 		}
 
 		task ("Choose a rating star for the blog") {
-			Ratings.rateStar(ratingStarCount = "4");
+			Ratings.rateStar(ratingStarCount = 4);
 		}
 
 		task ("Close sessions") {
@@ -801,7 +801,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to blog assets list") {
@@ -845,7 +845,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to blog assets list") {
@@ -868,7 +868,7 @@ definition {
 	}
 
 	@description = "View all blogs in the property in assets"
-	@priority = "5"
+	@priority = 5
 	test ViewAllBlogsShownInAssetList {
 		property portal.acceptance = "true";
 		property portal.release = "true";
@@ -887,7 +887,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToAssets();
 

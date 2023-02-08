@@ -14,13 +14,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Check for errors in the minified browser console"
-	@priority = "3"
+	@priority = 3
 	test SmokeMinifiedEnabled {
 
 		// TODO LPS-171621 SmokeMinifiedEnabled pending implementation JQuery enabled
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "Check for errors in the browser console on the jQuery page"
-	@priority = "3"
+	@priority = 3
 	test VerifyErroWhenJQueryEnabled {
 
 		// TODO LPS-155271 VerifyErroWhenJQueryEnabled pending implementation JQuery enabled

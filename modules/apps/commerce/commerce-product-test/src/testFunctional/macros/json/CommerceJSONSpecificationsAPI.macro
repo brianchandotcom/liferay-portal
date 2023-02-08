@@ -1,24 +1,24 @@
 definition {
 
 	macro _addCommerceProductsWithSpecifications {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
-		var optionCategoryIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIdBySpecKey(specificationKey = "${specificationKey}");
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+		var optionCategoryIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIdBySpecKey(specificationKey = ${specificationKey});
 
-		for (var optionCategoryId : list "${optionCategoryIds}") {
+		for (var optionCategoryId : list ${optionCategoryIds}) {
 			echo("optionCategoryId is ${optionCategoryId}");
 		}
 
-		var size = "101";
-		var i = "1";
+		var size = 101;
+		var i = 1;
 		var payload = "[";
 
-		while (("${i}" != "${size}") && (maxIterations = "101")) {
+		while ((${i} != ${size}) && (maxIterations = "101")) {
 			var array = '''
     		{
 				"active": true,
@@ -40,19 +40,19 @@ definition {
 			}''';
 			var j = ${i} + 1;
 
-			if ("${j}" == "${size}") {
-				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${array}");
+			if (${j} == ${size}) {
+				var payload = StringUtil.replace(${payload}, ${payload}, "${payload}${array}");
 			}
 			else {
-				var array = StringUtil.replace("${array}", "${array}", "${array},");
+				var array = StringUtil.replace(${array}, ${array}, "${array},");
 
-				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${array}");
+				var payload = StringUtil.replace(${payload}, ${payload}, "${payload}${array}");
 			}
 
 			var i = ${i} + 1;
 		}
 
-		var payload = StringUtil.replace("${payload}", "${payload}", "${payload}]");
+		var payload = StringUtil.replace(${payload}, ${payload}, "${payload}]");
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/batch \
@@ -62,11 +62,11 @@ definition {
 				-d '${payload}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteAllCommerceSpecifications {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -74,10 +74,10 @@ definition {
 
 		var specificationsCount = CommerceJSONSpecificationsAPI._getCommerceSpecificationsCount();
 
-		if ("${specificationsCount}" != "0") {
-			var specificationIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIds(specificationCount = "${specificationsCount}");
+		if (${specificationsCount} != 0) {
+			var specificationIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIds(specificationCount = ${specificationsCount});
 
-			for (var specificationId : list "${specificationIds}") {
+			for (var specificationId : list ${specificationIds}) {
 				echo("Deleting Commerce specification with id: ${specificationId}");
 
 				var curl = '''
@@ -86,7 +86,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -95,7 +95,7 @@ definition {
 	}
 
 	macro _getCommerceSpecificationIdBySpecKey {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -107,23 +107,23 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var optionCategoryId = JSONCurlUtil.get("${curl}", "$.items..optionCategory.id");
+		var optionCategoryId = JSONCurlUtil.get(${curl}, "$.items..optionCategory.id");
 
-		return "${optionCategoryId}";
+		return ${optionCategoryId};
 	}
 
 	macro _getCommerceSpecificationIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(specificationCount)) {
-			var specificationsCount = "${specificationCount}";
+			var specificationsCount = ${specificationCount};
 		}
 		else {
-			var specificationsCount = "100";
+			var specificationsCount = 100;
 		}
 
 		var curl = '''
@@ -132,13 +132,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var specificationIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var specificationIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		return "${specificationIds}";
+		return ${specificationIds};
 	}
 
 	macro _getCommerceSpecificationsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -150,11 +150,11 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var specificationsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var specificationsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The Commerce specifications count is: ${specificationsCount}");
 
-		return "${specificationsCount}";
+		return ${specificationsCount};
 	}
 
 }

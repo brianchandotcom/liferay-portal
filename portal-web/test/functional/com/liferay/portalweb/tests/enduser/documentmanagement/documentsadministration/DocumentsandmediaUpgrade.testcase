@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test FileUploadLimitIsPreservedAfterUpgradeFrom70105 {
 		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
 		property database.types = "mariadb,mysql,postgresql";
@@ -32,7 +32,7 @@ definition {
 			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test FileUploadLimitIsPreservedAfterUpgradeFrom71105 {
 		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
 		property database.types = "mariadb,mysql,postgresql";
@@ -46,7 +46,7 @@ definition {
 			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test FileUploadLimitIsPreservedAfterUpgradeFrom72104 {
 		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
 		property database.types = "mariadb,mysql,postgresql";
@@ -60,7 +60,7 @@ definition {
 			warningForSizeLimits = "Please enter a file with a valid file size no larger than 100 KB");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test FileUploadLimitIsPreservedAfterUpgradeFrom73101 {
 		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
 		property database.types = "mariadb,mysql,postgresql";
@@ -74,7 +74,7 @@ definition {
 			warningForSizeLimits = "Please enter a file with a valid file size no larger than 100 KB");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewDMArchive625 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -84,7 +84,7 @@ definition {
 		Upgrade.viewDocument();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDMArchive71105 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -103,7 +103,7 @@ definition {
 		Upgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDMArchive72104 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -122,7 +122,7 @@ definition {
 		Upgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDMArchive73101 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -141,7 +141,7 @@ definition {
 		Upgrade.deleteDocumentTypesAndMetadataSets();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewDMArchive621015 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -151,7 +151,7 @@ definition {
 		Upgrade.viewDocument();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewDMArchive621021 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -161,7 +161,7 @@ definition {
 		Upgrade.viewDocument();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDMArchive701015 {
 		property data.archive.type = "data-archive-documents-and-media";

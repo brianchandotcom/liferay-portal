@@ -27,8 +27,8 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "Supervisor",
 				name = "supervisor",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = ${objectDefinitionId1},
+				objectDefinitionId2 = ${objectDefinitionId2},
 				type = "oneToMany");
 		}
 	}
@@ -40,7 +40,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
 		}
 	}
@@ -48,7 +48,7 @@ definition {
 	@description = "Aggregation Terms in oneToMany relationship"
 	@disable-webdriver = "true"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnAggregationTermsDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -60,13 +60,13 @@ definition {
 		task ("Given three employee accounts created") {
 			var employeeId1 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId1}");
+				managerId = ${managerId1});
 			var employeeId2 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Riley",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 			var employeeId3 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Justin",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 		}
 
 		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {
@@ -77,21 +77,21 @@ definition {
 
 		task ("Then receiving the managerId in facets with a correct number of ocurrences") {
 			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "1",
-				managerId = "${managerId1}",
-				responseToParse = "${getFacetsWithManagerId}");
+				expectedValue = 1,
+				managerId = ${managerId1},
+				responseToParse = ${getFacetsWithManagerId});
 
 			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "2",
-				managerId = "${managerId2}",
-				responseToParse = "${getFacetsWithManagerId}");
+				expectedValue = 2,
+				managerId = ${managerId2},
+				responseToParse = ${getFacetsWithManagerId});
 		}
 	}
 
 	@description = "Aggregation Terms in oneToMany relationship after object deletion"
 	@disable-webdriver = "true"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnAggregationTermsDetailsInOneToManyRelationshipAfterObjectDeletion {
 		property portal.acceptance = "true";
 
@@ -103,17 +103,17 @@ definition {
 		task ("Given three employee accounts created with two of them related with the same manager") {
 			var employeeId1 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId1}");
+				managerId = ${managerId1});
 			var employeeId2 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Riley",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 			var employeeId3 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Justin",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 		}
 
 		task ("Given deleting one of the employees related with the same manager") {
-			ObjectDefinitionAPI.deleteEmployee(employeeId = "${employeeId3}");
+			ObjectDefinitionAPI.deleteEmployee(employeeId = ${employeeId3});
 		}
 
 		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {
@@ -124,21 +124,21 @@ definition {
 
 		task ("Then both managerId in facets have value 1 as the number of ocurrences") {
 			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "1",
-				managerId = "${managerId1}",
-				responseToParse = "${getFacetsWithManagerId}");
+				expectedValue = 1,
+				managerId = ${managerId1},
+				responseToParse = ${getFacetsWithManagerId});
 
 			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "1",
-				managerId = "${managerId2}",
-				responseToParse = "${getFacetsWithManagerId}");
+				expectedValue = 1,
+				managerId = ${managerId2},
+				responseToParse = ${getFacetsWithManagerId});
 		}
 	}
 
 	@description = "Aggregation Terms in oneToMany updated relationship"
 	@disable-webdriver = "true"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnAggregationTermsDetailsInOneToManyUpdatedRelationship {
 		property portal.acceptance = "true";
 
@@ -150,20 +150,20 @@ definition {
 		task ("Given three employee accounts created") {
 			var employeeId1 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId1}");
+				managerId = ${managerId1});
 			var employeeId2 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Riley",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 			var employeeId3 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Justin",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 		}
 
 		task ("Given the third employee updated by relating with the same manager") {
 			ObjectDefinitionAPI.updateEmployee(
 				employeeFirstname = "Bruce",
-				employeeId = "${employeeId1}",
-				managerId = "${managerId2}");
+				employeeId = ${employeeId1},
+				managerId = ${managerId2});
 		}
 
 		task ("When calling for 'employees' with a 'managerId' as aggregationTerms parameter") {
@@ -174,15 +174,15 @@ definition {
 
 		task ("Then receiving the managerId in facets with a correct number of ocurrences") {
 			ObjectDefinitionAPI.assertInFacetsWithCorrectValue(
-				expectedValue = "3",
-				managerId = "${managerId2}",
-				responseToParse = "${getFacetsWithManagerId}");
+				expectedValue = 3,
+				managerId = ${managerId2},
+				responseToParse = ${getFacetsWithManagerId});
 		}
 	}
 
 	@description = "Nested fields in oneToMany relationship"
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnNestedFieldsDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
 
@@ -193,7 +193,7 @@ definition {
 		task ("Given employee accounts created") {
 			var employeeId = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId}");
+				managerId = ${managerId});
 		}
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
@@ -206,18 +206,18 @@ definition {
 			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Courtney",
-				expectedManagerId = "${managerId}",
+				expectedManagerId = ${managerId},
 				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
 				nestedObject = "manager",
-				objectId = "${employeeId}",
+				objectId = ${employeeId},
 				relationshipName = "supervisor",
-				responseToParse = "${getEmployeesWithManager}");
+				responseToParse = ${getEmployeesWithManager});
 		}
 	}
 
 	@description = "Nested fields in oneToMany relationship after object deletion"
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnNestedFieldsDetailsInOneToManyRelationshipAfterObjectDeletion {
 		property portal.acceptance = "true";
 
@@ -229,14 +229,14 @@ definition {
 		task ("Given two employee accounts created") {
 			var employeeId1 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId1}");
+				managerId = ${managerId1});
 			var employeeId2 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Riley",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 		}
 
 		task ("Given deleting one of the employees") {
-			ObjectDefinitionAPI.deleteEmployee(employeeId = "${employeeId1}");
+			ObjectDefinitionAPI.deleteEmployee(employeeId = ${employeeId1});
 		}
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
@@ -247,17 +247,17 @@ definition {
 
 		task ("Then 'employee' information should not include 'manager' information assigned to the deleted employee") {
 			ObjectDefinitionAPI.assertResponseOnlyIncludesDetailsOfNotDeletedEmployee(
-				employeeId1 = "${employeeId1}",
-				employeeId2 = "${employeeId2}",
-				managerId1 = "${managerId1}",
-				managerId2 = "${managerId2}",
-				responseToParse = "${responseToParse}");
+				employeeId1 = ${employeeId1},
+				employeeId2 = ${employeeId2},
+				managerId1 = ${managerId1},
+				managerId2 = ${managerId2},
+				responseToParse = ${responseToParse});
 		}
 	}
 
 	@description = "Nested fields in oneToMany Updated relationship"
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanReturnNestedFieldsDetailsInOneToManyUpdatedRelationship {
 		property portal.acceptance = "true";
 
@@ -269,17 +269,17 @@ definition {
 		task ("Given two employee accounts created") {
 			var employeeId1 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Bruce",
-				managerId = "${managerId1}");
+				managerId = ${managerId1});
 			var employeeId2 = ObjectDefinitionAPI.createEmployee(
 				employeeFirstname = "Riley",
-				managerId = "${managerId2}");
+				managerId = ${managerId2});
 		}
 
 		task ("Given the employee account updated by changing manager") {
 			ObjectDefinitionAPI.updateEmployee(
 				employeeFirstname = "Bruce",
-				employeeId = "${employeeId1}",
-				managerId = "${managerId2}");
+				employeeId = ${employeeId1},
+				managerId = ${managerId2});
 		}
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
@@ -292,12 +292,12 @@ definition {
 			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Aaron",
-				expectedManagerId = "${managerId2}",
+				expectedManagerId = ${managerId2},
 				nestedField = "r_${relationshipName}_c_${nestedObject}Id",
 				nestedObject = "manager",
-				objectId = "${employeeId1}",
+				objectId = ${employeeId1},
 				relationshipName = "supervisor",
-				responseToParse = "${getEmployeesWithManager}");
+				responseToParse = ${getEmployeesWithManager});
 		}
 	}
 

@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8890 | Test Summary: Able to change retention period"
-	@priority = "4"
+	@priority = 4
 	test CanChangeRetentionPeriod {
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanChangeRetentionPeriod";
 
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
-	@priority = "5"
+	@priority = 5
 	test CanCreateAccessRequest {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateAccessRequest";
@@ -79,15 +79,15 @@ definition {
 		var userName = "dcp1";
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmail}",
-			userFirstName = "${userName}",
-			userLastName = "${userName}",
-			userScreenName = "${userName}");
+			userEmailAddress = ${userEmail},
+			userFirstName = ${userName},
+			userLastName = ${userName},
+			userScreenName = ${userName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = ${userEmail});
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -97,7 +97,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				email = "${userEmail}",
+				email = ${userEmail},
 				jobType = "Access");
 		}
 
@@ -112,13 +112,13 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Access",
-				key_emailAdress = "${userEmail}",
-				searchUser = "${userName}");
+				key_emailAdress = ${userEmail},
+				searchUser = ${userName});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
-	@priority = "5"
+	@priority = 5
 	test CanCreateDeleteRequest {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateDeleteRequest";
@@ -127,15 +127,15 @@ definition {
 		var userName = "dcp2";
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmail}",
-			userFirstName = "${userName}",
-			userLastName = "${userName}",
-			userScreenName = "${userName}");
+			userEmailAddress = ${userEmail},
+			userFirstName = ${userName},
+			userLastName = ${userName},
+			userScreenName = ${userName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = ${userEmail});
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -145,7 +145,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				email = "${userEmail}",
+				email = ${userEmail},
 				jobType = "Delete");
 		}
 
@@ -160,13 +160,13 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Delete",
-				key_emailAdress = "${userEmail}",
-				searchUser = "${userName}");
+				key_emailAdress = ${userEmail},
+				searchUser = ${userName});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
-	@priority = "5"
+	@priority = 5
 	test CanCreateSuppressRequest {
 		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateSuppressRequest";
@@ -175,15 +175,15 @@ definition {
 		var userName = "dcp3";
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmail}",
-			userFirstName = "${userName}",
-			userLastName = "${userName}",
-			userScreenName = "${userName}");
+			userEmailAddress = ${userEmail},
+			userFirstName = ${userName},
+			userLastName = ${userName},
+			userScreenName = ${userName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = ${userEmail});
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -193,7 +193,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				email = "${userEmail}",
+				email = ${userEmail},
 				jobType = "Suppress");
 		}
 
@@ -208,14 +208,14 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Suppress",
-				key_emailAdress = "${userEmail}",
-				searchUser = "${userName}");
+				key_emailAdress = ${userEmail},
+				searchUser = ${userName});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanUnsuppressUser {
 
 		// AC Refactor: Timing issues may happen on this test case
@@ -225,15 +225,15 @@ definition {
 		var userName = "dcp4";
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmail}",
-			userFirstName = "${userName}",
-			userLastName = "${userName}",
-			userScreenName = "${userName}");
+			userEmailAddress = ${userEmail},
+			userFirstName = ${userName},
+			userLastName = ${userName},
+			userScreenName = ${userName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = ${userEmail});
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -243,7 +243,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				email = "${userEmail}",
+				email = ${userEmail},
 				jobType = "Suppress");
 		}
 
@@ -254,8 +254,8 @@ definition {
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 
-			while ((IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
-				ACUtils.searchBar(searchItem = "${userName}");
+			while ((IsElementNotPresent(itemName = ${userEmail}, locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
+				ACUtils.searchBar(searchItem = ${userName});
 
 				ACUtils.clearSearchBar();
 			}
@@ -269,7 +269,7 @@ definition {
 
 		task ("Assert that the user was unsuppressed") {
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "${userEmail}",
+				emailAdresses = ${userEmail},
 				jobType = "Access");
 
 			ACSettings.goToDataControlAndPrivacy();
@@ -280,19 +280,19 @@ definition {
 
 			ACSettings.assertRequestLog(
 				jobType = "Unsuppress",
-				key_emailAdress = "${userEmail}",
-				searchUser = "${userName}");
+				key_emailAdress = ${userEmail},
+				searchUser = ${userName});
 
 			ACSettings.assertRequestLog(
 				jobType = "Access",
-				key_emailAdress = "${userEmail}",
-				searchUser = "${userName}");
+				key_emailAdress = ${userEmail},
+				searchUser = ${userName});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8892 | Test Summary: Suppressed user appears in Suppressed User List"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test SuppressedUserAppearsInSuppressedUserList {
 
 		// AC Refactor: Timing issues may happen on this test case
@@ -302,15 +302,15 @@ definition {
 		var userName = "dcp5";
 
 		JSONUser.addUser(
-			userEmailAddress = "${userEmail}",
-			userFirstName = "${userName}",
-			userLastName = "${userName}",
-			userScreenName = "${userName}");
+			userEmailAddress = ${userEmail},
+			userFirstName = ${userName},
+			userLastName = ${userName},
+			userScreenName = ${userName});
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
-			userEmailAddress = "${userEmail}");
+			userEmailAddress = ${userEmail});
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
@@ -320,7 +320,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = "${userEmail}",
+				emailAdresses = ${userEmail},
 				jobType = "Suppress");
 		}
 
@@ -331,13 +331,13 @@ definition {
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 
-			while ((IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
+			while ((IsElementNotPresent(itemName = ${userEmail}, locator1 = "ACSettings#ITEM_ON_LIST")) && (maxIterations = "50")) {
 				Refresh();
 			}
 
 			// Couldn't assert the list due to missing data.
 
-			ACUtils.assertItemsName(itemList = "${userEmail}");
+			ACUtils.assertItemsName(itemList = ${userEmail});
 		}
 	}
 

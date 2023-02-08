@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = " COMMERCE-9883 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in th organization to which the same Sales Agent belongs"
-	@priority = "4"
+	@priority = 4
 	test CanAddNewUserToAccountAsSalesAgent {
 		task ("And the admin creates an account called Commerce Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9880 | As a Sales Agent, I want to be able to checkout orders"
-	@priority = "4"
+	@priority = 4
 	test CanCheckoutOrdersAsSalesAgent {
 		property portal.acceptance = "true";
 
@@ -148,9 +148,9 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Account A",
 				orderItems = "MIN55861:1",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("When the Sales Agent logs in") {
@@ -174,8 +174,8 @@ definition {
 				manageShippingOptionsPermission = "false",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				selectedShippingAddressName = "Test Name",
 				shippingMethod = "Standard");
 		}
@@ -189,7 +189,7 @@ definition {
 		task ("Then the Sales Agent can create and checkout an order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -203,14 +203,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentMethod = "Money Order",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "COMMERCE-9882 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in the organization to which the same Sales Agent belongs"
-	@priority = "4"
+	@priority = 4
 	test CanEditAccountDetailsAsSalesAgent {
 		property portal.acceptance = "true";
 
@@ -260,12 +260,12 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
-				text = "123456");
+				text = 123456);
 
 			Button.clickSave();
 
 			for (var addressType : list "Billing,Shipping") {
-				var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+				var addressTypeUppercase = StringUtil.upperCase(${addressType});
 
 				AssertClick(
 					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
@@ -302,7 +302,7 @@ definition {
 			Account.viewAccountDetails(
 				accountDescription = "Commerce Account Edit Description",
 				accountName = "Commerce Account Edit",
-				accountTaxId = "123456");
+				accountTaxId = 123456);
 
 			Account.viewDefaultBillingAddress(
 				addressCity = "Test Address",
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9874 | As a Sales Agent, I want to not be able to see accounts and orders when 'Manage Available Accounts' permission is removed"
-	@priority = "4"
+	@priority = 4
 	test CannotViewAccountsAndOrdersAsSalesAgentWithoutPermission {
 		task ("Given 4 accounts are created") {
 			for (var account : list "A,B,C,D") {
@@ -345,18 +345,18 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Account A",
 				orderItems = "MIN55861:1",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("And the Account B has a pending order") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Account B",
 				orderItems = "MIN55861:1",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("And Manage Available Accounts permission is removed for the Sales Agent role") {
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9872 | As a Sales Agent, I want to not be able to see accounts that are outside the organization I'm part of"
-	@priority = "4"
+	@priority = 4
 	test CannotViewAccountsOutsideOrganizationAsSalesAgent {
 		property portal.acceptance = "true";
 
@@ -406,16 +406,16 @@ definition {
 		task ("And the acccount has a pending and a placed order") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN55861:1",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("When the Sales Agent logs in") {
@@ -459,7 +459,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9871 |  As a Sales Agent, I want to be able to see all the accounts and orders that are present in the organization to which the Sales Agent belongs"
-	@priority = "4"
+	@priority = 4
 	test CanViewAccountsAndOrdersAsSalesAgent {
 		property portal.acceptance = "true";
 
@@ -483,18 +483,18 @@ definition {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Account A",
 				orderItems = "MIN55861:1",
-				orderStatus = "1",
+				orderStatus = 1,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("And the account B has a pending order") {
 			CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Account B",
 				orderItems = "MIN55861:1",
-				orderStatus = "2",
+				orderStatus = 2,
 				paymentMethod = "money-order",
-				paymentStatus = "2");
+				paymentStatus = 2);
 		}
 
 		task ("When the Sales Agent logs in") {
@@ -562,7 +562,7 @@ definition {
 			FrontStore.viewMiniCartItem(
 				cartItemName = "U-Joint",
 				cartItemPriceValue = "24.00",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "MIN55861");
 		}
 	}

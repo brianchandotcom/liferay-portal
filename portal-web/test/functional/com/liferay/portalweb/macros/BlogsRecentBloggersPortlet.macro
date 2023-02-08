@@ -2,7 +2,7 @@ definition {
 
 	macro gotoEntryDetails {
 		Click(
-			key_userName = "${userName}",
+			key_userName = ${userName},
 			locator1 = "BlogsRecentBloggers#USER_NAME_LINK");
 	}
 
@@ -21,7 +21,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsRecentBloggers#POST_DATE",
-			value1 = "${postYear}");
+			value1 = ${postYear});
 	}
 
 }

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165106. The role of page template cards should be button when create a new page."
-	@priority = "1"
+	@priority = 1
 	test ViewRoleOfPageTemplateCards {
 		task ("Given a page creator accesses to the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");

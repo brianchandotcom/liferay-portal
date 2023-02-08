@@ -1,15 +1,15 @@
 definition {
 
 	macro _deleteJobSchedulerTrigger {
-		Variables.assertDefined(parameterList = "${triggerName}");
+		Variables.assertDefined(parameterList = ${triggerName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var triggerId = JSONJobScheduler._getJobSchedulerTriggerIdByName(triggerName = "${triggerName}");
+		var triggerId = JSONJobScheduler._getJobSchedulerTriggerIdByName(triggerName = ${triggerName});
 
 		var curl = '''
 			${baseURL}/api/jsonws/dispatch.dispatchtrigger/delete-dispatch-trigger \
@@ -17,11 +17,11 @@ definition {
 				-d dispatchTriggerId=${triggerId}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteJobSchedulerTriggers {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -29,8 +29,8 @@ definition {
 
 		var triggerIds = JSONJobScheduler._getJobSchedulerTriggerIds();
 
-		if ("${triggerIds}" != "") {
-			for (var triggerId : list "${triggerIds}") {
+		if (${triggerIds} != "") {
+			for (var triggerId : list ${triggerIds}) {
 				echo("Deleting Job Scheduler Trigger with ID: ${triggerId}");
 
 				var curl = '''
@@ -39,7 +39,7 @@ definition {
 						-d dispatchTriggerId=${triggerId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -48,19 +48,19 @@ definition {
 	}
 
 	macro _deleteJobSchedulerTriggersByType {
-		Variables.assertDefined(parameterList = "${taskExecutorType}");
+		Variables.assertDefined(parameterList = ${taskExecutorType});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(triggerCount)) {
-			var triggerCount = "${triggerCount}";
+			var triggerCount = ${triggerCount};
 		}
 		else {
-			var triggerCount = "100";
+			var triggerCount = 100;
 		}
 
 		var curl = '''
@@ -70,10 +70,10 @@ definition {
 				-d end=${triggerCount}
 		''';
 
-		var triggerIds = JSONCurlUtil.post("${curl}", "$.[?(@['dispatchTaskExecutorType'] == '${taskExecutorType}')].['dispatchTriggerId']");
+		var triggerIds = JSONCurlUtil.post(${curl}, "$.[?(@['dispatchTaskExecutorType'] == '${taskExecutorType}')].['dispatchTriggerId']");
 
-		if ("${triggerIds}" != "") {
-			for (var triggerId : list "${triggerIds}") {
+		if (${triggerIds} != "") {
+			for (var triggerId : list ${triggerIds}) {
 				echo("Deleting Job Scheduler Trigger with ID: ${triggerId}");
 
 				var curl = '''
@@ -82,7 +82,7 @@ definition {
 						-d dispatchTriggerId=${triggerId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -91,19 +91,19 @@ definition {
 	}
 
 	macro _getJobSchedulerTriggerIdByName {
-		Variables.assertDefined(parameterList = "${triggerName}");
+		Variables.assertDefined(parameterList = ${triggerName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(triggerCount)) {
-			var triggerCount = "${triggerCount}";
+			var triggerCount = ${triggerCount};
 		}
 		else {
-			var triggerCount = "100";
+			var triggerCount = 100;
 		}
 
 		var curl = '''
@@ -113,23 +113,23 @@ definition {
 				-d end=${triggerCount}
 		''';
 
-		var triggerId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${triggerName}')]['dispatchTriggerId']");
+		var triggerId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${triggerName}')]['dispatchTriggerId']");
 
-		return "${triggerId}";
+		return ${triggerId};
 	}
 
 	macro _getJobSchedulerTriggerIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(triggerCount)) {
-			var triggerCount = "${triggerCount}";
+			var triggerCount = ${triggerCount};
 		}
 		else {
-			var triggerCount = "100";
+			var triggerCount = 100;
 		}
 
 		var curl = '''
@@ -139,9 +139,9 @@ definition {
 				-d end=${triggerCount}
 		''';
 
-		var triggerIds = JSONCurlUtil.post("${curl}", "$..['dispatchTriggerId']");
+		var triggerIds = JSONCurlUtil.post(${curl}, "$..['dispatchTriggerId']");
 
-		return "${triggerIds}";
+		return ${triggerIds};
 	}
 
 }

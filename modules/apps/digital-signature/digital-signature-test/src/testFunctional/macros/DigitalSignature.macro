@@ -5,7 +5,7 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentFile = ${dmDocumentFile},
 			dmDocumentTitle = "DM Document Title");
 
 		Navigator.openURL();
@@ -19,34 +19,34 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${envelopeName}");
+			value1 = ${envelopeName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${recipientFullName}");
+			value1 = ${recipientFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = "${emailSubject}");
+			value1 = ${emailSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = "${recipientEmail}");
+			value1 = ${recipientEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = "${emailMessage}");
+			value1 = ${emailMessage});
 
 		Click(
 			key_text = "Add Document",
 			locator1 = "Button#ANY_WITH_SPAN");
 
 		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
@@ -72,34 +72,34 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${envelopeName}");
+			value1 = ${envelopeName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${recipientFullName}");
+			value1 = ${recipientFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = "${emailSubject}");
+			value1 = ${emailSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = "${recipientEmail}");
+			value1 = ${recipientEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = "${emailMessage}");
+			value1 = ${emailMessage});
 
 		Click(
 			key_text = "Add Document",
 			locator1 = "Button#ANY_WITH_SPAN");
 
 		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
@@ -113,7 +113,7 @@ definition {
 			locator1 = "Button#ANY_WITH_SPAN");
 
 		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
@@ -127,20 +127,20 @@ definition {
 		Refresh();
 
 		Click(
-			key_text = "${envelopeName}",
+			key_text = ${envelopeName},
 			locator1 = "Link#ANY");
 
 		AssertElementPresent(locator1 = "TextInput#HIDDEN");
 
 		var value = selenium.getElementValue("TextInput#HIDDEN");
 
-		Navigator.openSpecificURL(url = "${value}");
+		Navigator.openSpecificURL(url = ${value});
 	}
 
 	macro enableDigitalSignature {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "${siteStrategy}");
+			value1 = ${siteStrategy});
 
 		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
 		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
@@ -150,23 +150,23 @@ definition {
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
-			value1 = "${digitalSignatureApiUsername}");
+			value1 = ${digitalSignatureApiUsername});
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
-			value1 = "${digitalSignatureApiAccountId}");
+			value1 = ${digitalSignatureApiAccountId});
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
-			value1 = "${digitalSignatureAccountBaseUri}");
+			value1 = ${digitalSignatureAccountBaseUri});
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
-			value1 = "${digitalSignatureIntegrationKey}");
+			value1 = ${digitalSignatureIntegrationKey});
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
-			value1 = "${digitalSignatureRsaPrivateKey}");
+			value1 = ${digitalSignatureRsaPrivateKey});
 
 		SystemSettings.saveConfiguration();
 	}

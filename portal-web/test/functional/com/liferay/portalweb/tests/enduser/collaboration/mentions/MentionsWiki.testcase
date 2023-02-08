@@ -17,7 +17,7 @@ definition {
 			layoutName = "Wiki Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Page",
 			widgetName = "Wiki");
@@ -40,7 +40,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewWikiCommentMentionedUser {
 		property portal.acceptance = "true";

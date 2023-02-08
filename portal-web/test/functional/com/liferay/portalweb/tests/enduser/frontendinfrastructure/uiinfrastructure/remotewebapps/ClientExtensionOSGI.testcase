@@ -23,13 +23,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-169554 Access the osgi deployed custom element and assert that field information is displayed correctly and not editable"
-	@priority = "4"
+	@priority = 4
 	test FieldsAreNotEditableWhenAccessed {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#FieldsAreNotEditableWhenAccessed";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "LPS-169551: Verify that view button is visible"
-	@priority = "3"
+	@priority = 3
 	test HasViewAction {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#HasViewAction";
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "LPS-169552 Select view action from Remote app and assert that field information is displayed correctly and not editable"
-	@priority = "3"
+	@priority = 3
 	test ViewActionCanDisplayFieldsAsNotEditable {
 		property custom.element.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtensionOSGI#ViewActionCanDisplayFieldsAsNotEditable";

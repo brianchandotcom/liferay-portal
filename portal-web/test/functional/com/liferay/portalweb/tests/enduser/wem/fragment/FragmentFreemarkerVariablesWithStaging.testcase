@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154077. The pages designer can identify in a fragment when they are at edit or view mode in staging site."
-	@priority = "3"
+	@priority = 3
 	test AddFragmentWithLayoutModeToContentPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Fragments";
@@ -57,13 +57,13 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 			var fragmentEntryId = JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name (Staging)",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name",
 				site = "false");
 		}

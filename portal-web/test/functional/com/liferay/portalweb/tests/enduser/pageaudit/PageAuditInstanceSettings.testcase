@@ -33,15 +33,13 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
-	When the value is void ('Choose an option')
-	Then the call is made for Google Page Speed default value - desktop"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DefaultStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtInstanceSettings";
@@ -71,9 +69,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given any value in the Instance settings Site scope section
-	Then all sites shows the same value (also void fields)"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test InstanceSettingsHierarchy {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#InstanceSettingsHierarchy";
@@ -106,10 +103,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MobileStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtInstanceSettings";
@@ -139,10 +134,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given any value in the Instance settings Site scope section
-	When the same value has been overwritten in any of the sites
-	Then the value in the site prevails over any changes in the Instance settings"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test SiteSettingsHierarchyOverInstanceSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverInstanceSettings";
@@ -178,10 +171,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings";
@@ -208,11 +199,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
+	@description = ""
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope";
 
@@ -228,10 +217,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings";
@@ -258,10 +245,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon";

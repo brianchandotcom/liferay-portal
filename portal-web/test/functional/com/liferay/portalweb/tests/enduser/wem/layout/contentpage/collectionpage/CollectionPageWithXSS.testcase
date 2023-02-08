@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is use case for LPS-129109. No alert shown when view the collection page based on collection with XSS name."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionPageBasedOnCollectionWithXSSName {
 		task ("Create a manual collection with XSS name for All Types") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");

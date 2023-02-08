@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."
-	@priority = "5"
+	@priority = 5
 	test CanViewArticleInFolderThroughPageTreePanel {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This test ensures that a child article is displayed in the KB page tree after expanding the parent article."
-	@priority = "4"
+	@priority = 4
 	test CanViewChildArticleThroughPageTreePanel {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."
-	@priority = "5"
+	@priority = 5
 	test CanViewSubFolderThroughPageTreePanel {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."
-	@priority = "5"
+	@priority = 5
 	test PageTreeIsCollapsedAfterOpeningProductMenu {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

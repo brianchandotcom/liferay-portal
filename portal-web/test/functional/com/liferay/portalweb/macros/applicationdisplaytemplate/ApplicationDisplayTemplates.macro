@@ -12,7 +12,7 @@ definition {
 		PortletEntry.inputName(name = "${portletName} Test ADT");
 
 		Click(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
 
 		PortletEntry.save();
@@ -21,7 +21,7 @@ definition {
 	}
 
 	macro addCP {
-		var key_adtType = "${adtType}";
+		var key_adtType = ${adtType};
 
 		Portlet.viewEmptyMessage(message = "There are no templates.");
 
@@ -51,26 +51,26 @@ definition {
 
 			Type.sendKeysAceEditor(
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
-				value1 = "${templateScript}");
+				value1 = ${templateScript});
 		}
 		else if (isSet(fieldNameList)) {
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				AssertClick(
 					key_panelTitle = "Fields",
-					key_variableName = "${fieldName}",
+					key_variableName = ${fieldName},
 					locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE",
-					value1 = "${fieldName}");
+					value1 = ${fieldName});
 			}
 		}
 		else {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-			var filePath = TestCase.getDependenciesDirPath(fileName = "${adtFile}");
+			var filePath = TestCase.getDependenciesDirPath(fileName = ${adtFile});
 
 			UploadFile(
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${filePath}");
+				value1 = ${filePath});
 		}
 
 		PortletEntry.save();
@@ -83,7 +83,7 @@ definition {
 	macro deleteCP {
 		ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
 			item = "Delete",
-			widgetTemplateName = "${widgetTemplateName}");
+			widgetTemplateName = ${widgetTemplateName});
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -103,7 +103,7 @@ definition {
 
 		Type.sendKeysAceEditor(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
-			value1 = "${adtScript}");
+			value1 = ${adtScript});
 
 		PortletEntry.save();
 	}
@@ -112,18 +112,18 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "Edit ${oldWidgetTemplateName}");
 
 		if (isSet(newWidgetTemplateName)) {
-			PortletEntry.inputName(name = "${newWidgetTemplateName}");
+			PortletEntry.inputName(name = ${newWidgetTemplateName});
 		}
 
 		if (isSet(adtFile)) {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-			var filePath = TestCase.getDependenciesDirPath(fileName = "${adtFile}");
+			var filePath = TestCase.getDependenciesDirPath(fileName = ${adtFile});
 
 			UploadFile(
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${filePath}");
+				value1 = ${filePath});
 		}
 
 		PortletEntry.save();
@@ -138,17 +138,17 @@ definition {
 				-d templateId=${templateID}
 		''';
 
-		var templateKey = JSONCurlUtil.post("${curl}", "$.templateKey");
+		var templateKey = JSONCurlUtil.post(${curl}, "$.templateKey");
 
-		return "${templateKey}";
+		return ${templateKey};
 	}
 
 	macro gotoWidgetTemplatesEllipsisItem {
 		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${widgetTemplateName}",
+			key_tableEntry = ${widgetTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${item}");
+		MenuItem.click(menuItem = ${item});
 	}
 
 	macro openWidgetTemplatesAdmin {
@@ -156,16 +156,16 @@ definition {
 	}
 
 	macro searchGlobalADT {
-		Search.searchCP(searchTerm = "${templateName}");
+		Search.searchCP(searchTerm = ${templateName});
 
 		AssertVisible(
-			key_tableEntry = "${templateName}",
+			key_tableEntry = ${templateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
 	macro selectPortletADT {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -178,7 +178,7 @@ definition {
 
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 
 		PortletEntry.save();
 

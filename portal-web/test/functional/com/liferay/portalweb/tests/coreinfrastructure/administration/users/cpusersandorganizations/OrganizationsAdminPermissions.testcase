@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddOrganizationRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -45,7 +45,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -81,7 +81,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ORGANIZATION",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
@@ -92,7 +92,7 @@ definition {
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ORGANIZATION",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Organization Administrator of an organization can manage suborganizations associated to it."
-	@priority = "4"
+	@priority = 4
 	test OrganizationAdminCanManageSuborganizations {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

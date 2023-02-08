@@ -32,9 +32,9 @@ definition {
 	@description = "Enable Cookie Preference handling with Explicit cookie setting Enabled on site level"
 	macro enablePreferenceHandlingWithCookieConsentInSiteSettings {
 		CookieNavigator.gotoSiteSettings(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			portlet = "Preference Handling",
-			siteURLKey = "${siteURLKey}");
+			siteURLKey = ${siteURLKey});
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 

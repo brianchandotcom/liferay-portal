@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154273. The site designer can view number of usages on categories admin in staging and live site."
-	@priority = "4"
+	@priority = 4
 	test ViewUsages {
 		task ("Given a site designer has a document with a category") {
 			JSONCategory.addVocabulary(
@@ -51,7 +51,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name-staging",
 				mimeType = "image/jpeg",
@@ -67,7 +67,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 		}
 
 		task ("When the site designer publishes changes to live") {
@@ -82,7 +82,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 		}
 
 		task ("When the site designer moves the document to recycle bin in live site") {
@@ -97,7 +97,7 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 		}
 
 		task ("When the site designer delete the document in recycle bin of live site") {
@@ -114,14 +114,14 @@ definition {
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
-				tableEntryInfo = "0");
+				tableEntryInfo = 0);
 
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name-staging");
 
 			LexiconTable.viewTableEntryInfo(
 				columnName = "usages",
 				tableEntry = "Category Name",
-				tableEntryInfo = "1");
+				tableEntryInfo = 1);
 		}
 	}
 

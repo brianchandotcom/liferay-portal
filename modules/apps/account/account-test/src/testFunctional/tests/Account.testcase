@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
-	@priority = "4"
+	@priority = 4
 	test AccountGroupsAreDisplayedInAccountDetailsPage {
 		property portal.acceptance = "true";
 
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 100."
-	@priority = "5"
+	@priority = 5
 	test AccountNameCannotExceed100Characters {
 		task ("When a user types an account name with more than 100 characters") {
 			Account.openAccountsAdmin();
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "This test assigns an account role to a regular user via Account Admin and asserts that it displays in Users Admin edit user page."
-	@priority = "3"
+	@priority = 3
 	test AccountRoleDisplaysInUsersAdmin {
 		task ("Given a regular user is added to a business account") {
 			JSONUser.addUser(
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101893. It asserts all accounts display properly across pages."
-	@priority = "4"
+	@priority = 4
 	test AccountsDisplayWhenChangingPagination {
 		for (var accountNum : list "1,2,3,4,5,6") {
 			JSONAccountEntry.addAccountEntry(
@@ -163,7 +163,7 @@ definition {
 
 		Account.openAccountsAdmin();
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var accountNum : list "1,2,3,4") {
 			LexiconEntry.viewEntryName(rowEntry = "Accounts Name ${accountNum}");
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "Duplicate External Reference Codes should not be allowed for multiple accounts in the same company. If a duplicate ERC is submitted, the form will not be saved and an error message will inform the user that the ERC belongs to another account."
-	@priority = "4"
+	@priority = 4
 	test AccountWithDuplicateExternalReferenceCodeIsNotSaved {
 		Account.openAccountsAdmin();
 
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "This test makes sure that only one user can be assigned to a Person Account. When you add another person to a Person Account with assigned user, it will only replace the existing user and not add another one."
-	@priority = "4"
+	@priority = 4
 	test AddingSecondUserToPersonAccountWillReplaceFirstUser {
 		property portal.acceptance = "true";
 
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This test adds an address to account and asserts this address is not shared across accounts"
-	@priority = "3"
+	@priority = 3
 	test AddressesAreAccountSpecific {
 		property testray.component.names = "Address";
 
@@ -275,7 +275,7 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "1005 High-Tech Zone",
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This test asserts that only the chosen address type displays when setting default shipping and billing addresses"
-	@priority = "5"
+	@priority = 5
 	test AddressesFilterCorrectlyDefaultAddress {
 		property portal.acceptance = "true";
 		property testray.component.names = "Address";
@@ -315,7 +315,7 @@ definition {
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
-				addressPostalCode = "91765",
+				addressPostalCode = 91765,
 				addressRegion = "California",
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing",
@@ -325,7 +325,7 @@ definition {
 				addressCity = "Dalian",
 				addressCountry = "China",
 				addressName = "Liferay Dalian Software Co., Ltd.",
-				addressPostalCode = "116023",
+				addressPostalCode = 116023,
 				addressRegion = "Liaoning Sheng",
 				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@description = "This test asserts that an Account Manager can view all accounts that are added by other users in the Accounts Admin portlet, not just the ones he created"
-	@priority = "5"
+	@priority = 5
 	test AllAccountsEntriesDisplay {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -415,7 +415,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-139430. Asserts a user can be assigned to an account through the Users Admin portlet"
-	@priority = "3"
+	@priority = 3
 	test AssignUserToAccountViaUsersAdmin {
 		task ("Given two accounts are created") {
 			JSONAccountEntry.addAccountEntry(
@@ -450,13 +450,13 @@ definition {
 			for (var accountName : list "Account Test 1,Account Test 2") {
 				User.viewMemberships(
 					assetType = "Accounts",
-					assigneeName = "${accountName}");
+					assigneeName = ${accountName});
 			}
 		}
 	}
 
 	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
-	@priority = "4"
+	@priority = 4
 	test BlockedDomainsAreInstanceWide {
 		property test.name.skip.portal.instance = "Accounts#BlockedDomainsAreInstanceWide";
 
@@ -546,7 +546,7 @@ definition {
 	}
 
 	@description = "This tests activating an inactive account"
-	@priority = "3"
+	@priority = 3
 	test CanActivateAnInactiveAccount {
 		task ("Given a business account that is Inactive") {
 			JSONAccountEntry.addAccountEntry(
@@ -579,7 +579,7 @@ definition {
 	}
 
 	@description = "This test adds a new user via the Users tab of an Account"
-	@priority = "4"
+	@priority = 4
 	test CanAddAccountUserViaAssignUser {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Assign Account User",
@@ -607,7 +607,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-157661. It asserts that account avatar can be added in creation."
-	@priority = "3"
+	@priority = 3
 	test CanAddAccountWithAvatar {
 		Account.openAccountsAdmin();
 
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@description = "This test adds and removes a user assignee to an Owned or account specific role."
-	@priority = "4"
+	@priority = 4
 	test CanAddAndRemoveAssigneeToAnOwnedAccountRole {
 		property portal.acceptance = "true";
 
@@ -684,7 +684,7 @@ definition {
 	}
 
 	@description = "This test adds and removes multiple organizations from an account via management toolbar."
-	@priority = "4"
+	@priority = 4
 	test CanAddAndRemoveOrganizationsInBulk {
 		for (var organizationNumber : list "1,2,3,4") {
 			JSONOrganization.addOrganization(
@@ -724,7 +724,7 @@ definition {
 	}
 
 	@description = "This test adds a Person Account by changing the type in the dropdown upon creation."
-	@priority = "4"
+	@priority = 4
 	test CanAddAPersonAccount {
 		Account.openAccountsAdmin();
 
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@description = "This test adds a category to an account"
-	@priority = "3"
+	@priority = 3
 	test CanAddCategoryToAnAccount {
 		JSONCategory.addVocabulary(
 			groupName = "Global",
@@ -771,7 +771,7 @@ definition {
 	}
 
 	@description = "This test asserts that multiple accounts can be added with the same domain"
-	@priority = "3"
+	@priority = 3
 	test CanAddMultipleAccountsWithSameDomain {
 		task ("Enable account email domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -793,7 +793,7 @@ definition {
 	}
 
 	@description = "This test asserts that users can add more than one domain to a business account."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleDomainsToAccount {
 		property portal.acceptance = "true";
 
@@ -811,13 +811,13 @@ definition {
 
 		for (var domainName : list "liferay.com,google.com,si-na.com,9teen.com") {
 			AssertElementPresent(
-				key_domainName = "${domainName}",
+				key_domainName = ${domainName},
 				locator1 = "Account#VALID_DOMAINS_DOMAIN_NAME");
 		}
 	}
 
 	@description = "This test adds a new shipping address and billing address via Set Default Address. It asserts that these addresses are set by default after adding."
-	@priority = "3"
+	@priority = 3
 	test CanAddNewAddressViaSetDefaultAddress {
 		property testray.component.names = "Address";
 
@@ -841,7 +841,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
@@ -876,7 +876,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			addressType = "Billing",
@@ -895,7 +895,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-149125. This test asserts that regular users are displayed in Account Admin when selecting users for an account"
-	@priority = "4"
+	@priority = 4
 	test CanAddRegularUserViaAssignUser {
 		task ("Given there is a regular user added in Users Admin and a business account,") {
 			JSONUser.addUser(
@@ -941,7 +941,7 @@ definition {
 	}
 
 	@description = "This test assigns an existing user to account through the Users tab"
-	@priority = "4"
+	@priority = 4
 	test CanAssignExistingUserToAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
@@ -979,7 +979,7 @@ definition {
 	}
 
 	@description = "This test asserts that multiple users can be assigned to an account via the Assign Users Modal"
-	@priority = "4"
+	@priority = 4
 	test CanAssignMultipleUsersViaAssignUsersModal {
 		task ("Create an account and add 4 users into it") {
 			JSONAccountEntry.addAccountEntry(
@@ -1048,7 +1048,7 @@ definition {
 	}
 
 	@description = "This test adds an organization as an assignee of a business account"
-	@priority = "4"
+	@priority = 4
 	test CanAssignOrganizationToBusinessAccount {
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
@@ -1076,7 +1076,7 @@ definition {
 	}
 
 	@description = "This test assigns a role to an Account User in the Account Details page via Users tab"
-	@priority = "4"
+	@priority = 4
 	test CanAssignRolesViaUsersTab {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
@@ -1129,7 +1129,7 @@ definition {
 	}
 
 	@description = "This test asserts that address type can be changed from Billing to Shipping and vice versa."
-	@priority = "5"
+	@priority = 5
 	test CanChangeAddressType {
 		property portal.acceptance = "true";
 		property testray.component.names = "Address";
@@ -1148,7 +1148,7 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "1005 High-Tech Zone",
@@ -1164,7 +1164,7 @@ definition {
 
 		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Billing and Shipping") {
 			LexiconEntry.viewEntryContent(
-				rowAny = "${rowAny}",
+				rowAny = ${rowAny},
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
 		}
 
@@ -1180,7 +1180,7 @@ definition {
 
 		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Shipping") {
 			LexiconEntry.viewEntryContent(
-				rowAny = "${rowAny}",
+				rowAny = ${rowAny},
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
 		}
 
@@ -1196,13 +1196,13 @@ definition {
 
 		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning Sheng,116023,Billing") {
 			LexiconEntry.viewEntryContent(
-				rowAny = "${rowAny}",
+				rowAny = ${rowAny},
 				rowEntry = "Liferay Dalian Software Co., Ltd.");
 		}
 	}
 
 	@description = "This test adds more than 4 addresses to an account and asserts correct pagination in the address list."
-	@priority = "3"
+	@priority = 3
 	test CanChangePaginationInAddressesList {
 		property testray.component.names = "Address";
 
@@ -1220,7 +1220,7 @@ definition {
 			addressCity = "Chicago",
 			addressCountry = "United States",
 			addressName = "Chicago",
-			addressPostalCode = "60606",
+			addressPostalCode = 60606,
 			addressRegion = "Illinois",
 			addressStreet1 = "205 W. Wacker Dr",
 			addressStreet2 = "Suite 720",
@@ -1231,7 +1231,7 @@ definition {
 			addressCity = "Hamilton",
 			addressCountry = "United States",
 			addressName = "Hamilton",
-			addressPostalCode = "45011",
+			addressPostalCode = 45011,
 			addressRegion = "Ohio",
 			addressStreet1 = "10 Journal Square",
 			addressStreet2 = "Suite 200",
@@ -1253,7 +1253,7 @@ definition {
 			addressCity = "Recife",
 			addressCountry = "Brazil",
 			addressName = "Latin America Ltda",
-			addressPostalCode = "2480",
+			addressPostalCode = 2480,
 			addressRegion = "São Paulo",
 			addressStreet1 = "Alameda Santos",
 			addressStreet2 = "7 andar",
@@ -1264,7 +1264,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Los Angeles",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			addressType = "Billing",
@@ -1274,7 +1274,7 @@ definition {
 			addressCity = "Madrid",
 			addressCountry = "Spain",
 			addressName = "Spain and Portugal",
-			addressPostalCode = "28046",
+			addressPostalCode = 28046,
 			addressRegion = "Madrid",
 			addressStreet1 = "Paseo de la Castellana",
 			addressStreet2 = "280 Planta 1. Modulo B",
@@ -1287,14 +1287,14 @@ definition {
 
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var addressName : list "Chicago,Hamilton,Japan K. K.,Latin America Ltda") {
-			LexiconEntry.viewEntryName(rowEntry = "${addressName}");
+			LexiconEntry.viewEntryName(rowEntry = ${addressName});
 		}
 
 		for (var addressName : list "Los Angeles,Spain and Portugal") {
-			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+			LexiconEntry.viewNoEntry(rowEntry = ${addressName});
 		}
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
@@ -1302,18 +1302,18 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		for (var addressName : list "Los Angeles,Spain and Portugal") {
-			LexiconEntry.viewEntryName(rowEntry = "${addressName}");
+			LexiconEntry.viewEntryName(rowEntry = ${addressName});
 		}
 
 		for (var addressName : list "Chicago,Hamilton,Japan K. K.,Latin America Ltda") {
-			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+			LexiconEntry.viewNoEntry(rowEntry = ${addressName});
 		}
 
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
 	@description = "Assert that the pagination is changable when assigning organizations to an account."
-	@priority = "4"
+	@priority = 4
 	test CanChangePaginationInAssignOrganizations {
 		task ("Setting up an account with organizations.") {
 			for (var organizationNumber : list "1,2,3,4,5,6,7") {
@@ -1340,7 +1340,7 @@ definition {
 				key_title = "Assign Organizations to Account with Organization",
 				locator1 = "IFrame#MODAL_ANY");
 
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 
 			for (var organizationNumber : list "1,2,3,4") {
 				LexiconEntry.viewEntryName(rowEntry = "Organization ${organizationNumber}");
@@ -1367,7 +1367,7 @@ definition {
 	}
 
 	@description = "This test asserts that pagination can be changed in the Assign Users Modal."
-	@priority = "4"
+	@priority = 4
 	test CanChangePaginationInAssignUsersModal {
 		task ("Add an account and add 5 users to it") {
 			JSONAccountEntry.addAccountEntry(
@@ -1406,15 +1406,15 @@ definition {
 
 		task ("Assert pagination can be changed and correct entries and amount are displayed") {
 			for (var listEntries : list "4,8,20") {
-				Pagination.changePagination(itemsPerPage = "${listEntries}");
+				Pagination.changePagination(itemsPerPage = ${listEntries});
 
-				if ("${listEntries}" == "4") {
+				if (${listEntries} == 4) {
 					Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
 					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
 
 					for (var accountUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3") {
-						LexiconEntry.viewEntryName(rowEntry = "${accountUsers}");
+						LexiconEntry.viewEntryName(rowEntry = ${accountUsers});
 					}
 
 					Click(locator1 = "Pagination#NEXT_LINK");
@@ -1426,14 +1426,14 @@ definition {
 					LexiconEntry.viewEntryName(rowEntry = "userfn5 userln5");
 
 					for (var accountUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3") {
-						LexiconEntry.viewNoEntry(rowEntry = "${accountUsers}");
+						LexiconEntry.viewNoEntry(rowEntry = ${accountUsers});
 					}
 				}
 				else {
 					Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
 					for (var allUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4,userfn5 userln5") {
-						LexiconEntry.viewEntryName(rowEntry = "${allUsers}");
+						LexiconEntry.viewEntryName(rowEntry = ${allUsers});
 					}
 				}
 			}
@@ -1441,7 +1441,7 @@ definition {
 	}
 
 	@description = "This test adds more than 3 Owned Roles to an account and asserts correct pagination in the Roles list."
-	@priority = "3"
+	@priority = 3
 	test CanChangePaginationInRolesList {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with Role",
@@ -1463,10 +1463,10 @@ definition {
 
 		Account.gotoAssigneeTab(assigneeTab = "Roles");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
-			LexiconEntry.viewEntryName(rowEntry = "${accountRoleName}");
+			LexiconEntry.viewEntryName(rowEntry = ${accountRoleName});
 		}
 
 		LexiconEntry.viewNoEntry(rowEntry = "Account Role 4");
@@ -1478,14 +1478,14 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Account Role 4");
 
 		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
-			LexiconEntry.viewNoEntry(rowEntry = "${accountRoleName}");
+			LexiconEntry.viewNoEntry(rowEntry = ${accountRoleName});
 		}
 
 		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
 	}
 
 	@description = "This test deactivates an active account and asserts account displays in correct filter."
-	@priority = "4"
+	@priority = 4
 	test CanDeactivateAccount {
 		property portal.acceptance = "true";
 
@@ -1519,7 +1519,7 @@ definition {
 	}
 
 	@description = "This test deactivates and activates multiple entries via management toolbar"
-	@priority = "4"
+	@priority = 4
 	test CanDeactivateAndActivateAccountsInBulk {
 		for (var accountNumber : list "1,2,3,4,5,6") {
 			JSONAccountEntry.addAccountEntry(
@@ -1575,7 +1575,7 @@ definition {
 	}
 
 	@description = "This test asserts that group scope permissions can be defined in the Accounts Admin Portlet."
-	@priority = "5"
+	@priority = 5
 	test CanDefineGroupScopePermissionsInAccountsAdmin {
 		property portal.acceptance = "true";
 
@@ -1616,7 +1616,7 @@ definition {
 	}
 
 	@description = "This test asserts that group scope permissions can be defined in the Roles Admin portlet."
-	@priority = "5"
+	@priority = 5
 	test CanDefineGroupScopePermissionsInRolesAdmin {
 		property test.name.skip.portal.instance = "Accounts#CanDefineGroupScopePermissionsInRolesAdmin";
 
@@ -1645,7 +1645,7 @@ definition {
 	}
 
 	@description = "This only tests the UI for defining permissions for an Owned or account specific role. Permissioning will be covered when 2B widgets are implemented."
-	@priority = "4"
+	@priority = 4
 	test CanDefinePermissionsForOwnedAccountRole {
 		task ("Add a business account with Owned or account specific role and navigate to Define Permissions") {
 			JSONAccountEntry.addAccountEntry(
@@ -1695,7 +1695,7 @@ definition {
 	}
 
 	@description = "This test asserts an account can be deleted successfully via management toolbar and menu item."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteAccount {
 		property portal.acceptance = "true";
 
@@ -1737,7 +1737,7 @@ definition {
 	}
 
 	@description = "This test deletes multiple accounts via management toolbar"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAccountsInBulk {
 		for (var accountNumber : list "1,2,3") {
 			JSONAccountEntry.addAccountEntry(
@@ -1781,7 +1781,7 @@ definition {
 	}
 
 	@description = "This test asserts address deletes successfully."
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAddress {
 		property testray.component.names = "Address";
 
@@ -1800,11 +1800,11 @@ definition {
 			addressCountry = "China",
 			addressDescription = "Address of DL office.",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.openAccountsAdmin();
@@ -1831,7 +1831,7 @@ definition {
 	}
 
 	@description = "This test deletes multiple addresses via management toolbar"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAddressesInBulk {
 		property testray.component.names = "Address";
 
@@ -1849,7 +1849,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			addressType = "Billing",
@@ -1859,11 +1859,11 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			addressType = "Shipping",
 			phoneNumber = "+86 (0)411 88120855");
 
@@ -1885,7 +1885,7 @@ definition {
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		for (var addressName : list "Liferay Dalian Software Co., Ltd.,Liferay Japan K. K.") {
-			LexiconEntry.selectEntry(rowEntry = "${addressName}");
+			LexiconEntry.selectEntry(rowEntry = ${addressName});
 		}
 
 		ClickNoError(
@@ -1903,14 +1903,14 @@ definition {
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		for (var addressName : list "Liferay Dalian Software Co., Ltd.,Liferay Japan K. K.") {
-			LexiconEntry.viewNoEntry(rowEntry = "${addressName}");
+			LexiconEntry.viewNoEntry(rowEntry = ${addressName});
 		}
 
 		LexiconEntry.viewEntryName(rowEntry = "Liferay, Inc.");
 	}
 
 	@description = "This is a use case for LPS-101315. Deleting an inactive account will navigate you back to inactive filter."
-	@priority = "3"
+	@priority = 3
 	test CanDeleteAnInactiveAccount {
 		task ("Given a business account that is Inactive") {
 			JSONAccountEntry.addAccountEntry(
@@ -1933,7 +1933,7 @@ definition {
 	}
 
 	@description = "This test adds a custom field for an account entry and asserts field can be updated."
-	@priority = "4"
+	@priority = 4
 	test CanEditAccountCustomField {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1965,7 +1965,7 @@ definition {
 	}
 
 	@description = "This test asserts that address fields are able to be added and edited."
-	@priority = "4"
+	@priority = 4
 	test CanEditAddressFields {
 		property testray.component.names = "Address";
 
@@ -1984,7 +1984,7 @@ definition {
 				addressCity = "Dalian",
 				addressCountry = "Cuba",
 				addressName = "Address Entry Name",
-				addressPostalCode = "116023",
+				addressPostalCode = 116023,
 				addressStreet1 = "537 Huangpu Road Taide Building,");
 		}
 
@@ -1993,7 +1993,7 @@ definition {
 				addressCity = "Irvine",
 				addressCountry = "Chile",
 				addressName = "Address Entry Name",
-				addressPostalCode = "123456",
+				addressPostalCode = 123456,
 				addressStreet1 = "Street address one");
 		}
 
@@ -2027,7 +2027,7 @@ definition {
 	}
 
 	@description = "This test asserts that External Reference Code is editable."
-	@priority = "3"
+	@priority = 3
 	test CanEditExternalReferenceCode {
 		Account.openAccountsAdmin();
 
@@ -2058,7 +2058,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101221. It updates an inactive account by clicking on its link and asserts user stays on the Inactive filter when you go back to Accounts list."
-	@priority = "4"
+	@priority = 4
 	test CanEditInactiveAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Accounts Name for Test",
@@ -2103,7 +2103,7 @@ definition {
 	}
 
 	@description = "This test updates an account's name and description and asserts change saves successfully."
-	@priority = "5"
+	@priority = 5
 	test CanEditNameAndDescription {
 		property portal.acceptance = "true";
 
@@ -2148,7 +2148,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139477. This test asserts accounts are filtered by All Accounts by default. Changing filter to Business, Guest and Person shows accurate results."
-	@priority = "3"
+	@priority = 3
 	test CanFilterAccountsByType {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -2194,7 +2194,7 @@ definition {
 	}
 
 	@description = "This test asserts that users are correctly filtered by First Name, Last Name, and Email Address in the Assign Users Modal"
-	@priority = "4"
+	@priority = 4
 	test CanFilterAndOrderUsersInAssignUsersModal {
 		task ("Add an account and add 3 different users with varying names and email addresses") {
 			JSONAccountEntry.addAccountEntry(
@@ -2247,22 +2247,22 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "First Name");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "A-user");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "B-user");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "C-user");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "4",
+				key_rowNumber = 4,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Test");
 		}
@@ -2271,22 +2271,22 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Last Name");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Test");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userln1");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userln2");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "4",
+				key_rowNumber = 4,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userln3");
 		}
@@ -2295,29 +2295,29 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Email Address");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "test@liferay.com");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "x-ea@liferay.com");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "3",
+				key_rowNumber = 3,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "y-ea@liferay.com");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "4",
+				key_rowNumber = 4,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "z-ea@liferay.com");
 		}
 	}
 
 	@description = "This tests that an admin can invite a new user with the same domain."
-	@priority = "5"
+	@priority = 5
 	test CanInviteNewUserToAccount {
 		property test.smtp.server.enabled = "true";
 
@@ -2382,7 +2382,7 @@ definition {
 	}
 
 	@description = "This asserts that filter in setting default shipping will not change to billing and that billing addresses do not display as options."
-	@priority = "3"
+	@priority = 3
 	test CannotAddBillingAddressAsDefaultShipping {
 		property testray.component.names = "Address";
 
@@ -2400,7 +2400,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			addressType = "Billing",
@@ -2430,7 +2430,7 @@ definition {
 	}
 
 	@description = "This asserts that filter in setting default billing will not change to shipping and that shipping addresses do not display as options."
-	@priority = "3"
+	@priority = 3
 	test CannotAddShippingAddressAsDefaultBilling {
 		property testray.component.names = "Address";
 
@@ -2448,11 +2448,11 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			addressType = "Shipping",
 			phoneNumber = "+86 (0)411 88120855");
 
@@ -2480,7 +2480,7 @@ definition {
 	}
 
 	@description = "This test adds a blocked domain in instance settings and asserts that a user with a blocked domain cannot be added to an account."
-	@priority = "4"
+	@priority = 4
 	test CannotAddUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -2538,7 +2538,7 @@ definition {
 	}
 
 	@description = "This test sets a valid domain for a business account. It attempts to add a user with a different domain and asserts that a warning displays and the user is not added."
-	@priority = "3"
+	@priority = 3
 	test CannotAddUserWithInvalidEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -2594,7 +2594,7 @@ definition {
 	}
 
 	@description = "This tests that a user cannot invite a user with a different domain"
-	@priority = "4"
+	@priority = 4
 	test CannotInviteUserWithDifferentDomain {
 		task ("Given an account with a domain set") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2618,7 +2618,7 @@ definition {
 	}
 
 	@description = "This test adds an address, sets it as default, and removes it as default"
-	@priority = "3"
+	@priority = 3
 	test CanRemoveAddressAsDefault {
 		property testray.component.names = "Address";
 
@@ -2636,11 +2636,11 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.openAccountsAdmin();
@@ -2648,33 +2648,33 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
 
 		Account.setDefaultShippingAddress(
-			addressDataType = "${addressDataType}",
+			addressDataType = ${addressDataType},
 			addressName = "Liferay Dalian Software Co., Ltd.");
 
 		Account.viewDefaultShippingAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.setDefaultBillingAddress(
-			addressDataType = "${addressDataType}",
+			addressDataType = ${addressDataType},
 			addressName = "Liferay Dalian Software Co., Ltd.");
 
 		Account.viewDefaultBillingAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.removeDefaultBillingAddress(accountName = "Account Remove Address");
@@ -2695,7 +2695,7 @@ definition {
 	}
 
 	@description = "This test removes domain set to an account."
-	@priority = "3"
+	@priority = 3
 	test CanRemoveDomainFromAccount {
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -2725,14 +2725,14 @@ definition {
 	}
 
 	@description = "This test removes a blocked domain in Instance Settings."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDomainFromBlacklist {
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
 
 		for (var settingValue : list "yahoo.com,blocked.com,google.com") {
 			SystemSettings.viewTextareaPartialText(
 				settingName = "Blocked Email Domains",
-				settingValue = "${settingValue}");
+				settingValue = ${settingValue});
 		}
 
 		SystemSettings.editTextAreaSetting(
@@ -2747,7 +2747,7 @@ definition {
 	}
 
 	@description = "This test removes an organization as an assignee of a business account."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveOrganizationFromBusinessAccount {
 		property portal.acceptance = "true";
 
@@ -2783,7 +2783,7 @@ definition {
 	}
 
 	@description = "This test removes a user from account via Users tab"
-	@priority = "5"
+	@priority = 5
 	test CanRemoveUserFromAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Remove Account User",
@@ -2814,7 +2814,7 @@ definition {
 	}
 
 	@description = "This test removes a user from a person account"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveUserFromPersonAccount {
 		property portal.acceptance = "true";
 
@@ -2855,7 +2855,7 @@ definition {
 	}
 
 	@description = "This test removes multiple users from an account in bulk via management toolbar"
-	@priority = "3"
+	@priority = 3
 	test CanRemoveUsersFromAccountsInBulk {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -2904,7 +2904,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for assigned account groups of an account"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccountGroup {
 		task ("Given a business account with assigned account group") {
 			JSONAccountEntry.addAccountEntry(
@@ -2938,7 +2938,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching within a filter scope"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccountInTheInactiveFilter {
 		task ("Given an active and inactive business account exist") {
 			JSONAccountEntry.addAccountEntry(
@@ -2977,7 +2977,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for account roles available in an account"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccountRole {
 		task ("Given a business account with account roles") {
 			JSONAccountEntry.addAccountEntry(
@@ -3007,7 +3007,7 @@ definition {
 	}
 
 	@description = "This test searches for an address in the addresses tab of an account."
-	@priority = "3"
+	@priority = 3
 	test CanSearchForAddressInAddressesTab {
 		property testray.component.names = "Address";
 
@@ -3025,24 +3025,24 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 		for (var searchTerm : list "Dalian,China,Liaoning,Liferay,116023") {
-			Search.searchCP(searchTerm = "${searchTerm}");
+			Search.searchCP(searchTerm = ${searchTerm});
 
 			LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
 		}
 	}
 
 	@description = "This test searches for organizations assigned to an account"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAssignedOrganizations {
 		task ("Add an account and add two organizations") {
 			JSONAccountEntry.addAccountEntry(
@@ -3051,7 +3051,7 @@ definition {
 
 			for (var org : list "Organization Name,New Selection for Search Test") {
 				JSONOrganization.addOrganization(
-					organizationName = "${org}",
+					organizationName = ${org},
 					organizationSite = "true");
 			}
 		}
@@ -3064,20 +3064,20 @@ definition {
 			for (var org : list "Organization Name,New Selection for Search Test") {
 				Account.assignOrganizations(
 					accountName = "Business Account",
-					assigneeName = "${org}");
+					assigneeName = ${org});
 			}
 		}
 
 		task ("Search for both organizations and assert only the searched organization is displayed") {
 			for (var searchTerm : list "Organization Name,New Selection for Search Test") {
-				Search.searchCP(searchTerm = "${searchTerm}");
+				Search.searchCP(searchTerm = ${searchTerm});
 
-				if ("${searchTerm}" == "Organization Name") {
+				if (${searchTerm} == "Organization Name") {
 					LexiconEntry.viewEntryName(rowEntry = "Organization Name");
 
 					LexiconEntry.viewNoEntry(rowEntry = "New Selection for Search Test");
 				}
-				else if ("${searchTerm}" == "New Selection for Search Test") {
+				else if (${searchTerm} == "New Selection for Search Test") {
 					LexiconEntry.viewEntryName(rowEntry = "New Selection for Search Test");
 
 					LexiconEntry.viewNoEntry(rowEntry = "Organization Name");
@@ -3087,7 +3087,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for assigned users of an account"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForUser {
 		task ("Given a business account with assigned users") {
 			JSONAccountEntry.addAccountEntry(
@@ -3125,7 +3125,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for available organizations in Assign Organizations to account modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchInAssignOrganizationsToAccountModal {
 		task ("Given a business account and a few organizations") {
 			JSONAccountEntry.addAccountEntry(
@@ -3165,7 +3165,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for available users in Assign Users to account modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchInAssignUsersToAccountModal {
 		task ("Given a business account and a few users") {
 			JSONAccountEntry.addAccountEntry(
@@ -3221,7 +3221,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for available users in Assign Users to account role modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchInAssignUsersToAccountRoleModal {
 		task ("Given a business account and two users, but only one user is a member of the account") {
 			JSONAccountEntry.addAccountEntry(
@@ -3283,7 +3283,7 @@ definition {
 	}
 
 	@description = "This test asserts accurate results when searching for available users in Assign User to person account modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchInAssignUserToPersonAccountModal {
 		task ("Given a person account and a few users") {
 			JSONAccountEntry.addAccountEntry(
@@ -3335,7 +3335,7 @@ definition {
 	}
 
 	@description = "This test sets default shipping and default billing addresses for an account."
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultAddresses {
 		property testray.component.names = "Address";
 
@@ -3353,11 +3353,11 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
@@ -3366,7 +3366,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			addressType = "Billing",
@@ -3405,7 +3405,7 @@ definition {
 			addressCity = "Diamond Bar",
 			addressCountry = "United States",
 			addressName = "Liferay, Inc.",
-			addressPostalCode = "91765",
+			addressPostalCode = 91765,
 			addressRegion = "California",
 			addressStreet1 = "1400 Montefino Ave",
 			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
@@ -3418,27 +3418,27 @@ definition {
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 
 		Account.viewDefaultShippingAddress(
 			addressCity = "Dalian",
 			addressCountry = "China",
 			addressName = "Liferay Dalian Software Co., Ltd.",
-			addressPostalCode = "116023",
+			addressPostalCode = 116023,
 			addressRegion = "Liaoning Sheng",
 			addressStreet1 = "537 Huangpu Road Taide Building,",
 			addressStreet2 = "High-Tech Zone",
-			addressStreet3 = "1005",
+			addressStreet3 = 1005,
 			phoneNumber = "+86 (0)411 88120855");
 	}
 
 	@description = "This test unassigns a role to an Account User in the Account Details page via Users tab"
-	@priority = "3"
+	@priority = 3
 	test CanUnassignRolesViaUsersTab {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
@@ -3491,7 +3491,7 @@ definition {
 	}
 
 	@description = "This test view the account user via Manage Users in account list view"
-	@priority = "3"
+	@priority = 3
 	test CanViewAccountUsersViaManageUsersInAccountsListView {
 		task ("Given A new Account and add new Account User to it") {
 			JSONAccountEntry.addAccountEntry(
@@ -3522,7 +3522,7 @@ definition {
 	}
 
 	@description = "This tests canceling account creation will not save it."
-	@priority = "3"
+	@priority = 3
 	test ClickingCancelOrBackWillNotSaveAccount {
 		Account.openAccountsAdmin();
 
@@ -3570,7 +3570,7 @@ definition {
 	}
 
 	@description = "This test makes sure the default account roles are present in Roles Admin."
-	@priority = "4"
+	@priority = 4
 	test DefaultAccountRolesArePresent {
 		property portal.acceptance = "true";
 
@@ -3604,7 +3604,7 @@ definition {
 	}
 
 	@description = "This test removes domain set to an account."
-	@priority = "4"
+	@priority = 4
 	test DisablingDomainValidationRemovesWarningMessages {
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -3673,7 +3673,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can filter addresses by billing type"
-	@priority = "4"
+	@priority = 4
 	test FilterAddressesByBillingType {
 		property testray.component.names = "Address";
 
@@ -3694,7 +3694,7 @@ definition {
 				addressCity = "Chicago",
 				addressCountry = "United States",
 				addressName = "Chicago",
-				addressPostalCode = "60606",
+				addressPostalCode = 60606,
 				addressRegion = "Illinois",
 				addressStreet1 = "205 W. Wacker Dr",
 				addressStreet2 = "Suite 720",
@@ -3705,7 +3705,7 @@ definition {
 				addressCity = "Dalian",
 				addressCountry = "China",
 				addressName = "Liferay Dalian Software Co., Ltd.",
-				addressPostalCode = "116023",
+				addressPostalCode = 116023,
 				addressRegion = "Liaoning Sheng",
 				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
@@ -3723,7 +3723,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can filter addresses by shipping type"
-	@priority = "4"
+	@priority = 4
 	test FilterAddressesByShippingType {
 		property testray.component.names = "Address";
 
@@ -3744,7 +3744,7 @@ definition {
 				addressCity = "Chicago",
 				addressCountry = "United States",
 				addressName = "Chicago",
-				addressPostalCode = "60606",
+				addressPostalCode = 60606,
 				addressRegion = "Illinois",
 				addressStreet1 = "205 W. Wacker Dr",
 				addressStreet2 = "Suite 720",
@@ -3755,7 +3755,7 @@ definition {
 				addressCity = "Dalian",
 				addressCountry = "China",
 				addressName = "Liferay Dalian Software Co., Ltd.",
-				addressPostalCode = "116023",
+				addressPostalCode = 116023,
 				addressRegion = "Liaoning Sheng",
 				addressStreet1 = "537 Huangpu Road Taide Building,",
 				addressStreet2 = "1005 High-Tech Zone",
@@ -3773,7 +3773,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
-	@priority = "3"
+	@priority = 3
 	test NoFilterByNavigationForPersonAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -3808,7 +3808,7 @@ definition {
 	}
 
 	@description = "This test sets a valid domain for a business account. It adds a user with a same domain and asserts no warning displays."
-	@priority = "3"
+	@priority = 3
 	test NoWarningDisplaysWhenAddingAUserWithValidDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -3860,7 +3860,7 @@ definition {
 	}
 
 	@description = "This test asserts that only the account name field is required when making an account."
-	@priority = "4"
+	@priority = 4
 	test OnlyAccountNameIsRequired {
 		task ("Add account with account name only.") {
 			Account.openAccountsAdmin();
@@ -3884,7 +3884,7 @@ definition {
 	}
 
 	@description = "This test adds a global tag and adds it to account"
-	@priority = "3"
+	@priority = 3
 	test OnlyGlobalTagCanBeAddedToAccount {
 		JSONAssettag.addTag(
 			groupName = "Guest",
@@ -3910,9 +3910,9 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Account with Tags");
 
 		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
-			var tagName = StringUtil.lowerCase("${tagName}");
+			var tagName = StringUtil.lowerCase(${tagName});
 
-			AssetCategorization.viewTag(tagName = "${tagName}");
+			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 
 		Click(
@@ -3922,13 +3922,13 @@ definition {
 
 		IFrame.selectTagFrame();
 
-		var rowEntry = StringUtil.lowerCase("${rowEntry}");
+		var rowEntry = StringUtil.lowerCase(${rowEntry});
 
 		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("Guest Tag"));
 	}
 
 	@description = "This test adds an Owned or account specific role and ensures this role is not shared across accounts"
-	@priority = "4"
+	@priority = 4
 	test OwnedAccountRoleIsNotSharedAcrossAccounts {
 		property portal.acceptance = "true";
 
@@ -3968,7 +3968,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-139430. Asserts an account can be removed from a user through the Users Admin portlet"
-	@priority = "3"
+	@priority = 3
 	test RemoveAccountFromUserViaUsersAdmin {
 		task ("Given an account user is created under account") {
 			JSONAccountEntry.addAccountEntry(
@@ -3995,7 +3995,7 @@ definition {
 	}
 
 	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."
-	@priority = "5"
+	@priority = 5
 	test SelectingUserWillReplaceExistingUserInPersonAccount {
 		property portal.acceptance = "true";
 
@@ -4023,7 +4023,7 @@ definition {
 		Account.gotoEdit(accountName = "Person Account");
 
 		for (var navTab : list "Details,Organizations,Roles") {
-			Account.viewAssigneeTab(navTab = "${navTab}");
+			Account.viewAssigneeTab(navTab = ${navTab});
 		}
 
 		Account.viewNoAssigneeTab(navTab = "Users");
@@ -4042,7 +4042,7 @@ definition {
 	}
 
 	@description = "This test makes sure the default account roles are present in Roles Admin."
-	@priority = "4"
+	@priority = 4
 	test SharedAccountRoleDisplaysInAllAccounts {
 		Role.openRolesAdmin();
 
@@ -4095,7 +4095,7 @@ definition {
 			value1 = "Shared");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property portal.acceptance = "true";
 
@@ -4124,7 +4124,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-169033. This test asserts that no tab displays on account creation. These tabs will display after saving."
-	@priority = "4"
+	@priority = 4
 	test TabsDisplayAfterAccountIsSaved {
 		property portal.acceptance = "true";
 
@@ -4136,7 +4136,7 @@ definition {
 
 		task ("Then no tabs are present") {
 			for (var navTab : list "Details,Addresses,Users,Organizations,Account Groups,Roles,Channel Defaults") {
-				Navigator.viewNoNavTab(navTab = "${navTab}");
+				Navigator.viewNoNavTab(navTab = ${navTab});
 			}
 		}
 
@@ -4149,14 +4149,14 @@ definition {
 		task ("Then all the other tabs become available") {
 			for (var navTab : list "Details,Addresses,Users,Organizations,Account Groups,Roles,Channel Defaults") {
 				AssertElementPresent(
-					key_tab = "${navTab}",
+					key_tab = ${navTab},
 					locator1 = "NavTab#TAB_LINK");
 			}
 		}
 	}
 
 	@description = "This test assigns a user to an account with valid domain set. Manager can filter valid domain users and all users when assigning."
-	@priority = "3"
+	@priority = 3
 	test UsersWithValidAndInvalidDomainsAreFilteredWhenAssigningUsers {
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -4195,7 +4195,7 @@ definition {
 			rowEntry = "Account no Domain");
 
 		for (var assigneeName : list "userfn1,userfn2") {
-			Account.viewAssignee(assigneeName = "${assigneeName}");
+			Account.viewAssignee(assigneeName = ${assigneeName});
 		}
 
 		Account.openAccountsAdmin();
@@ -4242,7 +4242,7 @@ definition {
 	}
 
 	@description = "This test asserts that domain validation is not present in Person Accounts."
-	@priority = "4"
+	@priority = 4
 	test ValidDomainSectionDoesNotDisplayInPersonAccounts {
 		AccountConfiguration.enableAccountEmailDomain();
 

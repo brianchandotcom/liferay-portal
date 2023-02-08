@@ -16,12 +16,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test BlacklistModuleBundleSymbolicName {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
@@ -63,14 +63,14 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test BlacklistModuleLPKG {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
@@ -81,7 +81,7 @@ definition {
 
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
-		if ("${gogoShellLPKGExists}" == "false") {
+		if (${gogoShellLPKGExists} == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
@@ -108,7 +108,7 @@ definition {
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
@@ -117,7 +117,7 @@ definition {
 
 		BundleBlacklist.blacklistModuleAndComponentConfiguration(
 			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "${symbolicName}");
+			symbolicName = ${symbolicName});
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
@@ -126,7 +126,7 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test BlacklistModuleWar {
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
 
@@ -161,7 +161,7 @@ definition {
 		AssertTextNotPresent(value1 = "Classic");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanEnableBlacklistedModuleJarAfterRestart {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleJarAfterRestart";
@@ -200,13 +200,13 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanEnableBlacklistedModuleLPKGAfterRestart {
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleLPKGAfterRestart";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
@@ -217,7 +217,7 @@ definition {
 
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
-		if ("${gogoShellLPKGExists}" == "false") {
+		if (${gogoShellLPKGExists} == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
@@ -267,7 +267,7 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanEnableBlacklistedModuleWarAfterRestart {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleWarAfterRestart";
@@ -316,13 +316,13 @@ definition {
 			value1 = "Minium");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanRemoveBlacklistedModuleLPKGViaUI {
 		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKGViaUI";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
@@ -333,7 +333,7 @@ definition {
 
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
-		if ("${gogoShellLPKGExists}" == "false") {
+		if (${gogoShellLPKGExists} == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
@@ -374,7 +374,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "STARTED ${symbolicName}");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanRemoveBlacklistedModuleWarViaUI {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleWarViaUI";
@@ -442,7 +442,7 @@ definition {
 			value1 = "Minium");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test EnableBlacklistedModuleAfterShutdown {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
 		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
@@ -471,7 +471,7 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ExportBundleBlacklistConfig {
 		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";
 
@@ -494,13 +494,13 @@ definition {
 		var tempFileDirectory = selenium.getOutputDirName();
 
 		OSGiConfig.copyOSGiConfigFile(
-			osgiConfigFileBaseDir = "${tempFileDirectory}",
+			osgiConfigFileBaseDir = ${tempFileDirectory},
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
 		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleJarViaUI {
 		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleJarViaUI";
 
@@ -539,13 +539,13 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleLPKGViaUI {
 		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleLPKGViaUI";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			var symbolicName = "Liferay Foundation - Liferay Gogo Shell - Impl";
 		}
 		else {
@@ -556,7 +556,7 @@ definition {
 
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
-		if ("${gogoShellLPKGExists}" == "false") {
+		if (${gogoShellLPKGExists} == "false") {
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
@@ -578,7 +578,7 @@ definition {
 
 		BundleBlacklist.blacklistModuleAndComponentConfiguration(
 			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "${symbolicName}");
+			symbolicName = ${symbolicName});
 
 		BundleBlacklist.viewProductMenuBlacklistedModule(
 			category = "System",
@@ -599,7 +599,7 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleWarViaUI {
 		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleWarViaUI";
 

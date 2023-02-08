@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the instance level."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDisableSharingAtInstanceScope {
 		property custom.properties = "dl.actions.visible=true";
@@ -61,7 +61,7 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Test Site",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the system level."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDisableSharingAtSystemScope {
 		property custom.properties = "dl.actions.visible=true";
@@ -121,7 +121,7 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Test Site",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can Filter By AssetType in the Shared Content app."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanFilterByAssetType {
 		property custom.properties = "dl.actions.visible=true";
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanOrderBySharedDate {
 		property custom.properties = "dl.actions.visible=true";

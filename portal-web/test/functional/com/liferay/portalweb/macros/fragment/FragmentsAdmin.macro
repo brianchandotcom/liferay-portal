@@ -4,8 +4,8 @@ definition {
 		FragmentsAdminNavigator.gotoAddCollection();
 
 		Collection.editCollection(
-			collectionDescription = "${collectionDescription}",
-			collectionName = "${collectionName}");
+			collectionDescription = ${collectionDescription},
+			collectionName = ${collectionName});
 
 		Button.clickSave();
 	}
@@ -17,7 +17,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		PortletEntry.inputName(name = "${folderName}");
+		PortletEntry.inputName(name = ${folderName});
 
 		IFrame.selectConfigurationFrame();
 
@@ -36,26 +36,26 @@ definition {
 		}
 
 		if ((IsElementPresent(locator1 = "Message#SUBTITLE")) && (IsTextEqual(locator1 = "Message#SUBTITLE", value1 = "Select Fragment Type:"))) {
-			LexiconCard.clickCardTitle(card = "${fragmentType}");
+			LexiconCard.clickCardTitle(card = ${fragmentType});
 
 			Click(
 				key_text = "Next",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
-			if ("${fragmentType}" == "Basic Fragment") {
-				PortletEntry.inputName(name = "${fragmentName}");
+			if (${fragmentType} == "Basic Fragment") {
+				PortletEntry.inputName(name = ${fragmentName});
 
 				Click(
 					key_text = "Add",
 					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 			}
-			else if ("${fragmentType}" == "Form Fragment") {
-				PortletEntry.inputName(name = "${fragmentName}");
+			else if (${fragmentType} == "Form Fragment") {
+				PortletEntry.inputName(name = ${fragmentName});
 
 				if (isSet(supportedFieldTypes)) {
-					for (var supportedFieldType : list "${supportedFieldTypes}") {
+					for (var supportedFieldType : list ${supportedFieldTypes}) {
 						Check.checkNotVisible(
-							checkboxName = "${supportedFieldType}",
+							checkboxName = ${supportedFieldType},
 							locator1 = "Checkbox#ANY_CHECKBOX");
 					}
 				}
@@ -66,7 +66,7 @@ definition {
 			}
 		}
 		else {
-			PortletEntry.inputName(name = "${fragmentName}");
+			PortletEntry.inputName(name = ${fragmentName});
 
 			Button.clickSave();
 		}
@@ -81,7 +81,7 @@ definition {
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${resourceFile}");
+			value1 = ${resourceFile});
 
 		IFrame.selectConfigurationFrame();
 
@@ -89,15 +89,15 @@ definition {
 	}
 
 	macro addResourceToFolder {
-		LexiconCard.clickCardTitleLink(card = "${folderName}");
+		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
-			value1 = "${resourceFile}");
+			value1 = ${resourceFile});
 	}
 
 	macro addSubfolder {
-		LexiconCard.clickCardTitleLink(card = "${folderName}");
+		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		LexiconEntry.gotoAdd();
 
@@ -105,7 +105,7 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		PortletEntry.inputName(name = "${subfolderName}");
+		PortletEntry.inputName(name = ${subfolderName});
 
 		IFrame.selectConfigurationFrame();
 
@@ -114,7 +114,7 @@ definition {
 
 	macro deleteEntry {
 		LexiconCard.clickEllipsisItem(
-			card = "${entry}",
+			card = ${entry},
 			item = "Delete");
 
 		AssertTextEquals(
@@ -128,7 +128,7 @@ definition {
 
 	macro deleteResource {
 		LexiconCard.clickEllipsisItem(
-			card = "${entry}",
+			card = ${entry},
 			item = "Delete");
 
 		AssertTextEquals(
@@ -141,27 +141,27 @@ definition {
 	}
 
 	macro exportCollection {
-		Navigator.gotoNavNested(navNested = "${collectionName}");
+		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${collectionName}",
+			key_headerName = ${collectionName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Export");
 	}
 
 	macro exportFragment {
-		FragmentsAdminNavigator.gotoCollection(collectionName = "${collectionName}");
+		FragmentsAdminNavigator.gotoCollection(collectionName = ${collectionName});
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "${fragmentName}",
+			entry = ${fragmentName},
 			item = "Export");
 	}
 
 	macro exportMultipleCollections {
-		for (var collectionName : list "${collectionNameList}") {
+		for (var collectionName : list ${collectionNameList}) {
 			Check(
-				key_tableEntry = "${collectionName}",
+				key_tableEntry = ${collectionName},
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 		}
 
@@ -175,7 +175,7 @@ definition {
 	macro importCollectionFromDependenciesFolder {
 		FragmentsAdminNavigator.gotoImportCollection();
 
-		UploadDependencyFile.uploadArchiveFile(fileName = "${collectionZipFile}");
+		UploadDependencyFile.uploadArchiveFile(fileName = ${collectionZipFile});
 
 		SelectFrameTop();
 
@@ -197,7 +197,7 @@ definition {
 
 		UploadTempFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${collectionsZipFileName}");
+			value1 = ${collectionsZipFileName});
 
 		SelectFrameTop();
 
@@ -216,7 +216,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${collectionName}",
+			key_headerName = ${collectionName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Import");
@@ -227,7 +227,7 @@ definition {
 
 		UploadTempFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${entriesZipFileName}");
+			value1 = ${entriesZipFileName});
 
 		SelectFrameTop();
 
@@ -248,9 +248,9 @@ definition {
 
 	macro propagateChanges {
 		if (isSet(itemNameList)) {
-			for (var itemName : list "${itemNameList}") {
+			for (var itemName : list ${itemNameList}) {
 				Check(
-					key_tableEntry = "${itemName}",
+					key_tableEntry = ${itemName},
 					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 			}
 		}
@@ -269,30 +269,30 @@ definition {
 		Select(
 			key_fieldLabel = "Fragment Sets",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${collectionName}");
+			value1 = ${collectionName});
 
 		Modal.save();
 	}
 
 	macro viewEntryNotPresent {
-		LexiconCard.viewCardNotPresent(card = "${entry}");
+		LexiconCard.viewCardNotPresent(card = ${entry});
 	}
 
 	macro viewEntryPresent {
-		LexiconCard.viewCardPresent(card = "${entry}");
+		LexiconCard.viewCardPresent(card = ${entry});
 	}
 
 	macro viewEntryWorkflowStatus {
 		LexiconCard.viewCardLabel(
-			card = "${entry}",
-			cardLabel = "${workflowStatus}");
+			card = ${entry},
+			cardLabel = ${workflowStatus});
 	}
 
 	macro viewSiteUsages {
 		LexiconTable.viewTableEntryInfo(
 			columnName = "usages",
-			tableEntry = "${siteName}",
-			tableEntryInfo = "${usages}");
+			tableEntry = ${siteName},
+			tableEntryInfo = ${usages});
 	}
 
 }

@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanApproveImage {
 		property portal.acceptance = "true";
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanApproveWCArticle {
 		property portal.acceptance = "true";
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-113392. It ensures that an asset library WC article can be approved by the content reviewer."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanApproveWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This ensures that a single approver workflow of web content can be defined for the asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanApproveWCArticleWithinDepot {
 		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanApproveWCInFolder {
 		JSONWebcontent.addFolder(
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@description = "This ensures that the resubmitted image from a depot is available to use in its connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitImage {
 		JSONFolder.addFolder(
@@ -565,7 +565,7 @@ definition {
 	}
 
 	@description = "This ensures that the resubmitted WC article from a depot is available to use in its connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitWC {
 		ApplicationsMenu.gotoPortlet(
@@ -680,7 +680,7 @@ definition {
 	}
 
 	@description = "This ensures that the resubmitted web content can be approved in an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRejectAndResubmitWCArticleWithinDepot {
 		DepotNavigator.openDepotWorkflowAdmin(depotName = "Test Depot Name");
@@ -758,7 +758,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library WC article can be rejected by the content reviewer."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRejectWCArticleByContentReviewer {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@description = "This ensures that a DM folder workflow can be restored to default from other settings."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRestoreDMFolderWorkflowToDefault {
 		JSONFolder.addFolder(
@@ -879,7 +879,7 @@ definition {
 	}
 
 	@description = "This ensures that a WC folder workflow can be restored to default from other settings."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRestoreWCFolderWorkflowToDefault {
 		JSONWebcontent.addFolder(
@@ -922,7 +922,7 @@ definition {
 	}
 
 	@description = "This ensures that the workflow can be set in an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test WorkflowCanBeSetInDepot {
 		property portal.acceptance = "true";

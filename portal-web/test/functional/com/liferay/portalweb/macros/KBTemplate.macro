@@ -5,7 +5,7 @@ definition {
 			Button.click(button = "New");
 		}
 		else if (isSet(siteURLKey)) {
-			KBTemplate.openToAddTemplate(siteURLKey = "${siteURLKey}");
+			KBTemplate.openToAddTemplate(siteURLKey = ${siteURLKey});
 		}
 		else {
 			Navigator.gotoNavItem(navItem = "Templates");
@@ -13,23 +13,23 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		PortletEntry.inputTitle(title = "${kbTemplateTitle}");
+		PortletEntry.inputTitle(title = ${kbTemplateTitle});
 
-		CKEditor.addContent(content = "${kbTemplateContent}");
+		CKEditor.addContent(content = ${kbTemplateContent});
 
 		if (isSet(embedImage)) {
 			ItemSelector.gotoItemSelectorViaCKEditor();
 
 			if (isSet(uploadFileName)) {
 				ItemSelector.uploadFile(
-					navTab = "${navTab}",
-					uploadFileName = "${uploadFileName}");
+					navTab = ${navTab},
+					uploadFileName = ${uploadFileName});
 
 				SelectFrameTop();
 			}
 			else if (isSet(imageSourceURL)) {
 				ItemSelector.addImageFromURL(
-					imageSourceURL = "${imageSourceURL}",
+					imageSourceURL = ${imageSourceURL},
 					navTab = "URL");
 			}
 			else {
@@ -46,14 +46,14 @@ definition {
 						locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
 						value1 = "Asset Library");
 
-					LexiconCard.clickCard(card = "${depotName}");
+					LexiconCard.clickCard(card = ${depotName});
 				}
 				else {
-					LexiconCard.clickCard(card = "${siteName}");
+					LexiconCard.clickCard(card = ${siteName});
 				}
 
 				Click(
-					key_imageFileName = "${imageFileName}",
+					key_imageFileName = ${imageFileName},
 					locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 			}
 
@@ -66,12 +66,12 @@ definition {
 	macro deleteTemplate {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
-				kbTemplateTitle = "${kbTemplateTitle}",
+				kbTemplateTitle = ${kbTemplateTitle},
 				menuItem = "Delete");
 		}
 		else {
 			ClickNoError(
-				key_rowEntry = "${kbTemplateTitle}",
+				key_rowEntry = ${kbTemplateTitle},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -83,23 +83,23 @@ definition {
 	macro editTemplate {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
-				kbTemplateTitle = "${kbTemplateTitle}",
+				kbTemplateTitle = ${kbTemplateTitle},
 				menuItem = "Edit");
 		}
 		else {
 			Click(
-				key_rowEntry = "${kbTemplateTitle}",
+				key_rowEntry = ${kbTemplateTitle},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit");
 		}
 
 		if (isSet(kbTemplateTitleEdit)) {
-			PortletEntry.inputTitle(title = "${kbTemplateTitleEdit}");
+			PortletEntry.inputTitle(title = ${kbTemplateTitleEdit});
 		}
 
 		if (isSet(kbTemplateContentEdit)) {
-			CKEditor.addContent(content = "${kbTemplateContentEdit}");
+			CKEditor.addContent(content = ${kbTemplateContentEdit});
 		}
 
 		PortletEntry.publish();
@@ -107,25 +107,25 @@ definition {
 
 	macro gotoTemplateMenuItemThroughPageTreePanel {
 		MouseOver(
-			key_itemLinkName = "${kbTemplateTitle}",
+			key_itemLinkName = ${kbTemplateTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
 
 		Click.waitForMenuToggleJSClick(
-			key_itemName = "${kbTemplateTitle}",
+			key_itemName = ${kbTemplateTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		if ("${menuItem}" == "Delete") {
-			MenuItem.clickNoError(menuItem = "${menuItem}");
+		if (${menuItem} == "Delete") {
+			MenuItem.clickNoError(menuItem = ${menuItem});
 		}
 		else {
-			MenuItem.click(menuItem = "${menuItem}");
+			MenuItem.click(menuItem = ${menuItem});
 		}
 	}
 
 	macro openToAddTemplate {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -137,12 +137,12 @@ definition {
 	macro previewTemplate {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
-				kbTemplateTitle = "${kbTemplateTitle}",
+				kbTemplateTitle = ${kbTemplateTitle},
 				menuItem = "View");
 		}
 		else {
 			Click(
-				key_rowEntry = "${kbTemplateTitle}",
+				key_rowEntry = ${kbTemplateTitle},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "View");
@@ -150,11 +150,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseTemplate#TEMPLATE_TITLE",
-			value1 = "${kbTemplateTitle}");
+			value1 = ${kbTemplateTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseTemplate#TEMPLATE_CONTENT",
-			value1 = "${kbTemplateContent}");
+			value1 = ${kbTemplateContent});
 
 		if (isSet(embedImage)) {
 			KBArticle.viewImageViaContentCmd();
@@ -190,19 +190,19 @@ definition {
 	}
 
 	macro viewCPViaAddTemplate {
-		LexiconEntry.gotoAddMenuItem(menuItem = "${kbTemplateTitle}");
+		LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 
 		AssertTextEquals(
 			key_editor = "title",
 			locator1 = "TextInput#TITLE",
-			value1 = "${kbTemplateTitle}");
+			value1 = ${kbTemplateTitle});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertTextEquals(
 			key_editor = "content",
 			locator1 = "CKEditor#BODY",
-			value1 = "${kbTemplateContent}");
+			value1 = ${kbTemplateContent});
 	}
 
 	macro viewNoTemplates {
@@ -212,9 +212,9 @@ definition {
 	}
 
 	macro viewTemplatesThroughPageTreePanel {
-		for (var kbTemplateTitle : list "${kbTemplatesList}") {
+		for (var kbTemplateTitle : list ${kbTemplatesList}) {
 			AssertVisible(
-				key_itemLinkName = "${kbTemplateTitle}",
+				key_itemLinkName = ${kbTemplateTitle},
 				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
 		}
 	}

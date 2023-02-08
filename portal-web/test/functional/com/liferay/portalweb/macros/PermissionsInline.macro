@@ -1,21 +1,21 @@
 definition {
 
 	macro addOrRemoveAccessPermissionFromAllRoles {
-		for (var roleTitle : list "${roleList}") {
-			var roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var roleTitle = ${roleTitle};
 
-			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+			var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 			ScrollWebElementIntoView(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 
 			takeScreenshot();
 
-			if ("${addOrRemoveViewPermission}" == "Add") {
+			if (${addOrRemoveViewPermission} == "Add") {
 				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 			}
-			else if ("${addOrRemoveViewPermission}" == "Remove") {
+			else if (${addOrRemoveViewPermission} == "Remove") {
 				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 			}
 		}
@@ -28,17 +28,17 @@ definition {
 	}
 
 	macro addOrRemoveAnyPermissionsFromSpecificRole {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${addOrRemoveViewPermission}" == "Add") {
+		if (${addOrRemoveViewPermission} == "Add") {
 			if (isSet(permissionsBulkEditing)) {
-				for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				for (var permissionDefinitionKey : list ${permissionsKeyList}) {
 					if (IsElementPresent(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE")) {
 						Click.clickNoWaitForVisible(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE");
 					}
@@ -47,14 +47,14 @@ definition {
 				}
 			}
 			else {
-				for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				for (var permissionDefinitionKey : list ${permissionsKeyList}) {
 					Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 				}
 			}
 		}
-		else if ("${addOrRemoveViewPermission}" == "Remove") {
+		else if (${addOrRemoveViewPermission} == "Remove") {
 			if (isSet(permissionsBulkEditing)) {
-				for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				for (var permissionDefinitionKey : list ${permissionsKeyList}) {
 					if (IsElementPresent(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE")) {
 						Click.clickNoWaitForVisible(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE");
 					}
@@ -64,7 +64,7 @@ definition {
 				}
 			}
 			else {
-				for (var permissionDefinitionKey : list "${permissionsKeyList}") {
+				for (var permissionDefinitionKey : list ${permissionsKeyList}) {
 					Uncheck.uncheckNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 				}
 			}
@@ -84,18 +84,18 @@ definition {
 				value1 = "More Options");
 		}
 
-		if ("${addOrRemoveViewPermission}" == "Remove") {
-			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}") {
-				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
-				var key_roleTitle = "${roleTitle}";
+		if (${addOrRemoveViewPermission} == "Remove") {
+			for (var permissionDefinitionKey : list ${permissionDefinitionKeyList}) {
+				var key_permissionDefinitionKey = ${permissionDefinitionKey};
+				var key_roleTitle = ${roleTitle};
 
 				Uncheck.uncheckNotVisible(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
 			}
 		}
 		else {
-			for (var permissionDefinitionKey : list "${permissionDefinitionKeyList}") {
-				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
-				var key_roleTitle = "${roleTitle}";
+			for (var permissionDefinitionKey : list ${permissionDefinitionKeyList}) {
+				var key_permissionDefinitionKey = ${permissionDefinitionKey};
+				var key_roleTitle = ${roleTitle};
 
 				Check.checkNotVisible(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
 			}
@@ -103,17 +103,17 @@ definition {
 	}
 
 	macro addOrRemoveManagePagesPermissionFromAllRoles {
-		for (var roleTitle : list "${roleList}") {
-			var roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var roleTitle = ${roleTitle};
 
-			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+			var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
-			if ("${addOrRemoveViewPermission}" == "Add") {
+			if (${addOrRemoveViewPermission} == "Add") {
 				Check.checkNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
 			}
-			else if ("${addOrRemoveViewPermission}" == "Remove") {
+			else if (${addOrRemoveViewPermission} == "Remove") {
 				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
 			}
 		}
@@ -126,17 +126,17 @@ definition {
 	}
 
 	macro addOrRemoveSubscribePermissionFromAllRoles {
-		for (var roleTitle : list "${roleList}") {
-			var roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var roleTitle = ${roleTitle};
 
-			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+			var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
-			if ("${addOrRemoveViewPermission}" == "Add") {
+			if (${addOrRemoveViewPermission} == "Add") {
 				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
 			}
-			else if ("${addOrRemoveViewPermission}" == "Remove") {
+			else if (${addOrRemoveViewPermission} == "Remove") {
 				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
 			}
 		}
@@ -149,21 +149,21 @@ definition {
 	}
 
 	macro addOrRemoveViewPermissionFromAllRoles {
-		for (var roleTitle : list "${roleList}") {
-			var roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var roleTitle = ${roleTitle};
 
-			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+			var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 			ScrollWebElementIntoView(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 
 			takeScreenshot();
 
-			if ("${addOrRemoveViewPermission}" == "Add") {
+			if (${addOrRemoveViewPermission} == "Add") {
 				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
-			else if ("${addOrRemoveViewPermission}" == "Remove") {
+			else if (${addOrRemoveViewPermission} == "Remove") {
 				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 		}
@@ -176,21 +176,21 @@ definition {
 	}
 
 	macro assertDefaultPG {
-		for (var roleTitle : list "${roleList}") {
-			var roleTitle = "${roleTitle}";
+		for (var roleTitle : list ${roleList}) {
+			var roleTitle = ${roleTitle};
 
-			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+			var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
-			if (("${roleTitle}" == "Guest") || ("${roleTitle}" == "Site Member")) {
+			if ((${roleTitle} == "Guest") || (${roleTitle} == "Site Member")) {
 				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
 			}
 			else {
 				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
 			}
 
-			if (("${roleTitle}" == "Guest") || ("${roleTitle}" == "Power User") || ("${roleTitle}" == "Site Member") || ("${roleTitle}" == "User")) {
+			if ((${roleTitle} == "Guest") || (${roleTitle} == "Power User") || (${roleTitle} == "Site Member") || (${roleTitle} == "User")) {
 				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX");
 
 				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
@@ -201,7 +201,7 @@ definition {
 				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
 			}
 
-			if (("${roleTitle}" == "Power User") || ("${roleTitle}" == "User")) {
+			if ((${roleTitle} == "Power User") || (${roleTitle} == "User")) {
 				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 			else {
@@ -212,16 +212,16 @@ definition {
 
 	macro gotoConfigurationPG {
 		if (isSet(portletOption)) {
-			var optionName = "${portletOption}";
+			var optionName = ${portletOption};
 		}
 		else {
 			var optionName = "Permissions";
 		}
 
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "${optionName}",
-			siteTemplate = "${siteTemplate}");
+			portletName = ${portletName},
+			portletOption = ${optionName},
+			siteTemplate = ${siteTemplate});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -231,7 +231,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${depotName}");
+			rowEntry = ${depotName});
 	}
 
 	macro gotoDocumentsAndMediaDocumentPG {
@@ -239,7 +239,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${dmDocumentTitle}");
+			rowEntry = ${dmDocumentTitle});
 
 		if (IsElementPresent(key_title = "Permissions", locator1 = "IFrame#MODAL_ANY")) {
 			IFrame.selectPermissionsFrame();
@@ -248,14 +248,14 @@ definition {
 
 	macro gotoDocumentsAndMediaHomeFolderPG {
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		Click(locator1 = "Icon#INFO");
 
@@ -270,9 +270,9 @@ definition {
 
 	macro gotoMessageBoardsCategoryPG {
 		AssertClick(
-			key_categoryName = "${categoryName}",
+			key_categoryName = ${categoryName},
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -282,7 +282,7 @@ definition {
 	}
 
 	macro gotoMessageBoardsPG {
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -296,23 +296,23 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${threadSubject}");
+			rowEntry = ${threadSubject});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoMessageBoardsThreadReplyPG {
 		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		AssertClick.assertPartialTextClickAt(
-			key_threadSubject = "${threadSubject}",
+			key_threadSubject = ${threadSubject},
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
-			value1 = "${threadSubject}");
+			value1 = ${threadSubject});
 
 		Click.waitForMenuToggleJSClick(
-			key_threadReplyBody = "${threadReplyBody}",
+			key_threadReplyBody = ${threadReplyBody},
 			locator1 = "MessageBoards#THREAD_REPLY_ACTIONS");
 
 		MenuItem.click(menuItem = "Permissions");
@@ -324,11 +324,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "${site}");
+			site = ${site});
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
-			pageName = "${pageName}");
+			pageName = ${pageName});
 
 		IFrame.selectPermissionsFrame();
 	}
@@ -336,7 +336,7 @@ definition {
 	macro gotoPollPermissionsCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${pollsQuestionTitle}");
+			rowEntry = ${pollsQuestionTitle});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -346,35 +346,35 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${roleName}");
+			rowEntry = ${roleName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoSitePageCP {
 		if (isSet(privacy)) {
-			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+			PagesAdmin.togglePrivacy(privacy = ${privacy});
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
-			pageName = "${pageName}");
+			pageName = ${pageName});
 
 		IFrame.selectPermissionsFrame();
 	}
 
 	macro gotoSiteTeamsCP {
-		Navigator.openSiteURL(siteName = "${siteScopeName}");
+		Navigator.openSiteURL(siteName = ${siteScopeName});
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			portlet = "${portletName}");
+			portlet = ${portletName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${teamName}");
+			rowEntry = ${teamName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -383,17 +383,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "${site}");
+			site = ${site});
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Permissions",
-			pageName = "${page}");
+			pageName = ${page});
 	}
 
 	macro gotoUserGroupSitePermissionsCP {
 		UserGroup.openUserGroupsAdmin();
 
-		LexiconEntry.openEntryMenu(rowEntry = "${userGroupName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${userGroupName});
 
 		MenuItem.click(menuItem = "User Group Pages Permissions");
 
@@ -403,15 +403,15 @@ definition {
 	macro gotoWCArticle {
 		LexiconList.clickEllipsisItem(
 			item = "Permissions",
-			listEntry = "${webContentTitle}");
+			listEntry = ${webContentTitle});
 
 		IFrame.selectPermissionsFrame();
 	}
 
 	macro viewPermissionsChecked {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
@@ -419,9 +419,9 @@ definition {
 	}
 
 	macro viewPermissionsRemoved {
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 

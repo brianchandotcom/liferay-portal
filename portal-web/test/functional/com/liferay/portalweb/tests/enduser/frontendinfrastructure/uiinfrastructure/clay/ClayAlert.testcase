@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "Verify alert contains all required attributes: icon, type text, and description"
-	@priority = "5"
+	@priority = 5
 	test CanDisplayAllAttributes {
 		task ("When the alert contains all attributes") {
 			VerifyElementPresent(
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Verify the keyword is semi-bold when alert contains status icon and keyword"
-	@priority = "4"
+	@priority = 4
 	test KeywordCanDisplayInSemibold {
 		task ("When alert contains status icon and keyword") {
 			AssertTextEquals(
@@ -95,12 +95,12 @@ definition {
 				key_alertType = "success",
 				locator1 = "ClayAlert#ALERT_STATIC",
 				locator2 = "font-weight",
-				value1 = "400");
+				value1 = 400);
 		}
 	}
 
 	@description = "Verify toast message popup can be closed manually"
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test ToastMessageCanBeClosedManually {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanBeClosedManually";
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "Verify toast message popup will close automatically"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test ToastMessageCanCloseAutomatically {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanCloseAutomatically";

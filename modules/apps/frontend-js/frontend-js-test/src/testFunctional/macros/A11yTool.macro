@@ -40,16 +40,16 @@ definition {
 
 	macro checkFilter {
 		Check.checkNotVisible(
-			key_filter = "${filterType}",
+			key_filter = ${filterType},
 			locator1 = "A11yTool#FILTER_CHECKBOX");
 	}
 
 	macro clickOnAllViolations {
-		var count = "1";
+		var count = 1;
 
-		while (IsElementPresent(key_index = "${count}", locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX")) {
+		while (IsElementPresent(key_index = ${count}, locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX")) {
 			Click(
-				key_index = "${count}",
+				key_index = ${count},
 				locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX");
 
 			var count = ${count} + 1;
@@ -70,7 +70,7 @@ definition {
 
 	macro uncheckFilter {
 		Uncheck.uncheckNotVisible(
-			key_filter = "${filterType}",
+			key_filter = ${filterType},
 			locator1 = "A11yTool#FILTER_CHECKBOX");
 	}
 

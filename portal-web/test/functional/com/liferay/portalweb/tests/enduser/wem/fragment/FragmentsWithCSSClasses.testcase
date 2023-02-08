@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152105. The page creator could add CSS class to fragment."
-	@priority = "5"
+	@priority = 5
 	test AddCSSClassToFragment {
 		property portal.acceptance = "true";
 
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-152105. The page creator could add multiple CSS classes to fragment."
-	@priority = "5"
+	@priority = 5
 	test AddMultipleCSSClassesToFragment {
 		property portal.acceptance = "true";
 
@@ -112,7 +112,7 @@ definition {
 				TestUtils.assertPartialAttributeValue(
 					attribute = "class",
 					element = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__fragment-content')]",
-					value = "${cssClass}");
+					value = ${cssClass});
 			}
 		}
 	}

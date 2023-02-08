@@ -29,7 +29,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8356 | Test Summary: 180 Days time period filter in Path Analysis"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanTimeFilterUse180DaysPathAnalysis {
 
 		// AC Refactor: Need past data
@@ -50,7 +50,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Pages tab in Sites") {
@@ -72,7 +72,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8358 | Test Summary: Custom Range time period filter in Path Analysis"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanTimeFilterUseCustomRangeInPathAnalysis {
 
 		// AC Refactor: Need past data
@@ -83,7 +83,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Pages tab in Sites") {
@@ -96,12 +96,12 @@ definition {
 
 		task ("Assert custom time filter") {
 			ACTimeFilter.setCustomRange(
-				endDay = "13",
+				endDay = 13,
 				endMonth = "July",
-				endYear = "2020",
-				startDay = "1",
+				endYear = 2020,
+				startDay = 1,
 				startMonth = "July",
-				startYear = "2020");
+				startYear = 2020);
 
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
 		}
@@ -109,7 +109,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8357 | Test Summary: Last Year time period filter in Path Analysis"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CanTimeFilterUseLastYearPathAnalysis {
 
 		// AC Refactor: Need past data
@@ -120,7 +120,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to Pages tab in Sites") {
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8988 | Automation ID: LRAC-11059 | Test Summary: Create the page name with special characters makes the correct name appear in the path part of AC pages"
-	@priority = "3"
+	@priority = 3
 	test CreatePageNameWithSpecialCharactersMakeCorrectNameAppearInPath {
 		property analytics.cloud.upstream = "false";
 
@@ -168,7 +168,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Go to Pages tab, change time filter to last 24 hours and select the page") {
@@ -180,7 +180,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACNavigation.openItem(itemName = "Snúið Vinsælar þú - Site Name - ${dataSourceName}");
 		}

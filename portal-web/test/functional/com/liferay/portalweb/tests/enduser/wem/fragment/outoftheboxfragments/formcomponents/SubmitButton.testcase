@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on content page."
-	@priority = "4"
+	@priority = 4
 	test ConfigureSubmitButtonOnContentPage {
 		task ("Given a page designer has a Form Container on content page") {
 			task ("Add a web content") {
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151754. View warning message when publish content page with hidden Submit Button."
-	@priority = "4"
+	@priority = 4
 	test ViewWarningMessageWhenPublishContentPageWithHiddenSubmitButton {
 		task ("Given a page designer has a Form Container with hidden Submit Button") {
 			task ("Add a Form Container framgment to content page") {
@@ -188,7 +188,7 @@ definition {
 			AssertNotVisible(
 				fragmentName = "button",
 				id = "text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 
@@ -249,7 +249,7 @@ definition {
 			AssertVisible(
 				key_fragmentName = "Form Container",
 				key_messageInfo = "Place fragments here.",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
 	}

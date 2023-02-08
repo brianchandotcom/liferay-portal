@@ -18,10 +18,10 @@ definition {
 
 		echo("");
 
-		var actual = "${staticVariable}";
+		var actual = ${staticVariable};
 		var expected = "OLD - Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -42,10 +42,10 @@ definition {
 
 		var staticVariable = "NEW - Static Value";
 
-		var actual = "${staticVariable}";
+		var actual = ${staticVariable};
 		var expected = "NEW - Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -66,10 +66,10 @@ definition {
 
 		var nonStaticVariable = "NEW - Non-Static Value";
 
-		var actual = "${nonStaticVariable}";
+		var actual = ${nonStaticVariable};
 		var expected = "NEW - Non-Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the non-static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -98,10 +98,10 @@ definition {
 
 		echo("");
 
-		var actual = "${staticVariable}";
+		var actual = ${staticVariable};
 		var expected = "NEW - Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -120,10 +120,10 @@ definition {
 
 		echo("");
 
-		var actual = "${nonStaticVariable}";
+		var actual = ${nonStaticVariable};
 		var expected = "OLD - Non-Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the non-static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test StaticVariables1 {
 		echo("");
 
@@ -154,10 +154,10 @@ definition {
 
 		echo("");
 
-		var actual = "${staticVariable}";
+		var actual = ${staticVariable};
 		var expected = "NEW - Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -176,10 +176,10 @@ definition {
 
 		echo("");
 
-		var actual = "${nonStaticVariable}";
+		var actual = ${nonStaticVariable};
 		var expected = "OLD - Non-Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the non-static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test StaticVariables2 {
 		echo("");
 
@@ -210,10 +210,10 @@ definition {
 
 		echo("");
 
-		var actual = "${staticVariable}";
+		var actual = ${staticVariable};
 		var expected = "NEW - Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");
@@ -232,10 +232,10 @@ definition {
 
 		echo("");
 
-		var actual = "${nonStaticVariable}";
+		var actual = ${nonStaticVariable};
 		var expected = "OLD - Non-Static Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value set to the non-static variable was a match to the expected value.");
 
 			echo("actual: '${actual}'");

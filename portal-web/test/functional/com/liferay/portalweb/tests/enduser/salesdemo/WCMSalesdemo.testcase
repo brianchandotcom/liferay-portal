@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test IFrameDemo {
 		property testray.component.names = "IFrame Portlet";
 
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140253. View no private page in page administration."
-	@priority = "4"
+	@priority = 4
 	test IFrameDemoFF {
 		property testray.component.names = "IFrame Portlet";
 
@@ -95,7 +95,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SalesDemo {
 		property testray.component.names = "Web Content Administration,Web Content Display";
 

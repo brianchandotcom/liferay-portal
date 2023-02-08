@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a translation can be added"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -42,7 +42,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@description = "Verify that multiple translations can be added"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreatedInMultipleLanguages {
 		property portal.acceptance = "true";
 
@@ -73,7 +73,7 @@ definition {
 
 		Form.editName(formName = "Form1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "Verify that only one translation is supported for each language"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreatedOnlyOncePerLanguage {
 		property portal.acceptance = "true";
 
@@ -132,7 +132,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -152,12 +152,12 @@ definition {
 		FormFields.viewTransltaionNotDuplicated(
 			key_language1 = "Spanish (Spain)",
 			key_language2 = "Spanish (Spain)",
-			key_position1 = "2",
-			key_position2 = "3");
+			key_position1 = 2,
+			key_position2 = 3);
 	}
 
 	@description = "Verify that a Form can be created with Spanish as the default portal language"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreatedWithSpanishAsDefaultLanguage {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -178,7 +178,7 @@ definition {
 			locator1 = "Form#NAME_FIELD",
 			value1 = "Formulario");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -196,10 +196,10 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field On Spanish Portal",
-			fieldName = "${fieldTextField}");
+			fieldName = ${fieldTextField});
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submit();
@@ -222,7 +222,7 @@ definition {
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field On Spanish Portal",
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		Navigator.openURL();
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "Verify that a translation can be deactivated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -245,7 +245,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "Verify that a translation can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -275,7 +275,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -310,7 +310,7 @@ definition {
 	}
 
 	@description = "Verify that a translation can be previewed"
-	@priority = "5"
+	@priority = 5
 	test CanBePreviewed {
 		property portal.acceptance = "true";
 
@@ -319,7 +319,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@description = "Verify that a translation can be published"
-	@priority = "5"
+	@priority = 5
 	test CanBePublished {
 		property portal.acceptance = "true";
 
@@ -357,7 +357,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -392,7 +392,7 @@ definition {
 	}
 
 	@description = "Verify that a translated Form can be submitted"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmitted {
 		property portal.acceptance = "true";
 
@@ -401,7 +401,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@description = "Verify that a Color field's Label and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test ColorFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -455,7 +455,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -492,7 +492,7 @@ definition {
 	}
 
 	@description = "Verify that a Date field's Label and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test DateFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -501,7 +501,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -538,7 +538,7 @@ definition {
 	}
 
 	@description = "Verify that Fieldsets can be translated"
-	@priority = "5"
+	@priority = 5
 	test ElementSetsCanBeTranslated {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -557,7 +557,7 @@ definition {
 
 		Form.editDescription(formDescription = "Element Set Description");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.enableSwitch(fieldName = "required");
 
@@ -566,7 +566,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Select from List");
 
 		Form.editElementSetFieldLabel(fieldValue = "Select Repeatable");
@@ -575,7 +575,7 @@ definition {
 			FormFields.editOptionsRow(
 				optionName = "Select${number}",
 				optionValue = "Select ${number}",
-				rowNumber = "${number}");
+				rowNumber = ${number});
 		}
 
 		Form.gotoAdvancedTab();
@@ -620,10 +620,10 @@ definition {
 
 		Form.gotoAddElementSet(
 			elementSetTitle = "Element Set 1",
-			fieldPositionNumber = "0");
+			fieldPositionNumber = 0);
 
 		Form.gotoAddField(
-			fieldPositionNumber = "2",
+			fieldPositionNumber = 2,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
@@ -650,15 +650,15 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${textFieldRequiredName1}");
+			fieldName = ${textFieldRequiredName1});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "${selectRepeatableName1}");
+			fieldName = ${selectRepeatableName1});
 
 		FormFields.viewRequiredAsterisk();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "${selectRepeatableName1}");
+		FormsAdminNavigator.gotoEditField(fieldName = ${selectRepeatableName1});
 
 		Form.gotoAdvancedTab();
 
@@ -670,11 +670,11 @@ definition {
 
 		Form.gotoAddElementSet(
 			elementSetTitle = "Element Set 1",
-			fieldPositionNumber = "3");
+			fieldPositionNumber = 3);
 
 		FormsAdminNavigator.gotoEditField(
 			fieldName = "Text Field Required",
-			fieldPositionNumber = "3");
+			fieldPositionNumber = 3);
 
 		Form.gotoAdvancedTab();
 
@@ -684,7 +684,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(
 			fieldName = "Select Repeatable",
-			fieldPositionNumber = "4");
+			fieldPositionNumber = 4);
 
 		Form.gotoAdvancedTab();
 
@@ -700,19 +700,19 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldName = "${textFieldRequiredName1}");
+			fieldName = ${textFieldRequiredName1});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Repeatable",
-			fieldName = "${selectRepeatableName1}");
+			fieldName = ${selectRepeatableName1});
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldName = "${textFieldRequiredName2}");
+			fieldName = ${textFieldRequiredName2});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Repeatable",
-			fieldName = "${selectRepeatableName2}");
+			fieldName = ${selectRepeatableName2});
 
 		FormFields.viewRequiredAsterisk();
 
@@ -720,28 +720,28 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${textFieldRequiredName1}");
+			fieldName = ${textFieldRequiredName1});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "${selectRepeatableName1}");
+			fieldName = ${selectRepeatableName1});
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${textFieldRequiredName2}");
+			fieldName = ${textFieldRequiredName2});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "${selectRepeatableName2}");
+			fieldName = ${selectRepeatableName2});
 
 		FormFields.viewRequiredAsterisk();
 
 		FormFields.editText(
-			fieldName = "${textFieldRequiredName1}",
+			fieldName = ${textFieldRequiredName1},
 			fieldValue = "文本输入中文");
 
 		FormFields.editText(
-			fieldName = "${textFieldRequiredName2}",
+			fieldName = ${textFieldRequiredName2},
 			fieldValue = "文本再次输入中文");
 
 		FormPortlet.submit();
@@ -762,7 +762,7 @@ definition {
 
 		Form.gotoAddElementSet(
 			elementSetTitle = "Element Set 1",
-			fieldPositionNumber = "0");
+			fieldPositionNumber = 0);
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
@@ -784,11 +784,11 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${textFieldRequiredName3}");
+			fieldName = ${textFieldRequiredName3});
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "${selectRepeatableName3}");
+			fieldName = ${selectRepeatableName3});
 
 		FormFields.viewRequiredAsterisk();
 
@@ -802,7 +802,7 @@ definition {
 
 		Form.selectTranslation(localizedLanguage = "English (United States)");
 
-		Form.addTextField(fieldPositionNumber = "2");
+		Form.addTextField(fieldPositionNumber = 2);
 
 		Form.editElementSetFieldLabel(fieldValue = "Text Field New");
 
@@ -812,7 +812,7 @@ definition {
 	}
 
 	@description = "Verify that Forms submitted in different languages show the appropriate country flags in View Entries"
-	@priority = "5"
+	@priority = 5
 	test EntriesDisplayTheCorrectLanguageFlag {
 		property portal.acceptance = "true";
 
@@ -821,7 +821,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -864,7 +864,7 @@ definition {
 	}
 
 	@description = "Verify that a field that is added in a translation is also added to the default language"
-	@priority = "5"
+	@priority = 5
 	test FieldsAddedToTranslationAreAddedToDefaultLanguage {
 		property portal.acceptance = "true";
 
@@ -873,7 +873,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -881,7 +881,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.save();
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@description = "Verify that if a field is deleted on the translation, it is also deleted on the default language"
-	@priority = "5"
+	@priority = 5
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
 		property portal.acceptance = "true";
 
@@ -900,12 +900,12 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -922,7 +922,7 @@ definition {
 	}
 
 	@description = "Verify that a Grid field's Label, Help Text and Options can be translated"
-	@priority = "5"
+	@priority = 5
 	test GridFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -931,7 +931,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Grid");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -939,12 +939,12 @@ definition {
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option One",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
 			optionValue = "Option Two",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
@@ -955,12 +955,12 @@ definition {
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Opción Uno",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
 			optionValue = "Opción Dos",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		Form.save();
 
@@ -979,12 +979,12 @@ definition {
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
 			optionName = "Option One",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.viewOptionColumnsName(
 			fieldTitle = "Grid",
 			optionName = "Option Two",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
 
@@ -999,16 +999,16 @@ definition {
 		FormFields.viewOptionRowName(
 			fieldTitle = "Cuadrícula",
 			optionName = "Opción Uno",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.viewOptionColumnsName(
 			fieldTitle = "Cuadrícula",
 			optionName = "Opción Dos",
-			rowNumber = "1");
+			rowNumber = 1);
 	}
 
 	@description = "Verify that an Image field's Label and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test ImageFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1017,7 +1017,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Image");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
@@ -1054,7 +1054,7 @@ definition {
 	}
 
 	@description = "Verify that the properties of a field remain the same when adding a translation"
-	@priority = "5"
+	@priority = 5
 	test MaintainPropertiesFromDefaultLanguage {
 		property portal.acceptance = "true";
 
@@ -1063,7 +1063,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
@@ -1089,7 +1089,7 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection field's Label, Help Text and Options can be translated"
-	@priority = "5"
+	@priority = 5
 	test MultipleSelectionFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1098,9 +1098,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Multiple Selection",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		FormViewBuilder.editText(
 			fieldName = "Help Text",
@@ -1109,12 +1109,12 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Option One",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option Two",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
@@ -1125,12 +1125,12 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Opción Uno",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Opción Dos",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.save();
 
@@ -1174,7 +1174,7 @@ definition {
 	}
 
 	@description = "Verify that a Numeric field's Label, Placeholder Text and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test NumericFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1183,7 +1183,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
@@ -1228,7 +1228,7 @@ definition {
 	}
 
 	@description = "Verify that a Paragraph field's Label and Body Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test ParagraphFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1237,7 +1237,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Paragraph body text.");
@@ -1274,7 +1274,7 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text field's Label, Help Text and Predefined Value can be translated"
-	@priority = "5"
+	@priority = 5
 	test RichTextFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1283,7 +1283,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		Form.gotoAdvancedTab();
@@ -1357,7 +1357,7 @@ definition {
 	}
 
 	@description = "Verify that a Select From List field's Label, Help Text and Options can be translated"
-	@priority = "5"
+	@priority = 5
 	test SelectFromListFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1366,7 +1366,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Select from List");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -1378,7 +1378,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option Two",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
@@ -1393,7 +1393,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Opción Dos",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.save();
 
@@ -1441,7 +1441,7 @@ definition {
 	}
 
 	@description = "Verify that a Separator field's Label and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test SeparatorFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1450,7 +1450,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Separator");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -1487,7 +1487,7 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection field's Label, Help Text and Options can be translated"
-	@priority = "5"
+	@priority = 5
 	test SingleSelectionFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1496,7 +1496,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Single Selection");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -1508,7 +1508,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option Two",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
@@ -1523,7 +1523,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Opción Dos",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.save();
 
@@ -1567,7 +1567,7 @@ definition {
 	}
 
 	@description = "LPS-116866 - Verify the Submit Button Label can be translated to multiple languages"
-	@priority = "4"
+	@priority = 4
 	test SubmitButtonLabelCanBeTranslated {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -1578,7 +1578,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var textFieldName = FormFields.getFieldName();
 
@@ -1599,7 +1599,7 @@ definition {
 		FormPortlet.changeLocale(locale = "português-Brasil");
 
 		FormFields.editText(
-			fieldName = "${textFieldName}",
+			fieldName = ${textFieldName},
 			fieldValue = "Campo de Texto");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar Personalizado");
@@ -1627,14 +1627,14 @@ definition {
 		FormPortlet.changeLocale(locale = "日本語-日本");
 
 		FormFields.editText(
-			fieldName = "${textFieldName}",
+			fieldName = ${textFieldName},
 			fieldValue = "テキストフィールド");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "参加する");
 	}
 
 	@description = "Verify that a Text field's Autocomplete Options can be translated"
-	@priority = "5"
+	@priority = 5
 	test TextFieldAutocompleteOptionsCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1643,7 +1643,7 @@ definition {
 		Form.editName(formName = "Form1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.gotoAutocompleteTab();
@@ -1652,13 +1652,13 @@ definition {
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Apple",
-			optionValue = "1");
+			optionValue = 1);
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Manzana",
-			optionValue = "1");
+			optionValue = 1);
 
 		Form.save();
 
@@ -1690,7 +1690,7 @@ definition {
 	}
 
 	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test TextFieldBasicPropertiesCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1698,7 +1698,7 @@ definition {
 
 		Form.editName(formName = "Form1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
 
@@ -1744,7 +1744,7 @@ definition {
 	}
 
 	@description = "Verify that a Text field's Predefined Value can be translated"
-	@priority = "5"
+	@priority = 5
 	test TextFieldPredefinedValueCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1752,7 +1752,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.editPredefinedValueInput(fieldValue = "Predefined value");
 
@@ -1776,7 +1776,7 @@ definition {
 	}
 
 	@description = "Verify that an Upload field's Label and Help Text can be translated"
-	@priority = "5"
+	@priority = 5
 	test UploadFieldCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1785,7 +1785,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");

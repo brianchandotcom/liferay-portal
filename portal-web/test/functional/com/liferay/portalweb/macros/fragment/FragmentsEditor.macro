@@ -5,11 +5,11 @@ definition {
 
 		if (isSet(text)) {
 			AssertTextEquals(
-				locator1 = "${fragmentLocator}",
-				value1 = "${text}");
+				locator1 = ${fragmentLocator},
+				value1 = ${text});
 		}
 		else {
-			AssertElementPresent(locator1 = "${fragmentLocator}");
+			AssertElementPresent(locator1 = ${fragmentLocator});
 		}
 
 		SelectFrame.selectFrameTop();
@@ -21,15 +21,15 @@ definition {
 
 		Type.sendKeysAceEditor(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-			value1 = "${htmlSnippet}");
+			value1 = ${htmlSnippet});
 
 		Click(
-			autocompleteField = "${autocompleteField}",
+			autocompleteField = ${autocompleteField},
 			locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-			value1 = "${fragmentHtml}");
+			value1 = ${fragmentHtml});
 	}
 
 	macro gotoCodeTab {
@@ -47,32 +47,32 @@ definition {
 	macro typeConfigurationEditor {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro typeCssEditor {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CSS_EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro typeFileContent {
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
-		var content = FileUtil.read("${dependencyFilePath}");
-		var fileExtension = File.getFileExtension(fileName = "${fileName}");
+		var content = FileUtil.read(${dependencyFilePath});
+		var fileExtension = File.getFileExtension(fileName = ${fileName});
 
-		if ("${fileExtension}" == "html") {
-			FragmentsEditor.typeHtmlEditor(content = "${content}");
+		if (${fileExtension} == "html") {
+			FragmentsEditor.typeHtmlEditor(content = ${content});
 		}
-		else if ("${fileExtension}" == "css") {
-			FragmentsEditor.typeCssEditor(content = "${content}");
+		else if (${fileExtension} == "css") {
+			FragmentsEditor.typeCssEditor(content = ${content});
 		}
-		else if ("${fileExtension}" == "js") {
-			FragmentsEditor.typeJsEditor(content = "${content}");
+		else if (${fileExtension} == "js") {
+			FragmentsEditor.typeJsEditor(content = ${content});
 		}
-		else if ("${fileExtension}" == "json") {
-			FragmentsEditor.typeConfigurationEditor(content = "${content}");
+		else if (${fileExtension} == "json") {
+			FragmentsEditor.typeConfigurationEditor(content = ${content});
 		}
 		else {
 			fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
@@ -82,13 +82,13 @@ definition {
 	macro typeHtmlEditor {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro typeJsEditor {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#JS_EDITOR",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro waitForAutoSave {

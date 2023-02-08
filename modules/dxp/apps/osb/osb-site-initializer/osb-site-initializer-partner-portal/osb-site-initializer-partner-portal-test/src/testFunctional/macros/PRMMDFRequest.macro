@@ -2,7 +2,7 @@ definition {
 
 	macro activityCollapseButton {
 		Click.mouseDownMouseUp(
-			key_textButton = "${button}",
+			key_textButton = ${button},
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
 	}
 
@@ -17,17 +17,17 @@ definition {
 	macro assertClaimMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PRMMDFRequest#CLAIM_MESSAGE",
-			value1 = "${key_claimMessage}");
+			value1 = ${key_claimMessage});
 	}
 
 	@summary = "Change MDF status"
 	macro changeMDFStatus {
 		Click(
-			key_MDFName = "${campaignName}",
+			key_MDFName = ${campaignName},
 			locator1 = "PRMMDFRequest#REQUEST_ID");
 
 		ClickNoError(
-			buttonId = "${key_statusButton}",
+			buttonId = ${key_statusButton},
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
 
 		Confirm.acceptAlert();
@@ -36,27 +36,27 @@ definition {
 	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
 		PRMMDFRequest.fillGoalsPage(
-			accountName = "${accountName}",
-			additionalOptions = "${additionalOptions}",
-			campaignDescription = "${campaignDescription}",
-			campaignName = "${campaignName}",
-			countryName = "${countryName}",
-			goalsOptions = "${goalsOptions}",
-			targetMarketOptions = "${targetMarketOptions}",
-			targetRolesOptions = "${targetRolesOptions}");
+			accountName = ${accountName},
+			additionalOptions = ${additionalOptions},
+			campaignDescription = ${campaignDescription},
+			campaignName = ${campaignName},
+			countryName = ${countryName},
+			goalsOptions = ${goalsOptions},
+			targetMarketOptions = ${targetMarketOptions},
+			targetRolesOptions = ${targetRolesOptions});
 
 		Button.click(button = "Continue");
 
 		PRMMDFRequest.newActivity(
-			activityDescription = "${activityDescription}",
-			activityName = "${activityName}",
-			budgetList = "${budgetList}",
-			followUpStrategy = "${followUpStrategy}",
-			leadFollowUpList = "${leadFollowUpList}",
-			leadList = "${leadList}",
-			tactic = "${tactic}",
-			targetOfLeads = "${targetOfLeads}",
-			typeOfActivity = "${typeOfActivity}");
+			activityDescription = ${activityDescription},
+			activityName = ${activityName},
+			budgetList = ${budgetList},
+			followUpStrategy = ${followUpStrategy},
+			leadFollowUpList = ${leadFollowUpList},
+			leadList = ${leadList},
+			tactic = ${tactic},
+			targetOfLeads = ${targetOfLeads},
+			typeOfActivity = ${typeOfActivity});
 
 		Button.click(button = "Continue");
 
@@ -75,62 +75,62 @@ definition {
 			Select(
 				key_fieldName = "company",
 				locator1 = "PRMMDFRequest#SELECT",
-				value1 = "${accountName}");
+				value1 = ${accountName});
 		}
 
 		if (isSet(countryName)) {
 			Select(
 				key_fieldName = "country",
 				locator1 = "PRMMDFRequest#SELECT",
-				value1 = "${countryName}");
+				value1 = ${countryName});
 		}
 
 		if (isSet(campaignName)) {
 			Type(
 				key_fieldName = "overallCampaignName",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${campaignName}");
+				value1 = ${campaignName});
 		}
 
 		if (isSet(campaignDescription)) {
 			Type(
 				key_fieldName = "overallCampaignDescription",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${campaignDescription}");
+				value1 = ${campaignDescription});
 		}
 
 		if (isSet(goalsOptions)) {
-			for (var goalsList : list "${goalsOptions}") {
+			for (var goalsList : list ${goalsOptions}) {
 				Click.clickAtNotVisible(
 					key_fieldName = "liferayBusinessSalesGoals",
-					key_optionValue = "${goalsList}",
+					key_optionValue = ${goalsList},
 					locator1 = "PRMMDFRequest#CHECKBOX");
 			}
 		}
 
 		if (isSet(targetMarketOptions)) {
-			for (var targetMarketList : list "${targetMarketOptions}") {
+			for (var targetMarketList : list ${targetMarketOptions}) {
 				Click.clickAtNotVisible(
 					key_fieldName = "targetMarkets",
-					key_optionValue = "${targetMarketList}",
+					key_optionValue = ${targetMarketList},
 					locator1 = "PRMMDFRequest#CHECKBOX");
 			}
 		}
 
 		if (isSet(additionalOptions)) {
-			for (var optionsList : list "${additionalOptions}") {
+			for (var optionsList : list ${additionalOptions}) {
 				Click.clickAtNotVisible(
-					key_buttonText = "${optionsList}",
+					key_buttonText = ${optionsList},
 					key_fieldName = "additionalOption",
 					locator1 = "PRMMDFRequest#INPUT_BUTTON");
 			}
 		}
 
 		if (isSet(targetRolesOptions)) {
-			for (var targetRolesList : list "${targetRolesOptions}") {
+			for (var targetRolesList : list ${targetRolesOptions}) {
 				Click.clickAtNotVisible(
 					key_fieldName = "targetAudienceRoles",
-					key_optionValue = "${targetRolesList}",
+					key_optionValue = ${targetRolesList},
 					locator1 = "PRMMDFRequest#CHECKBOX");
 			}
 		}
@@ -144,33 +144,33 @@ definition {
 			var nextDayDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
 		}
 
-		return "${nextDayDate}";
+		return ${nextDayDate};
 	}
 
 	@summary = "Fill the date fields on Activity Form"
 	macro insertDate {
 		if (!(isSet(activityIndex))) {
-			var activityIndex = "0";
+			var activityIndex = 0;
 		}
 
-		var currentDate = DateUtil.getFormattedDate("${dateRange}", "${dateFormat}");
+		var currentDate = DateUtil.getFormattedDate(${dateRange}, ${dateFormat});
 
-		if ("${fieldName}" == "startDate") {
+		if (${fieldName} == "startDate") {
 			Type.sendKeys(
 				key_fieldName = "activities[${activityIndex}].startDate",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 
 			Click(
 				key_fieldName = "activities[${activityIndex}].endDate",
 				locator1 = "PRMMDFRequest#TEXT_FIELD");
 		}
 
-		if ("${fieldName}" == "endDate") {
+		if (${fieldName} == "endDate") {
 			Type.sendKeys(
 				key_fieldName = "activities[${activityIndex}].endDate",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 
 			Click(
 				key_fieldName = "activities[${activityIndex}].startDate",
@@ -181,7 +181,7 @@ definition {
 	@summary = "Add a new activity"
 	macro newActivity {
 		if (!(isSet(activityIndex))) {
-			var activityIndex = "0";
+			var activityIndex = 0;
 		}
 
 		Click(
@@ -191,45 +191,45 @@ definition {
 		Type(
 			key_fieldName = "activities[${activityIndex}].name",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${activityName}");
+			value1 = ${activityName});
 
 		Select(
 			key_fieldName = "activities[${activityIndex}].typeActivity",
 			locator1 = "PRMMDFRequest#SELECT",
-			value1 = "${typeOfActivity}");
+			value1 = ${typeOfActivity});
 
 		Select(
 			key_fieldName = "activities[${activityIndex}].tactic",
 			locator1 = "PRMMDFRequest#SELECT",
-			value1 = "${tactic}");
+			value1 = ${tactic});
 
 		Type(
 			key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${activityDescription}");
+			value1 = ${activityDescription});
 
 		Click.clickAtNotVisible(
-			key_buttonText = "${leadList}",
+			key_buttonText = ${leadList},
 			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
 			locator1 = "PRMMDFRequest#INPUT_BUTTON");
 
-		if ("${leadList}" == "Yes") {
+		if (${leadList} == "Yes") {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${targetOfLeads}");
+				value1 = ${targetOfLeads});
 
-			for (var leadFollowUp : list "${leadFollowUpList}") {
+			for (var leadFollowUp : list ${leadFollowUpList}) {
 				Click.clickAtNotVisible(
 					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
-					key_optionValue = "${leadFollowUp}",
+					key_optionValue = ${leadFollowUp},
 					locator1 = "PRMMDFRequest#CHECKBOX");
 			}
 
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${followUpStrategy}");
+				value1 = ${followUpStrategy});
 		}
 
 		var startDate = PRMMDFRequest.formatDate();
@@ -237,20 +237,20 @@ definition {
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].startDate",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${startDate}");
+			value1 = ${startDate});
 
 		var endDate = PRMMDFRequest.formatDate(endDate = "true");
 
 		Type.sendKeys(
 			key_fieldName = "activities[${activityIndex}].endDate",
 			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = "${endDate}");
+			value1 = ${endDate});
 
-		var budgetIndex = "0";
+		var budgetIndex = 0;
 
-		for (var bugdetValues : list "${budgetList}") {
-			var expenseOption = StringUtil.extractFirst("${bugdetValues}", "-");
-			var bugdetValue = StringUtil.extractLast("${bugdetValues}", "-");
+		for (var bugdetValues : list ${budgetList}) {
+			var expenseOption = StringUtil.extractFirst(${bugdetValues}, "-");
+			var bugdetValue = StringUtil.extractLast(${bugdetValues}, "-");
 
 			Click(
 				key_buttonText = "Add Expense",
@@ -259,12 +259,12 @@ definition {
 			Select(
 				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].expense",
 				locator1 = "PRMMDFRequest#SELECT",
-				value1 = "${expenseOption}");
+				value1 = ${expenseOption});
 
 			Type(
 				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "${bugdetValue}");
+				value1 = ${bugdetValue});
 
 			var budgetIndex = ${budgetIndex} + 1;
 		}
@@ -273,13 +273,13 @@ definition {
 	@summary = "Assert button is not clickable"
 	macro viewDisabledButton {
 		AssertElementPresent(
-			key_text = "${buttonName}",
+			key_text = ${buttonName},
 			locator1 = "Button#ANY_DISABLED");
 	}
 
 	@summary = "Verify error messages"
 	macro viewErrorMessage {
-		var key_errorMessage = "${errorMessage}";
+		var key_errorMessage = ${errorMessage};
 
 		AssertElementPresent(locator1 = "PRMMDFRequest#ERROR_MESSAGE");
 	}

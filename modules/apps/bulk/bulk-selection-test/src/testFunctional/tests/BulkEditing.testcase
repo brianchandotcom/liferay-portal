@@ -15,7 +15,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -30,7 +30,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This ensures that indeterminate checkboxes appear in the permissions modal when editing multiple folders with different permissions."
-	@priority = "5"
+	@priority = 5
 	test CanAddPermissionsForFoldersWithDifferentPermissions {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -88,7 +88,7 @@ definition {
 	}
 
 	@description = "This test adds a tag for a single document via management toolbar"
-	@priority = "4"
+	@priority = 4
 	test CanAddTagToSingleAsset {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteCommonCategoryTags {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -133,7 +133,7 @@ definition {
 		for (var categoryName : list "Books,Plants,Pets") {
 			JSONCategory.addCategory(
 				groupName = "Guest",
-				title = "${categoryName}",
+				title = ${categoryName},
 				vocabularyName = "Topic");
 		}
 
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94955. It ensures that users can edit category tags by using the bulk append action."
-	@priority = "5"
+	@priority = 5
 	test CanEditAndAppendCategoryTags {
 		property portal.acceptance = "true";
 
@@ -199,11 +199,11 @@ definition {
 
 		DMDocument.editCategoryTags(
 			categoryNameList = "Books",
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewCategoriesInfo(categoryName = "Books");
 
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91749. It ensures that a user can edit tags by using the bulk append action for checked out document files."
-	@priority = "4"
+	@priority = 4
 	test CanEditAndAppendTagForCheckedOutFiles {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -234,7 +234,7 @@ definition {
 		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true",
 			tagName = "newtag");
 
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@description = "This test edits tags by using the bulk append action."
-	@priority = "4"
+	@priority = 4
 	test CanEditAndAppendTags {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -273,12 +273,12 @@ definition {
 		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true",
 			tagName = "tagtwo");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewTagInfo(tagName = "tagone,tagtwo");
 
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "This test edits tags by using the bulk append action, also covers LPS-91586."
-	@priority = "4"
+	@priority = 4
 	test CanEditAndReplaceTags {
 		for (var entryCount : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
@@ -307,12 +307,12 @@ definition {
 
 		DMDocument.editTags(
 			editAction = "Replace",
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true",
 			tagName = "newTag");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_3") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewTagInfo(tagName = "newTag");
 
@@ -327,12 +327,12 @@ definition {
 
 		DMDocument.editTags(
 			editAction = "Replace",
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true",
 			tagName = "");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewNoTagInfo();
 
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@description = "This ensures that the files permissions can be edited via bulk editing."
-	@priority = "5"
+	@priority = 5
 	test CanEditFilesPermissions {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@description = "This ensures that multiple folders with the same permissions can be edited via bulk editing."
-	@priority = "5"
+	@priority = 5
 	test CanEditFoldersWithSamePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -461,7 +461,7 @@ definition {
 	}
 
 	@description = "This ensures that the shortcuts permissions can be edited via bulk editing."
-	@priority = "5"
+	@priority = 5
 	test CanEditShortcutsPermissions {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -522,7 +522,7 @@ definition {
 	}
 
 	@description = "This test selects multiple documents and moves them into one folder."
-	@priority = "5"
+	@priority = 5
 	test CanMoveDocumentsToFolder {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -531,7 +531,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -575,12 +575,12 @@ definition {
 
 			DMNavigator.gotoFolder(dmFolderName = "Folder 1");
 
-			DMDocument.viewPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMDocument.viewPG(dmDocumentTitle = ${key_dmDocumentTitle});
 		}
 	}
 
 	@description = "This ensures that the users can not edit file and folder permissions simultaneously."
-	@priority = "4"
+	@priority = 4
 	test CannotEditFileAndFolderPermissionsSimultaneously {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -606,7 +606,7 @@ definition {
 	}
 
 	@description = "This ensures that users can not edit file and shortcut permissions simultaneously."
-	@priority = "4"
+	@priority = 4
 	test CannotEditFileAndShortcutPermissionsSimultaneously {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "This ensures that the files permissions can be removed via bulk editing."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveFilesPermissions {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -687,7 +687,7 @@ definition {
 	}
 
 	@description = "This ensures that the indeterminate permissions in the permissions modal can be unchecked and saved when editing the multiple folders."
-	@priority = "5"
+	@priority = 5
 	test CanRemovePermissionsForFoldersWithDifferentPermissions {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -732,7 +732,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."
-	@priority = "4"
+	@priority = 4
 	test CanSaveTags {
 		for (var entryCount : list "1,2,3,4") {
 			JSONDocument.addFileWithUploadedFile(
@@ -750,12 +750,12 @@ definition {
 		DMNavigator.gotoItemViaManagementBar(item = "Edit Tags");
 
 		DMDocument.editTags(
-			itemNumber = "4",
+			itemNumber = 4,
 			multipleDocuments = "true",
 			tagName = "tagone");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2,Document_3,Document_4") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewTagInfo(tagName = "tagone");
 
@@ -763,7 +763,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test SingleDocumentSelectionDoesNotCheckAllEntries {
 		JSONDocument.addFileWithUploadedFile(
@@ -794,7 +794,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91524. It asserts that the Edit Tags icon is disabled when workflow is enabled. "
-	@priority = "4"
+	@priority = 4
 	test TagsCannotBeEditedForUnapprovedEntries {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -832,14 +832,14 @@ definition {
 	}
 
 	@description = "This test covers LPS-94994. It ensures that users can edit category tags by using the bulk append action."
-	@priority = "5"
+	@priority = 5
 	test UncommonCategoryTagsCanBeReplacedUsingBulkAction {
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
 
 		for (var categoryName : list "Books,Plants,Pets,Furniture") {
 			JSONCategory.addCategory(
 				groupName = "Guest",
-				title = "${categoryName}",
+				title = ${categoryName},
 				vocabularyName = "Topic");
 		}
 
@@ -862,13 +862,13 @@ definition {
 		DMDocument.editCategoryTags(
 			categoryNameList = "Furniture",
 			editAction = "Replace",
-			itemNumber = "2",
+			itemNumber = 2,
 			multipleDocuments = "true");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		for (var key_dmDocumentTitle : list "Document_1,Document_2") {
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "${key_dmDocumentTitle}");
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = ${key_dmDocumentTitle});
 
 			DMDocument.viewCategoriesInfo(categoryNameList = "Books,Furniture");
 

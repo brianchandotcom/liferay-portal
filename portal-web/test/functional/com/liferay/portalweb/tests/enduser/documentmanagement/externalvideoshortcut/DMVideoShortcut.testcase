@@ -16,7 +16,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed a Twitch live stream in a blog."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddBlogWithTwitchStream {
 		property portal.acceptance = "true";
@@ -52,7 +52,7 @@ definition {
 			layoutName = "Blog Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blog Page",
 			widgetName = "Blogs");
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Facebook."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddFacebookVideo {
 		property portal.acceptance = "true";
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Facebook video added via item selector can be embedded when adding a KB."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddFacebookVideoToKBViaItemSelector {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external video in a KB article."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddKBArticleWithEmbeddedVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed a Twitch live stream in a KB article."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddKBArticleWithTwitchStream {
 		property portal.acceptance = "true";
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Twitch live stream."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddTwitchLiveStream {
 		property portal.acceptance = "true";
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Twitch video added via item selector can be embedded when adding a WC."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddTwitchToWCViaItemSelector {
 		JSONDepot.addDepot(
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Twitch."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddTwitchVideoOnSite {
 		property portal.acceptance = "true";
@@ -247,7 +247,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Vimeo video added via item selector can be embedded when adding a blog."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddVimeoToBlogViaItemSelector {
 		JSONLayout.addPublicLayout(
@@ -255,7 +255,7 @@ definition {
 			layoutName = "Blog Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blog Page",
 			widgetName = "Blogs");
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with Vimeo."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddVimeoVideo {
 		property portal.acceptance = "true";
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external Twitch video in a WC article."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddWCWithEmbeddedTwitchVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed an external video in web content."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddWCWithEmbeddedVideo {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "This test ensures that a YouTube video added via item selector can be embedded when adding a WC."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddYouTubeToWCViaItemSelector {
 		property portal.acceptance = "true";
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with YouTube."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddYouTubeVideoOnSite {
 		property portal.acceptance = "true";
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be added with a YouTube shortened URL on a content page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddYoutubeWithShortenedURL {
 		property portal.acceptance = "true";
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@description = "This ensures that the video shortcut can be viewed with different views in the item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanChangeViewsInItemSelector {
 		property portal.acceptance = "true";
@@ -481,7 +481,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		for (var videoShortcutTitle : list "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video") {
-			LexiconList.viewListEntryTitle(listEntry = "${videoShortcutTitle}");
+			LexiconList.viewListEntryTitle(listEntry = ${videoShortcutTitle});
 		}
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut can be edited with a YouTube shortened URL."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditYoutubeWithShortenedURL {
 		property portal.acceptance = "true";
@@ -527,7 +527,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut associated with a category can be searched."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForCategory {
 		JSONLayout.addPublicLayout(
@@ -591,7 +591,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -603,7 +603,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -615,7 +615,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -625,7 +625,7 @@ definition {
 	}
 
 	@description = "This ensures that a video shortcut associated with a tag can be searched."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForTag {
 		JSONLayout.addPublicLayout(
@@ -683,7 +683,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -695,7 +695,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -707,7 +707,7 @@ definition {
 
 		for (var videoShortcutTitle : list "Test YouTube Video,Test Vimeo Video,Test Twitch Video") {
 			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "${videoShortcutTitle}",
+				searchAssetTitle = ${videoShortcutTitle},
 				searchAssetType = "Document");
 		}
 
@@ -717,7 +717,7 @@ definition {
 	}
 
 	@description = "This ensures that an external video in an external video fragment can be rendered correctly after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -769,7 +769,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-123911. It ensures that a preview of the video can be shown when checking video shortcut from search result."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSearchResult {
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -810,7 +810,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-124246 and LPS-124309. It ensures that YouTube shortcut can be added with the invalid file name and the thumbnail can be displayed in AP."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewThumbnailViaAP {
 		JSONLayout.addPublicLayout(
@@ -842,7 +842,7 @@ definition {
 	}
 
 	@description = "This ensures that an external video in the WC content field can be rendered correctly after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewVideoInWCAfterMovingToFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -881,7 +881,7 @@ definition {
 	}
 
 	@description = "This ensures that the thumbnail of Vimeo video can be viewed in DM."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewVimeoThumbnail {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -902,7 +902,7 @@ definition {
 	}
 
 	@description = "This ensures that the thumbnail of YouTube video can be viewed in DM. It also asserts the icon of External Video Shortcut."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewYouTubeThumbnail {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -942,7 +942,7 @@ definition {
 	}
 
 	@description = "It ensures that a message is displayed in the preview section When pasting an invalid URL."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test ValidationOccursForEachVideoType {
 		property portal.acceptance = "true";

@@ -14,14 +14,14 @@ definition {
 
 		Type(
 			locator1 = "SystemSettings#KEY",
-			value1 = "${key}");
+			value1 = ${key});
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
 
 		AssertElementPresent(
-			key_configurationEntry = "${key}",
+			key_configurationEntry = ${key},
 			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 	}
 

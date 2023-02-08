@@ -10,7 +10,7 @@ definition {
 
 	macro gotoFormField {
 		Click(
-			key_formFieldName = "${formFieldName}",
+			key_formFieldName = ${formFieldName},
 			locator1 = "PopulateObjectFormsConfiguration#GO_TO_FORM_FIELD");
 	}
 
@@ -20,7 +20,7 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
 
 		Click(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
 
 		WaitForPageLoad();
@@ -30,12 +30,12 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		AssertClick(
-			key_formObjectField = "${formObjectField}",
+			key_formObjectField = ${formObjectField},
 			locator1 = "PopulateObjectFormsConfiguration#FORM_OBJECT_FIELD",
-			value1 = "${formObjectField}");
+			value1 = ${formObjectField});
 
 		Click(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
 
 		WaitForPageLoad();
@@ -63,7 +63,7 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
 
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 
 		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
@@ -73,13 +73,13 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_STORAGE_TYPE");
 
 		Click(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
 	macro selectObjectOnly {
 		Click(
-			key_label = "${labelObject}",
+			key_label = ${labelObject},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
@@ -87,7 +87,7 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
 
 		Click(
-			key_label = "${picklistItem}",
+			key_label = ${picklistItem},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 
 		IFrame.selectTopFrame();
@@ -95,13 +95,13 @@ definition {
 
 	macro viewDisplaySelectOption {
 		AssertElementPresent(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
 	macro viewDisplaySelectOptionNotPresent {
 		AssertElementNotPresent(
-			key_label = "${label}",
+			key_label = ${label},
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
 	}
 
@@ -117,7 +117,7 @@ definition {
 		Click(locator1 = "PopulateObjectFormsConfiguration#OBJECT_FIELD_TAB");
 
 		AssertElementPresent(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "PopulateObjectFormsConfiguration#MAP_OBJECT_FIELD");
 	}
 
@@ -128,11 +128,11 @@ definition {
 
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_TITLE");
 
-		var fieldType = StringUtil.toLowerCase("${fieldType}");
+		var fieldType = StringUtil.toLowerCase(${fieldType});
 
 		AssertElementPresent(
-			key_fieldLabel = "${fieldLabel}",
-			key_fieldType = "${fieldType}",
+			key_fieldLabel = ${fieldLabel},
+			key_fieldType = ${fieldType},
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_FORM_FIELDS_ERROR_PANEL_BODY");
 	}
 
@@ -144,8 +144,8 @@ definition {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_TITLE");
 
 		AssertElementPresent(
-			key_fieldLabelName = "${fieldLabelName}",
-			key_fieldType = "${fieldType}",
+			key_fieldLabelName = ${fieldLabelName},
+			key_fieldType = ${fieldType},
 			locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_PANEL_BODY");
 	}
 

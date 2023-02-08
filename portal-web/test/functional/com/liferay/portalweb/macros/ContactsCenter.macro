@@ -5,11 +5,11 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${contactName}");
+		PortletEntry.inputName(name = ${contactName});
 
 		Type.typePause(
 			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		Button.clickSave();
 
@@ -20,9 +20,9 @@ definition {
 
 	macro editPG {
 		AssertClick(
-			key_contact = "${contactName}",
+			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",
-			value1 = "${contactName}");
+			value1 = ${contactName});
 
 		AssertClick(
 			locator1 = "Button#EDIT",
@@ -31,13 +31,13 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#NAME");
 
 		if (isSet(contactNameEdit)) {
-			PortletEntry.inputName(name = "${contactNameEdit}");
+			PortletEntry.inputName(name = ${contactNameEdit});
 		}
 
 		if (isSet(emailAddressEdit)) {
 			PortletEntry.inputText(
 				fieldLabel = "Email Address",
-				text = "${emailAddressEdit}");
+				text = ${emailAddressEdit});
 		}
 
 		Button.clickSave();
@@ -48,7 +48,7 @@ definition {
 	}
 
 	macro viewContactCenterContainerPG {
-		if ("${contactConnection}" != "1") {
+		if (${contactConnection} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
 				value1 = "You have ${contactConnection} connections.");
@@ -63,7 +63,7 @@ definition {
 			locator1 = "ContactsCenter#CONTACT_FOLLOWING_COUNT",
 			value1 = "You are following ${contactFollowing} people.");
 
-		if ("${contactFollower}" != "1") {
+		if (${contactFollower} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#CONTACT_FOLLOWER_COUNT",
 				value1 = "You have ${contactFollower} followers.");
@@ -74,7 +74,7 @@ definition {
 				value1 = "You have one follower.");
 		}
 
-		if ("${myContact}" != "1") {
+		if (${myContact} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#MY_CONTACTS_COUNT",
 				value1 = "View my ${myContact} contacts.");
@@ -85,7 +85,7 @@ definition {
 				value1 = "View one contact.");
 		}
 
-		if ("${allUser}" != "1") {
+		if (${allUser} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#All_USERS_COUNT",
 				value1 = "View all ${allUser} users.");
@@ -99,23 +99,23 @@ definition {
 
 	macro viewContactPG {
 		AssertClick.assertPartialTextClickAt(
-			key_contact = "${contactName}",
+			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",
-			value1 = "${contactName}");
+			value1 = ${contactName});
 
 		AssertTextEquals.assertPartialText(
-			key_contactText = "${contactName}",
+			key_contactText = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
-			value1 = "${contactName}");
+			value1 = ${contactName});
 
 		AssertTextEquals(
-			key_contactText = "${emailAddress}",
+			key_contactText = ${emailAddress},
 			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		if (isSet(interactButton)) {
-			for (var button : list "${interactButton}") {
-				Button.viewPresent(button = "${button}");
+			for (var button : list ${interactButton}) {
+				Button.viewPresent(button = ${button});
 			}
 		}
 	}

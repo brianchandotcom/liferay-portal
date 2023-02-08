@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69039. This test verifies that editing chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanEditChosenOptions {
 		NavItem.gotoStructures();
 
@@ -112,9 +112,9 @@ definition {
 		for (var row : list "1,2,3") {
 			for (var column : list "2,2,2") {
 				DERenderer.inputDataInGridField(
-					column = "${column}",
+					column = ${column},
 					fieldLabel = "Grid",
-					row = "${row}");
+					row = ${row});
 			}
 		}
 
@@ -124,9 +124,9 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		Button.clickPublish();
@@ -135,14 +135,14 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -179,7 +179,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69039. This test verifies that is not possible to publish the Web Content with a blank required field."
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69039. This test verifies that chosen options persists."
-	@priority = "5"
+	@priority = 5
 	test CanSelectOptions {
 		NavItem.gotoStructures();
 
@@ -235,9 +235,9 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		Button.clickPublish();
@@ -246,14 +246,14 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68573. This test verifies that multiple options on Column and Row can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetMultipleOptions {
 		NavItem.gotoStructures();
 
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@description = "Check if Grid Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewGridFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -363,7 +363,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Grid",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -379,7 +379,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Grid",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

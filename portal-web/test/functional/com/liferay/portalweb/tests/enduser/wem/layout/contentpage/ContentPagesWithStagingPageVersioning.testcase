@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125755. Can switch to specific Site Pages Variation on content page when enable page versioning."
-	@priority = "5"
+	@priority = 5
 	test ChangeSitePagesVariationInViewMode {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page in site page variation."
-	@priority = "4"
+	@priority = 4
 	test CreatePageTemplateFromContentPageInSitePageVariation {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125755. Can manage Site Pages Navigation on content page when enable page versioning."
-	@priority = "5"
+	@priority = 5
 	test ManageSitePagesVariationInViewMode {
 		property portal.acceptance = "true";
 
@@ -225,7 +225,7 @@ definition {
 			LexiconEntry.openEntryMenu(rowEntry = "Main Variation");
 
 			for (var menuItem : list "Edit,Permissions,Merge") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
@@ -263,7 +263,7 @@ definition {
 			LexiconEntry.openEntryMenu(rowEntry = "Test Site Pages Variation");
 
 			for (var menuItem : list "Edit,Permissions,Merge,Delete") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 		}
 
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125755. The Site Pages Variation is enabled on content page in view mode when enable page versioning."
-	@priority = "5"
+	@priority = 5
 	test PublishContentPageWithPageVariationToLive {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125755. The Site Pages Variation is not shown on content page in edit mode when enable page versioning."
-	@priority = "4"
+	@priority = 4
 	test ViewSitePagesVariationOnlyShownInViewMode {
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");

@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddAutoTag {
 		property portal.acceptance = "true";
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-93334. It checks that an ODT file can be auto-tagged."
-	@priority = "4"
+	@priority = 4
 	test CanAddAutoTagForODTFile {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanAddAutoTagForODTFile";
 
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAssertImageAutoTagAfterPublishToLive {
 		property custom.properties = "dl.actions.visible=true";
@@ -96,7 +96,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101885. It asserts that an auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteAutoTaggedDocument {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanDeleteAutoTaggedDocument";
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This test asserts that no auto-tags are generated for manually tagged images."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddAutoTagForManuallyTaggedImage {
 		property test.name.skip.portal.instance = "DMAutoTagging#CannotAddAutoTagForManuallyTaggedImage";
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "This test asserts that auto-tags can be deleted."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveImageAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanRemoveImageAutoTag";
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveOpenNLPAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanRemoveOpenNLPAutoTag";
@@ -248,7 +248,7 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "alice,adventures") {
-			AssetCategorization.removeTag(tagName = "${tagName}");
+			AssetCategorization.removeTag(tagName = ${tagName});
 		}
 
 		Button.clickPublish();
@@ -261,12 +261,12 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 
 		for (var tagName : list "alice,adventures") {
-			DMDocument.viewNoTagInfo(tagName = "${tagName}");
+			DMDocument.viewNoTagInfo(tagName = ${tagName});
 		}
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating an image."
-	@priority = "5"
+	@priority = 5
 	test NoTagUpdatesForImageAfterDisablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForImageAfterDisablingUpdateAutoTags";
 
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a text document."
-	@priority = "5"
+	@priority = 5
 	test NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "DMAutoTagging#NoTagUpdatesForTextDMAfterDisablingUpdateAutoTags";
 
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating an image."
-	@priority = "5"
+	@priority = 5
 	test TagUpdatesForImageAfterEnablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForImageAfterEnablingUpdateAutoTags";
 
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a text document."
-	@priority = "5"
+	@priority = 5
 	test TagUpdatesForTextDMAfterEnablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "DMAutoTagging#TagUpdatesForTextDMAfterEnablingUpdateAutoTags";
 

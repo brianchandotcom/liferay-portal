@@ -4,7 +4,7 @@ definition {
 	function sikuliLeftMouseUp {
 		WaitForSPARefresh();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.sikuliLeftMouseUp();
 

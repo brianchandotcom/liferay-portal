@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that user can change and remove translation files during import"
-	@priority = "3"
+	@priority = 3
 	test CanChangeFilesDuringImport {
 		property portal.acceptance = "false";
 
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated zip file contains multiple web contents with multiple available languages can be exported."
-	@priority = "5"
+	@priority = 5
 	test CanExportMultipleWCsWithMultipleLanguages {
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated zip file with all available language can be exported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanExportWCWithAllLanguages {
 		JSONWebcontent.addWebContent(
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated zip file with an available language can be exported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanExportWebContent {
 		property portal.acceptance = "true";
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This ensures that user can import the exported xliff file with 1.2 version."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportExportedXLIFF {
 		JSONWebcontent.addWebContent(
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation files(zip and xlf files) contians multiple web contents can be imported from a zip."
-	@priority = "5"
+	@priority = 5
 	test CanImportMultipleFiles {
 		property portal.acceptance = "false";
 
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation files contians multiple web contents can be imported from a zip."
-	@priority = "5"
+	@priority = 5
 	test CanImportMultipleWCs {
 		property portal.acceptance = "false";
 
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation files can be imported from a zip."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportWCWithZipFile {
 		JSONWebcontent.addWebContent(
@@ -404,7 +404,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportWebContent {
 		property portal.acceptance = "true";
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated file(.xlf) after re-encoding it to UTF-8 can be imported."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanImportWebContentWithUTF8 {
 		JSONWebcontent.addWebContent(
@@ -498,7 +498,7 @@ definition {
 	}
 
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportWebContentWithXliffFile {
 		property portal.acceptance = "true";
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136979. It checks that a user can import translation with long inputs."
-	@priority = "4"
+	@priority = 4
 	test CanImportWithLongInputs {
 		JSONWebcontent.addWebContent(
 			content = "WebContentContent",
@@ -592,7 +592,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136980. It checks that a user can import translation with special characters."
-	@priority = "4"
+	@priority = 4
 	test CanImportWithSpecialCharacters {
 		WebContentNavigator.openToAddBasicArticle(
 			groupName = "Guest",
@@ -639,7 +639,7 @@ definition {
 	}
 
 	@description = "This ensures that only the valid translation files can be imported from zip and xlf files."
-	@priority = "5"
+	@priority = 5
 	test CanPartiallyImportMultipleFiles {
 		property portal.acceptance = "false";
 
@@ -783,7 +783,7 @@ definition {
 	}
 
 	@description = "This ensures that user can upload another translation file after publishing translation."
-	@priority = "3"
+	@priority = 3
 	test CanUploadAnotherFileAfterPublishing {
 		property portal.acceptance = "false";
 
@@ -859,7 +859,7 @@ definition {
 	}
 
 	@description = "This ensures that users can view the info of the unsuccessfully imported web content translations in the downloaded CSV report."
-	@priority = "5"
+	@priority = 5
 	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
 		property portal.acceptance = "false";
 
@@ -915,7 +915,7 @@ definition {
 			webContentTitle = "WebContentTitle");
 
 		Translations.viewCSVErrorReport(
-			errorReportName = "${errorReportName}",
+			errorReportName = ${errorReportName},
 			reportContent = "WebContentTitle-en_US-ja_JP.xlf,The translation file does not correspond to this web content.,WebContentTitle-en_US_translated.zip",
 			viewNoSuccessfullyImportedTranslation = "WebContentTitle-en_US-es_ES");
 	}

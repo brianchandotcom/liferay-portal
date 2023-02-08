@@ -25,8 +25,8 @@ definition {
 
 		for (var termsType : list "Delivery,Payment") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
-				termsCount = "2",
-				termsType = "${termsType}");
+				termsCount = 2,
+				termsType = ${termsType});
 		}
 	}
 
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test AssertCheckoutStepsNotShownWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -66,7 +66,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -82,7 +82,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -108,7 +108,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -129,13 +129,13 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentTerm = "Payment Term 2",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test AssertDeliveryTermsNotEditableWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -166,7 +166,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -182,7 +182,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -197,7 +197,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -217,8 +217,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test AssertPaymentTermsNotEditableWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -302,7 +302,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -318,7 +318,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -333,7 +333,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -353,8 +353,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -407,7 +407,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test AssertTermsNotEditableAfterOrderIsPlaced {
 		property portal.acceptance = "false";
 
@@ -438,7 +438,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -454,7 +454,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -469,7 +469,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -488,8 +488,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
@@ -500,7 +500,7 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ChangeDeliveryTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
 
@@ -540,7 +540,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -555,7 +555,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -598,9 +598,9 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		for (var deliveryTerms : list "${deliveryTermsEligibility}") {
+		for (var deliveryTerms : list ${deliveryTermsEligibility}) {
 			AssertElementPresent(
-				key_radioOption = "${deliveryTerms}",
+				key_radioOption = ${deliveryTerms},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			echo("${deliveryTerms} is available");
@@ -632,7 +632,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ChangePaymentTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
 
@@ -656,7 +656,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -671,7 +671,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -714,9 +714,9 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		for (var paymentTerms : list "${paymentTermsEligibility}") {
+		for (var paymentTerms : list ${paymentTermsEligibility}) {
 			AssertElementPresent(
-				key_radioOption = "${paymentTerms}",
+				key_radioOption = ${paymentTerms},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			echo("${paymentTerms} is available");
@@ -748,7 +748,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test EditTermsFromOrderAdmin {
 		property portal.acceptance = "false";
 
@@ -779,7 +779,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -795,7 +795,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -810,7 +810,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -829,8 +829,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -854,14 +854,14 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
 		for (var termType : list "Payment,Delivery") {
 			CommerceOrders.editOrdersEntryTerms(
 				newTerm = "${termType} Term 2",
-				type = "${termType}");
+				type = ${termType});
 		}
 
 		CommerceOrders.viewOrdersEntry(
@@ -872,13 +872,13 @@ definition {
 			paymentTerm = "Payment Term 2",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ViewAvailableDeliveryTerms {
 		property portal.acceptance = "false";
 
@@ -908,7 +908,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = ${deliveryTermsEligibility});
 
 		Refresh();
 
@@ -923,7 +923,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -966,9 +966,9 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		for (var deliveryTerms : list "${deliveryTermsEligibility}") {
+		for (var deliveryTerms : list ${deliveryTermsEligibility}) {
 			AssertElementPresent(
-				key_radioOption = "${deliveryTerms}",
+				key_radioOption = ${deliveryTerms},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			echo("${deliveryTerms} is available");
@@ -987,7 +987,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ViewAvailablePaymentTerms {
 		property portal.acceptance = "true";
 
@@ -1011,7 +1011,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = ${paymentTermsEligibility});
 
 		Refresh();
 
@@ -1026,7 +1026,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -1069,9 +1069,9 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		for (var paymentTerms : list "${paymentTermsEligibility}") {
+		for (var paymentTerms : list ${paymentTermsEligibility}) {
 			AssertElementPresent(
-				key_radioOption = "${paymentTerms}",
+				key_radioOption = ${paymentTerms},
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			echo("${paymentTerms} is available");
@@ -1090,7 +1090,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ViewDeliveryTermAttachedToOrder {
 		property portal.acceptance = "false";
 
@@ -1133,7 +1133,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -1151,8 +1151,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -1175,13 +1175,13 @@ definition {
 			deliveryTerm = "Delivery Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
 
 	@description = "[Please Update]"
-	@priority = "4"
+	@priority = 4
 	test ViewPaymentTermAttachedToOrder {
 		property portal.acceptance = "false";
 
@@ -1218,7 +1218,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -1237,8 +1237,8 @@ definition {
 			paymentMethod = "Money Order",
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -1262,7 +1262,7 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}

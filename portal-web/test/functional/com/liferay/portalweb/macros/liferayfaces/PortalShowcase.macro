@@ -47,17 +47,17 @@ definition {
 	macro _writeText {
 		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
-		RobotType(locator1 = "${text}");
+		RobotType(locator1 = ${text});
 
 		PortalShowcase.submit();
 	}
 
 	macro checkText {
-		var boldOpen = "${boldOpen}";
-		var boldClose = "${boldClose}";
-		var italicOpen = "${italicOpen}";
-		var italicClose = "${italicClose}";
-		var usecase = "${usecase}";
+		var boldOpen = ${boldOpen};
+		var boldClose = ${boldClose};
+		var italicOpen = ${italicOpen};
+		var italicClose = ${italicClose};
+		var usecase = ${usecase};
 
 		Click(locator1 = "//a[contains(text(),'${usecase}')]");
 
@@ -124,36 +124,36 @@ definition {
 	}
 
 	macro submitImmediate {
-		if ("${immediate}" == "true") {
+		if (${immediate} == "true") {
 			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
-			RobotType(locator1 = "${text}");
+			RobotType(locator1 = ${text});
 
 			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON");
 
 			AssertElementPresent(
-				key_message = "${messageImmediate1}",
+				key_message = ${messageImmediate1},
 				locator1 = "JSFShowcase#RESULT_MESSAGE");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "JSFShowcase#MODEL_RESULT",
-				value1 = "${textResult}");
+				value1 = ${textResult});
 		}
 
-		if ("${immediate}" == "false") {
+		if (${immediate} == "false") {
 			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD_2");
 
-			RobotType(locator1 = "${text}");
+			RobotType(locator1 = ${text});
 
 			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON_2");
 
 			AssertElementPresent(
-				key_message = "${messageImmediate2}",
+				key_message = ${messageImmediate2},
 				locator1 = "JSFShowcase#RESULT_MESSAGE");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "JSFShowcase#MODEL_RESULT_2",
-				value1 = "${textResult}");
+				value1 = ${textResult});
 		}
 	}
 

@@ -17,13 +17,13 @@ definition {
 
 		ACUtils.tearDownAC();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Automation ID: LRAC-9062 | Test Summary: Edit button to manage user permissions"
-	@priority = "5"
+	@priority = 5
 	test CanEditButtonToManageUserPermissions {
 		task ("Go to User Management in Settings") {
 			ACNavigation.goToSettings();

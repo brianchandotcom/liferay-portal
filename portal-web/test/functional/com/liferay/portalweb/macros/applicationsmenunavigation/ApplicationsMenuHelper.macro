@@ -14,8 +14,8 @@ definition {
 
 	macro gotoPortlet {
 		Click(
-			key_category = "${category}",
-			key_portlet = "${portlet}",
+			key_category = ${category},
+			key_portlet = ${portlet},
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 

@@ -3,19 +3,19 @@ definition {
 	macro changePagination {
 		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
 
-		var key_itemsPerPage = "${itemsPerPage}";
+		var key_itemsPerPage = ${itemsPerPage};
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage}");
+			value1 = ${itemsPerPage});
 	}
 
 	macro viewResults {
 		AssertTextEquals(
 			locator1 = "Pagination#RESULTS",
-			value1 = "${results}");
+			value1 = ${results});
 	}
 
 }

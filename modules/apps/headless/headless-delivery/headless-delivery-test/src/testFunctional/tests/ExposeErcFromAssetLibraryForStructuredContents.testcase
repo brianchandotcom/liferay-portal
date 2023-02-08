@@ -17,7 +17,7 @@ definition {
 		task ("Given a content structure created in asset library") {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
-			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = "${assetLibraryId}");
+			WebContentNavigator.openWebContentStructuresAdminInAssetLibrary(depotId = ${assetLibraryId});
 
 			WebContentStructures.addCP(structureName = "content-structure");
 
@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Structured content is deleted in an asset library by custom erc"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStructuredContentInAssetLibraryByAssetLibraryIdAndCustomErc {
 		property portal.acceptance = "true";
 
@@ -50,9 +50,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -61,23 +61,23 @@ definition {
 
 		task ("When I make a DELETE request by assetLibraryId and the custom erc") {
 			HeadlessWebcontentAPI.deleteStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then the structured content is correctly deleted") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "0",
-				responseToParse = "${response}");
+				expectedTotalElement = 0,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is deleted in an asset library by default erc"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteStructuredContentInAssetLibraryByAssetLibraryIdAndDefaultErc {
 		property portal.acceptance = "true";
 
@@ -86,35 +86,35 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
 		}
 
 		task ("When I make a DELETE request by assetLibraryId and uuid as the erc") {
-			var structuredContentUuid = HeadlessWebcontentAPI.getUuidOfStructuredContent(responseToParse = "${response}");
+			var structuredContentUuid = HeadlessWebcontentAPI.getUuidOfStructuredContent(responseToParse = ${response});
 
 			HeadlessWebcontentAPI.deleteStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${structuredContentUuid}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${structuredContentUuid});
 		}
 
 		task ("Then the structured content is correctly deleted") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "0",
-				responseToParse = "${response}");
+				expectedTotalElement = 0,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get structured content in asset library by existing custom erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetStructuredContentInAssetLibraryByExistingCustomErc {
 		property portal.acceptance = "true";
 
@@ -123,9 +123,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -134,19 +134,19 @@ definition {
 
 		task ("When I make a GET request by assetLibraryId and erc") {
 			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc");
 		}
 
 		task ("Then I receive a correct body response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Get structured content in asset library by existing uuid as erc"
-	@priority = "5"
+	@priority = 5
 	test CanGetStructuredContentInAssetLibraryByExistingUuidAsErc {
 		property portal.acceptance = "true";
 
@@ -155,31 +155,31 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
 		}
 
 		task ("When I make a GET request by assetLibraryId and uuid as the erc") {
-			var structuredContentUuid = HeadlessWebcontentAPI.getUuidOfStructuredContent(responseToParse = "${response}");
+			var structuredContentUuid = HeadlessWebcontentAPI.getUuidOfStructuredContent(responseToParse = ${response});
 
 			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${structuredContentUuid}");
+				assetLibraryId = ${assetLibraryId},
+				externalReferenceCode = ${structuredContentUuid});
 		}
 
 		task ("Then I receive a correct body response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${structuredContentUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${structuredContentUuid},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is not able to create with an existing erc"
-	@priority = "5"
+	@priority = 5
 	test CannotCreateStructuredContentInAssetLibraryWithExistingErc {
 		property portal.acceptance = "true";
 
@@ -188,9 +188,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -199,9 +199,9 @@ definition {
 
 		task ("When with POST I create a structured content with an existing erc") {
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -210,23 +210,23 @@ definition {
 
 		task ("Then I receive duplicate external reference code response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "Duplicate journal article external reference code erc");
 		}
 
 		task ("And Then another structured content with same erc is not being created") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20Second%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "0",
-				responseToParse = "${response}");
+				expectedTotalElement = 0,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Cannot update structured content erc since erc in the path takes precedence over the one in the body"
-	@priority = "5"
+	@priority = 5
 	test CannotUpdateStructuredContentErcInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -235,9 +235,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -246,9 +246,9 @@ definition {
 
 		task ("When I make a PUT request by assetLibraryId and erc with an erc modified in the body") {
 			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -259,22 +259,22 @@ definition {
 		task ("Then the erc in the response body is not changed") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then another structured content with an erc being the modified value is not being created") {
 			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "erc-update");
 
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "No JournalArticle exists with the key");
 		}
 	}
 
 	@description = "Unable to get structured content by nonexistent assetLibraryId"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetStructuredContentInAssetLibraryByNonexistentAssetLibraryId {
 		property portal.acceptance = "true";
 
@@ -286,7 +286,7 @@ definition {
 
 		task ("Then I receive not found error response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "NOT_FOUND");
 		}
 
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@description = "Unable to get structured content by nonexistent erc"
-	@priority = "4"
+	@priority = 4
 	test CanReturnErrorWithGetStructuredContentInAssetLibraryByNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -304,19 +304,19 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then I receive error message in response") {
 			TestUtils.assertPartialEquals(
-				actual = "${response}",
+				actual = ${response},
 				expected = "No JournalArticle exists with the key");
 		}
 	}
 
 	@description = "Structured content is updated by asset library id and erc"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateStructuredContentTitleInAssetLibraryByErc {
 		property portal.acceptance = "true";
 
@@ -325,9 +325,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -336,9 +336,9 @@ definition {
 
 		task ("When I make a PUT request by assetLibraryId and erc") {
 			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -346,26 +346,26 @@ definition {
 		}
 
 		task ("Then I receive a correct body response with updated data") {
-			var titleInResponse = HeadlessWebcontentAPI.getTitleOfStructuredContent(responseToParse = "${response}");
+			var titleInResponse = HeadlessWebcontentAPI.getTitleOfStructuredContent(responseToParse = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${titleInResponse}",
+				actual = ${titleInResponse},
 				expected = "WC WebContent Title Updated");
 		}
 
 		task ("And Then the structured content is correctly updated") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%20Updated%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is not able to delete with a nonexistent erc in asset library"
-	@priority = "3"
+	@priority = 3
 	test StructruedContentDeletionImpossibleByAssetLibraryIdAndNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -374,9 +374,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -385,27 +385,27 @@ definition {
 
 		task ("When I make a DELETE request by assetLibraryId and a non-existent erc") {
 			HeadlessWebcontentAPI.deleteStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				externalReferenceCode = "nonexistent-erc");
 		}
 
 		task ("Then the structured content with a custom erc created earlier still exists") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is created by put nonexistent erc in asset library without erc in the body"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedInAssetLibraryByPutNonexistentErc {
 		property portal.acceptance = "true";
 
@@ -414,9 +414,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "nonexistent-erc",
 				label = "Text",
 				name = "Text",
@@ -426,22 +426,22 @@ definition {
 		task ("Then its erc matches the inserted one in response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "nonexistent-erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then a new structured content is created properly") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is created by put nonexistent erc in asset library with erc in the body"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedInAssetLibraryByPutNonexistentErcWithErcInBody {
 		property portal.acceptance = "true";
 
@@ -450,9 +450,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -461,9 +461,9 @@ definition {
 
 		task ("When I make a PUT request by assetLibraryId and a non-existent erc with exsiting erc in the body") {
 			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content update</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "nonexistent-erc",
 				label = "Text",
 				name = "Text",
@@ -474,22 +474,22 @@ definition {
 		task ("Then the erc in response matches the one in the path") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "nonexistent-erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then a new structured content is created properly") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "2",
-				responseToParse = "${response}");
+				expectedTotalElement = 2,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is created in an asset library with custom erc"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedInAssetLibraryWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -498,9 +498,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -510,22 +510,22 @@ definition {
 		task ("Then I can see the custom erc in the body response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "erc",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 
 		task ("And Then structured content is created properly") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is created in an asset library with default erc"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedInAssetLibraryWithErcByDefault {
 		property portal.acceptance = "true";
 
@@ -534,31 +534,31 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				title = "WC WebContent Title");
 		}
 
 		task ("Then I can see erc equals to the uuid in the body response") {
-			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = ${response});
 		}
 
 		task ("And Then the structured content is created properly") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured content is created in an asset library with structured content id as erc"
-	@priority = "5"
+	@priority = 5
 	test StructuredContentIsCreatedInAssetLibraryWithStructuredContentIdAsErc {
 		property portal.acceptance = "true";
 
@@ -567,9 +567,9 @@ definition {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				externalReferenceCode = "erc",
 				label = "Text",
 				name = "Text",
@@ -577,12 +577,12 @@ definition {
 		}
 
 		task ("When with POST request I create a structured content with erc equals to the internal id of the previously created structured content") {
-			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${response}");
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = ${response});
 			var response = HeadlessWebcontentAPI.createStructuredContent(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				data = "<p>My content</p>",
-				ddmStructureId = "${ddmStructureId}",
-				externalReferenceCode = "${customErc}",
+				ddmStructureId = ${ddmStructureId},
+				externalReferenceCode = ${customErc},
 				label = "Text",
 				name = "Text",
 				title = "WC Second WebContent Title");
@@ -590,18 +590,18 @@ definition {
 
 		task ("Then I can see erc equals to the previous id in the body response") {
 			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedactualExternalReferenceCodeValueValue = "${structuredContentId}",
-				responseToParse = "${response}");
+				expectedactualExternalReferenceCodeValueValue = ${structuredContentId},
+				responseToParse = ${response});
 		}
 
 		task ("Then structured content is created properly") {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = "1",
-				responseToParse = "${response}");
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 

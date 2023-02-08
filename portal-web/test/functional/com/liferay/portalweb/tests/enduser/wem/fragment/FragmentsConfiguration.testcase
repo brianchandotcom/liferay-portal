@@ -39,7 +39,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164104. View fragment with fragmentEntryLinkNamespace variable to JavaScript on content page."
-	@priority = "4"
+	@priority = 4
 	test AddFragmentWithFragmentEntryLinkNamespaceInJavaScriptToContentPage {
 		task ("Given a page creator has a fragment with fragmentEntryLinkNamespace in JavaScript") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -58,7 +58,7 @@ definition {
     <div id="fragment-${fragmentEntryLinkNamespace}"></div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -68,7 +68,7 @@ element.textContent = 'Fragment Example';''';
 
 			FragmentsEditor.waitForAutoSave();
 
-			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+			FragmentsEditor.typeJsEditor(content = ${jsSnippet});
 
 			FragmentsEditor.publish();
 		}
@@ -85,7 +85,7 @@ element.textContent = 'Fragment Example';''';
 
 		task ("Then the page creator sees the content of new fragment") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Fragment Name",
 				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Fragment Example");
@@ -102,14 +102,14 @@ element.textContent = 'Fragment Example';''';
 		task ("Then the page creators sees the content of new fragment") {
 			AssertTextEquals(
 				fragmentName = "fragment-name",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Fragment Example");
 		}
 	}
 
 	@description = "This is a test for LPS-164104. View fragment with fragmentEntryLinkNamespace variable to JavaScript on associated display page template."
-	@priority = "4"
+	@priority = 4
 	test AddFragmentWithFragmentEntryLinkNamespaceInJavaScriptToDisplayPageTemplate {
 		property testray.component.names = "Display Pages,Fragments";
 
@@ -121,7 +121,7 @@ element.textContent = 'Fragment Example';''';
     <div id="fragment-${fragmentEntryLinkNamespace}"></div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -131,7 +131,7 @@ element.textContent = 'Fragment Example';''';
 
 			FragmentsEditor.waitForAutoSave();
 
-			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+			FragmentsEditor.typeJsEditor(content = ${jsSnippet});
 
 			FragmentsEditor.publish();
 		}
@@ -154,7 +154,7 @@ element.textContent = 'Fragment Example';''';
 
 		task ("Then the page creator sees the content of new fragment") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Fragment Name",
 				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "Fragment Example");
@@ -183,14 +183,14 @@ element.textContent = 'Fragment Example';''';
 		task ("Then the page creators sees the content of new fragment") {
 			AssertTextEquals(
 				fragmentName = "fragment-name",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Fragment Example");
 		}
 	}
 
 	@description = "This is a test for LPS-158328. The user can change default resource image on content page after propagation."
-	@priority = "4"
+	@priority = 4
 	test ChangeResourceImageAfterPropagation {
 		task ("Given a page creator has a fragment on content page with propagated resource image") {
 			task ("Add a fragment with an invalid image resource") {
@@ -206,13 +206,13 @@ element.textContent = 'Fragment Example';''';
 	/>
 </div>	''';
 
-				var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+				var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 				JSONFragment.addSection(
 					collectionName = "Collection Name",
 					fragmentStatus = "Approved",
 					groupName = "Test Site Name",
-					html = "${htmlSnippet}",
+					html = ${htmlSnippet},
 					name = "Fragment Name");
 			}
 
@@ -264,7 +264,7 @@ element.textContent = 'Fragment Example';''';
 	/>
 </div>	''';
 
-				FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+				FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 				FragmentsEditor.waitForAutoSave();
 
@@ -313,7 +313,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-152633. The changes of a draft contributed fragment cannot be shown on the content page."
-	@priority = "3"
+	@priority = 3
 	test ChangesOfDraftContributedFragmentNotPresentOnPage {
 		task ("Given a Fragments creator has a new Fragment Set with a copied contributed fragment") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
@@ -338,7 +338,7 @@ element.textContent = 'Fragment Example';''';
 </div>
 		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 		}
@@ -361,14 +361,14 @@ element.textContent = 'Fragment Example';''';
 			AssertTextNotEquals(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "Go Somewhere edited");
 		}
 	}
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureCheckboxConfigurationInContentPage {
 		property portal.acceptance = "true";
@@ -379,10 +379,10 @@ element.textContent = 'Fragment Example';''';
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Checkbox Fragment Example");
 		}
 
@@ -420,7 +420,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration in content page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureCheckboxConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
@@ -431,10 +431,10 @@ element.textContent = 'Fragment Example';''';
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Checkbox Fragment Example");
 		}
 
@@ -495,7 +495,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureCheckboxConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -506,10 +506,10 @@ element.textContent = 'Fragment Example';''';
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Checkbox Fragment Example");
 		}
 
@@ -555,7 +555,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-97179. User can change colorPalette fragment configuration."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureColorPaletteInContentPage {
 		property portal.acceptance = "true";
@@ -566,10 +566,10 @@ element.textContent = 'Fragment Example';''';
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "ColorPalette Fragment Example");
 		}
 
@@ -603,7 +603,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-140717. The user can change fragment text color via color picker configuration."
-	@priority = "5"
+	@priority = 5
 	test ConfigureColorPicker {
 		property portal.acceptance = "true";
 
@@ -632,7 +632,7 @@ element.textContent = 'Fragment Example';''';
 	]
 }				''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -648,7 +648,7 @@ element.textContent = 'Fragment Example';''';
 	</h1>
 </div>			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -709,7 +709,7 @@ element.textContent = 'Fragment Example';''';
 	}
 
 	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
-	@priority = "4"
+	@priority = 4
 	test ConfigureFragmentWithJavaScript {
 		task ("Add a new fragment with the following codes") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -781,7 +781,7 @@ element.textContent = 'Fragment Example';''';
 }
 				''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -801,7 +801,7 @@ element.textContent = 'Fragment Example';''';
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			var jsSnippet = '''
 
@@ -821,7 +821,7 @@ main();
 
 			FragmentsEditor.waitForAutoSave();
 
-			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+			FragmentsEditor.typeJsEditor(content = ${jsSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -877,7 +877,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureSelectConfigurationInContentPage {
 		property portal.acceptance = "true";
@@ -888,10 +888,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Select Fragment Example");
 		}
 
@@ -924,7 +924,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in content page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureSelectConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
@@ -935,10 +935,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Select Fragment Example");
 		}
 
@@ -994,7 +994,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureSelectConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -1005,10 +1005,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Select Fragment Example");
 		}
 
@@ -1049,7 +1049,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureTextConfigurationInContentPage {
 		property portal.acceptance = "true";
@@ -1060,10 +1060,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Text Fragment Example");
 		}
 
@@ -1109,7 +1109,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration in content page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureTextConfigurationInContentPageTemplate {
 		property portal.acceptance = "true";
@@ -1120,10 +1120,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Text Fragment Example");
 		}
 
@@ -1192,7 +1192,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-97192. User can change text fragment configuration in display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureTextConfigurationInDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -1203,10 +1203,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Text Fragment Example");
 		}
 
@@ -1260,7 +1260,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-164081. The fragment developer can configure a URL selector on Freemarker."
-	@priority = "3"
+	@priority = 3
 	test ConfigureURLSelectorConfiguration {
 		task ("Given a fragment developer has a new fragment with URL selector configuration") {
 			var newLine = '''
@@ -1270,7 +1270,7 @@ main();
 	Fragment Example
 </div>''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
     "fieldSets": [
@@ -1286,14 +1286,14 @@ main();
     ]
 }''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 
 			JSONLayout.addPublicLayout(
@@ -1344,7 +1344,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-147897. The page designer could customize date format on date fragment."
-	@priority = "4"
+	@priority = 4
 	test CustomizeDateFormatToMappedDate {
 		task ("Given a page designer has a fragment with mapped date") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -1355,7 +1355,7 @@ main();
 	</div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1411,9 +1411,9 @@ main();
 		task ("Then the page designer sees the customized date format applied to mapped date") {
 			var modifiedDate = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'fragment-name')]]//*[contains(@data-lfr-editable-id,'date-time')]");
 
-			var match = StringUtil.matches("${modifiedDate}", "^(\d\d-\d\d-\d\d\d\d\s\d\d:\d\d:\d\d)$");
+			var match = StringUtil.matches(${modifiedDate}, "^(\d\d-\d\d-\d\d\d\d\s\d\d:\d\d:\d\d)$");
 
-			if ("${match}" == "true") {
+			if (${match} == "true") {
 				echo("PASSED");
 			}
 			else {
@@ -1423,7 +1423,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-147897. The page designer could map the date field in specific date format to date fragment."
-	@priority = "5"
+	@priority = 5
 	test MapDateFieldToFragmentWithDateEditableField {
 		task ("Given a page designer has a fragment with date editable field") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -1434,7 +1434,7 @@ main();
 	</div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1513,7 +1513,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-164242. The fragment developer could map to web contents in Collection Display using itemSelector configuration."
-	@priority = "5"
+	@priority = 5
 	test MapToWebContentsInCollectionDisplayViaItemSelectorConfiguration {
 		property portal.acceptance = "true";
 
@@ -1527,7 +1527,7 @@ main();
     [/#if]
 </div>''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
     "fieldSets": [
@@ -1543,14 +1543,14 @@ main();
     ]
 }''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
 
@@ -1559,7 +1559,7 @@ main();
 				JSONWebcontent.addWebContent(
 					content = "${title} Introduction",
 					groupName = "Test Site Name",
-					title = "${title}");
+					title = ${title});
 			}
 
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -1587,14 +1587,14 @@ main();
 		}
 
 		task ("Then the fragment developer sees the each new fragment displays the title of associated web content") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "twitter,tesla,spacex") {
 				AssertTextEquals(
-					index = "${n}",
+					index = ${n},
 					key_fragmentName = "Fragment Name",
 					locator1 = "Fragment#FRAGMENT_CONTENT",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -1609,14 +1609,14 @@ main();
 		}
 
 		task ("Then the fragment developer sees the Collection Display displays the title of associated web content") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "twitter,tesla,spacex") {
 				AssertTextEquals(
-					key_colPosition = "1",
-					key_rowPosition = "${n}",
+					key_colPosition = 1,
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -1624,7 +1624,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-100751. View placeholder in fragment configuration without default value."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewPlaceholderInConfigurationWithoutDefaultValue {
 		property portal.acceptance = "true";
@@ -1635,10 +1635,10 @@ main();
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Text Fragment Example");
 		}
 
@@ -1664,7 +1664,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-109138. When type email address in the configuration text field, the field can constraint min and max length."
-	@priority = "4"
+	@priority = 4
 	test ViewValidationInTextFieldWithEmailConstraintRules {
 		task ("Add a fragment with email constraint rules in configuration text field") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -1696,7 +1696,7 @@ main();
 }
 			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1708,7 +1708,7 @@ main();
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.publish();
 		}
@@ -1771,7 +1771,7 @@ main();
 	}
 
 	@description = "This is a test for LPS-109138. When type integer in the configuration text field, the field can constraint min and max value."
-	@priority = "4"
+	@priority = 4
 	test ViewValidationInTextFieldWithNumberConstraintRules {
 		task ("Add a fragment with number constraint rules in configuration text field") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -1803,7 +1803,7 @@ main();
 }
 			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1815,7 +1815,7 @@ main();
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.publish();
 		}
@@ -1840,7 +1840,7 @@ main();
 			Type(
 				key_text = "Age",
 				locator1 = "TextInput#ANY",
-				value1 = "10");
+				value1 = 10);
 
 			AssertTextEquals(
 				locator1 = "Message#WARNING_FEEDBACK",
@@ -1851,7 +1851,7 @@ main();
 			Type(
 				key_text = "Age",
 				locator1 = "TextInput#ANY",
-				value1 = "70");
+				value1 = 70);
 
 			AssertTextEquals(
 				locator1 = "Message#WARNING_FEEDBACK",
@@ -1862,14 +1862,14 @@ main();
 			Type(
 				key_text = "Age",
 				locator1 = "TextInput#ANY",
-				value1 = "30");
+				value1 = 30);
 
 			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
 		}
 	}
 
 	@description = "This is a test for LPS-109138. When type URL in the configuration text field, the field can constraint min and max length."
-	@priority = "4"
+	@priority = 4
 	test ViewValidationInTextFieldWithURLConstraintRules {
 		task ("Add a fragment with URL constraint rules in configuration text field") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -1901,7 +1901,7 @@ main();
 }
 			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1913,7 +1913,7 @@ main();
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.publish();
 		}

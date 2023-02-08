@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can apply the selected template"
-	@priority = "3"
+	@priority = 3
 	test CanApplySelectedTemplate {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can delete a template"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteTemplate {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Modified Date"
-	@priority = "2"
+	@priority = 2
 	test CanFilterByTemplateModifiedDate {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Name"
-	@priority = "2"
+	@priority = 2
 	test CanFilterByTemplateName {
 		property portal.upstream = "quarantine";
 
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
-	@priority = "3"
+	@priority = 3
 	test CanSaveCurrentConfigurationAsTemplate {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",

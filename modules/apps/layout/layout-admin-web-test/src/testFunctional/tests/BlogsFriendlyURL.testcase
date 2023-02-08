@@ -18,7 +18,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This ensures that a user is redirected to a restored friendly URL when he accesses a blog display page URL."
-	@priority = "4"
+	@priority = 4
 	test CanAccessDisplayPageWithOldFriendlyURLAfterRestoring {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -71,7 +71,7 @@ definition {
 
 			Panel.expandPanel(panel = "Configuration");
 
-			BlogsEntry.addCustomURL(customURL = "${customURL}");
+			BlogsEntry.addCustomURL(customURL = ${customURL});
 
 			PortletEntry.publish();
 		}
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history."
-	@priority = "4"
+	@priority = 4
 	test CanAddMultipleOldFriendlyURLs {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@description = "This ensures that a duplicate URL title cannot be used even if it is an old friendly URL."
-	@priority = "4"
+	@priority = 4
 	test CannotAddEntryWithDuplicateOldFriendlyURL {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@description = "This ensures that an old friendlyURL can be removed from the history."
-	@priority = "5"
+	@priority = 5
 	test CanRemoveOldFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "This ensures that an old friendlyURL can be restored from the history."
-	@priority = "5"
+	@priority = 5
 	test CanRestoreOldFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
-	@priority = "5"
+	@priority = 5
 	test CanViewFriendlyURLs {
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -48,7 +48,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "When a new user subscribes a web content they should receive an email notification when the web content has a modification."
-	@priority = "4"
+	@priority = 4
 	test ViewEditWebContentEmailNotification {
 		task ("Given a user has subscribed a web content") {
 			JSONWebcontent.addWebContent(
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "When a new user subscribes a folder they should receive an email notification when the folder has a modification."
-	@priority = "4"
+	@priority = 4
 	test ViewFolderEmailNotification {
 		task ("Given a user has subscribed a folder") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151781. When a new user subscribes a web content folder, the Granted email should show the article diffs."
-	@priority = "4"
+	@priority = 4
 	test ViewGrantedEmailNotificationWithArticleDiffs {
 		task ("Given a user has subscribed a folder with Granted Email enabled") {
 			task ("Add a folder") {
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "When a new user subscribes a web content they should receive an email notification when the web content is moved to a new folder."
-	@priority = "4"
+	@priority = 4
 	test ViewMoveWebContentEmailNotification {
 		task ("Given a user has subscribed a web content") {
 			JSONWebcontent.addWebContent(

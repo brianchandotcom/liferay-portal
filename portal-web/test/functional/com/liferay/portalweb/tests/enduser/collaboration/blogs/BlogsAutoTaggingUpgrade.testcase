@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewBlogsArchive72101 {
 		property data.archive.type = "data-archive-auto-tagging";
@@ -47,7 +47,7 @@ definition {
 			tagName = "value people");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ViewBlogsArchive73101 {
 		property data.archive.type = "data-archive-auto-tagging";

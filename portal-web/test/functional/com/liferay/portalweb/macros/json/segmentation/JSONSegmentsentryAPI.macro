@@ -18,13 +18,13 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		var segmentId = JSONCurlUtil.post("${curl}", "$.segmentsEntryId");
+		var segmentId = JSONCurlUtil.post(${curl}, "$.segmentsEntryId");
 
-		return "${segmentId}";
+		return ${segmentId};
 	}
 
 	macro _deleteSegment {
-		Variables.assertDefined(parameterList = "${segmentsId}");
+		Variables.assertDefined(parameterList = ${segmentsId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -36,7 +36,7 @@ definition {
 
 		echo("curl: ${curl}");
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This makes sure that multiple blog images can be previewed by using the keyboard."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewMultipleImagesInBlogsImages {
 		for (var num : list "1,2,3") {
@@ -74,13 +74,13 @@ definition {
 
 		for (var coverImageName : list "Document_1,Document_2,Document_3") {
 			AssertElementNotPresent(
-				key_coverImageName = "${coverImageName}",
+				key_coverImageName = ${coverImageName},
 				locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
 		}
 	}
 
 	@description = "This makes sure that multiple DM images can be previewed by using the keyboard."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewMultipleImagesInDM {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -88,7 +88,7 @@ definition {
 		for (var documentTitle : list "Document_1,Document_2,Document_3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "${documentTitle}",
+				dmDocumentTitle = ${documentTitle},
 				groupName = "Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "${documentTitle}.jpg");
@@ -136,13 +136,13 @@ definition {
 
 		for (var coverImageName : list "Document_1,Document_2,Document_3") {
 			AssertElementNotPresent(
-				key_coverImageName = "${coverImageName}",
+				key_coverImageName = ${coverImageName},
 				locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
 		}
 	}
 
 	@description = "This ensures that navigation arrows do not appear in image preview when there is only one image in the library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewSingleImage {
 		property portal.acceptance = "true";

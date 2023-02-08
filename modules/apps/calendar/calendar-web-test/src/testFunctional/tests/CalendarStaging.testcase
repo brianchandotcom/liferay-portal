@@ -46,7 +46,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-52083."
-	@priority = "3"
+	@priority = 3
 	test AddEvent {
 		CalendarNavigator.gotoAddEvent();
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-74684."
-	@priority = "5"
+	@priority = 5
 	test InviteUserViaUnpublishedEventAndViewNoResponse {
 		property portal.acceptance = "true";
 
@@ -226,7 +226,7 @@ definition {
 			userCalendarName = "Test Test");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SchedulePublishToLiveWithEventAndResource {
 		property portal.upstream = "quarantine";
 

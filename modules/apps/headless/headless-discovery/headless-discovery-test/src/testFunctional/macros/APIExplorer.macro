@@ -10,12 +10,12 @@ definition {
 		Type(
 			locator1 = "OpenAPI#HEADER_PARAMETER",
 			name = "key",
-			value1 = "${headerKey}");
+			value1 = ${headerKey});
 
 		Type(
 			locator1 = "OpenAPI#HEADER_PARAMETER",
 			name = "value",
-			value1 = "${headerValue}");
+			value1 = ${headerValue});
 
 		Button.clickSave();
 	}
@@ -25,35 +25,35 @@ definition {
 
 		Click(
 			locator1 = "OpenAPI#API_METHOD",
-			method = "${method}",
-			service = "${service}");
+			method = ${method},
+			service = ${service});
 
-		if ("${parameter}" == "siteId") {
+		if (${parameter} == "siteId") {
 			if (!(isSet(groupName))) {
 				var groupName = "Guest";
 			}
 
 			var value = JSONGroupAPI._getGroupIdByNameNoSelenium(
-				groupName = "${groupName}",
+				groupName = ${groupName},
 				site = "true");
 		}
 
 		Type(
 			locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
-			method = "${method}",
-			parameter = "${parameter}",
-			value1 = "${value}");
+			method = ${method},
+			parameter = ${parameter},
+			value1 = ${value});
 
 		if (isSet(requestBody)) {
 			Type(
 				locator1 = "OpenAPI#REQUEST_BODY",
-				method = "${method}",
-				value1 = "${requestBody}");
+				method = ${method},
+				value1 = ${requestBody});
 		}
 
 		Click(
 			locator1 = "Button#EXECUTE",
-			method = "${method}");
+			method = ${method});
 	}
 
 	macro executeGraphqlQuery {
@@ -73,7 +73,7 @@ definition {
 
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "OpenAPI#GRAPHQL_EDITOR",
-			value1 = "${query}");
+			value1 = ${query});
 
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",

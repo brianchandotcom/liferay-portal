@@ -9,29 +9,29 @@ definition {
 	}
 
 	macro _viewBody {
-		var key_entryComment = "${workflowComment}";
+		var key_entryComment = ${workflowComment};
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${workflowComment}");
+			value1 = ${workflowComment});
 	}
 
 	macro add {
 		WorkflowComment._openComments();
 
-		PageComment.reply(commentBody = "${workflowComment}");
+		PageComment.reply(commentBody = ${workflowComment});
 
 		WorkflowComment._openComments();
 
 		Alert.viewSuccessMessage();
 
-		WorkflowComment._viewBody(workflowComment = "${workflowComment}");
+		WorkflowComment._viewBody(workflowComment = ${workflowComment});
 	}
 
 	macro view {
 		WorkflowComment._openComments();
 
-		WorkflowComment._viewBody(workflowComment = "${workflowComment}");
+		WorkflowComment._viewBody(workflowComment = ${workflowComment});
 	}
 
 	macro viewCommentsNotPresent {

@@ -1,13 +1,13 @@
 definition {
 
 	macro openToConfigInSystemSettings {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "Asset Publisher") {
+		if (${portlet} == "Asset Publisher") {
 			var portletId = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration";
 		}
 

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120091. Can navigate via Menu Display in Staging and Live site."
-	@priority = "4"
+	@priority = 4
 	test NavigateViaMenuDisplayInStagingAndLiveSite {
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(

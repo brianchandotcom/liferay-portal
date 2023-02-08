@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Verify that the user can approve a Content Page"
-	@priority = "5"
+	@priority = 5
 	test CanApproveContentPageWithWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -122,7 +122,7 @@ definition {
 
 		for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Page Author",
 				roleType = "site");
@@ -130,7 +130,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 				roleTitle = "Page Author",
 				roleType = "site");
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "Verify that the user can reject a Content Page"
-	@priority = "5"
+	@priority = 5
 	test CanRejectContentPageWithWorkflow {
 		property portal.upstream = "quarantine";
 
@@ -268,7 +268,7 @@ definition {
 
 		for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Page Author",
 				roleType = "site");
@@ -276,7 +276,7 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 				roleTitle = "Page Author",
 				roleType = "site");
@@ -339,7 +339,7 @@ definition {
 			portlet = "Pages");
 
 		PagesAdmin.viewPageStatus(
-			index = "2",
+			index = 2,
 			pageName = "Test Page Name",
 			status = "Pending");
 	}

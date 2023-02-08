@@ -39,7 +39,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This test asserts that a newly created site will have default account type settings even after changing settings on original site."
-	@priority = "5"
+	@priority = 5
 	test AllowedAccountTypeIsSiteWide {
 		task ("Given that the allowed account type is set to Person") {
 			Account.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-155553. This test asserts that Account Modals can be custom styled."
-	@priority = "3"
+	@priority = 3
 	test CanCustomizeStylingForAccountModals {
 		task ("Given the new account is created") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This test asserts that only business accounts can be added when the allowed account type is business"
-	@priority = "5"
+	@priority = 5
 	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property portal.acceptance = "true";
 
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This test asserts that only person accounts can be added when the allowed account type is person"
-	@priority = "5"
+	@priority = 5
 	test CanOnlyAddPersonAccountsWhenAllowedAccountTypeIsPerson {
 		property portal.acceptance = "true";
 
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property test.name.skip.portal.instance = "AccountManagementWidget#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
 
@@ -275,9 +275,9 @@ definition {
 		}
 
 		task ("When the allowed account type is set to Business") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-			ApplicationsMenu.gotoSite(site = "${siteName}");
+			ApplicationsMenu.gotoSite(site = ${siteName});
 
 			Account.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
 		}
@@ -296,12 +296,12 @@ definition {
 	}
 
 	@description = "This test asserts the correct search results when searching via Account Management widget"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccount {
 		task ("Given business accounts exist") {
 			for (var accountName : list "Acme Inc,Liferay,South Bay Auto Parts") {
 				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${accountName}",
+					accountEntryName = ${accountName},
 					accountEntryType = "Business");
 			}
 		}
@@ -318,13 +318,13 @@ definition {
 			LexiconEntry.viewEntryName(rowEntry = "South Bay Auto Parts");
 
 			for (var accountName : list "Acme Inc,Liferay") {
-				LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+				LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 			}
 		}
 	}
 
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
-	@priority = "4"
+	@priority = 4
 	test CanSetActiveAccount {
 		property portal.acceptance = "true";
 

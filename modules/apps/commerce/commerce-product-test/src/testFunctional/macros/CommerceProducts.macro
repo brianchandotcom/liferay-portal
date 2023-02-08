@@ -2,22 +2,22 @@ definition {
 
 	macro addDiagramProductWithImage {
 		CommerceJSONProductsAPI._addCommerceProduct(
-			catalogName = "${catalogName}",
-			productName = "${productName}",
+			catalogName = ${catalogName},
+			productName = ${productName},
 			productType = "Diagram",
-			shortDescription = "${shortDescription}",
-			sku = "${sku}");
+			shortDescription = ${shortDescription},
+			sku = ${sku});
 
 		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "Diagram");
 
-		CommerceNavigator.gotoEntry(entryName = "${productName}");
+		CommerceNavigator.gotoEntry(entryName = ${productName});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
 		CommerceProductImages.addDiagramImages(
-			imageTitles = "${imageTitle}",
+			imageTitles = ${imageTitle},
 			productType = "Diagram");
 
 		SelectFrame(value1 = "relative=top");
@@ -29,21 +29,21 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
-			key_menuItem = "${productType}",
+			key_menuItem = ${productType},
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
-			value1 = "${key_menuItem}");
+			value1 = ${key_menuItem});
 
 		if (!(isSet(productCatalog))) {
 			var productCatalog = "Master";
 		}
 
 		CommerceEntry.addProductsEntry(
-			compileDescription = "${compileDescription}",
-			productCatalog = "${productCatalog}",
-			productFullDescription = "${productFullDescription}",
-			productName = "${productName}",
-			productShortDescription = "${productShortDescription}",
-			publishProduct = "${publishProduct}");
+			compileDescription = ${compileDescription},
+			productCatalog = ${productCatalog},
+			productFullDescription = ${productFullDescription},
+			productName = ${productName},
+			productShortDescription = ${productShortDescription},
+			publishProduct = ${publishProduct});
 	}
 
 	macro addGroupedProductEntries {
@@ -51,10 +51,10 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		for (var productName : list "${productNames}") {
+		for (var productName : list ${productNames}) {
 			Check.checkToggleSwitch(
 				locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
-				productName = "${productName}");
+				productName = ${productName});
 		}
 
 		SelectFrame(value1 = "relative=top");
@@ -65,31 +65,31 @@ definition {
 	}
 
 	macro addProductWithStatusViaAPI {
-		if ("${productStatusCode}" == "0") {
+		if (${productStatusCode} == 0) {
 			var productName = "Approved Product";
 		}
-		else if ("${productStatusCode}" == "1") {
+		else if (${productStatusCode} == 1) {
 			var productName = "Pending Product";
 		}
-		else if ("${productStatusCode}" == "2") {
+		else if (${productStatusCode} == 2) {
 			var productName = "Draft Product";
 		}
-		else if ("${productStatusCode}" == "3") {
+		else if (${productStatusCode} == 3) {
 			var productName = "Expired Product";
 		}
-		else if ("${productStatusCode}" == "4") {
+		else if (${productStatusCode} == 4) {
 			var productName = "Denied Product";
 		}
-		else if ("${productStatusCode}" == "5") {
+		else if (${productStatusCode} == 5) {
 			var productName = "Inactive Product";
 		}
-		else if ("${productStatusCode}" == "6") {
+		else if (${productStatusCode} == 6) {
 			var productName = "Incomplete Product";
 		}
-		else if ("${productStatusCode}" == "7") {
+		else if (${productStatusCode} == 7) {
 			var productName = "Scheduled Product";
 		}
-		else if ("${productStatusCode}" == "8") {
+		else if (${productStatusCode} == 8) {
 			var productName = "In Recycle Bin Product";
 		}
 		else {
@@ -97,10 +97,10 @@ definition {
 		}
 
 		CommerceJSONProductsAPI._addCommerceProduct(
-			catalogName = "${catalogName}",
-			productName = "${productName}",
-			productStatus = "${productStatusCode}",
-			productType = "${productType}");
+			catalogName = ${catalogName},
+			productName = ${productName},
+			productStatus = ${productStatusCode},
+			productType = ${productType});
 	}
 
 	macro approvePendingProduct {
@@ -124,7 +124,7 @@ definition {
 
 		SelectFrameTop();
 
-		if (isSet(approveRequest) && ("${approveRequest}" == "true")) {
+		if (isSet(approveRequest) && (${approveRequest} == "true")) {
 			Click(
 				key_itemName = "",
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
@@ -136,38 +136,38 @@ definition {
 	}
 
 	macro checkProductDescription {
-		for (var value : list "${list}") {
-			var productName = StringUtil.extractFirst("${value}", ":");
+		for (var value : list ${list}) {
+			var productName = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productName}:", "");
 
-			var status = StringUtil.extractFirst("${value}", ":");
+			var status = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${status}:", "");
 
-			var productShortDescription = StringUtil.extractFirst("${value}", ":");
+			var productShortDescription = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productShortDescription}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productShortDescription}:", "");
 
-			var productFullDescription = StringUtil.extractFirst("${value}", ":");
+			var productFullDescription = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productFullDescription}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productFullDescription}:", "");
 
-			var row = "${value}";
+			var row = ${value};
 
-			AppBuilderAdmin.searchByItem(itemName = "${productName}");
+			AppBuilderAdmin.searchByItem(itemName = ${productName});
 
-			if ("${row}" == "") {
+			if (${row} == "") {
 				Click(
-					key_productName = "${productName}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
 			}
 			else {
 				Click(
-					key_productName = "${productName}",
-					key_row = "${row}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_row = ${row},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_WITH_ROW");
 			}
 
@@ -187,13 +187,13 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-				value = "${productShortDescription}");
+				value = ${productShortDescription});
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertElementPresent(
 				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
-				value = "${productFullDescription}");
+				value = ${productFullDescription});
 
 			SelectFrameTop();
 
@@ -202,16 +202,16 @@ definition {
 	}
 
 	macro checkProductId {
-		for (var value : list "${list}") {
-			var productName = StringUtil.extractFirst("${value}", ":");
+		for (var value : list ${list}) {
+			var productName = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productName}:", "");
 
-			var status = StringUtil.extractFirst("${value}", ":");
+			var status = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${status}:", "");
 
-			var productId = "${value}";
+			var productId = ${value};
 
 			echo("--------------------------");
 
@@ -224,14 +224,14 @@ definition {
 			echo("--------------------------");
 
 			Click(
-				key_productName = "${productName}",
-				key_status = "${status}",
+				key_productName = ${productName},
+				key_status = ${status},
 				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
 
 			CommerceProducts.checkProductIdsEqual(
-				firstProductId = "${productId}",
+				firstProductId = ${productId},
 				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
-				status = "${status}");
+				status = ${status});
 
 			Navigator.gotoBack();
 		}
@@ -239,12 +239,12 @@ definition {
 
 	macro checkProductIdsEqual {
 		var equals = CommerceProducts.isProductIdsEqual(
-			firstProductId = "${firstProductId}",
-			secondProductId = "${secondProductId}");
+			firstProductId = ${firstProductId},
+			secondProductId = ${secondProductId});
 
 		echo("equals = ${equals}");
 
-		if ("${equals}" == "false") {
+		if (${equals} == "false") {
 			fail("The product ID for the ${status} status with the ID ${secondProductId} is not correct, the expected ID is ${firstProductId}");
 		}
 
@@ -253,10 +253,10 @@ definition {
 
 	macro checkProductIdsNotEqual {
 		var equals = CommerceProducts.isProductIdsEqual(
-			firstProductId = "${firstProductId}",
-			secondProductId = "${secondProductId}");
+			firstProductId = ${firstProductId},
+			secondProductId = ${secondProductId});
 
-		if ("${equals}" == "true") {
+		if (${equals} == "true") {
 			fail("A new version of the product has not been created because the first ID ${firstProductId} is the same of the second ID ${secondProductId}");
 		}
 
@@ -264,21 +264,21 @@ definition {
 	}
 
 	macro checkProductsNotPresent {
-		for (var value : list "${list}") {
-			var productName = StringUtil.extractFirst("${value}", ":");
+		for (var value : list ${list}) {
+			var productName = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productName}:", "");
 
-			var status = StringUtil.extractFirst("${value}", ":");
+			var status = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${status}:", "");
 
-			if ("${status}" == "") {
-				var status = "${value}";
+			if (${status} == "") {
+				var status = ${value};
 				var row = "";
 			}
 			else {
-				var row = "${value}";
+				var row = ${value};
 			}
 
 			echo("--------------------------");
@@ -291,38 +291,38 @@ definition {
 
 			echo("--------------------------");
 
-			if ("${row}" == "") {
+			if (${row} == "") {
 				AssertElementNotPresent(
-					key_productName = "${productName}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
 			}
 			else {
 				AssertElementNotPresent(
-					key_productName = "${productName}",
-					key_row = "${row}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_row = ${row},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
 			}
 		}
 	}
 
 	macro checkProductsPresent {
-		for (var value : list "${list}") {
-			var productName = StringUtil.extractFirst("${value}", ":");
+		for (var value : list ${list}) {
+			var productName = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${productName}:", "");
 
-			var status = StringUtil.extractFirst("${value}", ":");
+			var status = StringUtil.extractFirst(${value}, ":");
 
-			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+			var value = StringUtil.replaceFirst(${value}, "${status}:", "");
 
-			if ("${status}" == "") {
-				var status = "${value}";
+			if (${status} == "") {
+				var status = ${value};
 				var row = "";
 			}
 			else {
-				var row = "${value}";
+				var row = ${value};
 			}
 
 			echo("--------------------------");
@@ -335,88 +335,88 @@ definition {
 
 			echo("--------------------------");
 
-			if ("${row}" == "") {
+			if (${row} == "") {
 				AssertElementPresent(
-					key_productName = "${productName}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
 			}
 			else {
 				AssertElementPresent(
-					key_productName = "${productName}",
-					key_row = "${row}",
-					key_status = "${status}",
+					key_productName = ${productName},
+					key_row = ${row},
+					key_status = ${status},
 					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
 			}
 		}
 	}
 
 	macro checkProductStatusAfterDuplicationAndConvertionToDraft {
-		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+		AppBuilderAdmin.searchByItem(itemName = ${entryName});
 
-		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+		CommerceNavigator.gotoEntry(entryName = ${entryName});
 
 		CommerceProducts.duplicateProduct(
-			checkProductFields = "${productName}",
-			compileDescription = "${productName}",
-			productCatalog = "${productCatalog}",
-			productName = "${productName}",
+			checkProductFields = ${productName},
+			compileDescription = ${productName},
+			productCatalog = ${productCatalog},
+			productName = ${productName},
 			publishProduct = "false",
-			status = "${status}");
+			status = ${status});
 
 		Click(locator1 = "Icon#BACK");
 
-		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
+		AppBuilderAdmin.searchByItem(itemName = ${entryName});
 
-		CommerceNavigator.gotoEntry(entryName = "${entryName}");
+		CommerceNavigator.gotoEntry(entryName = ${entryName});
 
-		CommerceProducts.convertProductToDraft(status = "${status}");
+		CommerceProducts.convertProductToDraft(status = ${status});
 	}
 
 	macro configureSubscription {
-		if ("${subscriptionName}" == "Payment Subscription") {
-			var indexNumber = "1";
+		if (${subscriptionName} == "Payment Subscription") {
+			var indexNumber = 1;
 		}
 		else {
-			var indexNumber = "2";
+			var indexNumber = 2;
 		}
 
 		Check.checkToggleSwitch(
-			key_subscriptionName = "${subscriptionName}",
+			key_subscriptionName = ${subscriptionName},
 			locator1 = "CommerceEntry#SUBSCRIPTION_TOGGLE");
 
 		if (isSet(subscriptionType)) {
 			Select(
 				key_subscriptionFieldLabel = "Subscription Type",
-				key_subscriptionName = "${subscriptionName}",
+				key_subscriptionName = ${subscriptionName},
 				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
-				value1 = "${subscriptionType}");
+				value1 = ${subscriptionType});
 
 			if (isSet(subscriptionMode)) {
 				Select(
 					key_subscriptionFieldLabel = "Mode",
-					key_subscriptionName = "${subscriptionName}",
+					key_subscriptionName = ${subscriptionName},
 					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
-					value1 = "${subscriptionMode}");
+					value1 = ${subscriptionMode});
 
-				if ("${subscriptionMode}" == "Exact Day of Month") {
+				if (${subscriptionMode} == "Exact Day of Month") {
 					Type(
 						key_text = "On",
 						locator1 = "TextInput#ANY",
-						value1 = "${subscriptionExactDay}");
+						value1 = ${subscriptionExactDay});
 				}
 
-				if ("${subscriptionMode}" == "Exact Day of Year") {
+				if (${subscriptionMode} == "Exact Day of Year") {
 					Select(
 						key_subscriptionFieldLabel = "Month",
-						key_subscriptionName = "${subscriptionName}",
+						key_subscriptionName = ${subscriptionName},
 						locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
-						value1 = "${subscriptionMonth}");
+						value1 = ${subscriptionMonth});
 
 					Type(
 						key_text = "Day",
 						locator1 = "TextInput#ANY",
-						value1 = "${subscriptionExactDay}");
+						value1 = ${subscriptionExactDay});
 				}
 			}
 		}
@@ -424,28 +424,28 @@ definition {
 		if (isSet(subscriptionLength)) {
 			Type(
 				key_fieldLabel = "Subscription Length",
-				key_indexNumber = "${indexNumber}",
+				key_indexNumber = ${indexNumber},
 				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
-				value1 = "${subscriptionLength}");
+				value1 = ${subscriptionLength});
 		}
 
 		if (isSet(neverEnds)) {
 			Click(
 				key_buttonName = "Never Ends",
-				key_indexNumber = "${indexNumber}",
+				key_indexNumber = ${indexNumber},
 				locator1 = "CommerceEntry#TOGGLE_SWITCH_BUTTON");
 
 			Type(
 				key_text = "Ends After",
 				locator1 = "TextInput#ANY",
-				value1 = "${subscriptionCycleValue}");
+				value1 = ${subscriptionCycleValue});
 		}
 
 		Button.clickPublish();
 	}
 
 	macro convertProductToDraft {
-		if ("${status}" == "Draft") {
+		if (${status} == "Draft") {
 			AssertElementPresent(
 				key_text = "Save as Draft",
 				locator1 = "Button#ANY");
@@ -504,7 +504,7 @@ definition {
 		ClickNoError(locator1 = "Button#TRASH_ENABLED");
 
 		if (isSet(deleteMessage)) {
-			Confirm(value1 = "${deleteMessage}");
+			Confirm(value1 = ${deleteMessage});
 		}
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
@@ -540,14 +540,14 @@ definition {
 	}
 
 	macro duplicateProduct {
-		var productName = "${productName}";
+		var productName = ${productName};
 
 		if (isSet(status)) {
 			AssertElementPresent(
-				key_status = "${status}",
+				key_status = ${status},
 				locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
-			if ("${status}" != "Draft") {
+			if (${status} != "Draft") {
 				AssertElementNotPresent(
 					key_text = "Save as Draft",
 					locator1 = "Button#ANY");
@@ -572,24 +572,24 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		CommerceEntry.selectAutoCompleteField(
-			entryName = "${productCatalog}",
+			entryName = ${productCatalog},
 			label = "Catalog");
 
 		Button.clickSubmitButton();
 
-		if (!(isSet(checkProductFields)) || ("${checkProductFields}" == "true")) {
+		if (!(isSet(checkProductFields)) || (${checkProductFields} == "true")) {
 			CommerceEntry.checkProductsEntryFields(
-				productCatalog = "${productCatalog}",
+				productCatalog = ${productCatalog},
 				productName = "Copy of ${productName}");
 		}
 
-		if (!(isSet(compileDescription)) || ("${compileDescription}" == "true")) {
+		if (!(isSet(compileDescription)) || (${compileDescription} == "true")) {
 			CommerceEntry.addProductDescription(
-				productFullDescription = "${productFullDescription}",
-				productShortDescription = "${productShortDescription}");
+				productFullDescription = ${productFullDescription},
+				productShortDescription = ${productShortDescription});
 		}
 
-		if (!(isSet(publishProduct)) || ("${publishProduct}" == "true")) {
+		if (!(isSet(publishProduct)) || (${publishProduct} == "true")) {
 			CommerceEntry.publishEntry(status = "Approved");
 		}
 		else {
@@ -613,7 +613,7 @@ definition {
 	}
 
 	macro isProductIdsEqual {
-		if ("${firstProductId}" == "${secondProductId}") {
+		if (${firstProductId} == ${secondProductId}) {
 			return "true";
 		}
 		else {
@@ -629,22 +629,22 @@ definition {
 
 	macro openProductsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet");
 
 		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
 	macro searchAndGoToProductEntry {
-		CommerceNavigator.searchEntry(entryName = "${entryProductName}");
+		CommerceNavigator.searchEntry(entryName = ${entryProductName});
 
-		CommerceNavigator.gotoEntry(entryName = "${entryProductName}");
+		CommerceNavigator.gotoEntry(entryName = ${entryProductName});
 	}
 
 	macro searchProduct {
 		Type(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
-			value1 = "${search}");
+			value1 = ${search});
 
 		KeyPress(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
@@ -654,14 +654,14 @@ definition {
 	macro setReplacementSKU {
 		Type(
 			locator1 = "TextInput#REPLACEMENT",
-			value1 = "${replacementSKU}");
+			value1 = ${replacementSKU});
 
 		Button.clickPublish();
 	}
 
 	macro updateProductInventoryConfiguration {
 		if (isSet(displayAvailability)) {
-			if ("${displayAvailability}" == "true") {
+			if (${displayAvailability} == "true") {
 				Check.checkToggleSwitch(
 					key_toggleSwitchLabel = "Display Availability",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -674,7 +674,7 @@ definition {
 		}
 
 		if (isSet(allowBackOrders)) {
-			if ("${allowBackOrders}" == "true") {
+			if (${allowBackOrders} == "true") {
 				Check.checkToggleSwitch(
 					key_toggleSwitchLabel = "Allow Back Order",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -687,7 +687,7 @@ definition {
 		}
 
 		if (isSet(displayStockQuantity)) {
-			if ("${displayStockQuantity}" == "true") {
+			if (${displayStockQuantity} == "true") {
 				Check.checkToggleSwitch(
 					key_toggleSwitchLabel = "Display Stock Quantity",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -703,7 +703,7 @@ definition {
 			Type(
 				key_labelName = "Minimum Order Quantity",
 				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-				value1 = "${minOrderQuantity}");
+				value1 = ${minOrderQuantity});
 		}
 
 		Button.clickPublish();
@@ -717,13 +717,13 @@ definition {
 		}
 
 		if (isSet(virtualProductFile)) {
-			CommerceUtilities.uploadSingleFile(uploadFileName = "${virtualProductFile}");
+			CommerceUtilities.uploadSingleFile(uploadFileName = ${virtualProductFile});
 		}
 
 		if (isSet(enableSample) && isSet(sampleFileName)) {
 			CommerceProducts.uploadVirtualProductSample(
-				enableSample = "${enableSample}",
-				sampleFileName = "${sampleFileName}");
+				enableSample = ${enableSample},
+				sampleFileName = ${sampleFileName});
 		}
 
 		Button.clickSave();
@@ -738,14 +738,14 @@ definition {
 				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
 		}
 
-		if ("${enableSample}" == "true") {
+		if (${enableSample} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Enable Sample",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			CommerceUtilities.uploadSingleFile(
 				selectButtonName = "selectSampleFile",
-				uploadFileName = "${sampleFileName}");
+				uploadFileName = ${sampleFileName});
 		}
 		else {
 			Uncheck.uncheckToggleSwitch(
@@ -753,7 +753,7 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		if (isSet(publish) && ("${publish}" == "true")) {
+		if (isSet(publish) && (${publish} == "true")) {
 			Button.clickSave();
 		}
 	}

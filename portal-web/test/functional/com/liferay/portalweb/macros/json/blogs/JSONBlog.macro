@@ -3,13 +3,13 @@ definition {
 	@summary = "This calls the JSON WS API to add a Blog entry comment"
 	macro addComment {
 		var entryId = JSONBlog.getBlogEntryId(
-			entryTitle = "${entryTitle}",
-			friendlyURL = "${friendlyURL}",
-			groupName = "${groupName}");
+			entryTitle = ${entryTitle},
+			friendlyURL = ${friendlyURL},
+			groupName = ${groupName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentCommentId))) {
-			var parentCommentId = "0";
+			var parentCommentId = 0;
 		}
 
 		if (!(isSet(userEmailAddress))) {
@@ -37,7 +37,7 @@ definition {
 
 		echo("## * entryId: ${entryId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to add a Blog entry"
@@ -45,7 +45,7 @@ definition {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
+		var contentXml = JSONBlogSetter.setContentXML(content = ${entryContent});
 
 		if (!(isSet(entrySubtitle))) {
 			var entrySubtitle = "";
@@ -76,13 +76,13 @@ definition {
 		}
 
 		var serviceContext = JSONBlogSetter.setServiceContext(
-			addGuestPermissions = "${guestPermissions}",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			groupName = "${groupName}",
-			serviceContext = "${serviceContext}",
-			site = "${site}",
-			workflowAction = "${workflowAction}");
+			addGuestPermissions = ${guestPermissions},
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			groupName = ${groupName},
+			serviceContext = ${serviceContext},
+			site = ${site},
+			workflowAction = ${workflowAction});
 
 		if (isSet(displayDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
@@ -102,11 +102,11 @@ definition {
 			}
 		}
 		else {
-			var displayDateMinute = "01";
-			var displayDateHour = "01";
-			var displayDateDay = "01";
-			var displayDateMonth = "01";
-			var displayDateYear = "2004";
+			var displayDateMinute = 01;
+			var displayDateHour = 01;
+			var displayDateDay = 01;
+			var displayDateMonth = 01;
+			var displayDateYear = 2004;
 		}
 
 		var curl = '''
@@ -138,7 +138,7 @@ definition {
 
 		echo("## * Content: ${entryContent}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	macro addEntryWithImage {
@@ -151,10 +151,10 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -165,7 +165,7 @@ definition {
 		}
 
 		if (!(isSet(coverImageId))) {
-			var coverImageId = "0";
+			var coverImageId = 0;
 		}
 
 		if (!(isSet(entrySubtitle))) {
@@ -180,14 +180,14 @@ definition {
 		}
 
 		if (isSet(assetCategoryIds)) {
-			var assetCategoryIds = "${assetCategoryIds}";
+			var assetCategoryIds = ${assetCategoryIds};
 		}
 		else {
-			var assetCategoryIds = "0";
+			var assetCategoryIds = 0;
 		}
 
 		if (isSet(viewableBy)) {
-			var viewableBy = "${viewableBy}";
+			var viewableBy = ${viewableBy};
 		}
 		else {
 			var viewableBy = "Anyone";
@@ -219,9 +219,9 @@ definition {
 
 		echo("## * Content: ${entryContent}");
 
-		var entryId = JSONCurlUtil.post("${curl}", "$..entryId");
+		var entryId = JSONCurlUtil.post(${curl}, "$..entryId");
 
-		return "${entryId}";
+		return ${entryId};
 	}
 
 	macro getBlogEntryId {
@@ -230,8 +230,8 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(friendlyURL)) {
@@ -251,9 +251,9 @@ definition {
 			''';
 		}
 
-		var entryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${entryTitle}')]['entryId']");
+		var entryId = JSONCurlUtil.post(${curl}, "$.[?(@['title'] == '${entryTitle}')]['entryId']");
 
-		return "${entryId}";
+		return ${entryId};
 
 		echo("## * Blogs ID: ${entryId}");
 	}
@@ -267,8 +267,8 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
@@ -276,18 +276,18 @@ definition {
 				-u 'test@liferay.com:test'
 		''';
 
-		var imageId = JSONCurlUtil.get("${curl}", "$..[?(@['title'] == '${imageTitle}')]['id']");
+		var imageId = JSONCurlUtil.get(${curl}, "$..[?(@['title'] == '${imageTitle}')]['id']");
 
-		return "${imageId}";
+		return ${imageId};
 	}
 
 	macro moveEntryToTrash {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
 		var entryId = JSONBlog.getBlogEntryId(
-			entryTitle = "${entryTitle}",
-			friendlyURL = "${friendlyURL}",
-			groupName = "${groupName}");
+			entryTitle = ${entryTitle},
+			friendlyURL = ${friendlyURL},
+			groupName = ${groupName});
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -304,7 +304,7 @@ definition {
 				-d entryId=${entryId} \
 		''';
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	macro removeBlogImage {
@@ -312,9 +312,9 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var imageId = JSONBlog.getBlogImageId(
-			groupName = "${groupName}",
-			imageTitle = "${imageTitle}",
-			site = "${site}");
+			groupName = ${groupName},
+			imageTitle = ${imageTitle},
+			site = ${site});
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
@@ -322,12 +322,12 @@ definition {
 				-u 'test@liferay.com:test'
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	@summary = "This calls the headless API to subscribe to the blog widget"
 	macro subscribeToBlogsWidget {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -344,10 +344,10 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings/subscribe \
@@ -355,7 +355,7 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		JSONCurlUtil.put("${curl}");
+		JSONCurlUtil.put(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to update a blog entry"
@@ -373,14 +373,14 @@ definition {
 		}
 
 		if (!(isSet(newEntryTitle))) {
-			var newEntryTitle = "${entryTitle}";
+			var newEntryTitle = ${entryTitle};
 		}
 
 		if (!(isSet(newEntryContent))) {
-			var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
+			var contentXml = JSONBlogSetter.setContentXML(content = ${entryContent});
 		}
 		else {
-			var contentXml = JSONBlogSetter.setContentXML(content = "${newEntryContent}");
+			var contentXml = JSONBlogSetter.setContentXML(content = ${newEntryContent});
 		}
 
 		if (!(isSet(newFriendlyURL))) {
@@ -388,17 +388,17 @@ definition {
 		}
 
 		var entryId = JSONBlog.getBlogEntryId(
-			entryTitle = "${entryTitle}",
-			friendlyURL = "${friendlyURL}",
-			groupName = "${groupName}",
-			site = "${site}");
+			entryTitle = ${entryTitle},
+			friendlyURL = ${friendlyURL},
+			groupName = ${groupName},
+			site = ${site});
 		var serviceContext = JSONBlogSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			groupName = "${groupName}",
-			serviceContext = "${serviceContext}",
-			site = "${site}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			groupName = ${groupName},
+			serviceContext = ${serviceContext},
+			site = ${site},
+			workflowAction = ${workflowAction});
 
 		if (isSet(newDisplayDate)) {
 			var displayDateMinute = DateUtil.getFormattedCurrentDate("m");
@@ -414,11 +414,11 @@ definition {
 			}
 		}
 		else {
-			var displayDateMinute = "01";
-			var displayDateHour = "01";
-			var displayDateDay = "01";
-			var displayDateMonth = "01";
-			var displayDateYear = "2004";
+			var displayDateMinute = 01;
+			var displayDateHour = 01;
+			var displayDateDay = 01;
+			var displayDateMonth = 01;
+			var displayDateYear = 2004;
 		}
 
 		if (!(isSet(userEmailAddress))) {
@@ -454,7 +454,7 @@ definition {
 
 		echo("## Updating a 'Blog' with the following info using JSONWS:");
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro updateEntryCoverImage {
@@ -467,15 +467,15 @@ definition {
 		}
 
 		var entryId = JSONBlog.getBlogEntryId(
-			entryTitle = "${entryTitle}",
-			friendlyURL = "${friendlyURL}",
-			groupName = "${groupName}",
-			site = "${site}");
+			entryTitle = ${entryTitle},
+			friendlyURL = ${friendlyURL},
+			groupName = ${groupName},
+			site = ${site});
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
@@ -501,7 +501,7 @@ definition {
 				}
 		''';
 
-		JSONCurlUtil.put("${curl}");
+		JSONCurlUtil.put(${curl});
 	}
 
 	macro uploadBlogImage {
@@ -514,10 +514,10 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 		var baseDir = PropsUtil.get("test.base.dir.name");
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
@@ -531,9 +531,9 @@ definition {
 				-F file=@${filePath}
 		''';
 
-		var imageId = JSONCurlUtil.post("${curl}", "$..id");
+		var imageId = JSONCurlUtil.post(${curl}, "$..id");
 
-		return "${imageId}";
+		return ${imageId};
 	}
 
 }

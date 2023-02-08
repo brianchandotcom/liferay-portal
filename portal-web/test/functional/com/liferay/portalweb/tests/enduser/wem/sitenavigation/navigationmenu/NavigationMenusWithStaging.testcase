@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135675. The user can create navigate menu items based on assets with associated display page template in staging site."
-	@priority = "4"
+	@priority = 4
 	test AddDisplayPageTypeNavigationMenuItems {
 		task ("Add the first display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -211,7 +211,7 @@ definition {
 
 		task ("View the Display Page items") {
 			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
-				NavigationMenusAdmin.viewItem(itemName = "${itemName}");
+				NavigationMenusAdmin.viewItem(itemName = ${itemName});
 			}
 		}
 
@@ -239,7 +239,7 @@ definition {
 		task ("View the items shown in Navigation Menu widget") {
 			for (var itemName : list "Web Content Title,Blogs Entry Title,Document Title,Category Name") {
 				AssertVisible(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE");
 			}
 		}
@@ -252,7 +252,7 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 
@@ -309,7 +309,7 @@ definition {
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "The user can edit the navigation menus in the staging site but cannot in the live site."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CannotEditNavigationMenuInLive {
 		property portal.acceptance = "true";
@@ -412,7 +412,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-89358. Deleted navigation menus will not appear in live after publish."
-	@priority = "3"
+	@priority = 3
 	test DeletedNavigationMenuNotShownInLiveAfterPublish {
 		task ("Add a page in staging site") {
 			JSONLayout.addPublicLayout(
@@ -487,7 +487,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86525. The user could publish changes of navigation menu to live."
-	@priority = "5"
+	@priority = 5
 	test PublishEditedNavigationMenuToLive {
 		property portal.acceptance = "true";
 
@@ -654,7 +654,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86529. The user could publish changes of primary navigation menu to live."
-	@priority = "5"
+	@priority = 5
 	test PublishEditedPrimaryNavigationMenuToLive {
 		property portal.acceptance = "true";
 
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86142 and LPS-112993. The user could publish navigation menu to live."
-	@priority = "5"
+	@priority = 5
 	test PublishNavigationMenuToLive {
 		property portal.acceptance = "true";
 
@@ -950,7 +950,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86525. The user could publish a navigation menu without deleted pages from live."
-	@priority = "5"
+	@priority = 5
 	test PublishNavigationMenuWithoutDeletedPagesFromLive {
 		property portal.acceptance = "true";
 
@@ -1040,7 +1040,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86142. The user could publish primary navigation menu to live.."
-	@priority = "5"
+	@priority = 5
 	test PublishPrimaryNavigationMenuToLive {
 		property portal.acceptance = "true";
 
@@ -1151,7 +1151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86525. The user could publish a primary navigation menu without deleted pages from live."
-	@priority = "5"
+	@priority = 5
 	test PublishPrimaryNavigationMenuWithoutDeletedPagesFromLive {
 		property portal.acceptance = "true";
 
@@ -1251,7 +1251,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137577. The user can select multiple categories in the navigation menu in a staging site."
-	@priority = "4"
+	@priority = 4
 	test SelectMultipleCategories {
 		task ("Add three hierarchy levels categories to a vocabulary within Global site") {
 			JSONCategory.addVocabulary(
@@ -1339,7 +1339,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113994. The Navigation Menu widget can display more than 2 sublevels page hierarchy when use the default template after enable Live."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ShowMoreThanTwoSublevelsWhenSelectPublicPagesHierarchyAndBarMinimallyStyled {
 		task ("Add a widget page with 3 sublevels child pages") {
@@ -1423,7 +1423,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164269. The navigation menu creator could view a tooltip with the page URL on selection modal on staging site."
-	@priority = "4"
+	@priority = 4
 	test ViewPageURLOnTooltipWhenSelectPageItem {
 		task ("Given a navigation menu opens the select pages modal in staging site") {
 			task ("Add a Navigation menu") {

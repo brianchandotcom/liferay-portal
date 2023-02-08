@@ -1,21 +1,21 @@
 definition {
 
 	macro _addCommerceTermsAndConditions {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (!(isSet(termsCount))) {
-			var termsCount = "1";
+			var termsCount = 1;
 		}
 
 		var size = ${termsCount} + 1;
-		var i = "1";
+		var i = 1;
 
-		while ("${i}" != "${size}") {
-			var termsTypeLowercase = StringUtil.lowerCase("${termsType}");
+		while (${i} != ${size}) {
+			var termsTypeLowercase = StringUtil.lowerCase(${termsType});
 
 			var payload = '''
             {
@@ -40,12 +40,12 @@ definition {
 			''';
 			var i = ${i} + 1;
 
-			JSONCurlUtil.post("${curl}");
+			JSONCurlUtil.post(${curl});
 		}
 	}
 
 	macro _deleteAllCommerceTermsAndConditions {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -53,10 +53,10 @@ definition {
 
 		var termsAndConditionsCount = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsCount();
 
-		if ("${termsAndConditionsCount}" != "0") {
-			var termsAndConditionsIds = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIds(termsAndConditionsCount = "${termsAndConditionsCount}");
+		if (${termsAndConditionsCount} != 0) {
+			var termsAndConditionsIds = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIds(termsAndConditionsCount = ${termsAndConditionsCount});
 
-			for (var termsAndConditionsId : list "${termsAndConditionsIds}") {
+			for (var termsAndConditionsId : list ${termsAndConditionsIds}) {
 				echo("Deleting Commerce Term with id: ${termsAndConditionsId}");
 
 				var curl = '''
@@ -65,7 +65,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -74,7 +74,7 @@ definition {
 	}
 
 	macro _getCommerceTermsAndConditionsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -86,25 +86,25 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var termsAndConditionsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var termsAndConditionsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The Commerce Terms And Conditions count is: ${termsAndConditionsCount}");
 
-		return "${termsAndConditionsCount}";
+		return ${termsAndConditionsCount};
 	}
 
 	macro _getCommerceTermsAndConditionsIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(termsAndConditionsCount)) {
-			var termsAndConditionsCount = "${termsAndConditionsCount}";
+			var termsAndConditionsCount = ${termsAndConditionsCount};
 		}
 		else {
-			var termsAndConditionsCount = "100";
+			var termsAndConditionsCount = 100;
 		}
 
 		var curl = '''
@@ -113,9 +113,9 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var termsAndConditionsIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var termsAndConditionsIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		return "${termsAndConditionsIds}";
+		return ${termsAndConditionsIds};
 	}
 
 }

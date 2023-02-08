@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "The user could add widget to page without Add Page permissions"
-	@priority = "4"
+	@priority = 4
 	test CanAddWidgetToPageWithoutAddPagePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107833. Cannot view Global Navigation Menus via Navigation Menu widget in normal site if the user without View permission."
-	@priority = "4"
+	@priority = 4
 	test CannotViewGlobalNavigationMenuInNavigationMenuWidgetWithoutPermission {
 		task ("Add a URL type item in Global navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenuItem(
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67191. The user could configure the display template in the Navigation Menu widget."
-	@priority = "5"
+	@priority = 5
 	test ConfigureDisplayTemplateOfNavigationMenuWidget {
 		property portal.acceptance = "true";
 
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107833. Can edit Global Navigation Menu via Navigation Menu widget in normal site."
-	@priority = "4"
+	@priority = 4
 	test EditGlobalNavigationMenuViaNavigationMenuWidgetInNormalSite {
 		task ("Select Global Navigation Menu in normal site") {
 			JSONLayout.addPublicLayout(
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-87134. The user could hide pages from the Navigation Menu widget."
-	@priority = "4"
+	@priority = 4
 	test HidePages {
 		task ("Add two pages") {
 			for (var n : list "1,2") {
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-87134. The user could navigate to pages via the Navigation Menu widget."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test NavigateToPages {
 		property portal.acceptance = "true";
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107833. Can select Global Navigation Menu via Navigation Menu widget in normal site."
-	@priority = "5"
+	@priority = 5
 	test SelectGlobalNavigationMenuInNormalSite {
 		property portal.acceptance = "true";
 
@@ -390,7 +390,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when choose a custom menu."
-	@priority = "4"
+	@priority = 4
 	test ShowMoreThanTwoSublevelsWhenSelectCustomMenuAndBarMinimallyStyled {
 		task ("Add pages at the same level") {
 			JSONLayout.addPublicLayout(
@@ -474,7 +474,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when use the Bar minimally styled by default."
-	@priority = "5"
+	@priority = 5
 	test ShowMoreThanTwoSublevelsWhenSelectPublicPagesHierarchyAndBarMinimallyStyled {
 		property portal.acceptance = "true";
 
@@ -552,7 +552,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when use the List Menu."
-	@priority = "4"
+	@priority = 4
 	test ShowMoreThanTwoSublevelsWhenSelectPublicPagesHierarchyAndListMenu {
 		task ("Add pages with hierarchy") {
 			JSONLayout.addPublicLayout(
@@ -628,7 +628,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113994. The Navigation Menu should show the same amount of levels with the number of Levels to Display."
-	@priority = "5"
+	@priority = 5
 	test ShowTheSameAmountOfLevelsWithTheNumberOfLevelsToDisplay {
 		property portal.acceptance = "true";
 
@@ -662,12 +662,12 @@ definition {
 		task ("Select 2 in Levels to Display") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectLevelsToDisplay(levels = "2");
+			NavigationMenusWidget.selectLevelsToDisplay(levels = 2);
 
 			AssertSelectedLabel(
 				key_selectFieldLabel = "Levels to Display",
 				locator1 = "Select#ANY",
-				value1 = "2");
+				value1 = 2);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -693,12 +693,12 @@ definition {
 		task ("Select 3 in Levels to Display") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectLevelsToDisplay(levels = "3");
+			NavigationMenusWidget.selectLevelsToDisplay(levels = 3);
 
 			AssertSelectedLabel(
 				key_selectFieldLabel = "Levels to Display",
 				locator1 = "Select#ANY",
-				value1 = "3");
+				value1 = 3);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -723,7 +723,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-108262. Custom fields defined in Site Navigation Menu Item can be displayed in Navigation Menu portlet."
-	@priority = "4"
+	@priority = 4
 	test ViewCustomFieldOfNavigationMenu {
 		task ("Add a custom field for Site Navigation Menu Item") {
 			ApplicationsMenu.gotoPortlet(
@@ -810,7 +810,7 @@ definition {
 
 			ApplicationDisplayTemplates.addCP(
 				adtType = "Menu Display",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Select the navigation menu in the Navigation Menu widget") {
@@ -836,13 +836,13 @@ definition {
 				AssertTextEquals.assertPartialText(
 					key_portletName = "Menu Display",
 					locator1 = "ManagementBar#PORTLET_BODY",
-					value1 = "${fieldValue}");
+					value1 = ${fieldValue});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-87134. The selected navigation is Pages Hierarchy in the Navigation Menu widget by default."
-	@priority = "3"
+	@priority = 3
 	test ViewDefaultSelectedNavigation {
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
@@ -866,7 +866,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-76717. The user could view warning message in preview window when no available navigation in site."
-	@priority = "3"
+	@priority = 3
 	test ViewWarningMessageInPreviewWindowWhenNoNavigationAvailable {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -891,7 +891,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.addWidget(
-				indexItem = "2",
+				indexItem = 2,
 				portletName = "Menu Display");
 		}
 

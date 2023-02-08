@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddDMImageToWikiPageViaURL {
 		property test.name.skip.portal.instance = "WikiAdmin#CanAddDMImageToWikiPageViaURL";
@@ -61,7 +61,7 @@ definition {
 
 	@description = "This ensures that a wiki node can be added."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
@@ -71,13 +71,13 @@ definition {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "0",
+			numberOfWikiPages = 0,
 			wikiNodeName = "Wiki Node Name");
 	}
 
 	@description = "This ensures that a wiki page can be added to a wiki node."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddPageToNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
@@ -91,7 +91,7 @@ definition {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "2",
+			numberOfWikiPages = 2,
 			wikiNodeName = "Main");
 
 		WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Title");
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "This ensures that the wiki page versions can be compared."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanComparePageVersions {
 		JSONWiki.addWikiPage(
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This ensures that the front page can be removed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteFrontPage {
 		WikiNavigator.openToWikiPage(
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This ensures that the wiki node can be deleted."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This ensures that the default front page can be edited."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditFrontPage {
 		WikiNavigator.openToWikiPage(
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This ensures that the wiki node can be edited."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditNode {
 		JSONWiki.addWikiNode(
@@ -242,12 +242,12 @@ definition {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNode.viewCP(
-			numberOfWikiPages = "1",
+			numberOfWikiPages = 1,
 			wikiNodeName = "Wiki Node Name Edit");
 	}
 
 	@description = "This ensures that a wiki page can be moved to a new parent page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMovePageToNewParentPage {
 		for (var num : list "1,2") {
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-106280. It ensures that the wiki Email content can be edited."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewConfiguredEmailContent {
 		property portal.acceptance = "false";
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@description = "This ensures that the imported pages can be viewed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewImportedPages {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -315,7 +315,7 @@ definition {
 			layoutName = "Wiki");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Wiki",
 			widgetName = "Wiki");
@@ -338,7 +338,7 @@ definition {
 		for (var wikiPageTitle : list "FrontPage,Board of Governors,Board of Governors,The Space Program,Antony Carelli,Dr. Harold Vance,Victoria Allen,Dr. Asmund Grey") {
 			WikiNavigator.gotoAllPagesPG();
 
-			WikiNavigator.gotoPG(wikiPageTitle = "${wikiPageTitle}");
+			WikiNavigator.gotoPG(wikiPageTitle = ${wikiPageTitle});
 		}
 
 		WikiPage.viewPG(
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "This ensures that the deleted front page can be restored."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRestoredFrontPage {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@description = "This ensures that the restored and rename wiki page can be viewed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewRestoredWikiPage {
 		JSONWiki.addWikiPage(

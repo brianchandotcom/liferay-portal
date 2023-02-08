@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This makes sure that an image can be uploaded via URL."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddBlogsImageViaURL {
 		property test.name.skip.portal.instance = "ItemSelector#AddBlogsImageViaURL";
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-105188. It ensures that a user can change selected page for Navigation Menu item based on page after creation."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanChangeSelectedPageForNavigationMenu {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-119899, It ensures that the search results can be cleared after filtering everywhere in the item selector."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanClearFilterResults {
 		JSONDepot.addDepot(
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107014. It checks that the site pagination can be displayed correctly in item selector."
-	@priority = "4"
+	@priority = 4
 	test CanDisplaySitePaginationCorrectly {
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
 			JSONGroup.addGroup(groupName = "Site Name ${i}");
@@ -187,7 +187,7 @@ definition {
 	}
 
 	@description = "This test ensures that documents can filter by the current site in the item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterByCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -229,7 +229,7 @@ definition {
 
 	@description = "This test ensures that web content using a structure can be filtered from the current depot."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterCustomWCFromCurrentDepot {
 		JSONDepot.addDepot(
@@ -282,7 +282,7 @@ definition {
 
 	@description = "This test ensures that a document folder can be filtered from the current depot."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterDMFolderFromCurrentDepot {
 		JSONDepot.addDepot(
@@ -313,7 +313,7 @@ definition {
 
 	@description = "This test ensures that a document can be filtered from the current depot."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterImageFromCurrentDepot {
 		JSONDepot.addDepot(
@@ -348,7 +348,7 @@ definition {
 
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterWCByCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -362,7 +362,7 @@ definition {
 			layoutName = "Web Content Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Web Content Display Page",
 			widgetName = "Web Content Display");
@@ -398,7 +398,7 @@ definition {
 
 	@description = "This test ensures that the web content folder can be filtered from the current depot."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterWCFolderFromCurrentDepot {
 		JSONDepot.addDepot(
@@ -430,7 +430,7 @@ definition {
 
 	@description = "This test ensures that web content can be filtered from the current depot."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanFilterWCFromCurrentDepot {
 		JSONDepot.addDepot(
@@ -461,7 +461,7 @@ definition {
 	}
 
 	@description = "This ensures that a message is displayed in the preview section of the item selector when pasting an invalid URL."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotPreviewVideosWithInvalidURL {
 		KBArticle.openToAddKBArticle(
@@ -507,7 +507,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136947. It checks that unsupported files cannot be uploaded to Blogs."
-	@priority = "3"
+	@priority = 3
 	test CannotUploadUnsupportedFilesToBlogs {
 		property portal.acceptance = "false";
 
@@ -521,7 +521,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotViewFilterScopeInBlogImagesTab {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
@@ -531,12 +531,12 @@ definition {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		for (var subheaderItem : list "Everywhere,Current Site") {
-			ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = "${subheaderItem}");
+			ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = ${subheaderItem});
 		}
 	}
 
 	@description = "It ensures that the web content draft in an Asset Library cannot be found when searching in an Item Selector in that Library."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotViewWCDraftViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -585,7 +585,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the Facebook video in item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewFacebookVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewFacebookVideo";
@@ -622,7 +622,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the supported videos in the item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewSupportedVideos {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
@@ -642,7 +642,7 @@ definition {
 			ItemSelector.addVideoFromURL(
 				navTab = "URL",
 				unpublish = "true",
-				videoSourceURL = "${videoSourceURL}");
+				videoSourceURL = ${videoSourceURL});
 
 			ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
 		}
@@ -663,7 +663,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the SVG image in item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewSVG {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -687,7 +687,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the Twitch video in item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewTwitchVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewTwitchVideo";
@@ -729,7 +729,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the Vimeo video in item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewVimeoVideo {
 		DMNavigator.openToAddEntry(
@@ -755,7 +755,7 @@ definition {
 	}
 
 	@description = "This ensures that users can preview the YouTube video in item selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewYouTubeVideo {
 		DMNavigator.openToAddEntry(
@@ -781,7 +781,7 @@ definition {
 	}
 
 	@description = "This ensures that a blog cover image uploaded from blogs images can be viewed in the blogs images tab of item selector."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSearchForUploadedImageFromBlogsImages {
 		property portal.acceptance = "false";
@@ -806,7 +806,7 @@ definition {
 	}
 
 	@description = "This ensures that a blog cover image uploaded from DM images can be viewed in the blogs images tab of item selector."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanSearchForUploadedImageFromDMImages {
 		property portal.acceptance = "false";
@@ -831,7 +831,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106776. This ensures that the background image of a fragment can be added."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectBackgroundImageForFragment {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -860,7 +860,7 @@ definition {
 			backgroundImage = "Direct",
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media",
-			paddingTop = "2",
+			paddingTop = 2,
 			panel = "Styles");
 
 		PageEditor.publish();
@@ -871,7 +871,7 @@ definition {
 	}
 
 	@description = "Checks if user can edit a KB article adding an Image via Upload Image."
-	@priority = "3"
+	@priority = 3
 	test CanUploadImageInKBContentField {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@description = "Checks if user can edit a Wiki page adding an Image via URL."
-	@priority = "3"
+	@priority = 3
 	test CanUploadImageInWikiPage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -927,7 +927,7 @@ definition {
 
 	@description = "This test covers LPS-119553. It ensures that the assets in the connected site can not be filtered out after navigating to the depot through the breadcrumb."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCorrectFilterResultsInSpecificBreadcrumb {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -937,7 +937,7 @@ definition {
 			layoutName = "Web Content Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Web Content Display Page",
 			widgetName = "Web Content Display");
@@ -992,7 +992,7 @@ definition {
 
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCorrectWCLocationInfo {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1037,7 +1037,7 @@ definition {
 	}
 
 	@description = "This ensures that the location info of the documents can be viewed through Blogs on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewDocumentsCorrectLocationInfo {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1097,14 +1097,14 @@ definition {
 			BlogsNavigator.gotoSelectFile();
 
 			ItemSelector.viewLocationInfoViaBlogs(
-				locationName = "${locationName}",
+				locationName = ${locationName},
 				navTab = "Documents and Media",
 				titleList = "Document_1.jpg,Document_2.jpg,DM Folder Name");
 		}
 	}
 
 	@description = "This test covers LPS-118808. It ensures that an image in the depot folder can be viewed through everywhere filter on a connected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewFolderImageViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1141,7 +1141,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-119707. It ensures that the web content in the depot folder can be viewed through everywhere filter on a connected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewFolderWCViaFilterResults {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1204,7 +1204,7 @@ definition {
 	}
 
 	@description = "This ensures that the video thumbnails can be viewed in Item Selector."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewVideoThumbnailsViaWC {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1268,7 +1268,7 @@ definition {
 	}
 
 	@description = "This makes sure that the files in item selector can display by pagination."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test FilePaginationDisplaysCorrectCount {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1276,7 +1276,7 @@ definition {
 		for (var documentTitle : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "${documentTitle}",
+				dmDocumentTitle = ${documentTitle},
 				groupName = "Site Name",
 				mimeType = "image/jpeg",
 				sourceFileName = "${documentTitle}.jpg");
@@ -1291,15 +1291,15 @@ definition {
 		ItemSelector.switchTab(navTab = "Documents and Media");
 
 		for (var card : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
-			LexiconCard.viewCardTitle(card = "${card}");
+			LexiconCard.viewCardTitle(card = ${card});
 		}
 
 		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		for (var card : list "Document_1,Document_2,Commerce_Black,Commerce_White") {
-			LexiconCard.viewCardTitle(card = "${card}");
+			LexiconCard.viewCardTitle(card = ${card});
 		}
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
@@ -1307,14 +1307,14 @@ definition {
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		for (var card : list "Document_3,Document_4") {
-			LexiconCard.viewCardTitle(card = "${card}");
+			LexiconCard.viewCardTitle(card = ${card});
 		}
 
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 	}
 
 	@description = "This test covers LPS-122139. It ensures that the files in the item selector can display by pagination after scoped everywhere filter."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test FilePaginationForFilteredResultsDisplaysCorrectCount {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1355,7 +1355,7 @@ definition {
 			filterBy = "Everywhere",
 			navTab = "Documents and Media");
 
-		Pagination.changePagination(itemsPerPage = "40");
+		Pagination.changePagination(itemsPerPage = 40);
 
 		Pagination.viewResults(results = "Showing 1 to 30 of 30 entries.");
 
@@ -1373,7 +1373,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136945. It checks that only 'File Upload', 'Folder', and 'External Video Shortcut' options appear when adding a document."
-	@priority = "3"
+	@priority = 3
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
 		property portal.acceptance = "false";
 
@@ -1401,7 +1401,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136943. It checks that only 'File Upload' and 'Folder' options appear when adding images."
-	@priority = "3"
+	@priority = 3
 	test OnlyRelevantSelectionsAppearWhenAddingImages {
 		property portal.acceptance = "false";
 
@@ -1415,7 +1415,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

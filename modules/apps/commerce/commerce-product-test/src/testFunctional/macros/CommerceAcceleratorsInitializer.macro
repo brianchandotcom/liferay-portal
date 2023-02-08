@@ -8,62 +8,62 @@ definition {
 		Select(
 			key_fieldLabel = "Type",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${keyType}");
+			value1 = ${keyType});
 
 		Type(
 			key_fieldLabel = "Address",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyAddress}");
+			value1 = ${keyAddress});
 
 		Type(
 			key_fieldLabel = "City",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyCity}");
+			value1 = ${keyCity});
 
 		Select(
 			key_fieldLabel = "Country",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${keyCountry}");
+			value1 = ${keyCountry});
 
 		Select(
 			key_fieldLabel = "Region",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${keyRegion}");
+			value1 = ${keyRegion});
 
 		Type(
 			key_fieldLabel = "Zip Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyZipCode}");
+			value1 = ${keyZipCode});
 
 		Click(locator1 = "Button#ARROW_SUBMIT_BTN");
 
 		Type(
 			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyName}");
+			value1 = ${keyName});
 
 		Type(
 			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_INPUT_TELEPHONE",
-			value1 = "${keyTelephone}");
+			value1 = ${keyTelephone});
 
 		Click(
 			key_tab = "Create",
 			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		AssertElementPresent(
-			key_addressType = "${keyType}",
+			key_addressType = ${keyType},
 			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
 	}
 
 	macro addADT {
-		var key_adtType = "${adtType}";
+		var key_adtType = ${adtType};
 
 		LexiconEntry.gotoAdd();
 
 		if (IsElementPresent(key_text = "More", locator1 = "Button#ANY")) {
 			Button.clickMore();
 
-			if ("${adtType}" == "Search Results") {
+			if (${adtType} == "Search Results") {
 				ScrollWebElementIntoView(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
 
 				Click(locator1 = "CommerceEntry#COMMERCE_SEARCH_RESULTS_TEMPLATE_MENU_ITEM");
@@ -87,26 +87,26 @@ definition {
 		if (isSet(templateScript)) {
 			Type.sendKeysAceEditor(
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
-				value1 = "${templateScript}");
+				value1 = ${templateScript});
 		}
 		else if (isSet(fieldNameList)) {
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				AssertClick(
 					key_panelTitle = "Fields",
-					key_variableName = "${fieldName}",
+					key_variableName = ${fieldName},
 					locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE",
-					value1 = "${fieldName}");
+					value1 = ${fieldName});
 			}
 		}
 		else {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-			var filePath = TestCase.getDependenciesDirPath(fileName = "${adtFile}");
+			var filePath = TestCase.getDependenciesDirPath(fileName = ${adtFile});
 
 			UploadFile(
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${filePath}");
+				value1 = ${filePath});
 		}
 
 		PortletEntry.save();
@@ -118,14 +118,14 @@ definition {
 	}
 
 	macro addPortlet {
-		if ("${portletName}" == "Where are the Liferay members?") {
+		if (${portletName} == "Where are the Liferay members?") {
 			var portletName = "Map";
 		}
 
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			var browserType = PropsUtil.get("browser.type");
 
-			if ("${browserType}" == "safari") {
+			if (${browserType} == "safari") {
 				Click.clickNoMouseOver(locator1 = "ControlMenu#ADD");
 			}
 			else {
@@ -141,14 +141,14 @@ definition {
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-			value1 = "${portletName}");
+			value1 = ${portletName});
 
-		Portlet._clickAddPortlet(portletName = "${portletName}");
+		Portlet._clickAddPortlet(portletName = ${portletName});
 
-		var key_portletName = "${portletName}";
+		var key_portletName = ${portletName};
 
 		AssertElementPresent(
-			key_portletName = "${portletName}",
+			key_portletName = ${portletName},
 			locator1 = "Portlet#LOADED");
 
 		Refresh();
@@ -156,17 +156,17 @@ definition {
 
 	macro assertMiniumCardDescription {
 		AssertTextEquals(
-			key_productDescription = "${productDescription}",
-			key_productName = "${productName}",
+			key_productDescription = ${productDescription},
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_DESCRIPTION",
-			value1 = "${productDescription}");
+			value1 = ${productDescription});
 	}
 
 	macro changeProductsSorting {
 		Click(locator1 = "CommerceAccelerators#SORT_BY_DROPDOWN");
 
 		Click(
-			key_menuItem = "${sortingType}",
+			key_menuItem = ${sortingType},
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 
 		WaitForPageLoad();
@@ -175,17 +175,17 @@ definition {
 	macro createNewAccountInFlow {
 		SelectFrameTop();
 
-		PortletEntry.inputName(name = "${accountName}");
+		PortletEntry.inputName(name = ${accountName});
 
 		if (isSet(accountOrganizationsList)) {
-			for (var accountOrganizations : list "${accountOrganizationsList}") {
+			for (var accountOrganizations : list ${accountOrganizationsList}) {
 				Type(
 					key_fieldLabel = "Organizations",
 					locator1 = "TextInput#GENERIC_TEXT_INPUT",
-					value1 = "${accountOrganizations}");
+					value1 = ${accountOrganizations});
 
 				Click.mouseDownMouseUp(
-					key_organizationName = "${accountOrganizations}",
+					key_organizationName = ${accountOrganizations},
 					locator1 = "CommerceAccelerators#ORGANIZATION_AUTOCOMPLETE_SPECIFIC");
 			}
 		}
@@ -193,26 +193,26 @@ definition {
 		if (isSet(accountTaxId)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
-				text = "${accountTaxId}");
+				text = ${accountTaxId});
 		}
 
 		if (isSet(accountExternalReferenceCode)) {
 			PortletEntry.inputText(
 				fieldLabel = "External Reference Code",
-				text = "${accountExternalReferenceCode}");
+				text = ${accountExternalReferenceCode});
 		}
 
 		if (isSet(accountDescription)) {
 			Type(
 				locator1 = "CommerceAccelerators#IN_FLOW_ACCOUNTS_MODAL_DESCRIPTION",
-				value1 = "${accountDescription}");
+				value1 = ${accountDescription});
 		}
 
 		Button.click(button = "Create");
 	}
 
 	macro createNewAccountViaFront {
-		Account.addBusinessAccount(accountName = "${accountName}");
+		Account.addBusinessAccount(accountName = ${accountName});
 	}
 
 	macro createNewOrderFromAccountSelectorDropdown {
@@ -233,20 +233,20 @@ definition {
 
 			Select(
 				locator1 = "Select#TYPE",
-				value1 = "${orderType}");
+				value1 = ${orderType});
 
 			Button.click(button = "Add Order");
 
 			SelectFrame.selectFrameTop();
 
 			WaitForElementPresent(
-				key_orderType = "${orderType}",
+				key_orderType = ${orderType},
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
 
 	macro deactivateCommerceAccountViaFront {
-		Account.deactivateAccount(accountName = "${accountName}");
+		Account.deactivateAccount(accountName = ${accountName});
 	}
 
 	macro gotoAccountSelectorAccountsList {
@@ -254,83 +254,83 @@ definition {
 
 		var currentListHead = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT");
 
-		if ("${currentListHead}" != "Select Account") {
+		if (${currentListHead} != "Select Account") {
 			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
 		}
 	}
 
 	macro gotoMiniumProductDetailsPage {
 		Click(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	macro inviteNewMemberWithRoleToAccount {
 		Account.addNewUserToBusinessAccount(
-			accountName = "${accountName}",
-			userEmailAddress = "${emailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			accountName = ${accountName},
+			userEmailAddress = ${emailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		Account.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "${role}",
-			accountUserName = "${emailAddress}");
+			accountRoleTitle = ${role},
+			accountUserName = ${emailAddress});
 	}
 
 	macro reviewOrder {
-		if (IsElementPresent(key_orderAuthor = "${orderAuthor}", locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON")) {
+		if (IsElementPresent(key_orderAuthor = ${orderAuthor}, locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON")) {
 			Click(
-				key_orderAuthor = "${orderAuthor}",
+				key_orderAuthor = ${orderAuthor},
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 		}
 
 		WaitForElementPresent(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU");
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
-			value1 = "${productSku}");
+			value1 = ${productSku});
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_NAME",
-			value1 = "${productName}");
+			value1 = ${productName});
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
 			value1 = "$ ${productUnitPrice}");
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
-				key_productName = "${productName}",
+				key_productName = ${productName},
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_DISCOUNT",
 				value1 = "$ ${productDiscount}");
 		}
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_QUANTITY",
-			value1 = "${productQuantity}");
+			value1 = ${productQuantity});
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 			value1 = "$ ${productPrice}");
 
 		if (isSet(deliveryTerm)) {
 			AssertElementPresent(
-				key_term = "${deliveryTerm}",
+				key_term = ${deliveryTerm},
 				key_termType = "Delivery Terms",
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_TERMS_AND_CONDITIONS");
 		}
 
 		if (isSet(paymentTerm)) {
 			AssertElementPresent(
-				key_term = "${paymentTerm}",
+				key_term = ${paymentTerm},
 				key_termType = "Payment Terms",
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_TERMS_AND_CONDITIONS");
 		}
@@ -342,7 +342,7 @@ definition {
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
 
 		Click(
-			key_accountName = "${accountName}",
+			key_accountName = ${accountName},
 			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
 
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
@@ -358,35 +358,35 @@ definition {
 
 	macro viewDisabledAddToCartButton {
 		AssertElementPresent(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 	}
 
 	macro viewDiscountedProductDetailsPage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
-			value1 = "${productListPrice}");
+			value1 = ${productListPrice});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
-			value1 = "${discountPercentage}");
+			value1 = ${discountPercentage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
-			value1 = "${productDiscountedPrice}");
+			value1 = ${productDiscountedPrice});
 	}
 
 	macro viewEnabledAddToCartButton {
 		AssertElementPresent(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_ENABLED");
 	}
 
 	macro viewMiniumCardName {
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME",
-			value1 = "${productName}");
+			value1 = ${productName});
 	}
 
 	macro viewMiniumSelectedAccount {
@@ -394,7 +394,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT",
-			value1 = "${selectedAccount}");
+			value1 = ${selectedAccount});
 
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 	}
@@ -402,19 +402,19 @@ definition {
 	macro viewSpeedwellAccount {
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${userScreenName}");
+			value1 = ${userScreenName});
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}");
+			value1 = ${userEmailAddress});
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}");
+			value1 = ${userFirstName});
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "${userLastName}");
+			value1 = ${userLastName});
 	}
 
 }

@@ -11,7 +11,7 @@ definition {
 
 		DDLNavigator.gotoOptionalConfiguration();
 
-		if ("${configureChecked}" == "false") {
+		if (${configureChecked} == "false") {
 			Uncheck(locator1 = "DDLConfiguration#${configureCheckBoxName}");
 		}
 		else {
@@ -22,26 +22,26 @@ definition {
 	}
 
 	macro viewAddToolbar {
-		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
+		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
 
 		AssertElementPresent(locator1 = "DDL#TOOLBAR_ADD");
 	}
 
 	macro viewDDLTemplateRecordFieldData {
-		var key_ddlRecordFieldData = "${ddlRecordFieldData}";
+		var key_ddlRecordFieldData = ${ddlRecordFieldData};
 
 		AssertTextEquals(
 			locator1 = "DDL#RECORD_TABLE_DISPLAY_FIELD",
-			value1 = "${ddlRecordFieldData}");
+			value1 = ${ddlRecordFieldData});
 	}
 
 	macro viewFieldSelectViaSpreadsheetView {
-		var key_ddlRecordRow = "${ddlRecordRow}";
-		var key_fieldName = "${fieldName}";
+		var key_ddlRecordRow = ${ddlRecordRow};
+		var key_fieldName = ${fieldName};
 
 		AssertTextEquals(
 			locator1 = "DDLSpreadsheet#RECORD_TABLE_FIELD_ENTRY",
-			value1 = "${ddlRecordFieldData}");
+			value1 = ${ddlRecordFieldData});
 	}
 
 	macro viewSpreadsheetContainer {

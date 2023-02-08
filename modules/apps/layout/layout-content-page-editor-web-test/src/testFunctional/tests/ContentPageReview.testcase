@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddComment {
 		JSONLayout.addPublicLayout(
@@ -56,13 +56,13 @@ definition {
 			fragmentClass = "header",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment!");
 	}
 
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddCommentWithEscapeCharacters {
 		JSONLayout.addPublicLayout(
@@ -83,13 +83,13 @@ definition {
 			fragmentClass = "body",
 			fragmentComment = '''& < > " Escape Characters Comment''',
 			fragmentName = "Content",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(fragmentComment = '''& < > " Escape Characters Comment''');
 	}
 
 	@description = "This is a use case for LPS-106776. This case ensures a user can delete a fragment comment after publishing a content page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteComment {
 		JSONLayout.addPublicLayout(
@@ -110,7 +110,7 @@ definition {
 			fragmentClass = "header",
 			fragmentComment = "This is a fragment comment.",
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -120,7 +120,7 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment.");
 
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanReopenResolvedComment {
 		JSONLayout.addPublicLayout(
@@ -155,7 +155,7 @@ definition {
 			fragmentClass = "static-text",
 			fragmentComment = "This is a fragment comment",
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.replyToComment(commentReply = "Fragment Comment 1");
 
@@ -169,7 +169,7 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.reopenResolvedComment(
 			commentReply = "Fragment Comment 1",
@@ -179,7 +179,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanResolveComment {
 		JSONLayout.addPublicLayout(
@@ -200,7 +200,7 @@ definition {
 			fragmentClass = "static-text",
 			fragmentComment = "This is a fragment comment.",
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -210,13 +210,13 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.resolveComment(fragmentComment = "This is a fragment comment.");
 	}
 
 	@description = "This case ensures that the user can see a fragment comment after publishing a content page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewComment {
 		JSONLayout.addPublicLayout(
@@ -237,7 +237,7 @@ definition {
 			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -247,7 +247,7 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewCommentAfterDeactivatingStaging {
 		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
@@ -279,7 +279,7 @@ definition {
 			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -300,7 +300,7 @@ definition {
 		PageEditor.gotoCommentViaFragment(
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCommentAfterDiscardedDraft {
 		JSONLayout.addPublicLayout(
@@ -329,7 +329,7 @@ definition {
 			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -353,7 +353,7 @@ definition {
 		PageEditor.gotoCommentViaFragment(
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment",
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCommentAsNonCreator {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -399,7 +399,7 @@ definition {
 			fragmentClass = "rich-text",
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -418,7 +418,7 @@ definition {
 		PageEditor.gotoCommentViaFragment(
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCommentList {
 		JSONLayout.addPublicLayout(
@@ -449,7 +449,7 @@ definition {
 			fragmentClass = "header",
 			fragmentComment = "Title fragment comment",
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.gotoCommentList();
 
@@ -476,7 +476,7 @@ definition {
 			fragmentClass = "body",
 			fragmentComment = "Content fragment comment",
 			fragmentName = "Content",
-			position = "2");
+			position = 2);
 
 		PageEditor.gotoCommentList();
 
@@ -493,7 +493,7 @@ definition {
 	}
 
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCommentListNavigation {
 		JSONLayout.addPublicLayout(
@@ -514,7 +514,7 @@ definition {
 			fragmentClass = "header",
 			fragmentComment = "Title fragment comment",
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCommentOnDifferentExperience {
 		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
@@ -574,7 +574,7 @@ definition {
 			fragmentClass = "header",
 			fragmentComment = "This is a fragment comment.",
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.changeExperience(newExperience = "Default");
 
@@ -590,7 +590,7 @@ definition {
 
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = "Title",
-			position = "1");
+			position = 1);
 
 		PageEditor.gotoCommentList();
 
@@ -601,7 +601,7 @@ definition {
 	}
 
 	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCommentsDefault {
 		JSONLayout.addPublicLayout(
@@ -621,7 +621,7 @@ definition {
 	}
 
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCommentViaFragment {
 		JSONLayout.addPublicLayout(
@@ -640,7 +640,7 @@ definition {
 		PageEditor.addCommentViaFragment(
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.publish();
 
@@ -651,7 +651,7 @@ definition {
 		PageEditor.gotoCommentViaFragment(
 			fragmentComment = "This is a fragment comment!",
 			fragmentName = "Rich Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(
 			fragmentComment = "This is a fragment comment!",
@@ -659,7 +659,7 @@ definition {
 	}
 
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewEditedComment {
 		JSONLayout.addPublicLayout(
@@ -680,7 +680,7 @@ definition {
 			fragmentClass = "static-text",
 			fragmentComment = "This is a fragment comment.",
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.editComment(fragmentCommentEdit = "This is a fragment comment edited.");
 
@@ -693,13 +693,13 @@ definition {
 		PageEditor.gotoCommentViaFragment(
 			fragmentComment = "This is a fragment comment edited.",
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		PageEditor.viewComment(fragmentComment = "This is a fragment comment edited.");
 	}
 
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMultipleCommentsList {
 		JSONLayout.addPublicLayout(
@@ -721,7 +721,7 @@ definition {
 				fragmentClass = "static-text",
 				fragmentComment = "Static Text fragment comment ${commentNumber}",
 				fragmentName = "Static Text",
-				position = "1");
+				position = 1);
 		}
 
 		PageEditor.gotoCommentList();
@@ -737,7 +737,7 @@ definition {
 	}
 
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMultipleReplies {
 		JSONLayout.addPublicLayout(
@@ -758,7 +758,7 @@ definition {
 			fragmentClass = "static-text",
 			fragmentComment = "This is a fragment comment.",
 			fragmentName = "Static Text",
-			position = "1");
+			position = 1);
 
 		for (var commentReplyNumber : list "1,2,3,4,5") {
 			PageEditor.replyToComment(commentReply = "Fragment Comment ${commentReplyNumber}");

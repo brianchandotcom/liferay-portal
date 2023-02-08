@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "LPS-159823. When skippable is set to true, checked and ends all steps the hotspot element is not present."
-	@priority = "3"
+	@priority = 3
 	test CanEnableSkippable {
 		property portal.acceptance = "true";
 
@@ -40,7 +40,7 @@ definition {
 		}
 
 		task ("And When navigate to second step") {
-			Walkthrough.goToSpecificStep(key_step = "2");
+			Walkthrough.goToSpecificStep(key_step = 2);
 		}
 
 		task ("And When enable Do not show me this again") {
@@ -50,7 +50,7 @@ definition {
 		}
 
 		task ("And When navigate to next step") {
-			Walkthrough.goToNextStep(key_step = "3");
+			Walkthrough.goToNextStep(key_step = 3);
 		}
 
 		task ("And When click ok to finish the steps") {
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "LPS-159844. When a walkthrough step is defined and a step is below the fold, user can see popover is."
-	@priority = "3"
+	@priority = 3
 	test CanRenderWhenStepIsBelowFold {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("And When navigate to step that is below the fold") {
-			Walkthrough.goToNextStep(key_step = "2");
+			Walkthrough.goToNextStep(key_step = 2);
 		}
 
 		task ("Then popover element is visible when rendered") {
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@description = "LPS-167997. It is possible use same JSON on different sites as long as the pages have same name. "
-	@priority = "4"
+	@priority = 4
 	test SameJSONCanBeEnabledOnMultipleSites {
 		property portal.acceptance = "true";
 
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "LPS-159826. Checked that each step corresponds to the expected Step Id."
-	@priority = "5"
+	@priority = 5
 	test StepCanCorrespondToCorrectStepId {
 		property portal.acceptance = "true";
 
@@ -185,7 +185,7 @@ definition {
 		}
 
 		task ("When on step 2 correspond to the correct step ID on correct page") {
-			Walkthrough.goToNextStep(key_step = "2");
+			Walkthrough.goToNextStep(key_step = 2);
 
 			AssertLocation(value1 = "${portalURL}/web/site-name/walkthrough-page-2");
 

@@ -29,28 +29,28 @@ definition {
 
 			var responseToParse1 = HeadlessWebcontentAPI.createStructuredContentDraft(
 				data = "Text",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.0",
 				title = "Web Content 1");
 			var responseToParse2 = HeadlessWebcontentAPI.createStructuredContentDraft(
 				data = "Text",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "1.1",
 				title = "Web Content 2");
 			var responseToParse3 = HeadlessWebcontentAPI.createStructuredContentDraft(
 				data = "Text",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "2.99",
 				title = "Web Content 3");
 			var responseToParse4 = HeadlessWebcontentAPI.createStructuredContentDraft(
 				data = "Text",
-				ddmStructureId = "${ddmStructureId}",
+				ddmStructureId = ${ddmStructureId},
 				label = "Text",
 				name = "Text",
 				priority = "0.99",
@@ -61,19 +61,19 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
 
-			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = "${response}");
+			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = ${response});
 
 			WebContentStructures.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanFilterEqualToPriorityValuesSortedByPriorityAscendingByDefault {
 		property portal.acceptance = "true";
 
@@ -86,11 +86,11 @@ definition {
 		task ("Then the response body only includes items with priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 2,Web Content 3",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanFilterGreaterEqualPriorityValues {
 		property portal.acceptance = "true";
 
@@ -101,11 +101,11 @@ definition {
 		task ("Then the response body only includes items with priority greater than to 0.99") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 1,Web Content 2,Web Content 3,Web Content 4",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanFilterGreaterThanPriorityValuesSortedDescending {
 		property portal.acceptance = "true";
 
@@ -118,11 +118,11 @@ definition {
 		task ("Then the response body only includes items with priority greater than 0.99") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 3,Web Content 2,Web Content 1",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanFilterNotEqualToPriorityValuesSortedAscending {
 		property portal.acceptance = "true";
 
@@ -135,11 +135,11 @@ definition {
 		task ("Then the response body only includes items without priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 4,Web Content 2,Web Content 3",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanInvokeAllStructuredContentCreated {
 		property portal.acceptance = "true";
 
@@ -147,14 +147,14 @@ definition {
 			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title = "Web Content 3");
 
 			var response = HeadlessWebcontentAPI.versionStructureContent(
-				structuredContentId = "${structuredContentId}",
+				structuredContentId = ${structuredContentId},
 				versionvalue = "1.0");
 		}
 
 		task ("Then I should see in response Web Content 3 with a priority field set") {
 			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
 				expectedPriorityValue = "2.99",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 

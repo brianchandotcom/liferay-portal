@@ -15,7 +15,7 @@ definition {
 			layoutName = "Questions Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddQuestionWithTheMaximumTags {
 		JSONMBMessage.addCategory(
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
-	@priority = "2"
+	@priority = 2
 	@refactordone
 	test CannotAddQuestionWithMoreThanTheMaximumTags {
 		JSONMBMessage.addCategory(
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "Validate that the user cannot post a question with a tag containing Java Script. It also covers LPS-137561 and LPS-137633."
-	@priority = "4"
+	@priority = 4
 	test CannotPostQuestionWithTagContainingJavaScript {
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "Validate if the user can subscribe from the tag."
-	@priority = "4"
+	@priority = 4
 	test CanSubscribeFromTag {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -165,7 +165,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "Validate if the user can unsubscribe from the tag."
-	@priority = "4"
+	@priority = 4
 	test CanUnsubscribeFromTag {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property solutions.acceptance = "true";
@@ -236,11 +236,11 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewQuestionViaTag {
 		JSONMBMessage.addCategory(
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "Validate if Question portlet have one tab with all tags used in the questions"
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test ListOfTagsCanBeViewedInTagsTab {
 		JSONMBMessage.addCategory(
@@ -301,12 +301,12 @@ definition {
 		Questions.configureTagsFilter(filterBy = "Latest Created");
 
 		for (var tagName : list "tag1,tag2") {
-			Questions.viewTags(tagName = "${tagName}");
+			Questions.viewTags(tagName = ${tagName});
 		}
 	}
 
 	@description = "Validate if the user can sort the tags."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	@uitest
 	test QuestionsTagsCanBeSortedInTagsTab {
@@ -338,40 +338,40 @@ definition {
 		Questions.gotoTab(questionTabField = "Tags");
 
 		Questions.viewTagsFilterResults(
-			position = "1",
+			position = 1,
 			tagName = "tag1",
 			usedTimes = "Used 2 Times");
 
 		Questions.viewTagsFilterResults(
-			position = "2",
+			position = 2,
 			tagName = "tag2",
 			usedTimes = "Used 1 Times");
 
 		Questions.configureTagsFilter(filterBy = "Latest Created");
 
 		Questions.viewTagsFilterResults(
-			position = "1",
+			position = 1,
 			tagName = "tag2");
 
 		Questions.viewTagsFilterResults(
-			position = "2",
+			position = 2,
 			tagName = "tag1");
 
 		Questions.configureTagsFilter(filterBy = "Number of Usages");
 
 		Questions.viewTagsFilterResults(
-			position = "1",
+			position = 1,
 			tagName = "tag1",
 			usedTimes = "Used 2 Times");
 
 		Questions.viewTagsFilterResults(
-			position = "2",
+			position = 2,
 			tagName = "tag2",
 			usedTimes = "Used 1 Times");
 	}
 
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test QuestionTagsCanBeOrderedByOccurrenceInTagsTab {
 		for (var num : list "1,2") {
@@ -395,7 +395,7 @@ definition {
 			siteURLKey = "guest");
 
 		Questions.viewTags(
-			amountOfUsedTimes = "2",
+			amountOfUsedTimes = 2,
 			tagName = "tag1");
 
 		JSONQuestions.addQuestionWithTag(
@@ -410,12 +410,12 @@ definition {
 			siteURLKey = "guest");
 
 		Questions.viewTags(
-			amountOfUsedTimes = "3",
+			amountOfUsedTimes = 3,
 			tagName = "tag1");
 	}
 
 	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test QuestionTagsCanBeSearchedInTagsTab {
 		JSONMBMessage.addCategory(
@@ -447,7 +447,7 @@ definition {
 		Questions.clearSearchResults();
 
 		for (var tagName : list "tag1,tag2,tag3") {
-			Questions.viewTags(tagName = "${tagName}");
+			Questions.viewTags(tagName = ${tagName});
 		}
 
 		Questions.configureTagsFilter(filterBy = "Latest Created");
@@ -463,7 +463,7 @@ definition {
 		Questions.clearSearchResults();
 
 		for (var tagName : list "tag1,tag2,tag3") {
-			Questions.viewTags(tagName = "${tagName}");
+			Questions.viewTags(tagName = ${tagName});
 		}
 	}
 

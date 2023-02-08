@@ -56,7 +56,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "Verify that the user can create a new field set on Manage FIeld Sets Area."
-	@priority = "5"
+	@priority = 5
 	test CanCreateANewFieldSet {
 		Click(locator1 = "Button#PLUS");
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "Verify that the user can delete a field set."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteAFieldSet {
 		KaleoFormsManageFieldSets.deleteOneFieldSet(fieldSetName = "Inventory");
 
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "Verify that user can filter by modified date and ID."
-	@priority = "3"
+	@priority = 3
 	test CanFilterByModifiedDate {
 		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
 
@@ -109,13 +109,13 @@ definition {
 	}
 
 	@description = "Verify that the user can not delete a field set that is required by one or more templates."
-	@priority = "4"
+	@priority = 4
 	test CanNotDeleteFieldSetInUse {
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeDeleted(fieldSetName = "Contacts");
 	}
 
 	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."
-	@priority = "3"
+	@priority = 3
 	test CanReverseSortDirectionTheElement {
 		KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "ID");
 
@@ -129,13 +129,13 @@ definition {
 	}
 
 	@description = "Verify that the user can search for a field set on manage field set page."
-	@priority = "4"
+	@priority = 4
 	test CanSearchFieldSet {
 		KaleoFormsManageFieldSets.searchFieldSet(fieldSetName = "Inventory");
 	}
 
 	@description = "Verify that user can view of values on columns -ID-, -Name-,  -Description-, -Scope-, -Modified Date-."
-	@priority = "3"
+	@priority = 3
 	test CanViewValuesOnColumns {
 		KaleoFormsManageFieldSets.editFieldSets(
 			nameFieldset = "Contacts",
@@ -146,23 +146,23 @@ definition {
 			descriptionField = "Contacts description edited",
 			modifiedDateField = "0 Seconds Ago",
 			nameField = "Contacts Edited",
-			rowNumber = "6");
+			rowNumber = 6);
 	}
 
 	@description = "Verify that the user can navigate to the next page."
-	@priority = "3"
+	@priority = 3
 	test NavigateToTheNextPage {
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		KaleoFormsAdmin.viewNextFieldSetPage();
 
 		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 
-		KaleoFormsManageFieldSets.viewPageNumber(pageNumberList = "2");
+		KaleoFormsManageFieldSets.viewPageNumber(pageNumberList = 2);
 	}
 
 	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."
-	@priority = "3"
+	@priority = 3
 	test NotViewResultTheSearch {
 		KaleoFormsManageFieldSets.viewFieldSetCannotBeFound(fieldSetName = "Acrw23f");
 	}

@@ -14,7 +14,7 @@ definition {
 		PagesAdmin.tearDownCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewDependencyAbleFox {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

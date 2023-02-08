@@ -19,7 +19,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -45,7 +45,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -72,12 +72,12 @@ definition {
 	}
 
 	@description = "This checks that an administrator will receive a notification when a blog entry is flagged."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewEmailNotificationForFlaggedEntry {
 		property test.smtp.server.enabled = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -90,7 +90,7 @@ definition {
 
 		BlogsEntry.flagPG(
 			flagReason = "Spam",
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userEmailAddress = "userea@liferay.com");
 
 		MockMock.viewMail(
@@ -101,7 +101,7 @@ definition {
 			subject = "Inappropriate Content Flagged in ${siteName}");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewEmailNotificationsAfterAddingAndUpdatingEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-103502. It ensures that notifications are displayed correctly after being mentioned."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewWebsiteNotificationForMention {
 		JSONBlog.addEntry(
@@ -177,7 +177,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -201,7 +201,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -214,7 +214,7 @@ definition {
 			notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewWebsiteNotificationForNewComment {
 		JSONBlog.addEntry(
@@ -239,13 +239,13 @@ definition {
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -256,14 +256,14 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		Comments.viewPG(
-			commentCount = "1",
+			commentCount = 1,
 			entryComment = "Blogs Entry Comment",
 			userFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewWebsiteNotificationForNewEntry {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -283,13 +283,13 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userPassword = "test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -299,11 +299,11 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
 	@description = "This test covers LPS-143369. It validates that an email notification can be received after a Blog update is scheduled and the time is reached."
-	@priority = "4"
+	@priority = 4
 	test EmailIsReceivedWhenUpdateReachesScheduledTime {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
@@ -320,7 +320,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Guest",
-			increaseMinutes = "1",
+			increaseMinutes = 1,
 			newDisplayDate = "true",
 			newEntryContent = "Blogs Entry Content Edit");
 
@@ -330,7 +330,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "60000");
+		Pause(locator1 = 60000);
 
 		MockMock.viewMail(
 			asset = "Test Test Updated",
@@ -340,7 +340,7 @@ definition {
 			subject = "Test Test Updated");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test NoWebsiteNotificationAppearsForNewBlogsEntry {
 		Navigator.gotoNotifications();
@@ -372,16 +372,16 @@ definition {
 
 		PortletEntry.publish();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test NoWebsiteNotificationAppearsForUpdatedBlogsEntry {
 		Navigator.gotoPage(pageName = "Blogs Page");
@@ -404,13 +404,13 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
 }

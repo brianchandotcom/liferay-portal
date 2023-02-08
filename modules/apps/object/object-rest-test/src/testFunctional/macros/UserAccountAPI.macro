@@ -25,35 +25,35 @@ definition {
 				-u test@liferay.com:test \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro assertResponseHasCorrectRelatedEntryName {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
 
 		var response = UserAccountAPI.getRelationshipByUserAccountId(
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+			relationshipName = ${relationshipName},
+			userAccountId = ${userAccountId});
 
-		var actual = JSONUtil.getWithJSONPath("${response}", "$.items[?(@.id==${customObjectEntryId})].name");
+		var actual = JSONUtil.getWithJSONPath(${response}, "$.items[?(@.id==${customObjectEntryId})].name");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedValue}");
+			actual = ${actual},
+			expected = ${expectedValue});
 	}
 
 	macro assertResponseNotIncludeDetailsOfDeletedObjectEntry {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
 
 		var response = UserAccountAPI.getRelationshipByUserAccountId(
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+			relationshipName = ${relationshipName},
+			userAccountId = ${userAccountId});
 
-		var actual = JSONUtil.getWithJSONPath("${response}", "$..items");
+		var actual = JSONUtil.getWithJSONPath(${response}, "$..items");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedValue}");
+			actual = ${actual},
+			expected = ${expectedValue});
 	}
 
 	macro createUserAccount {
@@ -66,22 +66,22 @@ definition {
 			var body = StringUtil.add("${body},", "\"${fieldName}\":\"${fieldValue}\"", "");
 		}
 
-		var curl = StringUtil.add("${curl}", "-d {${body}}", " ");
+		var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro deleteObjectEntryRelatedToUserAccount {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectEntryId}");
 
 		var curl = UserAccountAPI._curlUserAccount(
-			customObjectEntryId = "${customObjectEntryId}",
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+			customObjectEntryId = ${customObjectEntryId},
+			relationshipName = ${relationshipName},
+			userAccountId = ${userAccountId});
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro getRelationshipByUserAccountId {
@@ -96,47 +96,47 @@ definition {
 				-u test@liferay.com:test \
 		''';
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getSystemObjectsWithNestedField {
 		var curl = UserAccountAPI._curlUserAccount(
-			parameter = "${parameter}",
-			parameterValue = "${parameterValue}",
-			userAccountId = "${userAccountId}");
+			parameter = ${parameter},
+			parameterValue = ${parameterValue},
+			userAccountId = ${userAccountId});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro getUpdatedFieldOfUserAccountWithPatchRequest {
 		Variables.assertDefined(parameterList = "${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
-			var userAccountId = "${UserAccountId}";
+			var userAccountId = ${UserAccountId};
 		}
 
-		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${userAccountId}");
+		var curl = UserAccountAPI._curlUserAccount(userAccountId = ${userAccountId});
 		var body = '''-d {"${fieldName}":"${updatedFieldValue}"}''';
 
-		var curl = StringUtil.add("${curl}", "${body}", "");
+		var curl = StringUtil.add(${curl}, ${body}, "");
 
-		var valueOfField = JSONCurlUtil.patch("${curl}", "$.${fieldName}");
+		var valueOfField = JSONCurlUtil.patch(${curl}, "$.${fieldName}");
 
-		return "${valueOfField}";
+		return ${valueOfField};
 	}
 
 	macro getUpdatedFieldOfUserAccountWithPutRequest {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
-			var userAccountId = "${UserAccountId}";
+			var userAccountId = ${UserAccountId};
 		}
 
-		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${userAccountId}");
+		var curl = UserAccountAPI._curlUserAccount(userAccountId = ${userAccountId});
 		var body = '''
 			-d {
 				"alternateName": "${alternateName}",
@@ -147,11 +147,11 @@ definition {
 			}
 		''';
 
-		var curl = StringUtil.add("${curl}", "${body}", "");
+		var curl = StringUtil.add(${curl}, ${body}, "");
 
-		var valueOfField = JSONCurlUtil.put("${curl}", "$.${fieldName}");
+		var valueOfField = JSONCurlUtil.put(${curl}, "$.${fieldName}");
 
-		return "${valueOfField}";
+		return ${valueOfField};
 	}
 
 	macro relateObjectEntries {
@@ -166,9 +166,9 @@ definition {
 				-u test@liferay.com:test \
 		''';
 
-		var response = JSONCurlUtil.put("${curl}");
+		var response = JSONCurlUtil.put(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro setUpGlobalUserAccountId {
@@ -176,36 +176,36 @@ definition {
 			alternateName = "user",
 			emailAddress = "user@liferay.com",
 			familyName = "userfn",
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}",
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue},
 			givenName = "usergn");
 
-		static var staticResponse = "${response}";
+		static var staticResponse = ${response};
 
-		static var staticUserAccountId = JSONUtil.getWithJSONPath("${staticResponse}", "$.id");
+		static var staticUserAccountId = JSONUtil.getWithJSONPath(${staticResponse}, "$.id");
 
-		return "${staticResponse}";
+		return ${staticResponse};
 
-		return "${staticUserAccountId}";
+		return ${staticUserAccountId};
 	}
 
 	macro setUpGlobalUserAccountIds {
 		var response1 = UserAccountAPI.createUserAccount(
-			alternateName = "${alternateName1}",
-			emailAddress = "${emailAddress1}",
-			familyName = "${familyName1}",
-			givenName = "${givenName1}");
+			alternateName = ${alternateName1},
+			emailAddress = ${emailAddress1},
+			familyName = ${familyName1},
+			givenName = ${givenName1});
 		var response2 = UserAccountAPI.createUserAccount(
-			alternateName = "${alternateName2}",
-			emailAddress = "${emailAddress2}",
-			familyName = "${familyName2}",
-			givenName = "${givenName2}");
-		static var staticUserAccountId1 = JSONUtil.getWithJSONPath("${response1}", "$.id");
-		static var staticUserAccountId2 = JSONUtil.getWithJSONPath("${response2}", "$.id");
+			alternateName = ${alternateName2},
+			emailAddress = ${emailAddress2},
+			familyName = ${familyName2},
+			givenName = ${givenName2});
+		static var staticUserAccountId1 = JSONUtil.getWithJSONPath(${response1}, "$.id");
+		static var staticUserAccountId2 = JSONUtil.getWithJSONPath(${response2}, "$.id");
 
-		return "${staticUserAccountId1}";
+		return ${staticUserAccountId1};
 
-		return "${staticUserAccountId2}";
+		return ${staticUserAccountId2};
 	}
 
 }

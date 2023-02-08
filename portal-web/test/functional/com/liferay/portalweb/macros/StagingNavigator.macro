@@ -1,21 +1,21 @@
 definition {
 
 	macro openToConfigInSystemSettings {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${portlet}" == "Export/Import, Staging") {
+		if (${portlet} == "Export/Import, Staging") {
 			var portletId = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration";
 		}
 
-		if ("${portlet}" == "Site Templates") {
+		if (${portlet} == "Site Templates") {
 			var portletId = "com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration";
 		}
 
-		if ("${portlet}" == "Staging") {
+		if (${portlet} == "Staging") {
 			var portletId = "com.liferay.staging.configuration.StagingConfiguration";
 		}
 

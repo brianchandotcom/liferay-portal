@@ -21,7 +21,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "LPS-155319 - Verify that when Raylife D2C is created, the Objects APIs are created"
-	@priority = "5"
+	@priority = 5
 	test AllObjectsIsCreatedForRaylifeD2c {
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeSite#AllObjectsIsCreatedForRaylifeD2c";
@@ -38,7 +38,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Add site Raylife D2C") {
-			Raylife.createRaylifeSite(siteName = "${testSiteName}");
+			Raylife.createRaylifeSite(siteName = ${testSiteName});
 		}
 
 		task ("Assert all object for Raylife D2C") {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "Verify if Raylife can be created"
-	@priority = "5"
+	@priority = 5
 	test CanRaylifeBeCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#CanRaylifeBeCreated";
 
@@ -57,19 +57,19 @@ definition {
 			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
-				siteName = "${testSiteName}",
+				siteName = ${testSiteName},
 				siteTemplateName = "Raylife D2C");
 		}
 	}
 
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
-	@priority = "5"
+	@priority = 5
 	test CatalogForRaylifeIsCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#CatalogForRaylifeIsCreated";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -89,13 +89,13 @@ definition {
 	}
 
 	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."
-	@priority = "5"
+	@priority = 5
 	test ProductsForRaylifeIsCreated {
 		property test.name.skip.portal.instance = "RaylifeSite#ProductsForRaylifeIsCreated";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

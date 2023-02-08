@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,9 +45,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-133818. Able to add Site Administration permissions for specific site."
-	@priority = "4"
+	@priority = 4
 	test CanAddSitePermissionForSpecificSite {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
@@ -65,32 +65,32 @@ definition {
 			permissionNavItem = "Documents and Media",
 			permissionSheetSubtitle = "General Permissions",
 			permissionValues = "Access in Site and Asset Library Administration",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "Access in Site and Asset Library Administration",
 			permissionNavigationValue = "Documents and Media",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View",
 			permissionNavigationValue = "Documents and Media > Documents",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		Role.viewPermissionCP(
 			permissionDefinitionValue = "View Site and Asset Library Administration Menu",
 			permissionNavigationValue = "Site Settings > Site",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
 	}
 
 	@description = "This is a use case for LPS-157219. It ensures a user can only view the portlets he has permissions from applications menu."
-	@priority = "3"
+	@priority = 3
 	test CanOnlyViewPortletsWithPermissionsGranted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: Assign a new regular role to a new user") {
 			JSONUser.addUser(
@@ -116,7 +116,7 @@ definition {
 		task ("And: Define permissions for Roles Regrole Name to make sure it can access the Sites and update Site Template") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Roles Regrole Name");
 
 			Permissions.definePermissionViaJSONAPI(
@@ -146,7 +146,7 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -155,7 +155,7 @@ definition {
 		task ("Then: Assert only the Sites and Site Templates portlets are displayed on the template's applications menu") {
 			for (var panelName : list "Applications,Commerce") {
 				AssertElementNotPresent(
-					key_panel = "${entryCount}",
+					key_panel = ${entryCount},
 					locator1 = "ApplicationsMenu#PANEL");
 			}
 
@@ -172,14 +172,14 @@ definition {
 			for (var portletName : list "Sites,Site Templates") {
 				AssertVisible(
 					key_category = "Sites",
-					key_portlet = "${portletName}",
+					key_portlet = ${portletName},
 					locator1 = "ApplicationsMenu#PORTLET");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-148855. The default site role shouldn't be inherited by Guest."
-	@priority = "5"
+	@priority = 5
 	test DefaultSiteRoleIsNotInheritedByGuestUser {
 		task ("Assign default site to a new regular Role") {
 			JSONRole.addRegularRole(
@@ -235,11 +235,11 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test EditTeamPermissions {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "User");
 
 		JSONRole.addSiteRole(
@@ -248,7 +248,7 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
@@ -256,7 +256,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
@@ -264,7 +264,7 @@ definition {
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.Team",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
@@ -272,7 +272,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
@@ -379,7 +379,7 @@ definition {
 
 		for (var permissionDefinitionKey : list "ACTION_ASSIGN_MEMBERS,ACTION_DELETE,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_VIEW") {
 			Team.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionDefinitionKey = ${permissionDefinitionKey},
 				teamName = "Site Team Name");
 		}
 
@@ -406,7 +406,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124190."
-	@priority = "3"
+	@priority = 3
 	test ExportRoleWithSiteAssignee {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -416,7 +416,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE_DISCUSSION,DELETE_DISCUSSION") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.journal.model.JournalArticle",
 				roleTitle = "Web Content Comment Reviewer");
 		}
@@ -467,14 +467,14 @@ definition {
 		AssertElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test GroupScopePermissionCheck {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "RolesandpermissionsUsecase#GroupScopePermissionCheck";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Role.openRolesAdmin();
 
@@ -486,12 +486,12 @@ definition {
 			permissionNavItem = "Bookmarks",
 			permissionSheetSubtitle = "Bookmarks Entry",
 			permissionValues = "View",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "${siteName}");
+			site = ${siteName});
 
 		PagesAdmin.addPage(pageName = "Bookmarks Page");
 
@@ -556,7 +556,7 @@ definition {
 		User.openUsersAdmin();
 
 		User.editUserSiteCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		User.openUsersAdmin();
@@ -602,7 +602,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test NoGuestRolePermissionsFromPrivateLayout {
 		property custom.properties = "permissions.check.guest.enabled=false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -645,12 +645,12 @@ definition {
 			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SiteRoleBookmarksInlinePermissions {
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Role.openRolesAdmin();
 
@@ -668,7 +668,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
-			site = "${siteName}");
+			site = ${siteName});
 
 		PagesAdmin.addPage(pageName = "Bookmarks Page");
 
@@ -706,7 +706,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editUserSiteCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		User.logoutPG();
@@ -755,7 +755,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test TeamPermissionsSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -840,7 +840,7 @@ definition {
 
 		for (var permissionDefinitionKey : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
 			Team.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionDefinitionKey = ${permissionDefinitionKey},
 				teamName = "Site Team Name");
 		}
 
@@ -857,7 +857,7 @@ definition {
 		for (var portletName : list "SearchBar,Suggestions,SiteFacet,TypeFacet,TagFacet,CategoryFacet,FolderFacet,UserFacet,ModifiedFacet,SearchResults,SearchOptions") {
 			AssertVisible(
 				key_decorator = "barebone",
-				key_portletTitleName = "${portletName}",
+				key_portletTitleName = ${portletName},
 				locator1 = "Portlet#SPECIFIC_PORTLET_BORDER_DECORATOR");
 		}
 
@@ -878,7 +878,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewAssetViaOrgRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -976,11 +976,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		BlogsEntry.viewNoAddPermissions();
 
@@ -1037,11 +1037,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		BlogsEntry.viewNoAddPermissions();
 
@@ -1052,7 +1052,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewAssetViaSiteRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1129,11 +1129,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		BlogsEntry.viewNoAddPermissions();
 
@@ -1179,16 +1179,16 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		BlogsEntry.viewNoAddPermissions();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewAutomaticAssignedRoles {
 		property portal.acceptance = "true";
 
@@ -1225,7 +1225,7 @@ definition {
 			permissionNavigationValue = "Site Settings > Site");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_REPOSITORY",
@@ -1248,7 +1248,7 @@ definition {
 			permissionSheetSubtitle = "Documents",
 			permissionValues = "Add Repository",
 			remove = "true",
-			siteNameScope = "${siteName}");
+			siteNameScope = ${siteName});
 
 		var key_permissionDefinitionValue = "Add Repository";
 		var key_permissionNavigationValue = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX";
@@ -1258,11 +1258,11 @@ definition {
 		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_REMOVE");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewPrivatePageSiteMemberRole {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1298,7 +1298,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Memberships",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 
@@ -1319,7 +1319,7 @@ definition {
 		Page.viewSpecificPG(pageNameList = "Private Page");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewRegRolePermissionsDefaultView {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -1430,7 +1430,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115692."
-	@priority = "4"
+	@priority = 4
 	test ViewTeamUserOnStagingSite {
 		task ("Add new Site Role") {
 			JSONRole.addSiteRole(
@@ -1441,7 +1441,7 @@ definition {
 		task ("Define permission to new Site Role") {
 			for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -1468,7 +1468,7 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Assgin Default Site to new user") {
 			ApplicationsMenu.gotoPortlet(
@@ -1477,7 +1477,7 @@ definition {
 				portlet = "Users and Organizations");
 
 			User.editUserSiteCP(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				userScreenName = "usersn");
 		}
 
@@ -1538,7 +1538,7 @@ definition {
 			Refresh();
 		}
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Activate Staging of Default site") {
 			ProductMenu.gotoPortlet(
@@ -1546,11 +1546,11 @@ definition {
 				portlet = "Staging",
 				site = "Guest");
 
-			Staging.activateStagingCP(siteName = "${siteName}");
+			Staging.activateStagingCP(siteName = ${siteName});
 		}
 
 		task ("Assert team user on staging site") {
-			ProductMenu.gotoStagingSite(site = "${siteName}");
+			ProductMenu.gotoStagingSite(site = ${siteName});
 
 			ProductMenu.gotoPortlet(
 				category = "People",

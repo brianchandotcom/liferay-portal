@@ -13,24 +13,24 @@ definition {
 
 		Type(
 			locator1 = "ObjectPortlet#INPUT_NAME",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 
 		PortletEntry.save();
 
 		AssertTextEquals(
 			locator1 = "ObjectField#DOCUMENT_NAME",
-			value1 = "${folderName}");
+			value1 = ${folderName});
 	}
 
 	macro assertDocumentsAndMediaHomeFolderByCompany {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			key_viewHomeFolder = "${viewHomeFolder}",
+			key_viewHomeFolder = ${viewHomeFolder},
 			locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
 		AssertElementPresent(
-			key_infoText = "${infoText}",
+			key_infoText = ${infoText},
 			locator1 = "ObjectPortlet#FILE_ENTRY_OBJECT");
 	}
 
@@ -38,24 +38,24 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			key_viewHomeFolder = "${viewHomeFolder}",
+			key_viewHomeFolder = ${viewHomeFolder},
 			locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
 		AssertElementPresent(
-			key_card = "${imageName}",
+			key_card = ${imageName},
 			locator1 = "Card#CARD");
 	}
 
 	macro assertHelpText {
 		AssertElementPresent(
-			key_helpText = "${helpText}",
+			key_helpText = ${helpText},
 			locator1 = "ObjectField#HELP_TEXT");
 	}
 
 	macro assertLabel {
 		AssertTextEquals(
 			locator1 = "ObjectField#LABEL_LOCALIZED",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro assertMandatory {
@@ -65,7 +65,7 @@ definition {
 	macro assertName {
 		AssertTextEquals(
 			locator1 = "ObjectField#NAME_FIELD",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 	}
 
 	macro assertNameDisabled {
@@ -76,45 +76,45 @@ definition {
 		Click(locator1 = "ObjectField#TYPE_FIELD");
 
 		AssertElementPresent(
-			key_fieldType = "${option}",
+			key_fieldType = ${option},
 			locator1 = "ObjectField#TYPE_OPTION");
 
 		AssertTextEquals(
-			key_type = "${option}",
+			key_type = ${option},
 			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 	macro assertOptionAndDescriptionOnRequestFiles {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		AssertElementPresent(
-			key_fieldType = "${option}",
+			key_fieldType = ${option},
 			locator1 = "ObjectField#TYPE_OPTION");
 
 		AssertTextEquals(
-			key_type = "${option}",
+			key_type = ${option},
 			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
-			value1 = "${description}");
+			value1 = ${description});
 	}
 
 	macro assertSearchableLanguage {
 		AssertTextEquals(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = "${selected}");
+			value1 = ${selected});
 	}
 
 	macro assertSource {
 		AssertElementPresent(
-			key_label = "${fieldLabel}",
-			key_source = "${fieldSource}",
+			key_label = ${fieldLabel},
+			key_source = ${fieldSource},
 			locator1 = "ObjectField#SOURCE_FIELD");
 	}
 
 	macro assertType {
 		AssertElementPresent(
 			locator1 = "ObjectField#TYPE_FIELD",
-			value1 = "${fieldType}");
+			value1 = ${fieldType});
 	}
 
 	macro assertTypeDisabled {
@@ -123,13 +123,13 @@ definition {
 
 	macro assertValueOnLimitCharacters {
 		AssertElementPresent(
-			key_maxValue = "${maxValue}",
+			key_maxValue = ${maxValue},
 			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	macro assertValueOnLimitCharactersNotPresent {
 		AssertElementNotPresent(
-			key_maxValue = "${maxValue}",
+			key_maxValue = ${maxValue},
 			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
@@ -157,7 +157,7 @@ definition {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		Click(
-			key_fieldType = "${option}",
+			key_fieldType = ${option},
 			locator1 = "ObjectField#TYPE_OPTION");
 	}
 
@@ -167,23 +167,23 @@ definition {
 		}
 
 		Click(
-			dropdownLabel = "${dropdownLabel}",
+			dropdownLabel = ${dropdownLabel},
 			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
-		MenuItem.click(menuItem = "${picklistName}");
+		MenuItem.click(menuItem = ${picklistName});
 	}
 
 	macro selectSearchableLanguage {
 		Click(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = "${selected}");
+			value1 = ${selected});
 	}
 
 	macro selectType {
 		Click(locator1 = "ObjectField#TYPE_FIELD");
 
 		Click(
-			key_fieldType = "${fieldType}",
+			key_fieldType = ${fieldType},
 			locator1 = "ObjectField#TYPE_OPTION");
 	}
 
@@ -194,39 +194,39 @@ definition {
 	macro typeLabel {
 		Type(
 			locator1 = "ObjectField#LABEL_LOCALIZED",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro typeName {
 		Type(
 			locator1 = "ObjectField#NAME_FIELD",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 	}
 
 	macro typeStorageFolder {
 		Type(
 			locator1 = "ObjectField#STORAGE_FOLDER_INPUT",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro typeValueOnLimitCharacters {
 		Type(
 			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",
-			value1 = "${newValue}");
+			value1 = ${newValue});
 	}
 
 	macro viewCountCharactersOnEntries {
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
-			key_viewCountCharacters = "${viewCountCharacters}",
+			key_fieldName = ${fieldName},
+			key_viewCountCharacters = ${viewCountCharacters},
 			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
 	}
 
 	macro viewToogleOnSidePanelShowFilesInDM {
-		if ("${isDisabled}" == "Yes") {
+		if (${isDisabled} == "Yes") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED");
 		}
-		else if ("${isDisabled}" == "No") {
+		else if (${isDisabled} == "No") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_NOT_DISABLED");
 		}
 	}

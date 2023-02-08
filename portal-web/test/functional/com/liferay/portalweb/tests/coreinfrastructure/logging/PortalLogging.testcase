@@ -13,26 +13,26 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Ensure that Portal is logging into expected log files, both .xml and .log"
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property database.bare.enabled = "true";
 		property portal.acceptance = "true";
 		property portal.smoke = "false";
 
-		var liferayLog = Clustering.getLogFileSpecificServer(nodePort = "0");
+		var liferayLog = Clustering.getLogFileSpecificServer(nodePort = 0);
 
 		for (var logContent : list "Started dynamic bundles,Auto deploy scanner started for,System check is enabled") {
-			if (!(contains("${liferayLog}", "${logContent}"))) {
+			if (!(contains(${liferayLog}, ${logContent}))) {
 				fail("Unable to find expected logging: ${logContent}");
 			}
 
-			AssertConsoleTextPresent(value1 = "${logContent}");
+			AssertConsoleTextPresent(value1 = ${logContent});
 		}
 	}
 

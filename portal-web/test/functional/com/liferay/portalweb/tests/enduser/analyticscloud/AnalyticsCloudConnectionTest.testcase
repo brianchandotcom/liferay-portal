@@ -25,7 +25,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8832 | Test Summary: Add DXP data source and configure only one site"
-	@priority = "3"
+	@priority = 3
 	test AddDataSourceForOneSite {
 		property portal.release = "true";
 
@@ -55,7 +55,7 @@ definition {
 		task ("Launch AC, go to sites overview and change sites activities to the last 24 hours") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSites();
 
@@ -70,7 +70,7 @@ definition {
 			ACCards.viewMetricValue(
 				cardTitle = "${propertyName} Activities",
 				metricName = "Unique Visitors",
-				metricValue = "0");
+				metricValue = 0);
 		}
 
 		task ("Launch DXP and go to site") {
@@ -86,7 +86,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToSites();
 
@@ -101,14 +101,14 @@ definition {
 			ACCards.viewMetricValue(
 				cardTitle = "${propertyName} Activities",
 				metricName = "Unique Visitors",
-				metricValue = "1",
+				metricValue = 1,
 				timeFilter = "Last 24 hours");
 		}
 	}
 
 	@description = "Automation ID: LRAC-8108 | Test Summary: Add date source page that allows user to choose type of data source"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test AddDataSourcePageAllowsUserToChooseWhatKind {
 
 		// Salesforce and CSV are hidden due to LRAC-11651 and LRAC-11571
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8835 | Test Summary: Assert Liferay Data Source Contact Count Preview"
-	@priority = "4"
+	@priority = 4
 	test AssertLiferayDataSourceContactCountPreview {
 		property portal.release = "true";
 
@@ -142,7 +142,7 @@ definition {
 
 			var currentContacts = selenium.getText("ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER");
 
-			var numberContacts = StringUtil.extractDigits("${currentContacts}");
+			var numberContacts = StringUtil.extractDigits(${currentContacts});
 		}
 
 		task ("Add a new user") {
@@ -158,9 +158,9 @@ definition {
 		task ("Add 1 into the value of the variable and format the string") {
 			var numberContacts = ${numberContacts} + 1;
 
-			var newContacts = StringUtil.add("Sync All (", "${numberContacts}", "");
+			var newContacts = StringUtil.add("Sync All (", ${numberContacts}, "");
 
-			var newContacts = StringUtil.add("${newContacts}", " Contacts)", "");
+			var newContacts = StringUtil.add(${newContacts}, " Contacts)", "");
 		}
 
 		task ("Go to contact data and assert that the number of contacts updated") {
@@ -172,12 +172,12 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_NUMBER",
-				value1 = "${newContacts}");
+				value1 = ${newContacts});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8834 | Test Summary: Assert the Liferay DXP Data Source Status"
-	@priority = "3"
+	@priority = 3
 	test AssertLiferayDataSourceStatus {
 		property portal.release = "true";
 
@@ -185,7 +185,7 @@ definition {
 		var statusSyncSite = ListUtil.newListFromString("Active,Configured,Unconfigured");
 		var statusSyncContact = ListUtil.newListFromString("Active,Configured,Configured");
 		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");
-		var size = ListUtil.size("${sectionTitleList}");
+		var size = ListUtil.size(${sectionTitleList});
 
 		task ("Connect DXP to AC, create a property, and sync the site only") {
 			ACDXPSettings.goToInstanceSettingsAC();
@@ -204,9 +204,9 @@ definition {
 
 			var siteName = selenium.getText("ACDXPSettings#SITE_NAME");
 
-			ACDXPSettings.getAssignedPropertyName(siteName = "${siteName}");
+			ACDXPSettings.getAssignedPropertyName(siteName = ${siteName});
 
-			var dataSource = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
 		}
 
 		task ("Launch AC, go to settings and data source and click in the data source searched") {
@@ -216,25 +216,25 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Unconfigured") {
-			var i = "0";
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${sectionTitleList}", "${i}");
-				var status = ListUtil.get("${statusSyncSite}", "${i}");
+			while (${i} != ${size}) {
+				var section = ListUtil.get(${sectionTitleList}, ${i});
+				var status = ListUtil.get(${statusSyncSite}, ${i});
 
 				ACSettings.assertDataSourceStatus(
-					section = "${section}",
-					status = "${status}");
+					section = ${section},
+					status = ${status});
 
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 
@@ -255,50 +255,50 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Configured") {
-			var i = "0";
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${sectionTitleList}", "${i}");
-				var status = ListUtil.get("${statusSyncContact}", "${i}");
+			while (${i} != ${size}) {
+				var section = ListUtil.get(${sectionTitleList}, ${i});
+				var status = ListUtil.get(${statusSyncContact}, ${i});
 
 				ACSettings.assertDataSourceStatus(
-					section = "${section}",
-					status = "${status}");
+					section = ${section},
+					status = ${status});
 
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 
 		task ("Disconnect data source and assert the data source Status: Disconnected, Sites: Unconfigured, Contacts: Unconfigured") {
 			ACSettings.disconnectDataSource();
 
-			var i = "0";
+			var i = 0;
 
-			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${sectionTitleList}", "${i}");
-				var status = ListUtil.get("${statusDisconnect}", "${i}");
+			while (${i} != ${size}) {
+				var section = ListUtil.get(${sectionTitleList}, ${i});
+				var status = ListUtil.get(${statusDisconnect}, ${i});
 
 				ACSettings.assertDataSourceStatus(
-					section = "${section}",
-					status = "${status}");
+					section = ${section},
+					status = ${status});
 
 				var i = ${i} + 1;
 
-				var i = StringUtil.valueOf("${i}");
+				var i = StringUtil.valueOf(${i});
 			}
 		}
 	}
 
 	@description = "Automation ID: LRAC-8836 | Test Summary: Cancel Creating a DXP Data Source"
-	@priority = "3"
+	@priority = 3
 	test CancelCreatingDxpDataSource {
 		property test.name.skip.portal.instance = "AnalyticsCloudConnectionTest#CancelCreatingDxpDataSource";
 
@@ -336,27 +336,27 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8107 | Test Summary: Navigates to data source page"
-	@priority = "5"
+	@priority = 5
 	test CanNavigatesToDataSourcePage {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-		var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+		var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
 		ACDXPSettings.syncNewContactData();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToSettings();
 
-		ACUtils.assertItemsName(itemList = "${dataSource}");
+		ACUtils.assertItemsName(itemList = ${dataSource});
 
 		ACUtils.assertPageTitle(pageTitle = "Data Sources");
 	}
 
 	@description = "Sync Liferay Data Source Contacts"
-	@priority = "5"
+	@priority = 5
 	test CanSyncAllContactsFromDXPToAC {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -377,7 +377,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = ${propertyName});
 
 		ACNavigation.goToIndividuals();
 
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11140 | Automation ID: LRAC-11141 | Test Summary: Check the AC connection success message with the DXP"
-	@priority = "3"
+	@priority = 3
 	test CheckConnectionSuccessMessage {
 		property portal.release = "true";
 
@@ -407,7 +407,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11423 | Automation ID: LRAC-11475 | Test Summary: Check if it is possible to connect AC with DXP using an existing data source"
-	@priority = "4"
+	@priority = 4
 	test CheckIfIsPossibleToReconnectACWithDXP {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -418,13 +418,13 @@ definition {
 		}
 
 		task ("Form the data source name") {
-			var dataSourceName = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+			var dataSourceName = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
 		}
 
 		task ("Launch AC and copy the token from an existing data source") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromExistingDataSource(dataSourceName = "${dataSourceName}");
+			ACSettings.takeTokenFromExistingDataSource(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Reconnect AC with DXP") {
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@description = "Validate if the user can connect AC to DXP"
-	@priority = "5"
+	@priority = 5
 	test ConnectACtoDXP {
 		property portal.release = "true";
 
@@ -441,12 +441,12 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10629 | Automation ID: LRAC-11443 | Test Summary: Sites and Contacts connection status is not changing when renaming the data source"
-	@priority = "3"
+	@priority = 3
 	test ConnectionStatusNotChangeWhenRenameDataSource {
 		task ("Launch AC then go to Data Sources and open the created data source") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${assignedPropertyName}, " Combined Property", "");
 
 			ACUtils.launchAC();
 
@@ -454,18 +454,18 @@ definition {
 
 			ACSettings.goToDataSources();
 
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACNavigation.openItem(itemName = "${dataSource}");
+			ACNavigation.openItem(itemName = ${dataSource});
 		}
 
 		task ("See that the status of sites and contacts are 'configured'") {
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 
@@ -473,11 +473,11 @@ definition {
 			ACSettings.renameDataSource(dataSourceNewName = "New Data Source Name");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 
@@ -485,11 +485,11 @@ definition {
 			Refresh();
 
 			ACUtils.viewGenericTextInOrder(
-				index = "1",
+				index = 1,
 				textValueList = "Configured");
 
 			ACUtils.viewGenericTextInOrder(
-				index = "2",
+				index = 2,
 				textValueList = "Configured");
 		}
 
@@ -519,24 +519,24 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8821 | Test Summary: Data Source list is searchable"
-	@priority = "5"
+	@priority = 5
 	test DataSourceListIsSearchable {
 		task ("Create data sources") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
-			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
 		}
 
 		task ("Assert that a data source is searchable and found") {
-			ACUtils.searchBar(searchItem = "${dataSource}");
+			ACUtils.searchBar(searchItem = ${dataSource});
 
-			ACUtils.assertDataSourceName(dataSourceName = "${dataSource}");
+			ACUtils.assertDataSourceName(dataSourceName = ${dataSource});
 		}
 
 		task ("Assert that a data source that doesn't exist is not found") {
@@ -547,7 +547,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8825 | Test Summary: Validate Invalid Token"
-	@priority = "4"
+	@priority = 4
 	test InvalidToken {
 		ACUtils.launchAC();
 
@@ -555,7 +555,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8839 | Test Summary: Preview the number of Organization contacts to sync"
-	@priority = "3"
+	@priority = 3
 	test OrganizationContactSyncPreview {
 		property portal.release = "true";
 
@@ -595,11 +595,11 @@ definition {
 
 			var entrieOrg = selenium.getText("ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW");
 
-			var numberOrg = StringUtil.extractDigits("${entrieOrg}");
+			var numberOrg = StringUtil.extractDigits(${entrieOrg});
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
-				value1 = "${entrieOrg}");
+				value1 = ${entrieOrg});
 		}
 
 		task ("Create a new organization and assign the organization for the created user") {
@@ -627,7 +627,7 @@ definition {
 			ACDXPSettings.navToSyncedContactDataMenu();
 
 			ACDXPSettings.syncByOrganizations(
-				index = "2",
+				index = 2,
 				orgName = "Organization Name 2");
 		}
 
@@ -638,16 +638,16 @@ definition {
 
 			var newNumberOrg = ${numberOrg} + 1;
 
-			var newEntrieOrg = StringUtil.add("${newNumberOrg}", " Organizations Selected", "");
+			var newEntrieOrg = StringUtil.add(${newNumberOrg}, " Organizations Selected", "");
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_PREVIEW",
-				value1 = "${newEntrieOrg}");
+				value1 = ${newEntrieOrg});
 		}
 	}
 
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
-	@priority = "4"
+	@priority = 4
 	test SyncDataSourceContactsByGroups {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -690,7 +690,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToIndividuals();
 
@@ -711,7 +711,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
-	@priority = "4"
+	@priority = 4
 	test SyncDataSourceContactsByOrganizations {
 		property analytics.cloud.upstream = "false";
 		property portal.release = "true";
@@ -758,7 +758,7 @@ definition {
 		}
 
 		task ("Go to Known Individuals tab") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 
 			ACNavigation.goToIndividuals();
 
@@ -779,7 +779,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8824 | Test Summary: Preview the number of User Group contacts to sync"
-	@priority = "4"
+	@priority = 4
 	test UserGroupContactSyncPreview {
 		property portal.release = "true";
 
@@ -789,16 +789,16 @@ definition {
 		task ("Create user") {
 			JSONUser.addUser(
 				userEmailAddress = "${user}@liferay.com",
-				userFirstName = "${user}",
-				userLastName = "${user}",
-				userScreenName = "${user}");
+				userFirstName = ${user},
+				userLastName = ${user},
+				userScreenName = ${user});
 		}
 
 		task ("Create groups") {
-			for (var groups : list "${groupsList}") {
+			for (var groups : list ${groupsList}) {
 				JSONUserGroup.addUserGroup(
 					userGroupDescription = "${groups} Description",
-					userGroupName = "${groups}");
+					userGroupName = ${groups});
 			}
 		}
 
@@ -810,10 +810,10 @@ definition {
 		}
 
 		task ("Entry user and add to groups") {
-			UserNavigator.gotoUser(userScreenName = "${user}");
+			UserNavigator.gotoUser(userScreenName = ${user});
 
-			for (var addUsers : list "${groupsList}") {
-				User.assignUserGroupCP(userGroupName = "${addUsers}");
+			for (var addUsers : list ${groupsList}) {
+				User.assignUserGroupCP(userGroupName = ${addUsers});
 			}
 		}
 
@@ -828,11 +828,11 @@ definition {
 
 			var entrieGrup = selenium.getText("ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW");
 
-			var numberGrup = StringUtil.extractDigits("${entrieGrup}");
+			var numberGrup = StringUtil.extractDigits(${entrieGrup});
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW",
-				value1 = "${entrieGrup}");
+				value1 = ${entrieGrup});
 
 			Navigator.gotoBack();
 		}
@@ -846,11 +846,11 @@ definition {
 
 			var newNumberGrup = ${numberGrup} + 1;
 
-			var newEntrieGrup = StringUtil.add("${newNumberGrup}", " User Groups Selected", "");
+			var newEntrieGrup = StringUtil.add(${newNumberGrup}, " User Groups Selected", "");
 
 			AssertTextEquals(
 				locator1 = "ACDXPSettings#SYNC_BY_USER_GROUPS_PREVIEW",
-				value1 = "${newEntrieGrup}");
+				value1 = ${newEntrieGrup});
 		}
 	}
 

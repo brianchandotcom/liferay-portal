@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-93410 - Verify that when there is no SLA defined for the process, all items will be displayed as Untracked"
-	@priority = "4"
+	@priority = 4
 	test ItemsWithNoSlaAreDisplayedUntracked {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -50,10 +50,10 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "UNTRACKED",
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "LPS-93410 - Verify that the items are classified by Overdue, On Time and Untracked"
-	@priority = "3"
+	@priority = 3
 	test PendingItemsCardsAreOverdueOnTimeUntracked {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "LPS-93410 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
-	@priority = "3"
+	@priority = 3
 	test PercentageIsDisplayedInCards {
 		Click(
 			key_processName = "Single Approver",
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "LPS-93410 - Verify that the sum for items Overdue + On Time + Untracked is equal to the Total Pending"
-	@priority = "3"
+	@priority = 3
 	test SumOfOverdueOnTimeUntrackedIsEqualToTotalPending {
 		property portal.upstream = "quarantine";
 
@@ -111,10 +111,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "0001",
+			slaDefinitionHours = 0001,
 			slaDefinitionName = "SLAName",
 			slaDefinitionPause = "On Task: Update",
 			slaDefinitionStart = "Process Begins");
@@ -156,7 +156,7 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.waitForSLA(
-			key_expectedValue = "0",
+			key_expectedValue = 0,
 			key_status = "OVERDUE");
 
 		var overdueItems = selenium.getText("WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE");
@@ -169,7 +169,7 @@ definition {
 		AssertTextEquals(
 			key_statusName = "Total Pending",
 			locator1 = "WorkflowMetrics#DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS",
-			value1 = "${expectedResultTotal}");
+			value1 = ${expectedResultTotal});
 	}
 
 }

@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86193. Can export display page template based on custom master and import."
-	@priority = "3"
+	@priority = 3
 	test ExportImportDisplayPageTemplateBasedOnCustomMaster {
 		task ("Add a custom master with Header and Footer element") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -139,14 +139,14 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
-	@priority = "4"
+	@priority = 4
 	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
 					groupName = "Test Site Name",
-					title = "${entryTitle}");
+					title = ${entryTitle});
 			}
 		}
 
@@ -183,14 +183,14 @@ definition {
 		}
 
 		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Third,Second,First") {
 				AssertVisible(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_entryTitle = "${title} Web Content",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var n = ${n} + 1;
@@ -224,14 +224,14 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Third,Second,First") {
 				AssertVisible(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_entryTitle = "${title} Web Content",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var n = ${n} + 1;

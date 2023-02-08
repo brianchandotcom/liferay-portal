@@ -7,7 +7,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.startBusinessAtYear",
-			value = "2000");
+			value = 2000);
 
 		Click(
 			field = "Does your business operate year round?",
@@ -15,7 +15,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.partTimeEmployees",
-			value = "200");
+			value = 200);
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.estimatedAnnualGrossRevenue",
@@ -41,7 +41,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.startBusinessAtYear",
-			value = "2000");
+			value = 2000);
 
 		Click(
 			field = "Does your business operate year round?",
@@ -49,7 +49,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.partTimeEmployees",
-			value = "200");
+			value = 200);
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.estimatedAnnualGrossRevenue",
@@ -67,7 +67,7 @@ definition {
 	macro typeEmployeesInfoFields {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro viewEmployeesInfo {
@@ -83,7 +83,7 @@ definition {
 		AssertElementPresent(
 			label = "employees.startBusinessAtYear",
 			locator1 = "Raylife#FORMS_FIELDS",
-			value1 = "2000");
+			value1 = 2000);
 
 		AssertElementPresent(
 			field = "Does your business operate year round?",
@@ -92,7 +92,7 @@ definition {
 		AssertElementPresent(
 			label = "employees.partTimeEmployees",
 			locator1 = "Raylife#FORMS_VALUE",
-			value = "200");
+			value = 200);
 
 		AssertElementPresent(
 			label = "employees.estimatedAnnualGrossRevenue",

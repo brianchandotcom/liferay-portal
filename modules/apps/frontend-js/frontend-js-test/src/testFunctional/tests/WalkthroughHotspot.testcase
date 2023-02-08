@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "LPS-154637. Assert a hotspot element will switch to popover mode after clicking."
-	@priority = "5"
+	@priority = 5
 	test WillDisplayPopoverWhenClicked {
 		task ("When click hospot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "LPS-154636. Assert walkthrough component renders a hotspot element as initial state."
-	@priority = "5"
+	@priority = 5
 	test WillRenderAsInitialState {
 		task ("Then Hotspot element is present") {
 			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");

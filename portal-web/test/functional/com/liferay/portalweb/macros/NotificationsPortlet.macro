@@ -5,29 +5,29 @@ definition {
 
 		Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = ${menuItem});
 	}
 
 	macro disableUserDeliveries {
-		var key_contentType = "${contentType}";
-		var key_panel = "${contentType}";
+		var key_contentType = ${contentType};
+		var key_panel = ${contentType};
 
 		if (IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) {
 			AssertClick(
 				locator1 = "Panel#PANEL",
-				value1 = "${contentType}");
+				value1 = ${contentType});
 		}
 
-		var key_actionType = "${actionType}";
-		var key_contentType = StringUtil.replace("${contentType}", " ", "-");
+		var key_actionType = ${actionType};
+		var key_contentType = StringUtil.replace(${contentType}, " ", "-");
 
-		if ("${notificationType}" == "Website") {
+		if (${notificationType} == "Website") {
 			ScrollWebElementIntoView(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH");
 
 			Check.toggleSwitch(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH");
 		}
 
-		if ("${notificationType}" == "Email") {
+		if (${notificationType} == "Email") {
 			Click(locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_EMAIL_SWITCH");
 		}
 
@@ -37,7 +37,7 @@ definition {
 	macro gotoNotificationDelivery {
 		Navigator.gotoNotifications();
 
-		if ("${notificationPg}" == "true") {
+		if (${notificationPg} == "true") {
 			NotificationsPortlet.configureNotificationPG(menuItem = "Configuration");
 		}
 		else {
@@ -52,14 +52,14 @@ definition {
 
 		NotificationsPortlet.gotoNotificationDelivery();
 
-		for (var actionType : list "${actionList}") {
-			var key_actionType = "${actionType}";
+		for (var actionType : list ${actionList}) {
+			var key_actionType = ${actionType};
 
-			for (var contentType : list "${contentList}") {
-				var key_contentType = "${contentType}";
+			for (var contentType : list ${contentList}) {
+				var key_contentType = ${contentType};
 
-				for (var notificationType : list "${notificationList}") {
-					var key_notificationType = "${notificationType}";
+				for (var notificationType : list ${notificationList}) {
+					var key_notificationType = ${notificationType};
 
 					Check(locator1 = "Notifications#NOTIFICATION_DELIVERY_CHECKBOX");
 				}

@@ -14,72 +14,72 @@ definition {
 	}
 
 	tearDown {
-		JSONWiki.deleteWikiPageById(wikiPageId = "${staticWikiPageId}");
+		JSONWiki.deleteWikiPageById(wikiPageId = ${staticWikiPageId});
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAttachmentByExternalReferenceCode {
 		property portal.acceptance = "true";
 
 		task ("When deleting the attachment with deleteByExternalReferenceCode") {
 			WikiPageAttachmentAPI.deleteByErc(
 				groupName = "Guest",
-				wikiPageAttachmentErc = "${staticWikiPageAttachmentErc}",
-				wikiPageErc = "${staticWikiPageErc}");
+				wikiPageAttachmentErc = ${staticWikiPageAttachmentErc},
+				wikiPageErc = ${staticWikiPageErc});
 		}
 
 		task ("Then the attachment is deleted") {
-			var response = WikiPageAttachmentAPI.getAttachmentById(wikiPageAttachmentId = "${staticWikiPageAttachmentId}");
+			var response = WikiPageAttachmentAPI.getAttachmentById(wikiPageAttachmentId = ${staticWikiPageAttachmentId});
 
 			ObjectDefinitionAPI.assertStatusInResponse(
 				expectedValue = "NOT_FOUND",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "3"
+	@priority = 3
 	test CanReturenErcWithGetSiteWikiPagesByErc {
 		task ("When requesting getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode") {
 			var response = WikiPageAttachmentAPI.getWikiPageAttachments(
 				groupName = "Guest",
-				wikiPageAttachementErc = "${staticWikiPageAttachmentErc}",
-				wikiPageErc = "${staticWikiPageErc}");
+				wikiPageAttachementErc = ${staticWikiPageAttachmentErc},
+				wikiPageErc = ${staticWikiPageErc});
 		}
 
 		task ("Then the payload contains externalReferenceCode") {
 			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
-				expectedErc = "${staticWikiPageAttachmentErc}",
-				responseToParse = "${response}");
+				expectedErc = ${staticWikiPageAttachmentErc},
+				responseToParse = ${response});
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "3"
+	@priority = 3
 	test CanReturenErcWithGetWikiPageAttachmentsByWikiPageId {
 		task ("When requesting getWikiPageWikiPageAttachmentsPage") {
-			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageAttachementId = "${staticWikiPageAttachmentId}");
+			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageAttachementId = ${staticWikiPageAttachmentId});
 		}
 
 		task ("Then the attachment object contains externalReferenceCode") {
 			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
-				expectedErc = "${staticWikiPageAttachmentErc}",
-				responseToParse = "${response}");
+				expectedErc = ${staticWikiPageAttachmentErc},
+				responseToParse = ${response});
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "3"
+	@priority = 3
 	test CanReturenErcWithGetWikiPagesByWikiPageId {
 		task ("When requesting getWikiPageAttachment") {
-			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageId = "${staticWikiPageId}");
+			var response = WikiPageAttachmentAPI.getWikiPageAttachments(wikiPageId = ${staticWikiPageId});
 		}
 
 		task ("Then the attachment object contains externalReferenceCode") {
 			WikiPageAttachmentAPI.AssertCorrectErcInResponse(
-				expectedErc = "${staticWikiPageAttachmentErc}",
-				responseToParse = "${response}");
+				expectedErc = ${staticWikiPageAttachmentErc},
+				responseToParse = ${response});
 		}
 	}
 

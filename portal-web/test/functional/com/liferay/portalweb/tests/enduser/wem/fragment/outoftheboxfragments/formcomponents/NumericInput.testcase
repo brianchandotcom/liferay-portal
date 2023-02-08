@@ -61,7 +61,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155169. The page creator could configure the Numeric Input framgent."
-	@priority = "4"
+	@priority = 4
 	test ConfigureNumericInput {
 		task ("Given a page creator has a Form Container mapped to an entity with Integer field") {
 			task ("Add a Form Container framgment to content page") {
@@ -100,11 +100,11 @@ definition {
 				for (var index : list "4,3,2") {
 					PageEditor.removeFragment(
 						fragmentName = "Numeric Input",
-						index = "${index}");
+						index = ${index});
 				}
 
 				for (var fragmentName : list "Numeric Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
 		}
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155169. The user could submit successfully when a Form Container has Numeric Input fragments"
-	@priority = "4"
+	@priority = 4
 	test SubmitFormWithNumericInput {
 		task ("Given a user has a content page with Numeric Input fragments inside Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -226,7 +226,7 @@ definition {
 			Type(
 				key_text = "Ticket Number",
 				locator1 = "TextInput#ANY",
-				value1 = "100");
+				value1 = 100);
 
 			Type(
 				key_text = "Price",
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155169. The Numeric Input only allow numbers and some special characters."
-	@priority = "5"
+	@priority = 5
 	test ViewAllowedCharacters {
 		property portal.acceptance = "true";
 
@@ -364,7 +364,7 @@ definition {
 				AssertTextEquals(
 					key_text = "Tax",
 					locator1 = "TextInput#ANY",
-					value1 = "1212");
+					value1 = 1212);
 			}
 
 			task ("Type 1.2? in Numeric Input") {
@@ -392,13 +392,13 @@ definition {
 				AssertTextEquals(
 					key_text = "Tax",
 					locator1 = "TextInput#ANY",
-					value1 = "14");
+					value1 = 14);
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the maximum or minimum value of field."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheMaxOrMinValueOfField {
 		task ("Given a user has a content page where a Numeric Input and Submit Button fragments are inside a Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -431,7 +431,7 @@ definition {
 			Type(
 				key_text = "Ticket Number",
 				locator1 = "TextInput#ANY",
-				value1 = "10000000000");
+				value1 = 10000000000);
 
 			Button.clickSubmitButton();
 		}
@@ -467,7 +467,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155169. The Numeric Input could be mapped to Long Integer, Integer, Precision Decimal and Decimal fields."
-	@priority = "5"
+	@priority = 5
 	test ViewMappableFields {
 		property portal.acceptance = "true";
 
@@ -497,11 +497,11 @@ definition {
 				for (var index : list "4,3,2") {
 					PageEditor.removeFragment(
 						fragmentName = "Numeric Input",
-						index = "${index}");
+						index = ${index});
 				}
 
 				for (var fragmentName : list "Numeric Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
 
@@ -520,7 +520,7 @@ definition {
 			for (var fieldName : list "Amount,Ticket Number,Price,Tax") {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
-					key_value = "${fieldName}",
+					key_value = ${fieldName},
 					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}

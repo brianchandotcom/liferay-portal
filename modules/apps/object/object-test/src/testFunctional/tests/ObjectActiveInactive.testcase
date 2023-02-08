@@ -16,13 +16,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated"
-	@priority = "4"
+	@priority = 4
 	test ObjectEntriesDisappearsWorkflowMetricsWhenInactivated {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147750",
@@ -63,10 +63,10 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "0",
-			key_untracked = "0");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 0,
+			key_untracked = 0);
 	}
 
 }

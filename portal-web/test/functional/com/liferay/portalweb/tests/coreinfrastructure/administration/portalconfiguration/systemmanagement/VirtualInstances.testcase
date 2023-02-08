@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanAddAndDeletePortalInstance {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VirtualInstances#CanAddAndDeletePortalInstance";
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This automates LPS-157752. It asserts that email settings can be configured in a Virtual Instance."
-	@priority = "4"
+	@priority = 4
 	test CanConfigureEmailSettingsInVirtualInstance {
 		property test.name.skip.portal.instance = "VirtualInstances#CanConfigureEmailSettingsInVirtualInstance";
 
@@ -75,7 +75,7 @@ definition {
 
 			FormFields.editText(
 				fieldName = "pop3Port",
-				fieldValue = "995");
+				fieldValue = 995);
 
 			PortletEntry.save();
 		}
@@ -83,11 +83,11 @@ definition {
 		task ("Then the new configuration should now be displayed") {
 			FormFields.viewTextValue(
 				fieldName = "pop3Port",
-				fieldValue = "995");
+				fieldValue = 995);
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PermissionCheckPortalInstances {
 		property test.name.skip.portal.instance = "VirtualInstances#PermissionCheckPortalInstances";
 
@@ -128,14 +128,14 @@ definition {
 
 		var documentURL = selenium.getLocation();
 
-		var otherInstanceAccessAttempt = StringUtil.replace("${documentURL}", "able", "baker");
+		var otherInstanceAccessAttempt = StringUtil.replace(${documentURL}, "able", "baker");
 
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@www.baker.com",
 			virtualHostsURL = "http://www.baker.com:8080");
 
-		Navigator.openSpecificURL(url = "${otherInstanceAccessAttempt}");
+		Navigator.openSpecificURL(url = ${otherInstanceAccessAttempt});
 
 		Alert.viewRequestFailedToComplete();
 
@@ -144,7 +144,7 @@ definition {
 			value1 = "You do not have the required permissions.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewDeactivatedPortalInstance {
 		property test.name.skip.portal.instance = "VirtualInstances#ViewDeactivatedPortalInstance";
 
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ViewVirtualHostPrivateSitePage {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -275,13 +275,13 @@ definition {
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.baker.com",
-			publicVirtualHosts = "${publicPageVirtualHostURL}");
+			publicVirtualHosts = ${publicPageVirtualHostURL});
 
 		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.charlie.com",
-			privateVirtualHosts = "${privatePageVirtualHostURL}");
+			privateVirtualHosts = ${privatePageVirtualHostURL});
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -314,7 +314,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewVirtualInstanceInheritsSystemSettings {
 		property test.name.skip.portal.instance = "VirtualInstances#ViewVirtualInstanceInheritsSystemSettings";
 

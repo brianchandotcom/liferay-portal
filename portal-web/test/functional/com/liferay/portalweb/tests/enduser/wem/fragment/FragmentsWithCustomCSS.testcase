@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136411. The page creator could add custom css of fragment in each viewport."
-	@priority = "4"
+	@priority = 4
 	test AddCustomCSSOfFragmentInEachViewport {
 		task ("Given a page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136411. When add a custom css to a fragment inside Collection Display, the custom css will be applied to all similar fragments inside Collection Display."
-	@priority = "4"
+	@priority = 4
 	test ViewAppliedCustomCSSOfFragmentInsideCollectionDisplay {
 		task ("Given a page creator has a content page with a Heading and Button fragments inside Collection Display") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -155,12 +155,12 @@ definition {
 				PageEditor.viewFragmentStyle(
 					backgroundColor = "success",
 					fragmentName = "Button",
-					position = "${i}");
+					position = ${i});
 			}
 
 			for (var i : list "1,2,3") {
 				AssertCssValue(
-					index = "${i}",
+					index = ${i},
 					key_fragmentName = "Heading",
 					locator1 = "Fragment#FRAGMENT_CONTENT",
 					locator2 = "background-color",

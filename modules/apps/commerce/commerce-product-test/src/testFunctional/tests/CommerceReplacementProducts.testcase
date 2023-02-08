@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8164 | A discontinued product cannot be replaced by another discontinued product"
-	@priority = "3"
+	@priority = 3
 	test CannotReplaceDiscontinuedProductWithDiscontinuedProduct {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9352 | Verify if discontinued products are replaced by the replacement product when adding a discontinued product to an order"
-	@priority = "3"
+	@priority = 3
 	test DiscontinuedProductIsReplacedWhenImportedFromOrders {
 		property portal.acceptance = "true";
 
@@ -125,7 +125,7 @@ definition {
 		task ("Given a complete order with a discontinued product") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -138,8 +138,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -151,11 +151,11 @@ definition {
 			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.editWarehousesQuantity(
-				italyQuantity = "0",
-				northeastQuantity = "0",
+				italyQuantity = 0,
+				northeastQuantity = 0,
 				productName = "U-Joint",
 				productSku = "MIN55861",
-				southwestQuantity = "0");
+				southwestQuantity = 0);
 
 			CommerceProducts.discontinueSKU();
 
@@ -180,7 +180,7 @@ definition {
 
 			IFrame.selectModalFrame();
 
-			CommerceNavigator.gotoTableListEntry(entryName = "${currentOrderId}");
+			CommerceNavigator.gotoTableListEntry(entryName = ${currentOrderId});
 
 			SelectFrameTop();
 
@@ -191,7 +191,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "50.00",
 				unitPrice = "50.00");
@@ -205,14 +205,14 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				productTotalPrice = "50.00");
 		}
 	}
 
 	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
-	@priority = "3"
+	@priority = 3
 	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9347 | Replacement product's information is shown in product details"
-	@priority = "3"
+	@priority = 3
 	test ReplacementProductInformationIsDisplayedInProductDetails {
 		property portal.acceptance = "true";
 
@@ -310,7 +310,7 @@ definition {
 			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
 
 			FrontStore.assertProductDetails(
-				endOfLifeDate = "${endOfLifeDate}",
+				endOfLifeDate = ${endOfLifeDate},
 				productAvailability = "Discontinued");
 		}
 

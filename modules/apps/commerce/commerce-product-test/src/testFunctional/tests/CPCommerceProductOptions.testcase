@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9633. CanAddToCartGeneratedProductSkus"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartGeneratedProductSkus {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -65,7 +65,7 @@ definition {
 
 		task ("And 2 values are added to the option") {
 			for (var valueName : list "Value1,Value2") {
-				CommerceProductOptions.createProductOptionValue(key_name = "${valueName}");
+				CommerceProductOptions.createProductOptionValue(key_name = ${valueName});
 
 				SelectFrame.selectFrameTop();
 
@@ -121,13 +121,13 @@ definition {
 
 			FrontStore.viewMiniCartItem(
 				cartItemName = "Simple T-Shirt",
-				cartItemQuantity = "1",
+				cartItemQuantity = 1,
 				cartItemSku = "VALUE1");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-9824. CanAssertChangesNotSavedOnCorrespondingOptions"
-	@priority = "3"
+	@priority = 3
 	test CanAssertChangesNotSavedOnCorrespondingOptions {
 		property portal.acceptance = "false";
 
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9834. CanAssertDefaultOptionValuesAreChecked"
-	@priority = "3"
+	@priority = 3
 	test CanAssertDefaultOptionValuesAreChecked {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9837. CanChangeOptionAndOptionValuePositions"
-	@priority = "3"
+	@priority = 3
 	test CanChangeOptionAndOptionValuePositions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -434,7 +434,7 @@ definition {
 
 			CommerceProductOptions.editProductOption(
 				key_option = "Option1",
-				key_position = "1",
+				key_position = 1,
 				productOptionPosition = "true");
 
 			SelectFrameTop();
@@ -456,12 +456,12 @@ definition {
 		task ("Then in the product details, Option2 is the first option on the list") {
 			AssertElementPresent(
 				key_optionName = "Option2",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_POSITION");
 
 			AssertElementPresent(
 				key_optionName = "Option1",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_POSITION");
 		}
 
@@ -472,19 +472,19 @@ definition {
 				locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST");
 
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_optionValue = "Value2",
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				key_optionValue = "Value1",
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-9833. CanCheckoutProductWithEveryOptionFieldType"
-	@priority = "3"
+	@priority = 3
 	test CanCheckoutProductWithEveryOptionFieldType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -523,11 +523,11 @@ definition {
 				Refresh();
 
 				CommerceProductOptions.editProductOption(
-					key_fieldType = "${fieldType}",
+					key_fieldType = ${fieldType},
 					key_option = "Option ${fieldType}",
 					productOptionFieldType = "true");
 
-				if (("${fieldType}" == "Select from List") || ("${fieldType}" == "Single Selection") || ("${fieldType}" == "Multiple Selection")) {
+				if ((${fieldType} == "Select from List") || (${fieldType} == "Single Selection") || (${fieldType} == "Multiple Selection")) {
 					CommerceProductOptions.createProductOptionValue(key_name = "Value ${fieldType}");
 				}
 
@@ -562,7 +562,7 @@ definition {
 			Type(
 				key_fieldLabel = "Option Numeric",
 				locator1 = "TextInput#NUMERIC",
-				value1 = "9876543210");
+				value1 = 9876543210);
 
 			Type(
 				key_fieldLabel = "Option Text",
@@ -577,7 +577,7 @@ definition {
 
 			Type(
 				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
-				value1 = "${currentDate}");
+				value1 = ${currentDate});
 
 			FrontStore.selectAssociatedFSOptionsValue(
 				fsOptionName = "Option Select from List",
@@ -595,19 +595,19 @@ definition {
 				key_orderAuthor = "Commerce Account",
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-			var month = StringUtil.extractFirst("${currentDate}", "-");
+			var month = StringUtil.extractFirst(${currentDate}, "-");
 
-			var currentDate = StringUtil.replace("${currentDate}", "${month}-", "");
+			var currentDate = StringUtil.replace(${currentDate}, "${month}-", "");
 
-			var day = StringUtil.extractFirst("${currentDate}", "/");
-			var year = StringUtil.extractLast("${currentDate}", "/");
+			var day = StringUtil.extractFirst(${currentDate}, "/");
+			var year = StringUtil.extractLast(${currentDate}, "/");
 
 			for (var optionValue : list "9876543210,true,Value Multiple Selection,Value Select from List,Value Single Selection,abc@#^,${year}-${month}-${day}") {
 				AssertTextEquals.assertPartialText(
-					key_columnNumber = "2",
+					key_columnNumber = 2,
 					key_entryName = "MIN93015",
 					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-					value1 = "${optionValue}");
+					value1 = ${optionValue});
 			}
 		}
 
@@ -621,8 +621,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "ABS Sensor",
-				productQuantity = "1",
-				productUnitPrice = "50",
+				productQuantity = 1,
+				productUnitPrice = 50,
 				shippingMethod = "Standard");
 		}
 
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9823. CanEditRemoveReaddProductOption"
-	@priority = "3"
+	@priority = 3
 	test CanEditRemoveReaddProductOption {
 		property portal.acceptance = "true";
 
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
-	@priority = "3"
+	@priority = 3
 	test CanViewOptionOnTheOptionFacetWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -869,7 +869,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
-	@priority = "3"
+	@priority = 3
 	test CreateAnOptionForAllTheFieldType {
 		property portal.acceptance = "true";
 
@@ -888,7 +888,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Options");
 
 		var colorName = "Color_";
-		var count = "0";
+		var count = 0;
 
 		for (var fieldType : list "Text,Single Selection,Multiple Selection,Date,Numeric,Boolean") {
 			Type(
@@ -904,7 +904,7 @@ definition {
 				key_entryName = "${colorName}${count}",
 				locator1 = "CommerceNavigation#ENTRY_NAME");
 
-			if ("${count}" == "0") {
+			if (${count} == 0) {
 				AssertElementPresent(
 					key_entryName = "${colorName}${count}",
 					key_table = "Select from List",
@@ -922,7 +922,7 @@ definition {
 			Select(
 				key_fieldLabel = "Field Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${fieldType}");
+				value1 = ${fieldType});
 
 			Button.clickSave();
 
@@ -932,7 +932,7 @@ definition {
 
 			AssertElementPresent(
 				key_entryName = "${colorName}${count}",
-				key_table = "${fieldType}",
+				key_table = ${fieldType},
 				locator1 = "CommerceEntry#OPTION_TABLE_CHECK");
 
 			echo("The option ${colorName}${count} is present with type ${fieldType}");
@@ -942,7 +942,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6019. EditAndRemoveAnOptionWithValues"
-	@priority = "3"
+	@priority = 3
 	test EditAndRemoveAnOptionWithValues {
 		property portal.acceptance = "false";
 

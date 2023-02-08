@@ -7,7 +7,7 @@ definition {
 	macro searchMyWorkflowTasks {
 		Type(
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
 	}
@@ -23,8 +23,8 @@ definition {
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowTask = "Review");
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		MenuItem.click(menuItem = "Update Due Date");
 
@@ -36,35 +36,35 @@ definition {
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
-			value1 = "${dueDate}");
+			value1 = ${dueDate});
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "${dueDateTime}");
+			value1 = ${dueDateTime});
 
 		Workflow.confirmWorkflowAction();
 	}
 
 	macro updateDueDateMyWorkflowTasksFutureDate {
-		var key_workflowAssetTitle = "${key_workflowAssetTitle}";
-		var key_workflowTask = "${key_workflowTask}";
+		var key_workflowAssetTitle = ${key_workflowAssetTitle};
+		var key_workflowTask = ${key_workflowTask};
 		var displayDateDay = DateUtil.getCurrentDate();
 		var displayDateMonth = DateUtil.getCurrentMonth();
 		var currentYear = DateUtil.getCurrentYear();
 		var futureDay = ${displayDateDay} + 1;
 		var futureMonth = ${displayDateMonth} + 1;
 		var futureYear = ${currentYear} + 1;
-		var timePeriod = "${key_timePeriod}";
+		var timePeriod = ${key_timePeriod};
 
 		Workflow.viewTaskAssignedToMyRoles(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${key_workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${key_workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${key_workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${key_workflowTask});
 
 		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
-			workflowAssetTitle = "${key_workflowAssetTitle}",
-			workflowTask = "${key_workflowTask}");
+			workflowAssetTitle = ${key_workflowAssetTitle},
+			workflowTask = ${key_workflowTask});
 
 		MenuItem.click(menuItem = "Update Due Date");
 
@@ -74,7 +74,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		if ("${key_timePeriod}" == "day") {
+		if (${key_timePeriod} == "day") {
 			Type(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 				value1 = "${displayDateMonth}/${futureDay}/${displayDateYear}");
@@ -84,13 +84,13 @@ definition {
 				value1 = "07:30 PM");
 		}
 
-		if ("${key_timePeriod}" == "month") {
+		if (${key_timePeriod} == "month") {
 			Type(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 				value1 = "${futureMonth}/${displayDateDay}/${displayDateYear}");
 		}
 
-		if ("${key_timePeriod}" == "year") {
+		if (${key_timePeriod} == "year") {
 			Type(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 				value1 = "${displayDateMonth}/${displayDateDay}/${futureYear}");
@@ -101,10 +101,10 @@ definition {
 
 	macro viewDueDateValue {
 		AssertTextEquals.assertPartialText(
-			key_workflowAssetTitle = "${workflowAssetTitle}",
-			key_workflowTask = "${workflowTask}",
+			key_workflowAssetTitle = ${workflowAssetTitle},
+			key_workflowTask = ${workflowTask},
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
-			value1 = "${dueDateValue}");
+			value1 = ${dueDateValue});
 	}
 
 	macro viewErrorRequestFailed {
@@ -120,32 +120,32 @@ definition {
 	}
 
 	macro viewMyWorkflowTaskItemPosition {
-		var key_rowPosition = "${rowPosition}";
-		var key_title = "${title}";
+		var key_rowPosition = ${rowPosition};
+		var key_title = ${title};
 
 		AssertElementPresent(
-			key_rowPosition = "${rowPosition}",
-			key_title = "${title}",
+			key_rowPosition = ${rowPosition},
+			key_title = ${title},
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
 	}
 
 	macro viewTaskAssignedAndAssertTextsPresent {
 		var elements = "Assigned to,Task Name,Create Date,Due Date";
 
-		for (var list : list "${elements}") {
+		for (var list : list ${elements}) {
 			AssertElementPresent(
-				key_reviewDisplay = "${list}",
+				key_reviewDisplay = ${list},
 				locator1 = "MyWorkflowTasks#REVIEW_PAGE_ELEMENTS_DISPLAYS");
 		}
 
 		AssertElementPresent(
-			key_reviewDisplay = "${titleMessageBoard}",
+			key_reviewDisplay = ${titleMessageBoard},
 			locator1 = "MyWorkflowTasks#MESSAGE_BOARD_SUBJECT_TITLE");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#SUMMARY_TEXT_CONTENT");
 
 		AssertElementPresent(
-			key_nameAuthor = "${nameAuthor}",
+			key_nameAuthor = ${nameAuthor},
 			locator1 = "MyWorkflowTasks#NAME_AUTHOR");
 
 		AssertElementPresent(locator1 = "IFrame#IFRAME");

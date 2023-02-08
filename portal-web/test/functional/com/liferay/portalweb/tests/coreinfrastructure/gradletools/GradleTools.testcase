@@ -12,13 +12,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Verify a module can be deployed after adding a hotfix qualifier to its build version"
-	@priority = "3"
+	@priority = 3
 	test HotfixQualifierSmoke {
 		property test.name.skip.portal.instance = "GradleTools#HotfixQualifierSmoke";
 
@@ -31,11 +31,11 @@ definition {
 			for (var file : list "bnd.bnd,package.json") {
 				var fileContent = FileUtil.read("${projectDir}/${moduleBaseDir}/${file}");
 
-				var bundleVersion = RegexUtil.replace("${fileContent}", "[Vv]ersion\"?: \"?(.*[0-9])", "1");
+				var bundleVersion = RegexUtil.replace(${fileContent}, "[Vv]ersion\"?: \"?(.*[0-9])", 1);
 
-				var fileContent = StringUtil.replace("${fileContent}", "${bundleVersion}", "${bundleVersion}${hotfixQualifier}");
+				var fileContent = StringUtil.replace(${fileContent}, ${bundleVersion}, "${bundleVersion}${hotfixQualifier}");
 
-				FileUtil.write("${projectDir}/${moduleBaseDir}/${file}", "${fileContent}");
+				FileUtil.write("${projectDir}/${moduleBaseDir}/${file}", ${fileContent});
 			}
 		}
 

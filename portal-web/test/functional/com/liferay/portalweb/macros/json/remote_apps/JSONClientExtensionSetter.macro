@@ -1,11 +1,11 @@
 definition {
 
 	macro setNameMap {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
 
-		return "${nameMap}";
+		return ${nameMap};
 	}
 
 	macro setTypeSettings {
@@ -17,7 +17,7 @@ definition {
 			var typeSettings = "url=${url}%0A";
 		}
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 }

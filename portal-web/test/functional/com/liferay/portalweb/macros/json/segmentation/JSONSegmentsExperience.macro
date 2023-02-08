@@ -4,7 +4,7 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${experienceName}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		var curl = '''
 			${portalURL}/api/jsonws/segments.segmentsexperience/get-segments-experiences \
@@ -19,11 +19,11 @@ definition {
 		''';
 		var criteria = "$[?(@.nameCurrentValue == '${experienceName}')]['segmentsExperienceId']";
 
-		var segmentExperienceId = JSONCurlUtil.post("${curl}", "${criteria}");
+		var segmentExperienceId = JSONCurlUtil.post(${curl}, ${criteria});
 
 		echo("Segment Experience ID: ${segmentExperienceId}");
 
-		return "${segmentExperienceId}";
+		return ${segmentExperienceId};
 	}
 
 }

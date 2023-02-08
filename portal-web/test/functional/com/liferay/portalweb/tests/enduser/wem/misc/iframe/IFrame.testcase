@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "View IFrame widget is shown on the page."
-	@priority = "3"
+	@priority = 3
 	test ViewIFrameWidget {
 		task ("View IFrame widget is shown") {
 			Navigator.gotoSitePage(

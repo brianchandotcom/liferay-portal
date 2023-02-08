@@ -4,66 +4,66 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		if (!(isSet(auto))) {
 			var auto = "true";
 		}
 
 		JSONSitenavigationAPI._addSiteNavigationMenu(
-			auto = "${auto}",
-			groupId = "${groupId}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+			auto = ${auto},
+			groupId = ${groupId},
+			siteNavigationMenuName = ${siteNavigationMenuName});
 	}
 
 	macro addSiteNavigationMenuItem {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName},${type}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
-			groupName = "${groupName}",
-			site = "${site}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+			groupName = ${groupName},
+			site = ${site},
+			siteNavigationMenuName = ${siteNavigationMenuName});
 
 		if (isSet(parentSiteNavigationMenuItem)) {
 			var parentSiteNavigationMenuItemId = JSONSitenavigationSetter.setSiteNavigationMenuItemId(
-				groupName = "${groupName}",
-				siteNavigationMenuItemName = "${parentSiteNavigationMenuItem}",
-				siteNavigationMenuName = "${siteNavigationMenuName}");
+				groupName = ${groupName},
+				siteNavigationMenuItemName = ${parentSiteNavigationMenuItem},
+				siteNavigationMenuName = ${siteNavigationMenuName});
 		}
 		else {
-			var parentSiteNavigationMenuItemId = "0";
+			var parentSiteNavigationMenuItemId = 0;
 		}
 
 		var typeSettings = JSONSitenavigationSetter.setTypeSettings(
-			groupId = "${groupId}",
-			layoutUuid = "${layoutUuid}",
-			privateLayout = "${privateLayout}",
-			siteNavigationMenuItemName = "${siteNavigationMenuItemName}",
-			type = "${type}",
-			url = "${url}",
-			useNewTab = "${useNewTab}");
+			groupId = ${groupId},
+			layoutUuid = ${layoutUuid},
+			privateLayout = ${privateLayout},
+			siteNavigationMenuItemName = ${siteNavigationMenuItemName},
+			type = ${type},
+			url = ${url},
+			useNewTab = ${useNewTab});
 
 		JSONSitenavigationAPI._addSiteNavigationMenuItem(
-			groupId = "${groupId}",
-			parentSiteNavigationMenuItemId = "${parentSiteNavigationMenuItemId}",
-			siteNavigationMenuId = "${siteNavigationMenuId}",
-			type = "${type}",
-			typeSettings = "${typeSettings}");
+			groupId = ${groupId},
+			parentSiteNavigationMenuItemId = ${parentSiteNavigationMenuItemId},
+			siteNavigationMenuId = ${siteNavigationMenuId},
+			type = ${type},
+			typeSettings = ${typeSettings});
 	}
 
 	macro deleteSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
-			groupName = "${groupName}",
-			site = "${site}",
-			siteNavigationMenuName = "${siteNavigationMenuName}");
+			groupName = ${groupName},
+			site = ${site},
+			siteNavigationMenuName = ${siteNavigationMenuName});
 
-		JSONSitenavigationAPI._deleteSiteNavigationMenu(siteNavigationMenuId = "${siteNavigationMenuId}");
+		JSONSitenavigationAPI._deleteSiteNavigationMenu(siteNavigationMenuId = ${siteNavigationMenuId});
 	}
 
 }

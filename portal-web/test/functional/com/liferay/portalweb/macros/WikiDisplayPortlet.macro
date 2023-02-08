@@ -10,22 +10,22 @@ definition {
 		Select(
 			key_selectFieldLabel = "Node",
 			locator1 = "Select#ANY",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Node",
 			locator1 = "Select#ANY",
-			value1 = "${wikiNodeName}");
+			value1 = ${wikiNodeName});
 
 		Select(
 			key_selectFieldLabel = "Page",
 			locator1 = "Select#ANY",
-			value1 = "${wikiPageName}");
+			value1 = ${wikiPageName});
 
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Page",
 			locator1 = "Select#ANY",
-			value1 = "${wikiPageName}");
+			value1 = ${wikiPageName});
 
 		PortletEntry.save();
 	}

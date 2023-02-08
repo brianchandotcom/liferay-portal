@@ -13,7 +13,7 @@ definition {
 	property upgrade.reports.enabled = "true";
 
 	@description = "LPS-158741: Upgrade Report provides the initial, final, and expected portal build number"
-	@priority = "3"
+	@priority = 3
 	test BuildNumberLogged {
 		property test.name.skip.portal.instance = "UpgradeReport#BuildNumberLogged";
 
@@ -24,8 +24,8 @@ definition {
 		}
 
 		task ("Read the intial portal build number") {
-			if (!(contains("${fileContent}", "Initial portal build number: 7413"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Initial portal build number: 7413"))) {
+				echo(${fileContent});
 
 				fail("Inital portal build number is not present in upgrade report.");
 			}
@@ -34,8 +34,8 @@ definition {
 		task ("Read the final portal build number") {
 			var finalBuildVersion = Upgrade.getBuildNumber();
 
-			if (!(contains("${fileContent}", "Final portal build number: ${finalBuildVersion}"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Final portal build number: ${finalBuildVersion}"))) {
+				echo(${fileContent});
 
 				fail("Final portal build number is not present in upgrade report.");
 			}
@@ -44,8 +44,8 @@ definition {
 		task ("Read the expected portal build number") {
 			var expectedBuildVersion = Upgrade.getBuildNumber();
 
-			if (!(contains("${fileContent}", "Expected portal build number: ${expectedBuildVersion}"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Expected portal build number: ${expectedBuildVersion}"))) {
+				echo(${fileContent});
 
 				fail("Expected portal build number is not present in upgrade report.");
 			}
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report provides the type and version of the database"
-	@priority = "3"
+	@priority = 3
 	test DatabaseLogged {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property test.name.skip.portal.instance = "UpgradeReport#DatabaseLogged";
@@ -69,8 +69,8 @@ definition {
 
 			var databaseVersion = PropsUtil.get("database.${databaseType}.version");
 
-			if (!(contains("${fileContent}", "Using ${databaseType} version ${databaseVersion}"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Using ${databaseType} version ${databaseVersion}"))) {
+				echo(${fileContent});
 
 				fail("Database type and version is not present in upgrade report.");
 			}
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "LPS-154683: The Upgrade Report Document Library Store and storage size."
-	@priority = "4"
+	@priority = 4
 	test DocumentLibraryLogged {
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -87,16 +87,16 @@ definition {
 		}
 
 		task ("Read which Document Library Store is being used") {
-			if (!(contains("${fileContent}", "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "dl.store.impl=com.liferay.portal.store.file.system.FileSystemStore"))) {
+				echo(${fileContent});
 
 				fail("Document library store is not present in upgrade report.");
 			}
 		}
 
 		task ("Read the size of document library storage") {
-			if (!(contains("${fileContent}", "The document library storage size is 750.03 KB"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "The document library storage size is 750.03 KB"))) {
+				echo(${fileContent});
 
 				fail("Size of document library storage is not present in upgrade report.");
 			}
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report shows errors"
-	@priority = "4"
+	@priority = 4
 	test ErrorsLogged {
 		property custom.mysql.sql.statement = "ALTER TABLE Release_ DROP servletContextName;";
 		property test.name.skip.portal.instance = "UpgradeReport#ErrorsLogged";
@@ -116,24 +116,24 @@ definition {
 		}
 
 		task ("Read the content. Error expected") {
-			if (!(contains("${fileContent}", "Errors thrown during upgrade process"))) {
+			if (!(contains(${fileContent}, "Errors thrown during upgrade process"))) {
 				fail("Upgrade report does not contain expected errors.");
 			}
 		}
 
 		task ("Read the content. Check for class name and message") {
-			if (!(contains("${fileContent}", "Class name: com.liferay.portal.tools.DBUpgrader"))) {
+			if (!(contains(${fileContent}, "Class name: com.liferay.portal.tools.DBUpgrader"))) {
 				fail("Upgrade report does not contain the error class name.");
 			}
 
-			if (!(contains("${fileContent}", "1 occurrences of the following errors: Unknown column 'servletContextName' in 'where clause'"))) {
+			if (!(contains(${fileContent}, "1 occurrences of the following errors: Unknown column 'servletContextName' in 'where clause'"))) {
 				fail("Upgrade report does not contain the error message.");
 			}
 		}
 	}
 
 	@description = "LPS-154683: The Upgrade Report logs the longest running upgrade processes."
-	@priority = "4"
+	@priority = 4
 	test LongestProcessesLogged {
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -142,8 +142,8 @@ definition {
 		}
 
 		task ("Read the processes list message") {
-			if (!(contains("${fileContent}", "Top 20 longest running upgrade processes"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Top 20 longest running upgrade processes"))) {
+				echo(${fileContent});
 
 				fail("List with the 20 longest upgrade processes not found.");
 			}
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report is created when property is set to true"
-	@priority = "4"
+	@priority = 4
 	test ReportGeneratedWhenEnabled {
 		property test.name.skip.portal.instance = "UpgradeReport#ReportGeneratedWhenEnabled";
 
@@ -162,14 +162,14 @@ definition {
 		}
 
 		task ("Check if file exists") {
-			if ("${reportFileExists}" != "true") {
+			if (${reportFileExists} != "true") {
 				fail("Upgrade report not found in ${liferayHome}/tools/portal-tools-db-upgrade-client/reports/");
 			}
 		}
 	}
 
 	@description = "LPS-154683: Upgrade Report is not created when property is not set to true"
-	@priority = "4"
+	@priority = 4
 	test ReportNotGenerated {
 		property test.name.skip.portal.instance = "UpgradeReport#ReportNotGenerated";
 		property upgrade.reports.enabled = "false";
@@ -181,14 +181,14 @@ definition {
 		}
 
 		task ("Check file doesn't exist") {
-			if ("${reportFileExists}" == "true") {
+			if (${reportFileExists} == "true") {
 				fail("Upgrade report found in ${liferayHome}/tools/portal-tools-db-upgrade-client/reports/");
 			}
 		}
 	}
 
 	@description = "LPS-154683: The Upgrade Report should not be deleted on additional upgrade runs."
-	@priority = "4"
+	@priority = 4
 	test ReportPersistThroughAdditionalUpgradeRuns {
 		property test.name.skip.portal.instance = "UpgradeReport#ReportPersistThroughAdditionalUpgradeRuns";
 
@@ -199,8 +199,8 @@ definition {
 		}
 
 		task ("Read the report. All upgrade processes are expected") {
-			if (!(contains("${upgradeReportOriginal}", "Top 20 longest running upgrade processes:"))) {
-				echo("${upgradeReportOriginal}");
+			if (!(contains(${upgradeReportOriginal}, "Top 20 longest running upgrade processes:"))) {
+				echo(${upgradeReportOriginal});
 
 				fail("Upgrade report does not contains expected upgrades.");
 			}
@@ -219,8 +219,8 @@ definition {
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains("${upgradeReportNew}", "No upgrade processes registered"))) {
-				echo("${upgradeReportNew}");
+			if (!(contains(${upgradeReportNew}, "No upgrade processes registered"))) {
+				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
 			}
@@ -229,19 +229,19 @@ definition {
 		task ("Look for the original upgrade report that has been renamed") {
 			var upgradeReportFilePattern = StringUtil.split("**/upgrade_report.info.[0-9]*");
 
-			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs("${upgradeReportFilePattern}", "${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
+			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs(${upgradeReportFilePattern}, "${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
 
-			var upgradeReportRenamedFilePath = StringUtil.valueOf("${upgradeReportRenamedFilePath}");
+			var upgradeReportRenamedFilePath = StringUtil.valueOf(${upgradeReportRenamedFilePath});
 
-			var upgradeReportRenamedFilePath = RegexUtil.replace("${upgradeReportRenamedFilePath}", "\[(.*)\]", "1");
+			var upgradeReportRenamedFilePath = RegexUtil.replace(${upgradeReportRenamedFilePath}, "\[(.*)\]", 1);
 
-			var upgradeReportRenamedFilePath = StringUtil.replace("${upgradeReportRenamedFilePath}", "file:", "");
+			var upgradeReportRenamedFilePath = StringUtil.replace(${upgradeReportRenamedFilePath}, "file:", "");
 
-			var upgradeReportRenamed = FileUtil.read("${upgradeReportRenamedFilePath}");
+			var upgradeReportRenamed = FileUtil.read(${upgradeReportRenamedFilePath});
 		}
 
 		task ("Compare original and renamed upgrade reports") {
-			if ("${upgradeReportRenamed}" != "${upgradeReportOriginal}") {
+			if (${upgradeReportRenamed} != ${upgradeReportOriginal}) {
 				echo("Original upgrade report content: ${upgradeReportOriginal}");
 
 				echo("Renamed upgrade report content: ${upgradeReportRenamed}");
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "LPS-154683: The Upgrade Report logs the row counts for each table."
-	@priority = "3"
+	@priority = 3
 	test RowCountsLogged {
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -261,14 +261,14 @@ definition {
 		}
 
 		task ("Read the row counts references") {
-			if (!(contains("${fileContent}", "Rows (initial)"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Rows (initial)"))) {
+				echo(${fileContent});
 
 				fail("Initial rows numbers column not present in upgrade report.");
 			}
 
-			if (!(contains("${fileContent}", "Rows (final)"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Rows (final)"))) {
+				echo(${fileContent});
 
 				fail("Final rows numbers column not present in upgrade report.");
 			}
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@description = "LPS-158741: The Upgrade Report should list the initial, expected, and final schema versions."
-	@priority = "4"
+	@priority = 4
 	test SchemaVersionsLogged {
 		property test.name.skip.portal.instance = "UpgradeReport#SchemaVersionsLogged";
 
@@ -287,8 +287,8 @@ definition {
 		}
 
 		task ("Read the intial schema version") {
-			if (!(contains("${fileContent}", "Initial portal schema version: 13.1.1"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Initial portal schema version: 13.1.1"))) {
+				echo(${fileContent});
 
 				fail("Inital schema version is not present in upgrade report.");
 			}
@@ -297,8 +297,8 @@ definition {
 		task ("Read the final schema version") {
 			var finalSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
-			if (!(contains("${fileContent}", "Final portal schema version: ${finalSchemaVersion}"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Final portal schema version: ${finalSchemaVersion}"))) {
+				echo(${fileContent});
 
 				fail("Final schema version is not present in upgrade report.");
 			}
@@ -307,8 +307,8 @@ definition {
 		task ("Read the expected schema version") {
 			var expectedSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
-			if (!(contains("${fileContent}", "Expected portal schema version: ${expectedSchemaVersion}"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Expected portal schema version: ${expectedSchemaVersion}"))) {
+				echo(${fileContent});
 
 				fail("Expected schema version is not present in upgrade report.");
 			}
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "LPS-154683: The Upgrade Report logs total upgrade runtime."
-	@priority = "4"
+	@priority = 4
 	test TotalRuntimeLogged {
 		property test.name.skip.portal.instance = "UpgradeReport#TotalRuntimeLogged";
 
@@ -331,28 +331,28 @@ definition {
 		}
 
 		task ("Capture the upgrade runtime in upgrade logs") {
-			var upgradeRunTimeLog = RegexUtil.replace("${fileContentLog}", "Completed Liferay upgrade process i\"?n \"?(.*[0-9])", "1");
+			var upgradeRunTimeLog = RegexUtil.replace(${fileContentLog}, "Completed Liferay upgrade process i\"?n \"?(.*[0-9])", 1);
 
 			echo("Upgrade runtime reported by upgrade.log is ${upgradeRunTimeLog}");
 		}
 
 		task ("Capture the upgrade runtime in upgrade Report") {
-			var upgradeRunTimeReport = RegexUtil.replace("${fileContentReport}", "Upgrade completed i\"?n \"?(.*[0-9])", "1");
+			var upgradeRunTimeReport = RegexUtil.replace(${fileContentReport}, "Upgrade completed i\"?n \"?(.*[0-9])", 1);
 
 			echo("Upgrade runtime reported by upgrade_report.info is ${upgradeRunTimeReport}");
 		}
 
 		task ("Read the total runtime to see if it's present") {
-			if (!(contains("${fileContentReport}", "Upgrade completed in ${upgradeRunTimeReport}"))) {
-				echo("${fileContentReport}");
+			if (!(contains(${fileContentReport}, "Upgrade completed in ${upgradeRunTimeReport}"))) {
+				echo(${fileContentReport});
 
 				fail("Total runtime is not present in upgrade report.");
 			}
 		}
 
 		task ("Read the total runtime comparing with the one got in the logs") {
-			if (!(contains("${fileContentReport}", "Upgrade completed in ${upgradeRunTimeLog}"))) {
-				echo("${fileContentReport}");
+			if (!(contains(${fileContentReport}, "Upgrade completed in ${upgradeRunTimeLog}"))) {
+				echo(${fileContentReport});
 
 				fail("Total runtime in upgrade report does not match the runtime in upgrade.log file.");
 			}
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report shows warnings"
-	@priority = "3"
+	@priority = 3
 	test WarningsLogged {
 		property test.name.skip.portal.instance = "UpgradeReport#WarningsLogged";
 
@@ -371,22 +371,22 @@ definition {
 		}
 
 		task ("Read the content. Warnings expected") {
-			if (!(contains("${fileContent}", "Warnings thrown during upgrade process"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Warnings thrown during upgrade process"))) {
+				echo(${fileContent});
 
 				fail("Upgrade report does not contain expected warnings.");
 			}
 		}
 
 		task ("Read the content. Check for class name and message") {
-			if (!(contains("${fileContent}", "Class name:"))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "Class name:"))) {
+				echo(${fileContent});
 
 				fail("Upgrade report does not contain the warning class name.");
 			}
 
-			if (!(contains("${fileContent}", "occurrences of the following warnings: "))) {
-				echo("${fileContent}");
+			if (!(contains(${fileContent}, "occurrences of the following warnings: "))) {
+				echo(${fileContent});
 
 				fail("Upgrade report does not contain the warning message.");
 			}

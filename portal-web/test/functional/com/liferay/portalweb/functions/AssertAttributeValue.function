@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForElementPresent();
 
-		selenium.assertAttributeNotPresent("${attribute1}", "${locator1}", "${value1}");
+		selenium.assertAttributeNotPresent(${attribute1}, ${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors();
 
@@ -18,7 +18,7 @@ definition {
 
 		selenium.waitForElementPresent();
 
-		selenium.assertAttributeValue("${attribute1}", "${locator1}", "${value1}");
+		selenium.assertAttributeValue(${attribute1}, ${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors();
 
@@ -30,7 +30,7 @@ definition {
 
 		selenium.waitForElementPresent();
 
-		selenium.assertAttributeValue("${attribute1}", "${locator1}", "${value1}");
+		selenium.assertAttributeValue(${attribute1}, ${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors();
 

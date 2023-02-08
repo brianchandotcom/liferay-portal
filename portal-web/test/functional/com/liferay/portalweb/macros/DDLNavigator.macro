@@ -12,7 +12,7 @@ definition {
 	macro gotoDataDefinitionPermissions {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
@@ -23,8 +23,8 @@ definition {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
 		DDLNavigator.viewDetails(
-			userName = "${userName}",
-			workflowStatus = "${workflowStatus}");
+			userName = ${userName},
+			workflowStatus = ${workflowStatus});
 	}
 
 	macro gotoEdit {
@@ -34,17 +34,17 @@ definition {
 	}
 
 	macro gotoListRecords {
-		var key_ddlListName = "${ddlListName}";
+		var key_ddlListName = ${ddlListName};
 
 		AssertTextEquals(
 			locator1 = "DDL#LIST_TABLE_NAME",
-			value1 = "${ddlListName}");
+			value1 = ${ddlListName});
 
 		AssertClick(
 			locator1 = "DDL#LIST_TABLE_NAME",
-			value1 = "${ddlListName}");
+			value1 = ${ddlListName});
 
-		SiteAdmin.viewPortletTitle(portletTitle = "${ddlListName}");
+		SiteAdmin.viewPortletTitle(portletTitle = ${ddlListName});
 	}
 
 	macro gotoManageDataDefinitions {
@@ -58,7 +58,7 @@ definition {
 	macro gotoManageTemplates {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
+		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
@@ -75,13 +75,13 @@ definition {
 
 	macro gotoSpreadsheetView {
 		AssertTextEquals(
-			key_ddlListName = "${ddlListName}",
+			key_ddlListName = ${ddlListName},
 			locator1 = "DDL#LIST_TABLE_NAME",
-			value1 = "${ddlListName}");
+			value1 = ${ddlListName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Spreadsheet View",
-			rowEntry = "${ddlListName}");
+			rowEntry = ${ddlListName});
 	}
 
 	macro gotoView {
@@ -99,7 +99,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Staging#WORKFLOW_STATUS",
-			value1 = "${workflowStatus}");
+			value1 = ${workflowStatus});
 	}
 
 }

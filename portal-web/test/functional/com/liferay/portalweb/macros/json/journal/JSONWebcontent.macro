@@ -2,34 +2,34 @@ definition {
 
 	@summary = "Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'"
 	macro addBasicWebContentLocalized {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
 		var contentXml = JSONWebcontentSetter.setContentXML(
-			content = "${content}",
-			contentMap = "${contentMap}");
-		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = "${description}");
+			content = ${content},
+			contentMap = ${contentMap});
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = ${description});
 		var folderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${folderName}",
-			groupId = "${groupId}");
+			folderName = ${folderName},
+			groupId = ${groupId});
 		var serviceContext = JSONWebcontentSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
 		var titleMap = JSONWebcontentSetter.setTitleMap(
-			title = "${title}",
-			titleMap = "${titleMap}");
+			title = ${title},
+			titleMap = ${titleMap});
 
 		JSONWebcontentAPI._addWebContent(
-			contentXml = "${contentXml}",
-			descriptionMap = "${descriptionMap}",
-			folderId = "${folderId}",
-			groupId = "${groupId}",
-			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			contentXml = ${contentXml},
+			descriptionMap = ${descriptionMap},
+			folderId = ${folderId},
+			groupId = ${groupId},
+			serviceContext = ${serviceContext},
+			titleMap = ${titleMap},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
@@ -37,20 +37,20 @@ definition {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var parentFolderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${parentFolderName}",
-			groupId = "${groupId}");
+			folderName = ${parentFolderName},
+			groupId = ${groupId});
 
 		JSONWebcontentAPI._addFolder(
-			folderDescription = "${folderDescription}",
-			folderName = "${folderName}",
-			groupId = "${groupId}",
-			parentFolderId = "${parentFolderId}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			folderDescription = ${folderDescription},
+			folderName = ${folderName},
+			groupId = ${groupId},
+			parentFolderId = ${parentFolderId},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
@@ -58,31 +58,31 @@ definition {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var contentXml = JSONWebcontentSetter.setContentXML(
-			content = "${content}",
-			source = "${source}");
-		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = "${description}");
+			content = ${content},
+			source = ${source});
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = ${description});
 		var folderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${folderName}",
-			groupId = "${groupId}");
+			folderName = ${folderName},
+			groupId = ${groupId});
 		var serviceContext = JSONWebcontentSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
-		var titleMap = JSONWebcontentSetter.setTitleMap(title = "${title}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
+		var titleMap = JSONWebcontentSetter.setTitleMap(title = ${title});
 
 		JSONWebcontentAPI._addWebContent(
-			contentXml = "${contentXml}",
-			descriptionMap = "${descriptionMap}",
-			folderId = "${folderId}",
-			groupId = "${groupId}",
-			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			contentXml = ${contentXml},
+			descriptionMap = ${descriptionMap},
+			folderId = ${folderId},
+			groupId = ${groupId},
+			serviceContext = ${serviceContext},
+			titleMap = ${titleMap},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	@summary = "Delete a WC Article under an existing site via article title"
@@ -90,29 +90,29 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var articleId = JSONWebcontentSetter.setArticleId(
-			groupName = "${groupName}",
-			site = "${site}",
-			title = "${title}");
+			groupName = ${groupName},
+			site = ${site},
+			title = ${title});
 
 		JSONWebcontentAPI._deleteWebContent(
-			articleId = "${articleId}",
-			groupId = "${groupId}");
+			articleId = ${articleId},
+			groupId = ${groupId});
 	}
 
 	@summary = "Get the 'folderId' for the folder '${folderName}' that is part of the Site '${groupName}' via JSON"
 	macro getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
 
 		var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
-			folderName = "${folderName}",
-			groupId = "${groupId}");
+			folderName = ${folderName},
+			groupId = ${groupId});
 
-		return "${folderId}";
+		return ${folderId};
 	}
 
 	@summary = "Get the 'uuid' for the folder '${folderName}' that is part of the Site '${groupName}' via JSON"
@@ -120,48 +120,48 @@ definition {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var folderUuid = JSONWebcontentAPI._getFolderUuidByFolderName(
-			folderName = "${folderName}",
-			groupId = "${groupId}");
+			folderName = ${folderName},
+			groupId = ${groupId});
 
-		return "${folderUuid}";
+		return ${folderUuid};
 	}
 
 	@summary = "Get the 'resourcePrimKey' via JSON"
 	macro getResourcePrimKeyByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var urlTitle = StringUtil.replace("${title}", " ", "-");
+		var urlTitle = StringUtil.replace(${title}, " ", "-");
 
-		var urlTitle = StringUtil.lowerCase("${urlTitle}");
+		var urlTitle = StringUtil.lowerCase(${urlTitle});
 
 		var resourcePrimKey = JSONWebcontentAPI._getResourcePrimKeyByURLTitle(
-			groupName = "${groupName}",
-			urlTitle = "${urlTitle}");
+			groupName = ${groupName},
+			urlTitle = ${urlTitle});
 
-		return "${resourcePrimKey}";
+		return ${resourcePrimKey};
 	}
 
 	@summary = "Move a WC Article to trash under an existing site"
 	macro moveWebContentToTrash {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
 		var articleId = JSONWebcontentSetter.setArticleId(
-			groupName = "${groupName}",
-			title = "${title}");
+			groupName = ${groupName},
+			title = ${title});
 
 		JSONWebcontentAPI._moveWebContentToTrash(
-			articleId = "${articleId}",
-			groupId = "${groupId}");
+			articleId = ${articleId},
+			groupId = ${groupId});
 	}
 
 	@summary = "Restore a WC Article from the trash via 'resourcePrimKey' by JSON"
 	macro restoreWebContentFromTrashViaResourcePrimKey {
-		var resourcePrimKey = "${resourcePrimKey}";
+		var resourcePrimKey = ${resourcePrimKey};
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -170,7 +170,7 @@ definition {
 				-d resourcePrimKey=${resourcePrimKey}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Update status of a WC Article under an existing site via article title"
@@ -178,20 +178,20 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${statusKey},${title}");
 
 		var articleId = JSONWebcontentSetter.setArticleId(
-			groupName = "${groupName}",
-			title = "${title}");
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
-		var status = JSONWebcontentSetter.setStatus(statusKey = "${statusKey}");
+			groupName = ${groupName},
+			title = ${title});
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
+		var status = JSONWebcontentSetter.setStatus(statusKey = ${statusKey});
 
 		if (!(isSet(version))) {
 			var version = "1.0";
 		}
 
 		JSONWebcontentAPI._updateStatus(
-			articleId = "${articleId}",
-			groupId = "${groupId}",
-			status = "${status}",
-			version = "${version}");
+			articleId = ${articleId},
+			groupId = ${groupId},
+			status = ${status},
+			version = ${version});
 	}
 
 }

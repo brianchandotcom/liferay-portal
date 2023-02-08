@@ -27,7 +27,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8557 | Automation ID: LRAC-11056 | Test Summary: Search using special characters shown in search overview"
-	@priority = "4"
+	@priority = 4
 	test SearchTermWithSpecialCharacters {
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -46,7 +46,7 @@ definition {
 			Navigator.openURL();
 
 			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
-				ContentDashboard.searchValue(webContentTitle = "${keyword}");
+				ContentDashboard.searchValue(webContentTitle = ${keyword});
 			}
 		}
 
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to sites pages tab") {
@@ -78,13 +78,13 @@ definition {
 
 		task ("Assert Keywords Searched") {
 			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
-				ACUtils.viewGenericText(textValueList = "${keyword}");
+				ACUtils.viewGenericText(textValueList = ${keyword});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
-	@priority = "5"
+	@priority = 5
 	test ShowsKeywordsBeingSearched {
 		property analytics.cloud.upstream = "false";
 
@@ -96,7 +96,7 @@ definition {
 			Navigator.openURL();
 
 			for (var keyword : list "liferay,ac") {
-				ContentDashboard.searchValue(webContentTitle = "${keyword}");
+				ContentDashboard.searchValue(webContentTitle = ${keyword});
 			}
 		}
 
@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("Switch to new property in AC") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Go to sites pages tab") {
@@ -129,7 +129,7 @@ definition {
 		task ("Assert Keywords Searched") {
 			for (var keyword : list "liferay,ac") {
 				AssertElementPresent(
-					key_keyword = "${keyword}",
+					key_keyword = ${keyword},
 					locator1 = "ACSites#SEARCHED_KEYWORD");
 			}
 		}

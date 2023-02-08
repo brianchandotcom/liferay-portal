@@ -19,7 +19,7 @@ definition {
 		}
 
 		if (!(isSet(coverImageId))) {
-			var coverImageId = "0";
+			var coverImageId = 0;
 		}
 
 		if (!(isSet(subtitle))) {
@@ -33,20 +33,20 @@ definition {
 		if (isSet(assetTagNames)) {
 			var list = ListUtil.newList();
 
-			for (var assetTagName : list "${assetTagNames}") {
+			for (var assetTagName : list ${assetTagNames}) {
 				var assetTagName = '''"${assetTagName}"''';
 
-				ListUtil.add("${list}", "${assetTagName}");
+				ListUtil.add(${list}, ${assetTagName});
 			}
 
-			var assetTagNames = ListUtil.toString("${list}");
+			var assetTagNames = ListUtil.toString(${list});
 		}
 		else {
 			var assetTagNames = "";
 		}
 
 		if (!(isSet(assetCategoryIds))) {
-			var assetCategoryIds = "0";
+			var assetCategoryIds = 0;
 		}
 
 		if (!(isSet(viewableBy))) {
@@ -56,10 +56,10 @@ definition {
 		var content = '''<p>${content}</p>''';
 		var os = OSDetector.isWindows();
 
-		if ("${os}" == "true") {
-			var content = StringUtil.replace("${content}", ">", "^>");
+		if (${os} == "true") {
+			var content = StringUtil.replace(${content}, ">", "^>");
 
-			var content = StringUtil.replace("${content}", "<", "^<");
+			var content = StringUtil.replace(${content}, "<", "^<");
 		}
 
 		var curl = '''
@@ -82,9 +82,9 @@ definition {
 				}
 		''';
 
-		var entryId = JSONCurlUtil.post("${curl}", "$.id");
+		var entryId = JSONCurlUtil.post(${curl}, "$.id");
 
-		return "${entryId}";
+		return ${entryId};
 	}
 
 }

@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccounts});
 		}
 	}
 
@@ -34,19 +34,19 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-147029 | Test Summary: Verify that the cards Subscriptions displays (Product logo - Subscription - Instance Size - Start Date - End Date)"
-	@priority = "5"
+	@priority = 5
 	test AffirmAllCardInformation {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -57,10 +57,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147027 | Test Summary: Verify if the Active status reflects the dates displayed"
-	@priority = "4"
+	@priority = 4
 	test IfActiveStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -74,10 +74,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147025 | Test Summary: Verify if the Expired status reflects the dates displayed"
-	@priority = "4"
+	@priority = 4
 	test IfExpiredStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -93,10 +93,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147026 | Test Summary: Verify if the Future status reflects the dates displayed"
-	@priority = "4"
+	@priority = 4
 	test IfFutureStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
@@ -112,10 +112,10 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147021 | Test Summary: Verify if a tab is shown only if there are subscriptions to display on that tab"
-	@priority = "5"
+	@priority = 5
 	test IfTabAppearOnlyWithSubscriptions {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
@@ -128,14 +128,14 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147034 | Test Summary: Verify if when the project has up to 3 options in the tabs for subscription management, the tabs are listed side by side"
-	@priority = "4"
+	@priority = 4
 	test LessThan5TabsAreSideBySide {
 		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -146,14 +146,14 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147022 | Test Summary: Verify if when the user doesn't have a subscription then a tab will not be shown"
-	@priority = "4"
+	@priority = 4
 	test TabDontAppearWithoutSubscription {
 		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Partnership");
 		}
@@ -164,14 +164,14 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147035 | Test Summary: Verify if when a project has at least 5 options in the tabs for subscription management, the tab list turns into a dropdown list"
-	@priority = "4"
+	@priority = 4
 	test Tabs5OrMoreBecamesDropdownList {
 		task ("Given I set up the width of window desktop") {
 			SetWindowSize(value1 = "1920,1080");
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(title = "Test Account Others");
 		}

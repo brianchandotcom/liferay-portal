@@ -7,8 +7,8 @@ definition {
 	macro assertPaginationComponentPresent {
 		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON");
 
-		for (var pageNumber : list "${pageNumberList}") {
-			var key_pageNumber = "${pageNumber}";
+		for (var pageNumber : list ${pageNumberList}) {
+			var key_pageNumber = ${pageNumber};
 
 			AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NUMBER_BUTTON");
 		}
@@ -18,43 +18,43 @@ definition {
 
 	macro assertTooltipMessage {
 		AssertElementPresent(
-			key_sectionName = "${sectionName}",
-			key_tooltipMessage = "${tooltipMessage}",
+			key_sectionName = ${sectionName},
+			key_tooltipMessage = ${tooltipMessage},
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_TOOLTIP_MESSAGE");
 	}
 
 	macro changePagination {
 		Click(locator1 = "WorkflowMetricsProcessListView#ITEMS_PER_PAGE_SELECT");
 
-		var key_itemsPerPage = "${itemsPerPage}";
+		var key_itemsPerPage = ${itemsPerPage};
 
-		MenuItem.click(menuItem = "${itemsPerPage}");
+		MenuItem.click(menuItem = ${itemsPerPage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WorkflowMetricsProcessListView#ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage}");
+			value1 = ${itemsPerPage});
 	}
 
 	macro metricsWorkflowSearch {
-		var key_workflowSearchName = "${workflowSearchName}";
+		var key_workflowSearchName = ${workflowSearchName};
 
 		Type(
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
-			value1 = "${workflowSearchName}");
+			value1 = ${workflowSearchName});
 
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
 
 		AssertElementPresent(
-			key_workflowProcessName = "${key_workflowSearchName}",
+			key_workflowProcessName = ${key_workflowSearchName},
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
 	macro metricsWorkflowSearchClearAll {
-		var key_workflowSearchName = "${workflowSearchName}";
+		var key_workflowSearchName = ${workflowSearchName};
 
 		Type(
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
-			value1 = "${workflowSearchName}");
+			value1 = ${workflowSearchName});
 
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
 
@@ -66,7 +66,7 @@ definition {
 	macro viewResults {
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsProcessListView#PAGINATION_RESULTS",
-			value1 = "${results}");
+			value1 = ${results});
 	}
 
 }

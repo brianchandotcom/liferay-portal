@@ -27,7 +27,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8304 | Test Summary: Assert Sites Top Pages Card Entrance Pages Highest Entrances"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesTopPagesCardEntrancePagesHighestEntrances {
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -47,8 +47,8 @@ definition {
 		var pageInteraction = "AC Page,AC Page 1,AC Page 1,AC Page 2,AC Page 2,AC Page 2";
 
 		task ("Add Site and Page") {
-			for (var n : list "${pageCreation}") {
-				ACUtils.addPage(layoutName = "${n}");
+			for (var n : list ${pageCreation}) {
+				ACUtils.addPage(layoutName = ${n});
 			}
 		}
 
@@ -57,9 +57,9 @@ definition {
 		}
 
 		task ("Interation with Pages") {
-			for (var pageName : list "${pageInteraction}") {
+			for (var pageName : list ${pageInteraction}) {
 				ACUtils.navigateToSitePage(
-					pageName = "${pageName}",
+					pageName = ${pageName},
 					siteName = "Site Name");
 			}
 		}
@@ -69,7 +69,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset highest views pages highest entrances") {
@@ -83,14 +83,14 @@ definition {
 			ACNavigation.switchTabInCard(tabName = "Entrance Pages");
 
 			for (var current : list "3-AC Page,2-AC Page 1,1-AC Page 2") {
-				ACSites.viewVisitedTopPages(current = "${current}");
+				ACSites.viewVisitedTopPages(current = ${current});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8302 | Test Summary: Assert Sites Top Pages Card Exit Pages Highest Exits"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesTopPagesCardExitPagesHighestExits {
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -135,7 +135,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset highest views pages Top Pages") {
@@ -149,25 +149,25 @@ definition {
 			ACNavigation.switchTabInCard(tabName = "Exit Pages");
 
 			for (var current : list "1-Test Blog 2,2-Test Blog 1,3-AC Page") {
-				ACSites.viewVisitedTopPages(current = "${current}");
+				ACSites.viewVisitedTopPages(current = ${current});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
 		var num = "1,2";
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		task ("Add two new users") {
-			for (var name : list "${usernameList}") {
+			for (var name : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
-					userFirstName = "${name}",
-					userLastName = "${name}",
-					userScreenName = "${name}");
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -177,7 +177,7 @@ definition {
 		}
 
 		task ("Blogs creation") {
-			for (var n : list "${num}") {
+			for (var n : list ${num}) {
 				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${n}");
 			}
 		}
@@ -225,7 +225,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Asset highest views pages Top Pages") {
@@ -233,7 +233,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACSites.viewVisitedTopPages(
 				pageNameList = "Test Blog 2 - Site Name - ${dataSourceName},AC Page - Site Name - ${dataSourceName},Test Blog 1 - Site Name - ${dataSourceName}",
@@ -243,7 +243,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8305 | Test Summary: Assert Sites Top Pages Change Time Filter"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertSitesTopPagesChangeTimeFilter {
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -268,7 +268,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset last 180 days time period filter ") {
@@ -276,7 +276,7 @@ definition {
 
 			ACTimeFilter.setLast180Days();
 
-			ACCards.noViewTopSitesCardByIndexes(key_index = "1");
+			ACCards.noViewTopSitesCardByIndexes(key_index = 1);
 		}
 
 		task ("Asset last 24 hours time period filter ") {
@@ -287,13 +287,13 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACCards.viewTopSitesCardByIndexes(key_index = "1");
+			ACCards.viewTopSitesCardByIndexes(key_index = 1);
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8296 | Test Summary: Show Top 5 Entrance Pages"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ShowTop5EntrancePages {
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -322,7 +322,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Asset top 5 entrances pages") {
@@ -339,19 +339,19 @@ definition {
 
 			ACCards.viewTopSitesByIndexes(
 				key_entry = "AC Page",
-				key_index = "1");
+				key_index = 1);
 
 			for (var n : list "2,3,4,5") {
 				ACCards.viewTopSitesByIndexes(
 					key_entry = "Test Blog ${n}",
-					key_index = "${n}");
+					key_index = ${n});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8297 | Test Summary: Show Top 5 Exit Pages"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ShowTop5ExitPages {
 
 		// AC Refactor: the issue is due to data not appearing on time
@@ -360,13 +360,13 @@ definition {
 		task ("Site and blogs creation and connection with AC") {
 			var pages = "AC Page,AC Page 2,AC Page 3,AC Page 4,AC Page 5";
 
-			for (var n : list "${pages}") {
-				if ("${n}" != "AC Page") {
-					ACUtils.addPage(layoutName = "${n}");
+			for (var n : list ${pages}) {
+				if (${n} != "AC Page") {
+					ACUtils.addPage(layoutName = ${n});
 				}
 
 				ACUtils.addWidgetToPage(
-					layoutName = "${n}",
+					layoutName = ${n},
 					widgetName = "Blogs");
 			}
 
@@ -376,13 +376,13 @@ definition {
 		}
 
 		task ("Interation with pages") {
-			for (var n : list "${pages}") {
+			for (var n : list ${pages}) {
 				User.logoutAndLoginPG(
 					userLoginEmailAddress = "test@liferay.com",
 					userLoginFullName = "test test");
 
 				ACUtils.navigateToSitePage(
-					pageName = "${n}",
+					pageName = ${n},
 					siteName = "Site Name");
 			}
 
@@ -392,7 +392,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Setting filter") {
@@ -409,19 +409,19 @@ definition {
 
 			var pagesList = "AC Page-2,AC Page 2-3,AC Page 3-4,AC Page 4-5,AC Page 5-1";
 
-			for (var current : list "${pagesList}") {
-				var name = StringUtil.extractFirst("${current}", "-");
-				var n = StringUtil.extractLast("${current}", "-");
+			for (var current : list ${pagesList}) {
+				var name = StringUtil.extractFirst(${current}, "-");
+				var n = StringUtil.extractLast(${current}, "-");
 
 				ACCards.viewTopSitesByIndexes(
-					key_entry = "${name}",
-					key_index = "${n}");
+					key_entry = ${name},
+					key_index = ${n});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8294 | Test Summary: Show Top 5 Visited Pages"
-	@priority = "5"
+	@priority = 5
 	test ShowTop5VisitedPages {
 		property analytics.cloud.upstream = "false";
 
@@ -429,7 +429,7 @@ definition {
 		var u = "1,2,3,4";
 
 		task ("Site, users and blogs creation then connect with AC") {
-			for (var x : list "${n}") {
+			for (var x : list ${n}) {
 				ACUtils.createBlogsAndAddToPage(entryTitle = "Test Blog ${x}");
 			}
 
@@ -443,7 +443,7 @@ definition {
 		}
 
 		task ("Interation with pages") {
-			for (var x : list "${n}") {
+			for (var x : list ${n}) {
 				ACUtils.navigateToSitePage(
 					actionType = "View Blog",
 					documentTitleList = "Test Blog ${x}",
@@ -455,7 +455,7 @@ definition {
 				userLoginEmailAddress = "test1@liferay.com",
 				userLoginFullName = "test1 test1");
 
-			for (var x : list "${u}") {
+			for (var x : list ${u}) {
 				ACUtils.navigateToSitePage(
 					actionType = "View Blog",
 					documentTitleList = "Test Blog ${x}",
@@ -471,7 +471,7 @@ definition {
 		task ("AC launch") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Assert top 5 visited pages") {
@@ -486,7 +486,7 @@ definition {
 				key_entry = "AC Page",
 				key_result = "");
 
-			for (var x : list "${u}") {
+			for (var x : list ${u}) {
 				ACCards.viewTopVisitedPages(
 					key_entry = "Test Blog ${x}",
 					key_result = "");

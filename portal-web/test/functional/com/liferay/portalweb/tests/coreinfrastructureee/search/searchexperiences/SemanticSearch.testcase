@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -157,7 +157,7 @@ definition {
 			SearchResultPortlet.viewDocumentDetailValue(
 				documentDetailKey = "text_embedding_768_en_US",
 				documentDetailKeyValue = "0.0",
-				searchAssetTitle = "${assetTitle}");
+				searchAssetTitle = ${assetTitle});
 		}
 	}
 
@@ -195,7 +195,7 @@ definition {
 
 		var assetScoreUnboosted = selenium.getText("Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
 
-		if ("${assetScoreUnboosted}" != "${assetScoreBoosted}") {
+		if (${assetScoreUnboosted} != ${assetScoreBoosted}) {
 			echo("Assertion PASSED: Semantic Search had an effect on the search result score");
 
 			echo("Search score without Semantic Search: ${assetScoreUnboosted}");
@@ -272,7 +272,7 @@ definition {
 		Type(
 			key_fieldLabel = "Model Timeout",
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-			value1 = "25");
+			value1 = 25);
 
 		AssertElementNotPresent(
 			key_text = "Test Configuration",
@@ -330,7 +330,7 @@ definition {
 		Select(
 			ariaLabel = "Embedding Vector Dimensions",
 			locator1 = "Select#ANY_ARIA_LABEL",
-			value1 = "384");
+			value1 = 384);
 
 		Button.click(button = "Test Configuration");
 
@@ -339,7 +339,7 @@ definition {
 		Select(
 			ariaLabel = "Embedding Vector Dimensions",
 			locator1 = "Select#ANY_ARIA_LABEL",
-			value1 = "768");
+			value1 = 768);
 
 		Button.click(button = "Test Configuration");
 

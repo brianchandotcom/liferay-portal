@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the depot language can be set in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSetCustomLanguage {
 		JSONDepot.addDepot(
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom type language can be set in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewCustomLanguagesOrderForCustomType {
 		JSONDepot.addDepot(
@@ -84,12 +84,12 @@ definition {
 			defaultDepotLanguage = "English (United States)");
 
 		Depot.changeLanguagesOrder(
-			fromRowNumber = "2",
-			toRowNumber = "3");
+			fromRowNumber = 2,
+			toRowNumber = 3);
 
 		Depot.changeLanguagesOrder(
-			fromRowNumber = "4",
-			toRowNumber = "1");
+			fromRowNumber = 4,
+			toRowNumber = 1);
 
 		Button.click(button = "Save");
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This ensures that the web content language can be set in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewCustomLanguagesOrderForWebContent {
 		JSONDepot.addDepot(
@@ -211,12 +211,12 @@ definition {
 			defaultDepotLanguage = "English (United States)");
 
 		Depot.changeLanguagesOrder(
-			fromRowNumber = "2",
-			toRowNumber = "3");
+			fromRowNumber = 2,
+			toRowNumber = 3);
 
 		Depot.changeLanguagesOrder(
-			fromRowNumber = "4",
-			toRowNumber = "1");
+			fromRowNumber = 4,
+			toRowNumber = 1);
 
 		Button.click(button = "Save");
 

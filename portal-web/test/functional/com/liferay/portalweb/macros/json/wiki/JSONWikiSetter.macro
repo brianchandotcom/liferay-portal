@@ -1,17 +1,17 @@
 definition {
 
 	macro setGroupId {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setNodeId {
@@ -22,15 +22,15 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			noSelenium = "${noSelenium}",
-			site = "${site}");
+			groupName = ${groupName},
+			noSelenium = ${noSelenium},
+			site = ${site});
 
 		var nodeId = JSONWikiAPI._getNodeIdByName(
-			groupId = "${groupId}",
-			name = "${name}");
+			groupId = ${groupId},
+			name = ${name});
 
-		return "${nodeId}";
+		return ${nodeId};
 	}
 
 	macro setPageId {
@@ -41,18 +41,18 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var nodeId = JSONWikiAPI._getNodeIdByName(
-			groupId = "${groupId}",
-			name = "${name}");
+			groupId = ${groupId},
+			name = ${name});
 
 		var pageId = JSONWikiAPI._getPageIdByName(
-			nodeId = "${nodeId}",
-			title = "${title}");
+			nodeId = ${nodeId},
+			title = ${title});
 
-		return "${pageId}";
+		return ${pageId};
 	}
 
 	macro setResourcePrimKey {
@@ -63,27 +63,27 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var nodeId = JSONWikiAPI._getNodeIdByName(
-			groupId = "${groupId}",
-			name = "${name}");
+			groupId = ${groupId},
+			name = ${name});
 
 		var resourcePrimKey = JSONWikiAPI._getPageResourcePrimKey(
-			nodeId = "${nodeId}",
-			title = "${title}");
+			nodeId = ${nodeId},
+			title = ${title});
 
-		return "${resourcePrimKey}";
+		return ${resourcePrimKey};
 	}
 
 	macro setServiceContext {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			groupName = "${groupName}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			groupName = ${groupName});
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 }

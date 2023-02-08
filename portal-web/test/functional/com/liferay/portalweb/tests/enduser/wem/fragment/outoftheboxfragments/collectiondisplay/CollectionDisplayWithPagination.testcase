@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,13 +36,13 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146171. Check the behaviors when user define different Maximum Number of Pages to Display."
-	@priority = "4"
+	@priority = 4
 	test ConfigureMaximumNumberOfPagesToDisplay {
 		task ("Given a page creator has a content page with Collection Display fragment then select a dynamic collection") {
 			task ("Add 6 web contents") {
-				var i = "1";
+				var i = 1;
 
-				while ("${i}" != "7") {
+				while (${i} != 7) {
 					JSONWebcontent.addWebContent(
 						content = "Web Content Content ${i}",
 						groupName = "Test Site Name",
@@ -79,14 +79,14 @@ definition {
 		task ("When the page creator changes the Maximum Number of Items per Page to 1") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "1",
+				maxNumberOfItemsPerPage = 1,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("Then the page creator could view 6 pages shown in Collection Display") {
 			for (var pageNumber : list "1,2,3,...,6") {
 				AssertVisible(
-					key_pageNumber = "${pageNumber}",
+					key_pageNumber = ${pageNumber},
 					locator1 = "Pagination#ANY_PAGE");
 			}
 		}
@@ -101,30 +101,30 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Maximum Number of Pages to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "5");
+				value1 = 5);
 
 			for (var pageNumber : list "1,2,3,4,5") {
 				AssertVisible(
-					key_pageNumber = "${pageNumber}",
+					key_pageNumber = ${pageNumber},
 					locator1 = "Pagination#ANY_PAGE");
 			}
 
 			AssertElementNotPresent(
-				key_pageNumber = "6",
+				key_pageNumber = 6,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
 		task ("When the page creator changes the Maximum Number of Pages to Display is 6") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfPagesToDisplay = "6",
+				maxNumberOfPagesToDisplay = 6,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("Then the page creator could view the page 6 shown in pagination bar") {
 			for (var pageNumber : list "1,2,3,...,6") {
 				AssertVisible(
-					key_pageNumber = "${pageNumber}",
+					key_pageNumber = ${pageNumber},
 					locator1 = "Pagination#ANY_PAGE");
 			}
 		}
@@ -132,19 +132,19 @@ definition {
 		task ("When the page creator changes the Maximum Number of Pages to Display is 7") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfPagesToDisplay = "7",
+				maxNumberOfPagesToDisplay = 7,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("Then the page creator could only view 6 pages shown in Collection Display") {
 			for (var pageNumber : list "1,2,3,...,6") {
 				AssertVisible(
-					key_pageNumber = "${pageNumber}",
+					key_pageNumber = ${pageNumber},
 					locator1 = "Pagination#ANY_PAGE");
 			}
 
 			AssertElementNotPresent(
-				key_pageNumber = "7",
+				key_pageNumber = 7,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
@@ -156,7 +156,7 @@ definition {
 			Type.sendKeys(
 				key_fieldLabel = "Maximum Number of Pages to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "0");
+				value1 = 0);
 		}
 
 		task ("Then the Maximum Number of Pages to Display field should be empty") {
@@ -190,14 +190,14 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Maximum Number of Pages to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "1");
+				value1 = 1);
 
 			AssertVisible(
-				key_pageNumber = "1",
+				key_pageNumber = 1,
 				locator1 = "Pagination#ANY_PAGE");
 
 			AssertElementNotPresent(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
@@ -220,18 +220,18 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Maximum Number of Pages to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "2");
+				value1 = 2);
 
 			for (var pageNumber : list "1,2") {
 				AssertVisible(
-					key_pageNumber = "${pageNumber}",
+					key_pageNumber = ${pageNumber},
 					locator1 = "Pagination#ANY_PAGE");
 			}
 		}
 	}
 
 	@description = "This is a use case for LPS-149178. The user could navigate through pages in Collection Display with pagination and Display All Collection Items."
-	@priority = "4"
+	@priority = 4
 	test NavigateToPagesInCollectionDisplayWithDisplayAllCollectionItems {
 		property portal.acceptance = "true";
 
@@ -267,18 +267,18 @@ definition {
 				displayAllPages = "true",
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				maxNumberOfItemsPerPage = "5",
+				maxNumberOfItemsPerPage = 5,
 				styleDisplay = "Bordered List");
 		}
 
 		task ("View only 5 web contents shown in page 1 of Collection Display in page editor") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "6,5,4,3,2") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='Web Content Title ${i}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
 
 				var n = ${n} + 1;
@@ -287,13 +287,13 @@ definition {
 
 		task ("View the sixth web content shown in page 2 of Collection Display in page editor") {
 			Click(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space(text())='Web Content Title 1']",
 				key_fragmentName = "Collection Display",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
 
 			PageEditor.publish();
@@ -304,13 +304,13 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "6,5,4,3,2") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='Web Content Title ${i}']",
 					key_fragmentName = "Collection Display",
-					key_position = "${n}",
+					key_position = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
 				var n = ${n} + 1;
@@ -319,19 +319,19 @@ definition {
 
 		task ("View the sixth web content shown in page 2 of Collection Display at view mode") {
 			Click(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space(text())='Web Content Title 1']",
 				key_fragmentName = "Collection Display",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
 	}
 
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Numeric pagination."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test NavigateToPagesInCollectionDisplayWithNumericPagination {
 		property portal.acceptance = "true";
@@ -398,38 +398,38 @@ definition {
 			PageEditor.editCollectionDisplay(
 				displayAllPages = "false",
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "15",
-				maxNumberOfPagesToDisplay = "1",
+				maxNumberOfItemsPerPage = 15,
+				maxNumberOfPagesToDisplay = 1,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("View all assets shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Document Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "6";
+			var n = 6;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Blogs Entry Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "11";
+			var n = 11;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -437,11 +437,11 @@ definition {
 
 		task ("View only the page 1 shown in Collection Display") {
 			AssertVisible(
-				key_pageNumber = "1",
+				key_pageNumber = 1,
 				locator1 = "Pagination#ANY_PAGE");
 
 			AssertElementNotPresent(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
@@ -458,26 +458,26 @@ definition {
 		task ("Select the 5 in Maximum Number of Items per Page field") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "5",
-				maxNumberOfPagesToDisplay = "3",
+				maxNumberOfItemsPerPage = 5,
+				maxNumberOfPagesToDisplay = 3,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Document Title ${i}",
-					row = "${n}");
+					row = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -497,27 +497,27 @@ definition {
 
 		task ("Navigate to page 3 in Collection Display") {
 			Click(
-				key_pageNumber = "3",
+				key_pageNumber = 3,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Web Content Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -528,22 +528,22 @@ definition {
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Blogs Entry Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -552,48 +552,48 @@ definition {
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
 		task ("Navigate to page 2 in Collection Display") {
 			Click(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -604,22 +604,22 @@ definition {
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 
 			Close.closeWindow();
@@ -634,48 +634,48 @@ definition {
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
 		task ("Navigate to page 3 in Collection Display") {
 			Click(
-				key_pageNumber = "3",
+				key_pageNumber = 3,
 				locator1 = "Pagination#ANY_PAGE");
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -686,28 +686,28 @@ definition {
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 	}
 
 	@description = "This is a use case for LPS-123825. The user could navigate through pages in Collection Display with the Simple pagination."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test NavigateToPagesInCollectionDisplayWithSimplePagination {
 		property portal.acceptance = "true";
@@ -789,7 +789,7 @@ definition {
 		task ("View the Previous and Next buttons not shown in Collection Display") {
 			for (var buttonName : list "Previous,Next") {
 				AssertElementNotPresent(
-					key_text = "${buttonName}",
+					key_text = ${buttonName},
 					locator1 = "Button#ANY");
 			}
 		}
@@ -798,45 +798,45 @@ definition {
 			PageEditor.editCollectionDisplay(
 				displayAllPages = "false",
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "15",
-				maxNumberOfPagesToDisplay = "1",
+				maxNumberOfItemsPerPage = 15,
+				maxNumberOfPagesToDisplay = 1,
 				pagination = "Simple",
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("View all assets shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Document Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "6";
+			var n = 6;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Blogs Entry Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
-			var n = "11";
+			var n = 11;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Web Content Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -845,7 +845,7 @@ definition {
 		task ("View the Previous and Next buttons are disabled") {
 			for (var buttonName : list "Previous,Next") {
 				AssertElementPresent(
-					key_text = "${buttonName}",
+					key_text = ${buttonName},
 					locator1 = "Button#ANY_DISABLED");
 			}
 		}
@@ -853,28 +853,28 @@ definition {
 		task ("Select the 5 in Maximum Number of Items per Page field") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "5",
-				maxNumberOfPagesToDisplay = "3",
+				maxNumberOfItemsPerPage = 5,
+				maxNumberOfPagesToDisplay = 3,
 				selectedName = "Dynamic Collection");
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Document Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -885,22 +885,22 @@ definition {
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Blogs Entry Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -911,22 +911,22 @@ definition {
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				PageEditor.viewFragmentEditableText(
 					editableText = "Web Content Title ${i}",
 					fragmentName = "Heading",
 					id = "element-text",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -935,22 +935,22 @@ definition {
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -961,22 +961,22 @@ definition {
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -987,22 +987,22 @@ definition {
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 
 			Close.closeWindow();
@@ -1017,22 +1017,22 @@ definition {
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Document Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -1043,22 +1043,22 @@ definition {
 		}
 
 		task ("View only the 5 blogs entries shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Blogs Entry Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 
@@ -1069,36 +1069,36 @@ definition {
 		}
 
 		task ("View only the 5 web contents shown in current page of Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var i : list "5,4,3,2,1") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Web Content Title ${i}");
 
 				var n = ${n} + 1;
 			}
 
 			AssertElementNotPresent(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_fragmentName = "heading",
-				key_rowPosition = "6",
+				key_rowPosition = 6,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 		}
 	}
 
 	@description = "This is a use case for LPS-146171. Check the default settings of Collection Display after selecting collection or collection provider."
-	@priority = "5"
+	@priority = 5
 	test ViewDefaultSettingsOfCollectionDisplayWithCollection {
 		property portal.acceptance = "true";
 
 		task ("Given a page creator has a content page with Collection Display fragment") {
 			task ("Add 21 web contents") {
-				var i = "1";
+				var i = 1;
 
-				while (("${i}" != "22") && (maxIterations = "25")) {
+				while ((${i} != 22) && (maxIterations = "25")) {
 					JSONWebcontent.addWebContent(
 						content = "Web Content Content ${i}",
 						groupName = "Test Site Name",
@@ -1136,7 +1136,7 @@ definition {
 			task ("View the pagination of Collection Display is Numeric") {
 				for (var pageNumber : list "1,2") {
 					AssertVisible(
-						key_pageNumber = "${pageNumber}",
+						key_pageNumber = ${pageNumber},
 						locator1 = "Pagination#ANY_PAGE");
 				}
 			}
@@ -1150,14 +1150,14 @@ definition {
 			task ("View the Maximum Number of Items per Page is 20") {
 				InputField.viewText(
 					fieldLabel = "Maximum Number of Items per Page",
-					text = "20");
+					text = 20);
 			}
 		}
 
 		task ("When the page creator changes the Maximum Number of Items per Page to 21") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItemsPerPage = "21",
+				maxNumberOfItemsPerPage = 21,
 				selectedName = "Dynamic Collection");
 		}
 
@@ -1170,7 +1170,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-146171.2 Check the default settings of Collection Display with None pagination."
-	@priority = "4"
+	@priority = 4
 	test ViewDefaultSettingsOfCollectionDisplayWithNonePagination {
 		task ("Given a page creator has a content page with Collection Display fragment then select a dynamic collection") {
 			task ("Add a web content") {
@@ -1214,7 +1214,7 @@ definition {
 		task ("Then the page creator could view the default settings of Collection Display") {
 			task ("View the page number, next and previous buttons not shown in Collection Display") {
 				AssertElementNotPresent(
-					key_pageNumber = "1",
+					key_pageNumber = 1,
 					locator1 = "Pagination#ANY_PAGE");
 
 				AssertElementNotPresent(
@@ -1236,7 +1236,7 @@ definition {
 				AssertTextEquals(
 					key_fieldLabel = "Maximum Number of Items to Display",
 					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "5");
+					value1 = 5);
 			}
 
 			task ("View warning message shown below the Maximum Number of Items to Display field") {

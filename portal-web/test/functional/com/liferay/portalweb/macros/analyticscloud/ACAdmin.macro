@@ -8,13 +8,13 @@ definition {
 		if (isSet(incomingPOPServer)) {
 			Type(
 				locator1 = "ServerAdministrationMail#INCOMING_POP_SERVER",
-				value1 = "${incomingPOPServer}");
+				value1 = ${incomingPOPServer});
 		}
 
 		if (isSet(incomingPort)) {
 			Type(
 				locator1 = "ServerAdministrationMail#INCOMING_PORT",
-				value1 = "${incomingPort}");
+				value1 = ${incomingPort});
 
 			Check(locator1 = "ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX");
 		}
@@ -22,25 +22,25 @@ definition {
 		if (isSet(userName)) {
 			Type(
 				locator1 = "ServerAdministrationMail#INCOMING_USER_NAME",
-				value1 = "${userName}");
+				value1 = ${userName});
 		}
 
 		if (isSet(userPassword)) {
 			Type(
 				locator1 = "ServerAdministrationMail#INCOMING_PASSWORD",
-				value1 = "${userPassword}");
+				value1 = ${userPassword});
 		}
 
 		if (isSet(outgoingSMTPServer)) {
 			Type(
 				locator1 = "ServerAdministrationMail#OUTGOING_SMTP_SERVER",
-				value1 = "${outgoingSMTPServer}");
+				value1 = ${outgoingSMTPServer});
 		}
 
 		if (isSet(outgoingPort)) {
 			Type(
 				locator1 = "ServerAdministrationMail#OUTGOING_PORT",
-				value1 = "${outgoingPort}");
+				value1 = ${outgoingPort});
 
 			Check(locator1 = "ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX");
 		}
@@ -48,13 +48,13 @@ definition {
 		if (isSet(userName)) {
 			Type(
 				locator1 = "ServerAdministrationMail#OUTGOING_USER_NAME",
-				value1 = "${userName}");
+				value1 = ${userName});
 		}
 
 		if (isSet(userPassword)) {
 			Type(
 				locator1 = "ServerAdministrationMail#OUTGOING_PASSWORD",
-				value1 = "${userPassword}");
+				value1 = ${userPassword});
 		}
 
 		AssertClick(
@@ -69,7 +69,7 @@ definition {
 	macro getUserID {
 		var userID = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
 
-		return "${userID}";
+		return ${userID};
 	}
 
 	macro goToACAdmin {

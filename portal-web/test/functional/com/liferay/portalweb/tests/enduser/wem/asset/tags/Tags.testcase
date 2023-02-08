@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "The user cannot add a tag with an empty name."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test CannotAddTagWithoutName {
 		task ("View cannot add a tag wih an empty name") {
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@description = "View cannot merge single tag on tags admin."
-	@priority = "4"
+	@priority = 4
 	test CannotMergeSingleTarget {
 		task ("Add a tag") {
 			JSONAssettag.addTag(
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "The user can delete multiple tags via Toolbar management."
-	@priority = "4"
+	@priority = 4
 	test DeleteMultipleTagsViaToolbar {
 		task ("Add three tags") {
 			for (var i : list "1,2,3") {
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "The user can delete single tag via Toolbar management."
-	@priority = "4"
+	@priority = 4
 	test DeleteSingleTagViaToolbar {
 		task ("Add a tag") {
 			JSONAssettag.addTag(
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "The user can delete a single tag via menu item."
-	@priority = "5"
+	@priority = 5
 	test DeleteTagViaMenu {
 		property portal.acceptance = "true";
 
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "The user can edit the tag name."
-	@priority = "5"
+	@priority = 5
 	test EditTag {
 		property portal.acceptance = "true";
 
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@description = "The edited tag name is not shown whether the change is not saved."
-	@priority = "4"
+	@priority = 4
 	test EditTagWithoutSave {
 		task ("Add a tag") {
 			JSONAssettag.addTag(
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "The usar can select another tag to merge in Merge Tags section."
-	@priority = "3"
+	@priority = 3
 	test MergeAdditionalTag {
 		task ("Add six tags") {
 			for (var i : list "1,2,3,4,5,6") {
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "The user can merge multiple tags."
-	@priority = "4"
+	@priority = 4
 	test MergeMultipleTags {
 		task ("Add three tags") {
 			for (var i : list "1,2,3") {
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "View display styles in tags admin."
-	@priority = "4"
+	@priority = 4
 	test ToggleDisplayStyles {
 		task ("Add a tag") {
 			JSONAssettag.addTag(
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of tags admin."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInTagsAdmin {
 		task ("Given a Tags creator has a new tag") {
 			JSONAssettag.addTag(
@@ -333,12 +333,12 @@ definition {
 	}
 
 	@description = "View pagination in tags admin."
-	@priority = "4"
+	@priority = 4
 	test ViewTagsPagination {
 		task ("Add twenty four tags") {
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "10") {
+			while (${i} != 10) {
 				JSONAssettag.addTag(
 					groupName = "Test Site Name",
 					tagName = "tagname0${i}");
@@ -346,7 +346,7 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			while ("${i}" != "26") {
+			while (${i} != 26) {
 				JSONAssettag.addTag(
 					groupName = "Test Site Name",
 					tagName = "tagname${i}");
@@ -366,19 +366,19 @@ definition {
 		}
 
 		task ("Change the amount of items per page to 4") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 24 entries.");
 		}
 
 		task ("Change the amount of items per page to 8") {
-			Pagination.changePagination(itemsPerPage = "8");
+			Pagination.changePagination(itemsPerPage = 8);
 
 			Pagination.viewResults(results = "Showing 1 to 8 of 24 entries.");
 		}
 
 		task ("Change the amount of items per page to 40") {
-			Pagination.changePagination(itemsPerPage = "40");
+			Pagination.changePagination(itemsPerPage = 40);
 
 			Pagination.viewResults(results = "Showing 1 to 24 of 24 entries.");
 		}

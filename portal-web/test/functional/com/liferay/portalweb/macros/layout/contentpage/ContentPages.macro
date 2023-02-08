@@ -2,15 +2,15 @@ definition {
 
 	macro _selectCard {
 		if (isSet(collectionName)) {
-			Navigator.gotoNavNested(navNested = "${collectionName}");
+			Navigator.gotoNavNested(navNested = ${collectionName});
 
-			LexiconCard.clickCard(card = "${pageTemplateName}");
+			LexiconCard.clickCard(card = ${pageTemplateName});
 		}
 		else {
 			Navigator.gotoNavNested(navNested = "Basic Templates");
 
 			if (isSet(masterLayoutName)) {
-				LexiconCard.clickCard(card = "${masterLayoutName}");
+				LexiconCard.clickCard(card = ${masterLayoutName});
 			}
 			else {
 				LexiconCard.clickCard(card = "Blank");
@@ -20,35 +20,35 @@ definition {
 
 	macro addChildPage {
 		MouseOver(
-			key_itemName = "${parentPageName}",
+			key_itemName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
 		Click(
-			key_pageName = "${parentPageName}",
+			key_pageName = ${parentPageName},
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
 		DropdownMenuItem.click(menuItem = "Add Page");
 
 		ContentPages._selectCard(
-			basicTemplate = "${basicTemplate}",
-			collectionName = "${collectionName}",
-			masterLayoutName = "${masterLayoutName}",
-			pageTemplateName = "${pageTemplateName}");
+			basicTemplate = ${basicTemplate},
+			collectionName = ${collectionName},
+			masterLayoutName = ${masterLayoutName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${childPageName}");
+		PortletEntry.inputName(name = ${childPageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.click(button = "Add");
@@ -61,14 +61,14 @@ definition {
 	macro addCollectionItemInCollectionPage {
 		if (isSet(itemSubtype)) {
 			Click(
-				key_title = "${title}",
+				key_title = ${title},
 				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
 
-			MenuItem.click(menuItem = "${itemSubtype}");
+			MenuItem.click(menuItem = ${itemSubtype});
 		}
 		else {
 			Click(
-				key_title = "${title}",
+				key_title = ${title},
 				locator1 = "ControlMenu#NEW_COLLECTION_PAGE_ITEM_BUTTON");
 		}
 	}
@@ -84,21 +84,21 @@ definition {
 
 		MenuItem.click(menuItem = "Collection Page");
 
-		Navigator.gotoNavTab(navTab = "${tabName}");
+		Navigator.gotoNavTab(navTab = ${tabName});
 
 		if (isSet(menuItem)) {
 			AssetListsAdmin.addSelection(
-				collectionName = "${collectionName}",
-				menuItem = "${menuItem}",
-				selectedAsset = "${selectedAsset}");
+				collectionName = ${collectionName},
+				menuItem = ${menuItem},
+				selectedAsset = ${selectedAsset});
 
 			Click(locator1 = "Icon#BACK");
 		}
 
-		LexiconCard.clickCard(card = "${collectionName}");
+		LexiconCard.clickCard(card = ${collectionName});
 
 		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = "${masterLayoutName}");
+			LexiconCard.clickCard(card = ${masterLayoutName});
 		}
 		else {
 			LexiconCard.clickCard(card = "Blank");
@@ -106,18 +106,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.click(button = "Add");
@@ -129,7 +129,7 @@ definition {
 		ControlMenu.viewHeaderTitle(headerTitle = "${pageName} *");
 
 		PageEditor.viewFragmentEditableText(
-			editableText = "${collectionName}",
+			editableText = ${collectionName},
 			fragmentName = "Heading",
 			id = "element-text");
 
@@ -156,30 +156,30 @@ definition {
 		}
 
 		ContentPages._selectCard(
-			basicTemplate = "${basicTemplate}",
-			collectionName = "${collectionName}",
-			masterLayoutName = "${masterLayoutName}",
-			pageTemplateName = "${pageTemplateName}");
+			basicTemplate = ${basicTemplate},
+			collectionName = ${collectionName},
+			masterLayoutName = ${masterLayoutName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		PagesAdmin._addPageToNavigationMenu(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus});
 
 		Button.click(button = "Add");
 
@@ -208,14 +208,14 @@ definition {
 		}
 
 		ContentPages._selectCard(
-			basicTemplate = "${basicTemplate}",
-			collectionName = "${collectionName}",
-			masterLayoutName = "${masterLayoutName}",
-			pageTemplateName = "${pageTemplateName}");
+			basicTemplate = ${basicTemplate},
+			collectionName = ${collectionName},
+			masterLayoutName = ${masterLayoutName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		Button.click(button = "Add");
 
@@ -235,21 +235,21 @@ definition {
 
 		MenuItem.click(menuItem = "Public Collection Page");
 
-		Navigator.gotoNavTab(navTab = "${tabName}");
+		Navigator.gotoNavTab(navTab = ${tabName});
 
 		if (isSet(menuItem)) {
 			AssetListsAdmin.addSelection(
-				collectionName = "${collectionName}",
-				menuItem = "${menuItem}",
-				selectedAsset = "${selectedAsset}");
+				collectionName = ${collectionName},
+				menuItem = ${menuItem},
+				selectedAsset = ${selectedAsset});
 
 			Click(locator1 = "Icon#BACK");
 		}
 
-		LexiconCard.clickCard(card = "${collectionName}");
+		LexiconCard.clickCard(card = ${collectionName});
 
 		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = "${masterLayoutName}");
+			LexiconCard.clickCard(card = ${masterLayoutName});
 		}
 		else {
 			LexiconCard.clickCard(card = "Blank");
@@ -257,18 +257,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.click(button = "Add");
@@ -280,7 +280,7 @@ definition {
 		ControlMenu.viewHeaderTitle(headerTitle = "${pageName} *");
 
 		PageEditor.viewFragmentEditableText(
-			editableText = "${collectionName}",
+			editableText = ${collectionName},
 			fragmentName = "Heading",
 			id = "element-text");
 
@@ -307,14 +307,14 @@ definition {
 		}
 
 		ContentPages._selectCard(
-			basicTemplate = "${basicTemplate}",
-			collectionName = "${collectionName}",
-			masterLayoutName = "${masterLayoutName}",
-			pageTemplateName = "${pageTemplateName}");
+			basicTemplate = ${basicTemplate},
+			collectionName = ${collectionName},
+			masterLayoutName = ${masterLayoutName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		Button.click(button = "Add");
 
@@ -324,11 +324,11 @@ definition {
 	}
 
 	macro changeExperience {
-		ContentPages.openExperienceMenu(locale = "${locale}");
+		ContentPages.openExperienceMenu(locale = ${locale});
 
-		MenuItem.click(menuItem = "${experienceName}");
+		MenuItem.click(menuItem = ${experienceName});
 
-		ContentPages.viewCurrentExperience(experienceName = "${experienceName}");
+		ContentPages.viewCurrentExperience(experienceName = ${experienceName});
 	}
 
 	macro focusSlide {
@@ -339,7 +339,7 @@ definition {
 
 	macro getCommonStylesClass {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		var javascript = '''
@@ -350,9 +350,9 @@ function getWebElement(locator) {
 return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item-')][contains(@class,'-${fragmentName}')])[${index}]").classList).find(className => className.includes('lfr-layout-structure-item') && !className.includes('-${fragmentName}'));
 		''';
 
-		var commonStylesClass = selenium.getEval("${javascript}");
+		var commonStylesClass = selenium.getEval(${javascript});
 
-		return "${commonStylesClass}";
+		return ${commonStylesClass};
 	}
 
 	macro gotoPageEditor {
@@ -362,10 +362,10 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	macro openExperienceMenu {
-		if ("${locale}" == "es") {
+		if (${locale} == "es") {
 			var ariaLabel = "Selector de experiencia";
 		}
-		else if ("${locale}" == "ja") {
+		else if (${locale} == "ja") {
 			var ariaLabel = "エクスペリエンスセレクター";
 		}
 		else {
@@ -373,20 +373,20 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 		}
 
 		Click(
-			ariaLabel = "${ariaLabel}",
+			ariaLabel = ${ariaLabel},
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
 	macro viewCurrentExperience {
 		AssertVisible(
-			key_title = "${experienceName}",
+			key_title = ${experienceName},
 			locator1 = "Experience#EXPERIENCE_SELECTED_VIEW_MODE");
 	}
 
 	macro viewExperienceOrder {
 		ContentPages.openExperienceMenu();
 
-		MenuItem.viewOrder(menuItemList = "${experienceNameList}");
+		MenuItem.viewOrder(menuItemList = ${experienceNameList});
 
 		Click(
 			ariaLabel = "Experience Selector",
@@ -395,35 +395,35 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 
 	macro viewFragmentBackgroundImage {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
 		AssertVisible(
-			image = "${image}",
-			index = "${position}",
+			image = ${image},
+			index = ${position},
 			locator1 = "Fragment#FRAGMENT_BACKGROUND_IMAGE");
 	}
 
 	macro viewFragmentCommonStyle {
 		if (isSet(className)) {
-			var fragmentName = "${className}";
+			var fragmentName = ${className};
 		}
 		else {
-			var fragmentName = StringUtil.replace("${fragmentName}", " ", "-");
+			var fragmentName = StringUtil.replace(${fragmentName}, " ", "-");
 
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+			var fragmentName = StringUtil.lowerCase(${fragmentName});
 		}
 
 		var commonStylesClass = ContentPages.getCommonStylesClass(
-			fragmentName = "${fragmentName}",
-			index = "${index}");
+			fragmentName = ${fragmentName},
+			index = ${index});
 
 		var actualStyleValue = Css.getStyleValue(
-			className = "${commonStylesClass}",
+			className = ${commonStylesClass},
 			cssSelector = "link[href*=layout-common-styles]",
-			styleName = "${styleName}");
+			styleName = ${styleName});
 
-		if (contains("${actualStyleValue}", "${styleValue}")) {
+		if (contains(${actualStyleValue}, ${styleValue})) {
 			echo("PASSED");
 		}
 		else {
@@ -433,85 +433,85 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 
 	macro viewFragmentImage {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
-		if ("${fragmentName}" == "Content Display") {
+		if (${fragmentName} == "Content Display") {
 			if (!(isSet(assetType))) {
 				AssertVisible(
-					image = "${image}",
-					index = "${position}",
+					image = ${image},
+					index = ${position},
 					locator1 = "Fragment#CONTENT_DISPLAY_PREVIEW_IMAGE");
 			}
 			else {
 				AssertVisible(
-					assetType = "${assetType}",
-					image = "${image}",
-					index = "${position}",
+					assetType = ${assetType},
+					image = ${image},
+					index = ${position},
 					locator1 = "Fragment#CONTENT_DISPLAY_IMAGE");
 			}
 		}
 		else {
 			AssertVisible(
-				fragmentName = "${fragmentName}",
-				id = "${id}",
-				image = "${image}",
-				index = "${position}",
+				fragmentName = ${fragmentName},
+				id = ${id},
+				image = ${image},
+				index = ${position},
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
 		}
 	}
 
 	macro viewFragmentText {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
-		if ("${contributed}" == "false") {
+		if (${contributed} == "false") {
 			AssertTextEquals(
-				fragmentName = "${fragmentName}",
-				index = "${position}",
+				fragmentName = ${fragmentName},
+				index = ${position},
 				locator1 = "Fragment#EDITABLE_FIELD_ANY",
-				value1 = "${text}");
+				value1 = ${text});
 		}
-		else if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Display Page Content")) {
+		else if ((${fragmentName} == "Content Display") || (${fragmentName} == "Display Page Content")) {
 			if (!(isSet(assetType))) {
 				AssertTextEquals(
-					index = "${position}",
+					index = ${position},
 					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY",
-					value1 = "${text}");
+					value1 = ${text});
 			}
 			else {
 				AssertTextEquals(
-					assetType = "${assetType}",
-					index = "${position}",
+					assetType = ${assetType},
+					index = ${position},
 					locator1 = "Fragment#CONTENT_DISPLAY_TEXT",
-					value1 = "${text}");
+					value1 = ${text});
 			}
 		}
 		else {
 			AssertTextEquals(
-				fragmentName = "${fragmentName}",
-				id = "${id}",
-				index = "${position}",
+				fragmentName = ${fragmentName},
+				id = ${id},
+				index = ${position},
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				value1 = "${text}");
+				value1 = ${text});
 		}
 	}
 
 	macro viewFragmentTextInCollectionDisplay {
 		if (!(isSet(row))) {
-			var row = "1";
+			var row = 1;
 		}
 
 		if (!(isSet(column))) {
-			var column = "1";
+			var column = 1;
 		}
 
 		AssertTextEquals(
-			column = "${column}",
+			column = ${column},
 			locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-			row = "${row}",
-			value1 = "${text}");
+			row = ${row},
+			value1 = ${text});
 	}
 
 }

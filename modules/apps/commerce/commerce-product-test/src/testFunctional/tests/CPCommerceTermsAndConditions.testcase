@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8332. Assert default delivery term can be added"
-	@priority = "4"
+	@priority = 4
 	test AddADefaultDeliveryTerm {
 		property portal.acceptance = "true";
 
@@ -36,7 +36,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "AA Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
@@ -44,7 +44,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "ZZ Terms and Condition Entry",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "2");
+				valuePosition = 2);
 		}
 
 		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8319. Assert default payment term can be added"
-	@priority = "4"
+	@priority = 4
 	test CanAddADefaultPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -134,7 +134,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "BB Terms and Condition Entry",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
@@ -142,7 +142,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "AA Terms and Condition Entry",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "2");
+				valuePosition = 2);
 		}
 
 		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "This is a test for the bug COMMERCE-9088, with the ticket COMMERCE-10006 | When the user select a shipping/payment option which eligible term description contains bold, italic, etc... text the checkout portlet breaks"
-	@priority = "4"
+	@priority = 4
 	test CanCompleteCheckoutWithRichTextTermDescription {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -240,7 +240,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Payment Term",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			CommerceUtilities.addFullDescriptionUsingSource(sourceFullDescription = "<ul><li><u><em><strong>Payment Term Description</strong></em></u></li></ul>");
 
@@ -265,7 +265,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Delivery Term",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			FormFields.toggleCKEditorContentStyle(optionTool = "Image");
 
@@ -321,7 +321,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "ABS Sensor",
-				productQuantity = "2");
+				productQuantity = 2);
 
 			CommerceNavigator.gotoMiniCart();
 		}
@@ -341,14 +341,14 @@ definition {
 				newAddressZipCode = "Test Zip Code",
 				paymentTerm = "Payment Term",
 				productName = "ABS Sensor",
-				productQuantity = "2",
-				productUnitPrice = "50",
+				productQuantity = 2,
+				productUnitPrice = 50,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8333. Deleting an account default delivery term will revert to Use Priority Settings"
-	@priority = "4"
+	@priority = 4
 	test RemoveADeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
@@ -361,7 +361,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
@@ -369,7 +369,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 2",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "2");
+				valuePosition = 2);
 		}
 
 		task ("And given I create an account with a specific default delivery term already selected.") {
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8320. Delete an account default payment term will revert to "Use Priority Settings"."
-	@priority = "4"
+	@priority = 4
 	test RemoveAPaymentTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
@@ -439,7 +439,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Icon#BACK");
 
@@ -447,7 +447,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 2",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "2");
+				valuePosition = 2);
 		}
 
 		task ("And given I create an account with a specific default payment term already selected.") {
@@ -504,7 +504,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8334. If the delivery term set for the account is changed to inactive, the default term remains shown but inactive"
-	@priority = "4"
+	@priority = 4
 	test SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
@@ -517,7 +517,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Delivery Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}
@@ -572,7 +572,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8328. If the payment term set for the account is changed to inactive, the default term remains shown but inactive"
-	@priority = "4"
+	@priority = 4
 	test SetAnInactivePaymentTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
@@ -585,7 +585,7 @@ definition {
 				active = "true",
 				termsAndConditionName = "Terms and Condition Entry 1",
 				termsAndConditionType = "Payment Terms",
-				valuePosition = "1");
+				valuePosition = 1);
 
 			Click(locator1 = "Button#BACK");
 		}

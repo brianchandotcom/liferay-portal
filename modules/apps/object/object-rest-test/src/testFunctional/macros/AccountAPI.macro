@@ -21,71 +21,71 @@ definition {
 				-u test@liferay.com:test \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro createAccount {
-		Variables.assertDefined(parameterList = "${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		var curl = AccountAPI._curlAccount();
 		var body = '''"name": "${name}"''';
 
-		var curl = StringUtil.add("${curl}", "-d {${body}}", " ");
+		var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		var accountId = JSONUtil.getWithJSONPath("${response}", "$..id");
+		var accountId = JSONUtil.getWithJSONPath(${response}, "$..id");
 
-		return "${accountId}";
+		return ${accountId};
 	}
 
 	macro deleteAccount {
-		Variables.assertDefined(parameterList = "${accountId}");
+		Variables.assertDefined(parameterList = ${accountId});
 
-		var curl = AccountAPI._curlAccount(accountId = "${accountId}");
+		var curl = AccountAPI._curlAccount(accountId = ${accountId});
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro getRelationshipByAccountId {
 		var curl = AccountAPI._curlAccount(
-			accountId = "${accountId}",
-			relationshipName = "${relationshipName}");
+			accountId = ${accountId},
+			relationshipName = ${relationshipName});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro putAccountRelationship {
 		var curl = AccountAPI._curlAccount(
-			accountId = "${accountId}",
-			relationshipName = "${relationshipName}");
+			accountId = ${accountId},
+			relationshipName = ${relationshipName});
 
-		var response = JSONCurlUtil.put("${curl}");
+		var response = JSONCurlUtil.put(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro relateObjectEntries {
 		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
 
 		var curl = AccountAPI._curlAccount(
-			customObjectId = "${customObjectId}",
-			relationshipName = "${relationshipName}",
-			userAccountId = "${userAccountId}");
+			customObjectId = ${customObjectId},
+			relationshipName = ${relationshipName},
+			userAccountId = ${userAccountId});
 
-		var response = JSONCurlUtil.put("${curl}");
+		var response = JSONCurlUtil.put(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro setUpGlobalAccountId {
 		var accountId = AccountAPI.createAccount(name = "user1");
 
-		static var staticAccountId = "${accountId}";
+		static var staticAccountId = ${accountId};
 
-		return "${staticAccountId}";
+		return ${staticAccountId};
 	}
 
 }

@@ -14,12 +14,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CustomizeFileFilter {
 		property custom.properties = "module.framework.file.install.filter=^(?!test-theme).*\\..*";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeFileFilter";
@@ -37,7 +37,7 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.auto.deploy.dirs=${liferay.home}/alt-deploy/osgi/portal,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";
@@ -46,7 +46,7 @@ definition {
 
 		Clustering.deployClusteringModule(
 			deployDir = "${liferayHome}/alt-deploy",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
@@ -59,7 +59,7 @@ definition {
 		GogoShell.viewOutput(outputContent = "Active");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CustomizeRecursiveSubdirectoryMode {
 		property custom.properties = "module.framework.file.install.subdir.mode=recurse";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
@@ -68,7 +68,7 @@ definition {
 
 		Clustering.deployClusteringModule(
 			deployDir = "${liferayHome}/osgi/portal",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
@@ -81,7 +81,7 @@ definition {
 		GogoShell.viewOutput(outputContent = "Active");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CustomizeSkipSubdirectoryMode {
 		property custom.properties = "module.framework.file.install.subdir.mode=skip";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";
@@ -90,7 +90,7 @@ definition {
 
 		Clustering.deployClusteringModule(
 			deployDir = "${liferayHome}/osgi/portal",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -105,7 +105,7 @@ definition {
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test InstallOSGiConfigWithHiddenFile {
 		property create.osgi.hidden.file = "true";
 		property test.assert.warning.exceptions = "true";
@@ -121,7 +121,7 @@ definition {
 			configurationScope = "System Scope");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
 		property test.name.skip.portal.instance = "FileInstall#RestartingPortalDuplicatesOSGiConfiguration";
 
@@ -130,7 +130,7 @@ definition {
 		var symbolicLink = "${liferayHome}/osgi/configs/com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration-abc.config";
 		var symbolicLinkResource = "${liferayHome}/osgi/temp/abc.config";
 
-		FileUtil.write("${symbolicLinkResource}", "urlsIncludes=\"abc\"");
+		FileUtil.write(${symbolicLinkResource}, "urlsIncludes=\"abc\"");
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -141,24 +141,24 @@ definition {
 			WHERE configurationId LIKE 'com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration%';
 		''';
 
-		var originalCount = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var originalCount = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
 		Portlet.shutdownServer();
 
 		Portlet.startServer(keepOSGiState = "true");
 
-		var actualCount = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var actualCount = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
-		if ("${originalCount}" != "${actualCount}") {
+		if (${originalCount} != ${actualCount}) {
 			fail("Expected MYSQL entries='${originalCount}', after restarting portal MYSQL entries='${actualCount}'");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test UninstallJarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
 
-		Clustering.deployClusteringModule(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = 8080);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -193,7 +193,7 @@ definition {
 
 	@description = "Failing due to LPS-122119."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
 

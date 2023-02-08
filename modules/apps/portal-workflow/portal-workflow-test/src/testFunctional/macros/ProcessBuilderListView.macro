@@ -4,12 +4,12 @@ definition {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		Click(
-			key_filterOption = "${filterOption}",
+			key_filterOption = ${filterOption},
 			locator1 = "ProcessBuilderListView#FILTER_AND_ORDER");
 	}
 
 	macro gotoPermissions {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -19,13 +19,13 @@ definition {
 	}
 
 	macro searchForWorkflow {
-		var key_workflowName = "${workflowName}";
+		var key_workflowName = ${workflowName};
 
 		Click(locator1 = "ProcessBuilderListView#SEARCH_FIELD");
 
 		Type(
 			locator1 = "ProcessBuilderListView#SEARCH_FIELD",
-			value1 = "${workflowName}");
+			value1 = ${workflowName});
 
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
@@ -52,26 +52,26 @@ definition {
 
 		if (isSet(published)) {
 			AssertElementPresent(
-				key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+				key_workflowDefinitionTitle = ${workflowDefinitionTitle},
 				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
 		}
 
 		if (isSet(notPublished)) {
 			AssertElementPresent(
-				key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+				key_workflowDefinitionTitle = ${workflowDefinitionTitle},
 				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
 		}
 	}
 
 	macro viewWorkflowIsNotPresent {
 		AssertElementNotPresent(
-			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			key_workflowDefinitionTitle = ${workflowDefinitionTitle},
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
 	}
 
 	macro viewWorkflowIsPresent {
 		AssertElementPresent(
-			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			key_workflowDefinitionTitle = ${workflowDefinitionTitle},
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
 	}
 

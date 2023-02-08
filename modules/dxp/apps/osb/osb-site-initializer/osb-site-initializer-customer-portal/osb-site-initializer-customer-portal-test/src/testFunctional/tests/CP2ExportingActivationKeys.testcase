@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,17 +35,17 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-150641 | Test Summary: Verify if when the user successfully downloads a key, shows the message Activation key details successfully exported"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertTheActivationKeyDownloadMessage {
 
 		// Needs refactor since it depends on example NASA ICE account
@@ -55,13 +55,13 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount1}");
+			CustomerPortal.search(searchItem = ${testAccount1});
 
-			CustomerPortal.enterOnProject(title = "${testAccount1}");
+			CustomerPortal.enterOnProject(title = ${testAccount1});
 		}
 
 		task ("And I click on DXP product") {
@@ -77,7 +77,7 @@ definition {
 
 	@description = "LPS-148064 - Verify if the option to 'Export all key details (csv)' successfully downloads keys and shows a success message"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test SuccessMessageWhenKeyIsDownloaded {
 
 		// Needs refactor since it depends on example FIFA account
@@ -87,13 +87,13 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = ${testAccount});
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("And I click on DXP product") {

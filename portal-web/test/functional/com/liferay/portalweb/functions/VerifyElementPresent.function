@@ -5,7 +5,7 @@ definition {
 	function verifyElementPresent {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent("${locator1}", "false");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.verifyElementPresent();
 

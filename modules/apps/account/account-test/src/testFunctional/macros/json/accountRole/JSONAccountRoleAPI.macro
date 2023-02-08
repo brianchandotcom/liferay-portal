@@ -14,15 +14,15 @@ definition {
 				-d userId=${userId} \
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Get the accountRoleId of an account role by using its roleId"
 	macro _getAccountRoleByRoleId {
-		Variables.assertDefined(parameterList = "${accountRole}");
+		Variables.assertDefined(parameterList = ${accountRole});
 
 		var portalURL = JSONCompany.getPortalURL();
-		var roleId = JSONRoleSetter.setRoleId(name = "${accountRole}");
+		var roleId = JSONRoleSetter.setRoleId(name = ${accountRole});
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountrole/get-account-role-by-role-id \
@@ -30,9 +30,9 @@ definition {
 				-d roleId=${roleId} \
 		''';
 
-		var accountRoleId = JSONCurlUtil.post("${curl}", "$['accountRoleId']");
+		var accountRoleId = JSONCurlUtil.post(${curl}, "$['accountRoleId']");
 
-		return "${accountRoleId}";
+		return ${accountRoleId};
 	}
 
 }

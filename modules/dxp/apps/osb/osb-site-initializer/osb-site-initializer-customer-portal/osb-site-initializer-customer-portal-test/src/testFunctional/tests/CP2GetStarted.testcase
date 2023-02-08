@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,16 +35,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-145260 | Test Summary: Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again"
-	@priority = "4"
+	@priority = 4
 	test GetStartedDontAppearASecondTime {
 		task ("Creating objects") {
 			CustomerPortal.showCPObject(title = "Account Flag");
@@ -53,7 +53,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testProduct}");
+			CustomerPortal.accountTableProject(title = ${testProduct});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -63,7 +63,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -77,7 +77,7 @@ definition {
 		task ("Go back to Homepage and join a project again") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Assert the Overview page") {
@@ -86,12 +86,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-145256 | Test Summary: Verify if the non-admin user with just one project is redirected to the Project Overview page."
-	@priority = "4"
+	@priority = 4
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Assert the Overview page") {
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-143374 | Test Summary: Verify if the button 'Start Project Setup' is present."
-	@priority = "4"
+	@priority = 4
 	test IsStartProjectButtonPresent {
 		task ("Creating objects") {
 			CustomerPortal.showCPObject(title = "Account Flag");
@@ -109,7 +109,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -119,7 +119,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Assert that the Get Start button appears") {
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-145255 | Test Summary: Verify if the get started page is shown for user when admin profile logs in for the first time"
-	@priority = "5"
+	@priority = 5
 	test IsStartProjectShowingInFirstTime {
 		task ("Creating objects") {
 			CustomerPortal.showCPObject(title = "Account Flag");
@@ -137,7 +137,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -147,7 +147,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Assert the Get Start modal") {
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-145259 | Test Summary: Verify that the Get Started button takes the user to the Invite Your Team Members page"
-	@priority = "5"
+	@priority = 5
 	test StartPojectButtonRedirectsToYourTeamMembers {
 		task ("Creating objects") {
 			CustomerPortal.showCPObject(title = "Account Flag");
@@ -165,7 +165,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -175,7 +175,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-145258 | Test Summary: Verify if the non-admin user with more than one project is redirected to the All Projects page"
-	@priority = "4"
+	@priority = 4
 	test WithMoreThanOneProjectIsRedirectedToAllProjects {
 		task ("Go to CP2.0") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();

@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "Test that the UI for adding a WC folder works."
-	@priority = "5"
+	@priority = 5
 	test AddFolder {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "Test that the UI for adding a WC works."
-	@priority = "4"
+	@priority = 4
 	test AddWebContent {
 		property testray.component.names = "Web Content Administration";
 
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "Test that the UI for saving a WC as a draft works."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentDraft {
 		property testray.component.names = "Web Content Administration";
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "Test that the UI for adding multiple WC works."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentMultiple {
 		property testray.component.names = "Web Content Administration";
 
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "Test that the UI for editing WC localization works."
-	@priority = "4"
+	@priority = 4
 	test EditWCAddLocalization {
 		property testray.component.names = "Localization,Web Content Administration";
 
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151948. The Filter by Status is available to the Versions tab."
-	@priority = "4"
+	@priority = 4
 	test ViewFilterByStatusAvailableToVersionsTab {
 		task ("Given a site designer has a draft web content") {
 			JSONWebcontent.addWebContent(
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153323. View kebab icon of web content visible."
-	@priority = "4"
+	@priority = 4
 	test ViewKebabIconOfWebContentVisible {
 		property testray.component.names = "Web Content Administration";
 
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131307. View the order of web content actions."
-	@priority = "5"
+	@priority = 5
 	test ViewOrderOfWebContentActions {
 		property portal.acceptance = "true";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146458. View the available status filters of Web Content admin."
-	@priority = "5"
+	@priority = 5
 	test ViewStatusFiltersOfWebContentAdmin {
 		property portal.acceptance = "true";
 
@@ -318,11 +318,11 @@ definition {
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 			for (var filterName : list "Draft,With Scheduled Versions,With Approved Versions,With Expired Versions") {
-				MenuItem.viewVisible(menuItem = "${filterName}");
+				MenuItem.viewVisible(menuItem = ${filterName});
 			}
 
 			for (var filterName : list "Denied,Pending") {
-				MenuItem.viewNotPresent(menuItem = "${filterName}");
+				MenuItem.viewNotPresent(menuItem = ${filterName});
 			}
 		}
 
@@ -340,7 +340,7 @@ definition {
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 			for (var filterName : list "Draft,Denied,Pending,With Scheduled Versions,With Approved Versions,With Expired Versions") {
-				MenuItem.viewVisible(menuItem = "${filterName}");
+				MenuItem.viewVisible(menuItem = ${filterName});
 			}
 		}
 	}

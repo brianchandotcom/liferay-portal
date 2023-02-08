@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,10 +35,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-157033 Given the View mode of a page
-	When an experience is active in the Control Menu
-	Then the ACTIVE label will appear next to the experience name"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ActiveExperienceLabelInControlMenu {
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
@@ -71,11 +69,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-157033 Given the View mode of a page
-	When the Experience dropdown menu is displayed
-	And there experiences active
-	Then the ACTIVE label will appear next to each experience name active"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ActiveExperienceLabelInViewDropdown {
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
@@ -105,7 +100,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142290. The user cannot modify experiences at view mode."
-	@priority = "4"
+	@priority = 4
 	test CannotModifyExperienceAtViewMode {
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -140,7 +135,7 @@ definition {
 			ContentPages.openExperienceMenu();
 
 			for (var experienceName : list "Default,New Experience") {
-				MenuItem.viewPresent(menuItem = "${experienceName}");
+				MenuItem.viewPresent(menuItem = ${experienceName});
 			}
 
 			for (var action : list "Prioritize,Deprioritize,Edit,Duplicate,Delete") {
@@ -152,7 +147,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142290. The user cannot modify experiences on preview draft page."
-	@priority = "4"
+	@priority = 4
 	test CannotModifyExperiencesOnPreviewDraftPage {
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -193,7 +188,7 @@ definition {
 			ContentPages.openExperienceMenu();
 
 			for (var experienceName : list "Default,New Experience") {
-				MenuItem.viewPresent(menuItem = "${experienceName}");
+				MenuItem.viewPresent(menuItem = ${experienceName});
 			}
 
 			for (var action : list "Prioritize,Deprioritize,Edit,Duplicate,Delete") {
@@ -205,7 +200,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on non-default experience."
-	@priority = "4"
+	@priority = 4
 	test CreatePageTemplateFromContentPageBasedOnNonDefaultExperience {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -254,10 +249,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-157033 Given the View mode of a page
-	When an experience is inactive in the Control Menu
-	Then the INACTIVE label will appear next to the experience name"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test InactiveExperienceLabelInControlMenu {
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
@@ -288,11 +281,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-157033 Given the View mode of a page
-	When the Experience dropdown menu is displayed
-	And there experiences inactive
-	Then the INACTIVE label will appear next to each experience name inactive"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test InactiveExperienceLabelInViewDropdown {
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
@@ -320,7 +310,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153367. The page creator could preview current experience in a new tab."
-	@priority = "4"
+	@priority = 4
 	test PreviewCurrentExperienceInANewTab {
 		task ("Given a page creator has a Heading fragment on a content page with a new experience") {
 			JSONLayout.addPublicLayout(
@@ -359,7 +349,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142290. The user can switch experiences at view mode."
-	@priority = "4"
+	@priority = 4
 	test SwitchExperienceAtViewMode {
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -396,7 +386,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -457,7 +447,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -468,7 +458,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142290. The user can switch experiences on preview draft page."
-	@priority = "4"
+	@priority = 4
 	test SwitchExperienceOnPreviewDraftPage {
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -511,7 +501,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -572,7 +562,7 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -583,7 +573,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
-	@priority = "4"
+	@priority = 4
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {
 		task ("Add a segment with a Regular Role field") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
@@ -593,7 +583,7 @@ definition {
 				groupName = "Test Site Name",
 				operator = "equals",
 				segmentName = "New Segment",
-				text = "${roleId}");
+				text = ${roleId});
 		}
 
 		task ("Add a web content without tag") {
@@ -702,12 +692,12 @@ definition {
 
 			MobileDevice.previewPG();
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content Title 2,Web Content Title 1") {
 				ContentPages.viewFragmentTextInCollectionDisplay(
-					row = "${n}",
-					text = "${title}");
+					row = ${n},
+					text = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -727,14 +717,14 @@ definition {
 			ContentPages.viewFragmentTextInCollectionDisplay(text = "Web Content Title 2");
 
 			AssertElementNotPresent(
-				column = "1",
+				column = 1,
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
-				row = "2");
+				row = 2);
 		}
 	}
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at view mode in page editor."
-	@priority = "5"
+	@priority = 5
 	test ViewExperienceInViewMode {
 		property portal.acceptance = "true";
 
@@ -799,7 +789,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141773. Able to land in the experience selected at preview draft page in page editor."
-	@priority = "5"
+	@priority = 5
 	test ViewExperienceSelectedInPreviewDraftPage {
 		property portal.acceptance = "true";
 
@@ -892,7 +882,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122148. Only the inline text items from current experience shown in Page Content panel."
-	@priority = "5"
+	@priority = 5
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {
 		property portal.acceptance = "true";
 

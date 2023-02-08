@@ -1,11 +1,11 @@
 definition {
 
 	macro addOptionValues {
-		var optionValuesList = "${optionValuesList}";
+		var optionValuesList = ${optionValuesList};
 
-		for (var optionValues : list "${optionValuesList}") {
-			var optionValue = StringUtil.extractFirst("${optionValues}", ":");
-			var optionPosition = StringUtil.extractLast("${optionValues}", ":");
+		for (var optionValues : list ${optionValuesList}) {
+			var optionValue = StringUtil.extractFirst(${optionValues}, ":");
+			var optionPosition = StringUtil.extractLast(${optionValues}, ":");
 
 			Refresh();
 
@@ -16,8 +16,8 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			CommerceEntry.addOptionValue(
-				valueName = "${optionValue}",
-				valuePosition = "${optionPosition}");
+				valueName = ${optionValue},
+				valuePosition = ${optionPosition});
 
 			Button.clickSubmitButton();
 		}
@@ -31,23 +31,23 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		CommerceOptions.addEntry(
-			facetable = "${facetable}",
-			optionDescription = "${optionDescription}",
-			optionFieldType = "${optionFieldType}",
-			optionName = "${optionName}",
-			required = "${required}",
-			skuContributor = "${skuContributor}");
+			facetable = ${facetable},
+			optionDescription = ${optionDescription},
+			optionFieldType = ${optionFieldType},
+			optionName = ${optionName},
+			required = ${required},
+			skuContributor = ${skuContributor});
 	}
 
 	macro newProductsEntry {
 		CommerceProducts.addEntry(
-			compileDescription = "${compileDescription}",
-			productCatalog = "${productCatalog}",
+			compileDescription = ${compileDescription},
+			productCatalog = ${productCatalog},
 			productFullDescription = "${productName} Full Description",
-			productName = "${productName}",
+			productName = ${productName},
 			productShortDescription = "${productName} Short Description",
-			productType = "${productType}",
-			publishProduct = "${publishProduct}");
+			productType = ${productType},
+			publishProduct = ${publishProduct});
 	}
 
 }

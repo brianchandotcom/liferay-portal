@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10560. Allowed quantities can be added to the cart when order quantity is higher than the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartAllowedQuantitiesWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -40,14 +40,14 @@ definition {
 		task ("And the warehouse quantity for the product is set to 1") {
 			var warehouseList = "1:Italy,0:United States - Southwest,0:United States - Northeast";
 
-			for (var warehouse : list "${warehouseList}") {
-				var warehouseName = StringUtil.extractLast("${warehouse}", ":");
-				var warehouseQuantity = StringUtil.extractFirst("${warehouse}", ":");
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
 
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "${warehouseQuantity}",
-					warehouseName = "${warehouseName}");
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -69,7 +69,7 @@ definition {
 
 		task ("When buyer user adds allowed quantities to the cart") {
 			FrontStore.addInitializerProductToCart(
-				allowedQuantities = "2",
+				allowedQuantities = 2,
 				productName = "U-Joint");
 
 			CommerceNavigator.gotoMiniCart();
@@ -79,7 +79,7 @@ definition {
 				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCart(
-				cartSummaryQuantity = "2",
+				cartSummaryQuantity = 2,
 				cartSummarySubtotal = "48.00",
 				cartSummaryTotal = "48.00");
 
@@ -87,12 +87,12 @@ definition {
 				Select(
 					key_cartItemSku = "MIN55861",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_SELECT_FIELD",
-					value1 = "${quantity}");
+					value1 = ${quantity});
 
 				var subtotal = 24 * ${quantity};
 
 				FrontStore.viewMiniCart(
-					cartSummaryQuantity = "${quantity}",
+					cartSummaryQuantity = ${quantity},
 					cartSummarySubtotal = "${subtotal}.00",
 					cartSummaryTotal = "${subtotal}.00");
 			}
@@ -108,14 +108,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "6",
-				productUnitPrice = "24",
+				productQuantity = 6,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10560. Allowed quantities can be added to the cart when order quantity is lower than the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartAllowedQuantitiesWhenOrderItemQuantityIsLowerThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -137,14 +137,14 @@ definition {
 		task ("And the warehouse quantity for the product is set to 7") {
 			var warehouseList = "1:Italy,3:United States - Southwest,3:United States - Northeast";
 
-			for (var warehouse : list "${warehouseList}") {
-				var warehouseName = StringUtil.extractLast("${warehouse}", ":");
-				var warehouseQuantity = StringUtil.extractFirst("${warehouse}", ":");
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
 
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "${warehouseQuantity}",
-					warehouseName = "${warehouseName}");
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -166,7 +166,7 @@ definition {
 
 		task ("When buyer user adds allowed quantities to the cart") {
 			FrontStore.addInitializerProductToCart(
-				allowedQuantities = "3",
+				allowedQuantities = 3,
 				productName = "U-Joint");
 
 			CommerceNavigator.gotoMiniCart();
@@ -176,7 +176,7 @@ definition {
 				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCart(
-				cartSummaryQuantity = "3",
+				cartSummaryQuantity = 3,
 				cartSummarySubtotal = "72.00",
 				cartSummaryTotal = "72.00");
 
@@ -184,12 +184,12 @@ definition {
 				Select(
 					key_cartItemSku = "MIN55861",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_SELECT_FIELD",
-					value1 = "${quantity}");
+					value1 = ${quantity});
 
 				var subtotal = 24 * ${quantity};
 
 				FrontStore.viewMiniCart(
-					cartSummaryQuantity = "${quantity}",
+					cartSummaryQuantity = ${quantity},
 					cartSummarySubtotal = "${subtotal}.00",
 					cartSummaryTotal = "${subtotal}.00");
 			}
@@ -205,8 +205,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "2",
-				productUnitPrice = "24",
+				productQuantity = 2,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -214,7 +214,7 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			FrontStore.addInitializerProductToCart(
-				allowedQuantities = "6",
+				allowedQuantities = 6,
 				productName = "U-Joint");
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
@@ -226,14 +226,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "6",
-				productUnitPrice = "24",
+				productQuantity = 6,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10542. Maximum quantity can be added to the cart when order quantity is higher than the stock quantity and when back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMaximumProductQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -256,14 +256,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And maximum quantity is set to 8 and Allow Back Order is enabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				maxOrderQuantity = "8",
+				maxOrderQuantity = 8,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -283,7 +283,7 @@ definition {
 		task ("When buyer user adds maximum quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "8");
+				productQuantity = 8);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -296,14 +296,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "8",
-				productUnitPrice = "24",
+				productQuantity = 8,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10542. Maximum quantity can be added to the cart when order quantity is lower than stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMaximumProductQuantityWhenOrderItemQuantityIsLowerThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -326,14 +326,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And maximum quantity is set to 4 and Allow Back Order is enabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				maxOrderQuantity = "4",
+				maxOrderQuantity = 4,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -353,7 +353,7 @@ definition {
 		task ("When buyer user adds maximum quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -366,8 +366,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -376,7 +376,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -387,14 +387,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10503. Minimum quantity can be added to the cart when order quantity is higher then the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMinimumProductQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -417,8 +417,8 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -435,7 +435,7 @@ definition {
 				allowBackOrders = "true",
 				displayAvailability = "true",
 				displayStockQuantity = "true",
-				minOrderQuantity = "8",
+				minOrderQuantity = 8,
 				publish = "true");
 		}
 
@@ -451,7 +451,7 @@ definition {
 		task ("When buyer user adds minimum quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "8");
+				productQuantity = 8);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -464,14 +464,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "8",
-				productUnitPrice = "24",
+				productQuantity = 8,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10503. Minimum quantity can be added to the cart when order quantity is lower than the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMinimumProductQuantityWhenOrderItemQuantityIsLowerThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -494,8 +494,8 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -512,7 +512,7 @@ definition {
 				allowBackOrders = "true",
 				displayAvailability = "true",
 				displayStockQuantity = "true",
-				minOrderQuantity = "4",
+				minOrderQuantity = 4,
 				publish = "true");
 		}
 
@@ -528,7 +528,7 @@ definition {
 		task ("When buyer user adds minimum quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -541,8 +541,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -551,7 +551,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -562,14 +562,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10559. Multiple quantities can be added to the cart when order quantity is higher than the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMultipleProductQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -592,14 +592,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And multiple quantity is set to 8 and Allow Back Order is enabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				multipleOrderQuantity = "8",
+				multipleOrderQuantity = 8,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -619,7 +619,7 @@ definition {
 		task ("When buyer user adds multiple quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "8");
+				productQuantity = 8);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -632,14 +632,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "8",
-				productUnitPrice = "24",
+				productQuantity = 8,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10559. Multiple quantities can be added to the cart when order quantity is lower than the stock quantity and back order is enabled"
-	@priority = "3"
+	@priority = 3
 	test CanAddToCartMultipleProductQuantityWhenOrderItemQuantityIsLowerThanStockQuantityAndBackOrderIsEnabled {
 		property portal.acceptance = "false";
 
@@ -662,14 +662,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And multiple quantity is set to 4 and Allow Back Order is enabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				multipleOrderQuantity = "4",
+				multipleOrderQuantity = 4,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -689,7 +689,7 @@ definition {
 		task ("When buyer user adds multiple quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -702,8 +702,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -712,7 +712,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -723,14 +723,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-10560. Allowed quantities cannot be added to the cart when order quantity is higher than the stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartAllowedQuantitiesWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -752,14 +752,14 @@ definition {
 		task ("And the warehouse quantity for the product is set to 5") {
 			var warehouseList = "1:Italy,2:United States - Southwest,2:United States - Northeast";
 
-			for (var warehouse : list "${warehouseList}") {
-				var warehouseName = StringUtil.extractLast("${warehouse}", ":");
-				var warehouseQuantity = StringUtil.extractFirst("${warehouse}", ":");
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
 
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "${warehouseQuantity}",
-					warehouseName = "${warehouseName}");
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -783,7 +783,7 @@ definition {
 			Select(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
-				value1 = "8");
+				value1 = 8);
 
 			Click(
 				key_productName = "U-Joint",
@@ -796,7 +796,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10560. Allowed quantities can be added to the cart until there's stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartAllowedQuantitiesWhenStockQuantityIsLessAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -818,14 +818,14 @@ definition {
 		task ("And the warehouse quantity for the product is set to 7") {
 			var warehouseList = "1:Italy,3:United States - Southwest,3:United States - Northeast";
 
-			for (var warehouse : list "${warehouseList}") {
-				var warehouseName = StringUtil.extractLast("${warehouse}", ":");
-				var warehouseQuantity = StringUtil.extractFirst("${warehouse}", ":");
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
 
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "${warehouseQuantity}",
-					warehouseName = "${warehouseName}");
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -847,7 +847,7 @@ definition {
 
 		task ("When buyer user adds allowed quantities to the cart") {
 			FrontStore.addInitializerProductToCart(
-				allowedQuantities = "2",
+				allowedQuantities = 2,
 				productName = "U-Joint");
 
 			CommerceNavigator.gotoMiniCart();
@@ -857,7 +857,7 @@ definition {
 				cartItemSku = "MIN55861");
 
 			FrontStore.viewMiniCart(
-				cartSummaryQuantity = "2",
+				cartSummaryQuantity = 2,
 				cartSummarySubtotal = "48.00",
 				cartSummaryTotal = "48.00");
 
@@ -865,12 +865,12 @@ definition {
 				Select(
 					key_cartItemSku = "MIN55861",
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_SELECTOR_SELECT_FIELD",
-					value1 = "${quantity}");
+					value1 = ${quantity});
 
 				var subtotal = 24 * ${quantity};
 
 				FrontStore.viewMiniCart(
-					cartSummaryQuantity = "${quantity}",
+					cartSummaryQuantity = ${quantity},
 					cartSummarySubtotal = "${subtotal}.00",
 					cartSummaryTotal = "${subtotal}.00");
 			}
@@ -886,8 +886,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "6",
-				productUnitPrice = "24",
+				productQuantity = 6,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -897,7 +897,7 @@ definition {
 			Select(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
-				value1 = "2");
+				value1 = 2);
 
 			Click(
 				key_productName = "U-Joint",
@@ -910,7 +910,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10542. Maximum quantity cannot be added to the cart when order quantity is higher than the stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMaximumProductQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -933,14 +933,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And maximum quantity is set to 8 and Allow Back Order is disabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				maxOrderQuantity = "8",
+				maxOrderQuantity = 8,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -961,7 +961,7 @@ definition {
 			Type(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "8");
+				value1 = 8);
 
 			Click(
 				key_productName = "U-Joint",
@@ -974,7 +974,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10542. Maximum quantity can be added to the cart until there's stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMaximumProductQuantityWhenStockQuantityIsLessAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -997,14 +997,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And maximum quantity is set to 4 and Allow Back Order is disabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				maxOrderQuantity = "4",
+				maxOrderQuantity = 4,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -1024,7 +1024,7 @@ definition {
 		task ("And buyer user adds maximum quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -1037,8 +1037,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1048,7 +1048,7 @@ definition {
 			Type(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "4");
+				value1 = 4);
 
 			Click(
 				key_productName = "U-Joint",
@@ -1061,7 +1061,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10503. Minimum quantity cannot be added to the cart when order quantity is higher then the stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMinimumProductQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -1084,8 +1084,8 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -1102,7 +1102,7 @@ definition {
 				allowBackOrders = "false",
 				displayAvailability = "true",
 				displayStockQuantity = "true",
-				minOrderQuantity = "8",
+				minOrderQuantity = 8,
 				publish = "true");
 		}
 
@@ -1127,7 +1127,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10503. Minimum quantity can be added to the cart until there's stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMinimumProductQuantityWhenStockQuantityIsLessAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -1150,8 +1150,8 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
@@ -1168,7 +1168,7 @@ definition {
 				allowBackOrders = "false",
 				displayAvailability = "true",
 				displayStockQuantity = "true",
-				minOrderQuantity = "4",
+				minOrderQuantity = 4,
 				publish = "true");
 		}
 
@@ -1184,7 +1184,7 @@ definition {
 		task ("And buyer user can do the checkout with a quantity that is less than the stock quantity one") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1195,8 +1195,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1214,7 +1214,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10559. Multiple quantities cannot be added to the cart when order quantity is higher than the stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMultipleQuantityWhenOrderItemQuantityIsHigherThanStockQuantityAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -1237,14 +1237,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And multiple quantity is set to 8 and Allow Back Order is disabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				multipleOrderQuantity = "8",
+				multipleOrderQuantity = 8,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -1265,7 +1265,7 @@ definition {
 			Type(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "8");
+				value1 = 8);
 
 			Click(
 				key_productName = "U-Joint",
@@ -1278,7 +1278,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10559. Multiple quantities can be added to the cart until there's stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartMultipleQuantityWhenStockQuantityIsLessAndBackOrderIsDisabled {
 		property portal.acceptance = "false";
 
@@ -1301,14 +1301,14 @@ definition {
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
 				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
 					productSku = "MIN55861",
-					quantity = "2",
-					warehouseName = "${warehouseName}");
+					quantity = 2,
+					warehouseName = ${warehouseName});
 			}
 		}
 
 		task ("And multiple quantity is set to 4 and Allow Back Order is disabled") {
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
-				multipleOrderQuantity = "4",
+				multipleOrderQuantity = 4,
 				productName = "U-Joint");
 
 			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
@@ -1328,7 +1328,7 @@ definition {
 		task ("And buyer user adds multiple quantity to the cart") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -1341,8 +1341,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1352,7 +1352,7 @@ definition {
 			Type(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "4");
+				value1 = 4);
 
 			Click(
 				key_productName = "U-Joint",
@@ -1365,7 +1365,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10491. The product can be added to the cart until there's stock quantity and back order is disabled"
-	@priority = "3"
+	@priority = 3
 	test CanOnlyPlaceOrderWhenStockIsAvailable {
 		property portal.acceptance = "false";
 
@@ -1388,11 +1388,11 @@ definition {
 			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.editWarehousesQuantity(
-				italyQuantity = "1",
-				northeastQuantity = "1",
+				italyQuantity = 1,
+				northeastQuantity = 1,
 				productName = "U-Joint",
 				productSku = "MIN55861",
-				southwestQuantity = "2");
+				southwestQuantity = 2);
 		}
 
 		task ("And product's Allow Back Order is disabled") {
@@ -1413,7 +1413,7 @@ definition {
 		task ("And given a placed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "4");
+				productQuantity = 4);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1424,8 +1424,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "4",
-				productUnitPrice = "24",
+				productQuantity = 4,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 		}
 
@@ -1445,7 +1445,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10491.  The user can see product is unavailable when stock quantity is zero"
-	@priority = "3"
+	@priority = 3
 	test CanSeeProductUnavailableWhenStockIsZero {
 		property portal.acceptance = "false";
 
@@ -1468,11 +1468,11 @@ definition {
 			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.editWarehousesQuantity(
-				italyQuantity = "0",
-				northeastQuantity = "0",
+				italyQuantity = 0,
+				northeastQuantity = 0,
 				productName = "U-Joint",
 				productSku = "MIN55861",
-				southwestQuantity = "0");
+				southwestQuantity = 0);
 		}
 
 		task ("And product's Allow Back Order is disabled") {
@@ -1502,7 +1502,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
-	@priority = "3"
+	@priority = 3
 	test UseConfiguration {
 		property portal.acceptance = "true";
 
@@ -1548,7 +1548,7 @@ definition {
 		Type(
 			key_labelName = "Minimum Order Quantity",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "2");
+			value1 = 2);
 
 		AssertElementPresent(
 			key_labelName = "Allowed Order Quantities",
@@ -1557,7 +1557,7 @@ definition {
 		Type(
 			key_labelName = "Allowed Order Quantities",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Select(
 			key_title = "Low Stock Action",
@@ -1571,7 +1571,7 @@ definition {
 		Type(
 			key_labelName = "Low Stock Threshold",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Uncheck.uncheckToggleSwitch(
 			key_toggleSwitchLabel = "Allow Back Order",
@@ -1584,7 +1584,7 @@ definition {
 		Type(
 			key_labelName = "Maximum Order Quantity",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "20000");
+			value1 = 20000);
 
 		AssertElementPresent(
 			key_labelName = "Multiple Order Quantity",
@@ -1593,7 +1593,7 @@ definition {
 		Type(
 			key_labelName = "Multiple Order Quantity",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "2");
+			value1 = 2);
 
 		Uncheck.uncheckToggleSwitch(
 			key_toggleSwitchLabel = "Free Shipping",
@@ -1610,7 +1610,7 @@ definition {
 		Type(
 			key_labelName = "Shipping Extra Price",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertElementPresent(
 			key_labelName = "Width",
@@ -1619,7 +1619,7 @@ definition {
 		Type(
 			key_labelName = "Width",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertElementPresent(
 			key_labelName = "Height",
@@ -1628,7 +1628,7 @@ definition {
 		Type(
 			key_labelName = "Height",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertElementPresent(
 			key_labelName = "Depth",
@@ -1637,7 +1637,7 @@ definition {
 		Type(
 			key_labelName = "Depth",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		AssertElementPresent(
 			key_labelName = "Weight",
@@ -1646,7 +1646,7 @@ definition {
 		Type(
 			key_labelName = "Weight",
 			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickPublish();
 

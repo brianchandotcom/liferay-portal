@@ -2,14 +2,14 @@ definition {
 
 	macro assertChangeRole {
 		AssertElementPresent(
-			key_email = "${email}",
-			key_role = "${role}",
+			key_email = ${email},
+			key_role = ${role},
 			locator1 = "CP2Utils#ROLE");
 	}
 
 	macro assertDropdownList {
-		for (var options : list "${optionList}") {
-			var key_option = "${options}";
+		for (var options : list ${optionList}) {
+			var key_option = ${options};
 
 			AssertVisible(locator1 = "CP2Utils#DROPDOWN_OPTIONS");
 		}
@@ -19,67 +19,67 @@ definition {
 		Click(locator1 = "CP2Subscription#SUBSCRIPTION_TERM_DROPDOWN_BUTTON");
 
 		AssertVisible(
-			key_number = "0",
+			key_number = 0,
 			key_options = "Jul 25, 2021 - Jul 24, 2022",
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 
 		AssertVisible(
-			key_number = "1",
+			key_number = 1,
 			key_options = "Jul 25, 2022 - Jul 24, 2023",
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 
 		AssertVisible(
-			key_number = "2",
+			key_number = 2,
 			key_options = "Jul 25, 2023 - Jul 24, 2024",
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 
 		AssertVisible(
-			key_number = "3",
+			key_number = 3,
 			key_options = "Jul 25, 2024 - Jul 24, 2025",
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 
 		AssertVisible(
-			key_number = "4",
+			key_number = 4,
 			key_options = "Jul 25, 2025 - Jul 24, 2026",
 			locator1 = "CP2Subscription#DROPDOWN_OPTIONS");
 	}
 
 	macro assertNotChangeRole {
 		AssertVisible(
-			key_role = "${role}",
+			key_role = ${role},
 			locator1 = "CP2Utils#ROLE");
 	}
 
 	macro assertOrganization {
 		AssertElementPresent(
-			key_text = "${text}",
+			key_text = ${text},
 			locator1 = "CP2Utils#ANY_TEXT");
 	}
 
 	macro assertTextVisible {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CP2Utils#MODAL_TEXT");
 	}
 
 	macro assertThatTheOrganizationIsNotPresent {
 		AssertElementNotPresent(
-			key_text = "${text}",
+			key_text = ${text},
 			locator1 = "CP2Utils#ANY_TEXT");
 	}
 
 	macro assigneToRoleViaUsersTab {
 		Account.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "${testAccount}");
+		CustomerPortal.accountTableProject(title = ${testAccount});
 
 		Account.addAssigneeToRoleViaUsersTab(
-			accountRoleTitle = "${accountRoleTitle}",
-			accountUserName = "${accountUserName}");
+			accountRoleTitle = ${accountRoleTitle},
+			accountUserName = ${accountUserName});
 	}
 
 	macro changeCardStatus {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#SVG_ACTIVATION_STATUS");
 
@@ -88,8 +88,8 @@ definition {
 		Click(locator1 = "CustomerPortalSite#SVG_STATUS_OPTION");
 
 		CP2Utils.fillInTheProjectId(
-			label = "${label}",
-			value = "${value}");
+			label = ${label},
+			value = ${value});
 
 		CustomerPortal.clickAtButton(text = "Confirm");
 	}
@@ -97,28 +97,28 @@ definition {
 	macro changeRole {
 		Select(
 			locator1 = "CP2Utils#SELECT_ROLE",
-			value1 = "${role}");
+			value1 = ${role});
 	}
 
 	macro clickAtFilterMenu {
 		Click.pauseClickAt(
-			key_text = "${text}",
+			key_text = ${text},
 			locator1 = "CustomerPortalSite#ANY_BUTTON");
 
 		Click.clickNoWaitForVisible(
-			key_checkbox = "${checkbox}",
-			key_menu = "${menu}",
+			key_checkbox = ${checkbox},
+			key_menu = ${menu},
 			locator1 = "CP2NavigationMenu#FILTER_CHECKBOX");
 	}
 
 	macro clickBreadcrumb {
-		var key_project = "${project}";
+		var key_project = ${project};
 
 		Click(locator1 = "CP2Utils#SVG_DROPDOWN");
 
 		CP2Utils.search(
-			project = "${project}",
-			searchItem = "${project}");
+			project = ${project},
+			searchItem = ${project});
 
 		Click(locator1 = "CP2Utils#SVG_DROPDOWN_LIST");
 	}
@@ -133,12 +133,12 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
 
-		CP2Utils.selectPaginationNumber(quantity = "40");
+		CP2Utils.selectPaginationNumber(quantity = 40);
 
-		var key_status = "${status}";
+		var key_status = ${status};
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectCustomInfo(position = "${position}");
+			CustomerPortal.viewCPObjectCustomInfo(position = ${position});
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "activationStatus",
@@ -158,10 +158,10 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "${portlet}");
+			portlet = ${portlet});
 
 		Click(
-			key_text = "${email}",
+			key_text = ${email},
 			locator1 = "CP2Utils#OBJECT_ENTRY_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -174,7 +174,7 @@ definition {
 	macro fillInTheProjectId {
 		Type(
 			locator1 = "CustomerPortalSite#FIELD_VALUE",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	// Workaround for LPS-168369
@@ -206,7 +206,7 @@ definition {
 			key_text = "Redacted",
 			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 
-		CustomerPortal.clickAtButton(text = "${text}");
+		CustomerPortal.clickAtButton(text = ${text});
 
 		if (IsElementPresent(key_text = "Generate New", locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN")) {
 			AssertVisible(
@@ -216,7 +216,7 @@ definition {
 		else {
 			for (var actions : list "Generate New,Deactivate") {
 				AssertElementNotPresent(
-					key_text = "${actions}",
+					key_text = ${actions},
 					locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 			}
 		}
@@ -224,17 +224,17 @@ definition {
 
 	macro openActionMenu {
 		Click(
-			key_text = "${openUser}",
+			key_text = ${openUser},
 			locator1 = "Icon#SPECIFIC_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = ${menuItem});
 	}
 
 	macro search {
 		if (IsElementPresent(locator1 = "CP2Utils#PROJECT_SEARCH")) {
 			Type(
 				locator1 = "CP2Utils#PROJECT_SEARCH",
-				value1 = "${searchItem}");
+				value1 = ${searchItem});
 		}
 	}
 
@@ -243,7 +243,7 @@ definition {
 
 		Type(
 			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
-			value1 = "${searchinput}");
+			value1 = ${searchinput});
 
 		KeyPress(
 			locator1 = "CP2NavigationMenu#SEARCH_FILTER",
@@ -255,35 +255,35 @@ definition {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 
 			AssertVisible(
-				key_quantity = "${quantity}",
+				key_quantity = ${quantity},
 				locator1 = "CP2Utils#PAGINATION_BUTTON_ITEM");
 
 			Click(
-				key_quantity = "${quantity}",
+				key_quantity = ${quantity},
 				locator1 = "CP2Utils#PAGINATION_BUTTON_ITEM");
 		}
 	}
 
 	macro typeSetupInfoFields {
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
-		var key_index = "${position}";
+		var key_index = ${position};
 
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro unassignUserRole {
 		Account.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "${testAccount}");
+		CustomerPortal.accountTableProject(title = ${testAccount});
 
 		Account.unassignUserRole(
-			accountRoleTitle = "${accountRoleTitle}",
-			accountUserName = "${accountUserName}");
+			accountRoleTitle = ${accountRoleTitle},
+			accountUserName = ${accountUserName});
 	}
 
 }

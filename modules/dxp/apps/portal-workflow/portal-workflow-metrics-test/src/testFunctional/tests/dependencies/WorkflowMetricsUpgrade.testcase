@@ -14,7 +14,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test UpdateMetricsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test UpdateMetricsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test UpdateMetricsAfterUpgrade73101 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewMetricsAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewMetricsAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewMetricsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewMetricsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ViewMetricsAfterUpgrade73101 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

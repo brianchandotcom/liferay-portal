@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
-	@priority = "4"
+	@priority = 4
 	test CanBeTranslatedWithDifferentInstanceLanguages {
 		property test.name.skip.portal.instance = "DELocalization#CanBeTranslatedWithDifferentInstanceLanguages";
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to choose different options for Grid field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanChooseDifferentOptionsFromGridField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -137,9 +137,9 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -148,9 +148,9 @@ definition {
 
 		for (var index : list "4,5,6") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "网格",
-				row = "${index}");
+				row = ${index});
 		}
 
 		PortletEntry.publish();
@@ -163,9 +163,9 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -176,14 +176,14 @@ definition {
 
 		for (var index : list "1,2,3,4,5,6") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "网格",
-				row = "${index}");
+				row = ${index});
 		}
 	}
 
 	@description = "Verify that is possible to choose different options for Multiple Selection field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanChooseDifferentOptionsFromMultpleSelectionField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to choose different options for Select From List field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanChooseDifferentOptionsFromSelectFromListField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to choose different options for Single Selection field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanChooseDifferentOptionsFromSingleSelectionField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@description = "Verify that the Date field mask is succesfully applied for languages which uses DD/MM/YYYY"
-	@priority = "5"
+	@priority = 5
 	test CanDateMaskBeAppliedForTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -450,7 +450,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -485,7 +485,7 @@ definition {
 	}
 
 	@description = "Verify that for decimal Numeric fields the decimal separator is adequate to the current locale"
-	@priority = "4"
+	@priority = 4
 	test CanDecimalSeparatorBeAdequateWithDifferentLanguages {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@description = "Verify that upon editing Default language, translated languages are not affected"
-	@priority = "5"
+	@priority = 5
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
 		property test.name.skip.portal.instance = "DELocalization#CanDefaulfLanguageChangeTranslationsAfterEdited";
 
@@ -556,7 +556,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -594,7 +594,7 @@ definition {
 			locator1 = "Translation#CURRENT_LOCALE");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Text - ${language}",
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@description = "Verify that default language inputted data are displayed for untranslated languages"
-	@priority = "4"
+	@priority = 4
 	test CanDefaultDatabeShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -648,7 +648,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
+			webContentNumeric = 12345,
 			webContentTitle = "Test");
 
 		PortletEntry.publish();
@@ -658,18 +658,18 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "数字",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 	}
 
 	@description = "Verify Default language when Portal Instance language is changed"
-	@priority = "5"
+	@priority = 5
 	test CanDefaultLanguageBeChanged {
 		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeChanged";
 
@@ -709,7 +709,7 @@ definition {
 	}
 
 	@description = "Verify that upon editing Default language, translated languages are not affected"
-	@priority = "5"
+	@priority = 5
 	test CanDefaultLanguageBeEditedAndRemainTranslations {
 		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeEditedAndRemainTranslations";
 
@@ -733,9 +733,9 @@ definition {
 			fieldPlaceholder = "Placeholder Text");
 
 		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
+			WebContentStructures.addTranslations(localeList = ${language});
 
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Text",
@@ -778,7 +778,7 @@ definition {
 			fieldPlaceholder = "Placeholder Text");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Text ${language}",
@@ -801,7 +801,7 @@ definition {
 	}
 
 	@description = "Verify that a field without translation for a language follows default language translation"
-	@priority = "3"
+	@priority = 3
 	test CanFieldWithoutTranslationFollowsDefaultLanguage {
 		property test.name.skip.portal.instance = "DELocalization#CanFieldWithoutTranslationFollowsDefaultLanguage";
 
@@ -855,7 +855,7 @@ definition {
 	}
 
 	@description = "Verify that Fieldset's translations are displayed on the Web Content"
-	@priority = "5"
+	@priority = 5
 	test CanFielsetTranslationsBeShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -903,7 +903,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to input different values for Text and Numeric fields inside a Fields Group for translated languages"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedInFieldOnFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -925,7 +925,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -943,7 +943,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -953,7 +953,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.publish();
 
@@ -965,7 +965,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -975,11 +975,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 	}
 
 	@description = "Verify that is possible to translate fields with options inside a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedInFieldOptionOnFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1098,7 +1098,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to choose a different color on the Color Field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedOnColorField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1156,7 +1156,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate input data on the Date Field"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedOnDateField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1212,7 +1212,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate input data on the Numeric Field"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedOnNumericField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1241,13 +1241,13 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
+			webContentNumeric = 12345,
 			webContentTitle = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
+			webContentNumeric = 12345,
 			webContentNumericFieldLabel = "数字",
 			webContentTitle = "测试");
 
@@ -1264,11 +1264,11 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "数字",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 	}
 
 	@description = "Verify that is possible to translate input data on the Rich Text Field"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedOnRichTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1327,7 +1327,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate input data on the Text Field"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedOnTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1383,7 +1383,7 @@ definition {
 	}
 
 	@description = "Verify that translations for more than two different languages persists"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedToTwoLanguages {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1400,7 +1400,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN,en-US") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1422,7 +1422,7 @@ definition {
 		PortletEntry.inputTitle(title = "Test - en-US");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
+			webContentNumeric = 12345,
 			webContentNumericFieldLabel = "Numeric - en-US",
 			webContentText = "Test - en-US",
 			webContentTextFieldLabel = "Text - en-US",
@@ -1433,7 +1433,7 @@ definition {
 		PortletEntry.inputTitle(title = "Test - zh-CN");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "54321",
+			webContentNumeric = 54321,
 			webContentNumericFieldLabel = "Numeric - zh-CN",
 			webContentText = "Test - zh-CN",
 			webContentTextFieldLabel = "Text - zh-CN",
@@ -1444,7 +1444,7 @@ definition {
 		PortletEntry.inputTitle(title = "Test - pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "98765",
+			webContentNumeric = 98765,
 			webContentNumericFieldLabel = "Numeric - pt-BR",
 			webContentText = "Test - pt-BR",
 			webContentTextFieldLabel = "Text - pt-BR",
@@ -1466,7 +1466,7 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - en-US",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1482,7 +1482,7 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - zh-CN",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "54321");
+			value1 = 54321);
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -1498,11 +1498,11 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - pt-BR",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "98765");
+			value1 = 98765);
 	}
 
 	@description = "Verify that translations for more than two different languages persists for fields inside a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeTranslatedToTwoLanguagesOnFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1522,7 +1522,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN,en-US") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1542,7 +1542,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title - en-US");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
+			webContentNumeric = 12345,
 			webContentNumericFieldLabel = "Numeric - en-US",
 			webContentText = "Test - en-US",
 			webContentTextFieldLabel = "Text - en-US",
@@ -1551,7 +1551,7 @@ definition {
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "54321",
+			webContentNumeric = 54321,
 			webContentNumericFieldLabel = "Numeric - zh-CN",
 			webContentText = "Test - zh-CN",
 			webContentTextFieldLabel = "Text - zh-CN",
@@ -1560,7 +1560,7 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "98765",
+			webContentNumeric = 98765,
 			webContentNumericFieldLabel = "Numeric - pt-BR",
 			webContentText = "Test - pt-BR",
 			webContentTextFieldLabel = "Text - pt-BR",
@@ -1584,7 +1584,7 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - en-US",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1602,7 +1602,7 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - zh-CN",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "54321");
+			value1 = 54321);
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -1620,11 +1620,11 @@ definition {
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Numeric - pt-BR",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "98765");
+			value1 = 98765);
 	}
 
 	@description = "Verify that is not possible to translate a field that has Localizable set as off"
-	@priority = "4"
+	@priority = 4
 	test CanNotLocalizbleOffTranslate {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1641,7 +1641,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1661,7 +1661,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text",
@@ -1672,7 +1672,7 @@ definition {
 		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -1680,12 +1680,12 @@ definition {
 		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 	}
 
 	@description = "Verify that is not possible to translate a field that has Localizable set as off and is inside a Fields Group that has Localizable fields"
-	@priority = "3"
+	@priority = 3
 	test CanNotLocalizbleOffTranslateFieldsOnFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1709,7 +1709,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1729,7 +1729,7 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
-			webContentNumeric = "10",
+			webContentNumeric = 10,
 			webContentNumericFieldLabel = "Numeric",
 			webContentText = "Test",
 			webContentTextFieldLabel = "Text",
@@ -1744,7 +1744,7 @@ definition {
 		FormFields.assertFieldsGroup(fieldName = "Fields Group");
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -1754,12 +1754,12 @@ definition {
 		FormFields.assertFieldsGroup(fieldName = "Fields Group");
 
 		for (var fieldFieldLabel : list "Text,Numeric") {
-			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+			DataEngine.assertNonLocalizableField(fieldFieldName = ${fieldFieldLabel});
 		}
 	}
 
 	@description = "Verify that is not possible to choose options of a field that has Localizable set as off"
-	@priority = "4"
+	@priority = 4
 	test CanNotLocalizbleOffTranslateOptionFields {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1780,7 +1780,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1815,7 +1815,7 @@ definition {
 	}
 
 	@description = "Verify Default language when Portal Instance language is changed"
-	@priority = "4"
+	@priority = 4
 	test CanPortalLanguageBeChanged {
 		property test.name.skip.portal.instance = "DELocalization#CanPortalLanguageBeChanged";
 
@@ -1850,7 +1850,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "en-US,ca-ES,zh-CN");
 
 		for (var language : list "en-US,ca-ES,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -1877,7 +1877,7 @@ definition {
 	}
 
 	@description = "Verify that Structure's translations are displayed on the Web Content"
-	@priority = "5"
+	@priority = 5
 	test CanStructureTranslationsBeShown {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1915,7 +1915,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate field with options inside a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateFieldOptionInFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1982,7 +1982,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate fields with options on the Fieldset modal"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateFieldOptionOnFieldset {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2062,7 +2062,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate fields inside a Fields Group on the Fieldset modal"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateFieldsGroupOnFieldset {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2106,7 +2106,7 @@ definition {
 		PortletEntry.inputTitle(title = "Test");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -2115,13 +2115,13 @@ definition {
 		PortletEntry.inputTitle(title = "Test zh-CN");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "文本,数字");
 	}
 
 	@description = "Verify that is possible to translate fields on the Fieldset modal"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateFieldsOnFieldset {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2169,7 +2169,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate fields inside a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateFieldsOnFieldsGroup {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2196,9 +2196,9 @@ definition {
 			fieldHelp = "Help Text");
 
 		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
+			WebContentStructures.addTranslations(localeList = ${language});
 
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Text",
@@ -2223,7 +2223,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -2239,10 +2239,10 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DEBuilder.assertFieldsGroup(
-				fieldGroupDepth = "1",
+				fieldGroupDepth = 1,
 				fieldGroupLabel = "Fields Group",
 				fieldsLabelList = "Text ${language},Numeric ${language}");
 
@@ -2260,7 +2260,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Color Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnColorField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2306,7 +2306,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Date Field"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelAndHelpTextOnDateField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2352,7 +2352,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Geolocation Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnGeolocationField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2398,7 +2398,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate multiple options for Grid field"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelAndHelpTextOnGridField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2444,7 +2444,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Image Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnImageField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2490,7 +2490,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Link to Page Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnLinkToPageField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2536,7 +2536,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate multiple options for Multiple Selection field"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelAndHelpTextOnMultipleSelectionField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2582,7 +2582,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Numeric Field"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelAndHelpTextOnNumericField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2628,7 +2628,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Rich Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnRichTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2674,7 +2674,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate multiple options for Select From List field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnSelectFromListField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2720,7 +2720,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Separator Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnSeparatorField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2766,7 +2766,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate multiple options for Single Selection field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnSingleSelectionField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2812,7 +2812,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Upload Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnUploadField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2858,7 +2858,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Web Content Field"
-	@priority = "4"
+	@priority = 4
 	test CanTranslateLabelAndHelpTextOnWebContentField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2905,7 +2905,7 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelPlaceholderAndHelpTextOfTextField {
 
 		// TODO pending implementation
@@ -2913,7 +2913,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label, Placeholder and Help text of Text Field"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateLabelPlaceholderHelpTextOnTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -2963,7 +2963,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate a Web Content with all fields"
-	@priority = "5"
+	@priority = 5
 	test CanTranslateWebContentWithAllFields {
 		for (var n : list "1,2") {
 			JSONLayout.addPublicLayout(
@@ -3000,7 +3000,7 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "下拉列表",
-			index = "1",
+			index = 1,
 			optionValue = "选择 2");
 
 		DataEngine.editFieldLabel(
@@ -3009,7 +3009,7 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "单选列表框",
-			index = "1",
+			index = 1,
 			optionValue = "选择 3");
 
 		DataEngine.editFieldLabel(
@@ -3018,44 +3018,44 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "复选列表框",
-			index = "1",
+			index = 1,
 			optionValue = "选择 1");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Grid",
 			fieldFieldLabelEdit = "网格");
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "R3,R4") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "网格",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "行 ${index}");
 
 			DataEngine.editFieldReferenceOfFieldOption(
 				fieldFieldLabel = "网格",
-				fieldReferenceOfFieldOption = "${optionValue}",
-				index = "${index}",
+				fieldReferenceOfFieldOption = ${optionValue},
+				index = ${index},
 				optionFieldLabel = "Rows");
 
 			var index = ${index} + 1;
 		}
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "C3,C4") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "网格",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "列 ${index}");
 
 			DataEngine.editFieldReferenceOfFieldOption(
 				fieldFieldLabel = "网格",
-				fieldReferenceOfFieldOption = "${optionValue}",
-				index = "${index}",
+				fieldReferenceOfFieldOption = ${optionValue},
+				index = ${index},
 				optionFieldLabel = "Rows");
 
 			var index = ${index} + 1;
@@ -3114,17 +3114,17 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			column = "1",
+			column = 1,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "1",
+			row = 1,
 			webContentColor = "FF0D0D",
 			webContentDate = "10/10/2020",
 			webContentGrid = "true",
 			webContentImage = "Document_3.png",
 			webContentLinkToPage = "Test Page Name 1",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
 			webContentSingleSelection = "Option 3",
@@ -3136,10 +3136,10 @@ definition {
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addWithStructureCP(
-			column = "2",
+			column = 2,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "2",
+			row = 2,
 			webContentColor = "2BA676",
 			webContentColorFieldLabel = "颜色",
 			webContentDate = "2020/01/01",
@@ -3152,7 +3152,7 @@ definition {
 			webContentLinkToPageFieldLabel = "网页链接",
 			webContentMultipleSelection = "选择 1",
 			webContentMultipleSelectionFieldLabel = "复选列表框",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentNumericFieldLabel = "数字",
 			webContentRichText = "这是多格式文本框",
 			webContentRichTextFieldLabel = "多格式文本框",
@@ -3171,10 +3171,10 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			column = "1",
+			column = 1,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "1",
+			row = 1,
 			webContentColor = "FF0D0D",
 			webContentDate = "10/10/2020",
 			webContentGeolocation = "true",
@@ -3182,7 +3182,7 @@ definition {
 			webContentImage = "Document_3.png",
 			webContentLinkToPage = "Test Page Name 1",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
 			webContentSeparator = "true",
@@ -3199,11 +3199,11 @@ definition {
 			value1 = "网页内容标题");
 
 		WebContent.viewWithStructureCP(
-			column = "2",
+			column = 2,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
 			predefinedValue = "true",
-			row = "2",
+			row = 2,
 			webContentColor = "2BA676",
 			webContentColorFieldLabel = "颜色",
 			webContentDate = "2020/01/01",
@@ -3218,7 +3218,7 @@ definition {
 			webContentLinkToPageFieldLabel = "网页链接",
 			webContentMultipleSelection = "选择 1",
 			webContentMultipleSelectionFieldLabel = "复选列表框",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentNumericFieldLabel = "数字",
 			webContentRichText = "这是多格式文本框",
 			webContentRichTextFieldLabel = "多格式文本框",
@@ -3237,7 +3237,7 @@ definition {
 	}
 
 	@description = "Verify that upon changing the language of the structure to one that was translated on the fieldset, the translations are displayed"
-	@priority = "5"
+	@priority = 5
 	test CanTranslationOnFieldsetPersirtsAfterChangingStructureLanguage {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3293,7 +3293,7 @@ definition {
 	}
 
 	@description = "Verify that translations for repeatable fields persists"
-	@priority = "5"
+	@priority = 5
 	test CanTranslationsPersistsOnRepeatableField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3329,24 +3329,24 @@ definition {
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text - pt-BR",
-			index = "1",
+			index = 1,
 			value = "Campo de texto 1");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text - pt-BR",
-			index = "2",
+			index = 2,
 			value = "Campo de texto 2");
 
 		PortletEntry.publish();
@@ -3355,29 +3355,29 @@ definition {
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text - pt-BR",
-			index = "1",
+			index = 1,
 			value = "Campo de texto 1");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text - pt-BR",
-			index = "2",
+			index = 2,
 			value = "Campo de texto 2");
 	}
 
 	@description = "Verify that is possible to upload a different file on the Upload Field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanUploadedChangeWithTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3454,7 +3454,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to upload a different image on the Image Field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanUploadedImageChangeWithTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3530,7 +3530,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to choose a different Page on the Link to Page Field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanUploadedLinkToPageChangeWithTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3592,7 +3592,7 @@ definition {
 			value1 = "Test");
 
 		DERenderer.assertContentInLinktoPageField(
-			index = "1",
+			index = 1,
 			linkToPageContent = "Pages > Test Page Name 1",
 			linkToPageFieldLabel = "Link to Page");
 
@@ -3603,13 +3603,13 @@ definition {
 			value1 = "测试");
 
 		DERenderer.assertContentInLinktoPageField(
-			index = "1",
+			index = 1,
 			linkToPageContent = "Pages > Test Page Name 2",
 			linkToPageFieldLabel = "网页链接");
 	}
 
 	@description = "Verify that is possible to choose a different Web Content on the Web Content Field for a translated language"
-	@priority = "5"
+	@priority = 5
 	test CanUploadedWebContentChangeWithTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -3686,7 +3686,7 @@ definition {
 	}
 
 	@description = "Create, edit and delete Web Content with translations"
-	@priority = "5"
+	@priority = 5
 	test CanWebContentWithTranslationsBeCreatedEditedAndDeleted {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

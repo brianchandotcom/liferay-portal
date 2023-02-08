@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "Verify that the backspace function can delete all entries in the Calculator"
-	@priority = "5"
+	@priority = 5
 	test BackspaceCanDeleteAllEntriesInCalculator {
 		property portal.acceptance = "true";
 
@@ -46,7 +46,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		FormViewBuilder.editFieldLabel(
@@ -56,7 +56,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormViewBuilder.editFieldLabel(
@@ -72,11 +72,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric 1",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric 2");
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "(");
@@ -85,21 +85,21 @@ definition {
 
 		FormRules.chooseCalculateOperator(calculateOperator = "*");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 2);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "+");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "7");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 7);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "-");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "5");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 5);
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = ")");
 
 		FormRules.chooseCalculateOperator(calculateOperator = "/");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 2);
 
 		for (var i : list "1,2,3,4") {
 			FormRules.clickOnCalculatorBackspace();
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "Verify that a Rule Action can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -130,13 +130,13 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
@@ -148,11 +148,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -162,27 +162,27 @@ definition {
 			actionTarget = "Numeric",
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			ruleNumber = "1");
+			ruleNumber = 1);
 
-		FormRules.gotoEdit(ruleNumber = "1");
+		FormRules.gotoEdit(ruleNumber = 1);
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_ACTION");
 
 		FormRules.configureActionOptions(
 			action = "Require",
-			actionRowNumber = "2",
+			actionRowNumber = 2,
 			actionTarget = "Text");
 
-		FormRules.deleteActions(rowNumber = "1");
+		FormRules.deleteActions(rowNumber = 1);
 
 		FormRules.viewActionNotPresent(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.viewAction(
 			action = "Require",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Text");
 
 		FormRules.save();
@@ -192,11 +192,11 @@ definition {
 			actionTarget = "Text",
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			ruleNumber = "1");
+			ruleNumber = 1);
 	}
 
 	@description = "Verify that a Rule Action can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -205,13 +205,13 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
@@ -223,11 +223,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Require",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -237,18 +237,18 @@ definition {
 			actionTarget = "Numeric",
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			ruleNumber = "1");
+			ruleNumber = 1);
 
-		FormRules.gotoEdit(ruleNumber = "1");
+		FormRules.gotoEdit(ruleNumber = 1);
 
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "LPS-71592 - Verify that a Rule with 'Calculate' action can be created"
-	@priority = "5"
+	@priority = 5
 	test CanCreateACalculateRule {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -284,7 +284,7 @@ definition {
 		Form.editName();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		var fieldNameQuantity = FormFields.getFieldName();
@@ -298,7 +298,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		var fieldNameValue = FormFields.getFieldName();
@@ -312,7 +312,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "2",
+			fieldPositionNumber = 2,
 			fieldType = "Numeric");
 
 		var fieldNameTotal = FormFields.getFieldName();
@@ -331,18 +331,18 @@ definition {
 
 		FormRules.selectConditionField(
 			conditionField = "Quantity",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.selectConditionOperator(
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.selectAction(
 			action = "Calculate",
-			actionRowNumber = "1");
+			actionRowNumber = 1);
 
 		FormRules.selectActionTarget(
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Total");
 
 		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference");
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Jump to page' action can be created"
-	@priority = "4"
+	@priority = 4
 	test CanCreateAJumpToPageRule {
 		property portal.acceptance = "true";
 
@@ -367,23 +367,23 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
-		Form.addPage(formAddNewPageNumber = "2");
+		Form.addPage(formAddNewPageNumber = 2);
 
 		Form.editPageTitle(
 			formPageName = "Page C",
-			formTitleNumber = "3");
+			formTitleNumber = 3);
 
 		FormsAdminNavigator.gotoRules();
 
@@ -393,12 +393,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Jump to Page",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "3 Page C");
 
 		FormRules.save();
@@ -413,7 +413,7 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -423,13 +423,13 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page C",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Rule with 'Enable' action can be created"
-	@priority = "4"
+	@priority = 4
 	test CanCreateAnEnableRule {
 		property portal.acceptance = "true";
 
@@ -437,12 +437,12 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
@@ -455,12 +455,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Enable",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -481,7 +481,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormPortlet.clickSubmit();
 
@@ -491,7 +491,7 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Require' action can be created"
-	@priority = "4"
+	@priority = 4
 	test CanCreateARequireRule {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -501,7 +501,7 @@ definition {
 
 		Form.editName();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldNameTextField = FormFields.getFieldName();
 
@@ -510,7 +510,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
@@ -525,12 +525,12 @@ definition {
 			conditionField = "Text Field",
 			conditionFieldValue = "test",
 			conditionOperator = "Is Equal To",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Require",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Date Field");
 
 		FormRules.save();
@@ -548,7 +548,7 @@ definition {
 		FormFields.viewRequiredAsteriskNotPresent();
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
+			fieldName = ${fieldNameTextField},
 			fieldValue = "test");
 
 		FormFields.viewRequiredAsterisk();
@@ -557,7 +557,7 @@ definition {
 	}
 
 	@description = "Verify that a Rule with more than one Action can be created"
-	@priority = "5"
+	@priority = 5
 	test CanCreateARuleWithMoreThanOneAction {
 		property portal.acceptance = "true";
 
@@ -570,13 +570,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "2",
+			fieldPositionNumber = 2,
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Test");
@@ -588,18 +588,18 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Require",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.addAction();
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "2",
+			actionRowNumber = 2,
 			actionTarget = "Paragraph");
 
 		FormRules.save();
@@ -628,7 +628,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormPortlet.submit();
 
@@ -638,7 +638,7 @@ definition {
 	}
 
 	@description = "Verify that a Rule with 'Show' action can be created"
-	@priority = "5"
+	@priority = 5
 	test CanCreateAShowRule {
 		property portal.acceptance = "true";
 
@@ -651,7 +651,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -662,12 +662,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -690,7 +690,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormPortlet.submit();
 
@@ -700,7 +700,7 @@ definition {
 	}
 
 	@description = "Verify that a Calculate Rule can be created using the decimal point"
-	@priority = "5"
+	@priority = 5
 	test CanIncludeDecimalPointInCalculations {
 		property portal.acceptance = "true";
 
@@ -709,13 +709,13 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		for (var fieldAndPosition : list "Text-0,Numeric-1") {
-			var field = StringUtil.extractFirst("${fieldAndPosition}", "-");
-			var position = StringUtil.extractLast("${fieldAndPosition}", "-");
+			var field = StringUtil.extractFirst(${fieldAndPosition}, "-");
+			var position = StringUtil.extractLast(${fieldAndPosition}, "-");
 
 			Form.gotoAddField(
-				fieldPositionNumber = "${position}",
-				fieldType = "${field}",
-				formPageNumber = "0");
+				fieldPositionNumber = ${position},
+				fieldType = ${field},
+				formPageNumber = 0);
 
 			Form.closeSidebar();
 		}
@@ -728,20 +728,20 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		for (var value : list "1,.,5,+,2,.,5") {
-			if ("${value}" == "+") {
-				FormRules.chooseCalculateOperator(calculateOperator = "${value}");
+			if (${value} == "+") {
+				FormRules.chooseCalculateOperator(calculateOperator = ${value});
 			}
 			else {
-				FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "${value}");
+				FormRules.clickOnCalculatorNumbersKeyboard(buttonName = ${value});
 			}
 		}
 
@@ -765,13 +765,13 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "Numeric",
-			fieldValue = "4");
+			fieldValue = 4);
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Calculate Rule can be created using Numeric Fields in the calculation"
-	@priority = "5"
+	@priority = 5
 	test CanIncludeNumericFieldsInCalculations {
 		property portal.acceptance = "true";
 
@@ -780,7 +780,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		Form.editFieldLabelMetal(fieldValue = "Numeric 1");
@@ -792,7 +792,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
@@ -804,18 +804,18 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Numeric 1",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric 2");
 
 		FormRules.selectCalculateFieldByFieldReference(calculateFieldOption = "ValueReference1");
 
 		FormRules.chooseCalculateOperator(calculateOperator = "*");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 2);
 
 		FormRules.save();
 
@@ -829,23 +829,23 @@ definition {
 
 		FormFields.viewNumericFieldValue(
 			fieldName = "Numeric",
-			rowNumber = "2",
+			rowNumber = 2,
 			value = "");
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "15");
+			fieldValue = 15);
 
 		FormFields.viewNumericFieldValue(
 			fieldName = "Numeric",
-			rowNumber = "2",
-			value = "30");
+			rowNumber = 2,
+			value = 30);
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Calculate Rule can be created using all operators (+, -, *, /)"
-	@priority = "5"
+	@priority = 5
 	test CanIncludeOperatorsInCalculations {
 		property portal.acceptance = "true";
 
@@ -853,12 +853,12 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -869,39 +869,39 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "(");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "+");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "-");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "5");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 5);
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = ")");
 
 		FormRules.chooseCalculateOperator(calculateOperator = "/");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "3");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 3);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "*");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 2);
 
 		FormRules.save();
 
@@ -923,13 +923,13 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "Numeric",
-			fieldValue = "10");
+			fieldValue = 10);
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Calculate Rule can be created using the parenthesis"
-	@priority = "5"
+	@priority = 5
 	test CanIncludeParenthesisInCalculations {
 		property portal.acceptance = "true";
 
@@ -937,12 +937,12 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -953,31 +953,31 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "(");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "+");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = ")");
 
 		FormRules.chooseCalculateOperator(calculateOperator = "/");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "2");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 2);
 
 		FormRules.save();
 
@@ -999,7 +999,7 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "Numeric",
-			fieldValue = "10");
+			fieldValue = 10);
 
 		FormPortlet.submitSuccessfully();
 
@@ -1009,7 +1009,7 @@ definition {
 	}
 
 	@description = "LPS-102616 Configure data providers in both input and output fields in autofill rule"
-	@priority = "5"
+	@priority = 5
 	test CanUtilizeDataProvidersInAutofillRule {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -1030,7 +1030,7 @@ definition {
 				outputParameterLabel = "prefecture",
 				outputParameterPath = "$.results[0].address1",
 				outputParameterType = "Text",
-				timeout = "3000",
+				timeout = 3000,
 				url = "http://zipcloud.ibsnet.co.jp/api/search?zipcode={zipcode}");
 
 			FormsAdmin.saveDataProvider();
@@ -1041,7 +1041,7 @@ definition {
 
 			Form.editName(formName = "Address");
 
-			Form.addTextField(fieldPositionNumber = "0");
+			Form.addTextField(fieldPositionNumber = 0);
 
 			var fieldNameTextField = FormFields.getFieldName();
 
@@ -1051,7 +1051,7 @@ definition {
 
 			Form.closeSidebar();
 
-			Form.addTextField(fieldPositionNumber = "1");
+			Form.addTextField(fieldPositionNumber = 1);
 
 			var fieldNameTextField2 = FormFields.getFieldName();
 
@@ -1070,11 +1070,11 @@ definition {
 			FormRules.configureConditionOptions(
 				conditionField = "Postal code",
 				conditionOperator = "Is Not Empty",
-				conditionRowNumber = "1");
+				conditionRowNumber = 1);
 
 			FormRules.configureActionOptions(
 				action = "Autofill",
-				actionRowNumber = "1",
+				actionRowNumber = 1,
 				actionTarget = "zipcloud");
 
 			FormRules.selectAutofillFromDataProvider(
@@ -1100,13 +1100,13 @@ definition {
 			FormsAdminNavigator.gotoPublishedForm();
 
 			FormFields.editText(
-				fieldName = "${fieldNameTextField}",
-				fieldValue = "1500000");
+				fieldName = ${fieldNameTextField},
+				fieldValue = 1500000);
 		}
 
 		task ("Assert that the Prefectures field was filled by the Data Provider and the form can be submited") {
 			FormFields.viewTextValue(
-				fieldName = "${fieldNameTextField2}",
+				fieldName = ${fieldNameTextField2},
 				fieldValue = "東京都");
 
 			FormPortlet.submitSuccessfullyAndViewSuccessPage();
@@ -1114,7 +1114,7 @@ definition {
 	}
 
 	@description = "LPS-70446 - Verify that a Rule with 'Autofill' action can be created with Data Providers"
-	@priority = "5"
+	@priority = 5
 	test CanUtilizeDataProvidersToCreateAnAutofillRule {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersToCreateAnAutofillRule";
@@ -1147,7 +1147,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldNameTextField = FormFields.getFieldName();
 
@@ -1156,7 +1156,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Select from List");
 
 		var fieldNameCountries = FormFields.getFieldName();
@@ -1170,7 +1170,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Select2",
 			optionValue = "Select 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Form.closeSidebar();
 
@@ -1182,12 +1182,12 @@ definition {
 			conditionField = "Text Field",
 			conditionFieldValue = "country",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Autofill",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Liferay Countries");
 
 		FormRules.selectAutofillFromDataProvider(
@@ -1206,34 +1206,34 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "${fieldNameTextField}");
+			fieldName = ${fieldNameTextField});
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
+			fieldName = ${fieldNameTextField},
 			fieldValue = "test");
 
 		FormFields.viewSelectOptionsList(
-			fieldName = "${fieldNameCountries}",
+			fieldName = ${fieldNameCountries},
 			selectOption = "Select 1");
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
+			fieldName = ${fieldNameTextField},
 			fieldValue = "country");
 
 		DataEngine.waitForAutoSave();
 
 		Click(
-			key_fieldName = "${fieldNameCountries}",
+			key_fieldName = ${fieldNameCountries},
 			locator1 = "FormFields#SELECT_FIELD");
 
 		Refresh();
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField}",
+			fieldName = ${fieldNameTextField},
 			fieldValue = "country");
 
 		FormFields.selectSelectOption(
-			fieldName = "${fieldNameCountries}",
+			fieldName = ${fieldNameCountries},
 			selectOption = "Afghanistan");
 
 		FormPortlet.submitSuccessfully();
@@ -1256,7 +1256,7 @@ definition {
 	}
 
 	@description = "LPS-75495 - Verify that the 'Show' action is not triggered when typing into an unrelated field"
-	@priority = "3"
+	@priority = 3
 	test ShowDoesNotTriggerWhenTypingIntoUnrelatedField {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -1266,7 +1266,7 @@ definition {
 
 		Form.editName(formName = "Test Form");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldNameTextField1 = FormFields.getFieldName();
 
@@ -1274,7 +1274,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = 1);
 
 		var fieldNameTextField2 = FormFields.getFieldName();
 
@@ -1283,7 +1283,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "2",
+			fieldPositionNumber = 2,
 			fieldType = "Date");
 
 		var fieldNameDateField = FormFields.getFieldName();
@@ -1302,12 +1302,12 @@ definition {
 			conditionField = "Text Field 1",
 			conditionFieldValue = "test",
 			conditionOperator = "Is Equal To",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Date Field");
 
 		FormRules.save();
@@ -1329,20 +1329,20 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField2}",
+			fieldName = ${fieldNameTextField2},
 			fieldValue = "testing");
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldNameDateField}");
+			fieldName = ${fieldNameDateField});
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextField1}",
+			fieldName = ${fieldNameTextField1},
 			fieldValue = "test");
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldNameDateField}");
+			fieldName = ${fieldNameDateField});
 	}
 
 }

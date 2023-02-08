@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that the user with Account role type receives the notification for review"
-	@priority = "4"
+	@priority = 4
 	test AccountUserReceivesNotification {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowNotifications#AccountUserReceivesNotification";
@@ -82,11 +82,11 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "Verify that the user can open new user details by notifications"
-	@priority = "3"
+	@priority = 3
 	test CanOpenNewUserDetailsByNotifications {
 		property test.name.skip.portal.instance = "WorkflowNotifications#CanOpenNewUserDetailsByNotifications";
 
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "LPS-135888 - Verify that when the user delete the order, the notifications are not displayed"
-	@priority = "4"
+	@priority = 4
 	test NotificationIsNotAvailableWhenOrderIsDeleted {
 		property test.name.skip.portal.instance = "WorkflowNotifications#NotificationIsNotAvailableWhenOrderIsDeleted";
 
@@ -187,11 +187,11 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniCart();
 

@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot document cannot be searched from the disconnected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotSearchForDocumentFromDisconnectedSite {
 		JSONDocument.addFile(
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot web content can be searched on a connected site when searching is reenabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanReenableSearchability {
 		JSONWebcontent.addWebContent(
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "This ensures that users can search for depot document from connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForDocument {
 		JSONDocument.addFile(
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForTag {
 		JSONDocument.addFileWithUploadedFile(
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForUser {
 		JSONDocument.addFile(
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot web content can be searched from the connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForWC {
 		property portal.acceptance = "true";
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test DocumentCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFile(
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot document associated with a tag cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test TagCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFileWithUploadedFile(
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot content associated with the user cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test UserCanNotBeSearchedWhenDisabled {
 		JSONDocument.addFile(
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test WCCanNotBeSearchedWhenDisabled {
 		JSONWebcontent.addWebContent(

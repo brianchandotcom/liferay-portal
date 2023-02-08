@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 
 	@description = "This ensures that a metadata set can be removed from the entry Menu."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteEntry {
 		property portal.acceptance = "true";
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-128046. It ensures that a metadata set can be removed from the management bar."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteEntryViaManagementBar {
 		property portal.acceptance = "true";
@@ -77,7 +77,7 @@ definition {
 			metadataSetName = "DM Metadata Set Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotDeleteIfReferencedByDocType {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -105,7 +105,7 @@ definition {
 			metadataSetName = "DM Metadata Set Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveFromDocType {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -136,7 +136,7 @@ definition {
 
 	@description = "This ensures that the user can create a document using edited image field inside metadata set."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentwithEditedImageField {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -165,7 +165,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			imageField = "Document_1.jpg",
 			navTab = "Documents and Media",
-			numericField = "123");
+			numericField = 123);
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -205,7 +205,7 @@ definition {
 			imageDescription = "Photo Description",
 			imageField = "Document_2.jpg",
 			navTab = "Documents and Media",
-			numericField = "123");
+			numericField = 123);
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
@@ -216,7 +216,7 @@ definition {
 
 	@description = "This ensures that the user can create a document using edited text field inside metadata set."
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentwithEditedTextField {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -243,7 +243,7 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "123",
+			numericField = 123,
 			textField = "DM Document Text");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -282,7 +282,7 @@ definition {
 			dmDocumentTitle = "DM Document Title 2",
 			dmDocumentTypeName = "DM Document Type Name",
 			fieldFieldLabel = "Company",
-			numericField = "123",
+			numericField = 123,
 			textField = "Liferay");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This ensures that when a metadata field deletions in document type will be reflected when adding a new doc type."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test DeletedFieldsAreReflectedWhenAddingNewDocType {
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
@@ -318,7 +318,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Numeric,Text,Date,Image") {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -334,13 +334,13 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Date") {
 			AssertElementNotPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		for (var fieldFieldLabel : list "Numeric,Image") {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}

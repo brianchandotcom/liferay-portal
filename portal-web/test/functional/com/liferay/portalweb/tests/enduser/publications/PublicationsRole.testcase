@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishAnEditToDefinedPermissionsForARole {
 		JSONRole.addRegularRole(
 			roleKey = "Regrole Name",
@@ -33,7 +33,7 @@ definition {
 
 		for (var resourceActionIndex : list "ADD_PUBLICATION,PERMISSIONS") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.change.tracking",
 				roleTitle = "Regrole Name");
 		}
@@ -64,7 +64,7 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishANewRoleWithDefinedPermissions {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -76,8 +76,8 @@ definition {
 
 		for (var resourceActionIndex : list "VIEW,VIEW_CONTROL_PANEL") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
-				resourceName = "90",
+				resourceAction = ${resourceActionIndex},
+				resourceName = 90,
 				roleTitle = "Regrole Name");
 		}
 
@@ -94,7 +94,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Permissions",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Global",
 			changeTitle = "Regrole Name Permissions for Portal",
 			changeType = "Added",

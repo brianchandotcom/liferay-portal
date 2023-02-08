@@ -42,7 +42,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11308 | Test Summary: Delete browser storage changes userid and anonymous user appears"
-	@priority = "3"
+	@priority = 3
 	test CheckDeleteBrowserStorageChangesUserId {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -109,8 +109,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
+				actual = ${userId},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Sign out") {
@@ -135,8 +135,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertNotEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+				actual = ${localStorageItem2},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Close sessions") {
@@ -146,7 +146,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -154,7 +154,7 @@ definition {
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "1");
+				count = 1);
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
@@ -196,13 +196,13 @@ definition {
 		task ("Check the number of downloads made by the anonymous user") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
-				metricValue = "1");
+				metricValue = 1);
 		}
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12154 | Test Summary: Check if the identity event is sent when the user interacts with sites that have different channels ids"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CheckEventSentWhenUserInteractsWithSitesWithDifferentChannelId {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -211,14 +211,14 @@ definition {
 
 		task ("Add a new site with a public page") {
 			ACUtils.addSiteAndPage(
-				layoutName = "${sitePageName}",
-				siteName = "${sitePageName}");
+				layoutName = ${sitePageName},
+				siteName = ${sitePageName});
 		}
 
 		task ("Create another property and sync the second site") {
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACDXPSettings.createCombinedProperties(siteName = "${sitePageName}");
+			ACDXPSettings.createCombinedProperties(siteName = ${sitePageName});
 		}
 
 		task ("Add a new user") {
@@ -266,8 +266,8 @@ definition {
 
 		task ("Go to the second site and interact with it") {
 			ACUtils.navigateToSitePage(
-				pageName = "${sitePageName}",
-				siteName = "${sitePageName}");
+				pageName = ${sitePageName},
+				siteName = ${sitePageName});
 		}
 
 		task ("Wait for sending requests") {
@@ -280,13 +280,13 @@ definition {
 
 		task ("Check that the times in milliseconds that the events were sent are different") {
 			TestUtils.assertNotEquals(
-				actual = "${identityLastUpdateDate2}",
-				expected = "${identityLastUpdateDate1}");
+				actual = ${identityLastUpdateDate2},
+				expected = ${identityLastUpdateDate1});
 		}
 	}
 
 	@description = "Story: LRAC-10998 | Automation ID: LRAC-11380 | Test Summary: Check that the Identify event is not sent every time the user interacts with the site"
-	@priority = "3"
+	@priority = 3
 	test CheckIdentityEventNotTriggeredAlwaysUserInteractsWithSite {
 		property proxy.server.enabled = "true";
 
@@ -341,8 +341,8 @@ definition {
 
 		task ("Check that the time of the last update of the identity event has not changed") {
 			TestUtils.assertEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+				actual = ${localStorageItem2},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Navigate to the connected site") {
@@ -357,13 +357,13 @@ definition {
 
 		task ("Check that the time of the last update of the identity event has not changed") {
 			TestUtils.assertEquals(
-				actual = "${localStorageItem3}",
-				expected = "${localStorageItem1}");
+				actual = ${localStorageItem3},
+				expected = ${localStorageItem1});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8715 | Test Summary: Check identity is triggered when logging in after a unintended session close"
-	@priority = "3"
+	@priority = 3
 	test CheckIdentityTriggeredWhenLoginAfterASessionClose {
 		property proxy.server.enabled = "true";
 
@@ -378,15 +378,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Start Har recording") {
@@ -407,18 +407,18 @@ definition {
 		}
 
 		task ("View the identity request properties value") {
-			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = "${expectedDataSourceId}");
+			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = ${expectedDataSourceId});
 		}
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8714 | Test Summary: Check Identity is triggered when logging out and in again"
-	@priority = "3"
+	@priority = 3
 	test CheckIdentityTriggeredWhenLogoutAndLoginAgain {
 		property proxy.server.enabled = "true";
 
@@ -427,15 +427,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Sign in as Test Test") {
@@ -474,18 +474,18 @@ definition {
 		}
 
 		task ("View the identity request properties value") {
-			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = "${expectedDataSourceId}");
+			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = ${expectedDataSourceId});
 		}
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8713 | Test Summary: Check Identity triggers upon logging in and check its properties (see reference document in comments)"
-	@priority = "5"
+	@priority = 5
 	test CheckIdentityUponLogin {
 		property proxy.server.enabled = "true";
 
@@ -498,15 +498,15 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Get the DXP Instance ID in AC") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
 
-			var dataSourceName = StringUtil.trim("${dataSourceName}");
+			var dataSourceName = StringUtil.trim(${dataSourceName});
 
-			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
+			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = ${dataSourceName});
 		}
 
 		task ("Start Har recording") {
@@ -527,19 +527,19 @@ definition {
 		}
 
 		task ("View the identity request properties value") {
-			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = "${expectedDataSourceId}");
+			ACUtils.assertIdentityRequestPropertiesValue(expectedDataSourceId = ${expectedDataSourceId});
 		}
 
 		task ("View the request common properties value") {
 			ACUtils.assertRequestCommonPropertiesValue(
-				expectedChannelId = "${expectedChannelId}",
-				expectedDataSourceId = "${expectedDataSourceId}");
+				expectedChannelId = ${expectedChannelId},
+				expectedDataSourceId = ${expectedDataSourceId});
 		}
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12153 | Test Summary: Check if identity is sent after the first visit with an anonymous user and check if it is sent again after the login with the same user but as a known individual"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CheckIfEventSentAgainAfterLoginAndIfUserClassifiedAsKnownIndividual {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -593,8 +593,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
+				actual = ${userId},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Close sessions") {
@@ -604,7 +604,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview on the Individuals dashboard") {
@@ -616,11 +616,11 @@ definition {
 		task ("View the number of Total Individuals and Anonymous") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "1");
+				count = 1);
 		}
 
 		task ("Sign in as new user") {
@@ -647,7 +647,7 @@ definition {
 
 		task ("Check that the emailAddressHashed is not empty") {
 			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed}",
+				actual = ${emailAddressHashed},
 				expected = "");
 		}
 
@@ -658,7 +658,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview on the Individuals dashboard") {
@@ -670,21 +670,21 @@ definition {
 		task ("View the number of Total Individuals, Known and Anonymous") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Known",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "0");
+				count = 0);
 		}
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12152 | Test Summary: Check if the identity event is sent without the login and if the user is classified as anonymous"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CheckIfEventSentWithoutLoginAndIfUserClassifiedAsAnonymous {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -721,8 +721,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
+				actual = ${userId},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Close sessions") {
@@ -732,7 +732,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Overview on the Individuals dashboard") {
@@ -744,16 +744,16 @@ definition {
 		task ("View the number of Total Individuals and Anonymous") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
-				count = "1");
+				count = 1);
 
 			ACCards.viewTotalCount(
 				cardName = "Anonymous",
-				count = "1");
+				count = 1);
 		}
 	}
 
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11310 | Test Summary: Login as same user keeps userid"
-	@priority = "3"
+	@priority = 3
 	test CheckLoginSameUserKeepUserId {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -809,8 +809,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
+				actual = ${userId},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Sign out") {
@@ -831,8 +831,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+				actual = ${localStorageItem2},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Sign in as new user") {
@@ -855,13 +855,13 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${localStorageItem3}",
-				expected = "${localStorageItem2}");
+				actual = ${localStorageItem3},
+				expected = ${localStorageItem2});
 		}
 	}
 
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11307 | Test Summary: Logout continues to track user"
-	@priority = "4"
+	@priority = 4
 	test CheckLogoutContinuesToTrackUserWithSameUserId {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -917,8 +917,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${userId}",
-				expected = "${localStorageItem1}");
+				actual = ${userId},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Sign out") {
@@ -939,8 +939,8 @@ definition {
 
 		task ("Compare userId numbers to check if they are the same") {
 			TestUtils.assertEquals(
-				actual = "${localStorageItem2}",
-				expected = "${localStorageItem1}");
+				actual = ${localStorageItem2},
+				expected = ${localStorageItem1});
 		}
 
 		task ("Close sessions") {
@@ -950,7 +950,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {
@@ -971,14 +971,14 @@ definition {
 
 		task ("Check if events appear in user history") {
 			for (var eventName : list "documentPreviewed,documentDownloaded") {
-				ACUtils.assertPageTitle(pageTitle = "${eventName}");
+				ACUtils.assertPageTitle(pageTitle = ${eventName});
 			}
 		}
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12155 | Test Summary: New user changes emailAddressHashed"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test NewUserChangeEmailAddressHashed {
 		property analytics.cloud.upstream = "false";
 		property proxy.server.enabled = "true";
@@ -986,12 +986,12 @@ definition {
 		var usernameList = "user1,user2";
 
 		task ("Add two new users") {
-			for (var username : list "${usernameList}") {
+			for (var username : list ${usernameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${username}@liferay.com",
-					userFirstName = "${username}",
-					userLastName = "${username}",
-					userScreenName = "${username}");
+					userFirstName = ${username},
+					userLastName = ${username},
+					userScreenName = ${username});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -1034,7 +1034,7 @@ definition {
 
 		task ("Check that the emailAddressHashed is not empty") {
 			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed1}",
+				actual = ${emailAddressHashed1},
 				expected = "");
 		}
 
@@ -1068,8 +1068,8 @@ definition {
 
 		task ("Check if the emailAddressHashed was modified") {
 			TestUtils.assertNotEquals(
-				actual = "${emailAddressHashed2}",
-				expected = "${emailAddressHashed1}");
+				actual = ${emailAddressHashed2},
+				expected = ${emailAddressHashed1});
 		}
 
 		task ("Close sessions") {
@@ -1079,7 +1079,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigate to the Known Individuals on the Individuals dashboard") {

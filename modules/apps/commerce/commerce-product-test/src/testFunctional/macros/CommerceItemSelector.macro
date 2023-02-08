@@ -14,7 +14,7 @@ definition {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		Click(
-			key_entryName = "${entryName}",
+			key_entryName = ${entryName},
 			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
@@ -23,8 +23,8 @@ definition {
 	}
 
 	macro uploadSingleFile {
-		var key_uploadFileName = "${uploadFileName}";
-		var filePath = TestCase.getDependenciesDirPath(fileName = "${uploadFileName}");
+		var key_uploadFileName = ${uploadFileName};
+		var filePath = TestCase.getDependenciesDirPath(fileName = ${uploadFileName});
 
 		WaitForElementPresent(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
@@ -32,7 +32,7 @@ definition {
 
 		UploadFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${filePath}");
+			value1 = ${filePath});
 
 		WaitForElementPresent(locator1 = "ItemSelector#ADD_BUTTON");
 

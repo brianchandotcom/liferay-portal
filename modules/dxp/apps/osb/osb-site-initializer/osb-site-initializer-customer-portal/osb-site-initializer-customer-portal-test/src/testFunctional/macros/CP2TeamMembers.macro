@@ -17,14 +17,14 @@ definition {
 
 	macro addFieldsTeamMembersExtra {
 		Type(
-			key_fieldNumber = "${position}",
+			key_fieldNumber = ${position},
 			locator1 = "CP2TeamMembers#EMAIL_FIELD",
-			value1 = "${rowEmail}");
+			value1 = ${rowEmail});
 
 		Select(
-			key_rowNumber = "${positionNumber}",
+			key_rowNumber = ${positionNumber},
 			locator1 = "CP2TeamMembers#ROLE_SELECT",
-			value1 = "${rowRole}");
+			value1 = ${rowRole});
 
 		if (isSet(addMembers)) {
 			Click(locator1 = "CP2TeamMembers#ADD_MORE_MEMBERS");
@@ -33,28 +33,28 @@ definition {
 
 	macro assertInvitedUserIsNotVisible {
 		AssertNotVisible(
-			key_name = "${name}",
-			key_status = "${status}",
+			key_name = ${name},
+			key_status = ${status},
 			locator1 = "CP2TeamMembers#TEAM_MEMBERS_TABLE");
 	}
 
 	macro assertThatFunctionIsDisabled {
 		AssertElementPresent(
-			key_index = "${positionNumber}",
+			key_index = ${positionNumber},
 			locator1 = "CP2TeamMembers#ROLE_DISABLED",
-			role = "${role}");
+			role = ${role});
 	}
 
 	macro assertThatUserGuestIsVisible {
-		var key_email = "${email}";
+		var key_email = ${email};
 
 		AssertElementPresent(locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
 	}
 
 	macro assertTheInvitedUser {
 		AssertVisible(
-			key_name = "${name}",
-			key_status = "${status}",
+			key_name = ${name},
+			key_status = ${status},
 			locator1 = "CP2TeamMembers#TEAM_MEMBERS_TABLE");
 	}
 
@@ -81,21 +81,21 @@ definition {
 	macro searchCP {
 		Type(
 			locator1 = "CP2TeamMembers#SEARCH_TM",
-			value1 = "${search}");
+			value1 = ${search});
 	}
 
 	macro tableChangeRole {
 		Click(
-			key_text = "${roleDefault}",
+			key_text = ${roleDefault},
 			locator1 = "CP2TeamMembers#TABLE_ROLE_FIELD");
 
 		Click(
-			key_text = "${changeRole}",
+			key_text = ${changeRole},
 			locator1 = "CP2TeamMembers#ROLE_CHANGE");
 	}
 
 	macro teamMembersFlow {
-		CustomerPortal.enterOnProject(title = "${testAccount}");
+		CustomerPortal.enterOnProject(title = ${testAccount});
 
 		CustomerPortal.clickOnStartProjectSetup();
 
@@ -106,27 +106,27 @@ definition {
 
 	macro viewSupportSeatsAvailable {
 		AssertElementPresent(
-			key_number = "${available}",
+			key_number = ${available},
 			locator1 = "CP2TeamMembers#SUPPORT_SEATS");
 	}
 
 	macro viewTableValue {
 		AssertElementPresent(
 			locator1 = "CP2TeamMembers#TABLE",
-			value = "${name}");
+			value = ${name});
 
 		AssertElementPresent(
 			locator1 = "CP2TeamMembers#TABLE",
-			value = "${email}");
+			value = ${email});
 
 		AssertElementPresent(locator1 = "CP2TeamMembers#ICON_CHECK");
 
 		AssertElementPresent(
 			locator1 = "CP2TeamMembers#TABLE",
-			value = "${role}");
+			value = ${role});
 
 		AssertElementPresent(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 

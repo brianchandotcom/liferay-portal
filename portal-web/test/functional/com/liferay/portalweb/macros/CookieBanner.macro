@@ -21,7 +21,7 @@ definition {
 		SelectFrame.selectFrameTop();
 
 		Click(
-			key_text = "${privacyPolicyLink}",
+			key_text = ${privacyPolicyLink},
 			locator1 = "CookieBanner#VISIT_OUR_PRIVACY_POLICY");
 	}
 
@@ -73,17 +73,17 @@ definition {
 
 	@description = "Verify that customized texts are present"
 	macro verifyCustomTextsArePresent {
-		Variables.assertDefined(parameterList = "${key_text}");
+		Variables.assertDefined(parameterList = ${key_text});
 
 		var actualLink = selenium.getAttribute("CookieBanner#COOKIES_BANNER_LOCALIZED_LINK");
 
 		TestUtils.assertEquals(
-			actual = "${actualLink}",
+			actual = ${actualLink},
 			expected = "http://localhost:8080/web/guest/${key_text}_2");
 
 		for (var id : list "1,3") {
 			AssertElementPresent(
-				key_text = "${id}",
+				key_text = ${id},
 				locator1 = "CookieBanner#COOKIES_BANNER_LOCALIZED_TEXT");
 		}
 	}

@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This test asserts that a user can activate an inactive country."
-	@priority = "5"
+	@priority = 5
 	test CanActivateAnInactiveCountry {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CountriesManagement#CanActivateAnInactiveCountry";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can activate an inactive region"
-	@priority = "5"
+	@priority = 5
 	test CanActivateAnInactiveRegion {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CountriesManagement#CanActivateAnInactiveRegion";
@@ -74,7 +74,7 @@ definition {
 
 			CountriesManagement.addRegion(
 				countryName = "Philippines",
-				regionCode = "06",
+				regionCode = 06,
 				regionName = "Western Visayas");
 
 			Navigator.gotoBack();
@@ -84,7 +84,7 @@ definition {
 			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 			CountriesManagement.viewRegionsInTable(
-				regionCode = "06",
+				regionCode = 06,
 				regionName = "Western Visayas",
 				regionStatus = "Inactive");
 		}
@@ -99,7 +99,7 @@ definition {
 			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.viewRegionsInTable(
-				regionCode = "06",
+				regionCode = 06,
 				regionName = "Western Visayas",
 				regionStatus = "Active");
 		}
@@ -114,14 +114,14 @@ definition {
 			Search.searchCP(searchTerm = "Western Visayas");
 
 			CountriesManagement.viewRegionsInTable(
-				regionCode = "06",
+				regionCode = 06,
 				regionName = "Western Visayas",
 				regionStatus = "Active");
 		}
 	}
 
 	@description = "Test activating multiple countries at once via management toolbar"
-	@priority = "3"
+	@priority = 3
 	test CanActivateCountriesInBulk {
 		property test.name.skip.portal.instance = "CountriesManagement#CanActivateCountriesInBulk";
 
@@ -141,13 +141,13 @@ definition {
 			Click(locator1 = "ManagementBar#CLEAR_FILTER");
 
 			for (var countryName : list "Antarctica,Aruba,Austria,Bahrain") {
-				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+				LexiconEntry.viewEntryName(rowEntry = ${countryName});
 			}
 		}
 	}
 
 	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
-	@priority = "5"
+	@priority = 5
 	test CanAddCountry {
 		property test.name.skip.portal.instance = "CountriesManagement#CanAddCountry";
 
@@ -161,7 +161,7 @@ definition {
 		task ("When a user adds a new country, only filling out the required fields") {
 			CountriesManagement.addCountry(
 				countryName = "Test Country",
-				countryNumber = "01",
+				countryNumber = 01,
 				threeLetterISOCode = "AAA",
 				twoLetterISOCode = "AA");
 		}
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@description = "Test adding a region to existing country"
-	@priority = "5"
+	@priority = 5
 	test CanAddRegion {
 		property test.name.skip.portal.instance = "CountriesManagement#CanAddRegion";
 
@@ -195,7 +195,7 @@ definition {
 		task ("When a user adds a region to a country") {
 			CountriesManagement.addRegion(
 				countryName = "Philippines",
-				regionCode = "13",
+				regionCode = 13,
 				regionName = "National Capital Region",
 				regionPriority = "1.0");
 		}
@@ -206,7 +206,7 @@ definition {
 			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.viewRegionsInTable(
-				regionCode = "13",
+				regionCode = 13,
 				regionName = "National Capital Region",
 				regionPriority = "1.0",
 				regionStatus = "Active");
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can deactivate an active country"
-	@priority = "5"
+	@priority = 5
 	test CanDeactivateAnActiveCountry {
 		property test.name.skip.portal.instance = "CountriesManagement#CanDeactivateAnActiveCountry";
 
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "Test deactivating multiple countries at once via management toolbar"
-	@priority = "3"
+	@priority = 3
 	test CanDectivateCountriesInBulk {
 		property test.name.skip.portal.instance = "CountriesManagement#CanDectivateCountriesInBulk";
 
@@ -268,20 +268,20 @@ definition {
 			for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
 				AssertElementPresent(
 					key_columnName = "active",
-					key_tableEntry = "${countryName}",
+					key_tableEntry = ${countryName},
 					locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
 			}
 
 			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 			for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
-				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+				LexiconEntry.viewEntryName(rowEntry = ${countryName});
 			}
 		}
 	}
 
 	@description = "This test asserts that a user can delete an existing country."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteCountry {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteCountry";
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "Test deleting a region from country"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteRegion {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteRegion";
@@ -326,7 +326,7 @@ definition {
 
 			CountriesManagement.addRegion(
 				countryName = "Philippines",
-				regionCode = "14",
+				regionCode = 14,
 				regionName = "Cordillera Administrative Region");
 		}
 
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@description = "Selecting multiple regions and deleting it via management toolbar will successfully delete them"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteRegionsInBulk {
 		property test.name.skip.portal.instance = "CountriesManagement#CanDeleteRegionsInBulk";
 
@@ -359,18 +359,18 @@ definition {
 
 			CountriesManagement.goToRegions(countryName = "Brazil");
 
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 		}
 
 		task ("When a user selects multiple regions and deletes them") {
 			for (var regionName : list "Acre,Alagoas") {
-				LexiconEntry.selectEntry(rowEntry = "${regionName}");
+				LexiconEntry.selectEntry(rowEntry = ${regionName});
 			}
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
 			for (var regionName : list "Bahia,Distrito Federal") {
-				LexiconEntry.selectEntry(rowEntry = "${regionName}");
+				LexiconEntry.selectEntry(rowEntry = ${regionName});
 			}
 
 			ClickNoError(locator1 = "Icon#DELETE");
@@ -382,15 +382,15 @@ definition {
 			Alert.viewSuccessMessage();
 
 			for (var regionName : list "Arce,Alagoas,Bahia,Distrito Federal") {
-				Search.searchCP(searchTerm = "${regionName}");
+				Search.searchCP(searchTerm = ${regionName});
 
-				LexiconEntry.viewNoEntry(rowEntry = "${regionName}");
+				LexiconEntry.viewNoEntry(rowEntry = ${regionName});
 			}
 		}
 	}
 
 	@description = "Test editing region fields"
-	@priority = "5"
+	@priority = 5
 	test CanEditRegion {
 		property test.name.skip.portal.instance = "CountriesManagement#CanEditRegion";
 
@@ -399,7 +399,7 @@ definition {
 
 			CountriesManagement.addRegion(
 				countryName = "Philippines",
-				regionCode = "04",
+				regionCode = 04,
 				regionName = "Calabarzon");
 		}
 
@@ -409,7 +409,7 @@ definition {
 			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.editRegion(
-				regionCodeEdit = "05",
+				regionCodeEdit = 05,
 				regionKeyEdit = "bicol-region",
 				regionName = "Calabarzon",
 				regionNameEdit = "Bicol Region",
@@ -423,7 +423,7 @@ definition {
 			CountriesManagement.goToRegions(countryName = "Philippines");
 
 			CountriesManagement.viewRegionsInTable(
-				regionCode = "05",
+				regionCode = 05,
 				regionName = "Bicol Region",
 				regionPriority = "2.0",
 				regionStatus = "Inactive");
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user cannot add a new region with a region code that already exists"
-	@priority = "5"
+	@priority = 5
 	test CannotAddExistingRegionCode {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CountriesManagement#CannotAddExistingRegionCode";
@@ -460,7 +460,7 @@ definition {
 	}
 
 	@description = "Test that key and region code are required fields"
-	@priority = "3"
+	@priority = 3
 	test CannotAddRegionWithoutKeyAndRegionCode {
 		property test.name.skip.portal.instance = "CountriesManagement#CannotAddRegionWithoutKeyAndRegionCode";
 
@@ -482,13 +482,13 @@ definition {
 
 		task ("Then error validation displays for required fields, Key and Region Code") {
 			for (var fieldFieldLabel : list "Key,Region Code") {
-				Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+				Alert.viewSpecificRequiredField(fieldFieldLabel = ${fieldFieldLabel});
 			}
 		}
 	}
 
 	@description = "Can order countries by name in descending and ascending order"
-	@priority = "3"
+	@priority = 3
 	test CanOrderCountryByName {
 		property test.name.skip.portal.instance = "CountriesManagement#CanOrderCountryByName";
 
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "Can order countries by priority in descending and ascending order"
-	@priority = "3"
+	@priority = 3
 	test CanOrderCountryByPriority {
 		property test.name.skip.portal.instance = "CountriesManagement#CanOrderCountryByPriority";
 
@@ -528,7 +528,7 @@ definition {
 			JSONCountry.addCountry(
 				billingAllowed = "false",
 				countryName = "ZZ Test",
-				countryNumber = "01",
+				countryNumber = 01,
 				countryPriority = "5.0",
 				countryStatus = "active",
 				shippingAllowed = "false",
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@description = "Can order regions by name in descending and ascending order"
-	@priority = "3"
+	@priority = 3
 	test CanOrderRegionByName {
 		property test.name.skip.portal.instance = "CountriesManagement#CanOrderRegionByName";
 
@@ -595,7 +595,7 @@ definition {
 	}
 
 	@description = "Can order regions by priority in descending and ascending order"
-	@priority = "3"
+	@priority = 3
 	test CanOrderRegionByPriority {
 		property test.name.skip.portal.instance = "CountriesManagement#CanOrderRegionByPriority";
 
@@ -604,7 +604,7 @@ definition {
 
 			CountriesManagement.addRegion(
 				countryName = "China",
-				regionCode = "01",
+				regionCode = 01,
 				regionName = "A Region",
 				regionPriority = "5.0");
 
@@ -619,12 +619,12 @@ definition {
 
 		task ("Then the regions will display priority in descending order") {
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "A Region");
 
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Anhui Sheng");
 		}
@@ -635,7 +635,7 @@ definition {
 
 		task ("Then the region priorities are displayed in ascending order") {
 			AssertTextEquals.assertPartialText(
-				key_rowNumber = "1",
+				key_rowNumber = 1,
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "Anhui Sheng");
 
@@ -644,7 +644,7 @@ definition {
 	}
 
 	@description = "Canceling region creation will not save it"
-	@priority = "3"
+	@priority = 3
 	test ClickingCancelOrBackWillNotSaveRegion {
 		property test.name.skip.portal.instance = "CountriesManagement#ClickingCancelOrBackWillNotSaveRegion";
 
@@ -698,15 +698,15 @@ definition {
 			CountriesManagement.goToRegions(countryName = "China");
 
 			for (var regionName : list "Cancel Region Creation,Back Icon") {
-				Search.searchCP(searchTerm = "${regionName}");
+				Search.searchCP(searchTerm = ${regionName});
 
-				LexiconEntry.viewNoEntry(rowEntry = "${regionName}");
+				LexiconEntry.viewNoEntry(rowEntry = ${regionName});
 			}
 		}
 	}
 
 	@description = "This test asserts that country name is a localizable field"
-	@priority = "4"
+	@priority = 4
 	test CountryNameCanBeLocalized {
 		property test.name.skip.portal.instance = "CountriesManagement#CountryNameCanBeLocalized";
 
@@ -723,7 +723,7 @@ definition {
 				value1 = "Not Translated");
 
 			CountriesManagement._inputCountryDetails(
-				countryNumber = "23",
+				countryNumber = 23,
 				threeLetterISOCode = "AAA",
 				twoLetterISOCode = "AA");
 		}
@@ -751,7 +751,7 @@ definition {
 	}
 
 	@description = "Changing the filter to Active will not display countries in Inactive status"
-	@priority = "3"
+	@priority = 3
 	test FilterByActiveWillNotDisplayInactiveCountries {
 		property test.name.skip.portal.instance = "CountriesManagement#FilterByActiveWillNotDisplayInactiveCountries";
 
@@ -760,7 +760,7 @@ definition {
 
 			CountriesManagement.addCountry(
 				countryName = "AAA Test",
-				countryNumber = "01",
+				countryNumber = 01,
 				countryStatus = "Inactive",
 				threeLetterISOCode = "AAA",
 				twoLetterISOCode = "AA");
@@ -788,7 +788,7 @@ definition {
 	}
 
 	@description = "This test asserts that the country key will be used if country name is not provided when adding."
-	@priority = "4"
+	@priority = 4
 	test KeyValueIsUsedWhenCountryNameIsBlank {
 		property test.name.skip.portal.instance = "CountriesManagement#KeyValueIsUsedWhenCountryNameIsBlank";
 
@@ -799,7 +799,7 @@ definition {
 		task ("When a user adds a new country with no name") {
 			CountriesManagement.addCountry(
 				countryKey = "Country Key",
-				countryNumber = "01",
+				countryNumber = 01,
 				threeLetterISOCode = "AAA",
 				twoLetterISOCode = "AA");
 		}
@@ -816,7 +816,7 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert countries display properly."
-	@priority = "3"
+	@priority = 3
 	test PaginationWorksInCountries {
 		property test.name.skip.portal.instance = "CountriesManagement#PaginationWorksInCountries";
 
@@ -827,12 +827,12 @@ definition {
 		}
 
 		task ("When pagination is changed to 4") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Then only 4 entries display") {
 			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria") {
-				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+				LexiconEntry.viewEntryName(rowEntry = ${countryName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "American Samoa");
@@ -841,12 +841,12 @@ definition {
 		}
 
 		task ("When pagination is changed to 8") {
-			Pagination.changePagination(itemsPerPage = "8");
+			Pagination.changePagination(itemsPerPage = 8);
 		}
 
 		task ("Then 8 entries display") {
 			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria,American Samoa,Andorra,Angola,Anguilla") {
-				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+				LexiconEntry.viewEntryName(rowEntry = ${countryName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "Antarctica");
@@ -856,7 +856,7 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert regions display properly."
-	@priority = "3"
+	@priority = 3
 	test PaginationWorksInRegions {
 		property test.name.skip.portal.instance = "CountriesManagement#PaginationWorksInRegions";
 
@@ -869,12 +869,12 @@ definition {
 		}
 
 		task ("When pagination is changed to 4") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Then only 4 entries display") {
 			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas") {
-				LexiconEntry.viewEntryName(rowEntry = "${regionName}");
+				LexiconEntry.viewEntryName(rowEntry = ${regionName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "California");
@@ -883,12 +883,12 @@ definition {
 		}
 
 		task ("When pagination is changed to 8") {
-			Pagination.changePagination(itemsPerPage = "8");
+			Pagination.changePagination(itemsPerPage = 8);
 		}
 
 		task ("Then 8 entries display") {
 			for (var regionName : list "Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware") {
-				LexiconEntry.viewEntryName(rowEntry = "${regionName}");
+				LexiconEntry.viewEntryName(rowEntry = ${regionName});
 			}
 
 			LexiconEntry.viewNoEntry(rowEntry = "District of Columbia");
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@description = "This test asserts that region name is a localizable field"
-	@priority = "4"
+	@priority = 4
 	test RegionNameCanBeLocalized {
 		property test.name.skip.portal.instance = "CountriesManagement#RegionNameCanBeLocalized";
 
@@ -916,7 +916,7 @@ definition {
 				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
 				value1 = "Not Translated");
 
-			CountriesManagement._inputRegionDetails(regionCode = "123");
+			CountriesManagement._inputRegionDetails(regionCode = 123);
 		}
 
 		task ("When a user changes the localization to hu-HU and inputs a name") {

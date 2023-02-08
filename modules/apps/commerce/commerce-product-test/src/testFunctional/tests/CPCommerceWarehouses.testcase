@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
-	@priority = "3"
+	@priority = 3
 	test AddEditAndRemoveItemToWarehouse {
 		property portal.acceptance = "true";
 
@@ -37,12 +37,12 @@ definition {
 		Type(
 			key_fieldLabel = "Latitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 
 		Type(
 			key_fieldLabel = "Longitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "12345");
+			value1 = 12345);
 
 		Button.clickSave();
 
@@ -67,7 +67,7 @@ definition {
 		Type(
 			key_fieldLabel = "Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "50");
+			value1 = 50);
 
 		Button.click(button = "Submit");
 
@@ -82,9 +82,9 @@ definition {
 			value1 = "TestWH");
 
 		AssertTextEquals(
-			key_columnNumber = "4",
+			key_columnNumber = 4,
 			locator1 = "CommerceEntry#INVENTORY_COLUMN",
-			value1 = "50");
+			value1 = 50);
 
 		Click(
 			key_entryName = "TestWH",
@@ -95,7 +95,7 @@ definition {
 		Type(
 			key_fieldLabel = "Safety Stock Quantity",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "20");
+			value1 = 20);
 
 		Button.clickSave();
 
@@ -104,14 +104,14 @@ definition {
 		Refresh();
 
 		AssertTextEquals(
-			key_columnNumber = "3",
+			key_columnNumber = 3,
 			locator1 = "CommerceEntry#INVENTORY_COLUMN",
-			value1 = "20");
+			value1 = 20);
 
 		AssertTextEquals(
-			key_columnNumber = "4",
+			key_columnNumber = 4,
 			locator1 = "CommerceEntry#INVENTORY_COLUMN",
-			value1 = "30");
+			value1 = 30);
 
 		Click(
 			key_currentLocale = "ellipsis-v",
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6206. Add income items"
-	@priority = "3"
+	@priority = 3
 	test AddIncomeItems {
 		property portal.acceptance = "true";
 
@@ -154,7 +154,7 @@ definition {
 		Type(
 			key_text = "Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "10");
+			value1 = 10);
 
 		Select(
 			key_fieldLabel = "Destination",
@@ -181,7 +181,7 @@ definition {
 		Type(
 			key_text = "Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "15");
+			value1 = 15);
 
 		Type(
 			inputFieldId = "date",
@@ -201,7 +201,7 @@ definition {
 		AssertTextEquals(
 			key_text = "Quantity",
 			locator1 = "TextInput#ANY",
-			value1 = "15");
+			value1 = 15);
 
 		AssertTextEquals(
 			inputFieldId = "date",
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10640. As a buyer user I can verify that a product has unavailable tag and 0 stock once No Channel option is selected as Channel eligibility for warehouses."
-	@priority = "3"
+	@priority = 3
 	test CanAssertProductIsUnavailableWithoutWarehouseChannelEligibility {
 		property portal.acceptance = "false";
 
@@ -253,7 +253,7 @@ definition {
 				portlet = "Warehouses");
 
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
-				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
+				CommerceNavigator.gotoEntry(entryName = ${warehouseName});
 
 				Navigator.gotoNavTab(navTab = "Eligibility");
 
@@ -283,7 +283,7 @@ definition {
 				portlet = "Warehouses");
 
 			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
-				CommerceNavigator.gotoEntry(entryName = "${warehouseName}");
+				CommerceNavigator.gotoEntry(entryName = ${warehouseName});
 
 				Navigator.gotoNavTab(navTab = "Eligibility");
 
@@ -323,7 +323,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
-				value1 = "0");
+				value1 = 0);
 
 			AssertElementPresent(
 				key_productName = "U-Joint",
@@ -343,7 +343,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
-				value1 = "120");
+				value1 = 120);
 
 			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10308. It's not possible to use the Geolocate option for the Warehouses"
-	@priority = "5"
+	@priority = 5
 	test CanGeolocateWarehouse {
 		property portal.acceptance = "true";
 
@@ -396,7 +396,7 @@ definition {
 		AssertTextEquals(
 			key_text = "Postal Code",
 			locator1 = "TextInput#ANY",
-			value1 = "2021");
+			value1 = 2021);
 
 		AssertTextEquals(
 			key_text = "City",
@@ -405,7 +405,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see the stock quantity value of the Warehouses based on the View permission of my role"
-	@priority = "4"
+	@priority = 4
 	test CanSFUsersSeeStockQuantityBasedOnViewPermissionForWarehouse {
 		property portal.acceptance = "false";
 
@@ -470,12 +470,12 @@ definition {
 		task ("Then sees the exact number of the stock quantity value (120)") {
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
-				value1 = "120");
+				value1 = 120);
 		}
 	}
 
 	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see a decreased stock quantity value of the Warehouses when my role does not have permission to View Warehouses"
-	@priority = "4"
+	@priority = 4
 	test CanSFUsersWithoutWarehouseViewPermissionSeeDecreasedStockQuantity {
 		property portal.acceptance = "false";
 
@@ -541,20 +541,20 @@ definition {
 		task ("Then sees a decreased number of the stock quantity value (80)") {
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY",
-				value1 = "80");
+				value1 = 80);
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"
-	@priority = "3"
+	@priority = 3
 	test ConsumeBookedQuantitiesFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
 		// TODO Review
 
-		var previousTotal = "0";
-		var newTotal = "0";
-		var newTotalExpected = "0";
+		var previousTotal = 0;
+		var newTotal = 0;
+		var newTotalExpected = 0;
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "User Authentication",
@@ -580,7 +580,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
 		for (var option : list "0,1,2") {
-			var key_value1 = "${option}";
+			var key_value1 = ${option};
 
 			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
 
@@ -589,7 +589,7 @@ definition {
 			var previousTotal = ${previousTotal} + ${aux};
 		}
 
-		echo("${previousTotal}");
+		echo(${previousTotal});
 
 		Refresh();
 
@@ -629,7 +629,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -640,8 +640,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "ABS Sensor",
-			productQuantity = "1",
-			productUnitPrice = "50",
+			productQuantity = 1,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -682,7 +682,7 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -703,7 +703,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
 		for (var option : list "0,1,2") {
-			var key_value1 = "${option}";
+			var key_value1 = ${option};
 
 			WaitForElementPresent(locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY");
 
@@ -712,28 +712,28 @@ definition {
 			var newTotal = ${newTotal} + ${aux};
 		}
 
-		echo("${newTotal}");
+		echo(${newTotal});
 
 		var newTotalExpected = ${previousTotal} - 1;
 
-		echo("${newTotalExpected}");
+		echo(${newTotalExpected});
 
-		if ("${newTotal}" == "${newTotalExpected}") {
+		if (${newTotal} == ${newTotalExpected}) {
 			AssertTextEquals(
-				key_value1 = "0",
+				key_value1 = 0,
 				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
-				value1 = "19");
+				value1 = 19);
 		}
 		else {
 			AssertTextNotEquals(
-				key_value1 = "0",
+				key_value1 = 0,
 				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
-				value1 = "19");
+				value1 = 19);
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6201. Consume quantities of one item in multiple warehouses"
-	@priority = "3"
+	@priority = 3
 	test ConsumeQuantitiesFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
@@ -782,7 +782,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -793,8 +793,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "2",
-			productUnitPrice = "24",
+			productQuantity = 2,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -835,12 +835,12 @@ definition {
 		Type(
 			key_warehouseName = "Italy",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Type(
 			key_warehouseName = "United States - Southwest",
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = "1");
+			value1 = 1);
 
 		Button.clickSave();
 
@@ -848,25 +848,25 @@ definition {
 
 		for (var warehouse : list "Italy,United States - Southwest") {
 			AssertTextEquals(
-				key_warehouseName = "${warehouse}",
+				key_warehouseName = ${warehouse},
 				locator1 = "CommerceEntry#QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-				value1 = "1");
+				value1 = 1);
 		}
 	}
 
 	@description = "This is a test for COMMERCE-5706. As a system admin i want to be able to create / update and delete a new warehouse"
-	@priority = "3"
+	@priority = 3
 	test CreateEditAndDeleteWarehouseEntry {
 		property portal.acceptance = "true";
 
 		// TODO Review
 
 		var fieldDescription = "Test Warehouse Description";
-		var fieldLatitudeNumber = "12345";
-		var fieldLongitudeNumber = "12345";
+		var fieldLatitudeNumber = 12345;
+		var fieldLongitudeNumber = 12345;
 		var fieldName = "Test Warehouse";
 		var fieldCity = "Test City";
-		var fieldPostalCode = "12345";
+		var fieldPostalCode = 12345;
 		var fieldStreet1 = "Test Address";
 		var fieldStreet2 = "Test Street";
 		var fieldStreet3 = "";
@@ -885,7 +885,7 @@ definition {
 
 		Type(
 			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${fieldDescription}");
+			value1 = ${fieldDescription});
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Active",
@@ -894,12 +894,12 @@ definition {
 		Type(
 			key_fieldLabel = "Latitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldLatitudeNumber}");
+			value1 = ${fieldLatitudeNumber});
 
 		Type(
 			key_fieldLabel = "Longitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldLongitudeNumber}");
+			value1 = ${fieldLongitudeNumber});
 
 		Button.clickSave();
 
@@ -910,37 +910,37 @@ definition {
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet1}");
+			value1 = ${fieldStreet1});
 
 		Type(
 			key_fieldLabel = "Street 2",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet2}");
+			value1 = ${fieldStreet2});
 
 		Type(
 			key_fieldLabel = "Street 3",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet3}");
+			value1 = ${fieldStreet3});
 
 		Select(
 			key_fieldLabel = "Country",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${selectorCountry}");
+			value1 = ${selectorCountry});
 
 		Select(
 			key_fieldLabel = "Region",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${selectorRegion}");
+			value1 = ${selectorRegion});
 
 		Type(
 			key_fieldLabel = "Postal Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldPostalCode}");
+			value1 = ${fieldPostalCode});
 
 		Type(
 			key_fieldLabel = "City",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldCity}");
+			value1 = ${fieldCity});
 
 		Button.clickSave();
 
@@ -951,11 +951,11 @@ definition {
 		AssertTextEquals(
 			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		AssertTextEquals(
 			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${fieldDescription}");
+			value1 = ${fieldDescription});
 
 		AssertChecked.assertCheckedNotVisible(
 			key_toggleSwitchLabel = "Active",
@@ -964,47 +964,47 @@ definition {
 		AssertTextEquals(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet1}");
+			value1 = ${fieldStreet1});
 
 		AssertTextEquals(
 			key_fieldLabel = "Street 2",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet2}");
+			value1 = ${fieldStreet2});
 
 		AssertTextEquals(
 			key_fieldLabel = "Street 3",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldStreet3}");
+			value1 = ${fieldStreet3});
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Country",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${selectorCountry}");
+			value1 = ${selectorCountry});
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Region",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${selectorRegion}");
+			value1 = ${selectorRegion});
 
 		AssertTextEquals(
 			key_fieldLabel = "Postal Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldPostalCode}");
+			value1 = ${fieldPostalCode});
 
 		AssertTextEquals(
 			key_fieldLabel = "City",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldCity}");
+			value1 = ${fieldCity});
 
 		AssertTextEquals(
 			key_fieldLabel = "Latitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldLatitudeNumber}");
+			value1 = ${fieldLatitudeNumber});
 
 		AssertTextEquals(
 			key_fieldLabel = "Longitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldLongitudeNumber}");
+			value1 = ${fieldLongitudeNumber});
 
 		Button.clickSave();
 
@@ -1023,7 +1023,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-5707. As a product specialist i want to be able to deactivate a warehouse"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test DeactivateWarehouse {
 		property portal.acceptance = "false";
 
@@ -1032,7 +1032,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6199. Get available quantities of one item in multiple warehouses"
-	@priority = "3"
+	@priority = 3
 	test GetAvailableQuantityFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
@@ -1056,10 +1056,10 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
-		var quantity = "0";
+		var quantity = 0;
 
 		for (var warehouse : list "Italy,United States - Northeast,United States - Southwest") {
-			var key_inventoryName = "${warehouse}";
+			var key_inventoryName = ${warehouse};
 			var inventoryValue = selenium.getElementValue("CommerceEntry#INVENTORY_INPUT");
 
 			var quantity = ${quantity} + ${inventoryValue};
@@ -1085,7 +1085,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"
-	@priority = "3"
+	@priority = 3
 	test GetChannelSKUStockQuantity {
 		property portal.acceptance = "true";
 
@@ -1117,13 +1117,13 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
-		var key_value1 = "0";
+		var key_value1 = 0;
 
 		for (var value1 : list "20,60,60") {
 			AssertTextEquals(
-				key_value1 = "${key_value1}",
+				key_value1 = ${key_value1},
 				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
-				value1 = "${value1}");
+				value1 = ${value1});
 
 			var key_value1 = ${key_value1} + 1;
 		}
@@ -1188,7 +1188,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6203. Get stock quantity of a SKU"
-	@priority = "3"
+	@priority = 3
 	test GetSKUStockQuantity {
 		property portal.acceptance = "true";
 
@@ -1216,10 +1216,10 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
-		var count1 = "0";
-		var amount = "0";
+		var count1 = 0;
+		var amount = 0;
 
-		while (IsElementPresent(key_value1 = "${count1}", locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY")) {
+		while (IsElementPresent(key_value1 = ${count1}, locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY")) {
 			var temp1 = selenium.getAttribute("//input[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_commerceInventoryWarehouseItemQuantity${count1}')]@value");
 
 			var amount = ${temp1} + ${amount};
@@ -1236,11 +1236,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#INVENTORY_BY_WAREHOUSE_AVAILABLE_LABEL",
-			value1 = "${amount}");
+			value1 = ${amount});
 	}
 
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
-	@priority = "3"
+	@priority = 3
 	test GetWarehouseNameGivenChannel {
 		property portal.acceptance = "true";
 
@@ -1281,12 +1281,12 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
 
 		Type(
-			key_value1 = "0",
+			key_value1 = 0,
 			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
-			value1 = "45");
+			value1 = 45);
 
 		Click(
-			key_value1 = "0",
+			key_value1 = 0,
 			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
 
 		Refresh();
@@ -1305,7 +1305,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6202. It should be possible to limit the warehouse stock quantity by channel"
-	@priority = "3"
+	@priority = 3
 	test LimitWarehouseStockQuantityByChannel {
 		property portal.acceptance = "true";
 
@@ -1327,7 +1327,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6208. Concurrency management for inventory entities"
-	@priority = "3"
+	@priority = 3
 	test ManageInventoryEntityConcurrency {
 		property portal.acceptance = "false";
 
@@ -1343,7 +1343,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
-		Open.openInTheNewTab(locator1 = "${portalURL}");
+		Open.openInTheNewTab(locator1 = ${portalURL});
 
 		CommerceNavigator.gotoPortlet(
 			category = "Inventory Management",
@@ -1371,7 +1371,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5708. As a product specialist i want to update the quantity of a product inside a warehouse"
-	@priority = "3"
+	@priority = 3
 	test UpdateInventorySKUQuantity {
 		property portal.acceptance = "false";
 
@@ -1395,12 +1395,12 @@ definition {
 		Type(
 			key_fieldLabel = "Latitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "50");
+			value1 = 50);
 
 		Type(
 			key_fieldLabel = "Longitude",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "50");
+			value1 = 50);
 
 		Button.clickSave();
 
@@ -1426,7 +1426,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#INVENTORY_INPUT",
-			value1 = "50");
+			value1 = 50);
 
 		Button.clickSave();
 
@@ -1442,12 +1442,12 @@ definition {
 		Search.searchCP(searchTerm = "default");
 
 		AssertElementPresent(
-			key_quantity = "50",
+			key_quantity = 50,
 			key_sku = "default",
 			locator1 = "CommerceInventory#INVENTORY_SKU_ON_HAND_QUANTITY");
 
 		AssertElementPresent(
-			key_quantity = "50",
+			key_quantity = 50,
 			key_sku = "default",
 			locator1 = "CommerceInventory#INVENTORY_SKU_AVAILABLE_QUANTITY");
 	}

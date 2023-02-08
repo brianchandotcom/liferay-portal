@@ -8,35 +8,35 @@ definition {
 		var currentNodeTitle = "";
 		var currentDropLocation = "";
 
-		for (var current : list "${nodeTitleAndPositionList}") {
-			var currentNodeTitle = StringUtil.extractFirst("${current}", ";");
-			var currentDropLocation = StringUtil.extractLast("${current}", ";");
+		for (var current : list ${nodeTitleAndPositionList}) {
+			var currentNodeTitle = StringUtil.extractFirst(${current}, ";");
+			var currentDropLocation = StringUtil.extractLast(${current}, ";");
 
-			var value1 = StringUtil.replace("${currentDropLocation}", ".", ",");
+			var value1 = StringUtil.replace(${currentDropLocation}, ".", ",");
 
 			DragAndDrop.dragAndDrop(
-				key_nodeNodeTitle = "${currentNodeTitle}",
+				key_nodeNodeTitle = ${currentNodeTitle},
 				locator1 = "KaleoDesignerEditWorkflow#NODE_BY_TITLE",
-				value1 = "${value1}");
+				value1 = ${value1});
 		}
 	}
 
 	macro assertDefaultNodesOnForm {
-		for (var current : list "${nodesList}") {
+		for (var current : list ${nodesList}) {
 			AssertElementPresent(
-				key_nodeType = "${current}",
+				key_nodeType = ${current},
 				locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
 		}
 	}
 
 	macro viewWorkflowStatus {
 		AssertElementPresent(
-			key_workflowStatus = "${workflowStatus}",
+			key_workflowStatus = ${workflowStatus},
 			locator1 = "ProcessBuilderKaleoDesigner#WORKFLOW_STATUS");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",
-			value1 = "${workflowDefinitionTitle}");
+			value1 = ${workflowDefinitionTitle});
 	}
 
 }

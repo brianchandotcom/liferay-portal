@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This test deletes a document using a custom document type with all fields and a related metadataset with all fields."
-	@priority = "5"
+	@priority = 5
 	test DeleteDocumentWithFieldsFromCustomDocTypeAndMetadataSet {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

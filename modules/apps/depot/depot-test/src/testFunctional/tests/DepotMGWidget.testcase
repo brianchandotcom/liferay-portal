@@ -17,7 +17,7 @@ definition {
 			layoutName = "Media Gallery Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Media Gallery Page",
 			widgetName = "Media Gallery");
@@ -36,7 +36,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can add non-image/video files to asset library folder via MG on a connected site."
-	@priority = "3"
+	@priority = 3
 	test CanAddDocumentToFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can add an image to the subfolder of asset library via MG on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanAddImageToSubFolder {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can edit the image stored in asset library folder via MG on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanEditImage {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can move video stored in asset library folder to recycle bin via MG on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanMoveVideoToRecycleBin {
 		property test.name.skip.portal.instance = "DepotMGWidget#CanMoveVideoToRecycleBin";
 
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This ensures that a folder stored in asset library cannot be selected via MG once the site is disconnected."
-	@priority = "4"
+	@priority = 4
 	test CannotViewImageFromDisconnectedSite {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

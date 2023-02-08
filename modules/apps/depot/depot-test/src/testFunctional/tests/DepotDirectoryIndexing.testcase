@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This test asserts that no document shows in FTP mode after deleting it in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotViewDocumentAfterDeleting {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This test asserts that Not Found error returns when visiting FTP mode if indexing is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotViewDocumentWhenDisabled {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanNotViewDocumentWithoutPermissions {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This test asserts that the approved document in a depot can be accessed from FTP mode."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewApprovedDocument {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This test asserts that a document stored in a depot can be accessed from FTP mode."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewDocument {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "This test asserts that an edited document stored in a depot can be accessed from FTP mode."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewDocumentAfterEditing {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "This test asserts that a document in a folder stored in a depot can be accessed from FTP mode."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewDocumentInFolder {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This test asserts that a document with escape characters stored in a depot can be accessed from FTP mode."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewDocumentWithEscapeCharacters {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");

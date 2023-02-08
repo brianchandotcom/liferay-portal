@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a group"
 	macro _hasPortlet {
-		Variables.assertDefined(parameterList = "${portletId}");
+		Variables.assertDefined(parameterList = ${portletId});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -14,11 +14,11 @@ definition {
 				-d portletId=${portletId}
 		''';
 
-		var result = JSONCurlUtil.post("${curl}");
+		var result = JSONCurlUtil.post(${curl});
 
-		var result = StringUtil.extractFirst("${result}", "Finished");
+		var result = StringUtil.extractFirst(${result}, "Finished");
 
-		return "${result}";
+		return ${result};
 	}
 
 }

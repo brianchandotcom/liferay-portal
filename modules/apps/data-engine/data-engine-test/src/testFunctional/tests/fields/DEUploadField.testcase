@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that is possible to delete the field"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that is possible to duplicate the field"
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that is possible to clear the uploaded file"
-	@priority = "5"
+	@priority = 5
 	test CanClearInput {
 		NavItem.gotoStructures();
 
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Label and Help text can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that is possible to upload a file"
-	@priority = "5"
+	@priority = 5
 	test CanInputData {
 		NavItem.gotoStructures();
 
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -219,13 +219,13 @@ definition {
 		DERenderer.inputDataInUploadField(
 			dmNavTab = "User Personal Folder",
 			fieldLabel = "Upload",
-			index = "1",
+			index = 1,
 			webContentUpload = "Document_1.jpg");
 
 		DERenderer.inputDataInUploadField(
 			dmNavTab = "User Personal Folder",
 			fieldLabel = "Upload",
-			index = "2",
+			index = 2,
 			webContentUpload = "Document_2.jpg");
 
 		Button.clickPublish();
@@ -234,17 +234,17 @@ definition {
 
 		DERenderer.assertDataInUploadField(
 			fieldLabel = "Upload",
-			index = "1",
+			index = 1,
 			webContentUpload = "Document_1.jpg");
 
 		DERenderer.assertDataInUploadField(
 			fieldLabel = "Upload",
-			index = "2",
+			index = 2,
 			webContentUpload = "Document_2.jpg");
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that is not possible to publish the Web Content with a required field blank"
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that is possible to remove a duplicated field (repeatable)"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -304,11 +304,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Upload",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEUploadField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Default Searchable property is Keyword when System Setting is left checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEUploadField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -376,7 +376,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Label and Help text can be set"
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -401,7 +401,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68656. This test verifies that Label can be shown or hidden"
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@description = "Check if Upload Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewUploadFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -446,7 +446,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Upload",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -468,7 +468,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Upload",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

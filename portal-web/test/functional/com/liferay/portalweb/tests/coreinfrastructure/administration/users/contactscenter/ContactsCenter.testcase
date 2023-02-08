@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-100624."
-	@priority = "4"
+	@priority = 4
 	test Smoke {
 		Navigator.gotoPage(pageName = "Contacts Center Page");
 
@@ -73,11 +73,11 @@ definition {
 		Navigator.gotoPage(pageName = "Contacts Center Page");
 
 		ContactsCenter.viewContactCenterContainerPG(
-			allUser = "3",
-			contactConnection = "0",
-			contactFollower = "0",
-			contactFollowing = "0",
-			myContact = "1");
+			allUser = 3,
+			contactConnection = 0,
+			contactFollower = 0,
+			contactFollowing = 0,
+			myContact = 1);
 	}
 
 }

@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Assert we can publish a publication with an edited Segment."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedSegment {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "Assert we can publish a publication with a Segment and Page Experience."
-	@priority = "4"
+	@priority = 4
 	test CanPublishWithSegmentAndPageExperience {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "Assert we can resolve conflicting Segment changes by discarding."
-	@priority = "4"
+	@priority = 4
 	test CanResolveConflictingPublicationsByDiscarding {
 		JSONGroup.addGroup(groupName = "Site Name");
 

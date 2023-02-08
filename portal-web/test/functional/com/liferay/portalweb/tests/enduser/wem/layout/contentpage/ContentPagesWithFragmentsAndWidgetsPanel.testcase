@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158744. The new fragment set will be appended to the bottom of fragment sets list with customized order in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test AppendNewFragmentSetToTheBottomOfCustomizedOrder {
 		task ("Given a page creator customized the order of fragment sets") {
 			ContentPagesNavigator.openEditContentPage(
@@ -69,7 +69,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				index = "3",
+				index = 3,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130964 and LPS-76741. Change display style in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test ChangeDisplayStyle {
 		task ("Navigate to the Pages admin in new site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158744. The page creator could customize the order of fragment sets and widget categories in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategories {
 		property portal.release = "false";
 
@@ -191,21 +191,21 @@ definition {
 
 		task ("Then the page creator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "3",
+				index = 3,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-158744. Each user could customize order of fragment sets and widgets categories in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUser {
 		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.release = "false";
@@ -258,14 +258,14 @@ definition {
 
 		task ("Then the site administrator sees the default order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "2",
+				index = 2,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = "5",
+				index = 5,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -284,21 +284,21 @@ definition {
 
 		task ("Then the site administrator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "3",
+				index = 3,
 				key_panel = "Collaboration",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Content Display",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-158744. Each user could customize order of fragment sets and widgets categories in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUserOnReleaseBundle {
 		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.upstream = "false";
@@ -351,14 +351,14 @@ definition {
 
 		task ("Then the site administrator sees the default order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "2",
+				index = 2,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -377,21 +377,21 @@ definition {
 
 		task ("Then the site administrator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "2",
+				index = 2,
 				key_panel = "Collaboration",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Fragments");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Content Display",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-158744. The page creator could customize the order of fragment sets and widget categories in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle {
 		property portal.upstream = "false";
 
@@ -415,21 +415,21 @@ definition {
 
 		task ("Then the page creator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = "3",
+				index = 3,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = "3",
+				index = 3,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-158744. When move a fragment set to the place of a hidden fragment set, it should be placed bottom of the hidden fragment set in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test MoveFragmentSetToThePlaceOfHiddenOne {
 		task ("Given a page creator has a content page based on a custom master with disallowed fragment set") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -470,7 +470,7 @@ definition {
 				setName = "Cookie Banner");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				key_panel = "Cookie Banner",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -481,19 +481,19 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				key_panel = "Basic Components",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 
 			AssertVisible(
-				index = "2",
+				index = 2,
 				key_panel = "Cookie Banner",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
-	@priority = "4"
+	@priority = 4
 	test PersistInteractionStatesForRelease {
 		property portal.upstream = "false";
 
@@ -511,7 +511,7 @@ definition {
 				collectionName = "Fragment Set Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 
 			ContentPagesNavigator.openEditContentPage(
@@ -523,17 +523,17 @@ definition {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
-				Panel.expandPanel(panel = "${sectionName}");
+				Panel.expandPanel(panel = ${sectionName});
 			}
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			for (var sectionName : list "Highlighted,Accounts") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Management");
@@ -552,7 +552,7 @@ definition {
 
 			for (var sectionName : list "Highlighted,Accounts") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
@@ -564,20 +564,20 @@ definition {
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
 			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_EXPANDED");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
-	@priority = "4"
+	@priority = 4
 	test PersistInteractionStatesForUpstream {
 		property portal.release = "false";
 
@@ -595,7 +595,7 @@ definition {
 				collectionName = "Fragment Set Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 
 			ContentPagesNavigator.openEditContentPage(
@@ -607,17 +607,17 @@ definition {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
-				Panel.expandPanel(panel = "${sectionName}");
+				Panel.expandPanel(panel = ${sectionName});
 			}
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
-				Panel.collapsePanel(panel = "${sectionName}");
+				Panel.collapsePanel(panel = ${sectionName});
 			}
 
 			Panel.expandPanel(panel = "Content Management");
@@ -636,7 +636,7 @@ definition {
 
 			for (var sectionName : list "Highlighted,Accounts,Business Intelligence & Reporting") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
@@ -648,20 +648,20 @@ definition {
 
 			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_COLLAPSED");
 			}
 
 			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
 				AssertElementPresent(
-					key_panel = "${sectionName}",
+					key_panel = ${sectionName},
 					locator1 = "Panel#PANEL_EXPANDED");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-161732. When the page creator customizes the favorited widgets and order of widgets section on page editor, it should not be propagated to another user session."
-	@priority = "4"
+	@priority = 4
 	test PropogateCustomizedOrderOfWidgetCategoriesAndFavoriteWidgetsToAddPanelByEachUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property osgi.modules.includes = "portal-reports-engine-console";
@@ -719,7 +719,7 @@ definition {
 
 		task ("Then the site administrator sees the default order of widget categories and default favorite widgets on Add panel") {
 			AssertVisible(
-				index = "5",
+				index = 5,
 				key_panel = "Commerce",
 				locator1 = "Panel#PANEL_BY_INDEX");
 
@@ -731,7 +731,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-161732. When the page creator customizes the order of widgets section on page editor, the same order should be shown on Add panel widget pages."
-	@priority = "4"
+	@priority = 4
 	test PropogateCustomizedOrderOfWidgetCategoriesToAddPanel {
 		property osgi.modules.includes = "portal-reports-engine-console";
 
@@ -750,7 +750,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -767,14 +767,14 @@ definition {
 			Click(locator1 = "ControlMenu#ADD");
 
 			AssertVisible(
-				index = "4",
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#PANEL_BY_INDEX");
 		}
 	}
 
 	@description = "This is a test for LPS-161732. When the page creator favorites a widget on page editor, the highlighted widget should be shown on Add panel of widget page."
-	@priority = "4"
+	@priority = 4
 	test PropogateFavoriteWidgetsToAddPanel {
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -788,7 +788,7 @@ definition {
 			for (var widgetName : list "Asset Publisher,Documents and Media,Menu Display,Web Content Display") {
 				PageEditor.unmarkFavorite(
 					collectionName = "Highlighted",
-					fragmentName = "${widgetName}");
+					fragmentName = ${widgetName});
 			}
 
 			AssertElementNotPresent(
@@ -820,7 +820,7 @@ definition {
 			for (var widgetName : list "Asset Publisher,Documents and Media,Menu Display,Web Content Display") {
 				PageEditor.markFavorite(
 					collectionName = "Content Management",
-					fragmentName = "${widgetName}");
+					fragmentName = ${widgetName});
 			}
 
 			PageEditor.markFavorite(
@@ -846,7 +846,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130964. View visual feedback when drag items in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test ViewVisualFeedbackWhenDragItems {
 		task ("Navigate to content page at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
@@ -882,7 +882,7 @@ definition {
 				value1 = "Blogs");
 
 			DragOver(
-				key_indexItem = "1",
+				key_indexItem = 1,
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
@@ -918,7 +918,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130964 and LPS-132890. View visual feedback when hover on items in Fragments and Widgets panel."
-	@priority = "4"
+	@priority = 4
 	test ViewVisualFeedbackWhenHoverOnItems {
 		task ("Navigate to content page at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
@@ -956,12 +956,12 @@ definition {
 				value1 = "Blogs");
 
 			MouseOver(
-				key_indexItem = "1",
+				key_indexItem = 1,
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET");
 
 			AssertCssValue(
-				key_indexItem = "1",
+				key_indexItem = 1,
 				key_portletName = "Blogs",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "box-shadow",

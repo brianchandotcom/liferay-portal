@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can customize OG tags, also covers LPS-134658."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCustomizeMetaTags {
 		var portalURL = PropsUtil.get("portal.url");
@@ -60,7 +60,7 @@ definition {
 			htmlTitle = "This is a custom title",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can customize OG tags with escape characters."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCustomizeMetaTagsWithEscapeCharacters {
 		var portalURL = PropsUtil.get("portal.url");
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@description = "This ensures that OG tags will not appear when Open Graph is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableConfiguration {
 		property portal.acceptance = "true";
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "This ensures that OG configuration is properly disabled at the site level."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableConfigurationAtSiteLevel {
 		OpenGraph.disableOpenGraphAtSiteLevel(siteURLKey = "test-site-name");
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can edit existing OG tags."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditMetaTagCustomizations {
 		var portalURL = PropsUtil.get("portal.url");
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the blogs with open graph meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapBlogsToDisplayPage {
 		var portalURL = PropsUtil.get("portal.url");
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the document with open graph meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapDocumentToDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "This test ensures that image meta tags are displayed with the site image and alt description in the HTML when the image fields are not mapped in the display page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapSiteImageToDisplayPage {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
@@ -463,7 +463,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can map the web content with open graph meta tags for display pages."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMapWebContentToDisplayPage {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -525,7 +525,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can reset to the default OG title tag."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRevertCustomTitle {
 		var portalURL = PropsUtil.get("portal.url");
@@ -564,7 +564,7 @@ definition {
 	}
 
 	@description = "This ensures that OG tags will appear when Open Graph is enabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewDefaultMetaTags {
 		property portal.acceptance = "true";
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@description = "This ensures that meta tags can be viewed on a new page."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewNewPageWithMetaTags {
 		var portalURL = PropsUtil.get("portal.url");

@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77387. Add a structure when URL has locale."
-	@priority = "4"
+	@priority = 4
 	test AddStructureWhenURLHasLocale {
 		task ("Given a Web Content admin inserts locale to URL") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82208 and LPS-89641. The user can not delete a strcuture that is used as reference on a Display Page Template."
-	@priority = "5"
+	@priority = 5
 	test CannotDeleteStructureReferencedByDisplayPage {
 		property portal.acceptance = "true";
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-126248. Edit field reference of field options in structure editor."
-	@priority = "4"
+	@priority = 4
 	test EditFieldReferenceOfFieldOption {
 		task ("Add a web content structure with a Select from List field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -156,26 +156,26 @@ definition {
 		}
 
 		task ("Add two field options for Select from List") {
-			var index = "1";
+			var index = 1;
 
 			for (var optionValue : list "Option 1,Option 2") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
-					index = "${index}",
-					optionValue = "${optionValue}");
+					index = ${index},
+					optionValue = ${optionValue});
 
 				var index = ${index} + 1;
 			}
 		}
 
 		task ("Edit field reference of field options") {
-			var index = "1";
+			var index = 1;
 
 			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldFieldLabel = "Select from List",
-					fieldReferenceOfFieldOption = "${fieldReferenceOfFieldOption}",
-					index = "${index}");
+					fieldReferenceOfFieldOption = ${fieldReferenceOfFieldOption},
+					index = ${index});
 
 				var index = ${index} + 1;
 			}
@@ -188,13 +188,13 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Basic");
 
-			var index = "1";
+			var index = 1;
 
 			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				AssertTextEquals(
-					index = "${index}",
+					index = ${index},
 					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
-					value1 = "${fieldReferenceOfFieldOption}");
+					value1 = ${fieldReferenceOfFieldOption});
 
 				var index = ${index} + 1;
 			}
@@ -211,13 +211,13 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Basic");
 
-			var index = "1";
+			var index = 1;
 
 			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				AssertTextEquals(
-					index = "${index}",
+					index = ${index},
 					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
-					value1 = "${fieldReferenceOfFieldOption}");
+					value1 = ${fieldReferenceOfFieldOption});
 
 				var index = ${index} + 1;
 			}
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "The user can edit the default values for a structure with fieldsets"
-	@priority = "4"
+	@priority = 4
 	test EditStructureDefaultValuesBasedOnFieldset {
 		task ("Given a Web Content admin has a structure based on a fieldset") {
 			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for a new structure."
-	@priority = "5"
+	@priority = 5
 	test PredefineExpirationDateInCustomStructure {
 		property custom.properties = "feature.flag.LPS-156908=true";
 
@@ -307,7 +307,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for the ootb Basic Web Content structure."
-	@priority = "4"
+	@priority = 4
 	test PredefineExpirationDateInDefaultStructure {
 		property custom.properties = "feature.flag.LPS-156908=true";
 
@@ -345,7 +345,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632 and LPS-76981. Can select different type pages in Link to Page field."
-	@priority = "4"
+	@priority = 4
 	test SelectDifferentTypePagesInLinkToPageField {
 		property custom.properties = "redirect.url.ips.allowed=";
 
@@ -454,7 +454,7 @@ definition {
 
 			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Page Set,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
 				DataEngine.addField(
-					fieldFieldLabel = "${fieldLabel}",
+					fieldFieldLabel = ${fieldLabel},
 					fieldName = "Link to Page");
 			}
 
@@ -475,7 +475,7 @@ definition {
 			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Link To A Page Of This Site,Panel,Link To URL") {
 				WebContent.addWithStructureCP(
 					webContentLinkToPage = "Test ${fieldLabel}",
-					webContentLinkToPageFieldLabel = "${fieldLabel}");
+					webContentLinkToPageFieldLabel = ${fieldLabel});
 			}
 
 			WebContent.addWithStructureCP(
@@ -503,7 +503,7 @@ definition {
 		task ("Assert access to given pages via Web Content Display") {
 			for (var fieldLabel : list "Widget Page,Content Page,Search,Full Page Application,Embedded,Panel") {
 				WebContentDisplayPortlet.viewContent(
-					displayText = "${fieldLabel}",
+					displayText = ${fieldLabel},
 					pageName = "Test ${fieldLabel}",
 					webContentTitle = "Web Content Title");
 
@@ -538,7 +538,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632. Can select a great grand child page in Link to Page field."
-	@priority = "4"
+	@priority = 4
 	test SelectGreatGrandChildPageInLinkToPageField {
 		task ("Add a parent page") {
 			JSONLayout.addPublicLayout(
@@ -625,7 +625,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61632. Can select the image from Documents and Media in Image field."
-	@priority = "4"
+	@priority = 4
 	test SelectImageFromDocumentsAndMediaInImageField {
 		task ("Add a document with an image") {
 			JSONDocument.addFileWithUploadedFile(
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@description = "Validate global structure and template."
-	@priority = "4"
+	@priority = 4
 	test ValidateGlobalTemplatesForBasicWebContent {
 		task ("Given a Web Content admin has a new template for Basic Web Content in global site") {
 			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "global");
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Structure with all possible fields."
-	@priority = "5"
+	@priority = 5
 	test ViewAndEditAsWellAsDeleteStructureWithAllFields {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -764,8 +764,8 @@ definition {
 
 		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator") {
 			DataEngine.viewField(
-				fieldFieldLabel = "${fieldFieldLabel}",
-				fieldName = "${fieldFieldLabel}");
+				fieldFieldLabel = ${fieldFieldLabel},
+				fieldName = ${fieldFieldLabel});
 		}
 
 		task ("Edit structure name") {
@@ -775,7 +775,7 @@ definition {
 		task ("Edit field labels") {
 			for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator") {
 				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldFieldLabel}",
+					fieldFieldLabel = ${fieldFieldLabel},
 					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
 			}
 
@@ -798,7 +798,7 @@ definition {
 	}
 
 	@description = "The user can add a favorite structure in web content admin."
-	@priority = "4"
+	@priority = 4
 	test ViewFavoriteStructureInWebContentAdmin {
 		task ("Given a Web Content admin has multiple structures") {
 			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
@@ -822,7 +822,7 @@ definition {
 
 		task ("Then the Web Content admin should see the structures in more modal") {
 			for (var structureName : list "Basic Web Content,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7") {
-				WebContentStructures.viewStructuresViaMoreIFrame(structureName = "${structureName}");
+				WebContentStructures.viewStructuresViaMoreIFrame(structureName = ${structureName});
 			}
 
 			WebContentStructures.viewNoFavoriteStructure();
@@ -834,7 +834,7 @@ definition {
 
 		task ("Then the Web Content admin should see the favorite structure in more modal and plus icon in web content admin") {
 			WebContentStructures.viewFavoriteStructureViaIFrame(
-				indexNumber = "1",
+				indexNumber = 1,
 				structureName = "WC Structure Name 5");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

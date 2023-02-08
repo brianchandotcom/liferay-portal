@@ -4,7 +4,7 @@ definition {
 		Type(
 			key_title = "Add Options",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "${key_optionName}");
+			value1 = ${key_optionName});
 
 		Button.click(button = "Create New");
 	}
@@ -18,12 +18,12 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#MODAL_NAME_FIELD",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		if (isSet(position)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${key_position}");
+				value1 = ${key_position});
 		}
 
 		Button.click(button = "Submit");
@@ -31,7 +31,7 @@ definition {
 
 	macro deleteProductOptionValue {
 		Click(
-			key_value = "${key_value}",
+			key_value = ${key_value},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
@@ -45,7 +45,7 @@ definition {
 
 	macro editProductOption {
 		Click(
-			key_index = "${key_option}",
+			key_index = ${key_option},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -53,24 +53,24 @@ definition {
 		if (isSet(productOptionName)) {
 			Type(
 				locator1 = "CommerceEntry#NAME_FIELD",
-				value1 = "${key_optionName}");
+				value1 = ${key_optionName});
 		}
 
 		if (isSet(productOptionDescription)) {
 			Type(
 				key_fieldLabel = "Description",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${key_description}");
+				value1 = ${key_description});
 		}
 
 		if (isSet(productOptionPosition)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${key_position}");
+				value1 = ${key_position});
 		}
 
 		if (isSet(productOptionFacetable)) {
-			if ("${productOptionFacetable}" == "true") {
+			if (${productOptionFacetable} == "true") {
 				Check.checkNotVisible(
 					key_toggleSwitchLabel = "Use in Faceted Navigation",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -83,7 +83,7 @@ definition {
 		}
 
 		if (isSet(productOptionRequired)) {
-			if ("${productOptionRequired}" == "true") {
+			if (${productOptionRequired} == "true") {
 				Check.checkNotVisible(
 					key_toggleSwitchLabel = "Required",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -96,7 +96,7 @@ definition {
 		}
 
 		if (isSet(productOptionSkuContributor)) {
-			if ("${productOptionSkuContributor}" == "true") {
+			if (${productOptionSkuContributor} == "true") {
 				Check.checkNotVisible(
 					key_toggleSwitchLabel = "SKU Contributor",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -112,14 +112,14 @@ definition {
 			Select(
 				key_fieldLabel = "Field Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${key_fieldType}");
+				value1 = ${key_fieldType});
 		}
 
 		if (isSet(productOptionPriceType)) {
 			Select(
 				key_fieldLabel = "Price Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${key_priceType}");
+				value1 = ${key_priceType});
 		}
 
 		Button.clickSave();

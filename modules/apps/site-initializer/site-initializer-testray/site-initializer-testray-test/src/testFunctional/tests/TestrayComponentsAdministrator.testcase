@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -41,13 +41,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-156998 - Verify if as an Administrator I should be able to add and delete a Component that doesn't have a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddAndDeleteComponentWithoutTeam {
 		task ("Given that the user add a new Component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156997 - Verify if as an Administrator I should be able to add and delete a Component that has a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddAndDeleteComponentWithTeam {
 		task ("Given that the user adds a new Team") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156982 - Verify if as an Administrator I am able to add Components"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddComponent {
 		task ("Given that the user add a new Component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156994 - Verify if as an Administrator I am able to edit Components and change the assigned Team"
-	@priority = "4"
+	@priority = 4
 	test AdminCanEditChangeComponent {
 		task ("Given that the user adds a new Team") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156988 - Verify that as an Administrator I am able to edit Components while connecting a Team"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditComponent {
 		task ("Given that the user add a new Component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162504 - Verify if as an Administrator I should not be able to add a duplicate component"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicatedComponent {
 		task ("Given that the user adds a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
@@ -221,7 +221,7 @@ definition {
 
 	@description = "This is a test for LPS-156995 - Verify if as an Administrator when I search for a Component the system should return that component"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSearchComponent {
 
 		// TODO LPS-156995 AdminCanSearchComponent pending implementation
@@ -230,7 +230,7 @@ definition {
 
 	@description = "This is a test for LPS-156996 - Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSearchComponentNonExistent {
 
 		// TODO LPS-156996 AdminCanSearchComponentNonExistent pending implementation
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162505 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = "4"
+	@priority = 4
 	test AdminCanViewWarningMessage {
 		task ("Given that the user goes to component management") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");

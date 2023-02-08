@@ -21,7 +21,7 @@ definition {
 
 		Click(locator1 = "TextInput#SEARCH");
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
@@ -37,34 +37,34 @@ definition {
 
 		Click(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${ddlDisplayTemplateName}");
+		PortletEntry.inputName(name = ${ddlDisplayTemplateName});
 
 		DDLTemplate._showDetails();
 
 		Select(
 			locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-			value1 = "${ddlDisplayTemplateLanguage}");
+			value1 = ${ddlDisplayTemplateLanguage});
 
 		if (isSet(ddlDisplayTemplateTextFieldScript)) {
 			DDLList.expandCollapsedIcon(className = "Data List Record Fields");
 
 			AssertClick(
 				locator1 = "DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT",
-				value1 = "${ddlDisplayTemplateTextFieldScript}");
+				value1 = ${ddlDisplayTemplateTextFieldScript});
 		}
 
 		if (isSet(ddlDisplayTemplateScript)) {
 			Type.typeAceEditor(
 				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-				value1 = "${ddlDisplayTemplateScript}");
+				value1 = ${ddlDisplayTemplateScript});
 		}
 
 		if (isSet(ddlDisplayTemplateScriptFile)) {
-			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${ddlDisplayTemplateScriptFile}");
+			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${ddlDisplayTemplateScriptFile});
 
 			UploadFile(
 				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
-				value1 = "${dependencyFilePath}");
+				value1 = ${dependencyFilePath});
 		}
 
 		SelectFrameTop();
@@ -79,17 +79,17 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${ddlDisplayTemplateName}");
+		PortletEntry.inputName(name = ${ddlDisplayTemplateName});
 
 		DDLTemplate._showDetails();
 
 		Select(
 			locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-			value1 = "${ddlDisplayTemplateLanguage}");
+			value1 = ${ddlDisplayTemplateLanguage});
 
 		Type.typeAceEditor(
 			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-			value1 = "${ddlDisplayTemplateScript}");
+			value1 = ${ddlDisplayTemplateScript});
 
 		Button.clickSave();
 
@@ -99,7 +99,7 @@ definition {
 	macro addFormTemplateCP {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
@@ -117,7 +117,7 @@ definition {
 
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlFormTemplateName}");
+			value1 = ${ddlFormTemplateName});
 	}
 
 	macro addFormTemplateViaBackButton {
@@ -131,7 +131,7 @@ definition {
 
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlFormTemplateName}");
+			value1 = ${ddlFormTemplateName});
 	}
 
 	macro addFormTemplateViaDDLDisplayPG {
@@ -139,19 +139,19 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${ddlFormTemplateName}");
+		PortletEntry.inputName(name = ${ddlFormTemplateName});
 	}
 
 	macro deleteTemplateCP {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Manage Templates");
 
-		Search.searchCP(searchTerm = "${ddlTemplateName}");
+		Search.searchCP(searchTerm = ${ddlTemplateName});
 
 		PortletEntry.selectAll();
 
@@ -169,7 +169,7 @@ definition {
 
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
@@ -181,31 +181,31 @@ definition {
 	macro editDisplayTemplateCP {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Manage Templates");
 
-		var key_ddlTemplateName = "${ddlDisplayTemplateName}";
+		var key_ddlTemplateName = ${ddlDisplayTemplateName};
 
 		Click(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${ddlDisplayTemplateNameEdit}");
+		PortletEntry.inputName(name = ${ddlDisplayTemplateNameEdit});
 
 		DDLTemplate._showDetails();
 
 		Select(
 			locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-			value1 = "${ddlDisplayTemplateLanguage}");
+			value1 = ${ddlDisplayTemplateLanguage});
 
 		DDLList.expandCollapsedIcon(className = "Data List Record Fields");
 
 		AssertClick(
 			locator1 = "DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT",
-			value1 = "${ddlDisplayTemplateTextFieldScriptEdit}");
+			value1 = ${ddlDisplayTemplateTextFieldScriptEdit});
 
 		PortletEntry.save();
 	}
@@ -213,19 +213,19 @@ definition {
 	macro editFormTemplateCP {
 		DDLNavigator.gotoManageDataDefinitions();
 
-		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
+		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Manage Templates");
 
-		Search.searchCP(searchTerm = "${ddlFormTemplateName}");
+		Search.searchCP(searchTerm = ${ddlFormTemplateName});
 
 		Click(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${ddlFormTemplateNameEdit}");
+		PortletEntry.inputName(name = ${ddlFormTemplateNameEdit});
 	}
 
 	macro editFormTemplateModeCP {
@@ -235,7 +235,7 @@ definition {
 
 		Select(
 			locator1 = "DDMEditStructure#DETAILS_MODE_SELECT",
-			value1 = "${ddlFormTemplateMode}");
+			value1 = ${ddlFormTemplateMode});
 	}
 
 	macro saveAndContinueFormTemplateCP {
@@ -259,7 +259,7 @@ definition {
 
 		Select(
 			locator1 = "DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT",
-			value1 = "${ddlDisplayTemplateName}");
+			value1 = ${ddlDisplayTemplateName});
 
 		PortletEntry.save();
 
@@ -269,7 +269,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT",
-			value1 = "${ddlDisplayTemplateName}");
+			value1 = ${ddlDisplayTemplateName});
 
 		SelectFrameTop();
 	}
@@ -279,7 +279,7 @@ definition {
 
 		Select(
 			locator1 = "DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT",
-			value1 = "${ddlFormTemplateName}");
+			value1 = ${ddlFormTemplateName});
 
 		PortletEntry.save();
 
@@ -289,7 +289,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "DDLConfiguration#TEMPLATES_FORM_TEMPLATE_SELECT",
-			value1 = "${ddlFormTemplateName}");
+			value1 = ${ddlFormTemplateName});
 
 		SelectFrameTop();
 	}
@@ -307,7 +307,7 @@ definition {
 			var ddlDataDefinitionName = "Data Definition";
 		}
 
-		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
+		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
 
 		if (IsElementPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
@@ -327,9 +327,9 @@ definition {
 	}
 
 	macro viewDisplayTemplateCP {
-		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
-		var key_ddlTemplateName = "${ddlTemplateName}";
+		var key_ddlTemplateName = ${ddlTemplateName};
 
 		ScrollWebElementIntoView(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS");
 
@@ -343,17 +343,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlTemplateName}");
+			value1 = ${ddlTemplateName});
 	}
 
 	macro viewFormTemplateCP {
-		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
-		var key_ddlTemplateName = "${ddlTemplateName}";
+		var key_ddlTemplateName = ${ddlTemplateName};
 
 		AssertClick(
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
-			value1 = "${ddlTemplateName}");
+			value1 = ${ddlTemplateName});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",
@@ -361,25 +361,25 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${ddlTemplateName}");
+			value1 = ${ddlTemplateName});
 	}
 
 	macro viewNoDuplicateTemplateCP {
-		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
-		var key_ddlTemplateName = "${ddlTemplateName}";
+		var key_ddlTemplateName = ${ddlTemplateName};
 
 		AssertTextPresent(
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
-			value1 = "${ddlTemplateName}");
+			value1 = ${ddlTemplateName});
 
 		AssertElementNotPresent(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME");
 	}
 
 	macro viewNoTemplateCP {
-		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
-		var key_ddlTemplateName = "${ddlTemplateName}";
+		var key_ddlTemplateName = ${ddlTemplateName};
 
 		AssertElementNotPresent(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK");
 	}

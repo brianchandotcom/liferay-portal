@@ -43,19 +43,19 @@ definition {
 			JSONClientExtension.addRemoteAppEntry(
 				name = "FontFamily",
 				type = "globalCSS",
-				url = "${firstURL}");
+				url = ${firstURL});
 
 			JSONClientExtension.addRemoteAppEntry(
 				name = "BackgroundColor",
 				type = "globalCSS",
-				url = "${secondURL}");
+				url = ${secondURL});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153656. The site designer could add CSS extension to page, page template, and group of pages."
-	@priority = "5"
+	@priority = 5
 	test AddCSSExtension {
 		property portal.acceptance = "true";
 
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153656. The site designer could change CSS extension selection to an inheritor page from page template."
-	@priority = "5"
+	@priority = 5
 	test ChangeCSSExtensionOfInheritorPage {
 		property portal.acceptance = "true";
 
@@ -319,7 +319,7 @@ definition {
 
 			for (var extensionName : list "BackgroundColor,FontFamily") {
 				Click(
-					key_tableEntry = "${extensionName}",
+					key_tableEntry = ${extensionName},
 					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 				DropdownMenuItem.click(menuItem = "Delete");
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153656. The site designer could delete the CSS extenion selection."
-	@priority = "4"
+	@priority = 4
 	test ClearCSSExtensionSelection {
 		task ("Given a site designer has a content page with a CSS extension") {
 			JSONLayout.addPublicLayout(
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153658. The inherited CSS extensions from master or Pages should be read-only mode."
-	@priority = "4"
+	@priority = 4
 	test ViewInheritedCSSExtensionFromMasterPageOrPages {
 		task ("Given a site designer has a master page with a CSS extension") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -471,7 +471,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			LexiconTable.viewTableEntryInfo(
-				index = "3",
+				index = 3,
 				tableEntry = "BackgroundColor",
 				tableEntryInfo = "From Master");
 
@@ -516,7 +516,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			LexiconTable.viewTableEntryInfo(
-				index = "3",
+				index = 3,
 				tableEntry = "BackgroundColor",
 				tableEntryInfo = "From Pages");
 
@@ -527,7 +527,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153656. Page should inherit the CSS extension from page template."
-	@priority = "5"
+	@priority = 5
 	test ViewInheritedCSSExtensionFromPageTemplate {
 		property portal.acceptance = "true";
 
@@ -600,7 +600,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153656. The order of CSS extensions loading on page are same with the order of addition."
-	@priority = "4"
+	@priority = 4
 	test ViewOrderOfCSSExtensionLoading {
 		task ("Given a site designer has a content page with two CSS extensions") {
 			JSONLayout.addPublicLayout(
@@ -623,12 +623,12 @@ definition {
 			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily,BackgroundColor");
 
 			AssertVisible(
-				index = "1",
+				index = 1,
 				key_tableEntry = "FontFamily",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			AssertVisible(
-				index = "2",
+				index = 2,
 				key_tableEntry = "BackgroundColor",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 

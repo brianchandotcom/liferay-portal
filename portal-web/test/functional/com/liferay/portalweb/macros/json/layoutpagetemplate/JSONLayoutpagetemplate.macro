@@ -5,51 +5,51 @@ definition {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupKey = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
-		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = "${contentType}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
+		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = ${contentType});
 
-		if (("${subType}" == "Basic Document") || ("${contentType}" == "Blogs Entry") || ("${contentType}" == "Category") || ("${contentType}" == "Commerce Order") || ("${contentType}" == "Commerce Product") || ("${contentType}" == "Knowledge Base Article")) {
-			var classTypeId = "0";
+		if ((${subType} == "Basic Document") || (${contentType} == "Blogs Entry") || (${contentType} == "Category") || (${contentType} == "Commerce Order") || (${contentType} == "Commerce Product") || (${contentType} == "Knowledge Base Article")) {
+			var classTypeId = 0;
 		}
 		else {
-			if ("${subType}" == "Basic Web Content") {
+			if (${subType} == "Basic Web Content") {
 				var globalGroupId = JSONGroupAPI._getGroupIdByName(
 					groupName = "Global",
 					site = "true");
 
 				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-					classNameId = "${classNameId}",
-					groupId = "${globalGroupId}",
-					structureName = "${subType}");
+					classNameId = ${classNameId},
+					groupId = ${globalGroupId},
+					structureName = ${subType});
 			}
-			else if ("${subType}" == "Google Drive Shortcut") {
+			else if (${subType} == "Google Drive Shortcut") {
 				var globalGroupId = JSONGroupAPI._getGroupIdByName(
 					groupName = "Global",
 					site = "true");
 
 				var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
-					fileEntryTypeName = "${subType}",
-					groupId = "${globalGroupId}");
+					fileEntryTypeName = ${subType},
+					groupId = ${globalGroupId});
 			}
 			else {
 				if (isSet(depotName)) {
 					var depotId = JSONLayoutpagetemplateSetter.setGroupId(
-						groupKey = "${depotName}",
+						groupKey = ${depotName},
 						site = "false");
 
 					if (isSet(depotStructure)) {
 						var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-							classNameId = "${classNameId}",
-							groupId = "${depotId}",
-							structureName = "${subType}");
+							classNameId = ${classNameId},
+							groupId = ${depotId},
+							structureName = ${subType});
 					}
 					else if (isSet(depotDocumentType)) {
 						var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
-							fileEntryTypeName = "${subType}",
-							groupId = "${depotId}");
+							fileEntryTypeName = ${subType},
+							groupId = ${depotId});
 					}
 				}
 				else if (isSet(globalStructure)) {
@@ -58,9 +58,9 @@ definition {
 						site = "true");
 
 					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-						classNameId = "${classNameId}",
-						groupId = "${globalGroupId}",
-						structureName = "${subType}");
+						classNameId = ${classNameId},
+						groupId = ${globalGroupId},
+						structureName = ${subType});
 				}
 				else if (isSet(globalDocumentType)) {
 					var globalGroupId = JSONGroupAPI._getGroupIdByName(
@@ -68,67 +68,67 @@ definition {
 						site = "true");
 
 					var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
-						fileEntryTypeName = "${subType}",
-						groupId = "${globalGroupId}");
+						fileEntryTypeName = ${subType},
+						groupId = ${globalGroupId});
 				}
 				else {
 					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-						classNameId = "${classNameId}",
-						groupId = "${groupId}",
-						structureName = "${subType}");
+						classNameId = ${classNameId},
+						groupId = ${groupId},
+						structureName = ${subType});
 				}
 			}
 		}
 
 		if (isSet(masterLayoutEntryName)) {
 			var masterLayoutPlid = JSONLayoutpagetemplateSetter.setMasterLayoutPlid(
-				groupId = "${groupId}",
-				masterLayoutEntryName = "${masterLayoutEntryName}");
+				groupId = ${groupId},
+				masterLayoutEntryName = ${masterLayoutEntryName});
 		}
 		else {
-			var masterLayoutPlid = "0";
+			var masterLayoutPlid = 0;
 		}
 
 		if (!(isSet(statusKey))) {
 			var statusKey = "DRAFT";
 		}
 
-		var status = JSONLayoutpagetemplateSetter.setStatus(statusKey = "${statusKey}");
+		var status = JSONLayoutpagetemplateSetter.setStatus(statusKey = ${statusKey});
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
 
 		JSONLayoutpagetemplateAPI._addDisplayPageTemplateEntry(
-			classNameId = "${classNameId}",
-			classTypeId = "${classTypeId}",
-			displayPageTemplateEntryName = "${displayPageTemplateEntryName}",
-			groupId = "${groupId}",
-			masterLayoutPlid = "${masterLayoutPlid}",
-			serviceContext = "${serviceContext}",
-			status = "${status}");
+			classNameId = ${classNameId},
+			classTypeId = ${classTypeId},
+			displayPageTemplateEntryName = ${displayPageTemplateEntryName},
+			groupId = ${groupId},
+			masterLayoutPlid = ${masterLayoutPlid},
+			serviceContext = ${serviceContext},
+			status = ${status});
 	}
 
 	@summary = "Add a PageTemplateEntry to the Global site"
 	macro addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${pageTemplateEntryActive},${pageTemplateEntryName}");
 
-		var nameMap = JSONLayoutpagetemplateSetter.setNameMap(name = "${pageTemplateEntryName}");
-		var descriptionMap = JSONLayoutpagetemplateSetter.setDescriptionMap(description = "${pageTemplateEntryDescription}");
+		var nameMap = JSONLayoutpagetemplateSetter.setNameMap(name = ${pageTemplateEntryName});
+		var descriptionMap = JSONLayoutpagetemplateSetter.setDescriptionMap(description = ${pageTemplateEntryDescription});
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "false",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
 
 		JSONLayoutpagetemplateAPI._addGlobalPageTemplateEntry(
-			active = "${pageTemplateEntryActive}",
-			descriptionMap = "${descriptionMap}",
-			nameMap = "${nameMap}",
-			serviceContext = "${serviceContext}");
+			active = ${pageTemplateEntryActive},
+			descriptionMap = ${descriptionMap},
+			nameMap = ${nameMap},
+			serviceContext = ${serviceContext});
 	}
 
 	@summary = "Add a layoutPageTemplateCollection to an existing site"
@@ -136,13 +136,13 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupKey = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		if (isSet(description)) {
-			var description = "${description}";
+			var description = ${description};
 		}
 		else {
 			var description = "";
@@ -150,16 +150,16 @@ definition {
 
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
 
 		JSONLayoutpagetemplateAPI._addLayoutPageTemplateCollection(
-			description = "${description}",
-			groupId = "${groupId}",
-			layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}",
-			serviceContext = "${serviceContext}");
+			description = ${description},
+			groupId = ${groupId},
+			layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName},
+			serviceContext = ${serviceContext});
 	}
 
 	@summary = "Add a layoutPageTemplateEntry to an existing site"
@@ -167,46 +167,46 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupKey = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 
 		if (isSet(layoutPageTemplateCollectionName)) {
 			var layoutPageTemplateCollectionId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateCollectionId(
-				groupId = "${groupId}",
-				layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}");
+				groupId = ${groupId},
+				layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName});
 		}
 		else {
-			var layoutPageTemplateCollectionId = "0";
+			var layoutPageTemplateCollectionId = 0;
 		}
 
 		if (isSet(masterLayoutEntryName)) {
 			var masterLayoutPlid = JSONLayoutpagetemplateSetter.setMasterLayoutPlid(
-				groupId = "${groupId}",
-				masterLayoutEntryName = "${masterLayoutEntryName}");
+				groupId = ${groupId},
+				masterLayoutEntryName = ${masterLayoutEntryName});
 		}
 		else {
-			var masterLayoutPlid = "0";
+			var masterLayoutPlid = 0;
 		}
 
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
-		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = "${layoutPageTemplateStatus}");
-		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = "${layoutPageTemplateType}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
+		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = ${layoutPageTemplateStatus});
+		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = ${layoutPageTemplateType});
 
 		JSONLayoutpagetemplateAPI._addLayoutPageTemplateEntry(
-			groupId = "${groupId}",
-			layoutPageTemplateCollectionId = "${layoutPageTemplateCollectionId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
-			masterLayoutPlid = "${masterLayoutPlid}",
-			serviceContext = "${serviceContext}",
-			status = "${status}",
-			type = "${type}");
+			groupId = ${groupId},
+			layoutPageTemplateCollectionId = ${layoutPageTemplateCollectionId},
+			layoutPageTemplateEntryName = ${layoutPageTemplateEntryName},
+			masterLayoutPlid = ${masterLayoutPlid},
+			serviceContext = ${serviceContext},
+			status = ${status},
+			type = ${type});
 	}
 
 	@summary = "Add a masterPageTemplateEntry to an existing site"
@@ -214,21 +214,21 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = "${grandParentGroupName}",
-			groupKey = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			site = "${site}");
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupName},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			serviceContext = ${serviceContext},
+			workflowAction = ${workflowAction});
 
 		JSONLayoutpagetemplateAPI._addMasterPageTemplateEntry(
-			groupId = "${groupId}",
-			masterPageTemplateEntryName = "${masterPageTemplateEntryName}",
-			serviceContext = "${serviceContext}");
+			groupId = ${groupId},
+			masterPageTemplateEntryName = ${masterPageTemplateEntryName},
+			serviceContext = ${serviceContext});
 	}
 
 	@summary = "Delete a layoutPageTemplateEntry under an existing site"
@@ -236,15 +236,15 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			groupKey = "${groupName}",
-			site = "${site}");
+			groupKey = ${groupName},
+			site = ${site});
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
-			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
-			type = "${type}");
+			groupId = ${groupId},
+			layoutPageTemplateEntryName = ${layoutPageTemplateEntryName},
+			type = ${type});
 
-		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
+		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = ${layoutPageTemplateEntryId});
 	}
 
 	@summary = "Get the layoutPrototypeId from a layoutPageTemplateEntry"
@@ -252,16 +252,16 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			groupKey = "${groupName}",
-			site = "${site}");
-		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = "${layoutPageTemplateType}");
+			groupKey = ${groupName},
+			site = ${site});
+		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = ${layoutPageTemplateType});
 
 		var layoutPrototypeId = JSONLayoutpagetemplateAPI._getLayoutPrototypeId(
-			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
-			type = "${type}");
+			groupId = ${groupId},
+			layoutPageTemplateEntryName = ${layoutPageTemplateEntryName},
+			type = ${type});
 
-		return "${layoutPrototypeId}";
+		return ${layoutPrototypeId};
 	}
 
 	@summary = "Set a layoutPageTemplateEntry as default"
@@ -269,15 +269,15 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			groupKey = "${groupName}",
-			site = "${site}");
+			groupKey = ${groupName},
+			site = ${site});
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
-			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
-			type = "${type}");
+			groupId = ${groupId},
+			layoutPageTemplateEntryName = ${layoutPageTemplateEntryName},
+			type = ${type});
 
-		JSONLayoutpagetemplateAPI._setLayoutPageTemplateEntryAsDefault(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
+		JSONLayoutpagetemplateAPI._setLayoutPageTemplateEntryAsDefault(layoutPageTemplateEntryId = ${layoutPageTemplateEntryId});
 	}
 
 }

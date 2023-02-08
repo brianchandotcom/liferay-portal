@@ -1,7 +1,7 @@
 definition {
 
 	macro activateScheduleTrigger {
-		LexiconEntry.gotoEntry(rowEntry = "${trigger}");
+		LexiconEntry.gotoEntry(rowEntry = ${trigger});
 
 		Navigator.gotoNavTab(navTab = "Job Scheduler Trigger");
 
@@ -10,7 +10,7 @@ definition {
 		Type(
 			key_text = "Cron Expression",
 			locator1 = "TextInput#ANY",
-			value1 = "${cronExpression}");
+			value1 = ${cronExpression});
 
 		Button.clickSave();
 
@@ -22,16 +22,16 @@ definition {
 	macro addScheduleTrigger {
 		Click(locator1 = "Button#NEW");
 
-		MenuItem.click(menuItem = "${taskExecutorType}");
+		MenuItem.click(menuItem = ${taskExecutorType});
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${triggerName}");
+			value1 = ${triggerName});
 
 		if (isSet(triggerProperties)) {
 			Type.typeAceEditor(
 				locator1 = "TextArea#ACE_EDITOR",
-				value1 = "${triggerProperties}");
+				value1 = ${triggerProperties});
 		}
 
 		Button.clickSave();
@@ -40,10 +40,10 @@ definition {
 	}
 
 	macro deleteJobItem {
-		Variables.assertDefined(parameterList = "${jobItemName}");
+		Variables.assertDefined(parameterList = ${jobItemName});
 
 		Click(
-			key_name = "${jobItemName}",
+			key_name = ${jobItemName},
 			locator1 = "JobScheduler#JOB_ITEM_KEBAB_MENU");
 
 		ClickNoError(
@@ -55,13 +55,13 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertElementNotPresent(
-			key_name = "${jobItemName}",
+			key_name = ${jobItemName},
 			locator1 = "JobScheduler#JOB_ITEM_NAME");
 	}
 
 	macro openJobSchedulerAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_dispatch_web_internal_portlet_DispatchPortlet");
 	}
 
@@ -69,7 +69,7 @@ definition {
 		Variables.assertDefined(parameterList = "${key_name},${selectFieldLabel},${selectFieldValue}");
 
 		Click(
-			key_name = "${key_name}",
+			key_name = ${key_name},
 			locator1 = "JobScheduler#JOB_ITEM_NAME");
 
 		Click(
@@ -77,8 +77,8 @@ definition {
 			locator1 = "NavTab#TAB_LINK");
 
 		SelectField.select(
-			selectFieldLabel = "${selectFieldLabel}",
-			selectFieldValue = "${selectFieldValue}");
+			selectFieldLabel = ${selectFieldLabel},
+			selectFieldValue = ${selectFieldValue});
 
 		Button.clickSave();
 

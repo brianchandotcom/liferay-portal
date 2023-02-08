@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewProductionWebContentInPublication {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -63,17 +63,17 @@ definition {
 
 		AssetPublisherPortlet.viewDisplayOrderPG(
 			assetTitle = "Publication WC",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		AssetPublisherPortlet.viewDisplayOrderPG(
 			assetTitle = "Production WC",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		Publications.workOnProduction();
 
 		AssetPublisherPortlet.viewDisplayOrderPG(
 			assetTitle = "Production WC",
-			rowNumber = "1");
+			rowNumber = 1);
 	}
 
 }

@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-105498 - Verify that when the user selects an instance with more than 1 pending task, the bulk update due date modal is triggered"
-	@priority = "5"
+	@priority = 5
 	test BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected {
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListUpdateDueDate#BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected";
 
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Assignee on Select Tasks to Update step"
-	@priority = "3"
+	@priority = 3
 	test CanFilterTasksByAssignee {
 		property portal.upstream = "quarantine";
 
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "LPS-105498 - Verify that the user can filter the tasks by Step on Select Tasks to Update step"
-	@priority = "3"
+	@priority = 3
 	test CanFilterTasksByStep {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -175,7 +175,7 @@ definition {
 
 	@description = "LPS-105498 - Verify that the user cannot update the due date of unassigned tasks that are also not assigned to its current role"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanNotUpdateDueDateOfUnassignedTasks {
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsListUpdateDueDate#CanNotUpdateDueDateOfUnassignedTasks";
 
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "LPS-105497 - Verify that users can hover over a row to see action options and select to Update Task Due Date by hovering over the calendar icon"
-	@priority = "3"
+	@priority = 3
 	test CanSelectUpDateDueDateByHoveringOverIcon {
 		var currentYear = DateUtil.getCurrentYear();
 
@@ -262,7 +262,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
 		MouseOver(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW");
 
 		Click(locator1 = "WorkflowAllItems#CALENDAR_ICON");
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "LPS-105497 - Verify that the user can select Update Task Due Date in the kebab menu for a particular row"
-	@priority = "4"
+	@priority = 4
 	test CanSelectUpDateDueDateInKebabMenu {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "LPS-105497 - Verify that the current date/time is pre-populated into the Update Task Due Date form getting the data how it is in My Workflow Tasks"
-	@priority = "3"
+	@priority = 3
 	test CurrentDateTimeIsPrePopulated {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -359,20 +359,20 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		var displayTimeHour = DateUtil.getCurrentHour();
-		var displayTimeMinute = "${displayTimeMinute}";
+		var displayTimeMinute = ${displayTimeMinute};
 
 		var displayTime = "${displayTimeHour}:${displayTimeMinute}";
 
 		AssertElementPresent(
 			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST_TIME",
-			value1 = "${displayTime}");
+			value1 = ${displayTime});
 	}
 
 	@description = "LPS-105498 - Verify that the message The due dates for theses tasks have been updated is displayed when the bulk update due date action is successful"
-	@priority = "3"
+	@priority = 3
 	test MessageIsDisplayedWhenBulkUpdateActionIsSuccessful {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

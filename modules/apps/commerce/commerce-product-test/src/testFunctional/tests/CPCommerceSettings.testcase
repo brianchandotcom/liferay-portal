@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete countries"
-	@priority = "3"
+	@priority = 3
 	test BulkDeleteCountries {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSettings#BulkDeleteCountries";
@@ -90,9 +90,9 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		CommerceEntry.addNewCountriesEntry(
-			entryIsoNumber = "020",
+			entryIsoNumber = 020,
 			entryIsoThreeLetters = "TCO",
-			entryIsoTwoLetters = "54",
+			entryIsoTwoLetters = 54,
 			entryName = "Test Country");
 
 		Button.clickSave();

@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-88573 - Verify that the search can be done by similar words, not having 100% match needs of the string"
-	@priority = "4"
+	@priority = 4
 	test CanSearchBySimilarWords {
 		WorkflowMetricsProcessListView.metricsWorkflowSearch(workflowSearchName = "Single Ap");
 
@@ -38,14 +38,14 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"
-	@priority = "3"
+	@priority = 3
 	test ClearAllSearchResults {
 		WorkflowMetricsProcessListView.metricsWorkflowSearchClearAll(workflowSearchName = "Test");
 	}
 
 	@description = "LPS-88573 - Verify that the specific empty state is displayed when there are no metrics available"
 	@ignore = "Test Stub"
-	@priority = "2"
+	@priority = 2
 	test DisplayEmptyStateWhenNoProcessAvailable {
 
 		// TODO LRQA-67516 DisplayEmptyStateWhenNoProcessAvailable pending implementation
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
-	@priority = "3"
+	@priority = 3
 	test PaginationButtonIndicatesSelectedPage {
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationButtonIndicatesSelectedPage";
 
@@ -103,11 +103,11 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = "1");
+		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
 	}
 
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
-	@priority = "3"
+	@priority = 3
 	test PaginationFollowsAscDescSequence {
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationFollowsAscDescSequence";
 
@@ -159,15 +159,15 @@ definition {
 
 		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = "1");
+		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = "2");
+		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 2);
 
 		WorkflowMetricsProcessListView.viewResults(results = "Showing 1 to 4 of 5 entries.");
 	}
 
 	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
-	@priority = "3"
+	@priority = 3
 	test PaginationIsDisplayedWhenTableHas5Items {
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationIsDisplayedWhenTableHas5Items";
 
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
-	@priority = "3"
+	@priority = 3
 	test SavedOrderOptionStaysInMetricsContext {
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#SavedOrderOptionStaysInMetricsContext";
 
@@ -319,28 +319,28 @@ definition {
 		Click(locator1 = "WorkflowMetricsProcessListView#CLEAR_SEARCH");
 
 		AssertTextEquals(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver");
 
 		AssertTextEquals(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
 			value1 = "Message Boards User Stats Moderation");
 
 		AssertTextEquals(
-			key_rowNumber = "3",
+			key_rowNumber = 3,
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver A");
 
 		AssertTextEquals(
-			key_rowNumber = "4",
+			key_rowNumber = 4,
 			locator1 = "WorkflowAllItems#METRICS_PROCESS_NAME_TABLE_ROW",
 			value1 = "Single Approver B");
 	}
 
 	@description = "LPS-88573 - Verify that when an instance from Asset is added to the list of process, the count number should be reflected on the Process List"
-	@priority = "5"
+	@priority = 5
 	test TableDisplaysCorrectNumbersWhenAssetAdded {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -365,14 +365,14 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.checkWorkflowReports(
-			key_onTimeValue = "0",
-			key_overdueValue = "0",
-			key_totalPendingValue = "1",
+			key_onTimeValue = 0,
+			key_overdueValue = 0,
+			key_totalPendingValue = 1,
 			key_workflowProcessName = "Single Approver");
 	}
 
 	@description = "LPS-88573 - Verify that the table entries are ordered by Overdue, from biggest to the smaller value, by default"
-	@priority = "3"
+	@priority = 3
 	test TableIsOrderedByOverdueDesc {
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#TableIsOrderedByOverdueDesc";
 
@@ -394,7 +394,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",

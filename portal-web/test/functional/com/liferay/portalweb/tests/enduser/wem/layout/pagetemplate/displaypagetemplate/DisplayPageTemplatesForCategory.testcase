@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
-	@priority = "5"
+	@priority = 5
 	test AddDisplayPageTemplateAndMarkItAsDefault {
 		property portal.acceptance = "true";
 
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110247 and LPS-158711. The user can select the specific display page template in category editor."
-	@priority = "5"
+	@priority = 5
 	test SelectSpecificDisplayPageTemplateInCategoryEditor {
 		property portal.acceptance = "true";
 
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112578. The user can define associated display page template in subcategory and it will be inherited by its subcategory."
-	@priority = "5"
+	@priority = 5
 	test SelectSpecificDisplayPageTemplateInSubcategoryEditor {
 		property portal.acceptance = "true";
 
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110247. View available mapping fields in different type editable fields of fragment."
-	@priority = "4"
+	@priority = 4
 	test ViewAvailableMappingFields {
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -332,7 +332,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -365,7 +365,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -388,7 +388,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -451,7 +451,7 @@ definition {
 
 			PageEditor.clickConfigurableField(
 				fragmentName = "Container",
-				index = "3");
+				index = 3);
 
 			Click(
 				key_navItem = "Styles",
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112578. The new subcategory will inherit associated display page template from parent category."
-	@priority = "5"
+	@priority = 5
 	test ViewInheritedAssociatedDisplayPageTemplateFromParentCategory {
 		property portal.acceptance = "true";
 
@@ -546,7 +546,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132081. View mapped content of assets in display page template for Category when apply the Items with This Category to Collection Display."
-	@priority = "5"
+	@priority = 5
 	test ViewMappedContentInCollectionDisplayWithItemsWithThisCategory {
 		property portal.acceptance = "true";
 
@@ -612,7 +612,7 @@ definition {
 
 		task ("Add a web content with the category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -620,7 +620,7 @@ definition {
 
 		task ("Add a blogs entry with the category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -628,7 +628,7 @@ definition {
 
 		task ("Add a document entry with the category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
@@ -646,15 +646,15 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_fragmentName = "heading",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
-					value1 = "${title}");
+					value1 = ${title});
 
 				var n = ${n} + 1;
 			}
@@ -662,7 +662,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110247 and LPS-132081. The user can navigate to associated display page template via View Display Page of category."
-	@priority = "5"
+	@priority = 5
 	test ViewMappedContentInDisplayPageTemplate {
 		property portal.acceptance = "true";
 

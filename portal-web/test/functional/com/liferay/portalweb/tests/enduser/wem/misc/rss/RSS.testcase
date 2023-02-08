@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "The user can add a RSS Feed on RSS Publisher widget."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddFeed {
 		property portal.acceptance = "true";
@@ -57,7 +57,7 @@ definition {
 
 		task ("Add a Latimes : Technology News RSS Feed") {
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
 				feedURLLink = "rss2.0.xml");
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "The user can add a RSS Feed between other feeds on RSS Publisher widget."
-	@priority = "3"
+	@priority = 3
 	test AddFeedBetweenFeeds {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -79,7 +79,7 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Technology",
 				feedType = "file",
 				feedURLLink = "Technology.xml");
@@ -89,8 +89,8 @@ definition {
 
 		task ("Add a Latimes : Technology News RSS Feed") {
 			RSSPortlet.addFeed(
-				buttonRowIndexNumber = "1",
-				feedRowIndexNumber = "1",
+				buttonRowIndexNumber = 1,
+				feedRowIndexNumber = 1,
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
 				feedURLLink = "rss2.0.xml");
@@ -100,8 +100,8 @@ definition {
 
 		task ("Add a Reuters : Sports News between the RSS Feeds") {
 			RSSPortlet.addFeed(
-				buttonRowIndexNumber = "1",
-				feedRowIndexNumber = "2",
+				buttonRowIndexNumber = 1,
+				feedRowIndexNumber = 2,
 				feedTitle = "Reuters : Sports News",
 				feedType = "file",
 				feedURLLink = "reuters_sports_news.xml");
@@ -111,13 +111,13 @@ definition {
 
 		task ("View displayed titles on RSS Publisher") {
 			for (var feedTitle : list "Technology,Reuters : Sports News,Latimes : Technology News") {
-				RSSPortlet.viewDisplayFeedTitle(feedTitle = "${feedTitle}");
+				RSSPortlet.viewDisplayFeedTitle(feedTitle = ${feedTitle});
 			}
 		}
 	}
 
 	@description = "The input field of URL cannot accept a Feed with wrong URL."
-	@priority = "4"
+	@priority = 4
 	test CannotAddFeedWithWrongUrl {
 		task ("View the warning message when adding a RSS Feed with a wrong URL") {
 			Navigator.gotoSitePage(
@@ -125,7 +125,7 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "General Announcement",
 				feedURLLink = "www.theverge.com/rss/index.xml",
 				viewWarningMessage = "The following are invalid URLs: www.theverge.com/rss/index.xml.");
@@ -139,7 +139,7 @@ definition {
 
 		task ("Add a RSS Feed with a validate URL") {
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "General Announcement",
 				feedType = "file",
 				feedURLLink = "theverge.xml");
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
-	@priority = "4"
+	@priority = 4
 	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
 		task ("Assert the input field of Entries Per Feed shouldn't allow 0 value and negative value") {
 			for (var numberOfEntries : list "0,-1") {
@@ -163,7 +163,7 @@ definition {
 
 				RSSPortlet.configureDisplaySettings(
 					configureWithoutSave = "true",
-					numberOfEntriesPerFeed = "${numberOfEntries}");
+					numberOfEntriesPerFeed = ${numberOfEntries});
 
 				Click(
 					key_fieldLabel = "# of Entries Per Feed",
@@ -172,7 +172,7 @@ definition {
 				AssertTextEquals(
 					key_fieldLabel = "# of Entries Per Feed",
 					locator1 = "FormFields#NUMBER_FIELD",
-					value1 = "${numberOfEntries}");
+					value1 = ${numberOfEntries});
 
 				AssertTextEquals(
 					key_alertMessage = "Only integers greater than or equal to 1 are allowed.",
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "Can change the default Display Template on RSS Publisher widget."
-	@priority = "3"
+	@priority = 3
 	test ChangeDefaultDisplayTemplateToNavigation {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -253,7 +253,7 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Technology",
 				feedType = "file",
 				feedURLLink = "Technology.xml");
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107942.The input field of Entries Per Feed allows integer numbers greater than 10."
-	@priority = "5"
+	@priority = 5
 	test ChangeNumberOfEntriesPerFeedToEleven {
 		property portal.acceptance = "true";
 
@@ -282,7 +282,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = "11");
+			RSSPortlet.configureDisplaySettings(numberOfEntriesPerFeed = 11);
 		}
 
 		task ("View the new entries is shown") {
@@ -291,12 +291,12 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "# of Entries Per Feed",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "11");
+				value1 = 11);
 		}
 	}
 
 	@description = "The order of RSS Feeds can be changed on RSS Publisher widget."
-	@priority = "3"
+	@priority = 3
 	test ChangeOrderOfRSSFeeds {
 		task ("Add a Technology RSS Feed") {
 			Navigator.gotoSitePage(
@@ -304,7 +304,7 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Technology",
 				feedType = "file",
 				feedURLLink = "Technology.xml");
@@ -314,8 +314,8 @@ definition {
 
 		task ("Add a NBA RSS Feed") {
 			RSSPortlet.addFeed(
-				buttonRowIndexNumber = "1",
-				feedRowIndexNumber = "1",
+				buttonRowIndexNumber = 1,
+				feedRowIndexNumber = 1,
 				feedTitle = "NBA",
 				feedType = "file",
 				feedURLLink = "nba.xml");
@@ -323,21 +323,21 @@ definition {
 
 		task ("View order of RSS Feeds") {
 			RSSPortlet.viewPG(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Technology",
-				rowIndexNumber = "1");
+				rowIndexNumber = 1);
 
 			RSSPortlet.viewPG(
-				feedRowIndexNumber = "1",
+				feedRowIndexNumber = 1,
 				feedTitle = "NBA",
-				rowIndexNumber = "2");
+				rowIndexNumber = 2);
 		}
 
 		task ("Change the order of RSS Feeds") {
 			RSSPortlet.changeFeedsOrder(
-				fromRowNumber = "2",
+				fromRowNumber = 2,
 				offset = "0,-25",
-				toRowNumber = "1");
+				toRowNumber = 1);
 
 			PortletEntry.save();
 
@@ -350,19 +350,19 @@ definition {
 				portletOption = "Configuration");
 
 			RSSPortlet.viewPG(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "NBA",
-				rowIndexNumber = "1");
+				rowIndexNumber = 1);
 
 			RSSPortlet.viewPG(
-				feedRowIndexNumber = "1",
+				feedRowIndexNumber = 1,
 				feedTitle = "Technology",
-				rowIndexNumber = "2");
+				rowIndexNumber = 2);
 		}
 	}
 
 	@description = "Can delete a RSS Feed via RSS Publisher configuration."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DeleteFeed {
 		task ("Add a Latimes : Technology News RSS Feed") {
@@ -371,7 +371,7 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Latimes : Technology News",
 				feedType = "file",
 				feedURLLink = "rss2.0.xml");
@@ -384,7 +384,7 @@ definition {
 		}
 
 		task ("Delete the Technology RSS Feed") {
-			RSSPortlet.deleteFeed(buttonRowIndexNumberList = "1");
+			RSSPortlet.deleteFeed(buttonRowIndexNumberList = 1);
 
 			IFrame.closeFrame();
 		}
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@description = "Can delete a RSS Publisher widget from page."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DeleteRSSPublisher {
 		task ("View default RSS Publisher widget on page") {
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@description = "The title of a RSS Feed can be disabled on RSS Publisher configuration."
-	@priority = "3"
+	@priority = 3
 	test DisabledFeedTitle {
 		task ("View default RSS Publisher widget on page") {
 			Navigator.gotoSitePage(
@@ -432,7 +432,7 @@ definition {
 
 		task ("Add a Technology RSS Feed") {
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Technology",
 				feedType = "file",
 				feedURLLink = "Technology.xml");
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@description = "The usar can update the RSS Feed via Asset Publisher widget when the feed time is set to one on system settings."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
 		property test.name.skip.portal.instance = "RSS#EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne";
@@ -473,7 +473,7 @@ definition {
 				configurationName = "Cache",
 				configurationScope = "System Scope");
 
-			RSSPortlet.updateFeedTime(feedTime = "1");
+			RSSPortlet.updateFeedTime(feedTime = 1);
 		}
 
 		task ("Add a widget page") {
@@ -519,9 +519,9 @@ definition {
 				siteName = "Test Site Name");
 
 			RSSPortlet.addFeed(
-				feedRowIndexNumber = "0",
+				feedRowIndexNumber = 0,
 				feedTitle = "Web Asset Publisher",
-				feedURLLink = "${rssFeedURL}");
+				feedURLLink = ${rssFeedURL});
 
 			IFrame.closeFrame();
 		}

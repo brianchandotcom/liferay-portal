@@ -3,19 +3,19 @@ definition {
 	macro changePermission {
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		var key_userName = "${userName}";
+		var key_userName = ${userName};
 
 		AssertTextEquals(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
-			value1 = "${userName}");
+			value1 = ${userName});
 
 		Select(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}");
+			value1 = ${selectPermission});
 
 		AssertSelectedLabel(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}");
+			value1 = ${selectPermission});
 
 		Button.clickSave();
 
@@ -25,11 +25,11 @@ definition {
 	}
 
 	macro gotoManageCollaboratorsViaSharedByMe {
-		var key_contentTitle = "${contentTitle}";
+		var key_contentTitle = ${contentTitle};
 
 		Click(
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_OPTIONS",
-			value1 = "${contentTitle}");
+			value1 = ${contentTitle});
 
 		MenuItem.click(menuItem = "Manage Collaborators");
 	}
@@ -38,10 +38,10 @@ definition {
 
 		// You can use this navigation when you need to access the shared content quickly without checking the UI.
 
-		if ("${navTab}" == "Shared with Me") {
+		if (${navTab} == "Shared with Me") {
 			var incomingValue = "true";
 		}
-		else if ("${navTab}" == "Shared by Me") {
+		else if (${navTab} == "Shared by Me") {
 			var incomingValue = "false";
 		}
 
@@ -54,26 +54,26 @@ definition {
 		}
 
 		ManagementBar.setFilterAndOrder(
-			filterBy = "${filterBy}",
-			orderBy = "${orderBy}");
+			filterBy = ${filterBy},
+			orderBy = ${orderBy});
 
-		if ("${filterBy}" == "Asset Types") {
+		if (${filterBy} == "Asset Types") {
 			AssertTextEquals(
 				locator1 = "Portlet#MODAL_TITLE",
 				value1 = "Select Asset Type");
 
 			SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-			if ("${assetType}" == "Document") {
-				var assetType = "${assetType}";
+			if (${assetType} == "Document") {
+				var assetType = ${assetType};
 			}
 
-			if ("${assetType}" == "Blogs Entry") {
-				var assetType = "${assetType}";
+			if (${assetType} == "Blogs Entry") {
+				var assetType = ${assetType};
 			}
 
 			Click(
-				key_assetType = "${assetType}",
+				key_assetType = ${assetType},
 				locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE");
 
 			SelectFrame(value1 = "relative=top");
@@ -91,11 +91,11 @@ definition {
 		else {
 			Type.sendKeys(
 				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 
 			Click(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
 
-			var key_userName = "${userName}";
+			var key_userName = ${userName};
 
 			AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
 		}
@@ -107,12 +107,12 @@ definition {
 			FormFields.disableCheckbox(fieldName = "shareable");
 		}
 
-		if ("${sharingPermissions}" == "Update") {
+		if (${sharingPermissions} == "Update") {
 			FormFields.selectRadioOption(
 				fieldName = "sharingEntryPermission",
 				radioOption = "Update");
 		}
-		else if ("${sharingPermissions}" == "Comment") {
+		else if (${sharingPermissions} == "Comment") {
 			FormFields.selectRadioOption(
 				fieldName = "sharingEntryPermission",
 				radioOption = "Comment");

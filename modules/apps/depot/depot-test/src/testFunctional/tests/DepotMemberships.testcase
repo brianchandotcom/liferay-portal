@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library can be assigned to a user from the user profile."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAssignALFromUserProfile {
 		JSONUser.addUser(
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@description = "This ensures that an asset library with translation can be assigned to a user from the user profile."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAssignALWithTranslationForUser {
 		property test.name.skip.portal.instance = "DepotMemberships#AssignALWithTranslationForUser";
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "This ensures that the asset library can be displayed correctly in the memberships after selecting the same depot for the user."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotSelectSameDepotForUser {
 		JSONUser.addUser(
@@ -126,19 +126,19 @@ definition {
 
 		AssertTextEquals(
 			key_depotName = "Test Depot Name",
-			key_position = "1",
+			key_position = 1,
 			locator1 = "UsersAndOrganizationsEditUser#DEPOT_TABLE_SPECIFIC_NAME",
 			value1 = "Test Depot Name");
 
 		AssertElementNotPresent(
 			key_depotName = "Test Depot Name",
-			key_position = "2",
+			key_position = 2,
 			locator1 = "UsersAndOrganizationsEditUser#DEPOT_TABLE_SPECIFIC_NAME",
 			value1 = "Test Depot Name");
 	}
 
 	@description = "This ensures that an assigned asset library can be removed from the user profile."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveALFromUserProfile {
 		JSONUser.addUser(
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "This ensures that an organization can be added and removed in the membership of an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveOrganizationFromMemberships {
 		JSONOrganization.addOrganization(
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveUserFromMemberships {
 		property portal.acceptance = "true";
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveUserGroupFromMemberships {
 		JSONUserGroup.addUserGroup(userGroupName = "User Group Name");
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@description = "This ensures that the organizations page pagination can be displayed correctly in the depot memberships."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewOrganizationPagination {
 		for (var num : list "1,2,3,4,5") {
@@ -268,7 +268,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
 
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This ensures that the users page pagination can be displayed correctly in the depot memberships."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewUsersPagination {
 		for (var num : list "1,2,3,4,5") {
@@ -297,7 +297,7 @@ definition {
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 

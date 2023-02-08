@@ -44,11 +44,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Case Result via API"
@@ -70,11 +70,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Case Results For Subtask via API"
@@ -95,11 +95,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Case via API"
@@ -141,16 +141,16 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Case Type via API"
 	macro createCaseTypeAPI {
-		Variables.assertDefined(parameterList = "${caseType}");
+		Variables.assertDefined(parameterList = ${caseType});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -164,11 +164,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Component via API"
@@ -189,11 +189,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Environment Factors via API"
@@ -214,16 +214,16 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Factor Categories via API"
 	macro createFactorCategoriesAPI {
-		Variables.assertDefined(parameterList = "${categoryName}");
+		Variables.assertDefined(parameterList = ${categoryName});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -237,11 +237,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Factor Options via API"
@@ -261,11 +261,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a product version via API"
@@ -285,11 +285,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Project via API"
@@ -309,11 +309,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Requirements via API"
@@ -345,11 +345,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a routine via API"
@@ -369,11 +369,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Run via API"
@@ -393,11 +393,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Subtask via API"
@@ -427,11 +427,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Suite via API"
@@ -460,11 +460,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Task via API"
@@ -484,11 +484,11 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "create a Team via API"
@@ -508,26 +508,26 @@ definition {
 				}'
 		''';
 
-		var response = JSONCurlUtil.post("${curl}", "$.id");
+		var response = JSONCurlUtil.post(${curl}, "$.id");
 
-		echo("${response}");
+		echo(${response});
 
-		return "${response}";
+		return ${response};
 	}
 
 	@summary = "This calls the JSON WS API to delete an object"
 	macro deleteObjectViaAPI {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONTestrayAPI.getObjectId(
-			object = "${object}",
-			objectName = "${objectName}");
+			object = ${object},
+			objectName = ${objectName});
 
 		var curl = '''
 			${portalURL}/o/c/${object}/${objectId} \
 				-u test@liferay.com:test
 		''';
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to get object id"
@@ -539,9 +539,9 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var objectId = JSONCurlUtil.get("${curl}", "$.items[?(@.name=='${objectName}')].id");
+		var objectId = JSONCurlUtil.get(${curl}, "$.items[?(@.name=='${objectName}')].id");
 
-		return "${objectId}";
+		return ${objectId};
 	}
 
 }

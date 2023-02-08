@@ -175,7 +175,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "Export a live site into a different staging site. This test is focused on modern site building features. The high level steps of this test are outlined in LRQA-44517."
-	@priority = "5"
+	@priority = 5
 	test ImportLiveSiteToStagingSite {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitesExportImportWithStaging#ImportLiveSiteToStagingSite";
@@ -248,14 +248,14 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				PageEditor.viewFragmentEditableText(
 					contributed = "false",
-					editableText = "${text}",
+					editableText = ${text},
 					fragmentName = "Button",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -268,14 +268,14 @@ definition {
 				key_pageName = "Test Template Content Page",
 				locator1 = "Home#PAGE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "button",
-					position = "${n}",
-					text = "${text}");
+					position = ${n},
+					text = ${text});
 
 				var n = ${n} + 1;
 			}

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that the translator can select which target language she wants to translate into numeric fields."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateCustomizedWCWithNumericFields {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -65,7 +65,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			description = "WC WebContent Description",
-			webContentNumeric = "100",
+			webContentNumeric = 100,
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
@@ -83,13 +83,13 @@ definition {
 
 		Translations.viewBaseFields(
 			webContentDescription = "WC WebContent Description",
-			webContentNumeric = "100",
+			webContentNumeric = 100,
 			webContentTitle = "WC WebContent Title");
 
 		Translations.translateFields(
 			webContentDecimal = "2.2",
 			webContentDescription = "WC WebContent Descripción",
-			webContentNumber = "200",
+			webContentNumber = 200,
 			webContentTitle = "WC WebContent Título");
 
 		PortletEntry.publish();
@@ -103,7 +103,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentDecimal = "2,2",
 			webContentDescription = "WC WebContent Descripción",
-			webContentNumber = "200",
+			webContentNumber = 200,
 			webContentTitle = "WC WebContent Título");
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
@@ -118,7 +118,7 @@ definition {
 		WebContent.viewWithStructureCP(
 			description = "WC WebContent Descripción",
 			webContentLocaleFieldLabel = "es-ES",
-			webContentNumeric = "200",
+			webContentNumeric = 200,
 			webContentTitle = "WC WebContent Title",
 			webContentTitleTranslated = "WC WebContent Título");
 
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "This ensures that the translator can select which target language she wants to translate into custom rich text."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateCustomizedWCWithRichText {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "This ensures that the translator can select which target language she wants to translate into custom text fields."
-	@priority = "5"
+	@priority = 5
 	test CanTranslateCustomizedWCWithTextFields {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "This ensures that the translator can select which base language she wants to translate."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanTranslateWebContent {
 		property portal.acceptance = "true";
@@ -424,7 +424,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-142169. It ensures that translate side by side shows the duplicate fields."
-	@priority = "4"
+	@priority = 4
 	test CanViewDuplicateFields {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "This ensures that translate side by side shows the latest values after editing the web content article."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test EditedValuesArePreservedInSideBySideUI {
 		JSONWebcontent.addWebContent(

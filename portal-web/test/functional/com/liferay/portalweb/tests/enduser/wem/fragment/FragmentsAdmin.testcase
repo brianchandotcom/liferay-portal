@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90063. Images can be uploaded and deleted in the resources folder in a fragment collection."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddAndDeleteResource {
 		task ("Add a fragment collection") {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166203. The site designer could add fragment set during copy OOTB fragment when the site doesn't have fragment set."
-	@priority = "5"
+	@priority = 5
 	test AddFirstFragmentSetWhenCopyContributedFragment {
 		task ("Given a site designer navigates to the Fragments admin of a new site") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159235. Add folders to fragment resource and check hints."
-	@priority = "4"
+	@priority = 4
 	test AddFoldersToResourceAndCheckHints {
 		property custom.properties = "feature.flag.LPS-158675=true";
 
@@ -169,7 +169,7 @@ definition {
 
 				Type.sendKeysAceEditor(
 					locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-					value1 = "${htmlSnippet}");
+					value1 = ${htmlSnippet});
 			}
 
 			task ("Assert there is a hint for resources with path") {
@@ -201,7 +201,7 @@ definition {
 
 				Type.sendKeysAceEditor(
 					locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-					value1 = "${htmlSnippet}");
+					value1 = ${htmlSnippet});
 			}
 
 			task ("Assert there is a hint for resources with path") {
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97184. The user could add a fragment via UI."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddFragment {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166203. The site designer could save in new set during copy OOTB fragment when the site has fragment sets."
-	@priority = "5"
+	@priority = 5
 	test AddNewFragmentSetWhenCopyContributedFragment {
 		task ("Given a site designer has a fragment set") {
 			JSONFragment.addFragmentCollection(
@@ -307,7 +307,7 @@ definition {
 	}
 
 	@description = "Fragments that are being used cannot be deleted."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CannotDeleteFragmentInUse {
 		property portal.acceptance = "true";
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101354, LPS-89115 and LPS-166203. The contributed fragments can be copied."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CopyContributedFragment {
 		property portal.acceptance = "true";
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CopyFragment {
 		property portal.acceptance = "true";
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@description = "Fragments can be deleted."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteFragment {
 		property portal.acceptance = "true";
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "Fragment collections can be deleted."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteFragmentCollection {
 		property portal.acceptance = "true";
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "Edit a fragment and assert the edits persist."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditFragment {
 		property portal.acceptance = "true";
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118241. The user could propagate the changes of fragment to content page."
-	@priority = "4"
+	@priority = 4
 	test PropagateChangesOfFragmentToContentPage {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -586,7 +586,7 @@ definition {
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Test Fragment Name");
 		}
 
@@ -642,7 +642,7 @@ definition {
 	<h2 data-lfr-editable-id="title2" data-lfr-editable-type="rich-text"></h2>
 </div>		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -685,7 +685,7 @@ definition {
 	}
 
 	@description = "LPS-79349 - User can propagate the changes of fragment to page templates."
-	@priority = "3"
+	@priority = 3
 	test PropagateChangesOfFragmentToPageTemplates {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -700,7 +700,7 @@ definition {
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Test Fragment Name");
 		}
 
@@ -735,7 +735,7 @@ definition {
 
 		task ("View the inline text of new fragment at edit mode") {
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Test Fragment Name",
 				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "TEST");
@@ -754,7 +754,7 @@ definition {
 
 			var htmlSnippet = '''<div>EDITED</div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -779,7 +779,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Test Fragment Name",
 				locator1 = "Fragment#FRAGMENT_CONTENT",
 				value1 = "EDITED");
@@ -787,7 +787,7 @@ definition {
 	}
 
 	@description = "Fragments can be renamed."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test RenameFragment {
 		task ("Add a fragment collection") {
@@ -832,7 +832,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-89115. Can see contributed fragment collections in fragment administration"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewContributedFragmentCollections {
 		property portal.acceptance = "true";
@@ -853,7 +853,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of fragment."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInFragmentsAdmin {
 		task ("Given a Fragments creator has a new Fragment Set and custom fragment") {
 			JSONFragment.addFragmentCollection(
@@ -909,7 +909,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of basic fragment."
-	@priority = "5"
+	@priority = 5
 	test ViewUsagesOfBasicFragment {
 		property portal.acceptance = "true";
 
@@ -931,7 +931,7 @@ definition {
     Fragment Example
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -980,7 +980,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
+				usageAmount = 1,
 				usageType = "All");
 		}
 
@@ -1002,7 +1002,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of form fragment."
-	@priority = "5"
+	@priority = 5
 	test ViewUsagesOfFormFragment {
 		property portal.acceptance = "true";
 
@@ -1050,7 +1050,7 @@ definition {
 	</div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1063,7 +1063,7 @@ if (layoutMode === 'edit') {
 	}
 }''';
 
-			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+			FragmentsEditor.typeJsEditor(content = ${jsSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1087,7 +1087,7 @@ if (layoutMode === 'edit') {
 	]
 }''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1151,7 +1151,7 @@ if (layoutMode === 'edit') {
 
 			AssertElementPresent(
 				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
+				usageAmount = 1,
 				usageType = "All");
 		}
 
@@ -1175,7 +1175,7 @@ if (layoutMode === 'edit') {
 	}
 
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of fragment used in fragment composition."
-	@priority = "4"
+	@priority = 4
 	test ViewUsagesOfFragmentUsedInFragmentComposition {
 		task ("Given a fragment developer has a fragment composition with a new fragment") {
 			JSONFragment.addFragmentCollection(
@@ -1193,7 +1193,7 @@ if (layoutMode === 'edit') {
     Fragment Example
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 

@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Verify that the user can not unpublish a workflow that is in use in a process and displays a error message."
-	@priority = "5"
+	@priority = 5
 	test CanNotUnpublishAWorkflowThatIsInUse {
 		KaleoFormsAdmin.addProcess();
 
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "Verify that the user can only choose one Field Set."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyChooseOneFieldSet {
 		KaleoFormsAdmin.addProcess();
 
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "Verify that the user can only choose one Workflow."
-	@priority = "4"
+	@priority = 4
 	test CanOnlyChooseOneWorkflow {
 		property test.name.skip.portal.instance = "KaleoFormsNewProcess#CanOnlyChooseOneWorkflow";
 
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "Verify that the name field is required."
-	@priority = "4"
+	@priority = 4
 	test FieldNameIsRequired {
 		KaleoFormsAdmin.addProcess();
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "Verify that the field set is required."
-	@priority = "4"
+	@priority = 4
 	test FieldSetIsRequired {
 		KaleoFormsAdmin.addProcess();
 
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "Verify that assign a form to the created task is required."
-	@priority = "4"
+	@priority = 4
 	test FormAssignedToCreatedTaskIsRequired {
 		KaleoFormsAdmin.addProcess();
 
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "Verify that the translation icon next to the -Name- and -Description- field is in English by default."
-	@priority = "3"
+	@priority = 3
 	test IconTranslationEnglishByDefault {
 		property portal.upstream = "quarantine";
 
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@description = "Verify that a workflow added on the creation of a new process appears on Process Builder tab."
-	@priority = "4"
+	@priority = 4
 	test NewProcessAppearsOnProcessBuilder {
 		property test.name.skip.portal.instance = "KaleoFormsNewProcess#NewProcessAppearsOnProcessBuilder";
 
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "Verify that the progress bar is shown correctly."
-	@priority = "4"
+	@priority = 4
 	test ProgressBarIsShownCorrectly {
 		KaleoFormsAdmin.addProcess();
 
@@ -273,12 +273,12 @@ definition {
 		for (var steps : list "Details,Fields,Workflow") {
 			KaleoFormsAdmin.viewProgressBarIsShownCorrectly(
 				iconType = "check",
-				stepProcess = "${steps}");
+				stepProcess = ${steps});
 		}
 	}
 
 	@description = "Verify that the workflow is required."
-	@priority = "4"
+	@priority = 4
 	test WorkflowIsRequired {
 		KaleoFormsAdmin.addProcess();
 

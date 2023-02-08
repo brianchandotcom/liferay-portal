@@ -6,7 +6,7 @@ definition {
 		if (isSet(category)) {
 			Type(
 				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${category}");
+				value1 = ${category});
 		}
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
@@ -17,7 +17,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayBuild#TYPE_PRODUCT_VERSION_IN_BUILD",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
 	}
@@ -27,18 +27,18 @@ definition {
 
 		SelectFrame(locator1 = "TestrayManage#OPTIONS_MODAL");
 
-		TestrayManage.selectOptionsManage(key_itemvalue = "${itemValue}");
+		TestrayManage.selectOptionsManage(key_itemvalue = ${itemValue});
 
 		Testray.createProjectTestray(
-			description = "${description}",
-			key_name = "${name}");
+			description = ${description},
+			key_name = ${name});
 
 		Click(locator1 = "TestrayManage#CLOSE_MODAL");
 	}
 
 	macro assertTitleModal {
 		AssertElementNotPresent(
-			key_title = "${key_itemvalue}",
+			key_title = ${key_itemvalue},
 			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
 	}
 
@@ -51,7 +51,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
+			value1 = ${caseName});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -61,26 +61,26 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${option}");
+			value1 = ${option});
 
 		Select(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = "${category}");
+			value1 = ${category});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro createProductVersion {
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${nameOptions});
 
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = ${manageOption});
 
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		if (isSet(version)) {
 			Type(
 				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${version}");
+				value1 = ${version});
 		}
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
@@ -92,14 +92,14 @@ definition {
 		if (isSet(teamName)) {
 			Type(
 				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${teamName}");
+				value1 = ${teamName});
 		}
 
 		if (isSet(component)) {
 			Click(
 				key_parameterType = "Unassigned",
 				locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
-				value1 = "${component}");
+				value1 = ${component});
 
 			Click(
 				key_arrowDirection = "Right",
@@ -118,8 +118,8 @@ definition {
 		TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
 		Testray.changePaginationInModal(
-			numberItems = "20",
-			valuePagination = "150");
+			numberItems = 20,
+			valuePagination = 150);
 
 		while (IsElementPresent(key_projectName = "Case_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case_");
@@ -155,7 +155,7 @@ definition {
 	}
 
 	macro deleteCasesTypes {
-		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -167,9 +167,9 @@ definition {
 	macro deleteCategory {
 		TestrayLayout.clickManageOnSidebar();
 
-		TestrayManage.selectOptionsManage(itemValue = "${selectCategories}");
+		TestrayManage.selectOptionsManage(itemValue = ${selectCategories});
 
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameCategory}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${nameCategory});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 
@@ -181,7 +181,7 @@ definition {
 	}
 
 	macro deleteOption {
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${nameOptions});
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 
@@ -191,9 +191,9 @@ definition {
 	}
 
 	macro deleteProductVersion {
-		TestrayContextMenu.clickContextMenuProjects(name = "${versionName}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${versionName});
 
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${itemManage}");
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = ${itemManage});
 
 		Alert.viewSuccessMessage();
 	}
@@ -201,7 +201,7 @@ definition {
 	macro editCategoryOption {
 		Type(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = "${category}");
+			value1 = ${category});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 
@@ -215,19 +215,19 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${category}");
+			value1 = ${category});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro editNewName {
-		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
 		MenuItem.clickNoError(menuItem = "Edit");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${valueType}");
+			value1 = ${valueType});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 
@@ -241,11 +241,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${option}");
+			value1 = ${option});
 
 		Select(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = "${category}");
+			value1 = ${category});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 
@@ -253,35 +253,35 @@ definition {
 	}
 
 	macro editProductVersion {
-		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
+		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${itemManage}");
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = ${itemManage});
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
+			value1 = ${caseName});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro editTeam {
 		TestrayManage.editProductVersion(
-			caseName = "${typeTeam}",
+			caseName = ${typeTeam},
 			itemManage = "Edit",
-			valueName = "${nameTeam}");
+			valueName = ${nameTeam});
 	}
 
 	macro selectOptionDropdownCategory {
 		Click(locator1 = "TestrayManage#DROPDOWN_CATEGORIES");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro selectOptionsManage {
 		Click(
-			key_itemvalue = "${itemValue}",
+			key_itemvalue = ${itemValue},
 			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 

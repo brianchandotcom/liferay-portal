@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddUserGroupRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -43,7 +43,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -64,7 +64,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_USER_GROUP",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -85,7 +85,7 @@ definition {
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_USER_GROUP",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
@@ -109,7 +109,7 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssignPermissionsToUGPages {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -138,7 +138,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "UG Reg Role");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -198,7 +198,7 @@ definition {
 			rowEntry = "UG UserGroup Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssignRoleToUsersOfDifferentSites {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -249,7 +249,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Test UserGroup Role");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -349,7 +349,7 @@ definition {
 		Blogs.viewEntryPresent(entryTitle = "Blogs Entry1 Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AssignSiteRoleToUG {
 		property test.name.skip.portal.instance = "UsergroupsUsecase#AssignSiteRoleToUG";
 
@@ -384,13 +384,13 @@ definition {
 			roleTitle = "UG Site Role");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test UserGroupRegularRolePermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "User");
 
 		for (var userNumber : list "1,2") {
@@ -485,7 +485,7 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test UserGroupSiteOwnerPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
@@ -496,7 +496,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "User");
 
 		for (var userNumber : list "1,2,3,4,5") {
@@ -591,7 +591,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-40580."
-	@priority = "4"
+	@priority = 4
 	test ViewUserGroupPermissionsNoAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -602,7 +602,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Roles Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -656,7 +656,7 @@ definition {
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME_LINK");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewUserGroupSiteRoleInline {
 		JSONRole.addSiteRole(
 			roleKey = "Roles Siterole Name",

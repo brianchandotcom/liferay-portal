@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test Demo1 {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -137,19 +137,19 @@ definition {
 
 		for (var ddlRecordFieldData : list "John,Jane") {
 			DDLRecord.viewViaDDLDisplayTable(
-				ddlRecordFieldData = "${ddlRecordFieldData}",
+				ddlRecordFieldData = ${ddlRecordFieldData},
 				fieldFieldLabel = "First Name");
 		}
 
 		for (var ddlRecordFieldData : list "Doe,Smith") {
 			DDLRecord.viewViaDDLDisplayTable(
-				ddlRecordFieldData = "${ddlRecordFieldData}",
+				ddlRecordFieldData = ${ddlRecordFieldData},
 				fieldFieldLabel = "Last Name");
 		}
 
 		for (var ddlRecordFieldData : list "Beef Jerky,Carrots") {
 			DDLRecord.viewViaDDLDisplayTable(
-				ddlRecordFieldData = "${ddlRecordFieldData}",
+				ddlRecordFieldData = ${ddlRecordFieldData},
 				fieldFieldLabel = "What are you bringing");
 		}
 
@@ -171,17 +171,17 @@ definition {
 
 		DDLRecord.populateFieldTextViaSpreadsheetView(
 			ddlRecordFieldData = "Joe",
-			ddlRecordRow = "3",
+			ddlRecordRow = 3,
 			fieldName = "FirstName");
 
 		DDLRecord.populateFieldTextViaSpreadsheetView(
 			ddlRecordFieldData = "Perkins",
-			ddlRecordRow = "3",
+			ddlRecordRow = 3,
 			fieldName = "LastName");
 
 		DDLRecord.populateFieldSelectViaSpreadsheetView(
 			ddlRecordFieldData = "Chips",
-			ddlRecordRow = "3",
+			ddlRecordRow = 3,
 			fieldName = "WhatAreYouBringing");
 	}
 

@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-81244. The web content can be assigned to the default display page."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentAssignedToDefaultDisplayPage {
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "The user can add the web content with an expiration date."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test AddWebContentExpirationDate {
 		task ("Add a web content with an experation date") {
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125458. The web content created via Headless should be assigned to the default display page."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentViaHeadlessAssignedToDefaultDisplayPage {
 		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(
@@ -173,14 +173,14 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}
 	}
 
 	@description = "The user cannot republish an expired web content."
-	@priority = "4"
+	@priority = 4
 	test CannotRepublishExpiredWebContent {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "The user can compare the web content history in web content admin."
-	@priority = "4"
+	@priority = 4
 	test CompareWebContentVersionsHistory {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "Delete a web content in web content admin."
-	@priority = "5"
+	@priority = 5
 	test DeleteWebContent {
 		property portal.acceptance = "true";
 
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "The user can edit the global basic strucutre and template in web content admin."
-	@priority = "4"
+	@priority = 4
 	test EditBasicWebContentStructureAndTemplate {
 		task ("Edit basic strucutre in global site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
@@ -315,8 +315,8 @@ definition {
 
 			for (var structureFieldName : list "Date,Image") {
 				DataEngine.viewField(
-					fieldFieldLabel = "${structureFieldName}",
-					fieldName = "${structureFieldName}");
+					fieldFieldLabel = ${structureFieldName},
+					fieldName = ${structureFieldName});
 			}
 		}
 
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@description = "The user can edit a web content."
-	@priority = "5"
+	@priority = 5
 	test EditWebContent {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Administration,WYSIWYG";
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-141842. View Error message when editing web contents concurrently."
-	@priority = "4"
+	@priority = 4
 	test EditWebContentConcurrently {
 		property portal.acceptance = "true";
 
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@description = "The user can edit a web content clicking in the article title in the serach result."
-	@priority = "5"
+	@priority = 5
 	test EditWebContentViaArticleTitle {
 		property portal.acceptance = "true";
 
@@ -450,7 +450,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129096. The user can edit and save a web content after upload a featured image."
-	@priority = "4"
+	@priority = 4
 	test EditWebContentWithUploadedFeaturedImage {
 		task ("Add a web content with a featured image") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -485,7 +485,7 @@ definition {
 	}
 
 	@description = "The user can edit an expired web content."
-	@priority = "3"
+	@priority = 3
 	test ExpireEditedWebContent {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -522,7 +522,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80208. The user can expire the latest web content version and view the previous."
-	@priority = "4"
+	@priority = 4
 	test ExpireLastestVersion {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@description = "The user can expire multiple web contents in web content admin."
-	@priority = "4"
+	@priority = 4
 	test ExpireMultipleWebContents {
 		task ("Add three web contents") {
 			for (var i : list "1,2,3") {
@@ -621,7 +621,7 @@ definition {
 	}
 
 	@description = "The user can expire a web content."
-	@priority = "4"
+	@priority = 4
 	test ExpireWebContent {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -647,7 +647,7 @@ definition {
 	}
 
 	@description = "Can move multiple web contents via icon to a new folder."
-	@priority = "4"
+	@priority = 4
 	test MoveMultipleWebContentsToFolder {
 		task ("Add a folder") {
 			JSONWebcontent.addFolder(
@@ -678,13 +678,13 @@ definition {
 				webContentTitle = "WC Folder Name");
 
 			for (var webContentTitle : list "Web Content Title 1,Web Content Title 2,Web Content Title 3") {
-				WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}
 		}
 	}
 
 	@description = "Can move a single web content to a new folder via menu item."
-	@priority = "5"
+	@priority = 5
 	test MoveWebContentToFolder {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162071. Verify that updating web content not will add unnecessary UUID value to web content references."
-	@priority = "3"
+	@priority = 3
 	test NotShownUUIDInWebContentReferencesWhenEditingWebContent {
 		task ("Given: Add new web content and a new WC structure with a web content field") {
 			JSONWebcontent.addWebContent(
@@ -814,7 +814,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
-	@priority = "5"
+	@priority = 5
 	test PreviewDraftWebContentInWCD {
 		property portal.acceptance = "true";
 
@@ -876,7 +876,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86845. A user can preview a draft or pending status Web Content article through the 'View Usages' screen."
-	@priority = "5"
+	@priority = 5
 	test PreviewPendingWebContentInWCD {
 		property portal.acceptance = "true";
 
@@ -948,7 +948,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90066 and LPS-127728. A user can preview a scheduled web content via View Usage. The warning message should have link in Web Content Display."
-	@priority = "5"
+	@priority = 5
 	test PreviewScheduledWebContentInWCD {
 		property portal.acceptance = "true";
 
@@ -1023,7 +1023,7 @@ definition {
 	}
 
 	@description = "The user can publish a draft web content in web content admin."
-	@priority = "4"
+	@priority = 4
 	test PublishDraftWebContent {
 		task ("Add a draft web content") {
 			JSONWebcontent.addWebContent(
@@ -1060,7 +1060,7 @@ definition {
 	}
 
 	@description = "The user can search for a specific web content in web content admin."
-	@priority = "5"
+	@priority = 5
 	test SearchWebContent {
 		property portal.acceptance = "true";
 
@@ -1100,13 +1100,13 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98669. The user could select the 12th page in Link to Page field."
-	@priority = "4"
+	@priority = 4
 	test SelectThe12thPageInLinkToPage {
 		task ("Add 12 pages") {
 			for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "${pageName}");
+					layoutName = ${pageName});
 			}
 		}
 
@@ -1153,7 +1153,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141766. The user could view associated display page from copy of web content."
-	@priority = "4"
+	@priority = 4
 	test ViewAssociatedDisplayPageFromCopyOfWebContent {
 		task ("Add two Public Pages and Add an Asset Publisher to each page") {
 			for (var i : list "1,2") {
@@ -1224,7 +1224,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80445. View the categorization settings after delete the category of web content."
-	@priority = "5"
+	@priority = 5
 	test ViewCategorizationSettingsAfterDeleteCategoryOfWebContent {
 		property portal.acceptance = "true";
 
@@ -1243,7 +1243,7 @@ definition {
 
 		task ("Add a web content with the category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1269,7 +1269,7 @@ definition {
 	}
 
 	@description = "The content cannot be lost after try to publish a web content without title."
-	@priority = "4"
+	@priority = 4
 	test ViewContentNotLostWithBlankTitle {
 		task ("View cannot add a web content without title") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1295,7 +1295,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138504. Assert display page is still selected after adding a web content without adding required category."
-	@priority = "4"
+	@priority = 4
 	test ViewDisplayPageAfterAddingWebContentWithoutAddingRequiredCategory {
 		property testray.component.names = "Asset Publisher";
 
@@ -1365,7 +1365,7 @@ definition {
 	}
 
 	@description = "View web content title with cards, list and table display styles in web content admin."
-	@priority = "3"
+	@priority = 3
 	test ViewDisplayStyles {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1382,7 +1382,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134566. View doAsUserId parameter not shown in URL field after add page link to text."
-	@priority = "4"
+	@priority = 4
 	test ViewDoAsUserIdNotShownInURLFieldAfterAddPageLinkToText {
 		task ("Add new user") {
 			JSONUser.addUser(
@@ -1439,7 +1439,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of web content admin."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInWebContentAdmin {
 		task ("Given a Web Content creator has a new web content") {
 			JSONWebcontent.addWebContent(
@@ -1546,7 +1546,7 @@ definition {
 	}
 
 	@description = "The user can add multiple categories wihtin web content."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewMultipleCategoriesInWebContentEditor {
 		property testray.component.names = "Categories,Web Content Administration";
@@ -1584,7 +1584,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-103344. View the same name categorization of web content."
-	@priority = "4"
+	@priority = 4
 	test ViewMultipleCategoriesWithSameNameInWebContentEditor {
 		task ("Add two categories") {
 			JSONCategory.addVocabulary(
@@ -1630,7 +1630,7 @@ definition {
 	}
 
 	@description = "View available vocabularies within a web content."
-	@priority = "4"
+	@priority = 4
 	test ViewMultipleVocabulariesInWebContentEditor {
 		property testray.component.names = "Categories,Web Content Administration";
 
@@ -1659,7 +1659,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140253. View no private page in web content."
-	@priority = "4"
+	@priority = 4
 	test ViewNoPrivatePageInWebContent {
 		task ("Add a content page and add Asset Publisher in it") {
 			JSONLayout.addPublicLayout(
@@ -1736,7 +1736,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-88500. At any given time, a user can view all the places a web content article is displayed through a Web Content Display widget or an Asset Publisher widget with manual selection."
-	@priority = "5"
+	@priority = 5
 	test ViewWebContentArticleUsages {
 		property portal.acceptance = "true";
 

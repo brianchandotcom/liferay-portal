@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteCommerceCurrencies {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,8 +9,8 @@ definition {
 
 		var commerceCurrenciesIds = CommerceJSONCurrenciesAPI._getCommerceCurrencies();
 
-		if ("${commerceCurrenciesIds}" != "") {
-			for (var commerceCurrenciesId : list "${commerceCurrenciesIds}") {
+		if (${commerceCurrenciesIds} != "") {
+			for (var commerceCurrenciesId : list ${commerceCurrenciesIds}) {
 				echo("Deleting Commerce Currency with id: ${commerceCurrenciesId}");
 
 				var curl = '''
@@ -19,7 +19,7 @@ definition {
 						-d commerceCurrencyId=${commerceCurrenciesId}
 				''';
 
-				JSONCurlUtil.post("${curl}");
+				JSONCurlUtil.post(${curl});
 			}
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	macro _getCommerceCurrencies {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -47,11 +47,11 @@ definition {
 
 		echo("curl: ${curl}");
 
-		var commerceCurrencies = JSONCurlUtil.post("${curl}", "$..['commerceCurrencyId']");
+		var commerceCurrencies = JSONCurlUtil.post(${curl}, "$..['commerceCurrencyId']");
 
 		echo("commerceCurrencies: ${commerceCurrencies}");
 
-		return "${commerceCurrencies}";
+		return ${commerceCurrencies};
 	}
 
 }

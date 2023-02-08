@@ -22,7 +22,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10000 | Multiple users can be set as Channel Account Manager for the account"
-	@priority = "4"
+	@priority = 4
 	test CanAccountHaveChannelAccountManagers {
 		property portal.acceptance = "false";
 
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9988 | Can add a Channel Account Managers entry"
-	@priority = "4"
+	@priority = 4
 	test CanAddChannelAccountManagersEntry {
 		property portal.acceptance = "false";
 
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10004 | Can add account entry user as Channel Account Manager"
-	@priority = "4"
+	@priority = 4
 	test CanAddNewUserToAccountAsChannelAccountManager {
 		task ("Given a business account is created") {
 			JSONAccountEntry.addAccountEntry(
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9993 | Can assert eligibles accounts list as Channel Account Manager"
-	@priority = "4"
+	@priority = 4
 	test CanAssertEligibleAccountsListAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9996 | Can assert that accounts valid for both permissions(Manage Available Accounts and Manage Available Account Via User Channel Rel) are not duplicated"
-	@priority = "4"
+	@priority = 4
 	test CanAssertEligibleAccountsNotDuplicated {
 		property portal.acceptance = "true";
 
@@ -433,13 +433,13 @@ definition {
 		task ("And Account B is not duplicated") {
 			AssertElementNotPresent(
 				key_accountName = "Account B",
-				key_index = "2",
+				key_index = 2,
 				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM_N");
 		}
 	}
 
 	@description = "COMMERCE-9992 | Can assert ineligible accounts are not present as Channel Account Manager"
-	@priority = "4"
+	@priority = 4
 	test CanAssertIneligibleAccountsNotPresentAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -494,7 +494,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9995 | Can channel account manager without permission not see accounts"
-	@priority = "4"
+	@priority = 4
 	test CanChannelAccountManagerWithoutPermissionNotSeeAccounts {
 		task ("Given a business accounts is created") {
 			JSONAccountEntry.addAccountEntry(
@@ -584,7 +584,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10005 | Can edit account details as Channel Account Manager"
-	@priority = "4"
+	@priority = 4
 	test CanEditAccountDetailsAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -653,12 +653,12 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",
-				text = "123456");
+				text = 123456);
 
 			Button.clickSave();
 
 			for (var addressType : list "Billing,Shipping") {
-				var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+				var addressTypeUppercase = StringUtil.upperCase(${addressType});
 
 				AssertClick(
 					locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
@@ -695,7 +695,7 @@ definition {
 			Account.viewAccountDetails(
 				accountDescription = "Commerce Account Edit Description",
 				accountName = "Commerce Account Edit",
-				accountTaxId = "123456");
+				accountTaxId = 123456);
 
 			Account.viewDefaultBillingAddress(
 				addressCity = "Test Address",
@@ -716,7 +716,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9989 | Can edit a Channel Account Managers entry and assert the changes for the user"
-	@priority = "4"
+	@priority = 4
 	test CanEditChannelAccountManagersEntry {
 		task ("Given a business account is created") {
 			JSONAccountEntry.addAccountEntry(

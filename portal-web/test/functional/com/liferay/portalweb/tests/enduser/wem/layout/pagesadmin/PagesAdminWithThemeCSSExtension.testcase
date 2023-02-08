@@ -41,12 +41,12 @@ definition {
 
 		task ("Add two remote apps for CSS extension") {
 			JSONClientExtension.addRemoteAppEntry(
-				mainURL = "${firstURL}",
+				mainURL = ${firstURL},
 				name = "FontFamily",
 				type = "themeCSS");
 
 			JSONClientExtension.addRemoteAppEntry(
-				mainURL = "${secondURL}",
+				mainURL = ${secondURL},
 				name = "BackgroundColor",
 				type = "themeCSS");
 		}
@@ -55,7 +55,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153653. The site designer could add theme CSS extension to page, page template, and group of pages."
-	@priority = "5"
+	@priority = 5
 	test AddThemeCSSExtension {
 		property portal.acceptance = "true";
 
@@ -227,7 +227,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153653 and LPS-153658. The site designer could change theme CSS extension selection to an inheritor page. View the inherited theme CSS extension from master."
-	@priority = "5"
+	@priority = 5
 	test ChangeThemeCSSExtensionOfInheritorPage {
 		property portal.acceptance = "true";
 
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153653. The site designer could delete inherited theme CSS extension from page template."
-	@priority = "4"
+	@priority = 4
 	test ClearInheritedThemeCSSExtensionFromPageTemplate {
 		task ("Given a site designer has a content page template with a theme CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153653. The site designer could delete the theme CSS extenion selection."
-	@priority = "4"
+	@priority = 4
 	test ClearThemeCSSExtensionSelection {
 		task ("Given a site designer has a content page with a theme CSS extension") {
 			JSONLayout.addPublicLayout(

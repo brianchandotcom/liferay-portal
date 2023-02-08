@@ -3,7 +3,7 @@ definition {
 	var assetType = "Documents Folder";
 
 	macro addCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		LexiconEntry.gotoAdd();
 
@@ -14,15 +14,15 @@ definition {
 
 		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${dmFolderName}");
+		PortletEntry.inputName(name = ${dmFolderName});
 
 		if (isSet(dmFolderDescription)) {
-			PortletEntry.inputDescription(description = "${dmFolderDescription}");
+			PortletEntry.inputDescription(description = ${dmFolderDescription});
 		}
 
 		Button.clickSave();
 
-		if ("${dmFolder}" == "Duplicate") {
+		if (${dmFolder} == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -34,15 +34,15 @@ definition {
 		}
 
 		if (isSet(siteName)) {
-			Navigator.openSiteURL(siteName = "${siteName}");
+			Navigator.openSiteURL(siteName = ${siteName});
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Documents and Media",
-				site = "${siteName}");
+				site = ${siteName});
 		}
 
-		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 	}
 
 	macro addDMFolderLoginUserPG {
@@ -52,22 +52,22 @@ definition {
 
 		if (isSet(siteName)) {
 			Navigator.gotoSitePage(
-				pageName = "${pageName}",
-				siteName = "${siteName}");
+				pageName = ${pageName},
+				siteName = ${siteName});
 		}
 		else {
-			Navigator.gotoPage(pageName = "${pageName}");
+			Navigator.gotoPage(pageName = ${pageName});
 		}
 
 		DMFolder.addPG(
-			dmFolder = "${dmFolder}",
-			dmFolderDescription = "${dmFolderDescription}",
-			dmFolderName = "${dmFolderName}",
-			viewableBy = "${viewableBy}");
+			dmFolder = ${dmFolder},
+			dmFolderDescription = ${dmFolderDescription},
+			dmFolderName = ${dmFolderName},
+			viewableBy = ${viewableBy});
 
 		User.logoutAndLoginPG(
-			userLoginEmailAddress = "${userLoginEmailAddress}",
-			userLoginFullName = "${userLoginFullName}");
+			userLoginEmailAddress = ${userLoginEmailAddress},
+			userLoginFullName = ${userLoginFullName});
 	}
 
 	macro addPG {
@@ -85,35 +85,35 @@ definition {
 
 		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${dmFolderName}");
+		PortletEntry.inputName(name = ${dmFolderName});
 
-		PortletEntry.inputDescription(description = "${dmFolderDescription}");
+		PortletEntry.inputDescription(description = ${dmFolderDescription});
 
 		if (isSet(viewableBy)) {
 			Panel.expandPanel(panel = "Permissions");
 
 			Select(
 				locator1 = "Select#PERMISSIONS",
-				value1 = "${viewableBy}");
+				value1 = ${viewableBy});
 
 			if (isSet(permissionDefinitionKeyList)) {
 				PermissionsInline.addOrRemoveEntryPermissionsFromAllRoles(
-					addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
-					key_roleTitle = "${roleTitle}",
-					permissionDefinitionKeyList = "${permissionDefinitionKeyList}");
+					addOrRemoveViewPermission = ${addOrRemoveViewPermission},
+					key_roleTitle = ${roleTitle},
+					permissionDefinitionKeyList = ${permissionDefinitionKeyList});
 			}
 		}
 
 		Button.clickSave();
 
-		if ("${dmFolder}" == "Duplicate") {
+		if (${dmFolder} == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "Please enter a unique folder name.");
 		}
-		else if ("${dmFolder}" == "Invalid") {
+		else if (${dmFolder} == "Invalid") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -135,15 +135,15 @@ definition {
 
 		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
-		PortletEntry.inputName(name = "${mgFolderName}");
+		PortletEntry.inputName(name = ${mgFolderName});
 
-		PortletEntry.inputDescription(description = "${mgFolderDescription}");
+		PortletEntry.inputDescription(description = ${mgFolderDescription});
 
 		PortletEntry.save();
 
-		var key_mgFolderName = "${mgFolderName}";
+		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${mgFolderName});
 	}
 
 	macro assertExpectedFileNames {
@@ -151,7 +151,7 @@ definition {
 
 		var fileName = FileUtil.exists("${tempDir}/${key_fileName}");
 
-		if ("${fileName}" == "false") {
+		if (${fileName} == "false") {
 			fail("Filename "${fileName}" was not expected.");
 		}
 	}
@@ -159,47 +159,47 @@ definition {
 	macro assertExpectedFileNumber {
 		var tempDir = PropsUtil.get("output.dir.name");
 
-		var folderPath = "${tempDir}";
+		var folderPath = ${tempDir};
 
 		if (isSet(key_folder)) {
 			var folderPath = "${folderPath}${key_folder}";
 		}
 
-		var fileList = FileUtil.listFiles("${folderPath}");
+		var fileList = FileUtil.listFiles(${folderPath});
 
-		var listSize = ListUtil.size("${fileList}");
+		var listSize = ListUtil.size(${fileList});
 
-		if ("${listSize}" != "${expectedFileNumber}") {
+		if (${listSize} != ${expectedFileNumber}) {
 			fail("Number of files on "${key_folder}" differ from expected.");
 		}
 	}
 
 	macro cannotViewCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
-		LexiconCard.viewCardNotPresent(card = "${dmFolderName}");
+		LexiconCard.viewCardNotPresent(card = ${dmFolderName});
 	}
 
 	macro configureWorkflowCP {
-		if ("${dmFolderName}" == "homeFolder") {
+		if (${dmFolderName} == "homeFolder") {
 			Portlet.gotoPortletOptions(portletOption = "Edit");
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${dmFolderName}");
+				rowEntry = ${dmFolderName});
 
 			if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
 				Click(locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE");
 			}
 		}
 
-		if ("${workflowRestriction}" == "Parent Folder") {
+		if (${workflowRestriction} == "Parent Folder") {
 			Click(locator1 = "Radio#WORKFLOW_PARENT_FOLDER");
 
 			Button.clickSave();
 		}
-		else if ("${workflowRestriction}" == "Specific Restrictions") {
+		else if (${workflowRestriction} == "Specific Restrictions") {
 			Click(locator1 = "Radio#WORKFLOW_SPECIFIC_RESTRICTIONS");
 
 			AssertClick(
@@ -210,7 +210,7 @@ definition {
 
 			SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 
-			var key_dmDocumentTypeName = "${dmDocumentTypeName}";
+			var key_dmDocumentTypeName = ${dmDocumentTypeName};
 
 			AssertClick(
 				locator1 = "DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE",
@@ -220,7 +220,7 @@ definition {
 
 			Select(
 				locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT",
-				value1 = "${workflowDefinition}");
+				value1 = ${workflowDefinition});
 
 			AssertClickNoError(
 				key_text = "Save",
@@ -229,21 +229,21 @@ definition {
 
 			AssertConfirm(value1 = "You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?");
 		}
-		else if ("${workflowRestriction}" == "Default Workflow") {
+		else if (${workflowRestriction} == "Default Workflow") {
 			if (!(isSet(homeFolder))) {
 				Click(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
 			}
 
 			Select(
 				locator1 = "Select#WORKFLOW_DEFAULT",
-				value1 = "${workflowDefinition}");
+				value1 = ${workflowDefinition});
 
 			PortletEntry.save();
 		}
 	}
 
 	macro deleteCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -262,11 +262,11 @@ definition {
 	}
 
 	macro deletePG {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_CHECKBOX");
 
@@ -281,16 +281,16 @@ definition {
 
 	macro downloadViaEllipsisMenu {
 		Click(
-			key_rowEntry = "${dmFolderName}",
+			key_rowEntry = ${dmFolderName},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Download");
 	}
 
 	macro editCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
-		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -298,61 +298,61 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${dmFolderNameEdit}");
+		PortletEntry.inputName(name = ${dmFolderNameEdit});
 
-		PortletEntry.inputDescription(description = "${dmFolderDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${dmFolderDescriptionEdit});
 
 		PortletEntry.save();
 
-		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 	}
 
 	macro editPG {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.inputName(name = "${dmFolderNameEdit}");
+		PortletEntry.inputName(name = ${dmFolderNameEdit});
 
-		PortletEntry.inputDescription(description = "${dmFolderDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${dmFolderDescriptionEdit});
 
 		Button.clickSave();
 
-		var key_dmFolderNameEdit = "${dmFolderNameEdit}";
+		var key_dmFolderNameEdit = ${dmFolderNameEdit};
 
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_EDITED_TITLE",
-			value1 = "${dmFolderNameEdit}");
+			value1 = ${dmFolderNameEdit});
 	}
 
 	macro editPGViaMG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${mgFolderName}");
+			rowEntry = ${mgFolderName});
 
-		PortletEntry.inputName(name = "${mgFolderNameEdit}");
+		PortletEntry.inputName(name = ${mgFolderNameEdit});
 
-		PortletEntry.inputDescription(description = "${mgFolderDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${mgFolderDescriptionEdit});
 
 		PortletEntry.save();
 
-		var key_mgFolderName = "${mgFolderName}";
+		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderNameEdit}");
+		DMFolder.viewEntryPresent(dmFolderName = ${mgFolderNameEdit});
 	}
 
 	macro gotoEditCP {
-		var key_dmFolderName = "${folderName}";
+		var key_dmFolderName = ${folderName};
 
-		DMFolder.viewEntryPresent(dmFolderName = "${folderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${folderName});
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -360,35 +360,35 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCard(card = "${dmFolderName}");
+		LexiconCard.clickCard(card = ${dmFolderName});
 	}
 
 	macro gotoPGViaMG {
-		var key_mgFolderName = "${mgFolderName}";
+		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
+		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#BREADCRUMB",
-			value1 = "${mgFolderName}");
+			value1 = ${mgFolderName});
 	}
 
 	macro moveToFolderCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 
 		Click(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS",
-			value1 = "${dmFolderName2}");
+			value1 = ${dmFolderName2});
 
 		MenuItem.click(menuItem = "Move");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${moveSubfolder}" == "true") {
+		if (${moveSubfolder} == "true") {
 			AssertClick(
 				key_breadcrumbName = "Home",
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
@@ -401,7 +401,7 @@ definition {
 
 			SelectFrame(locator1 = "relative=top");
 
-			if ("${moveFailure}" == "true") {
+			if (${moveFailure} == "true") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR",
 					value1 = "Error:The folder you selected already has an entry with this name. Please select a different folder.");
@@ -411,7 +411,7 @@ definition {
 			}
 		}
 		else {
-			var key_dmFolderName = "${dmFolderName1}";
+			var key_dmFolderName = ${dmFolderName1};
 
 			AssertClick(
 				locator1 = "DocumentsAndMediaSelectFolder#SELECT_BUTTON",
@@ -422,26 +422,26 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertElementNotPresent(
-				key_dmFolderName = "${dmFolderName2}",
+				key_dmFolderName = ${dmFolderName2},
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 
 			Click(
-				key_dmFolderName = "${dmFolderName1}",
+				key_dmFolderName = ${dmFolderName1},
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-				value1 = "${dmFolderName1}");
+				value1 = ${dmFolderName1});
 
 			AssertElementPresent(
-				key_dmFolderName = "${dmFolderName2}",
+				key_dmFolderName = ${dmFolderName2},
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 		}
 	}
 
 	macro moveToRecycleBinCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
-		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
+		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 
-		LexiconCard.checkCardCheckbox(card = "${dmFolderName}");
+		LexiconCard.checkCardCheckbox(card = ${dmFolderName});
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -456,12 +456,12 @@ definition {
 
 	macro removePermissions {
 		DMFolder.viewFolderPermissionsPG(
-			dmFolder = "${dmFolder}",
-			key_roleTitle = "${roleTitle}");
+			dmFolder = ${dmFolder},
+			key_roleTitle = ${roleTitle});
 
-		var key_roleTitle = "${roleTitle}";
+		var key_roleTitle = ${roleTitle};
 
-		for (var permissionName : list "${permissionNameList}") {
+		for (var permissionName : list ${permissionNameList}) {
 			ScrollWebElementIntoView(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
 
 			Uncheck.uncheckNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
@@ -471,7 +471,7 @@ definition {
 	}
 
 	macro selectFolders {
-		for (var key_dmFolderName : list "${dmFolderName}") {
+		for (var key_dmFolderName : list ${dmFolderName}) {
 			Check.checkNotVisible(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
 		}
 	}
@@ -492,7 +492,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Documents and Media",
-			site = "${site}");
+			site = ${site});
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
@@ -514,7 +514,7 @@ definition {
 	}
 
 	macro tearDownPGViaMG {
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		while (IsElementPresent(locator1 = "MediaGallery#ENTRIES_FOLDER")) {
 			Click(locator1 = "MediaGallery#ENTRIES_FOLDER");
@@ -530,35 +530,35 @@ definition {
 	}
 
 	macro viewCP {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
 			AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON");
 
 			AssertTextEquals(
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-				value1 = "${dmFolderName}");
+				value1 = ${dmFolderName});
 		}
 		else {
-			DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
+			DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 		}
 
-		if ("${specificNameFolder}" == "true") {
-			var rowEntry = "${dmFolderName}";
+		if (${specificNameFolder} == "true") {
+			var rowEntry = ${dmFolderName};
 
 			AssertClick(
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-				value1 = "${dmFolderName}");
+				value1 = ${dmFolderName});
 		}
 		else {
 			LexiconEntry.gotoEntry(
-				displayStyle = "${displayStyle}",
-				rowEntry = "${dmFolderName}");
+				displayStyle = ${displayStyle},
+				rowEntry = ${dmFolderName});
 		}
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 	}
 
 	macro viewDefaultCP {
@@ -570,12 +570,12 @@ definition {
 	}
 
 	macro viewEntryPresent {
-		LexiconCard.viewCardPresent(card = "${dmFolderName}");
+		LexiconCard.viewCardPresent(card = ${dmFolderName});
 	}
 
 	macro viewFolderPermissionsPG {
-		var key_dmFolderName = "${dmFolder}";
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_dmFolderName = ${dmFolder};
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -593,21 +593,21 @@ definition {
 	}
 
 	macro viewPG {
-		var key_dmFolderName = "${dmFolderName}";
+		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
-			value1 = "${dmFolderName}");
+			value1 = ${dmFolderName});
 	}
 
 	macro viewPGViaMG {
-		var key_mgFolderName = "${mgFolderName}";
+		var key_mgFolderName = ${mgFolderName};
 
-		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
+		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#FOLDER_HEADER_TITLE",
-			value1 = "${mgFolderName}");
+			value1 = ${mgFolderName});
 	}
 
 }

@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddArticleWithTemplate {
 		property portal.acceptance = "true";
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddTemplate {
 		property portal.acceptance = "true";
@@ -75,7 +75,7 @@ definition {
 
 	@description = "This test ensures that the template can be added by center new button."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	test CanAddTemplateThroughCenterNewButton {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete the kb template from the center pane."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteTemplateEntryViaCenterPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete the kb template from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteTemplateEntryViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditTemplateEntryViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template permissions from the center pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditTemplatePermissionsViaCenterPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template permissions from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditTemplatePermissionsViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit the kb template from the center pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditTemplateViaCenterPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -270,7 +270,7 @@ definition {
 
 	@description = "This test checks checks that the correct actions appear in the management toolbar for a KB template and that it is editable."
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanEditTemplateViaToolbar {
 
 		// TODO LPS-166644
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can preview the kb template from the center pane."
-	@priority = "5"
+	@priority = 5
 	test CanPreviewTemplateViaCenterPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This test ensures that the empty message can be displayed in the pane."
-	@priority = "3"
+	@priority = 3
 	test CanViewEmptyMessage {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "This test ensures that the article templates list can be displayed in the pane."
-	@priority = "3"
+	@priority = 3
 	test CanViewTemplatesInPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -338,7 +338,7 @@ definition {
 
 	@description = "This test checks that the checkbox, Filter & Order button, Order By button, and the search bar options appear in KB templates management toolbar."
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CorrectActionsAppearInToolbar {
 
 		// TODO LPS-166644
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."
-	@priority = "3"
+	@priority = 3
 	test TemplateNameDoesNotExecuteXSS {
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",

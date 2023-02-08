@@ -1,35 +1,35 @@
 definition {
 
 	macro _addCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		if (isSet(grandSubcategoryName)) {
 			Click(
-				key_categoryName = "${categoryName}",
+				key_categoryName = ${categoryName},
 				locator1 = "Categories#CATEGORY_ENTRY_LINK");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Add Subcategory",
-				rowEntry = "${subcategoryName}");
+				rowEntry = ${subcategoryName});
 
-			PortletEntry.inputTitle(title = "${grandSubcategoryName}");
+			PortletEntry.inputTitle(title = ${grandSubcategoryName});
 
 			if (isSet(grandSubcategoryDescription)) {
 				CKEditor.addContentInWebContent(
-					content = "${grandSubcategoryDescription}",
+					content = ${grandSubcategoryDescription},
 					fieldLabel = "Description");
 			}
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Add Subcategory",
-				rowEntry = "${categoryName}");
+				rowEntry = ${categoryName});
 
-			PortletEntry.inputTitle(title = "${subcategoryName}");
+			PortletEntry.inputTitle(title = ${subcategoryName});
 
 			if (isSet(subcategoryDescription)) {
 				CKEditor.addContentInWebContent(
-					content = "${subcategoryDescription}",
+					content = ${subcategoryDescription},
 					fieldLabel = "Description");
 			}
 		}
@@ -37,17 +37,17 @@ definition {
 
 	macro addCP {
 		Subcategory._addCP(
-			categoryName = "${categoryName}",
-			grandSubcategoryDescription = "${grandSubcategoryDescription}",
-			grandSubcategoryName = "${grandSubcategoryName}",
-			subcategoryDescription = "${subcategoryDescription}",
-			subcategoryName = "${subcategoryName}",
-			vocabularyName = "${vocabularyName}");
+			categoryName = ${categoryName},
+			grandSubcategoryDescription = ${grandSubcategoryDescription},
+			grandSubcategoryName = ${grandSubcategoryName},
+			subcategoryDescription = ${subcategoryDescription},
+			subcategoryName = ${subcategoryName},
+			vocabularyName = ${vocabularyName});
 
 		if (isSet(displayPageTemplateType)) {
 			Panel.expandPanel(panel = "Display Page");
 
-			if ("${displayPageTemplateType}" == "Inherited") {
+			if (${displayPageTemplateType} == "Inherited") {
 				AssertSelectedLabel(
 					locator1 = "Select#SELECT_ID",
 					selectFieldId = "displayPageType",
@@ -57,23 +57,23 @@ definition {
 				Select(
 					locator1 = "Select#SELECT_ID",
 					selectFieldId = "displayPageType",
-					value1 = "${displayPageTemplateType}");
+					value1 = ${displayPageTemplateType});
 			}
 
 			AssertSelectedLabel(
 				locator1 = "Select#SELECT_ID",
 				selectFieldId = "displayPageType",
-				value1 = "${displayPageTemplateType}");
+				value1 = ${displayPageTemplateType});
 
-			if ("${displayPageTemplateType}" != "None") {
-				if ("${displayPageTemplateType}" == "Default") {
+			if (${displayPageTemplateType} != "None") {
+				if (${displayPageTemplateType} == "Default") {
 					AssertTextEquals(
 						inputFieldId = "defaultDisplayPageNameInput",
 						locator1 = "TextInput#INPUT_ID",
-						value1 = "${displayPageName}");
+						value1 = ${displayPageName});
 				}
 
-				if ("${displayPageTemplateType}" == "Specific") {
+				if (${displayPageTemplateType} == "Specific") {
 					AssertTextEquals(
 						inputFieldId = "specificDisplayPageNameInput",
 						locator1 = "TextInput#INPUT_ID",
@@ -87,14 +87,14 @@ definition {
 
 					SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-					LexiconCard.clickCard(card = "${displayPageName}");
+					LexiconCard.clickCard(card = ${displayPageName});
 
 					SelectFrameTop();
 
 					AssertTextEquals(
 						inputFieldId = "specificDisplayPageNameInput",
 						locator1 = "TextInput#INPUT_ID",
-						value1 = "${displayPageName}");
+						value1 = ${displayPageName});
 				}
 			}
 		}
@@ -103,13 +103,13 @@ definition {
 	}
 
 	macro addDuplicateCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Add Subcategory",
-			rowEntry = "${categoryName}");
+			rowEntry = ${categoryName});
 
-		PortletEntry.inputTitle(title = "${subcategoryName}");
+		PortletEntry.inputTitle(title = ${subcategoryName});
 
 		Button.clickSave();
 
@@ -123,28 +123,28 @@ definition {
 	macro addPropertyCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${subcategoryName}");
+			rowEntry = ${subcategoryName});
 
 		Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 		Type(
 			locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-			value1 = "${propertiesKeyField}");
+			value1 = ${propertiesKeyField});
 
 		Type(
 			locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-			value1 = "${propertiesValueField}");
+			value1 = ${propertiesValueField});
 
 		PortletEntry.save();
 	}
 
 	macro deleteViaIconCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${categoryName}");
+		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
 
 		Check(
-			key_listEntry = "${subcategoryName}",
+			key_listEntry = ${subcategoryName},
 			locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
 
 		Click(
@@ -161,17 +161,17 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextNotPresent(value1 = "${subcategoryName}");
+		AssertTextNotPresent(value1 = ${subcategoryName});
 	}
 
 	macro deleteViaMenuCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${categoryName}");
+		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${subcategoryName}");
+			rowEntry = ${subcategoryName});
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -183,106 +183,106 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextNotPresent(value1 = "${subcategoryName}");
+		AssertTextNotPresent(value1 = ${subcategoryName});
 	}
 
 	macro editCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${categoryName}");
+		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${subcategoryName}");
+			rowEntry = ${subcategoryName});
 
-		PortletEntry.inputTitle(title = "${subcategoryNameEdit}");
+		PortletEntry.inputTitle(title = ${subcategoryNameEdit});
 
 		PortletEntry.save();
 	}
 
 	macro moveCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		AssertClick(
-			key_rowEntry = "${categoryName}",
+			key_rowEntry = ${categoryName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move",
-			rowEntry = "${subcategoryName}");
+			rowEntry = ${subcategoryName});
 
-		AssetCategorization.selectCategory(categoryName = "${categoryNameMove}");
+		AssetCategorization.selectCategory(categoryName = ${categoryNameMove});
 	}
 
 	macro searchCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${categoryName}");
+		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
 
-		Search.searchCP(searchTerm = "${subcategorySearchEntry}");
+		Search.searchCP(searchTerm = ${subcategorySearchEntry});
 	}
 
 	macro viewCategoryPropertyCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		Click(locator1 = "Categories#CATEGORY_ENTRY_LINK");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${subcategoryName}");
+			rowEntry = ${subcategoryName});
 
 		Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 		AssertTextEquals(
 			locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-			value1 = "${propertiesKeyField}");
+			value1 = ${propertiesKeyField});
 
 		AssertTextEquals(
 			locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-			value1 = "${propertiesValueField}");
+			value1 = ${propertiesValueField});
 	}
 
 	macro viewCP {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		AssertClick(
 			locator1 = "Categories#CATEGORY_ENTRY_LINK",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
-		var key_subcategoryName = "${subcategoryName}";
+		var key_subcategoryName = ${subcategoryName};
 
 		AssertTextEquals(
 			locator1 = "Categories#SUBCATEGORY_ENTRY",
-			value1 = "${subcategoryName}");
+			value1 = ${subcategoryName});
 	}
 
 	macro viewSearchResultsCP {
 		if (isSet(subCategoryNameList)) {
-			for (var subCategoryName : list "${subCategoryNameList}") {
-				var key_subCategoryName = "${subCategoryName}";
+			for (var subCategoryName : list ${subCategoryNameList}) {
+				var key_subCategoryName = ${subCategoryName};
 
 				AssertTextEquals(
 					locator1 = "Categories#SUBCATEGORY_ENTRY",
-					value1 = "${subcategoryName}");
+					value1 = ${subcategoryName});
 			}
 		}
 
 		if (isSet(subcategoryDescriptionList)) {
-			for (var categoryDescription : list "${subcategoryDescriptionList}") {
-				var key_subcategoryDescription = "${subcategoryDescription}";
+			for (var categoryDescription : list ${subcategoryDescriptionList}) {
+				var key_subcategoryDescription = ${subcategoryDescription};
 
 				AssertTextEquals(
 					locator1 = "Categories#SUBCATEGORY_ENTRY_DESCRIPTION",
-					value1 = "${subcategoryDescription}");
+					value1 = ${subcategoryDescription});
 			}
 		}
 
-		if ("${nullResult}" == "true") {
+		if (${nullResult} == "true") {
 			PortletEntry.viewEmptyMessage(entity = "Categories");
 		}
 	}

@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-86642 - Verify that, when the workflow has pending items, the columns are populated with numbers"
-	@priority = "5"
+	@priority = 5
 	test ColumnsWithNumbersWhenWorkflowHasPendingItems {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -50,26 +50,26 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 	}
 
 	@description = "LPS-86642 - Verify that, when the workflow has no pending items, the columns are populated with 0"
-	@priority = "4"
+	@priority = 4
 	test ColumnsWithZeroWhenWorkflowHasNoPendingItems {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "0",
-			key_untracked = "0");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 0,
+			key_untracked = 0);
 	}
 
 	@description = "LPS-86642 - Verify that info icon hover state and tooltip message"
-	@priority = "2"
+	@priority = 2
 	test InfoIconDisplaysMessageOnHover {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "LPS-86642 - Verify that when there is no SLA defined for the process, the card should display only the Total Pending column populated"
-	@priority = "4"
+	@priority = 4
 	test OnlyTotalPendingColumnIsPopulatedWhenNoSLA {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -102,14 +102,14 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 	}
 
 	@description = "LPS-86642 - Verify that the Overdue is the total number of pending instances that breached one or more SLAs target times"
-	@priority = "4"
+	@priority = 4
 	test PendingItemsThatDoBreachSlaIsOverdue {
 		property portal.upstream = "quarantine";
 
@@ -118,7 +118,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -151,37 +151,37 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
 			Refresh();
 		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "1",
-			key_pending = "1",
-			key_untracked = "0");
+			key_ontime = 0,
+			key_overdue = 1,
+			key_pending = 1,
+			key_untracked = 0);
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOntimeValue(
-			ontimeValue = "0",
+			ontimeValue = 0,
 			stepName = "Review");
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOverdueValue(
-			overdueValue = "1",
+			overdueValue = 1,
 			stepName = "Review");
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepTotalPendingValue(
 			stepName = "Review",
-			totalPendingValue = "1");
+			totalPendingValue = 1);
 	}
 
 	@description = "LPS-86642 - Verify that the On Time is the total number of pending instances that didn't breach any SLAs target times"
-	@priority = "4"
+	@priority = 4
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByStep#PendingItemsThatDoNotBreachSlaIsOnTime";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
-			definitionsJobInterval = "1",
-			slaJobInterval = "1");
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -199,7 +199,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
-			slaDefinitionDays = "0",
+			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
 			slaDefinitionHours = "00:01",
@@ -214,31 +214,31 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1")) && (maxIterations = "45")) {
+		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
 			Refresh();
 		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "1",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "0");
+			key_ontime = 1,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 0);
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOntimeValue(
-			ontimeValue = "1",
+			ontimeValue = 1,
 			stepName = "Review");
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOverdueValue(
-			overdueValue = "0",
+			overdueValue = 0,
 			stepName = "Review");
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepTotalPendingValue(
 			stepName = "Review",
-			totalPendingValue = "1");
+			totalPendingValue = 1);
 	}
 
 	@description = "LPS-86642 - Verify that when are parallel branches on the workflow, the sum of all pending items of the steps will be greater than the total pending items"
-	@priority = "3"
+	@priority = 3
 	test SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches {
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByStep#SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches";
 
@@ -270,14 +270,14 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Multi Task Process");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = "0",
-			key_overdue = "0",
-			key_pending = "1",
-			key_untracked = "1");
+			key_ontime = 0,
+			key_overdue = 0,
+			key_pending = 1,
+			key_untracked = 1);
 
 		for (var taskNumber : list "1,2,3") {
 			AssertElementPresent(
-				key_taskNumber = "${taskNumber}",
+				key_taskNumber = ${taskNumber},
 				locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_COLUMN");
 		}
 	}

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6258. UI lifecycle for activating a tax engine (ByAddress)"
-	@priority = "3"
+	@priority = 3
 	test ActivateByAddressTaxEngine {
 		property portal.acceptance = "false";
 
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6258. UI lifecycle for activating a tax engine (Fixed)"
-	@priority = "3"
+	@priority = 3
 	test ActivateFixedTaxEngine {
 		property portal.acceptance = "false";
 
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (ByAddress)"
-	@priority = "3"
+	@priority = 3
 	test AddTaxRateToByAddressTaxEngine {
 		property portal.acceptance = "false";
 
@@ -271,7 +271,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "7");
+			value1 = 7);
 
 		Select(
 			key_fieldLabel = "Country",
@@ -286,7 +286,7 @@ definition {
 		Type(
 			key_fieldLabel = "Zip",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "0100");
+			value1 = 0100);
 
 		Button.click(button = "Submit");
 
@@ -318,7 +318,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
 
 		AssertElementPresent(
-			key_errorMessage = "7",
+			key_errorMessage = 7,
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementPresent(
@@ -330,7 +330,7 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementPresent(
-			key_errorMessage = "0100",
+			key_errorMessage = 0100,
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		Click(
@@ -344,7 +344,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10");
+			value1 = 10);
 
 		Select(
 			key_fieldLabel = "Country",
@@ -359,7 +359,7 @@ definition {
 		Type(
 			key_fieldLabel = "Zip",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "0111");
+			value1 = 0111);
 
 		Button.clickSave();
 
@@ -381,7 +381,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
 
 		AssertElementPresent(
-			key_errorMessage = "10",
+			key_errorMessage = 10,
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementPresent(
@@ -393,12 +393,12 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementPresent(
-			key_errorMessage = "0111",
+			key_errorMessage = 0111,
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	@description = "This is a test for COMMERCE-6259. Add tax rates to the newly activated engine (Fixed)"
-	@priority = "3"
+	@priority = 3
 	test AddTaxRateToFixedTaxEngine {
 		property portal.acceptance = "false";
 
@@ -483,7 +483,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "7");
+			value1 = 7);
 
 		Button.click(button = "Submit");
 
@@ -517,7 +517,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "10");
+			value1 = 10);
 
 		Button.clickSave();
 
@@ -544,7 +544,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"
-	@priority = "3"
+	@priority = 3
 	test AssertAddressRestrictiedTaxIsCorrectlyCalculated {
 		property portal.acceptance = "false";
 
@@ -600,7 +600,7 @@ definition {
 		Type(
 			key_fieldLabel = "Amount",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "7");
+			value1 = 7);
 
 		Select(
 			key_fieldLabel = "Country",
@@ -615,7 +615,7 @@ definition {
 		Type(
 			key_fieldLabel = "Zip",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "0100");
+			value1 = 0100);
 
 		Button.click(button = "Submit");
 
@@ -665,7 +665,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -689,7 +689,7 @@ definition {
 		Type(
 			key_fieldName = "Zip",
 			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
-			value1 = "0100");
+			value1 = 0100);
 
 		Type(
 			key_fieldName = "City",
@@ -728,7 +728,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6260. Test tax calculation"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AssertProductTaxCategoryIsCorrectlyCalculated {
 		property portal.acceptance = "false";
 
@@ -737,7 +737,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"
-	@priority = "3"
+	@priority = 3
 	test ConfigureChannelShippingTaxCategory {
 		property portal.acceptance = "false";
 
@@ -786,7 +786,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6264 Add/update/delete tax category from UI/COMMERCE-9363 UI to show External Reference code of Tax Categories"
-	@priority = "3"
+	@priority = 3
 	test TaxCategoryLifecycle {
 		property portal.acceptance = "false";
 

@@ -3,25 +3,25 @@ definition {
 	macro _addCustomElementRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
-		var customElementCssurlModified = "${customElementCssurl}";
-		var customElementURLModified = StringUtil.replace("${customElementURL}", ":", "%3A");
-		var htmlNameModified = StringUtil.replace("${customElementHtmlName}", " ", "%20");
-		var nameModified = StringUtil.replace("${customElementName}", " ", "%20");
-		var customElementPropertiesModified = "${customElementProperties}";
-		var customElementUseESMValue = "${customElementUseESM}";
+		var customElementCssurlModified = ${customElementCssurl};
+		var customElementURLModified = StringUtil.replace(${customElementURL}, ":", "%3A");
+		var htmlNameModified = StringUtil.replace(${customElementHtmlName}, " ", "%20");
+		var nameModified = StringUtil.replace(${customElementName}, " ", "%20");
+		var customElementPropertiesModified = ${customElementProperties};
+		var customElementUseESMValue = ${customElementUseESM};
 
 		if (!(isSet(customElementCssurlModified))) {
 			var customElementCssurlModified = "";
 		}
 		else {
-			var customElementCssurlModified = StringUtil.replace("${customElementCssurl}", ":", "%3A");
+			var customElementCssurlModified = StringUtil.replace(${customElementCssurl}, ":", "%3A");
 		}
 
 		if (!(isSet(customElementPropertiesModified))) {
 			var customElementPropertiesModified = "";
 		}
 		else {
-			var customElementPropertiesModified = StringUtil.replace("${customElementProperties}", " ", "%20");
+			var customElementPropertiesModified = StringUtil.replace(${customElementProperties}, " ", "%20");
 		}
 
 		if (!(isSet(customElementUseESMValue))) {
@@ -42,14 +42,14 @@ definition {
 				-d typeSettings=cssURLs=${customElementCssurlModified}%0AhtmlElementName=${htmlNameModified}%0Aurls=${customElementURLModified}%0AuseESM=${customElementUseESMValue}%0Ainstanceable=true%0AportletCategoryName=category.client-extensions
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _addIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
-		var iFrameURLModified = StringUtil.replace("${iFrameURL}", ":", "%3A");
-		var nameModified = StringUtil.replace("${name}", " ", "%20");
+		var iFrameURLModified = StringUtil.replace(${iFrameURL}, ":", "%3A");
+		var nameModified = StringUtil.replace(${name}, " ", "%20");
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -64,7 +64,7 @@ definition {
 				-d typeSettings='url=${iFrameURLModified}'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _addRemoteAppEntry {
@@ -84,11 +84,11 @@ definition {
 				-d typeSettings=${typeSettings}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteIFrameRemoteAppEntry {
-		Variables.assertDefined(parameterList = "${externalReferenceCode}");
+		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
@@ -100,7 +100,7 @@ definition {
 				-d externalReferenceCode=${externalReferenceCode}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

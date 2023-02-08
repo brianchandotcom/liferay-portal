@@ -9,26 +9,26 @@ definition {
 		if (isSet(siteTemplateName)) {
 			Site.addCP(
 				membershipType = "Private",
-				siteName = "${siteName}",
-				siteTemplateName = "${siteTemplateName}");
+				siteName = ${siteName},
+				siteTemplateName = ${siteTemplateName});
 		}
 		else {
 			Site.addCP(
 				membershipType = "Private",
-				siteName = "${siteName}",
-				siteTemplateName = "${siteName}");
+				siteName = ${siteName},
+				siteTemplateName = ${siteName});
 		}
 	}
 
 	macro removeSingleItemViaMiniCart {
 		Click(
-			key_cartItemSku = "${key_cartItemSku}",
+			key_cartItemSku = ${key_cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
 	}
 
 	macro viewAllVariants {
 		Click(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 	}
 

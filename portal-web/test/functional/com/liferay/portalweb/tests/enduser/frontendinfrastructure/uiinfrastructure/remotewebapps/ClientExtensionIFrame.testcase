@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "LPS-168960 - Validates 'client extensions' is available as a selectable portlet category name"
-	@priority = "3"
+	@priority = 3
 	test HasPortletCategoryNameClientExtension {
 		task ("When access IFrame type client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();

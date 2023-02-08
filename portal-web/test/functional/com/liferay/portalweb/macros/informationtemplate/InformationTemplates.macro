@@ -3,20 +3,20 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${informationTemplateName}");
+		PortletEntry.inputName(name = ${informationTemplateName});
 
 		if (isSet(itemType)) {
 			Select(
 				key_fieldLabel = "Item Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${itemType}");
+				value1 = ${itemType});
 		}
 
 		if (isSet(itemSubtype)) {
 			Select(
 				key_fieldLabel = "Item Subtype",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${itemSubtype}");
+				value1 = ${itemSubtype});
 		}
 
 		PortletEntry.save();
@@ -27,7 +27,7 @@ definition {
 
 		Navigator.gotoSidebarTab(tabName = "Properties");
 
-		PortletEntry.inputDescription(description = "${informationTemplateDescription}");
+		PortletEntry.inputDescription(description = ${informationTemplateDescription});
 	}
 
 	macro addField {
@@ -36,22 +36,22 @@ definition {
 		Navigator.gotoSidebarTab(tabName = "Elements");
 
 		Click(
-			key_panelTitle = "${panelTitle}",
-			key_variableName = "${fieldName}",
+			key_panelTitle = ${panelTitle},
+			key_variableName = ${fieldName},
 			locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE");
 	}
 
 	macro copyCP {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
-			informationTemplateName = "${informationTemplateName}",
+			informationTemplateName = ${informationTemplateName},
 			item = "Copy");
 
 		if (isSet(informationTemplateCopyName)) {
-			PortletEntry.inputName(name = "${informationTemplateCopyName}");
+			PortletEntry.inputName(name = ${informationTemplateCopyName});
 		}
 
 		if (isSet(description)) {
-			PortletEntry.inputDescription(description = "${description}");
+			PortletEntry.inputDescription(description = ${description});
 		}
 
 		Click(locator1 = "Button#COPY");
@@ -61,7 +61,7 @@ definition {
 
 	macro deleteCP {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
-			informationTemplateName = "${informationTemplateName}",
+			informationTemplateName = ${informationTemplateName},
 			item = "Delete");
 
 		AssertTextEquals(
@@ -76,15 +76,15 @@ definition {
 	}
 
 	macro editName {
-		PortletEntry.inputName(name = "${informationTemplateName}");
+		PortletEntry.inputName(name = ${informationTemplateName});
 	}
 
 	macro gotoInformationTemplateEllipsisItem {
 		Click(
-			key_tableEntry = "${informationTemplateName}",
+			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		MenuItem.click(menuItem = "${item}");
+		MenuItem.click(menuItem = ${item});
 	}
 
 	macro importScript {
@@ -92,18 +92,18 @@ definition {
 
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-		var filePath = TestCase.getDependenciesDirPath(fileName = "${scriptFile}");
+		var filePath = TestCase.getDependenciesDirPath(fileName = ${scriptFile});
 
 		UploadFile(
 			inputFieldId = "importScript",
 			locator1 = "TextInput#INPUT_ID",
-			value1 = "${filePath}");
+			value1 = ${filePath});
 	}
 
 	macro inputScript {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR",
-			value1 = "${scriptContent}");
+			value1 = ${scriptContent});
 	}
 
 	macro openInformationTemplatesAdmin {
@@ -117,42 +117,42 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextArea#DESCRIPTION",
-			value1 = "${informationTemplateDescription}");
+			value1 = ${informationTemplateDescription});
 	}
 
 	macro viewScriptContent {
 		AssertTextEquals.assertPartialText(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
-			value1 = "${scriptContent}");
+			value1 = ${scriptContent});
 	}
 
 	macro viewTemplate {
 		AssertTextEquals(
 			key_columnName = "name",
-			key_tableEntry = "${informationTemplateName}",
+			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-			value1 = "${informationTemplateName}");
+			value1 = ${informationTemplateName});
 
 		if (isSet(itemType)) {
 			AssertTextEquals(
 				key_columnName = "item-type",
-				key_tableEntry = "${informationTemplateName}",
+				key_tableEntry = ${informationTemplateName},
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "${itemType}");
+				value1 = ${itemType});
 		}
 
 		if (isSet(itemSubtype)) {
 			AssertTextEquals(
 				key_columnName = "item-subtype",
-				key_tableEntry = "${informationTemplateName}",
+				key_tableEntry = ${informationTemplateName},
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "${itemSubtype}");
+				value1 = ${itemSubtype});
 		}
 	}
 
 	macro viewTemplateNotPresent {
 		AssertElementNotPresent(
-			key_tableEntry = "${informationTemplateName}",
+			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 

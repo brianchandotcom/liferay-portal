@@ -3,11 +3,11 @@ definition {
 	macro configure {
 		Select(
 			locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT",
-			value1 = "${samlRoleType}");
+			value1 = ${samlRoleType});
 
 		Type(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
-			value1 = "${samlEntityId}");
+			value1 = ${samlEntityId});
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -23,19 +23,19 @@ definition {
 
 		if (isSet(keystoreEnabled)) {
 			AssertClick(
-				key_certificateUsage = "${certificateUsage}",
+				key_certificateUsage = ${certificateUsage},
 				locator1 = "CPSAMLAdmin#AUTHENTICATE_CERTIFICATE",
 				value1 = "Authenticate Certificate");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 		else {
-			SAMLRole.createCertificate(certificateUsage = "${certificateUsage}");
+			SAMLRole.createCertificate(certificateUsage = ${certificateUsage});
 		}
 
 		Type(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD",
-			value1 = "${samlKeyPassword}");
+			value1 = ${samlKeyPassword});
 
 		AssertClick(
 			locator1 = "Button#SUBMIT",
@@ -44,11 +44,11 @@ definition {
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
 
 		AssertElementPresent(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
 	}
 
@@ -56,13 +56,13 @@ definition {
 		if (isSet(idpSessionIdleTimeout)) {
 			Type(
 				locator1 = "CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT",
-				value1 = "${idpSessionIdleTimeout}");
+				value1 = ${idpSessionIdleTimeout});
 		}
 
 		if (isSet(idpSessionMaximumAge)) {
 			Type(
 				locator1 = "CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE",
-				value1 = "${idpSessionMaximumAge}");
+				value1 = ${idpSessionMaximumAge});
 		}
 
 		AssertClick(
@@ -84,7 +84,7 @@ definition {
 
 	macro createCertificate {
 		AssertClick(
-			key_certificateUsage = "${certificateUsage}",
+			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#CREATE_CERTIFICATE",
 			value1 = "Create Certificate");
 
@@ -102,7 +102,7 @@ definition {
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
 			value1 = "USA");
 
-		if ("${certificateUsage}" == "SIGNING") {
+		if (${certificateUsage} == "SIGNING") {
 			Select(
 				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
 				value1 = "RSA");
@@ -110,7 +110,7 @@ definition {
 
 		Select(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
-			value1 = "2048");
+			value1 = 2048);
 	}
 
 	macro deleteCertificate {
@@ -126,7 +126,7 @@ definition {
 	macro enable {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
-			value1 = "${samlEntityId}");
+			value1 = ${samlEntityId});
 
 		Check(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
 
@@ -140,7 +140,7 @@ definition {
 	}
 
 	macro importCertificateAndPrivateKey {
-		if ("${certificateUsage}" == "SIGNING") {
+		if (${certificateUsage} == "SIGNING") {
 			AssertClick(
 				key_certificateUsage = "SIGNING",
 				locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE",
@@ -159,7 +159,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Button#SELECT_FILE");
 
-		if ("${certificateUsage}" == "SIGNING") {
+		if (${certificateUsage} == "SIGNING") {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "samlidp.p12");
@@ -184,13 +184,13 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		var key_keyStoreAlias = "${keyStoreAlias}";
+		var key_keyStoreAlias = ${keyStoreAlias};
 
 		Click(locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEYSTORE_ALIAS_RADIO");
 
 		Button.clickImport();
 
-		if ("${certificateUsage}" == "SIGNING") {
+		if (${certificateUsage} == "SIGNING") {
 			AssertElementPresent(
 				key_certificateUsage = "SIGNING",
 				locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");

@@ -39,7 +39,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151738. When a fragment doesn't have styling attribute the common styles class is generated in the outter div surrounding the fragment	."
-	@priority = "4"
+	@priority = 4
 	test ViewCommonStylesClassGeneratedInOutterDivWhenFragmentWithoutStylingAttribute {
 		task ("Given a page creator has a fragment without styling attribute") {
 			task ("Add a new fragment without styling attribute") {
@@ -59,7 +59,7 @@ definition {
 	Fragment Name
 </div>			''';
 
-				FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+				FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 				FragmentsEditor.waitForAutoSave();
 
@@ -80,7 +80,7 @@ definition {
 		task ("Then the page creator could see common styles class generated in outter div surrounding the fragment") {
 			AssertElementPresent(
 				fragmentName = "fragment-name",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COMMON_STYLES_CLASS");
 		}
 

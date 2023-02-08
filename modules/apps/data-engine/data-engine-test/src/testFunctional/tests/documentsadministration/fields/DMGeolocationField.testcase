@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "Verify if geolocation field can be be duplicated."
-	@priority = "4"
+	@priority = 4
 	test DuplicateGeolocation {
 		property portal.acceptance = "false";
 
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "Edit the label and help text of Separator Field"
-	@priority = "5"
+	@priority = 5
 	test EditLabelAndHelpTextOfGeolocation {
 		property portal.acceptance = "false";
 
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "Edit Field Reference with valid and invalid characters."
-	@priority = "4"
+	@priority = 4
 	test EditReferenceOfGeolocationWithValidAndInvalidCharacters {
 		property portal.acceptance = "false";
 
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable."
-	@priority = "4"
+	@priority = 4
 	test RepeatableGeolocationOnRenderer {
 		property portal.acceptance = "false";
 
@@ -130,11 +130,11 @@ definition {
 
 		DataEngine.assertFieldRepeated(
 			fieldName = "Geolocation",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "Verify if user has the ability to set Searchable Option"
-	@priority = "5"
+	@priority = 5
 	test SetSearchableOfGeolocation {
 		property portal.acceptance = "false";
 
@@ -176,33 +176,33 @@ definition {
 	}
 
 	@description = "Verify if a user can show/hide label."
-	@priority = "4"
+	@priority = 4
 	test ShowAndHideGeolocationLabel {
 		property portal.acceptance = "false";
 
 		var key_fieldFieldLabel = "Geolocation";
 
-		DataEngine.toggleShowLabel(fieldLabel = "${key_fieldFieldLabel}");
+		DataEngine.toggleShowLabel(fieldLabel = ${key_fieldFieldLabel});
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "${key_fieldFieldLabel}");
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = ${key_fieldFieldLabel});
 
-		DataEngine.toggleShowLabel(hiddenFieldLabel = "${key_fieldFieldLabel}");
+		DataEngine.toggleShowLabel(hiddenFieldLabel = ${key_fieldFieldLabel});
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "${key_fieldFieldLabel}",
-			fieldName = "${key_fieldFieldLabel}");
+			fieldFieldLabel = ${key_fieldFieldLabel},
+			fieldName = ${key_fieldFieldLabel});
 	}
 
 	@description = "Verify if duplicated geolocation field is correctly loaded."
-	@priority = "4"
+	@priority = 4
 	test VerifyDuplicatedGeolocationOnRenderer {
 		property portal.acceptance = "false";
 
@@ -220,13 +220,13 @@ definition {
 	}
 
 	@description = "Verify if user has the ability to set as Required or not."
-	@priority = "4"
+	@priority = 4
 	test VerifyRequiredPropertyOfGeolocationOnRenderer {
 		property portal.acceptance = "false";
 
 		var fieldLabel = "Geolocation";
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "${fieldLabel}");
+		DataEngine.editFieldRequired(fieldFieldLabel = ${fieldLabel});
 
 		DDLDataDefinition.save();
 

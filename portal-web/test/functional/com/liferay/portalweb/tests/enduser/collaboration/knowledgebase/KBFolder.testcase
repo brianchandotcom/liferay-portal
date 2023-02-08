@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 
 	@description = "This test checks that articles can be sorted by alphabetical order."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AssetsCanBeSortedByAlphabeticalOrder {
 
 		// TODO LPS-166644
@@ -37,7 +37,7 @@ definition {
 
 	@description = "This test checks that articles can be sorted by the modified date."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AssetsCanBeSortedByModifiedDate {
 
 		// TODO LPS-166644
@@ -46,7 +46,7 @@ definition {
 
 	@description = "This test checks that articles can be sorted by priority."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AssetsCanBeSortedByPriority {
 
 		// TODO LPS-166644
@@ -55,7 +55,7 @@ definition {
 
 	@description = "This test checks that articles can be sorted by view count."
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AssetsCanBeSortedByViewCount {
 
 		// TODO LPS-166644
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddFolder {
 		property custom.properties = "feature.flag.LPS-156421=true";
@@ -82,7 +82,7 @@ definition {
 
 	@description = "This test ensures that users can add folder via center pane button."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	test CanAddFolderViaCenterPaneButton {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -100,7 +100,7 @@ definition {
 		Button.viewNotPresent(button = "New");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteFolder {
 		property portal.acceptance = "true";
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can delete a KB folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteFolderViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -138,7 +138,7 @@ definition {
 			featureFlag = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanEditFolder {
 		property portal.acceptance = "true";
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can manage permissions for a KB folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditFolderPermissionsViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -168,7 +168,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can edit a KB folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditFolderViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can manage permissions for the KB home folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditHomeFolderPermissionsViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can move a KB folder from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanMoveFolderViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -288,7 +288,7 @@ definition {
 		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder 1");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotAddDuplicateFolder {
 		JSONKnowledgeBase.addkBFolder(
@@ -304,14 +304,14 @@ definition {
 
 	@description = "This test checks that the management toolbar displays the checkbox, Filter & Order button, Order By button, search bar, and the info icon"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CorrectActionsAppearInToolbarAfterSelectingFolder {
 
 		// TODO LPS-166644
 
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test EditKBFolderWithCustomField {
 		ApplicationsMenu.gotoPortlet(
@@ -329,7 +329,7 @@ definition {
 			layoutName = "Knowledge Base Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Page",
 			widgetName = "Knowledge Base Display");
@@ -380,12 +380,12 @@ definition {
 
 		var entries = "2010,2017";
 
-		for (var kbEntry : list "${entries}") {
+		for (var kbEntry : list ${entries}) {
 			KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${kbEntry}");
+				rowEntry = ${kbEntry});
 
 			AssertTextEquals(
 				locator1 = "TextInput#CUSTOM_FIELD",
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@description = "This test ensures that some folder info only display in panel."
-	@priority = "5"
+	@priority = 5
 	test SomeFolderInfoOnlyDisplayInPanel {
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
@@ -415,9 +415,9 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.viewFolderInfo(
-			articlesQuantity = "1",
+			articlesQuantity = 1,
 			entryDefaultInfo = "Test Test, modified",
-			foldersQuantity = "1",
+			foldersQuantity = 1,
 			infoPanel = "true",
 			kbFolderName = "KB Folder");
 	}

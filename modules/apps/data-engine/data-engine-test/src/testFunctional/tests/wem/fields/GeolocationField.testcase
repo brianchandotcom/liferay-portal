@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,18 +37,18 @@ definition {
 	}
 
 	@description = "This test ensures that the field can be duplicated on the builder."
-	@priority = "4"
+	@priority = 4
 	test DuplicateGeolocation {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.duplicate(fieldFieldLabel = "${key_fieldName}");
+		DataEngine.duplicate(fieldFieldLabel = ${key_fieldName});
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		AssertElementPresent(
-			key_fieldLabel = "${key_fieldName}",
+			key_fieldLabel = ${key_fieldName},
 			locator1 = "FormFields#LABEL");
 
 		AssertElementPresent(
@@ -57,82 +57,82 @@ definition {
 	}
 
 	@description = "This test ensures that user can set the searchable property of the field."
-	@priority = "5"
+	@priority = 5
 	test EditSearchableOfGeolocation {
 		var key_structureName = "WC Structure Title";
 		var key_fieldName = "Geolocation";
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Disable");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Disable");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Keyword");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Keyword");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Text");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			searchableType = "Text");
 	}
 
 	@description = "This test ensures that the user can set the fields parameters and it persists."
-	@priority = "5"
+	@priority = 5
 	test SetGeolocationLabelHelpTextAndReference {
 		var key_fieldName = "Geolocation";
 		var key_structureName = "WC Structure Title";
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		FormFields.viewTextLabel(
-			fieldLabel = "${key_fieldName}",
-			fieldName = "${key_fieldName}");
+			fieldLabel = ${key_fieldName},
+			fieldName = ${key_fieldName});
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "${key_fieldName}",
+			fieldFieldLabel = ${key_fieldName},
 			fieldHelp = "Help Text");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Help Text",
-			fieldName = "${key_fieldName}");
+			fieldName = ${key_fieldName});
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${key_structureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${key_structureName});
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${key_fieldName}",
+			key_fieldFieldLabel = ${key_fieldName},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${key_fieldName}");
+			value1 = ${key_fieldName});
 
 		if (IsElementNotPresent(key_tab = "Advanced", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Advanced");
@@ -140,15 +140,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${key_fieldName}");
+			value1 = ${key_fieldName});
 	}
 
 	@description = "This test ensures a repeatable geolocation field can be duplicated on the Web Content."
-	@priority = "4"
+	@priority = 4
 	test VerifyDuplicatedGeolocationOnWebContent {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "${key_fieldName}");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = ${key_fieldName});
 
 		WebContentStructures.saveCP();
 
@@ -158,24 +158,24 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
-		DataEngine.addRepeatableField(fieldLabel = "${key_fieldName}");
+		DataEngine.addRepeatableField(fieldLabel = ${key_fieldName});
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "${key_fieldName}",
-			index = "2");
+			fieldName = ${key_fieldName},
+			index = 2);
 	}
 
 	@description = "This test ensures the field can be set as required."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test VerifyRequiredPropertyOfGeolocation {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "${key_fieldName}");
+		DataEngine.editFieldRequired(fieldFieldLabel = ${key_fieldName});
 
 		WebContentStructures.saveCP();
 
@@ -184,9 +184,9 @@ definition {
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${key_fieldName}",
+			key_fieldFieldLabel = ${key_fieldName},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${key_fieldName}");
+			value1 = ${key_fieldName});
 
 		Uncheck.uncheckToggleSwitch(
 			key_toggleSwitchLabel = "Required Field",

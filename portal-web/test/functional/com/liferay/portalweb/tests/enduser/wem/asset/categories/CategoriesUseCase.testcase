@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Add a category as Site Role."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryAsSiteRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -64,7 +64,7 @@ definition {
 		task ("Define the permissions") {
 			for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.asset.categories",
 					roleTitle = "Category Role Name",
 					roleType = "site");
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "LPS-134960 When in Blogs, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryOfAnyVisibilityToBlogs {
 		task ("Create public vocabulary") {
 			JSONCategory.addVocabulary(
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "LPS-134960 When in Documents & Media, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryOfAnyVisibilityToDocsAndMedia {
 		task ("Create public vocabulary") {
 			JSONCategory.addVocabulary(
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "LPS-134960 When in Web Content, search by category or to assign a category to an item, all categories, regardless the visibility of the vocabularies they belong to, are available."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryOfAnyVisibilityToWebContent {
 		task ("Create public vocabulary") {
 			JSONCategory.addVocabulary(
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143509. The sites creator can add a site with required vocabulary."
-	@priority = "4"
+	@priority = 4
 	test AddSiteWithRequiredVocabulary {
 		task ("Given a site creator has a required vocabulary on Global site") {
 			task ("Add a vocabulary with site as associated asset type") {
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "Add a web content with a category from parent site."
-	@priority = "4"
+	@priority = 4
 	test AddWebContentWithCategoryFromParentSite {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -390,7 +390,7 @@ definition {
 	}
 
 	@description = "Add a web content with required category."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentWithRequiredCategory {
 		task ("Add a vocabulary for Web Content Article") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -438,7 +438,7 @@ definition {
 	}
 
 	@description = "Add a web content with a specific type category."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentWithSpecificTypeCategory {
 		task ("Add a vocabulary for Web Content Article") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "Cannot add multiple categories when disallow multiple categories."
-	@priority = "4"
+	@priority = 4
 	test CannotAddMultipleCategoriesWhenDisallowMultipleCategories {
 		task ("Add a vocabulary disallow multiple categories") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -515,7 +515,7 @@ definition {
 	}
 
 	@description = "Cannot delete a category without permission."
-	@priority = "4"
+	@priority = 4
 	test CannotDeleteCategoryWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -554,7 +554,7 @@ definition {
 		task ("Define the permissions") {
 			for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.asset.categories",
 					roleTitle = "Category Role Name",
 					roleType = "site");
@@ -568,7 +568,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 					roleTitle = "Category Role Name",
 					roleType = "site");
@@ -576,7 +576,7 @@ definition {
 
 			for (var resourceActionIndex : list "ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet",
 					roleTitle = "Category Role Name",
 					roleType = "site");
@@ -636,7 +636,7 @@ definition {
 	}
 
 	@description = "Copy a web content with a category."
-	@priority = "3"
+	@priority = 3
 	test CopyWebContentWithCategory {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -653,7 +653,7 @@ definition {
 
 		task ("Add a web content with the category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -679,7 +679,7 @@ definition {
 	}
 
 	@description = "Export and import vocabularies."
-	@priority = "5"
+	@priority = 5
 	test ExportImportVocabularies {
 		property portal.acceptance = "true";
 
@@ -692,7 +692,7 @@ definition {
 				JSONCategory.addVocabulary(
 					groupName = "Site Name 2",
 					siteURLKey = "site-name-2",
-					title = "${title}");
+					title = ${title});
 			}
 		}
 
@@ -710,7 +710,7 @@ definition {
 	}
 
 	@description = "Export and import a web content with a category or a subcategory."
-	@priority = "5"
+	@priority = 5
 	test ExportImportWebContentWithCategoryOrSubCategory {
 		property portal.acceptance = "true";
 
@@ -725,7 +725,7 @@ definition {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					widgetName = "${portletName}");
+					widgetName = ${portletName});
 			}
 		}
 
@@ -752,7 +752,7 @@ definition {
 
 		task ("Add a web content with the category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -760,7 +760,7 @@ definition {
 
 		task ("Add a web content with the subcategory") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${subcategoryId}",
+				assetCategoryIds = ${subcategoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Subcategory WC Title");
@@ -769,7 +769,7 @@ definition {
 		task ("Export the whole site") {
 			LAR.exportSiteCP(siteScopeName = "Test Site Name");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -786,7 +786,7 @@ definition {
 
 		task ("Import the lar to new site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Import Site Name");
 		}
 
@@ -838,7 +838,7 @@ definition {
 	}
 
 	@description = "Search categories in vocabulary."
-	@priority = "4"
+	@priority = 4
 	test SearchCategoryInVocabulary {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -865,10 +865,10 @@ definition {
 				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 				Category.searchCP(
-					categorySearchEntry = "${categoryName}",
+					categorySearchEntry = ${categoryName},
 					vocabularyName = "Vocabulary Name");
 
-				Category.viewSearchResultsCP(categoryNameList = "${categoryName}");
+				Category.viewSearchResultsCP(categoryNameList = ${categoryName});
 			}
 		}
 
@@ -877,10 +877,10 @@ definition {
 				Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 				Category.searchCP(
-					categorySearchEntry = "${categoryDescription}",
+					categorySearchEntry = ${categoryDescription},
 					vocabularyName = "Vocabulary Name");
 
-				Category.viewSearchResultsCP(categoryDefinitionList = "${categoryDescription}");
+				Category.viewSearchResultsCP(categoryDefinitionList = ${categoryDescription});
 			}
 
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -896,7 +896,7 @@ definition {
 	}
 
 	@description = "Search a category with localization as Site Administrator."
-	@priority = "4"
+	@priority = 4
 	test SearchCategorywithLocalizationAsSiteAdministrator {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -983,7 +983,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -1021,7 +1021,7 @@ definition {
 	}
 
 	@description = "Search subcategories in category."
-	@priority = "4"
+	@priority = 4
 	test SearchSubcategoryInCategory {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1058,10 +1058,10 @@ definition {
 
 				Subcategory.searchCP(
 					categoryName = "Category Name",
-					subcategorySearchEntry = "${subcategoryName}",
+					subcategorySearchEntry = ${subcategoryName},
 					vocabularyName = "Vocabulary Name");
 
-				Subcategory.viewSearchResultsCP(categoryNameList = "${categoryName}");
+				Subcategory.viewSearchResultsCP(categoryNameList = ${categoryName});
 			}
 		}
 
@@ -1071,10 +1071,10 @@ definition {
 
 				Subcategory.searchCP(
 					categoryName = "Category Name",
-					categorySearchEntry = "${subcategoryDescription}",
+					categorySearchEntry = ${subcategoryDescription},
 					vocabularyName = "Vocabulary Name");
 
-				Subcategory.viewSearchResultsCP(subcategoryDefinitionList = "${subcategoryDescription}");
+				Subcategory.viewSearchResultsCP(subcategoryDefinitionList = ${subcategoryDescription});
 			}
 
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1091,7 +1091,7 @@ definition {
 	}
 
 	@description = "Search web content by edited category."
-	@priority = "4"
+	@priority = 4
 	test SearchWebContentByEditedCategory {
 		task ("Add a Search page") {
 			JSONLayout.addPublicLayout(
@@ -1121,7 +1121,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Test Content",
 				groupName = "Test Site Name",
 				title = "Test Title");
@@ -1153,7 +1153,7 @@ definition {
 	}
 
 	@description = "This is for LPS-101409. Validate selecting multiple categories when creating page with blank template."
-	@priority = "4"
+	@priority = 4
 	test SelectMultipleRequiredCategoriesInContentPageCreation {
 		task ("Add a vocabulary with required for page") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1194,7 +1194,7 @@ definition {
 	}
 
 	@description = "This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
-	@priority = "5"
+	@priority = 5
 	test SelectRequiredCategoryInContentPageCreation {
 		property portal.acceptance = "true";
 
@@ -1235,7 +1235,7 @@ definition {
 	}
 
 	@description = "This is for LPS-101409. Validate if select a required category when entering the page name based on a page template. Also add a step to check adding page with category successfully via json."
-	@priority = "5"
+	@priority = 5
 	test SelectRequiredCategoryInWidgetPageCreation {
 		property portal.acceptance = "true";
 
@@ -1276,7 +1276,7 @@ definition {
 
 		task ("Add a page with category via JSONWS") {
 			JSONLayout.addPublicLayout(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 2");
 		}
@@ -1291,7 +1291,7 @@ definition {
 	}
 
 	@description = "View empty search result."
-	@priority = "3"
+	@priority = 3
 	test ViewEmptySearchResult {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1341,7 +1341,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-142234. The user could view error message when save site settings without required category."
-	@priority = "4"
+	@priority = 4
 	test ViewErrorMessageWhenSaveSiteSettingsWithoutRequiredCategory {
 		task ("Add a vocabulary with associated asset type") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1377,7 +1377,7 @@ definition {
 	}
 
 	@description = "View the vocabulary for asset subtype in web content editor."
-	@priority = "3"
+	@priority = 3
 	test ViewVocabularyForAssetSubtypeInWebContentEditor {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1435,7 +1435,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131984. View vocabulary for specific Asset Types in asset editor."
-	@priority = "4"
+	@priority = 4
 	test ViewVocabularyForSpecificAssetTypesInAssetEditor {
 		task ("Add a vocabulary for specific assets types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1451,7 +1451,7 @@ definition {
 			Vocabulary.addAssociatedAssetType(
 				assetType = "Web Content Article",
 				required = "true",
-				rowNumber = "2");
+				rowNumber = 2);
 
 			Button.clickNoError(button = "Save");
 

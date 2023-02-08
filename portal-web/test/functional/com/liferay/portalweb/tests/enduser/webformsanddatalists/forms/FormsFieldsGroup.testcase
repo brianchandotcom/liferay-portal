@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be collapsed"
-	@priority = "5"
+	@priority = 5
 	test CanBeCollapsed {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormsFieldsGroup#CanBeCollapsed";
@@ -42,7 +42,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -88,7 +88,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -101,18 +101,18 @@ definition {
 			fieldName = "Fields Group");
 
 		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
-			key_formPageNumber = "0",
-			key_rowNumber = "0",
+			key_formPageNumber = 0,
+			key_rowNumber = 0,
 			key_text = "Text");
 
 		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
-			key_formPageNumber = "0",
-			key_rowNumber = "1",
+			key_formPageNumber = 0,
+			key_rowNumber = 1,
 			key_text = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group can be created from an existing Field"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreatedFromExistingField {
 		property portal.acceptance = "true";
 
@@ -120,7 +120,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text");
 
@@ -129,7 +129,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text Numeric");
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -170,7 +170,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -182,7 +182,7 @@ definition {
 
 		Form.addFieldOutsideOfFieldsGroup(
 			fieldName = "Date",
-			index = "2");
+			index = 2);
 
 		Form.closeSidebar();
 
@@ -191,7 +191,7 @@ definition {
 		Form.save();
 
 		for (var label : list "Fields Group,Text,Numeric") {
-			FormFields.viewFieldLabelNotPresent(fieldLabel = "${label}");
+			FormFields.viewFieldLabelNotPresent(fieldLabel = ${label});
 		}
 
 		FormFields.viewDateField(
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		property portal.acceptance = "true";
 
@@ -208,7 +208,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -220,13 +220,13 @@ definition {
 
 		for (var label : list "Fields Group,Copy of Fields Group,Text,Copy of Text,Numeric,Copy of Numeric") {
 			FormFields.viewLabel(
-				fieldLabel = "${label}",
-				fieldName = "${label}");
+				fieldLabel = ${label},
+				fieldName = ${label});
 		}
 	}
 
 	@description = "Verify that a Fields Group can be moved between pages"
-	@priority = "5"
+	@priority = 5
 	test CanBeMovedBetweenPages {
 		property portal.acceptance = "true";
 
@@ -236,9 +236,9 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -246,33 +246,33 @@ definition {
 			key_fieldLabel = "Text",
 			key_fieldName = "Numeric");
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
 		Form.closeSidebar();
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldLabel = "Fields Group",
-			key_fieldPositionNumber = "0",
-			key_formPageNumber = "1",
+			key_fieldPositionNumber = 0,
+			key_formPageNumber = 1,
 			locator1 = "FormFields#LABEL",
 			locator2 = "Form#ADD_FIELD_POSITION",
 			value1 = "");
 
 		FormFields.viewPaginationField(
-			key_currentPage = "2",
-			key_lastPage = "2");
+			key_currentPage = 2,
+			key_lastPage = 2);
 
 		FormFields.assertFieldsGroup(fieldName = "Fields Group");
 
-		Form.viewPageEmptyField(pageIndex = "0");
+		Form.viewPageEmptyField(pageIndex = 0);
 	}
 
 	@description = "Verify that a Fields Group can be repeatable"
-	@priority = "5"
+	@priority = 5
 	test CanBeRepeatable {
 		property portal.acceptance = "true";
 
@@ -300,29 +300,29 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Fields Group",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
-		FormFields.viewRepeatableFieldGroup(repeatableFieldNumber = "2");
-
-		FormFields.viewRepeatableFieldInFieldGroup(
-			fieldName = "Text",
-			repeatableFieldNumber = "1");
+		FormFields.viewRepeatableFieldGroup(repeatableFieldNumber = 2);
 
 		FormFields.viewRepeatableFieldInFieldGroup(
 			fieldName = "Text",
-			repeatableFieldNumber = "2");
+			repeatableFieldNumber = 1);
+
+		FormFields.viewRepeatableFieldInFieldGroup(
+			fieldName = "Text",
+			repeatableFieldNumber = 2);
 
 		FormFields.viewRepeatableFieldInFieldGroup(
 			fieldName = "Numeric",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewRepeatableFieldInFieldGroup(
 			fieldName = "Numeric",
-			repeatableFieldNumber = "2");
+			repeatableFieldNumber = 2);
 	}
 
 	@description = "This is a test case for LPS-115196 and LPS-115198. Verify that an Entry using a Group Field can be viewed in Forms Details"
-	@priority = "5"
+	@priority = 5
 	test EntryWithGroupFieldCanBeViewedInFormsDetails {
 		property portal.acceptance = "true";
 
@@ -353,7 +353,7 @@ definition {
 
 			FormFields.editText(
 				fieldName = "Numeric",
-				fieldValue = "123");
+				fieldValue = 123);
 
 			FormPortlet.submitSuccessfully();
 		}
@@ -369,7 +369,7 @@ definition {
 
 			FormsAdmin.viewFormTableEntry(
 				fieldLabel = "Numeric",
-				fieldValue = "123");
+				fieldValue = 123);
 		}
 
 		task ("And assert the entry fields also can be shown via both view and Edit actions") {
@@ -383,7 +383,7 @@ definition {
 			FormsAdmin.viewTextEntry(
 				fieldLabel = "Numeric",
 				fieldName = "Numeric",
-				fieldValue = "123");
+				fieldValue = 123);
 
 			Navigator.gotoBack();
 
@@ -398,13 +398,13 @@ definition {
 			FormsAdmin.viewTextEntry(
 				fieldLabel = "Numeric",
 				fieldName = "Numeric",
-				fieldValue = "123",
+				fieldValue = 123,
 				onSitePage = "true");
 		}
 	}
 
 	@description = "Verify that fields within a Fields Group can be reordered"
-	@priority = "4"
+	@priority = 4
 	test FieldsCanBeReordered {
 		property portal.acceptance = "true";
 
@@ -412,7 +412,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -422,8 +422,8 @@ definition {
 
 		Form.reorderFieldsFromFieldsGroup(
 			key_fieldName = "Numeric",
-			key_pageNumber = "0",
-			key_rowNumber = "0");
+			key_pageNumber = 0,
+			key_rowNumber = 0);
 
 		Form.save();
 
@@ -432,13 +432,13 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		Form.assertFieldPositionAtFormsGroupOnPublishedForm(
-			key_formPageNumber = "0",
-			key_rowNumber = "0",
+			key_formPageNumber = 0,
+			key_rowNumber = 0,
 			key_text = "Numeric");
 	}
 
 	@description = "Verify that a Fields Group's Label can be edited"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -446,7 +446,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
@@ -474,7 +474,7 @@ definition {
 	}
 
 	@description = "Verify that a Fields Group's Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		property portal.acceptance = "true";
 

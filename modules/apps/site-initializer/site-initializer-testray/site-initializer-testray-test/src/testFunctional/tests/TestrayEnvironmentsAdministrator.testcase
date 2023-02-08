@@ -37,13 +37,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddAndDeleteFactorOption {
 		task ("Go to Categories and Add Factor Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -61,10 +61,10 @@ definition {
 				option = "Environments_2 Factor Option");
 
 			Testray.changePaginationInModal(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = "2");
+			Testray.clickOnPageNumberModal(pageNumber = 2);
 
 			Testray.assertItemName(key_name = "Environments_2 Factor Option");
 		}
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157231 - Verify if as an Administrator I am able to add Factor Categories"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddCategory {
 		task ("Go to Categories, add a category and check if the category was created") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157309 - Verify if as an Administrator I am able to add Options"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddOptions {
 		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -113,17 +113,17 @@ definition {
 
 		task ("Change pagination and assert the new option has been created") {
 			Testray.changePaginationInModal(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = "2");
+			Testray.clickOnPageNumberModal(pageNumber = 2);
 
 			Testray.assertItemName(key_name = "Environments_2 Option");
 		}
 	}
 
 	@description = "This is a test for LPS-157321 - Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
-	@priority = "5"
+	@priority = 5
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
 		task ("Go to Categories and Add two Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -159,8 +159,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteCategory {
 		task ("Go to Categories, add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157307 - Verify if as an Administrator I am able to edit Factor Categories"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditFactorCategories {
 		task ("Go to Categories, create the new category and then edit and state if the name has changed") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157326 - Verify if as an Administrator I am able to edit the Option by changing the Category"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditOptionChangingCategory {
 		task ("Go to Categories and Add two Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -256,10 +256,10 @@ definition {
 
 		task ("Change pagination and edit new Option by changing the Category") {
 			Testray.changePaginationInModal(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = "2");
+			Testray.clickOnPageNumberModal(pageNumber = 2);
 
 			TestrayManage.editNewOptionName(
 				category = "Environments_8 Category B",
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157323 - Verify if as an Administrator I am able to edit the Option Name"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditOptionName {
 		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -298,10 +298,10 @@ definition {
 
 		task ("Change the pagination and then edit and state if the name has Edited") {
 			Testray.changePaginationInModal(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = "2");
+			Testray.clickOnPageNumberModal(pageNumber = 2);
 
 			TestrayManage.editNewOptionName(
 				category = "Environments_7 Category",
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157328 - Verify if As an Administrator I should not be able to add a duplicate Factor Category"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateFactorCategory {
 		task ("Go to Categories and Add Category duplicate") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166557 - Verify if As an Administrator I should not be able to add a duplicate Factor Options"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateFactorOptions {
 		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164136 - Verify that the user can not create a options if all the required fields are not filled in"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewRequiredField {
 		task ("Go to Categories and Add Category without name") {
 			TestrayManage.selectOptionsManage(itemValue = "Options");
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewWarningMessage {
 		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");

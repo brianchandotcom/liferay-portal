@@ -5,7 +5,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "${siteName}");
+			value1 = ${siteName});
 
 		if (isSet(remoteStaging)) {
 			WaitForElementPresent(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
@@ -18,11 +18,11 @@ definition {
 
 			Type(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_PORT",
-				value1 = "${remotePort}");
+				value1 = ${remotePort});
 
 			Type(
 				locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
-				value1 = "${siteId}");
+				value1 = ${siteId});
 		}
 
 		if (!(isSet(remoteStaging))) {
@@ -31,7 +31,7 @@ definition {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_LOCAL_LIVE");
 		}
 
-		if ("${pageVersioningEnabled}" == "true") {
+		if (${pageVersioningEnabled} == "true") {
 			if (IsElementPresent(key_fieldLabel = "Enabled", locator1 = "Checkbox#CHECKBOX_LABEL")) {
 				Click.clickAtNotVisible(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
 			}
@@ -49,13 +49,13 @@ definition {
 		}
 
 		if (isSet(uncheckContent)) {
-			var key_contentName = "${uncheckContent}";
+			var key_contentName = ${uncheckContent};
 
 			Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
 		}
 
 		if (isSet(isNotEditable)) {
-			var key_contentName = "${isNotEditable}";
+			var key_contentName = ${isNotEditable};
 
 			AssertNotEditable(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
 		}
@@ -67,11 +67,11 @@ definition {
 		}
 
 		if (isSet(remoteStaging)) {
-			Staging.saveRemoteStagingConfiguration(siteName = "${siteName}");
+			Staging.saveRemoteStagingConfiguration(siteName = ${siteName});
 		}
 
 		if (!(isSet(remoteStaging))) {
-			Staging.saveLocalStagingConfiguration(siteName = "${siteName}");
+			Staging.saveLocalStagingConfiguration(siteName = ${siteName});
 		}
 
 		AssertTextNotPresent(
@@ -97,11 +97,11 @@ definition {
 		if (isSet(headerTitle)) {
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
-				value1 = "${headerTitle}");
+				value1 = ${headerTitle});
 		}
 
 		if (isSet(publishTemplateName)) {
-			var key_publishTemplateName = "${publishTemplateName}";
+			var key_publishTemplateName = ${publishTemplateName};
 
 			Click(locator1 = "Staging#STAGING_PUBLISH_TEMPLATE_LINK");
 		}
@@ -122,7 +122,7 @@ definition {
 
 		Type(
 			locator1 = "StagingManageVariations#MANAGE_VARIATION",
-			value1 = "${pageVariationName}");
+			value1 = ${pageVariationName});
 
 		AssertClick(
 			locator1 = "StagingManageVariations#ADD",
@@ -144,9 +144,9 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${publishTemplateName}");
+			value1 = ${publishTemplateName});
 
-		PortletEntry.inputDescription(description = "${publishTemplateDescription}");
+		PortletEntry.inputDescription(description = ${publishTemplateDescription});
 	}
 
 	macro addRepeatEvent {
@@ -158,7 +158,7 @@ definition {
 
 		Type(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
-			value1 = "${scheduleTitleName}");
+			value1 = ${scheduleTitleName});
 
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
@@ -170,11 +170,11 @@ definition {
 
 		Select(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
-			value1 = "${frequency}");
+			value1 = ${frequency});
 
 		AssertSelectedLabel(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
-			value1 = "${frequency}");
+			value1 = ${frequency});
 
 		AssertClick(
 			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
@@ -197,7 +197,7 @@ definition {
 
 		Click(locator1 = "Staging#MANAGE_VARIATIONS");
 
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		SelectFrame(locator1 = "IFrame#SITE_VARIATION_IFRAME");
 
@@ -207,7 +207,7 @@ definition {
 
 		Type(
 			locator1 = "StagingManageVariations#MANAGE_VARIATION",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 
 		if (isSet(copySitePagesVariationName)) {
 			MouseOver(
@@ -220,7 +220,7 @@ definition {
 
 			Select(
 				locator1 = "StagingManageVariations#ADD_SITE_PAGES_VARIATION_COPY_PAGES_SELECT",
-				value1 = "${copySitePagesVariationName}");
+				value1 = ${copySitePagesVariationName});
 		}
 
 		AssertClick(
@@ -239,7 +239,7 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ADD_TO_PAGE") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 				roleTitle = "Staging Admin",
 				roleType = "site");
@@ -247,7 +247,7 @@ definition {
 
 		for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,MANAGE_ANNOUNCEMENTS,VIEW_MEMBERS,EXPORT_IMPORT_PORTLET_INFO,VIEW,EXPORT_IMPORT_LAYOUTS,UPDATE,DELETE,PUBLISH_STAGING,CONFIGURE_PORTLETS,PUBLISH_PORTLET_INFO,ASSIGN_USER_ROLES,PREVIEW_IN_DEVICE,ASSIGN_MEMBERS,PERMISSIONS,ADD_LAYOUT_SET_BRANCH,MANAGE_TEAMS,ADD_LAYOUT_BRANCH,MANAGE_SUBGROUPS,ADD_LAYOUT,MANAGE_STAGING,ADD_COMMUNITY,MANAGE_LAYOUTS,VIEW_STAGING,MANAGE_ARCHIVED_SETUPS,ADD_LAYOUT_UTILITY_PAGE_ENTRY") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.Group",
 				roleTitle = "Staging Admin",
 				roleType = "site");
@@ -255,7 +255,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE_DISCUSSION,UPDATE,PERMISSIONS,DELETE_DISCUSSION,DELETE,CUSTOMIZE,CONFIGURE_PORTLETS,ADD_LAYOUT,ADD_DISCUSSION,VIEW,UPDATE_LAYOUT_ADVANCED_OPTIONS,UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_CONTENT,UPDATE_LAYOUT_LIMITED") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Staging Admin",
 				roleType = "site");
@@ -263,7 +263,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,DELETE") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.LayoutBranch",
 				roleTitle = "Staging Admin",
 				roleType = "site");
@@ -271,7 +271,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE,PERMISSIONS,MERGE,DELETE") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.LayoutSetBranch",
 				roleTitle = "Staging Admin",
 				roleType = "site");
@@ -286,11 +286,11 @@ definition {
 			userScreenName = "usersn");
 
 		JSONGroup.assignUserToGroup(
-			groupName = "${siteName}",
+			groupName = ${siteName},
 			userEmailAddress = "userea@liferay.com");
 
 		JSONGroup.assignGroupRoleToUser(
-			groupName = "${siteName}",
+			groupName = ${siteName},
 			roleTitle = "Staging Admin",
 			userEmailAddress = "userea@liferay.com");
 
@@ -313,53 +313,53 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Select(
-			key_pageVariationName = "${pageVariationNameMenulistName}",
+			key_pageVariationName = ${pageVariationNameMenulistName},
 			locator1 = "Staging#VARIATIONS_SELECTOR",
-			value1 = "${pageVariationNameMenulistName}");
+			value1 = ${pageVariationNameMenulistName});
 	}
 
 	macro changePageVariationPG {
-		var key_pageVariationName = "${pageVariationName}";
+		var key_pageVariationName = ${pageVariationName};
 
 		AssertClick(
 			locator1 = "Staging#PAGE_VARIATION_DROPDOWN",
-			value1 = "${pageVariationName}");
+			value1 = ${pageVariationName});
 
-		var key_pageVariationName = "${pageVariationNameMenulistName}";
+		var key_pageVariationName = ${pageVariationNameMenulistName};
 
 		AssertClick(
 			locator1 = "Staging#PAGE_VARIATION_MENULIST_NAME",
-			value1 = "${pageVariationNameMenulistName}");
+			value1 = ${pageVariationNameMenulistName});
 	}
 
 	macro changeSitePageVariationCP {
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		Click(locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_NAME");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_ACTIVE",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 	}
 
 	macro changeSitePageVariationPG {
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		Refresh();
 
 		AssertClick(
 			locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 
-		var key_sitePagesVariationName = "${sitePagesVariationMenulistName}";
+		var key_sitePagesVariationName = ${sitePagesVariationMenulistName};
 
 		AssertClick(
 			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_NAME",
-			value1 = "${sitePagesVariationMenulistName}");
+			value1 = ${sitePagesVariationMenulistName});
 	}
 
 	macro clickPublishToLiveButton {
-		if ("${remoteStaging}" == "true") {
+		if (${remoteStaging} == "true") {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}
 		else if (isSet(scheduleProcess)) {
@@ -385,43 +385,43 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
-		if ("${deleteMissingPages}" == "true") {
+		if (${deleteMissingPages} == "true") {
 			ContentConfiguration.deleteMissingPages();
 		}
 
-		if ("${uncheckLogo}" == "true") {
+		if (${uncheckLogo} == "true") {
 			ContentConfiguration.uncheckLogo();
 		}
 
 		if (isSet(checkPageName)) {
-			ContentConfiguration.checkPageName(checkPageName = "${checkPageName}");
+			ContentConfiguration.checkPageName(checkPageName = ${checkPageName});
 		}
 
 		if (isSet(contentDateRange)) {
 			ContentConfiguration.contentDateRange(
-				contentDateRange = "${contentDateRange}",
-				dateRangeEndDate = "${dateRangeEndDate}",
-				dateRangeStartDate = "${dateRangeStartDate}");
+				contentDateRange = ${contentDateRange},
+				dateRangeEndDate = ${dateRangeEndDate},
+				dateRangeStartDate = ${dateRangeStartDate});
 		}
 
-		if ("${contentDeletion}" == "true") {
+		if (${contentDeletion} == "true") {
 			ContentConfiguration.contentDeletion();
 		}
 
-		if ("${pageDeletion}" == "true") {
+		if (${pageDeletion} == "true") {
 			ContentConfiguration.pageDeletion();
 		}
 
 		if (isSet(checkContentNameList)) {
-			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
+			ContentConfiguration.checkContentNameList(checkContentNameList = ${checkContentNameList});
 		}
 
 		if (isSet(uncheckChildPagesNameList)) {
-			ContentConfiguration.uncheckChildPagesNameList(uncheckChildPagesNameList = "${uncheckChildPagesNameList}");
+			ContentConfiguration.uncheckChildPagesNameList(uncheckChildPagesNameList = ${uncheckChildPagesNameList});
 		}
 
 		if (isSet(uncheckContentNameList)) {
-			ContentConfiguration.uncheckContentNameList(uncheckContentNameList = "${uncheckContentNameList}");
+			ContentConfiguration.uncheckContentNameList(uncheckContentNameList = ${uncheckContentNameList});
 		}
 
 		if (isSet(uncheckPages)) {
@@ -430,34 +430,34 @@ definition {
 
 		if (isSet(uncheckSubContent)) {
 			Check.checkHiddenToggleSwitch(
-				key_contentName = "${mainContent}",
+				key_contentName = ${mainContent},
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 
 			ContentConfiguration.uncheckSubContent(
-				mainContent = "${mainContent}",
-				uncheckSubContent = "${uncheckSubContent}");
+				mainContent = ${mainContent},
+				uncheckSubContent = ${uncheckSubContent});
 		}
 
 		if (isSet(uncheckSubSubContent)) {
 			ContentConfiguration.uncheckSubSubContent(
-				contentName = "${contentName}",
-				subContent = "${subContent}",
-				uncheckSubSubContent = "${uncheckSubSubContent}");
+				contentName = ${contentName},
+				subContent = ${subContent},
+				uncheckSubSubContent = ${uncheckSubSubContent});
 		}
 
 		if (isSet(checkSubSubContent)) {
 			ContentConfiguration.checkSubSubContent(
-				checkSubSubContent = "${checkSubSubContent}",
-				contentName = "${contentName}",
-				subContent = "${subContent}");
+				checkSubSubContent = ${checkSubSubContent},
+				contentName = ${contentName},
+				subContent = ${subContent});
 		}
 
 		if (isSet(checkPrivatePages)) {
-			ContentConfiguration.checkPrivatePages(checkPrivatePages = "${checkPrivatePages}");
+			ContentConfiguration.checkPrivatePages(checkPrivatePages = ${checkPrivatePages});
 		}
 
 		if (isSet(checkPublicPages)) {
-			ContentConfiguration.checkPublicPages(checkPublicPages = "${checkPublicPages}");
+			ContentConfiguration.checkPublicPages(checkPublicPages = ${checkPublicPages});
 		}
 	}
 
@@ -467,29 +467,29 @@ definition {
 		if (isSet(scheduleTitleName)) {
 			Type(
 				locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
-				value1 = "${scheduleTitleName}");
+				value1 = ${scheduleTitleName});
 		}
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'schedulerStartDateHour')]@value");
 
-		var displayDateHourLength = StringUtil.length("${displayDateHour}");
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
 
-		if ("${displayDateHourLength}" == "1") {
+		if (${displayDateHourLength} == 1) {
 			var displayDateHour = "0${displayDateHour}";
 		}
 
 		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
 
-		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
 
-		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'schedulerStartDateMinute')]@value");
 
 		var displayDateMinuteFuture = ${displayDateMinute} + 5;
 
-		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
+		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
 
-		if ("${displayDateMinuteFutureLength}" == "1") {
+		if (${displayDateMinuteFutureLength} == 1) {
 			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 		}
 
@@ -497,20 +497,20 @@ definition {
 
 		Type(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT",
-			value1 = "${displayDate}");
+			value1 = ${displayDate});
 
 		if (isSet(endByDate)) {
 			Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_END_BY_RADIO");
 
 			var endByDateDay = selenium.getAttribute("//input[contains(@id,'schedulerEndDateDay')]@value");
 
-			if ("${endByDateDayLength}" == "1") {
+			if (${endByDateDayLength} == 1) {
 				var endByDateDay = "0${endByDateDay}";
 			}
 
 			var endByDateMonth = selenium.getAttribute("//input[contains(@id,'schedulerEndDateMonth')]@value");
 
-			if ("${endByDateMonthLength}" == "1") {
+			if (${endByDateMonthLength} == 1) {
 				var endByDateMonth = "0${endByDateMonth}";
 			}
 
@@ -522,14 +522,14 @@ definition {
 
 			Type(
 				locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_INPUT",
-				value1 = "${endByDay}");
+				value1 = ${endByDay});
 		}
 	}
 
 	macro copyFromLive {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "${portletOption}");
+			portletName = ${portletName},
+			portletOption = ${portletOption});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -599,7 +599,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${pageVariationName}");
+			rowEntry = ${pageVariationName});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -611,13 +611,13 @@ definition {
 	macro deletePublishTask {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Clear",
-			rowEntry = "${publicationTitle}");
+			rowEntry = ${publicationTitle});
 
 		Alert.viewSuccessMessage();
 
 		AssertElementNotPresent(
 			locator1 = "Staging#PROCESS_TITLE",
-			value1 = "${publicationTitle}");
+			value1 = ${publicationTitle});
 	}
 
 	macro deletePublishTemplate {
@@ -625,12 +625,12 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${publishTemplateName}");
+			rowEntry = ${publishTemplateName});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		AssertElementNotPresent(
-			key_rowEntry = "${publishTemplateName}",
+			key_rowEntry = ${publishTemplateName},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
@@ -639,7 +639,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItemNoWaitNoError(
 			menuItem = "Delete",
-			rowEntry = "${sitePagesVariationName}");
+			rowEntry = ${sitePagesVariationName});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -649,9 +649,9 @@ definition {
 	}
 
 	macro disableStagingSite {
-		Navigator.openSiteStagingConfiguration(siteName = "${siteName}");
+		Navigator.openSiteStagingConfiguration(siteName = ${siteName});
 
-		Staging.deactivateStagingCP(siteName = "${siteName}");
+		Staging.deactivateStagingCP(siteName = ${siteName});
 	}
 
 	macro editPublishTemplate {
@@ -659,42 +659,42 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Publish Templates");
 
-		var key_publishTemplateName = "${publishTemplateName}";
+		var key_publishTemplateName = ${publishTemplateName};
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-			value1 = "${publishTemplateName}");
+			value1 = ${publishTemplateName});
 
 		AssertClick(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-			value1 = "${publishTemplateName}");
+			value1 = ${publishTemplateName});
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${publishTemplateNameEdit}");
+			value1 = ${publishTemplateNameEdit});
 
-		PortletEntry.inputDescription(description = "${publishTemplateDescriptionEdit}");
+		PortletEntry.inputDescription(description = ${publishTemplateDescriptionEdit});
 	}
 
 	macro editPublishTemplateRemoteSiteID {
 		Panel.expandPanel(panel = "Remote Live Connection Settings");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
+			groupName = ${groupName},
 			portalURL = "http://localhost:${remotePort}",
 			site = "true");
 
 		Type(
 			locator1 = "SiteSettingsStaging#REMOTE_STAGING_SITE_ID",
-			value1 = "${siteId}");
+			value1 = ${siteId});
 	}
 
 	macro editSitePageVariationPG {
 		Staging.navigateToSitePageVariation();
 
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
-		LexiconEntry.openEntryMenu(rowEntry = "${sitePagesVariationName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${sitePagesVariationName});
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -712,14 +712,14 @@ definition {
 	macro editStagingConfiguration {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
-		if ("${pageVersioningEnabled}" == "true") {
+		if (${pageVersioningEnabled} == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
 
 			Check.checkHiddenToggleSwitch(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
 		}
 
 		if (isSet(isNotEditable)) {
-			var key_contentName = "${isNotEditable}";
+			var key_contentName = ${isNotEditable};
 
 			AssertNotEditable(locator1 = "Checkbox#STAGED_CONTENT");
 		}
@@ -739,8 +739,8 @@ definition {
 			value1 = "Enable in ${sitePagesVariationName}");
 
 		PagesAdmin.viewPageItemPresent(
-			pageName = "${pageName}",
-			privacy = "${privacy}");
+			pageName = ${pageName},
+			privacy = ${privacy});
 	}
 
 	macro gotoHistory {
@@ -754,7 +754,7 @@ definition {
 	}
 
 	macro gotoNavTab {
-		var key_tabName = "${tabName}";
+		var key_tabName = ${tabName};
 
 		if (IsElementNotPresent(locator1 = "StagingPublishToLive#ACTIVE_TAB_NAME")) {
 			Click(locator1 = "StagingPublishToLive#TAB_NAME");
@@ -796,13 +796,13 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItemNoWait(
 			menuItem = "Merge",
-			rowEntry = "${sitePagesVariationName}");
+			rowEntry = ${sitePagesVariationName});
 
-		var key_sitePagesVariationMergeName = "${sitePagesVariationMergeName}";
+		var key_sitePagesVariationMergeName = ${sitePagesVariationMergeName};
 
 		AssertTextEquals(
 			locator1 = "StagingManageVariations#MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH",
-			value1 = "${sitePagesVariationMergeName}");
+			value1 = ${sitePagesVariationMergeName});
 
 		AssertClickNoError(
 			locator1 = "StagingManageVariations#MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK",
@@ -840,7 +840,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
-			rowEntry = "${publishTemplateName}");
+			rowEntry = ${publishTemplateName});
 
 		Alert.viewSuccessMessage();
 	}
@@ -861,8 +861,8 @@ definition {
 
 	macro publishCustomPublication {
 		Staging.addCustomPublication(
-			headerTitle = "${headerTitle}",
-			publishTemplateName = "${publishTemplateName}");
+			headerTitle = ${headerTitle},
+			publishTemplateName = ${publishTemplateName});
 
 		if (isSet(scheduleProcess)) {
 			Staging.configureScheduleTime();
@@ -871,46 +871,46 @@ definition {
 		if (isSet(editPublishTemplateName)) {
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = "${editPublishTemplateName}");
+				value1 = ${editPublishTemplateName});
 		}
 
-		if ("${rangeAll}" == "true") {
+		if (${rangeAll} == "true") {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_ALL_CHANGE");
 
 			ClickNoError(locator1 = "Link#REFRESH_COUNTS");
 		}
 
 		if (isSet(checkContentNameList)) {
-			for (var contentName : list "${checkContentNameList}") {
+			for (var contentName : list ${checkContentNameList}) {
 				Check.checkNotVisible(
-					key_contentName = "${contentName}",
+					key_contentName = ${contentName},
 					locator1 = "Staging#STAGING_CONTENT_CHECKBOX");
 			}
 		}
 
 		Staging.clickPublishToLiveButton(
-			failureExpected = "${failureExpected}",
-			remoteStaging = "${remoteStaging}",
-			scheduleProcess = "${scheduleProcess}");
+			failureExpected = ${failureExpected},
+			remoteStaging = ${remoteStaging},
+			scheduleProcess = ${scheduleProcess});
 
 		Staging.viewProcessResult(
-			failureExpected = "${failureExpected}",
-			inProcess = "${inProcess}",
-			scheduleProcess = "${scheduleProcess}",
-			validateErrorMessage = "${validateErrorMessage}");
+			failureExpected = ${failureExpected},
+			inProcess = ${inProcess},
+			scheduleProcess = ${scheduleProcess},
+			validateErrorMessage = ${validateErrorMessage});
 	}
 
 	macro publishToLive {
 		if (isSet(publicationName)) {
-			PortletEntry.inputName(name = "${publicationName}");
+			PortletEntry.inputName(name = ${publicationName});
 		}
 
-		Staging.clickPublishToLiveButton(remoteStaging = "${remoteStaging}");
+		Staging.clickPublishToLiveButton(remoteStaging = ${remoteStaging});
 
 		Staging.viewProcessResult(
-			failureExpected = "${failureExpected}",
-			scheduleProcess = "${scheduleProcess}",
-			validateErrorMessage = "${validateErrorMessage}");
+			failureExpected = ${failureExpected},
+			scheduleProcess = ${scheduleProcess},
+			validateErrorMessage = ${validateErrorMessage});
 
 		SelectFrameTop();
 
@@ -928,7 +928,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
-		if ("${replicateIndividualDeletions}" == "true") {
+		if (${replicateIndividualDeletions} == "true") {
 			AssertVisible(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
 
 			Click(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
@@ -951,7 +951,7 @@ definition {
 
 	macro publishToLiveNowViaPortletPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Staging");
 
 		IFrame.selectConfigurationFrame();
@@ -994,7 +994,7 @@ definition {
 
 			// Set a minium pause to wait for the publication process completed.
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		if (IsElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
@@ -1012,7 +1012,7 @@ definition {
 				value1 = "SUCCESSFUL");
 		}
 
-		var key_siteName = "${siteName}";
+		var key_siteName = ${siteName};
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
@@ -1033,7 +1033,7 @@ definition {
 	macro publishToRemoteUncheckContentViaCustomPublication {
 		LexiconEntry.gotoAdd();
 
-		var key_contentName = "${contentName}";
+		var key_contentName = ${contentName};
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Staging#STAGING_CONTENT_CHECKBOX");
 
@@ -1049,20 +1049,20 @@ definition {
 	}
 
 	macro publishViaSAP {
-		if (IsElementPresent(key_rowEntry = "${entry}", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+		if (IsElementPresent(key_rowEntry = ${entry}, locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
 			Click(
-				key_rowEntry = "${entry}",
+				key_rowEntry = ${entry},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Publish to Live");
 		}
 		else {
 			WebContentNavigator.gotoEntryMenuItem(
-				entry = "${entry}",
+				entry = ${entry},
 				menuItem = "Publish to Live");
 		}
 
-		AssertConfirm(value1 = "${confirmMessage}");
+		AssertConfirm(value1 = ${confirmMessage});
 
 		AssertTextEquals(
 			locator1 = "Staging#PROCESS_SUCCESSFUL",
@@ -1081,7 +1081,7 @@ definition {
 
 	macro remoteStagingSetUp {
 		if (!(isSet(remotePort))) {
-			var remotePort = "8080";
+			var remotePort = 8080;
 		}
 
 		JSONGroup.addGroup(
@@ -1091,23 +1091,23 @@ definition {
 		var siteId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Site",
 			portalURL = "http://localhost:${remotePort}");
-		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+		var siteURLKey = ContentPagesNavigator._convertNameToKey(name = ${siteName});
 
-		Staging.openStagingAdmin(siteURLKey = "${siteURLKey}");
+		Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
 		Staging.activateStagingCP(
-			contentName = "${contentName}",
-			pageVersioningEnabled = "${pageVersioningEnabled}",
-			remotePort = "${remotePort}",
+			contentName = ${contentName},
+			pageVersioningEnabled = ${pageVersioningEnabled},
+			remotePort = ${remotePort},
 			remoteStaging = "true",
-			siteId = "${siteId}",
-			siteName = "${siteName}",
-			uncheckContent = "${uncheckContent}");
+			siteId = ${siteId},
+			siteName = ${siteName},
+			uncheckContent = ${uncheckContent});
 	}
 
 	macro remoteStagingSetUpViaJson {
 		if (!(isSet(remotePort))) {
-			var remotePort = "8080";
+			var remotePort = 8080;
 		}
 
 		JSONGroup.addGroup(
@@ -1119,12 +1119,12 @@ definition {
 			portalURL = "http://localhost:${remotePort}");
 
 		JSONStaging.enableRemoteStaging(
-			branchingPrivate = "${branchingPrivate}",
-			branchingPublic = "${branchingPublic}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}",
-			remoteGroupId = "${remoteGroupId}",
-			remotePort = "${remotePort}");
+			branchingPrivate = ${branchingPrivate},
+			branchingPublic = ${branchingPublic},
+			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
+			remoteGroupId = ${remoteGroupId},
+			remotePort = ${remotePort});
 	}
 
 	macro runGroovyScript {
@@ -1140,7 +1140,7 @@ definition {
 
 		Type(
 			locator1 = "ServerAdministrationScript#SCRIPT_TEXT",
-			value1 = "${script}");
+			value1 = ${script});
 
 		AssertClick(
 			locator1 = "ServerAdministrationScript#EXECUTE_BUTTON",
@@ -1150,7 +1150,7 @@ definition {
 
 			// Set a long pause to wait for creating 400 web content articles.
 
-			Pause(locator1 = "4000");
+			Pause(locator1 = 4000);
 		}
 	}
 
@@ -1165,7 +1165,7 @@ definition {
 
 			// Set a minium pause to wait for the publication process completed.
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		AssertTextEquals(
@@ -1176,15 +1176,15 @@ definition {
 	macro savePublishTemplate {
 		Button.clickSave();
 
-		var key_publishTemplateName = "${publishTemplateName}";
+		var key_publishTemplateName = ${publishTemplateName};
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-			value1 = "${publishTemplateName}");
+			value1 = ${publishTemplateName});
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_DESCRIPTION",
-			value1 = "${publishTemplateDescription}");
+			value1 = ${publishTemplateDescription});
 	}
 
 	macro saveRemoteStagingConfiguration {
@@ -1198,7 +1198,7 @@ definition {
 
 			// This pause has been optimized. See details in LRQA-66660.
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
@@ -1224,17 +1224,17 @@ definition {
 			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 		}
 
-		Staging.configureScheduleTime(scheduleTitleName = "${scheduleTitleName}");
+		Staging.configureScheduleTime(scheduleTitleName = ${scheduleTitleName});
 
 		if (isSet(frequency)) {
 			Select(
 				locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
-				value1 = "${frequency}");
+				value1 = ${frequency});
 		}
 
 		if (isSet(checkContentNameList)) {
-			for (var contentName : list "${checkContentNameList}") {
-				var key_contentName = "${contentName}";
+			for (var contentName : list ${checkContentNameList}) {
+				var key_contentName = ${contentName};
 
 				Click(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 			}
@@ -1250,19 +1250,19 @@ definition {
 
 		// We split a long pause which is a 5-minute scheduled event into smaller one and there is another 3-minute pause in testcases.
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 	}
 
 	macro searchPublishTemplate {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
-		Search.searchCP(searchTerm = "${searchTerm}");
+		Search.searchCP(searchTerm = ${searchTerm});
 
-		var key_publishTemplateName = "${searchTerm}";
+		var key_publishTemplateName = ${searchTerm};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 	}
 
 	macro setStartDateTomorrow {
@@ -1272,7 +1272,7 @@ definition {
 
 		var tomorrow = ${daySelected} + 1;
 
-		var key_daySpecific = "${tomorrow}";
+		var key_daySpecific = ${tomorrow};
 
 		if (IsElementPresent(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC")) {
 			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC");
@@ -1280,7 +1280,7 @@ definition {
 		else {
 			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_NEXT_MONTH_BUTTON");
 
-			var key_daySpecific = "1";
+			var key_daySpecific = 1;
 
 			Click(locator1 = "CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC");
 		}
@@ -1324,7 +1324,7 @@ definition {
 
 		var result = FileUtil.read("${liferayHome}/result.txt");
 
-		if (contains("${result}", "not found")) {
+		if (contains(${result}, "not found")) {
 			fail("Folder not found in lar file.");
 		}
 	}
@@ -1338,7 +1338,7 @@ definition {
 
 		var result = FileUtil.read("${liferayHome}/result.txt");
 
-		if (!(contains("${result}", "not found"))) {
+		if (!(contains(${result}, "not found"))) {
 			fail("Folder found in lar file.");
 		}
 	}
@@ -1353,28 +1353,28 @@ definition {
 
 	macro viewDateRange {
 		AssertElementPresent(
-			key_dateRangeStartDate = "${dateRangeStartDate}",
+			key_dateRangeStartDate = ${dateRangeStartDate},
 			locator1 = "Select#DATE_RANGE_START_DATE_VALUE");
 
 		AssertElementPresent(
-			key_dateRangeEndDate = "${dateRangeEndDate}",
+			key_dateRangeEndDate = ${dateRangeEndDate},
 			locator1 = "Select#DATE_RANGE_END_DATE_VALUE");
 	}
 
 	macro viewDefaultConfiguration {
-		for (var configurationName : list "${configurationNameList}") {
-			var key_checkboxName = "${configurationName}";
+		for (var configurationName : list ${configurationNameList}) {
+			var key_checkboxName = ${configurationName};
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "StagingPublishToLive#STAGING_CONFIGURATION_CHECKBOX");
 		}
 	}
 
 	macro viewEditedSitePagesVariationPG {
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#SITE_PAGES_VARIATION",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 	}
 
 	macro viewHistoryVersionPG {
@@ -1382,32 +1382,32 @@ definition {
 			Staging.gotoHistory();
 		}
 
-		if ("${modifiedVersion}" == "true") {
+		if (${modifiedVersion} == "true") {
 			AssertTextNotEquals(
 				locator1 = "Staging#HISTORY_VERSION",
-				value1 = "${historyVersion}");
+				value1 = ${historyVersion});
 		}
 		else if (isSet(historyVersionName)) {
-			var key_historyVersionName = "${historyVersionName}";
+			var key_historyVersionName = ${historyVersionName};
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Staging#HISTORY_VERSION_NAME",
-				value1 = "${historyVersionName}");
+				value1 = ${historyVersionName});
 		}
 		else if (IsElementPresent(locator1 = "Staging#HISTORY_VERSION_2")) {
 			AssertTextEquals(
 				locator1 = "Staging#HISTORY_VERSION_2",
-				value1 = "${historyVersion}");
+				value1 = ${historyVersion});
 		}
 		else if (IsElementPresent.isVisible(locator1 = "Staging#HISTORY_VERSION")) {
 			AssertTextEquals(
 				locator1 = "Staging#HISTORY_VERSION",
-				value1 = "${historyVersion}");
+				value1 = ${historyVersion});
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Staging#HISTORY_VERSION_ANCHOR",
-				value1 = "${historyVersion}");
+				value1 = ${historyVersion});
 		}
 
 		IFrame.closeFrame();
@@ -1432,11 +1432,11 @@ definition {
 	}
 
 	macro viewPageVariationPG {
-		var key_pageVariationName = "${pageVariationName}";
+		var key_pageVariationName = ${pageVariationName};
 
 		AssertTextEquals(
 			locator1 = "Staging#PAGE_VARIATION",
-			value1 = "${pageVariationName}");
+			value1 = ${pageVariationName});
 	}
 
 	macro viewPortletDefaultMessageInRemoteLive {
@@ -1448,7 +1448,7 @@ definition {
 
 			// This pause has been optimized. See details in LPS-135924.
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = 1000);
 		}
 
 		if (isSet(failureExpected)) {
@@ -1471,26 +1471,26 @@ definition {
 		}
 
 		if (isSet(validateErrorMessage)) {
-			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
+			Staging.viewValidationError(validateErrorMessage = ${validateErrorMessage});
 		}
 	}
 
 	macro viewPublicationSummary {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Summary",
-			rowEntry = "${publicationTitle}");
+			rowEntry = ${publicationTitle});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(locator1 = "Staging#PROCESS_SUMMARY_PAGES_TITLE");
 
 		if (isSet(content)) {
-			for (var content : list "${contentList}") {
-				var key_content = "${content}";
+			for (var content : list ${contentList}) {
+				var key_content = ${content};
 
 				AssertTextPresent(
 					locator1 = "Staging#PUBLICATION_CONTENT",
-					value1 = "${content}");
+					value1 = ${content});
 			}
 		}
 
@@ -1499,65 +1499,65 @@ definition {
 		}
 
 		if (isSet(lookAndFeelList)) {
-			for (var lookAndFeel : list "${lookAndFeelList}") {
-				var key_lookAndFeel = "${lookAndFeel}";
+			for (var lookAndFeel : list ${lookAndFeelList}) {
+				var key_lookAndFeel = ${lookAndFeel};
 
 				AssertTextPresent(
 					locator1 = "Staging#PUBLICATION_LOOK_AND_FEEL",
-					value1 = "${lookAndFeel}");
+					value1 = ${lookAndFeel});
 			}
 		}
 
-		if ("${dateRestrictionOption}" == "All") {
+		if (${dateRestrictionOption} == "All") {
 			var key_dateRestrictionOption = "Without Restriction";
 
 			AssertTextPresent(
 				locator1 = "Staging#PUBLICATION_DATE",
-				value1 = "${key_dateRestrictionOption}");
+				value1 = ${key_dateRestrictionOption});
 		}
 
-		if ("${dateRestrictionOption}" == "From Last Publish Date") {
+		if (${dateRestrictionOption} == "From Last Publish Date") {
 			AssertTextPresent(
 				locator1 = "Staging#PUBLICATION_DATE",
-				value1 = "${dateRestrictionOption}");
+				value1 = ${dateRestrictionOption});
 		}
 
-		if ("${dateRestrictionOption}" == "Date Range") {
+		if (${dateRestrictionOption} == "Date Range") {
 			var key_dateRestrictionOption = "Modified or Created Between";
 
 			AssertTextPresent(
 				locator1 = "Staging#PUBLICATION_DATE",
-				value1 = "${key_dateRestrictionOption}");
+				value1 = ${key_dateRestrictionOption});
 		}
 
-		if ("${dateRestrictionOption}" == "Last") {
+		if (${dateRestrictionOption} == "Last") {
 			AssertTextPresent(
 				locator1 = "Staging#PUBLICATION_DATE",
-				value1 = "${dateRestrictionOption}");
+				value1 = ${dateRestrictionOption});
 		}
 
 		if (isSet(noContent)) {
-			for (var noContent : list "${noContentList}") {
-				var key_content = "${noContent}";
+			for (var noContent : list ${noContentList}) {
+				var key_content = ${noContent};
 
 				AssertTextNotPresent(
 					locator1 = "Staging#PUBLICATION_CONTENT",
-					value1 = "${content}");
+					value1 = ${content});
 			}
 		}
 
 		if (isSet(pagesNotToPublish)) {
-			AssertHTMLSourceTextNotPresent(value1 = "${pagesNotToPublish}");
+			AssertHTMLSourceTextNotPresent(value1 = ${pagesNotToPublish});
 		}
 
 		if (isSet(pagesOption)) {
 			AssertTextEquals(
 				locator1 = "Staging#PUBLICATION_PAGE_OPTION",
-				value1 = "${pagesOption}");
+				value1 = ${pagesOption});
 		}
 
 		if (isSet(pagesToPublish)) {
-			AssertHTMLSourceTextPresent(value1 = "${pagesToPublish}");
+			AssertHTMLSourceTextPresent(value1 = ${pagesToPublish});
 		}
 
 		if (isSet(permissions)) {
@@ -1574,11 +1574,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Staging#STAGING_CONTENT_COUNT",
-			value1 = "${contentCount}");
+			value1 = ${contentCount});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#STAGING_CONTENT_INFO",
-			value1 = "${contentInformation}");
+			value1 = ${contentInformation});
 
 		IFrame.closeFrame();
 	}
@@ -1586,7 +1586,7 @@ definition {
 	macro viewPublishTask {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#PROCESS_TITLE",
-			value1 = "${publicationTitle}");
+			value1 = ${publicationTitle});
 	}
 
 	macro viewPublishTemplate {
@@ -1596,59 +1596,59 @@ definition {
 
 		MenuItem.click(menuItem = "Publish Templates");
 
-		var key_publishTemplateName = "${publishTemplateName}";
+		var key_publishTemplateName = ${publishTemplateName};
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-			value1 = "${publishTemplateName}");
+			value1 = ${publishTemplateName});
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_DESCRIPTION",
-			value1 = "${publishTemplateDescription}");
+			value1 = ${publishTemplateDescription});
 
 		if (isSet(uncheckContentNameList)) {
 			AssertClick(
 				locator1 = "StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME",
-				value1 = "${publishTemplateName}");
+				value1 = ${publishTemplateName});
 
-			for (var contentName : list "${uncheckContentNameList}") {
+			for (var contentName : list ${uncheckContentNameList}) {
 				AssertNotChecked.assertNotCheckedNotVisible(
-					key_contentName = "${contentName}",
+					key_contentName = ${contentName},
 					locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 			}
 		}
 	}
 
 	macro viewRepeatingEventDetails {
-		Staging.openStagingAdmin(siteURLKey = "${siteName}");
+		Staging.openStagingAdmin(siteURLKey = ${siteName});
 
 		Navigator.gotoNavItem(navItem = "Scheduled");
 
-		var key_scheduleTitleName = "${scheduleTitleName}";
+		var key_scheduleTitleName = ${scheduleTitleName};
 
 		AssertTextPresent(
 			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
-			value1 = "${scheduleTitleName}");
+			value1 = ${scheduleTitleName});
 
 		AssertTextEquals(
 			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_END_DATE",
-			value1 = "${endDate}");
+			value1 = ${endDate});
 	}
 
 	macro viewSitePagesVariationActiveCP {
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_ACTIVE",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 	}
 
 	macro viewSitePagesVariationPG {
-		var key_sitePagesVariationName = "${sitePagesVariationName}";
+		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#SITE_PAGES_VARIATION",
-			value1 = "${sitePagesVariationName}");
+			value1 = ${sitePagesVariationName});
 	}
 
 	macro viewStagingLocalLivePG {
@@ -1674,7 +1674,7 @@ definition {
 	}
 
 	macro viewStagingWorkflowStatusPG {
-		if ("${stagingWorkflowStatus}" == "Ready for Publication") {
+		if (${stagingWorkflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
 	}
@@ -1699,9 +1699,9 @@ definition {
 	macro viewUncheckContentNameList {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
-		for (var contentName : list "${uncheckContentNameList}") {
+		for (var contentName : list ${uncheckContentNameList}) {
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_contentName = "${contentName}",
+				key_contentName = ${contentName},
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 		}
 	}
@@ -1713,7 +1713,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "${validateErrorMessage}");
+			value1 = ${validateErrorMessage});
 	}
 
 	macro viewVariationSuccessMessage {
@@ -1727,16 +1727,16 @@ definition {
 	}
 
 	macro viewVariationTooltipMessage {
-		var key_pageName = "${pageName}";
-		var key_title = "${title}";
+		var key_pageName = ${pageName};
+		var key_title = ${title};
 
 		MouseOver(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME");
 
 		AssertVisible(
-			key_pageName = "${pageName}",
-			key_title = "${title}",
+			key_pageName = ${pageName},
+			key_title = ${title},
 			locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
 	}
 

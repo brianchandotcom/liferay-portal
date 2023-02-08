@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewInstanceManager {
 		property app.server.types = "tomcat";
 
@@ -75,7 +75,7 @@ definition {
 ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apache.bcel.internal.util.ClassLoader')}
 ''';
 
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = ${templateScript});
 
 		PortletEntry.save();
 
@@ -90,7 +90,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()}
 ''';
 
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = ${templateScript});
 
 		PortletEntry.save();
 
@@ -121,7 +121,7 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 			portletName = "WC Title 2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewInstanceManagerVelocity {
 		SetWindowSize(value1 = "1920,1080");
 
@@ -174,7 +174,7 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 		DDLTemplate.addDisplayTemplateTemplateViaDDLDisplayPG(
 			ddlDisplayTemplateLanguage = "Velocity (.vm)",
 			ddlDisplayTemplateName = "Velocity Template",
-			ddlDisplayTemplateScript = "${templateScript}");
+			ddlDisplayTemplateScript = ${templateScript});
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -183,7 +183,7 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 		AssertConsoleTextPresent(value1 = "java.lang.IllegalArgumentException: Denied resolving class org.apache.catalina.core.ApplicationContextFacade by org.apache");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewInstanceManagerWildfly {
 		property app.server.types = "wildfly";
 		property test.assert.warning.exceptions = "false";
@@ -217,7 +217,7 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apache.bcel.internal.util.ClassLoader')}
 ''';
 
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = ${templateScript});
 
 		PortletEntry.save();
 
@@ -235,7 +235,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			portletName = "WC Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewServletContext {
 		property app.server.types = "tomcat,weblogic,websphere,wildfly";
 		property test.assert.warning.exceptions = "false";
@@ -271,7 +271,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 </#list>
 ''';
 
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = ${templateScript});
 
 		PortletEntry.save();
 
@@ -289,7 +289,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			portletName = "WC Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewSpringBeans {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -323,7 +323,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 </#list>
 ''';
 
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+		WebContentTemplates.inputScript(templateScript = ${templateScript});
 
 		PortletEntry.save();
 

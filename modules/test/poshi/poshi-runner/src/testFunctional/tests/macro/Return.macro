@@ -4,7 +4,7 @@ definition {
 		var actual = Return.returnValue();
 		var expected = "Return Value";
 
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The value returned from 'Return#return' was a match to the expected value.");
 
 			echo("action: '${actual}'");

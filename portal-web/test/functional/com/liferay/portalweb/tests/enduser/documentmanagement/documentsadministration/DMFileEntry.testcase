@@ -15,7 +15,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This ensures that an old image friendlyURL redirects properly after document is reverted."
-	@priority = "5"
+	@priority = 5
 	test CanAccessOldFriendlyURLAfterRevert {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
@@ -100,7 +100,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddCommentToDocument {
 		property portal.acceptance = "true";
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "This test asserts that a major version can be created for a file."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddMajorVersionIncrement {
 		property portal.acceptance = "true";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This test asserts that a major version can be created for a file."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddMinorVersionIncrement {
 		property portal.acceptance = "true";
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "This case covers LPS-140006. It ensures that a valid file can be uploaded after the invalid file is discarded."
-	@priority = "3"
+	@priority = 3
 	test CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload {
 		property test.name.skip.portal.instance = "DMFileEntry#CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload";
 
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-124959. It ensures that a user can upload documents with a document type via multiple upload."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddWithDocumentTypeViaMultipleUpload {
 		property portal.acceptance = "true";
@@ -231,14 +231,14 @@ definition {
 		for (var dmDocumentTitle : list "Document_1,Document_2") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
 
 			DMDocument.viewDocumentTypePG(dateValue = "01/01/2022");
 		}
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAutocompleteCategory {
 		property portal.acceptance = "true";
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAutoCompleteCategory {
 		property portal.acceptance = "true";
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "This test ensures that the filename character restriction can be configured through the blacklist."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanBlacklistCharacters {
 		property custom.properties = "dl.char.blacklist=\\\\,//,:,*,?,<,#,|,../,/..";
@@ -398,7 +398,7 @@ definition {
 			value1 = ">.jpg");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCancelCheckout {
 		property custom.properties = "dl.actions.visible=true";
@@ -423,7 +423,7 @@ definition {
 	}
 
 	@description = "This test ensures that the document type of a published basic document can be changed."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanChangeDocumentType {
 		property portal.acceptance = "true";
@@ -476,7 +476,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101908. It makes sure that all elements selected on different pages can be checked out and checked in."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanCheckInAllDocumentsOnDifferentPagesAtOnce {
 		JSONDocument.addFileWithUploadedFile(
@@ -513,7 +513,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		PortletEntry.selectAll();
 
@@ -531,11 +531,11 @@ definition {
 
 		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementPresent(
-				key_dmDocumentTitle = "${dmDocumentFileList}",
+				key_dmDocumentTitle = ${dmDocumentFileList},
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 		}
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		PortletEntry.selectAll();
 
@@ -547,13 +547,13 @@ definition {
 
 		for (var dmDocumentFileList : list "Document_1.doc,Document_2.doc,Document_3.doc,Document_1.txt,Document_2.txt") {
 			AssertElementNotPresent(
-				key_dmDocumentTitle = "${dmDocumentFileList}",
+				key_dmDocumentTitle = ${dmDocumentFileList},
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 		}
 	}
 
 	@description = "This test covers LPS-88313 and LPS-92145. It ensures that a user can check in a document without changing versions."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCheckInAsCurrentVersion {
 		property portal.acceptance = "true";
@@ -595,7 +595,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can check in a document as a major version."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCheckInAsMajorVersion {
 		property portal.acceptance = "true";
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can check in a document as a minor version."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCheckInAsMinorVersion {
 		property portal.acceptance = "true";
@@ -669,7 +669,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-82306. It ensures that a user can check in a document through the Management toolbar."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCheckInViaManagementBar {
 		property portal.acceptance = "true";
@@ -704,7 +704,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-90736. It makes sure that all files are deleted when user selects all."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteAllDocumentsAtOnce {
 		property portal.acceptance = "true";
@@ -738,7 +738,7 @@ definition {
 		DMDocument.viewDefault();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteDocumentInSitePage {
 		property custom.properties = "dl.actions.visible=true";
@@ -751,7 +751,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -774,7 +774,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents through the actions icon after selecting them one by one."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteMultipleDocumentsViaActionsButton {
 		property custom.properties = "dl.actions.visible=true";
@@ -787,7 +787,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -808,7 +808,7 @@ definition {
 		for (var entryCount : list "1,2") {
 			var dmDocumentTitle = "Document_${entryCount}.doc";
 
-			LexiconCard.checkCardCheckbox(card = "${dmDocumentTitle}");
+			LexiconCard.checkCardCheckbox(card = ${dmDocumentTitle});
 		}
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
@@ -819,7 +819,7 @@ definition {
 	}
 
 	@description = "This case covers LPS-110213. It ensures that a document file can be downloaded after moving it between folders."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadDocumentMovedBetweenFolders {
 		property portal.acceptance = "true";
@@ -864,7 +864,7 @@ definition {
 	}
 
 	@description = "This ensures that multiple documents can be downloaded simultaneously."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadMultipleFilesSimultaneously {
 		property portal.acceptance = "true";
@@ -890,7 +890,7 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document file name."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadThroughURLWithFileName {
 		property portal.acceptance = "true";
@@ -917,7 +917,7 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document title."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadThroughURLWithTitle {
 		property portal.acceptance = "true";
@@ -944,7 +944,7 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded using the updated document file name."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedFileName {
 		property portal.acceptance = "true";
@@ -977,7 +977,7 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document title."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadThroughURLWithUpdatedTitle {
 		property portal.acceptance = "true";
@@ -1009,7 +1009,7 @@ definition {
 	}
 
 	@description = "This ensures that the document file name will be applied to the downloaded file name."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadWithCustomFileName {
 		property portal.acceptance = "true";
@@ -1033,7 +1033,7 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(fileName = "document_1_Edit.jpg");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDownloadWithSpecialCharactersInTitle {
 		property custom.properties = "dl.actions.visible=true";
@@ -1056,7 +1056,7 @@ definition {
 
 	@description = "This test edits the title and description of a document. It asserts minor version increment because only its metadata was updated."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditDocument {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -1096,7 +1096,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-128473. This test ensures that users can filter documents by Recent."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanFilterByRecent {
 		JSONDocument.addFileWithUploadedFile(
@@ -1120,18 +1120,18 @@ definition {
 			orderBy = "Modified Date");
 
 		AssertTextEquals.assertPartialText(
-			index = "1",
+			index = 1,
 			locator1 = "LexiconTable#TABLE_ROW",
 			value1 = "DM Document Title 3");
 
 		AssertTextEquals.assertPartialText(
-			index = "2",
+			index = 2,
 			locator1 = "LexiconTable#TABLE_ROW",
 			value1 = "DM Document Title 2");
 	}
 
 	@description = "This test covers LPS-136334. This test ensures that users can filter documents by Recent and order by Downloads."
-	@priority = "4"
+	@priority = 4
 	test CanFilterByRecentAndOrderByDownloads {
 		property custom.properties = "dl.actions.visible=true";
 
@@ -1164,18 +1164,18 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals.assertPartialText(
-			index = "1",
+			index = 1,
 			locator1 = "LexiconTable#TABLE_ROW",
 			value1 = "Document_3.doc");
 
 		AssertTextEquals.assertPartialText(
-			index = "2",
+			index = 2,
 			locator1 = "LexiconTable#TABLE_ROW",
 			value1 = "Document_2.doc");
 	}
 
 	@description = "This is a test for LPS-136825. It checks that a file entry can be imported with tags."
-	@priority = "3"
+	@priority = 3
 	test CanImportWithTags {
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "Tag Name",
@@ -1201,7 +1201,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-115949. It validates that resource allocation for forked processes can be controlled through portal.properties."
-	@priority = "4"
+	@priority = 4
 	test CanLimitForkedProcessResourceAllocation {
 		property custom.properties = "dl.file.entry.preview.fork.process.jvm.options=-Xmx0m";
 
@@ -1215,7 +1215,7 @@ definition {
 	}
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanLimitMaximumAmountOfVersions {
 		property test.name.skip.portal.instance = "DMFileEntry#CanLimitMaximumAmountOfVersions";
@@ -1227,7 +1227,7 @@ definition {
 			dmDocumentTitle = "Edit this document two times",
 			groupName = "Guest");
 
-		DMDocument.updateMaximumVersions(fieldValue = "2");
+		DMDocument.updateMaximumVersions(fieldValue = 2);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1248,7 +1248,7 @@ definition {
 
 		for (var versionNumber : list "1.2,1.1") {
 			AssertElementPresent(
-				key_dmDocumentVersionNumber = "${versionNumber}",
+				key_dmDocumentVersionNumber = ${versionNumber},
 				locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 		}
 
@@ -1257,7 +1257,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanMoveDocumentToRecycleBin {
 		property portal.acceptance = "true";
@@ -1279,7 +1279,7 @@ definition {
 	}
 
 	@description = "This ensures that the entry can be moved to another folder via drag and drop."
-	@priority = "4"
+	@priority = 4
 	test CanMoveEntryToFolderViaDragAndDrop {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder1 Description",
@@ -1317,7 +1317,7 @@ definition {
 	}
 
 	@description = "This validates that the location of the document accurately displays after it is moved from one folder to another."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanMoveFromOneFolderToAnother {
 		property custom.properties = "dl.actions.visible=true";
@@ -1362,7 +1362,7 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanMoveWithSlashesInTitle {
 		property custom.properties = "dl.actions.visible=true";
@@ -1392,7 +1392,7 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "/D/M/Document Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddDocumentWithDuplicateName {
 		property custom.properties = "dl.actions.visible=true";
@@ -1415,7 +1415,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddSpecialCharacterToName {
 		property custom.properties = "dl.actions.visible=true";
@@ -1428,7 +1428,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -1450,7 +1450,7 @@ definition {
 	}
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotEditCheckedOutDocument {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
@@ -1503,7 +1503,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-82205. It checks that the XSS can not be executed after accessing HTML file."
-	@priority = "4"
+	@priority = 4
 	test CannotExecuteXSSWhenAccessingHTMLFile {
 		DMDocument.enableDirectoryIndexing(siteURLKey = "guest");
 
@@ -1523,7 +1523,7 @@ definition {
 		DMDocument.assertFileNameFromTempFolder(fileName = "xss_test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotMoveToFolderWithDuplicateTitle {
 		property custom.properties = "dl.actions.visible=true";
@@ -1568,7 +1568,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotPreviewFileThatExceedsLimit {
 		property portal.acceptance = "true";
@@ -1579,7 +1579,7 @@ definition {
 		Type(
 			key_fieldLabel = "Previewable Processor Maximum Size",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "1024");
+			value1 = 1024);
 
 		SystemSettings.saveConfiguration();
 
@@ -1601,7 +1601,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user cannot set a previous expiration date."
-	@priority = "3"
+	@priority = 3
 	test CannotPublishInvalidExpirationDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
@@ -1615,12 +1615,12 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "1",
+			increaseMinutes = 1,
 			invalidExpirationDate = "true");
 	}
 
 	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
-	@priority = "5"
+	@priority = 5
 	test CannotUploadFileThatCausesOutOfMemoryErrors {
 		property testray.component.names = "Security";
 
@@ -1643,7 +1643,7 @@ definition {
 	}
 
 	@description = "This test ensures that the guest cannot see an expired document."
-	@priority = "4"
+	@priority = 4
 	test CannotViewExpiredDocumentAsGuest {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CannotViewExpiredDocumentAsGuest";
@@ -1657,12 +1657,12 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1678,13 +1678,13 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -1700,7 +1700,7 @@ definition {
 	}
 
 	@description = "This ensures that the empty state displays when the preview file doesn't have anything previewable."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanPreviewEmptyState {
 		property portal.acceptance = "true";
@@ -1720,12 +1720,12 @@ definition {
 		for (var emptyStateInfo : list "No preview available,Hmm... looks like this item does not have a preview we can show you.") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW",
-				value1 = "${emptyStateInfo}");
+				value1 = ${emptyStateInfo});
 		}
 	}
 
 	@description = "This ensures that an image can be previewed through the original URL."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewImageThroughURL {
 		property portal.acceptance = "true";
@@ -1751,7 +1751,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-104957. It ensures that the JPG file can be previewed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewJPG {
 		property portal.acceptance = "true";
@@ -1778,7 +1778,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88785."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewPDF {
 		property portal.acceptance = "true";
@@ -1816,7 +1816,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-146237. It validates that a PDF can be previewed from the Recycle Bin."
-	@priority = "3"
+	@priority = 3
 	test CanPreviewPDFFromRecycleBin {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.pdf",
@@ -1838,7 +1838,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-148758. It ensures that a PDF without an extension can be previewed through the latest version URL."
-	@priority = "3"
+	@priority = 3
 	test CanPreviewPDFWithoutExtensionViaLatestVersionURL {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.pdf",
@@ -1859,12 +1859,12 @@ definition {
 
 		var latestVersionURL = DMDocument.getLatestVersionURL();
 
-		Navigator.openSpecificURL(url = "${latestVersionURL}");
+		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
 			attribute1 = "baseURI",
 			locator1 = "//embed",
-			value1 = "${latestVersionURL}");
+			value1 = ${latestVersionURL});
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "pdf_no_extension",
@@ -1873,16 +1873,16 @@ definition {
 
 		var latestVersionURL = DMDocument.getLatestVersionURL();
 
-		Navigator.openSpecificURL(url = "${latestVersionURL}");
+		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
 			attribute1 = "baseURI",
 			locator1 = "//embed",
-			value1 = "${latestVersionURL}");
+			value1 = ${latestVersionURL});
 	}
 
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewPNG {
 		property portal.acceptance = "true";
@@ -1909,7 +1909,7 @@ definition {
 	}
 
 	@description = "This ensures that the SVG file can be previewed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewSVG {
 		property portal.acceptance = "true";
@@ -1936,7 +1936,7 @@ definition {
 	}
 
 	@description = "This test ensures that a document with special characters in its title can be published successfully."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishTitleWithSpecialCharacters {
 		property custom.properties = "dl.actions.visible=true";
@@ -1961,12 +1961,12 @@ definition {
 	}
 
 	@description = "This test ensures that the user can republish an expired document after disabling expiration date."
-	@priority = "4"
+	@priority = 4
 	test CanRepublishDocumentAfterDisablingExpirationDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanRepublishDocumentAfterDisablingExpirationDate";
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1982,11 +1982,11 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 3000);
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_5.txt",
@@ -2005,7 +2005,7 @@ definition {
 	}
 
 	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanRestoreDocumentWithoutOriginalFolder {
 		JSONFolder.addFolder(
@@ -2050,7 +2050,7 @@ definition {
 	}
 
 	@description = "This test checks if file uploads can be restricted to .doc format."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRestrictFileExtensionToDoc {
 		property portal.acceptance = "true";
@@ -2077,13 +2077,13 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
-				dmDocumentFile = "${dmDocumentTitle}",
-				dmDocumentTitle = "${dmDocumentTitle}",
+				dmDocumentFile = ${dmDocumentTitle},
+				dmDocumentTitle = ${dmDocumentTitle},
 				validationError = "Document names must end with one of the following extensions: .doc");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRevertToOriginal {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}dl.actions.visible=true";
@@ -2130,18 +2130,18 @@ definition {
 	}
 
 	@description = "This test ensures that the user can review a document when the date is changed."
-	@priority = "4"
+	@priority = 4
 	test CanReviewDocumentWhenDateIsChanged {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsChanged";
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_5.txt",
 			groupName = "Guest",
-			increaseMinutes = "10",
+			increaseMinutes = 10,
 			mimeType = "text/plain",
 			reviewDate = "true",
 			sourceFileName = "Document_5.txt");
@@ -2151,17 +2151,17 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		DMDocument.setReviewDate(increaseMinutes = "1");
+		DMDocument.setReviewDate(increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -2183,12 +2183,12 @@ definition {
 	}
 
 	@description = "This test ensures that the user can review a document when the date is disabled."
-	@priority = "4"
+	@priority = 4
 	test CanReviewDocumentWhenDateIsDisabled {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsDisabled";
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2204,13 +2204,13 @@ definition {
 
 		DMDocument.setReviewDate(
 			enableReviewDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -2234,12 +2234,12 @@ definition {
 	}
 
 	@description = "This test ensures that the user can review a document when the date is set."
-	@priority = "5"
+	@priority = 5
 	test CanReviewDocumentWhenDateIsSet {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsSet";
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
@@ -2252,13 +2252,13 @@ definition {
 
 		DMDocument.setReviewDate(
 			enableReviewDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -2280,7 +2280,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-130154. It ensures that the user can search for a document based on the content."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForDocumentBasedOnContent {
 		property portal.acceptance = "true";
@@ -2302,7 +2302,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can search for document file name using partial text."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchForDocumentWithPartialText {
 		property portal.acceptance = "true";
@@ -2320,7 +2320,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80857. It checks that the user will stay in the same folder context after filtering."
-	@priority = "3"
+	@priority = 3
 	test CanStayInFolderAfterFiltering {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2348,7 +2348,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can create a document with edited display page template."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentWithEditedDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -2421,7 +2421,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can create a document with the topic from the Global site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentWithTopics {
 		property custom.properties = "dl.actions.visible=true";
@@ -2470,12 +2470,12 @@ definition {
 	}
 
 	@description = "This test ensures that the user can view an expired document."
-	@priority = "5"
+	@priority = 5
 	test CanViewExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocument";
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",
@@ -2490,13 +2490,13 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -2512,7 +2512,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user who has content review permissions can see an expired document."
-	@priority = "4"
+	@priority = 4
 	test CanViewExpiredDocumentAsContentReviewer {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocumentAsContentReviewer";
@@ -2539,7 +2539,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_5.txt");
 
-		DMDocument.updateCheckInterval(fieldValue = "1");
+		DMDocument.updateCheckInterval(fieldValue = 1);
 
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Document_5.txt",
@@ -2550,11 +2550,11 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "1");
+			increaseMinutes = 1);
 
 		// We need to wait for the system time to pass by 2 minutes in order to verify the document is expired. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = 120000);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -2568,7 +2568,7 @@ definition {
 	}
 
 	@description = "This ensures that a user can view the information about an image when navigating to info panel."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewImageFromInfoPanel {
 		property custom.properties = "dl.actions.visible=true";
@@ -2594,7 +2594,7 @@ definition {
 	}
 
 	@description = "This ensures that the document title can be displayed correctly in the different views."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewInDifferentDisplayStyles {
 		property portal.acceptance = "true";
@@ -2626,7 +2626,7 @@ definition {
 			dmDocumentTitle = "Document_2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewOlderVersion {
 		property custom.properties = "dl.actions.visible=true";
@@ -2660,7 +2660,7 @@ definition {
 	}
 
 	@description = "This ensures that the user can view the document through related assets."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewRelatedDocument {
 		property custom.properties = "dl.actions.visible=true";
@@ -2704,7 +2704,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145630. It checks that the DOCs linked in web articles content can be updated."
-	@priority = "4"
+	@priority = 4
 	test DocumentLinkedInWCCanBeUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
@@ -2770,7 +2770,7 @@ definition {
 	}
 
 	@description = "This ensures that the friendly URL of a document created on a site will be updated automatically if it duplicates the existing one on the site."
-	@priority = "4"
+	@priority = 4
 	test FriendlyURLDuplicatingSiteDocIsAutomaticallyChanged {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1",
@@ -2799,7 +2799,7 @@ definition {
 	}
 
 	@description = "This ensures that the friendly URL of a document created on a site will be updated automatically if it duplicates the one in the recycle bin of the site."
-	@priority = "3"
+	@priority = 3
 	test FriendlyURLDuplicatingSiteRecycleBinDocIsAutomaticallyChanged {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1",
@@ -2832,7 +2832,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
 		property test.name.skip.portal.instance = "DMFileEntry#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
@@ -2869,7 +2869,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-157175. Check that there is no corrupted filename on downloaded folder."
-	@priority = "3"
+	@priority = 3
 	test NoCorruptedNameInDownloadedZip {
 		JSONFolder.addFolder(
 			dmFolderName = "日本語フォルダ1",
@@ -2912,16 +2912,16 @@ definition {
 		DMFolder.assertExpectedFileNames(key_fileName = "日本語フォルダ2/Document_2.doc");
 
 		DMFolder.assertExpectedFileNumber(
-			expectedFileNumber = "3",
+			expectedFileNumber = 3,
 			key_folder = "");
 
 		DMFolder.assertExpectedFileNumber(
-			expectedFileNumber = "1",
+			expectedFileNumber = 1,
 			key_folder = "/日本語フォルダ2");
 	}
 
 	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."
-	@priority = "4"
+	@priority = 4
 	test NoZipFileIsCreatedIfDownloadResultsInError {
 		DMDocument.deleteTempFolder(appServer = "tomcat-9.0.71");
 
@@ -2948,7 +2948,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test SizeIsDisplayedCorrectlyInDifferentVersions {
 		JSONDocument.addFileWithUploadedFile(
@@ -2983,7 +2983,7 @@ definition {
 	}
 
 	@description = "This a ticket for LPS-154955. Verify tree image is available when Liferay is deployed"
-	@priority = "4"
+	@priority = 4
 	test VerifyTreeImageIsAvailable {
 		task ("Go to Documents and Media Settings") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -2997,13 +2997,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
-	@priority = "4"
+	@priority = 4
 	test WildcardCanBeDefinedWithOtherFileExtensions {
 		property test.name.skip.portal.instance = "DMFileEntry#WildcardCanBeDefinedWithOtherFileExtensions";
 
 		DMDocument.updateFileExtensions(
 			fieldValue = ".doc",
-			indexNumber = "2");
+			indexNumber = 2);
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3024,12 +3024,12 @@ definition {
 		for (var dmDocumentTitleList : list "Document_2.jpg,Document_1.doc") {
 			DMDocument.viewStatus(
 				dmDocumentStatus = "Approved",
-				dmDocumentTitle = "${dmDocumentTitleList}");
+				dmDocumentTitle = ${dmDocumentTitleList});
 		}
 	}
 
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test WillRejectForbiddenCharactersInFileName {
 		property portal.acceptance = "true";

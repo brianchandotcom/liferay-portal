@@ -1,15 +1,15 @@
 definition {
 
 	macro assertKeywordNotPresentByIndex {
-		var key_keywordName = "${keywordName}";
-		var key_index = "${index}";
+		var key_keywordName = ${keywordName};
+		var key_index = ${index};
 
 		AssertElementNotPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 	}
 
 	macro assertKeywordPresentByIndex {
-		var key_keywordName = "${keywordName}";
-		var key_index = "${index}";
+		var key_keywordName = ${keywordName};
+		var key_index = ${index};
 
 		AssertElementPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
 	}
@@ -21,13 +21,13 @@ definition {
 	}
 
 	macro clickInterest {
-		var key_interestTopic = "${interestTopic}";
+		var key_interestTopic = ${interestTopic};
 
 		Click(locator1 = "ACInterests#INTEREST_TOPIC");
 	}
 
 	macro clickKeywordCheckbox {
-		var key_keywordName = "${keyword}";
+		var key_keywordName = ${keyword};
 
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME")) {
 			KeyPress(
@@ -53,30 +53,30 @@ definition {
 	}
 
 	macro switchTab {
-		var key_tabName = "${tabName}";
+		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACInterests#TAB_NAME");
 	}
 
 	macro viewIndividualInterestSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var interestTopic : list "${interestTopic}") {
+		for (var interestTopic : list ${interestTopic}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertVisible(
-				key_interestTopic = "${interestTopic}",
+				key_interestTopic = ${interestTopic},
 				locator1 = "ACInterests#INTEREST_VIEW_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
+				resultOrder = ${resultOrder});
 		}
 	}
 
 	macro viewInterest {
-		var key_interestTopic = "${interestTopic}";
+		var key_interestTopic = ${interestTopic};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTEREST_TOPIC",
-			value1 = "${interestTopic}");
+			value1 = ${interestTopic});
 
 		if (!(isSet(knownIndividuals))) {
 			AssertElementPresent(locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_BAR");
@@ -85,109 +85,109 @@ definition {
 		if (isSet(membersCount)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#INTEREST_SEGMENT_MEMBERS_COUNT",
-				value1 = "${membersCount}");
+				value1 = ${membersCount});
 		}
 
 		if (isSet(membersPercentage)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#INTEREST_ACTIVE_MEMBERS_PERCENTAGE",
-				value1 = "${membersPercentage}");
+				value1 = ${membersPercentage});
 		}
 	}
 
 	macro viewInterestContributingPage {
-		var key_interestTopic = "${interestTopic}";
-		var key_interestContributingPage = "${interestContributingPage}";
+		var key_interestTopic = ${interestTopic};
+		var key_interestContributingPage = ${interestContributingPage};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTEREST_CONTRIBUTING_PAGE",
-			value1 = "${interestContributingPage}");
+			value1 = ${interestContributingPage});
 	}
 
 	macro viewInterestHeader {
-		var key_interestTopic = "${interestTopic}";
+		var key_interestTopic = ${interestTopic};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTEREST_HEADER",
-			value1 = "${interestName}");
+			value1 = ${interestName});
 	}
 
 	macro viewInterestNotPresent {
 		AssertElementNotPresent(
-			key_interestTopic = "${interestTopic}",
+			key_interestTopic = ${interestTopic},
 			locator1 = "ACInterests#INTEREST_TOPIC");
 	}
 
 	macro viewInterestPage {
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#PAGE_NAME",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		if (isSet(pageURL)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#PAGE_URL",
-				value1 = "${pageURL}");
+				value1 = ${pageURL});
 		}
 
 		if (isSet(pageViews)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#PAGE_VIEWS",
-				value1 = "${pageViews}");
+				value1 = ${pageViews});
 		}
 	}
 
 	macro viewInterestPageViaPosition {
-		var key_positionValue = "${positionValue}";
+		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#PAGE_NAME_VIA_POSITION",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 	}
 
 	macro viewInterests {
-		var key_interestName = "${interestName}";
+		var key_interestName = ${interestName};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTERESTS_TABLE",
-			value1 = "${interestName}");
+			value1 = ${interestName});
 	}
 
 	macro viewInterestUser {
-		var key_userName = "${userName}";
+		var key_userName = ${userName};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#USER_NAME",
-			value1 = "${userName}");
+			value1 = ${userName});
 
 		if (isSet(userEmailAddress)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#USER_EMAIL_ADDRESS",
-				value1 = "${userEmailAddress}");
+				value1 = ${userEmailAddress});
 		}
 
 		if (isSet(userAccount)) {
 			AssertTextEquals(
 				locator1 = "ACInterests#USER_ACCOUNT",
-				value1 = "${userAccount}");
+				value1 = ${userAccount});
 		}
 	}
 
 	macro viewInterestUserViaPosition {
-		var key_positionValue = "${positionValue}";
+		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#USER_NAME_VIA_POSITION",
-			value1 = "${userName}");
+			value1 = ${userName});
 	}
 
 	macro viewInterestViaPosition {
-		var key_positionValue = "${positionValue}";
+		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(
 			locator1 = "ACInterests#INTEREST_TOPIC_VIA_POSITION",
-			value1 = "${interestTopic}");
+			value1 = ${interestTopic});
 	}
 
 }

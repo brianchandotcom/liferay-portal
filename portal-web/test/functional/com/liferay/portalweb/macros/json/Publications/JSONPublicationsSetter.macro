@@ -1,11 +1,11 @@
 definition {
 
 	macro setCTCollectionId {
-		Variables.assertDefined(parameterList = "${publicationName}");
+		Variables.assertDefined(parameterList = ${publicationName});
 
-		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "${publicationName}");
+		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = ${publicationName});
 
-		return "${ctCollectionId}";
+		return ${ctCollectionId};
 	}
 
 	macro setPublicationDescription {
@@ -13,15 +13,15 @@ definition {
 			var publicationDescription = "";
 		}
 
-		return "${publicationDescription}";
+		return ${publicationDescription};
 	}
 
 	macro setPublicationName {
-		Variables.assertDefined(parameterList = "${publicationName}");
+		Variables.assertDefined(parameterList = ${publicationName});
 
-		var publicationName = URLUtil.encodeUTF8("${publicationName}");
+		var publicationName = URLUtil.encodeUTF8(${publicationName});
 
-		return "${publicationName}";
+		return ${publicationName};
 	}
 
 }

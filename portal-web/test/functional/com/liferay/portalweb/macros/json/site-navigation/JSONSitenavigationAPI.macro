@@ -15,7 +15,7 @@ definition {
 				-d auto=${auto}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to add a site navigation menu item via JSON"
@@ -34,12 +34,12 @@ definition {
 				-d typeSettings=${typeSettings}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to delete a site navigation menu via JSON"
 	macro _deleteSiteNavigationMenu {
-		Variables.assertDefined(parameterList = "${siteNavigationMenuId}");
+		Variables.assertDefined(parameterList = ${siteNavigationMenuId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -49,7 +49,7 @@ definition {
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Helper function to get a siteNavigationMenuId via JSON"
@@ -64,9 +64,9 @@ definition {
 				-d groupId=${groupId}
 		''';
 
-		var siteNavigationMenuId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${siteNavigationMenuName}')]['siteNavigationMenuId']");
+		var siteNavigationMenuId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${siteNavigationMenuName}')]['siteNavigationMenuId']");
 
-		return "${siteNavigationMenuId}";
+		return ${siteNavigationMenuId};
 	}
 
 	@summary = "Helper function to get a siteNavigationMenuItemId via JSON"
@@ -81,9 +81,9 @@ definition {
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
 
-		var siteNavigationMenuItemId = JSONCurlUtil.post("${curl}", "$.[?(@['typeSettings'] contains '${siteNavigationMenuItemName}')]['siteNavigationMenuItemId']");
+		var siteNavigationMenuItemId = JSONCurlUtil.post(${curl}, "$.[?(@['typeSettings'] contains '${siteNavigationMenuItemName}')]['siteNavigationMenuItemId']");
 
-		return "${siteNavigationMenuItemId}";
+		return ${siteNavigationMenuItemId};
 	}
 
 }

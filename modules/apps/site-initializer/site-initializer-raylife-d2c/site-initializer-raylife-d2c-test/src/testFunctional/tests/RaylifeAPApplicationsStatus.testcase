@@ -15,7 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -23,7 +23,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,11 +32,11 @@ definition {
 	}
 
 	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
-	@priority = "4"
+	@priority = 4
 	test IfStatusOpenAppearsInApplicationsStatus {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusOpenAppearsInApplicationStatus";
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
@@ -52,7 +52,7 @@ definition {
 
 		Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
@@ -61,16 +61,16 @@ definition {
 		AssertTextEquals(
 			key_legendItem = "Open",
 			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-			value1 = "${newValue}");
+			value1 = ${newValue});
 	}
 
 	@description = "LPS-154593 - Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
-	@priority = "4"
+	@priority = 4
 	test IfStatusQuotedAppearsInApplicationsStatus {
 		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#IfStatusQuotedAppearsInApplicationStatus";
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
@@ -82,7 +82,7 @@ definition {
 
 		Raylife.formsFlow();
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
@@ -91,15 +91,15 @@ definition {
 		AssertTextEquals(
 			key_legendItem = "Quoted",
 			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-			value1 = "${newValue}");
+			value1 = ${newValue});
 	}
 
 	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
-	@priority = "4"
+	@priority = 4
 	test NumberCenterGraphEqualNumberOfStatus {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#NumberCenterGraphEqualNumberOfStatus";
 
-		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 

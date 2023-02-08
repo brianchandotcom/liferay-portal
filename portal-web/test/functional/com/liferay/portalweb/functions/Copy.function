@@ -4,7 +4,7 @@ definition {
 	function copy {
 		WaitForSPARefresh();
 
-		if (contains("${locator1}", "/input")) {
+		if (contains(${locator1}, "/input")) {
 			Copy.valueCopy();
 		}
 		else {

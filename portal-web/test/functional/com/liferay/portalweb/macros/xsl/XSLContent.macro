@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro viewConsoleError {
-		AssertConsoleTextPresent(value1 = "${consoleTextError}");
+		AssertConsoleTextPresent(value1 = ${consoleTextError});
 	}
 
 	macro viewErrorMessage {
@@ -55,23 +55,23 @@ definition {
 			locator1 = "XSLContentPortlet#TABLE_YEAR_HEADER",
 			value1 = "Year");
 
-		var key_titleEntry = "${tableTitleEntry}";
+		var key_titleEntry = ${tableTitleEntry};
 
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TABLE_TITLE_ENTRY",
-			value1 = "${tableTitleEntry}");
+			value1 = ${tableTitleEntry});
 
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TABLE_ARTIST_ENTRY",
-			value1 = "${tableArtistEntry}");
+			value1 = ${tableArtistEntry});
 
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TABLE_COUNTRY_ENTRY",
-			value1 = "${tableCountryEntry}");
+			value1 = ${tableCountryEntry});
 
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TABLE_YEAR_ENTRY",
-			value1 = "${tableYearEntry}");
+			value1 = ${tableYearEntry});
 	}
 
 }

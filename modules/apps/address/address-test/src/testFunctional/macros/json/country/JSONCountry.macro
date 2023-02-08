@@ -11,55 +11,55 @@ definition {
 			var creatorPassword = "test";
 		}
 
-		var countryStatus = JSONCountrySetter.setStatus(countryStatus = "${countryStatus}");
+		var countryStatus = JSONCountrySetter.setStatus(countryStatus = ${countryStatus});
 
 		JSONCountryAPI._addAccountEntry(
-			billingAllowed = "${billingAllowed}",
-			countryName = "${countryName}",
-			countryNumber = "${countryNumber}",
-			countryPriority = "${countryPriority}",
-			countryStatus = "${countryStatus}",
-			creatorEmailAddress = "${creatorEmailAddress}",
-			creatorPassword = "${creatorPassword}",
-			shippingAllowed = "${shippingAllowed}",
-			subjectToVAT = "${subjectToVAT}",
-			threeLetterISOCode = "${threeLetterISOCode}",
-			twoLetterISOCode = "${twoLetterISOCode}");
+			billingAllowed = ${billingAllowed},
+			countryName = ${countryName},
+			countryNumber = ${countryNumber},
+			countryPriority = ${countryPriority},
+			countryStatus = ${countryStatus},
+			creatorEmailAddress = ${creatorEmailAddress},
+			creatorPassword = ${creatorPassword},
+			shippingAllowed = ${shippingAllowed},
+			subjectToVAT = ${subjectToVAT},
+			threeLetterISOCode = ${threeLetterISOCode},
+			twoLetterISOCode = ${twoLetterISOCode});
 	}
 
 	macro getCountryAbbreviation {
-		Variables.assertDefined(parameterList = "${countryName}");
+		Variables.assertDefined(parameterList = ${countryName});
 
-		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = "${countryName}");
+		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = ${countryName});
 
-		return "${countryAbbreviation}";
+		return ${countryAbbreviation};
 	}
 
 	@summary = "Get the countryId based of its name"
 	macro getCountryId {
-		Variables.assertDefined(parameterList = "${countryName}");
+		Variables.assertDefined(parameterList = ${countryName});
 
-		var key_countryName = StringUtil.replace("${countryName}", " ", "-");
+		var key_countryName = StringUtil.replace(${countryName}, " ", "-");
 
-		var country = JSONCountryAPI._getCountryByName(countryName = "${key_countryName}");
+		var country = JSONCountryAPI._getCountryByName(countryName = ${key_countryName});
 
-		var countryId = JSONUtil.getWithJSONPath("${country}", "$..countryId");
+		var countryId = JSONUtil.getWithJSONPath(${country}, "$..countryId");
 
-		return "${countryId}";
+		return ${countryId};
 	}
 
 	@summary = "Get the regionId based of its name and the respective country"
 	macro getRegionId {
 		Variables.assertDefined(parameterList = "${regionName},${countryName}");
 
-		var key_countryName = StringUtil.replace("${countryName}", " ", "-");
-		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = "${countryName}");
+		var key_countryName = StringUtil.replace(${countryName}, " ", "-");
+		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = ${countryName});
 
-		var countryRegions = JSONCountryAPI._getCountryRegions(countryAbbreviation = "${countryAbbreviation}");
+		var countryRegions = JSONCountryAPI._getCountryRegions(countryAbbreviation = ${countryAbbreviation});
 
-		var regionId = JSONUtil.getWithJSONPath("${countryRegions}", "$[?(@.title=='${regionName}')].regionId");
+		var regionId = JSONUtil.getWithJSONPath(${countryRegions}, "$[?(@.title=='${regionName}')].regionId");
 
-		return "${regionId}";
+		return ${regionId};
 	}
 
 }

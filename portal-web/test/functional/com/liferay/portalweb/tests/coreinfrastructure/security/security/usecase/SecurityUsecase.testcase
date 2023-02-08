@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107017. Create user via JSONWSAPUI."
-	@priority = "4"
+	@priority = 4
 	test CreateUserViaJSONWSAPIUI {
 		var portalURL = PropsUtil.get("portal.url");
 		var userfn = "testfUI";
@@ -37,13 +37,13 @@ definition {
 			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextName=&signature=/user/add-user-31-long-boolean-java.lang.String-java.lang.String-boolean-java.lang.String-java.lang.String-long-java.lang.String-java.util.Locale-java.lang.String-java.lang.String-java.lang.String-long-long-boolean-int-int-int-java.lang.String-%5BJ-%5BJ-%5BJ-%5BJ-java.util.List-java.util.List-java.util.List-java.util.List-java.util.List-boolean-com.liferay.portal.kernel.service.ServiceContext");
 
 			JSONUser.addUserByJSONWSUI(
-				userFirstName = "${userfn}",
-				userLastName = "${userln}");
+				userFirstName = ${userfn},
+				userLastName = ${userln});
 		}
 
 		task ("Assert message present in HTML source") {
 			while (IsElementPresent(locator1 = "JSONWS#SECURITY_RESULT", value1 = "Welcome ${userfn} ${userln}!")) {
-				Pause(locator1 = "500");
+				Pause(locator1 = 500);
 			}
 		}
 
@@ -53,14 +53,14 @@ definition {
 			User.openUsersAdmin();
 
 			User.viewUserTableName(
-				key_userScreenName = "${key_userScreenName}",
-				userfn = "${userfn}",
-				userln = "${userln}");
+				key_userScreenName = ${key_userScreenName},
+				userfn = ${userfn},
+				userln = ${userln});
 		}
 	}
 
 	@description = "This is a use case for LPS-83566. Escape url redirect with groovy script."
-	@priority = "5"
+	@priority = 5
 	test EscapeUrlRedirectWithGroovyScript {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";
@@ -83,7 +83,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-87768. No permission from unauthorized url as power user."
-	@priority = "5"
+	@priority = 5
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
@@ -137,7 +137,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin."
-	@priority = "5"
+	@priority = 5
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
 
@@ -146,14 +146,14 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Define user permissions view control panel menu") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "User");
 		}
 
 		task ("Define user permissions") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
 					roleTitle = "User");
 			}
@@ -204,7 +204,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-68070. Validate cannot overwrite OSGi service identifier."
-	@priority = "5"
+	@priority = 5
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
 
@@ -213,14 +213,14 @@ out.println(PortalUtil.escapeRedirect("/"));
 		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&serviceMethodName=getOSGiServiceIdentifier&p_auth=";
 
 		task ("Assert JSONWS empty page") {
-			Api.gotoPAuthURL(url = "${url}");
+			Api.gotoPAuthURL(url = ${url});
 
 			ServerAdministration.viewJSONWSSecurityEmptyPage();
 		}
 	}
 
 	@description = "This is a use case for LPS-49848."
-	@priority = "4"
+	@priority = 4
 	test ValidateCannotStealAdminAccount {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
 
@@ -254,7 +254,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LRQA-14382. Validate forward url PG."
-	@priority = "5"
+	@priority = 5
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";
 		property portal.acceptance = "true";
@@ -285,7 +285,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution."
-	@priority = "5"
+	@priority = 5
 	test ValidateNoLARRemoteCodeExecution {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateNoLARRemoteCodeExecution";
 
@@ -305,7 +305,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-85112. Validate view permission cannot update other users password."
-	@priority = "5"
+	@priority = 5
 	test ValidateViewPermissionCanNotUpdateOtherUsersPassword {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
 
@@ -347,7 +347,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-55622. View no invoked portlet via URL."
-	@priority = "5"
+	@priority = 5
 	test ViewNoInvokedPortletViaURL {
 		property portal.acceptance = "true";
 

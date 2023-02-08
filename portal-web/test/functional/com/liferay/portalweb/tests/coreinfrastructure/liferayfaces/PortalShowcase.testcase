@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test InputRichTextSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/general");
 
@@ -156,9 +156,9 @@ definition {
 			locator1 = "PortalShowcase#WRITEABLE_FIELD",
 			value1 = "\UP");
 
-		var i = "0";
+		var i = 0;
 
-		while ("${i}" != "7") {
+		while (${i} != 7) {
 			KeyPress(
 				locator1 = "PortalShowcase#WRITEABLE_FIELD",
 				value1 = "\LEFT");

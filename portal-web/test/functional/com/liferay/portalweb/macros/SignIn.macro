@@ -7,11 +7,11 @@ definition {
 	macro _signIn {
 		var appServerType = PropsUtil.get("app.server.type");
 
-		if ("${appServerType}" == "weblogic") {
+		if (${appServerType} == "weblogic") {
 
 			// Pausing 2 seconds due to LPS-159595
 
-			Pause(locator1 = "2000");
+			Pause(locator1 = 2000);
 		}
 
 		if (isSet(virtualHostsURL)) {
@@ -46,7 +46,7 @@ definition {
 	macro setPasswordReminder {
 		Type(
 			locator1 = "TextInput#ANSWER",
-			value1 = "${userPasswordReminderAnswer}");
+			value1 = ${userPasswordReminderAnswer});
 
 		Button.clickSave();
 	}
@@ -54,29 +54,29 @@ definition {
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
 	macro signIn {
 		SignIn._signIn(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	macro signInPortalInstanceSetUp {
 		var portalURL = PropsUtil.get("portal.url");
 
-		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
+		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
-		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
+		var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
-			authenticationMethod = "${authenticationMethod}",
+			authenticationMethod = ${authenticationMethod},
 			domain = "liferay.com",
-			portalInstanceId = "${portalURL}",
-			virtualHost = "${portalURL}");
+			portalInstanceId = ${portalURL},
+			virtualHost = ${portalURL});
 	}
 
 	macro signInSpecificURL {
 		SignIn._signIn(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}",
-			virtualHostsURL = "${url}");
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			virtualHostsURL = ${url});
 	}
 
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
@@ -84,9 +84,9 @@ definition {
 		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "test@liferay.com");
 
 		SignIn._signIn(
-			licenseExpired = "${licenseExpired}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			licenseExpired = ${licenseExpired},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 }

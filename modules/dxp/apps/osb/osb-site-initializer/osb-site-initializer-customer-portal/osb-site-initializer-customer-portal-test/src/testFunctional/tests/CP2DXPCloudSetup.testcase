@@ -20,13 +20,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -35,21 +35,21 @@ definition {
 
 		CustomerPortal.customerPortalTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-144988 | Test Summary: Assert if button 'Add Another Admin' works when clicked"
-	@priority = "4"
+	@priority = 4
 	test CanAddAnotherAdmin {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -59,7 +59,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CustomerPortal.clickOnStartProjectSetup();
 
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144976 | Test Summary: Verify if the user can choose an option at Disaster Recovery Data Center Region"
-	@priority = "5"
+	@priority = 5
 	test CanChooseDisasterRecoveryDataCenter {
 		task ("Activate object for disaster data center region") {
 			CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
@@ -87,7 +87,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -97,7 +97,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
@@ -111,17 +111,17 @@ definition {
 		}
 
 		task ("Deactivating object for the disaster data center region") {
-			CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter(index = "6");
+			CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter(index = 6);
 		}
 	}
 
 	@description = "Automation ID: LPS-144970 | Test Summary: Verify if the user can choose an option at 'Primary Data Center Region"
-	@priority = "5"
+	@priority = 5
 	test CanChoosePrimaryDataCenter {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -131,7 +131,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
@@ -146,12 +146,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144986 | Test Summary: Verify if Submit button is only enabled when all the fields are filled"
-	@priority = "5"
+	@priority = 5
 	test CanClickSubmitButtonWithAllFilledIn {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -161,7 +161,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
@@ -176,12 +176,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144990 | Test Summary: If the admin user selects 'Skip for Now' then the user is taken to that project's home page / subscriptions page"
-	@priority = "4"
+	@priority = 4
 	test CanSkipForNowToOverview {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -191,7 +191,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -208,12 +208,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144989 | Test Summary: Verify a success message is shown after finishing setting DXP Cloud up"
-	@priority = "4"
+	@priority = 4
 	test CanViewDXPCloudSetupSuccessMessage {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -223,7 +223,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -244,7 +244,7 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
-				position = "1",
+				position = 1,
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
@@ -254,12 +254,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146684 | Test Summary: Verify if the admin user selects 'Cancel', then the user goes back to the project's Product Activation page"
-	@priority = "4"
+	@priority = 4
 	test IfSelectsCancelThenTheUserGoesBackPreviousPage {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -269,7 +269,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -283,7 +283,7 @@ definition {
 		task ("Go to the product activation page and open the card activation modal") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -296,12 +296,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144977 | Test Summary: Verify message 'This field is required.' on DXP Cloud System Admin's Email Address"
-	@priority = "4"
+	@priority = 4
 	test IsDXPCloudEmailRequired {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -311,7 +311,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -340,12 +340,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144978 | Test Summary: Verify message 'Please insert a valid e-mail.' on DXP Cloud System Admin's Email Address"
-	@priority = "3"
+	@priority = 3
 	test IsDXPCloudEmailValid {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -355,7 +355,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -380,12 +380,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144974 | Test Summary: Verify message 'This field is required.' in Project ID field"
-	@priority = "4"
+	@priority = 4
 	test IsProjectIDRequired {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -395,7 +395,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -407,7 +407,7 @@ definition {
 		task ("Filling and deleting the Project ID field") {
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "projectId",
-				value = "001");
+				value = 001);
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "projectId",
@@ -424,12 +424,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144982 | Test Summary: Verify message 'This field is required.' on System Admin's First Name"
-	@priority = "4"
+	@priority = 4
 	test IsSystemAdminFirstNameRequired {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -439,7 +439,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -468,12 +468,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144985 | Test Summary: Verify message 'This field is required.' on System Admin's Github Username"
-	@priority = "4"
+	@priority = 4
 	test IsSystemAdminGitUserRequired {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -483,7 +483,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -512,12 +512,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144984 | Test Summary: Verify message 'This field is required.' on System Admin's Last Name"
-	@priority = "4"
+	@priority = 4
 	test IsSystemAdminLastNameRequired {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -527,7 +527,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -556,12 +556,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146677 | Test Summary: Verify if the project name and version is correct"
-	@priority = "4"
+	@priority = 4
 	test NameAndVersionOfChosenProject {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -571,7 +571,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -585,26 +585,26 @@ definition {
 		task ("Go to the product activation page and open the card activation modal") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 		}
 
 		task ("Assert the project name and version") {
 			AssertTextEquals(
-				key_name = "${testAccount}",
+				key_name = ${testAccount},
 				locator1 = "CP2DXPCloudSetup#PROJECT_NAME_SETUP",
-				value1 = "${testAccount}");
+				value1 = ${testAccount});
 		}
 	}
 
 	@description = "Automation ID: LPS-146676 | Test Summary: Verify if that when you click 'Finish Activation' the DXP Cloud configuration modal is shown"
-	@priority = "5"
+	@priority = 5
 	test OpenSetUpModal {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -614,7 +614,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -628,7 +628,7 @@ definition {
 		task ("Go to the product activation page and open the card activation modal") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -641,12 +641,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146686 | Test Summary: Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
-	@priority = "4"
+	@priority = 4
 	test SeeIfTheCardActivationStatusChanges {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -656,7 +656,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			CP2Utils.goToCustomerPortalSiteWithRefresh();
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
@@ -666,7 +666,7 @@ definition {
 		task ("Go to the product activation page and open the card activation modal") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -683,7 +683,7 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
-				position = "1",
+				position = 1,
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(

@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98501. Copy a global fragment to collection in current site."
-	@priority = "4"
+	@priority = 4
 	test CopyGlobalFragmentToCollectionInNormalSite {
 		task ("Add a fragment in global fragment collection") {
 			var newLine = '''
@@ -50,7 +50,7 @@ definition {
 </${configuration.headingLevel}>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
 	"fieldSets": [
@@ -91,14 +91,14 @@ definition {
 }
 			''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Global",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Global Fragment Name");
 		}
 
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-100540. The changes of global fragments can be propagated to all pages of a site or sites that use the fragments"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test PropagateGlobalFragmentChanges {
 		property portal.acceptance = "true";
@@ -144,7 +144,7 @@ definition {
 </${configuration.headingLevel}>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
 	"fieldSets": [
@@ -185,14 +185,14 @@ definition {
 }
 			''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Global",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Global Fragment Name");
 		}
 
@@ -254,7 +254,7 @@ definition {
 				siteName = "Site Name");
 
 			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+				Button.viewPresent(button = ${button});
 			}
 		}
 
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98501. View global fragment resource is copied to collection in current site."
-	@priority = "4"
+	@priority = 4
 	test ViewGlobalFragmentResourceCopiedToCollectionInNormalSite {
 		task ("Upload an image as fragment resource") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
@@ -291,7 +291,7 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 			var jsonSnippet = '''
 {
 	"fieldSets": [
@@ -323,14 +323,14 @@ definition {
 }
 			''';
 
-			var jsonSnippet = StringUtil.regexReplaceAll("${jsonSnippet}", "${newLine}", "");
+			var jsonSnippet = StringUtil.regexReplaceAll(${jsonSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Global",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Global Fragment Name");
 		}
 
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101230 and LPS-100540. Global fragments are visible in Fragments admin. The View Site Usages action is unavailable if fragment is unused."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewGlobalFragments {
 		property portal.acceptance = "true";
@@ -421,7 +421,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-100540. The View Site Usages action of global fragments shows all the usage"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewGlobalFragmentsSiteUsages {
 		property portal.acceptance = "true";
@@ -508,11 +508,11 @@ definition {
 
 			FragmentsAdmin.viewSiteUsages(
 				siteName = "Test Site Name",
-				usages = "4");
+				usages = 4);
 
 			FragmentsAdmin.viewSiteUsages(
 				siteName = "Test Site Name 2",
-				usages = "2");
+				usages = 2);
 		}
 
 		task ("View site usages of the second global fragment") {
@@ -524,7 +524,7 @@ definition {
 
 			FragmentsAdmin.viewSiteUsages(
 				siteName = "Test Site Name",
-				usages = "4");
+				usages = 4);
 
 			LexiconTable.viewTableEntryNotPresent(tableEntry = "Test Site Name 2");
 		}

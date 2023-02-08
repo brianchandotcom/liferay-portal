@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 
 				JSONLayout.deletePublicLayout(
 					groupName = "Guest",
-					layoutName = "${layoutName}");
+					layoutName = ${layoutName});
 
 				Navigator.gotoPage(pageName = "Home");
 
@@ -52,7 +52,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUseObjectsInsideTemplates {
 		property portal.acceptance = "true";
 
@@ -84,7 +84,7 @@ definition {
 			UploadFile(
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${filePath}");
+				value1 = ${filePath});
 
 			PortletEntry.save();
 		}
@@ -133,14 +133,14 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUseServicesInsideTemplates {
 		property portal.acceptance = "true";
 
 		task ("Given three blog postings created") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "3");
+				numberOfBlogPostings = 3);
 		}
 
 		task ("And Given a template that will print the blog postings headlines sorted desc and filtered by creator name") {

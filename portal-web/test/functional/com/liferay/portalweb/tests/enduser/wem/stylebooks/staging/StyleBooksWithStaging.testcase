@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116106. Page Creator can change style book of content page via Look and Feel settings in Staging site."
-	@priority = "3"
+	@priority = 3
 	test ChangeStyleBookOfContentPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Buttons");
@@ -66,7 +66,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -123,7 +123,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(0, 255, 0, 1)");
@@ -131,7 +131,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "32px");
@@ -194,7 +194,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(11, 95, 255, 1)");
@@ -202,7 +202,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "26px");
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116106. Page Creator can quickly change style book via Page Design Options panel in Staging site."
-	@priority = "4"
+	@priority = 4
 	test ChangeStyleBookOfContentPageViaPageDesignOptionsPanelInStagingSite {
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Buttons");
@@ -260,7 +260,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -300,7 +300,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(0, 255, 0, 1)");
@@ -308,7 +308,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "32px");
@@ -356,7 +356,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(11, 95, 255, 1)");
@@ -364,7 +364,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "26px");
@@ -398,7 +398,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116106 and LPS-121004. Page Creator can change style book of widget page via Look and Feel settings in Staging site."
-	@priority = "3"
+	@priority = 3
 	test ChangeStyleBookOfWidgetPageViaLookAndFeelInStagingSite {
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Buttons");
@@ -553,7 +553,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116078. Can preview the effect on page when edit the style book in Staging site."
-	@priority = "4"
+	@priority = 4
 	test PreviewTheEffectOnPageInStyleBookEditorInStagingSite {
 		task ("Edit the style book and Publish it") {
 			StyleBooks.selectForm(formName = "Buttons");
@@ -577,7 +577,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -639,7 +639,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116077. The data of Style Books is immediately available to Live site when manage it in Staging site."
-	@priority = "5"
+	@priority = 5
 	test ViewDataChangesOfStyleBookAreImmediatelyAvailableToLiveSite {
 		property portal.acceptance = "true";
 
@@ -665,7 +665,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2");
+				value1 = 2);
 
 			StyleBooks.clickManagementBar();
 
@@ -715,7 +715,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "background-color",
 				value1 = "rgba(0, 255, 0, 1)");
@@ -723,7 +723,7 @@ definition {
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				locator2 = "font-size",
 				value1 = "32px");

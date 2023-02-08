@@ -18,7 +18,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -46,7 +46,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -58,7 +58,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMentionViaBlogsEntry {
 		Mentions.addMentionViaBlogsEntry(
@@ -78,7 +78,7 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMentionViaBlogsEntryComment {
 		JSONBlog.addEntry(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "This ensures that a guest is able to mention others in the comment section."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewMentionViaBlogsEntryCommentAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This ensures that a user is able to mention others in comment section when editing."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMentionViaEditedBlogsEntryComment {
 		JSONBlog.addEntry(

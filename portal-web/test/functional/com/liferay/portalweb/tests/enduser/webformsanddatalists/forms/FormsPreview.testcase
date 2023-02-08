@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Autofill) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test AutofillRuleCanBePreviewed {
 		property test.name.skip.portal.instance = "FormsPreview#AutofillRuleCanBePreviewed";
 
@@ -56,7 +56,7 @@ definition {
 			outputParameterLabel = "Country Name",
 			outputParameterPath = "$..nameCurrentValue",
 			outputParameterType = "List",
-			timeout = "1000",
+			timeout = 1000,
 			url = "${portalURL}/api/jsonws/country/get-countries/");
 
 		FormsAdmin.saveDataProvider();
@@ -65,16 +65,16 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.editFieldLabelMetal(fieldValue = "Region");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Select from List",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.editFieldLabelMetal(fieldValue = "Country");
 
@@ -88,15 +88,15 @@ definition {
 
 		FormRules.selectConditionField(
 			conditionField = "Region",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.selectConditionOperator(
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Autofill",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Countries of the World");
 
 		FormRules.selectAutofillFromDataProvider(
@@ -121,18 +121,18 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Calculate) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test CalculateRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -143,23 +143,23 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Calculate",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.chooseCalculateOperator(calculateOperator = "+");
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "1");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 1);
 
-		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = "0");
+		FormRules.clickOnCalculatorNumbersKeyboard(buttonName = 0);
 
 		FormRules.save();
 
@@ -175,29 +175,29 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "Numeric",
-			fieldValue = "20");
+			fieldValue = 20);
 	}
 
 	@description = "Verify that a user can navigate to different pages of a preview"
-	@priority = "5"
+	@priority = 5
 	test CanNavigateToDifferentPages {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
 		FormsAdminNavigator.gotoPreviewForm();
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Verify that it is not possible to submit a preview of a Form"
-	@priority = "4"
+	@priority = 4
 	test CannotBeSubmitted {
 		property portal.acceptance = "true";
 
@@ -232,7 +232,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		FormsAdminNavigator.gotoPreviewForm();
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@description = "Verify that a user cannot navigate to a new page without completing a required field"
-	@priority = "5"
+	@priority = 5
 	test CannotNavigateToANewPageWithoutCompletingARequiredField {
 		FormsAdmin.addForm();
 
@@ -249,17 +249,17 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.enableSwitch(fieldName = "Required");
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
 		FormsAdminNavigator.gotoPreviewForm();
 
@@ -267,7 +267,7 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		Form.viewRequiredFieldIndicator();
 
@@ -285,18 +285,18 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 	}
 
 	@description = "Verify that a Color Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test ColorFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Color");
 
 		FormFields.editHelpText(
@@ -323,20 +323,20 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Contains) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test ContainsRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -347,12 +347,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -373,14 +373,14 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test DateFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		FormFields.editHelpText(
@@ -402,26 +402,26 @@ definition {
 		FormFields.editDateCalendar(
 			fieldName = "Date",
 			fieldValue = "01/01/2019",
-			valueDay = "1",
+			valueDay = 1,
 			valueMonth = "January",
-			valueYear = "2019");
+			valueYear = 2019);
 	}
 
 	@description = "Verify that a rule with a (Does not contain) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test DoesNotContainRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		FormsAdminNavigator.gotoRules();
 
@@ -431,12 +431,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Does Not Contain",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -458,20 +458,20 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Enable) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test EnableRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.closeSidebar();
@@ -484,12 +484,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Enable",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -510,11 +510,11 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 	}
 
 	@description = "Verify that a Fieldsets can be previewed"
-	@priority = "5"
+	@priority = 5
 	test FieldsetsCanBePreviewed {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -527,13 +527,13 @@ definition {
 		Form.editName(formName = "Element Set 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.saveElementSet();
@@ -544,7 +544,7 @@ definition {
 
 		Form.gotoAddElementSet(
 			elementSetTitle = "Element Set 1",
-			fieldPositionNumber = "0");
+			fieldPositionNumber = 0);
 
 		FormsAdminNavigator.gotoPreviewForm();
 
@@ -560,18 +560,18 @@ definition {
 	}
 
 	@description = "Verify that a Fields Groups can be previewed"
-	@priority = "5"
+	@priority = 5
 	test FieldsGroupsCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		Form.addFieldToFieldsGroup(
@@ -586,35 +586,35 @@ definition {
 	}
 
 	@description = "Verify that a Grid Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test GridFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Grid");
 
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 1",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editGridOptions(
 			gridField = "Rows",
 			optionValue = "Option 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
 			optionValue = "Option A",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editGridOptions(
 			gridField = "Columns",
 			optionValue = "Option B",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.editHelpText(
 			fieldHelpText = "Test Help Text",
@@ -635,43 +635,43 @@ definition {
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
 			optionName = "Option 1",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
 			optionName = "Option 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.viewOptionColumnsName(
 			fieldTitle = "Grid",
 			optionName = "Option A",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.viewOptionColumnsName(
 			fieldTitle = "Grid",
 			optionName = "Option B",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "Grid",
 			optionColumnNumber = "A",
-			optionRowNumber = "1");
+			optionRowNumber = 1);
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = "Grid",
-			key_optionNumber = "1",
+			key_optionNumber = 1,
 			locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
 	@description = "Verify that an Image Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test ImageFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Image");
 
 		FormFields.editHelpText(
@@ -693,13 +693,13 @@ definition {
 		FormFields.selectImageUpload(
 			fileName = "Document_1.jpg",
 			navTab = "Documents and Media",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.validateImagePredefinedValue(fileName = "Document_1.jpg");
 	}
 
 	@description = "Verify that is is not possible to preview an invalid Form (ie. no Fields or a Paragraph field with no body text)"
-	@priority = "5"
+	@priority = 5
 	test InvalidFormCannotBePreviewed {
 		property portal.acceptance = "true";
 
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Is empty) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test IsEmptyRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
@@ -724,7 +724,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -734,11 +734,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -759,20 +759,20 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Is Equal To) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test IsEqualToRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -783,12 +783,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Is Equal To",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -811,7 +811,7 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Is Not Empty) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test IsNotEmptyRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
@@ -822,7 +822,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -832,11 +832,11 @@ definition {
 		FormRules.configureConditionOptions(
 			conditionField = "Text",
 			conditionOperator = "Is Not Empty",
-			conditionRowNumber = "1");
+			conditionRowNumber = 1);
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Text");
 
 		FormRules.save();
@@ -853,24 +853,24 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 	}
 
 	@description = "Verify that a rule with an (Is Not Equal To) condition can be previewed"
-	@priority = "5"
+	@priority = 5
 	test IsNotEqualToRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -881,12 +881,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Is Not Equal To",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -909,7 +909,7 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Jump to Page) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test JumpToPageRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
@@ -917,21 +917,21 @@ definition {
 
 		Form.editPageTitle(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
-		Form.addPage(formAddNewPageNumber = "1");
+		Form.addPage(formAddNewPageNumber = 1);
 
 		Form.editPageTitle(
 			formPageName = "Page B",
-			formTitleNumber = "2");
+			formTitleNumber = 2);
 
-		Form.addPage(formAddNewPageNumber = "2");
+		Form.addPage(formAddNewPageNumber = 2);
 
 		Form.editPageTitle(
 			formPageName = "Page C",
-			formTitleNumber = "3");
+			formTitleNumber = 3);
 
 		FormsAdminNavigator.gotoRules();
 
@@ -941,12 +941,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Jump to Page",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "3 Page C");
 
 		FormRules.save();
@@ -959,7 +959,7 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page A",
-			formTitleNumber = "1");
+			formTitleNumber = 1);
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -969,27 +969,27 @@ definition {
 
 		Form.viewPageName(
 			formPageName = "Page C",
-			formTitleNumber = "3");
+			formTitleNumber = 3);
 	}
 
 	@description = "Verify that a Multiple Selection Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test MultipleSelectionFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Multiple Selection");
 
 		FormFields.editOptionsRow(
 			optionValue = "Option 1",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editOptionsRow(
 			optionValue = "Option 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormFields.editHelpTextFieldAtMultipleSelection(
 			fieldName = "tip",
@@ -1005,8 +1005,8 @@ definition {
 
 		for (var label : list "Option 1,Option 2") {
 			FormFields.viewCheckboxLabel(
-				fieldLabel = "${label}",
-				fieldName = "${label}");
+				fieldLabel = ${label},
+				fieldName = ${label});
 		}
 
 		FormFields.viewFieldHelpText(
@@ -1019,14 +1019,14 @@ definition {
 	}
 
 	@description = "Verify that a Numeric Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test NumericFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		FormFields.editHelpText(
@@ -1051,22 +1051,22 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormFields.viewTextValue(
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 	}
 
 	@description = "Verify that a Paragraph Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test ParagraphFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Test");
@@ -1077,13 +1077,13 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Require) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test RequireRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormsAdminNavigator.gotoRules();
 
@@ -1093,12 +1093,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Require",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Text");
 
 		FormRules.save();
@@ -1119,14 +1119,14 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test RichTextFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Rich Text");
 
 		FormFields.editHelpText(
@@ -1153,14 +1153,14 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test SelectFromListFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Select from List");
 
 		FormFields.editHelpText(
@@ -1170,11 +1170,11 @@ definition {
 
 		FormFields.editOptionsRow(
 			optionValue = "Option 1",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		FormFields.editOptionsRow(
 			optionValue = "Option 2",
-			rowNumber = "2");
+			rowNumber = 2);
 
 		FormsAdminNavigator.gotoPreviewForm();
 
@@ -1206,14 +1206,14 @@ definition {
 	}
 
 	@description = "Verify that a Separator Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test SeparatorFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Separator");
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
@@ -1230,7 +1230,7 @@ definition {
 	}
 
 	@description = "Verify that a rule with a (Show) action can be previewed"
-	@priority = "5"
+	@priority = 5
 	test ShowRuleCanBePreviewed {
 		FormsAdmin.addForm();
 
@@ -1241,7 +1241,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
 		FormsAdminNavigator.gotoRules();
@@ -1252,12 +1252,12 @@ definition {
 			conditionField = "Text",
 			conditionFieldValue = "Test",
 			conditionOperator = "Contains",
-			conditionRowNumber = "1",
+			conditionRowNumber = 1,
 			conditionValueType = "Value");
 
 		FormRules.configureActionOptions(
 			action = "Show",
-			actionRowNumber = "1",
+			actionRowNumber = 1,
 			actionTarget = "Numeric");
 
 		FormRules.save();
@@ -1278,23 +1278,23 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test SingleSelectionFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Single Selection");
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 1",
-			optionValue = "1");
+			optionValue = 1);
 
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",
-			optionValue = "2");
+			optionValue = 2);
 
 		FormFields.editHelpText(
 			fieldHelpText = "Test Help Text",
@@ -1314,29 +1314,29 @@ definition {
 
 		FormFields.viewSingleSelectionOption(
 			key_optionLabel = "Option 1",
-			key_position = "1");
+			key_position = 1);
 
 		FormFields.viewSingleSelectionOption(
 			key_optionLabel = "Option 2",
-			key_position = "2");
+			key_position = 2);
 
 		ClickNoError(
 			key_optionValue = "Option 1",
 			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_OPTION");
 
 		AssertChecked.assertCheckedNotVisible(
-			key_radioOption = "1",
+			key_radioOption = 1,
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 	}
 
 	@description = "Verify that a Text Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test TextFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.editPlaceholderField(fieldValue = "Test Placeholder Text");
 
@@ -1368,7 +1368,7 @@ definition {
 	}
 
 	@description = "Verify that translations can be previewed"
-	@priority = "5"
+	@priority = 5
 	test TranslationsCanBePreviewed {
 		property portal.acceptance = "true";
 
@@ -1377,7 +1377,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
@@ -1404,14 +1404,14 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be previewed"
-	@priority = "5"
+	@priority = 5
 	test UploadFieldCanBePreviewed {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Upload");
 
 		FormFields.editHelpText(

@@ -16,7 +16,7 @@ definition {
 
 	@description = "COMMERCE-5841. As a system admin I want to be able to add/suspend/reactivate/cancel a delivery subscription"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test CreateAndUpdateDeliverySubscription {
 		property portal.acceptance = "false";
 
@@ -27,7 +27,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6257. Test payment subscription lifecycle add/suspend/reactivate/cancel"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test SubscriptionLifecycle {
 		property portal.acceptance = "false";
 
@@ -37,7 +37,7 @@ definition {
 
 	@description = "COMMERCE-5844. As a system admin I want to check subscription notifications are properly created"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test SubscriptionNotifications {
 		property portal.acceptance = "false";
 

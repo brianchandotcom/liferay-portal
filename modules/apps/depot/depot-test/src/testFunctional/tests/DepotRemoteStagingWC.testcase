@@ -20,7 +20,7 @@ definition {
 
 		Depot.remoteStagingSetUpViaJson(
 			groupName = "Test Depot Name",
-			remotePort = "9080",
+			remotePort = 9080,
 			site = "false");
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -31,7 +31,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -41,7 +41,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling remote staging."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteWCInlineImage {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanDeleteWCInlineImage";
@@ -122,7 +122,7 @@ definition {
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling remote staging."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditFriendlyURL {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanEditFriendlyURL";
@@ -251,7 +251,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling remote staging."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditWCInlineImage {
 		property portal.acceptance = "true";
@@ -373,7 +373,7 @@ definition {
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "This ensures that an article using a structure stored in depot can be deleted and republished in remote staging site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishDeletedWCCustomization {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishDeletedWCCustomization";
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "This ensures that an article using a structure stored in depot can be edited and republished in remote staging site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishEditedWCCustomization {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishEditedWCCustomization";
@@ -588,7 +588,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -624,7 +624,7 @@ definition {
 	}
 
 	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling remote staging."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPublishWCFolder {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCFolder";
@@ -699,7 +699,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-122790. It ensures that web content with a category in depot can be published in remote staging site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanPublishWCWithCategory {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithCategory";
@@ -768,7 +768,7 @@ definition {
 	}
 
 	@description = "This test ensures that a depot WC with an embedded video added from the item selector can be published on a connected remote staging site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanPublishWCWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DepotRemoteStagingWC#CanPublishWCWithEmbeddedVideo";

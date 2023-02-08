@@ -39,8 +39,8 @@ definition {
 
 		task ("Change pagination and create Team") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -77,8 +77,8 @@ definition {
 				caseTypeId = "Case_Type",
 				componentId = "Components_1 Project",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -106,7 +106,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
@@ -123,13 +123,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160724 - Verify if as an Administrator I should be able to add a task with user groups"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
 		task ("Given the user add a user and UserGroups") {
 			JSONUser.addUser(
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166561 - Verify if as an Administrator I should not be able to add a duplicate Task"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
 		task ("Given the user try to add a duplicate Task") {
 			TestrayTestflow.goToTestflow();
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-168093 - Verify that the user cannot create a task without assign users"
-	@priority = "4"
+	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
 		task ("Given the user try to add a Task without User") {
 			TestrayTestflow.goToTestflow();
@@ -256,7 +256,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164153 - Verify that the user cannot create a task without Case Type"
-	@priority = "4"
+	@priority = 4
 	test AdminCanViewRequiredCaseType {
 		task ("Given the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
@@ -275,14 +275,14 @@ definition {
 	}
 
 	@description = "This is a test for LPS-169349 - Verify if as an Administrator I should be able view task in analysis"
-	@priority = "4"
+	@priority = 4
 	test AdminCanViewTaskInAnalysis {
 		task ("Given the user add a Task in a different flow") {
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163863 - Verify that As an administrator can remove users from the context menu"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveUser {
 		task ("Given the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163862 - Verify that the user can not create a task without name"
-	@priority = "3"
+	@priority = 3
 	test CanViewFieldNameRequired {
 		task ("Given the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();

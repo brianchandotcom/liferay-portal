@@ -55,7 +55,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164125. Form Components should available on Masters Page Template for user with custom permissions."
-	@priority = "4"
+	@priority = 4
 	test MapEntityToFormContainerInMastersPageTemplateAsUserWithViewPermissionForCustomObject {
 		task ("Given a site creator grants the needed permissions to new user") {
 			task ("Add a text field to Object") {

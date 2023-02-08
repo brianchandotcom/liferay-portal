@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
-	@priority = "4"
+	@priority = 4
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
@@ -58,7 +58,7 @@ definition {
 			for (var layoutName : list "Welcome,Documents and Media,News") {
 				JSONLayout.addPrivateLayout(
 					groupName = "Organization Name",
-					layoutName = "${layoutName}");
+					layoutName = ${layoutName});
 			}
 		}
 
@@ -95,7 +95,7 @@ definition {
 		task ("View prviate pages") {
 			for (var sitePageName : list "Welcome,Documents and Media,News") {
 				AssertElementPresent(
-					key_pageName = "${sitePageName}",
+					key_pageName = ${sitePageName},
 					locator1 = "Home#PAGE");
 			}
 		}
@@ -107,7 +107,7 @@ definition {
 		task ("View public pages not shown") {
 			for (var sitePageName : list "Welcome,Documents and Media,News") {
 				AssertElementNotPresent(
-					key_pageName = "${sitePageName}",
+					key_pageName = ${sitePageName},
 					locator1 = "Home#PAGE");
 			}
 		}
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host. This is a use case for LPS-140253. View no private page in  site settings's virtual host."
-	@priority = "4"
+	@priority = 4
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHostFF {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
@@ -285,7 +285,7 @@ definition {
 	}
 
 	@description = "Add a draft web content via Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test AddDraftWebContentViaAssetPublisher {
 		task ("Add a draft web content via Asset Publisher") {
 			Navigator.gotoSitePage(
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-137055. The show only assets configuration should be unavailable to display page template."
-	@priority = "4"
+	@priority = 4
 	test CannotViewShowOnlyAssetsConfigurationInDisplayPageTemplate {
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -344,7 +344,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132428. The user could configure Asset Publisher after adding the Kaleo Forms admin portlet to blacklist."
-	@priority = "4"
+	@priority = 4
 	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList";
 		property test.run.environment = "EE";
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "Configure the Asset Publisher as Site Administrator."
-	@priority = "4"
+	@priority = 4
 	test ConfigureAssetPublisherAsSiteAdministrater {
 		property asset.publisher.selection.style = "asset-list";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@description = "Disable Show Content Add Button."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DisableShowContentAddButton {
 		property portal.acceptance = "true";
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-132428. The default selection style of Asset Publisher is Collection."
-	@priority = "5"
+	@priority = 5
 	test DisplayCollectionInAssetPublisher {
 		property asset.publisher.selection.style = "asset-list";
 		property portal.acceptance = "true";
@@ -518,7 +518,7 @@ definition {
 	}
 
 	@description = "Edit the global web content via Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test EditGlobalWebContentViaAssetPublisher {
 		task ("Add a global web content") {
 			JSONWebcontent.addWebContent(
@@ -573,7 +573,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120568. The user could edit message board thread reply via Asset Publisher."
-	@priority = "5"
+	@priority = 5
 	test EditMessageBoardThreadReplyViaAP {
 		property portal.acceptance = "true";
 
@@ -625,7 +625,7 @@ definition {
 	}
 
 	@description = "Filter and order the displayed assets by field."
-	@priority = "5"
+	@priority = 5
 	test FilterAndOrderAssetsByField {
 		property portal.acceptance = "true";
 
@@ -649,13 +649,13 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text Box",
-				fieldLocation = "8",
+				fieldLocation = 8,
 				fieldName = "Text",
 				fieldType = "Multiple Lines");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Decimal",
-				fieldLocation = "9",
+				fieldLocation = 9,
 				fieldName = "Numeric",
 				numericType = "Decimal");
 
@@ -677,7 +677,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentNumeric = "345",
+				webContentNumeric = 345,
 				webContentTitle = "Web Content1 Title");
 		}
 
@@ -686,7 +686,7 @@ definition {
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt1 Titel");
 
-			WebContent.addWithStructureCP(webContentNumeric = "3");
+			WebContent.addWithStructureCP(webContentNumeric = 3);
 
 			PortletEntry.publish();
 		}
@@ -695,7 +695,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentNumeric = "123",
+				webContentNumeric = 123,
 				webContentTitle = "Web Content2 Title");
 		}
 
@@ -704,7 +704,7 @@ definition {
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt2 Titel");
 
-			WebContent.addWithStructureCP(webContentNumeric = "8");
+			WebContent.addWithStructureCP(webContentNumeric = 8);
 
 			PortletEntry.publish();
 		}
@@ -713,7 +713,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentNumeric = "567",
+				webContentNumeric = 567,
 				webContentTitle = "Web Content3 Title");
 		}
 
@@ -722,7 +722,7 @@ definition {
 
 			WebContent.addCP(webContentTitle = "Netz Inhalt3 Titel");
 
-			WebContent.addWithStructureCP(webContentNumeric = "5");
+			WebContent.addWithStructureCP(webContentNumeric = 5);
 
 			PortletEntry.publish();
 		}
@@ -808,12 +808,12 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content2 Title,Web Content1 Title,Web Content3 Title") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -828,12 +828,12 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Netz Inhalt1 Titel,Netz Inhalt3 Titel,Netz Inhalt2 Titel") {
 				AssetPublisherPortlet.viewDisplayOrderPG(
-					assetTitle = "${title}",
-					rowNumber = "${n}");
+					assetTitle = ${title},
+					rowNumber = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -861,15 +861,15 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "345",
+				assetContent = 345,
 				assetTitle = "Web Content1 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "123",
+				assetContent = 123,
 				assetTitle = "Web Content2 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "567",
+				assetContent = 567,
 				assetTitle = "Web Content3 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
@@ -894,15 +894,15 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "345",
+				assetContent = 345,
 				assetTitle = "Web Content1 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "123",
+				assetContent = 123,
 				assetTitle = "Web Content2 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "567",
+				assetContent = 567,
 				assetTitle = "Web Content3 Title");
 
 			AssetPublisherPortlet.viewAssetPG(
@@ -923,7 +923,7 @@ definition {
 
 			for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal") {
 				DataEngine.editFieldSearchable(
-					fieldFieldLabel = "${fieldFieldLabel}",
+					fieldFieldLabel = ${fieldFieldLabel},
 					searchableType = "Disable");
 			}
 
@@ -943,7 +943,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135460. Filter the displayed assets by categories when enable pagination."
-	@priority = "5"
+	@priority = 5
 	test FilterAssetsByCategoriesWithPagination {
 		property portal.acceptance = "true";
 
@@ -963,7 +963,7 @@ definition {
 		task ("Add 5 web contents with category") {
 			for (var i : list "1,2,3,4,5") {
 				JSONWebcontent.addWebContent(
-					assetCategoryIds = "${categoryId}",
+					assetCategoryIds = ${categoryId},
 					content = "WC WebContent${i} Content",
 					groupName = "Test Site Name",
 					title = "WC WebContent${i} Title");
@@ -983,7 +983,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "3",
+				paginationNumber = 3,
 				paginationType = "Regular");
 		}
 
@@ -996,7 +996,7 @@ definition {
 				nextPageClick = "true",
 				pageMod = "1 - 3 of 5",
 				pageNumber = "1 of 2",
-				paginationNumber = "3",
+				paginationNumber = 3,
 				paginationType = "Regular");
 		}
 
@@ -1004,7 +1004,7 @@ definition {
 			AssetPublisherPortlet.viewPaginatedAssetsPG(
 				pageMod = "4 - 5 of 5",
 				pageNumber = "2 of 2",
-				paginationNumber = "3",
+				paginationNumber = 3,
 				paginationType = "Regular");
 		}
 
@@ -1053,7 +1053,7 @@ definition {
 				nextPageClick = "true",
 				pageMod = "1 - 3 of 5",
 				pageNumber = "1 of 2",
-				paginationNumber = "3",
+				paginationNumber = 3,
 				paginationType = "Regular");
 		}
 
@@ -1061,7 +1061,7 @@ definition {
 			AssetPublisherPortlet.viewPaginatedAssetsPG(
 				pageMod = "4 - 5 of 5",
 				pageNumber = "2 of 2",
-				paginationNumber = "3",
+				paginationNumber = 3,
 				paginationType = "Regular");
 		}
 
@@ -1081,7 +1081,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159046. The page creator should see the tags on Asset Publisher filter selector under scoped page."
-	@priority = "3"
+	@priority = 3
 	test FilterAssetsFromPageScopeByTag {
 		task ("Given a page creator has an Asset Publisher and Blogs widget with scoped page") {
 			task ("Add a Blogs widget to page") {
@@ -1097,7 +1097,7 @@ definition {
 					siteName = "Test Site Name");
 
 				Portlet.selectScopePG(
-					portletIndex = "2",
+					portletIndex = 2,
 					portletName = "Blogs",
 					scope = "Asset Publisher Page");
 			}
@@ -1160,7 +1160,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-113996. The user could filter documents by field in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test FilterDocumentsByField {
 		task ("Add a document type with a Select from List field") {
 			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -1176,13 +1176,13 @@ definition {
 			for (var index : list "1,2") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index}");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldFieldLabel = "Select from List",
 					fieldReferenceOfFieldOption = "Value${index}",
-					index = "${index}");
+					index = ${index});
 			}
 
 			DDLDataDefinition.save();
@@ -1267,7 +1267,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129830. The user could remove multiple manual selection asset entries in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test RemoveMultipleManualSelectionAssetEntries {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#RemoveMultipleManualSelectionAssetEntries";
 
@@ -1276,13 +1276,13 @@ definition {
 
 			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
 
-			GogoShell.stopModule(moduleId = "${moduleId}");
+			GogoShell.stopModule(moduleId = ${moduleId});
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.layout.type.controller.portlet",
 				moduleStatus = "Resolved");
 
-			GogoShell.startModule(moduleId = "${moduleId}");
+			GogoShell.startModule(moduleId = ${moduleId});
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.layout.type.controller.portlet",
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-158221. The Asset Publisher widget should not lose the layout article reference after edit associated content page."
-	@priority = "4"
+	@priority = 4
 	test RepublishAssociatedContentPage {
 		task ("Given a page creator has a web content with an associated content page") {
 			task ("Add two content pages") {
@@ -1433,7 +1433,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-133629. The user can select folder by search when create web content based on custom structure via Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test SelectFolderBySearchWhenCreateWebContentBasedOnCustomStructureViaAssetPublisher {
 		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(
@@ -1509,7 +1509,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-133629. The user can select folder when create web content based on Basic Web Content via Asset Publisher."
-	@priority = "5"
+	@priority = 5
 	test SelectFolderWhenCreateWebContentViaAssetPublisher {
 		property portal.acceptance = "true";
 
@@ -1571,7 +1571,7 @@ definition {
 	}
 
 	@description = "The user could set as the Default Asset Publisher for This Page."
-	@priority = "5"
+	@priority = 5
 	test SetAsDefaultAssetPublisherForThisPage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -1616,7 +1616,7 @@ definition {
 	}
 
 	@description = "View assets filter by tag or category in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -1633,7 +1633,7 @@ definition {
 
 		task ("Add the first wiki page with category") {
 			JSONWiki.addWikiPage(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				groupName = "Test Site Name",
 				wikiNodeName = "Main",
 				wikiPageContent = "Wiki Page Content 1",
@@ -1651,7 +1651,7 @@ definition {
 
 		task ("Add the first web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content 1",
 				groupName = "Test Site Name",
 				title = "Web Content Title 1");
@@ -1729,7 +1729,7 @@ definition {
 	}
 
 	@description = "View assets from defined site scope in Asset Publisher."
-	@priority = "5"
+	@priority = 5
 	test ViewAssetsFromDefinedSiteScope {
 		property portal.acceptance = "true";
 
@@ -1754,7 +1754,7 @@ definition {
 			for (var siteName : list "Test Site Name,Site Name,Global") {
 				JSONWebcontent.addWebContent(
 					content = "${siteName} WC Content",
-					groupName = "${siteName}",
+					groupName = ${siteName},
 					title = "${siteName} WC Title");
 			}
 		}
@@ -1817,7 +1817,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142468. The View link shouldn't be shown in details page."
-	@priority = "3"
+	@priority = 3
 	test ViewDetailsLinkNotShownInDetailsPage {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1867,7 +1867,7 @@ definition {
 	}
 
 	@description = "View document types shown in manual selection."
-	@priority = "4"
+	@priority = 4
 	test ViewDocumentTypeShownInManualSelection {
 		task ("Add a global document type") {
 			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "global");
@@ -1903,7 +1903,7 @@ definition {
 	}
 
 	@description = "View the global web content with custom structure in Asset Publisher."
-	@priority = "3"
+	@priority = 3
 	test ViewGlobalWebContentWithCustomStructureInAssetPublisher {
 		task ("Add a web content structure in Global site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
@@ -1959,7 +1959,7 @@ definition {
 	}
 
 	@description = "LPS-103624 - URLs are not well formed when changing language in classic Display Pages."
-	@priority = "4"
+	@priority = 4
 	test ViewInContextTranslatedWCWithFriendlyURL {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
@@ -2022,7 +2022,7 @@ definition {
 	}
 
 	@description = "View localized web content with localized categories."
-	@priority = "3"
+	@priority = 3
 	test ViewLocalizedWebContentWithLocalizedCategories {
 		task ("Add a vocabulary with localized title") {
 			JSONCategory.addVocabulary(
@@ -2039,7 +2039,7 @@ definition {
 
 		task ("Add a localized web content with the category") {
 			JSONWebcontent.addBasicWebContentLocalized(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				contentMap = "en_US:Web Content1 Content,de_DE:Netz Content1 Inhalt,fr_FR:Contenu de Contenu Web1",
 				groupName = "Test Site Name",
 				titleMap = "en_US:Web Content1 Title,de_DE:Netz Content1 Titel,fr_FR:Titre de Contenu Web1");
@@ -2112,7 +2112,7 @@ definition {
 	}
 
 	@description = "View no console error thrown when refresh page as Guest."
-	@priority = "4"
+	@priority = 4
 	test ViewNoConsoleErrorWhenRefreshPageAsGuest {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -2137,7 +2137,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-141570. The user could view non-searchable web content in Asset Publisher after disable search with index."
-	@priority = "4"
+	@priority = 4
 	test ViewNonSearchableWebContentAfterDisableSearchWithIndex {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNonSearchableWebContentAfterDisableSearchWithIndex";
 
@@ -2200,7 +2200,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126190. The user could receive a notification email when the Dynamic Subscription Limit is set to 0 in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
 		property custom.properties = "mail.send.blacklist=";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero";
@@ -2211,7 +2211,7 @@ definition {
 
 			SystemSettings.editTextSetting(
 				settingName = "Dynamic Subscription Limit",
-				settingValue = "0");
+				settingValue = 0);
 
 			SystemSettings.saveConfiguration();
 		}
@@ -2259,13 +2259,13 @@ catch (Exception e) {
 }
 			''';
 
-			var script = StringUtil.trimLeading("${script}");
+			var script = StringUtil.trimLeading(${script});
 
-			var script = StringUtil.trimTrailing("${script}");
+			var script = StringUtil.trimTrailing(${script});
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
-				script = "${script}");
+				script = ${script});
 		}
 
 		task ("View the notification email in Mock Mock") {
@@ -2279,7 +2279,7 @@ catch (Exception e) {
 	}
 
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ViewOpenOfficeFileTypeLinks {
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
@@ -2374,7 +2374,7 @@ catch (Exception e) {
 	}
 
 	@description = "This is a use case for LPS-146343. View the pagination with 2 Asset Publisher widgets on a Content Page."
-	@priority = "3"
+	@priority = 3
 	test ViewPaginationWithTwoAssetPublisherWidgetsInContentPage {
 		task ("Add 3 web contents") {
 			for (var i : list "1,2,3") {
@@ -2400,7 +2400,7 @@ catch (Exception e) {
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "1",
+				paginationNumber = 1,
 				paginationType = "Regular");
 
 			IFrame.closeFrame();
@@ -2410,9 +2410,9 @@ catch (Exception e) {
 				targetFragmentName = "Asset Publisher");
 
 			AssetPublisherPortlet.configurePaginationPG(
-				paginationNumber = "1",
+				paginationNumber = 1,
 				paginationType = "Regular",
-				portletIndex = "2");
+				portletIndex = 2);
 
 			IFrame.closeFrame();
 
@@ -2431,7 +2431,7 @@ catch (Exception e) {
 				value1 = "Page 2 of 3");
 
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
 				value1 = "Page 1 of 3");
 
@@ -2442,14 +2442,14 @@ catch (Exception e) {
 				value1 = "Page 2 of 3");
 
 			AssertTextEquals(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
 				value1 = "Page 2 of 3");
 		}
 	}
 
 	@description = "View tag of web content in Asset Publisher."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewTagInAssetPublisher {
 		task ("Add a Tags Navigation to page") {
@@ -2493,7 +2493,7 @@ catch (Exception e) {
 	}
 
 	@description = "This is a test for LPS-128196. View the URL when there is an Asset Publisher in a page."
-	@priority = "3"
+	@priority = 3
 	test ViewURLWhenPageHasAssetPublisher {
 		task ("Navigate to the page with Asset Publisher") {
 			Navigator.openSiteURL(siteName = "Test Site Name");
@@ -2511,7 +2511,7 @@ catch (Exception e) {
 	}
 
 	@description = "View the web content author."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ViewWebContentAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -2525,14 +2525,14 @@ catch (Exception e) {
 		task ("Define permissions of the regular role") {
 			for (var resourceActionIndex : list "ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
 					roleTitle = "WC Author");
 			}
 
 			for (var resourceActionIndex : list "VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal.model.JournalArticle",
 					roleTitle = "WC Author");
 			}
@@ -2549,7 +2549,7 @@ catch (Exception e) {
 
 			for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 					roleTitle = "WC Author");
 			}
@@ -2559,9 +2559,9 @@ catch (Exception e) {
 			for (var userScreenName : list "author1,author2") {
 				JSONUser.addUser(
 					userEmailAddress = "${userScreenName}ea@liferay.com",
-					userFirstName = "${userScreenName}",
-					userLastName = "${userScreenName}",
-					userScreenName = "${userScreenName}");
+					userFirstName = ${userScreenName},
+					userLastName = ${userScreenName},
+					userScreenName = ${userScreenName});
 
 				JSONUser.setFirstPassword(
 					agreeToTermsAndAnswerReminderQuery = "true",
@@ -2637,7 +2637,7 @@ catch (Exception e) {
 	}
 
 	@description = "This is a test for LPS-129012. View web content in associated public content page."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentInAssociatedPublicContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -2717,7 +2717,7 @@ catch (Exception e) {
 	}
 
 	@description = "View web content in associated public page."
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentInAssociatedPublicPage {
 		task ("Set the Asset Publisher as default for page") {
 			Navigator.gotoSitePage(
@@ -2757,7 +2757,7 @@ catch (Exception e) {
 	}
 
 	@description = "This is a use case for LPS-49853. View the web content with viewable by Site Members in Asset Publisher as Guest with VIEW permission."
-	@priority = "5"
+	@priority = 5
 	test ViewWebContentWithViewableBySiteMembersAsGuestWithViewPermission {
 		property portal.acceptance = "true";
 

@@ -7,10 +7,10 @@ definition {
 
 		MenuItem.click(menuItem = "Category");
 
-		PortletEntry.inputName(name = "${categoryName}");
+		PortletEntry.inputName(name = ${categoryName});
 
-		if ("${categoryDescriptionEnabled}" == "true") {
-			PortletEntry.inputDescription(description = "${categoryDescription}");
+		if (${categoryDescriptionEnabled} == "true") {
+			PortletEntry.inputDescription(description = ${categoryDescription});
 		}
 
 		PortletEntry.save();
@@ -19,8 +19,8 @@ definition {
 	macro addPG {
 		if (isSet(siteURLKey)) {
 			MessageboardsCategory.openToAddCategory(
-				layoutName = "${layoutName}",
-				siteURLKey = "${siteURLKey}");
+				layoutName = ${layoutName},
+				siteURLKey = ${siteURLKey});
 		}
 		else {
 			AssertClick(
@@ -28,18 +28,18 @@ definition {
 				value1 = "Add Category");
 		}
 
-		PortletEntry.inputName(name = "${categoryName}");
+		PortletEntry.inputName(name = ${categoryName});
 
-		if ("${categoryDescriptionEnabled}" == "true") {
-			PortletEntry.inputDescription(description = "${categoryDescription}");
+		if (${categoryDescriptionEnabled} == "true") {
+			PortletEntry.inputDescription(description = ${categoryDescription});
 		}
 
-		if ("${displayStyle}" == "Question") {
+		if (${displayStyle} == "Question") {
 			Select(
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
 				value1 = "Question");
 		}
-		else if ("${displayStyle}" == "Default") {
+		else if (${displayStyle} == "Default") {
 			Select(
 				locator1 = "MessageBoardsEditCategory#DISPLAY_STYLE_SELECT",
 				value1 = "Default");
@@ -49,7 +49,7 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		if ("${categoryWithoutName}" == "true") {
+		if (${categoryWithoutName} == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#REQUIRED_ALERT",
 				value1 = "The Name field is required.");
@@ -70,13 +70,13 @@ definition {
 	}
 
 	macro deletePG {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
-		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${categoryName});
 
 		PortletEntry.clickMoveToRecycleBin();
 
@@ -88,18 +88,18 @@ definition {
 	macro editPG {
 		if (isSet(siteURLKey)) {
 			MessageboardsCategory.openToEditCategory(
-				categoryName = "${categoryName}",
-				groupName = "${groupName}",
-				layoutName = "${layoutName}",
-				siteURLKey = "${siteURLKey}");
+				categoryName = ${categoryName},
+				groupName = ${groupName},
+				layoutName = ${layoutName},
+				siteURLKey = ${siteURLKey});
 		}
 		else {
-			LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
+			LexiconEntry.openEntryMenu(rowEntry = ${categoryName});
 
 			MenuItem.click(menuItem = "Edit");
 		}
 
-		PortletEntry.inputName(name = "${categoryNameEdit}");
+		PortletEntry.inputName(name = ${categoryNameEdit});
 
 		Click(
 			locator1 = "Button#SAVE",
@@ -109,15 +109,15 @@ definition {
 	}
 
 	macro gotoCP {
-		var key_rowEntry = "${categoryName}";
+		var key_rowEntry = ${categoryName};
 
 		AssertTextEquals(
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		AssertClick(
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
@@ -125,33 +125,33 @@ definition {
 	}
 
 	macro gotoPG {
-		if ("${categoryDescriptionEnabled}" == "true") {
-			var key_categoryDescription = "${categoryDescription}";
-			var key_categoryName = "${categoryName}";
+		if (${categoryDescriptionEnabled} == "true") {
+			var key_categoryDescription = ${categoryDescription};
+			var key_categoryName = ${categoryName};
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-				value1 = "${categoryDescription}");
+				value1 = ${categoryDescription});
 		}
 		else {
-			var key_categoryName = "${categoryName}";
+			var key_categoryName = ${categoryName};
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}");
+				value1 = ${categoryName});
 		}
 
-		if ("${subCategoryEnabled}" == "true") {
-			var key_categoryName = "${subCategoryName}";
+		if (${subCategoryEnabled} == "true") {
+			var key_categoryName = ${subCategoryName};
 
 			Click(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${subCategoryName}");
+				value1 = ${subCategoryName});
 		}
 	}
 
 	macro openToAddCategory {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -162,9 +162,9 @@ definition {
 
 	macro openToCategory {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
-		var baseURL = "${baseURL}";
+			categoryName = ${categoryName},
+			groupName = ${groupName});
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -180,9 +180,9 @@ definition {
 
 	macro openToEditCategory {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}");
-		var baseURL = "${baseURL}";
+			categoryName = ${categoryName},
+			groupName = ${groupName});
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -197,13 +197,13 @@ definition {
 	}
 
 	macro subscribePG {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
-		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${categoryName});
 
 		MenuItem.click(menuItem = "Subscribe");
 
@@ -229,16 +229,16 @@ definition {
 	}
 
 	macro viewCategoryDefaultPG {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC");
 
-		var key_categoryCount = "${categoryCount}";
-		var key_threadCount = "${threadCount}";
+		var key_categoryCount = ${categoryCount};
+		var key_threadCount = ${threadCount};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
@@ -252,7 +252,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
 
@@ -260,7 +260,7 @@ definition {
 	}
 
 	macro viewCategorySubscribeLink {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		if (isSet(disabledEmailConfiguration)) {
 			Click(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
@@ -269,7 +269,7 @@ definition {
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}");
+				value1 = ${categoryName});
 
 			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -282,7 +282,7 @@ definition {
 
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}");
+				value1 = ${categoryName});
 
 			Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -293,36 +293,36 @@ definition {
 	}
 
 	macro viewCP {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_CHECKBOX");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
-		var key_categoryCount = "${categoryCount}";
+		var key_categoryCount = ${categoryCount};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
-			value1 = "${categoryCount}");
+			value1 = ${categoryCount});
 
-		var key_threadCount = "${threadCount}";
+		var key_threadCount = ${threadCount};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
-			value1 = "${threadCount}");
+			value1 = ${threadCount});
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
 
 		AssertClick(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		if (isSet(localizedHeader)) {
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "${localizedHeader}");
+				value1 = ${localizedHeader});
 		}
 		else {
 			AssertTextEquals(
@@ -343,25 +343,25 @@ definition {
 			value1 = "My Subscriptions");
 
 		AssertTextEquals(
-			key_parentcategory1 = "${parentcategory1}",
+			key_parentcategory1 = ${parentcategory1},
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1",
-			value1 = "${parentcategory1}");
+			value1 = ${parentcategory1});
 
 		AssertTextEquals(
-			key_parentcategory2 = "${parentcategory2}",
+			key_parentcategory2 = ${parentcategory2},
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2",
-			value1 = "${parentcategory2}");
+			value1 = ${parentcategory2});
 
 		AssertTextEquals.assertPartialText(
-			key_subscribedThread = "${subscribedThread}",
+			key_subscribedThread = ${subscribedThread},
 			locator1 = "MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3",
-			value1 = "${subscribedThread}");
+			value1 = ${subscribedThread});
 	}
 
 	macro viewNoPG {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
-		AssertTextNotPresent(value1 = "${categoryName}");
+		AssertTextNotPresent(value1 = ${categoryName});
 
 		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
 
@@ -375,42 +375,42 @@ definition {
 	}
 
 	macro viewPG {
-		var key_categoryName = "${categoryName}";
-		var key_threadCount = "${threadCount}";
+		var key_categoryName = ${categoryName};
+		var key_threadCount = ${threadCount};
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		if (isSet(threadCount)) {
-			var key_threadCount = "${threadCount}";
+			var key_threadCount = ${threadCount};
 
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
 				value1 = "${threadCount} Threads");
 		}
-		else if ("${threadPostCount}" == "1") {
+		else if (${threadPostCount} == 1) {
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
 				value1 = "1 Thread");
 		}
 
 		if ("categoryDescriptionEnabled" == "true") {
-			var key_categoryDescription = "${categoryDescription}";
+			var key_categoryDescription = ${categoryDescription};
 
 			AssertTextEquals(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
-				value1 = "${categoryDescription}");
+				value1 = ${categoryDescription});
 		}
 		else {
 			AssertClick(
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-				value1 = "${categoryName}");
+				value1 = ${categoryName});
 		}
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 	}
 
 }

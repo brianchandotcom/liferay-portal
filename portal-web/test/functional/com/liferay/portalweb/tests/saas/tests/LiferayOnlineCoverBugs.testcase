@@ -23,13 +23,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-142122: Clicking on Masterclass logo opens a page with an error"
-	@priority = "3"
+	@priority = 3
 	test ClickMasterclassLogoGoesHomePage {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#ClickMasterclassLogoGoesHomePage";
 
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "Verify if a virtual instance is created using the initializer, showing a different site comparing with the default Liferay bundle"
-	@priority = "4"
+	@priority = 4
 	test CreateVirtualInstanceUsingInitializerWithSuccess {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#CreateVirtualInstanceUsingInitializerWithSuccess";
 
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "Delete Virtual Instance in Liferay Online"
-	@priority = "4"
+	@priority = 4
 	test DeleteVirtualInstance {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#DeleteVirtualInstance";
 
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "Verify if a friendly error appears when the user is not able to create the virtual host"
-	@priority = "3"
+	@priority = 3
 	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost";
 
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "Create Virtual instance using the Virtual Instance Initializer not works with the curl command."
-	@priority = "4"
+	@priority = 4
 	test UserCanCreateVirtualInstance {
 		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#UserCanCreateVirtualInstance";
 

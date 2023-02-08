@@ -11,17 +11,17 @@ definition {
 		}
 
 		if (!(isSet(targetFragmentName))) {
-			var targetFragmentName = "${fragmentName}";
+			var targetFragmentName = ${fragmentName};
 		}
 
 		Navigator.gotoNavTab(navTab = "Fragments");
 
-		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+		PageEditor.expandFragmentCollection(collectionName = ${collectionName});
 
-		if ("${index}" == "1") {
+		if (${index} == 1) {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "${collectionName}",
-				key_fragmentName = "${fragmentName}",
+				key_collectionName = ${collectionName},
+				key_fragmentName = ${fragmentName},
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "");
@@ -30,10 +30,10 @@ definition {
 			var position = ${index} - 1;
 
 			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_collectionName = "${collectionName}",
-				key_fragmentName = "${fragmentName}",
-				key_index = "${position}",
-				key_targetFragmentName = "${targetFragmentName}",
+				key_collectionName = ${collectionName},
+				key_fragmentName = ${fragmentName},
+				key_index = ${position},
+				key_targetFragmentName = ${targetFragmentName},
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "CommerceEntry#ANY_FRAGMENT_DROP_TARGET_N",
 				value1 = "");
@@ -46,22 +46,22 @@ definition {
 	macro addMappedDisplayPageTemplateEntry {
 		task ("Given a new ${contentType} type display page template with fragment created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "${contentType}",
-				displayPageTemplateEntryName = "${displayPageName}",
-				groupName = "${groupName}");
+				contentType = ${contentType},
+				displayPageTemplateEntryName = ${displayPageName},
+				groupName = ${groupName});
 		}
 
 		task ("And the fragments mapped to the given fields, published and optionally click on the given menu item") {
 			CommerceDisplayPageTemplates.mapFragmentsToFields(
-				displayPageName = "${displayPageName}",
-				fieldsList = "${fieldsList}",
-				fragmentName = "${fragmentName}",
-				siteURLKey = "${siteURLKey}");
+				displayPageName = ${displayPageName},
+				fieldsList = ${fieldsList},
+				fragmentName = ${fragmentName},
+				siteURLKey = ${siteURLKey});
 
 			if (isSet(menuItem)) {
 				LexiconEntry.gotoEntryMenuItem(
-					menuItem = "${menuItem}",
-					rowEntry = "${displayPageName}");
+					menuItem = ${menuItem},
+					rowEntry = ${displayPageName});
 
 				Alert.viewSuccessMessage();
 			}
@@ -69,15 +69,15 @@ definition {
 	}
 
 	macro checkCollectionDisplayProductSpecificationsPresent {
-		var productSpecifications = CommerceJSONProductsAPI._getCommerceProductSpecifications(productName = "${product}");
+		var productSpecifications = CommerceJSONProductsAPI._getCommerceProductSpecifications(productName = ${product});
 
-		for (var productSpecification : list "${productSpecifications}") {
-			var specification = StringUtil.extractFirst("${productSpecification}", ":");
-			var value = StringUtil.extractLast("${productSpecification}", ":");
+		for (var productSpecification : list ${productSpecifications}) {
+			var specification = StringUtil.extractFirst(${productSpecification}, ":");
+			var value = StringUtil.extractLast(${productSpecification}, ":");
 
 			AssertElementPresent(
-				key_specification = "${specification}",
-				key_value = "${value}",
+				key_specification = ${specification},
+				key_value = ${value},
 				locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_SPECIFICATION_ENTRY");
 
 			echo("The Specification ${specification} with the value ${value} is present");
@@ -86,7 +86,7 @@ definition {
 
 	@summary = "Map a fragment to a field in a Display Page Template"
 	macro mapEditableTextToField {
-		if ("${index}" == "1") {
+		if (${index} == 1) {
 			var contributed = "false";
 		}
 		else {
@@ -98,23 +98,23 @@ definition {
 		}
 
 		PageEditorMapping.gotoEditableFieldMapping(
-			className = "${className}",
-			contributed = "${contributed}",
-			fragmentName = "${fragmentName}",
-			id = "${id}",
-			index = "${index}");
+			className = ${className},
+			contributed = ${contributed},
+			fragmentName = ${fragmentName},
+			id = ${id},
+			index = ${index});
 
 		if (isSet(source)) {
 			Select(
 				key_fieldLabel = "Source",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${source}");
+				value1 = ${source});
 		}
 
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${field}");
+			value1 = ${field});
 
 		PageEditor.waitForAutoSave();
 	}
@@ -127,22 +127,22 @@ definition {
 			var collectionName = "Basic Components";
 		}
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${siteURLKey}");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = ${displayPageName});
 
-		var index = "1";
+		var index = 1;
 
-		for (var fieldName : list "${fieldsList}") {
+		for (var fieldName : list ${fieldsList}) {
 			CommerceDisplayPageTemplates.addFragment(
-				collectionName = "${collectionName}",
-				fragmentName = "${fragmentName}",
-				index = "${index}");
+				collectionName = ${collectionName},
+				fragmentName = ${fragmentName},
+				index = ${index});
 
 			CommerceDisplayPageTemplates.mapEditableTextToField(
-				field = "${fieldName}",
-				fragmentName = "${fragmentName}",
-				index = "${index}");
+				field = ${fieldName},
+				fragmentName = ${fragmentName},
+				index = ${index});
 
 			var index = ${index} + 1;
 		}
@@ -156,15 +156,15 @@ definition {
 		}
 
 		AssertElementPresent(
-			key_fragmentText = "${fragmentText}",
-			key_id = "${id}",
+			key_fragmentText = ${fragmentText},
+			key_id = ${id},
 			locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
 	}
 
 	@summary = "Verify the multiple mapped fields’ outcome."
 	macro viewMappedFragmentsText {
-		for (var fragmentText : list "${fragmentsTextList}") {
-			CommerceDisplayPageTemplates.viewFragmentText(fragmentText = "${fragmentText}");
+		for (var fragmentText : list ${fragmentsTextList}) {
+			CommerceDisplayPageTemplates.viewFragmentText(fragmentText = ${fragmentText});
 		}
 	}
 

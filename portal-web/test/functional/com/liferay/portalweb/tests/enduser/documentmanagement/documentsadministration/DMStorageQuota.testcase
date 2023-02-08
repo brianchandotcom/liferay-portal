@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "This ensures that users can not upload files that exceed the storage quota through the multiple upload."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ExceedStorageQuotaMultipleUpload {
 		property custom.properties = "data.limit.dl.storage.max.size=1048576${line.separator}dl.actions.visible=true";
@@ -38,7 +38,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test ExceedStorageQuotaSingleUpload {
 		property custom.properties = "data.limit.dl.storage.max.size=1048576";

@@ -19,20 +19,20 @@ definition {
 
 		echo("## * Description: ${depotDescription}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to connect the depot to a site"
 	macro connectSite {
-		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -48,14 +48,14 @@ definition {
 
 		echo("## * ID: ${groupId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to delete a Depot entry"
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(
-			depotName = "${depotName}",
-			noSelenium = "${noSelenium}");
+			depotName = ${depotName},
+			noSelenium = ${noSelenium});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -68,7 +68,7 @@ definition {
 
 		echo("## * ID: ${depotId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "This calls the JSON WS API to disconnect the depot to a site"
@@ -78,8 +78,8 @@ definition {
 		}
 
 		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -92,12 +92,12 @@ definition {
 
 		echo("## * ID: ${groupId}");
 
-		var messageId = JSONCurlUtil.post("${curl}");
+		var messageId = JSONCurlUtil.post(${curl});
 	}
 
 	macro remoteStagingSetUp {
 		if (!(isSet(remotePort))) {
-			var remotePort = "8080";
+			var remotePort = 8080;
 		}
 
 		JSONDepot.addDepot(
@@ -108,15 +108,15 @@ definition {
 		var remoteGroupId = JSONGroupSetter.setGroupId(
 			groupName = "Remote Depot",
 			portalURL = "http://localhost:${remotePort}",
-			site = "${site}");
+			site = ${site});
 
 		JSONStaging.enableRemoteStaging(
-			branchingPrivate = "${branchingPrivate}",
-			branchingPublic = "${branchingPublic}",
-			groupName = "${groupName}",
-			remoteGroupId = "${remoteGroupId}",
-			remotePort = "${remotePort}",
-			site = "${site}");
+			branchingPrivate = ${branchingPrivate},
+			branchingPublic = ${branchingPublic},
+			groupName = ${groupName},
+			remoteGroupId = ${remoteGroupId},
+			remotePort = ${remotePort},
+			site = ${site});
 	}
 
 	@summary = "This calls the JSON WS API to make structure available or unavailable."
@@ -127,17 +127,17 @@ definition {
 			var site = "true";
 		}
 
-		if ("${structureState}" == "Available") {
+		if (${structureState} == "Available") {
 			var ddmStructuresAvailable = "true";
 		}
 
-		if ("${structureState}" == "Unavailable") {
+		if (${structureState} == "Unavailable") {
 			var ddmStructuresAvailable = "false";
 		}
 
 		var depotEntryGroupRelId = JSONGroupAPI._getDepotEntryGroupRelIdByGroupName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -147,7 +147,7 @@ definition {
 				-d ddmStructuresAvailable=${ddmStructuresAvailable}
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 }

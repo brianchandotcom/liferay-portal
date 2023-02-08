@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112030. Can return to a specific interaction state via Undo History list."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test NavigateToSpecificInteractionStateViaUndoHistory {
 		property portal.acceptance = "true";
@@ -64,11 +64,11 @@ definition {
 		task ("Remove the duplicated Button") {
 			PageEditor.removeFragment(
 				fragmentName = "Button",
-				index = "2");
+				index = 2);
 
 			PageEditor.viewFragmentNotPresent(
 				fragmentName = "Button",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Navigate to specific interaction states via Undo History") {
@@ -85,7 +85,7 @@ definition {
 				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.click(menuItem = "Duplicate Button");
@@ -97,13 +97,13 @@ definition {
 				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 
 			MenuItem.click(menuItem = "Delete Button");
 
 			AssertElementNotPresent(
-				index = "2",
+				index = 2,
 				key_fragmentName = "Button",
 				locator1 = "Fragment#FRAGMENT_CONTENT");
 
@@ -114,13 +114,13 @@ definition {
 				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-111549. Redo can make the page editor rollback the previous undo state up to X that is the number of undo interactions."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test RedoInteractionStates {
 		property portal.acceptance = "true";
@@ -139,10 +139,10 @@ definition {
 			PageEditor.addElementToTab(
 				collectionName = "Basic Components",
 				fragmentName = "Heading",
-				index = "2",
+				index = 2,
 				navItem = "Tab 1",
 				navTab = "Fragments",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Edit the inline content of Heading") {
@@ -165,11 +165,11 @@ definition {
 		task ("Remove the duplicated Tabs") {
 			PageEditor.removeFragment(
 				fragmentName = "Tabs",
-				index = "2");
+				index = 2);
 
 			PageEditor.viewFragmentNotPresent(
 				fragmentName = "Tabs",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the Undo button is enabled but the Redo button is disabled") {
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test UndoAllInteractionStates {
 		property portal.acceptance = "true";
@@ -283,22 +283,22 @@ definition {
 
 		task ("Change the number of modules to 1") {
 			PageEditor.editLayoutGrid(
-				columnCount = "1",
+				columnCount = 1,
 				panel = "General");
 
 			PageEditor.viewGridStyle(
-				columnCount = "1",
-				position = "1");
+				columnCount = 1,
+				position = 1);
 		}
 
 		task ("Change the number of modules to 2") {
 			PageEditor.editLayoutGrid(
-				columnCount = "2",
+				columnCount = 2,
 				panel = "General");
 
 			PageEditor.viewGridStyle(
-				columnCount = "2",
-				position = "1");
+				columnCount = 2,
+				position = 1);
 		}
 
 		task ("Undo 3 times") {
@@ -307,16 +307,16 @@ definition {
 				locator1 = "Icon#ANY");
 
 			PageEditor.viewGridStyle(
-				columnCount = "1",
-				position = "1");
+				columnCount = 1,
+				position = 1);
 
 			Click(
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 
 			PageEditor.viewGridStyle(
-				columnCount = "3",
-				position = "1");
+				columnCount = 3,
+				position = 1);
 
 			Click(
 				key_text = "undo",
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test UndoDeletedCollectionDisplay {
 		task ("Add three web contents") {
@@ -385,30 +385,30 @@ definition {
 
 		task ("View the displayed collection items") {
 			for (var i : list "1,2,3") {
-				if ("${i}" == "1") {
+				if (${i} == 1) {
 					AssertVisible(
-						key_colPosition = "1",
+						key_colPosition = 1,
 						key_entryTitle = "WC WebContent Title 3",
 						key_fragmentName = "Collection Display",
-						key_rowPosition = "${i}",
+						key_rowPosition = ${i},
 						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 				}
 
-				if ("${i}" == "2") {
+				if (${i} == 2) {
 					AssertVisible(
-						key_colPosition = "1",
+						key_colPosition = 1,
 						key_entryTitle = "WC WebContent Title ${i}",
 						key_fragmentName = "Collection Display",
-						key_rowPosition = "${i}",
+						key_rowPosition = ${i},
 						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 				}
 
-				if ("${i}" == "3") {
+				if (${i} == 3) {
 					AssertVisible(
-						key_colPosition = "1",
+						key_colPosition = 1,
 						key_entryTitle = "WC WebContent Title 1",
 						key_fragmentName = "Collection Display",
-						key_rowPosition = "${i}",
+						key_rowPosition = ${i},
 						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 				}
 			}
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test UndoDeletedFragmentAndWidget {
 		property portal.acceptance = "true";
@@ -467,7 +467,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted composition of fragments back."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test UndoDeletedFragmentComposition {
 		property portal.acceptance = "true";
@@ -495,7 +495,7 @@ definition {
 				menuItem = "Delete");
 
 			for (var fragmentName : list "Container,Grid") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+				PageEditor.viewFragmentNotPresent(fragmentName = ${fragmentName});
 			}
 		}
 
@@ -507,13 +507,13 @@ definition {
 
 		task ("View the fragment composition is back") {
 			for (var fragmentName : list "Container,Grid") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragment(fragmentName = ${fragmentName});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with custom configuration back."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test UndoDeletedFragmentWithCustomConfiguration {
 		task ("Add a Tabs fragment to page") {
@@ -528,7 +528,7 @@ definition {
 
 		task ("Configure the number of Tabs to 2") {
 			PageEditor.editTabs(
-				numberOfTabs = "2",
+				numberOfTabs = 2,
 				panel = "General");
 
 			AssertVisible(
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test UndoDeletedFragmentWithInlineContent {
 		task ("Add a Heading fragment to page") {
@@ -609,7 +609,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with mapped content back."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test UndoDeletedFragmentWithMappedContent {
 		task ("Add a web content") {
@@ -666,7 +666,7 @@ definition {
 	}
 
 	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 100 last states when the page has more than 100 states."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test UndoInteractionStatesHundredTimes {
 		property custom.properties = "session.timeout=30";
@@ -685,7 +685,7 @@ definition {
 		task ("Change the number of Tabs 19 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
 				PageEditor.editTabs(
-					numberOfTabs = "${i}",
+					numberOfTabs = ${i},
 					panel = "General");
 			}
 		}
@@ -703,7 +703,7 @@ definition {
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
 				PageEditor.editTabs(
-					numberOfTabs = "${i}",
+					numberOfTabs = ${i},
 					panel = "General");
 			}
 		}
@@ -721,7 +721,7 @@ definition {
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
 				PageEditor.editTabs(
-					numberOfTabs = "${i}",
+					numberOfTabs = ${i},
 					panel = "General");
 			}
 		}
@@ -739,7 +739,7 @@ definition {
 		task ("Change the number of Tabs 18 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
 				PageEditor.editTabs(
-					numberOfTabs = "${i}",
+					numberOfTabs = ${i},
 					panel = "General");
 			}
 		}
@@ -757,15 +757,15 @@ definition {
 		task ("Change the number of Tabs 19 times") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
 				PageEditor.editTabs(
-					numberOfTabs = "${i}",
+					numberOfTabs = ${i},
 					panel = "General");
 			}
 		}
 
 		task ("Undo 100 times") {
-			var count = "0";
+			var count = 0;
 
-			while (("${count}" != "100") && (maxIterations = "100")) {
+			while ((${count} != 100) && (maxIterations = "100")) {
 				Click(
 					key_text = "undo",
 					locator1 = "Icon#ANY");
@@ -794,7 +794,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-112030. The all saved interactions are shown in the Undo History list."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewInteractionStatesViaUndoHistory {
 		property portal.acceptance = "true";
@@ -829,11 +829,11 @@ definition {
 		task ("Remove the duplicated Button") {
 			PageEditor.removeFragment(
 				fragmentName = "Button",
-				index = "2");
+				index = 2);
 
 			PageEditor.viewFragmentNotPresent(
 				fragmentName = "Button",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Add a Heading fragment below the Button") {
@@ -879,7 +879,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToUp(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				key_dragFragmentName = "Heading",
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
 				locator2 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
@@ -892,13 +892,13 @@ definition {
 			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Fragment,Delete Button,Add Heading,Update Heading Editable Values,Add Image,Update Image Editable Values,Move Heading") {
-				MenuItem.viewVisible(menuItem = "${menuItem}");
+				MenuItem.viewVisible(menuItem = ${menuItem});
 			}
 		}
 	}
 
 	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewUndoInteractionStatesClearedAfterRefreshPage {
 		task ("Add a Heading fragment to page") {

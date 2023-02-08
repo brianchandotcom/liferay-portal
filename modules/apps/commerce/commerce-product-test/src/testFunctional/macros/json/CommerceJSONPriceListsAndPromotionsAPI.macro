@@ -3,14 +3,14 @@ definition {
 	macro _addPriceList {
 		Variables.assertDefined(parameterList = "${catalogName},${priceListName},${currencyCode}");
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (!(isSet(priority))) {
-			var priority = "0";
+			var priority = 0;
 		}
 
 		var curl = '''
@@ -31,14 +31,14 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addPriceListEntry {
 		Variables.assertDefined(parameterList = "${productSKU},${priceListName},${entryPrice}");
 
-		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${productSKU}");
-		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = "${priceListName}");
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -58,13 +58,13 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addPromotion {
 		Variables.assertDefined(parameterList = "${catalogName},${promotionName},${currencyCode}");
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -88,14 +88,14 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addPromotionEntry {
 		Variables.assertDefined(parameterList = "${productSKU},${promotionName},${entryPrice}");
 
-		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${productSKU}");
-		var promotionId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = "${promotionName}");
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var promotionId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${promotionName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -115,11 +115,11 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteAllNoMasterPriceListsAndPromotions {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -127,15 +127,15 @@ definition {
 
 		var priceListAndPromotionIds = CommerceJSONPriceListsAndPromotionsAPI._getCommerceNoMasterPriceListsAndPromotions();
 
-		if ("${priceListAndPromotionIds}" != "") {
-			for (var priceListAndPromotionId : list "${priceListAndPromotionIds}") {
+		if (${priceListAndPromotionIds} != "") {
+			for (var priceListAndPromotionId : list ${priceListAndPromotionIds}) {
 				var curl = '''
 					${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListAndPromotionId} \
 						-u test@liferay.com:test \
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -144,17 +144,17 @@ definition {
 	}
 
 	macro _getCommerceNoMasterPriceListsAndPromotions {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(priceListAndPromotionCount)) {
-			var priceListsAndPromotionsCount = "${priceListAndPromotionCount}";
+			var priceListsAndPromotionsCount = ${priceListAndPromotionCount};
 		}
 		else {
-			var priceListsAndPromotionsCount = "100";
+			var priceListsAndPromotionsCount = 100;
 		}
 
 		var curl = '''
@@ -163,25 +163,25 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var priceListAndPromotionIds = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] != 'Master Base Promotion' && @['name'] != 'Master Base Price List')].['id']");
+		var priceListAndPromotionIds = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] != 'Master Base Promotion' && @['name'] != 'Master Base Price List')].['id']");
 
-		return "${priceListAndPromotionIds}";
+		return ${priceListAndPromotionIds};
 	}
 
 	macro _getCommercePriceListsAndPromotionsIdByName {
-		Variables.assertDefined(parameterList = "${priceListAndPromotionName}");
+		Variables.assertDefined(parameterList = ${priceListAndPromotionName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(priceListAndPromotionCount)) {
-			var priceListsAndPromotionsCount = "${priceListAndPromotionCount}";
+			var priceListsAndPromotionsCount = ${priceListAndPromotionCount};
 		}
 		else {
-			var priceListsAndPromotionsCount = "100";
+			var priceListsAndPromotionsCount = 100;
 		}
 
 		var curl = '''
@@ -190,9 +190,9 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var priceListAndPromotionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${priceListAndPromotionName}')].['id']");
+		var priceListAndPromotionId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${priceListAndPromotionName}')].['id']");
 
-		return "${priceListAndPromotionId}";
+		return ${priceListAndPromotionId};
 	}
 
 }

@@ -19,13 +19,13 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
@@ -34,16 +34,16 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
 	}
 
 	@description = "Automation ID: LPS-149746 | Test Summary: Verify if the team member table contains the following data (Name - Email - Support Seat - Role - Status)"
-	@priority = "4"
+	@priority = 4
 	test AssertAllItemsInTheTable {
 		property portal.upstream = "quarantine";
 
@@ -52,7 +52,7 @@ definition {
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -60,7 +60,7 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Login in Okta") {
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-149752 | Test Summary: Verify that in the table the guest user is below the current user and its status is displayed as invited"
-	@priority = "5"
+	@priority = 5
 	test AssertTheStatusAndOrderOfTheGuestUser {
 		property portal.upstream = "quarantine";
 
@@ -113,17 +113,17 @@ definition {
 
 			Account.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
 
 			Account.assignUsers(
-				accountName = "${testAccount}",
+				accountName = ${testAccount},
 				assigneeName = "Test User");
 		}
 
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "${testAccount}");
+			CustomerPortal.accountTableProject(title = ${testAccount});
 
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("Login in Okta") {

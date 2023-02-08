@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "Verify custom look and feel Settings can be applied to page"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanConfigureLookAndFeelSettingsOnSinglePage {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
@@ -63,7 +63,7 @@ definition {
 
 		var htmlSourceText = '''body, #wrapper{background-color: #42f4c5;}''';
 
-		AssertHTMLSourceTextPresent(value1 = "${htmlSourceText}");
+		AssertHTMLSourceTextPresent(value1 = ${htmlSourceText});
 
 		takeScreenshot();
 

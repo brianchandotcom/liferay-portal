@@ -11,13 +11,13 @@ definition {
 
 		Type(
 			locator1 = "ACLogin#EMAIL_LOGIN_FIELD",
-			value1 = "${emailAddress}");
+			value1 = ${emailAddress});
 
 		Click(locator1 = "ACLogin#PASSWORD_LOGIN_FIELD");
 
 		Type(
 			locator1 = "ACLogin#PASSWORD_LOGIN_FIELD",
-			value1 = "${password}");
+			value1 = ${password});
 
 		Click(locator1 = "ACLogin#LOGIN_BUTTON");
 	}

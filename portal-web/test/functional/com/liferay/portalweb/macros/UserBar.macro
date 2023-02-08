@@ -19,9 +19,9 @@ definition {
 		UserBar.gotoDropdown();
 
 		AssertClick(
-			key_dropdownItem = "${dropdownItem}",
+			key_dropdownItem = ${dropdownItem},
 			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-			value1 = "${dropdownItem}");
+			value1 = ${dropdownItem});
 	}
 
 	macro openUserOrganizations {
@@ -43,12 +43,12 @@ definition {
 	macro viewFullName {
 		AssertTextEquals(
 			locator1 = "UserBar#USER_FULL_NAME",
-			value1 = "${userName}");
+			value1 = ${userName});
 	}
 
 	macro viewNoDropdownItem {
 		AssertElementNotPresent(
-			key_dropdownItem = "${dropdownItem}",
+			key_dropdownItem = ${dropdownItem},
 			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
 	}
 
@@ -64,7 +64,7 @@ definition {
 		var accountDetailImage = selenium.getAttribute("//a//img[contains(@src,'user_portrait')]@src");
 		var accountImage = selenium.getAttribute("//button//img[contains(@src,'user_portrait')]@src");
 
-		if ("${accountImage}" != "${accountDetailImage}") {
+		if (${accountImage} != ${accountDetailImage}) {
 			fail("User portrait not match configuration!");
 		}
 	}

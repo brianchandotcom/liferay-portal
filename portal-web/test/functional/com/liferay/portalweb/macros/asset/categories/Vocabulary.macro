@@ -4,16 +4,16 @@ definition {
 		Panel.expandPanel(panel = "Associated Asset Types");
 
 		if (!(isSet(rowNumber))) {
-			var rowNumber = "1";
+			var rowNumber = 1;
 		}
 
 		Select(
-			key_rowNumber = "${rowNumber}",
+			key_rowNumber = ${rowNumber},
 			locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N",
-			value1 = "${assetType}");
+			value1 = ${assetType});
 
-		if ("${required}" == "true") {
-			var key_rowNumber = "${rowNumber}";
+		if (${required} == "true") {
+			var key_rowNumber = ${rowNumber};
 
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#REQUIRED");
 		}
@@ -23,30 +23,30 @@ definition {
 	macro addCP {
 		Vocabulary.gotoAddVocabulary();
 
-		PortletEntry.inputName(name = "${vocabularyName}");
+		PortletEntry.inputName(name = ${vocabularyName});
 
 		if (isSet(vocabularyDescription)) {
-			PortletEntry.inputDescription(description = "${vocabularyDescription}");
+			PortletEntry.inputDescription(description = ${vocabularyDescription});
 		}
 
-		if ("${allowMultipleCategories}" == "false") {
+		if (${allowMultipleCategories} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH");
 		}
 
 		if (isSet(locale)) {
 			PortletEntry.changeLocale(
 				fieldName = "Name",
-				locale = "${locale}");
+				locale = ${locale});
 
-			PortletEntry.inputName(name = "${localizationName}");
+			PortletEntry.inputName(name = ${localizationName});
 		}
 
 		if (isSet(locale2)) {
 			PortletEntry.changeLocale(
 				fieldName = "Name",
-				locale = "${locale2}");
+				locale = ${locale2});
 
-			PortletEntry.inputName(name = "${localization2Name}");
+			PortletEntry.inputName(name = ${localization2Name});
 		}
 
 		Button.clickNoError(button = "Save");
@@ -59,7 +59,7 @@ definition {
 	macro addInternalVocabulary {
 		Vocabulary.gotoAddVocabulary();
 
-		PortletEntry.inputName(name = "${vocabularyName}");
+		PortletEntry.inputName(name = ${vocabularyName});
 
 		Click(locator1 = "Categories#INTERNAL_VISIBILITY");
 
@@ -73,13 +73,13 @@ definition {
 	macro addViewableByCP {
 		Vocabulary.gotoAddVocabulary();
 
-		PortletEntry.inputName(name = "${vocabularyName}");
+		PortletEntry.inputName(name = ${vocabularyName});
 
 		Panel.expandPanel(panel = "Permissions");
 
 		Select(
 			locator1 = "Select#PERMISSIONS",
-			value1 = "${viewableBy}");
+			value1 = ${viewableBy});
 
 		Button.clickNoError(button = "Save");
 
@@ -88,9 +88,9 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
-			key_navNested = "${vocabularyName}",
+			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 	}
 
 	macro addVocabularyWithNullTitle {
@@ -108,17 +108,17 @@ definition {
 	macro addWithAssociatedAssetTypeCP {
 		Vocabulary.gotoAddVocabulary();
 
-		PortletEntry.inputName(name = "${vocabularyName}");
+		PortletEntry.inputName(name = ${vocabularyName});
 
 		Vocabulary.addAssociatedAssetType(
-			assetType = "${assetType}",
-			required = "${required}",
-			rowNumber = "${rowNumber}");
+			assetType = ${assetType},
+			required = ${required},
+			rowNumber = ${rowNumber});
 
 		if (isSet(assetSubtype)) {
 			Select(
 				locator1 = "Select#ASSET_SUBTYPE",
-				value1 = "${assetSubtype}");
+				value1 = ${assetSubtype});
 		}
 
 		Button.clickNoError(button = "Save");
@@ -128,28 +128,28 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
-			key_navNested = "${vocabularyName}",
+			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 	}
 
 	macro assertVocabularyVisibilityNonEditable {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		AssertElementPresent(
-			key_visibilityType = "${visibilityType}",
+			key_visibilityType = ${visibilityType},
 			locator1 = "Categories#VOCABULARY_VISIBILITY_DISABLED");
 
 		Button.clickCancel();
 	}
 
 	macro deleteAssociatedAssetTypeViaVocabularyCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${vocabularyName}",
+			key_headerName = ${vocabularyName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -173,9 +173,9 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "Categories#VOCABULARY_ENTRY",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 
 		PortletEntry.selectAll();
 
@@ -196,9 +196,9 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextNotPresent(
-			key_navNested = "${vocabularyName}",
+			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 	}
 
 	macro deleteByMenuCP {
@@ -211,7 +211,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "Categories#VOCABULARY_ENTRY_CHECKBOX");
 
 		SelectFrame(value1 = "relative=top");
@@ -231,39 +231,39 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextNotPresent(
-			key_navNested = "${vocabularyName}",
+			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 	}
 
 	macro editCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${vocabularyName}",
+			key_headerName = ${vocabularyName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 
 		if (isSet(vocabularyNameEdit)) {
-			PortletEntry.inputTitle(title = "${vocabularyNameEdit}");
+			PortletEntry.inputTitle(title = ${vocabularyNameEdit});
 		}
 
-		if ("${allowMultipleCategories}" == "false") {
+		if (${allowMultipleCategories} == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH");
 		}
-		else if ("${allowMultipleCategories}" == "true") {
+		else if (${allowMultipleCategories} == "true") {
 			Check.checkToggleSwitch(locator1 = "CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH");
 		}
 
 		PortletEntry.save();
 
 		if (isSet(vocabularyNameEdit)) {
-			var key_navNested = "${vocabularyNameEdit}";
+			var key_navNested = ${vocabularyNameEdit};
 
 			AssertTextEquals(
 				locator1 = "NavNested#NAV_NESTED_LINK",
-				value1 = "${vocabularyNameEdit}");
+				value1 = ${vocabularyNameEdit});
 		}
 	}
 
@@ -277,10 +277,10 @@ definition {
 	}
 
 	macro goToVocabulary {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		AssertElementPresent(
-			key_title = "${vocabularyName}",
+			key_title = ${vocabularyName},
 			locator1 = "Header#H2_TITLE");
 	}
 
@@ -318,15 +318,15 @@ definition {
 
 	macro viewCP {
 		AssertTextEquals(
-			key_navNested = "${vocabularyName}",
+			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 
-		if ("${allowMultipleCategories}" == "false") {
-			Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		if (${allowMultipleCategories} == "false") {
+			Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 			Click.waitForMenuToggleJSClick(
-				key_headerName = "${vocabularyName}",
+				key_headerName = ${vocabularyName},
 				locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
@@ -338,7 +338,7 @@ definition {
 	}
 
 	macro viewVocabularyAllowMultipleCAtegories {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
@@ -348,7 +348,7 @@ definition {
 	}
 
 	macro viewVocabularyAssociatedAssetTypesRequirement {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
@@ -360,25 +360,25 @@ definition {
 	}
 
 	macro viewVocabularyPermissionsCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${vocabularyName}",
+			key_headerName = ${vocabularyName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if ("${viewableBy}" == "Anyone (Guest Role)") {
+		if (${viewableBy} == "Anyone (Guest Role)") {
 			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
 		}
-		else if ("${viewableBy}" == "Owner") {
+		else if (${viewableBy} == "Owner") {
 			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
 		}
-		else if ("${viewableBy}" == "Site Members") {
+		else if (${viewableBy} == "Site Members") {
 			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
 		}
 
@@ -386,7 +386,7 @@ definition {
 	}
 
 	macro viewVocabularyVisibilityEdit {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
@@ -396,10 +396,10 @@ definition {
 	}
 
 	macro viewWithAssociatedAssetTypeCP {
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		Click.waitForMenuToggleJSClick(
-			key_headerName = "${vocabularyName}",
+			key_headerName = ${vocabularyName},
 			locator1 = "Portlet#H2_HEADER_VERTICAL_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -410,7 +410,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT",
-			value1 = "${vocabularyAssociatedAssetType}");
+			value1 = ${vocabularyAssociatedAssetType});
 	}
 
 }

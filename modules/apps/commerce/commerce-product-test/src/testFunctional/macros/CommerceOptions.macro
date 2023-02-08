@@ -15,12 +15,12 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
 		CommerceEntry.addOptionsEntry(
-			facetable = "${facetable}",
-			optionDescription = "${optionDescription}",
-			optionFieldType = "${optionFieldType}",
-			optionName = "${optionName}",
-			required = "${required}",
-			skuContributor = "${skuContributor}");
+			facetable = ${facetable},
+			optionDescription = ${optionDescription},
+			optionFieldType = ${optionFieldType},
+			optionName = ${optionName},
+			required = ${required},
+			skuContributor = ${skuContributor});
 	}
 
 	macro addNewOptionValue {
@@ -30,11 +30,11 @@ definition {
 
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${valueName}");
+			value1 = ${valueName});
 
 		Type(
 			locator1 = "CommerceEntry#PRIORITY_FIELD",
-			value1 = "${valuePosition}");
+			value1 = ${valuePosition});
 
 		Button.click(button = "Submit");
 	}
@@ -45,8 +45,8 @@ definition {
 		}
 
 		CommerceEntry.addOptionValue(
-			valueName = "${optionValueName}",
-			valuePriority = "${optionValuePriority}");
+			valueName = ${optionValueName},
+			valuePriority = ${optionValuePriority});
 
 		CommerceEntry.saveEntry();
 	}
@@ -83,18 +83,18 @@ definition {
 
 	macro setDeltaPrice {
 		Click(
-			key_index = "${key_index}",
+			key_index = ${key_index},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		Type(
 			key_fieldLabel = "Delta Price",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${deltaPrice}");
+			value1 = ${deltaPrice});
 
 		Type(
 			key_fieldLabel = "SKU",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${productSKU}");
+			value1 = ${productSKU});
 
 		Button.clickSave();
 
@@ -105,7 +105,7 @@ definition {
 		Select(
 			key_fieldLabel = "Price Type",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${priceType}");
+			value1 = ${priceType});
 
 		Button.clickSave();
 

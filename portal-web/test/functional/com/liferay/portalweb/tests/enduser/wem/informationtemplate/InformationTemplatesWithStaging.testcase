@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138780. The template creator can see the information template when enabling staging with staged Templates portlet."
-	@priority = "4"
+	@priority = 4
 	test PublishStagedInformationTemplateToLive {
 		task ("Enable local live with staged Templates portlet") {
 			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
@@ -45,7 +45,7 @@ definition {
 
 			for (var fieldName : list "Title,Author Name") {
 				InformationTemplates.addField(
-					fieldName = "${fieldName}",
+					fieldName = ${fieldName},
 					panelTitle = "Basic Information");
 			}
 
@@ -90,7 +90,7 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 			for (var action : list "Edit,Copy,Permissions") {
-				MenuItem.viewNotPresent(menuItem = "${action}");
+				MenuItem.viewNotPresent(menuItem = ${action});
 			}
 
 			MenuItem.viewPresent(menuItem = "Delete");
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138780. The template creator can see the information template when enabling staging with unstaged Templates portlet."
-	@priority = "4"
+	@priority = 4
 	test ViewUnstagedInformationTemplateAvailableToLiveSite {
 		task ("Enable local live with unstaged Templates portlet") {
 			JSONStaging.enableLocalStaging(
@@ -120,7 +120,7 @@ definition {
 
 			for (var fieldName : list "Title,Author Name") {
 				InformationTemplates.addField(
-					fieldName = "${fieldName}",
+					fieldName = ${fieldName},
 					panelTitle = "Basic Information");
 			}
 

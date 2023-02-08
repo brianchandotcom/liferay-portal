@@ -22,13 +22,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	@refactorneeded
 	test AddQuickNote {
 		Portlet.addPG(portletName = "Quick Note");

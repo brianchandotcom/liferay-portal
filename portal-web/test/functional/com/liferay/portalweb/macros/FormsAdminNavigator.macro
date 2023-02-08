@@ -1,7 +1,7 @@
 definition {
 
 	var formName = "Created Form Name";
-	var rowIndexNumber = "1";
+	var rowIndexNumber = 1;
 
 	macro closePublishedFormWindow {
 		Navigator.openURL();
@@ -63,9 +63,9 @@ definition {
 	}
 
 	macro gotoDeleteField {
-		FormsAdminNavigator.gotoEditField(fieldName = "${fieldName}");
+		FormsAdminNavigator.gotoEditField(fieldName = ${fieldName});
 
-		var key_fieldName = "${fieldName}";
+		var key_fieldName = ${fieldName};
 
 		ScrollBy(value1 = "0, 230");
 
@@ -79,14 +79,14 @@ definition {
 
 		Form.gotoFieldsTab();
 
-		var key_fieldName = "${fieldName}";
-		var key_fieldPositionNumber = "${fieldPositionNumber}";
+		var key_fieldName = ${fieldName};
+		var key_fieldPositionNumber = ${fieldPositionNumber};
 
 		if (isSet(formPageNumber)) {
-			var key_formPageNumber = "${formPageNumber}";
+			var key_formPageNumber = ${formPageNumber};
 		}
 		else {
-			var key_formPageNumber = "0";
+			var key_formPageNumber = 0;
 		}
 
 		if (isSet(key_fieldPositionNumber)) {
@@ -105,9 +105,9 @@ definition {
 
 	macro gotoEditFormByName {
 		AssertClick(
-			key_formName = "${formName}",
+			key_formName = ${formName},
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME",
-			value1 = "${formName}");
+			value1 = ${formName});
 	}
 
 	macro gotoEntries {
@@ -124,12 +124,12 @@ definition {
 
 	macro gotoEntriesLabel {
 		Click(
-			key_fieldName = "${key_value}",
+			key_fieldName = ${key_value},
 			locator1 = "FormFields#TEXT_FIELD_LABEL_REPORT_CARD");
 
 		AssertVisible(
-			key_type = "${key_key_type}",
-			key_value = "${key_value}",
+			key_type = ${key_key_type},
+			key_value = ${key_value},
 			locator1 = "FormFields#ENTRY_ANY_LABEL");
 	}
 
@@ -148,7 +148,7 @@ definition {
 	macro gotoPermissions {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
-			rowEntry = "${formName}");
+			rowEntry = ${formName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -172,9 +172,9 @@ definition {
 	macro gotoPublishedForm {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
-		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 	}
 
 	macro gotoRules {
@@ -196,7 +196,7 @@ definition {
 	}
 
 	macro gotoView {
-		var key_rowIndexNumber = "${rowIndexNumber}";
+		var key_rowIndexNumber = ${rowIndexNumber};
 
 		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 
@@ -218,7 +218,7 @@ definition {
 
 		var publishFormURL = Form.getPublishedFormPublicURL();
 
-		Navigator.openSpecificURL(url = "${publishFormURL}");
+		Navigator.openSpecificURL(url = ${publishFormURL});
 	}
 
 }

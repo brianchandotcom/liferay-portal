@@ -38,7 +38,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This test ensures that an image can be deleted in a staged asset library by a user with permissions."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "This test ensures that a basic article can be deleted in a staged asset library by a user with permissions."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteWC {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-151760. It ensures that an image can be downloaded in a staged asset library by a user with permissions."
-	@priority = "4"
+	@priority = 4
 	test CanDownloadImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions."
-	@priority = "4"
+	@priority = 4
 	test CanPublishDocument {
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -228,14 +228,14 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.depot.model.DepotEntry",
 				roleTitle = "Regular Role");
 		}
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedImage {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -291,14 +291,14 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.depot.model.DepotEntry",
 				roleTitle = "Regular Role");
 		}
@@ -329,7 +329,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library."
-	@priority = "4"
+	@priority = 4
 	test CanPublishEditedWC {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -353,14 +353,14 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.depot.model.DepotEntry",
 				roleTitle = "Regular Role");
 		}
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library."
-	@priority = "4"
+	@priority = 4
 	test CanPublishWC {
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -416,14 +416,14 @@ definition {
 
 		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.depot.model.DepotEntry",
 				roleTitle = "Regular Role");
 		}

@@ -7,7 +7,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
-	@priority = "4"
+	@priority = 4
 	test DecrementCoreSchemaMajorVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMajorVersion";
 
@@ -36,7 +36,7 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		Portlet.shutdownServer();
 
@@ -45,7 +45,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "You must first upgrade the portal to the required schema version");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DecrementCoreSchemaMicroVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMicroVersion";
 
@@ -78,11 +78,11 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 
-		if ("${output}" == "Cannot decrement micro version, it is already at the minimum value") {
+		if (${output} == "Cannot decrement micro version, it is already at the minimum value") {
 			echo("This testcase is currently not testable.");
 		}
 		else {
@@ -94,7 +94,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test DecrementCoreSchemaMinorVersion {
 		property test.name.skip.portal.instance = "UpgradeEnhancement#DecrementCoreSchemaMinorVersion";
 
@@ -127,11 +127,11 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 
-		if ("${output}" != "Cannot decrement minor version, it is already at the minimum value") {
+		if (${output} != "Cannot decrement minor version, it is already at the minimum value") {
 			Portlet.shutdownServer();
 
 			Portlet.startServer(deleteLiferayHome = "false");
@@ -143,7 +143,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DirectUpgradeFromArchive6012 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "false";
@@ -155,7 +155,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
 
-		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
+		if (contains(${fileContent}, "You must first upgrade to Liferay Portal 6200")) {
 			echo("You must first upgrade to Liferay Portal 6200.");
 		}
 		else {
@@ -163,7 +163,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DirectUpgradeFromArchive6130 {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "false";
@@ -175,7 +175,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
 
-		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
+		if (contains(${fileContent}, "You must first upgrade to Liferay Portal 6200")) {
 			echo("You must first upgrade to Liferay Portal 6200.");
 		}
 		else {
@@ -183,7 +183,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RemoveModulesWithSchemaVersionChange {
 		property osgi.modules.includes = "revert-schema-version-api,revert-schema-version-service";
 
@@ -201,7 +201,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.1.0 -Dupdate.properties.original=2.1.1");
 
-		Pause(locator1 = "15000");
+		Pause(locator1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -215,7 +215,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.0.0 -Dupdate.properties.original=2.1.0");
 
-		Pause(locator1 = "15000");
+		Pause(locator1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -229,7 +229,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=1.0.0 -Dupdate.properties.original=2.0.0");
 
-		Pause(locator1 = "15000");
+		Pause(locator1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "LPS-158742. Given custom log4j is added to portal and log context is enabled. Then log lines will be marked with custom context name."
-	@priority = "3"
+	@priority = 3
 	test LogOutputReturnsMarkedWithCustomName {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.log.context.name=ExampleText${line.separator}upgrade.database.auto.run=true";
 
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "LPS-158742. Given custom log4j is added to portal and log context is enabled. Then log lines will be marked with default context name."
-	@priority = "4"
+	@priority = 4
 	test LogOutputReturnsMarkedWithDefaultName {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
-	@priority = "3"
+	@priority = 3
 	test LogOutputReturnsUnmarkedWithoutCustomLog4j {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 		property log.context.enabled = "false";

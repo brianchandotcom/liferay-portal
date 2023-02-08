@@ -5,7 +5,7 @@ definition {
 	function verifyVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible("${locator1}", "false");
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.verifyVisible();
 

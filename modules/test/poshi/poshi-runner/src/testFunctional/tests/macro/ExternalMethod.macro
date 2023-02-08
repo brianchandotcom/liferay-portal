@@ -5,31 +5,31 @@ definition {
 		var actual = ExternalMethod.stringUtilAdd();
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 
 		var expected = "TestString";
 		var actual = ExternalMethod.stringUtilExtractChars();
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	macro stringUtilAdd {
 		var stringUtilReturn = StringUtil.add("test", "string");
 
-		return "${stringUtilReturn}";
+		return ${stringUtilReturn};
 	}
 
 	macro stringUtilExtractChars {
 		var stringUtilReturn = StringUtil.extractChars("Test String");
 
-		return "${stringUtilReturn}";
+		return ${stringUtilReturn};
 	}
 
 	macro validateMatch {
-		if ("${actual}" == "${expected}") {
+		if (${actual} == ${expected}) {
 			echo("The actual value matched the expected value.");
 
 			echo("action: '${actual}'");

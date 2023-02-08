@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom meta tag can be added with escape characters."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddTagWithEscapeCharacters {
 		var portalURL = PropsUtil.get("portal.url");
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom meta tag can be cleared."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanClearCustomTag {
 		property portal.acceptance = "true";
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom meta tag can be edited."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditTag {
 		property portal.acceptance = "true";
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This ensures that users can add multiple translated custom meta tags."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMultipleTranslatedTags {
 		property portal.acceptance = "true";
@@ -132,7 +132,7 @@ definition {
 			customContentsList = "custom Tag 1 content,custom Tag 2 content,custom Tag 3 content",
 			newCustomContent = "contenido de metaetiqueta personalizado");
 
-		CustomMetaTags.removeTag(tagNum = "2");
+		CustomMetaTags.removeTag(tagNum = 2);
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-125971. It ensures that the custom meta tag can be viewed in the HTML after editing and republishing the page."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewTagAfterEditingPage {
 		property portal.acceptance = "true";
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@description = "This ensures that the custom meta tag can not be generated without property or content."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewTagWithoutPropertyOrContent {
 		property portal.acceptance = "true";
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@description = "This ensures that the translated tag inherits the default property and content."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewTranslatedTagWithDefaultValue {
 		property portal.acceptance = "true";

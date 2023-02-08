@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOneDriveDocumentsArchive72101 {
 		property data.archive.type = "data-archive-onedrive";
 		property portal.version = "7.2.10.1";
@@ -42,7 +42,7 @@ definition {
 		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewOneDriveDocumentsArchive73101 {
 		property data.archive.type = "data-archive-onedrive";
 		property portal.version = "7.3.10.1";

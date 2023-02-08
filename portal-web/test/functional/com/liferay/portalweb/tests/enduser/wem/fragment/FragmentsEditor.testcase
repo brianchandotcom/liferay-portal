@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80503 and LPS-108566. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented. Assert the available variables and taglibs are shown in the IntelliSense and autocomplete works."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AutocompleteFragment {
 		property portal.acceptance = "true";
@@ -56,8 +56,8 @@ definition {
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-editable:image",
-				fragmentHtml = "${fragmentHtml}",
-				htmlSnippet = "${htmlSnippet}");
+				fragmentHtml = ${fragmentHtml},
+				htmlSnippet = ${htmlSnippet});
 		}
 
 		task ("Assert the fragment editor has autocomplete for lfr-widget tags") {
@@ -66,8 +66,8 @@ definition {
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-widget-asset-list",
-				fragmentHtml = "${fragmentHtml}",
-				htmlSnippet = "${htmlSnippet}");
+				fragmentHtml = ${fragmentHtml},
+				htmlSnippet = ${htmlSnippet});
 		}
 
 		task ("Assert the fragment editor has autocomplete for variables") {
@@ -76,8 +76,8 @@ definition {
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "portalUtil",
-				fragmentHtml = "${fragmentHtml}",
-				htmlSnippet = "${htmlSnippet}");
+				fragmentHtml = ${fragmentHtml},
+				htmlSnippet = ${htmlSnippet});
 		}
 
 		task ("Assert the fragment editor has autocomplete for variables") {
@@ -86,13 +86,13 @@ definition {
 
 			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "liferay_editor",
-				fragmentHtml = "${fragmentHtml}",
-				htmlSnippet = "${htmlSnippet}");
+				fragmentHtml = ${fragmentHtml},
+				htmlSnippet = ${htmlSnippet});
 		}
 	}
 
 	@description = "This is a test for LPS-108566. The IntelliSense for available resources will popup when the current collection has resources and Auto-Complete works."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AutocompleteFragmentWithCollectionResource {
 		property portal.acceptance = "true";
@@ -108,7 +108,7 @@ definition {
 
 			Type.sendKeysAceEditor(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${htmlSnippet}");
+				value1 = ${htmlSnippet});
 
 			AssertElementNotPresent(locator1 = "//ul[contains(@class,'CodeMirror-hints')]");
 		}
@@ -151,7 +151,7 @@ definition {
 
 			Type.sendKeysAceEditor(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${htmlSnippet}");
+				value1 = ${htmlSnippet});
 
 			AssertElementNotPresent(
 				autocompleteField = "Document_2.jpg",
@@ -167,12 +167,12 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${fragmentHtml}");
+				value1 = ${fragmentHtml});
 		}
 	}
 
 	@description = "This is a test for LPS-97184. The user cannot publish fragment with invalid configuration."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test CannotPublishFragmentWithInvalidConfiguration {
 		task ("Add a fragment with invalid configuration") {
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publishing."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewDraftAutoSaved {
 		property portal.acceptance = "true";
@@ -219,12 +219,12 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${htmlContent}");
+				value1 = ${htmlContent});
 		}
 	}
 
 	@description = "This is a test for LPS-114145. The latest changes are saved automatically in fragment editor when the fragment has a published version."
-	@priority = "4"
+	@priority = 4
 	test ViewLatestChangesAutoSaved {
 		task ("Add a fragment without publish") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
@@ -257,12 +257,12 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = "${htmlContent}");
+				value1 = ${htmlContent});
 		}
 	}
 
 	@description = "This is a test for LPS-89251. When creating fragments there should be a visible reference to the Liferay Fragments Toolkit."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewReferenceToFragmentsToolkit {
 		task ("Access to the fragment editor") {

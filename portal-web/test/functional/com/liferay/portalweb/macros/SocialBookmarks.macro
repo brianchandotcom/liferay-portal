@@ -2,14 +2,14 @@ definition {
 
 	macro clickBookmarkIcon {
 		Click(
-			key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}"),
+			key_socialBookmark = StringUtil.toLowerCase(${socialBookmark}),
 			locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
 	}
 
 	macro viewBookmarkIcons {
-		for (var socialBookmark : list "${socialBookmarks}") {
+		for (var socialBookmark : list ${socialBookmarks}) {
 			AssertElementPresent(
-				key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}"),
+				key_socialBookmark = StringUtil.toLowerCase(${socialBookmark}),
 				locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
 		}
 	}
@@ -17,8 +17,8 @@ definition {
 	macro viewBookmarkMenuItems {
 		Click(locator1 = "Icon#SHARE");
 
-		for (var socialBookmark : list "${socialBookmarks}") {
-			MenuItem.viewPresent(menuItem = "${socialBookmark}");
+		for (var socialBookmark : list ${socialBookmarks}) {
+			MenuItem.viewPresent(menuItem = ${socialBookmark});
 		}
 
 		Click(locator1 = "Icon#SHARE");
@@ -27,8 +27,8 @@ definition {
 	macro viewBookmarksNotPresent {
 		Click(locator1 = "Icon#SHARE");
 
-		for (var socialBookmark : list "${socialBookmarks}") {
-			MenuItem.viewNotPresent(menuItem = "${socialBookmark}");
+		for (var socialBookmark : list ${socialBookmarks}) {
+			MenuItem.viewNotPresent(menuItem = ${socialBookmark});
 		}
 
 		Click(locator1 = "Icon#SHARE");
@@ -39,9 +39,9 @@ definition {
 	}
 
 	macro viewNoBookmarkIcons {
-		for (var socialBookmark : list "${socialBookmarks}") {
+		for (var socialBookmark : list ${socialBookmarks}) {
 			AssertElementNotPresent(
-				key_socialBookmark = StringUtil.toLowerCase("${socialBookmark}"),
+				key_socialBookmark = StringUtil.toLowerCase(${socialBookmark}),
 				locator1 = "SocialBookmarks#SOCIAL_BOOKMARK_ICON");
 		}
 	}

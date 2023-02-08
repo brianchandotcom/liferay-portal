@@ -85,7 +85,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP(authenticationMethod = "By Screen Name");
 		}
 		else {
@@ -116,7 +116,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewDocumentAsGuest {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

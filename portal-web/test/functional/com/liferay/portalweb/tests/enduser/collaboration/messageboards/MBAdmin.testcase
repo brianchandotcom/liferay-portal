@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddCategory {
 		property portal.acceptance = "true";
@@ -40,10 +40,10 @@ definition {
 		MessageboardsCategory.viewCP(
 			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
-			threadCount = "0");
+			threadCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddSubcategory {
 		JSONMBMessage.addCategory(
@@ -59,7 +59,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "MB Subcategory Name",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		MessageboardsCategory.openToCategory(
@@ -70,11 +70,11 @@ definition {
 		MessageboardsCategory.viewCP(
 			categoryCount = "0 Categories",
 			categoryName = "MB Subcategory Name",
-			threadCount = "0");
+			threadCount = 0);
 	}
 
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddThread {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -92,25 +92,25 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 	}
 
 	@description = "This is a test for LPS-136921. It checks that the ban length and expiration of a user can be changed."
-	@priority = "3"
+	@priority = 3
 	test CanChangeBanLengthAndExpiration {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.expire.ban.interval=0${line.separator}company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "false";
 
-		MessageboardsThread.updateCheckInterval(fieldValue = "1");
+		MessageboardsThread.updateCheckInterval(fieldValue = 1);
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -130,7 +130,7 @@ definition {
 
 		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
 			Role.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionDefinitionKey = ${permissionDefinitionKey},
 				roleTitle = "User");
 		}
 
@@ -169,7 +169,7 @@ definition {
 			userScreenName = "userfn1 userln1");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteCategories {
 		for (var num : list "1,2,3") {
@@ -186,7 +186,7 @@ definition {
 		MessageboardsCategory.viewDefault();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
@@ -203,13 +203,13 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject Edit");
 	}
 
 	@description = "This is a test for LPS-136918. It checks that a category can be exported."
-	@priority = "3"
+	@priority = 3
 	test CanExportCategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136917. It checks that a category can be imported."
-	@priority = "3"
+	@priority = 3
 	test CanImportCategory {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -238,11 +238,11 @@ definition {
 		MessageboardsCategory.viewCP(
 			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
-			threadCount = "0");
+			threadCount = 0);
 	}
 
 	@description = "This is a test for LPS-136923. It checks that a user can be unbanned."
-	@priority = "3"
+	@priority = 3
 	test CanUnbanUser {
 		property portal.acceptance = "false";
 
@@ -251,7 +251,7 @@ definition {
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
@@ -271,7 +271,7 @@ definition {
 
 		for (var permissionDefinitionKey : list "INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
 			Role.definePermissionPG(
-				permissionDefinitionKey = "${permissionDefinitionKey}",
+				permissionDefinitionKey = ${permissionDefinitionKey},
 				roleTitle = "User");
 		}
 
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-82508. It ensures that the number of threads and categories in a message board reflects the whole hierarchy."
-	@priority = "5"
+	@priority = 5
 	test CanViewCountsFromRootCategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
@@ -327,7 +327,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "MB Subcategory Name",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		for (var threadCount : list "1,2") {
@@ -341,9 +341,9 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsCategory.viewCP(
-			categoryCount = "1",
+			categoryCount = 1,
 			categoryName = "MB Category Name",
-			threadCount = "2");
+			threadCount = 2);
 	}
 
 }

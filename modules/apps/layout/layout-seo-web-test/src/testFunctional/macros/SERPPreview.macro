@@ -4,13 +4,13 @@ definition {
 		if (isSet(htmlTitle)) {
 			PortletEntry.inputText(
 				fieldLabel = "HTML Title",
-				text = "${htmlTitle}");
+				text = ${htmlTitle});
 		}
 
 		if (isSet(description)) {
 			PortletEntry.inputText(
 				fieldLabel = "Description",
-				text = "${description}");
+				text = ${description});
 		}
 	}
 

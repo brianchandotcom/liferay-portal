@@ -86,7 +86,7 @@ definition {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			siteTemplateName = "Raylife D2C");
 	}
 
@@ -95,7 +95,7 @@ definition {
 
 		var panel = "Control Panel";
 
-		ApplicationsMenu.gotoPanel(panel = "${panel}");
+		ApplicationsMenu.gotoPanel(panel = ${panel});
 
 		ClickNoError(
 			key_category = "Sites",
@@ -149,16 +149,16 @@ definition {
 	}
 
 	macro viewProductsList {
-		for (var productsName : list "${productList}") {
+		for (var productsName : list ${productList}) {
 			AssertElementPresent(
-				key_productsName = "${productsList}",
+				key_productsName = ${productsList},
 				locator1 = "Raylife#PRODUCTS_NAME",
-				value1 = "${productsName}");
+				value1 = ${productsName});
 		}
 	}
 
 	macro waitForObject {
-		while (IsElementNotPresent(label = "${key_object}", locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT")) {
+		while (IsElementNotPresent(label = ${key_object}, locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT")) {
 			Refresh();
 
 			WaitForPageLoad();

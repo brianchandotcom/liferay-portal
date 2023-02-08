@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6062. AddAProductRelations"
-	@priority = "3"
+	@priority = 3
 	test AddAProductRelations {
 		property portal.acceptance = "false";
 
@@ -50,13 +50,13 @@ definition {
 
 			AssertElementPresent(
 				key_productName = "Shoes",
-				key_value = "${valueList}",
+				key_value = ${valueList},
 				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
-	@priority = "3"
+	@priority = 3
 	test EditAProductRelations {
 		property portal.acceptance = "true";
 
@@ -89,17 +89,17 @@ definition {
 		CommerceRelations.addProductRelation(productNameRelation = "Shoes");
 
 		CommerceRelations.productRelationSetPriority(
-			priorityValue = "1",
+			priorityValue = 1,
 			productNameRelation = "Shoes");
 
 		AssertElementPresent(
 			key_productName = "Shoes",
-			key_value = "1",
+			key_value = 1,
 			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 	}
 
 	@description = "This is a test for COMMERCE-6063. RemoveAProductRelations"
-	@priority = "3"
+	@priority = 3
 	test RemoveAProductRelations {
 		property portal.acceptance = "false";
 
@@ -146,13 +146,13 @@ definition {
 		for (var valueList : list "Up-Sell,Cross-Sell,Related,Accessories,Spare") {
 			AssertElementNotPresent(
 				key_productName = "Shoes",
-				key_value = "${valueList}",
+				key_value = ${valueList},
 				locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 		}
 	}
 
 	@description = "This is a test for COMMERCE-8308. SearchProductRelations"
-	@priority = "4"
+	@priority = 4
 	test SearchProductRelations {
 		property portal.acceptance = "true";
 
@@ -175,7 +175,7 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
 
 		for (var nameList : list "Channels,Account Groups") {
-			CommerceEntry.assertCheckedSpecificToggle(name = "${nameList}");
+			CommerceEntry.assertCheckedSpecificToggle(name = ${nameList});
 		}
 
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
@@ -201,7 +201,7 @@ definition {
 			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
 
 		Click(
-			key_pageNumber = "3",
+			key_pageNumber = 3,
 			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 		AssertElementPresent(

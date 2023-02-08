@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanAddNewUserUsingWidget {
 		task ("Given the Organization Management Widget Page is reached and the account svg node is reached") {
 			Navigator.openSitePage(
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanAssociateExistingAccountUsingWidget {
 		task ("Given an account and the Organization Management Widget Page is reached") {
 			JSONAccountEntry.addAccountEntry(
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9403. Verify the store admin can associate existing users to an organization by using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanAssociateExistingUserUsingWidget {
 		task ("Given an Organization Management Widget Page is reached") {
 			Navigator.openSitePage(
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanCreateAccountUsingWidget {
 		task ("Given the Organization Management Widget Page is reached") {
 			Navigator.openSitePage(
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9400. Verify new child organizations can be created using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanCreateOrganizationUsingWidget {
 		task ("Given the Organization Management Widget Page is reached") {
 			Navigator.openSitePage(
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9404. Verify accounts and organizations can be moved using the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanMoveAccountsAndOrganizationsInWidget {
 		task ("Given a new organization with a child organization") {
 			JSONOrganization.addOrganization(
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
-	@priority = "3"
+	@priority = 3
 	test CanViewOrganizationWidget {
 		task ("When the Organization Management Widget Page is reached") {
 			CommerceWidget.openOrganizationWidget();

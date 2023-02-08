@@ -12,17 +12,17 @@ definition {
 	}
 
 	macro gotoCollection {
-		MenuBar.click(menuBar = "${collectionName}");
+		MenuBar.click(menuBar = ${collectionName});
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCardTitleLink(card = "${entry}");
+		LexiconCard.clickCardTitleLink(card = ${entry});
 	}
 
 	macro gotoEntryEllipsisItem {
 		LexiconCard.clickEllipsisItem(
-			card = "${entry}",
-			item = "${item}");
+			card = ${entry},
+			item = ${item});
 	}
 
 	macro gotoExportCollection {
@@ -48,13 +48,13 @@ definition {
 
 	macro gotoSpecificScopeCollection {
 		MenuBar.clickInStack(
-			menuBar = "${collectionName}",
-			stackName = "${scope}");
+			menuBar = ${collectionName},
+			stackName = ${scope});
 	}
 
 	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 

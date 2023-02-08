@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82492."
-	@priority = "5"
+	@priority = 5
 	test AddCreatedStructureForImportedTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -86,7 +86,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
-			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
+			WebContentNavigator.gotoViewTemplate(templateName = ${templateName});
 
 			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
@@ -103,12 +103,12 @@ definition {
 			WebContentTemplates.viewCP(
 				structureName = "Content List",
 				templateDescription = "${templateName} Description",
-				templateName = "${templateName}");
+				templateName = ${templateName});
 		}
 	}
 
 	@description = "This is a use case for LPS-155637. Verify that it's possible to import exported web content structures with fieldsets."
-	@priority = "3"
+	@priority = 3
 	test CanImportExportedWCStructuresWithFieldsets {
 		task ("Given: Add a new site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-128693. Verify can import a LAR containing WCD between instances."
-	@priority = "3"
+	@priority = 3
 	test CanImportWCDBetweenInstances {
 		property test.name.skip.portal.instance = "WebContentExportImport#CanImportWCDBetweenInstances";
 
@@ -205,7 +205,7 @@ definition {
 
 			LAR.exportSiteCP(siteScopeName = "Guest");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -238,7 +238,7 @@ definition {
 
 			LAR.importSiteCP(
 				baseURL = "http://www.able.com:8080",
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site Name");
 
 			Navigator.openSitePage(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-114230. Verify that can show exported image global structures between instances."
-	@priority = "3"
+	@priority = 3
 	test CanShowExportedGlobalStructuresImageBetweenInstances {
 		property test.name.skip.portal.instance = "WebContentExportImport#CanShowExportedGlobalStructuresImageBetweenInstances";
 
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-162626. Verify order is preserved in repeatable web content fields when staging."
-	@priority = "3"
+	@priority = 3
 	test ContentWillDisplayInOrderInRepeatableWCFields {
 		property osgi.module.configuration.file.names = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_journalArticleExportImportProcessorCacheEnabled=B\"false\"";
 
@@ -423,7 +423,7 @@ definition {
 			WebContentTemplates.addCP(
 				structureName = "STR_KV",
 				templateName = "STR_KV Template",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("When Web Content is created using a structure with repeatable fields") {
@@ -447,22 +447,22 @@ definition {
 
 			WebContent.editFieldValue(
 				fieldFieldLabel = "Key",
-				index = "1",
+				index = 1,
 				value = "1. No");
 
 			WebContent.editFieldValue(
 				fieldFieldLabel = "Key",
-				index = "2",
+				index = 2,
 				value = "2. No");
 
 			WebContent.editFieldValue(
 				fieldFieldLabel = "Key",
-				index = "3",
+				index = 3,
 				value = "3. Yes");
 
 			Click(
 				key_fieldLabel = "Value",
-				key_index = "3",
+				key_index = 3,
 				locator1 = "DataEngineRenderer#SELECTOR_INPUT_INDEXED");
 
 			SelectFrame(
@@ -520,7 +520,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ExportLARWithNestedWebContent {
 		property testray.component.names = "Web Content Administration";
 
@@ -585,7 +585,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95441."
-	@priority = "3"
+	@priority = 3
 	test ExportWebContentWithEditedStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -635,7 +635,7 @@ definition {
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ImportAndUseGlobalStructureAndTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -701,12 +701,12 @@ definition {
 			webContentTextFieldLabel = "Title",
 			webContentTitle = "Agricultural Science Front Page");
 
-		var count = "1";
+		var count = 1;
 
 		for (var webContentText : list "Mowed Lawns,Mulched Branches,Compost Bin") {
 			WebContent.addWithStructureCP(
 				fieldType = "Multiple Lines",
-				webContentText = "${webContentText}",
+				webContentText = ${webContentText},
 				webContentTextFieldLabel = "Heading ${count}");
 
 			var count = ${count} + 1;
@@ -722,19 +722,19 @@ definition {
 			webContentTextFieldLabel = "Title",
 			webContentTitle = "Agricultural Science Front Page");
 
-		var count = "1";
+		var count = 1;
 
 		for (var webContentText : list "Mowed Lawns,Mulched Branches,Compost Bin") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "Heading ${count}",
 				locator1 = "DDMField#MULTIPLE_LINES",
-				value1 = "${webContentText}");
+				value1 = ${webContentText});
 
 			var count = ${count} + 1;
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ImportLAR {
 		property testray.component.names = "Web Content Administration";
 
@@ -817,7 +817,7 @@ definition {
 			templateName = "WC Template Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ImportLARLinkToPageValidation {
 		property testray.component.names = "Web Content Administration";
 
@@ -874,7 +874,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88893."
-	@priority = "3"
+	@priority = 3
 	test ImportLARWithTheSameTitle {
 		property testray.component.names = "Training";
 
@@ -903,7 +903,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "DuplicateFriendlyURLEntryException");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test MoveImportedWebContentArticlesToFolders {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -1059,7 +1059,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight,Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
-			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			WebContent.viewTitle(webContentTitle = ${webContentTitle});
 		}
 
 		WebContent.moveArticlesToFolderCP(
@@ -1077,7 +1077,7 @@ definition {
 			webContentTitle = "News");
 
 		for (var webContentTitle : list "When It All Began...,Stravinksy in Space?,Student Spotlight") {
-			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			WebContent.viewTitle(webContentTitle = ${webContentTitle});
 		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1087,12 +1087,12 @@ definition {
 			webContentTitle = "Events");
 
 		for (var webContentTitle : list "Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series") {
-			WebContent.viewTitle(webContentTitle = "${webContentTitle}");
+			WebContent.viewTitle(webContentTitle = ${webContentTitle});
 		}
 	}
 
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
-	@priority = "4"
+	@priority = 4
 	test ResetImportedStructureDefaultValues {
 		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";
 
@@ -1129,13 +1129,13 @@ definition {
 			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				column = "1",
-				row = "1",
+				column = 1,
+				row = 1,
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
 				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSingleSelection = "Option 3",
@@ -1187,14 +1187,14 @@ definition {
 				templateName = "WC Template Name");
 
 			WebContent.viewWithStructureCP(
-				column = "1",
+				column = 1,
 				predefinedValue = "true",
-				row = "1",
+				row = 1,
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
 				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSingleSelection = "Option 3",
@@ -1208,10 +1208,10 @@ definition {
 				templateName = "WC Template Name");
 
 			WebContent.viewWithStructureCP(
-				column = "1",
+				column = 1,
 				predefinedValue = "true",
-				row = "1",
-				webContentColor = "000000",
+				row = 1,
+				webContentColor = 000000,
 				webContentDate = "__/__/____",
 				webContentGrid = "false",
 				webContentNumeric = "",

@@ -3,36 +3,36 @@ definition {
 	macro addNewNotificationTemplate {
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "${notificationType}");
+		MenuItem.click(menuItem = ${notificationType});
 
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${name}");
+			value1 = ${name});
 
 		Type(
 			key_text = "To",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryTo}");
+			value1 = ${entryTo});
 
 		Type(
 			key_text = "From Address",
 			locator1 = "TextInput#ANY",
-			value1 = "${fromAddress}");
+			value1 = ${fromAddress});
 
 		Type(
 			key_text = "From Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${fromName}");
+			value1 = ${fromName});
 
 		Type(
 			key_text = "Subject",
 			locator1 = "TextInput#ANY",
-			value1 = "${subject}");
+			value1 = ${subject});
 
 		Type(
 			locator1 = "CKEditor#BODY_FIELD_IFRAME",
-			value1 = "${emailBody}");
+			value1 = ${emailBody});
 	}
 
 	macro addNotificationTemplateAttachment {
@@ -41,7 +41,7 @@ definition {
 			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
 
 		Click(
-			key_objectLabel = "${objectLabel}",
+			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS_SELECT_OBJECT");
 
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
@@ -51,7 +51,7 @@ definition {
 
 	macro deleteNotificationTemplate {
 		Click(
-			key_objectLabel = "${templateName}",
+			key_objectLabel = ${templateName},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -60,9 +60,9 @@ definition {
 	}
 
 	macro deleteQueue {
-		if (IsElementPresent(key_statusName = "${status}", locator1 = "ObjectNotifications#NOTIFICATION_STATUS")) {
+		if (IsElementPresent(key_statusName = ${status}, locator1 = "ObjectNotifications#NOTIFICATION_STATUS")) {
 			Click(
-				key_text = "${triggerBy}",
+				key_text = ${triggerBy},
 				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -74,58 +74,58 @@ definition {
 
 	macro editNotificationTemplate {
 		Click(
-			key_name = "${notificationTemplateName}",
+			key_name = ${notificationTemplateName},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 		if (isSet(name)) {
 			Type(
 				key_text = "Name",
 				locator1 = "TextInput#ANY",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 
 		if (isSet(entryTo)) {
 			Type(
 				key_text = "To",
 				locator1 = "TextInput#ANY",
-				value1 = "${entryTo}");
+				value1 = ${entryTo});
 		}
 
 		if (isSet(fromAddress)) {
 			Type(
 				key_text = "From Address",
 				locator1 = "TextInput#ANY",
-				value1 = "${fromAddress}");
+				value1 = ${fromAddress});
 		}
 
 		if (isSet(fromName)) {
 			Type(
 				key_text = "From Name",
 				locator1 = "TextInput#ANY",
-				value1 = "${fromName}");
+				value1 = ${fromName});
 		}
 
 		if (isSet(subject)) {
 			Type(
 				key_text = "Subject",
 				locator1 = "TextInput#ANY",
-				value1 = "${subject}");
+				value1 = ${subject});
 		}
 
 		if (isSet(emailBody)) {
 			Type(
 				locator1 = "CKEditor#BODY_FIELD_IFRAME",
-				value1 = "${emailBody}");
+				value1 = ${emailBody});
 		}
 
 		if (isSet(externalReferenceCode)) {
-			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = "${externalReferenceCode}");
+			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = ${externalReferenceCode});
 		}
 	}
 
 	macro resendNotificationInTheQueue {
 		Click(
-			key_text = "${triggerBy}",
+			key_text = ${triggerBy},
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Resend");
@@ -133,62 +133,62 @@ definition {
 
 	macro viewNotificationTemplateDetails {
 		Click(
-			key_name = "${name}",
+			key_name = ${name},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 		AssertTextEquals(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${name}");
+			value1 = ${name});
 
 		AssertTextEquals(
 			key_text = "From Address",
 			locator1 = "TextInput#ANY",
-			value1 = "${fromAddress}");
+			value1 = ${fromAddress});
 
 		AssertTextEquals(
 			key_text = "From Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${fromName}");
+			value1 = ${fromName});
 
 		if (isSet(description)) {
 			AssertTextEquals(
 				key_text = "description",
 				locator1 = "TextArea#ANY",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(entryTo)) {
 			AssertTextEquals(
 				key_text = "To",
 				locator1 = "TextInput#ANY",
-				value1 = "${entryTo}");
+				value1 = ${entryTo});
 		}
 
 		if (isSet(cc)) {
 			AssertTextEquals(
 				key_text = "CC",
 				locator1 = "TextInput#ANY",
-				value1 = "${cc}");
+				value1 = ${cc});
 		}
 
 		if (isSet(bcc)) {
 			AssertTextEquals(
 				key_text = "BCC",
 				locator1 = "TextInput#ANY",
-				value1 = "${bcc}");
+				value1 = ${bcc});
 		}
 
 		if (isSet(subject)) {
 			AssertTextEquals(
 				key_text = "Subject",
 				locator1 = "TextInput#ANY",
-				value1 = "${subject}");
+				value1 = ${subject});
 		}
 
 		if (isSet(externalReferenceCode)) {
 			AssertElementPresent(
-				key_externalReferenceCode = "${externalReferenceCode}",
+				key_externalReferenceCode = ${externalReferenceCode},
 				locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE_HEADER");
 		}
 
@@ -196,7 +196,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#IFRAME");
 
 			AssertElementPresent(
-				key_text = "${emailBody}",
+				key_text = ${emailBody},
 				locator1 = "CKEditor#BODY_TEXT");
 		}
 	}

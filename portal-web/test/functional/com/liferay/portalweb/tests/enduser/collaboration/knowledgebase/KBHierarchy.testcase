@@ -16,7 +16,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CanTraverseArticleHierachy {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -104,7 +104,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewImportedKBArticlesInHierarchyWithMarkdownFormat {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -138,7 +138,7 @@ definition {
 			kbMarkdownImageCaption = "Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewImportedKBArticlesWithMultiplePeerHierarchies {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -164,7 +164,7 @@ definition {
 		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 5");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewKBArticleNoHierarchyInFolder {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -208,7 +208,7 @@ definition {
 		KBArticle.viewNoHierarchyPG(kbArticleTitle = "Article 1 Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewKBArticlesHierarchyWithinFolders {
 		JSONKnowledgeBase.addkBFolder(
@@ -298,7 +298,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Folder 1 Title 1 Grandchild");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewKBArticlesViaNavigationLinks {
 		for (var kbCount : list "1,2,3") {
@@ -379,7 +379,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
 		JSONKnowledgeBase.addkBFolder(

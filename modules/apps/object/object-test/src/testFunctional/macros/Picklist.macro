@@ -5,11 +5,11 @@ definition {
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = ${newLanguage});
 
 		Type(
 			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 
 		WaitForSPARefresh();
 	}
@@ -21,22 +21,22 @@ definition {
 			IFrame.selectModalFrame();
 		}
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = ${newLanguage});
 
 		Type(
 			locator1 = "Picklist#EDIT_ITEM_NAME",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 
 		WaitForSPARefresh();
 	}
 
 	macro addPicklistItemViaAPI {
 		JSONObject.addPicklistItem(
-			itemKey = "${itemKey}",
-			itemName = "${itemName}",
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			itemKey = ${itemKey},
+			itemName = ${itemName},
+			picklistName = ${picklistName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	macro addPicklistItemViaUI {
@@ -51,21 +51,21 @@ definition {
 		if (isSet(picklistItemName)) {
 			Type(
 				locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
-				value1 = "${picklistItemName}");
+				value1 = ${picklistItemName});
 		}
 
 		if (isSet(picklistItemKey)) {
 			Type(
 				locator1 = "Picklist#ADD_PICKLIST_ITEM_KEY",
-				value1 = "${picklistItemKey}");
+				value1 = ${picklistItemKey});
 		}
 	}
 
 	macro addPicklistItemWithTranslationViaUI {
-		Picklist.addPicklistItemViaUI(picklistItemName = "${picklistItemName}");
+		Picklist.addPicklistItemViaUI(picklistItemName = ${picklistItemName});
 
 		ObjectAdmin.chooseAnyLanguage(
-			newLanguage = "${newLanguage}",
+			newLanguage = ${newLanguage},
 			symbolName = "");
 
 		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME")) {
@@ -78,10 +78,10 @@ definition {
 
 		Type(
 			locator1 = "Picklist#ADD_PICKLIST_ITEM_NAME",
-			value1 = "${newItemName}");
+			value1 = ${newItemName});
 
 		ObjectAdmin.chooseAnyLanguage(
-			newLanguage = "${defaultLanguage}",
+			newLanguage = ${defaultLanguage},
 			symbolName = "");
 
 		WaitForSPARefresh();
@@ -89,9 +89,9 @@ definition {
 
 	macro addPicklistViaAPI {
 		JSONObject.addPicklist(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			picklistName = ${picklistName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	macro addPicklistViaUI {
@@ -101,17 +101,17 @@ definition {
 
 		WaitForElementPresent(
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
-			value1 = "${picklistName}");
+			value1 = ${picklistName});
 
 		Type(
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
-			value1 = "${picklistName}");
+			value1 = ${picklistName});
 
 		PortletEntry.save();
 	}
 
 	macro assertDisabledPicklistItem {
-		Picklist.assertDisableKey(keyName = "${keyName}");
+		Picklist.assertDisableKey(keyName = ${keyName});
 
 		AssertElementPresent(locator1 = "Picklist#DISABLED_PICKLIST_NAME");
 	}
@@ -130,7 +130,7 @@ definition {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_ITEM_MODAL");
 
 		AssertElementPresent(
-			key_keyName = "${keyName}",
+			key_keyName = ${keyName},
 			locator1 = "Picklist#DISABLE_PICKLIST_KEY");
 	}
 
@@ -142,48 +142,48 @@ definition {
 
 	macro assertEntryRelationshipFieldPicklist {
 		Click(
-			key_selectField = "${selectField}",
+			key_selectField = ${selectField},
 			locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
 
 		AssertElementPresent(
-			key_entry = "${newEntry}",
+			key_entry = ${newEntry},
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
 	macro assertItemNameAndItemKeyOnModal {
 		if (IsElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME")) {
 			AssertElementPresent(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME");
 
 			AssertElementPresent(
-				key_labelName = "${itemName}",
+				key_labelName = ${itemName},
 				locator1 = "ObjectAdmin#VIEW_SIMPLE_TEXT_GENERIC");
 
 			AssertElementPresent(
-				key_itemKey = "${itemKey}",
+				key_itemKey = ${itemKey},
 				locator1 = "Picklist#VIEW_PICKLIST_ITEM_KEY");
 		}
 
 		if (IsElementPresent(locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_NAME")) {
 			AssertElementPresent(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_NAME");
 
 			AssertElementPresent(
-				key_itemKey = "${itemKey}",
+				key_itemKey = ${itemKey},
 				locator1 = "Picklist#VIEW_PICKLIST_EDIT_ITEM_KEY");
 		}
 	}
 
 	macro assertPicklist {
-		var key_picklistName = "${picklistName}";
+		var key_picklistName = ${picklistName};
 
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST");
 	}
 
 	macro assertPicklistDetails {
-		var key_title = "${title}";
+		var key_title = ${title};
 
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
@@ -195,11 +195,11 @@ definition {
 			SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 		}
 
-		var key_picklistItemName = "${picklistItemName}";
-		var key_picklistItemKey = "${picklistItemKey}";
+		var key_picklistItemName = ${picklistItemName};
+		var key_picklistItemKey = ${picklistItemKey};
 
 		if (IsElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM")) {
-			Picklist.gotoPicklistView(picklistName = "${picklistItemName}");
+			Picklist.gotoPicklistView(picklistName = ${picklistItemName});
 		}
 
 		AssertElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
@@ -212,31 +212,31 @@ definition {
 			IFrame.selectModalFrame();
 		}
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = ${newLanguage});
 
 		AssertTextEquals(
 			locator1 = "Picklist#EDIT_ITEM_NAME",
-			value1 = "${nameItem}");
+			value1 = ${nameItem});
 	}
 
 	macro assertPicklistItemInTable {
 		Picklist.assertPicklistDetails(title = "Items");
 
 		AssertElementPresent(
-			key_picklistItemKey = "${picklistItemKey}",
-			key_picklistItemName = "${picklistItemName}",
+			key_picklistItemKey = ${picklistItemKey},
+			key_picklistItemName = ${picklistItemName},
 			locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
 	macro assertPicklistItemNotPresent {
-		var key_picklistItemName = "${picklistItemName}";
-		var key_picklistItemKey = "${picklistItemKey}";
+		var key_picklistItemName = ${picklistItemName};
+		var key_picklistItemKey = ${picklistItemKey};
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM");
 	}
 
 	macro assertPicklistMessage {
-		var key_picklistMessage = "${picklistMessage}";
+		var key_picklistMessage = ${picklistMessage};
 
 		AssertElementPresent(locator1 = "Picklist#PICKLIST_MESSAGE");
 	}
@@ -246,15 +246,15 @@ definition {
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "${newLanguage}");
+		ObjectAdmin.changeLabelLanguage(newLanguage = ${newLanguage});
 
 		AssertTextEquals(
 			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
-			value1 = "${nameItem}");
+			value1 = ${nameItem});
 	}
 
 	macro assertPicklistNotPresent {
-		var key_picklistName = "${picklistName}";
+		var key_picklistName = ${picklistName};
 
 		AssertElementNotPresent(locator1 = "Picklist#VIEW_PICKLIST");
 	}
@@ -264,7 +264,7 @@ definition {
 
 		Type(
 			locator1 = "Picklist#ADD_PICKLIST_NAME",
-			value1 = "${picklistName}");
+			value1 = ${picklistName});
 
 		Picklist.cancelPicklistButton();
 	}
@@ -279,15 +279,15 @@ definition {
 
 	macro deleteAllPicklistsViaAPI {
 		JSONObject.deleteAllPicklists(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	macro deletePicklistViaAPI {
 		JSONObject.deletePicklist(
-			picklistName = "${picklistName}",
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+			picklistName = ${picklistName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
 	}
 
 	macro gotoPicklists {
@@ -298,7 +298,7 @@ definition {
 		WaitForPageLoad();
 
 		Click.javaScriptClick(
-			key_picklistName = "${picklistName}",
+			key_picklistName = ${picklistName},
 			locator1 = "Picklist#SELECT_PICKLIST_VIEW");
 
 		Click.javaScriptClick(locator1 = "Picklist#GOTO_PICKLIST_VIEW");
@@ -306,17 +306,17 @@ definition {
 
 	macro optionsPicklist {
 		Click.javaScriptClick(
-			key_picklistName = "${picklistName}",
+			key_picklistName = ${picklistName},
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU");
 
 		Click.javaScriptClick(
-			key_picklistOption = "${picklistOption}",
+			key_picklistOption = ${picklistOption},
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 	}
 
 	macro optionsPicklistItem {
-		var key_itemKey = "${itemKey}";
-		var key_picklistItemOption = "${picklistItemOption}";
+		var key_itemKey = ${itemKey};
+		var key_picklistItemOption = ${picklistItemOption};
 
 		SelectFrameTop();
 
@@ -330,7 +330,7 @@ definition {
 	macro searchPicklist {
 		Type(
 			locator1 = "TextInput#SEARCH",
-			value1 = "${picklistName}");
+			value1 = ${picklistName});
 
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
@@ -342,7 +342,7 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SEARCH",
-			value1 = "${picklistItemName}");
+			value1 = ${picklistItemName});
 
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
@@ -355,7 +355,7 @@ definition {
 
 	macro updatePicklistItemName {
 		Picklist.optionsPicklistItem(
-			itemKey = "${itemkey}",
+			itemKey = ${itemkey},
 			picklistItemOption = "View");
 
 		SelectFrameTop();
@@ -364,7 +364,7 @@ definition {
 
 		Type(
 			locator1 = "Picklist#EDIT_ITEM_NAME",
-			value1 = "${newItemName}");
+			value1 = ${newItemName});
 
 		WaitForSPARefresh();
 	}
@@ -374,7 +374,7 @@ definition {
 
 		Type(
 			locator1 = "Picklist#UPDATE_PICKLIST_NAME",
-			value1 = "${picklistName}");
+			value1 = ${picklistName});
 
 		WaitForSPARefresh();
 	}

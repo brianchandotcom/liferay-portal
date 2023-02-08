@@ -19,7 +19,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-102179. It ensures that the user can create a shortcut using a file from a different site after setting the root folder."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanReferenceDocumentFromOtherSiteAfterSettingRootFolder {
 		property portal.acceptance = "true";
@@ -61,7 +61,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -84,18 +84,18 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		DMDocument.addDMShortcutPG(
 			dmDocumentTitle = "DM Document Title",
-			siteName = "${siteName}");
+			siteName = ${siteName});
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveCurrentDisplayStyleViews {
 		property portal.acceptance = "true";
@@ -105,7 +105,7 @@ definition {
 		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemovePortlet {
 		property portal.acceptance = "true";
@@ -115,7 +115,7 @@ definition {
 		Portlet.deletePG(portletName = "Documents and Media");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test ConfigurationsAreIndependentAcrossPages {
 		property portal.acceptance = "true";
@@ -125,7 +125,7 @@ definition {
 			layoutName = "Documents and Media Page 2");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page 2",
 			widgetName = "Documents and Media");
@@ -137,7 +137,7 @@ definition {
 		DMPortlet.configureDisplaySettingsPG(
 			enableDisplaySettingsRelatedAssets = "false",
 			enableDisplaySettingsShowSearch = "false",
-			entriesToDisplayCount = "60");
+			entriesToDisplayCount = 60);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-104252. It validates that the search bar in the DM widget cannot execute XSS."
-	@priority = "4"
+	@priority = 4
 	test SearchBarDoesNotExecuteXSS {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -164,14 +164,14 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95662. Selecting an asset from the second does not invoke the management toolbar on the first."
-	@priority = "4"
+	@priority = 4
 	test SelectAssetFromSecondWidgetInvokesSecondManagementToolbar {
 		property portal.acceptance = "true";
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -183,13 +183,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		PortletEntry.SelectAllOnSpecificWidget(widgetPosition = "2");
+		PortletEntry.SelectAllOnSpecificWidget(widgetPosition = 2);
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
 	@description = "This test covers LPS-91595. It ensures that the document selection persists when navigating through the pagination in the DM widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test SelectionPersistsWhenTraversingPages {
 		property portal.acceptance = "true";
@@ -201,40 +201,40 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
 		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
-			var extension = StringUtil.extractLast("${documentName}", ".");
+			var extension = StringUtil.extractLast(${documentName}, ".");
 
-			if ("${extension}" == "doc") {
+			if (${extension} == "doc") {
 				var mimeType = "application/msword";
 			}
-			else if ("${extension}" == "jpg") {
+			else if (${extension} == "jpg") {
 				var mimeType = "image/jpg";
 			}
-			else if ("${extension}" == "xls") {
+			else if (${extension} == "xls") {
 				var mimeType = "application/vnd.ms-excel";
 			}
-			else if ("${extension}" == "txt") {
+			else if (${extension} == "txt") {
 				var mimeType = "text/plain";
 			}
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "${documentName}",
+				dmDocumentTitle = ${documentName},
 				groupName = "Site Name",
-				mimeType = "${mimeType}",
-				sourceFileName = "${documentName}");
+				mimeType = ${mimeType},
+				sourceFileName = ${documentName});
 		}
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		Pagination.changePagination(itemsPerPage = "4");
+		Pagination.changePagination(itemsPerPage = 4);
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
 
@@ -255,10 +255,10 @@ definition {
 
 	@description = "This test ensures that the DM widgets follow W3C accessibility standards."
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test WidgetsFollowAccessibilityStandards {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Media Gallery");
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a document on page."
-	@priority = "3"
+	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInDocument {
 		Navigator.openURL();
 

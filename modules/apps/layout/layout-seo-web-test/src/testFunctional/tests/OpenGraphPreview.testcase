@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,13 +29,13 @@ definition {
 	}
 
 	@description = "This ensures that the OG preview is updated when the image is changed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewAfterReplacingImage {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -57,7 +57,7 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "document_1",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
@@ -70,7 +70,7 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "document_2",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "document_1");
@@ -81,14 +81,14 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_2.jpeg",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewImage(imageName = "Document_1.png");
 	}
 
 	@description = "This test covers LPS-153646. It ensures pages with accented names show their names from their canonical URL"
-	@priority = "3"
+	@priority = 3
 	test CanPreviewCanonicalURLWithAccentedNames {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -108,13 +108,13 @@ definition {
 	}
 
 	@description = "This ensures that the OG preview is inherited from the SEO."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewInheritedSEO {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -138,7 +138,7 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.configureOpenGraph(
@@ -155,7 +155,7 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This ensures that escape characters are present correctly in the preview."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanPreviewWithEscapeCharacters {
 		var portalURL = PropsUtil.get("portal.url");
@@ -191,7 +191,7 @@ definition {
 			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalURL = "${portalURL}");
+			portalURL = ${portalURL});
 
 		Button.click(button = "Save");
 
@@ -200,11 +200,11 @@ definition {
 			htmlTitle = '''@#$%^&amp;*()~`1234567890title''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalURL = "${portalURL}");
+			portalURL = ${portalURL});
 	}
 
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanPreviewWithLongInputs {
 		property portal.acceptance = "quarantine";
@@ -231,7 +231,7 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name",
 			validateTitleCSSStyle = "true",
 			validateURLCSSStyle = "true");
@@ -242,20 +242,20 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name",
 			validateTitleCSSStyle = "true",
 			validateURLCSSStyle = "true");
 	}
 
 	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanReturnToDefault {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -280,14 +280,14 @@ definition {
 		Page.viewPreview(
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.viewNoPreviewDescription();
 	}
 
 	@description = "This test ensures that a user can preview Open Graph tags with Arabic."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewArabicTranslation {
 		property portal.acceptance = "true";
@@ -318,12 +318,12 @@ definition {
 			htmlTitle = "عنوان الاختبار",
 			locale = "ar-SA",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 	}
 
 	@description = "This ensures that the user can customize OG tags."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewPreview {
 		property environment.acceptance = "true";
@@ -331,7 +331,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -356,7 +356,7 @@ definition {
 			htmlTitle = "Custom Title",
 			key_imageName = "document_1",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Button.click(button = "Save");
@@ -366,18 +366,18 @@ definition {
 			htmlTitle = "Custom Title",
 			key_imageName = "Document_1",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 	}
 
 	@description = "This test covers LPS-106118. It ensures that the special images can be uploaded and previewed."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSpecialImages {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -393,25 +393,25 @@ definition {
 			OpenGraph.configureOpenGraph(
 				customImage = "true",
 				pageName = "Test Page Name",
-				uploadFileName = "${imageName}");
+				uploadFileName = ${imageName});
 
 			Page.viewPreview(
 				htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
-				key_imageName = "${imageName}",
+				key_imageName = ${imageName},
 				openGraph = "true",
-				portalURL = "${portalURL}",
+				portalURL = ${portalURL},
 				siteNameURL = "test-site-name");
 		}
 	}
 
 	@description = "This test ensures that OG can use the translated language that SEO has saved."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewTranslatedLanguages {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -449,7 +449,7 @@ definition {
 			description = "テスト記述",
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Button.clickSave();
@@ -462,7 +462,7 @@ definition {
 			description = "テスト記述",
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -476,7 +476,7 @@ definition {
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		OpenGraph.changeLocale(
@@ -488,18 +488,18 @@ definition {
 			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
 			locale = "ja-JP",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 	}
 
 	@description = "This test ensures that OG shows default translated language when switching to unsaved translations."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewUntranslatedLanguage {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -536,7 +536,7 @@ definition {
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			locale = "fr-FR",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 	}
 

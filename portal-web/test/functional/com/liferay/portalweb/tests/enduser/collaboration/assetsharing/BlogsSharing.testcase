@@ -34,7 +34,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "This case ensures that sharing permissions can be updated through Shared by Me."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanChangePermissionsViaSharedByMe {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -68,7 +68,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This test ensures that when a blog entry that was shared is deleted, it cannot be accessed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotViewDeletedEntryViaNotification {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -109,7 +109,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "This test ensures a user can only comment on a blog entry once it is shared with him."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanShareWithCommentPermissions {
 		property portal.acceptance = "true";
@@ -139,7 +139,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -157,13 +157,13 @@ definition {
 		Comments.addPG(entryComment = "test");
 
 		Comments.viewPG(
-			commentCount = "1",
+			commentCount = 1,
 			entryComment = "test",
 			userFullName = "userfn userln");
 	}
 
 	@description = "This test ensures a user can update a blog entry once it is shared with him."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanShareWithUpdatePermissions {
 		property portal.acceptance = "true";
@@ -179,7 +179,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This test ensures a user can only view a blog entry once it is shared with him."
-	@priority = "5"
+	@priority = 5
 	test CanShareWithViewPermissions {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
@@ -220,7 +220,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@description = "This test asserts that proper notifications are sent based on sharing permissions granted."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewSharingNotifications {
 		property portal.acceptance = "true";
@@ -246,7 +246,7 @@ definition {
 			BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 			Asset.share(
-				sharingPermissions = "${sharingPermissions}",
+				sharingPermissions = ${sharingPermissions},
 				userEmailAddress = "userea@liferay.com",
 				userName = "userfn userln");
 		}
@@ -255,13 +255,13 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Notifications.viewBadgeCount(notificationCount = "3");
+		Notifications.viewBadgeCount(notificationCount = 3);
 
 		for (var contentSharingPermission : list "viewing,updating,commenting") {
 			Notifications.gotoNotifications();
 
 			Notifications.viewNewSharedContent(
-				contentSharingPermission = "${contentSharingPermission}",
+				contentSharingPermission = ${contentSharingPermission},
 				contentTitle = "Blogs Entry Title",
 				ownerName = "Test Test");
 		}

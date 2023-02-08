@@ -27,7 +27,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -38,7 +38,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can change the view permission to the comment permission via the manage collaborators."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanChangePermissionToCommentViaManageCollaborators {
 		JSONDocument.addFileWithUploadedFile(
@@ -84,7 +84,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can change the view permission to the update permission via the manage collaborators"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanChangePermissionToUpdateViaManageCollaborators {
 		property portal.acceptance = "true";
@@ -135,7 +135,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94284 and LPS-105038. It ensures that the invalid email cannot be added if it has space, also covers the input field that still contains the invalid email after pressing enter."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotShareWithInvalidAddress {
 		JSONDocument.addFileWithUploadedFile(
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@description = "This test share an content to a user and disable the sharing option. This test asserts that a collaborator without sharing permissions will not be able to share this content."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotShareWithoutPermissions {
 		property portal.acceptance = "true";
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanReplyToCommentViaSharedContent {
 		JSONUser.addUser(
@@ -298,7 +298,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -311,7 +311,7 @@ definition {
 		Comments.addPG(entryComment = "This is a comment");
 
 		Comments.viewPG(
-			commentCount = "1",
+			commentCount = 1,
 			entryComment = "This is a comment",
 			userFullName = "userfn userln");
 
@@ -321,7 +321,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -334,13 +334,13 @@ definition {
 		Comments.replyToComment(commentReply = "This is a reply comment");
 
 		Comments.viewPG(
-			commentCount = "2",
+			commentCount = 2,
 			entryComment = "This is a reply comment",
 			userFullName = "userfn2 userln2");
 	}
 
 	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanShareViaSharedContent {
 		JSONUser.addUser(
@@ -393,7 +393,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94294. This test asserts that a user can comment on a document it is shared with him"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanShareWithCommentPermissions {
 		JSONDocument.addFileWithUploadedFile(
@@ -461,7 +461,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -478,13 +478,13 @@ definition {
 		Comments.addPG(entryComment = "test");
 
 		Comments.viewPG(
-			commentCount = "1",
+			commentCount = 1,
 			entryComment = "test",
 			userFullName = "userfn userln");
 	}
 
 	@description = "This test covers LPS-94661. It ensures that the user can share a document with an apostrophe in the title."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanShareWithSpecialCharacter {
 		DMNavigator.openToAddEntry(
@@ -517,7 +517,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can update a document once it is shared with him, also covers LPS-94448 and LPS-94294"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanShareWithUpdatePermissions {
 		JSONDocument.addFileWithUploadedFile(
@@ -563,7 +563,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -585,7 +585,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can only view a document once it is shared with him"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanShareWithViewPermissions {
 		JSONDocument.addFileWithUploadedFile(
@@ -619,7 +619,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -635,7 +635,7 @@ definition {
 	}
 
 	@description = "This test makes sure all collaborators will view all collaborators of the document that was shared to him. This usecase also tests that a user can successfully remove collaborators through Manage Collaborators and asserts that empty message displays when all collaborators are removed."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewAndRemoveCollaborators {
 		JSONUser.addUser(
@@ -720,7 +720,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-94858. It asserts deleted entry displays in a user's Shared Content using share button from info panel."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDeletedEntryInSharedContent {
 		JSONDocument.addFileWithUploadedFile(
@@ -749,7 +749,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -779,7 +779,7 @@ definition {
 	}
 
 	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Content app."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSharedContentViaEmail {
 		property test.smtp.server.enabled = "true";
@@ -836,7 +836,7 @@ definition {
 	}
 
 	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewSingleEntryAfterMultipleSharing {
 		JSONRole.assignRoleToUser(
@@ -890,7 +890,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -902,7 +902,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 

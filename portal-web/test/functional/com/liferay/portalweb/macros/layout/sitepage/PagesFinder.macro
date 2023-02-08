@@ -2,42 +2,42 @@ definition {
 
 	macro _addPage {
 		PagesAdmin._selectPageType(
-			collectionName = "${collectionName}",
-			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}");
+			collectionName = ${collectionName},
+			pageTemplateName = ${pageTemplateName},
+			sitePageType = ${sitePageType});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PagesAdmin._addPageToNavigationMenu(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus});
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.click(button = "Add");
 
 		SelectFrameTop();
 
-		if ("${sitePageType}" == "Embedded") {
+		if (${sitePageType} == "Embedded") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${pageTypeURL}");
+				value1 = ${pageTypeURL});
 		}
 
-		if ("${sitePageType}" == "Link to URL") {
+		if (${sitePageType} == "Link to URL") {
 			Type(
 				locator1 = "TextInput#URL",
-				value1 = "${pageTypeURL}");
+				value1 = ${pageTypeURL});
 		}
 
 		if (isSet(inheritChanges)) {
-			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
@@ -46,8 +46,8 @@ definition {
 
 		if (isSet(openGraph)) {
 			PagesAdmin._configureOpenGraph(
-				customDescription = "${customDescription}",
-				customTitle = "${customTitle}");
+				customDescription = ${customDescription},
+				customTitle = ${customTitle});
 		}
 
 		Button.click(button = "Save");
@@ -59,21 +59,21 @@ definition {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 		MouseOver(
-			key_pageName = "${parentPageName}",
+			key_pageName = ${parentPageName},
 			locator1 = "PagesFinder#PAGE_NAME");
 
 		Click.clickNoMouseOver(
-			key_pageName = "${parentPageName}",
+			key_pageName = ${parentPageName},
 			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
 
 		MenuItem.click(menuItem = "Add Child Page");
 
 		PagesFinder._addPage(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}",
-			pageName = "${childPageName}",
-			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus},
+			pageName = ${childPageName},
+			pageTemplateName = ${pageTemplateName},
+			sitePageType = ${sitePageType});
 	}
 
 	macro addCollectionPage {
@@ -83,21 +83,21 @@ definition {
 
 		MenuItem.click(menuItem = "Add Collection Page");
 
-		Navigator.gotoNavTab(navTab = "${tabName}");
+		Navigator.gotoNavTab(navTab = ${tabName});
 
 		if (isSet(menuItem)) {
 			AssetListsAdmin.addSelection(
-				collectionName = "${collectionName}",
-				menuItem = "${menuItem}",
-				selectedAsset = "${selectedAsset}");
+				collectionName = ${collectionName},
+				menuItem = ${menuItem},
+				selectedAsset = ${selectedAsset});
 
 			Click(locator1 = "Icon#BACK");
 		}
 
-		LexiconCard.clickCard(card = "${collectionName}");
+		LexiconCard.clickCard(card = ${collectionName});
 
 		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = "${masterLayoutName}");
+			LexiconCard.clickCard(card = ${masterLayoutName});
 		}
 		else {
 			LexiconCard.clickCard(card = "Blank");
@@ -105,18 +105,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.clickAdd();
@@ -134,17 +134,17 @@ definition {
 		MenuItem.click(menuItem = "Add Page");
 
 		ContentPages._selectCard(
-			collectionName = "${collectionName}",
-			pageTemplateName = "${pageTemplateName}");
+			collectionName = ${collectionName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.clickAdd();
@@ -162,19 +162,19 @@ definition {
 		MenuItem.click(menuItem = "Add Page");
 
 		PagesFinder._addPage(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			categoryName = "${categoryName}",
-			collectionName = "${collectionName}",
-			customDescription = "${customDescription}",
-			customTitle = "${customTitle}",
-			inheritChanges = "${inheritChanges}",
-			navigationMenus = "${navigationMenus}",
-			openGraph = "${openGraph}",
-			pageName = "${pageName}",
-			pageTemplateName = "${pageTemplateName}",
-			pageTypeURL = "${pageTypeURL}",
-			sitePageType = "${sitePageType}",
-			vocabularyName = "${vocabularyName}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			categoryName = ${categoryName},
+			collectionName = ${collectionName},
+			customDescription = ${customDescription},
+			customTitle = ${customTitle},
+			inheritChanges = ${inheritChanges},
+			navigationMenus = ${navigationMenus},
+			openGraph = ${openGraph},
+			pageName = ${pageName},
+			pageTemplateName = ${pageTemplateName},
+			pageTypeURL = ${pageTypeURL},
+			sitePageType = ${sitePageType},
+			vocabularyName = ${vocabularyName});
 	}
 
 	macro addPrivatePage {
@@ -185,40 +185,40 @@ definition {
 		MenuItem.click(menuItem = "Add Page");
 
 		PagesFinder._addPage(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			categoryName = "${categoryName}",
-			collectionName = "${collectionName}",
-			customDescription = "${customDescription}",
-			customTitle = "${customTitle}",
-			inheritChanges = "${inheritChanges}",
-			navigationMenus = "${navigationMenus}",
-			openGraph = "${openGraph}",
-			pageName = "${pageName}",
-			pageTemplateName = "${pageTemplateName}",
-			pageTypeURL = "${pageTypeURL}",
-			sitePageType = "${sitePageType}",
-			vocabularyName = "${vocabularyName}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			categoryName = ${categoryName},
+			collectionName = ${collectionName},
+			customDescription = ${customDescription},
+			customTitle = ${customTitle},
+			inheritChanges = ${inheritChanges},
+			navigationMenus = ${navigationMenus},
+			openGraph = ${openGraph},
+			pageName = ${pageName},
+			pageTemplateName = ${pageTemplateName},
+			pageTypeURL = ${pageTypeURL},
+			sitePageType = ${sitePageType},
+			vocabularyName = ${vocabularyName});
 	}
 
 	macro addPublicChildPage {
 		PagesFinder.selectPageType(optionValue = "Public Pages");
 
 		MouseOver(
-			key_pageName = "${parentPageName}",
+			key_pageName = ${parentPageName},
 			locator1 = "PagesFinder#PAGE_NAME");
 
 		Click.clickNoMouseOver(
-			key_pageName = "${parentPageName}",
+			key_pageName = ${parentPageName},
 			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
 
 		MenuItem.click(menuItem = "Add Child Page");
 
 		PagesFinder._addPage(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}",
-			pageName = "${childPageName}",
-			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus},
+			pageName = ${childPageName},
+			pageTemplateName = ${pageTemplateName},
+			sitePageType = ${sitePageType});
 	}
 
 	macro addPublicCollectionPage {
@@ -228,21 +228,21 @@ definition {
 
 		MenuItem.click(menuItem = "Add Collection Page");
 
-		Navigator.gotoNavTab(navTab = "${tabName}");
+		Navigator.gotoNavTab(navTab = ${tabName});
 
 		if (isSet(menuItem)) {
 			AssetListsAdmin.addSelection(
-				collectionName = "${collectionName}",
-				menuItem = "${menuItem}",
-				selectedAsset = "${selectedAsset}");
+				collectionName = ${collectionName},
+				menuItem = ${menuItem},
+				selectedAsset = ${selectedAsset});
 
 			Click(locator1 = "Icon#BACK");
 		}
 
-		LexiconCard.clickCard(card = "${collectionName}");
+		LexiconCard.clickCard(card = ${collectionName});
 
 		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = "${masterLayoutName}");
+			LexiconCard.clickCard(card = ${masterLayoutName});
 		}
 		else {
 			LexiconCard.clickCard(card = "Blank");
@@ -250,18 +250,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		if (isSet(categoryNameList)) {
 			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
+				categoryNameList = ${categoryNameList},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.clickAdd();
@@ -279,17 +279,17 @@ definition {
 		MenuItem.click(menuItem = "Add Page");
 
 		ContentPages._selectCard(
-			collectionName = "${collectionName}",
-			pageTemplateName = "${pageTemplateName}");
+			collectionName = ${collectionName},
+			pageTemplateName = ${pageTemplateName});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		if (isSet(categoryName)) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 
 		Button.clickAdd();
@@ -307,31 +307,31 @@ definition {
 		MenuItem.click(menuItem = "Add Page");
 
 		PagesFinder._addPage(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			categoryName = "${categoryName}",
-			collectionName = "${collectionName}",
-			customDescription = "${customDescription}",
-			customTitle = "${customTitle}",
-			inheritChanges = "${inheritChanges}",
-			navigationMenus = "${navigationMenus}",
-			openGraph = "${openGraph}",
-			pageName = "${pageName}",
-			pageTemplateName = "${pageTemplateName}",
-			pageTypeURL = "${pageTypeURL}",
-			sitePageType = "${sitePageType}",
-			vocabularyName = "${vocabularyName}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			categoryName = ${categoryName},
+			collectionName = ${collectionName},
+			customDescription = ${customDescription},
+			customTitle = ${customTitle},
+			inheritChanges = ${inheritChanges},
+			navigationMenus = ${navigationMenus},
+			openGraph = ${openGraph},
+			pageName = ${pageName},
+			pageTemplateName = ${pageTemplateName},
+			pageTypeURL = ${pageTypeURL},
+			sitePageType = ${sitePageType},
+			vocabularyName = ${vocabularyName});
 	}
 
 	macro gotoPageEllipsisItem {
 		MouseOver(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME");
 
 		Click.clickNoMouseOver(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.clickNoError(menuItem = ${item});
 	}
 
 	macro goToPagesFinder {
@@ -351,36 +351,36 @@ definition {
 	macro inputPageSearch {
 		Type(
 			locator1 = "PagesFinder#INPUT_FIELD",
-			value1 = "${keyword}");
+			value1 = ${keyword});
 	}
 
 	macro navigateToChildPage {
 		AssertClick(
-			key_childPageName = "${childPageName}",
-			key_parentPageName = "${parentPageName}",
+			key_childPageName = ${childPageName},
+			key_parentPageName = ${parentPageName},
 			locator1 = "PagesFinder#CHILD_PAGE_NAME",
-			value1 = "${childPageName}");
+			value1 = ${childPageName});
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "${childPageName}");
+			value1 = ${childPageName});
 	}
 
 	macro navigateToPage {
 		Click(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 	}
 
 	macro selectPageType {
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR");
 
-		DropdownMenuItem.click(menuItem = "${optionValue}");
+		DropdownMenuItem.click(menuItem = ${optionValue});
 	}
 
 	macro viewInPagesAdministration {
@@ -389,14 +389,14 @@ definition {
 
 	macro viewPageIconInPagesFinder {
 		AssertElementPresent(
-			key_pageName = "${pageName}",
-			key_text = "${icon}",
+			key_pageName = ${pageName},
+			key_text = ${icon},
 			locator1 = "PagesFinder#PAGE_ICON");
 	}
 
 	macro viewPageNameInPagesFinder {
 		AssertElementPresent(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME");
 	}
 

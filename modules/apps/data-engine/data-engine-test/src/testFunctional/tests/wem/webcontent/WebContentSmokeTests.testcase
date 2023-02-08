@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can create, read and delete a Web Content from a Structure with all possible fields and using a Template with all possible fields."
-	@priority = "5"
+	@priority = 5
 	test ViewAndDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "true";
 
@@ -72,10 +72,10 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				column = "1",
+				column = 1,
 				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
-				row = "1",
+				row = 1,
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
 				webContentColor = "FF0D0D",
@@ -84,7 +84,7 @@ definition {
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSingleSelection = "Option 3",
@@ -98,8 +98,8 @@ definition {
 
 		task ("View web content") {
 			WebContent.viewWithStructureCP(
-				column = "1",
-				row = "1",
+				column = 1,
+				row = 1,
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGeolocation = "true",
@@ -107,7 +107,7 @@ definition {
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSeparator = "true",

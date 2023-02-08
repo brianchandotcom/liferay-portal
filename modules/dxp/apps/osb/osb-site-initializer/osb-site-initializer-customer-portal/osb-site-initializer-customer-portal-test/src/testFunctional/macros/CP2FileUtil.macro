@@ -5,9 +5,9 @@ definition {
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
 
-		var fileExists = FileUtil.exists("${downloadedFilePath}");
+		var fileExists = FileUtil.exists(${downloadedFilePath});
 
-		if ("${fileExists}" == "false") {
+		if (${fileExists} == "false") {
 			echo("File named ${downloadedFileName} was not downloaded.");
 		}
 		else {
@@ -20,9 +20,9 @@ definition {
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
 
-		var fileExists = FileUtil.exists("${downloadedFilePath}");
+		var fileExists = FileUtil.exists(${downloadedFilePath});
 
-		if ("${fileExists}" == "true") {
+		if (${fileExists} == "true") {
 			echo("File named ${downloadedFileName} was downloaded.");
 		}
 		else {

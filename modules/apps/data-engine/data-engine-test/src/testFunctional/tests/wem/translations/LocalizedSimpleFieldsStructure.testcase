@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This test validates adding, editing and deleting fields on the builder"
-	@priority = "5"
+	@priority = 5
 	test AddEditAndDeleteFieldsOnStructure {
 		property portal.acceptance = "true";
 
@@ -43,7 +43,7 @@ definition {
 
 		for (var fieldList : list "Text,Date,Numeric") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldList}",
+				fieldFieldLabel = ${fieldList},
 				fieldFieldLabelEdit = "${fieldList} edited");
 
 			DataEngine.editFieldTip(
@@ -59,7 +59,7 @@ definition {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldList} edited",
 				fieldHelp = "Help text",
-				fieldName = "${fieldList}");
+				fieldName = ${fieldList});
 		}
 
 		WebContentStructures.saveCP();
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This test ensures that the title displayed on the structures list is the title defined on the default language."
-	@priority = "4"
+	@priority = 4
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
 		var defaultStructureName = "WC Structure Title EN";
 		var defaultStructureName_pt = "WC Structure Title PT";
@@ -98,7 +98,7 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -108,23 +108,23 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.addName(structureName = "${defaultStructureName_pt}");
+		WebContentStructures.addName(structureName = ${defaultStructureName_pt});
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
+		WebContentStructures.viewCP(structureName = ${defaultStructureName});
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "${key_urlAppend}");
+		Navigator.openWithAppendToBaseURL(urlAppend = ${key_urlAppend});
 
 		AssertTextEquals(
 			key_columnName = "name",
-			key_tableEntry = "${defaultStructureName_pt}",
+			key_tableEntry = ${defaultStructureName_pt},
 			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-			value1 = "${defaultStructureName_pt}");
+			value1 = ${defaultStructureName_pt});
 	}
 
 	@description = "This test ensures that the user can click on the Locale Selector."
-	@priority = "4"
+	@priority = 4
 	test CheckLanguageSelector {
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -136,13 +136,13 @@ definition {
 	}
 
 	@description = "This test ensures that localization persists."
-	@priority = "4"
+	@priority = 4
 	test CheckLocalizationOfFieldsUponLanguageChange {
 		var defaultStructureName = "WC Structure Title";
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
@@ -166,9 +166,9 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+		LexiconEntry.gotoEntry(rowEntry = ${defaultStructureName});
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "This test validates the creation and edition of localized fields as well as deletion of structure"
-	@priority = "5"
+	@priority = 5
 	test CreateEditAndDeleteLocalizedStructure {
 		property portal.acceptance = "true";
 
@@ -198,7 +198,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "pt-BR,ca-ES,zh-CN,fr-FR");
 
 		for (var language : list "pt-BR,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -232,7 +232,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "pt-BR,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Text - ${language}",
@@ -292,7 +292,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "pt-BR,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Text - ${language}",
@@ -324,7 +324,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "pt-BR,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Edited Text - ${language}",
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@description = "This test ensures the default title is carried to a locale, until it gets translated."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
@@ -365,11 +365,11 @@ definition {
 	}
 
 	@description = "This test ensures that translating the title for another locale does not changes the default title."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		var defaultStructureName = "WC Structure Title";
 
-		WebContentStructures.addCP(structureName = "${defaultStructureName}");
+		WebContentStructures.addCP(structureName = ${defaultStructureName});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -395,17 +395,17 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
+		WebContentStructures.viewCP(structureName = ${defaultStructureName});
 
-		WebContentNavigator.gotoEditStructure(structureName = "${defaultStructureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${defaultStructureName});
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "${defaultStructureName}");
+			value1 = ${defaultStructureName});
 	}
 
 	@description = "This test ensures that the translation of the title is not carried to the default language."
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
 
@@ -439,13 +439,13 @@ definition {
 
 		PortletEntry.changeLocale(locale = "en-US");
 
-		WebContentStructures.addName(structureName = "${defaultStructureName}");
+		WebContentStructures.addName(structureName = ${defaultStructureName});
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
+		WebContentStructures.viewCP(structureName = ${defaultStructureName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+		LexiconEntry.gotoEntry(rowEntry = ${defaultStructureName});
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -455,11 +455,11 @@ definition {
 	}
 
 	@description = "This test ensures that the translation of a field labels are carried when duplicating the field."
-	@priority = "4"
+	@priority = 4
 	test DuplicateTranslatedField {
 		var defaultStructureName = "WC Structure Title";
 
-		WebContentStructures.addCP(structureName = "${defaultStructureName}");
+		WebContentStructures.addCP(structureName = ${defaultStructureName});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -479,9 +479,9 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
+		WebContentStructures.viewCP(structureName = ${defaultStructureName});
 
-		WebContentNavigator.gotoEditStructure(structureName = "${defaultStructureName}");
+		WebContentNavigator.gotoEditStructure(structureName = ${defaultStructureName});
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -495,7 +495,7 @@ definition {
 	}
 
 	@description = "This test validates the creation and edition of localized fields as well as deletion of structure in different instance language"
-	@priority = "5"
+	@priority = 5
 	test EditAndDeleteWithDifferentInstanceLanguage {
 		property portal.acceptance = "true";
 
@@ -534,7 +534,7 @@ definition {
 		WebContentStructures.addTranslations(localeList = "en-US,ca-ES,zh-CN,fr-FR");
 
 		for (var language : list "en-US,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
 
@@ -568,7 +568,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "en-US,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Text - ${language}",
@@ -628,7 +628,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "en-US,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Text - ${language}",
@@ -660,7 +660,7 @@ definition {
 			fieldName = "Numeric");
 
 		for (var language : list "en-US,ca-ES,zh-CN,fr-FR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DataEngine.viewField(
 				fieldFieldLabel = "Edited Text - ${language}",
@@ -697,7 +697,7 @@ definition {
 	}
 
 	@description = "This test ensures that the translations for all fields in a structure persists for each field."
-	@priority = "5"
+	@priority = 5
 	test TranslateStructureWithAllFields {
 		property portal.acceptance = "true";
 
@@ -705,13 +705,13 @@ definition {
 
 		DataEngine.addFields(fieldNameList = "Web Content,Date,Rich Text,Single Selection,Grid,Select from List,Numeric,Link to Page,Image,Upload,Color,Text,Multiple Selection,Geolocation,Separator");
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "Value 1,Value 2") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "${optionValue}");
+				index = ${index},
+				optionValue = ${optionValue});
 
 			var index = ${index} + 1;
 		}
@@ -790,14 +790,14 @@ definition {
 
 		for (var key_fieldFieldLabel : list "Conteúdo Web,Numérico,Data,Enviar,Imagem,Texto Completo,Cor,Seleção Única,Seleção Múltipla,Texto,Grade,Localização Terrestre,Selecionar da Lista,Separador,Link para Página") {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${key_fieldFieldLabel}",
+				key_fieldFieldLabel = ${key_fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-				value1 = "${key_fieldFieldLabel}");
+				value1 = ${key_fieldFieldLabel});
 		}
 	}
 
 	@description = "This test ensures that user cannot save a structure without default title."
-	@priority = "4"
+	@priority = 4
 	test TranslateStructureWithoutDefaultTitle {
 		LexiconEntry.gotoAdd();
 
@@ -825,21 +825,21 @@ definition {
 	}
 
 	@description = "This test ensures that translations persists and do not interfere with each other."
-	@priority = "5"
+	@priority = 5
 	test TranslationDoesNotInterfereWithAnother {
 		var defaultStructureName = "WC Structure Title";
 		var fieldLabelDefault = "Text Test";
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
 		DataEngine.addField(
-			fieldFieldLabel = "${fieldLabelDefault}",
+			fieldFieldLabel = ${fieldLabelDefault},
 			fieldName = "Text");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "${fieldLabelDefault}",
+			fieldFieldLabel = ${fieldLabelDefault},
 			fieldHelp = "Help Text test");
 
 		WebContentStructures.addTranslations(localeList = "pt-BR,de-DE");
@@ -847,34 +847,34 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "${fieldLabelDefault}",
+			fieldFieldLabel = ${fieldLabelDefault},
 			fieldHelp = "Texto teste ajuda");
 
 		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "${fieldLabelDefault}",
+			fieldLabel = ${fieldLabelDefault},
 			label = "Texto Teste");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "${fieldLabelDefault}",
+			fieldFieldLabel = ${fieldLabelDefault},
 			fieldHelp = "Text test help German");
 
 		WebContentStructures.addName(structureName = "${defaultStructureName} German");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "${fieldLabelDefault}",
+			fieldLabel = ${fieldLabelDefault},
 			label = "Text test German");
 
 		WebContentStructures.saveCP();
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+		LexiconEntry.gotoEntry(rowEntry = ${defaultStructureName});
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -895,9 +895,9 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+		LexiconEntry.gotoEntry(rowEntry = ${defaultStructureName});
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
@@ -908,13 +908,13 @@ definition {
 	}
 
 	@description = "This test ensures that the default language is the first one shown to the user."
-	@priority = "4"
+	@priority = 4
 	test VerifyDefaultLanguageIsFirstShown {
 		var defaultStructureName = "WC Structure Title";
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
@@ -942,9 +942,9 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "${defaultStructureName}");
+			structureName = ${defaultStructureName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+		LexiconEntry.gotoEntry(rowEntry = ${defaultStructureName});
 
 		PortletEntry.viewLocale(locale = "en-US");
 	}

@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the WC content field can be rendered correctly when publication is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanViewImageInWC {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This ensures that an external video in the WC content field can be rendered correctly when publication is enabled."
-	@priority = "5"
+	@priority = 5
 	test CanViewVideoInWC {
 		JSONGroup.addGroup(groupName = "Site Name");
 

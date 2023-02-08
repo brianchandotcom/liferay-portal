@@ -1,7 +1,7 @@
 definition {
 
 	macro _deleteAllCommerceSpecificationGroups {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -9,10 +9,10 @@ definition {
 
 		var specificationGroupsCount = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupsCount();
 
-		if ("${specificationGroupsCount}" != "0") {
-			var specificationGroupIds = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupIds(specificationGroupsCount = "${specificationGroupsCount}");
+		if (${specificationGroupsCount} != 0) {
+			var specificationGroupIds = CommerceJSONSpecificationGroupsAPI._getCommerceSpecificationGroupIds(specificationGroupsCount = ${specificationGroupsCount});
 
-			for (var specificationGroupId : list "${specificationGroupIds}") {
+			for (var specificationGroupId : list ${specificationGroupIds}) {
 				echo("Deleting Commerce specification group with id: ${specificationGroupId}");
 
 				var curl = '''
@@ -21,7 +21,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -30,17 +30,17 @@ definition {
 	}
 
 	macro _getCommerceSpecificationGroupIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(specificationGroupsCount)) {
-			var specificationGroupsCount = "${specificationGroupCount}";
+			var specificationGroupsCount = ${specificationGroupCount};
 		}
 		else {
-			var specificationGroupsCount = "100";
+			var specificationGroupsCount = 100;
 		}
 
 		var curl = '''
@@ -49,13 +49,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var specificationGroupIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var specificationGroupIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		return "${specificationGroupIds}";
+		return ${specificationGroupIds};
 	}
 
 	macro _getCommerceSpecificationGroupsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -67,11 +67,11 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var specificationGroupsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var specificationGroupsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The Commerce specification groups count is: ${specificationGroupsCount}");
 
-		return "${specificationGroupsCount}";
+		return ${specificationGroupsCount};
 	}
 
 }

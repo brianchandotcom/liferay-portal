@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154530. The page designer can add negative values on spacing from style books."
-	@priority = "4"
+	@priority = 4
 	test AddNegativeValueOnSpacing {
 		task ("Given a page designer has a content page with selected custom style books") {
 			task ("Add a style book") {
@@ -88,12 +88,12 @@ definition {
 		task ("When the page designer selects a negative value on spacing") {
 			PageEditor.gotoStyle(fragmentName = "Button");
 
-			PageEditor.configureFragment(marginTop = "1");
+			PageEditor.configureFragment(marginTop = 1);
 		}
 
 		task ("Then the page designer can see negative style on button fragment at edit mode") {
 			AssertCssValue(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Button",
 				locator1 = "Fragment#FRAGMENT_LABEL",
 				locator2 = "margin-top",
@@ -111,7 +111,7 @@ definition {
 		task ("Then the page designer can see negative style on button fragment at view mode") {
 			AssertCssValue(
 				fragmentName = "layout-content",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COMMON_STYLES_CLASS",
 				locator2 = "margin-top",
 				value1 = "-32px");
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "Users can only edit content pages in edit mode."
-	@priority = "5"
+	@priority = 5
 	test CannotEditInViewMode {
 		property portal.acceptance = "true";
 
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125985. The Page Creater can configure configuration template of widget in page editor."
-	@priority = "5"
+	@priority = 5
 	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
 		property portal.acceptance = "true";
 
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-106813. Can set permissions for widgets in content page."
-	@priority = "5"
+	@priority = 5
 	test ConfigurePermissionsOfAssetPublisher {
 		property portal.acceptance = "true";
 
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137155. The page creator can configure content page via header ellipsis icon at edit mode."
-	@priority = "3"
+	@priority = 3
 	test ConfigureViaHeaderEllipsisIcon {
 		task ("Given a page designer has content page in pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-137155. The page creator can delete content page via header ellipsis icon at edit mode."
-	@priority = "3"
+	@priority = 3
 	test DeleteViaHeaderEllipsisIcon {
 		task ("Given a page designer has content page in pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78726 and LPS-168168. Discarding a draft will revert a content page back to its most recent published version."
-	@priority = "5"
+	@priority = 5
 	test DiscardContentPageDraft {
 		property portal.acceptance = "true";
 
@@ -450,7 +450,7 @@ definition {
 			PagesAdmin.discardDraft(pageName = "Test Content Page Name");
 
 			PagesAdmin.viewPageStatus(
-				index = "1",
+				index = 1,
 				pageName = "Test Content Page Name",
 				status = "Draft");
 
@@ -542,7 +542,7 @@ definition {
 			PagesAdmin.discardDraft(pageName = "Test Content Page Name");
 
 			AssertElementNotPresent(
-				index = "1",
+				index = 1,
 				key_itemName = "Test Content Page Name",
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS");
 
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159751. The page editor should be rendered after reset changes from site template."
-	@priority = "4"
+	@priority = 4
 	test EditContentPageAfterResetChangesFromSiteTemplate {
 		task ("Given a page creator has a site based on a site template") {
 			task ("Add a site template") {
@@ -686,7 +686,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134844 and LPS-106776. Fragments can be hidden and shown. Could add widget to react page editor."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test FragmentsCanBeHiddenAndShown {
 		property portal.acceptance = "true";
@@ -740,13 +740,13 @@ definition {
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			AssertNotVisible(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -773,13 +773,13 @@ definition {
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			AssertNotVisible(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
@@ -841,7 +841,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134844. Groups of fragments can be hidden and shown and Fragments added to a fragment with nested hidden fragment should be shown."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
 		task ("Add a Container and 4 elements inside") {
@@ -860,7 +860,7 @@ definition {
 			for (var fragmentName : list "HTML,Button,Heading") {
 				PageEditor.addElementToContainer(
 					collectionName = "Basic Components",
-					fragmentName = "${fragmentName}",
+					fragmentName = ${fragmentName},
 					height = "Tall",
 					navTab = "Fragments",
 					ratio = "9 / 8",
@@ -870,19 +870,19 @@ definition {
 
 		task ("Hide Blogs and HTML") {
 			for (var elementName : list "Blogs,HTML") {
-				PageEditor.hideFragmentViaPageStructure(fragmentName = "${elementName}");
+				PageEditor.hideFragmentViaPageStructure(fragmentName = ${elementName});
 			}
 		}
 
 		task ("View Blogs widget and HTML fragment are not shown") {
 			for (var elementName : list "Blogs,HTML") {
-				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
+				PageEditor.viewFragmentNotVisible(fragmentName = ${elementName});
 			}
 		}
 
 		task ("View Button and Heading are shown") {
 			for (var fragmentName : list "Button,Heading") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragment(fragmentName = ${fragmentName});
 			}
 		}
 
@@ -896,19 +896,19 @@ definition {
 
 		task ("Unhide the Container and HTML ") {
 			for (var fragmentName : list "Container,HTML") {
-				PageEditor.unhideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+				PageEditor.unhideFragmentViaPageStructure(fragmentName = ${fragmentName});
 			}
 		}
 
 		task ("Hide the Button and Heading fragment") {
 			for (var fragmentName : list "Button,Heading") {
-				PageEditor.hideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+				PageEditor.hideFragmentViaPageStructure(fragmentName = ${fragmentName});
 			}
 		}
 
 		task ("View Blogs, Button and Heading are not shown") {
 			for (var elementName : list "Blogs,Button,Heading") {
-				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
+				PageEditor.viewFragmentNotVisible(fragmentName = ${elementName});
 			}
 		}
 
@@ -930,7 +930,7 @@ definition {
 
 		task ("Assert only HTML fragments is shown") {
 			for (var elementName : list "Blogs,Button,Heading") {
-				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
+				PageEditor.viewFragmentNotVisible(fragmentName = ${elementName});
 			}
 
 			PageEditor.viewFragmentEditableText(
@@ -955,7 +955,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test HeaderOnlyShownWhenElementSelected {
 		property portal.acceptance = "true";
@@ -984,7 +984,7 @@ definition {
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
 
 			MouseOver(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Asset Publisher",
 				locator1 = "Fragment#FRAGMENT_CONTENT");
 
@@ -999,7 +999,7 @@ definition {
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Heading");
 
 			MouseOver(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Heading",
 				locator1 = "Fragment#FRAGMENT_CONTENT");
 
@@ -1008,7 +1008,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134844. Fragments hidden in pages templates appear as hidden in pages that use it and visibility can be changed."
-	@priority = "4"
+	@priority = 4
 	test HiddenFragmentsInPagesTemplatesAppearHiddenInPages {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -1049,14 +1049,14 @@ definition {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				index = "2",
+				index = 2,
 				text = "Heading Example 2");
 		}
 
 		task ("Hide Heading Example 1") {
 			PageEditor.hideFragmentViaPageStructure(
 				fragmentName = "Heading",
-				index = "1");
+				index = 1);
 		}
 
 		task ("Publish page template") {
@@ -1076,20 +1076,20 @@ definition {
 			AssertNotVisible(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				position = "2",
+				position = 2,
 				text = "Heading Example 2");
 		}
 
 		task ("Show Heading Example 1") {
 			PageEditor.unhideFragmentViaPageStructure(
 				fragmentName = "Heading",
-				index = "1");
+				index = 1);
 		}
 
 		task ("Open the Preview modal") {
@@ -1101,14 +1101,14 @@ definition {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
 					id = "element-text",
-					position = "${n}",
+					position = ${n},
 					text = "Heading Example ${n}");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-148426. The page creator can successfully publish a content page with commerce widgets."
-	@priority = "4"
+	@priority = 4
 	test PublishPageWithCommerceWidgets {
 		task ("Given a page creator has a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1121,7 +1121,7 @@ definition {
 
 			for (var widgetName : list "Open Carts,Placed Orders,Wish List Content,Wish Lists") {
 				PageEditor.addWidget(
-					portletName = "${widgetName}",
+					portletName = ${widgetName},
 					targetFragmentName = "Checkout");
 			}
 		}
@@ -1138,7 +1138,7 @@ definition {
 
 				for (var widgetName : list "Checkout,WishLists,WishListContent,OrderContent,OpenOrderContent") {
 					AssertElementPresent(
-						key_portletName = "${widgetName}",
+						key_portletName = ${widgetName},
 						locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
 				}
 			}
@@ -1146,7 +1146,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106776. Reorganize fragments in page editor."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ReorganizeFragmentsInPageEditor {
 		property portal.acceptance = "true";
@@ -1181,11 +1181,11 @@ definition {
 		task ("View Heading frgament is on top of Button fragment") {
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Heading",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Button",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Move the fragment") {
@@ -1194,7 +1194,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToUp(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				key_dragFragmentName = "Button",
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
 				locator2 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
@@ -1206,16 +1206,16 @@ definition {
 		task ("Assert the Button fragment is on top of Heading frgament") {
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Button",
-				position = "1");
+				position = 1);
 
 			PageEditor.viewFragmentOrder(
 				fragmentName = "Heading",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on page editor."
-	@priority = "4"
+	@priority = 4
 	test ViewBreadcrumbOnContentPage {
 		task ("Given the page creator has a content page with custom fragment structure") {
 			task ("Add a Grid fragment to content page") {
@@ -1231,7 +1231,7 @@ definition {
 			task ("Add a Container fragment inside first module of Grid") {
 				PageEditor.addElementToColumn(
 					collectionName = "Layout Elements",
-					columnNumber = "1",
+					columnNumber = 1,
 					fragmentName = "Container",
 					navTab = "Fragments");
 			}
@@ -1294,7 +1294,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129536. View the configuration settings of widget after execute Clean Up Orphaned Theme Portlet Preferences."
-	@priority = "4"
+	@priority = 4
 	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {
 		property test.name.skip.portal.instance = "ContentPages#ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences";
 
@@ -1326,7 +1326,7 @@ definition {
 		task ("View web content displayed at Title List in Asset Publisher at edit mode") {
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = "1",
+				rowNumber = 1,
 				value1 = "Web Content Title");
 
 			PageEditor.publish();
@@ -1339,7 +1339,7 @@ definition {
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = "1",
+				rowNumber = 1,
 				value1 = "Web Content Title");
 		}
 
@@ -1359,7 +1359,7 @@ definition {
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = "1",
+				rowNumber = 1,
 				value1 = "Web Content Title");
 		}
 
@@ -1370,13 +1370,13 @@ definition {
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = "1",
+				rowNumber = 1,
 				value1 = "Web Content Title");
 		}
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page editor."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownIconsInPageEditor {
 		task ("Given a Page designer has a content page with a Collection Display fragment") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -1423,7 +1423,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewEditModeHeaderFooterTheme {
 		property portal.acceptance = "true";
@@ -1502,7 +1502,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130083 and LPS-106776. View the ellipsis button on the topper of fragment when the fragment is inside a nested Grid."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
 		task ("Add a Grid element to the content page") {
@@ -1518,7 +1518,7 @@ definition {
 		task ("Add a second Grid to the second module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Layout Elements",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Grid",
 				navTab = "Fragments");
 		}
@@ -1526,43 +1526,43 @@ definition {
 		task ("Add a Heading fragment to the first module of inner Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Add a Button fragment to the second module of inner Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "2",
+				columnNumber = 2,
 				fragmentName = "Button",
 				navTab = "Fragments",
-				position = "2");
+				position = 2);
 		}
 
 		task ("Add a Paragraph fragment to the third module of inner Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "3",
+				columnNumber = 3,
 				fragmentName = "Paragraph",
 				navTab = "Fragments",
-				position = "2");
+				position = 2);
 		}
 
 		task ("View the ellipsis button is visible on topper of fragments inside inner Grid") {
 			for (var fragmentName : list "Heading,Button,Paragraph") {
-				PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+				PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 				AssertVisible(
-					key_fragmentName = "${fragmentName}",
+					key_fragmentName = ${fragmentName},
 					locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewHeaderOfFragmentMoveInsideBodyWhenReachTheManagementToolbar {
 		property portal.acceptance = "true";
@@ -1594,7 +1594,7 @@ definition {
 
 		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Card",
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
@@ -1607,7 +1607,7 @@ definition {
 
 		task ("Assert Header of Card moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Image",
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
@@ -1618,7 +1618,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-104629. The header of widget selected can reach the border of the management toolbar."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
 		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
@@ -1643,7 +1643,7 @@ definition {
 
 		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {
 			ScrollWebElementIntoView(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Blogs",
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
@@ -1656,7 +1656,7 @@ definition {
 
 		task ("Assert Header of Blogs moves inside body when reach the management toolbar") {
 			ScrollWebElementIntoView(
-				index = "1",
+				index = 1,
 				key_fragmentName = "My Sites",
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
@@ -1667,7 +1667,7 @@ definition {
 	}
 
 	@description = "This is for LPS-106813. Widgets inherited from content page template will inherit permissions set in content page template."
-	@priority = "4"
+	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromContentPageTemplate {
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -1755,7 +1755,7 @@ definition {
 	}
 
 	@description = "This is for LPS-106813. Widgets inherited from custom master will inherit permissions set in custom master."
-	@priority = "4"
+	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromMasterPageTemplate {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1855,7 +1855,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162323. The pages propagated from a Site Template should refer to the master page from site."
-	@priority = "4"
+	@priority = 4
 	test ViewReferredMasterPageOfPagesPropagatedFromSiteTemplate {
 		task ("Given a page creator has a site with a page from a site template") {
 			task ("Add a site template") {
@@ -1928,7 +1928,7 @@ definition {
 		task ("Then the page creator can see changes on propagated pages") {
 			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
 				ContentPagesNavigator.openViewContentPage(
-					pageName = "${pageName}",
+					pageName = ${pageName},
 					siteName = "Test Site Name 2");
 
 				ContentPages.viewFragmentText(
@@ -1940,7 +1940,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154530. View custom values matches in spacing on page editor."
-	@priority = "4"
+	@priority = 4
 	test ViewValuesMatchesInSpacingOnPageEditor {
 		task ("Given a page designer has a content page with default and custom style books") {
 			task ("Add a style book") {
@@ -1958,7 +1958,7 @@ definition {
 					fieldLabel = "Spacer 1",
 					unit = "EM");
 
-				var i = "0";
+				var i = 0;
 
 				for (var tokenValue : list "1,2,3") {
 					StyleBooks.configureUnit(
@@ -1968,7 +1968,7 @@ definition {
 					Type(
 						ariaLabel = "Spacer ${i}",
 						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-						value1 = "${tokenValue}");
+						value1 = ${tokenValue});
 
 					StyleBooks.clickManagementBar();
 
@@ -2013,13 +2013,13 @@ definition {
 		}
 
 		task ("Then the page designer can see default values on dropdown menu") {
-			var i = "0";
+			var i = 0;
 
 			for (var tokenValue : list "0,0.25rem,0.5rem,1rem") {
 				AssertTextEquals(
 					key_tokenName = "Spacer ${i}",
 					locator1 = "MenuItem#SPACING_VALUE",
-					value1 = "${tokenValue}");
+					value1 = ${tokenValue});
 
 				var i = ${i} + 1;
 			}
@@ -2040,13 +2040,13 @@ definition {
 				ariaLabel = "Margin Top",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-			var i = "0";
+			var i = 0;
 
 			for (var tokenValue : list "1em,2em,3em,Auto") {
 				AssertTextEquals(
 					key_tokenName = "Spacer ${i}",
 					locator1 = "MenuItem#SPACING_VALUE",
-					value1 = "${tokenValue}");
+					value1 = ${tokenValue});
 
 				var i = ${i} + 1;
 			}
@@ -2060,7 +2060,7 @@ definition {
 
 		task ("Then the page designer can see auto style on heading fragment at edit mode") {
 			AssertCssValue(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Heading",
 				locator1 = "Fragment#FRAGMENT_LABEL",
 				locator2 = "margin-top",
@@ -2092,7 +2092,7 @@ definition {
 		task ("Then the page designer can see auto style on heading fragment at view mode") {
 			AssertCssValue(
 				fragmentName = "layout-content",
-				index = "1",
+				index = 1,
 				locator1 = "PageEditor#COMMON_STYLES_CLASS",
 				locator2 = "margin-top",
 				value1 = "0px");
@@ -2100,7 +2100,7 @@ definition {
 	}
 
 	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
-	@priority = "3"
+	@priority = 3
 	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {
 		task ("Go to edit page") {
 			ContentPagesNavigator.openEditContentPage(

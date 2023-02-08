@@ -14,12 +14,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "3"
+	@priority = 3
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
 		property test.name.skip.portal.instance = "DXPLicense#DeleteLiferayDXPLicense";
@@ -43,7 +43,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test LiferayDXPLicenseExpire {
 		property dxp.license.file = "portal-dxp-license-custom-expiration-48-hours.xml";
 
@@ -51,14 +51,14 @@ definition {
 
 		// Pausing 300 seconds due to LRQA-64640
 
-		Pause(locator1 = "300000");
+		Pause(locator1 = 300000);
 
 		Navigator.openURL();
 
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test TermsOfUseNotShownToNonAdminUser {
 		property custom.properties = "enterprise.product.notification.enabled=true";
 		property portal.upstream = "true";
@@ -97,7 +97,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test TermsOfUseShownToNewAdmin {
 		property custom.properties = "enterprise.product.notification.enabled=true";
 		property portal.upstream = "true";

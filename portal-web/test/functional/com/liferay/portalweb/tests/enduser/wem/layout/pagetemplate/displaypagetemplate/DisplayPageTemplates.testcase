@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "User cannot delete a display page template with usage."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test CannotDeleteDisplayPageTemplateWithUsage {
 		task ("Publish the display page template") {
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129360 and LPS-106776. The user could change the display style of Documents and Media in display page template."
-	@priority = "4"
+	@priority = 4
 	test ChangeDisplayStyleOfDocumentsAndMediaInDisplayPageTemplate {
 		task ("Add a Documents and Media widget to the display page template") {
 			PageEditor.addWidget(portletName = "Documents and Media");
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-153367. The page creator could configure the display page template in a new tab."
-	@priority = "4"
+	@priority = 4
 	test ConfigureDisplayPageTemplateInANewTab {
 		task ("When the page creator accesses to the page editor of display page template") {
 			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
-	@priority = "5"
+	@priority = 5
 	test ConfigurePermissionsOfAssetPublisher {
 		property portal.acceptance = "true";
 
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86191. Configure the theme of display page template."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ConfigureTheme {
 		property test.name.skip.portal.instance = "DisplayPageTemplates#ConfigureTheme";
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@description = "User can delete default display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteDefaultDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "User can delete display page template."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DeleteDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86191 and LPS-96438. Disable Show Header and Show Footer of display page template."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DisableShowHeaderAndFooter {
 		task ("Publish the display page template") {
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-106776. User can edit a display page. This includes adding and removing fragments and includes editing text in fragment editable fields."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -532,14 +532,14 @@ definition {
 			AssertTextEquals.assertPartialText(
 				fragmentName = "html",
 				id = "element-html",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "HTML Example");
 		}
 	}
 
 	@description = "User can rename a display page."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test RenameDisplayPageTemplate {
 		task ("Rename the display page") {
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@description = "User can only map a display page to an asset type once."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewAssetTypeOnlySelectableOnce {
 		task ("View the plus button of Item field no longer shown in Mapping tab") {
@@ -575,7 +575,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on display page template."
-	@priority = "4"
+	@priority = 4
 	test ViewBreadcrumbOnDisplayPageTemplate {
 		task ("Given the display page template creator has a DPT with an Asset Publisher inside Container fragment") {
 			task ("Add a Container fragment to display page template") {
@@ -625,7 +625,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133350. View master page after renaming display page template within custom master page."
-	@priority = "4"
+	@priority = 4
 	test ViewMasterPageAfterRenamingDisplayPageTemplateWithinCustomMasterPage {
 		task ("Add a custom master page and publish") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
@@ -681,7 +681,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140197. Draft version can only be accessed by author."
-	@priority = "4"
+	@priority = 4
 	test ViewPreviewDraftViaURLFromNonAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -777,7 +777,7 @@ definition {
 
 			User.firstLoginUI(
 				password = "test",
-				specificURL = "${url}",
+				specificURL = ${url},
 				userEmailAddress = "userea@liferay.com");
 		}
 

@@ -5,68 +5,68 @@ definition {
 	property testray.main.component.name = "Smoke";
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test ExecuteMethodInMacro {
 		ExternalMethod.executeMethodInMacro();
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test ExecuteMethodStringArguments {
 		var expected = "test,string,";
 		var actual = StringUtil.add("test", "string");
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 
 		var expected = "TestString";
 		var actual = StringUtil.extractChars("Test String");
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test ExecuteMethodVariableArguments {
 		var argument1 = "test";
 		var argument2 = "string";
 		var expected = "test,string,";
-		var actual = StringUtil.add("${argument1}", "${argument2}");
+		var actual = StringUtil.add(${argument1}, ${argument2});
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 
 		var argument = "Test String";
 		var expected = "TestString";
-		var actual = StringUtil.extractChars("${argument}");
+		var actual = StringUtil.extractChars(${argument});
 
 		ExternalMethod.validateMatch(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test ExecuteMethodVariableReturn {
 		var expected = "test,string,";
 		var returnVariable = "actual";
 		var returnVariable = StringUtil.add("test", "string");
 
 		ExternalMethod.validateMatch(
-			actual = "${returnVariable}",
-			expected = "${expected}");
+			actual = ${returnVariable},
+			expected = ${expected});
 
 		var expected = "TestString";
 		var returnVariable = "actual";
 		var returnVariable = StringUtil.extractChars("Test String");
 
 		ExternalMethod.validateMatch(
-			actual = "${returnVariable}",
-			expected = "${expected}");
+			actual = ${returnVariable},
+			expected = ${expected});
 	}
 
 }

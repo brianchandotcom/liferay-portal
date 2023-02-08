@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDepotArchive73101 {
 		property data.archive.type = "data-archive-depot";
@@ -36,7 +36,7 @@ definition {
 		Upgrade.validateDepotEntries();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDepotAutotaggingAndSharingArchive73101 {
 		property data.archive.type = "data-archive-depot";
@@ -119,9 +119,9 @@ definition {
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "DM Without Autotagging",
 			dmTagName = "jersey,t-shirt",
-			dmTagNum = "11",
+			dmTagNum = 11,
 			wcTagName = "herbert,industrial",
-			wcTagNum = "5",
+			wcTagNum = 5,
 			webContentTitle = "WC Without Autotagging",
 			webContentTitleXml = '''<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US" default-locale="en_US"><Title language-id="en_US">WC Without Autotagging</Title></root>''');
 	}

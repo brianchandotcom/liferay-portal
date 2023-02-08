@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that is possible to delete the field."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that is possible to duplicate the field."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that Label and Help text can be edited."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70109. This test verifies that is possible to remove a duplicated field (repeatable)."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -152,11 +152,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Geolocation",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEGeolocationField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEGeolocationField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that Label and Help text can be set."
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68679. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@description = "Check if Geolocation Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewGeolocationFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -294,7 +294,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Geolocation",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -316,7 +316,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Geolocation",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

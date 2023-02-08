@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -55,24 +55,24 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddCalendarToCurrentSiteCalendars {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Calendar.add(
 			calendarName = "Site Calendar Name",
 			calendarType = "Current Site Calendars",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Calendar.view(
 			calendarName = "Site Calendar Name",
 			calendarType = "Current Site Calendars",
-			site = "${siteName}");
+			site = ${siteName});
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddCalendarToMyCalendars {
 		Calendar.add(
 			calendarName = "My Calendar Name",
@@ -87,7 +87,7 @@ definition {
 			user = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddUserCalendarToOtherCalendars {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -119,14 +119,14 @@ definition {
 	}
 
 	@description = "LRQA-71605 - Verify that the user can add multiple calendars with the same name"
-	@priority = "4"
+	@priority = 4
 	test CanAddCalendarsWithSameName {
 		for (var calendarsName : list "Same Name Calendar,Same Name Calendar") {
 			Navigator.gotoPage(pageName = "Calendar Page");
 
 			CalendarNavigator.gotoMyCalendarsManage();
 
-			CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = "${calendarsName}");
+			CalendarMyCalendars.addMyCalendarByManageCalendars(calendarName = ${calendarsName});
 
 			PortletEntry.save();
 		}
@@ -135,15 +135,15 @@ definition {
 
 		CalendarMyCalendars.viewManageCalendarsByPosition(
 			calendarName = "Same Name Calendar",
-			rowNumber = "1");
+			rowNumber = 1);
 
 		CalendarMyCalendars.viewManageCalendarsByPosition(
 			calendarName = "Same Name Calendar",
-			rowNumber = "2");
+			rowNumber = 2);
 	}
 
 	@description = "LRQA-71606 - Verify that the user can add calendars with Non-Ascii characters on the name field"
-	@priority = "4"
+	@priority = 4
 	test CanAddCalendarWithNoAsciiCharactersOnNameField {
 		Calendar.add(
 			calendarName = "旧历",
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "LRQA-71604 - Verify that the user can cancel Adding a new calendar"
-	@priority = "5"
+	@priority = 5
 	test CanCancelAddingCalendar {
 		CalendarNavigator.gotoAddMyCalendars();
 
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@description = "LRQA-71596 - Verify that user can choose the color of calendar in the -Add Calendar- Page"
-	@priority = "4"
+	@priority = 4
 	test CanChooseAColor {
 		property portal.upstream = "quarantine";
 
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "LRQA-71797 - Verify that the user can Enable Comments on Calendar"
-	@priority = "3"
+	@priority = 3
 	test CanEnableComments {
 		CalendarNavigator.gotoMyCalendarsManage();
 
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Enable Ratings on Calendar"
-	@priority = "3"
+	@priority = 3
 	test CanEnableRatings {
 		CalendarNavigator.gotoMyCalendarsManage();
 
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@description = "LRQA-71595 - Verify that the user can make the new Calendar as the Default Calendar"
-	@priority = "3"
+	@priority = 3
 	test CanMakeNewCalendarAsDefault {
 		CalendarNavigator.gotoMyCalendarsManage();
 
@@ -300,7 +300,7 @@ definition {
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Anyone"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanSaveCalendarViewableByAnyone {
 
 		// TODO LRQA-71602 CanSaveCalendarViewableByAnyone pending implementation
@@ -309,7 +309,7 @@ definition {
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Owner"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test CanSaveCalendarViewableByOwner {
 
 		// TODO LRQA-71599 CanSaveCalendarViewableByOwner pending implementation
@@ -318,7 +318,7 @@ definition {
 
 	@description = "LRQA-71360 - Verify that the user can save a new calendar with permission viewable by Site Members"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanSaveCalendarViewableBySiteMembers {
 
 		// TODO LRQA-71600 CanSaveCalendarViewableBySiteMembers pending implementation
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@description = "LRQA-71598 - Verify that the Time Zone selected by default follows the User's preferences."
-	@priority = "3"
+	@priority = 3
 	test DefaultTimeZoneFollowsUserPreferences {
 		Navigator.gotoAccountSettings();
 
@@ -345,7 +345,7 @@ definition {
 
 	@description = "LRQA-71360 - Verify that the name field is required"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test DescriptionTranslationIconHasEnglishByDefault {
 
 		// TODO LRQA-71603 DescriptionTranslationIconHasEnglishByDefault pending implementation
@@ -353,7 +353,7 @@ definition {
 	}
 
 	@description = "LRQA-71597 - Verify that the name is a required field"
-	@priority = "5"
+	@priority = 5
 	test NameFieldIsRequired {
 		CalendarNavigator.gotoMyCalendarsManage();
 
@@ -372,7 +372,7 @@ definition {
 
 	@description = "This is a use case for LPS-45062."
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test ResizeAddedEventsViaEventBlock {
 		property portal.acceptance = "true";
 
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "LRQA-71601 - Verify that the translation icon has the Instance Language by default"
-	@priority = "4"
+	@priority = 4
 	test TranslationIconHasInstanceLanguageByDefault {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -445,7 +445,7 @@ definition {
 	}
 
 	@description = "LPS-60800, Verify that can save individual calendar permissions."
-	@priority = "3"
+	@priority = 3
 	test ViewEntryPermissionsNotDefinedByRolePermissions {
 		property portal.upstream = "quarantine";
 
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-56229."
-	@priority = "3"
+	@priority = 3
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -525,7 +525,7 @@ definition {
 
 		for (var resourceActionIndex : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceActionIndex}",
+				resourceAction = ${resourceActionIndex},
 				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "User");
 		}
@@ -556,7 +556,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Sites");
 
-			Site.addBlankCP(siteName = "${siteName}");
+			Site.addBlankCP(siteName = ${siteName});
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -564,7 +564,7 @@ definition {
 				portlet = "Users and Organizations");
 
 			User.editUserSiteCP(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				userScreenName = "usersn");
 		}
 
@@ -609,7 +609,7 @@ definition {
 		Calendar.searchOtherCalendars(searchValue = "site");
 
 		for (var calendarName : list "Site A,Site B,Site C") {
-			Calendar.viewOtherCalendarsSearchResult(calendarName = "${calendarName}");
+			Calendar.viewOtherCalendarsSearchResult(calendarName = ${calendarName});
 		}
 
 		CalendarNavigator.gotoAddEvent();

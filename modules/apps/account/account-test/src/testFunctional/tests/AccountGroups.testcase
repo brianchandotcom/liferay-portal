@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test asserts the account group name not clickable when user only have the update permission."
-	@priority = "3"
+	@priority = 3
 	test AccountGroupNameLinkNotClickableWithOnlyUpdatePermission {
 		task ("Given A new User and a new Account Group exists") {
 			JSONUser.addUser(
@@ -48,7 +48,7 @@ definition {
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
-					resourceName = "90",
+					resourceName = 90,
 					roleTitle = "Only Update Permission");
 
 				Permissions.definePermissionViaJSONAPI(
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Access in Control Panel permission can acess account group via Control Panel."
-	@priority = "3"
+	@priority = 3
 	test CanAccessAccountGroupsInControlPanelWithPermissions {
 		task ("Given A new User exists") {
 			JSONUser.addUser(
@@ -111,7 +111,7 @@ definition {
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
-					resourceName = "90",
+					resourceName = 90,
 					roleTitle = "View AG Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Assign Account permission can assign account to account group."
-	@priority = "3"
+	@priority = 3
 	test CanAssignAccountFromAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -164,7 +164,7 @@ definition {
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
-					resourceName = "90",
+					resourceName = 90,
 					roleTitle = "Assign Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
@@ -174,7 +174,7 @@ definition {
 
 				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS,ASSIGN_ACCOUNTS") {
 					Permissions.definePermissionViaJSONAPI(
-						resourceAction = "${resourceAction}",
+						resourceAction = ${resourceAction},
 						resourceName = "com.liferay.account.model.AccountGroup",
 						roleTitle = "Assign Account Reg Role");
 				}
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This test deletes an account group."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteAnAccountGroup {
 		property portal.acceptance = "true";
 
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This test edit an account group name and description."
-	@priority = "4"
+	@priority = 4
 	test CanEditAnAccountGroup {
 		property portal.acceptance = "true";
 
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by name."
-	@priority = "3"
+	@priority = 3
 	test CanFilterAccountsBelongToAccountGroupByName {
 		task ("Given Add a new Account Group and Accounts with different name not in alphabetical order") {
 			JSONAccountGroup.addAccountGroup(
@@ -264,7 +264,7 @@ definition {
 
 			for (var accountEntryName : list "Liferay Account,Account Name for Test,Filter By Name,Banana Account") {
 				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${accountEntryName}",
+					accountEntryName = ${accountEntryName},
 					accountEntryType = "Business");
 			}
 		}
@@ -281,20 +281,20 @@ definition {
 				assigneeAll = "true");
 
 			for (var assigneeName : list "Liferay Account,Account Name for Test,Filter By Name,Banana Account") {
-				AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+				AccountGroups.viewAssignee(assigneeName = ${assigneeName});
 			}
 		}
 
 		task ("Then filter the accounts assigned to account group by Name returns proper results") {
 			ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Name");
 
-			var index = "1";
+			var index = 1;
 
 			for (var assigneeName : list "Account Name for Test,Banana Account,Filter By Name,Liferay Account") {
 				AssertTextEquals.assertPartialText(
-					key_rowNumber = "${index}",
+					key_rowNumber = ${index},
 					locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-					value1 = "${assigneeName}");
+					value1 = ${assigneeName});
 
 				var index = ${index} + 1;
 			}
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by status."
-	@priority = "3"
+	@priority = 3
 	test CanFilterAccountsBelongToAccountGroupByStatus {
 		task ("Given Add a new Account Group and Accounts with different status") {
 			JSONAccountGroup.addAccountGroup(
@@ -365,7 +365,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by type."
-	@priority = "3"
+	@priority = 3
 	test CanFilterAccountsBelongToAccountGroupByType {
 		task ("Given Add a new Account Group and Accounts with different type") {
 			JSONAccountGroup.addAccountGroup(
@@ -395,7 +395,7 @@ definition {
 				assigneeAll = "true");
 
 			for (var assigneeName : list "Business Account 1 for Account Group,Business Account 2 for Account Group,Person Account for Account Group") {
-				AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+				AccountGroups.viewAssignee(assigneeName = ${assigneeName});
 			}
 		}
 
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@description = "This test assigns an account to Account Group"
-	@priority = "4"
+	@priority = 4
 	test CanManuallyAssignAccountToGroup {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account for Account Group",
@@ -448,7 +448,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-122414. It asserts the number of accounts in Accounts Group view is accurate."
-	@priority = "4"
+	@priority = 4
 	test CanManuallyAssignMultipleAccountsToGroup {
 		for (var accountNumber : list "1,2,3,4,5") {
 			JSONAccountEntry.addAccountEntry(
@@ -476,7 +476,7 @@ definition {
 		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.viewEntry(
-			accountGroupAccount = "1",
+			accountGroupAccount = 1,
 			accountGroupDescription = "This is an Account Group with multiple accounts.",
 			accountGroupName = "Multiple Accounts AG");
 
@@ -489,13 +489,13 @@ definition {
 		AccountGroups.openAccountGroupsAdmin();
 
 		AccountGroups.viewEntry(
-			accountGroupAccount = "5",
+			accountGroupAccount = 5,
 			accountGroupDescription = "This is an Account Group with multiple accounts.",
 			accountGroupName = "Multiple Accounts AG");
 	}
 
 	@description = "This test removes an account from Account Group."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveAccountFromGroup {
 		property portal.acceptance = "true";
 
@@ -520,7 +520,7 @@ definition {
 			assigneeAll = "All");
 
 		for (var assigneeName : list "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG") {
-			AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+			AccountGroups.viewAssignee(assigneeName = ${assigneeName});
 		}
 
 		AccountGroups.openAccountGroupsAdmin();
@@ -566,16 +566,16 @@ definition {
 		Account.openAccountsAdmin();
 
 		for (var rowEntry : list "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG") {
-			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+			LexiconEntry.viewEntryName(rowEntry = ${rowEntry});
 		}
 	}
 
 	@description = "This test asserts the correct search results when searching for Account Groups"
-	@priority = "4"
+	@priority = 4
 	test CanSearchForAccountGroup {
 		task ("Given Account Groups exist") {
 			for (var accountGroupName : list "One,Two,Three") {
-				JSONAccountGroup.addAccountGroup(accountGroupName = "${accountGroupName}");
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
 			}
 		}
 
@@ -589,13 +589,13 @@ definition {
 			LexiconEntry.viewEntryName(rowEntry = "Two");
 
 			for (var accountName : list "One,Three") {
-				LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+				LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 			}
 		}
 	}
 
 	@description = "This test asserts accurate results when searching for available accounts in Assign Accounts to account group modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchInAssignAccountsToAccountGroupModal {
 		task ("Given an account group and few business accounts") {
 			JSONAccountEntry.addAccountEntry(
@@ -637,7 +637,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Assign Account permission can unassign account from account group."
-	@priority = "3"
+	@priority = 3
 	test CanUnassignAccountFromAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -664,7 +664,7 @@ definition {
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
-					resourceName = "90",
+					resourceName = 90,
 					roleTitle = "Assign Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
@@ -674,7 +674,7 @@ definition {
 
 				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS,ASSIGN_ACCOUNTS") {
 					Permissions.definePermissionViaJSONAPI(
-						resourceAction = "${resourceAction}",
+						resourceAction = ${resourceAction},
 						resourceName = "com.liferay.account.model.AccountGroup",
 						roleTitle = "Assign Account Reg Role");
 				}
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with View Account permission can view account in account group."
-	@priority = "3"
+	@priority = 3
 	test CanViewAccountsAssignedToAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -740,7 +740,7 @@ definition {
 
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "VIEW_CONTROL_PANEL",
-					resourceName = "90",
+					resourceName = 90,
 					roleTitle = "View Account Reg Role");
 
 				Permissions.definePermissionViaJSONAPI(
@@ -750,7 +750,7 @@ definition {
 
 				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS") {
 					Permissions.definePermissionViaJSONAPI(
-						resourceAction = "${resourceAction}",
+						resourceAction = ${resourceAction},
 						resourceName = "com.liferay.account.model.AccountGroup",
 						roleTitle = "View Account Reg Role");
 				}
@@ -789,7 +789,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-156788. This test asserts that a user with the correct permissions can view and edit the External Reference Code for an Account Group."
-	@priority = "3"
+	@priority = 3
 	test UserWithPermissionsCanEditExternalReferenceCode {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -820,7 +820,7 @@ definition {
 
 			for (var resourceAction : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceAction}",
+					resourceAction = ${resourceAction},
 					resourceName = "com.liferay.account.model.AccountGroup",
 					roleTitle = "Update and View Account Groups");
 			}

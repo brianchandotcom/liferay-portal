@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddReportInvalidEmail {
 		Navigator.openURL();
 
@@ -91,7 +91,7 @@ definition {
 			value1 = "Please enter a valid email address.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddSchedule {
 		Navigator.openURL();
 
@@ -142,7 +142,7 @@ definition {
 			userName = "Test Test");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ChangeReportName {
 		Navigator.openURL();
 
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "LRQA-64780 - Automate LPS-127390: Filter and Order options in Reports Admin do not function properly"
-	@priority = "5"
+	@priority = 5
 	test CheckFilterAndOrderOption {
 		property portal.acceptance = "true";
 
@@ -203,7 +203,7 @@ definition {
 		ReportsAdmin.assertReportEntryPresent(reportsDefinitionName = "Reports Definition Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DeleteReportFile {
 		Navigator.openURL();
 
@@ -247,7 +247,7 @@ definition {
 		ReportsAdmin.viewNoReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.csv");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DeliverReportToEmail {
 		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
@@ -295,10 +295,10 @@ definition {
 			sender = "Joe Bloggs",
 			subject = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = ${portalURL});
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportCSV {
 		Navigator.openURL();
 
@@ -332,7 +332,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.csv");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportHTML {
 		Navigator.openURL();
 
@@ -366,7 +366,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.html");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportPDF {
 		Navigator.openURL();
 
@@ -402,7 +402,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.pdf");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportRTF {
 		Navigator.openURL();
 
@@ -436,7 +436,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.rtf");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportTXT {
 		Navigator.openURL();
 
@@ -470,7 +470,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.txt");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportXLS {
 		Navigator.openURL();
 
@@ -504,7 +504,7 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.xls");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DownloadReportXML {
 		Navigator.openURL();
 
@@ -539,7 +539,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-43525."
-	@priority = "3"
+	@priority = 3
 	test TestDatabaseConnection {
 		property database.types = "mysql";
 
@@ -558,9 +558,9 @@ definition {
 		ReportsAdmin.addSource(
 			reportsDataSourceClass = "com.mysql.cj.jdbc.Driver",
 			reportsDataSourceName = "Reports Data Source Name",
-			reportsDataSourcePassword = "${databasePassword}",
-			reportsDataSourceURL = "${databaseURL}",
-			reportsDataSourceUser = "${databaseUsername}");
+			reportsDataSourcePassword = ${databasePassword},
+			reportsDataSourceURL = ${databaseURL},
+			reportsDataSourceUser = ${databaseUsername});
 
 		ReportsAdmin.testDatabaseConnection();
 
@@ -568,13 +568,13 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ViewEmailNotificationDelivery {
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -638,11 +638,11 @@ definition {
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: Custom Report Name.pdf,Your New Account,Your New Password");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = ${portalURL});
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test ViewEmailRecipientDelivery {
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
@@ -700,10 +700,10 @@ definition {
 
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password");
 
-		Navigator.openSpecificURL(url = "${portalURL}");
+		Navigator.openSpecificURL(url = ${portalURL});
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ViewReportDefinitionParametersFields {
 		Navigator.openURL();
 

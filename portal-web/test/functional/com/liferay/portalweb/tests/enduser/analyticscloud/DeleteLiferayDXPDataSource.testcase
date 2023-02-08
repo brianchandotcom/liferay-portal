@@ -29,13 +29,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8852 | Test Summary: Delete a DXP Data Source connected via Token Auth"
-	@priority = "4"
+	@priority = 4
 	test DeleteDXPDataSourceViaTokenAuth {
 		property portal.upstream = "quarantine";
 
@@ -45,17 +45,17 @@ definition {
 		task ("Site creation and connection with AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-			var dataSource = StringUtil.replace("${propertyName}", " Combined Property", "");
+			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
 			ACUtils.launchAC();
 		}
 
 		task ("Delete the data source and check if it has been deleted") {
-			ACSettings.deleteDataSource(dataSourceName = "${dataSource}");
+			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
 
 			TestUtils.hardRefresh();
 
-			ACUtils.assertItemsNameNotPresent(itemList = "${dataSource}");
+			ACUtils.assertItemsNameNotPresent(itemList = ${dataSource});
 		}
 	}
 

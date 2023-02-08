@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 
 	@description = "This test ensures that users can import article via center pane button."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	test CanImportArticleViaCenterPaneButton {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can import content to a KB folder rom the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanImportArticleViaNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -72,7 +72,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 2");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DeleteImportedArticles {
 		JSONLayout.addPublicLayout(
@@ -80,7 +80,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -108,7 +108,7 @@ definition {
 		KBArticle.deleteCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewImportedKBArticleWithImagesAsKBAttachments {
 		property custom.properties = "feature.flag.LPS-156421=true";
@@ -120,7 +120,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
@@ -156,7 +156,7 @@ definition {
 		KBArticle.viewAttachmentCP(kbArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test ViewImportedKBArticleWithSourceURLMetadata {
 		property test.name.skip.portal.instance = "KBExportImport#ViewImportedKBArticleWithSourceURLMetadata";
@@ -166,7 +166,7 @@ definition {
 			layoutName = "Knowledge Base Display Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");

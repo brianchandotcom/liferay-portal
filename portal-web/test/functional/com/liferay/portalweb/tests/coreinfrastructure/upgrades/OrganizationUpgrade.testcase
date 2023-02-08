@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -27,7 +27,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -36,7 +36,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade713 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -45,7 +45,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade720 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -54,7 +54,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade721 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -63,7 +63,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade730 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -72,7 +72,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade740 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
@@ -81,7 +81,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
@@ -89,7 +89,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10";
@@ -97,7 +97,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade7413 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
@@ -105,7 +105,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
@@ -113,7 +113,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10.1";
@@ -121,7 +121,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -130,7 +130,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddOrganizationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -139,7 +139,7 @@ definition {
 		Upgrade.addOrganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade625 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mysql";
@@ -148,7 +148,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade704 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -157,7 +157,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade713 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -166,7 +166,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade720 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -175,7 +175,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade721 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -184,7 +184,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade730 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -193,7 +193,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade740 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
@@ -202,7 +202,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.1.10";
@@ -210,7 +210,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade7210 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.2.10";
@@ -218,7 +218,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade7413 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -227,7 +227,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.0.10.6";
@@ -235,7 +235,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.2.10.1";
@@ -243,7 +243,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mysql,oracle,sybase";
@@ -252,7 +252,7 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test AddUserandSuborganizationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";

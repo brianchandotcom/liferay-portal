@@ -2,23 +2,23 @@ definition {
 
 	macro _openDescriptiveMenulistCP {
 		if (isSet(webContentTitleEscapeCharacter)) {
-			var key_webContentTitle = "${webContentTitleEscapeCharacter}";
+			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
 		else {
-			var key_webContentTitle = "${webContentTitle}";
+			var key_webContentTitle = ${webContentTitle};
 		}
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		if ("${liveSite}" == "true") {
+		if (${liveSite} == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
-				value1 = "${webContentTitle}");
+				value1 = ${webContentTitle});
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WC#ENTRY_LIST_TITLE",
-				value1 = "${webContentTitle}");
+				value1 = ${webContentTitle});
 		}
 
 		Click.waitForMenuToggleJSClick(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
@@ -37,15 +37,15 @@ definition {
 	macro gotoAddWithStructureCP {
 		LexiconEntry.gotoAdd();
 
-		if (IsElementPresent(key_menuItem = "${structureName}", locator1 = "MenuItem#ANY_MENU_ITEM")) {
-			MenuItem.click(menuItem = "${structureName}");
+		if (IsElementPresent(key_menuItem = ${structureName}, locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = ${structureName});
 		}
 		else {
 			Button.clickMore();
 
 			IFrame.selectConfigurationFrame();
 
-			LexiconEntry.gotoEntry(rowEntry = "${structureName}");
+			LexiconEntry.gotoEntry(rowEntry = ${structureName});
 
 			IFrame.selectTopFrame();
 		}
@@ -53,8 +53,8 @@ definition {
 
 	macro gotoEditCP {
 		WebContentNavigator._openDescriptiveMenulistCP(
-			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+			webContentTitle = ${webContentTitle},
+			webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -63,38 +63,38 @@ definition {
 
 	macro gotoEditFeed {
 		AssertClick(
-			key_feedName = "${feedName}",
+			key_feedName = ${feedName},
 			locator1 = "DDMSelectFeed#FEED_TABLE_NAME_LINK",
-			value1 = "${feedName}");
+			value1 = ${feedName});
 
 		SelectFrame(value1 = "relative=top");
 	}
 
 	macro gotoEditStructure {
 		WaitForElementPresent(
-			key_ddlDataDefinitionName = "${structureName}",
+			key_ddlDataDefinitionName = ${structureName},
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
 
 		AssertClick(
-			key_ddlDataDefinitionName = "${structureName}",
+			key_ddlDataDefinitionName = ${structureName},
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
-			value1 = "${structureName}");
+			value1 = ${structureName});
 
 		SelectFrame(value1 = "relative=top");
 	}
 
 	macro gotoEntryMenuItem {
 		Click.waitForMenuToggleJSClick(
-			key_webContentTitle = "${entry}",
+			key_webContentTitle = ${entry},
 			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	macro gotoManageTemplatesViaStructures {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Templates",
-			rowEntry = "${structureName}");
+			rowEntry = ${structureName});
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: ${structureName}");
 	}
@@ -115,15 +115,15 @@ definition {
 
 	macro gotoPreviewEntryCP {
 		WebContentNavigator._openDescriptiveMenulistCP(
-			liveSite = "${liveSite}",
-			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+			liveSite = ${liveSite},
+			webContentTitle = ${webContentTitle},
+			webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
 
 		MenuItem.click(menuItem = "Preview");
 	}
 
 	macro gotoViewStatus {
-		var key_webContentTitle = "${webContentTitle}";
+		var key_webContentTitle = ${webContentTitle};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -131,31 +131,31 @@ definition {
 
 		AssertElementPresent(locator1 = "WC#ENTRY_LIST_THUMBNAIL");
 
-		if ("${translationStatus}" == "true") {
+		if (${translationStatus} == "true") {
 			AssertTextEquals(
 				locator1 = "WC#ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS",
-				value1 = "${webContentStatus}");
+				value1 = ${webContentStatus});
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
-				value1 = "${webContentStatus}");
+				value1 = ${webContentStatus});
 		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 	}
 
 	macro gotoViewTemplate {
 		AssertClick(
-			key_ddlTemplateName = "${templateName}",
+			key_ddlTemplateName = ${templateName},
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
-			value1 = "${templateName}");
+			value1 = ${templateName});
 	}
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	macro openToAddBasicArticle {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -164,21 +164,21 @@ definition {
 		// Articles accessed in admin will stay in admin after publishing.
 
 		if (isSet(folderName)) {
-			var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+			var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
 
 			var folderId = JSONWebcontentSetter.setFolderId(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
+				folderName = ${folderName},
+				groupId = ${groupId});
 
 			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_journal_web_portlet_JournalPortlet_displayStyle%3Ddescriptive%26_com_liferay_journal_web_portlet_JournalPortlet_folderId%3D${folderId}%26_com_liferay_journal_web_portlet_JournalPortlet_groupId%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
 		}
 		else {
 			var groupId = JSONWebcontentSetter.setGroupId(
-				groupName = "${groupName}",
-				site = "${site}");
+				groupName = ${groupName},
+				site = ${site});
 
 			if (!(isSet(folderId))) {
-				var folderId = "0";
+				var folderId = 0;
 			}
 
 			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3DxwwxN5nQ&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}");
@@ -186,7 +186,7 @@ definition {
 	}
 
 	macro openToEditWCInSite {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -197,21 +197,21 @@ definition {
 		}
 
 		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var articleId = JSONWebcontentSetter.setArticleId(
-			groupName = "${groupName}",
-			site = "${site}",
-			title = "${webContentTitle}",
-			urlTitle = "${urlTitle}");
+			groupName = ${groupName},
+			site = ${site},
+			title = ${webContentTitle},
+			urlTitle = ${urlTitle});
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentSetter.setFolderId(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
+				folderName = ${folderName},
+				groupId = ${groupId});
 		}
 		else {
-			var folderId = "0";
+			var folderId = 0;
 		}
 
 		// Articles accessed in admin will stay in admin after editing.
@@ -222,37 +222,37 @@ definition {
 
 		if (isSet(staging)) {
 			Navigator.openWithAppendToBaseURL(
-				baseURL = "${baseURL}",
+				baseURL = ${baseURL},
 				urlAppend = "group/${siteURLKey}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=/edit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=${baseURL}/group/${siteURLKey}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_referringPortletResource=&_com_liferay_journal_web_portlet_JournalPortlet_version=${version}");
 		}
 		else {
 			Navigator.openWithAppendToBaseURL(
-				baseURL = "${baseURL}",
+				baseURL = ${baseURL},
 				urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=/edit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_articleId=${articleId}&_com_liferay_journal_web_portlet_JournalPortlet_folderId=${folderId}&_com_liferay_journal_web_portlet_JournalPortlet_groupId=${groupId}&_com_liferay_journal_web_portlet_JournalPortlet_referringPortletResource=&_com_liferay_journal_web_portlet_JournalPortlet_version=${version}");
 		}
 	}
 
 	macro openWebContentAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
 	macro openWebContentStructuresAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp&p_p_auth=sNIcMAzl");
 	}
 
 	macro openWebContentStructuresAdminInAssetLibrary {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
 	}
 
 	macro openWebContentTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
 	}
 

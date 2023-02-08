@@ -35,16 +35,16 @@ definition {
 	macro deployFileOnServer {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		if (("${bundleIndex}" == "0") || !(isSet(bundleIndex))) {
+		if ((${bundleIndex} == 0) || !(isSet(bundleIndex))) {
 			var deployDir = "${liferayHome}/deploy";
 		}
 		else {
 			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
 		}
 
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${jarFile}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${jarFile});
 
-		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/${jarFile}");
+		ArchiveUtil.archive(${dependencyFilePath}, "${deployDir}/${jarFile}");
 	}
 
 }

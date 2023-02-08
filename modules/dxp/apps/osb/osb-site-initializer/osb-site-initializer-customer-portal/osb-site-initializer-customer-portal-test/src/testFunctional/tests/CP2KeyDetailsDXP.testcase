@@ -20,31 +20,31 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 
 			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-148083 - Verify that an activation key's details pop up has all necessary information in the Environment, Status, and Server groups."
-	@priority = "5"
+	@priority = 5
 	test IfAllKeyElementsArePresent {
 		property portal.upstream = "quarantine";
 
@@ -55,11 +55,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -71,7 +71,7 @@ definition {
 		task ("Then the modal will show all elements of the Environment, Server, and Status groups") {
 			CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
 				environmentType = "Production",
-				instanceSize = "1",
+				instanceSize = 1,
 				product = "DXP",
 				subscriptionType = "Subscription",
 				version = "7.4");
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "LPS-148088 - Verify that the close button on the Activation Key Details popup works."
-	@priority = "3"
+	@priority = 3
 	test IfCloseButtonWorks {
 		property portal.upstream = "quarantine";
 
@@ -101,11 +101,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project and clicks on a key") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@description = "LPS-148086 - Verify that a Virtual activation key's details pop up will have a section for Cluster Nodes"
-	@priority = "4"
+	@priority = 4
 	test IfClusterNodesIsOnServerColumn {
 		property portal.upstream = "quarantine";
 
@@ -135,11 +135,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project and an individual key with a Virtual Cluster key type") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -150,13 +150,13 @@ definition {
 
 		task ("Then the modal will show 'Cluster Nodes' on the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
-				clusterNodes = "1",
+				clusterNodes = 1,
 				keyType = "Virtual Cluster");
 		}
 	}
 
 	@description = "LPS-148085 - Verify that the copy button works on an activation key's details pop up window."
-	@priority = "4"
+	@priority = 4
 	test IfCopyButtonWorks {
 		property portal.upstream = "quarantine";
 
@@ -167,11 +167,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "LPS-148079 - Verify that an activation key's details pop up appears when clicking on a key."
-	@priority = "5"
+	@priority = 5
 	test PopUpShowsFromActivationKey {
 		property portal.upstream = "quarantine";
 
@@ -201,11 +201,11 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
 		task ("When a user selects a project") {
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = ${testAccount});
 
 			CP2NavigationMenu.goToProductActivation();
 

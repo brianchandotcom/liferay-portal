@@ -20,14 +20,14 @@ definition {
 		task ("Activate remote staging") {
 			Staging.remoteStagingSetUpViaJson(
 				groupName = "Test Site Name",
-				remotePort = "9080");
+				remotePort = 9080);
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-91192. Publish associated display page template with Asset Publisher to live."
-	@priority = "4"
+	@priority = 4
 	test PublishDisplayPageTemplateWithAssetPublisherToLive {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}configuration.override.com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration_defaultSelectionStyle=\"dynamic\"";

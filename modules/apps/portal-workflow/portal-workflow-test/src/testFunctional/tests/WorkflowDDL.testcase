@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a DDL Entry"
-	@priority = "5"
+	@priority = 5
 	test CanApproveDDLEntry {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -55,8 +55,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69474. Verify that if it is possible to create a Dynamic Data List."
-	@priority = "5"
+	@priority = 5
 	test CanCreateDDL {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -110,8 +110,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "LRQA-69476 - Verify that the user can Publish a Entry after Save as Draft"
-	@priority = "4"
+	@priority = 4
 	test CanPublishAfterSaveAsDraft {
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
@@ -143,8 +143,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.saveAsDraftCP();
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "Verify that, when the user Save as Draft, the DDL status is Draft"
-	@priority = "3"
+	@priority = 3
 	test CanSaveAsDraft {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -188,8 +188,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.saveAsDraftCP();
 
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "Verify that the Entry is not displayed on My Workflow Tasks when the user Delete a DDL with Pending entry"
-	@priority = "4"
+	@priority = 4
 	test DeletedEntryIsNotDisplayedOnMyWorkflowTasks {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -224,8 +224,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "Verify that, when the user Save as Draft, the task is not displayed on My Workflow Tasks"
-	@priority = "3"
+	@priority = 3
 	test DraftEntryIsNotDisplayedOnMyWorkflowTasks {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -276,8 +276,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.saveAsDraftCP();
 
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "Verify that, editing an Approved entry, the DDL Entry status returns to Pending"
-	@priority = "4"
+	@priority = 4
 	test EditApprovedEntryReturnsToPending {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -314,8 +314,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-61212."
-	@priority = "5"
+	@priority = 5
 	test EditDDLRecordViaMyWorkflowTasks {
 		property portal.acceptance = "true";
 
@@ -465,7 +465,7 @@ definition {
 	}
 
 	@description = "Verify that, editing a Pending entry, a message is displayed"
-	@priority = "2"
+	@priority = 2
 	test MessageIsDisplayedOnEditingPendingEntry {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -492,19 +492,19 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 
 		KaleoFormsNewSubmissions.viewStatusDDL(status = "Pending");
 
-		DDLRecord.editPG(ddlListName = "${ddlListName}");
+		DDLRecord.editPG(ddlListName = ${ddlListName});
 
 		KaleoFormsNewSubmissions.viewWorkflowInProcessMessage(errorMessage = "There is a publication workflow in process. Some actions may be disabled depending on the status and your role through this process.");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test RejectDynamicdatalistCP {
 		var ddlDataDefinitionName = "DDL Definition";
 		var ddlListName = "DDL List";
@@ -623,7 +623,7 @@ definition {
 	}
 
 	@description = "Verify that, editing a Pending entry, the DDL Entry status remains on Pending"
-	@priority = "3"
+	@priority = 3
 	test StatusIsPendingWhenPendingEntryIsEdited {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -650,8 +650,8 @@ definition {
 			ddlInstantMesseger = "Liferay",
 			ddlJobTitle = "QA",
 			ddlLastName = "Test",
-			ddlPhoneMobile = "12345678",
-			ddlPhoneOffice = "12345678");
+			ddlPhoneMobile = 12345678,
+			ddlPhoneOffice = 12345678);
 
 		DDLRecord.submitForPublication();
 

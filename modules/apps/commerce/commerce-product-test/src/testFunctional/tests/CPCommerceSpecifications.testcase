@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
-	@priority = "3"
+	@priority = 3
 	test EditSpecificationGroup {
 		property portal.acceptance = "true";
 
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6284. EditSpecificationLabel"
-	@priority = "3"
+	@priority = 3
 	test EditSpecificationLabel {
 		property portal.acceptance = "true";
 
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6282. RemoveSpecificationGroup"
-	@priority = "3"
+	@priority = 3
 	test RemoveSpecificationGroup {
 		property portal.acceptance = "false";
 
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6281. RemoveSpecificationLabel"
-	@priority = "3"
+	@priority = 3
 	test RemoveSpecificationLabel {
 		property portal.acceptance = "false";
 

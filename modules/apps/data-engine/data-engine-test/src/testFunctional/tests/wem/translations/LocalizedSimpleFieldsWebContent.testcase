@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66585. This test validates the creation, edition and persistence of fields with Options on the Web Content Admin."
-	@priority = "5"
+	@priority = 5
 	test AddAndEditTranslatedFieldsWithOptions {
 		property portal.acceptance = "true";
 
@@ -37,15 +37,15 @@ definition {
 
 		for (var fieldName : list "Multiple Selection,Single Selection,Select from List") {
 			DataEngine.addField(
-				fieldFieldLabel = "${fieldName}",
-				fieldName = "${fieldName}");
+				fieldFieldLabel = ${fieldName},
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
-					fieldFieldLabel = "${fieldName}",
-					index = "${index}",
+					fieldFieldLabel = ${fieldName},
+					index = ${index},
 					optionValue = "Option ${index}");
 			}
 		}
@@ -58,7 +58,7 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				fieldFieldLabelEdit = "${fieldName} - pt-BR");
 		}
 
@@ -66,7 +66,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - pt-BR",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - pt-BR");
 			}
 		}
@@ -77,13 +77,13 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
-				fieldFieldLabel = "${fieldName}",
-				fieldName = "${fieldName}");
+				fieldFieldLabel = ${fieldName},
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DEBuilder.assertFieldOptionLabels(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				optionLabelList = "Option 1,Option 2,Option 3");
 		}
 
@@ -92,7 +92,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - pt-BR",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -105,7 +105,7 @@ definition {
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldName}",
+				fieldFieldLabel = ${fieldName},
 				fieldFieldLabelEdit = "${fieldName} - edited");
 		}
 
@@ -113,7 +113,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - edited",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - edited");
 			}
 		}
@@ -130,7 +130,7 @@ definition {
 			for (var index : list "1,2,3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "${fieldName} - pt-BR edited",
-					index = "${index}",
+					index = ${index},
 					optionValue = "Option ${index} - pt-BR edited");
 			}
 		}
@@ -142,7 +142,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - edited",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -156,7 +156,7 @@ definition {
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
 			DataEngine.viewField(
 				fieldFieldLabel = "${fieldName} - pt-BR edited",
-				fieldName = "${fieldName}");
+				fieldName = ${fieldName});
 		}
 
 		for (var fieldName : list "Select from List,Single Selection,Multiple Selection") {
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "4"
+	@priority = 4
 	test CheckDefaultWebContentTitleOnWebContentList {
 		property portal.acceptance = "false";
 
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test CheckDuplicatedRepeatableStructureOnWebContent {
 		NavItem.gotoStructures();
 
@@ -352,13 +352,13 @@ definition {
 		DataEngine.addRepeatableField(fieldLabel = "Text");
 
 		Type(
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "This is a Text field");
 
 		Type(
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "This is a duplicated Text field");
@@ -368,13 +368,13 @@ definition {
 		WebContent.addWithStructureCP(webContentTitle = "Título do conteúdo da web");
 
 		Type(
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Texto",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Este é um campo de texto");
 
 		Type(
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Texto",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Este é um campo de texto duplicado");
@@ -388,13 +388,13 @@ definition {
 			value1 = "Web Content Title");
 
 		AssertTextEquals.assertValue(
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "This is a Text field");
 
 		AssertTextEquals.assertValue(
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "This is a duplicated Text field");
@@ -402,7 +402,7 @@ definition {
 		for (var n : list "1,2") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "Text",
-				key_index = "${n}",
+				key_index = ${n},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT_ANY",
 				value1 = "Text Field Help Text");
 		}
@@ -414,13 +414,13 @@ definition {
 			value1 = "Título do conteúdo da web");
 
 		AssertTextEquals.assertValue(
-			index = "1",
+			index = 1,
 			key_fieldFieldLabel = "Texto",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Este é um campo de texto");
 
 		AssertTextEquals.assertValue(
-			index = "2",
+			index = 2,
 			key_fieldFieldLabel = "Texto",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
 			value1 = "Este é um campo de texto duplicado");
@@ -428,14 +428,14 @@ definition {
 		for (var n : list "1,2") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "Texto",
-				key_index = "${n}",
+				key_index = ${n},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT_ANY",
 				value1 = "Texto de ajuda do campo de texto");
 		}
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test CheckLanguageSelectorAndStructureTranslationsOnWebContent {
 		NavItem.gotoStructures();
 
@@ -493,7 +493,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test CheckLocalizationOfWebContentUponLanguageChange {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -557,7 +557,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test CheckStructureTranslationsOnWebContent {
 		NavItem.gotoStructures();
 
@@ -611,7 +611,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents."
-	@priority = "5"
+	@priority = 5
 	test CreateEditAndDeleteLocalizedWebContent {
 		property portal.acceptance = "true";
 
@@ -629,7 +629,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -637,7 +637,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -645,7 +645,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "12/04/2021",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -653,7 +653,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -661,7 +661,7 @@ definition {
 			skipGotoEditCp = "true",
 			webContentDate = "12/04/2021",
 			webContentLocaleFieldLabel = "pt-BR",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -698,7 +698,7 @@ definition {
 			webContentDate = "12/04/2021",
 			webContentDateFieldLabel = "Date - pt-BR",
 			webContentLocaleFieldLabel = "pt-BR",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentNumericFieldLabel = "Numeric - pt-BR",
 			webContentText = "This is a Text field - pt-BR",
 			webContentTextFieldLabel = "Text - pt-BR",
@@ -708,7 +708,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/20/2021",
-			webContentNumeric = "50",
+			webContentNumeric = 50,
 			webContentText = "This is a Text field - en-US",
 			webContentTitle = "Web Content Title - en-US");
 
@@ -716,7 +716,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/20/2021",
-			webContentNumeric = "50",
+			webContentNumeric = 50,
 			webContentText = "This is a Text field - en-US",
 			webContentTitle = "Web Content Title - en-US");
 
@@ -725,7 +725,7 @@ definition {
 			webContentDate = "12/04/2021",
 			webContentDateFieldLabel = "Date - pt-BR",
 			webContentLocaleFieldLabel = "pt-BR",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentNumericFieldLabel = "Numeric - pt-BR",
 			webContentText = "This is a Text field - pt-BR",
 			webContentTextFieldLabel = "Text - pt-BR",
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "4"
+	@priority = 4
 	test DefaultTitleDisplayedUponFirstlyTranslatingForAnotherLocale {
 		NavItem.gotoStructures();
 
@@ -801,7 +801,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "4"
+	@priority = 4
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		WebContentNavigator.gotoAddCP();
 
@@ -829,7 +829,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "4"
+	@priority = 4
 	test DefaultValuesDisplayedForNonTranslatedWebContent {
 		NavItem.gotoStructures();
 
@@ -895,7 +895,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66585. This test validates the creation, edition, duplication and persistence of Grid field on the Web Content Admin."
-	@priority = "5"
+	@priority = 5
 	test DuplicateAndEditTranslatedFieldsWithOptions {
 		property portal.acceptance = "true";
 
@@ -910,7 +910,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "Option ${index}");
 		}
@@ -918,7 +918,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index}");
 		}
@@ -936,7 +936,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid - ca-ES",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "Option ${index} - ca-ES");
 		}
@@ -944,7 +944,7 @@ definition {
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "Grid - ca-ES",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index} - ca-ES");
 		}
@@ -1035,8 +1035,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.addWithStructureCP(
-				column = "1",
-				row = "${index}",
+				column = 1,
+				row = ${index},
 				webContentGrid = "true");
 		}
 
@@ -1046,8 +1046,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.addWithStructureCP(
-				column = "2",
-				row = "${index}",
+				column = 2,
+				row = ${index},
 				webContentGrid = "true",
 				webContentGridFieldLabel = "Grid - ca-ES");
 		}
@@ -1058,8 +1058,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.viewWithStructureCP(
-				column = "1",
-				row = "${index}",
+				column = 1,
+				row = ${index},
 				skipGotoEditCp = "true",
 				webContentGrid = "true",
 				webContentTitle = "Web Content Title");
@@ -1069,8 +1069,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.viewWithStructureCP(
-				column = "2",
-				row = "${index}",
+				column = 2,
+				row = ${index},
 				skipGotoEditCp = "true",
 				webContentGrid = "true",
 				webContentGridFieldLabel = "Grid - ca-ES",
@@ -1081,8 +1081,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.addWithStructureCP(
-				column = "3",
-				row = "${index}",
+				column = 3,
+				row = ${index},
 				webContentGrid = "true");
 		}
 
@@ -1092,8 +1092,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.viewWithStructureCP(
-				column = "3",
-				row = "${index}",
+				column = 3,
+				row = ${index},
 				skipGotoEditCp = "true",
 				webContentGrid = "true",
 				webContentTitle = "Web Content Title");
@@ -1103,8 +1103,8 @@ definition {
 
 		for (var index : list "1,2,3") {
 			WebContent.viewWithStructureCP(
-				column = "2",
-				row = "${index}",
+				column = 2,
+				row = ${index},
 				skipGotoEditCp = "true",
 				webContentGrid = "true",
 				webContentGridFieldLabel = "Grid - ca-ES",
@@ -1113,7 +1113,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents in different instance language."
-	@priority = "5"
+	@priority = 5
 	test LocalizedWebContentWithDifferentInstanceLanguage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1151,7 +1151,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -1159,7 +1159,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -1167,7 +1167,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "12/04/2021",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 
@@ -1175,7 +1175,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "04/01/2021",
-			webContentNumeric = "12",
+			webContentNumeric = 12,
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -1183,7 +1183,7 @@ definition {
 			skipGotoEditCp = "true",
 			webContentDate = "12/04/2021",
 			webContentLocaleFieldLabel = "ca-ES",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentText = "This is a Text field - ca-ES",
 			webContentTitle = "Web Content Title - ca-ES");
 
@@ -1220,7 +1220,7 @@ definition {
 			webContentDate = "12/04/2021",
 			webContentDateFieldLabel = "Date - ca-ES",
 			webContentLocaleFieldLabel = "ca-ES",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentNumericFieldLabel = "Numeric - ca-ES",
 			webContentText = "This is a Text field - ca-ES",
 			webContentTextFieldLabel = "Text - ca-ES",
@@ -1230,7 +1230,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentDate = "18/04/2021",
-			webContentNumeric = "50",
+			webContentNumeric = 50,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -1238,7 +1238,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentDate = "18/04/2021",
-			webContentNumeric = "50",
+			webContentNumeric = 50,
 			webContentText = "This is a Text field - pt-BR",
 			webContentTitle = "Web Content Title - pt-BR");
 
@@ -1247,7 +1247,7 @@ definition {
 			webContentDate = "12/04/2021",
 			webContentDateFieldLabel = "Date - ca-ES",
 			webContentLocaleFieldLabel = "ca-ES",
-			webContentNumeric = "28",
+			webContentNumeric = 28,
 			webContentNumericFieldLabel = "Numeric - ca-ES",
 			webContentText = "This is a Text field - ca-ES",
 			webContentTextFieldLabel = "Text - ca-ES",
@@ -1291,7 +1291,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test TranslateWebContentWithAllFields {
 		for (var n : list "1,2") {
 			JSONLayout.addPublicLayout(
@@ -1326,7 +1326,7 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "下拉列表",
-			index = "1",
+			index = 1,
 			optionValue = "选择 2");
 
 		DataEngine.editFieldLabel(
@@ -1335,7 +1335,7 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "单选列表框",
-			index = "1",
+			index = 1,
 			optionValue = "选择 3");
 
 		DataEngine.editFieldLabel(
@@ -1344,44 +1344,44 @@ definition {
 
 		DataEngine.addFieldOption(
 			fieldFieldLabel = "复选列表框",
-			index = "1",
+			index = 1,
 			optionValue = "选择 1");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Grid",
 			fieldFieldLabelEdit = "网格");
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "R3,R4") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "网格",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "行 ${index}");
 
 			DataEngine.editFieldReferenceOfFieldOption(
 				fieldFieldLabel = "网格",
-				fieldReferenceOfFieldOption = "${optionValue}",
-				index = "${index}",
+				fieldReferenceOfFieldOption = ${optionValue},
+				index = ${index},
 				optionFieldLabel = "Rows");
 
 			var index = ${index} + 1;
 		}
 
-		var index = "1";
+		var index = 1;
 
 		for (var optionValue : list "C3,C4") {
 			DataEngine.addFieldOption(
 				fieldFieldLabel = "网格",
-				index = "${index}",
+				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "列 ${index}");
 
 			DataEngine.editFieldReferenceOfFieldOption(
 				fieldFieldLabel = "网格",
-				fieldReferenceOfFieldOption = "${optionValue}",
-				index = "${index}",
+				fieldReferenceOfFieldOption = ${optionValue},
+				index = ${index},
 				optionFieldLabel = "Rows");
 
 			var index = ${index} + 1;
@@ -1440,17 +1440,17 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			column = "1",
+			column = 1,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "1",
+			row = 1,
 			webContentColor = "FF0D0D",
 			webContentDate = "10/10/2020",
 			webContentGrid = "true",
 			webContentImage = "Document_3.png",
 			webContentLinkToPage = "Test Page Name 1",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
 			webContentSingleSelection = "Option 3",
@@ -1462,10 +1462,10 @@ definition {
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addWithStructureCP(
-			column = "2",
+			column = 2,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "2",
+			row = 2,
 			webContentColor = "2BA676",
 			webContentColorFieldLabel = "颜色",
 			webContentDate = "2020/01/01",
@@ -1478,7 +1478,7 @@ definition {
 			webContentLinkToPageFieldLabel = "网页链接",
 			webContentMultipleSelection = "选择 1",
 			webContentMultipleSelectionFieldLabel = "复选列表框",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentNumericFieldLabel = "数字",
 			webContentRichText = "这是多格式文本框",
 			webContentRichTextFieldLabel = "多格式文本框",
@@ -1497,10 +1497,10 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewWithStructureCP(
-			column = "1",
+			column = 1,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
-			row = "1",
+			row = 1,
 			webContentColor = "FF0D0D",
 			webContentDate = "10/10/2020",
 			webContentGeolocation = "true",
@@ -1508,7 +1508,7 @@ definition {
 			webContentImage = "Document_3.png",
 			webContentLinkToPage = "Test Page Name 1",
 			webContentMultipleSelection = "Option 1",
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
 			webContentSeparator = "true",
@@ -1525,11 +1525,11 @@ definition {
 			value1 = "网页内容标题");
 
 		WebContent.viewWithStructureCP(
-			column = "2",
+			column = 2,
 			dmNavTab = "User Personal Folder",
 			navTab = "Web Content Images",
 			predefinedValue = "true",
-			row = "2",
+			row = 2,
 			webContentColor = "2BA676",
 			webContentColorFieldLabel = "颜色",
 			webContentDate = "2020/01/01",
@@ -1544,7 +1544,7 @@ definition {
 			webContentLinkToPageFieldLabel = "网页链接",
 			webContentMultipleSelection = "选择 1",
 			webContentMultipleSelectionFieldLabel = "复选列表框",
-			webContentNumeric = "123",
+			webContentNumeric = 123,
 			webContentNumericFieldLabel = "数字",
 			webContentRichText = "这是多格式文本框",
 			webContentRichTextFieldLabel = "多格式文本框",
@@ -1563,7 +1563,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "5"
+	@priority = 5
 	test TranslationDoesNotChangeAnotherAndPersistsAfterEditingAnother {
 		NavItem.gotoStructures();
 

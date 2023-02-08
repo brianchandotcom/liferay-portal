@@ -4,11 +4,11 @@ definition {
 		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
 
 		SelectFrame(
-			key_title = "${frameTitle}",
+			key_title = ${frameTitle},
 			locator1 = "IFrame#MODAL_ANY");
 
 		Click.javaScriptClick(
-			key_pluralLabelName = "${pluralLabelName}",
+			key_pluralLabelName = ${pluralLabelName},
 			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
 
 		Click(locator1 = "VisualizeObjectDisplayPage#SELECT_ENTRY");
@@ -18,13 +18,13 @@ definition {
 
 	macro assertDisplayEntry {
 		AssertElementPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
 	macro assertDisplayEntryNotPresent {
 		AssertElementNotPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 
@@ -35,11 +35,11 @@ definition {
 
 		Type(
 			locator1 = "VisualizeObjectDisplayPage#NAME_OBJECT_DISPLAY_PAGE_TEMPLATE",
-			value1 = "${pageTemplateName}");
+			value1 = ${pageTemplateName});
 
 		Select(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
-			value1 = "${contentType}");
+			value1 = ${contentType});
 
 		Click(locator1 = "VisualizeObjectCollectionDisplay#SAVE_BUTTON");
 	}
@@ -48,7 +48,7 @@ definition {
 		NavItem.gotoDisplayPages();
 
 		Click(
-			key_pageName = "${displayPageName}",
+			key_pageName = ${displayPageName},
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_PAGE");
 	}
 
@@ -64,13 +64,13 @@ definition {
 		Click(locator1 = "Portlet#MODAL_TITLE");
 
 		Click(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "VisualizeObjectDisplayPage#SELECT_CHOOSE_AN_OPTION_FIELD");
 
 		Select(
-			key_fieldLabel = "${fieldLabel}",
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM_IN_FILTER_COLLECTION",
-			value1 = "${itemName}");
+			value1 = ${itemName});
 
 		Button.click(button = "Apply");
 	}
@@ -78,7 +78,7 @@ definition {
 	macro validateObjectContentType {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
-			value1 = "${contentType}");
+			value1 = ${contentType});
 	}
 
 }

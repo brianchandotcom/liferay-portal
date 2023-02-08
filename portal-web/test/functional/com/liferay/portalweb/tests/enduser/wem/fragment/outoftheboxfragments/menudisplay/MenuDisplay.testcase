@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120091. Can define displayed sublevels in Menu Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DefineDisplayedSublevels {
 		property portal.acceptance = "true";
@@ -141,7 +141,7 @@ definition {
 		task ("Select 1 in Sublevels field") {
 			PageEditor.editMenuDisplay(
 				panel = "General",
-				sublevels = "1");
+				sublevels = 1);
 
 			PageEditor.clickManagementBar();
 		}
@@ -163,7 +163,7 @@ definition {
 
 			for (var itemName : list "Test Grand Child Page,Test Great Grand Child Page") {
 				AssertElementNotPresent(
-					key_menuItem = "${itemName}",
+					key_menuItem = ${itemName},
 					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 			}
 		}
@@ -171,7 +171,7 @@ definition {
 		task ("Select 0 in Sublevels field") {
 			PageEditor.editMenuDisplay(
 				panel = "General",
-				sublevels = "0");
+				sublevels = 0);
 		}
 
 		task ("Assert the child toggle is not shown") {
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120091. Can define Display Style of Menu Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DefineDisplayStyle {
 		property portal.acceptance = "true";
@@ -234,7 +234,7 @@ definition {
 		task ("Assert the Test Parent Page and Test Content Page items are shown in Menu Display") {
 			for (var itemName : list "Test Parent Page,Test Content Page") {
 				AssertVisible(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE");
 			}
 		}
@@ -277,7 +277,7 @@ definition {
 		task ("Assert Test Parent Page, Test Child Page and Test Content Page items are shown in Menu Display") {
 			for (var itemName : list "Test Parent Page,Test Child Page,Test Content Page") {
 				AssertVisible(
-					key_itemName = "${itemName}",
+					key_itemName = ${itemName},
 					locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
 			}
 
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120091. Can define the item color styles in Menu Display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test DefineItemColorStyles {
 		property portal.acceptance = "true";
@@ -378,11 +378,11 @@ definition {
 		task ("Assert the item color when hover on it") {
 			for (var itemName : list "Test Widget Page,Test Content Page") {
 				MouseOver(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE");
 
 				AssertCssValue(
-					key_pageName = "${itemName}",
+					key_pageName = ${itemName},
 					locator1 = "Home#PAGE",
 					locator2 = "color",
 					value1 = "rgba(185, 80, 0, 1)");
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120091. Can select a navigation menu from existing ones in Menu Display fragment."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test SelectNavigationMenuFromExistingOnes {
 		property portal.acceptance = "true";
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-140988. The Menu Display fragment should be visible to guest with default permissions."
-	@priority = "4"
+	@priority = 4
 	test ViewMenuDisplayAsGuest {
 		task ("Given a page creator has a content page based on master template with a Menu Display") {
 			task ("Add a master template") {

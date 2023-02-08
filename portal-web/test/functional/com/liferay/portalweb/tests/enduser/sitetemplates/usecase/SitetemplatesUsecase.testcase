@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87055. Adding a page template with an already used name fails with a clear error message."
-	@priority = "3"
+	@priority = 3
 	test AddPageTemplatesWithDuplicateNameViaSiteTemplate {
 		task ("Given: User add a new Site template") {
 			SiteTemplates.addCP(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-51432 and LPS-95113. Pages associated with a site template cannot be deleted and removing a parent page on a site template will delete the same page and the child page also on the connected sites, if propagation is enabled."
-	@priority = "4"
+	@priority = 4
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage";
@@ -173,11 +173,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81629. Newly created pages are visible next to the home page on site template and on the site created from that template."
-	@priority = "3"
+	@priority = 3
 	test AllPageIsVisibleAfterAddingNewPages {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#AllPageIsVisibleAfterAddingNewPages";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site template with 2 page") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -188,7 +188,7 @@ definition {
 
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			SiteTemplates.addSitePageViaSiteTemplateCP(
@@ -199,7 +199,7 @@ definition {
 		task ("When: Pages are visible on the Site template") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page1 Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 		}
 
@@ -223,10 +223,10 @@ definition {
 	}
 
 	@description = "User can edit the permission of a page on site templates in the page admin menu."
-	@priority = "4"
+	@priority = 4
 	test EditSiteTemplateGuestPermissions {
 		task ("Given: User add a new Site template and a site based on the template") {
-			SiteTemplates.addCP(siteTemplateName = "${siteTemplateName}");
+			SiteTemplates.addCP(siteTemplateName = ${siteTemplateName});
 
 			Site.openSitesAdmin();
 
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@description = "Site templates with older versions can be imported."
-	@priority = "4"
+	@priority = 4
 	test ImportOldSchemaVersion {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#ImportOldSchemaVerion";
 
@@ -286,9 +286,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-42067. Portlet preferences are configurable and stay unchanged when the same portlet with the same name is created on different pages."
-	@priority = "4"
+	@priority = 4
 	test PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template with a page") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -301,7 +301,7 @@ definition {
 		task ("And: Add a portlet on the created page") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page1 Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(
@@ -341,7 +341,7 @@ definition {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.gotoViewPages(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			AssertClick(
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "Site admin should not be able to delete pages that were created from site templates."
-	@priority = "3"
+	@priority = 3
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
 		task ("Given: User add a new Site Template and add it to a new User group") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -397,12 +397,12 @@ definition {
 	}
 
 	@description = "LRQA-73456. Site template preferences and contents are inherited on User group sites."
-	@priority = "4"
+	@priority = 4
 	test SitesDynamicTemplateInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -412,7 +412,7 @@ definition {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.gotoViewPages(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ContentPages.gotoPageEditor();
@@ -464,12 +464,12 @@ definition {
 
 		task ("Then: The settings and contens are inherited from the Site template to the Site of the User group") {
 			UserGroup.gotoProfilePages(
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				userGroupName = "User Group Test");
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "Message Boards Body",
 				threadSubject = "Message Boards Subject");
 
@@ -480,11 +480,11 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-73458. The preferences and contents of a personal site will inherit from site templates."
-	@priority = "3"
+	@priority = 3
 	test SitesTemplateResourceInheritance {
 		property portal.release = "false";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template and a page to it") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -497,7 +497,7 @@ definition {
 		task ("And: Add a DM portlet on the new template page and configure it to enable actions") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(portletName = "Documents and Media");
@@ -508,7 +508,7 @@ definition {
 		task ("When: User add a new document to the DM portlet") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			DMDocument.addPG(
@@ -556,13 +556,13 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86487. Page links on sites which were created in site templates should redirect correctly to other pages."
-	@priority = "4"
+	@priority = 4
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
 
 		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template and 2 page to it") {
 			SiteTemplates.addCP(siteTemplateName = "Template Site");
@@ -581,12 +581,12 @@ definition {
 		task ("And: Copies the URL of the second site template page as external URL") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Page2 Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Template Site");
 
 			var page2URL = Navigator.getCurrentURL();
 
-			var entryExternalURL = StringUtil.replace("${page2URL}", "http://", "");
+			var entryExternalURL = StringUtil.replace(${page2URL}, "http://", "");
 		}
 
 		task ("And: Create WC on the Site template and use the copied URL as external URL") {
@@ -599,8 +599,8 @@ definition {
 			PortletEntry.inputTitle(title = "Web Content Title");
 
 			CKEditor.addEntryExternalURL(
-				displayText = "${page2URL}",
-				entryExternalURL = "${entryExternalURL}",
+				displayText = ${page2URL},
+				entryExternalURL = ${entryExternalURL},
 				fieldLabel = "Content");
 
 			PortletEntry.publish();
@@ -637,14 +637,14 @@ definition {
 				siteName = "Site Name");
 
 			WebContentDisplayPortlet.viewContent(
-				displayText = "${page2URL}",
+				displayText = ${page2URL},
 				url = "${portalURL}/web/site-name/page2-name",
 				webContentTitle = "Web Content Title");
 		}
 	}
 
 	@description = "This is a use case for LPS-74081. Site pages with numeric friendly URL's can be imported from LAR files."
-	@priority = "4"
+	@priority = 4
 	test ViewImportedSitePageWithNumericFriendlyURL {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#ViewImportedSitePageWithNumericFriendlyURL";
 
@@ -657,13 +657,13 @@ definition {
 
 			JSONLayout.addPublicLayout(
 				groupName = "Export",
-				layoutName = "1");
+				layoutName = 1);
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "export");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
-				pageName = "1");
+				pageName = 1);
 
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
@@ -674,13 +674,13 @@ definition {
 		task ("And: Add a second page to the new site then verify that it has correct friendly URL") {
 			JSONLayout.addPublicLayout(
 				groupName = "Export",
-				layoutName = "2");
+				layoutName = 2);
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "export");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
-				pageName = "2");
+				pageName = 2);
 
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
@@ -725,7 +725,7 @@ definition {
 				siteTemplateName = "New Site Template");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "New Site");
 		}
 
@@ -733,13 +733,13 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "new-site");
 
 			PagesAdmin.viewPagesOrder(
-				depth = "1",
+				depth = 1,
 				pageNameList = "Home,1,2,Hello");
 		}
 	}
 
 	@description = "This is a use case for LPS-107677. Additional info button should not be present on a newly imported site when it has no difference compared to the site template it was created from."
-	@priority = "3"
+	@priority = 3
 	test ViewImportedSitePageWithoutInfoMessage {
 		task ("Given: User add a new Site Template") {
 			SiteTemplates.addCP(
@@ -770,7 +770,7 @@ definition {
 
 			LAR.exportSiteCP(siteScopeName = "Site A");
 
-			var key_larFileName = "${larFileName}";
+			var key_larFileName = ${larFileName};
 			var larFileName = LAR.getLarFileName();
 
 			LAR.downloadLar();
@@ -794,7 +794,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Site B");
 
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Site B");
 		}
 
@@ -808,9 +808,9 @@ definition {
 	}
 
 	@description = "Portlets on the site templates should give guests view permission by default."
-	@priority = "3"
+	@priority = 3
 	test ViewInlineGuestPermissionsInSiteTemplatesViaWCD {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template and a page to it") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -823,7 +823,7 @@ definition {
 		task ("When: User add a WCD portlet to the page") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			Portlet.addPG(
@@ -834,7 +834,7 @@ definition {
 		task ("Then: The portlet have view permission for guests by default") {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName}",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			PermissionsInline.gotoConfigurationPG(
@@ -849,11 +849,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-92663. Navigation menus are copied when a site is created from a site template."
-	@priority = "4"
+	@priority = 4
 	test ViewNavigationMenuCopyFromSitesTemplate {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template and 2 page to it") {
 			SiteTemplates.addCP(
@@ -872,7 +872,7 @@ definition {
 		}
 
 		task ("And: Create new page navigation menu item for both template page then verify that they are visible") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "${siteTemplateId}");
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = ${siteTemplateId});
 
 			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
 
@@ -958,9 +958,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-113145. Portlet configuration is copied when a site is created from a site template."
-	@priority = "3"
+	@priority = 3
 	test ViewPortletConfigurationOfGlobalTemplatesPageCopyFromSitesTemplate {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template") {
 			SiteTemplates.addCP(

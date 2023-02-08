@@ -24,13 +24,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-	@priority = "3"
+	@priority = 3
 	test DefaultDateFormatIsMMDDYYYY {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that the fields From and To are required"
-	@priority = "3"
+	@priority = 3
 	test FromAndToAreRequiredFields {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that the user can not insert a future date"
-	@priority = "3"
+	@priority = 3
 	test FutureDatesAreNotAllowed {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "LPS-97665 - Verify that info icon hover state and tooltip message"
-	@priority = "2"
+	@priority = 2
 	test InfoIconDisplaysMessageOnHover {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"
-	@priority = "4"
+	@priority = 4
 	test ItemOutOfTimeFrameIsNotConsideredInVelocityResult {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -152,7 +152,7 @@ definition {
 			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
 			isPresent = "INST_HOUR");
 
-		WorkflowMetrics.assertChartTotalValueNotEquals(velocityValueTotal = "0");
+		WorkflowMetrics.assertChartTotalValueNotEquals(velocityValueTotal = 0);
 
 		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
 			completionVelocityDateRange = "Yesterday",
@@ -161,11 +161,11 @@ definition {
 
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / hour",
-			velocityValueTotal = "0");
+			velocityValueTotal = 0);
 	}
 
 	@description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
-	@priority = "3"
+	@priority = 3
 	test LabelFromYesterdayFilter {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that at the custom range modal, the oldest date accepted is 1970"
-	@priority = "2"
+	@priority = 2
 	test OldestDataAcceptedIs1970 {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "LPS-98233 - Verify that when there are no results for a filter selection, the table should display the respective empty state"
-	@priority = "3"
+	@priority = 3
 	test PageProvidesEmptyStateWhenThereAreNoResultForFilterSelection {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -223,11 +223,11 @@ definition {
 
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / hour",
-			velocityValueTotal = "0");
+			velocityValueTotal = 0);
 	}
 
 	@description = "LPS-98233 - Verify that the To date is greater than the From date"
-	@priority = "3"
+	@priority = 3
 	test ToDateMustBeGreaterThanFromDate {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

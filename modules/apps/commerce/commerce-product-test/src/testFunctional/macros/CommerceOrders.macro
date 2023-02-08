@@ -7,40 +7,40 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${orderRuleName}");
+			value1 = ${orderRuleName});
 
 		Type(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${orderRuleDescription}");
+			value1 = ${orderRuleDescription});
 
 		Select(
 			locator1 = "Select#TYPE",
-			value1 = "${orderRuleType}");
+			value1 = ${orderRuleType});
 
 		Button.clickSubmitButton();
 
 		if (isSet(amount)) {
 			Type(
-				key_text = "${orderRuleType}",
+				key_text = ${orderRuleType},
 				locator1 = "TextInput#ANY",
-				value1 = "${amount}");
+				value1 = ${amount});
 		}
 
 		if (isSet(orderRuleCurrency)) {
 			Select(
 				key_selectFieldLabel = "Currency",
 				locator1 = "Select#ANY",
-				value1 = "${orderRuleCurrency}");
+				value1 = ${orderRuleCurrency});
 		}
 
 		if (isSet(applyTo)) {
 			Select(
 				key_selectFieldLabel = "Apply To",
 				locator1 = "Select#ANY",
-				value1 = "${applyTo}");
+				value1 = ${applyTo});
 		}
 
-		if ("${active}" == "true") {
+		if (${active} == "true") {
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
 		}
 
@@ -56,11 +56,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#NAME",
-			value1 = "${orderTypeName}");
+			value1 = ${orderTypeName});
 
 		Type(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${orderTypeDescription}");
+			value1 = ${orderTypeDescription});
 
 		Button.clickSubmitButton();
 
@@ -72,7 +72,7 @@ definition {
 	}
 
 	macro assertOrderImportPreview {
-		Variables.assertDefined(parameterList = "${productNames}");
+		Variables.assertDefined(parameterList = ${productNames});
 
 		if (!(isSet(productImportStatuses))) {
 			var productImportStatuses = "";
@@ -98,152 +98,152 @@ definition {
 			var productUnitPrices = "";
 		}
 
-		var productNamesList = ListUtil.newListFromString("${productNames}");
-		var productSkusList = ListUtil.newListFromString("${productSkus}");
-		var productUnitPricesList = ListUtil.newListFromString("${productUnitPrices}");
-		var productQuantitiesList = ListUtil.newListFromString("${productQuantities}");
-		var productTotalPricesList = ListUtil.newListFromString("${productTotalPrices}");
-		var productImportStatusesList = ListUtil.newListFromString("${productImportStatuses}");
-		var productRequestedDeliveryDatesList = ListUtil.newListFromString("${productRequestedDeliveryDates}");
-		var size = ListUtil.size("${productNamesList}");
-		var count = "0";
+		var productNamesList = ListUtil.newListFromString(${productNames});
+		var productSkusList = ListUtil.newListFromString(${productSkus});
+		var productUnitPricesList = ListUtil.newListFromString(${productUnitPrices});
+		var productQuantitiesList = ListUtil.newListFromString(${productQuantities});
+		var productTotalPricesList = ListUtil.newListFromString(${productTotalPrices});
+		var productImportStatusesList = ListUtil.newListFromString(${productImportStatuses});
+		var productRequestedDeliveryDatesList = ListUtil.newListFromString(${productRequestedDeliveryDates});
+		var size = ListUtil.size(${productNamesList});
+		var count = 0;
 
-		var isLessThanSize = MathUtil.isLessThan("${count}", "${size}");
+		var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
 
-		while (("${isLessThanSize}" == "true")) {
-			var productName = ListUtil.get("${productNamesList}", "${count}");
-			var productSku = ListUtil.get("${productSkusList}", "${count}");
-			var productUnitPrice = ListUtil.get("${productUnitPricesList}", "${count}");
-			var productQuantity = ListUtil.get("${productQuantitiesList}", "${count}");
-			var productTotalPrice = ListUtil.get("${productTotalPricesList}", "${count}");
-			var productImportStatus = ListUtil.get("${productImportStatusesList}", "${count}");
-			var productRequestedDeliveryDate = ListUtil.get("${productRequestedDeliveryDatesList}", "${count}");
+		while (("" == "true")) {
+			var productName = ListUtil.get(${productNamesList}, ${count});
+			var productSku = ListUtil.get(${productSkusList}, ${count});
+			var productUnitPrice = ListUtil.get(${productUnitPricesList}, ${count});
+			var productQuantity = ListUtil.get(${productQuantitiesList}, ${count});
+			var productTotalPrice = ListUtil.get(${productTotalPricesList}, ${count});
+			var productImportStatus = ListUtil.get(${productImportStatusesList}, ${count});
+			var productRequestedDeliveryDate = ListUtil.get(${productRequestedDeliveryDatesList}, ${count});
 
 			CommerceOrders.assertOrderImportPreviewEntry(
-				importStatus = "${productImportStatus}",
-				productName = "${productName}",
-				productQuantity = "${productQuantity}",
-				productSku = "${productSku}",
-				requestedDeliveryDate = "${productRequestedDeliveryDate}",
-				totalPrice = "${productTotalPrice}",
-				unitPrice = "${productUnitPrice}");
+				importStatus = ${productImportStatus},
+				productName = ${productName},
+				productQuantity = ${productQuantity},
+				productSku = ${productSku},
+				requestedDeliveryDate = ${productRequestedDeliveryDate},
+				totalPrice = ${productTotalPrice},
+				unitPrice = ${productUnitPrice});
 
 			var count = ${count} + 1;
 
-			var count = StringUtil.valueOf("${count}");
+			var count = StringUtil.valueOf(${count});
 
-			var isLessThanSize = MathUtil.isLessThan("${count}", "${size}");
+			var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
 		}
 	}
 
 	macro assertOrderImportPreviewEntry {
 		if (isSet(productSku)) {
 			AssertTextEquals(
-				key_columnNumber = "1",
-				key_productName = "${productName}",
-				key_value = "${productSku}",
+				key_columnNumber = 1,
+				key_productName = ${productName},
+				key_value = ${productSku},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${productSku}");
+				value1 = ${productSku});
 		}
 
 		if (isSet(unitPrice)) {
 			AssertTextEquals.assertPartialText(
-				key_columnNumber = "3",
-				key_productName = "${productName}",
-				key_value = "${unitPrice}",
+				key_columnNumber = 3,
+				key_productName = ${productName},
+				key_value = ${unitPrice},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${unitPrice}");
+				value1 = ${unitPrice});
 		}
 
 		if (isSet(productQuantity)) {
 			AssertTextEquals(
-				key_columnNumber = "4",
-				key_productName = "${productName}",
-				key_value = "${productQuantity}",
+				key_columnNumber = 4,
+				key_productName = ${productName},
+				key_value = ${productQuantity},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${productQuantity}");
+				value1 = ${productQuantity});
 		}
 
 		if (isSet(totalPrice)) {
 			AssertTextEquals.assertPartialText(
-				key_columnNumber = "5",
-				key_productName = "${productName}",
-				key_value = "${totalPrice}",
+				key_columnNumber = 5,
+				key_productName = ${productName},
+				key_value = ${totalPrice},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${totalPrice}");
+				value1 = ${totalPrice});
 		}
 
 		if (isSet(importStatus)) {
 			AssertTextEquals.assertPartialText(
-				key_columnNumber = "6",
-				key_productName = "${productName}",
-				key_value = "${importStatus}",
+				key_columnNumber = 6,
+				key_productName = ${productName},
+				key_value = ${importStatus},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${importStatus}");
+				value1 = ${importStatus});
 		}
 
 		if (isSet(requestedDeliveryDate)) {
 			AssertTextEquals.assertPartialText(
-				key_columnNumber = "8",
-				key_productName = "${productName}",
-				key_value = "${requestedDeliveryDate}",
+				key_columnNumber = 8,
+				key_productName = ${productName},
+				key_value = ${requestedDeliveryDate},
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-				value1 = "${requestedDeliveryDate}");
+				value1 = ${requestedDeliveryDate});
 		}
 	}
 
 	macro assertOrderRulesEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${orderRuleName}");
+			value1 = ${orderRuleName});
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${orderRuleDescription}");
+			value1 = ${orderRuleDescription});
 
 		AssertSelectedLabel(
 			locator1 = "Select#TYPE",
-			value1 = "${orderRuleType}");
+			value1 = ${orderRuleType});
 
 		if (isSet(priority)) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
-				value1 = "${priority}");
+				value1 = ${priority});
 		}
 
 		if (isSet(amount)) {
 			AssertTextEquals(
-				key_text = "${orderRuleType}",
+				key_text = ${orderRuleType},
 				locator1 = "TextInput#ANY",
-				value1 = "${amount}");
+				value1 = ${amount});
 		}
 
 		if (isSet(orderRuleCurrency)) {
 			AssertSelectedLabel(
 				key_selectFieldLabel = "Currency",
 				locator1 = "Select#ANY",
-				value1 = "${orderRuleCurrency}");
+				value1 = ${orderRuleCurrency});
 		}
 
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Apply To",
 			locator1 = "Select#ANY",
-			value1 = "${applyTo}");
+			value1 = ${applyTo});
 	}
 
 	macro assertOrderTypesEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${orderTypeName}");
+			value1 = ${orderTypeName});
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${orderTypeDescription}");
+			value1 = ${orderTypeDescription});
 
 		if (isSet(displayOrder)) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#DISPLAY_ORDER_FIELD",
-				value1 = "${displayOrder}");
+				value1 = ${displayOrder});
 		}
 	}
 
@@ -266,20 +266,20 @@ definition {
 				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
 
 			CommerceShipments.editShipmentCarrierDetails(
-				carrierDetail = "${carrierDetail}",
-				shippingMethod = "${shippingMethod}",
-				trackingNumber = "${trackingNumber}",
-				trackingURL = "${trackingURL}");
+				carrierDetail = ${carrierDetail},
+				shippingMethod = ${shippingMethod},
+				trackingNumber = ${trackingNumber},
+				trackingURL = ${trackingURL});
 		}
 
-		if ("${moveOrderItemsInShipment}" == "true") {
-			CommerceShipments.moveOrderItemsInShipment(productSkuList = "${productSkuList}");
+		if (${moveOrderItemsInShipment} == "true") {
+			CommerceShipments.moveOrderItemsInShipment(productSkuList = ${productSkuList});
 		}
 
-		if ("${moveItemQuantitiesInShipment}" == "true") {
+		if (${moveItemQuantitiesInShipment} == "true") {
 			CommerceShipments.moveItemQuantitiesInShipment(
-				productSkuList = "${productSkuList}",
-				warehouseName = "${warehouseName}");
+				productSkuList = ${productSkuList},
+				warehouseName = ${warehouseName});
 		}
 
 		Click(
@@ -292,7 +292,7 @@ definition {
 
 		if (isSet(complement)) {
 			Click(
-				key_text = "${complement}",
+				key_text = ${complement},
 				locator1 = "Button#ANY");
 		}
 		else {
@@ -301,10 +301,10 @@ definition {
 	}
 
 	macro deleteOrderType {
-		CommerceNavigator.searchEntry(entryName = "${orderTypeName}");
+		CommerceNavigator.searchEntry(entryName = ${orderTypeName});
 
 		Click(
-			key_value = "${orderTypeName}",
+			key_value = ${orderTypeName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -320,13 +320,13 @@ definition {
 		Type(
 			key_fieldLabel = "External Reference Code",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
+			value1 = ${keyReferenceCode});
 
 		Button.click(button = "Submit");
 
 		if (isSet(checkReferenceCode)) {
 			AssertElementPresent(
-				key_erc = "${keyReferenceCode}",
+				key_erc = ${keyReferenceCode},
 				locator1 = "CommerceEntry#HEADER_ERC_VALUE");
 		}
 
@@ -338,7 +338,7 @@ definition {
 	macro editCartPortletOrderQuantity {
 		Type(
 			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_QUANTITY",
-			value1 = "${orderQuantity}");
+			value1 = ${orderQuantity});
 
 		Click(
 			key_text = "Update",
@@ -346,7 +346,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_QUANTITY",
-			value1 = "${orderQuantity}");
+			value1 = ${orderQuantity});
 	}
 
 	macro editOrderAddressCP {
@@ -358,38 +358,38 @@ definition {
 			Type(
 				key_fieldLabel = "Name",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${editedName}");
+				value1 = ${editedName});
 		}
 
 		if (isSet(editedStreet1)) {
 			Type(
 				locator1 = "TextInput#STREET_1",
-				value1 = "${editedStreet1}");
+				value1 = ${editedStreet1});
 		}
 
 		if (isSet(editedCountry)) {
 			Select(
 				locator1 = "Select#COUNTRY",
-				value1 = "${editedCountry}");
+				value1 = ${editedCountry});
 		}
 
 		if (isSet(editedZipCode)) {
 			Type(
 				key_fieldLabel = "Zip",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${editedZipCode}");
+				value1 = ${editedZipCode});
 		}
 
 		if (isSet(editedCity)) {
 			Type(
 				locator1 = "TextInput#CITY",
-				value1 = "${editedCity}");
+				value1 = ${editedCity});
 		}
 
 		if (isSet(editedRegion)) {
 			Select(
 				locator1 = "Select#REGION",
-				value1 = "${editedRegion}");
+				value1 = ${editedRegion});
 		}
 
 		Button.click(button = "Submit");
@@ -398,7 +398,7 @@ definition {
 	}
 
 	macro editOrderItemDetails {
-		CommerceNavigator.gotoEntry(entryName = "${orderItemSku}");
+		CommerceNavigator.gotoEntry(entryName = ${orderItemSku});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -406,35 +406,35 @@ definition {
 			Type(
 				key_fieldLabel = "Quantity",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${orderItemQuantity}");
+				value1 = ${orderItemQuantity});
 		}
 
 		if (isSet(orderItemPrice)) {
 			Type(
 				key_fieldLabel = "Price",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${orderItemPrice}");
+				value1 = ${orderItemPrice});
 		}
 
 		if (isSet(orderItemRequestedDeliveryDate)) {
 			Type(
 				key_fieldLabel = "Requested Delivery Date",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${orderItemRequestedDeliveryDate}");
+				value1 = ${orderItemRequestedDeliveryDate});
 		}
 
 		if (isSet(orderItemDeliveryGroup)) {
 			Type(
 				key_fieldLabel = "Delivery Group",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${orderItemDeliveryGroup}");
+				value1 = ${orderItemDeliveryGroup});
 		}
 
 		if (isSet(orderItemMeasurementUnit)) {
 			Select(
 				key_fieldLabel = "Measurement Units",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${orderItemMeasurementUnit}");
+				value1 = ${orderItemMeasurementUnit});
 		}
 
 		Button.clickSave();
@@ -447,7 +447,7 @@ definition {
 	}
 
 	macro editOrdersEntryTerms {
-		if ("${type}" == "Payment") {
+		if (${type} == "Payment") {
 			Click(
 				key_buttonName = "Edit",
 				key_titleName = "Payment Terms",
@@ -458,13 +458,13 @@ definition {
 			Select(
 				key_fieldLabel = "Title",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${newTerm}");
+				value1 = ${newTerm});
 
 			AssertClickNoError(
 				locator1 = "Button#SUBMIT",
 				value1 = "Submit");
 		}
-		else if ("${type}" == "Delivery") {
+		else if (${type} == "Delivery") {
 			Click(
 				key_buttonName = "Edit",
 				key_titleName = "Delivery Terms",
@@ -475,7 +475,7 @@ definition {
 			Select(
 				key_fieldLabel = "Title",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${newTerm}");
+				value1 = ${newTerm});
 
 			AssertClickNoError(
 				locator1 = "Button#SUBMIT",
@@ -487,19 +487,19 @@ definition {
 		if (isSet(orderTypeName)) {
 			Type(
 				locator1 = "CommerceEntry#NAME_FIELD",
-				value1 = "${orderTypeName}");
+				value1 = ${orderTypeName});
 		}
 
 		if (isSet(orderTypeDescription)) {
 			Type(
 				locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-				value1 = "${orderTypeDescription}");
+				value1 = ${orderTypeDescription});
 		}
 
 		if (isSet(displayOrder)) {
 			Type(
 				locator1 = "CommerceEntry#DISPLAY_ORDER_FIELD",
-				value1 = "${displayOrder}");
+				value1 = ${displayOrder});
 		}
 
 		Button.clickPublish();
@@ -515,23 +515,23 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(eligiblePaymentMethods)) {
-			for (var eligiblePaymentMethod : list "${eligiblePaymentMethods}") {
+			for (var eligiblePaymentMethod : list ${eligiblePaymentMethods}) {
 				AssertElementPresent(
-					key_radioOption = "${eligiblePaymentMethod}",
+					key_radioOption = ${eligiblePaymentMethod},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 			}
 		}
 
 		if (isSet(notEligiblePaymentMethods)) {
-			for (var notEligiblePaymentMethod : list "${notEligiblePaymentMethods}") {
+			for (var notEligiblePaymentMethod : list ${notEligiblePaymentMethods}) {
 				AssertElementNotPresent(
-					key_radioOption = "${notEligiblePaymentMethod}",
+					key_radioOption = ${notEligiblePaymentMethod},
 					locator1 = "CommerceEntry#RADIO_BUTTON");
 			}
 		}
 
 		Click.clickAtNotVisible(
-			key_radioOption = "${paymentMethod}",
+			key_radioOption = ${paymentMethod},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
@@ -540,11 +540,11 @@ definition {
 	}
 
 	macro getOrderCreationDateFromTable {
-		var key_columnIndex = "${columnIndex}";
-		var key_rowIndex = "${rowIndex}";
+		var key_columnIndex = ${columnIndex};
+		var key_rowIndex = ${rowIndex};
 		var orderCreationDate = selenium.getText("CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");
 
-		return "${orderCreationDate}";
+		return ${orderCreationDate};
 	}
 
 	macro importFromOrder {
@@ -554,19 +554,19 @@ definition {
 
 		IFrame.selectModalFrame();
 
-		Search.searchCP(searchTerm = "${orderId}");
+		Search.searchCP(searchTerm = ${orderId});
 
 		Button.click(button = "Select");
 
 		if (isSet(productNames)) {
 			CommerceOrders.assertOrderImportPreview(
-				productImportStatuses = "${productImportStatuses}",
-				productNames = "${productNames}",
-				productQuantities = "${productQuantities}",
-				productRequestedDeliveryDates = "${productRequestedDeliveryDates}",
-				productSkus = "${productSkus}",
-				productTotalPrices = "${productTotalPrices}",
-				productUnitPrices = "${productUnitPrices}");
+				productImportStatuses = ${productImportStatuses},
+				productNames = ${productNames},
+				productQuantities = ${productQuantities},
+				productRequestedDeliveryDates = ${productRequestedDeliveryDates},
+				productSkus = ${productSkus},
+				productTotalPrices = ${productTotalPrices},
+				productUnitPrices = ${productUnitPrices});
 		}
 
 		Button.click(button = "Import");
@@ -586,25 +586,25 @@ definition {
 
 	macro openOrderRulesAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_rule_web_internal_portlet_COREntryPortlet");
 	}
 
 	macro openOrdersAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet");
 	}
 
 	macro openOrderTypesAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet");
 	}
 
 	macro openTermsAndConditionsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_term_web_internal_portlet_CommerceTermEntryPortlet");
 	}
 
@@ -612,7 +612,7 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Click(
-			key_entryName = "${orderId}",
+			key_entryName = ${orderId},
 			locator1 = "CommerceEntry#SEARCH_ORDER_ID_RESULT");
 	}
 
@@ -627,7 +627,7 @@ definition {
 		Click(locator1 = "Link#PRINT");
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${portalURL}",
+			baseURL = ${portalURL},
 			urlAppend = "web/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
 
 		AssertLocation(value1 = "${portalURL}/web/minium/placed-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fcommerce_order_content%2Fexport_commerce_order_report&p_p_cacheability=cacheLevelPage&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet_commerceOrderId=${orderID}");
@@ -636,47 +636,47 @@ definition {
 	macro viewOrderAddress {
 		WaitForPageLoad();
 
-		if ("${addressType}" == "Billing") {
+		if (${addressType} == "Billing") {
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressStreet1}",
+				key_addressInfo = ${addressStreet1},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressStreet1}");
+				value1 = ${addressStreet1});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCity}",
+				key_addressInfo = ${addressCity},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressCity}");
+				value1 = ${addressCity});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressRegion}",
+				key_addressInfo = ${addressRegion},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressRegion}");
+				value1 = ${addressRegion});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressZipCode}",
+				key_addressInfo = ${addressZipCode},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressZipCode}");
+				value1 = ${addressZipCode});
 		}
-		else if ("${addressType}" == "Shipping") {
+		else if (${addressType} == "Shipping") {
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressStreet1}",
+				key_addressInfo = ${addressStreet1},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressStreet1}");
+				value1 = ${addressStreet1});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCity}",
+				key_addressInfo = ${addressCity},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressCity}");
+				value1 = ${addressCity});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressRegion}",
+				key_addressInfo = ${addressRegion},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressRegion}");
+				value1 = ${addressRegion});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressZipCode}",
+				key_addressInfo = ${addressZipCode},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressZipCode}");
+				value1 = ${addressZipCode});
 		}
 	}
 
@@ -684,106 +684,106 @@ definition {
 		AssertTextEquals.assertPartialText(
 			key_priceName = "Subtotal",
 			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
-			value1 = "${subTotalPrice}");
+			value1 = ${subTotalPrice});
 
 		AssertTextEquals.assertPartialText(
 			key_priceName = "Delivery",
 			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
-			value1 = "${deliveryPrice}");
+			value1 = ${deliveryPrice});
 
 		AssertTextEquals.assertPartialText(
 			key_priceName = "Tax",
 			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
-			value1 = "${taxPrice}");
+			value1 = ${taxPrice});
 
 		AssertTextEquals.assertPartialText(
 			key_priceName = "Total",
 			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
-			value1 = "${totalPrice}");
+			value1 = ${totalPrice});
 	}
 
 	macro viewOrdersDetails {
 		if (isSet(productSku)) {
 			AssertElementPresent(
-				key_productSku = "${productSku}",
+				key_productSku = ${productSku},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU");
 		}
 
 		if (isSet(productName)) {
 			AssertElementPresent(
-				key_productName = "${productName}",
+				key_productName = ${productName},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 		}
 
 		if (isSet(productListPrice)) {
 			AssertElementPresent(
-				key_productListPrice = "${productListPrice}",
+				key_productListPrice = ${productListPrice},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE");
 		}
 
 		if (isSet(productDiscount)) {
 			AssertElementPresent(
-				key_productDiscount = "${productDiscount}",
+				key_productDiscount = ${productDiscount},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT");
 		}
 
 		if (isSet(productQuantity)) {
 			AssertElementPresent(
-				key_productQuantity = "${productQuantity}",
+				key_productQuantity = ${productQuantity},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
 		}
 
 		if (isSet(productTotalPrice)) {
 			AssertElementPresent(
-				key_productTotalPrice = "${productTotalPrice}",
+				key_productTotalPrice = ${productTotalPrice},
 				locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE");
 		}
 
 		if (isSet(shippingAddressName)) {
 			AssertElementPresent(
-				key_addressInfo = "${shippingAddressName}",
+				key_addressInfo = ${shippingAddressName},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
 		}
 
 		if (isSet(shippingAddressAddress)) {
 			AssertElementPresent(
-				key_addressInfo = "${shippingAddressAddress}",
+				key_addressInfo = ${shippingAddressAddress},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
 		}
 
 		if (isSet(shippingAddressCity)) {
 			AssertElementPresent(
-				key_addressInfo = "${shippingAddressCity}",
+				key_addressInfo = ${shippingAddressCity},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
 		}
 
 		if (isSet(shippingAddressZipCode)) {
 			AssertElementPresent(
-				key_addressInfo = "${shippingAddressZipCode}",
+				key_addressInfo = ${shippingAddressZipCode},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_SHIPPING_ADDRESS");
 		}
 
 		if (isSet(billingAddressName)) {
 			AssertElementPresent(
-				key_addressInfo = "${billingAddressName}",
+				key_addressInfo = ${billingAddressName},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
 		}
 
 		if (isSet(billingAddressAddress)) {
 			AssertElementPresent(
-				key_addressInfo = "${billingAddressAddress}",
+				key_addressInfo = ${billingAddressAddress},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
 		}
 
 		if (isSet(billingAddressCity)) {
 			AssertElementPresent(
-				key_addressInfo = "${billingAddressCity}",
+				key_addressInfo = ${billingAddressCity},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
 		}
 
 		if (isSet(billingAddressZipCode)) {
 			AssertElementPresent(
-				key_addressInfo = "${billingAddressZipCode}",
+				key_addressInfo = ${billingAddressZipCode},
 				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_BILLING_ADDRESS");
 		}
 	}
@@ -791,81 +791,81 @@ definition {
 	macro viewOrdersEntry {
 		if (isSet(addressAddress) && isSet(addressCity) && isSet(addressZipCode)) {
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressAddress}",
+				key_addressInfo = ${addressAddress},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressAddress}");
+				value1 = ${addressAddress});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCity}",
+				key_addressInfo = ${addressCity},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressCity}");
+				value1 = ${addressCity});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressZipCode}",
+				key_addressInfo = ${addressZipCode},
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
-				value1 = "${addressZipCode}");
+				value1 = ${addressZipCode});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressAddress}",
+				key_addressInfo = ${addressAddress},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressAddress}");
+				value1 = ${addressAddress});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressCity}",
+				key_addressInfo = ${addressCity},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressCity}");
+				value1 = ${addressCity});
 
 			AssertTextEquals.assertPartialText(
-				key_addressInfo = "${addressZipCode}",
+				key_addressInfo = ${addressZipCode},
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
-				value1 = "${addressZipCode}");
+				value1 = ${addressZipCode});
 
 			if (isSet(deliveryTerm)) {
 				AssertTextEquals.assertPartialText(
-					key_deliveryTerm = "${deliveryTerm}",
+					key_deliveryTerm = ${deliveryTerm},
 					locator1 = "CommerceOrders#ORDER_DETAILS_DELIVERY_TERMS",
-					value1 = "${deliveryTerm}");
+					value1 = ${deliveryTerm});
 			}
 
 			if (isSet(paymentTerm)) {
 				AssertTextEquals.assertPartialText(
-					key_paymentTerm = "${paymentTerm}",
+					key_paymentTerm = ${paymentTerm},
 					locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_TERMS",
-					value1 = "${paymentTerm}");
+					value1 = ${paymentTerm});
 			}
 		}
 
 		AssertTextEquals(
-			key_productSku = "${productSku}",
+			key_productSku = ${productSku},
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU",
-			value1 = "${productSku}");
+			value1 = ${productSku});
 
 		AssertTextEquals(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME",
-			value1 = "${productName}");
+			value1 = ${productName});
 
 		AssertTextEquals.assertPartialText(
-			key_productListPrice = "${productListPrice}",
+			key_productListPrice = ${productListPrice},
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE",
-			value1 = "${productListPrice}");
+			value1 = ${productListPrice});
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
 				key_productDiscount = "$ ${productDiscount}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT",
-				value1 = "${productDiscount}");
+				value1 = ${productDiscount});
 		}
 
 		AssertTextEquals(
-			key_productQuantity = "${productQuantity}",
+			key_productQuantity = ${productQuantity},
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY",
-			value1 = "${productQuantity}");
+			value1 = ${productQuantity});
 
 		AssertTextEquals.assertPartialText(
-			key_productTotalPrice = "${productTotalPrice}",
+			key_productTotalPrice = ${productTotalPrice},
 			locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE",
-			value1 = "${productTotalPrice}");
+			value1 = ${productTotalPrice});
 
 		if (isSet(paymentMethod)) {
 			Click(
@@ -873,9 +873,9 @@ definition {
 				locator1 = "CommerceEntry#MENU_TAB");
 
 			AssertTextEquals.assertPartialText(
-				key_paymentMethod = "${paymentMethod}",
+				key_paymentMethod = ${paymentMethod},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
-				value1 = "${paymentMethod}");
+				value1 = ${paymentMethod});
 		}
 	}
 

@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7791 | Verify if only non subscription product in wish list will be imported when subscription product is not the first in the wish list"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyNonSubscriptionProductsAreImportedWhenTheSubscriptionProductIsNotTheFirstOnTheListWhenImporting {
 		task ("Given admin user enable subscription in one product") {
 			User.logoutAndLoginPG(
@@ -86,7 +86,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "24.00",
 				unitPrice = "24.00");
@@ -94,7 +94,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "34.00",
 				unitPrice = "34.00");
@@ -104,7 +104,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Cart cannot contain both subscription and non-subscription products.",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "",
 				unitPrice = "");
@@ -120,14 +120,14 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				productTotalPrice = "34.00");
 
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@description = "Verify only one wish list can be imported from list"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyOneWishlistCanBeChosenForTheImport {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7790 | Verify if only first subscription product in wish list will be imported"
-	@priority = "3"
+	@priority = 3
 	test AssertOnlyTheFirstSubscriptionProductInTheWishListIsImportedWhenTheOrderIsEmpty {
 		task ("Given admin user enable subscription in two products") {
 			User.logoutAndLoginPG(
@@ -258,7 +258,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "50.00",
 				unitPrice = "50.00");
@@ -268,7 +268,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Cart cannot contain both subscription and non-subscription products.",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "",
 				unitPrice = "");
@@ -278,7 +278,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Your cart can contain only one subscription product.",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "",
 				unitPrice = "");
@@ -294,7 +294,7 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				productTotalPrice = "50.00");
 
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7792 | Verify if when a subscription product is in the cart, nothing can be imported"
-	@priority = "3"
+	@priority = 3
 	test AssertProductsCannotBeImportedIfASubscriptionProductIsInTheOrder {
 		task ("Given admin user enable subscription in two products") {
 			User.logoutAndLoginPG(
@@ -353,7 +353,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "Mount",
-				productQuantity = "1");
+				productQuantity = 1);
 		}
 
 		task ("And given the buyer navigates to the order details page") {
@@ -384,7 +384,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Cart cannot contain both subscription and non-subscription products.",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "",
 				unitPrice = "");
@@ -392,7 +392,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Cart cannot contain both subscription and non-subscription products.",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "",
 				unitPrice = "");
@@ -402,7 +402,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Your cart can contain only one subscription product.",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "",
 				unitPrice = "");
@@ -418,7 +418,7 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "3.00",
 				productName = "Mount",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55857",
 				productTotalPrice = "3.00");
 
@@ -443,7 +443,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7793 | Verify if subscription product can not be imported if the order already has another subscription product"
-	@priority = "3"
+	@priority = 3
 	test AssertSubscriptionProductCannotBeImportedIfThereAreNonSubscriptionProductsInTheOrder {
 		task ("Given admin user enable subscription in one product") {
 			User.logoutAndLoginPG(
@@ -476,14 +476,14 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			for (var product : list "U-Joint:1,Torque Converters:1,Mount:1") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productQuantity = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productQuantity = StringUtil.extractLast(${product}, ":");
 
-				CommerceProducts.searchProduct(search = "${productName}");
+				CommerceProducts.searchProduct(search = ${productName});
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "${productQuantity}");
+					productName = ${productName},
+					productQuantity = ${productQuantity});
 			}
 		}
 
@@ -515,7 +515,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "24.00",
 				unitPrice = "24.00");
@@ -523,7 +523,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "34.00",
 				unitPrice = "34.00");
@@ -533,7 +533,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "Cart cannot contain both subscription and non-subscription products.",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "",
 				unitPrice = "");
@@ -549,21 +549,21 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55859",
 				productTotalPrice = "68.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "3.00",
 				productName = "Mount",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55857",
 				productTotalPrice = "3.00");
 
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7721 | Verify user can import wish discount and see price variations"
-	@priority = "3"
+	@priority = 3
 	test CanImportProductsFromWishlistWithPriceVariations {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
@@ -607,14 +607,14 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			for (var product : list "U-Joint:1,ABS Sensor:1,Torque Converters:1") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productQuantity = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productQuantity = StringUtil.extractLast(${product}, ":");
 
-				CommerceProducts.searchProduct(search = "${productName}");
+				CommerceProducts.searchProduct(search = ${productName});
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "${productQuantity}");
+					productName = ${productName},
+					productQuantity = ${productQuantity});
 			}
 
 			CommerceNavigator.gotoMiniCart();
@@ -624,9 +624,9 @@ definition {
 				cartItemPriceValues = "24,50,34",
 				cartItemQuantities = "1,1,1",
 				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
-				cartSummaryQuantity = "3",
-				cartSummarySubtotal = "108",
-				cartSummaryTotal = "${cartSummarySubtotal}");
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = 108,
+				cartSummaryTotal = ${cartSummarySubtotal});
 		}
 
 		task ("And given admin user add a new descount and promotion") {
@@ -642,7 +642,7 @@ definition {
 
 			CommerceEntry.addNewDiscountsEntry(
 				channelsEligibility = "Minium Portal",
-				discountAmount = "20",
+				discountAmount = 20,
 				discountName = "Test Discount",
 				discountTarget = "Products",
 				discountType = "Percentage");
@@ -660,7 +660,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = "20",
+				entryPrice = 20,
 				productSKU = "MIN55861",
 				promotionName = "Test Promotion");
 
@@ -687,7 +687,7 @@ definition {
 			Type(
 				key_text = "Quantity",
 				locator1 = "TextInput#ANY",
-				value1 = "2");
+				value1 = 2);
 
 			Click(locator1 = "Button#SUBMIT");
 		}
@@ -729,7 +729,7 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 
@@ -737,14 +737,14 @@ definition {
 				productDiscount = "20.00",
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN93015",
 				productTotalPrice = "80.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55859",
 				productTotalPrice = "68.00");
 
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@description = "Verify user can import wish list order in another order and do checkout"
-	@priority = "3"
+	@priority = 3
 	test CheckoutAfterImportFromWishList {
 		property portal.acceptance = "true";
 
@@ -784,14 +784,14 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			for (var product : list "U-Joint:1,ABS Sensor:1,Torque Converters:1") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productQuantity = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productQuantity = StringUtil.extractLast(${product}, ":");
 
-				CommerceProducts.searchProduct(search = "${productName}");
+				CommerceProducts.searchProduct(search = ${productName});
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "${productQuantity}");
+					productName = ${productName},
+					productQuantity = ${productQuantity});
 			}
 
 			CommerceNavigator.gotoMiniCart();
@@ -801,9 +801,9 @@ definition {
 				cartItemPriceValues = "24,50,34",
 				cartItemQuantities = "1,1,1",
 				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
-				cartSummaryQuantity = "3",
-				cartSummarySubtotal = "108",
-				cartSummaryTotal = "${cartSummarySubtotal}");
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = 108,
+				cartSummaryTotal = ${cartSummarySubtotal});
 		}
 
 		task ("When the buyer select the pending order and import a new order from wish list") {
@@ -834,21 +834,21 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55859",
 				productTotalPrice = "68.00");
 		}
@@ -884,21 +884,21 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55859",
 				productTotalPrice = "68.00");
 
@@ -925,7 +925,7 @@ definition {
 	}
 
 	@description = "Verify user can import item from wish list"
-	@priority = "3"
+	@priority = 3
 	test ImportProductsFromWishlist {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
@@ -950,14 +950,14 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 			for (var product : list "U-Joint:1,ABS Sensor:3,Transmission Cooler Line Assembly:1") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productQuantity = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productQuantity = StringUtil.extractLast(${product}, ":");
 
-				CommerceProducts.searchProduct(search = "${productName}");
+				CommerceProducts.searchProduct(search = ${productName});
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "${productQuantity}");
+					productName = ${productName},
+					productQuantity = ${productQuantity});
 			}
 
 			CommerceNavigator.gotoMiniCart();
@@ -967,9 +967,9 @@ definition {
 				cartItemPriceValues = "24,50,15",
 				cartItemQuantities = "1,3,1",
 				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
-				cartSummaryQuantity = "5",
-				cartSummarySubtotal = "189",
-				cartSummaryTotal = "${cartSummarySubtotal}");
+				cartSummaryQuantity = 5,
+				cartSummarySubtotal = 189,
+				cartSummaryTotal = ${cartSummarySubtotal});
 
 			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -978,7 +978,7 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
 			Click(
-				currentOrderId = "${currentOrderId}",
+				currentOrderId = ${currentOrderId},
 				locator1 = "CommerceOrders#SELECT_ORDER_FROM_LIST");
 		}
 
@@ -1002,35 +1002,35 @@ definition {
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = "4",
+				productQuantity = 4,
 				productSku = "MIN93015",
 				productTotalPrice = "200.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "15.00",
 				productName = "Transmission Cooler Line Assembly",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55860",
 				productTotalPrice = "15.00");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "34.00",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				productTotalPrice = "34.00");
 		}
 	}
 
 	@description = "Verify user can import item from wish list and see imported items"
-	@priority = "3"
+	@priority = 3
 	test ViewImportedWishlistItemsPreview {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
@@ -1073,7 +1073,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "24.00",
 				unitPrice = "24.00");
@@ -1081,7 +1081,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "ABS Sensor",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				totalPrice = "50.00",
 				unitPrice = "50.00");
@@ -1089,7 +1089,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "34.00",
 				unitPrice = "34.00");
@@ -1097,7 +1097,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "The specified quantity is unavailable.",
 				productName = "Power Steering Pump",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN38800",
 				totalPrice = "",
 				unitPrice = "");
@@ -1105,7 +1105,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "The product is no longer available.",
 				productName = "Brake Fluid",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "",
 				totalPrice = "",
 				unitPrice = "");
@@ -1113,7 +1113,7 @@ definition {
 	}
 
 	@description = "Verify if the wish list pagination show the right items"
-	@priority = "3"
+	@priority = 3
 	test ViewPaginationOnImportFromWishlist {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
@@ -1194,7 +1194,7 @@ definition {
 
 		task ("Then the first page is displayed") {
 			AssertElementPresent(
-				key_pageNumber = "1",
+				key_pageNumber = 1,
 				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
 		}
 
@@ -1204,7 +1204,7 @@ definition {
 
 		task ("Then the first page is displayed") {
 			AssertElementPresent(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_PAGINATION");
 		}
 	}

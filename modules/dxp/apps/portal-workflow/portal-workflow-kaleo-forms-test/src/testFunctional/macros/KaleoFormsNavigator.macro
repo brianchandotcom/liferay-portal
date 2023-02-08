@@ -15,10 +15,10 @@ definition {
 	macro gotoManageForms {
 		KaleoFormsNavigator.gotoManageFieldSets();
 
-		Search.searchCP(searchTerm = "${kfFieldSetName}");
+		Search.searchCP(searchTerm = ${kfFieldSetName});
 
 		Click.waitForMenuToggleJSClick(
-			key_kfFieldSetName = "${kfFieldSetName}",
+			key_kfFieldSetName = ${kfFieldSetName},
 			locator1 = "KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Manage Forms");

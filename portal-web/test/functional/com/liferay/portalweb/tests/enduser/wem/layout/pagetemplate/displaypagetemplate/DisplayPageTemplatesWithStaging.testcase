@@ -36,7 +36,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134847. The user can access to an associated display page template via Asset Publisher widget in live site."
-	@priority = "4"
+	@priority = 4
 	test AccessToAssociatedDisplayPageTemplateInLiveSite {
 		task ("Add a display page template for Document and Basic Document") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133767. The user can bulk assign categories to display page template in staging site but cannot in live site."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test BulkAssignCategoriesToDisplayPageTemplateInStagingSite {
 		task ("Add a vocabulary") {
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@description = "User can only edit display page template in the staging site."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CanOnlyEditDisplayPageTemplateInStagingSite {
 		property portal.acceptance = "true";
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-139493. View changes are propagated in the display page template content via web content admin in live site."
-	@priority = "4"
+	@priority = 4
 	test PropagateChangesOfFragmentToLive {
 		task ("Add a fragment set") {
 			JSONFragment.addFragmentCollection(
@@ -419,7 +419,7 @@ definition {
 				collectionName = "Fragment Set Name",
 				fragmentStatus = "Approved",
 				groupKey = "Test Site Name-staging",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Test Fragment Name",
 				site = "false");
 		}
@@ -491,7 +491,7 @@ definition {
 	New Fragment Test Edit
 </div>		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@description = "The changes of display page templates should not reflect in the live site until published."
-	@priority = "5"
+	@priority = 5
 	test PublishChangesOfDisplayPageTemplateToLive {
 		property portal.acceptance = "true";
 
@@ -653,7 +653,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86373 and LPS-118841. Publish the display page template marked as default to live site"
-	@priority = "5"
+	@priority = 5
 	test PublishDisplayPageTemplateMarkedAsDefaultToLive {
 		property portal.acceptance = "true";
 
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-86373 and LPS-92522. Publish the display page template with fragments to live."
-	@priority = "5"
+	@priority = 5
 	test PublishDisplayPageTemplateToLive {
 		property portal.acceptance = "true";
 
@@ -839,7 +839,7 @@ definition {
 	}
 
 	@description = "View mapped content in display page template after deactivate the staging."
-	@priority = "4"
+	@priority = 4
 	test ViewMappedContentInDisplayPageTemplateAfterDeactivateStaging {
 		task ("Add a Banner Center to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");

@@ -8,7 +8,7 @@ definition {
 		Select(
 			key_title = "Vocabulary",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${newVocabularyName}");
+			value1 = ${newVocabularyName});
 
 		Button.clickSave();
 
@@ -29,32 +29,32 @@ definition {
 
 	macro editMiniCartItemQuantity {
 		Type(
-			key_cartItemSku = "${cartItemSku}",
+			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "${productQuantity}");
+			value1 = ${productQuantity});
 	}
 
 	macro gotoCommercePortletNavItem {
 		AssertClick(
-			key_navItem = "${navItem}",
+			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "${navItem}");
+			value1 = ${navItem});
 	}
 
 	macro gotoEntry {
 		AssertClickNoError(
-			key_entryName = "${entryName}",
+			key_entryName = ${entryName},
 			locator1 = "CommerceNavigation#ENTRY_NAME",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		WaitForPageLoad();
 	}
 
 	macro gotoFrontStoreProductPage {
 		var baseURL = PropsUtil.get("portal.url");
-		var productName = StringUtil.replace("${productName}", " ", "-");
+		var productName = StringUtil.replace(${productName}, " ", "-");
 
-		var productName = StringUtil.lowerCase("${productName}");
+		var productName = StringUtil.lowerCase(${productName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/p/${productName}");
 	}
@@ -67,15 +67,15 @@ definition {
 
 	macro gotoMiniCartEntry {
 		AssertClickNoError(
-			key_cartItemSku = "${cartItemSku}",
+			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 	}
 
 	macro gotoMiniumAccountOrderDefaults {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/account-management");
 
-		CommerceNavigator.gotoEntry(entryName = "${accountName}");
+		CommerceNavigator.gotoEntry(entryName = ${accountName});
 
 		CommerceEntry.gotoMenuTab(menuTab = "Channel Defaults");
 	}
@@ -84,7 +84,7 @@ definition {
 		ScrollBy(value1 = "0, -1000");
 
 		Click(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
 
 		WaitForPageLoad();
@@ -92,9 +92,9 @@ definition {
 
 	macro gotoOptionValues {
 		Click(
-			key_optionEntryName = "${optionEntryName}",
+			key_optionEntryName = ${optionEntryName},
 			locator1 = "CommerceNavigation#OPTION_VALUES_LINK",
-			value1 = "${optionEntryName}");
+			value1 = ${optionEntryName});
 
 		WaitForSPARefresh();
 
@@ -103,7 +103,7 @@ definition {
 
 	macro gotoOrderEntryViaAdmin {
 		ClickNoError(
-			key_value = "${status}",
+			key_value = ${status},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "View");
@@ -111,18 +111,18 @@ definition {
 
 	macro gotoPortlet {
 		ApplicationsMenu.gotoPortlet(
-			category = "${category}",
+			category = ${category},
 			panel = "Commerce",
-			portlet = "${portlet}");
+			portlet = ${portlet});
 
 		WaitForPageLoad();
 	}
 
 	macro gotoProductDetails {
-		var productName = CommerceUtilities.convertStringToKey(string = "${productName}");
+		var productName = CommerceUtilities.convertStringToKey(string = ${productName});
 
 		Click(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceFrontStore#PRODUCT_CARD_CATALOG_IMAGE");
 	}
 
@@ -134,13 +134,13 @@ definition {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 
 		Click(
-			key_dropdownItem = "${dropdownItem}",
+			key_dropdownItem = ${dropdownItem},
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
 	}
 
 	macro gotoSpeedwellDashboardItem {
 		Click(
-			key_dashboardItem = "${dashboardItem}",
+			key_dashboardItem = ${dashboardItem},
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DASHBOARD_ITEM");
 	}
 
@@ -148,13 +148,13 @@ definition {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_BUTTON");
 
 		Click(
-			key_menuItem = "${menuItem}",
+			key_menuItem = ${menuItem},
 			locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_MENU_ITEM");
 	}
 
 	macro gotoTableListEntry {
 		Click(
-			key_entryName = "${entryName}",
+			key_entryName = ${entryName},
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
@@ -165,7 +165,7 @@ definition {
 	macro searchCatalog {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "${productName}");
+			value1 = ${productName});
 
 		Click(locator1 = "Button#SUBMIT");
 	}
@@ -175,7 +175,7 @@ definition {
 
 		Type(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		KeyPress(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
@@ -183,42 +183,42 @@ definition {
 	}
 
 	macro selectItemFromTreeNode {
-		var key_itemName = "${itemName}";
+		var key_itemName = ${itemName};
 
 		Click(locator1 = "Treeview#NODE_LIST_ITEM");
 	}
 
 	macro sortField {
 		Click(
-			key_sortFieldName = "${sortFieldName}",
+			key_sortFieldName = ${sortFieldName},
 			locator1 = "CommerceNavigation#SORT_FIELD",
-			value1 = "${sortFieldName}");
+			value1 = ${sortFieldName});
 	}
 
 	macro validateMiniCartItemQuantity {
 		AssertTextEquals(
-			key_cartItemSku = "${cartItemSku}",
+			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
-			value1 = "${productQuantity}");
+			value1 = ${productQuantity});
 	}
 
 	macro viewCartPortletEntry {
 		Click(
-			key_productName = "${productName}",
+			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_DESCRIPTION");
 	}
 
 	macro viewFilterResultsSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var searchAssetTitle : list "${resultsList}") {
+		for (var searchAssetTitle : list ${resultsList}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
-				key_entryName = "${searchAssetTitle}",
+				key_entryName = ${searchAssetTitle},
 				locator1 = "CommerceNavigation#ENTRY_NAME",
-				resultOrder = "${resultOrder}",
-				value1 = "${searchAssetTitle}");
+				resultOrder = ${resultOrder},
+				value1 = ${searchAssetTitle});
 		}
 	}
 

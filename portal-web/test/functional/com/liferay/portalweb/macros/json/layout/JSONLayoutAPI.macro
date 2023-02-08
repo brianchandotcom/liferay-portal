@@ -21,9 +21,9 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		var plid = JSONCurlUtil.post("${curl}", "$['plid']");
+		var plid = JSONCurlUtil.post(${curl}, "$['plid']");
 
-		return "${plid}";
+		return ${plid};
 	}
 
 	@summary = "Directly calls the JSON WS API to delete a layout"
@@ -41,7 +41,7 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Get the default plid from a site by using groupId"
@@ -57,15 +57,15 @@ definition {
 				-d privateLayout=${privateLayout}
 		''';
 
-		var defaultPlid = JSONCurlUtil.post("${curl}");
+		var defaultPlid = JSONCurlUtil.post(${curl});
 
-		var defaultPlid = StringUtil.extractDigits("${defaultPlid}");
+		var defaultPlid = StringUtil.extractDigits(${defaultPlid});
 
-		if ("${defaultPlid}" == "") {
+		if (${defaultPlid} == "") {
 			fail("FAIL. Cannot find defaultPlid.");
 		}
 
-		return "${defaultPlid}";
+		return ${defaultPlid};
 	}
 
 	@summary = "Get the layoutId from a layout by using groupId and layoutName"
@@ -81,13 +81,13 @@ definition {
 				-d privateLayout=${privateLayout}
 		''';
 
-		var layoutId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['layoutId']");
+		var layoutId = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['layoutId']");
 
-		if ("${layoutId}" == "") {
+		if (${layoutId} == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
-		return "${layoutId}";
+		return ${layoutId};
 	}
 
 	@summary = "Get the plid from a layout by groupId and layoutName"
@@ -105,13 +105,13 @@ definition {
 				-d privateLayout=${privateLayout}
 		''';
 
-		var plid = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['plid']");
+		var plid = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['plid']");
 
-		if ("${plid}" == "") {
+		if (${plid} == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
-		return "${plid}";
+		return ${plid};
 	}
 
 	@summary = "Get the typeSettings from a layout by using groupId and layoutName"
@@ -127,13 +127,13 @@ definition {
 				-d privateLayout=${privateLayout}
 		''';
 
-		var typeSettings = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
+		var typeSettings = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
 
-		if ("${typeSettings}" == "") {
+		if (${typeSettings} == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 	@summary = "Get the uuid from a layout by groupId and layoutName"
@@ -149,18 +149,18 @@ definition {
 				-d privateLayout=${privateLayout}
 		''';
 
-		var uuid = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['uuid']");
+		var uuid = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['uuid']");
 
-		if ("${uuid}" == "") {
+		if (${uuid} == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
-		return "${uuid}";
+		return ${uuid};
 	}
 
 	@summary = "Publish the layout by the plid"
 	macro _publishLayoutByPlid {
-		Variables.assertDefined(parameterList = "${plid}");
+		Variables.assertDefined(parameterList = ${plid});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -170,7 +170,7 @@ definition {
 				-d plid=${plid}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Directly calls the JavaScript API to update typeSettings"
@@ -188,7 +188,7 @@ definition {
 				-d typeSettings=${typeSettings}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

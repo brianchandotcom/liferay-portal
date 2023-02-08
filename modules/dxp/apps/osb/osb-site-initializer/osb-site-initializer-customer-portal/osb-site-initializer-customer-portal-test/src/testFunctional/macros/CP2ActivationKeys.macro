@@ -3,31 +3,31 @@ definition {
 	macro _formatCamelCase {
 		var camelCase = StringUtil.replace(${camelCase}, " ", "");
 
-		var camelCase = StringUtil.lowerCaseFirstLetter("${camelCase}");
+		var camelCase = StringUtil.lowerCaseFirstLetter(${camelCase});
 
-		return "${camelCase}";
+		return ${camelCase};
 	}
 
 	macro assertDropdownItemIsDisabled {
-		var key_dropdownItem = "${dropdownItem}";
+		var key_dropdownItem = ${dropdownItem};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#DISABLED_DROPDOWN_ITEM_BUTTON");
 	}
 
 	macro assertDropdownItemIsEnabled {
-		var key_dropdownItem = "${dropdownItem}";
+		var key_dropdownItem = ${dropdownItem};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#ENABLED_DROPDOWN_ITEM_BUTTON");
 	}
 
 	macro assertDropdownItemIsVisible {
-		var key_dropdownItem = "${dropdownItem}";
+		var key_dropdownItem = ${dropdownItem};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
 	macro assertDropdownSelection {
-		var key_option = "${option}";
+		var key_option = ${option};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
 	}
@@ -35,50 +35,50 @@ definition {
 	macro assertInfoNewKeyCard {
 		if (isSet(product)) {
 			var key_label = "Product";
-			var key_value = "${product}";
+			var key_value = ${product};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 
 		if (isSet(version)) {
 			var key_label = "Version";
-			var key_value = "${version}";
+			var key_value = ${version};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 
 		if (isSet(licenseType)) {
 			var key_label = "License Type";
-			var key_value = "${licenseType}";
+			var key_value = ${licenseType};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 
 		if (isSet(subscription)) {
 			var key_label = "Subscription";
-			var key_value = "${subscription}";
+			var key_value = ${subscription};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 
 		if (isSet(activationsAvailable)) {
 			var key_label = "Key Activations Available";
-			var key_value = "${activationsAvailable}";
+			var key_value = ${activationsAvailable};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 
 		if (isSet(instanceSize)) {
 			var key_label = "Instance Size";
-			var key_value = "${instanceSize}";
+			var key_value = ${instanceSize};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#INFO_NEW_KEY_CARD");
 		}
 	}
 
 	macro assertInstructionsTable {
-		for (var text : list "${textList}") {
-			var key_text = "${text}";
+		for (var text : list ${textList}) {
+			var key_text = ${text};
 
 			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
@@ -89,35 +89,35 @@ definition {
 
 		if (isSet(product)) {
 			var key_label = "Version";
-			var key_value = "${product}";
+			var key_value = ${product};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(version)) {
 			var key_label = "Version";
-			var key_value = "${version}";
+			var key_value = ${version};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(environmentType)) {
 			var key_label = "Environment Type";
-			var key_value = "${environmentType}";
+			var key_value = ${environmentType};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(subscriptionType)) {
 			var key_label = "Environment Type";
-			var key_value = "${subscriptionType}";
+			var key_value = ${subscriptionType};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(instanceSize)) {
 			var key_label = "Instance Size";
-			var key_value = "${instanceSize}";
+			var key_value = ${instanceSize};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
@@ -128,35 +128,35 @@ definition {
 
 		if (isSet(keyType)) {
 			var key_label = "Key Type";
-			var key_value = "${keyType}";
+			var key_value = ${keyType};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(hostName)) {
 			var key_label = "Host Name";
-			var key_value = "${hostName}";
+			var key_value = ${hostName};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(ipAddress)) {
 			var key_label = "IP Addresses";
-			var key_value = "${ipAddress}";
+			var key_value = ${ipAddress};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(macAddress)) {
 			var key_label = "MAC Addresses";
-			var key_value = "${macAddress}";
+			var key_value = ${macAddress};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(clusterNodes)) {
 			var key_label = "Cluster Nodes";
-			var key_value = "${clusterNodes}";
+			var key_value = ${clusterNodes};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
@@ -167,39 +167,39 @@ definition {
 
 		if (isSet(status)) {
 			var key_label = "Status";
-			var key_value = "${status}";
+			var key_value = ${status};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(startDate)) {
 			var key_label = "Start Date";
-			var key_value = "${startDate}";
+			var key_value = ${startDate};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 
 		if (isSet(expirationDate)) {
 			var key_label = "Expiration Date";
-			var key_value = "${expiratonDate}";
+			var key_value = ${expiratonDate};
 
 			AssertElementPresent(locator1 = "CP2ActivationKeys#KEY_DETAILS_ELEMENT_VALUES");
 		}
 	}
 
 	macro assertLicenseQuantity {
-		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
-		var key_numberOfLicenses = "${numberOfLicenses}";
+		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = ${licenseTab});
+		var key_numberOfLicenses = ${numberOfLicenses};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
 	}
 
 	macro assertSelectedFieldText {
-		var key_label = "${field}";
+		var key_label = ${field};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${option}");
+			value1 = ${option});
 	}
 
 	macro assertSignatureWithNoKeysIsVisible {
@@ -211,17 +211,17 @@ definition {
 	}
 
 	macro assertTextAtTable {
-		var key_linePosition = "${linePosition}";
-		var key_colunmPosition = "${lineColunm}";
-		var key_text = "${text}";
+		var key_linePosition = ${linePosition};
+		var key_colunmPosition = ${lineColunm};
+		var key_text = ${text};
 
 		AssertTextEquals(
 			locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_POSITION",
-			value1 = "${text}");
+			value1 = ${text});
 	}
 
 	macro assertTextButton {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
@@ -231,13 +231,13 @@ definition {
 	}
 
 	macro assertTooltipIsVisible {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
 	}
 
 	macro clickAtDownloadButton {
-		var key_entitlementName = "${entitlementName}";
+		var key_entitlementName = ${entitlementName};
 
 		Click(locator1 = "CP2ActivationKeys#TABLES_DOWNLOAD_BUTTON");
 
@@ -245,24 +245,24 @@ definition {
 	}
 
 	macro clickAtDropdownItem {
-		var key_dropdownItem = "${dropdownItem}";
+		var key_dropdownItem = ${dropdownItem};
 
 		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
 	macro countTableRows {
-		var key_rowCount = "1";
-		var rowCount = "0";
+		var key_rowCount = 1;
+		var rowCount = 0;
 		var hasPagesToCount = "true";
 
-		while (("${hasPagesToCount}" == "true")) {
+		while (("" == "true")) {
 			while ((IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS")) && (maxIterations = "51")) {
 				var key_rowCount = ${key_rowCount} + 1;
 				var rowCount = ${rowCount} + 1;
 			}
 
 			if ((IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS")) && (IsElementNotPresent(locator1 = "CP2ActivationKeys#DISABLED_NEXT_PAGE_BUTTON"))) {
-				var key_rowCount = "1";
+				var key_rowCount = 1;
 
 				CP2ActivationKeys.goToNextTablePage();
 			}
@@ -271,13 +271,13 @@ definition {
 			}
 		}
 
-		return "${rowCount}";
+		return ${rowCount};
 	}
 
 	macro deactivateExistingKey {
-		Search.searchCP(searchTerm = "${environmentName}");
+		Search.searchCP(searchTerm = ${environmentName});
 
-		CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(key_environmentName = "${environmentName}");
+		CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(key_environmentName = ${environmentName});
 
 		Button.click(button = "Deactivate");
 
@@ -293,11 +293,11 @@ definition {
 	}
 
 	macro environmentDetails {
-		var key_environmentDetails = "${environmentDetails}";
+		var key_environmentDetails = ${environmentDetails};
 
 		Type(
 			locator1 = "CP2ActivationKeys#ENVIRONMENT_DETAILS",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro exportAllKeyDetails {
@@ -311,15 +311,15 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
+		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${fileName});
 	}
 
 	macro filterKeyTable {
-		var key_filterOption = "${filterOption}";
+		var key_filterOption = ${filterOption};
 
 		CustomerPortal.clickAtButton(text = "Filter");
 
-		CP2ActivationKeys.clickAtDropdownItem(key_dropdownItem = "${filterType}");
+		CP2ActivationKeys.clickAtDropdownItem(key_dropdownItem = ${filterType});
 
 		Check.checkNotVisible(locator1 = "CP2ActivationKeys#FILTER_CHECKBOX");
 
@@ -361,15 +361,15 @@ definition {
 
 		var downloadedFileName = "${licenseType}${product}${version}${licenseName}";
 
-		var downloadedFileName = StringUtil.toLowerCase("${downloadedFileName}");
+		var downloadedFileName = StringUtil.toLowerCase(${downloadedFileName});
 
-		var downloadedFileName = StringUtil.replace("${downloadedFileName}", " ", "");
+		var downloadedFileName = StringUtil.replace(${downloadedFileName}, " ", "");
 
 		var downloadedFileName = "${downloadedFileName}${copy}.${fileType}";
 
 		echo("Expected file name: ${downloadedFileName}");
 
-		return "${downloadedFileName}";
+		return ${downloadedFileName};
 	}
 
 	macro fulfillActivationKey {
@@ -388,63 +388,63 @@ definition {
 		}
 
 		if (!(isSet(numberOfActivationKeys))) {
-			var numberOfActivationKeys = "1";
+			var numberOfActivationKeys = 1;
 		}
 
-		var count = "1";
+		var count = 1;
 		var isAddButtonIsPresent = "true";
 
-		while (("${isAddButtonIsPresent}" == "true") && (maxIterations = "100")) {
+		while ((${isAddButtonIsPresent} == "true") && (maxIterations = "100")) {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "${hostName}",
+				content = ${hostName},
 				field = "Host Name",
-				index = "${count}");
+				index = ${count});
 
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "${ipAddress}",
+				content = ${ipAddress},
 				field = "IP Address",
-				index = "${count}");
+				index = ${count});
 
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
-				content = "${macAddress}",
+				content = ${macAddress},
 				field = "MAC Address",
-				index = "${count}");
+				index = ${count});
 
-			if ((IsElementNotPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON")) || ("${numberOfActivationKeys}" == "${count}")) {
+			if ((IsElementNotPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON")) || (${numberOfActivationKeys} == ${count})) {
 				var isAddButtonIsPresent = "false";
 			}
 			else {
 				var count = ${count} + 1;
 
-				CustomerPortal.clickAtButton(text = "${key_text}");
+				CustomerPortal.clickAtButton(text = ${key_text});
 			}
 		}
 
-		return "${count}";
+		return ${count};
 	}
 
 	macro fulfillGenerateActivationKeyTextField {
-		var key_index = "1";
+		var key_index = 1;
 
 		if (isSet(index)) {
-			var key_index = "${index}";
+			var key_index = ${index};
 		}
 
-		var key_label = "${field}";
+		var key_label = ${field};
 
 		Type(
 			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
-			value1 = "${content}");
+			value1 = ${content});
 	}
 
 	macro generateKeyFlow {
-		CustomerPortal.search(searchItem = "${project}");
+		CustomerPortal.search(searchItem = ${project});
 
-		CustomerPortal.enterOnProject(title = "${project}");
+		CustomerPortal.enterOnProject(title = ${project});
 
 		CP2NavigationMenu.goToProductActivation();
 
-		CP2NavigationMenu.clickOnProductButton(product = "${product}");
+		CP2NavigationMenu.clickOnProductButton(product = ${product});
 
 		CP2ActivationKeys.generateNewKey();
 	}
@@ -458,25 +458,25 @@ definition {
 	}
 
 	macro getStartDateTextFromSignature {
-		var key_index = "1";
+		var key_index = 1;
 
 		if (isSet(index)) {
-			var key_index = "${index}";
+			var key_index = ${index};
 		}
 
 		WaitForElementPresent(locator1 = "CP2ActivationKeys#SIGNATURE_PERIOD_TEXT");
 
 		var signatureDate = selenium.getText("CP2ActivationKeys#SIGNATURE_PERIOD_TEXT");
 
-		var startDate = StringUtil.substring("${signatureDate}", "0", "12");
+		var startDate = StringUtil.substring(${signatureDate}, 0, 12);
 
-		var endsWithWhiteSpace = StringUtil.endsWith("${startDate}", " ");
+		var endsWithWhiteSpace = StringUtil.endsWith(${startDate}, " ");
 
-		if ("${endsWithWhiteSpace}" == "true") {
-			var startDate = StringUtil.substring("${signatureDate}", "0", "11");
+		if (${endsWithWhiteSpace} == "true") {
+			var startDate = StringUtil.substring(${signatureDate}, 0, 11);
 		}
 
-		return "${startDate}";
+		return ${startDate};
 	}
 
 	macro gotoKeyDeactivation {
@@ -488,7 +488,7 @@ definition {
 	}
 
 	macro goToKeyTab {
-		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
+		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = ${licenseTab});
 
 		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
 	}
@@ -500,14 +500,14 @@ definition {
 	}
 
 	macro putMouseOverElementAtTable {
-		var key_text = "${text}";
+		var key_text = ${text};
 
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
 	}
 
 	macro putMouseOverStatusElementAtTable {
-		var key_linePosition = "${linePosition}";
-		var key_status = "${status}";
+		var key_linePosition = ${linePosition};
+		var key_status = ${status};
 
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_STATUS");
 	}
@@ -519,36 +519,36 @@ definition {
 	macro selectClusterNodes {
 		Select(
 			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
-			value1 = "${key_option}");
+			value1 = ${key_option});
 	}
 
 	macro selectFistActiveSubscriptionInput {
-		var key_index = "1";
+		var key_index = 1;
 
 		if (isSet(index)) {
-			var key_index = "${index}";
+			var key_index = ${index};
 		}
 
 		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
 	}
 
 	macro selectGenerateActivationKeyOptionByField {
-		var key_label = "${field}";
+		var key_label = ${field};
 
 		Select(
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${option}");
+			value1 = ${option});
 	}
 
 	macro selectKeyCheckboxByEnvironmentName {
-		var key_environmentName = "${environmentName}";
+		var key_environmentName = ${environmentName};
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
 	}
 
 	macro selectKeyCheckboxByExpirationDate {
-		var key_position = "${position}";
-		var key_date = "${date}";
+		var key_position = ${position};
+		var key_date = ${date};
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
@@ -558,18 +558,18 @@ definition {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 
 			AssertVisible(
-				key_quantity = "${quantity}",
+				key_quantity = ${quantity},
 				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON_ITEM");
 
 			Click(
-				key_quantity = "${quantity}",
+				key_quantity = ${quantity},
 				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON_ITEM");
 		}
 	}
 
 	macro selectSubscription {
 		Click(
-			key_position = "${position}",
+			key_position = ${position},
 			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
 	}
 
@@ -596,14 +596,14 @@ definition {
 	}
 
 	macro viewActivationKeyDetails {
-		Search.searchCP(searchTerm = "${key_environmentName}");
+		Search.searchCP(searchTerm = ${key_environmentName});
 
 		Click(
-			key_text = "${key_environmentName}",
+			key_text = ${key_environmentName},
 			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 
 		AssertElementPresent(
-			key_environmentName = "${key_environmentName}",
+			key_environmentName = ${key_environmentName},
 			locator1 = "CP2ActivationKeys#KEY_DETAILS_MODAL");
 	}
 

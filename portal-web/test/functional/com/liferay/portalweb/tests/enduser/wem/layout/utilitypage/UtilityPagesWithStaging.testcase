@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162765. The page designer could use the 404 error type of utility page in staging and live site."
-	@priority = "4"
+	@priority = 4
 	test Apply404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page and a static page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");

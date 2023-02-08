@@ -3,13 +3,13 @@ definition {
 	macro _addTag {
 		Type(
 			locator1 = "AssetCategorization#TAGS_FIELD",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 
 		ScrollWebElementIntoView(locator1 = "AssetCategorization#TAGS_FIELD");
 
-		if (IsElementPresent(key_tagName = "${tagName}", locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC")) {
+		if (IsElementPresent(key_tagName = ${tagName}, locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC")) {
 			Click.mouseDownMouseUp(
-				key_tagName = "${tagName}",
+				key_tagName = ${tagName},
 				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC");
 		}
 		else {
@@ -20,32 +20,32 @@ definition {
 	}
 
 	macro addCategory {
-		var key_categoryName = "${categoryName}";
+		var key_categoryName = ${categoryName};
 
 		Type(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "AssetCategorization#CATEGORIES_FIELD",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 
 		Click.mouseDownMouseUp(locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
 
 		AssertTextEquals(
 			locator1 = "AssetCategorization#CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 	}
 
 	macro addCategoryViaSelect {
 		Panel.expandPanel(panel = "Categorization");
 
 		Click(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
 
 		IFrame.selectCategoryFrame();
 
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputName(name = "${categoryName}");
+		PortletEntry.inputName(name = ${categoryName});
 
 		IFrame.selectTopFrame();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	macro addDuplicateTag {
-		AssetCategorization._addTag(tagName = "${tagName}");
+		AssetCategorization._addTag(tagName = ${tagName});
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'form-feedback-item')]",
@@ -63,20 +63,20 @@ definition {
 	}
 
 	macro addMultipleCategories {
-		for (var categoryName : list "${categoryNameList}") {
+		for (var categoryName : list ${categoryNameList}) {
 			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
+				categoryName = ${categoryName},
+				vocabularyName = ${vocabularyName});
 		}
 	}
 
 	macro addTag {
-		AssetCategorization._addTag(tagName = "${tagName}");
+		AssetCategorization._addTag(tagName = ${tagName});
 
 		AssertTextEquals(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 	}
 
 	macro gotoSelectCategory {
@@ -86,15 +86,15 @@ definition {
 	}
 
 	macro removeCategories {
-		for (var categoryName : list "${categoryNameList}") {
-			var key_categoryName = "${categoryName}";
+		for (var categoryName : list ${categoryNameList}) {
+			var key_categoryName = ${categoryName};
 
 			AssertTextEquals(
 				locator1 = "AssetCategorization#CATEGORY",
-				value1 = "${categoryName}");
+				value1 = ${categoryName});
 
 			Click(
-				key_itemName = "${categoryName}",
+				key_itemName = ${categoryName},
 				locator1 = "AssetCategorization#ITEM_REMOVE");
 
 			AssertElementNotPresent(locator1 = "AssetCategorization#CATEGORY");
@@ -102,14 +102,14 @@ definition {
 	}
 
 	macro removeTag {
-		var key_tagName = "${tagName}";
+		var key_tagName = ${tagName};
 
 		AssertTextEquals(
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 
 		Click(
-			key_itemName = "${tagName}",
+			key_itemName = ${tagName},
 			locator1 = "AssetCategorization#ITEM_REMOVE");
 
 		AssertElementNotPresent(locator1 = "AssetCategorization#TAG");
@@ -120,9 +120,9 @@ definition {
 
 		Portlet.expandTree();
 
-		for (var categoryName : list "${categoryNameList}") {
+		for (var categoryName : list ${categoryNameList}) {
 			Check.checkNotVisible(
-				key_nodeName = "${categoryName}",
+				key_nodeName = ${categoryName},
 				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 
@@ -130,7 +130,7 @@ definition {
 
 		if (isSet(modalTitle)) {
 			SelectFrame(
-				key_title = "${modalTitle}",
+				key_title = ${modalTitle},
 				locator1 = "IFrame#MODAL_ANY");
 		}
 
@@ -150,10 +150,10 @@ definition {
 		AssetCategorization.gotoSelectCategory();
 
 		AssertVisible(
-			key_nodeName = "${categoryName}",
+			key_nodeName = ${categoryName},
 			locator1 = "Treeview#NODE_ITEM");
 
-		Portlet.selectTreeNode(nodeName = "${categoryName}");
+		Portlet.selectTreeNode(nodeName = ${categoryName});
 
 		SelectFrameTop();
 
@@ -177,9 +177,9 @@ definition {
 
 		IFrame.selectTagFrame();
 
-		for (var tagName : list "${tagNameList}") {
+		for (var tagName : list ${tagNameList}) {
 			Check(
-				key_rowEntry = "${tagName}",
+				key_rowEntry = ${tagName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 		}
 
@@ -196,23 +196,23 @@ definition {
 			value1 = "Done");
 
 		AssertTextEquals(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 	}
 
 	macro viewCategory {
 		AssertTextEquals(
-			key_categoryName = "${categoryName}",
+			key_categoryName = ${categoryName},
 			locator1 = "AssetCategorization#CATEGORY",
-			value1 = "${categoryName}");
+			value1 = ${categoryName});
 	}
 
 	macro viewNoAddPermissions {
 		Panel.expandPanel(panel = "Categorization");
 
 		Click(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
 
 		IFrame.selectCategoryFrame();
@@ -221,36 +221,36 @@ definition {
 	}
 
 	macro viewNoTag {
-		var tagName = StringUtil.lowerCase("${tagName}");
+		var tagName = StringUtil.lowerCase(${tagName});
 
 		AssertElementNotPresent(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 	}
 
 	macro viewNoVocabularyField {
 		Panel.expandPanel(panel = "Categorization");
 
 		AssertElementNotPresent(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "AssetCategorization#CATEGORIES_FIELD");
 	}
 
 	macro viewTag {
-		var tagName = StringUtil.lowerCase("${tagName}");
+		var tagName = StringUtil.lowerCase(${tagName});
 
 		AssertTextEquals(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 	}
 
 	macro viewVocabulary {
 		AssertTextEquals(
-			key_vocabularyName = "${vocabularyName}",
+			key_vocabularyName = ${vocabularyName},
 			locator1 = "UsersAndOrganizationsEditUser#VOCABULARY_LABEL",
-			value1 = "${vocabularyName}");
+			value1 = ${vocabularyName});
 	}
 
 }

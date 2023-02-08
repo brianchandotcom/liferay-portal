@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98753. The fragment styles and inline text should be copied to duplicated one."
-	@priority = "5"
+	@priority = 5
 	test DuplicateFragmentWithStylesAndInlineText {
 		property portal.acceptance = "true";
 
@@ -76,18 +76,18 @@ definition {
 				editableText = "Welcome to Liferay",
 				fragmentName = "Heading",
 				id = "element-text",
-				position = "2");
+				position = 2);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
 				headingLevel = "h4",
-				position = "2",
+				position = 2,
 				textColor = "warning");
 		}
 	}
 
 	@description = "This is a test for LPS-101255. View the actions of saved composition in Page Fragments admin."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewActionsOfFragmentComposition {
 		property portal.acceptance = "true";
@@ -128,13 +128,13 @@ definition {
 			LexiconEntry.openEntryMenu(rowEntry = "New Fragment Name");
 
 			for (var menuItem : list "Rename,Move,Change Thumbnail,Export,Delete") {
-				MenuItem.viewPresent(menuItem = "${menuItem}");
+				MenuItem.viewPresent(menuItem = ${menuItem});
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for fragments."
-	@priority = "3"
+	@priority = 3
 	test ViewOrderOfFragmentsActions {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -148,20 +148,20 @@ definition {
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Draft",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Draft Fragment Example");
 		}
 
 		task ("Add a published fragment") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
+				configuration = ${jsonSnippet},
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Approved Fragment Example");
 		}
 

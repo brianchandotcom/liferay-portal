@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Structured Content Folder is created with custom ERC"
-	@priority = "5"
+	@priority = 5
 	test CanCreateStructuredContentFolderWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -40,12 +40,12 @@ definition {
 		task ("Then a new folder is created with the custom erc in the body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "CustomeCode",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured Content Folder is created with default ERC"
-	@priority = "5"
+	@priority = 5
 	test CanCreateStructuredContentFolderWithDefaultErc {
 		property portal.acceptance = "true";
 
@@ -61,13 +61,13 @@ definition {
 				groupName = "Site Name");
 
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${folderUuid}",
-				responseToParse = "${response}");
+				expectedExternalReferenceCodeValue = ${folderUuid},
+				responseToParse = ${response});
 		}
 	}
 
 	@description = "Structured Content Folder Is Deleted With Custom ERC"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteStructuredContentFolderByCustomErc {
 		property portal.acceptance = "true";
 
@@ -81,7 +81,7 @@ definition {
 		task ("When I use deleteSiteStructuredContentFolderByExternalReferenceCode") {
 			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${responseFromCreate}");
+				responseToParse = ${responseFromCreate});
 			var response = HeadlessWebcontentFolderAPI.deleteWebContentFolder(
 				externalReferenceCode = "CustomeCode",
 				groupName = "Site Name");
@@ -90,12 +90,12 @@ definition {
 		task ("Then the folder is deleted successfully") {
 			HeadlessWebcontentFolderAPI.assertStructuredContentFolderDeleted(
 				expectedValue = "No JournalFolder exists with the primary key ${structuredContentFolderId}",
-				structuredContentFolderId = "${structuredContentFolderId}");
+				structuredContentFolderId = ${structuredContentFolderId});
 		}
 	}
 
 	@description = "Structured Content Folder Is Deleted With Default ERC"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteStructuredContentFolderByErc {
 		property portal.acceptance = "true";
 
@@ -108,24 +108,24 @@ definition {
 		task ("When I use deleteSiteStructuredContentFolderByExternalReferenceCode") {
 			var structuredContentFolderErc = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.externalReferenceCode",
-				responseToParse = "${responseFromCreate}");
+				responseToParse = ${responseFromCreate});
 			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${responseFromCreate}");
+				responseToParse = ${responseFromCreate});
 			var response = HeadlessWebcontentFolderAPI.deleteWebContentFolder(
-				externalReferenceCode = "${structuredContentFolderErc}",
+				externalReferenceCode = ${structuredContentFolderErc},
 				groupName = "Site Name");
 		}
 
 		task ("Then the folder is deleted successfully") {
 			HeadlessWebcontentFolderAPI.assertStructuredContentFolderDeleted(
 				expectedValue = "No JournalFolder exists with the primary key ${structuredContentFolderId}",
-				structuredContentFolderId = "${structuredContentFolderId}");
+				structuredContentFolderId = ${structuredContentFolderId});
 		}
 	}
 
 	@description = "Can get correct details with custom erc from folders"
-	@priority = "5"
+	@priority = 5
 	test CanGetCorrectDetailsWithCustomErcFromFolders {
 		property portal.acceptance = "true";
 
@@ -145,13 +145,13 @@ definition {
 		task ("Then I can retrieve the correct information from the response") {
 			HeadlessWebcontentFolderAPI.assertResponseHasCorrectDetails(
 				expectedExternalReferenceCodeValue = "CustomeCode",
-				responseFromCreate = "${responseFromCreate}",
-				responseFromGet = "${responseFromGet}");
+				responseFromCreate = ${responseFromCreate},
+				responseFromGet = ${responseFromGet});
 		}
 	}
 
 	@description = "Can get correct details with default erc from folders"
-	@priority = "5"
+	@priority = 5
 	test CanGetCorrectDetailsWithDefaultErcFromFolders {
 		property portal.acceptance = "true";
 
@@ -164,23 +164,23 @@ definition {
 		task ("When I use getSiteStructuredContentFolderByExternalReferenceCode") {
 			var structuredContentFolderErc = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.externalReferenceCode",
-				responseToParse = "${responseFromCreate}");
+				responseToParse = ${responseFromCreate});
 
 			var responseFromGet = HeadlessWebcontentFolderAPI.getSiteStructuredContentFoldersByErc(
-				externalReferenceCode = "${structuredContentFolderErc}",
+				externalReferenceCode = ${structuredContentFolderErc},
 				groupName = "Site Name");
 		}
 
 		task ("Then I can retrieve the correct information from the response") {
 			HeadlessWebcontentFolderAPI.assertResponseHasCorrectDetails(
-				expectedExternalReferenceCodeValue = "${structuredContentFolderErc}",
-				responseFromCreate = "${responseFromCreate}",
-				responseFromGet = "${responseFromGet}");
+				expectedExternalReferenceCodeValue = ${structuredContentFolderErc},
+				responseFromCreate = ${responseFromCreate},
+				responseFromGet = ${responseFromGet});
 		}
 	}
 
 	@description = "Existed Structured Content Folder will be updated with custom ERC"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateStructuredContentFolderByErc {
 		property portal.acceptance = "true";
 
@@ -201,16 +201,16 @@ definition {
 		task ("Then the same folder's name is updated in a response body of getStructureContentFolderById") {
 			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 
 			HeadlessWebcontentFolderAPI.assertStructuredContentFolderUpdated(
 				expectedValue = "Test Folder Updated",
-				structuredContentFolderId = "${structuredContentFolderId}");
+				structuredContentFolderId = ${structuredContentFolderId});
 		}
 	}
 
 	@description = "Not existed Structured Content Folder will be created with custom ERC"
-	@priority = "5"
+	@priority = 5
 	test NotExistedStructuredContentFolderWillBeCreatedWithCustomErc {
 		property portal.acceptance = "true";
 
@@ -224,7 +224,7 @@ definition {
 		task ("Then a new folder is created with the custom erc in the body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
 				expectedExternalReferenceCodeValue = "CustomeCode",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 

@@ -3,7 +3,7 @@ definition {
 	macro addPageAndPortlet {
 		JSONLayout.addPublicLayout(
 			groupName = "Bridge Issues",
-			layoutName = "${portletName}");
+			layoutName = ${portletName});
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -11,20 +11,20 @@ definition {
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
-			pageName = "${portletName}",
+			pageName = ${portletName},
 			sitePageType = "Widget Page");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-issues/${pageURL}");
 
-		Portlet.addPG(portletName = "${portletName}");
+		Portlet.addPG(portletName = ${portletName});
 	}
 
 	macro navigateToDo {
-		var key_urlAppend = "${urlAppend}";
+		var key_urlAppend = ${urlAppend};
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "${key_urlAppend}");
+		Navigator.openWithAppendToBaseURL(urlAppend = ${key_urlAppend});
 
-		var key_pageLink = "${pageLink}";
+		var key_pageLink = ${pageLink};
 
 		Click(locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 	}
@@ -33,126 +33,126 @@ definition {
 		Click(locator1 = "BridgeIssues#SELECT_ONE_MENU");
 
 		Click(
-			key_opt = "${textValue}",
+			key_opt = ${textValue},
 			locator1 = "BridgeIssues#SELECT_MENU_OPTION");
 
 		AssertElementPresent(
-			key_attribute = "${textValue}",
+			key_attribute = ${textValue},
 			locator1 = "BridgeIssues#SELECT_MENU_VALUE");
 	}
 
 	macro upload3250File {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_mode = "${mode}",
+			key_mode = ${mode},
 			locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON",
-			value1 = "${fileName}");
+			value1 = ${fileName});
 
-		if ("${instantAjax}" == "true") {
+		if (${instantAjax} == "true") {
 			Click(
-				key_mode = "${mode}",
+				key_mode = ${mode},
 				locator1 = "BridgeIssues#SUBMIT_FILE_BUTTON");
 		}
 	}
 
 	macro urlParameters {
 		Click(
-			key_buttonName = "${buttonName}",
+			key_buttonName = ${buttonName},
 			locator1 = "BridgeIssues#URL_BUTTON");
 
-		AssertLocation.assertPartialLocation(value1 = "${urlEnd}");
+		AssertLocation.assertPartialLocation(value1 = ${urlEnd});
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAMETER_ALPHA",
-			value1 = "${alpha}");
+			value1 = ${alpha});
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAMETER_BETA",
-			value1 = "${beta}");
+			value1 = ${beta});
 
 		AssertTextEquals(
 			locator1 = "BridgeIssues#PARAMETER_GAMMA",
-			value1 = "${gamma}");
+			value1 = ${gamma});
 	}
 
 	macro verifyParam {
-		var key_liIndex = "${liIndex}";
-		var key_ulIndex = "${ulIndex}";
+		var key_liIndex = ${liIndex};
+		var key_ulIndex = ${ulIndex};
 
 		if (isSet(paramLink)) {
 			AssertTextEquals(
 				locator1 = "BridgeIssues#PARAM_LINK",
-				value1 = "${paramLink}");
+				value1 = ${paramLink});
 		}
 
 		if (isSet(paramValue)) {
 			AssertTextEquals(
 				locator1 = "BridgeIssues#PARAM_VALUE",
-				value1 = "${paramValue}");
+				value1 = ${paramValue});
 		}
 	}
 
 	macro verifyValue {
-		if ("${restoreState}" == "true") {
+		if (${restoreState} == "true") {
 			Click(
-				key_pageLink = "${link}",
+				key_pageLink = ${link},
 				locator1 = "BridgeIssues#PAGE_LINK");
 
 			AssertElementPresent(
-				key_attribute = "${textValue}",
+				key_attribute = ${textValue},
 				locator1 = "BridgeIssues#TEXT_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${statusValue}",
+				key_attribute = ${statusValue},
 				locator1 = "BridgeIssues#STATUS_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${detailValue}",
+				key_attribute = ${detailValue},
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
 		if (isSet(toPageLink)) {
 			Click(
-				key_pageLink = "${link}",
+				key_pageLink = ${link},
 				locator1 = "BridgeIssues#PAGE_LINK");
 
 			Click(
-				key_toPageLink = "${toPageLink}",
+				key_toPageLink = ${toPageLink},
 				locator1 = "BridgeIssues#TO_PAGE_LINK");
 
 			AssertElementPresent(
-				key_attribute = "${textValue}",
+				key_attribute = ${textValue},
 				locator1 = "BridgeIssues#TEXT_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${statusValue}",
+				key_attribute = ${statusValue},
 				locator1 = "BridgeIssues#STATUS_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${detailValue}",
+				key_attribute = ${detailValue},
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
 		if (isSet(validURL)) {
 			Click(
-				key_validURL = "${validURL}",
+				key_validURL = ${validURL},
 				locator1 = "BridgeIssues#VALID_URL");
 
 			AssertElementPresent(
-				key_attribute = "${textValue}",
+				key_attribute = ${textValue},
 				locator1 = "BridgeIssues#TEXT_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${statusValue}",
+				key_attribute = ${statusValue},
 				locator1 = "BridgeIssues#STATUS_VALUE");
 
 			AssertElementPresent(
-				key_attribute = "${detailValue}",
+				key_attribute = ${detailValue},
 				locator1 = "BridgeIssues#DETAIL_VALUE");
 		}
 
 		if (isSet(inValidURL)) {
 			Click(
-				key_inValidURL = "${inValidURL}",
+				key_inValidURL = ${inValidURL},
 				locator1 = "BridgeIssues#INVALID_URL");
 
 			AssertElementPresent(locator1 = "BridgeIssues#ERROR_MESSAGE");

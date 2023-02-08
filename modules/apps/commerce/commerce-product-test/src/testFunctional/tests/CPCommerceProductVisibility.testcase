@@ -16,7 +16,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-6088. AddAccountGroupFilter"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test AddAccountGroupFilter {
 		property portal.acceptance = "false";
 
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6086. AddAChannelFilter"
-	@priority = "3"
+	@priority = 3
 	test AddAChannelFilter {
 		property portal.acceptance = "false";
 
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
-	@priority = "3"
+	@priority = 3
 	test RemoveAccountGroupFilter {
 		property portal.acceptance = "false";
 		property portal.upstream = "quarantine";
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6087. RemoveAChannelFilter"
-	@priority = "3"
+	@priority = 3
 	test RemoveAChannelFilter {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAChannelFilter";

@@ -3,8 +3,8 @@ definition {
 	macro _addCommerceProduct {
 		Variables.assertDefined(parameterList = "${catalogName},${productName},${productType}");
 
-		var productType = StringUtil.lowerCase("${productType}");
-		var baseURL = "${baseURL}";
+		var productType = StringUtil.lowerCase(${productType});
+		var baseURL = ${baseURL};
 
 		if (!(isSet(allowBackOrder))) {
 			var allowBackOrder = "true";
@@ -15,11 +15,11 @@ definition {
 		}
 
 		if (!(isSet(cost))) {
-			var cost = "0";
+			var cost = 0;
 		}
 
 		if (!(isSet(depth))) {
-			var depth = "0";
+			var depth = 0;
 		}
 
 		if (!(isSet(discontinued))) {
@@ -57,7 +57,7 @@ definition {
 		}
 
 		if (!(isSet(height))) {
-			var height = "0";
+			var height = 0;
 		}
 
 		if (!(isSet(inventoryEngine))) {
@@ -73,7 +73,7 @@ definition {
 		}
 
 		if (!(isSet(maxOrderQuantity))) {
-			var maxOrderQuantity = "10000";
+			var maxOrderQuantity = 10000;
 		}
 
 		if (!(isSet(metaDescription))) {
@@ -89,15 +89,15 @@ definition {
 		}
 
 		if (!(isSet(minOrderQuantity))) {
-			var minOrderQuantity = "1";
+			var minOrderQuantity = 1;
 		}
 
 		if (!(isSet(minStockQuantity))) {
-			var minStockQuantity = "0";
+			var minStockQuantity = 0;
 		}
 
 		if (!(isSet(multipleOrderQuantity))) {
-			var multipleOrderQuantity = "1";
+			var multipleOrderQuantity = 1;
 		}
 
 		if (!(isSet(neverExpire))) {
@@ -105,11 +105,11 @@ definition {
 		}
 
 		if (isSet(neverExpire)) {
-			var neverExpire = "${neverExpire}";
+			var neverExpire = ${neverExpire};
 		}
 
 		if (!(isSet(price))) {
-			var price = "0";
+			var price = 0;
 		}
 
 		if (!(isSet(productDescription))) {
@@ -117,7 +117,7 @@ definition {
 		}
 
 		if (!(isSet(promoPrice))) {
-			var promoPrice = "0";
+			var promoPrice = 0;
 		}
 
 		if (!(isSet(purchasable))) {
@@ -128,7 +128,7 @@ definition {
 			var replacementSkuId = "";
 		}
 		else {
-			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${replacementSKU}");
+			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${replacementSKU});
 		}
 
 		if (!(isSet(shortDescription))) {
@@ -136,7 +136,7 @@ definition {
 		}
 
 		if (!(isSet(productStatus))) {
-			var productStatus = "0";
+			var productStatus = 0;
 		}
 
 		if (!(isSet(sku))) {
@@ -146,14 +146,14 @@ definition {
 		var productSpecifications = "";
 
 		if (isSet(specifications)) {
-			var specificationPriority = "0";
+			var specificationPriority = 0;
 
-			for (var specificationKeyValue : list "${specifications}") {
-				var specificationKey = StringUtil.extractFirst("${specificationKeyValue}", ":");
-				var specificationValue = StringUtil.extractLast("${specificationKeyValue}", ":");
-				var specificationKey = CommerceUtilities.convertStringToKey(string = "${specificationKey}");
+			for (var specificationKeyValue : list ${specifications}) {
+				var specificationKey = StringUtil.extractFirst(${specificationKeyValue}, ":");
+				var specificationValue = StringUtil.extractLast(${specificationKeyValue}, ":");
+				var specificationKey = CommerceUtilities.convertStringToKey(string = ${specificationKey});
 
-				if ("${productSpecifications}" != "") {
+				if (${productSpecifications} != "") {
 					var comma = ",";
 				}
 				else {
@@ -179,14 +179,14 @@ definition {
 		}
 
 		if (!(isSet(weight))) {
-			var weight = "0";
+			var weight = 0;
 		}
 
 		if (!(isSet(width))) {
-			var width = "0";
+			var width = 0;
 		}
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
@@ -270,16 +270,16 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
 		if (isSet(price)) {
-			var price = "${price}";
+			var price = ${price};
 			var priceListName = "${catalogName} Base Price List";
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = "${price}",
-				priceListName = "${priceListName}",
-				productSKU = "${sku}");
+				entryPrice = ${price},
+				priceListName = ${priceListName},
+				productSKU = ${sku});
 		}
 	}
 
@@ -303,14 +303,14 @@ definition {
 		}
 
 		if (!(isSet(productStatus))) {
-			var productStatus = "0";
+			var productStatus = 0;
 		}
 
 		if (!(isSet(src))) {
 			var src = "${baseURL}/documents/d/guest/tree-png";
 		}
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
@@ -334,44 +334,44 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _addDiagramPin {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 
-		var baseURL = "${baseURL}";
-		var diagramProductId = CommerceJSONProductsAPI._getProductId(productName = "${diagram}");
+		var baseURL = ${baseURL};
+		var diagramProductId = CommerceJSONProductsAPI._getProductId(productName = ${diagram});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if ("${pinType}" == "Linked to a SKU") {
-			Variables.assertDefined(parameterList = "${linkedSKU}");
+		if (${pinType} == "Linked to a SKU") {
+			Variables.assertDefined(parameterList = ${linkedSKU});
 
 			var pinType = "sku";
-			var productId = CommerceJSONProductsAPI._getProductId(productSKU = "${linkedSKU}");
-			var sku = "${linkedSKU}";
-			var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${linkedSKU}");
+			var productId = CommerceJSONProductsAPI._getProductId(productSKU = ${linkedSKU});
+			var sku = ${linkedSKU};
+			var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${linkedSKU});
 		}
 
-		if ("${pinType}" == "Not Linked to a Catalog") {
-			Variables.assertDefined(parameterList = "${label}");
+		if (${pinType} == "Not Linked to a Catalog") {
+			Variables.assertDefined(parameterList = ${label});
 
 			var pinType = "external";
-			var productId = "0";
-			var sku = "${label}";
-			var skuId = "0";
+			var productId = 0;
+			var sku = ${label};
+			var skuId = 0;
 		}
 
-		if ("${pinType}" == "Linked to a Diagram") {
-			Variables.assertDefined(parameterList = "${linkedDiagram}");
+		if (${pinType} == "Linked to a Diagram") {
+			Variables.assertDefined(parameterList = ${linkedDiagram});
 
 			var pinType = "diagram";
-			var productId = CommerceJSONProductsAPI._getProductId(productName = "${linkedDiagram}");
+			var productId = CommerceJSONProductsAPI._getProductId(productName = ${linkedDiagram});
 			var sku = "";
-			var skuId = "0";
+			var skuId = 0;
 		}
 
 		var curl = '''
@@ -395,11 +395,11 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _deleteAllCommerceProducts {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -407,10 +407,10 @@ definition {
 
 		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
 
-		if ("${productsCount}" != "0") {
-			var productIds = CommerceJSONProductsAPI._getCommerceProductIds(prodCount = "${productsCount}");
+		if (${productsCount} != 0) {
+			var productIds = CommerceJSONProductsAPI._getCommerceProductIds(prodCount = ${productsCount});
 
-			for (var productId : list "${productIds}") {
+			for (var productId : list ${productIds}) {
 				echo("Deleting Commerce product with productId: ${productId}");
 
 				var curl = '''
@@ -419,7 +419,7 @@ definition {
 						-H 'accept: application/json' \
 				''';
 
-				JSONCurlUtil.delete("${curl}");
+				JSONCurlUtil.delete(${curl});
 			}
 		}
 		else {
@@ -428,17 +428,17 @@ definition {
 	}
 
 	macro _getCommerceProductIds {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(prodCount)) {
-			var productsCount = "${prodCount}";
+			var productsCount = ${prodCount};
 		}
 		else {
-			var productsCount = "100";
+			var productsCount = 100;
 		}
 
 		var curl = '''
@@ -447,21 +447,21 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productIds = JSONCurlUtil.get("${curl}", "$..['productId']");
+		var productIds = JSONCurlUtil.get(${curl}, "$..['productId']");
 
-		return "${productIds}";
+		return ${productIds};
 	}
 
 	macro _getCommerceProductImageIds {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/images \
@@ -469,19 +469,19 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productImageIds = JSONCurlUtil.get("${curl}", "$..['id']");
+		var productImageIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
-		if ("${productImageIds}" == "") {
+		if (${productImageIds} == "") {
 			var productImageIds = "default";
 		}
 
-		return "${productImageIds}";
+		return ${productImageIds};
 	}
 
 	macro _getCommerceProductImageURL {
 		Variables.assertDefined(parameterList = "${channelId},${productId}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -493,21 +493,21 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productImageURL = JSONCurlUtil.get("${curl}", "$..['urlImage']");
+		var productImageURL = JSONCurlUtil.get(${curl}, "$..['urlImage']");
 
-		return "${productImageURL}";
+		return ${productImageURL};
 	}
 
 	macro _getCommerceProductOptionId {
 		Variables.assertDefined(parameterList = "${productName},${productOptionName}");
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions \
@@ -515,21 +515,21 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productOptionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productOptionName}')].['id']");
+		var productOptionId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'].['en_US'] == '${productOptionName}')].['id']");
 
-		return "${productOptionId}";
+		return ${productOptionId};
 	}
 
 	macro _getCommerceProductOptions {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions \
@@ -537,15 +537,15 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productOptions = JSONCurlUtil.get("${curl}", "$..['name'].['en_US']");
+		var productOptions = JSONCurlUtil.get(${curl}, "$..['name'].['en_US']");
 
-		return "${productOptions}";
+		return ${productOptions};
 	}
 
 	macro _getCommerceProductOptionValues {
-		Variables.assertDefined(parameterList = "${productOptionId}");
+		Variables.assertDefined(parameterList = ${productOptionId});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -557,13 +557,13 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productOptionValues = JSONCurlUtil.get("${curl}", "$..['key']");
+		var productOptionValues = JSONCurlUtil.get(${curl}, "$..['key']");
 
-		return "${productOptionValues}";
+		return ${productOptionValues};
 	}
 
 	macro _getCommerceProductsCount {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -575,23 +575,23 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+		var productsCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
 
 		echo("The Commerce product count is: ${productsCount}");
 
-		return "${productsCount}";
+		return ${productsCount};
 	}
 
 	macro _getCommerceProductSpecifications {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications \
@@ -599,52 +599,52 @@ definition {
 				-H 'accept: application/json' \
 		''';
 
-		var productSpecifications = JSONCurlUtil.get("${curl}", "$..['value'].['en_US']");
-		var productSpecificationLabels = JSONCurlUtil.get("${curl}", "$..['specificationKey']");
-		var count = StringUtil.count("${productSpecifications}", ",");
-		var specificationLabelsCount = StringUtil.count("${productSpecificationLabels}", ",");
+		var productSpecifications = JSONCurlUtil.get(${curl}, "$..['value'].['en_US']");
+		var productSpecificationLabels = JSONCurlUtil.get(${curl}, "$..['specificationKey']");
+		var count = StringUtil.count(${productSpecifications}, ",");
+		var specificationLabelsCount = StringUtil.count(${productSpecificationLabels}, ",");
 
-		var commaInSpecification = MathUtil.isGreaterThan("${count}", "${specificationLabelsCount}");
+		var commaInSpecification = MathUtil.isGreaterThan(${count}, ${specificationLabelsCount});
 
-		while (("${commaInSpecification}" == "true")) {
-			var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", ",", "&comma;");
+		while (("" == "true")) {
+			var productSpecifications = StringUtil.replaceFirst(${productSpecifications}, ",", "&comma;");
 			var count = ${count} - 1;
 
-			var commaInSpecification = MathUtil.isGreaterThan("${count}", "${specificationLabelsCount}");
+			var commaInSpecification = MathUtil.isGreaterThan(${count}, ${specificationLabelsCount});
 		}
 
-		for (var productSpecification : list "${productSpecifications}") {
-			if ("${count}" != "0") {
-				var productSpecificationLabel = StringUtil.extractFirst("${productSpecificationLabels}", ",");
+		for (var productSpecification : list ${productSpecifications}) {
+			if (${count} != 0) {
+				var productSpecificationLabel = StringUtil.extractFirst(${productSpecificationLabels}, ",");
 
-				var productSpecificationLabels = StringUtil.replaceFirst("${productSpecificationLabels}", "${productSpecificationLabel},", "");
-				var productSpecificationLabel = StringUtil.upperCaseFirstLetter("${productSpecificationLabel}");
+				var productSpecificationLabels = StringUtil.replaceFirst(${productSpecificationLabels}, "${productSpecificationLabel},", "");
+				var productSpecificationLabel = StringUtil.upperCaseFirstLetter(${productSpecificationLabel});
 
-				var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", "${productSpecification}", "${productSpecificationLabel}:${productSpecification}");
+				var productSpecifications = StringUtil.replaceFirst(${productSpecifications}, ${productSpecification}, "${productSpecificationLabel}:${productSpecification}");
 				var count = ${count} - 1;
 			}
 			else {
-				var productSpecificationLabels = StringUtil.upperCaseFirstLetter("${productSpecificationLabels}");
+				var productSpecificationLabels = StringUtil.upperCaseFirstLetter(${productSpecificationLabels});
 
-				var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", "${productSpecification}", "${productSpecificationLabels}:${productSpecification}");
+				var productSpecifications = StringUtil.replaceFirst(${productSpecifications}, ${productSpecification}, "${productSpecificationLabels}:${productSpecification}");
 			}
 		}
 
-		return "${productSpecifications}";
+		return ${productSpecifications};
 
 		echo("${productName} Specifications:${productSpecifications}");
 	}
 
 	macro _getCPDefinitionId {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.cpdefinition/fetch-cp-definition-by-c-product-id \
@@ -652,41 +652,41 @@ definition {
 				-d cProductId=${productId}
 		''';
 
-		var cpDefinitionId = JSONCurlUtil.post("${curl}", "$..['CPDefinitionId']");
+		var cpDefinitionId = JSONCurlUtil.post(${curl}, "$..['CPDefinitionId']");
 
-		return "${cpDefinitionId}";
+		return ${cpDefinitionId};
 	}
 
 	macro _getProductCreateDate {
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productCreateDate = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productCreateDate = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?search=%22${search}%22 \
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 		''';
 
-		var productCreateDate = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productCreateDate']");
+		var productCreateDate = JSONCurlUtil.get(${curl}, "$.items[?(@['name'].['en_US'] == '${productName}')].['productCreateDate']");
 
-		return "${productCreateDate}";
+		return ${productCreateDate};
 	}
 
 	macro _getProductId {
 		if (isSet(productSKU)) {
-			var search = "${productSKU}";
+			var search = ${productSKU};
 		}
 
 		if (isSet(productName)) {
-			var search = "${productName}";
+			var search = ${productName};
 		}
 
-		var search = StringUtil.replace("${search}", " ", "%20");
-		var baseURL = "${baseURL}";
+		var search = StringUtil.replace(${search}, " ", "%20");
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -699,20 +699,20 @@ definition {
 		''';
 
 		if (isSet(productSKU)) {
-			var productId = JSONCurlUtil.get("${curl}", "$..['productId']");
+			var productId = JSONCurlUtil.get(${curl}, "$..['productId']");
 		}
 
 		if (isSet(productName)) {
-			var productId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productId']");
+			var productId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'].['en_US'] == '${productName}')].['productId']");
 		}
 
-		return "${productId}";
+		return ${productId};
 	}
 
 	macro _getSKUId {
-		Variables.assertDefined(parameterList = "${productSKU}");
+		Variables.assertDefined(parameterList = ${productSKU});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -725,20 +725,20 @@ definition {
 		''';
 
 		if (isSet(productSKU)) {
-			var skuId = JSONCurlUtil.get("${curl}", "$.items[?(@['sku'] == '${productSKU}')].['id']");
+			var skuId = JSONCurlUtil.get(${curl}, "$.items[?(@['sku'] == '${productSKU}')].['id']");
 		}
 
 		echo("The SKU ID is: ${skuId}");
 
-		return "${skuId}";
+		return ${skuId};
 	}
 
 	macro _patchCommerceProductConfiguration {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var fieldsList = ListUtil.newList();
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -747,68 +747,68 @@ definition {
 		if (isSet(allowBackOrder)) {
 			var allowBackOrder = '''"allowBackOrder": ${allowBackOrder}''';
 
-			ListUtil.add("${fieldsList}", "${allowBackOrder}");
+			ListUtil.add(${fieldsList}, ${allowBackOrder});
 		}
 
 		if (isSet(allowedOrderQuantities)) {
-			var allowedOrderQuantities = StringUtil.replace("${allowedOrderQuantities}", ",", "-");
+			var allowedOrderQuantities = StringUtil.replace(${allowedOrderQuantities}, ",", "-");
 
 			var allowedOrderQuantities = '''"allowedOrderQuantities": [${allowedOrderQuantities}]''';
 
-			ListUtil.add("${fieldsList}", "${allowedOrderQuantities}");
+			ListUtil.add(${fieldsList}, ${allowedOrderQuantities});
 		}
 
 		if (isSet(displayAvailability)) {
 			var displayAvailability = '''"displayAvailability": ${displayAvailability}''';
 
-			ListUtil.add("${fieldsList}", "${displayAvailability}");
+			ListUtil.add(${fieldsList}, ${displayAvailability});
 		}
 
 		if (isSet(displayStockQuantity)) {
 			var displayStockQuantity = '''"displayStockQuantity": ${displayStockQuantity}''';
 
-			ListUtil.add("${fieldsList}", "${displayStockQuantity}");
+			ListUtil.add(${fieldsList}, ${displayStockQuantity});
 		}
 
 		if (isSet(inventoryEngine)) {
 			var inventoryEngine = '''"inventoryEngine": "${inventoryEngine}"''';
 
-			ListUtil.add("${fieldsList}", "${inventoryEngine}");
+			ListUtil.add(${fieldsList}, ${inventoryEngine});
 		}
 
 		if (isSet(lowStockAction)) {
 			var lowStockAction = '''"lowStockAction": "${lowStockAction}"''';
 
-			ListUtil.add("${fieldsList}", "${lowStockAction}");
+			ListUtil.add(${fieldsList}, ${lowStockAction});
 		}
 
 		if (isSet(maxOrderQuantity)) {
 			var maxOrderQuantity = '''"maxOrderQuantity": ${maxOrderQuantity}''';
 
-			ListUtil.add("${fieldsList}", "${maxOrderQuantity}");
+			ListUtil.add(${fieldsList}, ${maxOrderQuantity});
 		}
 
 		if (isSet(minOrderQuantity)) {
 			var minOrderQuantity = '''"minOrderQuantity": ${minOrderQuantity}''';
 
-			ListUtil.add("${fieldsList}", "${minOrderQuantity}");
+			ListUtil.add(${fieldsList}, ${minOrderQuantity});
 		}
 
 		if (isSet(minStockQuantity)) {
 			var minStockQuantity = '''"minStockQuantity": ${minStockQuantity}''';
 
-			ListUtil.add("${fieldsList}", "${minStockQuantity}");
+			ListUtil.add(${fieldsList}, ${minStockQuantity});
 		}
 
 		if (isSet(multipleOrderQuantity)) {
 			var multipleOrderQuantity = '''"multipleOrderQuantity": ${multipleOrderQuantity}''';
 
-			ListUtil.add("${fieldsList}", "${multipleOrderQuantity}");
+			ListUtil.add(${fieldsList}, ${multipleOrderQuantity});
 		}
 
-		var fieldsList = ListUtil.toString("${fieldsList}");
+		var fieldsList = ListUtil.toString(${fieldsList});
 
-		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = "${fieldsList}");
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/configuration \
@@ -818,11 +818,11 @@ definition {
 				-d '{${payload}}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
 	}
 
 	macro _patchCommerceProductImageUsingERC {
-		Variables.assertDefined(parameterList = "${productERC}");
+		Variables.assertDefined(parameterList = ${productERC});
 
 		var baseURL = PropsUtil.get("portal.url");
 
@@ -889,15 +889,15 @@ definition {
 				}'
 		''';
 
-		var responseBody = JSONCurlUtil.patch("${curl}");
+		var responseBody = JSONCurlUtil.patch(${curl});
 
-		return "${responseBody}";
+		return ${responseBody};
 	}
 
 	macro _patchCommerceSku {
-		Variables.assertDefined(parameterList = "${productSku}");
+		Variables.assertDefined(parameterList = ${productSku});
 
-		var baseURL = "${baseURL}";
+		var baseURL = ${baseURL};
 		var fieldsList = ListUtil.newList();
 
 		if (!(isSet(baseURL))) {
@@ -907,61 +907,61 @@ definition {
 		if (isSet(discontinued)) {
 			var discontinued = '''"discontinued": ${discontinued}''';
 
-			ListUtil.add("${fieldsList}", "${discontinued}");
+			ListUtil.add(${fieldsList}, ${discontinued});
 		}
 
 		if (isSet(gtin)) {
 			var gtin = '''"gtin": "${gtin}"''';
 
-			ListUtil.add("${fieldsList}", "${gtin}");
+			ListUtil.add(${fieldsList}, ${gtin});
 		}
 
 		if (isSet(manufacturerPartNumber)) {
 			var manufacturerPartNumber = '''"manufacturerPartNumber": "${manufacturerPartNumber}"''';
 
-			ListUtil.add("${fieldsList}", "${manufacturerPartNumber}");
+			ListUtil.add(${fieldsList}, ${manufacturerPartNumber});
 		}
 
 		if (isSet(price)) {
 			var price = '''"price": ${price}''';
 
-			ListUtil.add("${fieldsList}", "${price}");
+			ListUtil.add(${fieldsList}, ${price});
 		}
 
 		if (isSet(promoPrice)) {
 			var promoPrice = '''"promoPrice": ${promoPrice}''';
 
-			ListUtil.add("${fieldsList}", "${promoPrice}");
+			ListUtil.add(${fieldsList}, ${promoPrice});
 		}
 
 		if (isSet(published)) {
 			var published = '''"published": ${published}''';
 
-			ListUtil.add("${fieldsList}", "${published}");
+			ListUtil.add(${fieldsList}, ${published});
 		}
 
 		if (isSet(purchasable)) {
 			var purchasable = '''"purchasable": ${purchasable}''';
 
-			ListUtil.add("${fieldsList}", "${purchasable}");
+			ListUtil.add(${fieldsList}, ${purchasable});
 		}
 
 		if (isSet(replacementSku)) {
-			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${replacementSku}");
+			var replacementSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${replacementSku});
 
 			var replacementSkuId = '''"replacementSkuId": ${replacementSkuId}''';
 
-			ListUtil.add("${fieldsList}", "${replacementSkuId}");
+			ListUtil.add(${fieldsList}, ${replacementSkuId});
 		}
 
 		var sku = '''"sku": "${productSku}"''';
 
-		ListUtil.add("${fieldsList}", "${sku}");
+		ListUtil.add(${fieldsList}, ${sku});
 
-		var fieldsList = ListUtil.toString("${fieldsList}");
+		var fieldsList = ListUtil.toString(${fieldsList});
 
-		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = "${fieldsList}");
-		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${productSku}");
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSku});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId} \
@@ -971,14 +971,14 @@ definition {
 				-d '{${payload}}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
 	}
 
 	macro _updateCommerceProduct {
-		Variables.assertDefined(parameterList = "${productName}");
+		Variables.assertDefined(parameterList = ${productName});
 
-		var baseURL = "${baseURL}";
-		var cpDefinitionId = CommerceJSONProductsAPI._getCPDefinitionId(productName = "${productName}");
+		var baseURL = ${baseURL};
+		var cpDefinitionId = CommerceJSONProductsAPI._getCPDefinitionId(productName = ${productName});
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -1009,7 +1009,7 @@ definition {
 		}
 
 		if (!(isSet(newProductName))) {
-			var newProductName = "${productName}";
+			var newProductName = ${productName};
 		}
 
 		if (!(isSet(newShortDescription))) {
@@ -1064,7 +1064,7 @@ definition {
 				-d neverExpire=${neverExpire}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

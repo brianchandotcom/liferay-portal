@@ -4,20 +4,20 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var formInstanceId = JSONDDMFormAPI._getFormInstanceId(
-			formName = "${formName}",
-			groupName = "${groupName}");
+			formName = ${formName},
+			groupName = ${groupName});
 
-		return "${formInstanceId}";
+		return ${formInstanceId};
 	}
 
 	macro getFormInstanceRecordId {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var formInstanceId = JSONDDMFormAPI._getFormInstanceId(
-			formName = "${formName}",
-			groupName = "${groupName}");
+			formName = ${formName},
+			groupName = ${groupName});
 
-		JSONDDMFormAPI._getFormInstanceRecordId(formInstanceId = "${formInstanceId}");
+		JSONDDMFormAPI._getFormInstanceRecordId(formInstanceId = ${formInstanceId});
 	}
 
 }

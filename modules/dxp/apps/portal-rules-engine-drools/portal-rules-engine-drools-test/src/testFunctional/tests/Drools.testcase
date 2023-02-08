@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,9 +24,9 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewWebContentInSampleDrools {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		property osgi.modules.includes = "portal-rules-engine-sample-web";
 
@@ -39,7 +39,7 @@ definition {
 		User.addAddressViaMyAccount(
 			userAddressCity = "Diamond Bar",
 			userAddressCountry = "United States",
-			userAddressPostalCode = "91765",
+			userAddressPostalCode = 91765,
 			userAddressRegion = "California",
 			userAddressStreet1 = "1400 Montefino Ave",
 			userAddressType = "Personal");
@@ -47,7 +47,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			portlet = "Tags",
-			site = "${siteName}");
+			site = ${siteName});
 
 		Tag.addCP(tagName = "americas");
 

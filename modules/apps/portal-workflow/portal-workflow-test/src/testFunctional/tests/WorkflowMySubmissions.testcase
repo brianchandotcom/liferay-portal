@@ -25,7 +25,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test WithdrawTaskAssignedToMeByActions {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
@@ -92,7 +92,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test WithdrawTaskAssignedToMeByDetails {
 		property portal.upstream = "quarantine";
 
@@ -149,7 +149,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test WithdrawTaskAssignedToMyRolesByActions {
 		property portal.upstream = "quarantine";
 
@@ -196,7 +196,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test WithdrawTaskAssignedToMyRolesByDetails {
 		property portal.upstream = "quarantine";
 
@@ -245,7 +245,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test WithdrawTaskCompletedNoByActions {
 		property portal.upstream = "quarantine";
 
@@ -290,7 +290,7 @@ definition {
 			workflowTask = "Approved");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test WithdrawTaskCompletedNoByDetails {
 		property portal.upstream = "quarantine";
 

@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-146888. Assert that can publish a widget page template created by another deleted admin user on local staging"
-	@priority = "3"
+	@priority = 3
 	test CanPublishAWidgetPageTemplateCreatedByAnotherDeletedUserOnLocalStaging {
 		task ("Given: Create a new user with Administrator role") {
 			JSONUser.addUser(

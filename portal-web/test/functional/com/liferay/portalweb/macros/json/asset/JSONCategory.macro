@@ -5,34 +5,34 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
-			a = "${title}",
-			b = "${titleMap}",
+			a = ${title},
+			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId();
 		var titleMap = JSONCategorySetter.setTitleMap(
-			title = "${title}",
-			titleMap = "${titleMap}");
+			title = ${title},
+			titleMap = ${titleMap});
 		var descriptionMap = JSONCategorySetter.setDescriptionMap(
-			description = "${description}",
-			descriptionMap = "${descriptionMap}");
-		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+			description = ${description},
+			descriptionMap = ${descriptionMap});
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = ${serviceContext});
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
 		var categoryId = JSONCategoryAPI._addCategory(
-			descriptionMap = "${descriptionMap}",
-			groupId = "${groupId}",
-			parentCategoryId = "${parentCategoryId}",
-			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}",
-			vocabularyId = "${vocabularyId}");
+			descriptionMap = ${descriptionMap},
+			groupId = ${groupId},
+			parentCategoryId = ${parentCategoryId},
+			serviceContext = ${serviceContext},
+			titleMap = ${titleMap},
+			vocabularyId = ${vocabularyId});
 
-		return "${categoryId}";
+		return ${categoryId};
 	}
 
 	@summary = "Add a basic subcategory"
@@ -40,71 +40,71 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${parentCategoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
-			a = "${title}",
-			b = "${titleMap}",
+			a = ${title},
+			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId(
-			groupId = "${groupId}",
-			parentCategoryName = "${parentCategoryName}",
-			vocabularyId = "${vocabularyId}");
-		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+			groupId = ${groupId},
+			parentCategoryName = ${parentCategoryName},
+			vocabularyId = ${vocabularyId});
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = ${serviceContext});
 		var titleMap = JSONCategorySetter.setTitleMap(
-			title = "${title}",
-			titleMap = "${titleMap}");
+			title = ${title},
+			titleMap = ${titleMap});
 		var descriptionMap = JSONCategorySetter.setDescriptionMap(
-			description = "${description}",
-			descriptionMap = "${descriptionMap}");
+			description = ${description},
+			descriptionMap = ${descriptionMap});
 
 		JSONCategoryAPI._addCategory(
-			descriptionMap = "${descriptionMap}",
-			groupId = "${groupId}",
-			parentCategoryId = "${parentCategoryId}",
-			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}",
-			vocabularyId = "${vocabularyId}");
+			descriptionMap = ${descriptionMap},
+			groupId = ${groupId},
+			parentCategoryId = ${parentCategoryId},
+			serviceContext = ${serviceContext},
+			titleMap = ${titleMap},
+			vocabularyId = ${vocabularyId});
 	}
 
 	@summary = "Add a basic vocabulary"
 	macro addVocabulary {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		JSONUtil2._exclusiveOrCheck(
-			a = "${title}",
-			b = "${titleMap}",
+			a = ${title},
+			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
-		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+			groupName = ${groupName},
+			site = ${site});
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = ${serviceContext});
 		var titleMap = JSONCategorySetter.setTitleMap(
-			title = "${title}",
-			titleMap = "${titleMap}");
+			title = ${title},
+			titleMap = ${titleMap});
 		var descriptionMap = JSONCategorySetter.setDescriptionMap(
-			description = "${description}",
-			descriptionMap = "${descriptionMap}");
+			description = ${description},
+			descriptionMap = ${descriptionMap});
 
 		if (!(isSet(visibility))) {
 			var visibility = "public";
 		}
 
-		var visibilityType = JSONCategorySetter.setVisibilityType(visibility = "${visibility}");
+		var visibilityType = JSONCategorySetter.setVisibilityType(visibility = ${visibility});
 
 		JSONCategoryAPI._addVocabulary(
-			descriptionMap = "${descriptionMap}",
-			groupId = "${groupId}",
-			serviceContext = "${serviceContext}",
-			titleMap = "${titleMap}",
-			visibilityType = "${visibilityType}");
+			descriptionMap = ${descriptionMap},
+			groupId = ${groupId},
+			serviceContext = ${serviceContext},
+			titleMap = ${titleMap},
+			visibilityType = ${visibilityType});
 	}
 
 	@summary = "Delete a category"
@@ -112,24 +112,24 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		var categoryId = JSONCategory.getCategoryId(
-			categoryName = "${categoryName}",
-			groupName = "${groupName}",
-			vocabularyName = "${vocabularyName}");
+			categoryName = ${categoryName},
+			groupName = ${groupName},
+			vocabularyName = ${vocabularyName});
 
-		JSONCategoryAPI._deleteCategory(categoryId = "${categoryId}");
+		JSONCategoryAPI._deleteCategory(categoryId = ${categoryId});
 	}
 
 	@summary = "Delete a vocabulary"
 	macro deleteVocabulary {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(groupName = ${groupName});
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
-		JSONCategoryAPI._deleteVocabulary(vocabularyId = "${vocabularyId}");
+		JSONCategoryAPI._deleteVocabulary(vocabularyId = ${vocabularyId});
 	}
 
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"
@@ -137,35 +137,35 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		var groupId = JSONCategorySetter.setGroupId(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
 		var categoryId = JSONCategoryAPI._getCategoryIdByName(
-			categoryName = "${categoryName}",
-			groupId = "${groupId}",
-			vocabularyId = "${vocabularyId}");
+			categoryName = ${categoryName},
+			groupId = ${groupId},
+			vocabularyId = ${vocabularyId});
 
-		return "${categoryId}";
+		return ${categoryId};
 	}
 
 	@summary = "Delete all categories from a vocabulary"
 	macro tearDownCategories {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(groupName = ${groupName});
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
-		var categoriesIds = JSONCategoryAPI._getVocabularyCategoriesIds(vocabularyId = "${vocabularyId}");
+		var categoriesIds = JSONCategoryAPI._getVocabularyCategoriesIds(vocabularyId = ${vocabularyId});
 
-		for (var categoryId : list "${categoriesIds}") {
-			JSONCategoryAPI._deleteCategory(categoryId = "${categoryId}");
+		for (var categoryId : list ${categoriesIds}) {
+			JSONCategoryAPI._deleteCategory(categoryId = ${categoryId});
 		}
 	}
 
@@ -173,36 +173,36 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
-			a = "${title}",
-			b = "${titleMap}",
+			a = ${title},
+			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(groupName = ${groupName});
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
-			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}");
+			groupId = ${groupId},
+			vocabularyName = ${vocabularyName});
 
 		var categoryId = JSONCategorySetter.setCategoryId(
-			categoryName = "${categoryName}",
-			groupId = "${groupId}",
-			vocabularyId = "${vocabularyId}");
+			categoryName = ${categoryName},
+			groupId = ${groupId},
+			vocabularyId = ${vocabularyId});
 		var descriptionMap = JSONCategorySetter.setDescriptionMap(
-			description = "${description}",
-			descriptionMap = "${descriptionMap}");
+			description = ${description},
+			descriptionMap = ${descriptionMap});
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId(
-			groupId = "${groupId}",
-			vocabularyId = "${vocabularyId}");
+			groupId = ${groupId},
+			vocabularyId = ${vocabularyId});
 		var titleMap = JSONCategorySetter.setTitleMap(
-			title = "${title}",
-			titleMap = "${titleMap}");
+			title = ${title},
+			titleMap = ${titleMap});
 
 		JSONCategoryAPI._updateCategory(
-			categoryId = "${categoryId}",
-			descriptionMap = "${descriptionMap}",
-			parentCategoryId = "${parentCategoryId}",
-			titleMap = "${titleMap}",
-			vocabularyId = "${vocabularyId}");
+			categoryId = ${categoryId},
+			descriptionMap = ${descriptionMap},
+			parentCategoryId = ${parentCategoryId},
+			titleMap = ${titleMap},
+			vocabularyId = ${vocabularyId});
 	}
 
 }

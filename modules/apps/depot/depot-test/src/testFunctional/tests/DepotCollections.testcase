@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for local staging."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBePublishedViaLocalStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -112,7 +112,7 @@ definition {
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for remote staging."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanBePublishedViaRemoteStaging {
 		property app.server.bundles.size = "1";
@@ -124,7 +124,7 @@ definition {
 
 		Depot.remoteStagingSetUp(
 			depotName = "Test Depot Name",
-			remotePort = "9080",
+			remotePort = 9080,
 			remoteStaging = "true");
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -135,7 +135,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
-			remotePort = "9080");
+			remotePort = 9080);
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -216,7 +216,7 @@ definition {
 
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanChangeScope {
 		JSONWebcontent.addWebContent(
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@description = "This ensures that collections from a site can select the basic web content stored in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanCreateCollectionOnSiteUsingDepotWC {
 		JSONWebcontent.addWebContent(
@@ -307,7 +307,7 @@ definition {
 			layoutName = "Asset Publisher Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
@@ -345,7 +345,7 @@ definition {
 
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisplayImageInAP {
 		JSONDocument.addFileWithUploadedFile(
@@ -383,7 +383,7 @@ definition {
 			layoutName = "Asset Publisher Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
@@ -409,7 +409,7 @@ definition {
 
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisplayWCWithTagInAP {
 		for (var i : list "1,2") {
@@ -450,7 +450,7 @@ definition {
 			layoutName = "Asset Publisher Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@description = "This ensures that images are excluded with the dynamic selection that does not contain the keyword "Image" in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanExcludeImagesDynamically {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@description = "This ensures that the asset types will not be displayed when disabling the applications."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotDisplayDisabledApplications {
 		JSONAssetlist.addDynamicAssetListEntry(
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@description = "This ensures that user can not select the collection in depot after disabling Collections."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanNotSelectAfterDisablingCollections {
 		JSONAssetlist.addManualAssetListEntry(
@@ -655,7 +655,7 @@ definition {
 	}
 
 	@description = "This ensures that the asset can be removed in Collections."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveSelectedAsset {
 		for (var i : list "1,2,3") {
@@ -708,7 +708,7 @@ definition {
 	}
 
 	@description = "This ensures that an image can be selected from other site scope through dynamic selection that does not contain the keyword."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectDMFromOtherScopeDynamically {
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -757,7 +757,7 @@ definition {
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Dynamic Asset List",
-				assetTitle = "${assetTitle}",
+				assetTitle = ${assetTitle},
 				assetType = "Document");
 		}
 
@@ -766,13 +766,13 @@ definition {
 
 			AssetListsAdmin.viewNoContent(
 				assetListTitle = "Depot Dynamic Asset List",
-				assetTitle = "${assetTitle}",
+				assetTitle = ${assetTitle},
 				assetType = "Document");
 		}
 	}
 
 	@description = "This ensures that the documents with document type can be selected through Collections in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectDocumentsWithTypeManually {
 		for (var i : list "1,2") {
@@ -815,34 +815,34 @@ definition {
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
-				assetTitle = "${documentName}",
+				assetTitle = ${documentName},
 				assetType = "Document");
 		}
 	}
 
 	@description = "This ensures that multiple documents can be selected through Collections in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectMultipleDMManually {
 		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
-			var extension = StringUtil.extractLast("${documentName}", ".");
+			var extension = StringUtil.extractLast(${documentName}, ".");
 
-			if ("${extension}" == "doc") {
+			if (${extension} == "doc") {
 				var mimeType = "application/msword";
 			}
-			else if ("${extension}" == "jpg") {
+			else if (${extension} == "jpg") {
 				var mimeType = "image/jpg";
 			}
-			else if ("${extension}" == "txt") {
+			else if (${extension} == "txt") {
 				var mimeType = "text/plain";
 			}
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "${documentName}",
+				dmDocumentTitle = ${documentName},
 				groupName = "Test Depot Name",
-				mimeType = "${mimeType}",
-				sourceFileName = "${documentName}");
+				mimeType = ${mimeType},
+				sourceFileName = ${documentName});
 		}
 
 		JSONAssetlist.addManualAssetListEntryWithItemType(
@@ -863,7 +863,7 @@ definition {
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
-				assetName = "${documentName}",
+				assetName = ${documentName},
 				assetType = "Basic Document");
 		}
 
@@ -872,13 +872,13 @@ definition {
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Depot Manual Asset List",
-				assetTitle = "${documentName}",
+				assetTitle = ${documentName},
 				assetType = "Document");
 		}
 	}
 
 	@description = "This ensures that multiple web content can be selected through Collections in a depot."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectMultipleWCManually {
 		for (var i : list "1,2,3") {
@@ -922,7 +922,7 @@ definition {
 	}
 
 	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSelectOnlyWCDynamically {
 		JSONDocument.addFileWithUploadedFile(
@@ -972,7 +972,7 @@ definition {
 	}
 
 	@description = "This ensures that web contents from all the scopes can be selected through dynamic selection in a depot."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSelectWCFromAllScopesDynamically {
 		for (var i : list "1,2") {
@@ -1025,7 +1025,7 @@ definition {
 
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
 	@e2e
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSelectWCWithStructure {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
@@ -1078,7 +1078,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in Asset Publisher can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageViaAPAfterMovingToFolder {
 		JSONGroup.addGroup(groupName = "Site Name");
 

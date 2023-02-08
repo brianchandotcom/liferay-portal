@@ -1,19 +1,19 @@
 definition {
 
 	macro addCustomAssetReport {
-		ACNavigation.openItem(itemName = "${assetName}");
+		ACNavigation.openItem(itemName = ${assetName});
 
 		Button.click(button = "Add Report");
 
 		Type(
 			key_text = "Report Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${reportName}");
+			value1 = ${reportName});
 
 		Select(
 			key_fieldLabel = "Metric",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${metric}");
+			value1 = ${metric});
 
 		WaitForVisible(
 			key_text = "Save",
@@ -24,66 +24,66 @@ definition {
 
 	macro goToTechnologyTabInactive {
 		Click(
-			key_cardTitle = "${cardTitle}",
-			key_tabName = "${tabName}",
+			key_cardTitle = ${cardTitle},
+			key_tabName = ${tabName},
 			locator1 = "ACAssets#TECHNOLOGY_TAB_INACTIVE");
 	}
 
 	macro removeCustomAssetReport {
 		Click(
-			key_cardTitle = "${reportName}",
+			key_cardTitle = ${reportName},
 			locator1 = "ACCards#TRASH_ICON");
 	}
 
 	macro viewAssetAppearsOnMetric {
-		var key_cardTitle = "${cardTitle}";
+		var key_cardTitle = ${cardTitle};
 
 		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
 
 		AssertTextEquals(
 			locator1 = "ACAssets#APPEARS_ON_PAGE_NAME",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		var portalURL = PropsUtil.get("portal.url");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",
-			value1 = "${canonicalURL}");
+			value1 = ${canonicalURL});
 
 		if (isSet(canonicalURLSuffix)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",
-				value1 = "${canonicalURLSuffix}");
+				value1 = ${canonicalURLSuffix});
 		}
 	}
 
 	macro viewAssetsInfo {
 		AssertTextEquals(
-			index = "${index}",
-			key_assetName = "${assetName}",
+			index = ${index},
+			key_assetName = ${assetName},
 			locator1 = "ACAssets#ASSETS_INFO",
-			value1 = "${value}");
+			value1 = ${value});
 	}
 
 	macro viewTechnologyBrowsersMetric {
-		var key_cardTitle = "${cardTitle}";
+		var key_cardTitle = ${cardTitle};
 
 		AssertTextEquals(
 			locator1 = "ACAssets#BROWSERS_METRIC_VALUE",
-			value1 = "${browserMetricValue}");
+			value1 = ${browserMetricValue});
 
 		AssertTextEquals(
 			locator1 = "ACAssets#BROWSERS_PERCENTAGE_METRIC_VALUE",
-			value1 = "${percentageMetricValue}");
+			value1 = ${percentageMetricValue});
 
 		AssertCssValue(
 			locator1 = "ACAssets#BROWSERS_PIE_CHART",
 			locator2 = "fill",
-			value1 = "${cssValue}");
+			value1 = ${cssValue});
 	}
 
 	macro viewTechnologyDeviceViewsAndPercentage {
-		var key_cardTitle = "${cardTitle}";
+		var key_cardTitle = ${cardTitle};
 
 		ScrollWebElementIntoView(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
 
@@ -93,75 +93,75 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_DEVICE_HEADER",
-			value1 = "${deviceName}");
+			value1 = ${deviceName});
 
 		AssertTextEquals(
 			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_VIEWS_HEADER",
-			value1 = "${actionValue}");
+			value1 = ${actionValue});
 
 		AssertTextEquals(
 			locator1 = "ACAssets#TECHNOLOGY_DEVICE_CHART_TOOLTIP_PERCENTAGE_HEADER",
-			value1 = "${percentageValue}");
+			value1 = ${percentageValue});
 	}
 
 	macro viewViewsByTechnologyTabActive {
 		AssertVisible(
-			key_cardTitle = "${cardTitle}",
-			key_tabName = "${tabName}",
+			key_cardTitle = ${cardTitle},
+			key_tabName = ${tabName},
 			locator1 = "ACAssets#TECHNOLOGY_TAB_ACTIVE");
 	}
 
 	macro viewVisitorsBehaviorMetric {
-		var key_metricTitle = "${metricTitle}";
-		var key_metricValue = "${metricValue}";
+		var key_metricTitle = ${metricTitle};
+		var key_metricValue = ${metricValue};
 
 		while ((IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
-			if ("${timeFilter}" != "Custom Range") {
+			if (${timeFilter} != "Custom Range") {
 				ACTimeFilter.clickTimeFilterButton();
 
-				if ("${timeFilter}" == "Last 24 hours") {
+				if (${timeFilter} == "Last 24 hours") {
 					ACTimeFilter.setLast24Hours();
 				}
 
-				if ("${timeFilter}" == "Yesterday") {
+				if (${timeFilter} == "Yesterday") {
 					ACTimeFilter.setYesterday();
 				}
 
-				if ("${timeFilter}" == "Last 7 days") {
+				if (${timeFilter} == "Last 7 days") {
 					ACTimeFilter.setLast7Days();
 				}
 
-				if ("${timeFilter}" == "Last 28 days") {
+				if (${timeFilter} == "Last 28 days") {
 					ACTimeFilter.setLast28Days();
 				}
 
-				if ("${timeFilter}" == "Last 30 days") {
+				if (${timeFilter} == "Last 30 days") {
 					ACTimeFilter.setLast30Days();
 				}
 
-				if ("${timeFilter}" == "Last 90 days") {
+				if (${timeFilter} == "Last 90 days") {
 					ACTimeFilter.setLast90Days();
 				}
 
-				if ("${timeFilter}" == "Last 180 days") {
+				if (${timeFilter} == "Last 180 days") {
 					ACTimeFilter.setLast180Days();
 				}
 
-				if ("${timeFilter}" == "Last Year") {
+				if (${timeFilter} == "Last Year") {
 					ACTimeFilter.setLastYear();
 				}
 			}
 
-			if ("${timeFilter}" == "Custom Range") {
+			if (${timeFilter} == "Custom Range") {
 				ACTimeFilter.setCustomRange(
-					endDay = "${endDay}",
-					endMonth = "${endMonth}",
-					endYear = "${endYear}",
-					startDay = "${startDay}",
-					startMonth = "${startMonth}",
-					startYear = "${startYear}");
+					endDay = ${endDay},
+					endMonth = ${endMonth},
+					endYear = ${endYear},
+					startDay = ${startDay},
+					startMonth = ${startMonth},
+					startYear = ${startYear});
 			}
 		}
 

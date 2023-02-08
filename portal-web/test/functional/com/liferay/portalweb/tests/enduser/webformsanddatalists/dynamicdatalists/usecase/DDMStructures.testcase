@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80085."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentTemplateWithSmallImage {
 		JSONGroup.addGroup(groupName = "Staging Site Name");
 
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-68661 and LPS-77957."
-	@priority = "4"
+	@priority = 4
 	test CreateWebContentStructureAndTemplate {
 		JSONGroup.addGroup(groupName = "Staging Site Name");
 
@@ -204,7 +204,7 @@ definition {
 
 		for (var menuItem : list "Edit,Edit Default Values,Permissions,Copy") {
 			LexiconEntry.viewNoEntryMenuItem(
-				menuItem = "${menuItem}",
+				menuItem = ${menuItem},
 				rowEntry = "WC Structure Name");
 		}
 
@@ -214,13 +214,13 @@ definition {
 
 		for (var menuItem : list "Edit,Permissions,Copy") {
 			LexiconEntry.viewNoEntryMenuItem(
-				menuItem = "${menuItem}",
+				menuItem = ${menuItem},
 				rowEntry = "WC Template Name");
 		}
 	}
 
 	@description = "This is a use case for LPS-67094."
-	@priority = "4"
+	@priority = 4
 	test ViewCacheableCheckbox {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69325."
-	@priority = "4"
+	@priority = 4
 	test ViewFieldInputWhenSwitchingTranslations {
 		Navigator.openURL();
 
@@ -320,7 +320,7 @@ definition {
 
 		var sourceJson = TestCase.getFileContent(fileName = "complexDDMStructure.json");
 
-		DynamicDataMapping.addFieldViaJSON(sourceJson = "${sourceJson}");
+		DynamicDataMapping.addFieldViaJSON(sourceJson = ${sourceJson});
 
 		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt-BR");
 
@@ -349,7 +349,7 @@ definition {
 		DDLRecord.addCP();
 
 		for (var language : list "es-ES,en-US,pt-BR") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DDLRecord.populateFieldText(
 				ddlRecordFieldData = "${language} Categoria",
@@ -370,7 +370,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69593 and LRQA-61632. Assert the selected image is kept in Image field under localized."
-	@priority = "4"
+	@priority = 4
 	test ViewFieldTranslationsWithImageField {
 		property test.name.skip.portal.instance = "DDMStructureWithImageField#ViewFieldTranslations";
 
@@ -495,7 +495,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-69335."
-	@priority = "4"
+	@priority = 4
 	test ViewFieldTranslationsWithNestedTextField {
 		Navigator.openURL();
 
@@ -550,7 +550,7 @@ definition {
 			fieldName = "textChild");
 
 		for (var language : list "es-ES,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			DDLRecord.populateFieldText(
 				ddlRecordFieldData = "${language} Parent",
@@ -562,7 +562,7 @@ definition {
 		}
 
 		for (var language : list "en-US,es-ES,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
+			PortletEntry.changeLocale(locale = ${language});
 
 			FormFields.viewTextValue(
 				fieldName = "textParent",

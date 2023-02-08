@@ -3,14 +3,14 @@ definition {
 	macro addMultipleFields {
 		DMMetadataSet.gotoFieldsTab();
 
-		for (var fieldType : list "${fieldType}") {
-			var key_fieldType = "${fieldType}";
+		for (var fieldType : list ${fieldType}) {
+			var key_fieldType = ${fieldType};
 
 			DoubleClick(locator1 = "DocumentsAndMediaMetadataSets#ADD_FIELD_TYPE");
 
 			AssertElementPresent(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_ACTIVE_BASIC_TAB");
 
-			DMMetadataSet.editFieldLabel(fieldType = "${fieldType}");
+			DMMetadataSet.editFieldLabel(fieldType = ${fieldType});
 
 			DMMetadataSet.gotoBack();
 		}
@@ -27,40 +27,40 @@ definition {
 			locator1 = "Dynamicdatamapping#HEADER_TITLE",
 			value1 = "New Metadata Set");
 
-		PortletEntry.inputName(name = "${metadataSetName}");
+		PortletEntry.inputName(name = ${metadataSetName});
 	}
 
 	macro delete {
 		if (isSet(searchMetadataSet)) {
-			Search.searchCP(searchTerm = "${metadataSetName}");
+			Search.searchCP(searchTerm = ${metadataSetName});
 		}
 
 		if (isSet(deleteViaManagementBar)) {
-			LexiconEntry.selectEntry(rowEntry = "${metadataSetName}");
+			LexiconEntry.selectEntry(rowEntry = ${metadataSetName});
 
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
 		else {
-			LexiconEntry.openEntryMenu(rowEntry = "${metadataSetName}");
+			LexiconEntry.openEntryMenu(rowEntry = ${metadataSetName});
 
 			MenuItem.clickNoError(menuItem = "Delete");
 		}
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-		if ("${metadataSetHasReference}" == "true") {
+		if (${metadataSetHasReference} == "true") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 		}
-		else if ("${deleteViaManagementBar}" == "true") {
+		else if (${deleteViaManagementBar} == "true") {
 			Alert.viewSuccessMessage();
 
 			AssertElementNotPresent(locator1 = "Icon#DELETE");
 
-			LexiconEntry.viewNoEntry(rowEntry = "${metadataSetName}");
+			LexiconEntry.viewNoEntry(rowEntry = ${metadataSetName});
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -70,7 +70,7 @@ definition {
 			}
 
 			AssertElementNotPresent(
-				key_metadataSetName = "${metadataSetName}",
+				key_metadataSetName = ${metadataSetName},
 				locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 		}
 	}
@@ -79,23 +79,23 @@ definition {
 		Type(
 			key_fieldName = "label",
 			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "${fieldType}");
+			value1 = ${fieldType});
 
 		if (!(isSet(fieldName))) {
-			var fieldName = StringUtil.replace("${fieldType}", " ", "");
+			var fieldName = StringUtil.replace(${fieldType}, " ", "");
 		}
 
 		DMMetadataSet.gotoAdvancedTab();
 
 		AssertTextEquals(
 			locator1 = "FormFields#FIELD_NAME_EDIT",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		DMMetadataSet.gotoBasicTab();
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaMetadataSets#FIELD_LABEL",
-			value1 = "${fieldType}");
+			value1 = ${fieldType});
 	}
 
 	macro gotoAdvancedTab {
@@ -151,7 +151,7 @@ definition {
 	}
 
 	macro validateCantInFieldset {
-		var key_fieldLabel = "${key_fieldLabel}";
+		var key_fieldLabel = ${key_fieldLabel};
 
 		Click(locator1 = "FormFields#LABEL");
 
@@ -180,7 +180,7 @@ definition {
 
 	macro viewMetadataSetTitle {
 		AssertElementPresent(
-			key_metadataSetName = "${metadataSetTitle}",
+			key_metadataSetName = ${metadataSetTitle},
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 	}
 

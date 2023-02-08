@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This ensures that the document can be deleted after the recycle bin is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteDocumentAfterDisabling {
 		JSONDocument.addFile(
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteWCAfterDisabling {
 		DepotNavigator.openDepotAdmin();
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "This ensures that the documents can be restored from recycle bin."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRestoreDocuments {
 		JSONDocument.addFileWithUploadedFile(
@@ -121,14 +121,14 @@ definition {
 		for (var dmDocumentTitle : list "Document_1,Document_2") {
 			DepotNavigator.openToDMEntryInDepot(
 				depotName = "Test Depot Name",
-				dmDocumentTitle = "${dmDocumentTitle}");
+				dmDocumentTitle = ${dmDocumentTitle});
 
-			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+			DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 		}
 	}
 
 	@description = "This ensures that the web content can be restored from recycle bin."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRestoreWebContent {
 		property portal.acceptance = "true";
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "This ensures that the expired entries can be removed automatically in the recycle bin."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ExpiredEntriesCanBeRemoved {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
@@ -207,7 +207,7 @@ definition {
 
 		// We need to wait for the system time to pass by 2 minutes in order for an article to be expired. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = 120000);
 
 		Refresh();
 

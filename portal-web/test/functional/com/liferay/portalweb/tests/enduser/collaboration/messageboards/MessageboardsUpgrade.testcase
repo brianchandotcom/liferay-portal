@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMessageBoardsArchive625 {
 		property data.archive.type = "data-archive-message-boards";
@@ -30,7 +30,7 @@ definition {
 		Upgrade.viewMessageBoards();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive71105 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.1.10.5";
@@ -40,7 +40,7 @@ definition {
 		Upgrade.editAndDeleteMessageBoard();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive72104 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.2.10.4";
@@ -50,7 +50,7 @@ definition {
 		Upgrade.editAndDeleteMessageBoard();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive73101 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.3.10.1";
@@ -60,7 +60,7 @@ definition {
 		Upgrade.editAndDeleteMessageBoard();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive621015 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.15";
@@ -70,7 +70,7 @@ definition {
 		Upgrade.viewMessageBoards();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive621021 {
 		property data.archive.type = "data-archive-message-boards";
 		property portal.version = "6.2.10.21";
@@ -80,7 +80,7 @@ definition {
 		Upgrade.viewMessageBoards();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CanViewMessageBoardsArchive701015 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.0.10.15";

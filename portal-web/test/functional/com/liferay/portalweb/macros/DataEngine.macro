@@ -5,22 +5,22 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
-		var key_fieldFieldLabel = "${fieldFieldLabel}";
-		var key_fieldName = "${fieldName}";
-		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+		var key_fieldFieldLabel = ${fieldFieldLabel};
+		var key_fieldName = ${fieldName};
+		var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
 
 		if (isSet(fieldLocation)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fieldLocation = "${fieldLocation}",
+				key_fieldLocation = ${fieldLocation},
 				locator1 = "Sidebar#ADD_FIELD_NAME",
 				locator2 = "Sidebar#ADD_FIELD_POSITION",
-				value1 = "${fieldName}");
+				value1 = ${fieldName});
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "Sidebar#ADD_FIELD_NAME",
 				locator2 = "Sidebar#ADD_FIELD_TARGET",
-				value1 = "${fieldName}");
+				value1 = ${fieldName});
 		}
 
 		WaitForVisible(locator1 = "Sidebar#BACK");
@@ -30,28 +30,28 @@ definition {
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertElementPresent(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
-		if ("${fieldName}" == "Text") {
+		if (${fieldName} == "Text") {
 			if (isSet(fieldType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${fieldType}",
+					key_toggleSwitchLabel = ${fieldType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
-		else if ("${fieldName}" == "Numeric") {
+		else if (${fieldName} == "Numeric") {
 			if (isSet(numericType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${numericType}",
+					key_toggleSwitchLabel = ${numericType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
@@ -61,7 +61,7 @@ definition {
 		if (isSet(textNumber)) {
 			var textNumber = selenium.getAttribute("//div[contains(@data-field-name,'fieldReference')]//label[normalize-space(text())='Field Reference']//following-sibling::input[@type='text']@value");
 
-			return "${textNumber}";
+			return ${textNumber};
 
 			echo("## * textNumber: ${textNumber}");
 		}
@@ -70,76 +70,76 @@ definition {
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFieldGroupWithFields {
-		var index = "1";
+		var index = 1;
 		var firstFieldLabel = "";
 
-		for (var fieldName : list "${fieldNameList}") {
-			if ("${index}" == "1") {
-				var firstFieldLabel = "${fieldName}";
+		for (var fieldName : list ${fieldNameList}) {
+			if (${index} == 1) {
+				var firstFieldLabel = ${fieldName};
 
 				DataEngine.addField(
-					fieldFieldLabel = "${fieldName}",
-					fieldName = "${fieldName}");
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName});
 			}
-			else if ("${index}" == "2") {
+			else if (${index} == 2) {
 				DataEngine.addFieldNested(
-					fieldFieldLabel = "${fieldName}",
-					fieldName = "${fieldName}",
-					targetFieldLabel = "${firstFieldLabel}");
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName},
+					targetFieldLabel = ${firstFieldLabel});
 			}
 			else {
 				DataEngine.addFieldNested(
-					fieldFieldLabel = "${fieldName}",
-					fieldName = "${fieldName}",
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName},
 					targetFieldGroupLabel = "Fields Group");
 			}
 
-			if (("${fieldName}" == "Select from List") || ("${fieldName}" == "Single Selection") || ("${fieldName}" == "Multiple Selection")) {
+			if ((${fieldName} == "Select from List") || (${fieldName} == "Single Selection") || (${fieldName} == "Multiple Selection")) {
 				for (var i : list "1,2,3") {
 					DataEngine.addFieldOption(
-						fieldFieldLabel = "${fieldName}",
-						index = "${i}",
+						fieldFieldLabel = ${fieldName},
+						index = ${i},
 						optionValue = "Option ${i}");
 				}
 			}
-			else if ("${fieldName}" == "Grid") {
+			else if (${fieldName} == "Grid") {
 				for (var i : list "1,2") {
 					DataEngine.addFieldOption(
-						fieldFieldLabel = "${fieldName}",
-						index = "${i}",
+						fieldFieldLabel = ${fieldName},
+						index = ${i},
 						optionFieldLabel = "Rows",
 						optionValue = "Row ${i}");
 
 					DataEngine.editFieldReferenceOfFieldOption(
-						fieldFieldLabel = "${fieldName}",
+						fieldFieldLabel = ${fieldName},
 						fieldReferenceOfFieldOption = "R${i}",
-						index = "${i}",
+						index = ${i},
 						optionFieldLabel = "Rows");
 				}
 
 				for (var i : list "1,2") {
 					DataEngine.addFieldOption(
-						fieldFieldLabel = "${fieldName}",
-						index = "${i}",
+						fieldFieldLabel = ${fieldName},
+						index = ${i},
 						optionFieldLabel = "Columns",
 						optionValue = "Column ${i}");
 
 					DataEngine.editFieldReferenceOfFieldOption(
-						fieldFieldLabel = "${fieldName}",
+						fieldFieldLabel = ${fieldName},
 						fieldReferenceOfFieldOption = "C${i}",
-						index = "${i}",
+						index = ${i},
 						optionFieldLabel = "Columns");
 				}
 			}
@@ -155,19 +155,19 @@ definition {
 
 		if (isSet(targetFieldGroupLabel)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fieldFieldGroupLabel = "${targetFieldGroupLabel}",
-				key_fieldName = "${fieldName}",
+				key_fieldFieldGroupLabel = ${targetFieldGroupLabel},
+				key_fieldName = ${fieldName},
 				locator1 = "Sidebar#ADD_FIELD_NAME",
 				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET",
-				value1 = "${fieldName}");
+				value1 = ${fieldName});
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fieldFieldLabel = "${targetFieldLabel}",
-				key_fieldName = "${fieldName}",
+				key_fieldFieldLabel = ${targetFieldLabel},
+				key_fieldName = ${fieldName},
 				locator1 = "Sidebar#ADD_FIELD_NAME",
 				locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-				value1 = "${fieldName}");
+				value1 = ${fieldName});
 		}
 
 		WaitForVisible(locator1 = "Sidebar#BACK");
@@ -177,34 +177,34 @@ definition {
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
-		if ("${fieldName}" == "Text") {
+		if (${fieldName} == "Text") {
 			if (isSet(fieldType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${fieldType}",
+					key_toggleSwitchLabel = ${fieldType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
-		else if ("${fieldName}" == "Numeric") {
+		else if (${fieldName} == "Numeric") {
 			if (isSet(numericType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${numericType}",
+					key_toggleSwitchLabel = ${numericType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
 
-		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+		var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -212,13 +212,13 @@ definition {
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		Click(locator1 = "Sidebar#BACK");
 	}
@@ -226,23 +226,23 @@ definition {
 	macro addFieldOption {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 
 		if (isSet(optionFieldLabel)) {
 			Type(
-				index = "${index}",
-				key_optionFieldLabel = "${optionFieldLabel}",
+				index = ${index},
+				key_optionFieldLabel = ${optionFieldLabel},
 				locator1 = "Sidebar#OPTION_INPUT",
-				value1 = "${optionValue}");
+				value1 = ${optionValue});
 		}
 		else {
 			Type(
-				index = "${index}",
+				index = ${index},
 				locator1 = "Sidebar#OPTION_INPUT_WITHOUT_LABEL",
-				value1 = "${optionValue}");
+				value1 = ${optionValue});
 		}
 
 		if (isSet(fieldFieldLabel)) {
@@ -255,106 +255,106 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Fields");
 
-		for (var fieldName : list "${fieldNameList}") {
-			var key_fieldName = "${fieldName}";
-			var fieldReference = StringUtil.replace("${fieldName}", " ", "");
+		for (var fieldName : list ${fieldNameList}) {
+			var key_fieldName = ${fieldName};
+			var fieldReference = StringUtil.replace(${fieldName}, " ", "");
 
 			DoubleClick(locator1 = "Sidebar#ADD_FIELD_NAME");
 
 			WaitForVisible(locator1 = "Sidebar#BACK");
 
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldName}",
+				key_fieldFieldLabel = ${fieldName},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-				value1 = "${fieldName}");
+				value1 = ${fieldName});
 
-			if ("${fieldName}" == "Grid") {
-				var index = "1";
+			if (${fieldName} == "Grid") {
+				var index = 1;
 
 				for (var optionValue : list "R1,R2") {
 					DataEngine.addFieldOption(
-						index = "${index}",
+						index = ${index},
 						optionFieldLabel = "Rows",
 						optionValue = "Row ${index}");
 
 					DataEngine.editFieldReferenceOfFieldOption(
-						fieldReferenceOfFieldOption = "${optionValue}",
-						index = "${index}",
+						fieldReferenceOfFieldOption = ${optionValue},
+						index = ${index},
 						optionFieldLabel = "Rows");
 
 					var index = ${index} + 1;
 				}
 
-				var index = "1";
+				var index = 1;
 
 				for (var optionValue : list "C1,C2") {
 					DataEngine.addFieldOption(
-						index = "${index}",
+						index = ${index},
 						optionFieldLabel = "Columns",
 						optionValue = "Column ${index}");
 
 					DataEngine.editFieldReferenceOfFieldOption(
-						fieldReferenceOfFieldOption = "${optionValue}",
-						index = "${index}",
+						fieldReferenceOfFieldOption = ${optionValue},
+						index = ${index},
 						optionFieldLabel = "Columns");
 
 					var index = ${index} + 1;
 				}
 			}
-			else if ("${fieldName}" == "Multiple Selection") {
+			else if (${fieldName} == "Multiple Selection") {
 				DataEngine.addFieldOption(
-					index = "1",
+					index = 1,
 					optionFieldLabel = "Options",
 					optionValue = "Option 1");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "First",
-					index = "1",
+					index = 1,
 					optionFieldLabel = "Options");
 
 				DataEngine.addFieldOption(
-					index = "2",
+					index = 2,
 					optionFieldLabel = "Options",
 					optionValue = "Option 2");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Second",
-					index = "2",
+					index = 2,
 					optionFieldLabel = "Options");
 			}
-			else if ("${fieldName}" == "Select from List") {
+			else if (${fieldName} == "Select from List") {
 				DataEngine.addFieldOption(
-					index = "1",
+					index = 1,
 					optionValue = "Option 2");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value2",
-					index = "1");
+					index = 1);
 
 				DataEngine.addFieldOption(
-					index = "2",
+					index = 2,
 					optionValue = "Option 1");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value1",
-					index = "2");
+					index = 2);
 			}
-			else if ("${fieldName}" == "Single Selection") {
+			else if (${fieldName} == "Single Selection") {
 				DataEngine.addFieldOption(
-					index = "1",
+					index = 1,
 					optionValue = "Option 3");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value3",
-					index = "1");
+					index = 1);
 
 				DataEngine.addFieldOption(
-					index = "2",
+					index = 2,
 					optionValue = "Option 4");
 
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value4",
-					index = "2");
+					index = 2);
 			}
 
 			Navigator.gotoNavTab(navTab = "Advanced");
@@ -363,13 +363,13 @@ definition {
 				key_fieldLabel = "Field Reference",
 				key_fieldName = "fieldReference",
 				locator1 = "Sidebar#TEXT_INPUT",
-				value1 = "${fieldReference}");
+				value1 = ${fieldReference});
 
 			AssertTextEquals.assertValue(
 				key_fieldLabel = "Field Reference",
 				key_fieldName = "fieldReference",
 				locator1 = "Sidebar#TEXT_INPUT",
-				value1 = "${fieldReference}");
+				value1 = ${fieldReference});
 
 			Click(locator1 = "Sidebar#BACK");
 		}
@@ -381,8 +381,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fieldFieldLabel = "${targetFieldLabel}",
-			key_fieldName = "${fieldsetName}",
+			key_fieldFieldLabel = ${targetFieldLabel},
+			key_fieldName = ${fieldsetName},
 			locator1 = "Sidebar#ADD_FIELD_NAME",
 			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
@@ -392,23 +392,23 @@ definition {
 			Type(
 				key_fieldLabel = "Label",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fieldsetLabel}");
+				value1 = ${fieldsetLabel});
 
 			AssertTextEquals(
 				key_fieldLabel = "Label",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fieldsetLabel}");
+				value1 = ${fieldsetLabel});
 
 			AssertElementPresent(
-				key_fieldsetLabel = "${fieldsetLabel}",
+				key_fieldsetLabel = ${fieldsetLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
-				value1 = "${fieldsetLabel}");
+				value1 = ${fieldsetLabel});
 		}
 		else {
 			AssertElementPresent(
-				key_fieldsetLabel = "${fieldsetName}",
+				key_fieldsetLabel = ${fieldsetName},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
-				value1 = "${fieldsetName}");
+				value1 = ${fieldsetName});
 		}
 
 		Click(locator1 = "Sidebar#BACK");
@@ -420,11 +420,11 @@ definition {
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		DoubleClick(
-			key_fieldName = "${fieldsetName}",
+			key_fieldName = ${fieldsetName},
 			locator1 = "Sidebar#ADD_FIELD_NAME");
 
 		AssertElementPresent(
-			key_fieldsetLabel = "${fieldsetName}",
+			key_fieldsetLabel = ${fieldsetName},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -436,8 +436,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "Fields");
 
 		DragAndDrop.javaScriptDragAndDropToBottom(
-			key_fieldName = "${fieldName}",
-			key_fieldsGroupLabel = "${fieldsGroupLabel}",
+			key_fieldName = ${fieldName},
+			key_fieldsGroupLabel = ${fieldsGroupLabel},
 			locator1 = "Sidebar#ADD_FIELD_NAME",
 			locator2 = "DDMEditStructure#FORM_FIELDS_GROUP_CONTAINER");
 
@@ -448,34 +448,34 @@ definition {
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
-		if ("${fieldName}" == "Text") {
+		if (${fieldName} == "Text") {
 			if (isSet(fieldType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${fieldType}",
+					key_toggleSwitchLabel = ${fieldType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
-		else if ("${fieldName}" == "Numeric") {
+		else if (${fieldName} == "Numeric") {
 			if (isSet(numericType)) {
 				Check.checkToggleSwitch(
-					key_toggleSwitchLabel = "${numericType}",
+					key_toggleSwitchLabel = ${numericType},
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
 
-		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+		var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -483,50 +483,50 @@ definition {
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addRepeatableField {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		WaitForElementPresent(
-			index = "${index}",
-			key_fieldLabel = "${fieldLabel}",
+			index = ${index},
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_ADD_BUTTON_INDEXED");
 
 		Click(
-			index = "${index}",
-			key_fieldLabel = "${fieldLabel}",
+			index = ${index},
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_ADD_BUTTON_INDEXED");
 	}
 
 	macro addTranslationToFieldset {
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = ${fieldsetName});
 
 		MenuItem.click(menuItem = "Edit");
 
-		for (var locale : list "${localeList}") {
+		for (var locale : list ${localeList}) {
 			DataEngine.changeLocale(
-				locale = "${locale}",
+				locale = ${locale},
 				modal = "true");
 
 			Type(
 				locator1 = "FormViewBuilder#FIELD_SET_NAME",
 				value1 = "${fieldsetName} ${locale}");
 
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldName}",
+					fieldFieldLabel = ${fieldName},
 					fieldFieldLabelEdit = "${fieldName} ${locale}",
 					fieldsetModal = "true");
 
@@ -561,9 +561,9 @@ definition {
 		var checkboxName = "Allow Multiple Selections";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -574,52 +574,52 @@ definition {
 
 	macro assertCheckboxOptions {
 		if (!(isSet(fieldIndex))) {
-			var fieldIndex = "1";
+			var fieldIndex = 1;
 		}
 
 		if (!(isSet(optionIndex))) {
-			var optionIndex = "1";
+			var optionIndex = 1;
 		}
 
-		for (var optionLabel : list "${optionLabelList}") {
+		for (var optionLabel : list ${optionLabelList}) {
 			AssertElementPresent(
-				fieldIndex = "${fieldIndex}",
-				key_fieldLabel = "${fieldLabel}",
-				key_optionLabel = "${optionLabel}",
+				fieldIndex = ${fieldIndex},
+				key_fieldLabel = ${fieldLabel},
+				key_optionLabel = ${optionLabel},
 				locator1 = "DataEngineBuilder#OPTIONS_CHECKBOX_INDEXED",
-				optionIndex = "${optionIndex}");
+				optionIndex = ${optionIndex});
 		}
 	}
 
 	macro assertFieldNotPresent {
 		if (isSet(fieldFieldLabel)) {
 			AssertElementNotPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 		}
 		else if (isSet(fieldsetLabel)) {
 			AssertElementNotPresent(
-				key_fieldsetLabel = "${fieldsetLabel}",
+				key_fieldsetLabel = ${fieldsetLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			AssertElementNotPresent(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}
 
 	macro assertFieldRepeated {
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
-			key_index = "${index}",
+			key_fieldName = ${fieldName},
+			key_index = ${index},
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 
 	macro assertFieldRepeatedNotPresent {
 		AssertElementNotPresent(
-			key_fieldName = "${fieldName}",
-			key_index = "${index}",
+			key_fieldName = ${fieldName},
+			key_index = ${index},
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 
@@ -627,9 +627,9 @@ definition {
 		var checkboxName = "Inline";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -640,20 +640,20 @@ definition {
 
 	macro assertInlineOptions {
 		if (!(isSet(fieldIndex))) {
-			var fieldIndex = "1";
+			var fieldIndex = 1;
 		}
 
 		if (!(isSet(optionIndex))) {
-			var optionIndex = "1";
+			var optionIndex = 1;
 		}
 
-		for (var optionLabel : list "${optionLabelList}") {
+		for (var optionLabel : list ${optionLabelList}) {
 			AssertElementPresent(
-				fieldIndex = "${fieldIndex}",
-				key_fieldLabel = "${fieldLabel}",
-				key_optionLabel = "${optionLabel}",
+				fieldIndex = ${fieldIndex},
+				key_fieldLabel = ${fieldLabel},
+				key_optionLabel = ${optionLabel},
 				locator1 = "DataEngineBuilder#OPTIONS_INLINE_INDEXED",
-				optionIndex = "${optionIndex}");
+				optionIndex = ${optionIndex});
 		}
 	}
 
@@ -661,9 +661,9 @@ definition {
 		var checkboxName = "Localizable";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -674,9 +674,9 @@ definition {
 
 	macro assertLocalizableFieldUnchecked {
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -689,26 +689,26 @@ definition {
 
 	macro assertNonInlineOptions {
 		if (!(isSet(fieldIndex))) {
-			var fieldIndex = "1";
+			var fieldIndex = 1;
 		}
 
 		if (!(isSet(optionIndex))) {
-			var optionIndex = "1";
+			var optionIndex = 1;
 		}
 
-		for (var optionLabel : list "${optionLabelList}") {
+		for (var optionLabel : list ${optionLabelList}) {
 			AssertElementPresent(
-				fieldIndex = "${fieldIndex}",
-				key_fieldLabel = "${fieldLabel}",
-				key_optionLabel = "${optionLabel}",
+				fieldIndex = ${fieldIndex},
+				key_fieldLabel = ${fieldLabel},
+				key_optionLabel = ${optionLabel},
 				locator1 = "DataEngineBuilder#OPTIONS_NOT_INLINE_INDEXED",
-				optionIndex = "${optionIndex}");
+				optionIndex = ${optionIndex});
 		}
 	}
 
 	macro assertNonLocalizableField {
 		AssertElementPresent(
-			key_fieldName = "${fieldFieldName}",
+			key_fieldName = ${fieldFieldName},
 			locator1 = "DataEngineRenderer#WEB_CONTENT_DISABLED_FIELD");
 	}
 
@@ -716,9 +716,9 @@ definition {
 		var checkboxName = "Order Options Alphabetically";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -731,9 +731,9 @@ definition {
 		var checkboxName = "Repeatable";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -746,9 +746,9 @@ definition {
 		var checkboxName = "Show Label";
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -759,20 +759,20 @@ definition {
 
 	macro assertSwitchOptions {
 		if (!(isSet(fieldIndex))) {
-			var fieldIndex = "1";
+			var fieldIndex = 1;
 		}
 
 		if (!(isSet(optionIndex))) {
-			var optionIndex = "1";
+			var optionIndex = 1;
 		}
 
-		for (var optionLabel : list "${optionLabelList}") {
+		for (var optionLabel : list ${optionLabelList}) {
 			AssertElementPresent(
-				fieldIndex = "${fieldIndex}",
-				key_fieldLabel = "${fieldLabel}",
-				key_optionLabel = "${optionLabel}",
+				fieldIndex = ${fieldIndex},
+				key_fieldLabel = ${fieldLabel},
+				key_optionLabel = ${optionLabel},
 				locator1 = "DataEngineBuilder#OPTIONS_SWITCH_INDEXED",
-				optionIndex = "${optionIndex}");
+				optionIndex = ${optionIndex});
 		}
 	}
 
@@ -781,7 +781,7 @@ definition {
 
 		if (isSet(fieldName)) {
 			Click.clickNoMouseOver(
-				key_fieldName = "${fieldName}",
+				key_fieldName = ${fieldName},
 				locator1 = "Button#LOCALIZATION");
 		}
 		else if (isSet(friendlyURLHistory)) {
@@ -799,12 +799,12 @@ definition {
 		}
 		else if (isSet(modal)) {
 			Click(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "DataEngineBuilder#DROPDOWN_MENU_ITEM");
 		}
 		else {
 			Click(
-				key_locale = "${locale}",
+				key_locale = ${locale},
 				locator1 = "Translation#LOCALIZATION_NAME");
 		}
 	}
@@ -814,22 +814,22 @@ definition {
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "${fieldsetName}");
+			value1 = ${fieldsetName});
 
-		DataEngine.addFields(fieldNameList = "${fieldNameList}");
+		DataEngine.addFields(fieldNameList = ${fieldNameList});
 
 		if (isSet(fieldHelp)) {
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				DataEngine.editFieldTip(
-					fieldFieldLabel = "${fieldName}",
+					fieldFieldLabel = ${fieldName},
 					fieldHelp = "${fieldName} Help Text");
 			}
 		}
 
 		if (isSet(fieldPlaceholder)) {
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				DataEngine.editFieldTip(
-					fieldFieldLabel = "${fieldName}",
+					fieldFieldLabel = ${fieldName},
 					fieldPlaceholder = "${fieldName} Placeholder");
 			}
 		}
@@ -842,29 +842,29 @@ definition {
 	macro delete {
 		if (isSet(fieldFieldLabel)) {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 			Click(
-				key_text = "${fieldFieldLabel}",
+				key_text = ${fieldFieldLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsetLabel)) {
 			Click(
-				key_fieldsetLabel = "${fieldsetLabel}",
+				key_fieldsetLabel = ${fieldsetLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 			Click(
-				key_text = "${fieldsetLabel}",
+				key_text = ${fieldsetLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			Click(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 			Click(
-				key_text = "${fieldsGroupLabel}",
+				key_text = ${fieldsGroupLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 
@@ -880,7 +880,7 @@ definition {
 
 		WebContentStructures.addCP();
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = ${fieldsetName});
 
 		MenuItem.click(menuItem = "Delete");
 
@@ -890,29 +890,29 @@ definition {
 	macro duplicate {
 		if (isSet(fieldFieldLabel)) {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 			Click(
-				key_text = "${fieldFieldLabel}",
+				key_text = ${fieldFieldLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsetLabel)) {
 			Click(
-				key_fieldsetLabel = "${fieldsetLabel}",
+				key_fieldsetLabel = ${fieldsetLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 			Click(
-				key_text = "${fieldsetLabel}",
+				key_text = ${fieldsetLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			Click(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 			Click(
-				key_text = "${fieldsGroupLabel}",
+				key_text = ${fieldsGroupLabel},
 				locator1 = "Icon#SELECTED_FORM_FIELD_VERTICAL_ELLIPSIS");
 		}
 
@@ -922,23 +922,23 @@ definition {
 	macro editCollapsible {
 		if (isSet(fieldsetLabel)) {
 			Click(
-				key_fieldsetLabel = "${fieldsetLabel}",
+				key_fieldsetLabel = ${fieldsetLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 		}
 		else if (isSet(fieldsGroupLabel)) {
 			Click(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		Navigator.gotoNavTab(navTab = "Basic");
 
-		if ("${collapsible}" == "true") {
+		if (${collapsible} == "true") {
 			Check.checkToggleSwitch(
 				checkboxName = "Collapsible",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-		else if ("${collapsible}" == "false") {
+		else if (${collapsible} == "false") {
 			Uncheck.uncheckToggleSwitch(
 				checkboxName = "Collapsible",
 				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
@@ -952,20 +952,20 @@ definition {
 
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
-		if ("${fieldName}" == "Boolean") {
+		if (${fieldName} == "Boolean") {
 			Click(
-				key_fieldLabel = "${fieldFieldLabel}",
+				key_fieldLabel = ${fieldFieldLabel},
 				locator1 = "Checkbox#CHECKBOX_LABEL");
 		}
 		else {
 			if (isSet(fieldsetModal)) {
 				Click(
-					key_fieldFieldLabel = "${fieldFieldLabel}",
+					key_fieldFieldLabel = ${fieldFieldLabel},
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 			}
 			else {
 				Click(
-					key_fieldFieldLabel = "${fieldFieldLabel}",
+					key_fieldFieldLabel = ${fieldFieldLabel},
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 			}
 		}
@@ -974,22 +974,22 @@ definition {
 			key_fieldLabel = "Label",
 			key_fieldName = "label",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldFieldLabelEdit}");
+			value1 = ${fieldFieldLabelEdit});
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Label",
 			key_fieldName = "label",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldFieldLabelEdit}");
+			value1 = ${fieldFieldLabelEdit});
 
-		if ("${fieldName}" == "Boolean") {
+		if (${fieldName} == "Boolean") {
 			AssertElementPresent(
-				key_fieldLabel = "${fieldFieldLabelEdit}",
+				key_fieldLabel = ${fieldFieldLabelEdit},
 				locator1 = "Checkbox#CHECKBOX_LABEL");
 		}
 		else {
 			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabelEdit}",
+				key_fieldFieldLabel = ${fieldFieldLabelEdit},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -1001,15 +1001,15 @@ definition {
 
 		if (isSet(fieldsetModal)) {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
@@ -1022,13 +1022,13 @@ definition {
 	macro editFieldReference {
 		if (isSet(fieldsGroupLabel)) {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-				value1 = "${fieldsGroupLabel}");
+				value1 = ${fieldsGroupLabel});
 		}
 		else {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 		}
 
@@ -1038,13 +1038,13 @@ definition {
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${fieldReference}");
+			value1 = ${fieldReference});
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "${assertFieldReference}");
+			value1 = ${assertFieldReference});
 
 		Click(locator1 = "Sidebar#BACK");
 	}
@@ -1052,22 +1052,22 @@ definition {
 	macro editFieldReferenceOfFieldOption {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 
 		if (isSet(optionFieldLabel)) {
 			TripleClick(
-				index = "${index}",
-				key_optionFieldLabel = "${optionFieldLabel}",
+				index = ${index},
+				key_optionFieldLabel = ${optionFieldLabel},
 				locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT");
 
 			Type.sendKeys(
-				index = "${index}",
-				key_optionFieldLabel = "${optionFieldLabel}",
+				index = ${index},
+				key_optionFieldLabel = ${optionFieldLabel},
 				locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT",
-				value1 = "${fieldReferenceOfFieldOption}");
+				value1 = ${fieldReferenceOfFieldOption});
 
 			Click.pauseClickAt(
 				key_tab = "Basic",
@@ -1075,13 +1075,13 @@ definition {
 		}
 		else {
 			TripleClick(
-				index = "${index}",
+				index = ${index},
 				locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
 
 			Type.sendKeys(
-				index = "${index}",
+				index = ${index},
 				locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
-				value1 = "${fieldReferenceOfFieldOption}");
+				value1 = ${fieldReferenceOfFieldOption});
 
 			Click.pauseClickAt(
 				key_tab = "Basic",
@@ -1095,9 +1095,9 @@ definition {
 
 	macro editFieldRequired {
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Basic");
 
@@ -1114,15 +1114,15 @@ definition {
 
 	macro editFieldSearchable {
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Check.checkNotVisible(
 			key_fieldFieldLabel = "Searchable",
-			key_optionValue = "${searchableType}",
+			key_optionValue = ${searchableType},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1130,7 +1130,7 @@ definition {
 
 	macro editFieldsetsCollapsible {
 		Click(
-			key_fieldsetLabel = "${fieldsetLabel}",
+			key_fieldsetLabel = ${fieldsetLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		Check.checkToggleSwitch(
@@ -1144,21 +1144,21 @@ definition {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Click(
-			key_fieldsetLabel = "${fieldsetLabel}",
+			key_fieldsetLabel = ${fieldsetLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetLabelEdit}");
+			value1 = ${fieldsetLabelEdit});
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetLabelEdit}");
+			value1 = ${fieldsetLabelEdit});
 
 		AssertElementPresent(
-			key_fieldsetLabel = "${fieldsetLabelEdit}",
+			key_fieldsetLabel = ${fieldsetLabelEdit},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1170,9 +1170,9 @@ definition {
 		}
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldsGroupLabel}",
+			key_fieldFieldLabel = ${fieldsGroupLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldsGroupLabel}");
+			value1 = ${fieldsGroupLabel});
 
 		Navigator.gotoNavTab(navTab = "Basic");
 
@@ -1188,27 +1188,27 @@ definition {
 
 		if (isSet(fieldsetModal)) {
 			Click(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 		}
 		else {
 			Click(
-				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				key_fieldFieldLabel = ${fieldsGroupLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsGroupLabelEdit}");
+			value1 = ${fieldsGroupLabelEdit});
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsGroupLabelEdit}");
+			value1 = ${fieldsGroupLabelEdit});
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldsGroupLabelEdit}",
+			key_fieldFieldLabel = ${fieldsGroupLabelEdit},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1217,12 +1217,12 @@ definition {
 	macro editFieldTip {
 		if (isSet(fieldsetModal)) {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 		}
 		else {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
@@ -1234,37 +1234,37 @@ definition {
 
 			Type(
 				locator1 = "Sidebar#DDM_ANY",
-				value1 = "${fieldPlaceholder}");
+				value1 = ${fieldPlaceholder});
 
 			AssertTextEquals(
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fieldPlaceholder}");
+				value1 = ${fieldPlaceholder});
 		}
 
 		if (isSet(fieldHelp)) {
 			if (isSet(fieldsetModal)) {
 				Click(
-					key_fieldFieldLabel = "${fieldFieldLabel}",
+					key_fieldFieldLabel = ${fieldFieldLabel},
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 
 				Type(
 					key_fieldLabel = "Help Text",
 					locator1 = "TextInput#GENERIC_TEXT_INPUT",
-					value1 = "${fieldHelp}");
+					value1 = ${fieldHelp});
 			}
 			else {
-				var key_fieldFieldLabel = "${fieldFieldLabel}";
+				var key_fieldFieldLabel = ${fieldFieldLabel};
 				var key_text = "Help";
 
 				Click(locator1 = "Sidebar#DDM_ANY");
 
 				Type(
 					locator1 = "Sidebar#DDM_ANY",
-					value1 = "${fieldHelp}");
+					value1 = ${fieldHelp});
 
 				AssertTextEquals(
 					locator1 = "DDMEditStructure#SETTINGS_TEXT",
-					value1 = "${fieldHelp}");
+					value1 = ${fieldHelp});
 			}
 		}
 
@@ -1273,27 +1273,27 @@ definition {
 
 	macro editFieldType {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		Check.checkNotVisible(
 			key_fieldFieldLabel = "Field Type",
-			key_optionValue = "${fieldLineType}",
+			key_optionValue = ${fieldLineType},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1301,9 +1301,9 @@ definition {
 
 	macro editImageFieldPredefinedValue {
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -1311,43 +1311,43 @@ definition {
 
 		if (isSet(selectFromDepot)) {
 			ItemSelector.selectRepositoryImage(
-				depotName = "${depotName}",
-				imageFileName = "${imageFileName}");
+				depotName = ${depotName},
+				imageFileName = ${imageFileName});
 		}
 		else if (isSet(selectFromCurrentSite)) {
-			ItemSelector.selectDMImage(imageFileName = "${imageFileName}");
+			ItemSelector.selectDMImage(imageFileName = ${imageFileName});
 		}
 		else {
-			ItemSelector.uploadFile(uploadFileName = "${imageFileName}");
+			ItemSelector.uploadFile(uploadFileName = ${imageFileName});
 		}
 	}
 
 	macro editNumericType {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		Check.checkNotVisible(
 			key_fieldFieldLabel = "My numeric type is:",
-			key_optionValue = "${fieldNumericType}",
+			key_optionValue = ${fieldNumericType},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
-		if ("${fieldNumericType}" == "Integer") {
+		if (${fieldNumericType} == "Integer") {
 			var numericType = "integer";
 		}
 		else {
@@ -1355,7 +1355,7 @@ definition {
 		}
 
 		WaitForElementPresent(
-			key_optionValue = "${numericType}",
+			key_optionValue = ${numericType},
 			locator1 = "DataEngineBuilder#OPTION_SELECTED");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1363,7 +1363,7 @@ definition {
 
 	macro editStyle {
 		Click(
-			key_fieldFieldLabel = "${fieldLabel}",
+			key_fieldFieldLabel = ${fieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
@@ -1371,10 +1371,10 @@ definition {
 		Type(
 			key_fieldName = "",
 			locator1 = "DDMField#TEXT_BOX",
-			value1 = "${styleValue}");
+			value1 = ${styleValue});
 
 		AssertElementPresent(
-			key_styleValue = "${styleValue}",
+			key_styleValue = ${styleValue},
 			locator1 = "DataEngineRenderer#SEPARATOR_STYLE");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1389,7 +1389,7 @@ definition {
 	}
 
 	macro gotoEditFieldset {
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = ${fieldsetName});
 
 		MenuItem.click(menuItem = "Edit");
 	}
@@ -1400,13 +1400,13 @@ definition {
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		Click(
-			key_fieldsetName = "${fieldsetName}",
+			key_fieldsetName = ${fieldsetName},
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
 	}
 
 	macro moveNestedField {
-		var key_fieldsetLabel = "${fieldsetLabel}";
-		var key_fieldFieldLabel = "${nestedFieldLabel}";
+		var key_fieldsetLabel = ${fieldsetLabel};
+		var key_fieldFieldLabel = ${nestedFieldLabel};
 
 		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
@@ -1418,20 +1418,20 @@ definition {
 	macro removeFieldOption {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 
 		if (isSet(optionFieldLabel)) {
 			Click(
-				index = "${index}",
-				key_optionFieldLabel = "${optionFieldLabel}",
+				index = ${index},
+				key_optionFieldLabel = ${optionFieldLabel},
 				locator1 = "DataEngineBuilder#OPTION_REMOVE_BUTTON_WITH_LABEL_INDEXED");
 		}
 		else {
 			Click(
-				index = "${index}",
+				index = ${index},
 				locator1 = "DataEngineBuilder#OPTION_REMOVE_BUTTON_INDEXED");
 		}
 	}
@@ -1452,46 +1452,46 @@ definition {
 
 	macro toggleFieldRepeatable {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (isSet(fieldFieldLabel)) {
-			var fieldLabel = "${fieldFieldLabel}";
+			var fieldLabel = ${fieldFieldLabel};
 			var tab = "Advanced";
 		}
 		else if (isSet(fieldsetLabel)) {
-			var fieldLabel = "${fieldsetLabel}";
+			var fieldLabel = ${fieldsetLabel};
 			var tab = "Basic";
 		}
 		else if (isSet(fieldsGroupLabel)) {
-			var fieldLabel = "${fieldsGroupLabel}";
+			var fieldLabel = ${fieldsGroupLabel};
 			var tab = "Basic";
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
-		Navigator.gotoNavTab(navTab = "${tab}");
+		Navigator.gotoNavTab(navTab = ${tab});
 
 		Check.checkToggleSwitch(
 			key_fieldName = "repeatable",
 			locator1 = "Checkbox#SWITCH");
 
 		WaitForElementPresent(
-			index = "${index}",
-			key_fieldLabel = "${fieldLabel}",
+			index = ${index},
+			key_fieldLabel = ${fieldLabel},
 			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_ADD_BUTTON_INDEXED");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1499,22 +1499,22 @@ definition {
 
 	macro toggleInline {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
@@ -1541,29 +1541,29 @@ definition {
 		}
 
 		Click.clickAtNotVisible(
-			key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
-			key_optionValue = "${webContentMultipleSelection}",
+			key_fieldFieldLabel = ${webContentMultipleSelectionFieldLabel},
+			key_optionValue = ${webContentMultipleSelection},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
 	macro toggleShowAsSwitch {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		Navigator.gotoNavTab(navTab = "Basic");
@@ -1584,34 +1584,34 @@ definition {
 
 	macro toggleShowLabel {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			if (isSet(fieldLabel)) {
 				AssertClick.assertPartialTextClickAt(
-					index = "${index}",
-					key_fieldLabel = "${fieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-					value1 = "${fieldLabel}");
+					value1 = ${fieldLabel});
 			}
 			else {
 				Click(
-					index = "${index}",
+					index = ${index},
 					locator1 = "DataEngineBuilder#FIELD_CONTAINER_IN_MODAL_INDEXED");
 			}
 		}
 		else {
 			if (isSet(fieldLabel)) {
 				AssertClick.assertPartialTextClickAt(
-					index = "${index}",
-					key_fieldLabel = "${fieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-					value1 = "${fieldLabel}");
+					value1 = ${fieldLabel});
 			}
 			else {
 				Click(
-					index = "${index}",
+					index = ${index},
 					locator1 = "DataEngineBuilder#FIELD_CONTAINER_INDEXED");
 			}
 		}
@@ -1623,7 +1623,7 @@ definition {
 			var tab = "Advanced";
 		}
 
-		Navigator.gotoNavTab(navTab = "${tab}");
+		Navigator.gotoNavTab(navTab = ${tab});
 
 		if (IsChecked(checkboxName = "Show Label", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Uncheck.uncheckToggleSwitch(
@@ -1632,14 +1632,14 @@ definition {
 
 			if (IsElementPresent(locator1 = "Modal#MODAL")) {
 				WaitForElementNotPresent(
-					index = "${index}",
-					key_fieldLabel = "${fieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED");
 			}
 			else {
 				WaitForElementNotPresent(
-					index = "${index}",
-					key_fieldLabel = "${fieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${fieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
 			}
 		}
@@ -1650,14 +1650,14 @@ definition {
 
 			if (IsElementPresent(locator1 = "Modal#MODAL")) {
 				WaitForElementPresent(
-					index = "${index}",
-					key_fieldLabel = "${hiddenFieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${hiddenFieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED");
 			}
 			else {
 				WaitForElementPresent(
-					index = "${index}",
-					key_fieldLabel = "${hiddenFieldLabel}",
+					index = ${index},
+					key_fieldLabel = ${hiddenFieldLabel},
 					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
 			}
 		}
@@ -1667,82 +1667,82 @@ definition {
 
 	macro viewField {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldFieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldFieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldFieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldFieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldFieldLabel}");
+				value1 = ${fieldFieldLabel});
 		}
 
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "DataEngineBuilder#FIELD_NAME_INDEXED");
 
 		AssertTextEquals.assertValue(
 			locator1 = "Sidebar#DDM_LABEL",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		if (isSet(fieldHelp)) {
 			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldFieldLabel = ${fieldFieldLabel},
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
-				value1 = "${fieldHelp}");
+				value1 = ${fieldHelp});
 		}
 
 		if (isSet(fieldPlaceholder)) {
 			AssertTextEquals(
 				key_fieldLabel = "Placeholder Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fieldPlaceholder}");
+				value1 = ${fieldPlaceholder});
 		}
 	}
 
 	macro viewFieldSearchable {
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			value1 = ${fieldFieldLabel});
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Searchable",
-			key_optionValue = "${searchableType}",
+			key_optionValue = ${searchableType},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
 	macro viewFieldset {
 		AssertVisible(
-			key_fieldsetLabel = "${fieldsetName}",
+			key_fieldsetLabel = ${fieldsetName},
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-		for (var fieldName : list "${fieldNameList}") {
+		for (var fieldName : list ${fieldNameList}) {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldName}",
+				key_fieldFieldLabel = ${fieldName},
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 	}
 
 	macro viewFieldsetTranslation {
-		for (var locale : list "${localeList}") {
-			PortletEntry.changeLocale(locale = "${locale}");
+		for (var locale : list ${localeList}) {
+			PortletEntry.changeLocale(locale = ${locale});
 
 			AssertVisible(
 				key_fieldsetLabel = "${fieldsetName} ${locale}",
 				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-			for (var fieldName : list "${fieldNameList}") {
+			for (var fieldName : list ${fieldNameList}) {
 				AssertVisible(
 					key_fieldFieldLabel = "${fieldName} ${locale}",
 					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -1752,27 +1752,27 @@ definition {
 
 	macro viewFieldType {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Field Type",
-			key_optionValue = "${fieldLineType}",
+			key_optionValue = ${fieldLineType},
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1780,34 +1780,34 @@ definition {
 
 	macro viewNestedField {
 		AssertTextEquals.assertValue(
-			key_fieldName = "${fieldName}",
-			key_nestedFieldName = "${nestedField}",
+			key_fieldName = ${fieldName},
+			key_nestedFieldName = ${nestedField},
 			locator1 = "DDMField#NESTED_INPUT",
-			value1 = "${nestedFieldData}");
+			value1 = ${nestedFieldData});
 	}
 
 	macro viewNumericType {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		if (IsElementPresent(locator1 = "Modal#MODAL")) {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				index = "${index}",
-				key_fieldLabel = "${fieldLabel}",
+				index = ${index},
+				key_fieldLabel = ${fieldLabel},
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
-				value1 = "${fieldLabel}");
+				value1 = ${fieldLabel});
 		}
 
 		AssertElementPresent(
-			key_optionValue = "${fieldNumericType}",
+			key_optionValue = ${fieldNumericType},
 			locator1 = "DataEngineBuilder#OPTION_SELECTED");
 
 		Click(locator1 = "Sidebar#BACK");

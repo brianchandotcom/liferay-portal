@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishPublicationWithDeletedListAndRecord {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -129,7 +129,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Site Name",
-			changeTitle = "${changeTitle}",
+			changeTitle = ${changeTitle},
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
@@ -160,7 +160,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "List Name");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishPublicationWithDisplayTemplate {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -274,7 +274,7 @@ definition {
 			value1 = "Text");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishPublicationWithEditedListAndRecord {
 
 		// Workaround LPS-148148
@@ -406,13 +406,13 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Site Name",
-			changeTitle = "${changeTitle}",
+			changeTitle = ${changeTitle},
 			changeType = "Modified",
 			changeUser = "Test Test");
 
 		PublicationsNavigator.gotoViewChangeDetails(
 			changeCategory = "Dynamic Data Lists Record",
-			changeTitle = "${changeTitle}");
+			changeTitle = ${changeTitle});
 
 		PublicationsChangeDetails.viewDDLRecordChangeDetails(
 			changeType = "Modified",
@@ -447,7 +447,7 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test PublishPublicationWithFormTemplate {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -558,7 +558,7 @@ definition {
 		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test PublishPublicationWithNewListAndRecord {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -633,7 +633,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Site Name",
-			changeTitle = "${changeTitle}",
+			changeTitle = ${changeTitle},
 			changeType = "Added",
 			changeUser = "Test Test");
 
@@ -667,7 +667,7 @@ definition {
 			fieldFieldLabel = "Documents and Media");*/
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ResolveConflictingPublicationsByDiscarding {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -771,7 +771,7 @@ definition {
 
 		PublicationsChanges.discardChanges(
 			changeCategory = "Dynamic Data Lists Record",
-			changeTitle = "${changeTitle}",
+			changeTitle = ${changeTitle},
 			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Lists Record");
 

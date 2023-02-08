@@ -7,50 +7,50 @@ definition {
 
 		Type(
 			locator1 = "TextInput#WEB_ID",
-			value1 = "${webId}");
+			value1 = ${webId});
 
 		Type(
 			locator1 = "TextInput#VIRTUAL_HOST",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 
 		Type(
 			locator1 = "TextInput#MAIL_DOMAIN",
-			value1 = "${mailDomain}");
+			value1 = ${mailDomain});
 
-		if ("${maxUsers}" == "true") {
+		if (${maxUsers} == "true") {
 			Type(
 				locator1 = "TextInput#MAX_USERS",
-				value1 = "${maxUserNumber}");
+				value1 = ${maxUserNumber});
 		}
 
-		if ("${portalInstanceActive}" == "false") {
+		if (${portalInstanceActive} == "false") {
 			Uncheck(locator1 = "Checkbox#ACTIVE");
 		}
 
 		if (isSet(instanceScreenName)) {
 			Type(
 				locator1 = "TextInput#VIRTUAL_INSTANCE_SCREEN_NAME",
-				value1 = "${instanceScreenName}");
+				value1 = ${instanceScreenName});
 
 			Type(
 				locator1 = "TextInput#VIRTUAL_INSTANCE_EMAIL",
-				value1 = "${instanceAdminEmail}");
+				value1 = ${instanceAdminEmail});
 
 			Type(
 				locator1 = "TextInput#VIRTUAL_INSTANCE_PASSWORD",
-				value1 = "${instancePassword}");
+				value1 = ${instancePassword});
 		}
 
 		if (isSet(instanceAdminFirstName)) {
 			Type(
 				locator1 = "TextInput#VIRTUAL_INSTANCE_FIRST_NAME",
-				value1 = "${instanceAdminFirstName}");
+				value1 = ${instanceAdminFirstName});
 		}
 
 		if (isSet(instanceAdminLastName)) {
 			Type(
 				locator1 = "TextInput#VIRTUAL_INSTANCE_LAST_NAME",
-				value1 = "${instanceAdminLastName}");
+				value1 = ${instanceAdminLastName});
 		}
 
 		SelectFrameTop();
@@ -61,9 +61,9 @@ definition {
 	}
 
 	macro deactivatePortalInstance {
-		var key_virtualHost = "${virtualHost}";
+		var key_virtualHost = ${virtualHost};
 
-		LexiconEntry.openEntryMenu(rowEntry = "${virtualHost}");
+		LexiconEntry.openEntryMenu(rowEntry = ${virtualHost});
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -73,17 +73,17 @@ definition {
 
 		AssertTextEquals(
 			key_columnName = "active",
-			key_tableEntry = "${virtualHost}",
+			key_tableEntry = ${virtualHost},
 			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
 			value1 = "No");
 	}
 
 	macro deleteCP {
-		var key_virtualHost = "${virtualHost}";
+		var key_virtualHost = ${virtualHost};
 
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
-			tableEntry = "${virtualHost}");
+			tableEntry = ${virtualHost});
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -97,21 +97,21 @@ definition {
 
 		AssertTextNotPresent(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 	}
 
 	macro editCP {
-		var key_virtualHost = "${virtualHost}";
+		var key_virtualHost = ${virtualHost};
 
 		AssertTextEquals(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		Type(
 			locator1 = "TextInput#MAIL_DOMAIN",
-			value1 = "${mailDomain}");
+			value1 = ${mailDomain});
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -122,10 +122,10 @@ definition {
 
 	macro openOnDemandAdminPortlet {
 		if (isSet(baseURL)) {
-			var baseURL = "${baseURL}";
+			var baseURL = ${baseURL};
 
 			Navigator.openWithAppendToBaseURL(
-				baseURL = "${baseURL}",
+				baseURL = ${baseURL},
 				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_on_demand_admin_web_internal_portlet_OnDemandAdminPortlet");
 		}
 		else {
@@ -137,10 +137,10 @@ definition {
 
 	macro openVirtualInstancesAdmin {
 		if (isSet(baseURL)) {
-			var baseURL = "${baseURL}";
+			var baseURL = ${baseURL};
 
 			Navigator.openWithAppendToBaseURL(
-				baseURL = "${baseURL}",
+				baseURL = ${baseURL},
 				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 		}
 		else {
@@ -151,7 +151,7 @@ definition {
 	macro requestOnDemandAdminOnInstance {
 		WaitForElementPresent(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Request Administrator Access");
 
@@ -170,32 +170,32 @@ definition {
 
 	@summary = "Clean up Portal Instances as part of standard teardown"
 	macro tearDownCP {
-		JSONUser.tearDownNonAdminUsers(authenticationMethod = "${authenticationMethod}");
+		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
-		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = "${authenticationMethod}");
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
 	@summary = "Clean up Portal Instances as part of standard teardown but without Selenium usage"
 	macro tearDownCPNoSelenium {
-		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = "${authenticationMethod}");
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 
-		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = "${authenticationMethod}");
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
 	macro viewCP {
-		var key_virtualHost = "${virtualHost}";
+		var key_virtualHost = ${virtualHost};
 
 		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_WEB_ID",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 
 		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 
 		AssertTextEquals.assertText(
 			locator1 = "PortalInstances#INSTANCE_TABLE_MAIL_DOMAIN",
-			value1 = "${virtualHost}");
+			value1 = ${virtualHost});
 	}
 
 }

@@ -30,7 +30,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@description = "LPS-146034. Verifies admin component displays it's default theme after applying a theme"
-	@priority = "5"
+	@priority = 5
 	test CanDisplayDefaultTheme {
 		task ("Assert classic theme background color") {
 			AssertCssValue(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "LPS-146450. Verifies admin component CSS can be overridden"
-	@priority = "4"
+	@priority = 4
 	test CssCanBeOverridden {
 		task ("Assert cadmin default theme is applied to a component") {
 			AssertCssValue(

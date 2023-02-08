@@ -8,24 +8,24 @@ definition {
 		Type(
 			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${name}");
+			value1 = ${name});
 
 		Select(
 			key_fieldLabel = "Target",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${target}");
+			value1 = ${target});
 
 		Select(
 			key_fieldLabel = "Modifier",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${modifier}");
+			value1 = ${modifier});
 
 		Button.clickSubmitButton();
 	}
 
 	macro assertDeleteButtonNotPresent {
 		Click(
-			key_value = "${baseEntryName}",
+			key_value = ${baseEntryName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		AssertElementNotPresent(
@@ -38,7 +38,7 @@ definition {
 
 		Click(
 			locator1 = "Radio#ANY",
-			radioLabel = "${key_pricingType}");
+			radioLabel = ${key_pricingType});
 
 		Click(locator1 = "Button#PLUS");
 
@@ -50,14 +50,14 @@ definition {
 			Type(
 				key_text = "Quantity",
 				locator1 = "TextInput#ANY",
-				value1 = "${key_quantity}");
+				value1 = ${key_quantity});
 		}
 
 		if (isSet(key_value)) {
 			Type(
 				key_text = "Tier Price",
 				locator1 = "TextInput#ANY",
-				value1 = "${key_value}");
+				value1 = ${key_value});
 		}
 
 		Click(locator1 = "Button#SUBMIT");
@@ -77,14 +77,14 @@ definition {
 		Type(
 			key_text = "Price List Price",
 			locator1 = "TextInput#ANY",
-			value1 = "${priceListEntryPrice}");
+			value1 = ${priceListEntryPrice});
 
 		Button.clickSave();
 	}
 
 	macro openPriceListsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
 	}
 

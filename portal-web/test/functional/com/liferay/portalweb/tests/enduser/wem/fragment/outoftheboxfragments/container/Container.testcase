@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111657. Can add the Container to a column of Row or another Container."
-	@priority = "4"
+	@priority = 4
 	test AddContainerToLayoutElements {
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -57,14 +57,14 @@ definition {
 
 			PageEditor.addElementToColumn(
 				collectionName = "Layout Elements",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Container",
 				navTab = "Fragments");
 		}
 	}
 
 	@description = "This is a test for LPS-107285. Can not duplicate Layout Elements with a widget that only allowed appear once in the page, there should be an error message shown."
-	@priority = "4"
+	@priority = 4
 	test CannotDuplicateContainerWithOnlyAllowedAppearOnceWidget {
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91000, LPS-95002, LPS-115224 and LPS-120693. Configure the Flex Column and Fixed Width Container styles."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFlexColumnAndFixedWidthContainerStyles {
 		property portal.acceptance = "true";
 
@@ -125,12 +125,12 @@ definition {
 		task ("Assert the Container styles") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container styles") {
@@ -144,8 +144,8 @@ definition {
 
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
-				paddingBottom = "4",
-				paddingTop = "2",
+				paddingBottom = 4,
+				paddingTop = 2,
 				panel = "Styles");
 		}
 
@@ -167,9 +167,9 @@ definition {
 				contentDisplay = "column",
 				height = "600px",
 				justifyContent = "around",
-				paddingBottom = "4",
-				paddingTop = "2",
-				position = "1");
+				paddingBottom = 4,
+				paddingTop = 2,
+				position = 1);
 		}
 
 		task ("Assert Fixed Width of Container works in view mode") {
@@ -185,8 +185,8 @@ definition {
 			var containerWidth = selenium.getElementWidth("//div[contains(@class,'lfr-layout-structure-item-container')]");
 
 			TestUtils.assertNotEquals(
-				actual = "${containerWidth}",
-				expected = "${screenWidth}");
+				actual = ${containerWidth},
+				expected = ${screenWidth});
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "container",
@@ -196,12 +196,12 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "container",
 				styleName = "paddingBottom",
-				styleValue = "4");
+				styleValue = 4);
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "container",
 				styleName = "paddingTop",
-				styleValue = "2");
+				styleValue = 2);
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'lfr-layout-structure-item-container')]",
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-163440. The page creator could define the Flex Column and Flex Wrap of a Container."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFlexColumnAndFlexWrapContainerStyles {
 		property portal.acceptance = "true";
 
@@ -233,9 +233,9 @@ definition {
 				fragmentName = "Button",
 				navTab = "Fragments");
 
-			var i = "1";
+			var i = 1;
 
-			while ("${i}" != "4") {
+			while (${i} != 4) {
 				PageEditor.addElementToContainer(
 					collectionName = "Basic Components",
 					fragmentName = "Button",
@@ -249,7 +249,7 @@ definition {
 		task ("When the page creator changes the Content Display to Flex Column and set up a Max Height smaller than nested Buttons' height") {
 			PageEditor.editLayoutContainer(
 				contentDisplay = "Flex Column",
-				maxHeight = "50",
+				maxHeight = 50,
 				panel = "General");
 		}
 
@@ -260,8 +260,8 @@ definition {
 			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
 
 			TestUtils.isGreaterThan(
-				actual = "${totalHeight}",
-				expected = "${containerHeight}");
+				actual = ${totalHeight},
+				expected = ${containerHeight});
 		}
 
 		task ("When the page creator changes the Flex Wrap to wrap") {
@@ -273,7 +273,7 @@ definition {
 		task ("Then the nested Buttons are wrapped in a single row") {
 			PageEditor.viewContainerStyle(
 				flexWrap = "wrap",
-				position = "1");
+				position = 1);
 
 			var totalHeight = Css.getElementPropertyValue(
 				element = "//div[contains(@class,'page-editor__container')]",
@@ -281,13 +281,13 @@ definition {
 			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
 
 			TestUtils.assertEquals(
-				actual = "${totalHeight}",
-				expected = "${containerHeight}");
+				actual = ${totalHeight},
+				expected = ${containerHeight});
 		}
 	}
 
 	@description = "This is a test for LPS-120693. Configure the Flex Column and Fluid Container styles."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFlexColumnAndFluidContainerStyles {
 		property portal.acceptance = "true";
 
@@ -320,12 +320,12 @@ definition {
 		task ("View the Container styles") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container styles") {
@@ -343,12 +343,12 @@ definition {
 				contentDisplay = "column",
 				height = "1000px",
 				justifyContent = "between",
-				position = "1");
+				position = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-120693. Configure the Flex Row and Fixed Width Container styles."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFlexRowAndFixedWidthContainerStyles {
 		property portal.acceptance = "true";
 
@@ -380,19 +380,19 @@ definition {
 
 			AssertElementPresent(
 				key_elementHeader = "//*[contains(@data-lfr-editable-id,'element-text')][normalize-space()='Banner Title Example']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("View the Container styles") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container styles") {
@@ -410,12 +410,12 @@ definition {
 				containerWidth = "Fixed Width",
 				contentDisplay = "row",
 				justifyContent = "end",
-				position = "1");
+				position = 1);
 		}
 	}
 
 	@description = "This is a use case for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
-	@priority = "5"
+	@priority = 5
 	test ConfigureFlexRowAndFluidContainerStyles {
 		property portal.acceptance = "true";
 
@@ -448,12 +448,12 @@ definition {
 		task ("View the Container styles") {
 			AssertElementNotPresent(
 				key_contentDisplay = "",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Container styles") {
@@ -467,17 +467,17 @@ definition {
 				backgroundColor = "Warning",
 				borderColor = "Danger",
 				borderRadius = "Border Radius Large",
-				borderWidth = "5",
+				borderWidth = 5,
 				boxShadow = "Box Shadow Large",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
-				opacity = "50",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
+				marginBottom = 2,
+				marginLeft = 2,
+				marginRight = 2,
+				marginTop = 2,
+				opacity = 50,
+				paddingBottom = 2,
+				paddingLeft = 2,
+				paddingRight = 2,
+				paddingTop = 2,
 				panel = "Styles");
 		}
 
@@ -487,21 +487,21 @@ definition {
 				backgroundColor = "warning",
 				borderColor = "danger",
 				borderRadius = "border-radius-lg",
-				borderWidth = "5",
+				borderWidth = 5,
 				boxShadow = "box-shadow-lg",
 				contentDisplay = "row",
 				dropShadow = "lg",
 				justifyContent = "center",
-				marginBottom = "2",
-				marginLeft = "2",
-				marginRight = "2",
-				marginTop = "2",
+				marginBottom = 2,
+				marginLeft = 2,
+				marginRight = 2,
+				marginTop = 2,
 				opacity = "0.5",
-				paddingBottom = "2",
-				paddingLeft = "2",
-				paddingRight = "2",
-				paddingTop = "2",
-				position = "1");
+				paddingBottom = 2,
+				paddingLeft = 2,
+				paddingRight = 2,
+				paddingTop = 2,
+				position = 1);
 		}
 
 		task ("Duplicate the Container") {
@@ -514,7 +514,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147394. View warning message and view change in DOM and Page Elements panel."
-	@priority = "4"
+	@priority = 4
 	test ConfigureHTMLTagOfContainer {
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -541,7 +541,7 @@ definition {
 
 		task ("View the HTML tag of Container is section") {
 			AssertVisible(
-				key_position = "1",
+				key_position = 1,
 				key_type = "section",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_TYPE");
 		}
@@ -555,7 +555,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-154980. Can drag and drop a fragment outside the container."
-	@priority = "3"
+	@priority = 3
 	test DragAndDropFragmentFromContainerToOutside {
 		task ("Given a page creator has two Containers on a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -579,12 +579,12 @@ definition {
 		task ("When the page creator drags and drops the second Container into the first one") {
 			PageEditor.clickConfigurableField(
 				fragmentName = "Container",
-				index = "2");
+				index = 2);
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_dragFragmentName = "Container",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
 				locator2 = "PageEditor#CONTAINER_CONTAINER");
 
@@ -595,13 +595,13 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Container']",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("When the page creator drags and drops the second Container outside the first one") {
 			DragAndDrop.javaScriptDragAndDropToBottom(
-				index = "1",
+				index = 1,
 				key_dragFragmentName = "Container",
 				key_targetFragmentName = "Container",
 				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
@@ -614,19 +614,19 @@ definition {
 			AssertElementNotPresent(
 				key_elementHeader = "//div[@aria-label='Container']",
 				key_elementType = "Container",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.viewFragment(fragmentName = "Container");
 
 			PageEditor.viewFragment(
 				fragmentName = "Container",
-				position = "2");
+				position = 2);
 		}
 	}
 
 	@description = "This is a test for LPS-107285. When duplicate the Container with the Grid, the Grid should also be duplicated."
-	@priority = "5"
+	@priority = 5
 	test DuplicateContainerWithGrid {
 		property portal.acceptance = "true";
 
@@ -654,13 +654,13 @@ definition {
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Grid']",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-121330. Can add an internal link to the Container element."
-	@priority = "5"
+	@priority = 5
 	test MapDisplayPageURLToContainer {
 		property portal.acceptance = "true";
 
@@ -755,7 +755,7 @@ definition {
 	}
 
 	@description = "This ensures that images can be added to the fragment background via the file URL when mapping a document."
-	@priority = "5"
+	@priority = 5
 	test MapDMImageToBackgroundImageOfContainer {
 		property portal.acceptance = "true";
 
@@ -784,7 +784,7 @@ definition {
 				entryTitle = "Document_1.jpg",
 				fieldName = "File URL",
 				navItem = "Documents and Media",
-				paddingTop = "2",
+				paddingTop = 2,
 				panel = "Styles");
 
 			PageEditor.publish();
@@ -800,7 +800,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
-	@priority = "5"
+	@priority = 5
 	test MapManualURLToContainerElement {
 		property portal.acceptance = "true";
 
@@ -854,7 +854,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
-	@priority = "5"
+	@priority = 5
 	test MapWebContentImageToBackgroundImageOfContainerInContentPage {
 		property portal.acceptance = "true";
 
@@ -931,7 +931,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."
-	@priority = "3"
+	@priority = 3
 	test MapWebContentImageToBackgroundImageOfContainerInContentPageTemplate {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -1031,7 +1031,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a display page template."
-	@priority = "2"
+	@priority = 2
 	test MapWebContentImageToBackgroundImageOfContainerInDisplayPageTemplate {
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1107,7 +1107,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107285 and LPS-106776. When the Container fragment is duplicated, the configuration of it and its components should also be duplicated."
-	@priority = "4"
+	@priority = 4
 	test ViewConfigurationDuplicatedInDuplicatedContainerWithHeading {
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1133,7 +1133,7 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
-				position = "1");
+				position = 1);
 		}
 
 		task ("Configure the Heading") {
@@ -1151,22 +1151,22 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
-				position = "2");
+				position = 2);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				position = "2",
+				position = 2,
 				textColor = "white");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Heading']",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-107285. When the Container fragment with Heading fragment is duplicated, the edited inline content should also be duplicated."
-	@priority = "4"
+	@priority = 4
 	test ViewEditedInlineContentDuplicatedInDuplicatedContainerWithHeading {
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1199,13 +1199,13 @@ definition {
 
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'New editable fragment text') and contains(@id,'fragment-')]",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-154980. Lower the opacity of the rest of the layout elements when a container is hovered to drop inside a fragment."
-	@priority = "3"
+	@priority = 3
 	test ViewLowerOpacityOfRestOfLayoutElementsWhenDraggingFragmentOverContainer {
 		task ("Given a page creator has three Containers on a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1224,7 +1224,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container",
-				index = "2",
+				index = 2,
 				targetFragmentName = "Container");
 
 			PageEditor.addElementToContainer(
@@ -1236,7 +1236,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Tabs",
 				navTab = "Fragments",
-				position = "3");
+				position = 3);
 		}
 
 		task ("When the page creator dragging a new HTML fragment over the second Container") {
@@ -1244,7 +1244,7 @@ definition {
 				key_collectionName = "Basic Components",
 				key_elementType = "Container",
 				key_fragmentName = "HTML",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#CONTAINER_CONTAINER");
 		}
@@ -1253,7 +1253,7 @@ definition {
 			AssertCssValue(
 				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
 				locator2 = "opacity",
-				value1 = "1");
+				value1 = 1);
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'lfr-layout-structure-item-basic-component-button')]",
@@ -1272,7 +1272,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			DragOver(
-				index = "1",
+				index = 1,
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Paragraph",
 				key_targetFragmentName = "Tabs",
@@ -1285,7 +1285,7 @@ definition {
 			AssertCssValue(
 				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[3]",
 				locator2 = "opacity",
-				value1 = "1");
+				value1 = 1);
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'lfr-layout-structure-item-basic-component-button')]",
@@ -1300,7 +1300,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107285. When the Container with Heading fragment is duplicated, the mapped content should also be duplicated."
-	@priority = "4"
+	@priority = 4
 	test ViewMappedContentDuplicatedInDuplicatedContainerWithHeading {
 		property portal.acceptance = "true";
 
@@ -1358,13 +1358,13 @@ definition {
 
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'WC WebContent Content') and contains(@id,'fragment-')]",
-				key_position = "2",
+				key_position = 2,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-149591. The user could view topper of Container when dragging fragment inside it."
-	@priority = "5"
+	@priority = 5
 	test ViewTopperOfContainerWhenDragFragmentInsideIt {
 		property portal.acceptance = "true";
 
@@ -1398,13 +1398,13 @@ definition {
 					collectionName = "Basic Components",
 					fragmentName = "Button",
 					navTab = "Fragments",
-					position = "2");
+					position = 2);
 			}
 		}
 
 		task ("When the Page designer dragging a new Heading fragment inside the first Container") {
 			DragOver.dragOverAtBottom(
-				index = "1",
+				index = 1,
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_targetFragmentName = "Heading",
@@ -1414,7 +1414,7 @@ definition {
 
 		task ("Then the Page designer view the topper of the first Container") {
 			AssertElementPresent(
-				index = "1",
+				index = 1,
 				key_fragmentName = "Container",
 				locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
 		}
@@ -1434,7 +1434,7 @@ definition {
 		task ("Then the Page designer cannot view any topper of Container") {
 			for (var i : list "1,2") {
 				AssertElementNotPresent(
-					index = "${i}",
+					index = ${i},
 					key_fragmentName = "Container",
 					locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
 			}
@@ -1446,7 +1446,7 @@ definition {
 			WaitForPageLoad();
 
 			DragOver.dragOverAtBottom(
-				index = "1",
+				index = 1,
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_targetFragmentName = "Button",
@@ -1456,7 +1456,7 @@ definition {
 
 		task ("Then the Page designer view the topper of the second Container") {
 			AssertElementPresent(
-				index = "2",
+				index = 2,
 				key_fragmentName = "Container",
 				locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
 		}

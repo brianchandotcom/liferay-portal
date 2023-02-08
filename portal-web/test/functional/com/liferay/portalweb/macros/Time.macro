@@ -7,9 +7,9 @@ definition {
 		return utcDate;
 		''';
 
-		var utcDate = selenium.getEval("${javaScript}");
+		var utcDate = selenium.getEval(${javaScript});
 
-		return "${utcDate}";
+		return ${utcDate};
 	}
 
 	macro getUTCHours {
@@ -19,9 +19,9 @@ definition {
 		return utcHours;
 		''';
 
-		var utcHours = selenium.getEval("${javaScript}");
+		var utcHours = selenium.getEval(${javaScript});
 
-		return "${utcHours}";
+		return ${utcHours};
 	}
 
 	macro getUTCMinutes {
@@ -31,9 +31,9 @@ definition {
 		return utcMinutes;
 		''';
 
-		var utcMinutes = selenium.getEval("${javaScript}");
+		var utcMinutes = selenium.getEval(${javaScript});
 
-		return "${utcMinutes}";
+		return ${utcMinutes};
 	}
 
 	macro getUTCMonth {
@@ -43,11 +43,11 @@ definition {
 		return utcMonth;
 		''';
 
-		var utcMonth = selenium.getEval("${javaScript}");
+		var utcMonth = selenium.getEval(${javaScript});
 
 		var utcMonth = ${utcMonth} + 1;
 
-		return "${utcMonth}";
+		return ${utcMonth};
 	}
 
 	macro getUTCYear {
@@ -57,9 +57,9 @@ definition {
 		return utcYear;
 		''';
 
-		var utcYear = selenium.getEval("${javaScript}");
+		var utcYear = selenium.getEval(${javaScript});
 
-		return "${utcYear}";
+		return ${utcYear};
 	}
 
 }

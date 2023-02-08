@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By button"
-	@priority = "5"
+	@priority = 5
 	test CanCollectDigitalSignatureByButton {
 		property solutions.acceptance = "true";
 
@@ -55,7 +55,7 @@ definition {
 		var dmDocumentTitle = "DM Document PDF";
 
 		Click(
-			dmDocumentTitle = "${dmDocumentTitle}",
+			dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
-	@priority = "5"
+	@priority = 5
 	test CanCollectDigitalSignatureByVerticalEllipsis {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -80,7 +80,7 @@ definition {
 		var dmDocumentTitle = "DM Document PDF";
 
 		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${dmDocumentTitle}",
+			key_rowEntry = ${dmDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-135089. Verify if its possible get multiple signatures from diferent documents in DM"
-	@priority = "5"
+	@priority = 5
 	test CanGetMultipleSignaturesByButton {
 		property solutions.acceptance = "true";
 
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-134093. Verify if warning message appear after try insert more than 10 documents to collect the digital signature"
-	@priority = "5"
+	@priority = 5
 	test CanViewWarningMessageForMoreThan10Documents {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
@@ -137,7 +137,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
-			value1 = "${modalTitle}");
+			value1 = ${modalTitle});
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

@@ -19,19 +19,19 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CanModuleBeShutdownDuringReplicateSession {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";
 		property test.name.skip.portal.instance = "ClusteringCache#CanModuleBeShutdownDuringReplicateSession";
 
-		Clustering.deployClusteringModule(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = 8080);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -45,7 +45,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
 
-		Clustering.deployClusteringModule(nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = 9080);
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
@@ -53,7 +53,7 @@ definition {
 
 		var sessionData = selenium.getText("ClusterSamplePortlet#STORED_DATA");
 
-		echo("${sessionData}");
+		echo(${sessionData});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -64,7 +64,7 @@ definition {
 
 		var moduleID = GogoShell.getModuleID(moduleName = "'Portal Cluster Multiple Sample Web'");
 
-		GogoShell.stopModule(moduleID = "${moduleID}");
+		GogoShell.stopModule(moduleID = ${moduleID});
 
 		GogoShell.viewModuleStatus(
 			moduleName = "'Portal Cluster Multiple Sample Web'",
@@ -76,32 +76,32 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ClusterSamplePortlet#STORED_DATA",
-			value1 = "${sessionData}");
+			value1 = ${sessionData});
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
 				exceptionText = "Unable to deserialize object",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanSessionReplicateBetweenNodes {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";
 		property test.name.skip.portal.instance = "ClusteringCache#CanSessionReplicateBetweenNodes";
 
-		Navigator.openNodePort(nodePort = "9080");
+		Navigator.openNodePort(nodePort = 9080);
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
 				exceptionText = "Unable to receive message through TCP channel",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 
-		Clustering.deployClusteringModule(nodePort = "8080");
+		Clustering.deployClusteringModule(nodePort = 8080);
 
-		Navigator.openNodePort(nodePort = "8080");
+		Navigator.openNodePort(nodePort = 8080);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -115,9 +115,9 @@ definition {
 
 		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
 
-		Clustering.deployClusteringModule(nodePort = "9080");
+		Clustering.deployClusteringModule(nodePort = 9080);
 
-		Navigator.openNodePort(nodePort = "8080");
+		Navigator.openNodePort(nodePort = 8080);
 
 		Navigator.gotoPage(pageName = "Session Replication Test");
 
@@ -125,7 +125,7 @@ definition {
 
 		var sessionData = selenium.getText("ClusterSamplePortlet#STORED_DATA");
 
-		echo("${sessionData}");
+		echo(${sessionData});
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Session Replication Test",
@@ -133,16 +133,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ClusterSamplePortlet#STORED_DATA",
-			value1 = "${sessionData}");
+			value1 = ${sessionData});
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
 				exceptionText = "Unable to receive message through TCP channel",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test DoNotReplicatePut {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePuts=false";
 		property test.name.skip.portal.instance = "ClusteringCache#DoNotReplicatePut";
@@ -155,14 +155,14 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
@@ -170,20 +170,20 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-update.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value.update",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(
@@ -194,7 +194,7 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
@@ -202,15 +202,15 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ReplicateByCopy {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=true";
 		property test.name.skip.portal.instance = "ClusteringCache#ReplicateByCopy";
@@ -223,14 +223,14 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
@@ -238,18 +238,18 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
@@ -257,15 +257,15 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ReplicateByRemove {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePutsViaCopy=false";
 		property test.name.skip.portal.instance = "ClusteringCache#ReplicateByRemove";
@@ -278,14 +278,14 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
@@ -293,18 +293,18 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove-all.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Cleared test.cache",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
@@ -312,11 +312,11 @@ definition {
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Cleared test.cache",
-			nodePort = "9080");
+			nodePort = 9080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 	}
 

@@ -15,7 +15,7 @@ definition {
 			layoutName = "Questions Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Validate if the anonymous user can ask questions and redirected to login, it also covers LPS-129203."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAskQuestionsThroughAnonymousUser {
 		property test.name.skip.portal.instance = "QuestionsPermissions#CanAskQuestionsThroughAnonymousUser";
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add root topic without permission."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddRootTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add subtopic without permission."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddSubTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAskQuestionAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

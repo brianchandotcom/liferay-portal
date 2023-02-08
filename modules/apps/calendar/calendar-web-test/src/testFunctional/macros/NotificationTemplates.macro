@@ -4,10 +4,10 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Click(
-			key_calendarName = "${calendarName}",
+			key_calendarName = ${calendarName},
 			locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
-		Calendar._gotoMenulistOption(menuListOption = "${menuListOption}");
+		Calendar._gotoMenulistOption(menuListOption = ${menuListOption});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -27,13 +27,13 @@ definition {
 	macro viewUserEmailDisplayedFromAdressField {
 		AssertTextEquals(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD",
-			value1 = "${userEmail}");
+			value1 = ${userEmail});
 	}
 
 	macro viewUserNameDisplayedFromNameField {
 		AssertTextEquals(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
-			value1 = "${userName}");
+			value1 = ${userName});
 	}
 
 }

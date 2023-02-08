@@ -1,34 +1,34 @@
 definition {
 
 	macro addMultipleSearchQuerySuccessfully {
-		var key_queryList = "${query_list}";
-		var flag = "0";
+		var key_queryList = ${query_list};
+		var flag = 0;
 		var aux = "";
 
-		for (var x : list "${key_queryList}") {
-			if ("${flag}" == "0") {
+		for (var x : list ${key_queryList}) {
+			if (${flag} == 0) {
 				Click(locator1 = "Icon#PLUS");
 
 				Type(
 					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
-					value1 = "${x}");
+					value1 = ${x});
 
-				var flag = "1";
+				var flag = 1;
 			}
 			else {
 				Click(
-					key_query = "${aux}",
+					key_query = ${aux},
 					locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
 
 				Type(
-					key_index = "${flag}",
+					key_index = ${flag},
 					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
-					value1 = "${x}");
+					value1 = ${x});
 
 				var flag = ${flag} + 1;
 			}
 
-			var aux = "${x}";
+			var aux = ${x};
 		}
 
 		Button.clickSave();
@@ -41,7 +41,7 @@ definition {
 
 		Type(
 			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
-			value1 = "${query}");
+			value1 = ${query});
 
 		Button.clickSave();
 
@@ -50,18 +50,18 @@ definition {
 
 	@summary = "Navigates to a definition in the Definitions screen. \  @param definitionType the name of the definition that will be navigated to."
 	macro assertIndividualAttributesSource {
-		var key_dataSourceName = "${dataSourceName}";
+		var key_dataSourceName = ${dataSourceName};
 
-		for (var attributeName : list "${attributeList}") {
+		for (var attributeName : list ${attributeList}) {
 			Type(
 				locator1 = "ACSettings#SEARCH_BAR",
-				value1 = "${attributeName}");
+				value1 = ${attributeName});
 
-			ACDefinitions.openIndividualAttributeDetails(attributeName = "${attributeName}");
+			ACDefinitions.openIndividualAttributeDetails(attributeName = ${attributeName});
 
 			AssertTextEquals(
 				locator1 = "ACDefinitions#SOURCE_NAME",
-				value1 = "${dataSourceName}");
+				value1 = ${dataSourceName});
 
 			ACUtils.closeModal();
 
@@ -89,7 +89,7 @@ definition {
 
 	macro deleteSearchQuerySuccessfully {
 		Click(
-			key_query = "${query}",
+			key_query = ${query},
 			locator1 = "ACDefinitions#SEARCH_QUERY_DELETE_BUTTON");
 
 		Button.clickSave();
@@ -100,7 +100,7 @@ definition {
 	macro editSearchQuerySuccessfully {
 		Type(
 			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
-			value1 = "${query}");
+			value1 = ${query});
 
 		Button.clickSave();
 
@@ -108,7 +108,7 @@ definition {
 	}
 
 	macro goToDefinitionType {
-		var key_definitionType = "${definitionType}";
+		var key_definitionType = ${definitionType};
 
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
@@ -120,9 +120,9 @@ definition {
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 			value1 = "\SPACE");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 
 		KeyPress(
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
@@ -131,18 +131,18 @@ definition {
 
 	macro noViewAddSearchQueryButton {
 		AssertElementNotPresent(
-			key_query = "${query}",
+			key_query = ${query},
 			locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
 	}
 
 	macro noViewSearchQuery {
 		AssertElementNotPresent(
-			key_query = "${query}",
+			key_query = ${query},
 			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
 	macro openIndividualAttributeDetails {
-		var key_attributeName = "${attributeName}";
+		var key_attributeName = ${attributeName};
 
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
 	}
@@ -154,7 +154,7 @@ definition {
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 			value1 = "\SPACE");
 
-		ACUtils.clickAnyButton(button = "${key_actionButton}");
+		ACUtils.clickAnyButton(button = ${key_actionButton});
 
 		KeyPress(
 			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
@@ -163,12 +163,12 @@ definition {
 
 	macro unhideEvent {
 		var key_actionButton = "Show";
-		var key_nameList = "${customEventName}";
+		var key_nameList = ${customEventName};
 
 		WaitForPageLoad();
 
 		while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 		}
 
 		MouseOver(locator1 = "ACUtils#NAME_LIST");
@@ -177,9 +177,9 @@ definition {
 	}
 
 	macro viewHiddenEvents {
-		for (var customEventName : list "${customEventNameList}") {
+		for (var customEventName : list ${customEventNameList}) {
 			var key_actionButton = "Show";
-			var key_nameList = "${customEventName}";
+			var key_nameList = ${customEventName};
 
 			AssertElementPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
 
@@ -191,14 +191,14 @@ definition {
 
 	macro viewSearchQuery {
 		AssertElementPresent(
-			key_query = "${query}",
+			key_query = ${query},
 			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
 	macro viewUnhideEvent {
-		for (var customEventName : list "${customEventNameList}") {
+		for (var customEventName : list ${customEventNameList}) {
 			var key_actionButton = "Hide";
-			var key_nameList = "${customEventName}";
+			var key_nameList = ${customEventName};
 
 			AssertElementNotPresent(locator1 = "ACDefinitions#HIDE_EVENT_ICON");
 

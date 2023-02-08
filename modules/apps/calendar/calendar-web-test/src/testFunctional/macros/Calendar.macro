@@ -6,12 +6,12 @@ definition {
 
 	macro _checkForRSSTitle {
 		if (IsElementNotPresent(locator1 = "RSS#FEED_TITLE")) {
-			Navigator.gotoPage(pageName = "${pageName}");
+			Navigator.gotoPage(pageName = ${pageName});
 
 			Calendar.chooseSiteCalendarMenulistOption(
 				menuListOption = "RSS",
-				siteCalendarName = "${siteCalendarName}",
-				siteName = "${siteName}");
+				siteCalendarName = ${siteCalendarName},
+				siteName = ${siteName});
 		}
 	}
 
@@ -30,58 +30,58 @@ definition {
 	}
 
 	macro _editName {
-		PortletEntry.inputName(name = "${calendarName}");
+		PortletEntry.inputName(name = ${calendarName});
 	}
 
 	macro _gotoMenulistOption {
-		var key_menuListOption = "${menuListOption}";
+		var key_menuListOption = ${menuListOption};
 
 		AssertClick(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_OPTION",
-			value1 = "${menuListOption}");
+			value1 = ${menuListOption});
 
-		if ("${menuListOption}" == "RSS") {
+		if (${menuListOption} == "RSS") {
 			SelectWindow.selectPopUp(locator1 = "null");
 		}
 	}
 
 	macro _gotoOtherCalendarMenulist {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
 		Click(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_ARROW",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 	}
 
 	macro _gotoSiteCalendarMenulist {
-		var key_siteCalendarName = "${siteCalendarName}";
-		var key_siteName = "${siteName}";
+		var key_siteCalendarName = ${siteCalendarName};
+		var key_siteName = ${siteName};
 
 		AssertTextEquals(
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
-			value1 = "${siteCalendarName}");
+			value1 = ${siteCalendarName});
 
 		Click(
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW",
-			value1 = "${siteCalendarName}");
+			value1 = ${siteCalendarName});
 	}
 
 	macro _viewCalendarHidden {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertElementNotPresent(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR");
 	}
 
 	macro _viewCalendarSettingsIframe {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -91,73 +91,73 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${header}");
+			value1 = ${header});
 
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB",
 			value1 = "Notification Templates");
 
-		var key_calendarName = "${header}";
+		var key_calendarName = ${header};
 
 		AssertTextEquals(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_HEADER_TITLE",
-			value1 = "${header}");
+			value1 = ${header});
 	}
 
 	macro add {
-		if ("${calendarType}" == "My Calendars") {
+		if (${calendarType} == "My Calendars") {
 			CalendarNavigator.gotoAddMyCalendars();
 
-			Calendar._editName(calendarName = "${calendarName}");
+			Calendar._editName(calendarName = ${calendarName});
 
 			PortletEntry.save();
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
+		else if (${calendarType} == "Current Site Calendars") {
 			CalendarNavigator.gotoAddCurrentSiteCalendars();
 
-			Calendar._editName(calendarName = "${calendarName}");
+			Calendar._editName(calendarName = ${calendarName});
 
 			PortletEntry.save();
 		}
-		else if ("${calendarType}" == "Other Calendars") {
-			Calendar.searchOtherCalendars(searchValue = "${calendarName}");
+		else if (${calendarType} == "Other Calendars") {
+			Calendar.searchOtherCalendars(searchValue = ${calendarName});
 
-			Calendar.viewOtherCalendarsSearchResult(calendarName = "${calendarName}");
+			Calendar.viewOtherCalendarsSearchResult(calendarName = ${calendarName});
 
-			var key_calendarName = "${calendarName}";
+			var key_calendarName = ${calendarName};
 
 			AssertClick(
 				locator1 = "Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			AssertTextEquals(
 				locator1 = "Calendar#OTHER_CALENDARS_CALENDAR",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 		}
 	}
 
 	macro changeColor {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_user = ${user};
 
 			AssertElementPresent(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT");
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
-			var key_color = "${myCalendarColor}";
+			var key_color = ${myCalendarColor};
 
 			Click(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER");
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_site = ${site};
 
 			AssertElementPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT");
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
-			var key_color = "${siteCalendarColor}";
+			var key_color = ${siteCalendarColor};
 
 			Click(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER");
 		}
@@ -165,46 +165,46 @@ definition {
 
 	macro chooseCalendarColor {
 		Click(
-			key_myCalendarColor = "${myCalendarColor}",
+			key_myCalendarColor = ${myCalendarColor},
 			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
 	}
 
 	macro chooseOtherCalendarMenulistOption {
-		Calendar._gotoOtherCalendarMenulist(calendarName = "${calendarName}");
+		Calendar._gotoOtherCalendarMenulist(calendarName = ${calendarName});
 
-		Calendar._gotoMenulistOption(menuListOption = "${menuListOption}");
+		Calendar._gotoMenulistOption(menuListOption = ${menuListOption});
 	}
 
 	macro chooseSiteCalendarMenulistOption {
 		Calendar._gotoSiteCalendarMenulist(
-			siteCalendarName = "${siteCalendarName}",
-			siteName = "${siteName}");
+			siteCalendarName = ${siteCalendarName},
+			siteName = ${siteName});
 
-		Calendar._gotoMenulistOption(menuListOption = "${menuListOption}");
+		Calendar._gotoMenulistOption(menuListOption = ${menuListOption});
 	}
 
 	macro delete {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_calendarName = "${calendarName}";
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_calendarName = ${calendarName};
+			var key_user = ${user};
 
 			AssertTextEquals(
 				locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
 			Calendar._deleteCalendar();
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_calendarName = "${calendarName}";
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_calendarName = ${calendarName};
+			var key_site = ${site};
 
 			AssertTextEquals(
 				locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
@@ -215,13 +215,13 @@ definition {
 	macro edit {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_calendarName = "${calendarName}";
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_calendarName = ${calendarName};
+			var key_user = ${user};
 
 			AssertTextEquals(
 				locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
@@ -229,18 +229,18 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			PortletEntry.inputName(name = "${calendarNameEdit}");
+			PortletEntry.inputName(name = ${calendarNameEdit});
 
 			PortletEntry.save();
 
 			SelectFrame(value1 = "relative=top");
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_calendarName = "${calendarName}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_calendarName = ${calendarName};
 
 			AssertTextEquals(
 				locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
@@ -248,20 +248,20 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			PortletEntry.inputName(name = "${calendarNameEdit}");
+			PortletEntry.inputName(name = ${calendarNameEdit});
 
 			PortletEntry.save();
 
 			SelectFrame(value1 = "relative=top");
 		}
-		else if ("${calendarType}" == "Other Calendars") {
+		else if (${calendarType} == "Other Calendars") {
 			Calendar.chooseOtherCalendarMenulistOption(
-				calendarName = "${calendarName}",
+				calendarName = ${calendarName},
 				menuListOption = "Calendar Settings");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			PortletEntry.inputName(name = "${calendarNameEdit}");
+			PortletEntry.inputName(name = ${calendarNameEdit});
 
 			PortletEntry.save();
 
@@ -272,13 +272,13 @@ definition {
 	macro editEmailTemplate {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_calendarName = "${calendarName}";
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_calendarName = ${calendarName};
+			var key_user = ${user};
 
 			AssertTextEquals(
 				locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
@@ -286,13 +286,13 @@ definition {
 
 			Calendar._viewEmailHeader(header = "${user} - ${calendarName}");
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_calendarName = "${calendarName}";
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_calendarName = ${calendarName};
+			var key_site = ${site};
 
 			AssertTextEquals(
 				locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW");
 
@@ -300,20 +300,20 @@ definition {
 
 			Calendar._viewEmailHeader(header = "${site} - ${calendarName}");
 		}
-		else if ("${calendarType}" == "Other Calendars") {
+		else if (${calendarType} == "Other Calendars") {
 			Calendar.chooseOtherCalendarMenulistOption(
-				calendarName = "${calendarName}",
+				calendarName = ${calendarName},
 				menuListOption = "Calendar Settings");
 
-			Calendar._viewEmailHeader(header = "${calendarName}");
+			Calendar._viewEmailHeader(header = ${calendarName});
 		}
 		else {
-			Calendar._viewEmailHeader(header = "${calendarName}");
+			Calendar._viewEmailHeader(header = ${calendarName});
 		}
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 
-		if ("${inviteEmail}" == "true") {
+		if (${inviteEmail} == "true") {
 			AssertElementPresent(locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE");
 		}
 		else if (IsElementNotPresent(locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE")) {
@@ -322,7 +322,7 @@ definition {
 				value1 = "Invite Email");
 		}
 
-		if ("${reminderEmail}" == "true") {
+		if (${reminderEmail} == "true") {
 			AssertElementNotPresent(locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE");
 
 			AssertClick(
@@ -335,13 +335,13 @@ definition {
 
 		Type(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
-			value1 = "${fromNameEdit}");
+			value1 = ${fromNameEdit});
 
 		Type(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD",
-			value1 = "${fromAddressEdit}");
+			value1 = ${fromAddressEdit});
 
-		if ("${inviteEmail}" == "true") {
+		if (${inviteEmail} == "true") {
 			Type(
 				locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_SUBJECT_FIELD",
 				value1 = "[$PORTLET_NAME$]: Edited Event Notification for [$EVENT_TITLE$]");
@@ -351,7 +351,7 @@ definition {
 				value1 = "[$TO_NAME$],      This is an edited event invite email.      Sincerely,     [$FROM_NAME$]     [$FROM_ADDRESS$]     [$PORTAL_URL$]");
 		}
 
-		if ("${reminderEmail}" == "true") {
+		if (${reminderEmail} == "true") {
 			Type(
 				locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_SUBJECT_FIELD",
 				value1 = "[$PORTLET_NAME$]: Edited Event Reminder for [$EVENT_TITLE$]");
@@ -371,33 +371,33 @@ definition {
 	macro enableComments {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_user = ${user};
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 			Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_site = ${site};
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 			Calendar._gotoMenulistOption(menuListOption = "Calendar Settings");
 		}
-		else if ("${calendarType}" == "Other Calendars") {
+		else if (${calendarType} == "Other Calendars") {
 			Calendar.chooseOtherCalendarMenulistOption(
-				calendarName = "${calendarName}",
+				calendarName = ${calendarName},
 				menuListOption = "Calendar Settings");
 		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
 		Check(locator1 = "CalendarEditCalendar#ENABLE_COMMENTS_CHECKBOX");
 
@@ -416,17 +416,17 @@ definition {
 	}
 
 	macro exportCalendarFile {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
-		LexiconEntry.openEntryMenu(rowEntry = "${calendarName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${calendarName});
 
 		MenuItem.click(menuItem = "Export");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = 5000);
 
 		AssertConsoleTextNotPresent(value1 = "ClassNotFoundException");
 	}
@@ -446,17 +446,17 @@ definition {
 	}
 
 	macro importCalendarFile {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
-		LexiconEntry.openEntryMenu(rowEntry = "${calendarName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${calendarName});
 
 		MenuItem.click(menuItem = "Import");
 
-		UploadDependencyFile.uploadFile(fileName = "${calendarFile}");
+		UploadDependencyFile.uploadFile(fileName = ${calendarFile});
 
 		ScrollWebElementIntoView(locator1 = "CalendarImport#IMPORT_BUTTON");
 
@@ -470,35 +470,35 @@ definition {
 	macro removeViewPermissions {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_user = ${user};
 
 			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 			Calendar._gotoMenulistOption(menuListOption = "Permissions");
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_site = ${site};
 
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
 			Calendar._gotoMenulistOption(menuListOption = "Permissions");
 		}
-		else if ("${calendarType}" == "Other Calendars") {
+		else if (${calendarType} == "Other Calendars") {
 			Calendar.chooseOtherCalendarMenulistOption(
-				calendarName = "${calendarName}",
+				calendarName = ${calendarName},
 				menuListOption = "Permissions");
 		}
 
-		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
-		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		IFrame.selectPermissionsFrame();
 
 		Uncheck(
 			locator1 = "Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX",
-			value1 = "${roleTitle}");
+			value1 = ${roleTitle});
 
 		Button.clickSave();
 
@@ -508,7 +508,7 @@ definition {
 	macro searchOtherCalendars {
 		Type(
 			locator1 = "Calendar#OTHER_CALENDARS_SEARCH",
-			value1 = "${searchValue}");
+			value1 = ${searchValue});
 	}
 
 	macro showCurrentSiteCalendar {
@@ -566,43 +566,43 @@ definition {
 	}
 
 	macro view {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
-		if ("${calendarType}" == "My Calendars") {
-			var key_user = "${user}";
+		if (${calendarType} == "My Calendars") {
+			var key_user = ${user};
 
 			AssertTextEquals(
 				locator1 = "Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 		}
-		else if ("${calendarType}" == "Current Site Calendars") {
-			var key_site = "${site}";
+		else if (${calendarType} == "Current Site Calendars") {
+			var key_site = ${site};
 
 			AssertTextEquals(
 				locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 		}
-		else if ("${calendarType}" == "Other Calendars") {
-			var key_calendarName = "${calendarName}";
+		else if (${calendarType} == "Other Calendars") {
+			var key_calendarName = ${calendarName};
 
 			AssertTextEquals(
 				locator1 = "Calendar#OTHER_CALENDARS_CALENDAR",
-				value1 = "${calendarName}");
+				value1 = ${calendarName});
 		}
 	}
 
 	macro viewCalendarColorPicker {
-		Calendar._gotoOtherCalendarMenulist(calendarName = "${calendarName}");
+		Calendar._gotoOtherCalendarMenulist(calendarName = ${calendarName});
 
-		var key_color = "${color}";
+		var key_color = ${color};
 
 		AssertElementPresent(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER");
 	}
 
 	macro viewColor {
-		var key_color = "${myCalendarColor}";
+		var key_color = ${myCalendarColor};
 
-		if ("${calendarType}" == "My Calendars") {
+		if (${calendarType} == "My Calendars") {
 			AssertElementPresent(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR");
 
 			AssertElementNotPresent(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT");
@@ -610,17 +610,17 @@ definition {
 	}
 
 	macro viewCurrentSiteCalendarName {
-		var key_siteName = "${siteName}";
+		var key_siteName = ${siteName};
 
 		AssertTextEquals(
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_HEADER",
 			value1 = "${siteName}'s Calendars");
 
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 	}
 
 	macro viewDefault {
@@ -632,19 +632,19 @@ definition {
 	}
 
 	macro viewDefaultViewCalendar {
-		if ("${defaultView}" == "Day") {
+		if (${defaultView} == "Day") {
 			AssertElementPresent(locator1 = "Calendar#VIEW_DAY_BUTTON_ACTIVE");
 		}
 
-		if ("${defaultView}" == "Week") {
+		if (${defaultView} == "Week") {
 			AssertElementPresent(locator1 = "Calendar#VIEW_WEEK_BUTTON_ACTIVE");
 		}
 
-		if ("${defaultView}" == "Month") {
+		if (${defaultView} == "Month") {
 			AssertElementPresent(locator1 = "Calendar#VIEW_MONTH_BUTTON_ACTIVE");
 		}
 
-		if ("${defaultView}" == "Agenda") {
+		if (${defaultView} == "Agenda") {
 			AssertElementPresent(locator1 = "Calendar#VIEW_AGENDA_BUTTON_ACTIVE");
 		}
 	}
@@ -662,13 +662,13 @@ definition {
 			Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
 		}
 
-		while ((IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = "${dateMonth}")) && (maxIterations = "100")) {
+		while ((IsTextNotEqual(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_DATE", value1 = ${dateMonth})) && (maxIterations = "100")) {
 			Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
 		}
 	}
 
 	macro viewNoRSS {
-		Navigator.openSpecificURL(url = "${rssURL}");
+		Navigator.openSpecificURL(url = ${rssURL});
 
 		SelectWindow.selectPopUp(locator1 = "null");
 
@@ -677,7 +677,7 @@ definition {
 
 	macro viewOtherCalendarMenulist {
 		Calendar.chooseOtherCalendarMenulistOption(
-			calendarName = "${calendarName}",
+			calendarName = ${calendarName},
 			menuListOption = "Add Event");
 
 		CalendarEvent.selectEventIframe();
@@ -686,66 +686,66 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		Calendar.chooseOtherCalendarMenulistOption(
-			calendarName = "${calendarName}",
+			calendarName = ${calendarName},
 			menuListOption = "Calendar Settings");
 
 		CalendarNavigator._selectCalendarSettingsIframe();
 
-		Calendar._viewCalendarSettingsIframe(calendarName = "${calendarName}");
+		Calendar._viewCalendarSettingsIframe(calendarName = ${calendarName});
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		Calendar.chooseOtherCalendarMenulistOption(
-			calendarName = "${calendarName}",
+			calendarName = ${calendarName},
 			menuListOption = "Permissions");
 
 		CalendarNavigator._selectPermissionsIframe();
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		Calendar.viewCalendarColorPicker(
-			calendarName = "${calendarName}",
-			color = "${color}");
+			calendarName = ${calendarName},
+			color = ${color});
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = ${pageName});
 
 		Calendar.chooseOtherCalendarMenulistOption(
-			calendarName = "${calendarName}",
+			calendarName = ${calendarName},
 			menuListOption = "Hide Calendar");
 
-		Calendar._viewCalendarHidden(calendarName = "${calendarName}");
+		Calendar._viewCalendarHidden(calendarName = ${calendarName});
 	}
 
 	macro viewOtherCalendarsSearchResult {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
 			locator1 = "Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 	}
 
 	macro viewOtherCalendarsSearchResultNotPresent {
-		var key_calendarName = "${calendarName}";
+		var key_calendarName = ${calendarName};
 
 		AssertElementNotPresent(locator1 = "Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT");
 	}
 
 	macro viewRSSFeedEventNotPresent {
 		Calendar._checkForRSSTitle(
-			pageName = "${pageName}",
-			siteCalendarName = "${siteCalendarName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteCalendarName = ${siteCalendarName},
+			siteName = ${siteName});
 
 		SelectWindow(locator1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
-		var key_eventTitle = "${eventTitle}";
+		var key_eventTitle = ${eventTitle};
 
 		AssertElementNotPresent(locator1 = "CalendarRSS#FEED_EVENT_TITLE");
 
@@ -754,41 +754,41 @@ definition {
 
 	macro viewRSSFeedEventPresent {
 		Calendar._checkForRSSTitle(
-			pageName = "${pageName}",
-			siteCalendarName = "${siteCalendarName}",
-			siteName = "${siteName}");
+			pageName = ${pageName},
+			siteCalendarName = ${siteCalendarName},
+			siteName = ${siteName});
 
 		SelectWindow(locator1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
-			value1 = "${calendarName}");
+			value1 = ${calendarName});
 
-		var key_eventTitle = "${eventTitle}";
+		var key_eventTitle = ${eventTitle};
 
 		AssertTextEquals(
 			locator1 = "CalendarRSS#FEED_EVENT_LINK",
-			value1 = "${eventTitle}");
+			value1 = ${eventTitle});
 
 		AssertTextEquals(
 			locator1 = "CalendarRSS#FEED_EVENT_TITLE",
-			value1 = "${eventTitle}");
+			value1 = ${eventTitle});
 
 		AssertElementPresent(locator1 = "CalendarRSS#FEED_EVENT_DATES");
 	}
 
 	macro viewSelectedNameLanguage {
 		AssertElementPresent(
-			key_locale = "${language}",
+			key_locale = ${language},
 			locator1 = "Calendar#VIEW_SELECTED_NAME_LANGUAGE");
 	}
 
 	macro viewSelectedTimeZone {
-		if ("${timeZone}" == "(UTC -08:00) Pacific Standard Time") {
+		if (${timeZone} == "(UTC -08:00) Pacific Standard Time") {
 			if (IsTextNotEqual(locator1 = "Select#LOS_ANGELES_TIME_ZONE", value1 = "(UTC -07:00) Pacific Daylight Time")) {
 				AssertSelectedLabel(
 					locator1 = "Select#TIME_ZONE",
-					value1 = "${timeZone}");
+					value1 = ${timeZone});
 			}
 			else {
 				AssertSelectedLabel(
@@ -799,28 +799,28 @@ definition {
 		else {
 			AssertSelectedLabel(
 				locator1 = "Select#TIME_ZONE",
-				value1 = "${timeZone}");
+				value1 = ${timeZone});
 		}
 	}
 
 	macro viewSiteCalendarNoMenulistOption {
 		Calendar._gotoSiteCalendarMenulist(
-			siteCalendarName = "${siteCalendarName}",
-			siteName = "${siteName}");
+			siteCalendarName = ${siteCalendarName},
+			siteName = ${siteName});
 
-		var key_menuListOption = "${menuListOption}";
+		var key_menuListOption = ${menuListOption};
 
 		AssertElementNotPresent(locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_OPTION");
 	}
 
 	macro viewWeekCountViaMonthView {
-		var key_weekNumber = "${weekNumber}";
+		var key_weekNumber = ${weekNumber};
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER");
 
 		SelectFrame(value1 = "relative=top");
 
-		Pause(locator1 = "3000");
+		Pause(locator1 = 3000);
 
 		var key_weekNumber = ${weekNumber} + 1;
 
@@ -832,7 +832,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CalendarEditEvent#MINI_CALENDAR_WEEK_START_DAY_START_DATE",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 
 		Click(locator1 = "CalendarEditEvent#DATE_CONTAINER");
 
@@ -840,7 +840,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CalendarEditEvent#MINI_CALENDAR_WEEK_START_DAY_END_DATE",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 
 		Click(locator1 = "CalendarEditEvent#FORM_CONTENT");
 	}
@@ -850,13 +850,13 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Calendar#SCHEDULER_VIEW_MONTH_WEEK_START_DAY",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 	}
 
 	macro viewWeekStartDayViaSmallCalendar {
 		AssertTextEquals(
 			locator1 = "Calendar#SMALL_CALENDAR_WEEK_START_DAY",
-			value1 = "${weekStartDay}");
+			value1 = ${weekStartDay});
 	}
 
 }

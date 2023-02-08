@@ -8,8 +8,8 @@ definition {
 			var groupName = "Guest";
 		}
 
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
-		var lowerCaseGroupName = StringUtil.lowerCase("${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		var lowerCaseGroupName = StringUtil.lowerCase(${groupName});
 
 		Navigator.openSpecificURL(url = "/group/${lowerCaseGroupName}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_mvcRenderCommandName=%2Fadmin%2Fedit_form_instance&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_redirect=%2Fgroup%2F${lowerCaseGroupName}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}&_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_groupId=${groupId}");
 	}
@@ -17,7 +17,7 @@ definition {
 	macro deleteForm {
 		FormsAdmin.viewForm(
 			formDescription = "",
-			formName = "${formName}");
+			formName = ${formName});
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
@@ -29,7 +29,7 @@ definition {
 	macro deleteFormEntry {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${formEntryValue}");
+			rowEntry = ${formEntryValue});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
@@ -39,79 +39,79 @@ definition {
 	macro editDataProvider {
 		FormFields.editText(
 			fieldName = "DataProviderPortlet_name",
-			fieldValue = "${name}");
+			fieldValue = ${name});
 
 		FormFields.editText(
 			fieldName = "$url",
-			fieldValue = "${url}");
+			fieldValue = ${url});
 
 		if (isSet(username)) {
 			FormFields.editText(
 				fieldName = "$username",
-				fieldValue = "${username}");
+				fieldValue = ${username});
 
 			var key_fieldName = "$password";
 
 			FormFields.editPassword(
 				fieldName = "$password",
-				fieldValue = "${password}");
+				fieldValue = ${password});
 		}
 
 		if (isSet(timeout)) {
 			FormFields.editText(
 				fieldName = "$timeout",
-				fieldValue = "${timeout}");
+				fieldValue = ${timeout});
 		}
 
 		if (isSet(inputParameterLabel)) {
 			FormsAdmin.editDataProviderInputParameter(
-				inputParameterLabel = "${inputParameterLabel}",
-				inputParameterName = "${inputParameterName}",
-				inputParameterType = "${inputParameterType}");
+				inputParameterLabel = ${inputParameterLabel},
+				inputParameterName = ${inputParameterName},
+				inputParameterType = ${inputParameterType});
 		}
 
 		FormsAdmin.editDataProviderOutputParameter(
-			outputParameterLabel = "${outputParameterLabel}",
-			outputParameterLabel2 = "${outputParameterLabel2}",
-			outputParameterName = "${outputParameterName}",
-			outputParameterName2 = "${outputParameterName2}",
-			outputParameterPath = "${outputParameterPath}",
-			outputParameterPath2 = "${outputParameterPath2}",
-			outputParameterType = "${outputParameterType}",
-			outputParameterType2 = "${outputParameterType2}");
+			outputParameterLabel = ${outputParameterLabel},
+			outputParameterLabel2 = ${outputParameterLabel2},
+			outputParameterName = ${outputParameterName},
+			outputParameterName2 = ${outputParameterName2},
+			outputParameterPath = ${outputParameterPath},
+			outputParameterPath2 = ${outputParameterPath2},
+			outputParameterType = ${outputParameterType},
+			outputParameterType2 = ${outputParameterType2});
 	}
 
 	macro editDataProviderInputParameter {
 		Type(
 			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_LABEL_FIELD",
-			value1 = "${inputParameterLabel}");
+			value1 = ${inputParameterLabel});
 
 		Type(
 			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_NAME_FIELD",
-			value1 = "${inputParameterName}");
+			value1 = ${inputParameterName});
 
-		FormFields.selectDataProviderInputType(inputParameterType = "${inputParameterType}");
+		FormFields.selectDataProviderInputType(inputParameterType = ${inputParameterType});
 	}
 
 	macro editDataProviderLocalNetwork {
 		FormFields.editText(
 			fieldName = "DataProviderPortlet_name",
-			fieldValue = "${name}");
+			fieldValue = ${name});
 
 		FormFields.editText(
 			fieldName = "$url",
-			fieldValue = "${url}");
+			fieldValue = ${url});
 
 		if (isSet(timeout)) {
 			FormFields.editText(
 				fieldName = "$timeout",
-				fieldValue = "${timeout}");
+				fieldValue = ${timeout});
 		}
 
 		if (isSet(description)) {
 			FormFields.editTextMultiline(
 				fieldName = "description",
-				fieldValue = "${description}");
+				fieldValue = ${description});
 		}
 
 		if (isSet(filterParameterName)) {
@@ -119,17 +119,17 @@ definition {
 
 			FormFields.editText(
 				fieldName = "$filterParameterName",
-				fieldValue = "${filterParameterName}");
+				fieldValue = ${filterParameterName});
 		}
 
-		if (isSet(cacheable) && ("${cacheable}" == "true")) {
+		if (isSet(cacheable) && (${cacheable} == "true")) {
 			FormFields.enableCheckbox(fieldName = "$cacheable");
 		}
 
 		if (isSet(username)) {
 			FormFields.editText(
 				fieldName = "$username",
-				fieldValue = "${username}");
+				fieldValue = ${username});
 		}
 
 		if (isSet(password)) {
@@ -138,65 +138,65 @@ definition {
 			if (IsElementPresent(locator1 = "FormFields#PASSWORD_FIELD")) {
 				FormFields.editPassword(
 					fieldName = "$password",
-					fieldValue = "${password}");
+					fieldValue = ${password});
 			}
 			else {
 				FormFields.editText(
 					fieldName = "$password",
-					fieldValue = "${password}");
+					fieldValue = ${password});
 			}
 		}
 
 		FormsAdmin.editDataProviderOutputParameter(
-			outputParameterLabel = "${outputParameterLabel}",
-			outputParameterLabel2 = "${outputParameterLabel2}",
-			outputParameterPath = "${outputParameterPath}",
-			outputParameterPath2 = "${outputParameterPath2}",
-			outputParameterType = "${outputParameterType}",
-			outputParameterType2 = "${outputParameterType2}");
+			outputParameterLabel = ${outputParameterLabel},
+			outputParameterLabel2 = ${outputParameterLabel2},
+			outputParameterPath = ${outputParameterPath},
+			outputParameterPath2 = ${outputParameterPath2},
+			outputParameterType = ${outputParameterType},
+			outputParameterType2 = ${outputParameterType2});
 	}
 
 	macro editDataProviderOutputParameter {
 		FormFields.editText(
 			fieldName = "outputParameterName",
-			fieldValue = "${outputParameterLabel}");
+			fieldValue = ${outputParameterLabel});
 
 		FormFields.editText(
 			fieldName = "outputParameterPath",
-			fieldValue = "${outputParameterPath}");
+			fieldValue = ${outputParameterPath});
 
-		FormFields.selectDataProviderOutputType(outputParameterType = "${outputParameterType}");
+		FormFields.selectDataProviderOutputType(outputParameterType = ${outputParameterType});
 
 		if (isSet(outputParameterPath2)) {
 			Click(locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON");
 
 			Type(
 				locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2",
-				value1 = "${outputParameterPath2}");
+				value1 = ${outputParameterPath2});
 
 			Type(
 				locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2",
-				value1 = "${outputParameterLabel2}");
+				value1 = ${outputParameterLabel2});
 
 			Click(locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2");
 
-			var key_outputParameterType = "${outputParameterType2}";
+			var key_outputParameterType = ${outputParameterType2};
 
 			AssertClick(
 				locator1 = "Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2",
-				value1 = "${outputParameterType2}");
+				value1 = ${outputParameterType2});
 		}
 	}
 
 	macro editFormEntry {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
-			rowEntry = "${formEntryValue}");
+			rowEntry = ${formEntryValue});
 
 		Type(
-			key_fieldName = "${formEntryValue}",
+			key_fieldName = ${formEntryValue},
 			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "${fieldValue}");
+			value1 = ${fieldValue});
 
 		FormPortlet.submit();
 
@@ -207,7 +207,7 @@ definition {
 
 	macro openFormsAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet");
 	}
 
@@ -254,7 +254,7 @@ definition {
 	}
 
 	macro viewCannotEditFormEntries {
-		if ("${onSitePage}" == "true") {
+		if (${onSitePage} == "true") {
 			AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
 		}
 		else {
@@ -267,102 +267,102 @@ definition {
 	macro viewCheckboxEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 
-		var key_fieldName = "${fieldName}";
-		var key_fieldValue = "${fieldValue}";
+		var key_fieldName = ${fieldName};
+		var key_fieldValue = ${fieldValue};
 
 		FormFields.viewCheckboxEntry(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 
 		AssertElementPresent(locator1 = "FormFields#CHECKBOX");
 	}
 
 	macro viewColorEntry {
-		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewColorLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		FormFields.viewColorValue(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewDateEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewDateLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		FormFields.viewDateValue(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewForm {
-		var key_formName = "${formName}";
+		var key_formName = ${formName};
 
 		WaitForElementPresent(
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME",
-			value1 = "${formName}");
+			value1 = ${formName});
 
-		var key_formDescription = "${formDescription}";
+		var key_formDescription = ${formDescription};
 
 		if (IsVisible(locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION")) {
 			AssertTextEquals(
 				locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION",
-				value1 = "${formDescription}");
+				value1 = ${formDescription});
 		}
 
-		var key_rowEntry = "${formName}";
+		var key_rowEntry = ${formName};
 
 		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
 	macro viewFormEntryWorkflowStatus {
-		var key_formEntryWorkflowStatus = "${formEntryWorkflowStatus}";
+		var key_formEntryWorkflowStatus = ${formEntryWorkflowStatus};
 
 		AssertTextEquals(
 			locator1 = "FormsAdmin#FORM_ENTRY_STATUS",
-			value1 = "${formEntryWorkflowStatus}");
+			value1 = ${formEntryWorkflowStatus});
 	}
 
 	macro viewFormTableEntry {
-		var key_fieldLabel = "${fieldLabel}";
-		var key_fieldValue = "${fieldValue}";
+		var key_fieldLabel = ${fieldLabel};
+		var key_fieldValue = ${fieldValue};
 
 		AssertTextEquals(
 			locator1 = "FormsAdmin#FORM_ENTRY_TABLE_ENTRY",
-			value1 = "${fieldValue}");
+			value1 = ${fieldValue});
 	}
 
 	macro viewFormTableEntryNotPresent {
-		var key_fieldLabel = "${fieldLabel}";
-		var key_fieldValue = "${fieldValue}";
+		var key_fieldLabel = ${fieldLabel};
+		var key_fieldValue = ${fieldValue};
 
 		AssertElementNotPresent(locator1 = "FormsAdmin#FORM_ENTRY_TABLE_ENTRY");
 	}
 
 	macro viewFormTableHeader {
-		var key_fieldHeader = "${fieldHeader}";
+		var key_fieldHeader = ${fieldHeader};
 
 		AssertTextEquals(
 			locator1 = "FormsAdmin#FORM_ENTRY_TABLE_HEADER",
-			value1 = "${fieldHeader}");
+			value1 = ${fieldHeader});
 	}
 
 	macro viewImageEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewTextLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		AssertElementPresent(
-			key_description = "${fieldDescription}",
+			key_description = ${fieldDescription},
 			locator1 = "FormFields#IMAGE_FIELD_DESCRIPTION");
 	}
 
@@ -374,16 +374,16 @@ definition {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewTextLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		FormFields.viewMultilineTextValue(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewNoDuplicateForms {
-		var key_formName = "${formName}";
+		var key_formName = ${formName};
 
 		AssertElementNotPresent(locator1 = "FormsAdmin#FORMS_TABLE_NAME_2");
 	}
@@ -405,57 +405,57 @@ definition {
 	}
 
 	macro viewRadioEntry {
-		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewRadioLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		FormFields.viewRadioValue(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewSelectEntry {
-		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewSelectLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
-		FormFields.viewSelectValue(fieldName = "${fieldName}");
+		FormFields.viewSelectValue(fieldName = ${fieldName});
 	}
 
 	macro viewTableEntryNotPresent {
 		AssertElementNotPresent(
-			key_fieldLabel = "${fieldLabel}",
-			key_fieldValue = "${fieldValue}",
+			key_fieldLabel = ${fieldLabel},
+			key_fieldValue = ${fieldValue},
 			locator1 = "FormsAdmin#FORM_ENTRY_TABLE_ENTRY");
 	}
 
 	macro viewTextEntry {
-		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewTextLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
 		FormFields.viewTextValue(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+			fieldName = ${fieldName},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewUploadFile {
 		FormFields.viewUploadLabel(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+			fieldLabel = ${fieldLabel},
+			fieldName = ${fieldName});
 
-		var key_fieldName = "${fieldName}";
-		var key_uploadFileName = "${uploadFileName}";
+		var key_fieldName = ${fieldName};
+		var key_uploadFileName = ${uploadFileName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "FormFields#UPLOAD_FILE_NAME",
-			value1 = "${uploadFileName}");
+			value1 = ${uploadFileName});
 	}
 
 }

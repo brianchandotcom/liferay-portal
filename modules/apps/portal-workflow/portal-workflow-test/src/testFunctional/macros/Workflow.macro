@@ -17,22 +17,22 @@ definition {
 			Select(
 				key_workflowResourceValue = "Knowledge Base Article",
 				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-				value1 = "${noWorkflow}");
+				value1 = ${noWorkflow});
 
 			Button.clickSave();
 		}
 
 		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Content Page,Knowledge Base Article,Message Boards Message,Page Revision,Web Content Article,Wiki Page") {
 			AssertClick.pauseAssertTextClickAt(
-				key_rowEntry = "${workflowResourceValue}",
+				key_rowEntry = ${workflowResourceValue},
 				locator1 = "Button#EDIT_ROW",
 				value1 = "Edit");
 
-			var key_workflowResourceValue = "${workflowResourceValue}";
+			var key_workflowResourceValue = ${workflowResourceValue};
 
 			Select(
 				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-				value1 = "${noWorkflow}");
+				value1 = ${noWorkflow});
 
 			AssertClick(
 				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
@@ -41,12 +41,12 @@ definition {
 	}
 
 	macro _viewActivities {
-		var key_workflowActivityComment = "${workflowActivityComment}";
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowActivityComment = ${workflowActivityComment};
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertClick(
 			locator1 = "MyWorkflowTasksTask#ACTIVITIES",
@@ -54,13 +54,13 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#ACTIVITIES_LINE",
-			value1 = "${workflowActivityComment}");
+			value1 = ${workflowActivityComment});
 	}
 
 	macro addAssigneeToRegularRole {
 		Role._goToRoleAssigneeType(
-			assigneeType = "${assigneeType}",
-			roleTitle = "${roleTitle}");
+			assigneeType = ${assigneeType},
+			roleTitle = ${roleTitle});
 
 		LexiconEntry.gotoAdd();
 
@@ -68,15 +68,15 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
+		Search.searchCP(searchTerm = ${assigneeName});
 
-		var key_userScreenName = "${assigneeName}";
+		var key_userScreenName = ${assigneeName};
 
 		AssertTextEquals(
 			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
-			value1 = "${assigneeName}");
+			value1 = ${assigneeName});
 
-		var key_assigneeName = "${assigneeName}";
+		var key_assigneeName = ${assigneeName};
 
 		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
 
@@ -90,55 +90,55 @@ definition {
 	macro addNewDefinition {
 		LexiconEntry.gotoAdd();
 
-		PortletEntry.inputTitle(title = "${workflowDefinitionTitle}");
+		PortletEntry.inputTitle(title = ${workflowDefinitionTitle});
 	}
 
 	macro approveTaskByActions {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			multipleTasks = "${multipleTasks}",
-			taskPosition = "${taskPosition}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			multipleTasks = ${multipleTasks},
+			taskPosition = ${taskPosition},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.gotoTaskAssignedToMeActionsCmd(
-			multipleTasks = "${multipleTasks}",
-			taskPosition = "${taskPosition}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			multipleTasks = ${multipleTasks},
+			taskPosition = ${taskPosition},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		var menuItem = "Approve";
 
 		if (isSet(workflowDefinitionTask)) {
-			var menuItem = "${workflowDefinitionTask}";
+			var menuItem = ${workflowDefinitionTask};
 		}
 		else if (isSet(boardWorkflowTask)) {
 			var menuItem = "Approve ${boardWorkflowTask}";
 		}
 
-		MenuItem.click(menuItem = "${menuItem}");
+		MenuItem.click(menuItem = ${menuItem});
 
 		IFrame.selectConfigurationFrame();
 
 		if (isSet(workflowActivityComment)) {
-			var key_workflowActivityComment = "${workflowActivityComment}";
+			var key_workflowActivityComment = ${workflowActivityComment};
 
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${workflowActivityComment}");
+				value1 = ${workflowActivityComment});
 		}
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewCompletedTask(
-			completedTask = "${completedTask}",
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			multipleTasks = "${multipleTasks}",
-			taskPosition = "${taskPosition}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			completedTask = ${completedTask},
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			multipleTasks = ${multipleTasks},
+			taskPosition = ${taskPosition},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		if (isSet(workflowActivityComment)) {
 			Workflow.gotoCompletedFilter();
@@ -148,93 +148,93 @@ definition {
 			}
 
 			Workflow._viewActivities(
-				workflowActivityComment = "${workflowActivityComment}",
-				workflowAssetTitle = "${workflowAssetTitle}");
+				workflowActivityComment = ${workflowActivityComment},
+				workflowAssetTitle = ${workflowAssetTitle});
 		}
 	}
 
 	macro approveTaskByDetails {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.viewTaskAssignedToMeDetails(
-			workflowAssetContent = "${workflowAssetContent}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssignedTo = "${workflowAssignedTo}",
-			workflowTask = "${workflowTask}");
+			workflowAssetContent = ${workflowAssetContent},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssignedTo = ${workflowAssignedTo},
+			workflowTask = ${workflowTask});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewCompletedTask(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro assertInfoItem {
 		var taskId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 		var creationDate = selenium.getText("//td[contains(text(),' AM')]|//td[contains(text(),' PM')]");
-		var key_dueDate = "${key_dueDate}";
-		var key_itemSubject = "${key_itemSubject}";
-		var key_processStep = "${key_processStep}";
-		var key_assignee = "${key_assignee}";
-		var key_createdBy = "${key_createdBy}";
+		var key_dueDate = ${key_dueDate};
+		var key_itemSubject = ${key_itemSubject};
+		var key_processStep = ${key_processStep};
+		var key_assignee = ${key_assignee};
+		var key_createdBy = ${key_createdBy};
 
 		AssertElementPresent(
 			key_columnName = "ID",
-			key_fieldName = "${taskId}",
+			key_fieldName = ${taskId},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
 
 		AssertElementPresent(
 			key_columnName = "Due Date",
-			key_fieldName = "${key_dueDate}",
+			key_fieldName = ${key_dueDate},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 
 		AssertElementPresent(
 			key_columnName = "Item Subject",
-			key_fieldName = "${key_processStep}",
+			key_fieldName = ${key_processStep},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 
 		AssertElementPresent(
 			key_columnName = "Process Step",
-			key_fieldName = "${key_processStep}",
+			key_fieldName = ${key_processStep},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_TH");
 
 		AssertElementPresent(
 			key_columnName = "Assignee",
-			key_fieldName = "${key_assignee}",
+			key_fieldName = ${key_assignee},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 
 		AssertElementPresent(
 			key_columnName = "Created By",
-			key_fieldName = "${key_createdBy}",
+			key_fieldName = ${key_createdBy},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 
 		AssertElementPresent(
 			key_columnName = "Creation Date",
-			key_fieldName = "${creationDate}",
+			key_fieldName = ${creationDate},
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_SPAN");
 	}
 
 	macro assignBlogEntriesToUsers {
-		var iterator = "1";
+		var iterator = 1;
 		var numberOfBlogInstances = ${numberOfBlogInstances} + 1;
 		var numberOfUsers = ${numberOfUsers} + 1;
-		var userCount = "1";
+		var userCount = 1;
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-		while ("${iterator}" != "${numberOfBlogInstances}") {
-			if ("${userCount}" == "${numberOfUsers}") {
-				var userCount = "1";
+		while (${iterator} != ${numberOfBlogInstances}) {
+			if (${userCount} == ${numberOfUsers}) {
+				var userCount = 1;
 			}
 
 			Workflow.assignTaskToUser(
@@ -259,12 +259,12 @@ definition {
 
 		Select(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT",
-			value1 = "${user}");
+			value1 = ${user});
 
 		if (isSet(comment)) {
 			Type(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${comment}");
+				value1 = ${comment});
 		}
 
 		Button.clickDone();
@@ -275,31 +275,31 @@ definition {
 	}
 
 	macro assignTaskToUser {
-		var key_assetTitle = "${assetTitle}";
-		var key_assetType = "${assetType}";
-		var key_assigneeName = "${assigneeName}";
-		var key_workflowTask = "${workflowTask}";
+		var key_assetTitle = ${assetTitle};
+		var key_assetType = ${assetType};
+		var key_assigneeName = ${assigneeName};
+		var key_workflowTask = ${workflowTask};
 
 		Workflow.viewPendingTasks(
-			workflowAssetTitle = "${assetTitle}",
-			workflowAssetType = "${assetType}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${assetTitle},
+			workflowAssetType = ${assetType},
+			workflowTask = ${workflowTask});
 
-		Workflow.assignByDetails(user = "${assigneeName}");
+		Workflow.assignByDetails(user = ${assigneeName});
 	}
 
 	macro assignToMeTaskByActions {
 		Workflow.viewTaskAssignedToMyRoles(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		MenuItem.click(menuItem = "Assign to Me");
 
@@ -308,36 +308,36 @@ definition {
 		if (isSet(workflowActivityComment)) {
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${workflowActivityComment}");
+				value1 = ${workflowActivityComment});
 		}
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			multipleTasks = "${multipleTasks}",
-			taskPosition = "${taskPosition}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			multipleTasks = ${multipleTasks},
+			taskPosition = ${taskPosition},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		if (isSet(workflowActivityComment)) {
 			Workflow._viewActivities(
-				workflowActivityComment = "${workflowActivityComment}",
-				workflowAssetTitle = "${workflowAssetTitle}");
+				workflowActivityComment = ${workflowActivityComment},
+				workflowAssetTitle = ${workflowAssetTitle});
 		}
 	}
 
 	macro assignToMeTaskByDetails {
 		Workflow.viewTaskAssignedToMyRoles(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.viewTaskAssignedToMyRolesDetails(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -346,10 +346,10 @@ definition {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro clickRevertSortDirection {
@@ -357,17 +357,17 @@ definition {
 	}
 
 	macro completeWorkflowBlogInstance {
-		var key_workflowInstanceTitle = "${workflowInstanceName}";
+		var key_workflowInstanceTitle = ${workflowInstanceName};
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "${key_workflowInstanceTitle}",
+			workflowAssetTitle = ${key_workflowInstanceTitle},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
-			workflowAssetTitle = "${key_workflowInstanceTitle}",
+			workflowAssetTitle = ${key_workflowInstanceTitle},
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 	}
@@ -383,7 +383,7 @@ definition {
 
 		Select(
 			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		PortletEntry.save();
 	}
@@ -403,18 +403,18 @@ definition {
 
 		Select(
 			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		PortletEntry.save();
 	}
 
 	macro configureWorkflow {
-		var key_workflowResourceValue = "${workflowResourceValue}";
+		var key_workflowResourceValue = ${workflowResourceValue};
 
-		Search.searchCP(searchTerm = "${workflowResourceValue}");
+		Search.searchCP(searchTerm = ${workflowResourceValue});
 
 		AssertClick.pauseAssertTextClickAt(
-			key_rowEntry = "${workflowResourceValue}",
+			key_rowEntry = ${workflowResourceValue},
 			locator1 = "Button#EDIT_ROW",
 			value1 = "Edit");
 
@@ -424,14 +424,14 @@ definition {
 			WaitForSPARefresh();
 
 			AssertClick.pauseAssertTextClickAt(
-				key_rowEntry = "${workflowResourceValue}",
+				key_rowEntry = ${workflowResourceValue},
 				locator1 = "Button#EDIT_ROW",
 				value1 = "Edit");
 		}
 
 		Select(
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		AssertClick(
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
@@ -440,15 +440,15 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Workflow.viewConfigurationSelected(
-			workflowDefinition = "${workflowDefinition}",
-			workflowResourceValue = "${workflowResourceValue}");
+			workflowDefinition = ${workflowDefinition},
+			workflowResourceValue = ${workflowResourceValue});
 	}
 
 	macro configureWorkflowCancel {
-		var key_workflowResourceValue = "${workflowResourceValue}";
+		var key_workflowResourceValue = ${workflowResourceValue};
 
 		AssertClick.pauseAssertTextClickAt(
-			key_rowEntry = "${workflowResourceValue}",
+			key_rowEntry = ${workflowResourceValue},
 			locator1 = "Button#EDIT_ROW",
 			value1 = "Edit");
 
@@ -458,22 +458,22 @@ definition {
 			WaitForSPARefresh();
 
 			AssertClick.pauseAssertTextClickAt(
-				key_rowEntry = "${workflowResourceValue}",
+				key_rowEntry = ${workflowResourceValue},
 				locator1 = "Button#EDIT_ROW",
 				value1 = "Edit");
 		}
 
 		Select(
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		AssertClick(
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_CANCEL",
 			value1 = "Cancel");
 
 		Workflow.viewConfigurationSelected(
-			workflowDefinition = "${workflowDefinitionEnd}",
-			workflowResourceValue = "${workflowResourceValue}");
+			workflowDefinition = ${workflowDefinitionEnd},
+			workflowResourceValue = ${workflowResourceValue});
 	}
 
 	macro configureWorkflowViaPortlet {
@@ -481,7 +481,7 @@ definition {
 
 		Select(
 			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		PortletEntry.save();
 	}
@@ -495,16 +495,16 @@ definition {
 	}
 
 	macro createWorkflowBlogInstance {
-		var key_workflowInstanceTitle = "${workflowInstanceName}";
+		var key_workflowInstanceTitle = ${workflowInstanceName};
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "",
-			entryTitle = "${key_workflowInstanceTitle}");
+			entryTitle = ${key_workflowInstanceTitle});
 	}
 
 	macro deleteWorkflowDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -550,14 +550,14 @@ definition {
 			portlet = "Process Builder");
 
 		Click(
-			key_workflowDefinitionTitle = "${workflowName}",
+			key_workflowDefinitionTitle = ${workflowName},
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
 		Button.click(button = "Duplicate");
 
-		PortletEntry.inputTitle(title = "${workflowCopyName}");
+		PortletEntry.inputTitle(title = ${workflowCopyName});
 	}
 
 	macro duplicateSingleApproverWorkflow {
@@ -574,7 +574,7 @@ definition {
 
 		Button.click(button = "Duplicate");
 
-		PortletEntry.inputTitle(title = "${workflowName}");
+		PortletEntry.inputTitle(title = ${workflowName});
 
 		ScrollWebElementIntoView(
 			key_text = "Update",
@@ -584,11 +584,11 @@ definition {
 	}
 
 	macro gotoAssetViaTableTitle {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 	}
 
 	macro gotoCompletedFilter {
@@ -598,11 +598,11 @@ definition {
 	}
 
 	macro gotoCompletedTaskAssignedToMePreview {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		Workflow.gotoPreviewView();
 	}
@@ -610,7 +610,7 @@ definition {
 	macro gotoEditWorkflowDefinition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${workflowDefinitionTitle}");
+			rowEntry = ${workflowDefinitionTitle});
 	}
 
 	macro gotoPreviewEdit {
@@ -618,8 +618,8 @@ definition {
 
 		var editAsset = "IFrame#EDIT_ASSET";
 
-		if (IsElementPresent(locator1 = "${editAsset}")) {
-			SelectFrame(locator1 = "${editAsset}");
+		if (IsElementPresent(locator1 = ${editAsset})) {
+			SelectFrame(locator1 = ${editAsset});
 		}
 	}
 
@@ -632,11 +632,11 @@ definition {
 	}
 
 	macro gotoTaskAssignedToMeActionsCmd {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
-		if ("${multipleTasks}" == "true") {
-			var key_position = "${taskPosition}";
+		if (${multipleTasks} == "true") {
+			var key_position = ${taskPosition};
 
 			Click(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_SPECIFIC_ACTIONS");
 		}
@@ -646,24 +646,24 @@ definition {
 	}
 
 	macro gotoTaskAssignedToMyRolesActionsCmd {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		Click(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS");
 	}
 
 	macro gotoTaskDetails {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 	}
 
 	macro gotoViewCompletedAssetViaMySubmissions {
 		Workflow.gotoCompletedFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		Click(locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 
@@ -691,7 +691,7 @@ definition {
 	}
 
 	macro permissionsWorkflowDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -701,7 +701,7 @@ definition {
 	}
 
 	macro processBuilderFilterAndOrder {
-		var key_optionOrder = "${optionOrder}";
+		var key_optionOrder = ${optionOrder};
 
 		Click(locator1 = "AssetWorkflow#PROCESS_BUILDER_FILTER_AND_ORDER_BUTTON");
 
@@ -709,7 +709,7 @@ definition {
 	}
 
 	macro publishExistingWorkflowDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -730,73 +730,73 @@ definition {
 				value1 = "Publish");
 		}
 
-		Alert.viewErrorMessage(errorMessage = "${errorMessage}");
+		Alert.viewErrorMessage(errorMessage = ${errorMessage});
 	}
 
 	macro rejectTaskByActions {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.gotoTaskAssignedToMeActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		MenuItem.click(menuItem = "Reject");
 
 		if (isSet(workflowActivityComment)) {
-			var key_workflowActivityComment = "${workflowActivityComment}";
+			var key_workflowActivityComment = ${workflowActivityComment};
 
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${workflowActivityComment}");
+				value1 = ${workflowActivityComment});
 		}
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewCompletedTask(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro rejectTaskByDetails {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.viewTaskAssignedToMeDetails(
-			workflowAssetContent = "${workflowAssetContent}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssignedTo = "${workflowAssignedTo}",
-			workflowTask = "${workflowTask}");
+			workflowAssetContent = ${workflowAssetContent},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssignedTo = ${workflowAssignedTo},
+			workflowTask = ${workflowTask});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewCompletedTask(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro resubmitTaskByActions {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.gotoTaskAssignedToMeActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		MenuItem.click(menuItem = "Resubmit");
 
@@ -805,24 +805,24 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Workflow.viewCompletedTask(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro resubmitTaskByDetails {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.viewTaskAssignedToMeDetails(
-			workflowAssetContent = "${workflowAssetContent}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssignedTo = "${workflowAssignedTo}",
-			workflowTask = "${workflowTask}");
+			workflowAssetContent = ${workflowAssetContent},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssignedTo = ${workflowAssignedTo},
+			workflowTask = ${workflowTask});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
 
@@ -831,14 +831,14 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Workflow.viewCompletedTask(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro saveDefinition {
-		if ("${newKaleoDesigner}" == "True") {
+		if (${newKaleoDesigner} == "True") {
 			AssertClick(
 				locator1 = "KaleoDesigner#SAVE_BUTTON",
 				value1 = "Save");
@@ -855,7 +855,7 @@ definition {
 	macro searchFieldPresent {
 		Type(
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		Click(locator1 = "WorkflowConfiguration#PROCESS_BUILDER_SEARCH_BAR_BUTTON");
 	}
@@ -864,7 +864,7 @@ definition {
 		Select(
 			key_title = "Buyer Order Approval Workflow",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		Button.clickSave();
 	}
@@ -917,17 +917,17 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS")) {
-			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
+			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = ${workflowDefinitionTitle});
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
 				panel = "Applications",
 				portlet = "Process Builder");
 
-			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
+			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = ${workflowDefinitionTitle});
 		}
 	}
 
@@ -947,7 +947,7 @@ definition {
 	}
 
 	macro unpublishWorkflowDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -965,24 +965,24 @@ definition {
 	}
 
 	macro updateDefinition {
-		PortletEntry.inputTitle(title = "${workflowDefinitionTitle}");
+		PortletEntry.inputTitle(title = ${workflowDefinitionTitle});
 
 		Button.click(button = "Update");
 	}
 
 	macro updateDueDateAssignedToMeTaskByActions {
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.gotoTaskAssignedToMeActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		MenuItem.click(menuItem = "Update Due Date");
 
@@ -998,14 +998,14 @@ definition {
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "${workflowDueDateTime}");
+			value1 = ${workflowDueDateTime});
 
 		if (isSet(workflowActivityComment)) {
-			var key_workflowActivityComment = "${workflowActivityComment}";
+			var key_workflowActivityComment = ${workflowActivityComment};
 
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${workflowActivityComment}");
+				value1 = ${workflowActivityComment});
 		}
 
 		Button.clickDone();
@@ -1013,10 +1013,10 @@ definition {
 		Alert.viewSuccessMessage();
 
 		Workflow.viewTaskAssignedToMe(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE",
@@ -1025,17 +1025,17 @@ definition {
 
 	macro updateDueDateTaskByActions {
 		Workflow.viewTaskAssignedToMyRoles(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 
 		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		MenuItem.click(menuItem = "Update Due Date");
 
@@ -1055,33 +1055,33 @@ definition {
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "${workflowDueDateTime}");
+			value1 = ${workflowDueDateTime});
 
 		if (isSet(workflowActivityComment)) {
-			var key_workflowActivityComment = "${workflowActivityComment}";
+			var key_workflowActivityComment = ${workflowActivityComment};
 
 			Type.clickAtType(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
-				value1 = "${workflowActivityComment}");
+				value1 = ${workflowActivityComment});
 		}
 
 		Workflow.confirmWorkflowAction();
 
 		Workflow.viewTaskAssignedToMyRoles(
-			ddlDataDefinitionName = "${ddlDataDefinitionName}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowTask = "${workflowTask}");
+			ddlDataDefinitionName = ${ddlDataDefinitionName},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowTask = ${workflowTask});
 	}
 
 	macro uploadDefinition {
-		Workflow.addNewDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
+		Workflow.addNewDefinition(workflowDefinitionTitle = ${workflowDefinitionTitle});
 
 		if (IsElementPresent(locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB")) {
 			KaleoDesigner.viewSourceXMLTab();
 		}
 
-		UploadDependencyFile.uploadFile(fileName = "${workflowDefinitionFile}");
+		UploadDependencyFile.uploadFile(fileName = ${workflowDefinitionFile});
 
 		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 
@@ -1090,22 +1090,22 @@ definition {
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");
 
-			Alert.viewErrorMessage(errorMessage = "${errorMessage}");
+			Alert.viewErrorMessage(errorMessage = ${errorMessage});
 		}
 		else {
 			PortletEntry.publish();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Portlet#HEADER",
-				value1 = "${workflowDefinitionTitle}");
+				value1 = ${workflowDefinitionTitle});
 
 			Navigator.gotoBack();
 		}
 	}
 
 	macro viewAssignedToMyRolesTasksCP {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
@@ -1113,19 +1113,19 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
-		var key_workflowAssetType = "${workflowAssetType}";
+		var key_workflowAssetType = ${workflowAssetType};
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1136,8 +1136,8 @@ definition {
 
 	macro viewCannotRejectTaskByActions {
 		Workflow.gotoTaskAssignedToMeActionsCmd(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowTask = ${workflowTask});
 
 		AssertElementNotPresent(locator1 = "MyWorkflowTasksTask#MENU_REJECT");
 	}
@@ -1145,23 +1145,23 @@ definition {
 	macro viewCannotWithdrawTaskByActions {
 		Workflow.gotoCompletedFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_DEFINITION",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
 
@@ -1175,23 +1175,23 @@ definition {
 	macro viewCompletedSubmission {
 		Workflow.gotoCompletedFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TASK",
-			value1 = "${workflowStatus}");
+			value1 = ${workflowStatus});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_DEFINITION",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
 
@@ -1201,20 +1201,20 @@ definition {
 	macro viewCompletedTask {
 		Workflow.gotoCompletedFilter();
 
-		if ("${workflowAssetType}" == "Translation") {
+		if (${workflowAssetType} == "Translation") {
 			var key_workflowAssetTitle = "Translation";
 		}
 		else {
-			var key_workflowAssetTitle = "${workflowAssetTitle}";
+			var key_workflowAssetTitle = ${workflowAssetTitle};
 		}
 
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowTask = ${workflowTask};
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
-		if ("${workflowAssetType}" == "Translation") {
+		if (${workflowAssetType} == "Translation") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
 				value1 = "Translation");
@@ -1222,39 +1222,39 @@ definition {
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
-				value1 = "${workflowAssetTitle}");
+				value1 = ${workflowAssetTitle});
 		}
 
-		if ("${multipleTasks}" == "true") {
+		if (${multipleTasks} == "true") {
 			AssertTextEquals(
-				key_position = "${taskPosition}",
+				key_position = ${taskPosition},
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_SPECIFIC_TYPE",
-				value1 = "${workflowAssetType}");
+				value1 = ${workflowAssetType});
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-				value1 = "${workflowAssetType}");
+				value1 = ${workflowAssetType});
 		}
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
 
-		if ("${completedTask}" == "viewDetails") {
+		if (${completedTask} == "viewDetails") {
 			AssertClick(
-				key_workflowAssetTitle = "${workflowAssetTitle}",
+				key_workflowAssetTitle = ${workflowAssetTitle},
 				locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
-				value1 = "${workflowAssetTitle}");
+				value1 = ${workflowAssetTitle});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
-				value1 = "${workflowAssetTitle}");
+				value1 = ${workflowAssetTitle});
 		}
 	}
 
 	macro viewCompletedTasksTaskNotPresentCP {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK");
 
@@ -1264,11 +1264,11 @@ definition {
 	}
 
 	macro viewConfigurationSelected {
-		var key_workflowResourceValue = "${workflowResourceValue}";
+		var key_workflowResourceValue = ${workflowResourceValue};
 
 		AssertTextEquals(
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 	}
 
 	macro viewDefaultMySubmissionsCP {
@@ -1296,66 +1296,66 @@ definition {
 	}
 
 	macro viewDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		if (isSet(workflowDefinitionTitle)) {
 			AssertTextEquals(
 				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
-				value1 = "${workflowDefinitionTitle}");
+				value1 = ${workflowDefinitionTitle});
 		}
 		else {
-			var key_workflowDefinitionTitle = "${workflowDefinitionName}";
+			var key_workflowDefinitionTitle = ${workflowDefinitionName};
 
 			AssertTextEquals(
 				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
-				value1 = "${workflowDefinitionName}");
+				value1 = ${workflowDefinitionName});
 		}
 	}
 
 	macro viewDefinitionNotPresent {
 		AssertElementNotPresent(
-			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			key_workflowDefinitionTitle = ${workflowDefinitionTitle},
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
 	}
 
 	macro viewDefinitionPublicationStatus {
 		AssertTextEquals(
 			locator1 = "WorkflowDefinition#PUBLICATION_STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 	macro viewDefinitionPublished {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		AssertTextEquals(
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED",
-			value1 = "${workflowDefinitionTitle}");
+			value1 = ${workflowDefinitionTitle});
 	}
 
 	macro viewDefinitionUnpublished {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		AssertTextEquals(
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED",
-			value1 = "${workflowDefinitionTitle}");
+			value1 = ${workflowDefinitionTitle});
 	}
 
 	macro viewMySubmissions {
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
 
@@ -1369,18 +1369,18 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#PREVIEW_CONTENT",
-			value1 = "${workflowAssetContent}");
+			value1 = ${workflowAssetContent});
 
-		Portlet.viewTitle(portletName = "${workflowSubmissionTitle}");
+		Portlet.viewTitle(portletName = ${workflowSubmissionTitle});
 	}
 
 	macro viewNoDuplicateTaskAssignedToMyRoles {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
@@ -1388,34 +1388,34 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE_DUPLICATE");
 	}
 
 	macro viewNotPresentWorkflowStatus {
 		AssertElementNotPresent(
-			key_status = "${statusNotPresent}",
+			key_status = ${statusNotPresent},
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
 	macro viewPendingTasks {
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1425,7 +1425,7 @@ definition {
 	macro viewRejectedTask {
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 		var key_workflowTask = "Update";
 
 		AssertTextEquals(
@@ -1434,11 +1434,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1446,28 +1446,28 @@ definition {
 	}
 
 	macro viewSecondAssetEntryContent {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		WorkflowAsset.previewViewContent(
-			fieldLabel = "${fieldLabel}",
-			fieldValue = "${fieldValue}");
+			fieldLabel = ${fieldLabel},
+			fieldValue = ${fieldValue});
 	}
 
 	macro viewSubmissionNotPresent {
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertElementNotPresent(locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 	}
 
 	macro viewTaskAssignedToMe {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		Navigator.gotoNavTab(navTab = "Assigned to Me");
 
@@ -1481,30 +1481,30 @@ definition {
 			Workflow._gotoPendingFilter();
 		}
 
-		if ("${multipleTasks}" == "true") {
-			var key_position = "${taskPosition}";
+		if (${multipleTasks} == "true") {
+			var key_position = ${taskPosition};
 
 			AssertTextEquals(
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_SPECIFIC_TASK",
-				value1 = "${workflowTask}");
+				value1 = ${workflowTask});
 
 			AssertTextEquals(
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_SPECIFIC_TYPE",
-				value1 = "${workflowAssetType}");
+				value1 = ${workflowAssetType});
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
-				value1 = "${workflowTask}");
+				value1 = ${workflowTask});
 
 			AssertTextEquals(
 				locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE",
-				value1 = "${workflowAssetType}");
+				value1 = ${workflowAssetType});
 		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1516,16 +1516,16 @@ definition {
 
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		if (isSet(workflowAssignedTo)) {
 			AssertTextEquals.assertText(
 				locator1 = "MyWorkflowTasksTask#ASSIGNED_TO",
-				value1 = "${workflowAssignedTo}");
+				value1 = ${workflowAssignedTo});
 		}
 		else {
 			AssertTextEquals.assertText(
@@ -1533,24 +1533,24 @@ definition {
 				value1 = "Test Test");
 		}
 
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowTask = ${workflowTask};
 
 		AssertTextEquals.assertText(
 			locator1 = "MyWorkflowTasksTask#TASK_NAME",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#PREVIEW_CONTENT",
-			value1 = "${workflowAssetContent}");
+			value1 = ${workflowAssetContent});
 	}
 
 	macro viewTaskAssignedToMyRoles {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
@@ -1562,15 +1562,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE");
 
@@ -1580,12 +1580,12 @@ definition {
 	}
 
 	macro viewTaskAssignedToMyRolesDetails {
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
-		var key_workflowTask = "${workflowTask}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
+		var key_workflowTask = ${workflowTask};
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasksTask#ASSIGNED_TO",
@@ -1593,11 +1593,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasksTask#TASK_NAME",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MyWorkflowTasksTask#PREVIEW_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 	}
 
 	macro viewTaskHeaderTitle {
@@ -1609,7 +1609,7 @@ definition {
 	macro viewWebContentWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
-			webContentTitle = "${webContentTitle}");
+			webContentTitle = ${webContentTitle});
 
 		AssertTextEquals(
 			key_status = "Pending",
@@ -1618,22 +1618,22 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
+			value1 = ${webContentTitle});
 	}
 
 	macro viewWebContentWithWorkflowStatus {
 		AssertTextEquals(
-			key_status = "${webContentStatus}",
+			key_status = ${webContentStatus},
 			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
-			value1 = "${webContentStatus}");
+			value1 = ${webContentStatus});
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
+			value1 = ${webContentTitle});
 	}
 
 	macro viewWorkflowDefinition {
-		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		Click(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
@@ -1642,9 +1642,9 @@ definition {
 
 	macro viewWorkflowStatus {
 		AssertTextEquals(
-			key_status = "${status}",
+			key_status = ${status},
 			locator1 = "CommerceEntry#WORKFLOW_STATUS",
-			value1 = "${status}");
+			value1 = ${status});
 	}
 
 	macro webContentGoToAddCP {
@@ -1663,10 +1663,10 @@ definition {
 
 	macro withdrawTaskByActions {
 		Workflow.viewMySubmissions(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowDefinition = "${workflowDefinition}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowDefinition = ${workflowDefinition},
+			workflowTask = ${workflowTask});
 
 		Workflow._gotoPendingFilter();
 
@@ -1677,24 +1677,24 @@ definition {
 
 	macro withdrawTaskByDetails {
 		Workflow.viewMySubmissions(
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowDefinition = "${workflowDefinition}",
-			workflowTask = "${workflowTask}");
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowDefinition = ${workflowDefinition},
+			workflowTask = ${workflowTask});
 
 		Workflow._gotoPendingFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertClick(
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		Workflow.viewMySubmissionsTaskPreview(
-			workflowAssetContent = "${workflowAssetContent}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowSubmissionTitle = "${workflowSubmissionTitle}");
+			workflowAssetContent = ${workflowAssetContent},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowSubmissionTitle = ${workflowSubmissionTitle});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Withdraw Submission");
 
@@ -1704,23 +1704,23 @@ definition {
 	macro withdrawTaskCompletedNoByDetails {
 		Workflow.gotoCompletedFilter();
 
-		var key_workflowAssetTitle = "${workflowAssetTitle}";
+		var key_workflowAssetTitle = ${workflowAssetTitle};
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_DEFINITION",
-			value1 = "${workflowDefinition}");
+			value1 = ${workflowDefinition});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TYPE",
-			value1 = "${workflowAssetType}");
+			value1 = ${workflowAssetType});
 
 		AssertTextEquals(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TASK",
-			value1 = "${workflowTask}");
+			value1 = ${workflowTask});
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE");
 
@@ -1728,13 +1728,13 @@ definition {
 
 		AssertClick(
 			locator1 = "WorkflowSubmissions#MY_SUBMISSIONS_TABLE_TITLE",
-			value1 = "${workflowAssetTitle}");
+			value1 = ${workflowAssetTitle});
 
 		Workflow.viewMySubmissionsTaskPreview(
-			workflowAssetContent = "${workflowAssetContent}",
-			workflowAssetTitle = "${workflowAssetTitle}",
-			workflowAssetType = "${workflowAssetType}",
-			workflowSubmissionTitle = "${workflowSubmissionTitle}");
+			workflowAssetContent = ${workflowAssetContent},
+			workflowAssetTitle = ${workflowAssetTitle},
+			workflowAssetType = ${workflowAssetType},
+			workflowSubmissionTitle = ${workflowSubmissionTitle});
 
 		AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#MENU_WITHDRAW_SUBMISSION");
 

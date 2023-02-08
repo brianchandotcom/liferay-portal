@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6280. RemoveAnOption"
-	@priority = "3"
+	@priority = 3
 	test RemoveAnOption {
 		property portal.acceptance = "false";
 

@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				JSONCategory.tearDownCategories(
 					groupName = "Global",
-					vocabularyName = "${vocabulary}");
+					vocabularyName = ${vocabulary});
 			}
 
 			JSONUser.tearDownNonAdminUsers();
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
-	@priority = "5"
+	@priority = 5
 	test ApprovedAndDraftStatus {
 		property portal.acceptance = "true";
 
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "LPS-120417 When there is web content published by a user different than the admin user and the admin user visit the Content Dashboard, the content is visible"
-	@priority = "3"
+	@priority = 3
 	test AssetNotFilteredByMe {
 		task ("Create an user via JSONWS") {
 			JSONUser.addUser(
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When all the web content is unassigned from a Vocab1's category, the relative ordering of the rest of the categories remain the same"
-	@priority = "3"
+	@priority = 3
 	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
-	@priority = "3"
+	@priority = 3
 	test BackFromCompareToWebContent {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
-	@priority = "3"
+	@priority = 3
 	test BackFromViewDocumentVersion {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -319,10 +319,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the blog author's avatar and name are shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogAuthorInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -351,10 +349,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the list of categories assigned to the content will be divided between public and internal vocabularies"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogCategoriesInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -421,10 +417,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the Creation date of the blog is shown in the Details section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogCreationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -453,10 +447,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the Display date of the blog is shown in the Details section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogDisplayDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -485,10 +477,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the ID of the blog is shown in the Details section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogIDDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -515,10 +505,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the Modification date of the blog is shown in the Details section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogModificationDateInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -547,10 +535,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132509 Given a blog created in site A in the instance, and another one created in the site B
-	When the user goes to the content dashboard
-	Then the user can see both listed"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test BlogsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -597,10 +583,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966 Given the Content Dashboard
-	When a blog is listed in the assets list
-	Then the following metadata are shown: Title, Author (Owner), Type, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogsMetadata {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -631,16 +615,14 @@ definition {
 		task ("Assert columns displayed") {
 			for (var columnHeader : list "Title,Author,Subtype,Site or Asset Library,Status,Audience,Stage,Modified Date") {
 				AssertVisible(
-					key_tableHeader = "${columnHeader}",
+					key_tableHeader = ${columnHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the blog status label is shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogStatusInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -667,10 +649,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then all the tags assigned to the blog appear as labels in the Tags section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogTagsInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -700,10 +680,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-    When the info panel of a blog is open
-    Then the title of the blog is shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogTitleInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -730,10 +708,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151065 Given a Blog
-    When the user opens asset's Info Panel at Content Dashboard
-    Then 'Blogs Entry' text will be exhibit"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogTypeInInfoPanel {
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -757,10 +733,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the blog version labels are shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test BlogVersionInInfoPanel {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -788,7 +762,7 @@ definition {
 	}
 
 	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
-	@priority = "5"
+	@priority = 5
 	test CategorieShowInTable {
 		property portal.acceptance = "true";
 
@@ -805,7 +779,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -823,7 +797,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When there are some categories created for vocabulary1 (X axis), they will always have the same order during the user session"
-	@priority = "3"
+	@priority = 3
 	test CategoriesWithSameOrderDuringASession {
 		task ("Create a list of Audiences") {
 			var categoryId1 = JSONCategory.addCategory(
@@ -858,25 +832,24 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
-				categoryIndex = "1",
+				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "C_Subaudience_1");
 
 			AssertTextPresent(
-				categoryIndex = "2",
+				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "B_Subaudience_2");
 
 			AssertTextPresent(
-				categoryIndex = "3",
+				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "A_Subaudience_3");
 		}
 	}
 
-	@description = "LPS-131793: Given the categorization section in Documents and Media
-	Then the OOTB Internal (Topic) and Public (Audience & Stage) vocabularies are shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CategorizationInOOTBTable {
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
 			DMNavigator.openToAddEntry(
@@ -906,11 +879,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given categories filter using treeview component
-	And there is any category's checkbox selected
-	When user clicks 'Clear All' button
-	Then all checkboxes turns deselected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckAllCheckboxesTurnsDeselectedWithClearButtonAtTreeviewComponent {
 		property portal.acceptance = "true";
 
@@ -935,7 +905,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -986,10 +956,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given categories filter using treeview component
-	When user selects any category's checkbox
-	Then a the amount of items selected appears at results bar"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckAmountOfCategoriesResultsBarAtTreeviewComponent {
 		property portal.acceptance = "false";
 
@@ -1014,7 +982,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -1051,11 +1019,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given user has selected categories checkboxes
-	And clicked 'Select'
-	When returns to 'Select Categories'
-	Then the results bar is present"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckCategoriesKeepResultsBarAtTreeviewComponent {
 		property portal.acceptance = "false";
 
@@ -1072,7 +1037,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -1097,10 +1062,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given categories filter using treeview component
-	When user selects any category's checkbox
-	Then a results bar appears"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckCategoriesResultsBarAtTreeviewComponent {
 		property portal.acceptance = "true";
 
@@ -1117,7 +1080,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -1146,10 +1109,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given categories filter using treeview component
-	When user selects any category's checkbox
-	Then a 'Clear All' button appears at results bar"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckClearButtonCategoryResultsBarAtTreeviewComponent {
 		property portal.acceptance = "true";
 
@@ -1166,7 +1127,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -1202,7 +1163,7 @@ definition {
 	}
 
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
-	@priority = "5"
+	@priority = 5
 	test CheckDisplayPageIconofApprovedWebContent {
 		property portal.acceptance = "true";
 
@@ -1239,7 +1200,7 @@ definition {
 	}
 
 	@description = "LPS-132597 When a web content is NOT associated to a Display Page and its status is Approved, a display page icon is NOT displayed"
-	@priority = "5"
+	@priority = 5
 	test CheckDisplayPageIconofApprovedWebContentNotDisplayed {
 		property portal.acceptance = "true";
 
@@ -1262,7 +1223,7 @@ definition {
 	}
 
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Pending, a display page icon is NOT displayed"
-	@priority = "5"
+	@priority = 5
 	test CheckDisplayPageIconofPendingWebContent {
 		property portal.acceptance = "true";
 
@@ -1307,7 +1268,7 @@ definition {
 	}
 
 	@description = "LPS-160210: Add WebDAV URL to Info Panel"
-	@priority = "3"
+	@priority = 3
 	test CheckDocumentURLLabel {
 		task ("Given a Document Asset at Content Dashboard") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1338,10 +1299,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131936 Given the Content Dashboard
-    When there is an asset with more than one category per vocabulary
-    Then the table will show a label with the first of the categories and another one with a + and the number of remaining categories"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test CheckForMoreCategories {
 		property portal.acceptance = "true";
 
@@ -1379,7 +1338,7 @@ definition {
 	}
 
 	@description = "LPS-151808 Bug: The button Metrics is shown for web content in Pending status"
-	@priority = "4"
+	@priority = 4
 	test CheckMetricsIconofPendingWebContent {
 		property portal.acceptance = "true";
 
@@ -1428,7 +1387,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
-	@priority = "3"
+	@priority = 3
 	test CheckOrderEvenWithSomeUnassignedCategories {
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
@@ -1501,11 +1460,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-152906: Given a Blogs Asset at Content Dashboard
-	When the user accesses the its information panel
-	Then the share button must be present"
+	@description = ""
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CheckShareButtonIsPresentForBlogs {
 		task ("Create a Blog Entry asset") {
 			JSONBlog.addEntry(
@@ -1529,11 +1486,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-152906: Given the Info panel of the Content Dashboard
-	When the user accesses the Web Content information panel
-	Then share button must not be present for Web Content"
+	@description = ""
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test CheckShareButtonNotPresentForWebContent {
 		task ("Create a Web Content and set a Display Page") {
 			JSONWebcontent.addWebContent(
@@ -1558,7 +1513,7 @@ definition {
 	}
 
 	@description = "LPS-133716 When in Content Dashboard, a column with the Site / assetLibraty header is shown."
-	@priority = "2"
+	@priority = 2
 	test CheckSiteAssertLibraryColumn {
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
@@ -1577,7 +1532,7 @@ definition {
 	}
 
 	@description = "LPS-133716 When in Content Dashboard, the name of the Site/Asset Library where the contents are stored is shown, regardless where it was created"
-	@priority = "5"
+	@priority = 5
 	test CheckSiteAssertLibraryOfContent {
 		property portal.acceptance = "true";
 
@@ -1615,7 +1570,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When a new category is created and assigned to a web content, the relative ordering of categories remain the same and the new category gets a new color, positionated in the last position"
-	@priority = "3"
+	@priority = 3
 	test CheckTheOrderWithANewCategory {
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
@@ -1702,7 +1657,7 @@ definition {
 	}
 
 	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
-	@priority = "4"
+	@priority = 4
 	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT {
 		property portal.acceptance = "true";
 
@@ -1727,7 +1682,7 @@ definition {
 	}
 
 	@description = "When click on the 'Other options' icon of not Approved WC and has a display page associated, View option NOT displayed"
-	@priority = "4"
+	@priority = 4
 	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT {
 		property portal.acceptance = "true";
 
@@ -1773,10 +1728,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-152604 Given there are nodes selected at treeview
-    When user clicks the 'Clear' button
-    Then 'Clear' button should not appear anymore"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	@uitest
 	test ClearButtonAtTreeviewComponent {
 		task ("Create a Web Content asset") {
@@ -1806,11 +1759,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155288: Given categories filter using treeview component
-	And there is any category's checkbox selected
-	When user clicks 'Clear All' button
-	Then the results bar disappears "
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ClearButtonCategoryAtTreeviewComponent {
 		property portal.acceptance = "false";
 
@@ -1827,7 +1777,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -1867,7 +1817,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with no edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
@@ -1925,7 +1875,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
@@ -1955,7 +1905,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
@@ -2028,7 +1978,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
@@ -2058,7 +2008,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with edit permissions (owner) clicks on the title of a content in status Approved with no associated DPT, the user is led to the web content editor"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ClickTitleApprovedNoDPT {
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
@@ -2085,11 +2035,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132509 Given a user with NO permissions to edit
-	And a Blog entry that is associated with a Display Page Template
-	When the user clicks on the title link in the content dashboard
-	Then the user should be led to a preview of the Display Page Template, with no editing options"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -2147,7 +2094,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
@@ -2174,11 +2121,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132509 Given a user with permissions to edit
-	And a Blog entry that is associated with a Display Page Template
-	When the user clicks on the title link in the content dashboard
-	Then the user is led to a preview of the Display Page Template with editing options"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -2220,11 +2164,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132509 Given a user with NO permissions to edit
-	And a Blog entry that is not associated with a Display Page Template
-	When the user clicks on the title link in the content dashboard
-	Then the user cannot click on the title"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -2269,7 +2210,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
@@ -2300,11 +2241,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132509 Given a user with permissions to edit
-	And a Blog entry that is not associated with a Display Page Template
-	When the user clicks on the title link in the content dashboard
-	Then the user is led to the edit mode"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
@@ -2333,10 +2271,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966 Given a user with NO permissions to edit documents
-	When the user clicks on the title link in the content dashboard
-	than the user cannot click on the title"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleDocumentDPTWithNoPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -2396,7 +2332,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
@@ -2423,10 +2359,8 @@ definition {
 		}
 	}
 
-	@description = "Given a user with permissions to edit documents
-	When the user clicks on the title link in the content dashboard
-	then the user is led to the edit mode"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test ClickTitleDocumentDPTWithPermissions {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
@@ -2471,7 +2405,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Draft, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ClickTitleDraftNoDPT {
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
@@ -2500,7 +2434,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Pending, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ClickTitlePendingNoDPT {
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitlePendingNoDPT";
@@ -2536,7 +2470,7 @@ definition {
 	}
 
 	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Scheduled, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test ClickTitleScheduledNoDPT {
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
@@ -2574,7 +2508,7 @@ definition {
 	}
 
 	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
-	@priority = "3"
+	@priority = 3
 	test CompareToLastVersionWebContent {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -2627,7 +2561,7 @@ definition {
 	}
 
 	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
-	@priority = "3"
+	@priority = 3
 	test CompareToVersionWebContent {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -2675,10 +2609,8 @@ definition {
 		}
 	}
 
-	@description = "Given a document created in an Asset Library
-	When the user goes to the content dashboard
-	Then the user can see the document listed"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test DocumentFromAssetLibraryIsListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2714,10 +2646,8 @@ definition {
 		}
 	}
 
-	@description = " Given a document with and associated Display Page Template
-	When the user with permissions clicks on the view button
-	Then the user is lead to the view mode"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DocumentIconView {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2780,10 +2710,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966 Given the Content Dashboard
-	When a document is listed in the assets list
-	Then the following metadata are shown: Title, Author (Owner), Subtype, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DocumentMetadata {
 		task ("Create a category for Audiente and Staged") {
 			JSONCategory.addCategory(
@@ -2811,16 +2739,14 @@ definition {
 		task ("Assert columns displayed") {
 			for (var columnHeader : list "Title,Author,Subtype,Site or Asset Library,Status,Audience,Stage,Modified Date") {
 				AssertVisible(
-					key_tableHeader = "${columnHeader}",
+					key_tableHeader = ${columnHeader},
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
 		}
 	}
 
-	@description = "Given a document created in site A in the instance, and another one created in the site B
-	When the user goes to the content dashboard
-	Then the user can see both listed"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test DocumentsFromDifferentSitesAreListed {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -2870,7 +2796,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test DocumentsVersionHistoryClickBack {
 		property portal.acceptance = "true";
@@ -2889,7 +2815,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "10");
+					versionsCreated = 10);
 			}
 
 			task ("Navigate to Version History Page") {
@@ -2913,7 +2839,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test DocumentsVersionHistoryDeleteVersion {
 		property portal.acceptance = "true";
 
@@ -2931,7 +2857,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "2");
+					versionsCreated = 2);
 			}
 
 			task ("Navigate to Version History Page") {
@@ -2960,7 +2886,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test DocumentsVersionHistoryDownloadVersion {
 		property portal.acceptance = "true";
 
@@ -2978,7 +2904,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "2");
+					versionsCreated = 2);
 			}
 
 			task ("Navigate to Version History Page") {
@@ -2999,7 +2925,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "3"
+	@priority = 3
 	test DocumentsVersionHistoryFirstVersionOptions {
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
@@ -3051,7 +2977,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryInformation {
 		task ("Given the Version History page for documents") {
@@ -3068,7 +2994,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "10");
+					versionsCreated = 10);
 			}
 
 			task ("Navigate to Content Dashboard") {
@@ -3118,7 +3044,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "3"
+	@priority = 3
 	test DocumentsVersionHistoryOfSingleVersion {
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
@@ -3156,7 +3082,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryOrdered {
 		task ("Given the Version History page for documents") {
@@ -3173,7 +3099,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "10");
+					versionsCreated = 10);
 			}
 
 			task ("Navigate to Content Dashboard") {
@@ -3201,7 +3127,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "3"
+	@priority = 3
 	test DocumentsVersionHistoryOtherVersionOptions {
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
@@ -3257,7 +3183,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test DocumentsVersionHistoryRevertVersion {
 		property portal.acceptance = "true";
 
@@ -3275,7 +3201,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "2");
+					versionsCreated = 2);
 			}
 
 			task ("Navigate to Version History Page") {
@@ -3300,7 +3226,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test DocumentsVersionHistoryViewVersion {
 		property portal.acceptance = "true";
 
@@ -3318,7 +3244,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "10");
+					versionsCreated = 10);
 			}
 
 			task ("Navigate to Version History Page") {
@@ -3342,10 +3268,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151065 Given a Document asset using a New Document Type
-    When the user opens Info Panel at Content Dashboard
-    Then 'Document - ' and structure's name text will be exhibit"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DocumentTypeInInfoPanel {
 		task ("Add a document type") {
 			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
@@ -3381,10 +3305,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-119966 Given a document with and associated Display Page Template
-	When the user with permissions clicks on the info panel button
-	Then the user is lead to the info panel"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DocumentViewInfoPanel {
 		property portal.acceptance = "true";
 
@@ -3413,7 +3335,7 @@ definition {
 	}
 
 	@description = "LPS-161017: Add the Download Action to the Version History for Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test DownloadDocumentFromVersionsTab {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -3463,10 +3385,8 @@ definition {
 		}
 	}
 
-	@description = " Given a document with and associated Display Page Template
-	When the user with permissions clicks on the edit button
-	Then the user is lead to the edit mode"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test EditBlog {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3496,10 +3416,8 @@ definition {
 		}
 	}
 
-	@description = " Given a document with and associated Display Page Template
-	When the user with permissions clicks on the edit button
-	Then the user is lead to the edit mode"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test EditDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -3531,7 +3449,7 @@ definition {
 	}
 
 	@description = "Validate if the user can edit a web content through the Edit option"
-	@priority = "5"
+	@priority = 5
 	test EditWebContent {
 		property portal.acceptance = "true";
 
@@ -3558,7 +3476,7 @@ definition {
 	}
 
 	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
-	@priority = "5"
+	@priority = 5
 	test ExpiredWebContent {
 		property portal.acceptance = "true";
 
@@ -3584,10 +3502,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-162827 Given the kebab menu of a web content with just one version
-	When the user clicks on Expire option
-	Then the web content is expired and it changes its status to Expired"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ExpireVersionLabel {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -3622,10 +3538,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-124236 Given the Content Dashboard
-	When there are no contents in the list
-	Then the Export XLS button is disabled"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test ExportXLSDisabled {
 		task ("Go to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
@@ -3642,10 +3556,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter and Order dropdown
-	When the user selects the option Filter by Author: All
-	Then the list of contents displays content from all users featured in the user's content dashboard view, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogByAuthorAll {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3671,10 +3583,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter and Order dropdown
-	When the user selects the option Filter by Author: Me
-	Then the list of contents displays content where the user is the creator, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogByAuthorMe {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3700,11 +3610,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter and Order dropdown
-	When the user selects the option Filter by Author: Author
-	And the user selects one or more authors
-	Then the list of contents displays content where the selected users are the last editors of the approved version, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogByAuthorOther {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3730,10 +3637,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter by... > Category
-	When the user clicks on several categories and clicks Save
-	Then the content list in the Content Dashboard filters accordingly, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogByCategory {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3754,7 +3659,7 @@ definition {
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
@@ -3771,10 +3676,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter by... > Sites and Asset Libraries
-	When the user selects one site or asset library within the modal
-	Then the list of contents that match the site or asset library selected is displayed, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogBySite {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3799,7 +3702,7 @@ definition {
 	}
 
 	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
-	@priority = "4"
+	@priority = 4
 	test FilterBlogByStatusAndAuthor {
 		task ("Given the Filter and Order dropdown") {
 			task ("Create a blog with the tag") {
@@ -3828,7 +3731,7 @@ definition {
 	}
 
 	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
-	@priority = "5"
+	@priority = 5
 	test FilterBlogByStatusApproved {
 		task ("Given The Filter and Order dropdown") {
 			task ("Create an approved blog") {
@@ -3855,7 +3758,7 @@ definition {
 	}
 
 	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
-	@priority = "5"
+	@priority = 5
 	test FilterBlogByStatusDraft {
 		task ("Given The Filter and Order dropdown") {
 			task ("Create an approved blog") {
@@ -3883,7 +3786,7 @@ definition {
 	}
 
 	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
-	@priority = "5"
+	@priority = 5
 	test FilterBlogByStatusScheduled {
 		task ("Given The Filter and Order dropdown") {
 			task ("Create an approved blog") {
@@ -3892,7 +3795,7 @@ definition {
 					entryContent = "Blogs Entry Content",
 					entryTitle = "Blogs Entry Title",
 					groupName = "Test Site Name",
-					increaseYears = "1");
+					increaseYears = 1);
 			}
 
 			task ("Go to Content Dashboard") {
@@ -3911,10 +3814,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Filter by... > Tags
-	When the user clicks on several tags and clicks Save
-	Then the content list in the Content Dashboard filters accordingly, including Blogs"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBlogByTag {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -3940,7 +3841,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Author, using different display types"
-	@priority = "5"
+	@priority = 5
 	test FilterByAuthor {
 		property portal.acceptance = "true";
 
@@ -3983,7 +3884,7 @@ definition {
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1 and Category1 and Category2, only the WebContent1 is shown in the list"
-	@priority = "3"
+	@priority = 3
 	test FilterByCategoriesAndAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -4036,7 +3937,7 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
@@ -4075,7 +3976,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by category"
-	@priority = "5"
+	@priority = 5
 	test FilterByCategory {
 		property portal.acceptance = "true";
 
@@ -4092,7 +3993,7 @@ definition {
 
 		task ("Create a Web Content using the category created") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -4110,7 +4011,7 @@ definition {
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1 and Category1, only the WebContent1 is shown in the list"
-	@priority = "3"
+	@priority = 3
 	test FilterByCategoryAndAuthor {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -4163,7 +4064,7 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
@@ -4202,7 +4103,7 @@ definition {
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 authored by Author1 and has Category1 and Category2 and a WebContent2 authored by Author2 and has Category1, and the user filters by Author1, Author2 and Category1, both web content are shown in the list"
-	@priority = "3"
+	@priority = 3
 	test FilterByCategoryAndAuthors {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -4255,7 +4156,7 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title 2",
@@ -4295,7 +4196,7 @@ definition {
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 that has Tag1, Category1 and Category2 and a WebContent2 that has Tag2 and Category1, and the user filters by Tag1 and Category1, both web content are shown in the list"
-	@priority = "3"
+	@priority = 3
 	test FilterByCategoryAndTag {
 		task ("Create two categories") {
 			var categoryId1 = JSONCategory.addCategory(
@@ -4319,7 +4220,7 @@ definition {
 
 		task ("Create a web content that has Tag2 and Category1 via JSONWS") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId1}",
+				assetCategoryIds = ${categoryId1},
 				assetTagNames = "tagnumber2",
 				content = "Web Content Content",
 				groupName = "Test Site Name",
@@ -4351,7 +4252,7 @@ definition {
 	}
 
 	@description = "LPS-146550 Bug: Filter by extension does not shown any result after duplicate a MIME type"
-	@priority = "4"
+	@priority = 4
 	test FilterByDuplicatedMimeType {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#FilterByDuplicatedMimeType";
@@ -4425,7 +4326,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by multiple tags"
-	@priority = "5"
+	@priority = 5
 	test FilterByMultipleTags {
 		property portal.acceptance = "true";
 
@@ -4459,7 +4360,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Site"
-	@priority = "5"
+	@priority = 5
 	test FilterBySite {
 		property portal.acceptance = "true";
 
@@ -4482,7 +4383,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Status: Any"
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusAny {
 		property portal.acceptance = "true";
 
@@ -4517,7 +4418,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Status: Approved"
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusApproved {
 		property portal.acceptance = "true";
 
@@ -4540,7 +4441,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Status: Draft"
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusDraft {
 		property portal.acceptance = "true";
 
@@ -4564,7 +4465,7 @@ definition {
 	}
 
 	@description = "LPS-161330: Add Filtering by Expired Status to the Content Dashboard"
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
@@ -4572,7 +4473,7 @@ definition {
 
 		task ("Given an expired Document asset") {
 			task ("Set update interval") {
-				DMDocument.updateCheckInterval(fieldValue = "1");
+				DMDocument.updateCheckInterval(fieldValue = 1);
 			}
 
 			task ("Create a Document") {
@@ -4592,15 +4493,15 @@ definition {
 
 				DMDocument.setExpirationDate(
 					enableExpirationDate = "true",
-					increaseMinutes = "1");
+					increaseMinutes = 1);
 			}
 
 			task ("Wait for document to expire") {
 				Navigator.openURL();
 
-				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 3000);
 
-				Notifications.viewBadgeCount(notificationCount = "1");
+				Notifications.viewBadgeCount(notificationCount = 1);
 			}
 		}
 
@@ -4618,7 +4519,7 @@ definition {
 	}
 
 	@description = "LPS-161330: Add Filtering by Expired Status to the Content Dashboard"
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusExpiredWebContent {
 		property portal.acceptance = "true";
 
@@ -4652,7 +4553,7 @@ definition {
 	}
 
 	@description = "LPS-155386: Add Filtering by Pending Status to the Content Dashboard"
-	@priority = "4"
+	@priority = 4
 	test FilterByStatusPendingBlog {
 		property portal.acceptance = "true";
 
@@ -4687,7 +4588,7 @@ definition {
 	}
 
 	@description = "LPS-155386: Add Filtering by Pending Status to the Content Dashboard"
-	@priority = "4"
+	@priority = 4
 	test FilterByStatusPendingWebContent {
 		property portal.acceptance = "true";
 
@@ -4722,7 +4623,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by Status: Scheduled. And for LPS-86164 - Assert whether selecting time ends in JS error."
-	@priority = "5"
+	@priority = 5
 	test FilterByStatusScheduled {
 		property portal.acceptance = "true";
 		property test.assert.javascript.errors = "true";
@@ -4756,10 +4657,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132411 Given The Type filter modal
-	When the user selects one or more subtypes
-	Then the subtypes selected appear as filter boxes above the Content table in the Content Dashboard, with the format Subtype: [subtypen_name]"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBySubtype {
 		property portal.acceptance = "true";
 
@@ -4790,7 +4689,7 @@ definition {
 	}
 
 	@description = "LPS-150510 Bug: Basic document cannot be selected in the subtype filter"
-	@priority = "4"
+	@priority = 4
 	test FilterBySubtypeBasicDocument {
 		property portal.acceptance = "true";
 
@@ -4817,10 +4716,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Type filter modal
-	When the user selects the Blogs Entry option
-	Then the subtype selected appears as filter box above the Content table in the Content Dashboard, with the format Subtype: [Blogs Entry]"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilterBySubtypeBlogsEntry {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -4852,10 +4749,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-150558 Given The Type filter modal
-	When the user selects the Blogs Entry option + any other subtype/s
-	Then the subtype Blogs + other subtypes preselected will be shown as a text with the format [number] Subtypes selected"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test FilterBySubtypeBlogsEntryAndWebContent {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
@@ -4896,7 +4791,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by tag"
-	@priority = "5"
+	@priority = 5
 	test FilterByTag {
 		property portal.acceptance = "true";
 
@@ -4920,7 +4815,7 @@ definition {
 	}
 
 	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
-	@priority = "3"
+	@priority = 3
 	test FilterByTypes {
 		task ("Create a basic web content via JSONWS") {
 			JSONWebcontent.addWebContent(
@@ -4974,10 +4869,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When the user selects one or more extensions and clicks on 'Select' button
-	Then the extensions selected appear as filter boxes above the Content table in the Content Dashboard, with the format 'Extension: [extension_name]' "
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test FilteringExtensionsOnTheDashboard {
 		property portal.acceptance = "true";
 
@@ -5003,7 +4896,7 @@ definition {
 	}
 
 	@description = "LPS-117419 When the item selector for tags displays all available tags and there's a tag that is created in two different sites with the same name, the repeated tag shows only once, the filter results retrieve contents labeled with those categories from the two sites and there's only one filter applied"
-	@priority = "5"
+	@priority = 5
 	test FilterTheListOfContentsByTag {
 		property portal.acceptance = "true";
 
@@ -5051,7 +4944,7 @@ definition {
 	}
 
 	@description = "LPS-116840 When a user with update permissions clicks on the edit icon, the user is led to the web editor"
-	@priority = "5"
+	@priority = 5
 	test IconEdit {
 		property portal.acceptance = "true";
 
@@ -5078,7 +4971,7 @@ definition {
 	}
 
 	@description = "LPS-116840 When the user clicks on the info icon, the info panel displays"
-	@priority = "5"
+	@priority = 5
 	test IconInfo {
 		property portal.acceptance = "true";
 
@@ -5114,10 +5007,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-134692 Given the info panel of an asset
-	When the user clicks on arrow next to the title of a section not collapsed
-	Then the section will be collapsed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test InfoPanelCollapseSection {
 		task ("Adding vocabulary and category") {
 			JSONCategory.addVocabulary(
@@ -5132,7 +5023,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -5159,10 +5050,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-134692 Given the info panel of an asset
-	When the user clicks on arrow next to the title of a section collapsed
-	Then the section will be expanded"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test InfoPanelExpandSection {
 		task ("Adding vocabulary and category") {
 			JSONCategory.addVocabulary(
@@ -5177,7 +5066,7 @@ definition {
 
 		task ("Adding Web Content") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
 				title = "WC WebContent Title");
@@ -5211,7 +5100,7 @@ definition {
 	}
 
 	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
-	@priority = "3"
+	@priority = 3
 	test InfoPanelNotOpenAfterNavigation {
 		task ("Given the info panel is open") {
 			task ("Crete an Asset") {
@@ -5246,7 +5135,7 @@ definition {
 	}
 
 	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
-	@priority = "3"
+	@priority = 3
 	test InfoPanelOpenAfterRefresh {
 		task ("Given the info panel is open") {
 			task ("Crete an Asset") {
@@ -5279,7 +5168,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
-	@priority = "3"
+	@priority = 3
 	test JustAddingAVocabularyThroughTheFilters {
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
@@ -5342,7 +5231,7 @@ definition {
 	}
 
 	@description = "LPS-116987 When the user clicks on the eye icon in any of the translated into languages within the info panel, the user navigates to the VIEW version of the page in the matching language"
-	@priority = "5"
+	@priority = 5
 	test LanguageVersion {
 		property portal.acceptance = "true";
 
@@ -5429,10 +5318,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'audio'
-	Then the MIME type 'audio' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeAudio {
 		property portal.acceptance = "true";
 
@@ -5457,10 +5344,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354 Given The Extension filter modal
-	When there are file extensions for the MIME type 'code'
-	Then the MIME type 'code' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeCode {
 		property portal.acceptance = "true";
 
@@ -5485,10 +5370,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'compressed'
-	Then the MIME type 'compressed' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeCompressed {
 		property portal.acceptance = "true";
 
@@ -5515,10 +5398,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'others'
-	Then the MIME type 'others' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeOthers {
 		property portal.acceptance = "true";
 
@@ -5543,10 +5424,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'presentation'
-	Then the MIME type 'presentation' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypePresentation {
 		property portal.acceptance = "true";
 
@@ -5571,10 +5450,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'spreadSheet'
-	Then the MIME type 'spreadSheet' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeSpreadsheet {
 		property portal.acceptance = "true";
 
@@ -5599,10 +5476,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'text'
-	Then the MIME type 'text' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeText {
 		property portal.acceptance = "true";
 
@@ -5627,10 +5502,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'vectorial'
-	Then the MIME type 'vectorial' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeVectorial {
 		property portal.acceptance = "true";
 
@@ -5655,10 +5528,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are file extensions for the MIME type 'video'
-	Then the MIME type 'video' appears as father and all of the file extensions for it appear as children and available to be selected"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MimeTypeVideo {
 		property portal.acceptance = "true";
 
@@ -5683,10 +5554,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131793: Given the categorization section in Documents and Media
-	When the user creates a Global internal vocabulary
-	Then the vocabulary is shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test NewVocabularyGlobalInOOTBTable {
 		task ("Add a Global Internal Vocabulary") {
 			JSONCategory.addVocabulary(
@@ -5714,10 +5583,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131793: Given the categorization section in Documents and Media
-	When the user creates a Site internal vocabulary
-	Then the vocabulary is shown"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test NewVocabularyInternalInOOTBTable {
 		task ("Add a Site Internal Vocabulary") {
 			JSONCategory.addVocabulary(
@@ -5745,10 +5612,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When there are NOT file extensions for any MIME type
-	Then the MIME type does NOT appear listed in the Extension modal"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test NoMimeType {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
@@ -5772,7 +5637,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When the user configure the audit graph to have just one vocabulary, the relative ordering of the categories remain the same"
-	@priority = "3"
+	@priority = 3
 	test NumberOfVocabulariesAccordingToTheAuditGraph {
 		task ("Create a list of Audiences") {
 			var categoryId1 = JSONCategory.addCategory(
@@ -5837,24 +5702,24 @@ definition {
 
 		task ("Validate if the remaining categories are shown in order of creating") {
 			AssertTextPresent(
-				categoryIndex = "1",
+				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "C_Subaudience_1");
 
 			AssertTextPresent(
-				categoryIndex = "2",
+				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "B_Subaudience_2");
 
 			AssertTextPresent(
-				categoryIndex = "3",
+				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "A_Subaudience_3");
 		}
 	}
 
 	@description = "Validate if the user can order by Modification Date"
-	@priority = "5"
+	@priority = 5
 	test OrderByModificationDate {
 		property portal.acceptance = "true";
 
@@ -5887,7 +5752,7 @@ definition {
 	}
 
 	@description = "Validate if the user can order by title"
-	@priority = "5"
+	@priority = 5
 	test OrderByTitle {
 		property portal.acceptance = "true";
 
@@ -5920,7 +5785,7 @@ definition {
 	}
 
 	@description = "LPS-132254 When a user selects the value of the number of rows (4, 8, 40, 60) displayed in the list, the Content Dashboard will display the number of rows selected"
-	@priority = "5"
+	@priority = 5
 	test PaginationDisplaySelectedNumberOfRows {
 		property portal.acceptance = "true";
 
@@ -5938,14 +5803,14 @@ definition {
 		}
 
 		task ("Check if the correct number of entries are being displayed") {
-			Pagination.changePagination(itemsPerPage = "8");
+			Pagination.changePagination(itemsPerPage = 8);
 
 			Pagination.viewResults(results = "Showing 1 to 8 of 14 entries.");
 		}
 	}
 
 	@description = "LPS-132254 When a user use the <, > buttons, the page displayed moves forward/backward"
-	@priority = "3"
+	@priority = 3
 	test PaginationMoveAcrossPagesWithButtons {
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
@@ -5961,7 +5826,7 @@ definition {
 		}
 
 		task ("Use < > buttons to move forth and back") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
@@ -5974,7 +5839,7 @@ definition {
 	}
 
 	@description = "LPS-132254 When a user clicks on a page number, that page is displayed in the Content Dashboard"
-	@priority = "3"
+	@priority = 3
 	test PaginationMoveAcrossPagesWithNumber {
 		task ("Create 6 WC using JSON") {
 			for (var count : list "1,2,3,4,5,6") {
@@ -5990,16 +5855,16 @@ definition {
 		}
 
 		task ("Use page numbers to move between pages") {
-			Pagination.changePagination(itemsPerPage = "4");
+			Pagination.changePagination(itemsPerPage = 4);
 
-			ContentDashboard.moveToPage(pageNumber = "2");
+			ContentDashboard.moveToPage(pageNumber = 2);
 
 			Pagination.viewResults(results = "Showing 5 to 8 of 10 entries.");
 		}
 	}
 
 	@description = "LPS-113832 When the option 'Access in Control Panel' is checked for permissions for Content Dashboard section, users with this role assigned can see and access the Content Dashboard in the Global App Menu."
-	@priority = "5"
+	@priority = 5
 	test PermissionsForContentDashboard {
 		property portal.acceptance = "true";
 
@@ -6034,7 +5899,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Content Dashboard User Test");
 
 			JSONRole.assignRoleToUser(
@@ -6052,7 +5917,7 @@ definition {
 	}
 
 	@description = "LPS-152905: Add a Preview to the Info Panel of Blogs in the Content Dashboard :"
-	@priority = "3"
+	@priority = 3
 	test PreviewBlogsImage {
 		task ("Given a blog contains only an image") {
 			var imageId = JSONBlog.uploadBlogImage(
@@ -6060,7 +5925,7 @@ definition {
 				sourceFileName = "Document_1.jpg");
 
 			JSONBlog.addEntryWithImage(
-				coverImageId = "${imageId}",
+				coverImageId = ${imageId},
 				entryContent = "Blogs Content",
 				entryTitle = "Blogs Title",
 				groupName = "Test Site Name");
@@ -6082,7 +5947,7 @@ definition {
 	}
 
 	@description = "LPS-162824: Add the Revert Action to the Version History for Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test RevertDocumentVersion {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -6127,7 +5992,7 @@ definition {
 
 		task ("Then a new major version is created") {
 			AssertTextPresent(
-				index = "1",
+				index = 1,
 				locator1 = "ContentDashboard#ASSET_VERSION_NUMBER_INDEX",
 				value1 = "Version 2.0");
 		}
@@ -6141,7 +6006,7 @@ definition {
 	}
 
 	@description = "Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
+	@priority = 5
 	test SaveFiltersAfterEditing {
 		property portal.acceptance = "true";
 
@@ -6167,10 +6032,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When the user selects one or more extensions
-	Then the number of file extensions preselected will be shown as a text with the format '[number] Subtypes selected' "
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test SelectedExtensionNumbers {
 		task ("Add a text file") {
 			JSONDocument.addFileWithUploadedFile(
@@ -6209,10 +6072,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-133354: Given The Extension filter modal
-	When the text input matches to one or more extensions from a MIME type and the user clicks on the MIME type parent
-	Then all the children that appear filtered will be selected"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test SelectedParentAndChildExtensions {
 		task ("Add a text file") {
 			JSONDocument.addFileWithUploadedFile(
@@ -6236,7 +6097,7 @@ definition {
 	}
 
 	@description = "LPS-131886 Validade if when Web Content is updated its being corectly displayed"
-	@priority = "3"
+	@priority = 3
 	test ShouldExhibitUpdatedWebContent {
 		task ("Create WC via JSON") {
 			JSONWebcontent.addWebContent(
@@ -6263,7 +6124,7 @@ definition {
 	}
 
 	@description = "LPS-131886 Validade if a Web Content associated with a Display Page Template is shown"
-	@priority = "5"
+	@priority = 5
 	test ShouldExhibitWebContentAssociatedWithDisplayPage {
 		property portal.acceptance = "true";
 
@@ -6300,7 +6161,7 @@ definition {
 	}
 
 	@description = "LPS-131886 Validade if a Web Content not associated with a Display Page Template is shown"
-	@priority = "5"
+	@priority = 5
 	test ShouldExhibitWebContentNotAssociatedWithDisplayPageTemplate {
 		property portal.acceptance = "true";
 
@@ -6323,7 +6184,7 @@ definition {
 	}
 
 	@description = "LPS-133181 When Filter by Author 'All', displays content from all users featured in the user's content dashboard view."
-	@priority = "5"
+	@priority = 5
 	test ShowAllContentCreatorUsers {
 		property portal.acceptance = "true";
 
@@ -6400,7 +6261,7 @@ definition {
 	}
 
 	@description = "When the user selects one or more authors in the item selector, the list of contents displays content where the selected users are the creators"
-	@priority = "5"
+	@priority = 5
 	test ShowAllContentsCreatedByUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -6481,7 +6342,7 @@ definition {
 	}
 
 	@description = "LPS-133181 When the user selects the option Filter by Author: Me in the 'Filter and Order' dropdown, the list of contents displays content where the user is the creator"
-	@priority = "5"
+	@priority = 5
 	test ShowOnlyContentCreatedByUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -6571,10 +6432,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131187 Given the Content Dashboard table
-	When a document is added
-	Then its type will be shown in the Type column"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test TypeColumnForDocument {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardDocumentConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -6599,10 +6458,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131187 Given the Content Dashboard table
-	When a web content is added
-	Then its type will be shown in the Type column"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test TypeColumnForWebContent {
 		task ("Create WC via JSON") {
 			JSONWebcontent.addWebContent(
@@ -6623,7 +6480,7 @@ definition {
 	}
 
 	@description = "LPS-122873 When the user uncheck any checkbox from the vocab2, the relative ordering of the categories remain the same"
-	@priority = "3"
+	@priority = 3
 	test UncheckACategoryInTheContentPanel {
 		task ("Create a list of Audience Categories") {
 			var audienceId1 = JSONCategory.addCategory(
@@ -6691,7 +6548,7 @@ definition {
 	}
 
 	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
-	@priority = "3"
+	@priority = 3
 	test ViewDocumentVersion {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -6745,7 +6602,7 @@ definition {
 	}
 
 	@description = "LPS-151911 Bug: Content Dashboard shows error when displaying details of article whose authors has been deleted"
-	@priority = "4"
+	@priority = 4
 	test ViewInfoPanelDeletedUser {
 		property portal.acceptance = "true";
 
@@ -6818,7 +6675,7 @@ definition {
 	}
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
-	@priority = "4"
+	@priority = 4
 	test ViewMoreButtonToDocumentsVersionHistory {
 		property portal.acceptance = "true";
 
@@ -6836,7 +6693,7 @@ definition {
 				ContentDashboard.createVersionsForDocument(
 					dmDocumentTitle = "DM Document Title",
 					groupName = "Test Site Name",
-					versionsCreated = "10");
+					versionsCreated = 10);
 			}
 		}
 
@@ -6853,17 +6710,15 @@ definition {
 		task ("Then this page should contain a table of all the Version Histories of the Document") {
 			for (var indexNumber : list "1,2,3,4,5,6,7,8,9,10,11") {
 				AssertVisible(
-					index = "${indexNumber}",
+					index = ${indexNumber},
 					key_tableEntry = "DM Document Title",
 					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 			}
 		}
 	}
 
-	@description = "LPS-161544 Given the Version History page for Web Contents
-	When the user clicks on back
-	Then the Web Content is selected and the Info Panel is open to the Versions tab"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test ViewMoreWCVersionsBackButton {
 		property custom.properties = "feature.flag.LPS-162924=true";
 
@@ -6914,7 +6769,7 @@ definition {
 	}
 
 	@description = "LPS-116840 When the user clicks on the view icon of a content with an associated display page, the user is led to the view mode of the page"
-	@priority = "5"
+	@priority = 5
 	test WebContentIconView {
 		property portal.acceptance = "true";
 
@@ -6972,10 +6827,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-151065 Given a Web Content asset using a Web Content Structure
-    When the user opens Info Panel at Content Dashboard
-    Then 'Web Content Article -' and structure's name text will be exhibit"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test WebContentStructureTypeInInfoPanel {
 		task ("Create a web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -7019,7 +6872,7 @@ definition {
 	}
 
 	@description = "LPS-114912: Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
+	@priority = 5
 	test WebContentViewInfoPanel {
 		property portal.acceptance = "true";
 

@@ -15,7 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		Raylife.createRaylifeSite(siteName = ${testSiteName});
 	}
 
 	tearDown {
@@ -23,7 +23,7 @@ definition {
 
 		Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,13 +33,13 @@ definition {
 
 	@description = "LPS-143798 - Verify that when you click 'send link and exit' the email is sent"
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test CanConfirmEmailSent {
 		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanConfirmEmailSent";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 
@@ -61,7 +61,7 @@ definition {
 
 		AssertElementPresent(
 			key_name = "Test",
-			key_order = "1",
+			key_order = 1,
 			locator1 = "CommerceEntry#ASSERT_NOTIFICATION_QUEUE");
 
 		Click(
@@ -72,13 +72,13 @@ definition {
 	}
 
 	@description = "LPS-143796 - Verify that when user fills out the form and save, user can retrieve quote by copying and pasting the email link into the browser"
-	@priority = "4"
+	@priority = 4
 	test CanRecoverQuotationThroughEmailLink {
 		property test.name.skip.portal.instance = "RaylifeRetrieveEmail#CanRecoverQuotationThroughEmailLink";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 		RaylifeHomePage.startFlow();
 

@@ -7,7 +7,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(description)) {
-			var description = "${description}";
+			var description = ${description};
 		}
 		else {
 			var description = "";
@@ -21,7 +21,7 @@ definition {
 				-d description=${description}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Directly calls the JSON WS API to add a fragment (default type is section)"
@@ -49,14 +49,14 @@ definition {
 				-d status=${status}
 		''';
 
-		var fragmentEntryId = JSONCurlUtil.post("${curl}", "$..fragmentEntryId");
+		var fragmentEntryId = JSONCurlUtil.post(${curl}, "$..fragmentEntryId");
 
-		return "${fragmentEntryId}";
+		return ${fragmentEntryId};
 	}
 
 	@summary = "Directly calls the JSON WS API to delete a fragment collection"
 	macro _deleteCollection {
-		Variables.assertDefined(parameterList = "${collectionId}");
+		Variables.assertDefined(parameterList = ${collectionId});
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -66,7 +66,7 @@ definition {
 				-d fragmentCollectionId=${collectionId}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	@summary = "Get the collectionId from a collection by using collectionName and groupId"
@@ -85,13 +85,13 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var collectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
+		var collectionId = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
 
-		if ("${collectionId}" == "") {
+		if (${collectionId} == "") {
 			fail("FAIL. Cannot find collection.");
 		}
 
-		return "${collectionId}";
+		return ${collectionId};
 	}
 
 	@summary = "Get the collectionName by using collectionName"
@@ -108,9 +108,9 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var collectionNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${collectionName}')]");
+		var collectionNameResult = JSONCurlUtil.post(${curl}, "$..[?(@['name'] == '${collectionName}')]");
 
-		return "${collectionNameResult}";
+		return ${collectionNameResult};
 	}
 
 	@summary = "Get the fragmentName from a fragmentCollection by using fragmentName "
@@ -126,9 +126,9 @@ definition {
 				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
 
-		var fragmentNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${fragmentName}')]");
+		var fragmentNameResult = JSONCurlUtil.post(${curl}, "$..[?(@['name'] == '${fragmentName}')]");
 
-		return "${fragmentNameResult}";
+		return ${fragmentNameResult};
 	}
 
 }

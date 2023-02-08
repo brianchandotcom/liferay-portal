@@ -13,15 +13,15 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.type();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.clickAt();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.assertJavaScriptErrors();
 
@@ -153,13 +153,13 @@ definition {
 
 		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.waitForEditable();
 
 		Type.typeCKEditor();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.assertJavaScriptErrors();
 
@@ -247,7 +247,7 @@ definition {
 
 		selenium.type();
 
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		selenium.assertJavaScriptErrors();
 

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6219. MoneyOrder Payment Method lifecycle"
-	@priority = "3"
+	@priority = 3
 	test CancelPayment {
 		property portal.acceptance = "false";
 
@@ -68,7 +68,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		Refresh();
 
@@ -81,8 +81,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 
 		User.logoutPG();
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
-	@priority = "3"
+	@priority = 3
 	test MoneyOrderCheckout {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePayments#MoneyOrderCheckout";
@@ -160,7 +160,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -171,8 +171,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard");
 	}
 

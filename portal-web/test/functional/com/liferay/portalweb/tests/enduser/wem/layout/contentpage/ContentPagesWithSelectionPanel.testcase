@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118271 and LPS-106776. Can change the order of the elements in page editor via Selection panel. View Page Structure in react page editor."
-	@priority = "5"
+	@priority = 5
 	test ChangeOrderOfElementsViaSelectionPanel {
 		property portal.acceptance = "true";
 
@@ -64,12 +64,12 @@ definition {
 		}
 
 		task ("Assert the order of elements in page editor") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Container,Heading,Asset Publisher") {
 				PageEditor.viewFragmentOrder(
-					fragmentName = "${fragmentName}",
-					position = "${n}");
+					fragmentName = ${fragmentName},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -82,12 +82,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Container,Heading,Asset Publisher") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -103,12 +103,12 @@ definition {
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Asset Publisher,Container,Heading") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -116,12 +116,12 @@ definition {
 		}
 
 		task ("Assert the order of elements in page editor") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Asset Publisher,Container,Heading") {
 				PageEditor.viewFragmentOrder(
-					fragmentName = "${fragmentName}",
-					position = "${n}");
+					fragmentName = ${fragmentName},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -136,12 +136,12 @@ definition {
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Asset Publisher,Heading,Container") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -149,12 +149,12 @@ definition {
 		}
 
 		task ("Assert the order of elements in page editor") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Asset Publisher,Heading,Container") {
 				PageEditor.viewFragmentOrder(
-					fragmentName = "${fragmentName}",
-					position = "${n}");
+					fragmentName = ${fragmentName},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118271. Can add elements into Layout elements via Selection panel."
-	@priority = "5"
+	@priority = 5
 	test MoveElementsIntoLayoutElementsViaSelectionPanel {
 		property portal.acceptance = "true";
 
@@ -197,12 +197,12 @@ definition {
 		}
 
 		task ("Assert the order of elements in page editor") {
-			var n = "1";
+			var n = 1;
 
 			for (var fragmentName : list "Container,Button,Grid,Asset Publisher") {
 				PageEditor.viewFragmentOrder(
-					fragmentName = "${fragmentName}",
-					position = "${n}");
+					fragmentName = ${fragmentName},
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -223,7 +223,7 @@ definition {
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Button']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
@@ -239,15 +239,15 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertElementPresent(
-				key_columnNumber = "1",
+				key_columnNumber = 1,
 				key_elementHeader = "//div[@aria-label='Asset Publisher']",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-118271. Can add fragments into the cell of Collection Display via Selection panel."
-	@priority = "5"
+	@priority = 5
 	test MoveFragmentsIntoCollectionDisplayViaSelectionPanel {
 		property portal.acceptance = "true";
 
@@ -292,17 +292,17 @@ definition {
 
 			for (var n : list "1,2,3") {
 				AssertElementPresent(
-					key_colPosition = "1",
+					key_colPosition = 1,
 					key_element = "//div[@aria-label='Heading']",
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-121281. The data-lfr-priority can order the elements information of fragment with drop zone in Selection panel."
-	@priority = "4"
+	@priority = 4
 	test OrderElementInfoOfFragmentWithDropZoneInSelectionPanel {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -338,9 +338,9 @@ definition {
 }
 		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
-			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+			FragmentsEditor.typeCssEditor(content = ${cssSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -364,12 +364,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Fragment Name,01-title,Drop Zone 1,02-title,Drop Zone 2") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -378,7 +378,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121626. The data-lfr-priority can order the elements information of fragment with editable fields in Selection panel."
-	@priority = "4"
+	@priority = 4
 	test OrderElementInfoOfFragmentWithEditableFieldInSelectionPanel {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -416,9 +416,9 @@ definition {
 }
 		''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
-			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+			FragmentsEditor.typeCssEditor(content = ${cssSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -442,12 +442,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Fragment Name,01-link,01-subtitle,01-title,02-link,02-subtitle,02-title") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on the asset displayed in Content Display via General panel."
-	@priority = "5"
+	@priority = 5
 	test PerformActionsOnDisplayedAssetInContentDisplayViaGeneralPanel {
 		property portal.acceptance = "true";
 
@@ -502,7 +502,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			AssertTextEquals(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content Edit");
 		}
@@ -565,7 +565,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
+				usageAmount = 1,
 				usageType = "All");
 
 			IFrame.closeFrame();
@@ -591,7 +591,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on collection displayed in Collection Display via General panel."
-	@priority = "5"
+	@priority = 5
 	test PerformActionsOnDisplayedCollectionInCollectionDisplayViaGeneralPanel {
 		property portal.acceptance = "true";
 
@@ -610,7 +610,7 @@ definition {
 
 		task ("Add a web content with category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -656,14 +656,14 @@ definition {
 		}
 
 		task ("View three assets shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
 				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${title}",
+					key_colPosition = 1,
+					key_entryTitle = ${title},
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var n = ${n} + 1;
@@ -693,15 +693,15 @@ definition {
 
 		task ("View only the web content shown in Collection Display") {
 			AssertVisible(
-				key_colPosition = "1",
+				key_colPosition = 1,
 				key_entryTitle = "Web Content Title",
 				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
+				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 			for (var title : list "Document Title,Blogs Entry Title") {
 				AssertElementNotPresent(
-					key_entryTitle = "${title}",
+					key_entryTitle = ${title},
 					locator1 = "PageEditor#COLLECTION_CELL");
 			}
 		}
@@ -737,14 +737,14 @@ definition {
 		}
 
 		task ("View the new web content shown in Collection Display") {
-			var n = "1";
+			var n = 1;
 
 			for (var title : list "Web Content Title 2,Web Content Title") {
 				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "${title}",
+					key_colPosition = 1,
+					key_entryTitle = ${title},
 					key_fragmentName = "Collection Display",
-					key_rowPosition = "${n}",
+					key_rowPosition = ${n},
 					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 
 				var n = ${n} + 1;
@@ -811,7 +811,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on mapped asset via Mapping panel."
-	@priority = "5"
+	@priority = 5
 	test PerformActionsOnMappedAssetViaMappingPanel {
 		property portal.acceptance = "true";
 
@@ -941,7 +941,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "AssetLists#ASSET_LIST_USAGES",
-				usageAmount = "1",
+				usageAmount = 1,
 				usageType = "All");
 
 			IFrame.closeFrame();
@@ -970,7 +970,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-109407. View the background color of nodes in the Page Structure when hover on them or they are selected."
-	@priority = "3"
+	@priority = 3
 	test ViewBackgroundColorOfNodesInSelectionPanel {
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -992,7 +992,7 @@ definition {
 		task ("Add a Heading fragment into the first module of Grid") {
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
@@ -1051,7 +1051,7 @@ definition {
 			for (var position : list "3,6,7") {
 				MouseOver(
 					key_nodeName = "Module",
-					key_position = "${position}",
+					key_position = ${position},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				AssertCssValue(
@@ -1107,7 +1107,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122396. The details of mapped assets are shown in Mapping panel."
-	@priority = "5"
+	@priority = 5
 	test ViewDetailsOfMappedAssetsInMappingPanel {
 		property portal.acceptance = "true";
 
@@ -1188,7 +1188,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121626. The elements information of Slider is organized in Selection panel."
-	@priority = "5"
+	@priority = 5
 	test ViewElementInfoOrderOfSliderInSelectionPanel {
 		property portal.acceptance = "true";
 
@@ -1209,12 +1209,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Slider,01-01-image,01-02-title,01-03-subtitle,02-01-image,02-02-title,02-03-subtitle,03-01-image,03-02-title,03-03-subtitle") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -1223,7 +1223,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-121281. The elements information of Tabs is organized in Selection panel."
-	@priority = "5"
+	@priority = 5
 	test ViewElementInfoOrderOfTabsInSelectionPanel {
 		property portal.acceptance = "true";
 
@@ -1244,12 +1244,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3,title4,Drop Zone 4") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -1258,7 +1258,7 @@ definition {
 
 		task ("Change the Number of Tabs to 5") {
 			PageEditor.editTabs(
-				numberOfTabs = "5",
+				numberOfTabs = 5,
 				panel = "General");
 		}
 
@@ -1269,12 +1269,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3,title4,Drop Zone 4,title5,Drop Zone 5") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -1283,7 +1283,7 @@ definition {
 
 		task ("Change the Number of Tabs to 3") {
 			PageEditor.editTabs(
-				numberOfTabs = "3",
+				numberOfTabs = 3,
 				panel = "General");
 		}
 
@@ -1294,12 +1294,12 @@ definition {
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var nodeName : list "Tabs,title1,Drop Zone 1,title2,Drop Zone 2,title3,Drop Zone 3") {
 				AssertElementPresent(
-					key_nodeName = "${nodeName}",
-					key_position = "${n}",
+					key_nodeName = ${nodeName},
+					key_position = ${n},
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				var n = ${n} + 1;
@@ -1308,7 +1308,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122142. View the visual style of mapped editable field items in Selection panel of content page."
-	@priority = "4"
+	@priority = 4
 	test ViewVisualStyleOfMappedEditableFieldItems {
 		task ("Add a web content with basic web content") {
 			JSONWebcontent.addWebContent(

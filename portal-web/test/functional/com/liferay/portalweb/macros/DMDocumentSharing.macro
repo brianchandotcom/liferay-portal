@@ -12,31 +12,31 @@ definition {
 
 	macro changePermission {
 		if (isSet(depotName)) {
-			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+			DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 		}
 		else {
 			DMDocument.viewPG(
-				dmDocumentDescription = "${dmDocumentDescription}",
-				dmDocumentTitle = "${dmDocumentTitle}");
+				dmDocumentDescription = ${dmDocumentDescription},
+				dmDocumentTitle = ${dmDocumentTitle});
 		}
 
 		DMDocumentSharing._manageCollaborators();
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		var key_userName = "${userName}";
+		var key_userName = ${userName};
 
 		AssertTextEquals(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
-			value1 = "${userName}");
+			value1 = ${userName});
 
 		Select(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}");
+			value1 = ${selectPermission});
 
 		AssertSelectedLabel(
 			locator1 = "Sharing#MANAGE_COLLABORATORS_ACCESS_DROPDOWN",
-			value1 = "${selectPermission}");
+			value1 = ${selectPermission});
 
 		Button.clickSave();
 
@@ -52,22 +52,22 @@ definition {
 
 		if (isSet(dmDocumentTitle)) {
 			DMDocument.editCP(
-				dmDocumentTitle = "${dmDocumentTitle}",
-				dmDocumentTitleEdit = "${entryTitleEdit}");
+				dmDocumentTitle = ${dmDocumentTitle},
+				dmDocumentTitleEdit = ${entryTitleEdit});
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${entryTitle}");
+				rowEntry = ${entryTitle});
 
 			BlogsEntry.editTitle(
-				entryTitle = "${entryTitle}",
-				entryTitleEdit = "${entryTitleEdit}");
+				entryTitle = ${entryTitle},
+				entryTitleEdit = ${entryTitleEdit});
 
 			Button.clickPublish();
 		}
 
-		LexiconEntry.viewEntryName(rowEntry = "${entryTitleEdit}");
+		LexiconEntry.viewEntryName(rowEntry = ${entryTitleEdit});
 	}
 
 	macro removeCollaborator {
@@ -77,8 +77,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		for (var collaborator : list "${collaboratorList}") {
-			var key_userName = "${collaborator}";
+		for (var collaborator : list ${collaboratorList}) {
+			var key_userName = ${collaborator};
 
 			Click(locator1 = "Sharing#MANAGE_COLLABORATORS_REMOVE_BUTTON");
 		}
@@ -97,12 +97,12 @@ definition {
 	macro viewCollaborators {
 		DMDocument.expandInfo();
 
-		for (var collaborator : list "${collaboratorList}") {
-			var key_collaborator = "${collaborator}";
+		for (var collaborator : list ${collaboratorList}) {
+			var key_collaborator = ${collaborator};
 
 			AssertElementPresent(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_COLLABORATOR_TOOLTIP",
-				value1 = "${collaborator}");
+				value1 = ${collaborator});
 		}
 	}
 
@@ -111,14 +111,14 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Shared Content");
 
-		if ("${contentSharingPermission}" == "View") {
+		if (${contentSharingPermission} == "View") {
 			AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
-		else if ("${contentSharingPermission}" == "Comment") {
+		else if (${contentSharingPermission} == "Comment") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertElementPresent(locator1 = "CKEditor#BODY");
@@ -129,7 +129,7 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
-		else if ("${contentSharingPermission}" == "Update") {
+		else if (${contentSharingPermission} == "Update") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			AssertElementPresent(locator1 = "CKEditor#BODY");
@@ -141,42 +141,42 @@ definition {
 			MenuItem.viewPresent(menuItem = "Edit");
 		}
 
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 	}
 
 	macro viewNoDuplicateDocument {
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		AssertTextEquals(
-			key_contentTitle = "${dmDocumentTitle}",
+			key_contentTitle = ${dmDocumentTitle},
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		AssertElementNotPresent(
-			key_contentTitle = "${dmDocumentTitle}",
+			key_contentTitle = ${dmDocumentTitle},
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 
 	macro viewSharedFlag {
 		if (isSet(detailsView)) {
-			if ("${displayStyle}" == "table") {
+			if (${displayStyle} == "table") {
 				AssertVisible(
-					key_dmDocumentTitle = "${dmDocumentTitle}",
+					key_dmDocumentTitle = ${dmDocumentTitle},
 					locator1 = "DocumentsAndMedia#TABLE_DOCUMENT_SHARED");
 			}
 			else {
 				AssertVisible(
-					key_dmDocumentTitle = "${dmDocumentTitle}",
+					key_dmDocumentTitle = ${dmDocumentTitle},
 					locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
 			}
 		}
 		else {
 			AssertElementNotPresent(
-				key_dmDocumentTitle = "${dmDocumentTitle}",
+				key_dmDocumentTitle = ${dmDocumentTitle},
 				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
 		}
 	}
@@ -185,10 +185,10 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
-			key_dmDocumentTitle = "${dmDocumentTitle}",
+			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
-		if ("${sharing}" == "true") {
+		if (${sharing} == "true") {
 			MenuItem.viewPresent(menuItem = "Share");
 		}
 		else {

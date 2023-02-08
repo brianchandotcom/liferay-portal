@@ -14,13 +14,13 @@ definition {
 				-d styleBookEntryKey=
 		''';
 
-		var styleBookEntryId = JSONCurlUtil.post("${curl}", "$.styleBookEntryId");
+		var styleBookEntryId = JSONCurlUtil.post(${curl}, "$.styleBookEntryId");
 
-		if ("${styleBookEntryId}" == "") {
+		if (${styleBookEntryId} == "") {
 			fail("FAIL. Cannot add style book entry.");
 		}
 
-		return "${styleBookEntryId}";
+		return ${styleBookEntryId};
 	}
 
 }

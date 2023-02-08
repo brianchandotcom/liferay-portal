@@ -17,7 +17,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170104."
-	@priority = "3"
+	@priority = 3
 	test CanApproveContentPage {
 		task ("Add new Content Page and enable workflow for Content Pages") {
 			JSONLayout.addPublicLayout(
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159649."
-	@priority = "4"
+	@priority = 4
 	test CannotPublishPublicationWithPendingAssetEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PublicationsWorkflow#CannotPublishPublicationWithPendingAssetEntries";
@@ -197,7 +197,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Article",
-			changeOrder = "2",
+			changeOrder = 2,
 			changeSite = "Guest",
 			changeStatus = "Approved",
 			changeTitle = "WC WebContent Title 2",
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-117628."
-	@priority = "4"
+	@priority = 4
 	test CanPublishPublicationWithApprovedAssetEntries {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PublicationsWorkflow#CanPublishPublicationWithApprovedAssetEntries";
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159649. Need to show proper notification message for changes in production while in a publication."
-	@priority = "4"
+	@priority = 4
 	test NotificationCanInformUserToSwitchToRelevantPublication {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PublicationsWorkflow#NotificationCanInformUserToSwitchToRelevantPublication";

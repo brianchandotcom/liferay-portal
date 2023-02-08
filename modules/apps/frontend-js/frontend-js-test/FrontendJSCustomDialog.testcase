@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "LPS-165263: This test validates that the liferay custom alert modal dialog can render."
-	@priority = "3"
+	@priority = 3
 	test CanRenderOpenAlertModal {
 		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
 			RunScript(locator1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");

@@ -6,7 +6,7 @@ definition {
 
 		selenium.sikuliMouseMove();
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		selenium.assertJavaScriptErrors();
 

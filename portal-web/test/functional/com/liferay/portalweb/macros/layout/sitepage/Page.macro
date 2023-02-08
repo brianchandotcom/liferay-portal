@@ -3,18 +3,18 @@ definition {
 	macro assertAlternateURL {
 		var html = '''<link data-senna-track="temporary" href="''';
 
-		if ("${locale}" == "zh") {
+		if (${locale} == "zh") {
 			var zhAlternate = '''" hreflang="zh-CN" rel="alternate">''';
 
-			var pageSource = StringUtil.add("${html}", "${portalURL}/zh/web/guest${zhAlternate}", "");
+			var pageSource = StringUtil.add(${html}, "${portalURL}/zh/web/guest${zhAlternate}", "");
 		}
-		else if ("${locale}" == "es") {
+		else if (${locale} == "es") {
 			var esAlternate = '''" hreflang="es-ES" rel="alternate">''';
 
-			var pageSource = StringUtil.add("${html}", "${portalURL}/es/web/guest${esAlternate}", "");
+			var pageSource = StringUtil.add(${html}, "${portalURL}/es/web/guest${esAlternate}", "");
 		}
 
-		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
 	macro assertCanonicalURL {
@@ -22,7 +22,7 @@ definition {
 		var html2 = '''" rel="canonical">''';
 
 		if (isSet(customCanonicalURL)) {
-			var portalURL = "${customCanonicalURL}";
+			var portalURL = ${customCanonicalURL};
 		}
 		else if (isSet(locale)) {
 			var portalURL = "${portalURL}/${locale}/web/guest";
@@ -32,34 +32,34 @@ definition {
 		}
 
 		if (isSet(pageName)) {
-			var pageName = StringUtil.lowerCase("${pageName}");
+			var pageName = StringUtil.lowerCase(${pageName});
 
-			var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+			var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
-			var pageSource = StringUtil.add("${html}", "${portalURL}/${pageNameURL}${html2}", "");
+			var pageSource = StringUtil.add(${html}, "${portalURL}/${pageNameURL}${html2}", "");
 		}
 		else {
-			var pageSource = StringUtil.add("${html}", "${portalURL}${html2}", "");
+			var pageSource = StringUtil.add(${html}, "${portalURL}${html2}", "");
 		}
 
-		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
 	macro assertDefaultAlternateURL {
 		var html = '''<link data-senna-track="temporary" href="''';
 		var html2 = '''" hreflang="x-default" rel="alternate">''';
 
-		var pageSource = StringUtil.add("${html}", "${portalURL}${html2}", "");
+		var pageSource = StringUtil.add(${html}, "${portalURL}${html2}", "");
 
-		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
+		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
 	macro assertNodePortPG {
-		var key_nodePort = "${nodePort}";
+		var key_nodePort = ${nodePort};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#NODE_NAME",
-			value1 = "${nodePort}");
+			value1 = ${nodePort});
 	}
 
 	macro changeSinglePageTheme {
@@ -77,9 +77,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconCard.viewCardTitle(card = "${themeName}");
+		LexiconCard.viewCardTitle(card = ${themeName});
 
-		LexiconCard.clickCardTitle(card = "${themeName}");
+		LexiconCard.clickCardTitle(card = ${themeName});
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -101,11 +101,11 @@ definition {
 		return authToken;
 		''';
 
-		var authToken = selenium.getEval("${javaScript}");
+		var authToken = selenium.getEval(${javaScript});
 
 		echo("## * Auth Token: ${authToken}");
 
-		return "${authToken}";
+		return ${authToken};
 	}
 
 	macro getPlidFromHtmlSource {
@@ -115,11 +115,11 @@ definition {
 		return plid;
 		''';
 
-		var plid = selenium.getEval("${javaScript}");
+		var plid = selenium.getEval(${javaScript});
 
 		echo("## * p_l_id: ${plid}");
 
-		return "${plid}";
+		return ${plid};
 	}
 
 	macro getTextCountFromHtmlSource {
@@ -127,65 +127,65 @@ definition {
 
 		echo("## * Page Source: ${pageSource}");
 
-		return "${pageSource}";
+		return ${pageSource};
 
-		var count = StringUtil.count("${pageSource}", "${text}");
+		var count = StringUtil.count(${pageSource}, ${text});
 
 		echo("## * Count: ${count}");
 
-		return "${count}";
+		return ${count};
 	}
 
 	macro gotoChildPagePG {
 		MouseOver.javaScriptMouseOver(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
 		Click(
-			key_childPageName = "${childPageName}",
+			key_childPageName = ${childPageName},
 			locator1 = "Home#PAGE_CHILD_PAGE");
 	}
 
 	macro gotoCollectionEntryEllipsisItem {
 		LexiconTable.clickEllipsisItem(
-			item = "${item}",
-			tableEntry = "${tableEntry}");
+			item = ${item},
+			tableEntry = ${tableEntry});
 
 		SelectFrameTop();
 	}
 
 	macro gotoPagePanelPortlet {
-		var key_portletName = "${portletName}";
+		var key_portletName = ${portletName};
 
 		AssertClick(
 			locator1 = "Panel#MENU_ITEM",
-			value1 = "${portletName}");
+			value1 = ${portletName});
 	}
 
 	macro localizedPG {
 		Click(
-			key_pageLocale = "${pageLocale}",
+			key_pageLocale = ${pageLocale},
 			locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE");
 	}
 
 	macro openURLLocale {
-		Navigator.openSpecificURL(url = "${localizationPageURL}");
+		Navigator.openSpecificURL(url = ${localizationPageURL});
 
-		AssertLocation(value1 = "${localizationPageURL}");
+		AssertLocation(value1 = ${localizationPageURL});
 	}
 
 	macro searchInCollectionFilter {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Type(
-			index = "${index}",
+			index = ${index},
 			locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		KeyPress(
-			index = "${index}",
+			index = ${index},
 			locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
 			value1 = "\RETURN");
 	}
@@ -193,27 +193,27 @@ definition {
 	macro selectFilterInCollectionFilter {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
-				key_columnNumber = "${columnNumber}",
+				key_columnNumber = ${columnNumber},
 				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 		else {
 			Click(
-				key_title = "${title}",
+				key_title = ${title},
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE");
 		}
 
 		if (isSet(searchTerm)) {
 			Type(
 				locator1 = "MenuItem#SEARCH_FIELD",
-				value1 = "${searchTerm}");
+				value1 = ${searchTerm});
 		}
 
 		if (isSet(multipleSelection)) {
-			for (var categoryName : list "${categoryNameList}") {
+			for (var categoryName : list ${categoryNameList}) {
 				Check.checkNotVisible(
-					key_checkboxName = "${categoryName}",
+					key_checkboxName = ${categoryName},
 					locator1 = "MenuItem#ANY_CHECKBOX");
 			}
 
@@ -221,38 +221,38 @@ definition {
 		}
 		else {
 			Click.clickAtNotVisible(
-				key_radioName = "${filterName}",
+				key_radioName = ${filterName},
 				locator1 = "MenuItem#ANY_RADIO");
 		}
 
 		if (isSet(columnNumber)) {
 			AssertTextEquals(
-				key_columnNumber = "${columnNumber}",
+				key_columnNumber = ${columnNumber},
 				key_elementHeader = "//label[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
-				key_position = "1",
+				key_position = 1,
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
-				value1 = "${selectedName}");
+				value1 = ${selectedName});
 		}
 		else {
 			AssertTextEquals(
-				key_title = "${title}",
+				key_title = ${title},
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
-				value1 = "${selectedName}");
+				value1 = ${selectedName});
 		}
 	}
 
 	macro selectTagInCollectionFilter {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Type.sendKeys(
-			index = "${index}",
+			index = ${index},
 			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 
 		KeyPress(
-			index = "${index}",
+			index = ${index},
 			locator1 = "PageEditor#COLLECTION_FILTER_TAGS_SELECTOR",
 			value1 = "\RETURN");
 	}
@@ -261,7 +261,7 @@ definition {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
 		if (isSet(javaScriptPage)) {
-			AssertConfirm.waitForConfirmation(value1 = "${javaScriptPage}");
+			AssertConfirm.waitForConfirmation(value1 = ${javaScriptPage});
 		}
 
 		Click.clickAtNotVisible(locator1 = "//div[@id='navigationCollapse']");
@@ -270,29 +270,29 @@ definition {
 
 		MouseOver.javaScriptMouseOver(locator1 = "Home#PAGE_2");
 
-		var key_childPageName = "${childPageName}";
+		var key_childPageName = ${childPageName};
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_CHILD_PAGE",
-			value1 = "${childPageName}");
+			value1 = ${childPageName});
 	}
 
 	macro viewCollectionItem {
 		if (isSet(key_rowNumber)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "${itemName}");
+				value1 = ${itemName});
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-				value1 = "${itemName}");
+				value1 = ${itemName});
 		}
 	}
 
 	macro viewCurrentPage {
 		AssertVisible(
-			key_pageName = "${pageName}",
+			key_pageName = ${pageName},
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 
@@ -311,26 +311,26 @@ definition {
 	macro viewDefaultSiteTemplatePagesPG {
 		Click(locator1 = "Home#PAGE_NAVIGATION_BAR");
 
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_TEMPLATE_1",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		AssertVisible(
-			key_siteName = "${siteName}",
+			key_siteName = ${siteName},
 			locator1 = "NavBar#GO_TO_HOME_PAGE_LINK");
 	}
 
 	macro viewInactiveRequestMessage {
 		AssertTextEquals(
-			key_resource = "${resource}",
+			key_resource = ${resource},
 			locator1 = "Home#STATUS_MESSAGE",
 			value1 = "This ${resource} is inactive. Please contact the administrator.");
 	}
 
 	macro viewLayoutLogoPG {
-		if ("${assertLayoutLogoPresent}" == "true") {
+		if (${assertLayoutLogoPresent} == "true") {
 			AssertElementPresent(locator1 = "Home#LAYOUT_LOGO");
 		}
 		else {
@@ -339,7 +339,7 @@ definition {
 	}
 
 	macro viewNoPG {
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		AssertElementNotPresent(locator1 = "Home#PAGE");
 	}
@@ -353,28 +353,28 @@ definition {
 	}
 
 	macro viewPanelPortletListPG {
-		var key_componentName = "${componentName}";
+		var key_componentName = ${componentName};
 
 		AssertTextEquals(
 			locator1 = "Panel#PANEL_TITLE",
-			value1 = "${componentName}");
+			value1 = ${componentName});
 
-		var key_pageName = "${pageName}";
+		var key_pageName = ${pageName};
 
 		AssertTextEquals(
 			locator1 = "Panel#PANEL_PAGE_TITLE",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 
 		AssertTextEquals(
 			locator1 = "Panel#PANEL_PAGE_DEFAULT_INFORMATION",
 			value1 = "Please select a tool from the left menu.");
 
-		for (var portletName : list "${portletNameList}") {
-			var key_portletName = "${portletName}";
+		for (var portletName : list ${portletNameList}) {
+			var key_portletName = ${portletName};
 
 			AssertTextEquals(
 				locator1 = "Panel#MENU_ITEM",
-				value1 = "${portletName}");
+				value1 = ${portletName});
 		}
 	}
 
@@ -385,11 +385,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PagesAdmin#PREVIEW_TITLE",
-			value1 = "${htmlTitle}");
+			value1 = ${htmlTitle});
 
-		var pageNameURL = StringUtil.lowerCase("${pageName}");
+		var pageNameURL = StringUtil.lowerCase(${pageName});
 
-		var pageNameURL = StringUtil.replace("${pageNameURL}", " ", "-");
+		var pageNameURL = StringUtil.replace(${pageNameURL}, " ", "-");
 
 		var url = "${portalURL}/web/guest/${pageNameURL}";
 
@@ -403,28 +403,28 @@ definition {
 		}
 
 		if (isSet(openGraph)) {
-			var url = StringUtil.upperCase("${url}");
+			var url = StringUtil.upperCase(${url});
 		}
 
 		if (isSet(locale)) {
-			var languageName = StringUtil.extractFirst("${locale}", "-");
+			var languageName = StringUtil.extractFirst(${locale}, "-");
 
 			if (isSet(openGraph)) {
-				var languageName = StringUtil.upperCase("${languageName}");
-				var portalURL = StringUtil.upperCase("${portalURL}");
+				var languageName = StringUtil.upperCase(${languageName});
+				var portalURL = StringUtil.upperCase(${portalURL});
 			}
 
-			var url = StringUtil.replace("${url}", "${portalURL}", "${portalURL}/${languageName}");
+			var url = StringUtil.replace(${url}, ${portalURL}, "${portalURL}/${languageName}");
 		}
 
 		AssertTextEquals(
 			locator1 = "PagesAdmin#PREVIEW_URL",
-			value1 = "${url}");
+			value1 = ${url});
 
 		if (isSet(description)) {
 			AssertTextEquals(
 				locator1 = "PagesAdmin#PREVIEW_DESCRIPTION",
-				value1 = "${description}");
+				value1 = ${description});
 		}
 
 		if (isSet(validateTitleCSSStyle)) {
@@ -487,84 +487,84 @@ definition {
 		AssertCssValue(
 			locator1 = "Home#SITE_WRAPPER",
 			locator2 = "padding-right",
-			value1 = "${sideNavWidth}");
+			value1 = ${sideNavWidth});
 	}
 
 	macro viewSiteNameTranslationsPG {
-		var list1 = ListUtil.newListFromString("${localeList}");
-		var list2 = ListUtil.newListFromString("${siteNameList}");
-		var list3 = ListUtil.newListFromString("${textIconList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${localeList});
+		var list2 = ListUtil.newListFromString(${siteNameList});
+		var list3 = ListUtil.newListFromString(${textIconList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var locale = ListUtil.get("${list1}", "${i}");
-			var siteName = ListUtil.get("${list2}", "${i}");
-			var textIcon = ListUtil.get("${list3}", "${i}");
+		while (${i} != ${size}) {
+			var locale = ListUtil.get(${list1}, ${i});
+			var siteName = ListUtil.get(${list2}, ${i});
+			var textIcon = ListUtil.get(${list3}, ${i});
 
 			LanguagePortlet.selectLanguagePG(
-				locale = "${locale}",
-				textIcon = "${textIcon}");
+				locale = ${locale},
+				textIcon = ${textIcon});
 
 			AssertTextEquals(
 				locator1 = "Home#SITE_NAME",
-				value1 = "${siteName}");
+				value1 = ${siteName});
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
 	macro viewSpecificPG {
-		for (var pageName : list "${pageNameList}") {
-			var key_pageName = "${pageName}";
+		for (var pageName : list ${pageNameList}) {
+			var key_pageName = ${pageName};
 
 			AssertTextEquals(
 				locator1 = "Home#PAGE",
-				value1 = "${pageName}");
+				value1 = ${pageName});
 		}
 	}
 
 	macro viewTranslationsPG {
-		Navigator.openSpecificURL(url = "${sitePageURL}");
+		Navigator.openSpecificURL(url = ${sitePageURL});
 
-		AssertLocation(value1 = "${sitePageURL}");
+		AssertLocation(value1 = ${sitePageURL});
 
 		Alert.viewLocalizationMessage(
-			defaultLanguageLocalizationMessage = "${defaultLanguageLocalizationMessage}",
-			key_pageLocale = "${defaultLanguageLocalizationMessage}",
-			preferredLanguageLocalizationMessage = "${preferredLanguageLocalizationMessage}",
-			translationLanguageLocalizationMessage = "${translationLanguageLocalizationMessage}");
+			defaultLanguageLocalizationMessage = ${defaultLanguageLocalizationMessage},
+			key_pageLocale = ${defaultLanguageLocalizationMessage},
+			preferredLanguageLocalizationMessage = ${preferredLanguageLocalizationMessage},
+			translationLanguageLocalizationMessage = ${translationLanguageLocalizationMessage});
 	}
 
 	macro viewURLLocale {
 		if (isSet(localizationOption)) {
 			AssertClick(
-				key_pageLocale = "${localizationOption}",
+				key_pageLocale = ${localizationOption},
 				locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE",
-				value1 = "${localizationOption}");
+				value1 = ${localizationOption});
 		}
 
-		AssertLocation(value1 = "${localizationPageURL}");
+		AssertLocation(value1 = ${localizationPageURL});
 	}
 
 	macro viewWithWorkflowPG {
-		if ("${workflowStatus}" == "Ready for Publication") {
+		if (${workflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Message#WORKFLOW_STATUS",
-				value1 = "${workflowStatus}");
+				value1 = ${workflowStatus});
 		}
 
-		if ("${livePage}" == "true") {
+		if (${livePage} == "true") {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "Staging#LIVE_BUTTON",
 				value1 = "Live");
 
-			var key_pageName = "${pageName}";
+			var key_pageName = ${pageName};
 
 			AssertElementNotPresent(locator1 = "Home#PAGE");
 		}

@@ -17,7 +17,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
@@ -30,7 +30,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This test ensures that a blog entry can be auto tagged after publishing from draft status."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test BlogEntryCanBeAutoTaggedAfterPublishingFromDraftStatus {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#BlogEntryCanBeAutoTaggedAfterPublishingFromDraftStatus";
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-98324. It ensures that Auto tags can be added and removed via Gogo Shell."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddAndRemoveAutoTagViaGogoShell {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#CanAddAndRemoveAutoTagViaGogoShell";
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@description = "This test asserts that a blog entry is auto tagged when OpenNLP Text Auto Tagging is enabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddAutoTag {
 		property portal.acceptance = "true";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@description = "This test ensures that a blog entry can get autotagged on a staging site and that the tags will be published to live successfully."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAssertAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#CanAssertAutoTagAfterPublishToLive";
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "This test ensures that when autotagging is disabled while adding a site, Blog entries will not be autotagged."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDisableAutoTaggingForSite {
 		property portal.acceptance = "true";
@@ -207,7 +207,7 @@ definition {
 			layoutName = "AutoTag Disabled Site Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site AutoTag Disabled",
 			layoutName = "AutoTag Disabled Site Page",
 			widgetName = "Blogs");
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This test ensures that if a user manual adds a tag when adding a blog entry, the entry will not be autotagged."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotAutoTagForManuallyAddedEntry {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#CannotAutoTagForManuallyAddedEntry";
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "This test ensures that autotags generated for a blog entry can be removed."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanRemoveAutoTag {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#CanRemoveAutoTag";
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@description = "This test asserts that no duplicate tags are added when autotagging assets are updated multiple times using similar text with Update Auto Tags checked."
-	@priority = "3"
+	@priority = 3
 	test NoDuplicateTagAddedAfterEnablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#NoDuplicateTagAddedAfterEnablingUpdateAutoTags";
 
@@ -339,7 +339,7 @@ definition {
 	}
 
 	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a blog entry."
-	@priority = "4"
+	@priority = 4
 	test NoTagUpdatesAfterDisablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#NoTagUpdatesAfterDisablingUpdateAutoTags";
 
@@ -377,12 +377,12 @@ definition {
 		for (var tagName : list "dxp,herbert") {
 			BlogsEntry.viewNoTag(
 				entryTitle = "Alice Adventures in Wonderland",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 	}
 
 	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a blog entry."
-	@priority = "4"
+	@priority = 4
 	test TagUpdatesAfterEnablingUpdateAutoTags {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#TagUpdatesAfterEnablingUpdateAutoTags";
 
@@ -412,7 +412,7 @@ definition {
 		for (var tagName : list "adventures,dxp,herbert") {
 			BlogsEntry.viewAutoTag(
 				entryTitle = "Alice Adventures in Wonderland",
-				tagName = "${tagName}");
+				tagName = ${tagName});
 		}
 	}
 

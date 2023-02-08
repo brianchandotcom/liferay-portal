@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 	}
 
@@ -41,13 +41,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160531 - Verify if As an Administrator I am able to add Product Versions"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddProductVersion {
 		task ("Create Product Version and Assert it was created") {
 			TestrayManage.createProductVersion(
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160533 - Verify if as an Administrator I am able to delete Product Versions"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteProductVersion {
 		task ("Create a Product Version") {
 			TestrayManage.createProductVersion(
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160532 - Verify if as an Administrator I am able to Edit Product Versions"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditProductVersion {
 		task ("Create a Product Version") {
 			TestrayManage.createProductVersion(
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160534 - Verify if as an Administrator I should not be able to add a duplicate Product Versions"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateProductVersion {
 		task ("Create Product Version duplicate and Assert that error message appears") {
 			TestrayManage.createProductVersion(
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-161334 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewWarningMessage {
 		task ("Create product version and Assert that field Name is required") {
 			TestrayManage.createProductVersion(

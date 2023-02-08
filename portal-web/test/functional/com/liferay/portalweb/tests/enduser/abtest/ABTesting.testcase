@@ -46,7 +46,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if the user has one experience with the AB test in a Running status, the experiences dropdown menu shows the AB test icon and one help hint"
-	@priority = "5"
+	@priority = 5
 	test ABTestIconInExperience {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if the A/B Test icon is not displayed in the control bar, when the user has not the page edit permission"
-	@priority = "3"
+	@priority = 3
 	test ABTestIconVisibleWithNoPermissions {
 		task ("Create user") {
 			JSONUser.addUser(
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
-	@priority = "3"
+	@priority = 3
 	test ABTestIconVisibleWithPermissions {
 		task ("Create user") {
 			JSONUser.addUser(
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user accesses the AB testing panel while a click goal test is running, the Change clickable element button don't show and the ID element box isn't enabled for edition, but the eye button will work normally"
-	@priority = "3"
+	@priority = 3
 	test AssertChangeClickableIDBoxNotEnabled {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -222,7 +222,7 @@ definition {
 
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 
 		task ("Create variable and run test") {
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if, in the list of the variant for A/B Test, the user have the options to edit the name and delete"
-	@priority = "3"
+	@priority = 3
 	test AssertEditDeleteVarianOptions {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -253,7 +253,7 @@ definition {
 
 		task ("Open the three dots menu for the variant and assert Edit and Delete appear") {
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ABTest#VARIANT_DROPDOWN");
 
 			AssertVisible(
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@description = "LPS-97194: Validate if the goal input test for the AB Test appears when the user tries to edit one AB Test"
-	@priority = "3"
+	@priority = 3
 	test AssertGoalInputWhenEdit {
 		task ("Create AB test and add variant") {
 			ABTest.createABTest(
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@description = "LPS-109345 Bug: On Page Structure, it is allowed to edit an element of a locked experience"
-	@priority = "4"
+	@priority = 4
 	test CanNotEditLockedExperience {
 		task ("Create a Segment") {
 			JSONSegmentsentry.addSegment(
@@ -345,14 +345,14 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertElementNotPresent(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 		}
 	}
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, after edit the mandatory information, A/B Test sidebar appears with the A/B Testing configuration"
-	@priority = "3"
+	@priority = 3
 	test ChangesAppliedAfterEdit {
 		task ("Create AB test") {
 			ABTest.createABTest(
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can press the cancel button on the modal, and the changes in the A/B Testing is not saved"
-	@priority = "4"
+	@priority = 4
 	test ChangesNotAppliedAfterCancel {
 		task ("Create AB test") {
 			ABTest.createABTest(
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can close the modal, and the changes in the A/B Testing is not saved"
-	@priority = "3"
+	@priority = 3
 	test ChangesNotAppliedAfterCloseModal {
 		task ("Create AB test") {
 			ABTest.createABTest(
@@ -454,7 +454,7 @@ definition {
 	}
 
 	@description = "LPS-101055: Validate if the A/B test panel is shown in content pages when AC is configured"
-	@priority = "3"
+	@priority = 3
 	test CheckABTestPanelAtContentPages {
 		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
 			ABTest.openABTestPanel();
@@ -466,7 +466,7 @@ definition {
 	}
 
 	@description = "LPS-101055: Validate if the A/B test panel is shown not shown in widget pages"
-	@priority = "3"
+	@priority = 3
 	test CheckABTestPanelAtWidgetPages {
 		task ("Create Widget Page") {
 			PagesAdmin.addPage(
@@ -484,7 +484,7 @@ definition {
 	}
 
 	@description = "LPS-108147: When user opens AB testing panel and AC is connected and synced, the AB testing panel display all its functionalities"
-	@priority = "5"
+	@priority = 5
 	test CheckABTestPanelInfo {
 		property portal.acceptance = "true";
 
@@ -508,7 +508,7 @@ definition {
 	}
 
 	@description = "LPS-108147: When user opens AB testing panel and AC is connected but not synced, the AB testing panel displays instructions to sync to AC ('Don't show me this again' button and the message is not displayed)"
-	@priority = "3"
+	@priority = 3
 	test CheckABTestPanelInfoNotSyncAC {
 		task ("Create a new Site and Page") {
 			JSONGroup.addGroup(groupName = "Test Site Name 2");
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@description = "LPS-100945: Validate if the Button components have the ID"
-	@priority = "3"
+	@priority = 3
 	test CheckButtonElementId {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -584,12 +584,12 @@ definition {
 
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-96791: Validate if A tooltip Click Element to Set as Click Target for your Goal appears when the user clicks on Set Target Button"
-	@priority = "3"
+	@priority = 3
 	test CheckClickElementTooltip {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -619,15 +619,15 @@ definition {
 				locator1 = "Button#ANY_SECONDARY");
 
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
 		}
 
 		task ("Assert that selected button is target") {
 			AssertElementPresent(
-				key_idElement = "${idbutton}",
+				key_idElement = ${idbutton},
 				locator1 = "ABTest#TARGET_ELEMENT_EDIT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 
 			AssertElementPresent(
 				key_text = "Select Clickable Element",
@@ -636,7 +636,7 @@ definition {
 	}
 
 	@description = "LPS-109991 Bug: When a variant is edited, other variants lose modifications"
-	@priority = "4"
+	@priority = 4
 	test CheckContentPersistAfterEditVariant {
 		property portal.acceptance = "false";
 
@@ -700,7 +700,7 @@ definition {
 	}
 
 	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
-	@priority = "3"
+	@priority = 3
 	test CheckElementIdWithVariant {
 		task ("Create a page with a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -737,12 +737,12 @@ definition {
 		task ("Assert that the Element ID still set") {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-101167: Validate if the image for the empty state appears"
-	@priority = "3"
+	@priority = 3
 	test CheckEmptyStateImage {
 		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
 			ABTest.openABTestPanel();
@@ -754,7 +754,7 @@ definition {
 	}
 
 	@description = "LPS-101167: Validate if the image for the running state appears"
-	@priority = "3"
+	@priority = 3
 	test CheckRunningStateImage {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -776,7 +776,7 @@ definition {
 	}
 
 	@description = "LPS-96781: Validate if, when the A/B Testing changes in the Liferay DXP, information about the Liferay DXP context, the changes are reflected in the test in Analytics Cloud"
-	@priority = "4"
+	@priority = 4
 	test CheckTestChangesInAC {
 		property test.name.skip.portal.instance = "ABTesting#CheckTestChangesInAC";
 
@@ -800,7 +800,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
-	@priority = "5"
+	@priority = 5
 	test CheckVariantAddedInAC {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -816,7 +816,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was deleted on Liferay portal is visible in the Analytics Cloud"
-	@priority = "4"
+	@priority = 4
 	test CheckVariantDeletedInAC {
 		property test.name.skip.portal.instance = "ABTesting#CheckVariantDeletedInAC";
 
@@ -848,19 +848,19 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_index = "2",
+				key_index = 2,
 				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
 				name = "Variant name 2");
 
 			AssertElementNotPresent(
-				key_index = "3",
+				key_index = 3,
 				locator1 = "ABTest#REVIEW_VARIANTS_ANALYTICS_CLOUD",
 				name = "Variant name");
 		}
 	}
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was edited on Liferay portal is visible in the Analytics Cloud"
-	@priority = "4"
+	@priority = 4
 	test CheckVariantEditedInAC {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -894,7 +894,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element and clicks on the x icon within the ID box, the ID box gets empty and the Change clickable element button changes into Select clickable element"
-	@priority = "3"
+	@priority = 3
 	test ClearIDBox {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -921,7 +921,7 @@ definition {
 
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 
 		task ("Clear ID Box") {
@@ -936,7 +936,7 @@ definition {
 	}
 
 	@description = "Validate if the user can create an A/B Test by Bounce rate"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CreateABTestByBounceRate {
 		task ("Create AB test, create variant and run the test") {
@@ -955,7 +955,7 @@ definition {
 	}
 
 	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CreateABTestByClick {
 		task ("Edit the Content page to add a button fragment") {
@@ -988,7 +988,7 @@ definition {
 	}
 
 	@description = "LPS-119475 Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test CreateABTestByClickInvalidId {
 		task ("Create AB test, write an invalid ID for the element and run the test") {
@@ -1009,7 +1009,7 @@ definition {
 	}
 
 	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test CreateABTestRunWithDeletedVariants {
 		task ("Create AB test, create variant, delete variant and run the test") {
@@ -1032,7 +1032,7 @@ definition {
 	}
 
 	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CreateABTestRunWithNoVariants {
 		task ("Create AB test and run the test") {
@@ -1051,7 +1051,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can create a variant for A/B Test with the same name that already exists with success"
-	@priority = "4"
+	@priority = 4
 	test CreateVariantSameName {
 		task ("Create AB test") {
 			ABTest.createABTest(
@@ -1069,19 +1069,19 @@ definition {
 
 		task ("Assert that variants where created") {
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_variantName = "Variant name",
 				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 
 			AssertVisible(
-				key_index = "2",
+				key_index = 2,
 				key_variantName = "Variant name",
 				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 		}
 	}
 
 	@description = "LPS-99421: The test is removed when the delete action is clicked"
-	@priority = "3"
+	@priority = 3
 	test DeleteABTest {
 		task ("Create AB test and a variant") {
 			ABTest.createABTest(
@@ -1103,7 +1103,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test is not removed when the delete action is canceled"
-	@priority = "3"
+	@priority = 3
 	test DeleteABTestCancel {
 		task ("Create AB test and a variant") {
 			ABTest.createABTest(
@@ -1130,7 +1130,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
-	@priority = "4"
+	@priority = 4
 	test DeleteABTestInACViewInDXP {
 		property portal.acceptance = "true";
 
@@ -1170,7 +1170,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The test deletion in DXP is reflected on AC"
-	@priority = "4"
+	@priority = 4
 	test DeleteABTestInDXPViewInAC {
 		property portal.acceptance = "true";
 
@@ -1212,7 +1212,7 @@ definition {
 	}
 
 	@description = "LPS-99421: The delete action shows in the test action menu when the test status allows it"
-	@priority = "3"
+	@priority = 3
 	test DeleteButtonShows {
 		task ("Create AB test and a variant") {
 			ABTest.createABTest(
@@ -1228,7 +1228,7 @@ definition {
 	}
 
 	@description = "LPS-145992 Bug: Run A/B Test with Click Goal of a deleted button"
-	@priority = "4"
+	@priority = 4
 	test DeleteButtonWarning {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -1272,7 +1272,7 @@ definition {
 	}
 
 	@description = "LPS-104203: Validate if in the AB Test, when the user delete the clickable element that was set, the warning alert appears"
-	@priority = "4"
+	@priority = 4
 	test DeleteClickableElementWarning {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -1308,7 +1308,7 @@ definition {
 	}
 
 	@description = "LPS-98829: Validate if the ab test in History tab can be deleted"
-	@priority = "3"
+	@priority = 3
 	test DeleteHistoryTab {
 		task ("Create AB test, create variant, run test and terminate test") {
 			ABTest.createABTest(
@@ -1328,7 +1328,7 @@ definition {
 
 		task ("Delete the History Tab and Assert is empty") {
 			Click(
-				key_index = "1",
+				key_index = 1,
 				key_name = "AB test title",
 				locator1 = "ABTest#VALUES_IN_LIST");
 
@@ -1345,7 +1345,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a page with an A/B test in terminated status"
-	@priority = "3"
+	@priority = 3
 	test DeletePageABTestTerminated {
 		task ("Create page") {
 			JSONLayout.addPublicLayout(
@@ -1376,7 +1376,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in the draft status"
-	@priority = "3"
+	@priority = 3
 	test DeleteSegmentABTestDraft {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -1410,7 +1410,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can delete a segment in an experience with an A/B test in terminated status"
-	@priority = "3"
+	@priority = 3
 	test DeleteSegmentABTestTerminated {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -1448,7 +1448,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if a message will appear asking if the user wants to delete a variant for A/B Test and he can delete with success"
-	@priority = "4"
+	@priority = 4
 	test DeleteVariant {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1470,7 +1470,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
-	@priority = "4"
+	@priority = 4
 	test DeleteVariantCancel {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1482,7 +1482,7 @@ definition {
 
 		task ("Try to delete variant") {
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ABTest#VARIANT_DROPDOWN");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -1498,7 +1498,7 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
-	@priority = "4"
+	@priority = 4
 	test DeletExperienceWithDraftABTest {
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1552,7 +1552,7 @@ definition {
 	}
 
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to cancel the deletion of the experience"
-	@priority = "3"
+	@priority = 3
 	test DeletExperienceWithDraftABTestCancel {
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1619,7 +1619,7 @@ definition {
 	}
 
 	@description = "LPS-96791: Validate if the user can edit the target"
-	@priority = "5"
+	@priority = 5
 	test EditClickElementTarget {
 		task ("Edit the Content page to add a button fragment and duplicate button") {
 			ContentPages.gotoPageEditor();
@@ -1651,12 +1651,12 @@ definition {
 				locator1 = "Button#ANY_SECONDARY");
 
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
 
 			var idelement = selenium.getAttribute("//div[contains(@class,'text-truncate')]@title");
 
-			var idelement = StringUtil.substring("${idelement}", "1", "19");
+			var idelement = StringUtil.substring(${idelement}, 1, 19);
 
 			Button.click(button = "Set Element as Click Target");
 
@@ -1670,12 +1670,12 @@ definition {
 		task ("Assert the button gets selected") {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idelement}");
+				value1 = ${idelement});
 		}
 	}
 
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
-	@priority = "4"
+	@priority = 4
 	test EditExperienceAfterTerminatedABTest {
 		property portal.acceptance = "true";
 
@@ -1735,7 +1735,7 @@ definition {
 	}
 
 	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
-	@priority = "5"
+	@priority = 5
 	test EditExperienceWithDraftABTest {
 		property portal.acceptance = "true";
 
@@ -1777,7 +1777,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, a modal is opened requiring some initial fields information"
-	@priority = "3"
+	@priority = 3
 	test EditRequiredInfo {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1803,7 +1803,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with success"
-	@priority = "5"
+	@priority = 5
 	test EditVariant {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1816,7 +1816,7 @@ definition {
 		}
 
 		task ("Edit variant") {
-			ABTest.editVariantName(key_index = "2");
+			ABTest.editVariantName(key_index = 2);
 
 			ABTest.fillInput(
 				key_testTitle = "Variant name 3",
@@ -1839,7 +1839,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can cancel the creation of one variant for A/B Test, and the data that he inputs during the creation is discarded"
-	@priority = "3"
+	@priority = 3
 	test EditVariantCancel {
 		task ("Create AB test") {
 			ABTest.createABTest(
@@ -1865,7 +1865,7 @@ definition {
 	}
 
 	@description = "LPS-99349: Validate if the user can edit the variant for A/B Test content with success"
-	@priority = "5"
+	@priority = 5
 	test EditVariantContent {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1902,7 +1902,7 @@ definition {
 	}
 
 	@description = "LPS-99349: Validate if the user can cancel the edition of one variant for A/B Test, and the data that he inputs during the creation is discarded"
-	@priority = "4"
+	@priority = 4
 	test EditVariantContentCancel {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1938,13 +1938,13 @@ definition {
 			AssertElementNotPresent(
 				fragmentName = "button",
 				id = "link",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 		}
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with the same name that already exists with success"
-	@priority = "3"
+	@priority = 3
 	test EditVariantSameName {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -1957,7 +1957,7 @@ definition {
 		}
 
 		task ("Edit variant") {
-			ABTest.editVariantName(key_index = "2");
+			ABTest.editVariantName(key_index = 2);
 
 			ABTest.fillInput(
 				key_testTitle = "Variant name",
@@ -1970,19 +1970,19 @@ definition {
 
 		task ("Assert that variant name is changed") {
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_variantName = "Variant name",
 				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 
 			AssertVisible(
-				key_index = "2",
+				key_index = 2,
 				key_variantName = "Variant name",
 				locator1 = "ABTest#VARIANT_TITLE_INDEX");
 		}
 	}
 
 	@description = "LPS-146003 Bug: Can't edit variant using top toolbar edit button"
-	@priority = "4"
+	@priority = 4
 	test EditVariantWithToolbarButton {
 		task ("Add a Heading fragment to content page") {
 			ContentPages.gotoPageEditor();
@@ -2017,7 +2017,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
-	@priority = "3"
+	@priority = 3
 	test EyeButton {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -2046,7 +2046,7 @@ definition {
 
 			Type(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 
 			KeyPress(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
@@ -2055,18 +2055,18 @@ definition {
 
 		task ("Assert that selected button is target") {
 			AssertElementPresent(
-				key_idElement = "${idbutton}",
+				key_idElement = ${idbutton},
 				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 
 		task ("Click wherever so the button highlight is taken out") {
 			Click(locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS");
 
 			AssertElementNotPresent(
-				key_idElement = "${idbutton}",
+				key_idElement = ${idbutton},
 				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 
 		task ("Click on the eye button") {
@@ -2075,14 +2075,14 @@ definition {
 
 		task ("Assert that selected button is target") {
 			AssertElementPresent(
-				key_idElement = "${idbutton}",
+				key_idElement = ${idbutton},
 				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-98829: Validate if the History tab appears with the list ordered by modified date DESC"
-	@priority = "3"
+	@priority = 3
 	test HistoryTabListedDescModifiedDate {
 		task ("Create AB test with a variant, run test and terminate test") {
 			ABTest.createABTest(
@@ -2116,14 +2116,14 @@ definition {
 
 		task ("Assert the second AB test appears first in the History Tab") {
 			AssertElementPresent(
-				key_index = "1",
+				key_index = 1,
 				key_name = "AB test title 2",
 				locator1 = "ABTest#VALUES_IN_LIST");
 		}
 	}
 
 	@description = "LPS-119475: When a user selects any highlighted element in the page, the ID of the selected element shows in the ID box"
-	@priority = "3"
+	@priority = 3
 	test IDShownInTheBox {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -2150,12 +2150,12 @@ definition {
 
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-96787: Validate if the Liferay NOT receives the notification when the test status is changed by the same user that created the test"
-	@priority = "3"
+	@priority = 3
 	test NoNotificationAfterChangesSameUser {
 		task ("Create AB test with a variant and run test") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -2177,7 +2177,7 @@ definition {
 	}
 
 	@description = "LPS-96787: Validate if the Liferay receives the notification when the AB Test status is changes in Analytics Cloud"
-	@priority = "3"
+	@priority = 3
 	test NotificationAfterChangesInAC {
 		task ("Create user and sync contact with AC") {
 			JSONUser.addUser(
@@ -2253,7 +2253,7 @@ definition {
 	}
 
 	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
-	@priority = "3"
+	@priority = 3
 	test NotificationLinkToContentPage {
 		task ("Create user and sync contact with AC") {
 			JSONUser.addUser(
@@ -2337,7 +2337,7 @@ definition {
 	}
 
 	@description = "LPS-103334: Validate if the AB Test is in the status running, the experience about the AB Test is active is in Non-Edition Mode"
-	@priority = "5"
+	@priority = 5
 	test NotPossibleToEditExperienceWithRunningABTest {
 		property portal.acceptance = "true";
 
@@ -2381,7 +2381,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if, when the A/B Test icon is pressed, it calls the function to open or close the A/B Test sidebar"
-	@priority = "3"
+	@priority = 3
 	test PanelOpenCloseAfterClickIcon {
 		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
 			ABTest.openABTestPanel();
@@ -2397,7 +2397,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can reassign a segment in an experience with an A/B test in the draft status"
-	@priority = "3"
+	@priority = 3
 	test ReassignSegmentABTestDraft {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -2443,7 +2443,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
-	@priority = "4"
+	@priority = 4
 	test ReassignSegmentABTestRunning {
 		property portal.acceptance = "true";
 
@@ -2483,7 +2483,7 @@ definition {
 	}
 
 	@description = "LPS-96791: Validate if the user can remove the target"
-	@priority = "5"
+	@priority = 5
 	test RemoveClickElementTarget {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -2506,7 +2506,7 @@ definition {
 		}
 
 		task ("Get the element ID from button 2") {
-			var idbutton = ABTest.takeElementID(key_index = "2");
+			var idbutton = ABTest.takeElementID(key_index = 2);
 		}
 
 		task ("Select the first button as click element") {
@@ -2518,7 +2518,7 @@ definition {
 
 			Type(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 
 			KeyPress(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
@@ -2528,12 +2528,12 @@ definition {
 		task ("Assert the button gets selected") {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
-	@priority = "3"
+	@priority = 3
 	test RenameSegmentABTestDraft {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -2571,7 +2571,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin cannot rename a segment in an experience with an A/B test in running status"
-	@priority = "3"
+	@priority = 3
 	test RenameSegmentABTestRunning {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -2611,7 +2611,7 @@ definition {
 	}
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in terminated status"
-	@priority = "3"
+	@priority = 3
 	test RenameSegmentABTestTerminated {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -2653,7 +2653,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"
-	@priority = "4"
+	@priority = 4
 	test ReviewAndStartCancel {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
@@ -2677,7 +2677,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks in closed button"
-	@priority = "3"
+	@priority = 3
 	test ReviewAndStartClose {
 		task ("Create AB test, create variant and delete variant") {
 			ABTest.createABTest(
@@ -2701,7 +2701,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if all the information configured in the "Review and Start Test" screen appears correctly after the user clicks on the Run button"
-	@priority = "5"
+	@priority = 5
 	test ReviewAndStartRunCheckInfo {
 		task ("Create AB test, create two variants") {
 			ABTest.createABTest(
@@ -2733,7 +2733,7 @@ definition {
 	}
 
 	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, the sum of all traffic split options should be 100%"
-	@priority = "4"
+	@priority = 4
 	test ReviewAndStartSum100 {
 		task ("Create AB test, create two variants") {
 			ABTest.createABTest(
@@ -2755,7 +2755,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element, the Select clickable element button changes into Change clickable element, and the elements are highlighted"
-	@priority = "3"
+	@priority = 3
 	test SelectButtonToChangeClickableElement {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -2789,7 +2789,7 @@ definition {
 
 	@description = "LPS-119476: When the ID of a submit element accomplishes all the conditions, the element will be rightly measured in AC"
 	@ignore = "true"
-	@priority = "4"
+	@priority = 4
 	test SubmitElementInAC {
 
 		// TODO LPS-137499 SubmitElementInAC pending implementation
@@ -2797,7 +2797,7 @@ definition {
 	}
 
 	@description = "LPS-119476: When there's a submit element with no ID, the matching element doesn't show as selectable"
-	@priority = "3"
+	@priority = 3
 	test SubmitElementWithNoID {
 		task ("Add a HTML fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -2815,7 +2815,7 @@ definition {
 		''';
 
 			PageEditor.editFragmentHTML(
-				content = "${htmlSnippet}",
+				content = ${htmlSnippet},
 				fragmentName = "HTML",
 				id = "element-html");
 
@@ -2845,7 +2845,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the experience, the context about the A/B Test changes too"
-	@priority = "4"
+	@priority = 4
 	test SwitchExperienceSelected {
 		property portal.acceptance = "true";
 
@@ -2883,7 +2883,7 @@ definition {
 	}
 
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the site pages, the context about the A/B Test changes too"
-	@priority = "3"
+	@priority = 3
 	test SwitchSitePage {
 		property portal.acceptance = "true";
 
@@ -2938,7 +2938,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user has selected an element, s/he can enter a different ID in the Element ID box and press enter again, so the element is highlighted and gets selected"
-	@priority = "3"
+	@priority = 3
 	test TypeDifferentID {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -2962,7 +2962,7 @@ definition {
 
 		task ("Get the element ID from buttons") {
 			var idbutton = ABTest.takeElementID();
-			var idbutton2 = ABTest.takeElementID(key_index = "2");
+			var idbutton2 = ABTest.takeElementID(key_index = 2);
 		}
 
 		task ("Select the first button as click element") {
@@ -2978,7 +2978,7 @@ definition {
 
 			Type(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton2}");
+				value1 = ${idbutton2});
 
 			KeyPress(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
@@ -2988,12 +2988,12 @@ definition {
 		task ("Assert the button gets selected") {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-119475: When a user enters a valid ID and presses Enter or clicks anywhere outside the box, the element with that ID get highlighted and the element with the ID is selected"
-	@priority = "3"
+	@priority = 3
 	test TypeElementID {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -3022,7 +3022,7 @@ definition {
 
 			Type(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 
 			KeyPress(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
@@ -3032,12 +3032,12 @@ definition {
 		task ("Assert the button gets selected") {
 			AssertTextEquals.assertValue(
 				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "${idbutton}");
+				value1 = ${idbutton});
 		}
 	}
 
 	@description = "LPS-119476: When the user enters the ID of a submit element in the ID Element box and hits enter, the matching element gets highlighted and selected"
-	@priority = "3"
+	@priority = 3
 	test TypeSubmitElementID {
 		task ("Add a HTML fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -3055,7 +3055,7 @@ definition {
 		''';
 
 			PageEditor.editFragmentHTML(
-				content = "${htmlSnippet}",
+				content = ${htmlSnippet},
 				fragmentName = "HTML",
 				id = "element-html");
 
@@ -3090,7 +3090,7 @@ definition {
 	}
 
 	@description = "LPS-119475: When a user clicks on the x icon of the selected element, the element gets unselected"
-	@priority = "3"
+	@priority = 3
 	test UnselectSelectedElement {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
@@ -3116,7 +3116,7 @@ definition {
 				locator1 = "Button#ANY_SECONDARY");
 
 			Click(
-				key_index = "1",
+				key_index = 1,
 				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
 		}
 

@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68681. This test verifies that is possible to delete the field"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68681. This test verifies that is possible to duplicate the field"
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70166. This test verifies that Styles are applied to the Separator"
-	@priority = "4"
+	@priority = 4
 	test CanBeStyled {
 		NavItem.gotoStructures();
 
@@ -93,7 +93,7 @@ definition {
 
 		DataEngine.editStyle(
 			fieldLabel = "Separator",
-			index = "1",
+			index = 1,
 			styleValue = "border-top: 10px dashed #9D60EB");
 
 		WebContentStructures.saveCP();
@@ -109,14 +109,14 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		for (var style : list "style-dashed,width-10px") {
-			var styleName = StringUtil.extractFirst("${style}", "-");
-			var styleValue = StringUtil.extractLast("${style}", "-");
+			var styleName = StringUtil.extractFirst(${style}, "-");
+			var styleValue = StringUtil.extractLast(${style}, "-");
 
 			AssertCssValue(
 				key_styleValue = "border-top: 10px dashed #9D60EB",
 				locator1 = "DataEngineRenderer#SEPARATOR_STYLE",
 				locator2 = "border-top-${styleName}",
-				value1 = "${styleValue}");
+				value1 = ${styleValue});
 		}
 
 		AssertCssValue(
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68681. This test verifies that Label and Help text can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-70166. This test verifies that is possible to remove a duplicated field (repeatable)"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -198,11 +198,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Separator",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-68681. This test verifies that Label and Help text can be set"
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
 
@@ -227,7 +227,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68681. This test verifies that Label can be shown or hidden"
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@description = "Check if Separator Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewSeparatorFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -272,7 +272,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Separator",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -292,7 +292,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Separator",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,11 +37,11 @@ definition {
 	}
 
 	@description = "This ensures that a user is able to embed a depot external video in a blog entry on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddBlogEntryWithEmbeddedVideo {
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Page Name",
 			widgetName = "Blogs");
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This test ensures that a YouTube shortened URL video added via item selector can be embedded when adding a depot WC."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddShortenedURLToWCViaItemSelector {
 		JSONDepot.addDepot(
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag cannot be searched on a connected site when searching is disabled."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CannotSearchDepotVideoShortcutWhenSearchingIsDisabled {
 		property test.name.skip.portal.instance = "DepotVideoShortcut#CannotSearchDepotVideoShortcutWhenSearchingIsDisabled";
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video cannot be viewed from the disconnected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotViewExternalVideoFromDisconnectedSite {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSearchVideoShortcutByTag {
 		property test.name.skip.portal.instance = "DepotVideoShortcut#CanSearchVideoShortcutByTag";
@@ -219,7 +219,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -277,7 +277,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewInlineVideoAfterMovingToFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanViewInlineVideoWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the KB content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewVideoInKBAfterMovingToFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewVideoInWCAfterMovingToFolder {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -487,7 +487,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connect site when publication is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanViewVideoInWCWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -532,7 +532,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot video shortcut can be used through Related Assets on a connected site."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewVideoShortcutInRelatedAssets {
 		property test.name.skip.portal.instance = "DepotVideoShortcut#ViewInRelatedAssets";

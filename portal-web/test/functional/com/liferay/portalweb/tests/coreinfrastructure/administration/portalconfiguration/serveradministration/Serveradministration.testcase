@@ -10,7 +10,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-111757"
-	@priority = "4"
+	@priority = 4
 	test ViewGlobalLibDirectory {
 		property environment.acceptance = "quarantine";
 
@@ -27,16 +27,16 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		var dirName = PropsUtil.get("liferay.app.server.shielded.container.lib.portal.dir");
 
-		var dirEnding = StringUtil.endsWith("${dirName}", "/");
+		var dirEnding = StringUtil.endsWith(${dirName}, "/");
 
-		if ("${dirEnding}" == "true") {
+		if (${dirEnding} == "true") {
 			AssertTextEquals(
 				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "${dirName}");
+				value1 = ${dirName});
 		}
 		else {
 			AssertTextEquals(
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@description = "This test automates LPS-144283 and asserts that the Log Levels page displays search results even after navigating to a different page number"
-	@priority = "4"
+	@priority = 4
 	test ViewLogLevelsDisplaySearchResultsAfterPageChange {
 		task ("Given the admin user navigates to Log Levels in Server Administration") {
 			ServerAdministration.openServerAdmin();
@@ -56,7 +56,7 @@ definition {
 
 		task ("When navigating to another page number and searching for a term") {
 			Click(
-				key_pageNumber = "2",
+				key_pageNumber = 2,
 				locator1 = "Pagination#ANY_PAGE");
 
 			Search.searchCP(searchTerm = "analytics");
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102790"
-	@priority = "4"
+	@priority = 4
 	test ViewSystemAndPortalProperties {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -82,13 +82,13 @@ definition {
 			propertyName = "catalina.home",
 			propertyTitle = "System Properties");
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = 20);
 
 		ServerAdministration.viewProperties(
 			propertyName = "admin.email.from.name",
 			propertyTitle = "Portal Properties");
 
-		Pagination.changePagination(itemsPerPage = "20");
+		Pagination.changePagination(itemsPerPage = 20);
 	}
 
 }

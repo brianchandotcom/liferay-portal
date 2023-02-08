@@ -1,10 +1,10 @@
 definition {
 
 	macro getApplicationLegendValue {
-		var key_legendItem = "${legendItem}";
+		var key_legendItem = ${legendItem};
 		var getItem = selenium.getText("RaylifeAPApplications#STATUS_LEGEND");
 
-		return "${getItem}";
+		return ${getItem};
 	}
 
 	macro verifyApplicationsStatus {
@@ -19,7 +19,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "RaylifeAPApplications#TOTAL_STATUS",
-			value1 = "${total}");
+			value1 = ${total});
 	}
 
 }

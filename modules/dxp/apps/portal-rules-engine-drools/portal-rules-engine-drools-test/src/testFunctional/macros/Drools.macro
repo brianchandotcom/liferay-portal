@@ -3,17 +3,17 @@ definition {
 	macro viewContentPG {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${welcomeMessage}");
+			value1 = ${welcomeMessage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${droolsContent}");
+			value1 = ${droolsContent});
 	}
 
 	macro viewDefaultPG {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",
-			value1 = "${welcomeMessage}");
+			value1 = ${welcomeMessage});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Drools#DROOLS_CONTENT",

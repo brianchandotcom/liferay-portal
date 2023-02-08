@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for admin user"
-	@priority = "4"
+	@priority = 4
 	test AddToCartButtonAndQuantitySelectorAreDisabledForAdminUser {
 		property portal.acceptance = "false";
 
@@ -24,7 +24,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		Pagination.changePagination(itemsPerPage = "60");
+		Pagination.changePagination(itemsPerPage = 60);
 
 		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for non-admin user"
-	@priority = "4"
+	@priority = 4
 	test AddToCartButtonAndQuantitySelectorAreDisabledForNewUser {
 		property portal.acceptance = "false";
 
@@ -81,7 +81,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "testuser@liferay.com");
 
-		Pagination.changePagination(itemsPerPage = "60");
+		Pagination.changePagination(itemsPerPage = 60);
 
 		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5725. New functional test for COMMERCE-5485"
-	@priority = "3"
+	@priority = 3
 	test AssertCheckoutMinicart {
 		property portal.acceptance = "false";
 
@@ -165,10 +165,10 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
 		AssertTextEquals(
-			key_columnNumber = "4",
+			key_columnNumber = 4,
 			key_entryName = "default",
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
-			value1 = "0");
+			value1 = 0);
 
 		CommerceEntry.gotoMenuTab(menuTab = "Subscription");
 
@@ -192,7 +192,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Simple T-Shirt",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckout();
 
@@ -203,8 +203,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "Simple T-Shirt",
-			productQuantity = "1",
-			productUnitPrice = "0");
+			productQuantity = 1,
+			productUnitPrice = 0);
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5530. AssertPromoProductPriceTotalIsDifferent"
-	@priority = "3"
+	@priority = 3
 	test AssertPromoProductPriceTotalIsDifferent {
 		property portal.acceptance = "false";
 
@@ -228,11 +228,11 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
-		Pagination.changePagination(itemsPerPage = "60");
+		Pagination.changePagination(itemsPerPage = 60);
 
 		FrontStore.addInitializerProductToCart(
 			productName = "Brake Pads",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-10315. It's not possible to save the Root Category for the Commerce Categories Navigation widget"
-	@priority = "4"
+	@priority = 4
 	test CanSaveCommerceCategoriesNavigationRootCategory {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -315,7 +315,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
-			productQuantity = "1");
+			productQuantity = 1);
 
 		CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -326,8 +326,8 @@ definition {
 			newAddressName = "Address Name",
 			newAddressZipCode = "Test Zip Code",
 			productName = "U-Joint",
-			productQuantity = "1",
-			productUnitPrice = "24",
+			productQuantity = 1,
+			productUnitPrice = 24,
 			shippingMethod = "Standard",
 			singleShippingOption = "true");
 	}
@@ -498,7 +498,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-2658. Can be Drag and Drop fragments on a Minium site page."
-	@priority = "4"
+	@priority = 4
 	test FragmentsCanBeDragAndDroppedToMiniumSitePage {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -713,7 +713,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -725,8 +725,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -739,7 +739,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceLogin.miniumLogoutPG();
 
@@ -754,7 +754,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -764,7 +764,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -777,7 +777,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -794,7 +794,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -853,7 +853,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		Refresh();
 
@@ -867,8 +867,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -881,7 +881,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		User.logoutPG();
 
@@ -896,7 +896,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -906,7 +906,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -919,7 +919,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -936,14 +936,14 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
 
 	@description = "COMMERCE-6350. As a buyer, I want to be redirected to Order Details page after clicking 'Review Order' button on mini-cart, if Buyer Order Approval Workflow is active"
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test MiniumSiteFullFlowWithBuyerOrderApprovalWorkflow {
 		property portal.acceptance = "false";
 
@@ -1014,7 +1014,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceCheckout.gotoCheckoutViaMiniCart();
 
@@ -1026,8 +1026,8 @@ definition {
 			newAddressZipCode = "Test Zip Code",
 			paymentMethod = "Money Order",
 			productName = "ABS Sensor",
-			productQuantity = "2",
-			productUnitPrice = "50",
+			productQuantity = 2,
+			productUnitPrice = 50,
 			shippingMethod = "Standard");
 
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
@@ -1036,7 +1036,7 @@ definition {
 
 		FrontStore.addInitializerProductToCart(
 			productName = "ABS Sensor",
-			productQuantity = "2");
+			productQuantity = 2);
 
 		CommerceLogin.speedwellLogout();
 
@@ -1056,7 +1056,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 
@@ -1073,7 +1073,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = "2",
+			productQuantity = 2,
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 	}

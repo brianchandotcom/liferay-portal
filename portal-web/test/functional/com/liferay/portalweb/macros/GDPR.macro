@@ -1,19 +1,19 @@
 definition {
 
 	macro addExportProcessCP {
-		var key_application = "${application}";
+		var key_application = ${application};
 
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(
-			key_firstName = "${userFirstName}",
-			key_lastName = "${userLastName}",
+			key_firstName = ${userFirstName},
+			key_lastName = ${userLastName},
 			locator1 = "ExportPersonalData#ADD_PROCESS_HEADER");
 
 		if (isSet(applications)) {
-			for (var application : list "${applications}") {
+			for (var application : list ${applications}) {
 				Check(
-					key_application = "${application}",
+					key_application = ${application},
 					locator1 = "ExportPersonalData#APPLICATION_CHECKBOX");
 			}
 		}
@@ -28,8 +28,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertElementPresent(
-			key_firstName = "${userFirstName}",
-			key_lastName = "${userLastName}",
+			key_firstName = ${userFirstName},
+			key_lastName = ${userLastName},
 			locator1 = "ExportPersonalData#HEADER");
 
 		WaitForElementNotPresent(
@@ -37,9 +37,9 @@ definition {
 			locator1 = "ExportPersonalData#EXPORT_PROCESS_STATUS");
 
 		if (isSet(applications)) {
-			for (var application : list "${applications}") {
+			for (var application : list ${applications}) {
 				AssertElementNotPresent(
-					key_application = "${application}",
+					key_application = ${application},
 					key_status = "In Progress",
 					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_STATUS");
 			}
@@ -50,9 +50,9 @@ definition {
 			locator1 = "ExportPersonalData#EXPORT_PROCESS_STATUS");
 
 		if (isSet(applications)) {
-			for (var application : list "${applications}") {
+			for (var application : list ${applications}) {
 				AssertElementPresent(
-					key_application = "${application}",
+					key_application = ${application},
 					key_status = "Successful",
 					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_STATUS");
 			}
@@ -61,9 +61,9 @@ definition {
 
 	macro anonymizeAllEntriesinApplicationCP {
 		GDPR.filterByApplications(
-			applicationItemsCount = "${applicationItemsCount}",
-			applications = "${applications}",
-			totalItemsCount = "${totalItemsCount}");
+			applicationItemsCount = ${applicationItemsCount},
+			applications = ${applications},
+			totalItemsCount = ${totalItemsCount});
 
 		PortletEntry.selectAll();
 
@@ -77,11 +77,11 @@ definition {
 	}
 
 	macro anonymizeDataViaReviewData {
-		var key_application = "${application}";
+		var key_application = ${application};
 
 		if (isSet(application)) {
 			Click(
-				key_applications = "${application}",
+				key_applications = ${application},
 				locator1 = "DataErasure#REVIEW_DATA_APPLICATION_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Anonymize");
@@ -113,8 +113,8 @@ definition {
 	}
 
 	macro anonymizeMultipleEntriesCP {
-		for (var rowEntry : list "${rowEntry}") {
-			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+		for (var rowEntry : list ${rowEntry}) {
+			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -129,7 +129,7 @@ definition {
 	macro anonymizeSingleEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Anonymize",
-			rowEntry = "${rowEntry}");
+			rowEntry = ${rowEntry});
 
 		AssertConfirm(value1 = "Are you sure you want to anonymize this entity?");
 
@@ -137,7 +137,7 @@ definition {
 	}
 
 	macro anonymizeSingleEntryViaInfoPanel {
-		LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+		LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 
 		Click.clickAt(locator1 = "Icon#INFO");
 
@@ -151,9 +151,9 @@ definition {
 	}
 
 	macro anonymizeTheSpecificEntry {
-		for (var rowIndexNumber : list "${rowIndexNumber}") {
+		for (var rowIndexNumber : list ${rowIndexNumber}) {
 			Click(
-				key_rowIndexNumber = "${rowIndexNumber}",
+				key_rowIndexNumber = ${rowIndexNumber},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 
 			MenuItem.clickNoError(menuItem = "Anonymize");
@@ -178,9 +178,9 @@ definition {
 
 	macro deleteAndAnonymizeAllEntriesCP {
 		GDPR.filterByApplications(
-			applicationItemsCount = "${applicationItemsCount}",
+			applicationItemsCount = ${applicationItemsCount},
 			applications = "All Applications",
-			totalItemsCount = "${totalItemsCount}");
+			totalItemsCount = ${totalItemsCount});
 
 		GDPR.deleteAllEntriesCP();
 
@@ -202,12 +202,12 @@ definition {
 
 		User.openUsersAdmin();
 
-		LexiconEntry.viewNoEntry(rowEntry = "${userName}");
+		LexiconEntry.viewNoEntry(rowEntry = ${userName});
 	}
 
 	macro deleteExportedPersonalData {
-		for (var application : list "${applications}") {
-			var key_rowEntry = "${application}";
+		for (var application : list ${applications}) {
+			var key_rowEntry = ${application};
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
 
@@ -220,8 +220,8 @@ definition {
 	}
 
 	macro deleteMultipleEntriesCP {
-		for (var rowEntry : list "${rowEntry}") {
-			LexiconEntry.selectEntry(rowEntry = "${rowEntry}");
+		for (var rowEntry : list ${rowEntry}) {
+			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -236,7 +236,7 @@ definition {
 	macro deleteSingleEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
-			rowEntry = "${rowEntry}");
+			rowEntry = ${rowEntry});
 
 		AssertConfirm(value1 = "Are you sure you want to delete this entity?");
 
@@ -244,9 +244,9 @@ definition {
 	}
 
 	macro deleteTheSpecificEntry {
-		for (var rowIndexNumber : list "${rowIndexNumber}") {
+		for (var rowIndexNumber : list ${rowIndexNumber}) {
 			Click(
-				key_rowIndexNumber = "${rowIndexNumber}",
+				key_rowIndexNumber = ${rowIndexNumber},
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -258,8 +258,8 @@ definition {
 	}
 
 	macro downloadExportedPersonalData {
-		for (var application : list "${applications}") {
-			var key_rowEntry = "${application}";
+		for (var application : list ${applications}) {
+			var key_rowEntry = ${application};
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
 
@@ -272,54 +272,54 @@ definition {
 	macro editEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
-			rowEntry = "${rowEntry}");
+			rowEntry = ${rowEntry});
 
 		AssertElementPresent(
 			locator1 = "TextInput#TITLE",
-			value1 = "${applicationsTitle}");
+			value1 = ${applicationsTitle});
 	}
 
 	macro filterByApplications {
 		Click.clickNoWaitForVisible(
-			key_selectData = "${applications}",
+			key_selectData = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
 		if (isSet(webContent)) {
 			Click.clickNoWaitForVisible(
-				key_selectData = "${webContent}",
+				key_selectData = ${webContent},
 				locator1 = "DataErasure#REVIEW_DATA_SELECT");
 		}
 
 		AssertElementPresent(
-			key_dataSelected = "${applications}",
+			key_dataSelected = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 
 		AssertTextEquals.assertPartialText(
-			key_applications = "${applications}",
+			key_applications = ${applications},
 			locator1 = "DataErasure#APPLICATIONS_COUNT",
 			value1 = "${applications} (${applicationItemsCount})");
 
 		AssertTextEquals.assertPartialText(
-			key_itemsCount = "${totalItemsCount}",
+			key_itemsCount = ${totalItemsCount},
 			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
 			value1 = "Remaining Items: ${totalItemsCount}");
 	}
 
 	macro filterByScope {
 		Click.clickNoWaitForVisible(
-			key_selectData = "${scope}",
+			key_selectData = ${scope},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
 		AssertElementPresent(
-			key_dataSelected = "${scope}",
+			key_dataSelected = ${scope},
 			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 	}
 
 	macro viewEntryRowInApplicationCP {
-		for (var tableEntryPartialText : list "${tableEntryPartialTextList}") {
+		for (var tableEntryPartialText : list ${tableEntryPartialTextList}) {
 			LexiconTable.viewTableEntryPartialText(
-				tableEntry = "${tableEntry}",
-				tableEntryPartialText = "${tableEntryPartialText}");
+				tableEntry = ${tableEntry},
+				tableEntryPartialText = ${tableEntryPartialText});
 		}
 	}
 
@@ -329,12 +329,12 @@ definition {
 		}
 
 		AssertTextEquals.assertPartialText(
-			key_applications = "${applications}",
+			key_applications = ${applications},
 			locator1 = "DataErasure#APPLICATIONS_COUNT",
 			value1 = "${applications} (0)");
 
 		AssertTextEquals.assertPartialText(
-			key_itemsCount = "0",
+			key_itemsCount = 0,
 			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
 			value1 = "Remaining Items: 0");
 

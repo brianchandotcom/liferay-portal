@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that is possible to delete the field"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that is possible to duplicate the field"
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that edited data persists"
-	@priority = "5"
+	@priority = 5
 	test CanEditData {
 		NavItem.gotoStructures();
 
@@ -101,7 +101,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		Button.clickPublish();
 
@@ -109,7 +109,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		Button.clickPublish();
 
@@ -117,11 +117,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Label and Help text can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelPlaceholderAndHelpText {
 		NavItem.gotoStructures();
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that input data on an Decimal Numeric field persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDecimalType {
 		NavItem.gotoStructures();
 
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -221,13 +221,13 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		Button.clickPublish();
 
@@ -235,17 +235,17 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that input data on an Integer Numeric field persists."
-	@priority = "5"
+	@priority = 5
 	test CanInputDataOnIntergerType {
 		NavItem.gotoStructures();
 
@@ -265,7 +265,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		Button.clickPublish();
 
@@ -273,11 +273,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that decimal round numbers are displayed with the decimal round part on a Numeric field."
-	@priority = "4"
+	@priority = 4
 	test CanInputRoundDecimalNumbers {
 		NavItem.gotoStructures();
 
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that is not possible to publish the Web Content with a required field blank."
-	@priority = "4"
+	@priority = 4
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
 
@@ -339,7 +339,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that is possible to remove a duplicated field (repeatable)."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -373,11 +373,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Numeric",
-			index = "2");
+			index = 2);
 	}
 
 	@description = "This is a test for LRQA-69098. This test verifies that is possible to remove inputted data from the field."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveInputtedData {
 		NavItem.gotoStructures();
 
@@ -397,7 +397,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		Button.clickPublish();
 
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Numeric field can be set as Decimal or Integer"
-	@priority = "5"
+	@priority = 5
 	test CanSetDecimalOrInteger {
 		NavItem.gotoStructures();
 
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DENumericField#CanSetDefaultSearchablePropertyToDisable";
 
@@ -487,7 +487,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Default Searchable property is Keyword when System Setting is left unchecked"
-	@priority = "3"
+	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DENumericField#CanSetDefaultSearchablePropertyToKeyword";
 
@@ -521,7 +521,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Label, Placeholder text and Help text can be set"
-	@priority = "5"
+	@priority = 5
 	test CanSetLabelPlaceholderAndHelpText {
 		NavItem.gotoStructures();
 
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Label can be shown or hidden."
-	@priority = "3"
+	@priority = 3
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@description = "Check if Numeric Field details can be seen."
-	@priority = "4"
+	@priority = 4
 	test ViewNumericFieldDetails {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -593,7 +593,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Numeric",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -615,7 +615,7 @@ definition {
 
 		DEBuilder.openField(
 			fieldLabel = "Numeric",
-			index = "1");
+			index = 1);
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

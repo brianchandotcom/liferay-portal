@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LRQA-71925 - Verify that the user can change Permissions for the Resource"
-	@priority = "3"
+	@priority = 3
 	test CanChangeResourcePermissions {
 		CalendarNavigator.gotoAddResource();
 
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "LRQA-71926 - Verify that the user can Clear the search results"
-	@priority = "3"
+	@priority = 3
 	test CanClearSearchResults {
 		CalendarNavigator.gotoAddResource();
 
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "LRQA-71924 - Verify that the user can create a New Calendar for the Resource"
-	@priority = "3"
+	@priority = 3
 	test CanCreateCalendarForResource {
 		CalendarNavigator.gotoAddResource();
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "LRQA-71922 - Verify that the user can filter by Active Resources"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByActiveResources {
 		CalendarNavigator.gotoAddResource();
 
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "LRQA-71921 - Verify that the user can filter by Current Scope"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByCurrentScope {
 		CalendarNavigator.gotoAddResource();
 
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@description = "LRQA-71920 - Verify that the user can filter by Global Scope"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByGlobalScope {
 		CalendarNavigator.gotoAddResource();
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "LRQA-71923 - Verify that the user can filter by Nonactive Resources"
-	@priority = "3"
+	@priority = 3
 	test CanFilterByNonactiveResources {
 		CalendarNavigator.gotoAddResource();
 
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@description = "LRQA-71885 - Verify that the user can search by Resource Description"
-	@priority = "4"
+	@priority = 4
 	test CanSearchByResourceDescription {
 		CalendarNavigator.gotoAddResource();
 
@@ -219,23 +219,23 @@ definition {
 		CalendarResource.viewTableEmpty();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test Delete {
 		var calendarResourceName = "Calendar Resource Name";
 
-		CalendarResource.add(calendarResourceName = "${calendarResourceName}");
+		CalendarResource.add(calendarResourceName = ${calendarResourceName});
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarResource.delete(calendarResourceName = "${calendarResourceName}");
+		CalendarResource.delete(calendarResourceName = ${calendarResourceName});
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarResource.viewDefault(calendarResourceName = "${calendarResourceName}");
+		CalendarResource.viewDefault(calendarResourceName = ${calendarResourceName});
 	}
 
 	@description = "This is a use case for LPS-59743."
-	@priority = "3"
+	@priority = 3
 	test Search {
 		CalendarResource.add(calendarResourceName = "Room 1");
 
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-62410."
-	@priority = "4"
+	@priority = 4
 	test ViewEventDateAndTimeInResourcesAvailability {
 		CalendarNavigator.gotoAddEvent();
 
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-55171."
-	@priority = "3"
+	@priority = 3
 	test ViewInactive {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -350,7 +350,7 @@ definition {
 		CalendarEvent.viewInvitationResourceNotPresent(resourceNameList = "Calendar Resource");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test ViewInvitedResourceAvailability {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -418,7 +418,7 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarEvent.view(
-			eventNumber = "2",
+			eventNumber = 2,
 			eventTitle = "Calendar Event All Day Title");
 	}
 

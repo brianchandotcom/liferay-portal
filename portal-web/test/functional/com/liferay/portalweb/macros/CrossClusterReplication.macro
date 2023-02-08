@@ -13,7 +13,7 @@ definition {
 				}'
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${cleanCurl});
 	}
 
 	macro getNumberOfSuccessfulWriteRequests {
@@ -22,13 +22,13 @@ definition {
 
 		var curl = "http://${portalHostname}:9202/liferay-${companyId}-${indexName}/_ccr/stats?pretty";
 
-		var ccrSynonymInfo = JSONCurlUtil.get("${curl}");
+		var ccrSynonymInfo = JSONCurlUtil.get(${curl});
 
-		var successfulWriteRequests = RegexUtil.replace("${ccrSynonymInfo}", "successful_write_requests\" : (\d+)", "1");
+		var successfulWriteRequests = RegexUtil.replace(${ccrSynonymInfo}, "successful_write_requests\" : (\d+)", 1);
 
 		echo("Number of successful_write_requests: ${successfulWriteRequests}");
 
-		return "${successfulWriteRequests}";
+		return ${successfulWriteRequests};
 	}
 
 	macro setupCrossClusterReplication {
@@ -66,10 +66,10 @@ definition {
 
 		var remoteClusterIndexList = JSONCurlUtil.get("http://localhost:9200/_cat/indices?h=index");
 
-		var remoteClusterIndexList = RegexUtil.replace("${remoteClusterIndexList}", "\n", ",");
+		var remoteClusterIndexList = RegexUtil.replace(${remoteClusterIndexList}, "\n", ",");
 
-		for (var indexName : list "${remoteClusterIndexList}") {
-			if (!(contains("${indexName}", ".")) && !(contains("${indexName}", "ilm-history")) && !(contains("${localClusterIndexList}", "${indexName}"))) {
+		for (var indexName : list ${remoteClusterIndexList}) {
+			if (!(contains(${indexName}, ".")) && !(contains(${indexName}, "ilm-history")) && !(contains(${localClusterIndexList}, ${indexName}))) {
 				fail("Failed to create a follower index for ${indexName}.");
 			}
 		}
@@ -82,7 +82,7 @@ definition {
 
 		var localClusterHealth = JSONCurlUtil.get("http://localhost:9202/_cluster/health?pretty");
 
-		if (contains("${localClusterHealth}", "red")) {
+		if (contains(${localClusterHealth}, "red")) {
 			echo("##");
 
 			echo("## Local Cluster Index Status");

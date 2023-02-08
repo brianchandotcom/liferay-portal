@@ -53,13 +53,13 @@ definition {
 
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.business.location.zip",
-			value = "12345");
+			value = 12345);
 	}
 
 	macro typeAllBusinessInfoFieldsPhone {
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.yearsOfExperience",
-			value = "3");
+			value = 3);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -107,7 +107,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.startBusinessAtYear",
-			value = "2000");
+			value = 2000);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -117,7 +117,7 @@ definition {
 
 		RaylifeEmployees.typeEmployeesInfoFields(
 			label = "employees.partTimeEmployees",
-			value = "200");
+			value = 200);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -145,7 +145,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.stories",
-			value = "3");
+			value = 3);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -163,7 +163,7 @@ definition {
 
 		RaylifeProperty.typePropertyInfoFields(
 			label = "property.yearBuilding",
-			value = "2015");
+			value = 2015);
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 

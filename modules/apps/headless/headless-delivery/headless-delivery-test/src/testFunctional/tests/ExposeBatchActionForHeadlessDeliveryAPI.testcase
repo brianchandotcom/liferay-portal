@@ -16,7 +16,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test IncludeBatchEndpointsInActionBlockForAssetLibraryDocumentFolder {
 		property portal.acceptance = "true";
 
@@ -29,19 +29,19 @@ definition {
 				depotName = "Test Depot Name",
 				noSelenium = "true");
 
-			var response = DocumentFolderAPI.getDocumentFolders(assetLibraryId = "${assetLibraryId}");
+			var response = DocumentFolderAPI.getDocumentFolders(assetLibraryId = ${assetLibraryId});
 		}
 
 		task ("Then I can see details of updateBatch, createBatch and deleteBatch inside of action block in response") {
 			DocumentFolderAPI.assertProperBatchInActionBlock(
-				assetLibraryId = "${assetLibraryId}",
+				assetLibraryId = ${assetLibraryId},
 				batchActions = "createBatch,updateBatch,deleteBatch",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test IncludeBatchEndpointsInActionBlockForSiteDocumentFolder {
 		property portal.acceptance = "true";
 
@@ -53,7 +53,7 @@ definition {
 			DocumentFolderAPI.assertProperBatchInActionBlock(
 				batchActions = "createBatch,updateBatch,deleteBatch",
 				groupName = "Guest",
-				responseToParse = "${response}");
+				responseToParse = ${response});
 		}
 	}
 

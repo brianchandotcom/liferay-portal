@@ -44,12 +44,12 @@ definition {
 			portlet = "Account Groups");
 
 		AccountGroups.addCP(
-			accountGroupDescription = "${accountGroupDescription}",
-			accountGroupName = "${accountGroupName}");
+			accountGroupDescription = ${accountGroupDescription},
+			accountGroupName = ${accountGroupName});
 
 		AccountGroups.openAccountGroupsAdmin();
 
-		LexiconEntry.viewEntryName(rowEntry = "${accountGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = ${accountGroupName});
 	}
 
 	macro addAndViewBusinessAccount {
@@ -59,32 +59,32 @@ definition {
 			portlet = "Accounts");
 
 		Account.addBusinessAccount(
-			accountDescription = "${accountDescription}",
-			accountName = "${accountName}",
-			accountTaxId = "${accountTaxId}");
+			accountDescription = ${accountDescription},
+			accountName = ${accountName},
+			accountTaxId = ${accountTaxId});
 
 		Account.openAccountsAdmin();
 
-		LexiconEntry.viewEntryName(rowEntry = "${accountName}");
+		LexiconEntry.viewEntryName(rowEntry = ${accountName});
 	}
 
 	macro addAutoTaggedBlogsEntry {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}");
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		AssertClick.assertTextClickAt(
-			key_entryTitle = "${entryTitle}",
+			key_entryTitle = ${entryTitle},
 			locator1 = "BlogsEntry#TITLE_LINK",
-			value1 = "${entryTitle}");
+			value1 = ${entryTitle});
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "${entryTitle}",
-			tagName = "${tagName}");
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
 	}
 
 	macro addAutoTaggedDM {
@@ -97,8 +97,8 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "${dmDocumentFile}",
-			dmDocumentTitle = "${dmDocumentTitle}");
+			dmDocumentFile = ${dmDocumentFile},
+			dmDocumentTitle = ${dmDocumentTitle});
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -107,11 +107,11 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewTagInfo(tagName = "${tagName}");
+		DMDocument.viewTagInfo(tagName = ${tagName});
 	}
 
 	macro addAutoTaggedWebContent {
@@ -124,10 +124,10 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		PortletEntry.inputTitle(title = "${webContentTitle}");
+		PortletEntry.inputTitle(title = ${webContentTitle});
 
 		CKEditor.addContentInWebContent(
-			content = "${webContentContent}",
+			content = ${webContentContent},
 			fieldLabel = "content");
 
 		PortletEntry.publish();
@@ -139,14 +139,14 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextEquals(
-			key_tagName = "${tagName}",
+			key_tagName = ${tagName},
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
+			value1 = ${tagName});
 	}
 
 	macro addAutoTagViaGogoShell {
@@ -167,12 +167,12 @@ definition {
 		if (isSet(blogEntryTitle)) {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-			BlogsNavigator.gotoEntryCP(entryTitle = "${blogEntryTitle}");
+			BlogsNavigator.gotoEntryCP(entryTitle = ${blogEntryTitle});
 
 			Panel.expandPanel(panel = "Categorization");
 
-			for (var tagName : list "${blogTagName}") {
-				AssetCategorization.viewTag(tagName = "${tagName}");
+			for (var tagName : list ${blogTagName}) {
+				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 		}
 
@@ -183,12 +183,12 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		for (var tagName : list "${dmTagName}") {
-			DMDocument.viewTagInfo(tagName = "${tagName}");
+		for (var tagName : list ${dmTagName}) {
+			DMDocument.viewTagInfo(tagName = ${tagName});
 		}
 
 		if (isSet(depotName)) {
@@ -198,12 +198,12 @@ definition {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 		}
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Categorization");
 
-		for (var tagName : list "${wcTagName}") {
-			AssetCategorization.viewTag(tagName = "${tagName}");
+		for (var tagName : list ${wcTagName}) {
+			AssetCategorization.viewTag(tagName = ${tagName});
 		}
 	}
 
@@ -257,14 +257,14 @@ definition {
 		}
 
 		task ("Assert the Button fragment is present") {
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "footer",
-					position = "${n}",
-					text = "${text}");
+					position = ${n},
+					text = ${text});
 
 				var n = ${n} + 1;
 			}
@@ -317,14 +317,14 @@ definition {
 		}
 
 		task ("Assert the Button fragment is present") {
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "footer",
-					position = "${n}",
-					text = "${text}");
+					position = ${n},
+					text = ${text});
 
 				var n = ${n} + 1;
 			}
@@ -344,7 +344,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Dynamic Data Lists",
-			site = "${site}");
+			site = ${site});
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -353,7 +353,7 @@ definition {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		for (var ddlDataDefinitionName : list "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do") {
-			DDLDataDefinition.viewName(ddlDataDefinitionName = "${ddlDataDefinitionName}");
+			DDLDataDefinition.viewName(ddlDataDefinitionName = ${ddlDataDefinitionName});
 		}
 
 		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
@@ -399,7 +399,7 @@ definition {
 			documentsAndMediaField = "DM Document JPG",
 			fieldFieldLabel = "Documents and Media",
 			navTab = "Documents and Media",
-			numberField = "1234");
+			numberField = 1234);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -416,7 +416,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Forms",
-			site = "${site}");
+			site = ${site});
 
 		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 
@@ -426,7 +426,7 @@ definition {
 
 		Form.editDescription(formDescription = "Form Description");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldName = FormFields.getFieldName();
 
@@ -473,7 +473,7 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field",
-			fieldName = "${fieldName}");
+			fieldName = ${fieldName});
 	}
 
 	macro addMessageBoards {
@@ -489,11 +489,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = ${dmDocumentTypeName});
 
 		OneDrive.AddDocument(
 			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
-			dmDocumentTypeName = "${dmDocumentTypeName}");
+			dmDocumentTypeName = ${dmDocumentTypeName});
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -540,7 +540,7 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Font Family Base",
-				text = "${fontFamily}");
+				text = ${fontFamily});
 
 			StyleBooks.clickManagementBar();
 
@@ -746,11 +746,11 @@ definition {
 			portlet = "Account Users");
 
 		AccountUsers.addUser(
-			accountName = "${accountName}",
-			userEmailAddress = "${userEmailAddress}",
-			userFirstName = "${userFirstName}",
-			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}");
+			accountName = ${accountName},
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -1059,7 +1059,7 @@ definition {
 				siteName = "Test Site Name");
 
 			for (var fragmentName : list "Container,Grid") {
-				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+				PageEditor.viewFragment(fragmentName = ${fragmentName});
 			}
 		}
 
@@ -1148,7 +1148,7 @@ definition {
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Low Resolution",
 			imageState = "Disabled",
-			percentAdapted = "0");
+			percentAdapted = 0);
 
 		AdaptiveMedia.deleteImageResolution(imageName = "Low Resolution");
 	}
@@ -1171,11 +1171,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
-			voteCount = "1");
+			voteCount = 1);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -1183,11 +1183,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		Blogs.editEntryPG(
 			embedVideo = "https://www.youtube.com/watch?v=HOdbzGCI5MEU",
@@ -1250,11 +1250,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as bad",
-			voteCount = "1");
+			voteCount = 1);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -1262,11 +1262,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		KBDisplayWidget.editPGViaKBDisplay(
 			kbArticleContentEdit = "Knowledge Base Video Content Edit",
@@ -1285,7 +1285,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "",
 			threadSubject = "Message Boards Subject");
 
@@ -1295,11 +1295,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as bad",
-			voteCount = "1");
+			voteCount = 1);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.rateThumb(
 			blogRating = "true",
@@ -1307,11 +1307,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as bad",
-			voteCount = "0");
+			voteCount = 0);
 
 		Navigator.gotoPage(pageName = "Message Boards");
 
@@ -1349,11 +1349,11 @@ definition {
 
 		Ratings.revokeStarsRating();
 
-		Ratings.rateStar(ratingStarCount = "3");
+		Ratings.rateStar(ratingStarCount = 3);
 
 		Ratings.viewRateStar(
 			averageRatingStarCount = "3.0",
-			ratingStarCount = "3");
+			ratingStarCount = 3);
 
 		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki FrontPage Content Edit");
 
@@ -1417,8 +1417,8 @@ definition {
 		AdaptiveMedia.editImageResolution(
 			imageName = "Low Resolution",
 			imageNameEdit = "Low Resolution Edited",
-			maxHeightEdit = "480",
-			maxWidthEdit = "320");
+			maxHeightEdit = 480,
+			maxWidthEdit = 320);
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution Edited");
 
@@ -1427,49 +1427,49 @@ definition {
 
 	macro editTagsAndDeleteAutoTaggedBlogsEntry {
 		BlogsNavigator.openToBlogEntry(
-			entryTitle = "${entryTitleKey}",
+			entryTitle = ${entryTitleKey},
 			layoutName = "test-page",
 			siteURLKey = "site-name");
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "${entryTitle}",
-			tagName = "${tagName}");
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
-		BlogsNavigator.gotoEditCP(entryTitle = "${entryTitle}");
+		BlogsNavigator.gotoEditCP(entryTitle = ${entryTitle});
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "${tagName}");
+		AssetCategorization.removeTag(tagName = ${tagName});
 
 		AssetCategorization.addTag(tagName = "new tag");
 
 		PortletEntry.publish();
 
 		BlogsNavigator.openToBlogEntry(
-			entryTitle = "${entryTitleKey}",
+			entryTitle = ${entryTitleKey},
 			layoutName = "test-page",
 			siteURLKey = "site-name");
 
 		BlogsEntry.viewNoTag(
-			entryTitle = "${entryTitle}",
-			tagName = "${tagName}");
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
 
 		BlogsEntry.viewAutoTag(
-			entryTitle = "${entryTitle}",
+			entryTitle = ${entryTitle},
 			tagName = "new tag");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}");
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
 
 		BlogsEntry.viewNoPG(
-			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}");
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
 	}
 
 	macro editTagsAndDeleteAutoTaggedDM {
@@ -1480,11 +1480,11 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewTagInfo(tagName = "${tagName}");
+		DMDocument.viewTagInfo(tagName = ${tagName});
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -1495,7 +1495,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.selectDocuments(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.selectDocuments(dmDocumentTitle = ${dmDocumentTitle});
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
@@ -1508,9 +1508,9 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
 
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 
 		DMDocument.viewTagInfo(tagName = "new tag");
 
@@ -1521,7 +1521,7 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 		}
 
-		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
+		DMDocument.deleteCP(dmDocumentTitle = ${dmDocumentTitle});
 	}
 
 	macro editTagsAndDeleteAutoTaggedWebContent {
@@ -1534,13 +1534,13 @@ definition {
 
 		WaitForPageLoad();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.viewTag(tagName = "${tagName}");
+		AssetCategorization.viewTag(tagName = ${tagName});
 
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -1551,23 +1551,23 @@ definition {
 
 		WaitForPageLoad();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.removeTag(tagName = "${tagName}");
+		AssetCategorization.removeTag(tagName = ${tagName});
 
 		AssetCategorization.addTag(tagName = "new tag");
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Categorization");
 
-		AssetCategorization.viewNoTag(tagName = "${tagName}");
+		AssetCategorization.viewNoTag(tagName = ${tagName});
 
 		AssetCategorization.viewTag(tagName = "new tag");
 
@@ -1580,7 +1580,7 @@ definition {
 
 		WaitForPageLoad();
 
-		WebContent.moveToRecycleBinCP(webContentTitle = "${webContentTitle}");
+		WebContent.moveToRecycleBinCP(webContentTitle = ${webContentTitle});
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
@@ -1595,7 +1595,7 @@ definition {
 			fieldFieldLabelEdit = "Boolean Edit",
 			fieldName = "Boolean");
 
-		if ("${webContentColor}" == "true") {
+		if (${webContentColor} == "true") {
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Color",
 				fieldFieldLabelEdit = "Color Edit");
@@ -1603,7 +1603,7 @@ definition {
 
 		for (var fieldFieldLabel : list "Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
 			DataEngine.editFieldLabel(
-				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldFieldLabel = ${fieldFieldLabel},
 				fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
 		}
 
@@ -1738,7 +1738,7 @@ definition {
 
 		task ("Import the default site into the new site") {
 			LAR.importSiteCP(
-				larFileName = "${larFileName}",
+				larFileName = ${larFileName},
 				siteName = "Test Site Name");
 		}
 
@@ -1770,25 +1770,25 @@ definition {
 	macro getBuildNumber {
 		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
-		var portalBuildNumber = StringUtil.regexReplaceAll("${sqlResults}", "[buildNumber\n]", "");
+		var portalBuildNumber = StringUtil.regexReplaceAll(${sqlResults}, "[buildNumber\n]", "");
 
 		echo("## * Build Number is: ${portalBuildNumber}");
 
-		return "${portalBuildNumber}";
+		return ${portalBuildNumber};
 	}
 
 	macro getSchemaVersion {
-		var mysqlStatement = "${mysqlStatement}";
+		var mysqlStatement = ${mysqlStatement};
 
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
-		var portalSchemaVersion = StringUtil.regexReplaceAll("${sqlResults}", "[schemaVersion\n]", "");
+		var portalSchemaVersion = StringUtil.regexReplaceAll(${sqlResults}, "[schemaVersion\n]", "");
 
 		echo("## * Schema Version is: ${portalSchemaVersion}");
 
-		return "${portalSchemaVersion}";
+		return ${portalSchemaVersion};
 	}
 
 	macro ignore404URLs {
@@ -1798,11 +1798,11 @@ definition {
 
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			requestNumber = "1");
+			requestNumber = 1);
 
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
-			requestNumber = "1");
+			requestNumber = 1);
 
 		Redirect.ignoreEntry(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
@@ -2430,7 +2430,7 @@ definition {
 	macro publishWorkflowDefinition {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
 				panel = "Applications",
@@ -2449,7 +2449,7 @@ definition {
 	macro resetTestUserPassword {
 		Type(
 			locator1 = "TextInput#EMAIL",
-			value1 = "${administratorEmail}");
+			value1 = ${administratorEmail});
 
 		SetupWizard.finishConfigurationPG();
 
@@ -2487,7 +2487,7 @@ definition {
 			navTab = "Shared by Me",
 			siteURLKey = "guest");
 
-		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${dmDocumentTitleView}");
+		Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = ${dmDocumentTitleView});
 
 		DMDocumentSharing.removeCollaborator(
 			collaboratorList = "user1fn",
@@ -2498,7 +2498,7 @@ definition {
 			siteURLKey = "guest");
 
 		if (isSet(blogsEntryTitleView)) {
-			Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = "${blogsEntryTitleView}");
+			Asset.gotoManageCollaboratorsViaSharedByMe(contentTitle = ${blogsEntryTitleView});
 
 			DMDocumentSharing.removeCollaborator(
 				collaboratorList = "user2fn",
@@ -2511,7 +2511,7 @@ definition {
 				userEmailAddress = "user2@liferay.com");
 
 			DMDocumentSharing.editViaSharedwithMe(
-				entryTitle = "${blogsEntryTitleUpdate}",
+				entryTitle = ${blogsEntryTitleUpdate},
 				entryTitleEdit = "${blogsEntryTitleUpdate} Edit");
 		}
 
@@ -2522,7 +2522,7 @@ definition {
 			userEmailAddress = "user1@liferay.com");
 
 		DMDocumentSharing.editViaSharedwithMe(
-			dmDocumentTitle = "${dmDocumentTitleUpdate}",
+			dmDocumentTitle = ${dmDocumentTitleUpdate},
 			entryTitleEdit = "${dmDocumentTitleUpdate} Edit");
 
 		User.logoutPG();
@@ -2539,7 +2539,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "1000");
+			fieldValue = 1000);
 
 		FormFields.editText(
 			fieldName = "SingleLineText",
@@ -2559,8 +2559,8 @@ definition {
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "Grid",
-			optionColumnNumber = "1",
-			optionRowNumber = "1");
+			optionColumnNumber = 1,
+			optionRowNumber = 1);
 
 		FormViewBuilder.editDate(
 			fieldName = "Date",
@@ -2594,7 +2594,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Numeric",
-			fieldValue = "1000");
+			fieldValue = 1000);
 	}
 
 	macro submitFormEntry7010 {
@@ -2655,7 +2655,7 @@ definition {
 
 		FormFields.editText(
 			fieldName = "Numeric",
-			fieldValue = "1000");
+			fieldValue = 1000);
 
 		FormFields.editText(
 			fieldName = "SingleLineText",
@@ -2675,8 +2675,8 @@ definition {
 
 		FormFields.selectGridRadioOptionWithoutCategory(
 			fieldName = "Grid",
-			optionColumnNumber = "1",
-			optionRowNumber = "1");
+			optionColumnNumber = 1,
+			optionRowNumber = 1);
 
 		FormViewBuilder.editDate(
 			fieldName = "Date",
@@ -2708,7 +2708,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Numeric",
-			fieldValue = "1000");
+			fieldValue = 1000);
 	}
 
 	macro submitNewWorkflow {
@@ -2808,7 +2808,7 @@ definition {
 			depotName = "Test Depot Name");
 
 		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing,DM Document Title In Site") {
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "${assetTitle}");
+			AssetPublisherPortlet.viewAssetPG(assetTitle = ${assetTitle});
 		}
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
@@ -2824,7 +2824,7 @@ definition {
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title In Site");
 
 		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing") {
-			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "${assetTitle}");
+			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = ${assetTitle});
 		}
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
@@ -2882,7 +2882,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title With DM Type",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "1234",
+			numericField = 1234,
 			numericFieldFieldLabel = "Number");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -2891,7 +2891,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			numericFieldLabel = "Number",
-			numericValue = "1234");
+			numericValue = 1234);
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -2906,7 +2906,7 @@ definition {
 
 		DMDocument.viewDocumentTypePG(
 			numericFieldLabel = "Amount",
-			numericValue = "1234");
+			numericValue = 1234);
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -2965,7 +2965,7 @@ definition {
 		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
 			Depot.viewDepotConfiguration(
 				configuration = "disabled",
-				toggleSwitchLabel = "${toggleSwitchLabel}");
+				toggleSwitchLabel = ${toggleSwitchLabel});
 		}
 
 		Depot.configureAutoTagging(autoTagging = "Enabled");
@@ -2975,7 +2975,7 @@ definition {
 		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
 			Depot.viewDepotConfiguration(
 				configuration = "enabled",
-				toggleSwitchLabel = "${toggleSwitchLabel}");
+				toggleSwitchLabel = ${toggleSwitchLabel});
 		}
 
 		DepotNavigator.gotoLanguages();
@@ -2997,7 +2997,7 @@ definition {
 		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
 			Depot.viewDepotConfiguration(
 				configuration = "disabled",
-				toggleSwitchLabel = "${toggleSwitchLabel}");
+				toggleSwitchLabel = ${toggleSwitchLabel});
 		}
 	}
 
@@ -3169,11 +3169,11 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = 0);
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as bad",
-			voteCount = "1");
+			voteCount = 1);
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry After Upgrade Content",
@@ -3191,7 +3191,7 @@ definition {
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Preview",
 			maxHeight = "Auto",
-			maxWidth = "1000");
+			maxWidth = 1000);
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
 
@@ -3201,20 +3201,20 @@ definition {
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320");
+			maxHeight = 480,
+			maxWidth = 320);
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Low Resolution",
-			maxHeight = "480",
-			maxWidth = "320",
-			percentAdapted = "0");
+			maxHeight = 480,
+			maxWidth = 320,
+			percentAdapted = 0);
 	}
 
 	macro viewAndAddKBArticle {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
-		if ("${portalVersion}" == "7.1.10.5") {
+		if (${portalVersion} == "7.1.10.5") {
 			KBArticle.viewPG(
 				kbArticleContent = "Knowledge Base Video Content",
 				kbArticleTitle = "Knowledge Base Article Title");
@@ -3230,7 +3230,7 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
-			voteCount = "1");
+			voteCount = 1);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -3252,7 +3252,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "Message Boards Body",
 			threadSubject = "Message Boards Subject");
 
@@ -3262,7 +3262,7 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
-			voteCount = "1");
+			voteCount = 1);
 
 		Navigator.gotoPage(pageName = "Message Boards");
 
@@ -3288,7 +3288,7 @@ definition {
 
 		Ratings.viewRateStar(
 			averageRatingStarCount = "4.0",
-			ratingStarCount = "4");
+			ratingStarCount = 4);
 
 		WikiNavigator.gotoAllPagesPG();
 
@@ -3481,7 +3481,7 @@ definition {
 			newCustomContent = "custom Tag 1 content edit",
 			newCustomProperty = "custom Tag 1 property edit");
 
-		CustomMetaTags.removeTag(tagNum = "2");
+		CustomMetaTags.removeTag(tagNum = 2);
 
 		CustomMetaTags.addMultipleTags(customTagsList = "custom Tag 3");
 
@@ -3567,7 +3567,7 @@ definition {
 			htmlTitle = "This is a custom title",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
@@ -3598,7 +3598,7 @@ definition {
 			htmlTitle = "This is a custom title edit",
 			key_imageName = "Document_2.jpg",
 			openGraph = "true",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			siteNameURL = "test-site-name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
@@ -3655,7 +3655,7 @@ definition {
 			description = "Description",
 			htmlTitle = "Page HTML Title - Liferay DXP",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalURL = ${portalURL});
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
@@ -3664,7 +3664,7 @@ definition {
 			htmlTitle = "Page HTML Title - Liferay DXP",
 			openGraph = "true",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalURL = ${portalURL});
 
 		Navigator.gotoNavTab(navTab = "SEO");
 
@@ -3682,7 +3682,7 @@ definition {
 			description = "Page Description Edit",
 			htmlTitle = "Page HTML Title Edit - Liferay DXP",
 			pageName = "Test Page",
-			portalURL = "${portalURL}");
+			portalURL = ${portalURL});
 	}
 
 	macro viewAndEditUser {
@@ -3712,18 +3712,18 @@ definition {
 
 		var testName = TestCase.getTestName();
 
-		if (contains("${testName}", "72")) {
-			var postalCode = "91765";
+		if (contains(${testName}, 72)) {
+			var postalCode = 91765;
 		}
 		else {
-			var postalCode = "91789";
+			var postalCode = 91789;
 		}
 
 		User.viewAddress(
 			addressType = "Business",
 			city = "Walnut",
 			country = "United States",
-			postalCode = "${postalCode}",
+			postalCode = ${postalCode},
 			region = "California",
 			street1 = "1220 Brea Canyon Rd");
 
@@ -3735,7 +3735,7 @@ definition {
 			searchContainerType = "phonesSearchContainer");
 
 		User.viewContactInformation(
-			addressCount = "10",
+			addressCount = 10,
 			addressPrefix = "test",
 			searchContainerType = "emailAddressesSearchContainer");
 
@@ -3751,10 +3751,10 @@ definition {
 
 		// Ignore these steps for 73 due to LPS-121271
 
-		if (!(contains("${testName}", "73"))) {
+		if (!(contains(${testName}, 73))) {
 			for (var announcementType : list "General,News,Test") {
 				AssertChecked(
-					key_announcementType = "${announcementType}",
+					key_announcementType = ${announcementType},
 					key_notificationType = "Email",
 					locator1 = "UsersAndOrganizationsEditUser#ALERTS_AND_ANNOUNCEMENTS_DELIVERY_CHECKBOX");
 			}
@@ -3826,7 +3826,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		if (!(contains("${testName}", "74"))) {
+		if (!(contains(${testName}, 74))) {
 			AssertClick(
 				key_pageName = "Documents and Media",
 				locator1 = "Home#PAGE",
@@ -3839,7 +3839,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		if (!(contains("${testName}", "74"))) {
+		if (!(contains(${testName}, 74))) {
 			AssertClick(
 				key_pageName = "Documents and Media",
 				locator1 = "Home#PAGE",
@@ -3877,7 +3877,7 @@ definition {
 		User.editAddressCP(
 			addressType = "Personal",
 			city = "Diamond Bar",
-			postalCode = "91765",
+			postalCode = 91765,
 			street1 = "1400 Montefino Ave");
 
 		UserNavigator.gotoDisplaySettings();
@@ -3907,7 +3907,7 @@ definition {
 			addressType = "Personal",
 			city = "Diamond Bar",
 			country = "United States",
-			postalCode = "91765",
+			postalCode = 91765,
 			region = "California",
 			street1 = "1400 Montefino Ave");
 
@@ -4011,7 +4011,7 @@ definition {
 
 		task ("View category shown in Asset Publisher") {
 			if (isSet(categoryName)) {
-				AssetPublisherPortlet.viewAssetMetadataPG(categoryName = "${categoryName}");
+				AssetPublisherPortlet.viewAssetMetadataPG(categoryName = ${categoryName});
 			}
 		}
 
@@ -4080,8 +4080,8 @@ definition {
 			var cardFragmentWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'col-md')])[2]");
 
 			TestUtils.assertEquals(
-				actual = "${cardFragmentWidth}",
-				expected = "${columnWidth}");
+				actual = ${cardFragmentWidth},
+				expected = ${columnWidth});
 		}
 	}
 
@@ -4142,7 +4142,7 @@ definition {
 
 			Navigator._gotoPage(pageName = "Test Fragment Content Page");
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = 5000);
 
 			Refresh();
 
@@ -4156,8 +4156,8 @@ definition {
 			var containerWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]");
 
 			TestUtils.assertNotEquals(
-				actual = "${containerWidth}",
-				expected = "${screenWidth}");
+				actual = ${containerWidth},
+				expected = ${screenWidth});
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "Container",
@@ -4166,15 +4166,15 @@ definition {
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				index = "2",
+				index = 2,
 				styleName = "paddingBottom",
-				styleValue = "3");
+				styleValue = 3);
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				index = "2",
+				index = 2,
 				styleName = "paddingTop",
-				styleValue = "3");
+				styleValue = 3);
 
 			AssertCssValue(
 				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
@@ -4191,7 +4191,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "button",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Button",
@@ -4218,11 +4218,11 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "card",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Card",
-				imageSize = "0");
+				imageSize = 0);
 		}
 
 		task ("Assert styles of Heading in view mode") {
@@ -4239,7 +4239,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
@@ -4250,7 +4250,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "html",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 		}
 
 		task ("Assert styles of Image in view mode") {
@@ -4262,11 +4262,11 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "image",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Image",
-				imageSize = "0");
+				imageSize = 0);
 		}
 
 		task ("Assert styles of Paragraph in view mode") {
@@ -4278,7 +4278,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "image",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "paragraph",
@@ -4288,12 +4288,12 @@ definition {
 
 		task ("Assert styles of Separator in view mode") {
 			PageEditor.viewFragmentStyle(
-				bottomSpacing = "1",
+				bottomSpacing = 1,
 				separatorColor = "dark");
 		}
 
 		task ("Assert styles of Spacer in view mode") {
-			PageEditor.viewFragmentStyle(height = "5");
+			PageEditor.viewFragmentStyle(height = 5);
 		}
 
 		task ("Assert styles of Video in view mode") {
@@ -4312,7 +4312,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "video",
 				styleName = "marginBottom",
-				styleValue = "1");
+				styleValue = 1);
 		}
 
 		task ("Navigate to page in edit mode") {
@@ -4324,9 +4324,9 @@ definition {
 		task ("Assert styles of Container in edit mode") {
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fixed Width",
-				paddingBottom = "3",
-				paddingTop = "3",
-				position = "2");
+				paddingBottom = 3,
+				paddingTop = 3,
+				position = 2);
 
 			PageEditor.viewContainerStyle(backgroundColor = "rgb(46, 90, 172)");
 		}
@@ -4335,7 +4335,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				fragmentName = "Button",
-				marginBottom = "1",
+				marginBottom = 1,
 				size = "lg",
 				type = "link");
 		}
@@ -4346,8 +4346,8 @@ definition {
 				borderRadius = "0.375rem",
 				boxShadow = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem",
 				fragmentName = "Card",
-				imageSize = "0",
-				marginBottom = "1");
+				imageSize = 0,
+				marginBottom = 1);
 		}
 
 		task ("Assert styles of Heading in edit mode") {
@@ -4355,40 +4355,40 @@ definition {
 				alignment = "center",
 				fragmentName = "Heading",
 				headingLevel = "h2",
-				marginBottom = "1",
+				marginBottom = 1,
 				textColor = "rgb(40, 125, 60)");
 		}
 
 		task ("Assert styles of HTML in edit mode") {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "HTML",
-				marginBottom = "1");
+				marginBottom = 1);
 		}
 
 		task ("Assert styles of Image in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				fragmentName = "Image",
-				imageSize = "0",
-				marginBottom = "1");
+				imageSize = 0,
+				marginBottom = 1);
 		}
 
 		task ("Assert styles of Paragraph in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				fragmentName = "Paragraph",
-				marginBottom = "1",
+				marginBottom = 1,
 				textColor = "rgb(185, 80, 0)");
 		}
 
 		task ("Assert styles of Separator in edit mode") {
 			PageEditor.viewFragmentStyle(
-				bottomSpacing = "1",
+				bottomSpacing = 1,
 				separatorColor = "dark");
 		}
 
 		task ("Assert styles of Spacer in edit mode") {
-			PageEditor.viewFragmentStyle(height = "5");
+			PageEditor.viewFragmentStyle(height = 5);
 		}
 
 		task ("Assert styles of Video in edit mode") {
@@ -4406,7 +4406,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Video URL",
-				marginBottom = "1");
+				marginBottom = 1);
 		}
 	}
 
@@ -4453,7 +4453,7 @@ definition {
 
 			Site.viewChildCP(
 				childSiteName = "Test Site Name",
-				siteName = "${siteName}");
+				siteName = ${siteName});
 		}
 
 		task ("View the site default language") {
@@ -4490,8 +4490,8 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Grid");
 
 			PageEditor.viewGridStyle(
-				columnCount = "6",
-				position = "1");
+				columnCount = 6,
+				position = 1);
 
 			PageEditor.switchViewport(deviceType = "Tablet");
 
@@ -4521,14 +4521,14 @@ definition {
 
 		task ("Configure the Grid") {
 			PageEditor.editLayoutGrid(
-				columnCount = "3",
+				columnCount = 3,
 				panel = "General");
 		}
 
 		task ("View the Grid Styles after updating") {
 			PageEditor.viewGridStyle(
-				columnCount = "3",
-				position = "1");
+				columnCount = 3,
+				position = 1);
 
 			PageEditor.switchViewport(deviceType = "Tablet");
 
@@ -4608,7 +4608,7 @@ definition {
 			booleanValue = "checked",
 			checkboxName = "Boolean",
 			numericFieldLabel = "Number",
-			numericValue = "1234");
+			numericValue = 1234);
 
 		Navigator.gotoPage(pageName = "Documents");
 
@@ -4710,7 +4710,7 @@ definition {
 		AssertTextEquals(
 			fieldName = "Boolean",
 			locator1 = "FormFields#CHECK_BOOLEAN_FIELD",
-			value1 = "${fieldName}");
+			value1 = ${fieldName});
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Number",
@@ -4839,7 +4839,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Multiple Selection",
@@ -4854,7 +4854,7 @@ definition {
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Numeric",
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "SingleLineText",
@@ -5045,7 +5045,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormsAdmin.viewImageTableEntry();
 
@@ -5064,7 +5064,7 @@ definition {
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Numeric",
 			fieldName = "Numeric",
-			fieldValue = "123");
+			fieldValue = 123);
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "SingleLineText",
@@ -5283,7 +5283,7 @@ definition {
 		var baseSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lportal.Calendar;");
 		var partitionSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lpartition_42638.Calendar;");
 
-		if ("${baseSchemaIndex}" == "${partitionSchemaIndex}") {
+		if (${baseSchemaIndex} == ${partitionSchemaIndex}) {
 			echo("Calendar Index matches: ${baseSchemaIndex}");
 		}
 		else {
@@ -5339,15 +5339,15 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				PageEditor.viewFragmentEditableText(
 					className = "footer",
 					contributed = "false",
-					editableText = "${text}",
+					editableText = ${text},
 					fragmentName = "Button",
-					position = "${n}");
+					position = ${n});
 
 				var n = ${n} + 1;
 			}
@@ -5360,14 +5360,14 @@ definition {
 				key_pageName = "Test Template Content Page",
 				locator1 = "Home#PAGE");
 
-			var n = "1";
+			var n = 1;
 
 			for (var text : list "Submit,Cancel") {
 				ContentPages.viewFragmentText(
 					contributed = "false",
 					fragmentName = "footer",
-					position = "${n}",
-					text = "${text}");
+					position = ${n},
+					text = ${text});
 
 				var n = ${n} + 1;
 			}
@@ -5449,7 +5449,7 @@ definition {
 			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
-			nestedColumnNumber = "1",
+			nestedColumnNumber = 1,
 			portletName = "Web Content Display");
 	}
 
@@ -5507,7 +5507,7 @@ definition {
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2");
+			notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -5524,7 +5524,7 @@ definition {
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "1");
+			notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -5550,7 +5550,7 @@ definition {
 		}
 
 		task ("View count of the assets on Mosted Viewed Assets") {
-			var n = "1";
+			var n = 1;
 
 			for (var count : list "3,2,5") {
 				AssetPublisherPortlet.viewAssetViewCount(
@@ -5562,9 +5562,9 @@ definition {
 		}
 
 		task ("View the Web Content Title 1 twice") {
-			var count = "0";
+			var count = 0;
 
-			while ("${count}" != "2") {
+			while (${count} != 2) {
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");
@@ -5578,9 +5578,9 @@ definition {
 		}
 
 		task ("View the Web Content Title 2 five times") {
-			var count = "0";
+			var count = 0;
 
-			while ("${count}" != "5") {
+			while (${count} != 5) {
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
 					siteName = "Test Site Name");
@@ -5612,7 +5612,7 @@ definition {
 		}
 
 		task ("View the new count of the assets on Mosted Viewed Assets") {
-			var n = "1";
+			var n = 1;
 
 			for (var count : list "5,7,6") {
 				AssetPublisherPortlet.viewAssetViewCount(
@@ -5627,17 +5627,17 @@ definition {
 	macro viewPortalCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${name}");
+			rowEntry = ${name});
 
 		AssertTextEquals(
 			key_configurationValue = "filterMappingUrlPattern",
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
-			value1 = "${urlPattern}");
+			value1 = ${urlPattern});
 
 		AssertTextEquals(
 			key_configurationValue = "header",
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
-			value1 = "${header}");
+			value1 = ${header});
 	}
 
 	macro ViewPortletsPermissions {
@@ -5651,7 +5651,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			threadSubject = "Message Boards Subject");
 
 		MessageboardsThread.viewPG(
@@ -5735,7 +5735,7 @@ definition {
 		if (isSet(samlRoleType)) {
 			AssertTextEquals(
 				locator1 = "CPSAMLAdmin#SAML_SELECTED_ROLE",
-				value1 = "${samlRoleType}");
+				value1 = ${samlRoleType});
 		}
 
 		AssertTextEquals(
@@ -5796,7 +5796,7 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "paginationDelta",
-			fieldValue = "2");
+			fieldValue = 2);
 
 		IFrame.closeFrame();
 
@@ -5844,7 +5844,7 @@ definition {
 			password = "test",
 			userEmailAddress = "user2@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "2");
+		Notifications.viewBadgeCount(notificationCount = 2);
 
 		Notifications.gotoNotifications();
 
@@ -5877,13 +5877,13 @@ definition {
 
 		Notifications.viewNewSharedContent(
 			contentSharingPermission = "viewing",
-			contentTitle = "${dmDocumentTitle}",
+			contentTitle = ${dmDocumentTitle},
 			openNotification = "true",
 			ownerName = "Test Test");
 
 		DMDocumentSharing.viewDocumentViaSharedContent(
 			contentSharingPermission = "View",
-			dmDocumentTitle = "${dmDocumentTitle}");
+			dmDocumentTitle = ${dmDocumentTitle});
 
 		User.logoutPG();
 
@@ -5943,11 +5943,11 @@ definition {
 			value1 = "Drag applications below to nest them.");
 
 		NestedPortlets.viewPG(
-			nestedColumnNumber = "1",
+			nestedColumnNumber = 1,
 			portletName = "Web Content Display");
 
 		NestedPortlets.viewPG(
-			nestedColumnNumber = "1",
+			nestedColumnNumber = 1,
 			portletName = "Blogs");
 	}
 
@@ -5960,11 +5960,11 @@ definition {
 
 		var paginationResults = selenium.getText("Pagination#RESULTS");
 
-		var totalElements = StringUtil.extractLast("${paginationResults}", " ");
+		var totalElements = StringUtil.extractLast(${paginationResults}, " ");
 
 		var difference = ${totalElements} - 39;
 
-		if ("${difference}" != "0") {
+		if (${difference} != 0) {
 			TestUtils.fail(message = "FAILED: Actual total elements '${totalElements}' is not equal to expected total elements of 39");
 		}
 
@@ -5996,7 +5996,7 @@ definition {
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
-			index = "40",
+			index = 40,
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT");
 
 		AssertElementPresent(
@@ -6023,7 +6023,7 @@ definition {
 			elementName = "Boost Contents in a Category for the Time of Day",
 			fieldLabel = "Asset Category ID",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = "12345");
+			value1 = 12345);
 
 		AssertElementPresent(
 			dropdownName = "Time of Day",
@@ -6095,7 +6095,7 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "checkInterval",
-			fieldValue = "5");
+			fieldValue = 5);
 
 		SystemSettings.viewTextareaValue(
 			fieldName = "customTokenNames",
@@ -6195,7 +6195,7 @@ definition {
 
 		FormFields.viewTextValue(
 			fieldName = "rssAbstractLength",
-			fieldValue = "500");
+			fieldValue = 500);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -6473,7 +6473,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			startedByUserName = "Test Test",
 			threadBody = "Message Boards Body",
 			threadSubject = "Message Boards Subject");
@@ -6540,7 +6540,7 @@ definition {
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
-			replyCount = "0",
+			replyCount = 0,
 			startedByUserName = "Test Test",
 			threadBody = "Message Boards Body",
 			threadSubject = "Message Boards Subject");
@@ -6710,7 +6710,7 @@ definition {
 	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		if ("${webContentColor}" == "false") {
+		if (${webContentColor} == "false") {
 			WebContent.viewWithStructureCP(
 				linkedPageName = "Home",
 				linkFieldName = "LinktoPage",
@@ -6722,7 +6722,7 @@ definition {
 				webContentDocumentsAndMedia = "DM Document Title",
 				webContentHtml = "This is a HTML field",
 				webContentImage = "Document_1.jpg",
-				webContentInteger = "9",
+				webContentInteger = 9,
 				webContentNumber = "-1",
 				webContentRadio = "option 1",
 				webContentSelect = "option 2",
@@ -6738,14 +6738,14 @@ definition {
 				menuItem = "Basic Document",
 				structureName = "WC Structure Name",
 				webContentBoolean = "true",
-				webContentColor = "000000",
+				webContentColor = 000000,
 				webContentDate = "01/29/2021",
 				webContentDecimal = "0.5",
 				webContentDocumentsAndMedia = "DM Document Title",
 				webContentHtml = "This is a HTML field",
 				webContentImage = "Document_1.jpg",
 				webContentImageDescription = "Image Description",
-				webContentInteger = "9",
+				webContentInteger = 9,
 				webContentNumber = "-1",
 				webContentRadio = "option 1",
 				webContentSelect = "option 2",
@@ -6789,12 +6789,12 @@ definition {
 	}
 
 	macro viewWebContentWithAllFields {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content",
-			site = "${siteName}");
+			site = ${siteName});
 
 		for (var fieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box") {
 			WebContentAdmin.viewEntryWorkflowStatus(
@@ -6837,7 +6837,7 @@ definition {
 		Navigator.gotoBack();
 
 		WebContent.viewWithStructureCP(
-			webContentNumeric = "9",
+			webContentNumeric = 9,
 			webContentNumericFieldLabel = "Integer",
 			webContentTitle = "Integer Web Content");
 
@@ -6899,7 +6899,7 @@ definition {
 		var imageFieldValue = selenium.getElementValue("//label[contains(@class,'ddm-label')][normalize-space(text())='Image']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]");
 
 		TestUtils.assertNotEquals(
-			actual = "${imageFieldValue}",
+			actual = ${imageFieldValue},
 			expected = "");
 
 		AssertElementPresent(
@@ -6945,7 +6945,7 @@ definition {
 
 		for (var webContentTitle : list "Web Content Title,Web Content With Predefined Value") {
 			WebContentAdmin.viewEntryWorkflowStatus(
-				entry = "${webContentTitle}",
+				entry = ${webContentTitle},
 				workflowStatus = "Approved");
 		}
 
@@ -6957,12 +6957,12 @@ definition {
 	macro viewWebContextsCORS {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${filter}");
+			rowEntry = ${filter});
 
 		AssertTextEquals(
 			key_configurationValue = "filterMappingUrlPattern",
 			locator1 = "SystemSettings#CORS_CONFIGURATION",
-			value1 = "${urlPattern}");
+			value1 = ${urlPattern});
 	}
 
 }

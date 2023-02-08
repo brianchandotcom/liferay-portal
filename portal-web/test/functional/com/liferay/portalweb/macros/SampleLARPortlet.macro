@@ -17,7 +17,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Samplelarportlet#SAMPLE_BOOKING_TABLE_BOOKING_NUMBER",
-			value1 = "${bookingNumber}");
+			value1 = ${bookingNumber});
 	}
 
 }

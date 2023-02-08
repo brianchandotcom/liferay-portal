@@ -4,7 +4,7 @@ definition {
 	function select {
 		WaitForSPARefresh();
 
-		selenium.pause("5000");
+		selenium.pause(5000);
 
 		WaitForSPARefresh();
 

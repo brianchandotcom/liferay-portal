@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "Verify the right to left localization css values are applied to a text field"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test RTLDirectionStyleAppliedToTextField {
 		property portal.acceptance = "true";
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "Verify the right to left localization css values are applied to page layout"
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test RTLStylesAppliedToPageLayout {
 		property portal.acceptance = "true";

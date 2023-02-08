@@ -67,7 +67,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10008 | Test Summary: Sample javascript copy"
-	@priority = "5"
+	@priority = 5
 	test CanCopySampleJavascript {
 		var layoutName = "Custom 2";
 		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
@@ -90,8 +90,8 @@ definition {
 			ACCustomEvents.createCustomEvent(
 				attributesName = "category,like,birthdate",
 				attributesValue = "wetsuit,true,2021-11-25T14:36:30.685Z",
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -101,7 +101,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -115,32 +115,32 @@ definition {
 		}
 
 		task ("Access the custom event") {
-			ACNavigation.openItem(itemName = "${customEventName1}");
+			ACNavigation.openItem(itemName = ${customEventName1});
 		}
 
 		task ("Copy the sample JS and replace an existing attribute with a new one") {
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.copySampleJavascript(
-				attributesList = "${attributesList}",
-				disableAttributesList = "${disableAttributesList}",
+				attributesList = ${attributesList},
+				disableAttributesList = ${disableAttributesList},
 				newAttributeList = "device",
-				newCustomEventName = "${customEventName2}",
+				newCustomEventName = ${customEventName2},
 				newValueList = "linux",
 				oldAttributeList = "category",
-				oldCustomEventName = "${customEventName1}",
+				oldCustomEventName = ${customEventName1},
 				oldValueList = "wetsuit");
 		}
 
 		task ("Launch DXP and create a new page") {
 			ACUtils.launchDXP();
 
-			ACUtils.addPage(layoutName = "${layoutName}");
+			ACUtils.addPage(layoutName = ${layoutName});
 		}
 
 		task ("Create a web content with the sample JS and put it on the page") {
 			ACUtils.createWCAndAddToPage(
-				layoutName = "${layoutName}",
+				layoutName = ${layoutName},
 				webContentContent = '''<div><button class="mybutton-shop" onclick="buySurfwear()">Buy</button></div> <script> function buySurfwear() { ${sampleJavascript} } </script>''',
 				webContentTitle = "Custom Event AC Title 2");
 		}
@@ -156,7 +156,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("Access the custom event") {
-			ACNavigation.openItem(itemName = "${customEventName2}");
+			ACNavigation.openItem(itemName = ${customEventName2});
 		}
 
 		task ("Check the attributes that the custom event has") {
@@ -179,14 +179,14 @@ definition {
 	}
 
 	@description = "Bug: LRAC-10747 | Automation ID: LRAC-11378 | Test Summary: Delete Custom Events description"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteCustomEventDescription {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -196,7 +196,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -210,7 +210,7 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName}");
+			ACNavigation.openItem(itemName = ${customEventName});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -230,7 +230,7 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName}");
+			ACNavigation.openItem(itemName = ${customEventName});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -251,14 +251,14 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10004 | Test Summary: Rename Custom Event Display Name"
-	@priority = "4"
+	@priority = 4
 	test CanRenameCustomEventName {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -268,7 +268,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName}");
+			ACNavigation.openItem(itemName = ${customEventName});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -303,14 +303,14 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10005 | Test Summary: Update Custom Events description"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateCustomEventDescription {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -320,7 +320,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -334,7 +334,7 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName}");
+			ACNavigation.openItem(itemName = ${customEventName});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -355,14 +355,14 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10003 | Test Summary: Custom Event name character limit (255 chars)"
-	@priority = "4"
+	@priority = 4
 	test CheckLimitOfCustomEventName {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -372,7 +372,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -386,9 +386,9 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACNavigation.openItem(itemName = "${customEventName}");
+			ACNavigation.openItem(itemName = ${customEventName});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-9865 | Test Summary: Custom Event shown in AC"
-	@priority = "5"
+	@priority = 5
 	test CustomEventIsShownInAC {
 		property portal.acceptance = "true";
 		property portal.release = "true";
@@ -412,8 +412,8 @@ definition {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -423,7 +423,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -437,19 +437,19 @@ definition {
 		}
 
 		task ("View the new custom events") {
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 	}
 
 	@description = "Bug: LRAC-9883 | Automation ID: LRAC-10262 | Test Summary: Custom Event is shown when pagination and searching are applied"
-	@priority = "4"
+	@priority = 4
 	test CustomEventIsShownWhenPaginatingAndSearching {
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -459,7 +459,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -473,59 +473,59 @@ definition {
 		}
 
 		task ("Check that the custom event appears in the list") {
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Clear the search and check that the custom event appears in the list") {
 			ACUtils.clearSearchBar();
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName}");
+			ACUtils.searchBar(searchItem = ${customEventName});
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Change the pagination to "30"") {
-			ACUtils.changePagination(itemsPerPage = "30");
+			ACUtils.changePagination(itemsPerPage = 30);
 		}
 
 		task ("Clear the search and check that the custom event appears in the list") {
 			ACUtils.clearSearchBar();
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
 		task ("Change the pagination to "20" and check that the custom event appears in the list") {
-			ACUtils.changePagination(itemsPerPage = "20");
+			ACUtils.changePagination(itemsPerPage = 20);
 
-			ACUtils.viewNameList(nameList = "${customEventName}");
+			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10007 | Test Summary: Search for Custom Event"
-	@priority = "3"
+	@priority = 3
 	test CustomEventListSearchable {
 		task ("Fill fields and create 2 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName2}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName2},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -535,7 +535,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -549,15 +549,15 @@ definition {
 		}
 
 		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName1}");
+			ACUtils.searchBar(searchItem = ${customEventName1});
 
-			ACUtils.viewNameList(nameList = "${customEventName1}");
+			ACUtils.viewNameList(nameList = ${customEventName1});
 		}
 
 		task ("Search for the name of the custom event and verify that it was found") {
-			ACUtils.searchBar(searchItem = "${customEventName2}");
+			ACUtils.searchBar(searchItem = ${customEventName2});
 
-			ACUtils.viewNameList(nameList = "${customEventName2}");
+			ACUtils.viewNameList(nameList = ${customEventName2});
 		}
 
 		task ("Search for the name of the custom event that doesn't exist and verify that it didn't find anything") {
@@ -568,26 +568,26 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10006 | Test Summary: Rename Custom Event that already exists custom event name"
-	@priority = "4"
+	@priority = 4
 	test RenameCustomEventToExistingName {
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName1}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName1},
+				timeToSendCustomEvent = 1);
 
 			var customEventName2 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName2}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName2},
+				timeToSendCustomEvent = 1);
 
 			var customEventName3 = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
-				customEventName = "${customEventName3}",
-				timeToSendCustomEvent = "1");
+				customEventName = ${customEventName3},
+				timeToSendCustomEvent = 1);
 		}
 
 		task ("Close sessions") {
@@ -597,7 +597,7 @@ definition {
 		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
 		task ("Navigation to custom events tab") {
@@ -611,7 +611,7 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName2}");
+			ACNavigation.openItem(itemName = ${customEventName2});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
@@ -627,13 +627,13 @@ definition {
 		}
 
 		task ("Edit the new custom event") {
-			ACNavigation.openItem(itemName = "${customEventName1}");
+			ACNavigation.openItem(itemName = ${customEventName1});
 
 			ACUtils.clickAnyButton(button = "Edit");
 		}
 
 		task ("Rename to an existing display name") {
-			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = "${customEventName3}");
+			ACCustomEvents.changeCustomEventDisplayNameOrDescription(newDisplayName = ${customEventName3});
 		}
 
 		task ("Check that the display name cannot be renamed to an existing one") {

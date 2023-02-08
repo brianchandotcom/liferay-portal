@@ -1,17 +1,17 @@
 definition {
 
 	macro changeDisplayStyle {
-		ManagementBar.changeDisplayStyle(displayStyle = "${displayStyle}");
+		ManagementBar.changeDisplayStyle(displayStyle = ${displayStyle});
 	}
 
 	macro clickEntryEllipsis {
-		LexiconList.clickEllipsis(listEntry = "${entry}");
+		LexiconList.clickEllipsis(listEntry = ${entry});
 	}
 
 	macro clickEntryEllipsisItem {
 		LexiconList.clickEllipsisItem(
-			item = "${item}",
-			listEntry = "${entry}");
+			item = ${item},
+			listEntry = ${entry});
 	}
 
 	macro clickSelectAllCheckbox {
@@ -19,11 +19,11 @@ definition {
 	}
 
 	macro configureEmailNotifications {
-		Navigator.gotoNavTab(navTab = "${navTab}");
+		Navigator.gotoNavTab(navTab = ${navTab});
 
-		if ("${enabled}" == "true") {
+		if (${enabled} == "true") {
 			Check(
-				inputFieldId = "${fieldName}",
+				inputFieldId = ${fieldName},
 				locator1 = "TextInput#INPUT_ID");
 		}
 
@@ -31,43 +31,43 @@ definition {
 			Type(
 				inputFieldId = "${fieldName}Subject",
 				locator1 = "TextInput#INPUT_ID",
-				value1 = "${notificationsSubject}");
+				value1 = ${notificationsSubject});
 		}
 
 		if (isSet(notificationsBody)) {
 			Type.typeCKEditor(
-				bodyFieldId = "${fieldName}",
+				bodyFieldId = ${fieldName},
 				locator1 = "CKEditor#BODY_FIELD_ID",
-				value1 = "${notificationsBody}");
+				value1 = ${notificationsBody});
 		}
 
 		PortletEntry.save();
 	}
 
 	macro gotoEntry {
-		LexiconList.clickListEntryTitle(listEntry = "${entry}");
+		LexiconList.clickListEntryTitle(listEntry = ${entry});
 	}
 
 	macro moveEntryToRecycleBin {
 		WebContentAdmin.clickEntryEllipsisItem(
-			entry = "${entry}",
+			entry = ${entry},
 			item = "Delete");
 
 		Confirm();
 	}
 
 	macro viewEntryNotPresent {
-		LexiconList.viewListEntryNotPresent(listEntry = "${entry}");
+		LexiconList.viewListEntryNotPresent(listEntry = ${entry});
 	}
 
 	macro viewEntryTitle {
-		LexiconList.viewListEntryTitle(listEntry = "${entry}");
+		LexiconList.viewListEntryTitle(listEntry = ${entry});
 	}
 
 	macro viewEntryWorkflowStatus {
 		LexiconList.viewListEntryLabel(
-			listEntry = "${entry}",
-			listEntryLabel = "${workflowStatus}");
+			listEntry = ${entry},
+			listEntryLabel = ${workflowStatus});
 	}
 
 }

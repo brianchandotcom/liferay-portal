@@ -1,11 +1,11 @@
 definition {
 
 	macro _editWalkthroughJSON {
-		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = "${fileName}");
+		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = ${fileName});
 
 		SystemSettings.editTextAreaSetting(
 			settingName = "Steps",
-			settingValue = "${jsonSnippet}");
+			settingValue = ${jsonSnippet});
 	}
 
 	macro _enableWalkthrough {
@@ -19,7 +19,7 @@ definition {
 
 		Walkthrough._enableWalkthrough();
 
-		Walkthrough._editWalkthroughJSON(fileName = "${fileName}");
+		Walkthrough._editWalkthroughJSON(fileName = ${fileName});
 
 		SystemSettings.saveConfiguration();
 	}
@@ -27,7 +27,7 @@ definition {
 	macro assertHighlightedSpecificObject {
 		AssertAttributeValue.assertAttributeNotPresent(
 			attribute1 = "fill-opacity",
-			key_stepId = "${key_stepId}",
+			key_stepId = ${key_stepId},
 			locator1 = "Walkthrough#STEP_ID",
 			value1 = "0.8");
 
@@ -49,11 +49,11 @@ definition {
 	}
 
 	macro getWalkthroughSteps {
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
-		var fileContent = FileUtil.read("${dependencyFilePath}");
+		var fileContent = FileUtil.read(${dependencyFilePath});
 
-		return "${fileContent}";
+		return ${fileContent};
 	}
 
 	macro goToNextStep {
@@ -91,24 +91,24 @@ definition {
 
 	macro setupWalkthroughPage {
 		task ("Given there is a site-level JSON defined for current site") {
-			Walkthrough.addWalkthrough(fileName = "${filename}");
+			Walkthrough.addWalkthrough(fileName = ${filename});
 
 			JSONLayout.addPublicLayout(
-				groupName = "${siteName}",
+				groupName = ${siteName},
 				layoutName = "Walkthrough Page 1");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "${siteName}",
+				groupName = ${siteName},
 				layoutName = "Walkthrough Page 1",
 				widgetName = "JS Walkthrough Sample");
 
-			if ("${filename}" == "walkthrough_configuration_multiple_page.json") {
+			if (${filename} == "walkthrough_configuration_multiple_page.json") {
 				JSONLayout.addPublicLayout(
-					groupName = "${siteName}",
+					groupName = ${siteName},
 					layoutName = "Walkthrough Page 2");
 
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "${siteName}",
+					groupName = ${siteName},
 					layoutName = "Walkthrough Page 2",
 					widgetName = "JS Walkthrough Sample");
 			}
@@ -117,7 +117,7 @@ definition {
 		task ("When instantiate the walkthrough") {
 			Navigator.openSitePage(
 				pageName = "Walkthrough Page 1",
-				siteName = "${siteName}");
+				siteName = ${siteName});
 
 			Walkthrough.enablePopoverMode();
 		}

@@ -1,7 +1,7 @@
 definition {
 
 	macro disableAutoTagging {
-		if ("${disableAutoTaggingFor}" == "System Settings") {
+		if (${disableAutoTaggingFor} == "System Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -14,7 +14,7 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
-		else if ("${disableAutoTaggingFor}" == "Instance Settings") {
+		else if (${disableAutoTaggingFor} == "Instance Settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Assets",
 				configurationName = "Asset Auto Tagging",
@@ -22,10 +22,10 @@ definition {
 
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
-		else if ("${disableAutoTaggingFor}" == "Site Settings") {
+		else if (${disableAutoTaggingFor} == "Site Settings") {
 			AutoTagging.openToAutoTaggingSiteSettings(
 				portlet = "Asset Auto Tagging",
-				siteURLKey = "${siteURLKey}");
+				siteURLKey = ${siteURLKey});
 
 			Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
@@ -39,7 +39,7 @@ definition {
 	}
 
 	macro enableAutoTagging {
-		if ("${enableAutoTaggingFor}" == "System Settings") {
+		if (${enableAutoTaggingFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
 			FormFields.enableCheckbox(fieldName = "enabled");
@@ -47,27 +47,27 @@ definition {
 			if (isSet(maximumNumberOfTags)) {
 				SystemSettings.editTextSetting(
 					settingName = "Maximum Number of Tags",
-					settingValue = "${maximumNumberOfTags}");
+					settingValue = ${maximumNumberOfTags});
 			}
 		}
-		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
+		else if (${enableAutoTaggingFor} == "Instance Settings") {
 			AutoTagging.openToAssetAutoTagging(
 				configurationScope = "Instance Settings",
-				systemSettingsInstanceScope = "${systemSettingsInstanceScope}");
+				systemSettingsInstanceScope = ${systemSettingsInstanceScope});
 
 			FormFields.enableCheckbox(fieldName = "enabled");
 
 			if (isSet(maximumNumberOfTags)) {
 				SystemSettings.editTextSetting(
 					settingName = "Maximum Number of Tags",
-					settingValue = "${maximumNumberOfTags}");
+					settingValue = ${maximumNumberOfTags});
 			}
 		}
-		else if ("${enableAutoTaggingFor}" == "Site Settings") {
+		else if (${enableAutoTaggingFor} == "Site Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Site Settings",
-				site = "${site}");
+				site = ${site});
 
 			Click(
 				key_itemName = "Assets",
@@ -90,7 +90,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
-				value1 = "${validationError}");
+				value1 = ${validationError});
 		}
 		else {
 			if (IsElementPresent(locator1 = "Button#UPDATE")) {
@@ -108,12 +108,12 @@ definition {
 		if (isSet(confidenceThreshold)) {
 			SystemSettings.editTextSetting(
 				settingName = "Confidence Threshold",
-				settingValue = "${confidenceThreshold}");
+				settingValue = ${confidenceThreshold});
 		}
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		DropdownMenuItem.click(menuItem = "${assetType}");
+		DropdownMenuItem.click(menuItem = ${assetType});
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
@@ -155,7 +155,7 @@ definition {
 	}
 
 	macro enableUpdateAutoTags {
-		if ("${enableUpdateAutoTagsFor}" == "System Settings") {
+		if (${enableUpdateAutoTagsFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
 			Click(
@@ -163,7 +163,7 @@ definition {
 				key_configurationScope = "Virtual Instance Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
-		else if ("${enableUpdateAutoTagsFor}" == "Instance Settings") {
+		else if (${enableUpdateAutoTagsFor} == "Instance Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "Instance Settings");
 
 			Click(
@@ -185,12 +185,12 @@ definition {
 	macro openToAssetAutoTagging {
 		var baseURL = PropsUtil.get("portal.url");
 
-		if ("${configurationScope}" == "System Settings") {
+		if (${configurationScope} == "System Settings") {
 			var pid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerSystemConfiguration";
 			var portlet = "SystemSettingsPortlet";
 		}
 
-		if ("${configurationScope}" == "Instance Settings") {
+		if (${configurationScope} == "Instance Settings") {
 			var pid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration";
 
 			if (!(isSet(systemSettingsInstanceScope))) {
@@ -202,7 +202,7 @@ definition {
 	}
 
 	macro openToAutoTaggingSiteSettings {
-		if ("${portlet}" == "Asset Auto Tagging") {
+		if (${portlet} == "Asset Auto Tagging") {
 			var configurationScreenKey = "site-configuration-asset-auto-tagger";
 		}
 
@@ -222,7 +222,7 @@ definition {
 	}
 
 	macro viewUpdateAutoTagsSetting {
-		if ("${updateAutoTagsFor}" == "System Settings") {
+		if (${updateAutoTagsFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
 			Click(
@@ -234,10 +234,10 @@ definition {
 			Panel.expandPanel(panel = "Categorization");
 		}
 
-		if ("${updateAutoTags}" == "disabled") {
+		if (${updateAutoTags} == "disabled") {
 			FormFields.viewCheckboxNotChecked(fieldName = "Update Auto Tags");
 		}
-		else if ("${updateAutoTags}" == "hidden") {
+		else if (${updateAutoTags} == "hidden") {
 			AssertElementNotPresent(
 				key_fieldName = "Update Auto Tags",
 				locator1 = "FormFields#CHECKBOX_LABEL");

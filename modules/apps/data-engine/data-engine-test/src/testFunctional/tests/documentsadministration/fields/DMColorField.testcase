@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This test ensures its possible to delete the Color Field on a Document Type."
-	@priority = "5"
+	@priority = 5
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "This test ensures its possible to duplicate the Color Field on a Document Type."
-	@priority = "4"
+	@priority = 4
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
@@ -82,7 +82,7 @@ definition {
 
 	@description = "This test validates field reference input with and without invalid characters."
 	@ignore = "true"
-	@priority = "3"
+	@priority = 3
 	test EditColorFieldNameWithInvalidAndValidCharacters {
 		property portal.acceptance = "false";
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "This test ensures that user can edit the label and help text of the color field."
-	@priority = "5"
+	@priority = 5
 	test EditHelpTextAndLabelOfColorField {
 		property portal.acceptance = "false";
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This test ensures is possible to set color field as required."
-	@priority = "4"
+	@priority = 4
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
 
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "This test ensures user can set a color on the color field."
-	@priority = "5"
+	@priority = 5
 	test SetColorWithPicker {
 		property portal.acceptance = "false";
 
@@ -198,9 +198,9 @@ definition {
 		DERenderer.inputDataInColorField(
 			colorSelectionMethod = "RGB",
 			fieldLabel = "Color",
-			valueBlue = "248",
-			valueGreen = "110",
-			valueRed = "0");
+			valueBlue = 248,
+			valueGreen = 110,
+			valueRed = 0);
 
 		Button.clickPublish();
 
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@description = "This test validates the set of searchable property on the color field."
-	@priority = "4"
+	@priority = 4
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 

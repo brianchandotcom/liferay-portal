@@ -14,7 +14,7 @@ definition {
 		for (var settingFieldName : list "Create Account CAPTCHA Enabled,Send Password CAPTCHA Enabled") {
 			SystemSettings.configureSystemSetting(
 				enableSetting = "false",
-				settingFieldName = "${settingFieldName}");
+				settingFieldName = ${settingFieldName});
 		}
 
 		Refresh();

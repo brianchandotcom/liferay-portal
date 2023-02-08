@@ -28,7 +28,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155168. The page creator cannot input Text Verification and reload the Simple Captcha in page editor."
-	@priority = "4"
+	@priority = 4
 	test CannotInputTextVerificationAndReloadSimpleCaptchaInPageEditor {
 		task ("Given a page creator has a content page with a Form Container") {
 			task ("Add a Text field to object") {
@@ -86,14 +86,14 @@ definition {
 		task ("Then the page creator cannot type text verification and reload simple captcha") {
 			AssertAttributeValue(
 				attribute1 = "disabled",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#INPUT_CAPTCHA_BODY",
 				value1 = "true");
 		}
 	}
 
 	@description = "This is a test for LPS-155168 and LPS-151402. The user could submit Text verification of Simple Captcha via clicking submit at view mode. The user could see error message when submit a form with wrong catpcha verification codes."
-	@priority = "4"
+	@priority = 4
 	test SubmitTextVerificationViaClickingSubmit {
 		task ("Given a site member has a content page with a Captcha and a Submit Button inside Form Container") {
 			task ("Add a Text field to object") {
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via pressing enter at view mode. The user could see error message when validation fail."
-	@priority = "5"
+	@priority = 5
 	test SubmitTextVerificationViaPressingEnter {
 		property portal.acceptance = "true";
 
@@ -196,7 +196,7 @@ definition {
 					panel = "General");
 
 				for (var fragmentName : list "Text Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
 
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-155168. The user could submit Verification of reCaptcha at view mode."
-	@priority = "5"
+	@priority = 5
 	test SubmitVerificationOfReCaptcha {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CaptchaFragment#SubmitVerificationOfReCaptcha";

@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddArticleAsDraft {
 		property portal.acceptance = "true";
@@ -48,7 +48,7 @@ definition {
 
 	@description = "This test ensures that users can add article via center pane button."
 	@e2etest
-	@priority = "5"
+	@priority = 5
 	test CanAddArticleViaCenterPaneButton {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -68,7 +68,7 @@ definition {
 		Button.viewNotPresent(button = "New");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddArticleWithAttachment {
 		KBArticle.addCP(
@@ -84,7 +84,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddArticleWithCategory {
 		Category.openCategoriesAdmin(siteURLKey = "guest");
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can add an article with a custom friendly URL via the new configuration pane."
-	@priority = "5"
+	@priority = 5
 	test CanAddArticleWithCustomFriendlyURL {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -139,14 +139,14 @@ definition {
 
 	@description = "This test ensures that users can add an article with the description."
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test CanAddArticleWithDescription {
 
 		// TODO LPS-172372
 
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddArticleWithHTML {
 		KBArticle.addCP(
@@ -159,7 +159,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanAddArticleWithRelatedBlog {
 		JSONBlog.addEntry(
@@ -184,7 +184,7 @@ definition {
 		KBArticle.viewBlogsEntryRelatedAsset(kbArticleRelatedAssetTitle = "Blogs Entry Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddChildArticle {
 		property portal.acceptance = "true";
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can add a child article for a kb entry from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanAddChildArticleFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -246,7 +246,7 @@ definition {
 			pageTreePanel = "true");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanCancelAddingArticle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -258,7 +258,7 @@ definition {
 		KBArticle.viewDefaultCP();
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanCancelEditingArticle {
 		JSONKnowledgeBase.addkBArticle(
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can delete the kb entry from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteArticleFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -309,7 +309,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can edit the kb entry permissions from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditArticlePermissionsFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can edit the kb entry from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanEditEntryFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can move the kb entry from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanMoveArticleFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -412,7 +412,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test CannotAddArticleWithDuplicateURL {
 		JSONKnowledgeBase.addkBArticle(
@@ -440,7 +440,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test CannotAddArticleWithInvalidAttachmentSize {
 		property test.name.skip.portal.instance = "KBArticle#CannotAddArticleWithInvalidAttachmentSize";
@@ -452,7 +452,7 @@ definition {
 			configurationName = "Upload Servlet Request",
 			configurationScope = "System Scope");
 
-		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = 102400);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -460,7 +460,7 @@ definition {
 			kbArticleAttachment = "Document_1.ppt",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			maxFileSize = "100");
+			maxFileSize = 100);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -470,7 +470,7 @@ definition {
 			noAttachment = "true");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CannotAddArticleWithoutCategory {
 		Category.openCategoriesAdmin(siteURLKey = "guest");
@@ -494,7 +494,7 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddArticleWithoutContent {
 		KBArticle.viewFieldRequiredAsterisk(fieldLabel = "Content");
@@ -511,7 +511,7 @@ definition {
 		KBArticle.viewDefaultCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddArticleWithoutTitle {
 		KBArticle.addCPWithInvalidTitle(
@@ -524,7 +524,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can print the kb entry by clicking the ellipsis on the kb entry."
-	@priority = "5"
+	@priority = 5
 	test CanPreviewPrintContent {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -539,7 +539,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the attachment for an article via the new configuration pane."
-	@priority = "5"
+	@priority = 5
 	test CanReplaceArticleAttachment {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -577,7 +577,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the category for an article via the new configuration pane."
-	@priority = "5"
+	@priority = 5
 	test CanReplaceArticleCategory {
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -594,7 +594,7 @@ definition {
 			vocabularyName = "Vocabulary Name");
 
 		JSONKnowledgeBase.addkBArticle(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
@@ -623,7 +623,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the related asset for an article via the new configuration pane."
-	@priority = "5"
+	@priority = 5
 	test CanReplaceArticleRelatedAsset {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can replace the tag for an article via the new configuration pane."
-	@priority = "5"
+	@priority = 5
 	test CanReplaceArticleTag {
 		JSONKnowledgeBase.addkBArticle(
 			assetTagNames = "Tag1",
@@ -697,7 +697,7 @@ definition {
 		AssetCategorization.viewTag(tagName = "Tag2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSaveEditedArticleAsDraft {
 		JSONKnowledgeBase.addkBArticle(
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can subscribe to a kb article by clicking the ellipsis on the kb entry."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeToArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -741,7 +741,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user can subscribe to a kb article from the navigation pane."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeToArticleFromNavigationPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
@@ -768,7 +768,7 @@ definition {
 	}
 
 	@description = "This test ensures that suggestion form is displayed on the KB article preview page when the KB article has suggestions."
-	@priority = "5"
+	@priority = 5
 	test CanViewArticlesWithSuggestions {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -793,7 +793,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbStatus = "Approved",
-			versionNumber = "1");
+			versionNumber = 1);
 
 		for (var suggestionCount : list "1,2") {
 			KBArticleSuggestion.viewPG(
@@ -804,7 +804,7 @@ definition {
 	}
 
 	@description = "This test ensures that a user is able to embed a video in a KB article."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewEmbeddedVideo {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
@@ -824,7 +824,7 @@ definition {
 	}
 
 	@description = "This test ensures that the information related to the KB entry can be viewed."
-	@priority = "4"
+	@priority = 4
 	test CanViewEntryInfo {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
@@ -839,7 +839,7 @@ definition {
 
 		KBArticle.viewInfoPanel(
 			kbArticleTitle = "Knowledge Base Article Title",
-			versionNumber = "1",
+			versionNumber = 1,
 			workflowStatus = "APPROVED");
 
 		KBArticle.viewInfoPanelVersions(
@@ -858,7 +858,7 @@ definition {
 
 		KBArticle.viewInfoPanel(
 			kbArticleTitle = "Knowledge Base Article Title Edit",
-			versionNumber = "2",
+			versionNumber = 2,
 			workflowStatus = "APPROVED");
 
 		KBArticle.viewInfoPanelVersions(
@@ -867,7 +867,7 @@ definition {
 	}
 
 	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInKBAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -911,7 +911,7 @@ definition {
 	}
 
 	@description = "This test ensures that users can view kb entry history by clicking the ellipsis on the kb entry."
-	@priority = "5"
+	@priority = 5
 	test CanViewKBArticleHistory {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -930,12 +930,12 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content Edit",
 			kbArticleContentAddedDiff = "Edit",
 			kbArticleTitle = "Knowledge Base Article Title Edit",
-			kbArticleVersionNew = "2",
-			kbArticleVersionOld = "1");
+			kbArticleVersionNew = 2,
+			kbArticleVersionOld = 1);
 	}
 
 	@description = "This ensures that an external video in the KB content field can be rendered correctly after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewVideoInKBAfterMovingToFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -980,7 +980,7 @@ definition {
 			locator1 = "BlogsEntry#CONTENT_VIDEO");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test EditKBArticleWithCustomField {
 		ApplicationsMenu.gotoPortlet(
@@ -999,7 +999,7 @@ definition {
 			layoutName = "Knowledge Base Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Knowledge Base Page",
 			widgetName = "Knowledge Base Display");
@@ -1038,7 +1038,7 @@ definition {
 	}
 
 	@description = "This test ensures that some article info only display in panel."
-	@priority = "5"
+	@priority = 5
 	test SomeArticleInfoOnlyDisplayInPanel {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -1068,10 +1068,10 @@ definition {
 		KBArticle.viewInfoPanel(
 			childArticlesQuantity = "1 Child Articles",
 			kbArticleTitle = "Knowledge Base Article Title",
-			viewQuantity = "0");
+			viewQuantity = 0);
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
 		property test.name.skip.portal.instance = "KBArticle#ViewKBArticleGitHubSourceURL";
@@ -1108,7 +1108,7 @@ definition {
 			layoutName = "KB Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "KB Page",
 			widgetName = "Knowledge Base Display");

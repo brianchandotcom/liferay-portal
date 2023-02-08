@@ -2,12 +2,12 @@ definition {
 
 	macro _getDisplayPageTemplatesWithDifferentParameters {
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
 
 		var api = "sites/${siteId}/display-page-templates";
 
 		if (isSet(parameter)) {
-			var api = StringUtil.add("${api}", "?${parameter}=${parameterValue}", "");
+			var api = StringUtil.add(${api}, "?${parameter}=${parameterValue}", "");
 		}
 
 		var curl = '''
@@ -16,18 +16,18 @@ definition {
 				-H Content-Type: application/json \
 		''';
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro getDisplayPageTemplatesWithDifferentParameters {
 		var curl = DisplayPageTemplateAPI._getDisplayPageTemplatesWithDifferentParameters(
-			groupName = "${groupName}",
-			parameter = "${parameter}",
-			parameterValue = "${parameterValue}");
+			groupName = ${groupName},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
 
-		var response = JSONCurlUtil.get("${curl}");
+		var response = JSONCurlUtil.get(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 }

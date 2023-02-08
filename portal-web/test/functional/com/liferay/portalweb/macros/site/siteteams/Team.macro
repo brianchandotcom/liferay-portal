@@ -1,36 +1,36 @@
 definition {
 
 	macro _editCP {
-		PortletEntry.inputName(name = "${teamName}");
+		PortletEntry.inputName(name = ${teamName});
 
-		PortletEntry.inputDescription(description = "${teamDescription}");
+		PortletEntry.inputDescription(description = ${teamDescription});
 	}
 
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
 		Team._editCP(
-			teamDescription = "${teamDescription}",
-			teamName = "${teamName}");
+			teamDescription = ${teamDescription},
+			teamName = ${teamName});
 
 		PortletEntry.save();
 	}
 
 	macro assignMembersCP {
-		var key_teamName = "${teamName}";
-		var key_userScreenName = "${userScreenName}";
+		var key_teamName = ${teamName};
+		var key_userScreenName = ${userScreenName};
 
-		Search.searchCP(searchTerm = "${teamName}");
+		Search.searchCP(searchTerm = ${teamName});
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		AssertClick(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		Navigator.gotoNavItem(navItem = "Users");
 
@@ -40,19 +40,19 @@ definition {
 
 		WaitForPageLoad();
 
-		Search.searchCP(searchTerm = "${userScreenName}");
+		Search.searchCP(searchTerm = ${userScreenName});
 
-		if ("${userNameIsNotFound}" == "true") {
+		if (${userNameIsNotFound} == "true") {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No users were found.");
 		}
 		else {
-			if (IsElementNotPresent(key_card = "${userScreenName}", locator1 = "Card#CARD")) {
+			if (IsElementNotPresent(key_card = ${userScreenName}, locator1 = "Card#CARD")) {
 				LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 			}
 
-			LexiconCard.checkCardCheckbox(card = "${userScreenName}");
+			LexiconCard.checkCardCheckbox(card = ${userScreenName});
 
 			SelectFrameTop();
 
@@ -64,26 +64,26 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-			LexiconCard.viewCardPresent(card = "${userScreenName}");
+			LexiconCard.viewCardPresent(card = ${userScreenName});
 		}
 
 		SelectFrameTop();
 	}
 
 	macro assignUserGroups {
-		var key_teamName = "${teamName}";
+		var key_teamName = ${teamName};
 
-		Search.searchCP(searchTerm = "${teamName}");
+		Search.searchCP(searchTerm = ${teamName});
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		AssertClick(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
@@ -91,17 +91,17 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		var key_cardText = "${userGroupName}";
+		var key_cardText = ${userGroupName};
 
-		Search.searchCP(searchTerm = "${userGroupName}");
+		Search.searchCP(searchTerm = ${userGroupName});
 
-		if ("${userGroupsNameIsNotAvailable}" == "true") {
+		if (${userGroupsNameIsNotAvailable} == "true") {
 			AssertTextNotPresent(
 				locator1 = "SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME",
-				value1 = "${userGroupName}");
+				value1 = ${userGroupName});
 		}
 		else {
-			LexiconEntry.selectEntry(rowEntry = "${userGroupName}");
+			LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
 			SelectFrameTop();
 
@@ -128,9 +128,9 @@ definition {
 	macro deleteCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		LexiconEntry.viewEntryName(rowEntry = "${teamName}");
+		LexiconEntry.viewEntryName(rowEntry = ${teamName});
 
-		LexiconEntry.openEntryMenu(rowEntry = "${teamName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${teamName});
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -144,29 +144,29 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${teamName}");
+			rowEntry = ${teamName});
 
 		Team._editCP(
-			teamDescription = "${teamDescriptionEdit}",
-			teamName = "${teamNameEdit}");
+			teamDescription = ${teamDescriptionEdit},
+			teamName = ${teamNameEdit});
 
 		PortletEntry.save();
 	}
 
 	macro removeMemberCP {
 		AssertClick(
-			key_rowEntry = "${teamName}",
+			key_rowEntry = ${teamName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		Navigator.gotoNavItem(navItem = "${membershipType}s");
 
-		if ("${membershipType}" == "User") {
+		if (${membershipType} == "User") {
 			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userLastName}");
 		}
-		else if ("${membershipType}" == "User Group") {
+		else if (${membershipType} == "User Group") {
 			Check(
-				key_rowEntry = "${userGroupName}",
+				key_rowEntry = ${userGroupName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 		}
 
@@ -188,24 +188,24 @@ definition {
 	macro searchCP {
 		Navigator.gotoNavItem(navItem = "${membershipType}s");
 
-		Search.searchCP(searchTerm = "${searchTerm}");
+		Search.searchCP(searchTerm = ${searchTerm});
 
-		if ("${isEmpty}" == "true") {
+		if (${isEmpty} == "true") {
 			AssertElementPresent(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
-			var name = StringUtil.unquote("${searchTerm}");
+			var name = StringUtil.unquote(${searchTerm});
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-				value1 = "${name}");
+				value1 = ${name});
 		}
 	}
 
 	macro tearDownCP {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		Navigator.openSiteURL(siteName = "${siteName}");
+		Navigator.openSiteURL(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -223,63 +223,63 @@ definition {
 	}
 
 	macro viewCP {
-		var key_teamName = "${teamName}";
+		var key_teamName = ${teamName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		AssertTextEquals(
 			locator1 = "SiteTeams#TEAM_TABLE_DESCRIPTION",
-			value1 = "${teamDescription}");
+			value1 = ${teamDescription});
 
 		AssertElementPresent(locator1 = "SiteTeams#TEAM_TABLE_ACTIONS");
 	}
 
 	macro viewDefaultCP {
-		var key_teamName = "${teamName}";
+		var key_teamName = ${teamName};
 
 		PortletEntry.viewEmptyMessage(entity = "teams");
 
 		AssertTextNotPresent(
 			locator1 = "SiteTeams#TEAM_TABLE_NAME",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 	}
 
 	macro viewMemberCP {
 		AssertClick(
-			key_rowEntry = "${teamName}",
+			key_rowEntry = ${teamName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		Navigator.gotoNavItem(navItem = "${membershipType}s");
 
-		if ("${membershipType}" == "User") {
+		if (${membershipType} == "User") {
 			AssertTextEquals.assertPartialText(
 				key_rowEntry = "${userFirstName} ${userLastName}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
 				value1 = "${userFirstName} ${userLastName}");
 		}
-		else if ("${membershipType}" == "User Group") {
+		else if (${membershipType} == "User Group") {
 			AssertTextEquals.assertPartialText(
-				key_rowEntry = "${userGroupName}",
+				key_rowEntry = ${userGroupName},
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_1",
-				value1 = "${userGroupName}");
+				value1 = ${userGroupName});
 		}
 	}
 
 	macro viewNoMembersCP {
 		AssertClick(
-			key_rowEntry = "${teamName}",
+			key_rowEntry = ${teamName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${teamName}");
+			value1 = ${teamName});
 
 		for (var navItem : list "Users,User Groups") {
-			Navigator.gotoNavItem(navItem = "${navItem}");
+			Navigator.gotoNavItem(navItem = ${navItem});
 
-			var lowercaseNavItem = StringUtil.lowerCase("${navItem}");
+			var lowercaseNavItem = StringUtil.lowerCase(${navItem});
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",

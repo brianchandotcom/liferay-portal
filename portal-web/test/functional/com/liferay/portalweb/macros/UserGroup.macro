@@ -1,25 +1,25 @@
 definition {
 
 	macro addCP {
-		var key_userGroupName = "${userGroupName}";
+		var key_userGroupName = ${userGroupName};
 
 		LexiconEntry.gotoAdd();
 
 		Type.type(
 			locator1 = "TextInput#NAME",
-			value1 = "${userGroupName}");
+			value1 = ${userGroupName});
 
-		if ("${selectSiteTemplate}" == "true") {
+		if (${selectSiteTemplate} == "true") {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${siteTemplateName}");
+				value1 = ${siteTemplateName});
 		}
 
 		Click(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		if ("${userGroupNameVariation}" == "Invalid") {
+		if (${userGroupNameVariation} == "Invalid") {
 			Alert.viewRequestFailedToComplete();
 
 			AssertTextEquals.assertPartialText(
@@ -30,12 +30,12 @@ definition {
 				locator1 = "Message#ERROR_1",
 				value1 = "The User Group Name cannot contain the following invalid characters: , *.");
 		}
-		else if ("${userGroupNameVariation}" == "Duplicate") {
+		else if (${userGroupNameVariation} == "Duplicate") {
 			Alert.viewRequestFailedToComplete();
 
 			Alert.viewDuplicateErrorMessage();
 		}
-		else if ("${userGroupNameVariation}" == "Null") {
+		else if (${userGroupNameVariation} == "Null") {
 			Alert.viewSpecificRequiredField(fieldFieldLabel = "Name");
 		}
 		else {
@@ -43,14 +43,14 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-				value1 = "${userGroupName}");
+				value1 = ${userGroupName});
 		}
 	}
 
 	macro assignAllMembersCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		LexiconEntry.gotoAdd();
 
@@ -68,7 +68,7 @@ definition {
 	macro assignMemberCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		LexiconEntry.gotoAdd();
 
@@ -78,10 +78,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		User.searchCP(searchTerm = "${userScreenName}");
+		User.searchCP(searchTerm = ${userScreenName});
 
 		Check(
-			key_userScreenName = "${userScreenName}",
+			key_userScreenName = ${userScreenName},
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
 		SelectFrameTop();
@@ -94,21 +94,21 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
+			key_userScreenName = ${userScreenName},
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
+			value1 = ${userScreenName});
 	}
 
 	macro deleteCP {
 		AssertTextEquals(
-			key_userGroupName = "${userGroupName}",
+			key_userGroupName = ${userGroupName},
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
-			value1 = "${userGroupName}");
+			value1 = ${userGroupName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
-			key_userGroupName = "${userGroupName}",
+			key_userGroupName = ${userGroupName},
 			menuItem = "Delete",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		if (isSet(withUser)) {
 			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
@@ -125,7 +125,7 @@ definition {
 			Alert.viewSuccessMessage();
 
 			AssertElementNotPresent(
-				key_userGroupName = "${userGroupName}",
+				key_userGroupName = ${userGroupName},
 				locator1 = "UserGroups#USER_GROUP_TABLE_NAME");
 		}
 	}
@@ -133,20 +133,20 @@ definition {
 	macro editCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		if (isSet(userGroupNameEdit)) {
-			PortletEntry.inputName(name = "${userGroupNameEdit}");
+			PortletEntry.inputName(name = ${userGroupNameEdit});
 		}
 		else if (isSet(userGroupDescriptionEdit)) {
-			PortletEntry.inputDescription(description = "${userGroupDescriptionEdit}");
+			PortletEntry.inputDescription(description = ${userGroupDescriptionEdit});
 		}
 		else if (isSet(userGroupSite)) {
 			Select(
 				locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_SELECT",
-				value1 = "${userGroupSite}");
+				value1 = ${userGroupSite});
 
-			if ("${checkEnablePropagationCheckbox}" == "true") {
+			if (${checkEnablePropagationCheckbox} == "true") {
 				AssertChecked(locator1 = "UserGroupsEditUserGroup#ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX");
 			}
 			else {
@@ -158,10 +158,10 @@ definition {
 	}
 
 	macro gotoAddPageCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
+		Search.searchCP(searchTerm = ${userGroupName});
 
 		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${userGroupName}",
+			key_tableEntry = ${userGroupName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -170,10 +170,10 @@ definition {
 	}
 
 	macro gotoProfilePages {
-		Search.searchCP(searchTerm = "${userGroupName}");
+		Search.searchCP(searchTerm = ${userGroupName});
 
 		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${userGroupName}",
+			key_tableEntry = ${userGroupName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -190,10 +190,10 @@ definition {
 	macro removeMemberCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		Check(
-			key_userScreenName = "${userScreenName}",
+			key_userScreenName = ${userScreenName},
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
 		ClickNoError(locator1 = "Icon#REMOVE");
@@ -202,13 +202,13 @@ definition {
 	}
 
 	macro searchCP {
-		Search.searchCP(searchTerm = "${userGroupName}");
+		Search.searchCP(searchTerm = ${userGroupName});
 
-		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
 		Search.searchCP(searchTerm = "UG1 UserGroup1 Name1");
 
-		LexiconEntry.viewNoEntry(rowEntry = "${userGroupName}");
+		LexiconEntry.viewNoEntry(rowEntry = ${userGroupName});
 	}
 
 	macro tearDownCP {
@@ -232,23 +232,23 @@ definition {
 	macro viewAssignMemberCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
-			rowEntry = "${userGroupName}");
+			rowEntry = ${userGroupName});
 
 		AssertTextEquals(
-			key_userScreenName = "${userScreenName}",
+			key_userScreenName = ${userScreenName},
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
+			value1 = ${userScreenName});
 	}
 
 	macro viewCP {
-		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
-		LexiconEntry.viewEntryMenu(rowEntry = "${userGroupName}");
+		LexiconEntry.viewEntryMenu(rowEntry = ${userGroupName});
 
 		AssertElementPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 
 		AssertElementPresent(
-			key_userGroupName = "${userGroupName}",
+			key_userGroupName = ${userGroupName},
 			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
 	}
 
@@ -269,11 +269,11 @@ definition {
 	}
 
 	macro viewRemoveMemberCP {
-		LexiconEntry.viewEntryName(rowEntry = "${userGroupName}");
+		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
-		LexiconEntry.gotoEntry(rowEntry = "${userGroupName}");
+		LexiconEntry.gotoEntry(rowEntry = ${userGroupName});
 
-		AssertTextNotPresent(value1 = "${userFirstName}");
+		AssertTextNotPresent(value1 = ${userFirstName});
 	}
 
 }

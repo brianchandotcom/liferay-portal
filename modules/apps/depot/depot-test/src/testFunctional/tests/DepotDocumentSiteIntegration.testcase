@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through Blogs on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddImageViaContentPage {
 		JSONDocument.addFileWithUploadedFile(
@@ -97,7 +97,7 @@ definition {
 			backgroundImage = "Direct",
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg",
-			paddingTop = "2",
+			paddingTop = 2,
 			panel = "Styles");
 
 		PageEditor.publish();
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through web content on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddImageViaWebContent {
 		JSONDocument.addFileWithUploadedFile(
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanRemoveDMWithDocumentType {
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be viewed on the connected site widgets."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDMwithDocumentTypeOnSiteWidgets {
 		JSONLayout.addPublicLayout(
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be viewed in related assets on a connected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewDocumentTypeInRelatedAssets {
 		JSONDepot.addDepot(
@@ -353,7 +353,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the KB content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInKBAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInMBAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -448,7 +448,7 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadBodyImage = "dm-document-title",
 			threadSubject = "MB Thread Message Subject",
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site when publication is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInMBWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -501,7 +501,7 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "MB Thread Message Body",
 			threadBodyImage = "dm-document-title",
 			threadSubject = "MB Thread Message Subject",
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the WC content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInWCAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the WC content field can be rendered correctly on a connected site when publication is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageInWCWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -638,7 +638,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in DM widget can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageViaDMWidgetAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -656,7 +656,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -690,7 +690,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in an image fragment can be rendered correctly on a connect site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageViaImageFragmentAfterMovingToFolder {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -746,7 +746,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewImageViaMGAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -764,7 +764,7 @@ definition {
 			layoutName = "Media Gallery Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Site Name",
 			layoutName = "Media Gallery Page",
 			widgetName = "Media Gallery");
@@ -804,7 +804,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewInlineImageAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -856,7 +856,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
-	@priority = "4"
+	@priority = 4
 	test CanViewInlineImageWithPublication {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
@@ -908,7 +908,7 @@ definition {
 	}
 
 	@description = "This ensures that the depot assets can be used through Related Assets on a connected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewRelatedAssets {
 		JSONLayout.addPublicLayout(
@@ -968,7 +968,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image in the Blogs small image can be rendered correctly on a connected site after moving it to a folder."
-	@priority = "4"
+	@priority = 4
 	test CanViewSmallImageAfterMovingToFolder {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

@@ -2,35 +2,35 @@ definition {
 
 	macro checkTableCheckbox {
 		Check(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 	}
 
 	macro clickEllipsisItem {
 		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.clickNoError(menuItem = ${item});
 	}
 
 	macro clickTableEntryColumnLink {
 		Click(
-			key_columnName = "${columnName}",
-			key_tableEntry = "${tableEntry}",
+			key_columnName = ${columnName},
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 	}
 
 	macro clickTableEntryTitle {
 		Click(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 	}
 
 	macro delete {
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
-			tableEntry = "${tableEntry}");
+			tableEntry = ${tableEntry});
 
 		Confirm();
 	}
@@ -38,54 +38,54 @@ definition {
 	macro viewTableEntryInfo {
 		if (isSet(index)) {
 			AssertTextEquals(
-				index = "${index}",
-				key_tableEntry = "${tableEntry}",
+				index = ${index},
+				key_tableEntry = ${tableEntry},
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO_BY_INDEX",
-				value1 = "${tableEntryInfo}");
+				value1 = ${tableEntryInfo});
 		}
 		else {
 			AssertTextEquals(
-				key_columnName = "${columnName}",
-				key_tableEntry = "${tableEntry}",
+				key_columnName = ${columnName},
+				key_tableEntry = ${tableEntry},
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "${tableEntryInfo}");
+				value1 = ${tableEntryInfo});
 		}
 	}
 
 	macro viewTableEntryNotPresent {
 		AssertElementNotPresent(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
 	macro viewTableEntryPartialText {
 		AssertTextEquals.assertPartialText(
-			key_tableEntry = "${tableEntry}",
-			key_tableEntryPartialText = "${tableEntryPartialText}",
+			key_tableEntry = ${tableEntry},
+			key_tableEntryPartialText = ${tableEntryPartialText},
 			locator1 = "LexiconTable#TABLE_ENTRY_PARTIAL_TEXT",
-			value1 = "${tableEntryPartialText}");
+			value1 = ${tableEntryPartialText});
 	}
 
 	macro viewTableEntryText {
 		AssertTextEquals(
-			key_tableEntry = "${tableEntry}",
-			key_tableEntryText = "${tableEntryText}",
+			key_tableEntry = ${tableEntry},
+			key_tableEntryText = ${tableEntryText},
 			locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
-			value1 = "${tableEntryText}");
+			value1 = ${tableEntryText});
 	}
 
 	macro viewTableEntryTitle {
 		AssertTextEquals(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
-			value1 = "${tableEntry}");
+			value1 = ${tableEntry});
 	}
 
 	macro viewTableEntryTitleLink {
 		AssertTextEquals(
-			key_tableEntry = "${tableEntry}",
+			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
-			value1 = "${tableEntry}");
+			value1 = ${tableEntry});
 	}
 
 }

@@ -17,13 +17,13 @@ definition {
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "Independent Modules");
 
-		var key_appName = "${appName}";
+		var key_appName = ${appName};
 
 		while (!(IsElementPresent.isElementPresentAfterWait(locator1 = "AppManager#APP_NAME"))) {
 			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
-		AssertTextPresent.assertTextPresent(value1 = "${appName}");
+		AssertTextPresent.assertTextPresent(value1 = ${appName});
 
 		AntCommand.antCommand(
 			locator1 = "build-test.xml",

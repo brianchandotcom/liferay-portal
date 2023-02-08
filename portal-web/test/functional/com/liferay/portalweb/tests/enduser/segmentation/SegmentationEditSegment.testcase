@@ -28,7 +28,7 @@ definition {
 
 		Navigator.openURL();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "LPS-94874 Bug: Can't edit segment if the segment has a select input"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CanEditSegmentIfHaveASelectInput {
 		property portal.acceptance = "true";
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "LPS-102740 Validate if the user can edit a segment with Properties Country"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSegmentUserByOrganizationCountry {
 		property portal.acceptance = "true";
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "LPS-102740 Validate if the user can edit a segment with Properties Region"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSegmentUserByOrganizationRegion {
 		property portal.acceptance = "true";
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@description = "LPS-102743 Validate if the user can edit a segment with Properties Session URL"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSegmentUserBySessionURL {
 		property portal.acceptance = "true";
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Validate if the user can edit a segment with User Tag"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSegmentUserByUserTag {
 		property portal.acceptance = "true";
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test EditSegmentUserEmailAddressContainsToEquals {
 		property portal.acceptance = "true";

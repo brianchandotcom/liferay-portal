@@ -1,10 +1,10 @@
 definition {
 
 	macro opentoAdmin {
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
 	}
 

@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "Verify users with the 'Manage Commerce Order Shipping Options' permission can select the shipping method during checkout."
-	@priority = "3"
+	@priority = 3
 	test UsersWithManagePermissionCanSelectShippingOptionDuringCheckout {
 		property portal.acceptance = "false";
 
@@ -43,7 +43,7 @@ definition {
 			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
 
 			CommerceChannels.addShippingOption(
-				amount = "50",
+				amount = 50,
 				key = "test-shipping-option",
 				name = "Test Shipping Option");
 		}
@@ -75,7 +75,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -90,14 +90,14 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Expedited");
 		}
 	}
 
 	@description = "Verify the shipping method selection step is skipped when a buyer without the 'Manage Commerce Order Shipping Options' permission checks out an order."
-	@priority = "3"
+	@priority = 3
 	test UsersWithoutManagePermissionSkipsShippingOptionStepDuringCheckout {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 			CommerceChannels.gotoShippingMethodShippingOptions(shippingMethod = "Flat Rate");
 
 			CommerceChannels.addShippingOption(
-				amount = "50",
+				amount = 50,
 				key = "test-shipping-option",
 				name = "Test Shipping Option");
 		}
@@ -141,7 +141,7 @@ definition {
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
@@ -155,8 +155,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Expedited");
 		}
 	}

@@ -5,16 +5,16 @@ definition {
 	}
 
 	macro assignSiteToExistingProperty {
-		Search.searchCP(searchTerm = "${assignedPropertyName}");
+		Search.searchCP(searchTerm = ${assignedPropertyName});
 
 		LexiconTable.clickTableEntryColumnLink(
 			columnName = "properties",
-			tableEntry = "${assignedPropertyName}");
+			tableEntry = ${assignedPropertyName});
 
-		var siteName = "${siteName}";
+		var siteName = ${siteName};
 
 		if (isSet(siteName)) {
-			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+			ACDXPSettings.searchACItem(searchItem = ${siteName});
 		}
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
@@ -53,34 +53,34 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
+		ACDXPSettings.createCombinedProperties(siteName = ${siteName});
 
-		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName(siteName = "${siteName}");
+		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName(siteName = ${siteName});
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
 		if (isSet(userGroup)) {
-			ACDXPSettings.syncContactSingleUserGroupData(userGroup = "${userGroup}");
+			ACDXPSettings.syncContactSingleUserGroupData(userGroup = ${userGroup});
 		}
 		else if (isSet(orgName)) {
-			ACDXPSettings.syncByOrganizations(orgName = "${orgName}");
+			ACDXPSettings.syncByOrganizations(orgName = ${orgName});
 		}
 		else {
 			ACDXPSettings.syncContactData();
 		}
 
-		return "${assignedPropertyName}";
+		return ${assignedPropertyName};
 	}
 
 	macro createCombinedProperties {
-		var siteName = "${siteName}";
+		var siteName = ${siteName};
 
 		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
 
 		if (isSet(siteName)) {
-			ACDXPSettings.searchACItem(searchItem = "${siteName}");
+			ACDXPSettings.searchACItem(searchItem = ${siteName});
 		}
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
@@ -95,9 +95,9 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
 
-		for (var siteName : list "${siteNameList}") {
+		for (var siteName : list ${siteNameList}) {
 			Check(
-				key_tableEntry = "${siteName}",
+				key_tableEntry = ${siteName},
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 		}
 
@@ -126,14 +126,14 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		WaitForVisible(
-			key_tableEntry = "${siteName}",
+			key_tableEntry = ${siteName},
 			locator1 = "LexiconTable#TABLE_ENTRY");
 
 		static var assignedPropertyName = selenium.getText("//tr[@data-qa-id='row'][contains(.,'${siteName}')]//td[contains(@class,'assigned-property-column')]");
 
 		ACNavigation.clickCancelButton();
 
-		return "${assignedPropertyName}";
+		return ${assignedPropertyName};
 	}
 
 	macro goToInstanceSettingsAC {
@@ -159,7 +159,7 @@ definition {
 
 		Type(
 			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
-			value1 = "${searchItem}");
+			value1 = ${searchItem});
 
 		KeyPress(
 			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
@@ -167,7 +167,7 @@ definition {
 	}
 
 	macro selectAvailableProperties {
-		var key_availablePropertyName = "${availablePropertyName}";
+		var key_availablePropertyName = ${availablePropertyName};
 
 		Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
 
@@ -179,11 +179,11 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#SYNC_BY_ORGANIZATIONS_BUTTON");
 
-		ACDXPSettings.searchACItem(searchItem = "${orgName}");
+		ACDXPSettings.searchACItem(searchItem = ${orgName});
 
 		if (isSet(index)) {
 			Click(
-				key_index = "${index}",
+				key_index = ${index},
 				locator1 = "ACDXPSettings#AC_CHECKBOX_INDEX");
 		}
 		else {
@@ -217,7 +217,7 @@ definition {
 			locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
 
 		Click(
-			key_entry = "${userGroup}",
+			key_entry = ${userGroup},
 			locator1 = "ACDXPSettings#USER_GROUP_OPTION_CHECKBOX");
 
 		Click(
@@ -250,9 +250,9 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_USER_TAB");
 
-		for (var fieldName : list "${fieldNameList}") {
+		for (var fieldName : list ${fieldNameList}) {
 			Check(
-				key_fieldName = "${fieldName}",
+				key_fieldName = ${fieldName},
 				locator1 = "ACDXPSettings#FIELD_NAME_CHECKBOX");
 		}
 

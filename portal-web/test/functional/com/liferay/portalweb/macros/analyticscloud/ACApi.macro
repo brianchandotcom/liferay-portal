@@ -1,35 +1,35 @@
 definition {
 
 	macro assertGenericJSONPathResponse {
-		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..${apiPath}");
+		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..${apiPath}");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	macro assertSearchKeywordNotPresent {
 		if (!(isSet(keywordPosition))) {
-			var keywordPosition = "0";
+			var keywordPosition = 0;
 		}
 
-		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
+		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..search-keywords[${keywordPosition}].keywords");
 
 		TestUtils.assertNotEquals(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	macro assertSearchResponse {
 		if (!(isSet(keywordPosition))) {
-			var keywordPosition = "0";
+			var keywordPosition = 0;
 		}
 
-		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..search-keywords[${keywordPosition}].keywords");
+		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..search-keywords[${keywordPosition}].keywords");
 
 		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expected}");
+			actual = ${actual},
+			expected = ${expected});
 	}
 
 	macro createNewExportSchedule {
@@ -40,9 +40,9 @@ definition {
 				-H "Authorization: Bearer ${token}"
 		''';
 
-		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		static var apiResponse = JSONCurlUtil.get(${curl}, "$");
 
-		return "${apiResponse}";
+		return ${apiResponse};
 	}
 
 	macro createQueryData {
@@ -52,9 +52,9 @@ definition {
 			${analyticsCloudURL}/api/reports -H "Authorization: Bearer ${token}"
 		''';
 
-		static var apiResponse = JSONCurlUtil.get("${curl}", "$");
+		static var apiResponse = JSONCurlUtil.get(${curl}, "$");
 
-		return "${apiResponse}";
+		return ${apiResponse};
 	}
 
 	macro getAnalyticsConfiguration {
@@ -62,15 +62,15 @@ definition {
 
 		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
 
-		static var faroBackendURL = "${scriptValue}";
+		static var faroBackendURL = ${scriptValue};
 
 		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
 
-		static var osbAsahFaroBackendSS = "${scriptValue}";
+		static var osbAsahFaroBackendSS = ${scriptValue};
 
 		ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
 
-		static var osbAsahProjectId = "${scriptValue}";
+		static var osbAsahProjectId = ${scriptValue};
 	}
 
 	macro getSearchHeaderValues {
@@ -80,7 +80,7 @@ definition {
 
 		ServerAdministration.executeScript(
 			language = "Groovy",
-			script = "${script}");
+			script = ${script});
 
 		static var scriptValue = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 	}
@@ -89,7 +89,7 @@ definition {
 
 		// The pause is necessary because it takes some time for the keywords to appear during curl see LRAC-12141
 
-		Pause(locator1 = "10000");
+		Pause(locator1 = 10000);
 
 		if (isSet(parameters)) {
 			var curl = '''
@@ -106,9 +106,9 @@ definition {
 			''';
 		}
 
-		static var apiResponse = JSONCurlUtil.get("${curl}");
+		static var apiResponse = JSONCurlUtil.get(${curl});
 
-		return "${apiResponse}";
+		return ${apiResponse};
 	}
 
 	macro getTokenValue {
@@ -122,7 +122,7 @@ definition {
 
 		var token = selenium.getAttribute("//button[@aria-label='Click to Copy']@data-clipboard-text");
 
-		return "${token}";
+		return ${token};
 	}
 
 	macro sendEmailReport {
@@ -136,14 +136,14 @@ definition {
 				-F 'frequency="${frequency}"'
 		''';
 
-		JSONCurlUtil.post("${curl}");
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro viewApiResponseForError {
 
 		// Checks if the API response message explains the reason for the error
 
-		if (contains("${apiResponse}", "${message}")) {
+		if (contains(${apiResponse}, ${message})) {
 			echo("Correct error message - PASSED");
 		}
 		else {
@@ -152,7 +152,7 @@ definition {
 
 		// Checks if the status value is ERROR
 
-		if (contains("${apiResponse}", "status=ERROR")) {
+		if (contains(${apiResponse}, "status=ERROR")) {
 			echo("Correct status - PASSED");
 		}
 		else {
@@ -164,7 +164,7 @@ definition {
 
 		// Checks if the API response message is correct
 
-		if (contains("${apiResponse}", "${message}")) {
+		if (contains(${apiResponse}, ${message})) {
 			echo("Correct message - PASSED");
 		}
 		else {
@@ -173,7 +173,7 @@ definition {
 
 		// Checks if the fromDate value is the same as the one used to create the schedule
 
-		if (contains("${apiResponse}", "fromDate=${startDate}T${startTime}Z")) {
+		if (contains(${apiResponse}, "fromDate=${startDate}T${startTime}Z")) {
 			echo("Correct fromDate - PASSED");
 		}
 		else {
@@ -182,7 +182,7 @@ definition {
 
 		// Checks if the toDate value is the same as the one used to create the schedule
 
-		if (contains("${apiResponse}", "toDate=${endDate}T${endTime}Z")) {
+		if (contains(${apiResponse}, "toDate=${endDate}T${endTime}Z")) {
 			echo("Correct toDate - PASSED");
 		}
 		else {
@@ -191,7 +191,7 @@ definition {
 
 		// Checks if the type value is the same as the one used to create the schedule
 
-		if (contains("${apiResponse}", "type=${upperCaseType}")) {
+		if (contains(${apiResponse}, "type=${upperCaseType}")) {
 			echo("Correct type - PASSED");
 		}
 		else {
@@ -200,7 +200,7 @@ definition {
 
 		// Checks if the status value is the same as the one used to create the schedule
 
-		if (contains("${apiResponse}", "status=${status}")) {
+		if (contains(${apiResponse}, "status=${status}")) {
 			echo("Correct status - PASSED");
 		}
 		else {
@@ -209,12 +209,12 @@ definition {
 	}
 
 	macro viewApiResponseForQueryData {
-		for (var type : list "${typeList}") {
-			if (contains("${apiResponse}", "${type}={href=http://osbasahbackend:8080/api/reports/${type}")) {
+		for (var type : list ${typeList}) {
+			if (contains(${apiResponse}, "${type}={href=http://osbasahbackend:8080/api/reports/${type}")) {
 				echo("${type} - PASSED");
 			}
 			else {
-				fail("${apiResponse}");
+				fail(${apiResponse});
 			}
 		}
 	}

@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116975. Map all categories from asset entry to editable field."
-	@priority = "4"
+	@priority = 4
 	test MapAllCategoriesFromAssetToEditableField {
 		task ("Add three vocabularies") {
 			for (var n : list "1,2,3") {
@@ -125,28 +125,28 @@ definition {
 			AssertTextEquals.assertPartialText(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "Category Name 3-1, Category Name 3-2, Category Name 3-3");
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "Subcategory Name 2");
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "heading",
 				id = "element-text",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
 				value1 = "Category Name 1");
 		}
 	}
 
 	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a Blog and the editable link display text will update to the published Blog field content."
-	@priority = "5"
+	@priority = 5
 	test MapBlogsContentToLinkFragment {
 		property portal.acceptance = "true";
 
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-116034. The custom ddmfields of content are available for mapping in editable field."
-	@priority = "4"
+	@priority = 4
 	test MapCustomDDMFieldToFragment {
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -348,8 +348,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a document and the editable link display text will update to the published document field content".
-	@priority = "3"
+	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a document and the editable link display text will update to the published document field content"
+	@priority = 3
 	test MapDocumentTitleToLinkFragment {
 		task ("Add a document based on Basic Document") {
 			JSONDocument.addFileWithUploadedFile(
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120094. Map manual URL to Image fragment."
-	@priority = "5"
+	@priority = 5
 	test MapManualURLToImageFragment {
 		property portal.acceptance = "true";
 
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031 and LPS-120348. Map Manual URL to Link fragment and select blank as target."
-	@priority = "5"
+	@priority = 5
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
 
@@ -511,7 +511,7 @@ definition {
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -522,7 +522,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-117818. Map manual URL to text fragment."
-	@priority = "5"
+	@priority = 5
 	test MapManualURLToTextFragment {
 		property portal.acceptance = "true";
 
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120198. Link public and private pages to fragments."
-	@priority = "4"
+	@priority = 4
 	test MapPageToImageFragment {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -691,7 +691,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-118276. Map single vocabulary with single category from asset entry to editable field."
-	@priority = "5"
+	@priority = 5
 	test MapSingleCategoryFromAssetToEditableField {
 		property portal.acceptance = "true";
 
@@ -713,7 +713,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Test Site Name",
 				title = "Web Content Title");
@@ -721,7 +721,7 @@ definition {
 
 		task ("Add a blogs entry with the new category") {
 			HeadlessBlog.addBlogEntry(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content",
 				groupName = "Test Site Name",
 				title = "Blogs Entry Title");
@@ -729,7 +729,7 @@ definition {
 
 		task ("Add a document based on Basic Document with the new category") {
 			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
 				groupName = "Test Site Name",
@@ -821,7 +821,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
-	@priority = "5"
+	@priority = 5
 	test MapTagFromAssetToEditableField {
 		property portal.acceptance = "true";
 
@@ -870,7 +870,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116975. Map multiple tags from asset entry to editable field."
-	@priority = "5"
+	@priority = 5
 	test MapTagsFromAssetToEditableField {
 		property portal.acceptance = "true";
 
@@ -919,7 +919,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123118. The page creator can map a fragment to web content template with portlet request model."
-	@priority = "4"
+	@priority = 4
 	test MapTemplateWithPortletRequestModelToFragment {
 		property custom.properties = "configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedVariables=[\"httpUtilUnsafe\",\"staticFieldGetter\",\"staticUtil\",\"serviceLocator\",]${line.separator}configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedClasses=[\"org.glassfish.*\",\"org.jboss.*\",\"org.springframework.*\",\"org.wildfly.*\",\"weblogic.*\",]";
 
@@ -986,8 +986,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-99686. Map web content fields to link editable field".
-	@priority = "2"
+	@description = "This is a test for LPS-99686. Map web content fields to link editable field"
+	@priority = 2
 	test MapWebContentFieldsToLinkFragment {
 		task ("Add a web content structure with multiple fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1000,8 +1000,8 @@ definition {
 
 			for (var fieldName : list "Text,Rich Text,Date") {
 				DataEngine.addField(
-					fieldFieldLabel = "${fieldName}",
-					fieldName = "${fieldName}");
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName});
 			}
 
 			DataEngine.addField(
@@ -1028,7 +1028,7 @@ definition {
 
 			WebContent.addWithStructureCP(
 				webContentDate = "10/10/2020",
-				webContentNumeric = "9",
+				webContentNumeric = 9,
 				webContentNumericFieldLabel = "Integer",
 				webContentRichText = "This is a Rich Text field",
 				webContentText = "This is a Text field",
@@ -1122,7 +1122,7 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
-				editableText = "9",
+				editableText = 9,
 				fragmentName = "Button",
 				id = "link");
 
@@ -1140,7 +1140,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
-	@priority = "4"
+	@priority = 4
 	test MapWebContentFieldWithURLToImageFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1216,7 +1216,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
-	@priority = "4"
+	@priority = 4
 	test MapWebContentFieldWithURLToLinkFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1292,7 +1292,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
-	@priority = "4"
+	@priority = 4
 	test MapWebContentFieldWithURLToTextFragment {
 		task ("Add a web content structure with a Text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1368,7 +1368,7 @@ definition {
 	}
 
 	@description = "This case ensures a user can map an image to the editable background image of a fragment."
-	@priority = "5"
+	@priority = 5
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
 		property portal.acceptance = "true";
 
@@ -1443,7 +1443,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99686. Map web content title to link type fragment."
-	@priority = "5"
+	@priority = 5
 	test MapWebContentTitleToLinkFragment {
 		property portal.acceptance = "true";
 
@@ -1498,7 +1498,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125933. Preview a Content Page with a Fragment Mapped to WC, a WCD, and an Assert Publisher."
-	@priority = "3"
+	@priority = 3
 	test PreviewContentPageWithMappedAndInlineContent {
 		task ("Add two web contents based on Basic Web Content") {
 			for (var n : list "1,2") {
@@ -1578,7 +1578,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-171383. View documentation link in date field."
-	@priority = "4"
+	@priority = 4
 	test ViewDocumentationLinkInDateField {
 		task ("Given a page has a fragment with mapped date") {
 			JSONFragment.addFragmentCollection(
@@ -1597,7 +1597,7 @@ definition {
 	</div>
 </div>''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -1650,7 +1650,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"
-	@priority = "3"
+	@priority = 3
 	test ViewEditableFieldValueWhenMappedContentMissing {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -1720,7 +1720,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120198. The link information is still kept when the linked page is deleted."
-	@priority = "4"
+	@priority = 4
 	test ViewMapInformationAfterDeleteMappedPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
@@ -1832,7 +1832,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-118979 and LPS-106776. The mappable fields are grouped by fieldset in content page."
-	@priority = "5"
+	@priority = 5
 	test ViewMappableFieldsAreGroupedByFieldset {
 		property portal.acceptance = "true";
 
@@ -1895,7 +1895,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1921,7 +1921,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1929,7 +1929,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Schedule",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1945,7 +1945,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1953,7 +1953,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Content",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1961,7 +1961,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Configuration",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1969,7 +1969,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
@@ -1985,7 +1985,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Basic Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -1993,7 +1993,7 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "File Information",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 
@@ -2007,14 +2007,14 @@ definition {
 				AssertElementPresent(
 					key_fieldLabel = "Field",
 					key_groupLabel = "Categorization",
-					key_value = "${field}",
+					key_value = ${field},
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-164269. The page creator could view a tooltip with the page URL when mapping a fragment on sites and libraries."
-	@priority = "4"
+	@priority = 4
 	test ViewPageURLOnTooltipWhenSelectPageItem {
 		task ("Given a page creator opens the link to page modal") {
 			task ("Get the guest site name") {
@@ -2079,7 +2079,7 @@ definition {
 				key_breadcrumbName = "Sites and Libraries",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			LexiconCard.clickCardTitle(card = "${siteName}");
+			LexiconCard.clickCardTitle(card = ${siteName});
 
 			Portlet.expandTree();
 

@@ -17,12 +17,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SearchByAssetAndModifiedRangeFacets {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -95,21 +95,21 @@ definition {
 		ClassicSearch.search(searchTerm = '''"AssetContent"''');
 
 		for (var searchAssetTitle : list "Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title") {
-			var key_searchAssetTitle = "${searchAssetTitle}";
+			var key_searchAssetTitle = ${searchAssetTitle};
 
 			AssertTextEquals(
 				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
-				value1 = "${searchAssetTitle}");
+				value1 = ${searchAssetTitle});
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
-			var key_searchAssetTitle = "${searchAssetTitle}";
+			var key_searchAssetTitle = ${searchAssetTitle};
 
 			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 		}
 
 		ClassicSearch.viewAssetTypeFacetPG(
-			facetFrequency = "1",
+			facetFrequency = 1,
 			searchAssetTitle = "Wiki Page2 Title",
 			searchAssetType = "Wiki Page");
 
@@ -118,21 +118,21 @@ definition {
 		ClassicSearch.gotoModifiedRangeFacetPG(searchModifiedRange = "Past Month");
 
 		for (var searchAssetTitle : list "Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title") {
-			var key_searchAssetTitle = "${searchAssetTitle}";
+			var key_searchAssetTitle = ${searchAssetTitle};
 
 			AssertTextEquals(
 				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
-				value1 = "${searchAssetTitle}");
+				value1 = ${searchAssetTitle});
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
-			var key_searchAssetTitle = "${searchAssetTitle}";
+			var key_searchAssetTitle = ${searchAssetTitle};
 
 			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SearchByPermission {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -186,7 +186,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SearchByUserFacet {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -251,7 +251,7 @@ definition {
 		ClassicSearch.search(searchTerm = "Entry");
 
 		ClassicSearch.viewUserFacetPG(
-			facetFrequency = "1",
+			facetFrequency = 1,
 			searchAssetSummary = "Blogs Super Admin Entry Content",
 			searchAssetTitle = "Blogs Super Admin Entry Title",
 			searchAssetType = "Blogs Entry",
@@ -266,7 +266,7 @@ definition {
 			value1 = "Any User");
 
 		ClassicSearch.viewUserFacetPG(
-			facetFrequency = "1",
+			facetFrequency = 1,
 			searchAssetSummary = "Blogs User Entry Content",
 			searchAssetTitle = "Blogs User Entry Title",
 			searchAssetType = "Blogs Entry",
@@ -287,9 +287,9 @@ definition {
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SearchTwiceScopeEverything {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -337,9 +337,9 @@ definition {
 			searchAssetType = "User");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SearchTwiceScopeLetUserChoose {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -409,9 +409,9 @@ definition {
 			searchAssetType = "User");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SearchTwiceScopeThisSite {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -455,7 +455,7 @@ definition {
 		ClassicSearch.viewSearchNoPG(searchAssetTitle = "userfn2 userln2");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewSearchResultForLongURL {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

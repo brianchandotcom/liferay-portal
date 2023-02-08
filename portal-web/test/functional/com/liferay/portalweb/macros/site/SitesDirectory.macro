@@ -2,7 +2,7 @@ definition {
 
 	macro configureSetupPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -10,13 +10,13 @@ definition {
 		if (isSet(directorySites)) {
 			Select(
 				locator1 = "Select#SITES",
-				value1 = "${directorySites}");
+				value1 = ${directorySites});
 		}
 
 		if (isSet(directoryDisplayStyle)) {
 			Select(
 				locator1 = "Select#DISPLAY_STYLE",
-				value1 = "${directoryDisplayStyle}");
+				value1 = ${directoryDisplayStyle});
 		}
 
 		Portlet.saveAndCloseConfig();
@@ -24,7 +24,7 @@ definition {
 
 	macro viewDefaultConfigurationPG {
 		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
+			portletName = ${portletName},
 			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -65,46 +65,46 @@ definition {
 	}
 
 	macro viewDescriptivePG {
-		var key_siteName = "${siteName}";
+		var key_siteName = ${siteName};
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitesDirectory#DESCRIPTIVE_SITE_ENTRY",
-			value1 = "${siteName}");
+			value1 = ${siteName});
 	}
 
 	macro viewListHierarchyPG {
-		var key_siteName = "${availableSiteName}";
+		var key_siteName = ${availableSiteName};
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE",
-			value1 = "${availableSiteName}");
+			value1 = ${availableSiteName});
 
-		var key_siteName = "${currentSiteName}";
+		var key_siteName = ${currentSiteName};
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT",
-			value1 = "${currentSiteName}");
+			value1 = ${currentSiteName});
 
-		var key_childSiteName = "${childSiteName1}";
-		var key_siteName = "${currentSiteName}";
-
-		AssertTextEquals(
-			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName1}");
-
-		var key_childSiteName = "${childSiteName2}";
-		var key_siteName = "${currentSiteName}";
+		var key_childSiteName = ${childSiteName1};
+		var key_siteName = ${currentSiteName};
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName2}");
+			value1 = ${childSiteName1});
 
-		var key_childSiteName = "${childSiteName3}";
-		var key_siteName = "${currentSiteName}";
+		var key_childSiteName = ${childSiteName2};
+		var key_siteName = ${currentSiteName};
 
 		AssertTextEquals(
 			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
-			value1 = "${childSiteName3}");
+			value1 = ${childSiteName2});
+
+		var key_childSiteName = ${childSiteName3};
+		var key_siteName = ${currentSiteName};
+
+		AssertTextEquals(
+			locator1 = "SitesDirectory#LIST_HIERARCHY_CHILD_SITE",
+			value1 = ${childSiteName3});
 	}
 
 }

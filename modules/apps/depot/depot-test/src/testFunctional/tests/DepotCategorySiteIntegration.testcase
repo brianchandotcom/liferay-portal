@@ -39,7 +39,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot category can be used to search for assets stored in the connected site."
-	@priority = "5"
+	@priority = 5
 	test AssetsCanBeSearchedByCategory {
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
@@ -65,38 +65,38 @@ definition {
 			groupName = "Site Name");
 
 		JSONWiki.addWikiPage(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Name");
 
 		JSONMBMessage.addMessage(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		JSONKnowledgeBase.addkBArticle(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
 		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			content = "WC WebContent Content",
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
 		JSONBlog.addEntry(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@description = "This ensures that assets stored in a site can be searched by a depot category after disconnecting the site."
-	@priority = "4"
+	@priority = 4
 	test AssetsCanBeSearchedByCategoryFromDisconnectedSite {
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
@@ -148,38 +148,38 @@ definition {
 			groupName = "Site Name");
 
 		JSONWiki.addWikiPage(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Name");
 
 		JSONMBMessage.addMessage(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		JSONKnowledgeBase.addkBArticle(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
 		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			content = "WC WebContent Content",
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
 		JSONBlog.addEntry(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name",
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot category cannot be shown in Category Navigation on a disconnected site."
-	@priority = "4"
+	@priority = 4
 	test CannotViewCategoryInCategoriesNavigationFromDisconnectedSite {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -247,13 +247,13 @@ definition {
 	}
 
 	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
-	@priority = "5"
+	@priority = 5
 	test CanSelectCategoryInCategoriesNavigation {
 		for (var portletName : list "Asset Publisher,Category Filter") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Page Name",
-				widgetName = "${portletName}");
+				widgetName = ${portletName});
 		}
 
 		var categoryId = JSONCategory.addCategory(
@@ -267,7 +267,7 @@ definition {
 			groupName = "Site Name");
 
 		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			content = "WC WebContent Content 1",
 			groupName = "Site Name",
 			title = "WC WebContent Title 1");
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-131774. It ensures that a depot category can be viewed through details info on a connected site."
-	@priority = "4"
+	@priority = 4
 	test CategoryCanBeViewedFromInfoPanel {
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
@@ -310,7 +310,7 @@ definition {
 			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
-			assetCategoryIds = "${categoryId}",
+			assetCategoryIds = ${categoryId},
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.txt",
 			groupName = "Site Name",
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-131849. It ensures that a user cannot add a category to depot from the connected site."
-	@priority = "3"
+	@priority = 3
 	test CategoryCannotBeAddedToDepotFromConnectedSite {
 		JSONCategory.addCategory(
 			groupName = "Test Depot Name",
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
-	@priority = "4"
+	@priority = 4
 	test VocabularyShouldNotBeViewedFromDisconnectedSite {
 		JSONCategory.addCategory(
 			groupName = "Test Depot Name",

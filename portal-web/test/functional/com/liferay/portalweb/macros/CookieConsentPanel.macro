@@ -17,7 +17,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
 
 		Click(
-			key_text = "${cookiePolicyLink}",
+			key_text = ${cookiePolicyLink},
 			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK");
 	}
 
@@ -142,7 +142,7 @@ definition {
 
 	@description = "Verify that customized texts are present"
 	macro verifyCustomTextsArePresent {
-		Variables.assertDefined(parameterList = "${key_text}");
+		Variables.assertDefined(parameterList = ${key_text});
 
 		SelectFrame.selectFrameTop();
 
@@ -155,7 +155,7 @@ definition {
 		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE");
 
 		TestUtils.assertEquals(
-			actual = "${actualLink}",
+			actual = ${actualLink},
 			expected = "http://localhost:8080/group/control_panel/${key_text}_3");
 
 		AssertElementPresent(
@@ -164,7 +164,7 @@ definition {
 
 		for (var id : list "2,5,6,7,8") {
 			AssertElementPresent(
-				key_text = "${id}",
+				key_text = ${id},
 				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT");
 		}
 
@@ -175,12 +175,12 @@ definition {
 
 	@description = "Verify that customized texts are present in portlet"
 	macro verifyCustomTextsArePresentInPortlet {
-		Variables.assertDefined(parameterList = "${key_text}");
+		Variables.assertDefined(parameterList = ${key_text});
 
-		var siteNameURL = StringUtil.replace("${siteName}", " ", "-");
+		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
-		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
-		var baseURL = "${baseURL}";
+		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
+		var baseURL = ${baseURL};
 		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE_IN_VIRTUAL_HOST");
 
 		if (!(isSet(baseURL))) {
@@ -188,12 +188,12 @@ definition {
 		}
 
 		Navigator.gotoSitePage(
-			baseURL = "${baseURL}",
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+			baseURL = ${baseURL},
+			pageName = ${pageName},
+			siteName = ${siteName});
 
 		TestUtils.assertEquals(
-			actual = "${actualLink}",
+			actual = ${actualLink},
 			expected = "${baseURL}/web/${siteNameURL}#${key_text}_3");
 
 		AssertElementPresent(
@@ -202,7 +202,7 @@ definition {
 
 		for (var id : list "2,5,6,7,8") {
 			AssertElementPresent(
-				key_text = "${id}",
+				key_text = ${id},
 				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT_IN_VIRTUAL_HOST");
 		}
 	}

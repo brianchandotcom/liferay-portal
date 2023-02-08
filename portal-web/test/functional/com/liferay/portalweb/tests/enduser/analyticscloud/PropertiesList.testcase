@@ -19,7 +19,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -28,30 +28,30 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11360 | Automation ID: LRAC-11361 | Test Summary: Paginate property list"
-	@priority = "4"
+	@priority = 4
 	test CanPaginatePropertyList {
 		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4,Property Name 5,Property Name 6";
 
 		task ("go to property and add 6 properties") {
 			ACNavigation.goToSettings();
 
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${n}");
+				ACProperties.addNewProperty(propertyName = ${n});
 			}
 		}
 
 		task ("Change the pagination to 5") {
 			ACSettings.goToProperties();
 
-			ACUtils.changePagination(itemsPerPage = "5");
+			ACUtils.changePagination(itemsPerPage = 5);
 		}
 
 		task ("Check first 5 properties appear on first page") {
 			var propertyList1 = "Property Name 2,Property Name 3,Property Name 4,Property Name 5,Property Name 6";
 
-			ACUtils.assertItemsName(itemList = "${propertyList1}");
+			ACUtils.assertItemsName(itemList = ${propertyList1});
 		}
 
 		task ("Click next page") {
@@ -65,7 +65,7 @@ definition {
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
 	@ignore = "true"
-	@priority = "2"
+	@priority = 2
 	test CanPropertyListLoadingALotOfValues {
 
 		// TODO LRAC-9119 CanPropertyListLoadingALotOfValues pending implementation
@@ -73,57 +73,57 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9121 | Test Summary: Settings page properties list is searchable"
-	@priority = "3"
+	@priority = 3
 	test CanSearchForPagePropertiesList {
 		var propertyList = "Property CanSearchForPagePropertiesList 1,Property CanSearchForPagePropertiesList 2,Property CanSearchForPagePropertiesList 3,Property CanSearchForPagePropertiesList 4";
 
 		task ("go to property and add new properties") {
 			ACNavigation.goToSettings();
 
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${n}");
+				ACProperties.addNewProperty(propertyName = ${n});
 			}
 		}
 
 		task ("search the properties") {
 			ACSettings.goToProperties();
 
-			for (var n : list "${propertyList}") {
-				ACUtils.searchBar(searchItem = "${n}");
+			for (var n : list ${propertyList}) {
+				ACUtils.searchBar(searchItem = ${n});
 
-				ACSettings.viewPropertyEntryName(propertyName = "${n}");
+				ACSettings.viewPropertyEntryName(propertyName = ${n});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
-	@priority = "5"
+	@priority = 5
 	test CanSearchForProperty {
 		var propertyList = "Property CanSearchForProperty 1,Property CanSearchForProperty 2,Property CanSearchForProperty 3,Property CanSearchForProperty 4";
 
 		task ("go to property and add new properties") {
 			ACNavigation.goToSettings();
 
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${n}");
+				ACProperties.addNewProperty(propertyName = ${n});
 			}
 		}
 
 		task ("search for a property") {
 			ACNavigation.exitSettings();
 
-			for (var n : list "${propertyList}") {
-				ACProperties.switchProperty(propertyName = "${n}");
+			for (var n : list ${propertyList}) {
+				ACProperties.switchProperty(propertyName = ${n});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
-	@priority = "3"
+	@priority = 3
 	test CanUserSelectPropertyFromTheDropDownByFirstTime {
 		var propertyName = "Property CanUserSelectPropertyFromTheDropDownByFirstTime 1";
 
@@ -132,28 +132,28 @@ definition {
 
 			ACSettings.goToProperties();
 
-			ACProperties.addNewProperty(propertyName = "${propertyName}");
+			ACProperties.addNewProperty(propertyName = ${propertyName});
 		}
 
 		task ("select new property") {
 			ACNavigation.exitSettings();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 	}
 
 	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
-	@priority = "2"
+	@priority = 2
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {
 		task ("Go to properties page and add 2 new properties") {
 			var propertyList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1,Property DeletedPropertiesNotAppearAsOptionInSyncSites 2";
 
 			ACNavigation.goToSettings();
 
-			for (var propertyName : list "${propertyList}") {
+			for (var propertyName : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
+				ACProperties.addNewProperty(propertyName = ${propertyName});
 			}
 		}
 
@@ -197,17 +197,17 @@ definition {
 	}
 
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
-	@priority = "4"
+	@priority = 4
 	test OnlyAvailablePropertiesAppearInDXP {
 		task ("Go to properties page and add 2 new properties") {
 			var propertyList = "Property OnlyAvailablePropertiesAppearInDXP 1,Property OnlyAvailablePropertiesAppearInDXP 2";
 
 			ACNavigation.goToSettings();
 
-			for (var propertyName : list "${propertyList}") {
+			for (var propertyName : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
+				ACProperties.addNewProperty(propertyName = ${propertyName});
 			}
 		}
 
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8300 | Test Summary: Search for a property when assigning sites to a property"
-	@priority = "5"
+	@priority = 5
 	test SearchPropertyToAssignSite {
 		task ("Connect AC and DXP") {
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -318,7 +318,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
-	@priority = "3"
+	@priority = 3
 	test ViewPropertyListDefault {
 		task ("Go to properties") {
 			ACNavigation.goToSettings();
@@ -344,25 +344,25 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
-	@priority = "3"
+	@priority = 3
 	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
 		task ("go to properties and add 2 new properties") {
 			ACNavigation.goToSettings();
 
 			var propertyList = "Property ViewSettingInfoAreGlobalAndDontDependOfProperty 1,Property ViewSettingInfoAreGlobalAndDontDependOfProperty 2";
 
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${n}");
+				ACProperties.addNewProperty(propertyName = ${n});
 			}
 		}
 
 		task ("switch between properties and assert the workspace settings is the same for those properties") {
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACNavigation.exitSettings();
 
-				ACProperties.switchProperty(propertyName = "${n}");
+				ACProperties.switchProperty(propertyName = ${n});
 
 				ACNavigation.goToSettings();
 
@@ -377,31 +377,31 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
-	@priority = "3"
+	@priority = 3
 	test ViewTheDropdownTransition {
 		task ("go to properties page and add 2 new properties") {
 			var propertyList = "Property ViewTheDropdownTransition 1,Property ViewTheDropdownTransition 2";
 
 			ACNavigation.goToSettings();
 
-			for (var n : list "${propertyList}") {
+			for (var n : list ${propertyList}) {
 				ACSettings.goToProperties();
 
-				ACProperties.addNewProperty(propertyName = "${n}");
+				ACProperties.addNewProperty(propertyName = ${n});
 			}
 		}
 
 		task ("assert transition when switching between properties") {
 			ACNavigation.exitSettings();
 
-			for (var n : list "${propertyList}") {
-				ACProperties.switchProperty(propertyName = "${n}");
+			for (var n : list ${propertyList}) {
+				ACProperties.switchProperty(propertyName = ${n});
 
-				ACProperties.assertPropertyHeader(propertyName = "${n}");
+				ACProperties.assertPropertyHeader(propertyName = ${n});
 
-				ACProperties.assertSitesOverviewPropertyHeader(propertyName = "${n}");
+				ACProperties.assertSitesOverviewPropertyHeader(propertyName = ${n});
 
-				ACProperties.assertCurrentActiveProperty(propertyName = "${n}");
+				ACProperties.assertCurrentActiveProperty(propertyName = ${n});
 			}
 		}
 	}

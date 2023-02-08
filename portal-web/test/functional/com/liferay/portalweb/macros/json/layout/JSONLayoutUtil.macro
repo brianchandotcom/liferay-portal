@@ -5,19 +5,19 @@ definition {
 		// Get column # we want to set to (can only be 1-3), default is 1
 
 		if (!(isSet(column))) {
-			var column = "1";
+			var column = 1;
 		}
 
-		Variables.assertDefined(parameterList = "${typeSettings}");
+		Variables.assertDefined(parameterList = ${typeSettings});
 
-		var widget = JSONLayoutUtil._generateWidget(widgetName = "${widgetName}");
+		var widget = JSONLayoutUtil._generateWidget(widgetName = ${widgetName});
 
 		if (isSet(remoteAppEntryId)) {
-			var widget = StringUtil.replace("${widget}", "remoteAppEntryId", "${remoteAppEntryId}");
+			var widget = StringUtil.replace(${widget}, "remoteAppEntryId", ${remoteAppEntryId});
 		}
 
-		if (contains("${typeSettings}", "column-${column}=")) {
-			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}", "(column-${column}=[^%]*)", "$1,${widget}");
+		if (contains(${typeSettings}, "column-${column}=")) {
+			var typeSettings = StringUtil.regexReplaceFirst(${typeSettings}, "(column-${column}=[^%]*)", "$1,${widget}");
 		}
 		else {
 			var typeSettings = '''${typeSettings}column-${column}''';
@@ -25,220 +25,220 @@ definition {
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 	@summary = "Generates a Widget to be used in typeSettings"
 	macro _generateWidget {
-		Variables.assertDefined(parameterList = "${widgetName}");
+		Variables.assertDefined(parameterList = ${widgetName});
 
-		if ("${widgetName}" == "Alerts") {
+		if (${widgetName} == "Alerts") {
 			var portletId = "com_liferay_announcements_web_portlet_AlertsPortlet";
 		}
-		else if ("${widgetName}" == "Account Management") {
+		else if (${widgetName} == "Account Management") {
 			var portletId = "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet";
 		}
-		else if ("${widgetName}" == "Announcements") {
+		else if (${widgetName} == "Announcements") {
 			var portletId = "com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 		}
-		else if ("${widgetName}" == "Asset Publisher") {
+		else if (${widgetName} == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
 		}
-		else if ("${widgetName}" == "Blogs") {
+		else if (${widgetName} == "Blogs") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsPortlet";
 		}
-		else if ("${widgetName}" == "Blogs Aggregator") {
+		else if (${widgetName} == "Blogs Aggregator") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 		}
-		else if ("${widgetName}" == "Bookmarks") {
+		else if (${widgetName} == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 		}
-		else if ("${widgetName}" == "Breadcrumb") {
+		else if (${widgetName} == "Breadcrumb") {
 			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
 		}
-		else if ("${widgetName}" == "Category Filter") {
+		else if (${widgetName} == "Category Filter") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
-		else if ("${widgetName}" == "Category Content") {
+		else if (${widgetName} == "Category Content") {
 			var portletId = "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet";
 		}
-		else if ("${widgetName}" == "Clay Sample") {
+		else if (${widgetName} == "Clay Sample") {
 			var portletId = "com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
 		}
-		else if ("${widgetName}" == "Commerce Categories Navigation") {
+		else if (${widgetName} == "Commerce Categories Navigation") {
 			var portletId = "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet";
 		}
-		else if ("${widgetName}" == "Contacts Center") {
+		else if (${widgetName} == "Contacts Center") {
 			var portletId = "com_liferay_contacts_web_portlet_ContactsCenterPortlet";
 		}
-		else if ("${widgetName}" == "Cookies Banner Configuration") {
+		else if (${widgetName} == "Cookies Banner Configuration") {
 			var portletId = "com_liferay_cookies_banner_web_portlet_CookiesBannerConfigurationPortlet";
 		}
-		else if ("${widgetName}" == "CSS Cadmin Sample") {
+		else if (${widgetName} == "CSS Cadmin Sample") {
 			var portletId = "com_liferay_frontend_css_cadmin_sample_web_internal_portlet_CadminSampleWebPortlet";
 		}
-		else if ("${widgetName}" == "Custom Filter") {
+		else if (${widgetName} == "Custom Filter") {
 			var portletId = "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet";
 		}
-		else if ("${widgetName}" == "Documents and Media") {
+		else if (${widgetName} == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
 		}
-		else if ("${widgetName}" == "Dynamic Data Lists Display") {
+		else if (${widgetName} == "Dynamic Data Lists Display") {
 			var portletId = "com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet";
 		}
-		else if ("${widgetName}" == "Form") {
+		else if (${widgetName} == "Form") {
 			var portletId = "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet";
 		}
-		else if ("${widgetName}" == "Highest Rated Assets") {
+		else if (${widgetName} == "Highest Rated Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_HighestRatedAssetsPortlet";
 		}
-		else if ("${widgetName}" == "IFrame") {
+		else if (${widgetName} == "IFrame") {
 			var portletId = "com_liferay_iframe_web_portlet_IFramePortlet";
 		}
-		else if ("${widgetName}" == "Invite Members") {
+		else if (${widgetName} == "Invite Members") {
 			var portletId = "com_liferay_invitation_invite_members_web_portlet_InviteMembersPortlet";
 		}
-		else if ("${widgetName}" == "JS A11y Sample") {
+		else if (${widgetName} == "JS A11y Sample") {
 			var portletId = "com_liferay_frontend_js_a11y_sample_web_internal_portlet_FrontendJSA11ySampleWebPortlet";
 		}
-		else if ("${widgetName}" == "JS Clay Sample") {
+		else if (${widgetName} == "JS Clay Sample") {
 			var portletId = "com_liferay_frontend_js_clay_sample_web_internal_portlet_FrontendJSClaySampleWebPortlet";
 		}
-		else if ("${widgetName}" == "JS Components Sample") {
+		else if (${widgetName} == "JS Components Sample") {
 			var portletId = "com_liferay_frontend_js_components_sample_web_portlet_FrontendJSComponentsSampleWebPortlet";
 		}
-		else if ("${widgetName}" == "JS Walkthrough Sample") {
+		else if (${widgetName} == "JS Walkthrough Sample") {
 			var portletId = "com_liferay_frontend_js_walkthrough_sample_web_internal_portlet_FrontendJSWalkthroughSampleWebPortlet";
 		}
-		else if ("${widgetName}" == "Knowledge Base Article") {
+		else if (${widgetName} == "Knowledge Base Article") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 		}
-		else if ("${widgetName}" == "Knowledge Base Display") {
+		else if (${widgetName} == "Knowledge Base Display") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_DisplayPortlet";
 		}
-		else if ("${widgetName}" == "Knowledge Base Search") {
+		else if (${widgetName} == "Knowledge Base Search") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_SearchPortlet";
 		}
-		else if ("${widgetName}" == "Knowledge Base Section") {
+		else if (${widgetName} == "Knowledge Base Section") {
 			var portletId = "com_liferay_knowledge_base_web_portlet_SectionPortlet";
 		}
-		else if ("${widgetName}" == "Language Selector") {
+		else if (${widgetName} == "Language Selector") {
 			var portletId = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet";
 		}
-		else if ("${widgetName}" == "Low Level Search Options") {
+		else if (${widgetName} == "Low Level Search Options") {
 			var portletId = "com_liferay_portal_search_web_low_level_search_options_portlet_LowLevelSearchOptionsPortlet";
 		}
-		else if ("${widgetName}" == "Media Gallery") {
+		else if (${widgetName} == "Media Gallery") {
 			var portletId = "com_liferay_document_library_web_portlet_IGDisplayPortlet";
 		}
-		else if ("${widgetName}" == "Message Boards") {
+		else if (${widgetName} == "Message Boards") {
 			var portletId = "com_liferay_message_boards_web_portlet_MBPortlet";
 		}
-		else if ("${widgetName}" == "Microblogs") {
+		else if (${widgetName} == "Microblogs") {
 			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsPortlet";
 		}
-		else if ("${widgetName}" == "Microblogs Status Update") {
+		else if (${widgetName} == "Microblogs Status Update") {
 			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet";
 		}
-		else if ("${widgetName}" == "Most Viewed Assets") {
+		else if (${widgetName} == "Most Viewed Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_MostViewedAssetsPortlet";
 		}
-		else if ("${widgetName}" == "My Sites") {
+		else if (${widgetName} == "My Sites") {
 			var portletId = "com_liferay_site_my_sites_web_portlet_MySitesPortlet";
 		}
-		else if ("${widgetName}" == "Menu Display") {
+		else if (${widgetName} == "Menu Display") {
 			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
 		}
-		else if ("${widgetName}" == "Nested Applications") {
+		else if (${widgetName} == "Nested Applications") {
 			var portletId = "com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 		}
-		else if ("${widgetName}" == "Organization Management") {
+		else if (${widgetName} == "Organization Management") {
 			var portletId = "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet";
 		}
-		else if ("${widgetName}" == "Profile") {
+		else if (${widgetName} == "Profile") {
 			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
 		}
-		else if ("${widgetName}" == "Product Details") {
+		else if (${widgetName} == "Product Details") {
 			var portletId = "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet";
 		}
-		else if ("${widgetName}" == "Questions") {
+		else if (${widgetName} == "Questions") {
 			var portletId = "com_liferay_questions_web_internal_portlet_QuestionsPortlet";
 		}
-		else if ("${widgetName}" == "Recent Bloggers") {
+		else if (${widgetName} == "Recent Bloggers") {
 			var portletId = "com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet";
 		}
-		else if ("${widgetName}" == "Related Assets") {
+		else if (${widgetName} == "Related Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet";
 		}
-		else if ("${widgetName}" == "RSS Publisher") {
+		else if (${widgetName} == "RSS Publisher") {
 			var portletId = "com_liferay_rss_web_portlet_RSSPortlet";
 		}
-		else if ("${widgetName}" == "Search Bar") {
+		else if (${widgetName} == "Search Bar") {
 			var portletId = "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet";
 		}
-		else if ("${widgetName}" == "Search Options") {
+		else if (${widgetName} == "Search Options") {
 			var portletId = "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet";
 		}
-		else if ("${widgetName}" == "Search Results") {
+		else if (${widgetName} == "Search Results") {
 			var portletId = "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet";
 		}
-		else if ("${widgetName}" == "Sign In") {
+		else if (${widgetName} == "Sign In") {
 			var portletId = "com_liferay_login_web_portlet_LoginPortlet";
 		}
-		else if ("${widgetName}" == "Similar Results") {
+		else if (${widgetName} == "Similar Results") {
 			var portletId = "com_liferay_portal_search_similar_results_web_portlet_SimilarResultsPortlet";
 		}
-		else if ("${widgetName}" == "Site Map") {
+		else if (${widgetName} == "Site Map") {
 			var portletId = "com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet";
 		}
-		else if ("${widgetName}" == "Sites Directory") {
+		else if (${widgetName} == "Sites Directory") {
 			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
 		}
-		else if ("${widgetName}" == "Tag Filter") {
+		else if (${widgetName} == "Tag Filter") {
 			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
 		}
-		else if ("${widgetName}" == "Tree Menu") {
+		else if (${widgetName} == "Tree Menu") {
 			var portletId = "com_liferay_wiki_navigation_web_portlet_WikiNavigationTreeMenuPortlet";
 		}
-		else if ("${widgetName}" == "Type Facet") {
+		else if (${widgetName} == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
 		}
-		else if ("${widgetName}" == "User Statistics") {
+		else if (${widgetName} == "User Statistics") {
 			var portletId = "com_liferay_social_user_statistics_web_portlet_SocialUserStatisticsPortlet";
 		}
-		else if ("${widgetName}" == "Vanilla Counter") {
+		else if (${widgetName} == "Vanilla Counter") {
 			var portletId = "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_remoteAppEntryId";
 		}
-		else if ("${widgetName}" == "Web Content Display") {
+		else if (${widgetName} == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
 		}
-		else if ("${widgetName}" == "Wiki") {
+		else if (${widgetName} == "Wiki") {
 			var portletId = "com_liferay_wiki_web_portlet_WikiPortlet";
 		}
-		else if ("${widgetName}" == "Wiki Display") {
+		else if (${widgetName} == "Wiki Display") {
 			var portletId = "com_liferay_wiki_web_portlet_WikiDisplayPortlet";
 		}
-		else if ("${widgetName}" == "CKEditor Sample") {
+		else if (${widgetName} == "CKEditor Sample") {
 			var portletId = "com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet";
 		}
-		else if ("${widgetName}" == "Frontend Data Set Sample") {
+		else if (${widgetName} == "Frontend Data Set Sample") {
 			var portletId = "com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet";
 		}
 		else {
 			fail("'widgetName' is either invalid or its 'portletId' is not yet set.");
 		}
 
-		var instanceId = StringUtil.randomString("12");
+		var instanceId = StringUtil.randomString(12);
 		var nonRepeatableWidgets = "Blogs,Bookmarks,Knowledge Base Display,Language Selector,Message Boards,My Sites,Sign In,Web Content Search,Wiki";
 
-		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
-			var widget = "${portletId}";
+		if (contains(${nonRepeatableWidgets}, ${widgetName})) {
+			var widget = ${portletId};
 		}
 		else {
 			var widget = "${portletId}_INSTANCE_${instanceId}";
 		}
 
-		return "${widget}";
+		return ${widget};
 	}
 
 	macro _getLayoutTemplateId {
@@ -246,53 +246,53 @@ definition {
 			fail("layoutTemplate not set.");
 		}
 
-		if ("${layoutTemplate}" == "1 Column") {
+		if (${layoutTemplate} == "1 Column") {
 			var layoutTemplateId = "1_column";
 		}
-		else if ("${layoutTemplate}" == "2 Columns (50/50)") {
+		else if (${layoutTemplate} == "2 Columns (50/50)") {
 			var layoutTemplateId = "2_columns_i";
 		}
-		else if ("${layoutTemplate}" == "2 Columns (30/70)") {
+		else if (${layoutTemplate} == "2 Columns (30/70)") {
 			var layoutTemplateId = "2_columns_ii";
 		}
-		else if ("${layoutTemplate}" == "2 Columns (70/30)") {
+		else if (${layoutTemplate} == "2 Columns (70/30)") {
 			var layoutTemplateId = "2_columns_iii";
 		}
-		else if ("${layoutTemplate}" == "3 Columns") {
+		else if (${layoutTemplate} == "3 Columns") {
 			var layoutTemplateId = "3_columns";
 		}
-		else if ("${layoutTemplate}" == "1-2 Columns (30/70)") {
+		else if (${layoutTemplate} == "1-2 Columns (30/70)") {
 			var layoutTemplateId = "1_2_columns_i";
 		}
-		else if ("${layoutTemplate}" == "1-2 Columns (70/30)") {
+		else if (${layoutTemplate} == "1-2 Columns (70/30)") {
 			var layoutTemplateId = "1_2_columns_ii";
 		}
-		else if ("${layoutTemplate}" == "1-2-1 Columns (50/50)") {
+		else if (${layoutTemplate} == "1-2-1 Columns (50/50)") {
 			var layoutTemplateId = "1_2_1_columns_i";
 		}
-		else if ("${layoutTemplate}" == "1-2-1 Columns (70/30)") {
+		else if (${layoutTemplate} == "1-2-1 Columns (70/30)") {
 			var layoutTemplateId = "1_2_1_columns_ii";
 		}
-		else if ("${layoutTemplate}" == "1-3-1 Columns") {
+		else if (${layoutTemplate} == "1-3-1 Columns") {
 			var layoutTemplateId = "1_3_1_columns";
 		}
-		else if ("${layoutTemplate}" == "1-3-2 Columns") {
+		else if (${layoutTemplate} == "1-3-2 Columns") {
 			var layoutTemplateId = "1_3_2_columns";
 		}
-		else if ("${layoutTemplate}" == "2-1-2 Columns") {
+		else if (${layoutTemplate} == "2-1-2 Columns") {
 			var layoutTemplateId = "2_1_2_columns";
 		}
-		else if ("${layoutTemplate}" == "2-2 Columns") {
+		else if (${layoutTemplate} == "2-2 Columns") {
 			var layoutTemplateId = "2_2_columns";
 		}
-		else if ("${layoutTemplate}" == "3-2-3 Columns") {
+		else if (${layoutTemplate} == "3-2-3 Columns") {
 			var layoutTemplateId = "3_2_3_columns";
 		}
 		else {
 			fail("'layoutTemplate' could not find a valid layoutTemplateId");
 		}
 
-		return "${layoutTemplateId}";
+		return ${layoutTemplateId};
 	}
 
 	macro _updateLayoutTemplateId {
@@ -304,11 +304,11 @@ definition {
 			fail("layoutTemplateId not set.");
 		}
 
-		var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
+		var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = ${layoutTemplate});
 
-		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}", "(layout-template-id=).*", "$1${layoutTemplateId}");
+		var typeSettings = StringUtil.regexReplaceFirst(${typeSettings}, "(layout-template-id=).*", "$1${layoutTemplateId}");
 
-		return "${typeSettings}";
+		return ${typeSettings};
 	}
 
 }

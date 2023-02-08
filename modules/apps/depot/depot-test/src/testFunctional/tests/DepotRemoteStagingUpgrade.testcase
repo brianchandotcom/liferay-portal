@@ -20,7 +20,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154493. It ensures that a blog small image can be published and rendered correctly after upgrading from 7.3.10.1."
-	@priority = "5"
+	@priority = 5
 	test CanPublishBlogSmallImageAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154489. It ensures that an image from an asset library can be published in a blog content field and correctly rendered after upgrading from 7.3.10.1."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-154497. It ensures that an image from an asset library can be rendered correctly in a Media Gallery widget after upgrading from 7.3.10.1."
-	@priority = "5"
+	@priority = 5
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
@@ -148,7 +148,7 @@ definition {
 			staging = "true");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test ViewDepotRemoteStagingArchive73101 {
 		property data.archive.type = "data-archive-depot-remote-staging";

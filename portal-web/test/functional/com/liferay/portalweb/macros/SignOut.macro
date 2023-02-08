@@ -8,7 +8,7 @@ definition {
 	}
 
 	macro signOutOfSpecificURL {
-		Navigator.openSpecificURL(url = "${url}");
+		Navigator.openSpecificURL(url = ${url});
 
 		UserBar.signOut();
 	}

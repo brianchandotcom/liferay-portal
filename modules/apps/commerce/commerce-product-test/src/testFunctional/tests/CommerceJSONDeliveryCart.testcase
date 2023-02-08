@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9738. Assert that if skuId is not passed, cart cannot be created."
-	@priority = "3"
+	@priority = 3
 	test CannotCreateCartViaJSONDeliveryAPIWithoutSkuId {
 		property portal.acceptance = "false";
 
@@ -33,7 +33,7 @@ definition {
 
 		task ("Then a BAD_REQUEST error is thrown") {
 			TestUtils.assertEquals(
-				actual = "${actual}",
+				actual = ${actual},
 				expected = "BAD_REQUEST");
 		}
 	}

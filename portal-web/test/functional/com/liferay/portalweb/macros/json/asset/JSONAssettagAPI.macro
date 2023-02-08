@@ -13,7 +13,7 @@ definition {
 				-d name=${tagName}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _getTagId {
@@ -31,9 +31,9 @@ definition {
 				-d -orderByComparator=
 		''';
 
-		var tagId = JSONCurlUtil.post("${curl}", "$..['tagId']");
+		var tagId = JSONCurlUtil.post(${curl}, "$..['tagId']");
 
-		return "${tagId}";
+		return ${tagId};
 	}
 
 }

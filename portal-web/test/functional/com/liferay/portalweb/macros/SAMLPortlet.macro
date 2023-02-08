@@ -4,10 +4,10 @@ definition {
 	macro addAndSelectInvalidAttributeForUserMatching {
 		Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
 
-		SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+		SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = ${idpAttributeMapping});
 
 		Click(
-			key_index = "0",
+			key_index = 0,
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
 
 		Button.clickSave();
@@ -20,11 +20,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_NAME_FIELD",
-			value1 = "${idpNameId}");
+			value1 = ${idpNameId});
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
 
@@ -33,7 +33,7 @@ definition {
 
 			Click.javaScriptClick(locator1 = "CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
-			UploadDependencyFile.uploadFile(fileName = "${uploadMetadataXML}");
+			UploadDependencyFile.uploadFile(fileName = ${uploadMetadataXML});
 
 			var idPMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
@@ -42,13 +42,13 @@ definition {
 		else {
 			Type(
 				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-				value1 = "${idpMetadataURL}");
+				value1 = ${idpMetadataURL});
 		}
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "${nameIdentifierFormat}");
+				value1 = ${nameIdentifierFormat});
 		}
 		else {
 			Select(
@@ -56,43 +56,43 @@ definition {
 				value1 = "Email Address");
 		}
 
-		if ("${userResolution}" == "none") {
+		if (${userResolution} == "none") {
 			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_NONE");
 		}
-		else if ("${userResolution}" == "dynamic") {
+		else if (${userResolution} == "dynamic") {
 			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_DYNAMIC");
 		}
-		else if ("${userResolution}" == "attribute") {
+		else if (${userResolution} == "attribute") {
 			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
 		}
 
 		if (isSet(idpAttributeMappingText)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
-				idpAttributeMapping = "${idpAttributeMapping}",
-				idpAttributeMappingText = "${idpAttributeMappingText}");
+				idpAttributeMapping = ${idpAttributeMapping},
+				idpAttributeMappingText = ${idpAttributeMappingText});
 		}
 		else if (isSet(idpAttributeMapping)) {
-			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = ${idpAttributeMapping});
 		}
 
 		if (isSet(idpCustomFieldAttributeMappingText)) {
 			SAMLPortlet.addIdentityProviderConnectionCustomFieldAttributeMappingWithCustomAttributes(
-				idpCustomFieldAttributeMapping = "${idpCustomFieldAttributeMapping}",
-				idpCustomFieldAttributeMappingText = "${idpCustomFieldAttributeMappingText}");
+				idpCustomFieldAttributeMapping = ${idpCustomFieldAttributeMapping},
+				idpCustomFieldAttributeMappingText = ${idpCustomFieldAttributeMappingText});
 		}
 		else if (isSet(idpCustomFieldAttributeMapping)) {
-			SAMLPortlet.addIdentityProviderConnectionCustomFieldAttributeMapping(idpCustomFieldAttributeMapping = "${idpCustomFieldAttributeMapping}");
+			SAMLPortlet.addIdentityProviderConnectionCustomFieldAttributeMapping(idpCustomFieldAttributeMapping = ${idpCustomFieldAttributeMapping});
 		}
 
-		if ("${userResolution}" == "attribute") {
+		if (${userResolution} == "attribute") {
 			if (isSet(customFieldUserMatching)) {
 				Click(
-					key_index = "${userMatchingAttributeIndex}",
+					key_index = ${userMatchingAttributeIndex},
 					locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_CUSTOM_FIELD_USE_TO_MATCH_USERS_RADIO");
 			}
 			else {
 				Click(
-					key_index = "${userMatchingAttributeIndex}",
+					key_index = ${userMatchingAttributeIndex},
 					locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
 			}
 		}
@@ -100,25 +100,25 @@ definition {
 		if (isSet(idpKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "${idpKeepAliveURL}");
+				value1 = ${idpKeepAliveURL});
 		}
 
 		PortletEntry.save();
 	}
 
 	macro addIdentityProviderConnectionAttributeMapping {
-		var attributeRowId = "0";
+		var attributeRowId = 0;
 
-		for (var userfieldExpressionName : list "${idpAttributeMapping}") {
+		for (var userfieldExpressionName : list ${idpAttributeMapping}) {
 			Select(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_FIELD_EXPRESSION_DROPDOWN",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			Type(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_SAML_ATTRIBUTE_TEXT",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			var attributeRowId = ${attributeRowId} + 1;
 
@@ -128,43 +128,43 @@ definition {
 
 	@description = "This macro should be used when the values of the User Field Expression and SAML Attribute are different inside the Attribute Mapping"
 	macro addIdentityProviderConnectionAttributeMappingWithCustomAttributes {
-		var attributeRowId = "0";
-		var attributeRowId2 = "0";
+		var attributeRowId = 0;
+		var attributeRowId2 = 0;
 
-		for (var userfieldExpressionName : list "${idpAttributeMapping}") {
+		for (var userfieldExpressionName : list ${idpAttributeMapping}) {
 			Select(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_FIELD_EXPRESSION_DROPDOWN",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			var attributeRowId = ${attributeRowId} + 1;
 
 			Click(locator1 = "Button#ADD_ROW");
 		}
 
-		for (var userfieldExpressionText : list "${idpAttributeMappingText}") {
+		for (var userfieldExpressionText : list ${idpAttributeMappingText}) {
 			Type(
-				key_index = "${attributeRowId2}",
+				key_index = ${attributeRowId2},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_SAML_ATTRIBUTE_TEXT",
-				value1 = "${userfieldExpressionText}");
+				value1 = ${userfieldExpressionText});
 
 			var attributeRowId2 = ${attributeRowId2} + 1;
 		}
 	}
 
 	macro addIdentityProviderConnectionCustomFieldAttributeMapping {
-		var attributeRowId = "0";
+		var attributeRowId = 0;
 
-		for (var userfieldExpressionName : list "${idpCustomFieldAttributeMapping}") {
+		for (var userfieldExpressionName : list ${idpCustomFieldAttributeMapping}) {
 			Select(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_CUSTOM_FIELD_EXPRESSION_DROPDOWN",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			Type(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_CUSTOM_FIELD_ATTRIBUTE_TEXT",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			var attributeRowId = ${attributeRowId} + 1;
 
@@ -174,25 +174,25 @@ definition {
 
 	@description = "This macro should be used when the values of the Custom field User Field Expression and SAML Attribute are different inside the Attribute Mapping"
 	macro addIdentityProviderConnectionCustomFieldAttributeMappingWithCustomAttributes {
-		var attributeRowId = "0";
-		var attributeRowId2 = "0";
+		var attributeRowId = 0;
+		var attributeRowId2 = 0;
 
-		for (var userfieldExpressionName : list "${idpCustomFieldAttributeMapping}") {
+		for (var userfieldExpressionName : list ${idpCustomFieldAttributeMapping}) {
 			Select(
-				key_index = "${attributeRowId}",
+				key_index = ${attributeRowId},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_CUSTOM_FIELD_EXPRESSION_DROPDOWN",
-				value1 = "${userfieldExpressionName}");
+				value1 = ${userfieldExpressionName});
 
 			var attributeRowId = ${attributeRowId} + 1;
 
 			Click(locator1 = "Button#ADD_ROW_LAST");
 		}
 
-		for (var userfieldExpressionText : list "${idpCustomFieldAttributeMappingText}") {
+		for (var userfieldExpressionText : list ${idpCustomFieldAttributeMappingText}) {
 			Type(
-				key_index = "${attributeRowId2}",
+				key_index = ${attributeRowId2},
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_CUSTOM_FIELD_ATTRIBUTE_TEXT",
-				value1 = "${userfieldExpressionText}");
+				value1 = ${userfieldExpressionText});
 
 			var attributeRowId2 = ${attributeRowId2} + 1;
 		}
@@ -206,11 +206,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_NAME_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 	}
 
 	@description = "Add Identity Provider Connection with only the Name and Entity ID filled out and user mapping is selected but empty"
@@ -221,16 +221,16 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_NAME_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		Type(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
 
 		Click(
-			key_index = "0",
+			key_index = 0,
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
 
 		Button.clickSave();
@@ -243,11 +243,11 @@ definition {
 
 		Type(
 			locator1 = "TextInput#SAML_NAME_FIELD",
-			value1 = "${spNameId}");
+			value1 = ${spNameId});
 
 		Type(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
-			value1 = "${spEntityId}");
+			value1 = ${spEntityId});
 
 		Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
 
@@ -256,7 +256,7 @@ definition {
 
 			Click.javaScriptClick(locator1 = "CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
-			UploadDependencyFile.uploadFile(fileName = "${uploadMetadataXML}");
+			UploadDependencyFile.uploadFile(fileName = ${uploadMetadataXML});
 
 			var spMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
@@ -265,7 +265,7 @@ definition {
 		else {
 			Type(
 				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-				value1 = "${spMetadataURL}");
+				value1 = ${spMetadataURL});
 		}
 
 		if (!(isSet(nameIdentifierAttributeName))) {
@@ -274,12 +274,12 @@ definition {
 
 		Type(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
-			value1 = "${nameIdentifierAttributeName}");
+			value1 = ${nameIdentifierAttributeName});
 
 		if (isSet(nameIdentifierFormat)) {
 			Select(
 				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
-				value1 = "${nameIdentifierFormat}");
+				value1 = ${nameIdentifierFormat});
 		}
 
 		if (isSet(spAttributes)) {
@@ -287,27 +287,27 @@ definition {
 
 			Type(
 				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
-				value1 = "${spAttributes}");
+				value1 = ${spAttributes});
 		}
 
 		if (isSet(spKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "${spKeepAliveURL}");
+				value1 = ${spKeepAliveURL});
 		}
 
 		PortletEntry.save();
 	}
 
 	macro configureIdentityProvider {
-		if ("${signMetadata}" == "disable") {
+		if (${signMetadata} == "disable") {
 			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX");
 		}
 		else {
 			Check(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX");
 		}
 
-		if ("${authnRequestSignatureRequired}" == "disable") {
+		if (${authnRequestSignatureRequired} == "disable") {
 			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 		}
 		else {
@@ -319,12 +319,12 @@ definition {
 
 	macro configureIdentityProviderConnection {
 		Click.waitForMenuToggleJSClick(
-			key_samlEntityId = "${samlEntityId}",
+			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		MenuItem.click(menuItem = "Edit");
 
-		if ("${forceAuthn}" == "enable") {
+		if (${forceAuthn} == "enable") {
 			Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_FORCE_AUTHN_CHECKBOX");
 		}
 
@@ -332,15 +332,15 @@ definition {
 	}
 
 	macro configureServiceProvider {
-		if ("${ldapImport}" == "enable") {
+		if (${ldapImport} == "enable") {
 			Check(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX");
 		}
 
-		if ("${signAuthnRequests}" == "disable") {
+		if (${signAuthnRequests} == "disable") {
 			Uncheck(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_SIGN_AUTHN_REQUESTS_CHECKBOX");
 		}
 
-		if ("${allowShowingTheLoginPortlet}" == "disable") {
+		if (${allowShowingTheLoginPortlet} == "disable") {
 			Uncheck(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_ALLOW_SHOWING_THE_LOGIN_PORTLET_CHECKBOX");
 		}
 
@@ -349,12 +349,12 @@ definition {
 
 	macro configureServiceProviderConnection {
 		Click.waitForMenuToggleJSClick(
-			key_samlEntityId = "${samlEntityId}",
+			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		MenuItem.click(menuItem = "Edit");
 
-		if ("${forceEncryption}" == "enable") {
+		if (${forceEncryption} == "enable") {
 			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_FORCE_ENCRYPTION");
 		}
 
@@ -363,7 +363,7 @@ definition {
 
 	macro deleteSAMLConnection {
 		Click.waitForMenuToggleJSClick(
-			key_samlEntityId = "${samlEntityId}",
+			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
 
 		ClickNoError(
@@ -378,15 +378,15 @@ definition {
 	@description = "Edit attribute mapping of SP, in Identity Provider Configurations"
 	macro editAttributeMappingOfSP {
 		AssertClick(
-			idpEntityId = "${idpEntityId}",
+			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
-		var attributeRowId = "1";
+		var attributeRowId = 1;
 
-		for (var loop : list "${idpAttributeMappingOld}") {
+		for (var loop : list ${idpAttributeMappingOld}) {
 			Click(
-				key_rowIndexNumber = "${attributeRowId}",
+				key_rowIndexNumber = ${attributeRowId},
 				locator1 = "Button#DELETE_ROW_N");
 
 			var attributeRowId = ${attributeRowId} + 1;
@@ -395,17 +395,17 @@ definition {
 		PortletEntry.save();
 
 		AssertClick(
-			idpEntityId = "${idpEntityId}",
+			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		if (isSet(idpAttributeMappingText)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
-				idpAttributeMapping = "${idpAttributeMappingNew}",
-				idpAttributeMappingText = "${idpAttributeMappingText}");
+				idpAttributeMapping = ${idpAttributeMappingNew},
+				idpAttributeMappingText = ${idpAttributeMappingText});
 		}
 		else {
-			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMappingNew}");
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = ${idpAttributeMappingNew});
 		}
 
 		PortletEntry.save();
@@ -415,15 +415,15 @@ definition {
 	macro editAttributesSentByIdP {
 		AssertClick(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME",
-			spEntityId = "${spEntityId}",
-			value1 = "${spEntityId}");
+			spEntityId = ${spEntityId},
+			value1 = ${spEntityId});
 
 		if (isSet(spAttributes)) {
 			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE");
 
 			Type(
 				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
-				value1 = "${spAttributes}");
+				value1 = ${spAttributes});
 		}
 
 		PortletEntry.save();
@@ -432,9 +432,9 @@ definition {
 	@description = "Edit metadata configurations of SP, in Identity Provider Configurations"
 	macro editMetadataConfigurationsOfSP {
 		AssertClick(
-			idpEntityId = "${idpEntityId}",
+			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		if (isSet(changeToURL)) {
 			SAML.assertSAMLMetadataAlertMessage();
@@ -443,7 +443,7 @@ definition {
 
 			Type(
 				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
-				value1 = "${idpMetadataURL}");
+				value1 = ${idpMetadataURL});
 		}
 
 		if (isSet(changeToXML)) {
@@ -451,7 +451,7 @@ definition {
 
 			Click.javaScriptClick(locator1 = "CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
-			UploadDependencyFile.uploadFile(fileName = "${uploadMetadataXML}");
+			UploadDependencyFile.uploadFile(fileName = ${uploadMetadataXML});
 
 			var idPMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
@@ -464,9 +464,9 @@ definition {
 	@description = "View metadata configurations of SP, in Identity Provider Configurations"
 	macro viewMetadataConfigurationsOfSP {
 		AssertClick(
-			idpEntityId = "${idpEntityId}",
+			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
-			value1 = "${idpEntityId}");
+			value1 = ${idpEntityId});
 
 		if (isSet(metadataURL)) {
 			AssertTextNotPresent(

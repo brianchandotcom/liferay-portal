@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "Add a Front Page with tag."
-	@priority = "4"
+	@priority = 4
 	test AddFrontPageTag {
 		property testray.component.names = "Wiki";
 
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "Add multiple tags via Blogs widget."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test AddMultipleTagsViaBlogs {
 		property portal.acceptance = "true";
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Add an auto assertion tag via blogs widget."
-	@priority = "4"
+	@priority = 4
 	test AddSingleTagViaBlogs {
 		property portal.acceptance = "true";
 		property testray.component.names = "Blogs";
@@ -106,7 +106,7 @@ definition {
 			for (var tagName : list "tag name 1,tag name 2,tag name 3") {
 				JSONAssettag.addTag(
 					groupName = "Test Site Name",
-					tagName = "${tagName}");
+					tagName = ${tagName});
 			}
 		}
 
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "View tags with cloud display template in Tag Filter widget."
-	@priority = "5"
+	@priority = 5
 	test DisplayTagCloudTemplate {
 		property portal.acceptance = "true";
 
@@ -203,20 +203,20 @@ definition {
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname1 (2)",
-				tagPopularityLevel = "6");
+				tagPopularityLevel = 6);
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname2 (1)",
-				tagPopularityLevel = "3");
+				tagPopularityLevel = 3);
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname3 (0)",
-				tagPopularityLevel = "1");
+				tagPopularityLevel = 1);
 		}
 	}
 
 	@description = "View tags with number display template in Tag Filter widget."
-	@priority = "3"
+	@priority = 3
 	test DisplayTagNumberTemplate {
 		task ("Add a Tag Filter to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "The Tag Filter widget could display unused tags."
-	@priority = "3"
+	@priority = 3
 	test DisplayUnusedTags {
 		task ("Add three tags") {
 			for (var i : list "1,2,3") {
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@description = "The user could remove selected tag via Blogs."
-	@priority = "3"
+	@priority = 3
 	test RemoveSelectedTagViaBlogs {
 		property portal.acceptance = "true";
 		property testray.component.names = "Blogs,Tags";
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "The user can search for multiple tags via Blogs widget."
-	@priority = "3"
+	@priority = 3
 	test SearchTagsViaBlogs {
 		property testray.component.names = "Blogs";
 
@@ -389,11 +389,11 @@ definition {
 		}
 
 		task ("Add thre Blogs entry with different tags") {
-			var i = "1";
+			var i = 1;
 
 			for (var tagName : list "blue,green,yellow") {
 				HeadlessBlog.addBlogEntry(
-					assetTagNames = "${tagName}",
+					assetTagNames = ${tagName},
 					content = "Blogs Entry Content ${i}",
 					groupName = "Test Site Name",
 					title = "Blogs Entry Title ${i}");
@@ -407,10 +407,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var i = "1";
+			var i = 1;
 
 			for (var searchTerm : list "blue,green,yellow") {
-				SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+				SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
 
 				SearchResultPortlet.viewSearchResults(
 					searchAssetTitle = "Blogs Entry Title ${i}",
@@ -422,7 +422,7 @@ definition {
 	}
 
 	@description = "View default display template in Tag Cloud widget."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewTagCloudDisplayConfiguration {
 		property portal.acceptance = "true";
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@description = "The user can increase tags with cloud display template."
-	@priority = "5"
+	@priority = 5
 	test ViewTagCloudIncrease {
 		property portal.acceptance = "true";
 
@@ -507,11 +507,11 @@ definition {
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname1 (2)",
-				tagPopularityLevel = "6");
+				tagPopularityLevel = 6);
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname2 (1)",
-				tagPopularityLevel = "3");
+				tagPopularityLevel = 3);
 		}
 
 		task ("Add a new web content with first and second tag") {
@@ -529,11 +529,11 @@ definition {
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname1 (3)",
-				tagPopularityLevel = "6");
+				tagPopularityLevel = 6);
 
 			TagsNavigationPortlet.viewTagCloud(
 				tagName = "tagname2 (2)",
-				tagPopularityLevel = "4");
+				tagPopularityLevel = 4);
 		}
 	}
 

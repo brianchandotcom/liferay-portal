@@ -4,7 +4,7 @@ definition {
 		Click(locator1 = "CustomerPortalSite#SUPPORT_SEAT");
 
 		AssertVisible(
-			key_content = "${info}",
+			key_content = ${info},
 			locator1 = "Tooltip#POPOVER_BODY");
 	}
 
@@ -14,11 +14,11 @@ definition {
 			locator1 = "Icon#ANY");
 
 		AssertVisible(
-			key_header = "${header}",
+			key_header = ${header},
 			locator1 = "Tooltip#POPOVER_HEADER");
 
 		AssertVisible(
-			key_content = "${info}",
+			key_content = ${info},
 			locator1 = "Tooltip#POPOVER_BODY_CONTENT");
 	}
 

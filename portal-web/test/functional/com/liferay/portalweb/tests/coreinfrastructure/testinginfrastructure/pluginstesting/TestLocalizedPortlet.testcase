@@ -14,7 +14,7 @@ definition {
 		PagesAdmin.tearDownCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewLocalizedChinese {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -35,7 +35,7 @@ definition {
 		AssertTextNotPresent(value1 = "FAILED");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewLocalizedEnglish {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -58,7 +58,7 @@ definition {
 		AssertTextNotPresent(value1 = "FAILED");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewLocalizedFrench {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -79,7 +79,7 @@ definition {
 		AssertTextNotPresent(value1 = "FAILED");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ViewLocalizedSpanish {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

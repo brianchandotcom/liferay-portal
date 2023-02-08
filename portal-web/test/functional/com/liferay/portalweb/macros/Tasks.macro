@@ -13,16 +13,16 @@ definition {
 
 		Type(
 			locator1 = "AddTask#TASK_DESCRIPTION_FIELD",
-			value1 = "${taskDescription}");
+			value1 = ${taskDescription});
 
 		Select(
 			locator1 = "AddTask#TASK_ASSIGNEE_SELECT_MENU",
-			value1 = "${taskAssignee}");
+			value1 = ${taskAssignee});
 
 		if (isSet(taskPriority)) {
 			Select(
 				locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU",
-				value1 = "${taskPriority}");
+				value1 = ${taskPriority});
 		}
 		else {
 			Select(
@@ -30,7 +30,7 @@ definition {
 				value1 = "Normal");
 		}
 
-		if ("${dueDate}" == "true") {
+		if (${dueDate} == "true") {
 			if (IsTextEqual(locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK", value1 = "Add Due Date")) {
 				AssertClick(
 					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
@@ -42,7 +42,7 @@ definition {
 				value1 = "3/16/2016");
 		}
 
-		if ("${dueTime}" == "true") {
+		if (${dueTime} == "true") {
 			if (IsElementNotPresent(locator1 = "AddTask#DUE_DATE_FIELD")) {
 				AssertClick(
 					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
@@ -51,9 +51,9 @@ definition {
 
 			var displayDateHour = selenium.getElementValue("AddTask#DUE_DATE_HOUR");
 
-			var displayDateHourLength = StringUtil.length("${displayDateHour}");
+			var displayDateHourLength = StringUtil.length(${displayDateHour});
 
-			if ("${displayDateHourLength}" == "1") {
+			if (${displayDateHourLength} == 1) {
 				var displayDateHour = "0${displayDateHour}";
 			}
 
@@ -61,29 +61,29 @@ definition {
 
 			var displayDateMinuteFuture = ${displayDateMinute} + 2;
 
-			var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
+			var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
 
-			if ("${displayDateMinuteFutureLength}" == "1") {
+			if (${displayDateMinuteFutureLength} == 1) {
 				var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 			}
 
 			var displayDateMeridian = selenium.getElementValue("AddTask#DUE_DATE_MERIDIAN");
 
-			var displayDateMeridian = StringUtil.replace("${displayDateMeridian}", "0", "AM");
+			var displayDateMeridian = StringUtil.replace(${displayDateMeridian}, 0, "AM");
 
-			var displayDateMeridian = StringUtil.replace("${displayDateMeridian}", "1", "PM");
+			var displayDateMeridian = StringUtil.replace(${displayDateMeridian}, 1, "PM");
 
 			var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}";
 
 			Type(
 				locator1 = "AddTask#DUE_DATE_TIME_FIELD",
-				value1 = "${displayDate}");
+				value1 = ${displayDate});
 		}
 
 		if (isSet(numberOfTags)) {
-			var tagNumber = "0";
+			var tagNumber = 0;
 
-			while ("${tagNumber}" != "${numberOfTags}") {
+			while (${tagNumber} != ${numberOfTags}) {
 				var tagNumber = ${tagNumber} + 1;
 
 				Type(
@@ -92,7 +92,7 @@ definition {
 
 				Click(locator1 = "Button#ADD_TAGS");
 
-				var key_tagNumber = "${tagNumber}";
+				var key_tagNumber = ${tagNumber};
 
 				AssertTextEquals(
 					locator1 = "AddTask#TASK_TAG",
@@ -101,7 +101,7 @@ definition {
 		}
 
 		if (isSet(tagNumber)) {
-			var key_tagNumber = "${tagNumber}";
+			var key_tagNumber = ${tagNumber};
 
 			Type(
 				locator1 = "AddTask#TASK_TAG_FIELD",
@@ -116,13 +116,13 @@ definition {
 
 		Button.clickSave();
 
-		var key_taskDescription = "${taskDescription}";
+		var key_taskDescription = ${taskDescription};
 
 		AssertTextEquals(
 			locator1 = "TasksTask#TASK_DESCRIPTION",
-			value1 = "${taskDescription}");
+			value1 = ${taskDescription});
 
-		if ("${taskAssignee}" == "Unassigned") {
+		if (${taskAssignee} == "Unassigned") {
 			AssertTextEquals(
 				locator1 = "TasksTask#TASK_ASSIGNEE",
 				value1 = "Unassigned");

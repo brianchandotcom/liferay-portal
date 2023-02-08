@@ -2,11 +2,11 @@ definition {
 
 	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
-		Variables.assertDefined(parameterList = "${content}");
+		Variables.assertDefined(parameterList = ${content});
 
 		var contentXml = '''<p>${content}</p> ''';
 
-		return "${contentXml}";
+		return ${contentXml};
 	}
 
 }

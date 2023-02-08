@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-75936. The admin user should access to product menu on page with Full Page Application type."
-	@priority = "5"
+	@priority = 5
 	test AccessToProductMenuOnFullPageApplicationPageAsAdmin {
 		property portal.acceptance = "true";
 
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "The user can add a blogs entry and message boards via collaboration panel page."
-	@priority = "3"
+	@priority = 3
 	@uitest
 	test AddAssetsViaCollaborationPanel {
 		task ("Add a panel page with collaboration component") {
@@ -113,12 +113,12 @@ definition {
 
 			MessageboardsThread.gotoPG(
 				lastPostUserName = "Test Test",
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject");
 
 			MessageboardsThread.viewPG(
-				replyCount = "0",
+				replyCount = 0,
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject",
 				userName = "Test Test");
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "The user can not delete the last public page on Liferay instance."
-	@priority = "3"
+	@priority = 3
 	test CannotDeleteLastPublicPageOnDefaultSite {
 		task ("Delete the Search page in Liferay instance") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@description = "The user can add an embedded and panel page via pages administration."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ConfigureEmbeddedAndPanelPage {
 		property portal.acceptance = "true";
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-71160. Can edit the SEO settings in a widget page via control menu."
-	@priority = "5"
+	@priority = 5
 	test EditPageViaControlMenu {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
-	@priority = "4"
+	@priority = 4
 	test PropagateChangesFromWidgetPageTemplate {
 		property testray.component.names = "Site Pages Administration,Widget Page Templates";
 
@@ -324,13 +324,13 @@ definition {
 				siteName = "Test Site name");
 
 			for (var widgetName : list "Blogs,Asset Publisher") {
-				Portlet.viewSpecificPG(portletName = "${widgetName}");
+				Portlet.viewSpecificPG(portletName = ${widgetName});
 			}
 		}
 	}
 
 	@description = "An error is thrown when the default language has an empty friendly url in widget page."
-	@priority = "3"
+	@priority = 3
 	test ViewNoExceptionWhenPageWithoutFriendlyURLInDefaultLanguage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(

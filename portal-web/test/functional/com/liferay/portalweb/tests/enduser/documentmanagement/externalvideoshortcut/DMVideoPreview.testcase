@@ -29,7 +29,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "This test ensures that no internal video is not listed via item selector after disabling FFMPEG."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
 		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Blog."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating KB article."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddKBArticleWithEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddWCWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DMVideoPreview#CanAddWCWithEmbeddedVideo";
@@ -208,7 +208,7 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test CanConfigureFFmpegVideoPreviewSizePG {
 		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
@@ -220,7 +220,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -242,10 +242,10 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
-		var videoGenerationTimeCounter = "0";
-		var videoGenerationTimeMaxWaitTime = "6";
+		var videoGenerationTimeCounter = 0;
+		var videoGenerationTimeMaxWaitTime = 6;
 
-		while (("${videoGenerationTimeCounter}" != "${videoGenerationTimeMaxWaitTime}") && (IsElementPresent(locator1 = "Message#INFO"))) {
+		while ((${videoGenerationTimeCounter} != ${videoGenerationTimeMaxWaitTime}) && (IsElementPresent(locator1 = "Message#INFO"))) {
 			var videoGenerationTimeCounter = ${videoGenerationTimeCounter} + 1;
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -257,31 +257,31 @@ definition {
 
 		SelectFrameTop();
 
-		Navigator.openSpecificURL(url = "${videoPreviewThumbnailLink}");
+		Navigator.openSpecificURL(url = ${videoPreviewThumbnailLink});
 
 		AssertElementPresent(
 			key_imageSourceURL = "Document_1.mp4",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 
 		AssertElementNotPresent(
-			key_videoGenerationThumbnailResolution = "640",
+			key_videoGenerationThumbnailResolution = 640,
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 
 		AssertElementNotPresent(
-			key_videoGenerationThumbnailResolution = "360",
+			key_videoGenerationThumbnailResolution = 360,
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 
 		AssertElementPresent.assertElementPresent(
-			key_videoGenerationThumbnailResolution = "854",
+			key_videoGenerationThumbnailResolution = 854,
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 
 		AssertElementPresent.assertElementPresent(
-			key_videoGenerationThumbnailResolution = "480",
+			key_videoGenerationThumbnailResolution = 480,
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportExportedBlogWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DMVideoPreview#CanImportExportedBlogWithEmbeddedVideo";
@@ -322,7 +322,7 @@ definition {
 	}
 
 	@description = "This test ensures that a kb article created with an internal video embedded in it can be exported and imported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -378,7 +378,7 @@ definition {
 	}
 
 	@description = "This test ensures that a web content created with an internal video embedded in it can be exported and imported."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanImportExportedWebContentWithEmbeddedVideo {
 		property portal.acceptance = "true";
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewFromDisconnectedSite {
 		property portal.acceptance = "true";
@@ -497,7 +497,7 @@ definition {
 	}
 
 	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
-	@priority = "4"
+	@priority = 4
 	test PreviewRemainsAfterDisablingFFmpeg {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMVideoPreview#PreviewRemainsAfterDisablingFFmpeg";

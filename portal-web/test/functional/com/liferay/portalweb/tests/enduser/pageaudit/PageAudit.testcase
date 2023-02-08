@@ -31,14 +31,13 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "LPS-132234: Given the detail view of the page audit panel
-	Then the checks related to Low contrast ratio, Missing image-alt and Missing input-image-alt will appear under the Accessibility section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test AccessibilityFailures {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
@@ -77,10 +76,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-119066: Given the Page Audit Panel
-	When the user clicks on the language selector and selects other language
-	Then the title of the page shows the matching translation (if existing), the URL changes (if localized URLs is enabled) and the API is called so the progress bar shows"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test AssertPageAuditLocale {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -128,10 +125,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-129375: Given the Page Audit panel of a content page
-	When the localized canonical URLs options is not enabled and the user changes the language
-	Then the URL for that language shows and is consulted"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AssertPageAuditLocaleInContentPage {
 		property portal.acceptance = "true";
 
@@ -158,10 +153,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-129375: Given the Page Audit panel of a display page
-	When the localized canonical URLs options is not enabled and the user changes the language
-	Then the URL for that language shows and is consulted"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AssertPageAuditLocaleInDisplayPage {
 		property portal.acceptance = "true";
 
@@ -226,10 +219,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-129375: Given the Page Audit panel of a widget page
-	When the localized canonical URLs options is not enabled and the user changes the language
-	Then the URL for that language shows and is consulted"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AssertPageAuditLocaleInWidgetPage {
 		property portal.acceptance = "true";
 
@@ -264,10 +255,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130621 Given the page audit panel
-	When the panel is showing cached data
-	Then there's an alert informing about the date and the hour when it was last updated"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CachedDataAlert {
 		task ("Create second content page") {
 			JSONLayout.addPublicLayout(
@@ -313,10 +302,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-129375: Given the Page Audit panel of a content page
-	When the localized canonical URLs options is enabled and the user changes the language
-	Then the matching canonical URL shows and is consulted"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CanonicalUrlLocaleInContentPage {
 		property portal.acceptance = "true";
 
@@ -356,10 +343,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-129375: Given the Page Audit panel of a widget page
-	When the localized canonical URLs options is enabled and the user changes the language
-	Then the matching canonical URL shows and is consulted"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CanonicalUrlLocaleInWidgetPage {
 		property portal.acceptance = "true";
 
@@ -409,10 +394,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there is more than the 60% of the texts on the page with insufficient font sizes
-	Then the users will see the matching failing elements, with the size of the illegible font and the percentage of text it covers"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckIllegibleFontSizes {
 		property portal.acceptance = "true";
@@ -441,10 +424,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are images on the page with a displayed ratio different from the actual one
-	Then the users will see the matching failing elements, with its source link and the occurrences separately, and the Displayed Aspect Ratio and the Actual Aspect Ratio for each one of them"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckIncorrectImageAspectRatio {
 		property portal.acceptance = "true";
@@ -485,10 +466,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there links on the page that are not formatted with the a href attributes or have invalid target URLs
-	Then the users will see the matching failing elements, with current link snippet"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckLinksCrawlable {
 		property portal.acceptance = "true";
@@ -521,10 +500,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are texts on the page with insufficient contrast ratio
-	Then the users will see the matching failing elements, with its current ratio, foreground color code, background color code, font size, font weight and expected ratio"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckLowContrastRatio {
 		property portal.acceptance = "true";
@@ -557,10 +534,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet "
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckMissingImgALTAttributes {
 		property portal.acceptance = "true";
@@ -593,10 +568,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are input-type images on the page with no alt text
-	Then the users will see the matching failing elements, and the current code snippet"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckMissingInputALTAttributes {
 		property portal.acceptance = "true";
@@ -629,9 +602,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-134760: Given the Page Audit panel in a private page
-	Then the reload button won't be visible."
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckNotVisibleReloadbButtonInPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
@@ -656,10 +628,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132406: Given the Page Audit Panel
-	When the users leave the page because the session expires or s/he does log out
-	Then they find the panel closed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckPageAuditClosedAfterLogout {
 		task ("Open Content Performance panel") {
 			PageAudit.openPageAuditSidebar();
@@ -678,10 +648,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132406: Given the Page Audit Panel
-	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
-	Then they find the panel open"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckPageAuditOpenAfterNavigation {
 		task ("Open Content Performance panel") {
 			PageAudit.openPageAuditSidebar();
@@ -698,10 +666,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there tap targets on the page that are too small or are overlapping with others
-	Then the users will see the matching failing elements, with the tap target snippet, size and Overlapping Target if there is one"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckSmallTapTargets {
 		property portal.acceptance = "true";
@@ -734,10 +700,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is void ('Choose an option')
-	Then the call is made for Google Page Speed default value - desktop"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DefaultStrategyAtSiteSettings {
 		property portal.acceptance = "true";
 
@@ -766,10 +730,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Desktop
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test DesktopStrategyAtSiteSettings {
 		property portal.acceptance = "true";
 
@@ -798,10 +760,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the page audit panel detail view
-	When there are more than 10 failing elements for a single issue
-	Then the users can see a Show more button every 10 failing elements, and when they click on it another 10 elements are displayed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test DisplayMoreErrors {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
@@ -826,21 +786,19 @@ definition {
 			PageAudit.goToDetailView(failingCheckName = "Illegible Font Sizes");
 
 			AssertElementPresent(
-				badgeValue = "12",
+				badgeValue = 12,
 				locator1 = "PageAudit#BADGE_NUMBER");
 
-			PageAudit.assertFailingElementCount(expectedLabels = "10");
+			PageAudit.assertFailingElementCount(expectedLabels = 10);
 
 			Button.click(button = "View More");
 
-			PageAudit.assertFailingElementCount(expectedLabels = "12");
+			PageAudit.assertFailingElementCount(expectedLabels = 12);
 		}
 	}
 
-	@description = "LPS-135681: Given the Page Audit panel when the invalid API Key error is retrieved
-	When the user clicks on the Set API Key button
-	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test InvalidAPIKeyErrorIsRecovered {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#InvalidAPIKeyErrorIsRecovered";
@@ -878,10 +836,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130636: Given a site
-	When the user visits a page where s/he had opened the Page Audit Panel previously to that visit
-	Then the API / cached data is called for the selected language URL and the progress bar shows"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test LanguageCacheData {
 		property portal.acceptance = "true";
 
@@ -925,10 +881,8 @@ definition {
 		}
 	}
 
-	@description = "Given the page audit panel
-	When the user clicks the launch button, either the one on the header or the one in the panel
-	Then the API is called and the data is retrieved"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test LaunchPageAudit {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
@@ -960,10 +914,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test MobileStrategyAtSiteSettings {
 		property portal.acceptance = "true";
 
@@ -992,10 +944,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-127668: Given the page audit panel
-	When the users access the second level
-	Then they can see the title of the issue, the description and tips sections"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test NavigateToSecondLevel {
 		property portal.acceptance = "true";
@@ -1031,7 +981,7 @@ definition {
 				value1 = "TIPS");
 
 			AssertElementPresent(
-				badgeValue = "1",
+				badgeValue = 1,
 				locator1 = "PageAudit#BADGE_NUMBER");
 
 			AssertTextPresent(
@@ -1040,10 +990,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-135681: Given the Page Audit panel in its initial state (no API Key configured)
-	When the user clicks on the Configure button
-	Then the user navigates to Site settings > Pages > Google PageSpeed Insights tab"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test NavigateToSiteSettingsWhenApiKeyNotConfigured {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#NavigateToSiteSettingsWhenApiKeyNotConfigured";
@@ -1075,10 +1023,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130621 Given the page audit panel
-	When there is a language version of the page that has no cached data and another one that does have
-	Then the first one shows the Launch a Page Audit... message, and the other one shows the cached data"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test OtherLanguageCacheData {
 		property portal.acceptance = "true";
 
@@ -1137,7 +1083,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
-	@priority = "3"
+	@priority = 3
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
@@ -1177,7 +1123,7 @@ definition {
 	}
 
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
-	@priority = "3"
+	@priority = 3
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
@@ -1216,10 +1162,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the Page Audit icon won't be visible from the view mode of the pages in the site"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test PageAuditIconInvisible {
 		task ("Check that Page Audit icon is visible") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1240,10 +1184,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-130621 Given the page audit panel
-	When the panel is showing no data because the audit has never been launched for that page / language combination
-	Then there's an image, a help texts and a button: Launch a Page Audit to check issues that impact on your page’s accessibility and SEO. + Button: Launch Page Audit, and the user is able to launch the audit by the means of clicking the button"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	@uitest
 	test PanelInfo {
 		property portal.acceptance = "true";
@@ -1273,10 +1215,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-132234: Given the detail view of the page audit panel
-	Then the checks related to Incorrect image-aspect-ratio, Missing meta-description, Invalid Hreflang, Invalid canonical URL, Illegible font sizes,
-	Small tap targets, Missing <title> element and Crawlable-anchors will appear under the SEO section"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test SEOFailures {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";

@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that is able to add a future validation using the response date as parameter"
-	@priority = "5"
+	@priority = 5
 	test CanAddFutureValidationUsingResponseDate {
 		property portal.acceptance = "true";
 
@@ -48,7 +48,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
@@ -75,7 +75,7 @@ definition {
 
 		FormViewBuilder.editDate(
 			fieldName = "Date Field",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = ${displayFutureDate});
 
 		FormPortlet.submitSuccessfully();
 
@@ -85,11 +85,11 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Date Field",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = ${displayFutureDate});
 	}
 
 	@description = "Verify that is able to add a past and range validation using the response date as parameter"
-	@priority = "5"
+	@priority = 5
 	test CanAddPastValidationUsingResponseDate {
 		property portal.acceptance = "true";
 
@@ -105,7 +105,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
@@ -128,13 +128,13 @@ definition {
 
 		FormViewBuilder.editDate(
 			fieldName = "Date Field",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = ${displayFutureDate});
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is invalid.");
 
 		FormViewBuilder.editDate(
 			fieldName = "Date Field",
-			fieldValue = "${displayPastDate}");
+			fieldValue = ${displayPastDate});
 
 		FormPortlet.submitSuccessfully();
 
@@ -144,11 +144,11 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Date Field",
-			fieldValue = "${displayPastDate}");
+			fieldValue = ${displayPastDate});
 	}
 
 	@description = "Verify that a Date Field can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -157,7 +157,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.save();
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -181,13 +181,13 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		FormViewBuilder.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Numeric");
 
 		FormViewBuilder.closeSidebar();
@@ -206,14 +206,14 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanBeEdited {
 		property portal.acceptance = "true";
 
@@ -259,7 +259,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.save();
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@description = "LPS-73322 - Verify that a Date Field can be required"
-	@priority = "4"
+	@priority = 4
 	test CanBeRequired {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -301,7 +301,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		var fieldDateField = FormFields.getFieldName();
@@ -328,26 +328,26 @@ definition {
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldDateField}");
+			fieldName = ${fieldDateField});
 
 		FormFields.viewRequiredAsterisk();
 
 		FormPortlet.submitWithValidationError();
 
 		Type(
-			key_fieldName = "${fieldDateField}",
+			key_fieldName = ${fieldDateField},
 			locator1 = "FormFields#DATE_FIELD",
 			value1 = "Invalid Value, Date Field");
 
 		AssertTextEquals(
-			key_fieldName = "${fieldDateField}",
+			key_fieldName = ${fieldDateField},
 			locator1 = "FormFields#DATE_FIELD",
 			value1 = "__/__/____");
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editDate(
-			fieldName = "${fieldDateField}",
+			fieldName = ${fieldDateField},
 			fieldValue = "01/01/2016");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -366,21 +366,21 @@ definition {
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "Date Field",
-			fieldName = "${fieldDateField}",
+			fieldName = ${fieldDateField},
 			fieldValue = "01/01/2016");
 	}
 
 	@description = "Verify that a Date Field can be Repeatable"
-	@priority = "5"
+	@priority = 5
 	test CanBeSetAsRepeatable {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -388,7 +388,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldName = "Date",
-			key_repeatableFieldNumber = "1",
+			key_repeatableFieldNumber = 1,
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 
 		Form.save();
@@ -399,29 +399,29 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Date",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewPublishedFormFieldByIndex(
 			fieldLabel = "Date",
-			index = "1");
+			index = 1);
 
 		FormFields.viewPublishedFormFieldByIndex(
 			fieldLabel = "Date",
-			index = "2");
+			index = 2);
 
 		FormFields.editDateByIndex(
-			index = "1",
-			key_value = "01012021");
+			index = 1,
+			key_value = 01012021);
 
 		FormFields.editDateByIndex(
-			index = "2",
-			key_value = "01012021");
+			index = 2,
+			key_value = 01012021);
 
 		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify if the Custom Date has Plus, 1 and Days as default value"
-	@priority = "5"
+	@priority = 5
 	test CanBeSetValidationWithCustomDate {
 		property portal.acceptance = "true";
 
@@ -430,7 +430,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -444,27 +444,27 @@ definition {
 		FormFields.viewValidationCustomDateStartsFrom(
 			startsFromOperation = "Plus",
 			startsFromOption = "Custom Date",
-			startsFromQuantity = "1",
+			startsFromQuantity = 1,
 			startsFromUnit = "Days");
 
 		FormFields.viewValidationCustomDateEndsOn(
 			endsOnOperation = "Plus",
 			endsOnOption = "Custom Date",
-			endsOnQuantity = "1",
+			endsOnQuantity = 1,
 			endsOnUnit = "Days");
 	}
 
 	@description = "Verify that a Form can be submitted with the Date Field"
-	@priority = "5"
+	@priority = 5
 	test CanBeSubmitted {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.save();
 
@@ -499,7 +499,7 @@ definition {
 	}
 
 	@description = "Verify that its possible to have more than one Date field using the Validation with custom date in a form"
-	@priority = "5"
+	@priority = 5
 	test CanHaveMoreThanOneDateFieldUsingDateValidation {
 		property portal.acceptance = "true";
 
@@ -512,7 +512,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -526,13 +526,13 @@ definition {
 		FormFields.selectValidationCustomDateStartsFrom(
 			startsFromOperation = "Plus",
 			startsFromOption = "Custom Date",
-			startsFromQuantity = "1",
+			startsFromQuantity = 1,
 			startsFromUnit = "Days");
 
 		FormFields.selectValidationCustomDateEndsOn(
 			endsOnOperation = "Plus",
 			endsOnOption = "Custom Date",
-			endsOnQuantity = "2",
+			endsOnQuantity = 2,
 			endsOnUnit = "Years");
 
 		FormFields.duplicateField();
@@ -574,7 +574,7 @@ definition {
 
 	@description = "Verify that changes to the Field can be canceled"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
 
@@ -583,14 +583,14 @@ definition {
 	}
 
 	@description = "Verify that the Dutch Netherlands Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationDutchNetherlands {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -641,14 +641,14 @@ definition {
 	}
 
 	@description = "Verify that the English United States Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationEnglishUnitedStates {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -739,14 +739,14 @@ definition {
 	}
 
 	@description = "Verify that the Hungarian Hungary Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationFinishFinland {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -797,14 +797,14 @@ definition {
 	}
 
 	@description = "Verify that the German Germany Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationGermanGermany {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -855,14 +855,14 @@ definition {
 	}
 
 	@description = "Verify that the Hungarian Hungary Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationHungarianHungary {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -913,14 +913,14 @@ definition {
 	}
 
 	@description = "Verify that the Japanese Japan Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationJapaneseJapan {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -971,14 +971,14 @@ definition {
 	}
 
 	@description = "Verify that the Portuguese Brazil Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationPortugueseBrazil {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -1029,14 +1029,14 @@ definition {
 	}
 
 	@description = "Verify that the Swedish Sweden	 Date Notation is correct"
-	@priority = "5"
+	@priority = 5
 	test DateNotationSwedishSweden {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -1087,14 +1087,14 @@ definition {
 	}
 
 	@description = "Verify that date value after translation change"
-	@priority = "5"
+	@priority = 5
 	test DateValueAfterChangeTranslation {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "My Date");
@@ -1150,16 +1150,16 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added"
-	@priority = "5"
+	@priority = 5
 	test HelpTextCanBeAdded {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Date Help Text");
 
@@ -1185,7 +1185,7 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1194,9 +1194,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Form.editFieldLabelMetal(fieldValue = "Test Date");
 
@@ -1212,7 +1212,7 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		property portal.acceptance = "true";
 
@@ -1221,7 +1221,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1238,7 +1238,7 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be applied"
-	@priority = "5"
+	@priority = 5
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -1247,7 +1247,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1273,7 +1273,7 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
-	@priority = "5"
+	@priority = 5
 	test ReferenceCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1282,7 +1282,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1302,7 +1302,7 @@ definition {
 
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";
 
@@ -1311,7 +1311,7 @@ definition {
 	}
 
 	@description = "Verify if the Repeatable option is working correctly on the Date field using the Validation with custom date"
-	@priority = "4"
+	@priority = 4
 	test ValidationCanBeRepeatable {
 		property portal.acceptance = "true";
 
@@ -1326,7 +1326,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1341,23 +1341,23 @@ definition {
 
 		FormFields.addRepeatableField(
 			fieldName = "Date",
-			repeatableFieldNumber = "1");
+			repeatableFieldNumber = 1);
 
 		FormFields.viewPublishedFormFieldByIndex(
 			fieldLabel = "Date",
-			index = "1");
+			index = 1);
 
 		FormFields.viewPublishedFormFieldByIndex(
 			fieldLabel = "Date",
-			index = "2");
+			index = 2);
 
 		FormFields.editDateByIndex(
-			index = "1",
-			key_value = "${displayFutureDate}");
+			index = 1,
+			key_value = ${displayFutureDate});
 
 		FormFields.editDateByIndex(
-			index = "2",
-			key_value = "${displayFutureDate}");
+			index = 2,
+			key_value = ${displayFutureDate});
 
 		FormPortlet.submitSuccessfully();
 
@@ -1371,7 +1371,7 @@ definition {
 	}
 
 	@description = "Verify if the Date field using the Validation with custom date can be translated"
-	@priority = "4"
+	@priority = 4
 	test ValidationCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1385,7 +1385,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1399,25 +1399,25 @@ definition {
 		FormFields.selectValidationCustomDateStartsFrom(
 			startsFromOperation = "Plus",
 			startsFromOption = "Custom Date",
-			startsFromQuantity = "1",
+			startsFromQuantity = 1,
 			startsFromUnit = "Days");
 
 		FormFields.selectValidationCustomDateEndsOn(
 			endsOnOperation = "Plus",
 			endsOnOption = "Custom Date",
-			endsOnQuantity = "2",
+			endsOnQuantity = 2,
 			endsOnUnit = "Years");
 
 		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
 
 		FormFields.viewValidationCustomDateStartsFrom(
 			startsFromOperation = "Plus",
-			startsFromQuantity = "1",
+			startsFromQuantity = 1,
 			startsFromUnit = "Days");
 
 		FormFields.viewValidationCustomDateEndsOn(
 			endsOnOperation = "Plus",
-			endsOnQuantity = "2",
+			endsOnQuantity = 2,
 			endsOnUnit = "Years");
 
 		Type(
@@ -1458,7 +1458,7 @@ definition {
 	}
 
 	@description = "Verify if that with date validation in the datefield the error message appears correctly on forms"
-	@priority = "5"
+	@priority = 5
 	test ValidationErrorMessageCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1467,7 +1467,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
@@ -1498,7 +1498,7 @@ definition {
 	}
 
 	@description = "Verify if the Predefined values are working correctly on the Date field using the Validation with custom date"
-	@priority = "5"
+	@priority = 5
 	test ValidationIsWorkingOnPredefinedValue {
 		property portal.acceptance = "true";
 
@@ -1515,14 +1515,14 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Date");
 
 		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitch(fieldName = "Validation");
 
-		FormFields.editDatePredefinedValue(fieldValue = "${displayPastDate}");
+		FormFields.editDatePredefinedValue(fieldValue = ${displayPastDate});
 
 		Form.publishForm();
 
@@ -1532,7 +1532,7 @@ definition {
 
 		FormFields.editDate(
 			fieldName = "Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = ${displayFutureDate});
 
 		FormPortlet.submitSuccessfully();
 
@@ -1542,7 +1542,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Date",
-			fieldValue = "${displayFutureDate}");
+			fieldValue = ${displayFutureDate});
 	}
 
 }

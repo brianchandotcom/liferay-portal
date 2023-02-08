@@ -44,7 +44,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-148919. The user cannot search a content page without publish version and its content."
-	@priority = "5"
+	@priority = 5
 	test CannotSearchContentPageWithoutPublishedVersion {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#CannotSearchContentPageWithoutPublishedVersion";
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78928. View content page in search results when filter by Type Facet."
-	@priority = "5"
+	@priority = 5
 	test FilterByTypeFacet {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByTypeFacet";
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78928. Search content page by inline text."
-	@priority = "5"
+	@priority = 5
 	test SearchByInlineText {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByInlineText";
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78928. Search content page by not editable text."
-	@priority = "5"
+	@priority = 5
 	test SearchByNotEditableText {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByNotEditableText";
@@ -243,13 +243,13 @@ definition {
 </div>
 			''';
 
-			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
 
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
+				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
 
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-120198. Search page in page select modal when map it to editable field."
-	@priority = "4"
+	@priority = 4
 	test SearchPageInSelectModalWhenMapPageToEditableField {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageInSelectModalWhenMapPageToEditableField";
 
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-164924. Able to search page with workflow by inline text or map content."
-	@priority = "4"
+	@priority = 4
 	test SearchPageWithWorkflowByInlineTextAndMapContent {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWithWorkflowByInlineTextAndMapContent";
 
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91405. View content page is not shown in search results after deleting the associated category."
-	@priority = "3"
+	@priority = 3
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageNotShownInSearchResultsAfterDeleteCategory";
 
@@ -579,7 +579,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-119582. View content page shown in search results after execute reindex all."
-	@priority = "5"
+	@priority = 5
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageShownInSearchResultsAfterExecuteReindexAll";
@@ -624,7 +624,7 @@ definition {
 
 		task ("View both content page and web content shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
-				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
+				Search.viewResultAssetTitle(searchAssetTitle = ${title});
 			}
 		}
 
@@ -644,7 +644,7 @@ definition {
 
 		task ("View both content page and web content are still shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
-				Search.viewResultAssetTitle(searchAssetTitle = "${title}");
+				Search.viewResultAssetTitle(searchAssetTitle = ${title});
 			}
 		}
 	}

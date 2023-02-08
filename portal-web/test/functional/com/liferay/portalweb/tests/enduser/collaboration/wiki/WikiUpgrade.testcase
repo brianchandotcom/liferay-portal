@@ -18,7 +18,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewWikiArchive71105 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.1.10.5";
@@ -28,7 +28,7 @@ definition {
 		Upgrade.editAndDeleteWiki();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewWikiArchive72104 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.2.10.4";
@@ -38,7 +38,7 @@ definition {
 		Upgrade.editAndDeleteWiki();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewWikiArchive73101 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.3.10.1";
@@ -48,7 +48,7 @@ definition {
 		Upgrade.editAndDeleteWiki();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ViewWikiArchive701015 {
 		property data.archive.type = "data-archive-collaboration";
 		property portal.version = "7.0.10.15";

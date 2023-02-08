@@ -1,24 +1,24 @@
 definition {
 
 	macro setContentXML {
-		var contentXml = JSONBlogUtil._convertToXML(content = "${content}");
+		var contentXml = JSONBlogUtil._convertToXML(content = ${content});
 
-		return "${contentXml}";
+		return ${contentXml};
 	}
 
 	macro setServiceContext {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
-				addGuestPermissions = "${addGuestPermissions}",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				groupName = "${groupName}",
-				site = "${site}",
-				workflowAction = "${workflowAction}");
+				addGuestPermissions = ${addGuestPermissions},
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				site = ${site},
+				workflowAction = ${workflowAction});
 		}
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 }

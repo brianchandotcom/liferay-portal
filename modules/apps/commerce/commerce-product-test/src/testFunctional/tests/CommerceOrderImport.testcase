@@ -42,14 +42,14 @@ definition {
 	}
 
 	@description = "Verify if the cancel button and the 'X' button for closing the modal works in every type of import(Orders, Wishlist, CSV)."
-	@priority = "3"
+	@priority = 3
 	test AbortImport {
 		property portal.acceptance = "false";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			CommerceCheckout.gotoCheckout();
 
@@ -60,8 +60,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -125,14 +125,14 @@ definition {
 	}
 
 	@description = "Verify users can abort an order import from the import preview modal using the 'X' button and the cancel button"
-	@priority = "3"
+	@priority = 3
 	test AbortImportFromPreview {
 		property portal.acceptance = "false";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -147,8 +147,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -163,9 +163,9 @@ definition {
 
 			IFrame.selectModalFrame();
 
-			var orderId = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "1");
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 1);
 
-			CommerceNavigator.gotoTableListEntry(entryName = "${orderId}");
+			CommerceNavigator.gotoTableListEntry(entryName = ${orderId});
 		}
 
 		task ("When the buyer aborts the import by clicking on the Cancel button") {
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@description = "Verify a csv file with a valid requested delivery date can be imported."
-	@priority = "3"
+	@priority = 3
 	test CanImportCSVWithValidRequestedDeliveryDate {
 		property portal.acceptance = "false";
 
@@ -221,13 +221,13 @@ definition {
 		task ("Then the import preview shows the Requested Delivery Date") {
 			var itemDeliveryDates = "Brake Fluid:2022-12-04,Brake Fluid:2022-08-13,Brake Fluid:2022-03-23,Premium Brake Fluid:2023-09-30,Premium Brake Pads:2022-02-23,Brake Rotors:2022-11-22";
 
-			for (var itemDeliveryDate : list "${itemDeliveryDates}") {
-				var productName = StringUtil.extractFirst("${itemDeliveryDate}", ":");
-				var requestedDeliveryDate = StringUtil.extractLast("${itemDeliveryDate}", ":");
+			for (var itemDeliveryDate : list ${itemDeliveryDates}) {
+				var productName = StringUtil.extractFirst(${itemDeliveryDate}, ":");
+				var requestedDeliveryDate = StringUtil.extractLast(${itemDeliveryDate}, ":");
 
 				CommerceOrders.assertOrderImportPreviewEntry(
-					productName = "${productName}",
-					requestedDeliveryDate = "${requestedDeliveryDate}");
+					productName = ${productName},
+					requestedDeliveryDate = ${requestedDeliveryDate});
 			}
 		}
 
@@ -251,14 +251,14 @@ definition {
 	}
 
 	@description = "Verify users can delete an order entry after importing an order"
-	@priority = "3"
+	@priority = 3
 	test DeleteAnEntryIntoAnOrder {
 		property portal.acceptance = "false";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -273,8 +273,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -285,13 +285,13 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
+			CommerceOrders.importFromOrder(orderId = ${activeOrderId});
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productPrice = "24.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -316,14 +316,14 @@ definition {
 	}
 
 	@description = "Verify users can edit an order entry after importing an order"
-	@priority = "3"
+	@priority = 3
 	test EditOrder {
 		property portal.acceptance = "false";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -338,8 +338,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -350,13 +350,13 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
+			CommerceOrders.importFromOrder(orderId = ${activeOrderId});
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productPrice = "24.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -380,21 +380,21 @@ definition {
 				productListPrice = "24.00",
 				productName = "U-Joint",
 				productPrice = "24.00",
-				productQuantity = "2",
+				productQuantity = 2,
 				productSku = "MIN55861",
 				productTotalPrice = "48.00");
 		}
 	}
 
 	@description = "Verify users can import an existing order into a new order"
-	@priority = "4"
+	@priority = 4
 	test ImportFromOrder {
 		property portal.acceptance = "true";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
-				productQuantity = "1");
+				productQuantity = 1);
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
@@ -409,8 +409,8 @@ definition {
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
 				productName = "U-Joint",
-				productQuantity = "1",
-				productUnitPrice = "24",
+				productQuantity = 1,
+				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -421,31 +421,31 @@ definition {
 		}
 
 		task ("Then they should be able to import the existing order") {
-			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
+			CommerceOrders.importFromOrder(orderId = ${activeOrderId});
 
 			CommerceAcceleratorsInitializer.reviewOrder(
 				orderAuthor = "Buyer User",
 				productName = "U-Joint",
 				productPrice = "24.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				productUnitPrice = "24.00");
 		}
 	}
 
 	@description = "Verify orders can be searched when importing an order"
-	@priority = "3"
+	@priority = 3
 	test ImportFromOrderUseSearchBar {
 		property portal.acceptance = "true";
 
 		task ("Given 2 completed orders") {
 			for (var product : list "U-Joint:24,Torque Converters:34") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productUnitPrice = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productUnitPrice = StringUtil.extractLast(${product}, ":");
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "1");
+					productName = ${productName},
+					productQuantity = 1);
 
 				CommerceNavigator.gotoMiniCart();
 
@@ -459,9 +459,9 @@ definition {
 					newAddressCountry = "United States",
 					newAddressName = "Address Name",
 					newAddressZipCode = "Test Zip Code",
-					productName = "${productName}",
-					productQuantity = "1",
-					productUnitPrice = "${productUnitPrice}",
+					productName = ${productName},
+					productQuantity = 1,
+					productUnitPrice = ${productUnitPrice},
 					shippingMethod = "Standard");
 
 				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -481,27 +481,27 @@ definition {
 		}
 
 		task ("When the buyer searches the ID of a completed order") {
-			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "2");
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 2);
 
-			var orderId1 = StringUtil.extractFirst("${orderIds}", ",");
-			var orderId2 = StringUtil.extractLast("${orderIds}", ",");
+			var orderId1 = StringUtil.extractFirst(${orderIds}, ",");
+			var orderId2 = StringUtil.extractLast(${orderIds}, ",");
 
-			Search.searchCP(searchTerm = "${orderId1}");
+			Search.searchCP(searchTerm = ${orderId1});
 		}
 
 		task ("Then only that order should appear") {
 			AssertElementPresent(
-				key_entryName = "${orderId1}",
+				key_entryName = ${orderId1},
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 			AssertElementNotPresent(
-				key_entryName = "${orderId2}",
+				key_entryName = ${orderId2},
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 		}
 	}
 
 	@description = "Verify an empty state message is displayed when buyers try importing an order when there are no orders"
-	@priority = "3"
+	@priority = 3
 	test TryImportWithoutOrders {
 		property portal.acceptance = "false";
 
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@description = "Verify a csv file with an invalid requested delivery date can be imported and the date is shown as invalid in the import preview."
-	@priority = "3"
+	@priority = 3
 	test ValidateCSVWithInvalidRequestedDeliveryDate {
 		property portal.acceptance = "false";
 
@@ -554,7 +554,7 @@ definition {
 		task ("Then the import preview shows the requested delivery date as invalid") {
 			for (var productName : list "Brake Fluid,Brake Fluid,Brake Fluid,Premium Brake Fluid") {
 				CommerceOrders.assertOrderImportPreviewEntry(
-					productName = "${productName}",
+					productName = ${productName},
 					requestedDeliveryDate = "The requested delivery date is invalid.");
 			}
 		}
@@ -579,18 +579,18 @@ definition {
 	}
 
 	@description = "Verify existing orders are shown when importing an order."
-	@priority = "4"
+	@priority = 4
 	test VerifyIfAllOrdersArePresent {
 		property portal.acceptance = "false";
 
 		task ("Given 3 completed orders") {
 			for (var product : list "U-Joint:24,Mount:3,Torque Converters:34") {
-				var productName = StringUtil.extractFirst("${product}", ":");
-				var productUnitPrice = StringUtil.extractLast("${product}", ":");
+				var productName = StringUtil.extractFirst(${product}, ":");
+				var productUnitPrice = StringUtil.extractLast(${product}, ":");
 
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "1");
+					productName = ${productName},
+					productQuantity = 1);
 
 				CommerceNavigator.gotoMiniCart();
 
@@ -604,9 +604,9 @@ definition {
 					newAddressCountry = "United States",
 					newAddressName = "Address Name",
 					newAddressZipCode = "Test Zip Code",
-					productName = "${productName}",
-					productQuantity = "1",
-					productUnitPrice = "${productUnitPrice}",
+					productName = ${productName},
+					productQuantity = 1,
+					productUnitPrice = ${productUnitPrice},
 					shippingMethod = "Standard");
 
 				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -630,30 +630,30 @@ definition {
 		task ("Then all 3 created orders should be available for import") {
 			IFrame.selectModalFrame();
 
-			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "3");
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 3);
 
-			for (var orderId : list "${orderIds}") {
+			for (var orderId : list ${orderIds}) {
 				AssertElementPresent(
-					key_entryName = "${orderId}",
+					key_entryName = ${orderId},
 					locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 			}
 
 			AssertElementNotPresent(
-				key_entryName = "${currentOrderId}",
+				key_entryName = ${currentOrderId},
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 		}
 	}
 
 	@description = "Verify the order import preview after a product in the order becomes unavailable"
-	@priority = "4"
+	@priority = 4
 	test VerifyPreviewModal {
 		property portal.acceptance = "false";
 
 		task ("Given a completed order with multiple products") {
 			for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters") {
 				FrontStore.addInitializerProductToCart(
-					productName = "${productName}",
-					productQuantity = "1");
+					productName = ${productName},
+					productQuantity = 1);
 			}
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
@@ -677,11 +677,11 @@ definition {
 			CommerceProducts.openProductsAdmin();
 
 			CommerceEntry.editWarehousesQuantity(
-				italyQuantity = "0",
-				northeastQuantity = "0",
+				italyQuantity = 0,
+				northeastQuantity = 0,
 				productName = "U-Joint",
 				productSku = "MIN55861",
-				southwestQuantity = "0");
+				southwestQuantity = 0);
 		}
 
 		task ("When the buyer is importing the order") {
@@ -707,7 +707,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "The specified quantity is unavailable.",
 				productName = "U-Joint",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55861",
 				totalPrice = "",
 				unitPrice = "");
@@ -715,7 +715,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "Transmission Cooler Line Assembly",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55860",
 				totalPrice = "15.00",
 				unitPrice = "15.00");
@@ -723,7 +723,7 @@ definition {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
 				productName = "Torque Converters",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				totalPrice = "34.00",
 				unitPrice = "34.00");
@@ -742,7 +742,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Transmission Cooler Line Assembly",
 				productPrice = "15.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55860",
 				productUnitPrice = "15.00");
 
@@ -750,7 +750,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Torque Converters",
 				productPrice = "34.00",
-				productQuantity = "1",
+				productQuantity = 1,
 				productSku = "MIN55859",
 				productUnitPrice = "34.00");
 

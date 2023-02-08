@@ -18,13 +18,13 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-135394 - Verify it is possible to add a column for the View"
-	@priority = "5"
+	@priority = 5
 	test CanAddColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147765",
@@ -46,12 +46,12 @@ definition {
 		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date");
 
 		for (var columnOption : list "Author,Create Date") {
-			ObjectCustomViews.assertColumnPresent(columnName = "${columnOption}");
+			ObjectCustomViews.assertColumnPresent(columnName = ${columnOption});
 		}
 	}
 
 	@description = "LPS-144472 - Verify if the user can add metadata columns to Default Sort"
-	@priority = "4"
+	@priority = 4
 	test CanAddMetadataColumnsToDefaultSort {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152059",
@@ -72,25 +72,25 @@ definition {
 
 		var listMetaData = "Author,Create Date,External Reference Code,Modified Date,Status,ID";
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+		ObjectCustomViews.addColumnsViaUI(addColumns = ${listMetaData});
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "${listMetaData}") {
+		for (var columnName : list ${listMetaData}) {
 			ObjectCustomViews.addDefaultSort(
-				columnOption = "${columnName}",
+				columnOption = ${columnName},
 				sortOption = "Ascending");
 		}
 
-		for (var columnName : list "${listMetaData}") {
+		for (var columnName : list ${listMetaData}) {
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
-				columnName = "${columnName}",
+				columnName = ${columnName},
 				sortingLabel = "Ascending");
 		}
 	}
 
 	@description = "LPS-147792 - Verify it is possible to add any translation for any Column Label"
-	@priority = "4"
+	@priority = 4
 	test CanAddTranslationToColumnLabel {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152069",
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"
-	@priority = "4"
+	@priority = 4
 	test CanCancelColumnAddition {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147766",
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify it is possible to cancel the rename of a Column Label"
-	@priority = "4"
+	@priority = 4
 	test CanCancelRenameColumnLabel {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152067",
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"
-	@priority = "4"
+	@priority = 4
 	test CanCancelViewCreation {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Object 147754",
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to create a Default Sort when there is column (Ascending or Descending)"
-	@priority = "4"
+	@priority = 4
 	test CanCreateDefaultSort {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152053",
@@ -280,7 +280,7 @@ definition {
 	}
 
 	@description = "LPS-144957 - Verify that it's possible to create the filter"
-	@priority = "4"
+	@priority = 4
 	test CanCreateFilter {
 		task ("Create Custom Object, Custom Field and publish it via API") {
 			ObjectAdmin.addObjectViaAPI(
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@description = "LPS-166585 - Verify that it's possible to create a filter using the relationship field of the object"
-	@priority = "5"
+	@priority = 5
 	test CanCreateFilterUsingRelationshipField {
 		property portal.acceptance = "true";
 
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"
-	@priority = "5"
+	@priority = 5
 	test CanCreateView {
 		property portal.acceptance = "true";
 
@@ -458,7 +458,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View by unselecting it"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteColumnByUnselect {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147768",
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteColumnThroughDeleteButton {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147767",
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "LPS-166588 - Verify that it's possible to delete a default filter column with the relationship field in the custom view"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteColumnWithRelationshipFieldFilter {
 		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
 			ObjectAdmin.addObjectViaAPI(
@@ -570,7 +570,7 @@ definition {
 	}
 
 	@description = "LPS-144957 - Verify that it's possible to delete the filter"
-	@priority = "4"
+	@priority = 4
 	test CanDeleteFilter {
 		task ("Create Custom Object and Custom Field via API and go to it") {
 			ObjectAdmin.addObjectViaAPI(
@@ -644,7 +644,7 @@ definition {
 			ObjectCustomViews.goToFiltersTab();
 
 			for (var filters : list "Create Date,Modified Date,Status") {
-				ObjectCustomViews.assertPresentEntriesOnFilters(filterBy = "${filters}");
+				ObjectCustomViews.assertPresentEntriesOnFilters(filterBy = ${filters});
 
 				Click(
 					key_cardName = "Filters",
@@ -666,7 +666,7 @@ definition {
 	}
 
 	@description = "LPS-166590 - Verify that it’s possible to delete the configured filters from the object"
-	@priority = "3"
+	@priority = 3
 	test CanDeleteFilterWithRelationshipField {
 		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
 			ObjectAdmin.addObjectViaAPI(
@@ -732,7 +732,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user to delete the pre-order column"
-	@priority = "4"
+	@priority = 4
 	test CanDeletePreOrderColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152057",
@@ -778,14 +778,14 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceAction : list "DELETE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role");
 		}
@@ -814,7 +814,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a View"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteView {
 		property portal.acceptance = "true";
 
@@ -839,7 +839,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to drag the columns"
-	@priority = "5"
+	@priority = 5
 	test CanDragColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147769",
@@ -862,39 +862,39 @@ definition {
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Author",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Create Date",
-			position = "2");
+			position = 2);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Modified Date",
-			position = "3");
+			position = 3);
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Create Date",
 			key_columnName1 = "Author",
-			key_position = "1",
+			key_position = 1,
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
 			value1 = "");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Create Date",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Author",
-			position = "2");
+			position = 2);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Modified Date",
-			position = "3");
+			position = 3);
 	}
 
 	@description = "LPS-146028 - Verify that the user can duplicate a object View"
-	@priority = "4"
+	@priority = 4
 	test CanDuplicateObjectView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151589",
@@ -915,7 +915,7 @@ definition {
 	}
 
 	@description = "LPS-144957 - Verify that it's possible to edit the filter"
-	@priority = "4"
+	@priority = 4
 	test CanEditFilter {
 		task ("Create Custom Object and Custom Field via API and go to it") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1005,7 +1005,7 @@ definition {
 
 			for (var filterValueList : list "Approved,Pending") {
 				Click.clickAtNotVisible(
-					key_columnOption = "${filterValueList}",
+					key_columnOption = ${filterValueList},
 					locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 			}
 
@@ -1028,7 +1028,7 @@ definition {
 	}
 
 	@description = "LPS-166587 - Verify that it's possible to edit a default filter column with the relationship field in the custom view"
-	@priority = "3"
+	@priority = 3
 	test CanEditFilterWithRelationshipField {
 		task ("Given: An object related to another object, in a One-to-Many relationship and the relationship field as a Default Filter") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1090,7 +1090,7 @@ definition {
 	}
 
 	@description = "LPS-169019 - Verify it's possible to filter by Create Date"
-	@priority = "4"
+	@priority = 4
 	test CanFilterEntriesByCreateDate {
 		task ("Given a Custom Object and two entries") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1131,7 +1131,7 @@ definition {
 
 			var listMetaData = "Custom Field,Create Date";
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+			ObjectCustomViews.addColumnsViaUI(addColumns = ${listMetaData});
 
 			ObjectCustomViews.goToFiltersTab();
 
@@ -1156,7 +1156,7 @@ definition {
 	}
 
 	@description = "LPS-169018 - Verify it's possible to filter by Modified Date"
-	@priority = "4"
+	@priority = 4
 	test CanFilterEntriesByModifiedDate {
 		task ("Given a Custom Object and two entries") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1197,7 +1197,7 @@ definition {
 
 			var listMetaData = "Custom Field,Modified Date";
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+			ObjectCustomViews.addColumnsViaUI(addColumns = ${listMetaData});
 
 			ObjectCustomViews.goToFiltersTab();
 
@@ -1222,7 +1222,7 @@ definition {
 	}
 
 	@description = "LPS-169016 - Verify it's possible to filter by status"
-	@priority = "4"
+	@priority = 4
 	test CanFilterEntriesByStatus {
 		task ("Given a custom object with an entry") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1276,7 +1276,7 @@ definition {
 
 			var listMetaData = "Custom Field,Status";
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
+			ObjectCustomViews.addColumnsViaUI(addColumns = ${listMetaData});
 
 			ObjectCustomViews.goToFiltersTab();
 
@@ -1304,7 +1304,7 @@ definition {
 	}
 
 	@description = "LPS-166586 - Verify that it’s possible to filter entries using any relationship field of the object in the custom view"
-	@priority = "5"
+	@priority = 5
 	test CanFilterEntriesUsingRelationshipField {
 		task ("Given: An object with text field related to another object in a One-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1397,7 +1397,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is not is possible to create a Default Sort when there isn't column"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateDefaultSortWhenNoColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152054",
@@ -1424,7 +1424,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"
-	@priority = "4"
+	@priority = 4
 	test CannotLeaveNameFieldEmpty {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147755",
@@ -1445,7 +1445,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveAnotherViewAsDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 171624",
@@ -1490,7 +1490,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is not possible to save a View set as default when there are no columns selected"
-	@priority = "4"
+	@priority = 4
 	test CannotSaveNoColumnsView {
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1525,7 +1525,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to prioritize columns to Default Sort"
-	@priority = "4"
+	@priority = 4
 	test CanPrioritizeColumns {
 		var listColumns = "Author,Create Date";
 
@@ -1546,23 +1546,23 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "${listColumns}");
+		ObjectCustomViews.addColumnsViaUI(addColumns = ${listColumns});
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "${listColumns}") {
+		for (var columnName : list ${listColumns}) {
 			ObjectCustomViews.addDefaultSort(
-				columnOption = "${columnName}",
+				columnOption = ${columnName},
 				sortOption = "Ascending");
 		}
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Author",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Create Date",
-			position = "2");
+			position = 2);
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Create Date",
@@ -1573,15 +1573,15 @@ definition {
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Create Date",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewColumnOrderOnDefaultSort(
 			columnName = "Author",
-			position = "2");
+			position = 2);
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"
-	@priority = "4"
+	@priority = 4
 	test CanSearchColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147762",
@@ -1610,7 +1610,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchColumnAddColumnModal {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147763",
@@ -1639,7 +1639,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to a New Default Sort modal"
-	@priority = "4"
+	@priority = 4
 	test CanSearchColumnOnNewDefaultSortModal {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152063",
@@ -1668,7 +1668,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to Default Sort"
-	@priority = "4"
+	@priority = 4
 	test CanSearchColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152062",
@@ -1695,21 +1695,21 @@ definition {
 
 		for (var columnName : list "Author,Create Date,External Reference Code,Modified Date,Status,ID") {
 			ObjectCustomViews.addDefaultSort(
-				columnOption = "${columnName}",
+				columnOption = ${columnName},
 				sortOption = "Ascending");
 		}
 
 		for (var columnName : list "Author,Create Date,External Reference Code,Modified Date,Status,ID") {
-			ObjectCustomViews.searchOnDefaultSort(columnName = "${columnName}");
+			ObjectCustomViews.searchOnDefaultSort(columnName = ${columnName});
 
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
-				columnName = "${columnName}",
+				columnName = ${columnName},
 				sortingLabel = "Ascending");
 		}
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a View"
-	@priority = "4"
+	@priority = 4
 	test CanSearchView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147753",
@@ -1734,7 +1734,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search when press enter key on Default Sort"
-	@priority = "4"
+	@priority = 4
 	test CanSearchWithEnterKey {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152064",
@@ -1755,13 +1755,13 @@ definition {
 
 		var listColumns = "Author,Create Date,Modified Date";
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "${listColumns}");
+		ObjectCustomViews.addColumnsViaUI(addColumns = ${listColumns});
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "${listColumns}") {
+		for (var columnName : list ${listColumns}) {
 			ObjectCustomViews.addDefaultSort(
-				columnOption = "${columnName}",
+				columnOption = ${columnName},
 				sortOption = "Ascending");
 		}
 
@@ -1776,12 +1776,12 @@ definition {
 			sortingLabel = "Ascending");
 
 		for (var columnNotPresent : list "Create Date,Modified Date") {
-			ObjectCustomViews.assertColumnNotPresentOnDefaultSort(columnName = "${columnNotPresent}");
+			ObjectCustomViews.assertColumnNotPresentOnDefaultSort(columnName = ${columnNotPresent});
 		}
 	}
 
 	@description = "LPS-144472 - Verify it is possible to see the entries with default return"
-	@priority = "4"
+	@priority = 4
 	test CanSeeEntriesWithDefaultReturn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152065",
@@ -1831,19 +1831,19 @@ definition {
 
 		ObjectCustomViews.viewFieldsEntryByPosition(
 			entryName = "Entry A",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewFieldsEntryByPosition(
 			entryName = "Entry Z",
-			position = "2");
+			position = 2);
 
 		ObjectCustomViews.viewFieldsEntryByPosition(
 			entryName = "Entry B",
-			position = "3");
+			position = 3);
 	}
 
 	@description = "LPS-166589 - Verify that it’s possible to view the object entries with the default filter applied"
-	@priority = "5"
+	@priority = 5
 	test CanSeeEntriesWithFilterApplied {
 		task ("Given: An object with text field related to another object in a One-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1938,7 +1938,7 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify that the new column name will be displayed on the entries list"
-	@priority = "4"
+	@priority = 4
 	test CanSeeRenamedColumnNameOnObjectView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152070",
@@ -1992,7 +1992,7 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify it is possible to see the column label as the alias on the view builder column list"
-	@priority = "5"
+	@priority = 5
 	test CanSeeRenamedColumnOnViewBuilder {
 		property portal.acceptance = "true";
 
@@ -2031,7 +2031,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible to sort the column entries as ascending or descending"
-	@priority = "4"
+	@priority = 4
 	test CanSortColumnEntries {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152060",
@@ -2085,11 +2085,11 @@ definition {
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry A",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry C",
-			position = "3");
+			position = 3);
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -2113,15 +2113,15 @@ definition {
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry C",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry A",
-			position = "3");
+			position = 3);
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user update the pre-order column"
-	@priority = "4"
+	@priority = 4
 	test CanUpdatePreOrderColumn {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152056",
@@ -2159,14 +2159,14 @@ definition {
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				roleTitle = "Regular Role");
 		}
 
 		for (var resourceAction : list "UPDATE,VIEW") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "${resourceAction}",
+				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.object.model.ObjectDefinition",
 				roleTitle = "Regular Role");
 		}
@@ -2201,7 +2201,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to update a View"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateView {
 		property portal.acceptance = "true";
 
@@ -2230,7 +2230,7 @@ definition {
 	}
 
 	@description = "LPS-148955 - Verify it is possible to view the values of 2 or more relationship fields for a same object"
-	@priority = "4"
+	@priority = 4
 	test CanView2RelationshipFieldValues {
 		for (var letter : list "A,B,C") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2313,7 +2313,7 @@ definition {
 	}
 
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"
-	@priority = "5"
+	@priority = 5
 	test CanViewEntries {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147770",
@@ -2361,7 +2361,7 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify it is possible the user see entries of object with default sort defined"
-	@priority = "4"
+	@priority = 4
 	test CanViewEntriesWithDefaultSort {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152058",
@@ -2415,15 +2415,15 @@ definition {
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry A",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewFieldsNameByPosition(
 			fieldName = "Entry B",
-			position = "2");
+			position = 2);
 	}
 
 	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"
-	@priority = "5"
+	@priority = 5
 	test CanViewMetadataValues {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 149239",
@@ -2466,12 +2466,12 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject149239");
 
 		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
-			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+			ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
 		}
 	}
 
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"
-	@priority = "5"
+	@priority = 5
 	test CanViewOnlySelectedColumns {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147771",
@@ -2516,16 +2516,16 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147771");
 
 		for (var columnName : list "Author,Create Date,Custom Field") {
-			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+			ObjectPortlet.assertEntryColumnPresent(column = ${columnName});
 		}
 
 		for (var columnName : list "External Reference Code,Modified Date,Status,ID") {
-			ObjectPortlet.assertEntryColumnNotPresent(column = "${columnName}");
+			ObjectPortlet.assertEntryColumnNotPresent(column = ${columnName});
 		}
 	}
 
 	@description = "LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization"
-	@priority = "5"
+	@priority = 5
 	test ColumnsAreOrdered {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147772",
@@ -2559,7 +2559,7 @@ definition {
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Create Date",
 			key_columnName1 = "Author",
-			key_position = "1",
+			key_position = 1,
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
 			value1 = "");
@@ -2581,19 +2581,19 @@ definition {
 
 		ObjectCustomViews.viewColumnsOrder(
 			columnName = "Create Date",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewColumnsOrder(
 			columnName = "Author",
-			position = "2");
+			position = 2);
 
 		ObjectCustomViews.viewColumnsOrder(
 			columnName = "ID",
-			position = "3");
+			position = 3);
 	}
 
 	@description = "LPS-146028 - Verify that the columns present at the View Builder are ordered correctly"
-	@priority = "4"
+	@priority = 4
 	test DuplicatedObjectViewColumnsAreCorrectlyOrdered {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151590",
@@ -2628,27 +2628,27 @@ definition {
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Author",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Create Date",
-			position = "2");
+			position = 2);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Modified Date",
-			position = "3");
+			position = 3);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Status",
-			position = "4");
+			position = 4);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "ID",
-			position = "5");
+			position = 5);
 	}
 
 	@description = "LPS-146028 - Verify that the fields present at the Default Sort are ordered correctly"
-	@priority = "4"
+	@priority = 4
 	test DuplicatedObjectViewFieldsAreCorrectlyOrdered {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151591",
@@ -2699,15 +2699,15 @@ definition {
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Custom Field A",
-			position = "1");
+			position = 1);
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Custom Field B",
-			position = "2");
+			position = 2);
 	}
 
 	@description = "LPS-146028 - Verify that the view name is the same of the original, adding a "(Copy)" on the right side"
-	@priority = "4"
+	@priority = 4
 	test DuplicatedViewHasSameOriginalName {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152051",
@@ -2732,7 +2732,7 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that when the user duplicate a view, the Mark As Default option comes inactivated"
-	@priority = "4"
+	@priority = 4
 	test DuplicatedViewIsNotDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152052",
@@ -2757,7 +2757,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"
-	@priority = "3"
+	@priority = 3
 	test EmptyStateViewBuilder {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147760",
@@ -2782,7 +2782,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View tab"
-	@priority = "3"
+	@priority = 3
 	test EmptyStateViewTab {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 201",
@@ -2799,7 +2799,7 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the Author, Create Date, Modified Date, Status, ID columns (Metadata columns) are displayed to be selected"
-	@priority = "5"
+	@priority = 5
 	test MetadataColumnsDisplayed {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147764",
@@ -2821,12 +2821,12 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		for (var columnOption : list "Author,Create Date,Modified Date,Status,ID") {
-			ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "${columnOption}");
+			ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = ${columnOption});
 		}
 	}
 
 	@description = "LPS-135394 - Verify the no result message when searching for a view"
-	@priority = "3"
+	@priority = 3
 	test NoResultMessageView {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 202",
@@ -2848,7 +2848,7 @@ definition {
 
 	@description = "LPS-135394 - Verify the no result message when searching for a column"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test NoResultMessageViewBuilder {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147761",

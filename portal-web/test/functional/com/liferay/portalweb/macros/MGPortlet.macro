@@ -26,7 +26,7 @@ definition {
 		if (isSet(invalidRootFolder)) {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD",
-				value1 = "${dmRootFolderName}");
+				value1 = ${dmRootFolderName});
 
 			AssertTextEquals.assertPartialText(
 				key_warningMessage = "The selected root folder cannot be found. Please select another one",
@@ -55,29 +55,29 @@ definition {
 					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
 					value1 = "Asset Library");
 
-				LexiconCard.clickCard(card = "${depotName}");
+				LexiconCard.clickCard(card = ${depotName});
 			}
 
-			if ("${selectHomeFolder}" == "true") {
-				var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			if (${selectHomeFolder} == "true") {
+				var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-				if (IsElementPresent(key_breadcrumbName = "${siteName}", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+				if (IsElementPresent(key_breadcrumbName = ${siteName}, locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
 					AssertVisible(
 						key_text = "Select This Folder",
 						locator1 = "Button#ANY_DISABLED");
 
 					AssertClick(
-						key_breadcrumbName = "${siteName}",
+						key_breadcrumbName = ${siteName},
 						locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-						value1 = "${siteName}");
+						value1 = ${siteName});
 				}
 			}
 
-			if ("${selectSubfolder}" == "true") {
+			if (${selectSubfolder} == "true") {
 				AssertClick(
-					key_dmFolderName = "${dmFolderName}",
+					key_dmFolderName = ${dmFolderName},
 					locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
-					value1 = "${dmFolderName}");
+					value1 = ${dmFolderName});
 			}
 
 			if (isSet(selectRootFolder)) {
@@ -89,13 +89,13 @@ definition {
 			else {
 				if (isSet(selectBreadcrumb)) {
 					AssertClick(
-						key_breadcrumbName = "${breadcrumbName}",
+						key_breadcrumbName = ${breadcrumbName},
 						locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-						value1 = "${breadcrumbName}");
+						value1 = ${breadcrumbName});
 				}
 
 				AssertClick(
-					key_dmFolderName = "${dmRootFolderName}",
+					key_dmFolderName = ${dmRootFolderName},
 					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
 					value1 = "Select");
 			}
@@ -129,10 +129,10 @@ definition {
 	}
 
 	macro viewFolderItemsPG {
-		LexiconEntry.openEntryMenu(rowEntry = "${mgFolderName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${mgFolderName});
 
 		for (var menuItem : list "Permissions,Multiple Media,Add Shortcut,Access from Desktop") {
-			MenuItem.viewPresent(menuItem = "${menuItem}");
+			MenuItem.viewPresent(menuItem = ${menuItem});
 		}
 	}
 

@@ -36,7 +36,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMentionViaMBThread {
 		Mentions.addMentionViaMessageBoardThread(
@@ -58,7 +58,7 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanViewMentionViaMBThreadReply {
 		JSONMBMessage.addMessage(
@@ -79,7 +79,7 @@ definition {
 			mentionsUserScreenName = "usersn");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CanViewMentionViaUpdatedMBThread {
 		JSONMBMessage.addMessage(
@@ -98,7 +98,7 @@ definition {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsThread.viewCP(
-			replyCount = "0",
+			replyCount = 0,
 			threadBody = "Thread Body Edit",
 			threadSubject = "Thread Subject");
 
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-117986. It ensures that multiple mentions can be added to thread."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test MultipleMentionsCanBeAddedToThread {
 		JSONUser.addUser(

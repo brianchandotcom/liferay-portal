@@ -25,13 +25,13 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
-	@priority = "4"
+	@priority = 4
 	test LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore {
 		property test.name.skip.portal.instance = "SegmentsCreationOverview#LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore";
 
@@ -44,7 +44,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a dynamic segment") {
@@ -60,7 +60,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "birthDate");
 
-			for (var cont : list "${criteriasAcount}") {
+			for (var cont : list ${criteriasAcount}) {
 				ACSegments.duplicateSegmentCriteria(criteriaName = "birthDate");
 			}
 
@@ -70,16 +70,16 @@ definition {
 		task ("Click View All Criteria, ascroll down and see the last criteria.") {
 			ACUtils.clickAnyButton(button = "View All Criteria");
 
-			for (var cont : list "${criteriasAcount}") {
+			for (var cont : list ${criteriasAcount}) {
 				ACSegments.viewSegmentCriteriaIndividualAttributes(
 					attributeName = "birthDate",
-					index = "${cont}");
+					index = ${cont});
 			}
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"
-	@priority = "4"
+	@priority = 4
 	test SegmentCriteriasNestCorrectlyInTheCriteriaCard {
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
@@ -88,7 +88,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = ${propertyName});
 		}
 
 		task ("Add a new dynamic segment") {
@@ -113,26 +113,26 @@ definition {
 			ACSegments.addSegmentField(segmentField = "birthDate");
 
 			ACSegments.selectOperator(
-				index = "2",
+				index = 2,
 				operator = "is after");
 
 			ACSegments.editDateCriterion(
-				day = "10",
+				day = 10,
 				month = "September",
-				year = "2020");
+				year = 2020);
 		}
 
 		task ("Add a userName criteria from Individual Attributes nested in email") {
 			ACSegments.addNestedSegmentField(
-				index = "2",
+				index = 2,
 				segmentField = "additionalName");
 
 			ACSegments.selectOperator(
-				index = "3",
+				index = 3,
 				operator = "does not contain");
 
 			ACSegments.editTextCriterion(
-				index = "3",
+				index = 3,
 				textInput = "@liferay.com");
 		}
 
@@ -141,11 +141,11 @@ definition {
 		}
 
 		task ("Change the second conjunction to OR") {
-			ACSegments.editConjunction(index = "2");
+			ACSegments.editConjunction(index = 2);
 
 			ACSegments.viewConjunction(
 				conjunction = "Or",
-				index = "2");
+				index = 2);
 		}
 
 		task ("Save the segment") {
@@ -164,14 +164,14 @@ definition {
 				attributeValue = "2020-09-10",
 				condition = "is after",
 				conjunction = "OR",
-				index = "2");
+				index = 2);
 
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
 				attributeName = "additionalName",
 				attributeValue = '''"@liferay.com"''',
 				condition = "does not contain",
-				index = "2",
-				key_indexNested = "2");
+				index = 2,
+				key_indexNested = 2);
 		}
 	}
 

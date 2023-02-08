@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,14 +26,12 @@ definition {
 		for (var vocabulary : list "Topic,Audience,Stage") {
 			JSONCategory.tearDownCategories(
 				groupName = "Global",
-				vocabularyName = "${vocabulary}");
+				vocabularyName = ${vocabulary});
 		}
 	}
 
-	@description = "LPS-148882: Given blogs entry editor screen
-	When user expands Categorization section
-	Then user can add categories from Audience and Stage Vocabularies"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test AddCategoriesToBlogs {
 		property portal.acceptance = "true";
 
@@ -89,10 +87,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
-	When the user has NOT permissions to add new categories to Global vocabularies
-	Then the user is NOT able to add new categories from the select modal window"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AddCategoryFromDMWithoutPermission {
 		task ("Create new user") {
 			JSONUser.addUser(
@@ -144,10 +140,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131793 Given select modal window in the the categorization section in Documents and Media
-	When the user has permissions to add new categories to Global vocabularies
-	Then the user is able to add new categories from the select modal window"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test AddCategoryFromDMWithPermission {
 		task ("Go to add Basic Document page in Global") {
 			DMNavigator.openToAddEntry(
@@ -163,7 +157,7 @@ definition {
 	}
 
 	@description = "When the user clicks on Save and Add a new one, the category is saved"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test AddCategoryViaSaveAndAddButton {
 		property portal.acceptance = "true";
@@ -191,7 +185,7 @@ definition {
 	}
 
 	@description = "When the site administrator (not Global) accesses to the Categories administration application, the existing Global vocabularies appear as locked and it's not possible to edit them"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test CannotEditGlobalCategoryInNormalSite {
 		property portal.acceptance = "true";
@@ -226,7 +220,7 @@ definition {
 	}
 
 	@description = "When Edit the Audience or Stage, default values are For internal use only ON , Allow user to select multiple categories ON, will be associated with web content, won't be required"
-	@priority = "5"
+	@priority = 5
 	test CheckAudienceStageDefaultSettings {
 		task ("Go to Global Vocabularies") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
@@ -263,10 +257,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
-	When user navigates to Content Dashboard
-	Then user can see the asset's categories under the respective column"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogCategoriesColumnAtContentDashboard {
 		property portal.acceptance = "true";
 
@@ -302,10 +294,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
-	When user navigates to Content Dashboard
-	Then the asset is being counted at graph"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogCategoriesGraphAtContentDashboard {
 		property portal.acceptance = "true";
 
@@ -347,10 +337,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
-	When the user filters by category using Filter and Order
-	Then the Blogs Entry is listed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogFilterByCategory {
 		property portal.acceptance = "true";
 
@@ -389,11 +377,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Dynamic Collection has a Blogs Entry item type
-	And is filtered by Audience's or Stage's audience
-	When the Collection is selected at Asset Publisher
-	Then all blogs entries with the corresponding category is shown"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogFilterByCategoryAtAssetPublisher {
 		property portal.acceptance = "true";
 
@@ -465,11 +450,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
-	And those categories are filtered at Dynamic Collection
-	When user clicks at View Items
-	Then the blog asset should be listed"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test CheckBlogFilterByCategoryAtCollection {
 		property portal.acceptance = "true";
 
@@ -523,11 +505,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Dynamic Collection has a Blogs Entry item type
-	And is filtered by Audience's or Stage's audience
-	When the Collection is selected at Collection Display Fragment
-	Then all blogs entries with the corresponding category is shown"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogFilterByCategoryAtCollectionWithFragment {
 		property portal.acceptance = "true";
 
@@ -602,10 +581,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given a Blog Entry with Audience and/or Stage categories
-	When the user filters by clicking at category's bar
-	Then the Blogs Entry is listed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckBlogFilterByCategoryBar {
 		property portal.acceptance = "true";
 
@@ -643,10 +620,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given there are two or more sites created
-	When user is creating a Blog Entry
-	Then s/he can add Audience and Stage categories across all sites"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	@uitest
 	test CheckBlogsCategoriesMoreThanOneSite {
 		property portal.acceptance = "true";
@@ -744,10 +719,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-148882: Given blogs entry editor screen
-	When user expands Categorization section
-	Then Audience and Stage vocabularies are visible"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test CheckCategoriesAtBlogs {
 		property portal.acceptance = "true";
 
@@ -777,10 +750,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-131793 Given the vocabulary's configuration page
-	When the Basic Document asset type for Documents and Media is selected
-	Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (External Video Shortcut & Google Drive Shortcut) will not"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckDMVocabularyAssetSubtypeBasicDocument {
 		property osgi.app.includes = "document-library-google-docs";
 
@@ -802,7 +773,7 @@ definition {
 
 			for (var vocabulary : list "Basic Document Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -821,7 +792,7 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -840,16 +811,14 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
 	}
 
-	@description = "LPS-131793 Given the vocabulary's configuration page
-	When External Video Shortcut asset type for Documents and Media is selected
-	Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (Basic Document & Google Drive Shortcut) will not"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckDMVocabularyAssetSubtypeExternalVideoShortcut {
 		property osgi.app.includes = "document-library-google-docs";
 
@@ -872,7 +841,7 @@ definition {
 
 			for (var vocabulary : list "External Video Shortcut Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -890,7 +859,7 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -909,16 +878,14 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
 	}
 
-	@description = "LPS-131793 Given the vocabulary's configuration page
-	When the Google Drive Shortcut asset type for Documents and Media is selected
-	Then the Categorization section in Documents and Media will include OOTB Internal (Topic) and Public (Audience & Stage) vocabularies, but the other asset types (Basic Document & External Video Shortcut) will not"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test CheckDMVocabularyAssetSubtypeGoogleDriveShortcut {
 		property osgi.app.includes = "document-library-google-docs";
 
@@ -941,7 +908,7 @@ definition {
 
 			for (var vocabulary : list "Google Drive Shortcut Vocabulary,Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -959,7 +926,7 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
@@ -978,14 +945,14 @@ definition {
 
 			for (var vocabulary : list "Topic,Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabulary}",
+					key_vocabularyName = ${vocabulary},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
 	}
 
 	@description = "LPS-134875 Internal categories are not shown in facets and result in a public context."
-	@priority = "5"
+	@priority = 5
 	test CheckInternalCategoriesInFacets {
 		property portal.acceptance = "true";
 
@@ -998,7 +965,7 @@ definition {
 
 		task ("Add WC with internal category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
 				groupName = "Guest",
 				title = "Web Content Title");
@@ -1014,7 +981,7 @@ definition {
 	}
 
 	@description = "LPS-134682 If categories are marked as internal, won't show in Categories Navigation widget."
-	@priority = "3"
+	@priority = 3
 	test CheckInternalCategoriesWidgetAssetsCategorization {
 		task ("Add a global category to each Topic (public) and Audience (private)") {
 			JSONCategory.addCategory(
@@ -1054,7 +1021,7 @@ definition {
 	}
 
 	@description = "LPS-134875 Public categories are shown in facets and result in a public context."
-	@priority = "4"
+	@priority = 4
 	test CheckPublicCategoriesInFacets {
 		property portal.acceptance = "true";
 
@@ -1067,7 +1034,7 @@ definition {
 
 		task ("Add WC with public category") {
 			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
+				assetCategoryIds = ${categoryId},
 				content = "Web Content Content With Category",
 				groupName = "Guest",
 				title = "Web Content Title");
@@ -1085,7 +1052,7 @@ definition {
 	}
 
 	@description = "LPS-134875 Visibility is not editable for vocabularies"
-	@priority = "4"
+	@priority = 4
 	test CheckVocabularyVisibilityNotEditable {
 		task ("Add a vocabulary disallow multiple categories") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -1101,7 +1068,7 @@ definition {
 	}
 
 	@description = "LPS-134875 Categories can only be moved to vocabularies with the same visibility"
-	@priority = "4"
+	@priority = 4
 	test MoveCategoryBetweenDifferentVisibility {
 		task ("Create categories in public and internal vocabularies") {
 			JSONCategory.addCategory(
@@ -1131,7 +1098,7 @@ definition {
 	}
 
 	@description = "When the user clicks on the link to documentation, the documentation link is opened"
-	@priority = "3"
+	@priority = 3
 	test OpenLiferayLearnCategoriesVocabulariesPage {
 		task ("Click on the Documentation link") {
 			Category.openCategoriesAdmin(siteURLKey = "global");
@@ -1147,7 +1114,7 @@ definition {
 	}
 
 	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
-	@priority = "3"
+	@priority = 3
 	test OpenLiferayLearnCategoriesVocabulariesPageFromContentDashboard {
 		task ("Go to content dashboard") {
 			ApplicationsMenu.gotoPortlet(
@@ -1162,7 +1129,7 @@ definition {
 	}
 
 	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
-	@priority = "3"
+	@priority = 3
 	test OpenLiferayLearnCategoriesVocabulariesPageFromWCEditor {
 		task ("Go to web content editor") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1178,7 +1145,7 @@ definition {
 	}
 
 	@description = "When a change in Global Vocabularies is made, the Global vocabularies section in a site's Categories administration application updates accordingly"
-	@priority = "5"
+	@priority = 5
 	test PropagateChangesOfGlobalCategoryToNormalSite {
 		property portal.acceptance = "true";
 
@@ -1222,7 +1189,7 @@ definition {
 	}
 
 	@description = "When the user opens the "Categorization" section and there's a vocabulary marked as internal, that vocabulary is shown in the Internal categories section"
-	@priority = "5"
+	@priority = 5
 	test ViewInternalVocabularyInWebContentEditor {
 		property portal.acceptance = "true";
 
@@ -1241,14 +1208,14 @@ definition {
 
 			for (var vocabularyName : list "Audience,Stage") {
 				AssertVisible(
-					key_vocabularyName = "${vocabularyName}",
+					key_vocabularyName = ${vocabularyName},
 					locator1 = "AssetCategorization#CATEGORIES_FIELD");
 			}
 		}
 	}
 
 	@description = "When the user opens the "Categorization" section and there's a vocabulary not marked as internal, that vocabulary is shown in the Public categories section"
-	@priority = "5"
+	@priority = 5
 	test ViewPublicVocabularyInWebContentEditor {
 		property portal.acceptance = "true";
 

@@ -3,14 +3,14 @@ definition {
 	macro addComment {
 		Type(
 			locator1 = "PublicationsChanges#COMMENT_BODY",
-			value1 = "${commentValue}");
+			value1 = ${commentValue});
 
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
 
 		AssertElementPresent(
-			key_commentValue = "${commentValue}",
+			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
 	}
 
@@ -29,7 +29,7 @@ definition {
 
 	macro deleteComment {
 		Click.mouseOverClick(
-			key_commentValue = "${commentValue}",
+			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
 
 		AssertClickNoError(
@@ -41,21 +41,21 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Button#DELETE");
 
-		AssertTextNotPresent(value1 = "${commentValue}");
+		AssertTextNotPresent(value1 = ${commentValue});
 	}
 
 	macro discardChanges {
 		if (isSet(changeOrder)) {
-			var changeOrder = "${changeOrder}";
+			var changeOrder = ${changeOrder};
 		}
 		else {
-			var changeOrder = "1";
+			var changeOrder = 1;
 		}
 
-		var key_changeCategory = "${changeCategory}";
-		var key_changeTitle = "${changeTitle}";
+		var key_changeCategory = ${changeCategory};
+		var key_changeTitle = ${changeTitle};
 
-		if ("${conflictingChanges}" == "true") {
+		if (${conflictingChanges} == "true") {
 			if (IsElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN")) {
 				Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
 
@@ -93,24 +93,24 @@ definition {
 
 	macro editComment {
 		Click.mouseOverClick(
-			key_commentValue = "${commentValue}",
+			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
 
 		MenuItem.click(menuItem = "Edit");
 
 		Type.clickAtType(
-			key_userName = "${userName}",
+			key_userName = ${userName},
 			locator1 = "PublicationsChanges#COMMENT_BODY_SPECIFIC",
-			value1 = "${commentValueEdit}");
+			value1 = ${commentValueEdit});
 
 		SelectFrame(value1 = "relative=top");
 
 		Click.javaScriptClick(locator1 = "Button#SAVE");
 
 		AssertElementPresent(
-			key_commentValue = "${commentValueEdit}",
+			key_commentValue = ${commentValueEdit},
 			locator1 = "PublicationsChanges#COMMENT_VALUE",
-			value1 = "${commentValueEdit}");
+			value1 = ${commentValueEdit});
 	}
 
 	macro filterChangesByItem {
@@ -124,24 +124,24 @@ definition {
 			key_name = "Filter By",
 			locator1 = "PublicationsChanges#SORT_BUTTON");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 
 		Check.checkNotVisible(
-			key_checkboxName = "${checkboxName}",
+			key_checkboxName = ${checkboxName},
 			locator1 = "MenuItem#ANY_CHECKBOX");
 	}
 
 	macro gotoEditChanges {
 		if (isSet(changeOrder)) {
-			var changeOrder = "${changeOrder}";
+			var changeOrder = ${changeOrder};
 		}
 		else {
-			var changeOrder = "1";
+			var changeOrder = 1;
 		}
 
 		Click(
-			key_changeCategory = "${changeCategory}",
-			key_changeTitle = "${changeTitle}",
+			key_changeCategory = ${changeCategory},
+			key_changeTitle = ${changeTitle},
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
 
 		MenuItem.click(menuItem = "Edit in ${editInLocation}");
@@ -153,16 +153,16 @@ definition {
 
 	macro sortChanges {
 		Click(
-			key_name = "${sortName}",
+			key_name = ${sortName},
 			locator1 = "PublicationsChanges#SORT_BUTTON");
 
-		if ("${sort}" == "descending") {
+		if (${sort} == "descending") {
 			if (IsElementPresent(locator1 = "PublicationsChanges#SORTED_ASCENDING_ICON")) {
 				Click(locator1 = "PublicationsChanges#SORTED_ASCENDING_ICON");
 			}
 		}
 
-		if ("${sort}" == "ascending") {
+		if (${sort} == "ascending") {
 			if (IsElementPresent(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON")) {
 				Click(locator1 = "PublicationsChanges#SORTED_DESCENDING_ICON");
 			}
@@ -170,29 +170,29 @@ definition {
 	}
 
 	macro viewChanges {
-		if ("${publishedPublication}" == "true") {
+		if (${publishedPublication} == "true") {
 			Click(
-				key_publicationName = "${publicationName}",
+				key_publicationName = ${publicationName},
 				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 		}
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
 
-		if ("${showAllItems}" == "true") {
+		if (${showAllItems} == "true") {
 			Check.checkToggleSwitch(locator1 = "PublicationsChanges#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
 
-		var key_changeCategory = "${changeCategory}";
-		var key_changeUser = "${changeUser}";
-		var key_changeSite = "${changeSite}";
-		var key_changeTitle = "${changeTitle}";
-		var key_changeType = "${changeType}";
+		var key_changeCategory = ${changeCategory};
+		var key_changeUser = ${changeUser};
+		var key_changeSite = ${changeSite};
+		var key_changeTitle = ${changeTitle};
+		var key_changeType = ${changeType};
 
 		if (isSet(changeOrder)) {
-			var changeOrder = "${changeOrder}";
+			var changeOrder = ${changeOrder};
 		}
 		else {
-			var changeOrder = "1";
+			var changeOrder = 1;
 		}
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_USER")) {
@@ -201,62 +201,62 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_SITE",
-			value1 = "${changeSite}");
+			value1 = ${changeSite});
 
 		if (isSet(changeStatus)) {
-			var key_changeStatus = "${changeStatus}";
+			var key_changeStatus = ${changeStatus};
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_STATUS",
-				value1 = "${changeStatus}");
+				value1 = ${changeStatus});
 		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-			value1 = "${changeTitle}");
+			value1 = ${changeTitle});
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TYPE",
-			value1 = "${changeType}");
+			value1 = ${changeType});
 	}
 
 	macro viewChangesInRelationships {
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Relationships");
 
 		AssertTextEquals.assertPartialText(
-			key_changeTitle = "${changeTitle}",
+			key_changeTitle = ${changeTitle},
 			locator1 = "PublicationsChanges#RELATIONSHIPS_CHANGE_TITLE",
-			value1 = "${changeTitle}");
+			value1 = ${changeTitle});
 	}
 
 	macro viewChangesResultNotPresent {
-		var key_changeCategory = "${changeCategory}";
-		var key_changeTitle = "${changeTitle}";
+		var key_changeCategory = ${changeCategory};
+		var key_changeTitle = ${changeTitle};
 
 		if (isSet(changeOrder)) {
-			var changeOrder = "${changeOrder}";
+			var changeOrder = ${changeOrder};
 		}
 		else {
-			var changeOrder = "1";
+			var changeOrder = 1;
 		}
 
 		AssertElementNotPresent(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-			value1 = "${changeTitle}");
+			value1 = ${changeTitle});
 	}
 
 	macro viewChangesResultsOrder {
-		var changeOrder = "0";
+		var changeOrder = 0;
 
-		for (var changeTitle : list "${changesList}") {
+		for (var changeTitle : list ${changesList}) {
 			var changeOrder = ${changeOrder} + 1;
-			var key_changeCategory = "${changeCategory}";
-			var key_changeTitle = "${changeTitle}";
+			var key_changeCategory = ${changeCategory};
+			var key_changeTitle = ${changeTitle};
 
 			AssertTextEquals(
-				changeOrder = "${changeOrder}",
+				changeOrder = ${changeOrder},
 				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
-				value1 = "${changeTitle}");
+				value1 = ${changeTitle});
 		}
 	}
 

@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in draft status from the app."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteDraftTranslation {
 		JSONWebcontent.addWebContent(
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteTranslation {
 		JSONWebcontent.addWebContent(
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation can be edited under Translations app."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditTranslation {
 		JSONWebcontent.addWebContent(
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@description = "This ensures that the translation can be edited to a new language under Translations app."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditTranslationToNewLanguage {
 		JSONWebcontent.addWebContent(
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-127980. This ensures that the newly added field can be translated after updating the WC structure."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanTranslateWCAfterEditingStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -367,7 +367,7 @@ definition {
 			webContentNumeric = "",
 			webContentNumericFieldLabel = "Numeric");
 
-		Translations.translateFields(webContentNumber = "200");
+		Translations.translateFields(webContentNumber = 200);
 
 		PortletEntry.publish();
 
@@ -377,13 +377,13 @@ definition {
 
 		Translations.viewTranslationDetails(
 			currentTargetLocale = "es-ES",
-			webContentNumber = "200",
+			webContentNumber = 200,
 			webContentText = "Mensaje de texto",
 			webContentTitle = "WC WebContent Título");
 	}
 
 	@description = "This ensures that the modification date of a translation can be displayed correctly after editing."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewEntryModifiedDate {
 		JSONWebcontent.addWebContent(
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
-	@priority = "4"
+	@priority = 4
 	test EntryIsNotShownAfterDeletingTranslatedPage {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -497,7 +497,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-125966. This ensures that a warning message shows when viewing a translation that its web content has been deleted."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test WarningAppearsForTranslationAfterWCIsDeleted {
 		JSONWebcontent.addWebContent(

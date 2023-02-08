@@ -15,9 +15,9 @@ definition {
 		return centerPositionX;
 		''';
 
-		var position_x = selenium.getEval("${javascript}");
+		var position_x = selenium.getEval(${javascript});
 
-		return "${position_x}";
+		return ${position_x};
 	}
 
 	macro getElementCirclePositionY {
@@ -35,9 +35,9 @@ definition {
 		return centerPositionY;
 		''';
 
-		var position_y = selenium.getEval("${javascript}");
+		var position_y = selenium.getEval(${javascript});
 
-		return "${position_y}";
+		return ${position_y};
 	}
 
 	macro getElementRectanglePositionX {
@@ -53,9 +53,9 @@ definition {
 		return positionX;
 		''';
 
-		var position_x = selenium.getEval("${javascript}");
+		var position_x = selenium.getEval(${javascript});
 
-		return "${position_x}";
+		return ${position_x};
 	}
 
 	macro getElementRectanglePositionY {
@@ -71,36 +71,36 @@ definition {
 		return positionY;
 		''';
 
-		var position_y = selenium.getEval("${javascript}");
+		var position_y = selenium.getEval(${javascript});
 
-		return "${position_y}";
+		return ${position_y};
 	}
 
 	macro viewCoordinatePositionMatchesElementStep {
-		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = "${stepElementId}");
-		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = "${stepElementId}");
-		var hotspotChildIndex = "1";
+		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = ${stepElementId});
+		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = ${stepElementId});
+		var hotspotChildIndex = 1;
 
-		if (contains("${stepElementId}", "teststep")) {
-			var hotspotChildIndex = "0";
+		if (contains(${stepElementId}, "teststep")) {
+			var hotspotChildIndex = 0;
 		}
 
 		var hotspot_x = WalkthroughPopover.getElementCirclePositionX(
-			childIndex = "${hotspotChildIndex}",
-			elementClass = "${hotspotElementClass}");
+			childIndex = ${hotspotChildIndex},
+			elementClass = ${hotspotElementClass});
 		var hotspot_y = WalkthroughPopover.getElementCirclePositionY(
-			childIndex = "${hotspotChildIndex}",
-			elementClass = "${hotspotElementClass}");
+			childIndex = ${hotspotChildIndex},
+			elementClass = ${hotspotElementClass});
 
 		echo("position step (x,y): ${step_x},${step_y}");
 
 		echo("position hotspot (x,y): ${hotspot_x},${hotspot_y}");
 
-		if ("${step_x}" != "${hotspot_x}") {
+		if (${step_x} != ${hotspot_x}) {
 			fail("FAIL. X coordinate positions do not match.");
 		}
 
-		if ("${step_y}" != "${hotspot_y}") {
+		if (${step_y} != ${hotspot_y}) {
 			fail("FAIL. Y coordinate positions do not match.");
 		}
 	}

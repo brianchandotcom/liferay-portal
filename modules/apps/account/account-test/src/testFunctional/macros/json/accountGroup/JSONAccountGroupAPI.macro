@@ -1,11 +1,11 @@
 definition {
 
 	macro _addAccountGroup {
-		Variables.assertDefined(parameterList = "${accountGroupName}");
+		Variables.assertDefined(parameterList = ${accountGroupName});
 
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
-		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = ${creatorEmailAddress});
 
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountgroup/add-account-group \
@@ -15,7 +15,7 @@ definition {
 				-d description=${accountGroupDescription}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 }

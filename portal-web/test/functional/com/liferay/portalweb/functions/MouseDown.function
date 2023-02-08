@@ -16,7 +16,7 @@ definition {
 
 		selenium.waitForVisible();
 
-		selenium.mouseDownAt("${locator1}", "${value1}");
+		selenium.mouseDownAt(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors();
 

@@ -19,7 +19,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,14 +29,14 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Clustering#AddAndDeleteBlogEntriesOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -59,11 +59,11 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Test Page1",
@@ -77,7 +77,7 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		Navigator.openNodePort(nodePort = "9080");
+		Navigator.openNodePort(nodePort = 9080);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -128,7 +128,7 @@ definition {
 		RecycleBin.emptyCP();
 
 		User.logoutPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -155,7 +155,7 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test CanAccessGogoShellOnAnyClusteredNode {
 		property test.name.skip.portal.instance = "Clustering#CanAccessGogoShellOnAnyClusteredNode";
 
@@ -171,7 +171,7 @@ definition {
 		User.logoutPG();
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170924."
-	@priority = "5"
+	@priority = 5
 	test CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property database.partition.enabled = "true";
@@ -195,7 +195,7 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		Navigator.openURL();
 
@@ -225,22 +225,22 @@ definition {
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "No default user was found for company",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "No default user was found for company",
-			nodePort = "9080");
+			nodePort = 9080);
 	}
 
 	@description = "This is a use case for LPS-171011."
-	@priority = "5"
+	@priority = 5
 	test CanCreateVirtualInstanceWithClustering {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "Clustering#CanCreateVirtualInstanceWithClustering";
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		Navigator.openURL();
 
@@ -270,14 +270,14 @@ definition {
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "No default user was found for company",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "No default user was found for company",
-			nodePort = "9080");
+			nodePort = 9080);
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanInvokeMethods {
 		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";
 
@@ -287,18 +287,18 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 8080",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-invoke-method.groovy");
 
 		for (var serverPort : list "8080,9080") {
 			Groovy.runScriptViaGogoShell(
 				expectedOutput = "Result of invoke-method-portal-on-master: 8080",
-				nodePort = "${serverPort}",
+				nodePort = ${serverPort},
 				scriptFile = "groovy-script-invoke-method-on-master.groovy");
 		}
 
 		for (var serverPort : list "8080,9080") {
-			Clustering.deployClusteringModule(nodePort = "${serverPort}");
+			Clustering.deployClusteringModule(nodePort = ${serverPort});
 		}
 
 		for (var method : list "invoke-method-module,invoke-method-portal") {
@@ -310,11 +310,11 @@ definition {
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 9080",
-				nodePort = "8080");
+				nodePort = 8080);
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 8080",
-				nodePort = "9080");
+				nodePort = 9080);
 		}
 
 		for (var method : list "invoke-method-module-on-master,invoke-method-portal-on-master") {
@@ -326,15 +326,15 @@ definition {
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 8080",
-				nodePort = "8080");
+				nodePort = 8080);
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 8080",
-				nodePort = "9080");
+				nodePort = 9080);
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromMaster {
 		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromMaster";
 
@@ -356,18 +356,18 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Send multicast message",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromSlave {
 		property app.server.bundles.size = "2";
 		property test.name.skip.portal.instance = "Clustering#CanUpdateLogLevelsForAllNodesFromSlave";
@@ -377,7 +377,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -399,81 +399,81 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		for (var serverPort : list "8080,9080,10080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Send multicast message",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Clustering#ShutdownAndStartupNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
-		Clustering.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = 8080);
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080");
+			nodePort = 8080);
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		User.logoutPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
-		Clustering.shutdownSpecificServer(nodePort = "9080");
+		Clustering.shutdownSpecificServer(nodePort = 9080);
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "9080");
+			nodePort = 9080);
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		User.logoutPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 	}
 
-	@priority = "4"
+	@priority = 4
 	test SlaveNodeCanBecomeMasterNode {
 		property test.name.skip.portal.instance = "Clustering#SlaveNodeCanBecomeMasterNode";
 
@@ -483,27 +483,27 @@ definition {
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		Clustering.shutdownSpecificServer(nodePort = "8080");
+		Clustering.shutdownSpecificServer(nodePort = 8080);
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
-			nodePort = "9080",
+			nodePort = 9080,
 			scriptFile = "groovy-script-master-slave.groovy");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080");
+			nodePort = 8080);
 
 		User.logoutPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -512,7 +512,7 @@ definition {
 			scriptFile = "groovy-script-master-slave.groovy");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.name.skip.portal.instance = "Clustering#TCPControlChannelProperties";
@@ -520,20 +520,20 @@ definition {
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Create a new JGroups channel",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "properties: TCP",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test UDPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
 		property test.name.skip.portal.instance = "Clustering#UDPControlChannelProperties";
@@ -541,26 +541,26 @@ definition {
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Create a new JGroups channel",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "properties: UDP",
-				nodePort = "${serverPort}");
+				nodePort = ${serverPort});
 		}
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ValidateDocumentOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateDocumentOnSeparateNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -587,11 +587,11 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Documents and Media Page",
@@ -600,7 +600,7 @@ definition {
 		DMDocument.viewAllPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -609,7 +609,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
 		property test.name.skip.portal.instance = "Clustering#ValidateLiveUsers";
@@ -621,10 +621,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		Clustering.viewLiveSessionCount(count = "1");
+		Clustering.viewLiveSessionCount(count = 1);
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -633,10 +633,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		Clustering.viewLiveSessionCount(count = "2");
+		Clustering.viewLiveSessionCount(count = 2);
 
 		User.loginPG(
-			nodePort = "8080",
+			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -645,12 +645,12 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		Clustering.viewLiveSessionCount(count = "3");
+		Clustering.viewLiveSessionCount(count = 3);
 
 		User.logoutPG();
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -659,17 +659,17 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		Clustering.viewLiveSessionCount(count = "3");
+		Clustering.viewLiveSessionCount(count = 3);
 	}
 
 	@description = "This is a use case for LPS-142472."
-	@priority = "4"
+	@priority = 4
 	test ValidatePublishOnTwoNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidatePublishOnTwoNodes";
 
 		Clustering.viewClusterStatusInConsole();
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -708,11 +708,11 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		Navigator.gotoSitePage(
 			baseURL = "http://localhost:9080",
@@ -740,7 +740,7 @@ definition {
 		Staging.publishToLive();
 
 		User.logoutPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -761,7 +761,7 @@ definition {
 			webContentTitle = "WebContent Title");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test ValidateSchedulerOnSeparateNodes {
 		property test.name.skip.portal.instance = "Clustering#ValidateSchedulerOnSeparateNodes";
 
@@ -771,7 +771,7 @@ definition {
 
 		var pageName = "Home";
 
-		Page.assertNodePortPG(nodePort = "8080");
+		Page.assertNodePortPG(nodePort = 8080);
 
 		Navigator.openURL();
 
@@ -779,7 +779,7 @@ definition {
 			category = "Publishing",
 			portlet = "Staging");
 
-		Staging.activateStagingCP(siteName = "${siteName}");
+		Staging.activateStagingCP(siteName = ${siteName});
 
 		Navigator.openURL();
 
@@ -810,11 +810,11 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Page.assertNodePortPG(nodePort = "9080");
+		Page.assertNodePortPG(nodePort = 9080);
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Home",
@@ -826,7 +826,7 @@ definition {
 
 		// Pausing 300 seconds due to LRQA-75909
 
-		Pause(locator1 = "300000");
+		Pause(locator1 = 300000);
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Home",
@@ -842,10 +842,10 @@ definition {
 			category = "Publishing",
 			portlet = "Staging");
 
-		Staging.deactivateStagingCP(siteName = "${siteName}");
+		Staging.deactivateStagingCP(siteName = ${siteName});
 
 		User.logoutPG(
-			nodePort = "9080",
+			nodePort = 9080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 

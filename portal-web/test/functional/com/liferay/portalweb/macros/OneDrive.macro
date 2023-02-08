@@ -5,13 +5,13 @@ definition {
 
 		Type(
 			locator1 = "TextInput#TITLE",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		Click(locator1 = "Button#SAVE");
 
 		SelectWindow.waitForSelectPopUp(
 			locator1 = "null",
-			value1 = "60000");
+			value1 = 60000);
 
 		if (IsElementNotPresent(locator1 = "IFrame#WEB_APPLICATION")) {
 			Close.closeWindow(locator1 = "null");
@@ -20,19 +20,19 @@ definition {
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-			DMDocument.deletePG(dmDocumentTitle = "${dmDocumentTitle}");
+			DMDocument.deletePG(dmDocumentTitle = ${dmDocumentTitle});
 
-			DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+			DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = ${dmDocumentTypeName});
 
 			Type(
 				locator1 = "TextInput#TITLE",
-				value1 = "${dmDocumentTitle}");
+				value1 = ${dmDocumentTitle});
 
 			Click(locator1 = "Button#SAVE");
 
 			SelectWindow.waitForSelectPopUp(
 				locator1 = "null",
-				value1 = "60000");
+				value1 = 60000);
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
@@ -42,7 +42,7 @@ definition {
 		if (isSet(dmDocumentContent)) {
 			Type.sendKeys(
 				locator1 = "OneDrive#DOCUMENTS_CONTENT",
-				value1 = "${dmDocumentContent}");
+				value1 = ${dmDocumentContent});
 
 			WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 		}
@@ -54,7 +54,7 @@ definition {
 
 	macro deleteDocument {
 		if (isSet(dmDocumentTitle)) {
-			var key_documentTitle = "${dmDocumentTitle}";
+			var key_documentTitle = ${dmDocumentTitle};
 
 			while (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
 				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
@@ -102,7 +102,7 @@ definition {
 
 		SelectWindow.waitForSelectPopUp(
 			locator1 = "null",
-			value1 = "60000");
+			value1 = 60000);
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
@@ -116,7 +116,7 @@ definition {
 
 		Type(
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
-			value1 = "${dmDocumentTitle}");
+			value1 = ${dmDocumentTitle});
 
 		KeyPress(
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
@@ -139,21 +139,21 @@ definition {
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientId}");
+			value1 = ${oneDriveClientId});
 
 		var oneDriveClientSecret = PropsUtil.get("onedrive.client.secret");
 
 		Type(
 			key_text = "clientSecret",
 			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientSecret}");
+			value1 = ${oneDriveClientSecret});
 
 		var oneDriveTenant = PropsUtil.get("onedrive.tenant");
 
 		Type(
 			key_text = "tenant",
 			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveTenant}");
+			value1 = ${oneDriveTenant});
 
 		ScrollWebElementIntoView(locator1 = "Button#CANCEL");
 
@@ -166,7 +166,7 @@ definition {
 	}
 
 	macro gotoEdit {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
@@ -179,8 +179,8 @@ definition {
 		WaitForPageLoad();
 
 		MicrosoftLogin.accountSignIn(
-			userEmail = "${userName}",
-			userPassword = "${userPassword}",
+			userEmail = ${userName},
+			userPassword = ${userPassword},
 			windowTitle = "Sign in to your account");
 
 		MicrosoftLogin.confirmMicrosoftApp();

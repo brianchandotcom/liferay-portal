@@ -4,7 +4,7 @@ definition {
 	property portal.smoke = "dummy";
 	property testray.main.component.name = "Tools";
 
-	@priority = "5"
+	@priority = 5
 	test Dummy {
 		echo("Dummy Functional Test");
 	}

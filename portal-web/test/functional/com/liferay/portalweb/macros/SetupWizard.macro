@@ -3,15 +3,15 @@ definition {
 	macro configureAdministratorUserPG {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
-			value1 = "${administratorFirstName}");
+			value1 = ${administratorFirstName});
 
 		Type(
 			locator1 = "TextInput#LAST_NAME",
-			value1 = "${administratorLastName}");
+			value1 = ${administratorLastName});
 
 		Type(
 			locator1 = "TextInput#EMAIL",
-			value1 = "${administratorEmail}");
+			value1 = ${administratorEmail});
 	}
 
 	macro configureDatabasePG {
@@ -24,34 +24,34 @@ definition {
 		if (isSet(databaseName)) {
 			var originalDatabaseName = PropsUtil.get("database.mysql.schema");
 
-			var jdbcURL = StringUtil.replace("${jdbcURL}", "${originalDatabaseName}", "${databaseName}");
+			var jdbcURL = StringUtil.replace(${jdbcURL}, ${originalDatabaseName}, ${databaseName});
 		}
 
 		Select(
 			locator1 = "SetupWizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT",
-			value1 = "${databaseType}");
+			value1 = ${databaseType});
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_URL_FIELD",
-			value1 = "${jdbcURL}");
+			value1 = ${jdbcURL});
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD",
-			value1 = "${jdbcDriverClassName}");
+			value1 = ${jdbcDriverClassName});
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD",
-			value1 = "${databaseUserName}");
+			value1 = ${databaseUserName});
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD",
-			value1 = "${databasePassword}");
+			value1 = ${databasePassword});
 	}
 
 	macro configureDefaultLanguagePG {
 		Select(
 			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
-			value1 = "${defaultLanguage}");
+			value1 = ${defaultLanguage});
 	}
 
 	macro configureDefaultPG {
@@ -72,11 +72,11 @@ definition {
 		Portlet.shutdownServer();
 
 		Portlet.startServer(
-			base_branch = "${base_branch}",
+			base_branch = ${base_branch},
 			deleteLiferayHome = "false");
 
 		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			Navigator.openSpecificURL(url = ${virtualHostsURL});
 		}
 		else {
 			Navigator.openURL();
@@ -84,7 +84,7 @@ definition {
 
 		User.acceptEndUserLicenseAgreement();
 
-		User.resetPassword(newPassword = "${newPassword}");
+		User.resetPassword(newPassword = ${newPassword});
 
 		User.answerPasswordReminder();
 
@@ -98,26 +98,26 @@ definition {
 	@summary = "Configure JDBC to ${databaseType} for Liferay with the Setup Wizard"
 	macro configurePG {
 		if (isSet(portalName)) {
-			SetupWizard.configurePortalNamePG(portalName = "${portalName}");
+			SetupWizard.configurePortalNamePG(portalName = ${portalName});
 		}
 		else {
 			SetupWizard.viewDefaultPortalNamePG();
 		}
 
 		SetupWizard.configureAdministratorUserPG(
-			administratorEmail = "${administratorEmail}",
-			administratorFirstName = "${administratorFirstName}",
-			administratorLastName = "${administratorLastName}");
+			administratorEmail = ${administratorEmail},
+			administratorFirstName = ${administratorFirstName},
+			administratorLastName = ${administratorLastName});
 
 		SetupWizard.configureDatabasePG(
-			databaseName = "${databaseName}",
-			databasePassword = "${databasePassword}",
-			databaseType = "${databaseType}",
-			databaseUserName = "${databaseUserName}",
-			jdbcDriverClassName = "${jdbcDriverClassName}",
-			jdbcURL = "${jdbcURL}");
+			databaseName = ${databaseName},
+			databasePassword = ${databasePassword},
+			databaseType = ${databaseType},
+			databaseUserName = ${databaseUserName},
+			jdbcDriverClassName = ${jdbcDriverClassName},
+			jdbcURL = ${jdbcURL});
 
-		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
+		SetupWizard.configureSampleDataPG(addSampleData = ${addSampleData});
 
 		SetupWizard.finishConfigurationPG();
 
@@ -126,13 +126,13 @@ definition {
 		Portlet.shutdownServer();
 
 		Portlet.startServer(
-			base_branch = "${base_branch}",
+			base_branch = ${base_branch},
 			deleteLiferayHome = "false");
 
-		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
+		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = ${databaseType});
 
 		if (isSet(virtualHostsURL)) {
-			Navigator.openSpecificURL(url = "${virtualHostsURL}");
+			Navigator.openSpecificURL(url = ${virtualHostsURL});
 		}
 		else {
 			var baseURL = PropsUtil.get("portal.url");
@@ -142,7 +142,7 @@ definition {
 
 		User.acceptEndUserLicenseAgreement();
 
-		User.resetPassword(newPassword = "${newPassword}");
+		User.resetPassword(newPassword = ${newPassword});
 
 		User.answerPasswordReminder();
 
@@ -160,7 +160,7 @@ definition {
 	macro configurePortalNamePG {
 		Type(
 			locator1 = "TextInput#PORTAL_NAME",
-			value1 = "${portalName}");
+			value1 = ${portalName});
 	}
 
 	macro configureSampleDataPG {
@@ -170,11 +170,11 @@ definition {
 				value1 = "(Change)");
 		}
 
-		if ("${addSampleData}" == "true") {
+		if (${addSampleData} == "true") {
 			Check(locator1 = "Checkbox#ADD_SAMPLE_DATA");
 		}
 
-		if ("${addSampleData}" == "false") {
+		if (${addSampleData} == "false") {
 			Uncheck(locator1 = "Checkbox#ADD_SAMPLE_DATA");
 		}
 	}
@@ -186,7 +186,7 @@ definition {
 	}
 
 	macro viewConfigurationSavedPG {
-		if (isSet(localization) && ("${localization}" == "ES")) {
+		if (isSet(localization) && (${localization} == "ES")) {
 			Alert.viewSuccessMessageText(successMessage = "La configuración fue guardada con éxito.");
 
 			AssertTextEquals.assertPartialText(
@@ -215,25 +215,25 @@ definition {
 	}
 
 	macro viewConfiguredDatabaseInConsole {
-		if ("${databaseType}" == "DB2") {
+		if (${databaseType} == "DB2") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect for DB2");
 		}
-		else if ("${databaseType}" == "HSQL") {
+		else if (${databaseType} == "HSQL") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.HSQLDialect for HSQL Database Engine");
 		}
-		else if ("${databaseType}" == "MariaDB") {
+		else if (${databaseType} == "MariaDB") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MariaDB");
 		}
-		else if ("${databaseType}" == "MySQL") {
+		else if (${databaseType} == "MySQL") {
 			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQL57Dialect for MySQL");
 		}
-		else if ("${databaseType}" == "Oracle") {
+		else if (${databaseType} == "Oracle") {
 			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle");
 		}
-		else if ("${databaseType}" == "PostgreSQL") {
+		else if (${databaseType} == "PostgreSQL") {
 			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQL10Dialect for PostgreSQL");
 		}
-		else if ("${databaseType}" == "Sybase") {
+		else if (${databaseType} == "Sybase") {
 			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect for Adaptive Server Enterprise");
 		}
 	}
@@ -304,7 +304,7 @@ definition {
 	macro viewDefaultPortalNamePG {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			AssertTextEquals.assertValue(
 				locator1 = "TextInput#PORTAL_NAME",
 				value1 = "Liferay DXP");
@@ -340,7 +340,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		if ("${testRunEnvironment}" == "EE") {
+		if (${testRunEnvironment} == "EE") {
 			Organization.viewCP(
 				orgName = "Liferay DXP, Inc.",
 				orgType = "Organization");
@@ -417,7 +417,7 @@ definition {
 
 		var fileContent = FileUtil.read("${liferayHome}/portal-setup-wizard.properties");
 
-		if (contains("${fileContent}", "setup.wizard.add.sample.data=on")) {
+		if (contains(${fileContent}, "setup.wizard.add.sample.data=on")) {
 			echo("The Sample Data property was saved successfully in portal-setup-wizard.properties!");
 		}
 		else {

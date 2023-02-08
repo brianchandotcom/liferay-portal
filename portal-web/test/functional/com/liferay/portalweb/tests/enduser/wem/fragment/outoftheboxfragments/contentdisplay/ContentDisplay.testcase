@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
-	@priority = "3"
+	@priority = 3
 	test CannotViewAssetWithoutAssetViewPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -76,7 +76,7 @@ definition {
 
 			for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
 					roleTitle = "Roles Siterole Name",
 					roleType = "site");
@@ -143,7 +143,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertTextEquals.assertPartialText(
-				index = "1",
+				index = 1,
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "Web Content Content");
 		}
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
-	@priority = "4"
+	@priority = 4
 	test DeletedContentIsInvisible {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -222,7 +222,7 @@ definition {
 
 			AssertElementNotPresent(
 				assetType = "journal",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#CONTENT_DISPLAY_TEXT");
 
 			AssertElementNotPresent(locator1 = "Portlet#MESSAGE_INFO");
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-142166. The user could display blogs entry when item type is blogs entry."
-	@priority = "4"
+	@priority = 4
 	test DisplayBlogsEntryWhenItemTypeIsBlogsEntry {
 		task ("Create a blog entry") {
 			HeadlessBlog.addBlogEntry(
@@ -283,7 +283,7 @@ definition {
 }
 			''';
 
-			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -299,7 +299,7 @@ definition {
 </div>
 			''';
 
-			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
 			FragmentsEditor.waitForAutoSave();
 
@@ -333,14 +333,14 @@ definition {
 		task ("View the displayed content") {
 			AssertTextEquals(
 				fragmentName = "blogs",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Blogs Entry Content");
 		}
 	}
 
 	@description = "This is a test for LPS-97182. Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
-	@priority = "4"
+	@priority = 4
 	test UnconfiguredContentDisplayIsInvisible {
 		task ("Add a Content Display to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-147579. View expired message of web content on Content Display fragment."
-	@priority = "4"
+	@priority = 4
 	test ViewExpiredWebContent {
 		task ("Given a page creator has a displayed web content on Content Display Fragment") {
 			task ("Add a web content") {
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101249. Can only select Documents and Media when set itemType to FileEntry."
-	@priority = "3"
+	@priority = 3
 	test ViewOnlyDocumentsAndMediaAvailableWhenItemTypeIsFileEntry {
 		task ("Add a WC based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -480,14 +480,14 @@ definition {
 
 			AssertTextEquals(
 				fragmentName = "dm",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Document Title");
 		}
 	}
 
 	@description = "This is a test for LPS-101249. Can only select web content articles when set itemType to JournalArticle"
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewOnlyWebContentAvailableWhenItemTypeIsJournalArticle {
 		property portal.acceptance = "true";
@@ -564,26 +564,26 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "wc",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Web Content Title");
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "wc",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Web Content Content");
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "wc",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Web Content Description");
 		}
 	}
 
 	@description = "This is a test for LPS-101249 and LPS-100545. Can only select web content articles created with a specific structure when set itemSubtype."
-	@priority = "3"
+	@priority = 3
 	test ViewOnlyWebContentBasedOnCustomStructureAvailableWhenSetItemSubtype {
 		property test.name.skip.portal.instance = "ContentDisplay#ViewOnlyWebContentBasedOnCustomStructureAvailableWhenSetItemSubtype";
 
@@ -702,14 +702,14 @@ definition {
 			for (var content : list "Web Content With Text Title,Web Content Description") {
 				AssertTextEquals.assertPartialText(
 					fragmentName = "wctext",
-					index = "1",
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${content}");
+					value1 = ${content});
 			}
 
 			AssertTextNotPresent(
 				fragmentName = "wctext",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Web Content Text");
 		}
@@ -732,21 +732,21 @@ definition {
 			for (var content : list "Web Content With Text Title,Web Content Description") {
 				AssertTextEquals.assertPartialText(
 					fragmentName = "wctext",
-					index = "1",
+					index = 1,
 					locator1 = "Fragment#FRAGMENT_BODY",
-					value1 = "${content}");
+					value1 = ${content});
 			}
 
 			AssertTextNotPresent(
 				fragmentName = "wctext",
-				index = "1",
+				index = 1,
 				locator1 = "Fragment#FRAGMENT_BODY",
 				value1 = "Web Content Text");
 		}
 	}
 
 	@description = "This is a test for LPS-97182. If you recycle bin the asset attached to a Content Display fragment and then restore it, it should re-appear in the Content Display fragment."
-	@priority = "2"
+	@priority = 2
 	test ViewRestoredAsset {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
@@ -838,7 +838,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. This case ensures that a user can map a blogs content field to a fragment via the content display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewSelectedBlog {
 		property portal.acceptance = "true";
@@ -850,7 +850,7 @@ definition {
 
 			HeadlessBlog.addBlogEntry(
 				content = "This content maps from blog content",
-				coverImageId = "${imageId}",
+				coverImageId = ${imageId},
 				groupName = "Test Site Name",
 				subtitle = "Blogs Entry Subtitle",
 				title = "Blogs Entry Title");
@@ -891,7 +891,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131040. The category name should be shown when select a category in Content Display with Default Template."
-	@priority = "4"
+	@priority = 4
 	test ViewSelectedCategoryInDisplayPageTemplate {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -949,7 +949,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. This case ensures that a user can map an image to a fragment via the content display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewSelectedDocument {
 		property portal.acceptance = "true";
@@ -993,7 +993,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test ViewSelectedWebContentInContentPage {
 		property portal.acceptance = "true";
@@ -1037,7 +1037,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
-	@priority = "4"
+	@priority = 4
 	test ViewSelectedWebContentInContentPageTemplate {
 		property testray.component.names = "Content Page Templates,Fragments";
 
@@ -1101,7 +1101,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-100545 and LPS-97182. The user can map the content field from web content to a fragment via the content display."
-	@priority = "4"
+	@priority = 4
 	test ViewSelectedWebContentInDisplayPageTemplate {
 		property testray.component.names = "Display Pages,Fragments";
 

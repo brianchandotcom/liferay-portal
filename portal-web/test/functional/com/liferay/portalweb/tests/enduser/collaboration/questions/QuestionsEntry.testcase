@@ -15,7 +15,7 @@ definition {
 			layoutName = "Questions Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "Validate if the user can create a question with an AL image."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddQuestionWithDepotImage {
 		JSONDepot.addDepot(
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "Validate if the user can create a question with an image."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	@uitest
 	test CanAddQuestionWithImage {
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddSubcategoryConfigureParentCategoryDisplay {
 		JSONMBMessage.addCategory(
@@ -170,7 +170,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Subcategory",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add a subtopic using the widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	@uitest
 	test CanAddSubTopicsViaWidget {
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "Validate if the user can cancel the deletions."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanCancelDeletions {
 		JSONMBMessage.addCategory(
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@description = "Validate if the user can setup the landing page topic navigation for the widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanConfigureLandingPageTopicNavigation {
 		JSONMBMessage.addCategory(
@@ -325,7 +325,7 @@ definition {
 
 		for (var topicName : list "Questions Test Category1,Questions Test Category2") {
 			AssertElementPresent(
-				key_card = "${topicName}",
+				key_card = ${topicName},
 				locator1 = "Card#CARD_TITLE");
 		}
 
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@description = "Validate if the user can setup the root topic for the widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanConfigureRootTopic {
 		JSONMBMessage.addCategory(
@@ -362,7 +362,7 @@ definition {
 			categoryDescription = "Subcategory Description",
 			categoryName = "Questions Test SubCategory",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -387,7 +387,7 @@ definition {
 
 		for (var topicName : list "Questions Test Category,Questions Test SubCategory") {
 			AssertElementNotPresent(
-				key_card = "${topicName}",
+				key_card = ${topicName},
 				locator1 = "Card#CARD_TITLE");
 		}
 
@@ -399,7 +399,7 @@ definition {
 			categoryDescription = "Subcategory Description",
 			categoryName = "New Questions Test SubCategory",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete an answer to a question."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteAnswer {
 		JSONMBMessage.addCategory(
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a comment to an answer."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteComment {
 		property solutions.acceptance = "true";
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a question with an answer."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteQuestionWithAnAnswer {
 		JSONMBMessage.addCategory(
@@ -517,7 +517,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a thread through My Activity, it also covers LPS-137639."
-	@priority = "4"
+	@priority = 4
 	test CanDeleteThreadThroughMyActivity {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@description = "Validate if the user can delete a topic, it also covers LPS-128699."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanDeleteTopic {
 		JSONMBMessage.addCategory(
@@ -552,7 +552,7 @@ definition {
 	}
 
 	@description = "Validate if the user can edit an answer to a question."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanEditAnswer {
 		property portal.acceptance = "quarantine";
@@ -580,7 +580,7 @@ definition {
 	}
 
 	@description = "Validate if the user can lock and unlock a question through the MB."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanLockAndUnlockThroughMB {
 		JSONMBMessage.addCategory(
@@ -672,7 +672,7 @@ definition {
 	}
 
 	@description = "Validate if the user can add a comment to an answer, it also covers that the published dates for responses can be shown."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanReplyToAnAnswer {
 		JSONMBMessage.addCategory(
@@ -702,7 +702,7 @@ definition {
 	}
 
 	@description = "Validate if a user can view question details after restoring history router to default setting."
-	@priority = "3"
+	@priority = 3
 	test CanRestoreHistoryRouterToDefaultSetting {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanRestoreHistoryRouterToDefaultSetting";
 
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@description = "Validate if the user can search for the questions."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanSearchForQuestions {
 		JSONMBMessage.addCategory(
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@description = "Validate if the user can subscribe and unsubscribe from the question."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSubscribeAndUnsubscribeFromQuestion {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -924,7 +924,7 @@ definition {
 	}
 
 	@description = "Validate if the user can subscribe and unsubscribe from the topic."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanSubscribeAndUnsubscribeFromTopic {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -997,7 +997,7 @@ definition {
 	}
 
 	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanUnsubscribeFromQuestionDetails {
 		JSONMBMessage.addCategory(
@@ -1028,7 +1028,7 @@ definition {
 	}
 
 	@description = "Validate if the guest can check the canonical URL, also covers LPS-137636."
-	@priority = "4"
+	@priority = 4
 	test CanViewCanonicalURL {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURL";
 
@@ -1068,12 +1068,12 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			title = "question");
 	}
 
 	@description = "Validate if the guest can check the canonical URL for duplicated questions."
-	@priority = "4"
+	@priority = 4
 	test CanViewCanonicalURLForDuplicatedQuestions {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLForDuplicatedQuestions";
 
@@ -1120,7 +1120,7 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			title = "question");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
@@ -1134,12 +1134,12 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			title = "question-1");
 	}
 
 	@description = "Validate if the guest can check the canonical URL with special characters."
-	@priority = "3"
+	@priority = 3
 	test CanViewCanonicalURLWithSpecialCharacters {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLWithSpecialCharacters";
 
@@ -1179,12 +1179,12 @@ definition {
 		Questions.assertCanonicalURL(
 			category = "category",
 			pageName = "Questions Page",
-			portalURL = "${portalURL}",
+			portalURL = ${portalURL},
 			title = "question-");
 	}
 
 	@description = "Validate if the user can view the select filter and search field after adding a question."
-	@priority = "4"
+	@priority = 4
 	test CanViewFilterAndSearchFieldAfterAddingQuestion {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1217,7 +1217,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the my activity default after delete all the responses."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMyActivityDeletions {
 		JSONMBMessage.addCategory(
@@ -1288,7 +1288,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the edited responses from my activity."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMyActivityEditedResponses {
 		JSONMBMessage.addCategory(
@@ -1336,7 +1336,7 @@ definition {
 
 		for (var articleBodyContent : list "Body AddQuestionTextEdit,Body AddAnswerTextEdit") {
 			AssertElementPresent(
-				key_articleBodyContent = "${articleBodyContent}",
+				key_articleBodyContent = ${articleBodyContent},
 				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
 		}
 
@@ -1348,7 +1348,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the responses from my activity."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewMyActivityResponses {
 		JSONMBMessage.addCategory(
@@ -1386,7 +1386,7 @@ definition {
 
 		for (var articleBodyContent : list "Body AddQuestionText,Body AddAnswerText,Body AddCommentText") {
 			AssertElementPresent(
-				key_articleBodyContent = "${articleBodyContent}",
+				key_articleBodyContent = ${articleBodyContent},
 				locator1 = "Questions#QUESTIONS_ARTICLE_BODY");
 		}
 
@@ -1398,7 +1398,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewQuestionAfterChangingSubTopic {
 		JSONMBMessage.addCategory(
@@ -1414,7 +1414,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Category2",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
@@ -1425,7 +1425,7 @@ definition {
 			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Category3",
 			groupName = "Guest",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = ${parentCategoryId},
 			userEmailAddress = "test@liferay.com");
 
 		JSONQuestions.addQuestion(
@@ -1457,7 +1457,7 @@ definition {
 	}
 
 	@description = "Validate if the user can filter by votes."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewQuestionsAfterFilteringByVotes {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1497,7 +1497,7 @@ definition {
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteUp = "true");
 
 		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
@@ -1509,7 +1509,7 @@ definition {
 			questionTitle = "Question 2");
 
 		Questions.voteQuestion(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteUp = "true");
 
 		User.logoutAndLoginPG(
@@ -1523,7 +1523,7 @@ definition {
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
-			currentVotedCount = "1",
+			currentVotedCount = 1,
 			voteUp = "true");
 
 		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
@@ -1532,15 +1532,15 @@ definition {
 
 		Questions.viewVotedResult(
 			questionTitle = "Question 1",
-			votedCount = "1");
+			votedCount = 1);
 
 		Questions.viewVotedResult(
 			questionTitle = "Question 2",
-			votedCount = "2");
+			votedCount = 2);
 
 		Questions.viewVotedResult(
 			questionTitle = "Question 3",
-			votedCount = "0");
+			votedCount = 0);
 
 		Questions.configureFilter(filterBy = "Most Voted");
 
@@ -1550,7 +1550,7 @@ definition {
 	}
 
 	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewQuestionsFromDifferentSubTopics {
 		JSONMBMessage.addCategory(
@@ -1578,7 +1578,7 @@ definition {
 				categoryDescription = "MB Subcategory Description",
 				categoryName = "Questions Subcategory${num}",
 				groupName = "Guest",
-				parentCategoryId = "${parentCategoryId}",
+				parentCategoryId = ${parentCategoryId},
 				userEmailAddress = "test@liferay.com");
 		}
 
@@ -1621,7 +1621,7 @@ definition {
 	}
 
 	@description = "Validate if the user can select the filter and view the related results."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewQuestionsWithConfiguredFilter {
 		JSONMBMessage.addCategory(
@@ -1677,7 +1677,7 @@ definition {
 	}
 
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CanViewSecondAnswer {
 		JSONMBMessage.addCategory(
@@ -1710,7 +1710,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view a topic."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	@uitest
 	test CanViewTopic {
@@ -1729,7 +1729,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view a topic on home page after navigation via home icon."
-	@priority = "4"
+	@priority = 4
 	test CanViewTopicOnHomePage {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Question Description",
@@ -1758,7 +1758,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view the voting style from the answers list."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewVotingStyleFromAnswersList {
 		JSONMBMessage.addCategory(
@@ -1781,7 +1781,7 @@ definition {
 		Questions.answerQuestion(contentField = "This is my answer for voting");
 
 		Questions.voteAnswer(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteUp = "true");
 
 		Questions.openToQuestionsTopic(
@@ -1794,11 +1794,11 @@ definition {
 			questionTitle = "Title AddQuestion");
 
 		Questions.voteAnswer(
-			currentVotedCount = "1",
+			currentVotedCount = 1,
 			voteDown = "true");
 
 		Questions.voteAnswer(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteDown = "true");
 
 		Questions.openToQuestionsTopic(
@@ -1825,11 +1825,11 @@ definition {
 
 		Questions.viewVotedResult(
 			answersList = "true",
-			votedCount = "0");
+			votedCount = 0);
 	}
 
 	@description = "Validate if the user can view the voting style from the questions list."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewVotingStyleFromQuestionsList {
 		JSONMBMessage.addCategory(
@@ -1850,7 +1850,7 @@ definition {
 			topicName = "questions-test-category");
 
 		Questions.voteQuestion(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteUp = "true");
 
 		Questions.openToQuestionsTopic(
@@ -1860,18 +1860,18 @@ definition {
 
 		Questions.viewVotedResult(
 			votedCaret = "top",
-			votedCount = "1");
+			votedCount = 1);
 
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestion");
 
 		Questions.voteQuestion(
-			currentVotedCount = "1",
+			currentVotedCount = 1,
 			voteDown = "true");
 
 		Questions.voteQuestion(
-			currentVotedCount = "0",
+			currentVotedCount = 0,
 			voteDown = "true");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1896,11 +1896,11 @@ definition {
 
 		Questions.viewVotedResult(
 			votedCaret = "top",
-			votedCount = "0");
+			votedCount = 0);
 	}
 
 	@description = "Validate if the user can view the statistics."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test CreatorStatisticsCanBeViewedInDetails {
 		JSONMBMessage.addCategory(
@@ -1927,7 +1927,7 @@ definition {
 	}
 
 	@description = "Validate if a user can view question details when using history router."
-	@priority = "4"
+	@priority = 4
 	test DetailsCanbeViewedWithHistoryRouter {
 		property test.name.skip.portal.instance = "QuestionsEntry#DetailsCanbeViewedWithHistoryRouter";
 
@@ -1962,7 +1962,7 @@ definition {
 	}
 
 	@description = "Validate if the My Activity tab appears"
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test MyActivityCanBeViewedInTopic {
 		JSONMBMessage.addCategory(
@@ -1981,7 +1981,7 @@ definition {
 	}
 
 	@description = "Validate if the user can view a question via an edited topic."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test QuestionCanBeViewedAfterEditingTopic {
 		JSONMBMessage.addCategory(
@@ -2009,7 +2009,7 @@ definition {
 	}
 
 	@description = "Validate if the pagination will appear and works when we have more than 4 questions."
-	@priority = "3"
+	@priority = 3
 	@refactordone
 	test QuestionsPaginationCanBeViewedInTopic {
 		JSONMBMessage.addCategory(
@@ -2046,7 +2046,7 @@ definition {
 	}
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a question on page."
-	@priority = "3"
+	@priority = 3
 	test XSSIsNotExecutedWhenViewingUsernameInQuestion {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

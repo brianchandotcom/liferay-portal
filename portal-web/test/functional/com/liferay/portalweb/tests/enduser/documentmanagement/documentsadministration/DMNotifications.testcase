@@ -20,7 +20,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
@@ -46,7 +46,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-51280"
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CanReceiveEmailNotificationForNewComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-136816. It checks that custom fields can be rendered properly when a DM notification email is sent."
-	@priority = "3"
+	@priority = 3
 	test CanViewCustomFieldsInEmail {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 		property test.smtp.server.enabled = "true";
@@ -180,14 +180,14 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			toName = "userfn userln");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test CanViewEmailNotificationForNewDocumentInFolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -206,7 +206,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			portlet = "Users and Organizations");
 
 		User.editUserSiteCP(
-			siteName = "${siteName}",
+			siteName = ${siteName},
 			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -291,7 +291,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			subject = "Basic Document Updated for ${dmDocumentTitle}");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewWebsiteNotificationForNewDocumentInFolder {
 		property portal.acceptance = "true";
@@ -325,7 +325,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -338,10 +338,10 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanViewWebsiteNotificationForUpdatedDocumentInFolder {
 		property portal.acceptance = "true";
@@ -378,7 +378,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = 1);
 
 		Notifications.gotoNotifications();
 
@@ -391,10 +391,10 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title Edit");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test NoWebsiteNotificationAppearsForNewDocumentInFolder {
 		property portal.acceptance = "true";
@@ -435,16 +435,16 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 
 		Button.clickPublish();
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test NoWebsiteNotificationAppearsForUpdatedDocumentInFolder {
 		property portal.acceptance = "true";
@@ -488,13 +488,13 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Notifications.viewBadgeCount(notificationCount = "0");
+		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
 }

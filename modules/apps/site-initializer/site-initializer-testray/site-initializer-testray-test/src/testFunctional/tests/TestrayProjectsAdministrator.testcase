@@ -29,13 +29,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-160539. Verify if as an Administrator I am able to add a Project"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddProject {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -47,15 +47,15 @@ definition {
 
 		task ("Change pagination and Assert it the project was created") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.assertItemName(key_name = "Projects_1 Project");
 		}
 	}
 
 	@description = "This is a test for LPS-160536. Verify that as an Administrator I am able to add a Project from the dropdown"
-	@priority = "4"
+	@priority = 4
 	test AdminCanAddProjectFromDropdown {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -67,15 +67,15 @@ definition {
 
 		task ("Change pagination, go to project and Assert project title") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.assertItemName(key_name = "Projects_1 Project");
 		}
 	}
 
 	@description = "This is a test for LPS-160538. Verify if as an Administrator I am able to delete a Project"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteProject {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160537. Verify if as an Administrator I am able to edit a Project name and description"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditProject {
 		task ("Go to Testray, Create Project and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -103,8 +103,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Edit Project name and description and change pagination") {
@@ -117,8 +117,8 @@ definition {
 				name = "Projects_1 Project Edited");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to Home Page and Assert it the name and description has been edited") {
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160541. Verify if as an Administrator I should not be able to add a duplicate Project"
-	@priority = "5"
+	@priority = 5
 	test AdminCanNotAddDuplicateProject {
 		task ("Go to Testray, Create Project duplicate") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164076 Verify that the user can not create a project if all the required fields are not filled in"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewWarningMessage {
 		task ("Go to Testray, Create Project and create product version") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160898. Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		task ("Create project, change pagination and create Routine") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -179,8 +179,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160897. Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
-	@priority = "5"
+	@priority = 5
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
 		task ("Go to Testray and create a Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -205,8 +205,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to created project and add a new team") {
@@ -233,8 +233,8 @@ definition {
 
 		task ("Create a new Routine and a new Case") {
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
@@ -247,8 +247,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "40",
-				priority = "5",
+				duration = 40,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			Testray.projectTabNavigator(navTabName = "Routine");
@@ -274,7 +274,7 @@ definition {
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
-				gitHash = "12345",
+				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 

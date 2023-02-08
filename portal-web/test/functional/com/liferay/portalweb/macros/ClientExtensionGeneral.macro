@@ -3,19 +3,19 @@ definition {
 	macro _deleteRemoteAppAPI {
 		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "externalReferenceCode=");
+		var findWhereIdBegins = StringUtil.extractLast(${currentURL}, "externalReferenceCode=");
 
-		var externalReferenceCodeValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
+		var externalReferenceCodeValue = StringUtil.extractFirst(${findWhereIdBegins}, "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
 
-		JSONClientExtension.deleteIFrameRemoteAppEntry(externalReferenceCode = "${externalReferenceCodeValue}");
+		JSONClientExtension.deleteIFrameRemoteAppEntry(externalReferenceCode = ${externalReferenceCodeValue});
 	}
 
 	macro addApp {
 		ClientExtensionEntry.addEntry(
-			entryHTMLElementName = "${entryHTMLElementName}",
-			entryName = "${entryName}",
-			entryURL = "${entryURL}",
-			mainURL = "${mainURL}");
+			entryHTMLElementName = ${entryHTMLElementName},
+			entryName = ${entryName},
+			entryURL = ${entryURL},
+			mainURL = ${mainURL});
 
 		PortletEntry.publish();
 	}
@@ -24,9 +24,9 @@ definition {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElement(
-			entryHtmlName = "${entryHtmlName}",
-			entryName = "${entryName}",
-			entryURL = "${entryURL}");
+			entryHtmlName = ${entryHtmlName},
+			entryName = ${entryName},
+			entryURL = ${entryURL});
 
 		PortletEntry.publish();
 	}
@@ -35,11 +35,11 @@ definition {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElementAllFields(
-			entryCssurl = "${entryCssurl}",
-			entryHtmlName = "${entryHtmlName}",
-			entryName = "${entryName}",
-			entryProperties = "${entryProperties}",
-			entryURL = "${entryURL}");
+			entryCssurl = ${entryCssurl},
+			entryHtmlName = ${entryHtmlName},
+			entryName = ${entryName},
+			entryProperties = ${entryProperties},
+			entryURL = ${entryURL});
 
 		Click(locator1 = "ClientExtensionEntry#USE_ES_MODULES");
 
@@ -78,47 +78,47 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Click(
-			key_itemName = "${type}",
+			key_itemName = ${type},
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
 	macro assertContentField {
 		AssertTextEquals(
-			key_text = "${entryField}",
+			key_text = ${entryField},
 			locator1 = "ClientExtension#REMOTE_APPS_FIELDS",
-			value1 = "${entryInformation}");
+			value1 = ${entryInformation});
 	}
 
 	macro assertCustomElementFields {
 		AssertTextEquals(
-			custom_entryName = "${entryName}",
+			custom_entryName = ${entryName},
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		AssertTextEquals(
-			custom_entryHtmlName = "${entryHtmlName}",
+			custom_entryHtmlName = ${entryHtmlName},
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHtmlName}");
+			value1 = ${entryHtmlName});
 
 		AssertTextEquals(
-			custom_entryURL = "${entryURL}",
+			custom_entryURL = ${entryURL},
 			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "ClientExtensionEntry#URL",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 
 		AssertTextEquals(
-			custom_entryCssurl = "${entryCssurl}",
+			custom_entryCssurl = ${entryCssurl},
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCssurl}");
+			value1 = ${entryCssurl});
 
 		AssertTextEquals(
-			custom_entryProperties = "${entryProperties}",
+			custom_entryProperties = ${entryProperties},
 			key_text = "Properties",
 			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
-			value1 = "${entryProperties}");
+			value1 = ${entryProperties});
 	}
 
 	macro assertCustomElementMultipleURLFields {
@@ -136,33 +136,33 @@ definition {
 
 		AssertTextEquals(
 			key_id = "ClientExtensionAdminPortlet_url",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js");
 
 		AssertTextEquals(
 			key_id = "ClientExtensionAdminPortlet_url",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		AssertTextEquals(
 			key_id = "cssURLs",
-			key_index = "1",
+			key_index = 1,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index1.css");
 
 		AssertTextEquals(
 			key_id = "cssURLs",
-			key_index = "2",
+			key_index = 2,
 			locator1 = "ClientExtensionEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");
 	}
 
 	macro assertFieldDisable {
-		for (var entryField : list "${entryFieldList}") {
+		for (var entryField : list ${entryFieldList}) {
 			AssertNotEditable(
-				key_text = "${entryField}",
+				key_text = ${entryField},
 				locator1 = "ClientExtension#REMOTE_APPS_FIELDS");
 		}
 	}
@@ -170,50 +170,50 @@ definition {
 	macro assertMultipleFields {
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Name",
-			entryInformation = "${entryName}");
+			entryInformation = ${entryName});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Source Code URL",
-			entryInformation = "${entrySourceCodeURL}");
+			entryInformation = ${entrySourceCodeURL});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Type",
-			entryInformation = "${entryType}");
+			entryInformation = ${entryType});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Friendly URL Mapping",
-			entryInformation = "${entryFriendlyURLMapping}");
+			entryInformation = ${entryFriendlyURLMapping});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "HTML Element Name",
-			entryInformation = "${entryHTMLElementName}");
+			entryInformation = ${entryHTMLElementName});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Portlet Category Name",
-			entryInformation = "${entryPortletCategoryName}");
+			entryInformation = ${entryPortletCategoryName});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "description",
-			entryInformation = "${entrydescription}");
+			entryInformation = ${entrydescription});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "CSS URLs",
-			entryInformation = "${entryCSSURLs}");
+			entryInformation = ${entryCSSURLs});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "_URLs",
-			entryInformation = "${entry_URLs}");
+			entryInformation = ${entry_URLs});
 
 		ClientExtensionGeneral.assertContentField(
 			entryField = "properties",
-			entryInformation = "${entryproperties}");
+			entryInformation = ${entryproperties});
 	}
 
 	macro assertTableEntryNameNotPresent {
 		AssertElementNotPresent(
-			key_tableEntryName = "${entryName}",
+			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 	}
 
 	macro deleteRemoteApp {
@@ -221,7 +221,7 @@ definition {
 
 		ClickNoError(locator1 = "ClientExtension#REMOTE_TABLE_DELETE");
 
-		var remoteAppNameToBeRemoved = "${tableEntry}";
+		var remoteAppNameToBeRemoved = ${tableEntry};
 
 		AssertConfirm(value1 = "Are you sure you want to delete ${remoteAppNameToBeRemoved}? Client extension will be removed immediately. Sites using this client extension will be affected. This action can not be undone.");
 	}
@@ -235,29 +235,29 @@ definition {
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = "${remoteAppNameToBeRemoved}");
+		ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = ${remoteAppNameToBeRemoved});
 	}
 
 	macro editCustomElement {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		Type(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryHtmlName}");
+			value1 = ${entryHtmlName});
 
 		Type(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY",
-			value1 = "${entryCssurl}");
+			value1 = ${entryCssurl});
 
 		Type(
 			key_text = "Properties",
 			locator1 = "ClientExtensionEntry#REMOTE_APPS_PROPERTIES",
-			value1 = "${entryProperties}");
+			value1 = ${entryProperties});
 
 		PortletEntry.publish();
 	}
@@ -273,13 +273,13 @@ definition {
 
 		var currentURL = Navigator.getCurrentURL();
 
-		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "externalReferenceCode=");
+		var findWhereIdBegins = StringUtil.extractLast(${currentURL}, "externalReferenceCode=");
 
-		var externalReferenceCodeValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
+		var externalReferenceCodeValue = StringUtil.extractFirst(${findWhereIdBegins}, "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
 
-		var externalReferenceCodeValue = StringUtil.replace("${externalReferenceCodeValue}", "-", "_");
+		var externalReferenceCodeValue = StringUtil.replace(${externalReferenceCodeValue}, "-", "_");
 
-		return "${externalReferenceCodeValue}";
+		return ${externalReferenceCodeValue};
 	}
 
 	macro getRemoteAppEntryId {
@@ -294,7 +294,7 @@ definition {
 
 		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name')]@value");
 
-		return "${remoteAppEntryValue}";
+		return ${remoteAppEntryValue};
 	}
 
 	macro goToRemoteAppsPortlet {
@@ -322,35 +322,35 @@ definition {
 
 	macro viewTableEntries {
 		AssertTextEquals(
-			key_tableEntryName = "${entryName}",
+			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 
 		AssertTextEquals(
-			key_tableEntryType = "${entryType}",
+			key_tableEntryType = ${entryType},
 			locator1 = "ClientExtension#TABLE_ENTRY_TYPE_REMOTE_TABLE",
-			value1 = "${entryType}");
+			value1 = ${entryType});
 	}
 
 	macro viewTableEntryName {
 		AssertTextEquals(
-			key_tableEntryName = "${entryName}",
+			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
-			value1 = "${entryName}");
+			value1 = ${entryName});
 	}
 
 	macro viewTableEntryType {
 		AssertTextEquals(
-			key_tableEntryType = "${entryType}",
+			key_tableEntryType = ${entryType},
 			locator1 = "ClientExtension#TABLE_ENTRY_TYPE_REMOTE_TABLE",
-			value1 = "${entryType}");
+			value1 = ${entryType});
 	}
 
 	macro viewTableEntryURL {
 		AssertTextEquals(
-			key_tableEntryURL = "${entryURL}",
+			key_tableEntryURL = ${entryURL},
 			locator1 = "ClientExtension#TABLE_ENTRY_URL_REMOTE_TABLE",
-			value1 = "${entryURL}");
+			value1 = ${entryURL});
 	}
 
 }

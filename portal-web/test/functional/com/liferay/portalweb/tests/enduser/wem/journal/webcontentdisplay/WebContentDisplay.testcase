@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@description = "Add a draft web content via web content display widget."
-	@priority = "4"
+	@priority = 4
 	test AddDraftWebContent {
 		task ("Add a draft web content via Web Content Display") {
 			Navigator.gotoSitePage(
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "View web content is shown in Web Content Display after be added via content panel."
-	@priority = "5"
+	@priority = 5
 	test AddRecentContentViaContentPanel {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@description = "Add a web content via web content display widget."
-	@priority = "5"
+	@priority = 5
 	test AddWebContent {
 		property portal.acceptance = "true";
 
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@description = "Add a web content and associate a page scope in Web Content Display widget."
-	@priority = "3"
+	@priority = 3
 	test AddWebContentUnderPageScope {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-70386. View a web content with portlet URL in Web Content Display."
-	@priority = "5"
+	@priority = 5
 	test AddWebContentWithPortletURL {
 		property portal.acceptance = "true";
 
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "Add a web content article with a custom DDM structure and template and display it in the web content display widget."
-	@priority = "5"
+	@priority = 5
 	test AddWithStructure {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -264,7 +264,7 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text Box",
-				fieldLocation = "2",
+				fieldLocation = 2,
 				fieldName = "Text",
 				fieldType = "Multiple Lines");
 
@@ -291,7 +291,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			WebContentDisplayPortlet.add(
 				fieldLabelList = "Text,Text Box",
 				structureName = "WC Structure Name",
-				webContentTextMultipleLines = "${content}",
+				webContentTextMultipleLines = ${content},
 				webContentTextSingleLine = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 		}
@@ -318,13 +318,13 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			WebContent.viewWithStructureCP(
 				fieldType = "Multiple Lines",
 				predefinedValue = "true",
-				webContentText = "${content}",
+				webContentText = ${content},
 				webContentTextFieldLabel = "Text Box");
 		}
 	}
 
 	@description = "Change a web content template via Web Content Display widget."
-	@priority = "4"
+	@priority = 4
 	test ChangeTemplate {
 		task ("Add a web content template with three content fields") {
 			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
@@ -372,7 +372,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a test for LPS-129438. The user could configure the border styles of WCD."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ConfigureBorderStyles {
 		task ("View the default border width and border color of WCD") {
@@ -441,7 +441,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a test for LPS-129944. The user could configure WCD when selected web content based on template with embedded widget."
-	@priority = "4"
+	@priority = 4
 	test ConfigureWCDWhenSelectedWebContentBasedOnTemplateWithEmbeddedWidget {
 		task ("Add a web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -460,14 +460,14 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("Add a web content template for new structure") {
 			NavItem.gotoTemplates();
 
-			var instanceId = StringUtil.randomString("12");
+			var instanceId = StringUtil.randomString(12);
 
 			var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_journal_content_web_portlet_JournalContentPortlet" instanceId="${instanceId}" />''';
 
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a web content based on new structure") {
@@ -516,7 +516,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "The user could display web content audio in Web Content Display."
-	@priority = "5"
+	@priority = 5
 	test DisplayWebContentAudio {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
@@ -565,7 +565,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			WebContent.uploadAudio(
-				dmDocumentURL = "${dmDocumentURL}",
+				dmDocumentURL = ${dmDocumentURL},
 				navTab = "URL");
 
 			PortletEntry.publish();
@@ -589,7 +589,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "The user could display web content image in Web Content Display."
-	@priority = "5"
+	@priority = 5
 	test DisplayWebContentImage {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
@@ -633,7 +633,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "The user could display web content video in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test DisplayWebContentVideo {
 		property dummy.socket.proxy.disabled = "true";
 		property testray.component.names = "Web Content Administration";
@@ -683,7 +683,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a use case for LPS-130033. Display web content with Geolocation field in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test DisplayWebContentWithGeolocationField {
 		task ("Add a web content structure with a Geolocation field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -729,7 +729,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "Can edit a web content template via Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test EditTemplate {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -766,7 +766,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "The user can edit a web content via Web Content Display widget."
-	@priority = "4"
+	@priority = 4
 	test EditWebContent {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -809,7 +809,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "User can view a specific web content in the search bar in Web Content Display widget."
-	@priority = "4"
+	@priority = 4
 	test SearchWebContent {
 		task ("Add two web contents") {
 			for (var i : list "1,2") {
@@ -855,7 +855,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a test for LPS-169728. The site designer could search folders when select web content in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test SearchWebContentFolder {
 		property portal.acceptance = "true";
 
@@ -892,13 +892,13 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				value1 = "2 Results for \"ABS Sensor\"");
 
 			for (var entryTitle : list "ABS Sensor,Tesla ABS Wheel Speed Sensor") {
-				LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+				LexiconList.viewListEntryTitle(listEntry = ${entryTitle});
 			}
 		}
 	}
 
 	@description = "User can select a web content in Web Content Display widget."
-	@priority = "5"
+	@priority = 5
 	test SelectWebContent {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Display,Training";
@@ -928,7 +928,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "User can select a web content that belongs to Global site in Web Content Display widget."
-	@priority = "3"
+	@priority = 3
 	test SelectWebContentFromGlobalScope {
 		task ("Add a web content in Global site") {
 			JSONWebcontent.addWebContent(
@@ -973,7 +973,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a test for LPS-169728. The site designer could see folders hierarchy when select web content in Web Content Display."
-	@priority = "5"
+	@priority = 5
 	test SelectWebContentUnderFolder {
 		property portal.acceptance = "true";
 
@@ -1013,7 +1013,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("Then the site designer sees the folders hierachy on modal") {
 			for (var entryTitle : list "Brake System,Exhaust System,Tesla Model 3") {
-				LexiconList.viewListEntryTitle(listEntry = "${entryTitle}");
+				LexiconList.viewListEntryTitle(listEntry = ${entryTitle});
 			}
 
 			LexiconList.clickListEntryTitle(listEntry = "Brake System");
@@ -1035,7 +1035,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a use case for LPS-71941. Can deploy and undeploy a Web Content Display widget via Gogo Shell."
-	@priority = "5"
+	@priority = 5
 	@uitest
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property portal.acceptance = "true";
@@ -1046,7 +1046,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.journal.content.web");
 
-			GogoShell.stopModule(moduleId = "${moduleId}");
+			GogoShell.stopModule(moduleId = ${moduleId});
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.journal.content.web",
@@ -1068,7 +1068,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("Enable Web Content Display module via GogoShell") {
 			GogoShell.openGogoShellAdmin();
 
-			GogoShell.startModule(moduleId = "${moduleId}");
+			GogoShell.startModule(moduleId = ${moduleId});
 
 			GogoShell.viewModuleStatus(
 				moduleName = "com.liferay.journal.content.web",
@@ -1091,7 +1091,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	}
 
 	@description = "This is a test for LPS-64814. Validate remote code execution via untrusted Java Deserialization in templates cannot cause out of memory errors."
-	@priority = "5"
+	@priority = 5
 	test ValidateRemoteCodeViaTemplatesCannotCauseOutOfMemoryErrors {
 		property portal.acceptance = "true";
 
@@ -1121,7 +1121,7 @@ ${company.getKeyObj()}
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a web content based in the new structure") {
@@ -1152,7 +1152,7 @@ ${company.getKeyObj()}
 	}
 
 	@description = "This is a test for LPS-58698. Validate remote code execution can't privilege escalation in templates."
-	@priority = "5"
+	@priority = 5
 	test ValidateTemplateRCEReturnsNoRuntimeClasses {
 		property portal.acceptance = "true";
 
@@ -1188,7 +1188,7 @@ ${runtimeInstance}
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a web content based in the new structure") {
@@ -1219,7 +1219,7 @@ ${runtimeInstance}
 	}
 
 	@description = "View all file types are shown in Web Content Display"
-	@priority = "4"
+	@priority = 4
 	test ViewAllFileTypesEnabled {
 		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllFileTypesEnabled";
 
@@ -1288,7 +1288,7 @@ ${runtimeInstance}
 	}
 
 	@description = "View all settings are shown in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test ViewAllSettingsEnabled {
 		task ("Add two web contents") {
 			for (var i : list "1,2") {
@@ -1353,7 +1353,7 @@ ${runtimeInstance}
 	}
 
 	@description = "View content is not shown in Web Content Display for guest without permission."
-	@priority = "4"
+	@priority = 4
 	test ViewArticleWithGuestViewPermission {
 		property testray.component.names = "Permissions";
 
@@ -1470,7 +1470,7 @@ ${runtimeInstance}
 	}
 
 	@description = "View an expired web content via Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test ViewExpiredWebContent {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
@@ -1511,7 +1511,7 @@ ${runtimeInstance}
 	}
 
 	@description = "View messages in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	@uitest
 	test ViewMessages {
 		task ("Add a web content") {
@@ -1613,7 +1613,7 @@ ${runtimeInstance}
 	}
 
 	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
-	@priority = "5"
+	@priority = 5
 	test ViewNoFileSystemAccessViaJournalTemplates {
 		property portal.acceptance = "true";
 
@@ -1636,7 +1636,7 @@ ${runtimeInstance}
 
 			var os = OSDetector.isWindows();
 
-			if ("${os}" == "true") {
+			if (${os} == "true") {
 				var templateScript = '''
 ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().create("file:///C:/boot.ini").toURL())}
 ''';
@@ -1650,7 +1650,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				templateScript = "${templateScript}");
+				templateScript = ${templateScript});
 		}
 
 		task ("Add a web content") {
@@ -1679,7 +1679,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	}
 
 	@description = "View pagination in related assets within a web content."
-	@priority = "3"
+	@priority = 3
 	test ViewRelatedAssetsAfterChangePagination {
 		property testray.component.names = "Related Assets,Web Content Administration";
 
@@ -1703,7 +1703,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 		task ("Change the pagination of Related Assets to 4") {
 			WebContent.paginateRelatedAssets(
 				assetType = "Basic Web Content",
-				itemsPerPage = "4",
+				itemsPerPage = 4,
 				webContentTitle = "Web Content Title 3");
 
 			WebContent.viewPaginateRelatedAssets(
@@ -1742,7 +1742,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	}
 
 	@description = "View web content with script pagination in Web Content Display."
-	@priority = "4"
+	@priority = 4
 	test ViewWithPaginationScript {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

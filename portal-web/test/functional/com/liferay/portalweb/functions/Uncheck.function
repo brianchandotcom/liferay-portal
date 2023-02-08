@@ -47,7 +47,7 @@ definition {
 		if (selenium.isChecked()) {
 			selenium.clickAt();
 
-			selenium.pause("1000");
+			selenium.pause(1000);
 		}
 
 		selenium.assertNotChecked();
@@ -86,7 +86,7 @@ definition {
 			selenium.clickAt();
 		}
 
-		selenium.pause("1000");
+		selenium.pause(1000);
 
 		AssertNotChecked.assertNotCheckedNotVisible();
 

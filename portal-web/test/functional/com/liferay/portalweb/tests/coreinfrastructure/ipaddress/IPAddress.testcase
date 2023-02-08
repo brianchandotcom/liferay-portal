@@ -12,13 +12,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@ignore = "true"
-	@priority = "5"
+	@priority = 5
 	test RunPortalOnIPV6 {
 		property custom.properties = "redirect.url.ips.allowed=127.0.0.1,SERVER_IP,0:0:0:0:0:0:0:1${line.separator}tunnel.servlet.hosts.allowed=[0:0:0:0:0:0:0:1]";
 		property portal.acceptance = "false";

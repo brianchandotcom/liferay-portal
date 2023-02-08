@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "User can nest a widget inside Nested Applications widget."
-	@priority = "5"
+	@priority = 5
 	test NestWidgetInsideNestedApplications {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -53,7 +53,7 @@ definition {
 				JSONLayout.addWidgetToPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name",
-					widgetName = "${widgetName}");
+					widgetName = ${widgetName});
 			}
 		}
 
@@ -69,14 +69,14 @@ definition {
 
 		task ("Drag and drop Web Content Display to first column in Nested Applications") {
 			NestedPortlets.dragAndDropPortletToPortletColumnPG(
-				columnNumberFrom = "1",
-				nestedColumnNumberTo = "1",
+				columnNumberFrom = 1,
+				nestedColumnNumberTo = 1,
 				portletName = "Web Content Display");
 		}
 
 		task ("View Web Content Display is nested to Nested Applications") {
 			NestedPortlets.viewPG(
-				nestedColumnNumber = "1",
+				nestedColumnNumber = 1,
 				portletName = "Web Content Display");
 		}
 	}

@@ -21,7 +21,7 @@ definition {
 
 		ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9134 | Test Summary: Cancel Unsaved Workspace Setting Changes"
-	@priority = "3"
+	@priority = 3
 	test CancelUnsavedChangesOfWorkspaceSettings {
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9149 | Test Summary: Information banner should no longer be shown after being dismissed by a user"
-	@priority = "5"
+	@priority = 5
 	test CannotViewInformationBannerAfterDismissedByUser {
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9147 | Test Summary: Set the timezone in workspace settings"
-	@priority = "5"
+	@priority = 5
 	test SetTimeZoneInExistingWorkspace {
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
@@ -162,11 +162,11 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8268 | Automation ID: LRAC-11511 | Test Summary: Change friendlyURL for workspace"
-	@priority = "4"
+	@priority = 4
 	test UpdateWorkspaceURLWithFriendlyURL {
 		var currentURL = Navigator.getCurrentURL();
 
-		var extractedAddress = StringUtil.extractFirst("${currentURL}", "/workspace");
+		var extractedAddress = StringUtil.extractFirst(${currentURL}, "/workspace");
 
 		task ("Connect AC to DXP") {
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9146 | Test Summary: Timezones are sorted in an increasing fashion"
-	@priority = "1"
+	@priority = 1
 	test ViewAvailableTimezonesSortedByAscendingAlphabetic {
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();
@@ -214,119 +214,119 @@ definition {
 
 		task ("View the available timezones are sorted by ascending alphabetic") {
 			AssertElementPresent(
-				index = "2",
+				index = 2,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Afghanistan");
 
 			AssertElementPresent(
-				index = "12",
+				index = 12,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Bahamas");
 
 			AssertElementPresent(
-				index = "22",
+				index = 22,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Cabo Verde");
 
 			AssertElementPresent(
-				index = "36",
+				index = 36,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Denmark");
 
 			AssertElementPresent(
-				index = "38",
+				index = 38,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Ecuador");
 
 			AssertElementPresent(
-				index = "43",
+				index = 43,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Fiji");
 
 			AssertElementPresent(
-				index = "49",
+				index = 49,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Georgia");
 
 			AssertElementPresent(
-				index = "58",
+				index = 58,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Haiti");
 
 			AssertElementPresent(
-				index = "61",
+				index = 61,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Iceland");
 
 			AssertElementPresent(
-				index = "68",
+				index = 68,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Jamaica");
 
 			AssertElementPresent(
-				index = "71",
+				index = 71,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Kazakhstan");
 
 			AssertElementPresent(
-				index = "75",
+				index = 75,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Latvia");
 
 			AssertElementPresent(
-				index = "81",
+				index = 81,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Malaysia");
 
 			AssertElementPresent(
-				index = "96",
+				index = 96,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Namibia");
 
 			AssertElementPresent(
-				index = "107",
+				index = 107,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Pakistan");
 
 			AssertElementPresent(
-				index = "117",
+				index = 117,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Qatar");
 
 			AssertElementPresent(
-				index = "118",
+				index = 118,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Romania");
 
 			AssertElementPresent(
-				index = "120",
+				index = 120,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Samoa");
 
 			AssertElementPresent(
-				index = "135",
+				index = 135,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Taiwan");
 
 			AssertElementPresent(
-				index = "148",
+				index = 148,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Ukraine");
 
 			AssertElementPresent(
-				index = "154",
+				index = 154,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Vanuatu");
 
 			AssertElementPresent(
-				index = "157",
+				index = 157,
 				locator1 = "ACWorkspace#TIMEZONE_COUNTRY_SELECT_OPTION",
 				option = "Wallis & Futuna");
 		}
 	}
 
 	@description = "Bug: LRAC-11903 | Automation ID: LRAC-12355 | Test Summary: Set time zone for existing workspace and validade that the events are shown in the activities card according to the new time zone"
-	@priority = "4"
+	@priority = 4
 	test ViewEventChangedInActivitiesCardAfterChangeTimeZone {
 		task ("Copy the token from AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -359,7 +359,7 @@ definition {
 		task ("Switch to new property in AC and go to Sites") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSites();
 		}
@@ -410,13 +410,13 @@ definition {
 
 		task ("Compare those of the times to verify that the time changes according to the time zone") {
 			TestUtils.assertNotEquals(
-				actual = "${timeBrazil}",
-				expected = "${timeUTC}");
+				actual = ${timeBrazil},
+				expected = ${timeUTC});
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9150 | Test Summary: Information banners should not be stacked after changing a time zone"
-	@priority = "5"
+	@priority = 5
 	test ViewOnlyOneInformationBannerShownAfterChangeTimezone {
 		task ("Navigate to Workspace Settings") {
 			ACNavigation.goToSettings();

@@ -6,10 +6,10 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Type(
-			key_indexNumber = "2",
+			key_indexNumber = 2,
 			key_label = "Code File MIME types",
 			locator1 = "TextArea#ANY_LABELED_N",
-			value1 = "${typeName}");
+			value1 = ${typeName});
 
 		Button.clickSave();
 
@@ -31,9 +31,9 @@ definition {
 	macro cancelSelectFilterTreeview {
 		Portlet.expandTree();
 
-		for (var optionName : list "${optionsList}") {
+		for (var optionName : list ${optionsList}) {
 			Check.checkNotVisible(
-				key_nodeName = "${optionName}",
+				key_nodeName = ${optionName},
 				locator1 = "Treeview#NODE_CHECKBOX_2");
 		}
 
@@ -53,13 +53,13 @@ definition {
 	macro checkMimeExtensionDisplayed {
 		if (isSet(typeName)) {
 			AssertVisible(
-				key_nodeName = "${typeName}",
+				key_nodeName = ${typeName},
 				locator1 = "Treeview#NODE_ITEM_2");
 		}
 		else {
-			for (var typeName : list "${typeNameList}") {
+			for (var typeName : list ${typeNameList}) {
 				AssertVisible(
-					key_nodeName = "${typeName}",
+					key_nodeName = ${typeName},
 					locator1 = "Treeview#NODE_ITEM_2");
 			}
 		}
@@ -77,15 +77,15 @@ definition {
 
 	macro clickMenuOfVersion {
 		Click.waitForMenuToggleJSClick(
-			key_version = "${versionName}",
+			key_version = ${versionName},
 			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
 
 		if (IsVisible(locator1 = "ContentDashboard#INFO_PANEL")) {
-			MenuItem.clickNoError(menuItem = "${menuItem}");
+			MenuItem.clickNoError(menuItem = ${menuItem});
 		}
 		else {
 			ClickNoError(
-				key_menuItem = "${menuItem}",
+				key_menuItem = ${menuItem},
 				locator1 = "ContentDashboard#VERSION_HISTORY_ELLIPSIS");
 		}
 	}
@@ -96,14 +96,14 @@ definition {
 		}
 
 		Click(
-			fillColor = "${fillColor}",
+			fillColor = ${fillColor},
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 	}
 
 	macro clickQuickActionIcon {
 		if (isSet(assetName)) {
 			Click.clickNoMouseOver(
-				key_assetName = "${assetName}",
+				key_assetName = ${assetName},
 				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
 		}
 		else {
@@ -112,7 +112,7 @@ definition {
 
 		Click.javaScriptClick(
 			locator1 = "ContentDashboard#QUICK_ACTION_ICON",
-			title = "${iconName}");
+			title = ${iconName});
 	}
 
 	macro clickViewMore {
@@ -120,16 +120,16 @@ definition {
 	}
 
 	macro createVersionsForDocument {
-		var count = "0";
+		var count = 0;
 
-		while ("${count}" != "${versionsCreated}") {
+		while (${count} != ${versionsCreated}) {
 			JSONDocument.checkOutFile(
-				dmDocumentTitle = "${dmDocumentTitle}",
-				groupName = "${groupName}");
+				dmDocumentTitle = ${dmDocumentTitle},
+				groupName = ${groupName});
 
 			JSONDocument.checkInFile(
-				dmDocumentTitle = "${dmDocumentTitle}",
-				groupName = "${groupName}");
+				dmDocumentTitle = ${dmDocumentTitle},
+				groupName = ${groupName});
 
 			var count = ${count} + 1;
 		}
@@ -141,7 +141,7 @@ definition {
 
 	macro downloadVersion {
 		Click.waitForMenuToggleJSClick(
-			key_tableEntry = "${version}",
+			key_tableEntry = ${version},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 		ClickNoError(
@@ -152,16 +152,16 @@ definition {
 	macro editAsset {
 		LexiconTable.clickEllipsisItem(
 			item = "Edit",
-			tableEntry = "${assetTitle}");
+			tableEntry = ${assetTitle});
 
 		if (isSet(assetNewTitle)) {
 			if (IsElementPresent(locator1 = "TextInput#TITLE")) {
 				Click(locator1 = "TextInput#TITLE");
 
-				PortletEntry.inputTitle(title = "${assetNewTitle}");
+				PortletEntry.inputTitle(title = ${assetNewTitle});
 			}
 			else {
-				BlogsEntry.addTitle(entryTitle = "${assetNewTitle}");
+				BlogsEntry.addTitle(entryTitle = ${assetNewTitle});
 			}
 		}
 
@@ -183,23 +183,23 @@ definition {
 		}
 
 		if (!(isSet(viewOption))) {
-			for (var authorName : list "${authorNameList}") {
-				LexiconTable.checkTableCheckbox(tableEntry = "${authorName}");
+			for (var authorName : list ${authorNameList}) {
+				LexiconTable.checkTableCheckbox(tableEntry = ${authorName});
 			}
 		}
-		else if ("${viewOption}" == "Cards") {
-			LexiconEntry.changeExportDisplayStyle(displayStyle = "${viewOption}");
+		else if (${viewOption} == "Cards") {
+			LexiconEntry.changeExportDisplayStyle(displayStyle = ${viewOption});
 
-			for (var authorName : list "${authorNameList}") {
-				LexiconCard.checkCardCheckbox(card = "${authorName}");
+			for (var authorName : list ${authorNameList}) {
+				LexiconCard.checkCardCheckbox(card = ${authorName});
 			}
 		}
-		else if ("${viewOption}" == "List") {
-			LexiconEntry.changeExportDisplayStyle(displayStyle = "${viewOption}");
+		else if (${viewOption} == "List") {
+			LexiconEntry.changeExportDisplayStyle(displayStyle = ${viewOption});
 
-			for (var authorName : list "${authorNameList}") {
+			for (var authorName : list ${authorNameList}) {
 				Check(
-					key_listEntry = "${authorName}",
+					key_listEntry = ${authorName},
 					locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
 			}
 		}
@@ -222,7 +222,7 @@ definition {
 	macro filterByCategory {
 		ContentDashboard.openFilterModal(filterOption = "Categories");
 
-		ContentDashboard.useTreeviewFilter(optionsList = "${categoryNameList}");
+		ContentDashboard.useTreeviewFilter(optionsList = ${categoryNameList});
 
 		ContentDashboard.applySelectedFilter();
 	}
@@ -231,10 +231,10 @@ definition {
 		ContentDashboard.openFilterModal(filterOption = "Extension");
 
 		if (!(isSet(extensionNameList))) {
-			var extensionNameList = "${extensionName}";
+			var extensionNameList = ${extensionName};
 		}
 
-		ContentDashboard.useTreeviewFilter(optionsList = "${extensionNameList}");
+		ContentDashboard.useTreeviewFilter(optionsList = ${extensionNameList});
 
 		ContentDashboard.applySelectedFilter();
 	}
@@ -242,7 +242,7 @@ definition {
 	macro filterByMimeParent {
 		ContentDashboard.openFilterModal(filterOption = "Extension");
 
-		ContentDashboard.useTreeviewFilter(optionsList = "${parentExtension}");
+		ContentDashboard.useTreeviewFilter(optionsList = ${parentExtension});
 
 		ContentDashboard.applySelectedFilter();
 	}
@@ -254,7 +254,7 @@ definition {
 			locator1 = "NavBar#MY_SITES",
 			value1 = "My Sites");
 
-		LexiconCard.clickCardTitle(card = "${siteName}");
+		LexiconCard.clickCardTitle(card = ${siteName});
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -269,11 +269,11 @@ definition {
 		ContentDashboard.openFilterModal(filterOption = "Tag");
 
 		if (!(isSet(tagNameList))) {
-			var tagNameList = "${tagName}";
+			var tagNameList = ${tagName};
 		}
 
-		for (var tableEntry : list "${tagNameList}") {
-			LexiconTable.checkTableCheckbox(tableEntry = "${tableEntry}");
+		for (var tableEntry : list ${tagNameList}) {
+			LexiconTable.checkTableCheckbox(tableEntry = ${tableEntry});
 		}
 
 		ContentDashboard.applySelectedFilter();
@@ -283,10 +283,10 @@ definition {
 		ContentDashboard.openFilterModal(filterOption = "Type");
 
 		if (!(isSet(typeNameList))) {
-			var typeNameList = "${typeName}";
+			var typeNameList = ${typeName};
 		}
 
-		ContentDashboard.useTreeviewFilter(optionsList = "${typeNameList}");
+		ContentDashboard.useTreeviewFilter(optionsList = ${typeNameList});
 
 		ContentDashboard.applySelectedFilter();
 	}
@@ -313,7 +313,7 @@ definition {
 
 		LexiconTable.clickEllipsisItem(
 			item = "Info",
-			tableEntry = "${assetName}");
+			tableEntry = ${assetName});
 
 		ContentDashboard.openVersionsTab();
 
@@ -327,7 +327,7 @@ definition {
 	macro moveVocabularyDisplayConfiguration {
 		ContentDashboard.openAuditGraphConfiguration();
 
-		for (var key_vocabularyName : list "${vocabularyName}") {
+		for (var key_vocabularyName : list ${vocabularyName}) {
 			if (IsElementPresent(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE")) {
 				Click.clickNoMouseOver(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 
@@ -349,7 +349,7 @@ definition {
 		}
 
 		if (isSet(warningMessage)) {
-			Alert.viewWarningSpecific(warningMessage = "${warningMessage}");
+			Alert.viewWarningSpecific(warningMessage = ${warningMessage});
 		}
 		else {
 			Alert.viewSuccessMessage();
@@ -360,8 +360,8 @@ definition {
 
 	macro navigateToDocumentVersionHistoryPage {
 		var fileEntryId = JSONDocument.getFileEntryId(
-			dmDocumentTitle = "${dmDocumentTitle}",
-			groupName = "${groupName}");
+			dmDocumentTitle = ${dmDocumentTitle},
+			groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_file_entry_history&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryId=${fileEntryId}");
 	}
@@ -411,7 +411,7 @@ definition {
 
 		Type(
 			locator1 = "ContentDashboard#SEARCH_FIELD",
-			value1 = "${webContentTitle}");
+			value1 = ${webContentTitle});
 
 		KeyPress(
 			locator1 = "ContentDashboard#SEARCH_FIELD",
@@ -427,12 +427,12 @@ definition {
 			groupName = "Global",
 			title = "Stage 1",
 			vocabularyName = "Stage");
-		static var audienceId1 = "${audienceCategory}";
-		static var stageId1 = "${stageCategory}";
+		static var audienceId1 = ${audienceCategory};
+		static var stageId1 = ${stageCategory};
 
-		return "${audienceId1}";
+		return ${audienceId1};
 
-		return "${stageId1}";
+		return ${stageId1};
 	}
 
 	macro setVocabularyInUseSecondPosition {
@@ -440,7 +440,7 @@ definition {
 
 		var secondVocabulary = selenium.getText("ContentDashboard#AUDIT_GRAPH_CONFIGURATION_SECOND_VOCABULARY_IN_USE");
 
-		if (contains("${secondVocabulary}", "${key_vocabularyName}")) {
+		if (contains(${secondVocabulary}, ${key_vocabularyName})) {
 			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 
 			Click(
@@ -460,7 +460,7 @@ definition {
 
 		var firstVocabulary = selenium.getText("ContentDashboard#AUDIT_GRAPH_CONFIGURATION_FIRST_VOCABULARY_IN_USE");
 
-		if (contains("${key_vocabularyName}", "${firstVocabulary}")) {
+		if (contains(${key_vocabularyName}, ${firstVocabulary})) {
 			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_IN_USE");
 
 			Click(
@@ -482,17 +482,17 @@ definition {
 	macro useTreeviewFilter {
 		Portlet.expandTree();
 
-		for (var optionName : list "${optionsList}") {
+		for (var optionName : list ${optionsList}) {
 			Check.checkNotVisible(
-				key_nodeName = "${optionName}",
+				key_nodeName = ${optionName},
 				locator1 = "Treeview#NODE_CHECKBOX_2");
 		}
 	}
 
 	macro viewAppliedFilters {
-		for (var filterLabel : list "${filterLabelList}") {
+		for (var filterLabel : list ${filterLabelList}) {
 			AssertElementPresent(
-				filterLabel = "${filterLabel}",
+				filterLabel = ${filterLabel},
 				locator1 = "ContentDashboard#FILTER_LABEL");
 		}
 	}
@@ -501,27 +501,27 @@ definition {
 		Panel.expandPanel(panel = "Details");
 
 		ClickNoError(
-			key_language = "${language}",
+			key_language = ${language},
 			locator1 = "ContentDashboard#VIEW_TRANSLATED_ASSET_ICON");
 	}
 
 	macro viewHistoryVersionOrder {
-		var count = "1";
-		var list1 = ListUtil.newListFromString("${assetVersionList}");
+		var count = 1;
+		var list1 = ListUtil.newListFromString(${assetVersionList});
 
-		var size = ListUtil.size("${list1}");
+		var size = ListUtil.size(${list1});
 
-		while ("${count}" != "${size}") {
-			var versionName = ListUtil.get("${list1}", "${count}");
+		while (${count} != ${size}) {
+			var versionName = ListUtil.get(${list1}, ${count});
 
 			AssertVisible(
-				index = "${count}",
-				key_tableEntry = "${versionName}",
+				index = ${count},
+				key_tableEntry = ${versionName},
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			var count = ${count} + 1;
 
-			var count = StringUtil.valueOf("${count}");
+			var count = StringUtil.valueOf(${count});
 		}
 	}
 

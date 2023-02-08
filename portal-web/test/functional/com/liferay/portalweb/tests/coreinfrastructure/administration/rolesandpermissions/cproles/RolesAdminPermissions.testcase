@@ -15,7 +15,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This test automates LPS-144566 and asserts that revoke the User's View permission on Administrator role, you still can assign new roles."
-	@priority = "3"
+	@priority = 3
 	test RevokeUserViewPermissionONAdminroleCanStillAssignNewRoles {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -43,26 +43,26 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "Roles Regrole Name");
 
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
 					roleTitle = "Roles Regrole Name");
 			}
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.User",
 					roleTitle = "Roles Regrole Name");
 			}
 
 			for (var resourceActionIndex : list "VIEW_MEMBERS,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
-					resourceAction = "${resourceActionIndex}",
+					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Organization",
 					roleTitle = "Roles Regrole Name");
 			}
@@ -97,7 +97,7 @@ definition {
 			for (var resourceActionIndex : list "INLINE_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
 				PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 					addOrRemoveViewPermission = "Add",
-					permissionsKeyList = "${resourceActionIndex}",
+					permissionsKeyList = ${resourceActionIndex},
 					roleTitle = "Roles Regrole Name");
 			}
 		}
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@description = "This test adds a user with a regular role that has view and add permissions for Roles. It then asserts that a user assigned to this role can successfully add different kinds of roles (Regular, Site, and Organization)"
-	@priority = "4"
+	@priority = 4
 	test UserWithAddRolePermissionCanAdd {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -168,7 +168,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -191,20 +191,20 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ROLE",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		for (var roleType : list "Regular,Site,Organization") {
 			Role.openRolesAdmin();
 
-			RoleNavigator.gotoRoleType(roleType = "${roleType}");
+			RoleNavigator.gotoRoleType(roleType = ${roleType});
 
 			Role.add(roleTitle = "${roleType}Role Name");
 		}
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_ROLE",
-			resourceName = "90",
+			resourceName = 90,
 			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
@@ -215,7 +215,7 @@ definition {
 		for (var roleType : list "Regular,Site,Organization") {
 			Role.openRolesAdmin();
 
-			RoleNavigator.gotoRoleType(roleType = "${roleType}");
+			RoleNavigator.gotoRoleType(roleType = ${roleType});
 
 			AssertElementNotPresent(locator1 = "NavBar#ADD");
 		}

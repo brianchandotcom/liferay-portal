@@ -18,7 +18,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to Collapse a Fields Group"
-	@priority = "3"
+	@priority = 3
 	test CanBeCollapsed {
 		NavItem.gotoStructures();
 
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to Collapse a Fields Group"
-	@priority = "3"
+	@priority = 3
 	test CanBeCollapsedAndTranslated {
 		NavItem.gotoStructures();
 
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by adding a field from the sidebar into a field that is on the builder."
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		NavItem.gotoStructures();
 
@@ -165,13 +165,13 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to create Fields Group by dragging a field already on the builder into another field on the builder."
-	@priority = "5"
+	@priority = 5
 	test CanBeCreatedWithFieldsOnBuilder {
 		NavItem.gotoStructures();
 
@@ -194,13 +194,13 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to delete the entire Fields Group."
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		NavItem.gotoStructures();
 
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to duplicate the entire Fields Group."
-	@priority = "4"
+	@priority = 4
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
 
@@ -255,18 +255,18 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Copy of Fields Group",
 			fieldsLabelList = "Copy of Text,Copy of Numeric");
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that the Web Content data persists upon editing the related Structure by creating a Fields Group"
-	@priority = "4"
+	@priority = 4
 	test CanDataBeEditedInNewFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -294,7 +294,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		Button.clickPublish();
 
@@ -318,11 +318,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 	}
 
 	@description = "Verify that the Web Content data persists upon editing the related Structure by creating a Fields Group	"
-	@priority = "4"
+	@priority = 4
 	test CanDataBeEditedInNewFieldsGroupTranslated {
 		NavItem.gotoStructures();
 
@@ -350,7 +350,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -360,7 +360,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123456");
+			value = 123456);
 
 		Button.clickPublish();
 
@@ -384,7 +384,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -394,11 +394,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123456");
+			value = 123456);
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to delete a field inside a Fields Group."
-	@priority = "5"
+	@priority = 5
 	test CanDeleteField {
 		NavItem.gotoStructures();
 
@@ -426,13 +426,13 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Numeric");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to duplicate the inner Fields Group that is inside another Fields Group."
-	@priority = "3"
+	@priority = 3
 	test CanDuplicateNestedFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -467,18 +467,18 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "2",
+			fieldGroupDepth = 2,
 			fieldGroupLabel = "Fields Group 2",
 			fieldsLabelList = "Numeric,Date");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "2",
+			fieldGroupDepth = 2,
 			fieldGroupLabel = "Copy of Fields Group 2",
 			fieldsLabelList = "Copy of Numeric,Copy of Date");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to duplicate or delete fields that are inside a Fields Group."
-	@priority = "5"
+	@priority = 5
 	test CanDuplicateOrDeleteFields {
 		NavItem.gotoStructures();
 
@@ -516,13 +516,13 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Copy of Text");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to duplicate or delete fields that are inside a Fields Group inside another Fields Group."
-	@priority = "3"
+	@priority = 3
 	test CanDuplicateOrDeleteFieldsInsideNestedFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to edit data inputted on a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanEditDataOnFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -586,7 +586,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -604,7 +604,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -614,7 +614,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.publish();
 
@@ -626,7 +626,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -636,7 +636,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.changeLocale(locale = "en-US");
 
@@ -646,7 +646,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "321");
+			value = 321);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -656,7 +656,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "678");
+			value = 678);
 
 		PortletEntry.publish();
 
@@ -668,7 +668,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "321");
+			value = 321);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -678,11 +678,11 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "678");
+			value = 678);
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to edit Fields Group label"
-	@priority = "4"
+	@priority = 4
 	test CanEditLabel {
 		NavItem.gotoStructures();
 
@@ -710,13 +710,13 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group Edited",
 			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to edit the label of a Fields Group that is inside another Fields Group."
-	@priority = "3"
+	@priority = 3
 	test CanEditLabelOfNestedFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -757,18 +757,18 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group 1",
 			fieldsLabelList = "Text");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "2",
+			fieldGroupDepth = 2,
 			fieldGroupLabel = "Fields Group 2 Edited",
 			fieldsLabelList = "Numeric,Date");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to edit Label, Placeholder and Help text of fields that are inside the Fields Group."
-	@priority = "5"
+	@priority = 5
 	test CanEditLabelPlaceholderAndHelpTextOfFields {
 		NavItem.gotoStructures();
 
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to edit Label, Placeholder and Help text of fields that are inside a Fields Group inside another Fields Group."
-	@priority = "4"
+	@priority = 4
 	test CanEditLabelPlaceholderAndHelpTextOfFieldsInsideNestedFieldsGroups {
 		NavItem.gotoStructures();
 
@@ -900,7 +900,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that inputted data on a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test CanInputData {
 		NavItem.gotoStructures();
 
@@ -934,7 +934,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
@@ -950,7 +950,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
@@ -958,7 +958,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
-	@priority = "4"
+	@priority = 4
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -992,32 +992,32 @@ definition {
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
-			index = "1",
+			index = 1,
 			value = "08/06/2021");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
-			index = "2",
+			index = 2,
 			value = "09/06/2021");
 
 		Button.clickPublish();
@@ -1026,37 +1026,37 @@ definition {
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
-			index = "1",
+			index = 1,
 			value = "08/06/2021");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
-			index = "2",
+			index = 2,
 			value = "09/06/2021");
 	}
 
 	@description = "Verify that data inputted on a repeatable Fields Group duplicated persists on the Web Content"
-	@priority = "4"
+	@priority = 4
 	test CanInputDataOnDuplicatedFieldTranslated {
 		NavItem.gotoStructures();
 
@@ -1085,45 +1085,45 @@ definition {
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1 zh-CN");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			index = 1,
+			value = 123456);
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2 zh-CN");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
+			index = 2,
+			value = 123456);
 
 		Button.clickPublish();
 
@@ -1131,49 +1131,49 @@ definition {
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1 zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			index = 1,
+			value = 123456);
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2 zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
+			index = 2,
+			value = 123456);
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to edit data inputted on a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanInputtedDataBeEdited {
 		NavItem.gotoStructures();
 
@@ -1207,7 +1207,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
@@ -1223,7 +1223,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
@@ -1239,7 +1239,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		DERenderer.assertDataInDateField(
 			fieldLabel = "Date",
@@ -1247,7 +1247,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove data from fields inside a Fields Group"
-	@priority = "3"
+	@priority = 3
 	test CanInputtedDataBeRemoved {
 		NavItem.gotoStructures();
 
@@ -1281,7 +1281,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		DERenderer.inputDataInDateField(
 			fieldLabel = "Date",
@@ -1321,7 +1321,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to remove data from fields inside a Fields Group"
-	@priority = "5"
+	@priority = 5
 	test CanRemoveDataOnFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -1341,7 +1341,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -1359,7 +1359,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1369,7 +1369,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.publish();
 
@@ -1381,7 +1381,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1391,7 +1391,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.publish();
 
@@ -1439,7 +1439,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that is possible to remove duplicated repeatable Fields Group"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
@@ -1483,11 +1483,11 @@ definition {
 
 		DEBuilder.assertFieldNotPresent(
 			fieldLabel = "Fields Group",
-			index = "3");
+			index = 3);
 	}
 
 	@description = "Verify that is possible to remove duplicated repeatable Fields Group"
-	@priority = "4"
+	@priority = 4
 	test CanRemoveDuplicatedRepeatableFieldsGroupTranslated {
 		NavItem.gotoStructures();
 
@@ -1516,45 +1516,45 @@ definition {
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1 zh-CN");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			index = 1,
+			value = 123456);
 
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2 zh-CN");
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
+			index = 2,
+			value = 123456);
 
 		Button.clickPublish();
 
@@ -1562,45 +1562,45 @@ definition {
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "456");
+			index = 2,
+			value = 456);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1 zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			index = 1,
+			value = 123456);
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "2",
+			index = 2,
 			value = "This is a Text field 2 zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "2",
-			value = "123456");
+			index = 2,
+			value = 123456);
 
 		Button.clickPublish();
 
@@ -1614,29 +1614,29 @@ definition {
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123");
+			index = 1,
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DERenderer.assertDataInTextField(
 			fieldLabel = "Text",
-			index = "1",
+			index = 1,
 			value = "This is a Text field 1 zh-CN");
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			index = "1",
-			value = "123456");
+			index = 1,
+			value = 123456);
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that is possible to remove a field from the Fields Group."
-	@priority = "4"
+	@priority = 4
 	test CanRemoveField {
 		NavItem.gotoStructures();
 
@@ -1664,13 +1664,13 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Text");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Numeric");
 	}
 
 	@description = "This is a test for LRQA-68747. This test verifies that if all fields from a Fields Group are removed the Fields Group is removed."
-	@priority = "3"
+	@priority = 3
 	test CanRemoveFieldsGroupWhenAllFieldsAreRemoved {
 		NavItem.gotoStructures();
 
@@ -1709,7 +1709,7 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for a Grid field inside a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test CanSelectGridOptionsInFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -1744,9 +1744,9 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		Button.clickPublish();
@@ -1755,14 +1755,14 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 	}
 
 	@description = "Verify that Options chosen for a Grid field inside a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test CanSelectGridOptionsInFieldsGroupTranslated {
 		NavItem.gotoStructures();
 
@@ -1797,18 +1797,18 @@ definition {
 
 		for (var index : list "1,2") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		for (var index : list "3,4") {
 			DERenderer.inputDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		Button.clickPublish();
@@ -1817,23 +1817,23 @@ definition {
 
 		for (var index : list "1,2") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		for (var index : list "3,4") {
 			DERenderer.assertDataInGridField(
-				column = "${index}",
+				column = ${index},
 				fieldLabel = "Grid",
-				row = "${index}");
+				row = ${index});
 		}
 	}
 
 	@description = "This is a test for LRQA-71711. This test verifies that Options chosen for Fields with Options inside a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test CanSelectOptionsInFieldsGroup {
 		NavItem.gotoStructures();
 
@@ -1874,7 +1874,7 @@ definition {
 	}
 
 	@description = "Verify that Options chosen for Fields with Options inside a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test CanSelectOptionsInFieldsGroupTranslated {
 		NavItem.gotoStructures();
 
@@ -1927,7 +1927,7 @@ definition {
 	}
 
 	@description = "Verify that inputted data on a Fields Group persists"
-	@priority = "5"
+	@priority = 5
 	test InputDataOnFieldsGroupPersists {
 		NavItem.gotoStructures();
 
@@ -1947,7 +1947,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
+			fieldGroupDepth = 1,
 			fieldGroupLabel = "Fields Group",
 			fieldsLabelList = "Text,Numeric");
 
@@ -1965,7 +1965,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1975,7 +1975,7 @@ definition {
 
 		DERenderer.inputDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 
 		PortletEntry.publish();
 
@@ -1987,7 +1987,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "123");
+			value = 123);
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -1997,7 +1997,7 @@ definition {
 
 		DERenderer.assertDataInNumericField(
 			fieldLabel = "Numeric",
-			value = "456");
+			value = 456);
 	}
 
 }

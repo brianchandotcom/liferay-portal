@@ -7,11 +7,11 @@ definition {
 
 		''';
 
-		var count = selenium.getEval("${javaScriptCountElement}");
+		var count = selenium.getEval(${javaScriptCountElement});
 
-		return "${count}";
+		return ${count};
 
-		if ("${count}" != "${expectedLabels}") {
+		if (${count} != ${expectedLabels}) {
 			fail("Labels number is not correct");
 		}
 	}
@@ -30,7 +30,7 @@ definition {
 		Click(locator1 = "PageAudit#LOCALE_BUTTON");
 
 		Click(
-			key_locale = "${locale}",
+			key_locale = ${locale},
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
@@ -100,7 +100,7 @@ definition {
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
-				configurationScope = "${scope}");
+				configurationScope = ${scope});
 		}
 
 		PageAudit.disableGooglePageSpeedSettings();
@@ -135,7 +135,7 @@ definition {
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Pages",
 				configurationName = "Google PageSpeed Insights",
-				configurationScope = "${settingsScope}");
+				configurationScope = ${settingsScope});
 		}
 
 		PageAudit.disableGooglePageSpeedSettings();
@@ -182,10 +182,10 @@ definition {
 
 		Type(
 			locator1 = "PageAudit#API_FIELD",
-			value1 = "${key_apiKey}");
+			value1 = ${key_apiKey});
 
 		if (isSet(preferredStrategy)) {
-			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
+			PageAudit.setPreferredStrategy(key_preferredStrategy = ${preferredStrategy});
 		}
 
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
@@ -210,8 +210,8 @@ definition {
 			configurationScope = "Site Scope");
 
 		PageAudit.setAPISettings(
-			key_apiKey = "${apiKey}",
-			preferredStrategy = "${preferredStrategy}");
+			key_apiKey = ${apiKey},
+			preferredStrategy = ${preferredStrategy});
 	}
 
 	macro setAPIViaSiteSettings {
@@ -225,8 +225,8 @@ definition {
 			configurationScope = "Site Scope");
 
 		PageAudit.setAPISettings(
-			key_apiKey = "${apiKey}",
-			preferredStrategy = "${preferredStrategy}");
+			key_apiKey = ${apiKey},
+			preferredStrategy = ${preferredStrategy});
 	}
 
 	macro setAPIViaSystemSettings {
@@ -241,14 +241,14 @@ definition {
 			configurationScope = "Site Scope");
 
 		PageAudit.setAPISettings(
-			key_apiKey = "${apiKey}",
-			preferredStrategy = "${preferredStrategy}");
+			key_apiKey = ${apiKey},
+			preferredStrategy = ${preferredStrategy});
 	}
 
 	macro setPreferredStrategy {
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		DropdownMenuItem.click(menuItem = "${key_preferredStrategy}");
+		DropdownMenuItem.click(menuItem = ${key_preferredStrategy});
 	}
 
 	macro setSEOcanonicalURL {
@@ -260,9 +260,9 @@ definition {
 			var pageName = "Content Page";
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "${urlAppend}");
+		Navigator.openWithAppendToBaseURL(urlAppend = ${urlAppend});
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "${pageName}");
+		Navigator.gotoEditPageViaControlMenu(pageName = ${pageName});
 
 		Navigator.gotoNavTab(navTab = "SEO");
 
@@ -273,12 +273,12 @@ definition {
 		}
 
 		if (isSet(canonicalLocale)) {
-			PortletEntry.changeLocale(locale = "${canonicalLocale}");
+			PortletEntry.changeLocale(locale = ${canonicalLocale});
 		}
 
 		Type(
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
-			value1 = "${url}");
+			value1 = ${url});
 
 		PortletEntry.save();
 	}

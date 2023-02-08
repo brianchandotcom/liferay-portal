@@ -20,23 +20,23 @@ definition {
 				-d alert=false
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
 	macro _getEntryId {
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
 
 		if (!(isSet(position))) {
-			var position = "1";
+			var position = 1;
 		}
 
 		var entryId = selenium.getAttribute("//tr[${position}]//input[contains(@name,'AnnouncementsAdminPortlet_rowIdsAnnouncementsEntry')]@value");
 
-		return "${entryId}";
+		return ${entryId};
 
 		echo("## * entryId: ${entryId}");
 	}

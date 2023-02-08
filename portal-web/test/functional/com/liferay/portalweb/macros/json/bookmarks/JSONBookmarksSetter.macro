@@ -2,43 +2,43 @@ definition {
 
 	macro setFolderId {
 		if (isSet(folderName)) {
-			Variables.assertDefined(parameterList = "${groupId}");
+			Variables.assertDefined(parameterList = ${groupId});
 
 			var folderId = JSONBookmarksAPI._getFolderIdByFolderName(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
+				folderName = ${folderName},
+				groupId = ${groupId});
 		}
 		else {
-			var folderId = "0";
+			var folderId = 0;
 		}
 
-		return "${folderId}";
+		return ${folderId};
 	}
 
 	macro setGroupId {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "${groupName}",
-			site = "${site}");
+			groupName = ${groupName},
+			site = ${site});
 
-		return "${groupId}";
+		return ${groupId};
 	}
 
 	macro setServiceContext {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			groupName = "${groupName}",
-			site = "${site}",
-			workflowAction = "${workflowAction}");
+			assetCategoryIds = ${assetCategoryIds},
+			assetTagNames = ${assetTagNames},
+			groupName = ${groupName},
+			site = ${site},
+			workflowAction = ${workflowAction});
 
-		return "${serviceContext}";
+		return ${serviceContext};
 	}
 
 }

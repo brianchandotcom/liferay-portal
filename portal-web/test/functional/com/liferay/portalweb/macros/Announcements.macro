@@ -18,12 +18,12 @@ definition {
 
 	macro viewAnnouncementEntry {
 		AssertElementPresent(
-			key_entryTitle = "${announcementTitle}",
+			key_entryTitle = ${announcementTitle},
 			locator1 = "Announcements#ANNOUNCEMENT_TITLE");
 
 		LexiconTable.clickTableEntryColumnLink(
 			columnName = "title",
-			tableEntry = "${announcementTitle}");
+			tableEntry = ${announcementTitle});
 
 		AssertTextEquals(
 			locator1 = "Announcements#ANNOUNCEMENT_ENTRY_TITLE",

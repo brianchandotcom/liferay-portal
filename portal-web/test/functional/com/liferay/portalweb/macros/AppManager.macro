@@ -1,13 +1,13 @@
 definition {
 
 	macro activateApp {
-		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Activate");
 	}
 
 	macro deactivateApp {
-		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Deactivate");
 
@@ -15,18 +15,18 @@ definition {
 	}
 
 	macro filtersApp {
-		var key_filterName = "${filterName}";
+		var key_filterName = ${filterName};
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
 
 		WaitForElementPresent(
-			key_filterName = "${filterName}",
+			key_filterName = ${filterName},
 			locator1 = "AppManager#APP_FILTER_LABEL");
 
 		if (isSet(filterBy)) {
 			Select(
 				locator1 = "AppManager#APP_FILTER_SELECT_DROP_DOWN_LIST",
-				value1 = "${filterBy}");
+				value1 = ${filterBy});
 		}
 
 		Click(locator1 = "AppManager#SEARCH_BUTTON");
@@ -50,14 +50,14 @@ definition {
 		Type(
 			key_text = "Email Address",
 			locator1 = "AppManager#LOGIN_INPUT_FIELD",
-			value1 = "${marketplaceClientId}");
+			value1 = ${marketplaceClientId});
 
 		var marketplaceClientSecret = PropsUtil.get("marketplace.email.password.6");
 
 		Type(
 			key_text = "Password",
 			locator1 = "AppManager#LOGIN_INPUT_FIELD",
-			value1 = "${marketplaceClientSecret}");
+			value1 = ${marketplaceClientSecret});
 
 		AssertClick(
 			locator1 = "AppManager#APP_SUBMIT",
@@ -75,21 +75,21 @@ definition {
 	}
 
 	macro purchaseApp {
-		var key_searchName = "${searchName}";
+		var key_searchName = ${searchName};
 
 		AssertElementPresent(
-			key_searchName = "${searchName}",
+			key_searchName = ${searchName},
 			locator1 = "AppManager#APP_TITLE_TYPE");
 
 		AssertClick(
-			key_searchName = "${searchName}",
+			key_searchName = ${searchName},
 			locator1 = "AppManager#APP_TITLE_TYPE",
-			value1 = "${searchName}");
+			value1 = ${searchName});
 
 		AssertClick(
-			key_type = "${type}",
+			key_type = ${type},
 			locator1 = "AppManager#APP_PURCHASE",
-			value1 = "${type}");
+			value1 = ${type});
 
 		WaitForPageLoad();
 
@@ -109,17 +109,17 @@ definition {
 
 		Type(
 			locator1 = "AppManager#APP_RESULT_BOX",
-			value1 = "${searchName}");
+			value1 = ${searchName});
 
 		Click(locator1 = "AppManager#SEARCH_BUTTON");
 
 		AssertElementPresent(
-			key_searchName = "${searchName}",
+			key_searchName = ${searchName},
 			locator1 = "AppManager#APP_TITLE_TYPE");
 	}
 
 	macro uninstallApp {
-		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
+		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Uninstall");
 
@@ -127,7 +127,7 @@ definition {
 	}
 
 	macro uploadApp {
-		var key_appName = "${appName}";
+		var key_appName = ${appName};
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
@@ -137,7 +137,7 @@ definition {
 
 		AssertElementPresent(locator1 = "TextInput#FILE");
 
-		UploadDependencyFile.uploadArchiveFile(fileName = "${warFileName}");
+		UploadDependencyFile.uploadArchiveFile(fileName = ${warFileName});
 
 		Button.clickInstall();
 
@@ -159,25 +159,25 @@ definition {
 	}
 
 	macro viewApp {
-		var key_appName = "${appName}";
+		var key_appName = ${appName};
 
 		if (isSet(searchTerm)) {
-			Search.searchCP(searchTerm = "${searchTerm}");
+			Search.searchCP(searchTerm = ${searchTerm});
 		}
 		else {
-			Search.searchCP(searchTerm = "${appName}");
+			Search.searchCP(searchTerm = ${appName});
 		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AppManager#APP_NAME",
-			value1 = "${appName}");
+			value1 = ${appName});
 
 		if (isSet(appStatus)) {
-			var key_appStatus = "${appStatus}";
+			var key_appStatus = ${appStatus};
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "AppManager#APP_STATUS",
-				value1 = "${appStatus}");
+				value1 = ${appStatus});
 		}
 	}
 

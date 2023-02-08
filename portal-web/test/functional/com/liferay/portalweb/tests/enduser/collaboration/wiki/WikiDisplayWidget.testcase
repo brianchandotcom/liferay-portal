@@ -16,7 +16,7 @@ definition {
 			layoutName = "Wiki Display Test Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Wiki Display Test Page",
 			widgetName = "Wiki Display");
@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This ensures that a child page can be added via wiki display widget."
-	@priority = "5"
+	@priority = 5
 	@refactordone
 	test CanAddChildPageViaWD {
 		JSONWiki.updateWikiPage(
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@description = "This ensures that a child page can be added with HTML format via wiki display widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddChildPageWithHTMLViaWD {
 		JSONWiki.updateWikiPage(
@@ -102,7 +102,7 @@ definition {
 
 		WikiPage.addChildPagePGViaWD(
 			htmlSource = "true",
-			wikiChildPageContent = "${welcomeToLiferay}",
+			wikiChildPageContent = ${welcomeToLiferay},
 			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
 			wikiPageContent = "Wiki FrontPage Content",
 			wikiPageTitle = "FrontPage");
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@description = "This ensures that the front page can be added via wiki display widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanAddFrontPageViaWD {
 		Navigator.gotoPage(pageName = "Wiki Display Test Page");
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@description = "This ensures that a front page can be deleted via wiki display widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CanDeleteWikiFrontPageViaWD {
 		JSONWiki.updateWikiPage(
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@description = "This ensures that a child page can be added with HTML format via wiki display widget."
-	@priority = "4"
+	@priority = 4
 	@refactordone
 	test CannotAddChildPageWithInvalidTitleViaWD {
 		JSONWiki.updateWikiPage(

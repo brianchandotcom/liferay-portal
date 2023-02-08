@@ -4,7 +4,7 @@ definition {
 		MouseOver(locator1 = "RaylifeAP#SIDEBAR");
 
 		Click.clickNoMouseOver(
-			key_optionName = "${itemName}",
+			key_optionName = ${itemName},
 			locator1 = "RaylifeAP#SIDEBAR_OPTION");
 
 		WaitForPageLoad();

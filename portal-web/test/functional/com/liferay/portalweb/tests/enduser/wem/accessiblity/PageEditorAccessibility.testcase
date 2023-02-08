@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165295. The page creator cannot access to disabled area via keyboard."
-	@priority = "3"
+	@priority = 3
 	test CannotAccessToDisabledAreaViaKeyboard {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165791. Focus on experience selector when the window width is less than 990px."
-	@priority = "3"
+	@priority = 3
 	test FocusOnExperienceSelectorWhenWindowWidthLessThan990 {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-85145. The focus should go to the Product Menu when open it."
-	@priority = "3"
+	@priority = 3
 	test FocusOnProductMenuWhenOpenIt {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166296. The sidebar buttons should be on focus after close the panel."
-	@priority = "3"
+	@priority = 3
 	test FocusOnSidebarButtonAfterClosePanel {
 		task ("Given a page creator accesses the Browser panel of content page") {
 			JSONLayout.addPublicLayout(
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165278. The page creator could see hovered status when navigate through treeview nodes via keyboard."
-	@priority = "3"
+	@priority = 3
 	test NavigateThroughTreeviewNodesViaKeyboard {
 		task ("Given a page creator has fragment composition on a content page") {
 			JSONLayout.addPublicLayout(
@@ -160,7 +160,7 @@ definition {
 
 			PageEditor.addElementToColumn(
 				collectionName = "Basic Components",
-				columnNumber = "1",
+				columnNumber = 1,
 				fragmentName = "Heading",
 				navTab = "Fragments");
 		}
@@ -181,12 +181,12 @@ definition {
 				value1 = "rgba(240, 245, 255, 1)");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Container",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Container",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 
@@ -205,12 +205,12 @@ definition {
 				value1 = "rgba(240, 245, 255, 1)");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Grid",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Grid",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 
@@ -243,19 +243,19 @@ definition {
 				value1 = "rgba(240, 245, 255, 1)");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 
 			AssertVisible(
-				key_index = "1",
+				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
 		}
 	}
 
 	@description = "This is a test for LPS-165485. The page creator could switch edit mode via keyboard."
-	@priority = "3"
+	@priority = 3
 	test SwitchEditModeViaKeyboard {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165288. The Comments panel should have correct accessibility."
-	@priority = "3"
+	@priority = 3
 	test ViewAccessibilityOfCommentsPanel {
 		task ("Given a page creator has a fragment on a content page") {
 			JSONLayout.addPublicLayout(
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165264. The Name and Page Template Set fields on create page template modal should have requried attribute."
-	@priority = "3"
+	@priority = 3
 	test ViewAccessibilityOfCreatePageTemplateModal {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165824. The edit mode selector should have aria-label attribute."
-	@priority = "3"
+	@priority = 3
 	test ViewAccessibilityOfEditModeSelector {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -406,7 +406,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165284. The Experience selector should have correct accessibility."
-	@priority = "3"
+	@priority = 3
 	test ViewAccessibilityOfExperienceSelector {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -467,7 +467,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
-	@priority = "2"
+	@priority = 2
 	test ViewAccessibilityOfLanguageSelector {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -490,7 +490,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-168850. All the elements are announced as Link."
-	@priority = "4"
+	@priority = 4
 	test ViewAccessibilityOfNavigationMenu {
 		task ("Given a page has several nested content pages") {
 			JSONLayout.addPublicLayout(
@@ -518,7 +518,7 @@ definition {
 
 			PageEditor.addWidgetViaKeyboard(
 				categoryName = "Content Management",
-				upCount = "1",
+				upCount = 1,
 				widgetName = "Menu Display");
 
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165288. The Page Design Options panel should have correct accessibility."
-	@priority = "3"
+	@priority = 3
 	test ViewAccessibilityOfPageDesignOptionsPanel {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -579,7 +579,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
-	@priority = "3"
+	@priority = 3
 	test ViewPageTitleOfViewModeAndEditMode {
 		task ("Given a page creator has a published content page") {
 			Navigator.openURL();
@@ -606,7 +606,7 @@ definition {
 			var viewModeTitle = selenium.getTitle();
 
 			TestUtils.assertEquals(
-				actual = "${viewModeTitle}",
+				actual = ${viewModeTitle},
 				expected = "Test Page Name - Test Site Name - ${siteName}");
 		}
 
@@ -618,13 +618,13 @@ definition {
 			var editModeTitle = selenium.getTitle();
 
 			TestUtils.assertEquals(
-				actual = "${editModeTitle}",
+				actual = ${editModeTitle},
 				expected = "Test Page Name - Test Site Name - ${siteName} (Editing)");
 		}
 	}
 
 	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
-	@priority = "3"
+	@priority = 3
 	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(

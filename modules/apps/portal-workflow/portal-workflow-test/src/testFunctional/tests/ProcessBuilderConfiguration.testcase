@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Knowledge Base Article"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToBaseArticle {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to a Content Page"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToContentPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Message Boards Message"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToMessageBoardsMessage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Page Revision"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToPageRevision {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Translation"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToTranslation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to User"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign a Workflow to Web Content Article"
-	@priority = "5"
+	@priority = 5
 	test CanAssignWorkflowToWebContentArticle {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to cancel the assignment"
-	@priority = "4"
+	@priority = 4
 	test CanCancelAssignment {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Resource"
-	@priority = "3"
+	@priority = 3
 	test CanOrderByResource {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to order by Workflow"
-	@priority = "3"
+	@priority = 3
 	test CanOrderByWorkflow {
 		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanOrderByWorkflow";
 
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to reverse sort direction"
-	@priority = "2"
+	@priority = 2
 	test CanReverseSortDirection {
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to search by Asset Type"
-	@priority = "4"
+	@priority = 4
 	test CanSearchByAssetType {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to search by Workflow Assigned"
-	@priority = "4"
+	@priority = 4
 	test CanSearchByWorkflowAssigned {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -285,18 +285,18 @@ definition {
 			value1 = "2 Results for \"Single Approver\"");
 
 		AssertTextEquals(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Blogs Entry");
 
 		AssertTextEquals(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "ProcessBuilderListView#PROCESS_NAME_TABLE_ROW",
 			value1 = "Comment");
 	}
 
 	@description = "Verify that search can be done using non-ASCII character"
-	@priority = "4"
+	@priority = 4
 	test CanSearchNonAsciiChar {
 		property test.name.skip.portal.instance = "ProcessBuilderConfiguration#CanSearchNonAsciiChar";
 		property test.run.environment = "EE";
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@description = "Verify that the user is able to unassign a Workflow from an Asset Type"
-	@priority = "5"
+	@priority = 5
 	test CanUnassignWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@description = "Verify that the Clear option cleans the search results"
-	@priority = "3"
+	@priority = 3
 	test ClearSearchResults {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -363,12 +363,12 @@ definition {
 
 		AssertElementPresent(
 			key_fieldName = "Knowledge Base Article",
-			key_order = "1",
+			key_order = 1,
 			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 
 		AssertElementPresent(
 			key_fieldName = "Web Content Article",
-			key_order = "2",
+			key_order = 2,
 			locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 
 		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
@@ -377,13 +377,13 @@ definition {
 
 		for (var orderNumber : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
 			AssertElementPresent(
-				key_order = "${orderNumber}",
+				key_order = ${orderNumber},
 				locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_ORDER");
 		}
 	}
 
 	@description = "Verify that there is a info message -The assets from Documents and Media and Forms are assigned within their respective applications.-"
-	@priority = "2"
+	@priority = 2
 	test DisplaysInfoMessage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

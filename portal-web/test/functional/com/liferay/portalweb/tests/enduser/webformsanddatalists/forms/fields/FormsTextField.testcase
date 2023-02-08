@@ -16,7 +16,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be Autocompleted from a Data Provider"
-	@priority = "4"
+	@priority = 4
 	test CanBeAutocompletedUsingADataProvider {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsTextField#CanBeAutocompletedUsingADataProvider";
@@ -70,7 +70,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldNameTextFieldAuto = FormFields.getFieldName();
 
@@ -96,7 +96,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Created Form Name");
 
-		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
+		FormsAdminNavigator.gotoEditField(fieldName = ${fieldNameTextFieldAuto});
 
 		Form.gotoAutocompleteTab();
 
@@ -113,7 +113,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editTextWithDataProvider(
-			fieldName = "${fieldNameTextFieldAuto}",
+			fieldName = ${fieldNameTextFieldAuto},
 			fieldValue = "Bra");
 
 		FormFields.selectAutoCompleteOption(autocompleteOption = "Brazil");
@@ -140,7 +140,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "${fieldNameTextFieldAuto}");
+		FormsAdminNavigator.gotoEditField(fieldName = ${fieldNameTextFieldAuto});
 
 		Form.gotoAutocompleteTab();
 
@@ -165,7 +165,7 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
-			fieldName = "${fieldNameTextFieldAuto}",
+			fieldName = ${fieldNameTextFieldAuto},
 			fieldValue = "Br");
 
 		AssertElementNotPresent(
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
-	@priority = "4"
+	@priority = 4
 	test CanBeAutocompletedUsingAList {
 		property portal.acceptance = "true";
 
@@ -187,12 +187,12 @@ definition {
 		FormViewBuilder.editAutoComplete(key_optionValue = "Manually");
 
 		Type(
-			key_rowNumber = "1",
+			key_rowNumber = 1,
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "Option 1");
 
 		Type(
-			key_rowNumber = "2",
+			key_rowNumber = 2,
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "Option 2");
 
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be created"
-	@priority = "5"
+	@priority = 5
 	test CanBeCreated {
 		property portal.acceptance = "true";
 
@@ -226,7 +226,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.save();
 
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be deleted"
-	@priority = "5"
+	@priority = 5
 	test CanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -248,14 +248,14 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = 1,
 			fieldType = "Numeric",
-			formPageNumber = "0");
+			formPageNumber = 0);
 
 		Click(
 			key_name = "Text",
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanBeDuplicated {
 		property portal.acceptance = "true";
 
@@ -291,7 +291,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.closeSidebar();
 
@@ -321,7 +321,7 @@ definition {
 	}
 
 	@description = "LPS-58829 - Verify that a Text Field can be required"
-	@priority = "5"
+	@priority = 5
 	test CanBeRequired {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -333,7 +333,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -351,14 +351,14 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
+			fieldName = ${fieldTextField});
 
 		FormFields.viewRequiredAsterisk();
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "LPS-59335 - Verify that a Text Field can be set to Repeatable "
-	@priority = "5"
+	@priority = 5
 	test CanBeSetAsRepeatable {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -391,7 +391,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -412,11 +412,11 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.addRepeatableField(
-			fieldName = "${fieldTextField}",
-			repeatableFieldNumber = "1");
+			fieldName = ${fieldTextField},
+			repeatableFieldNumber = 1);
 
 		FormFields.editRepeatingText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value",
 			fieldValueRepeat = "Text Field Value Repeat");
 
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@description = "LPS-59997 - Verify that a Text Field can be set to Multiple Lines"
-	@priority = "3"
+	@priority = 3
 	test CanBeSetToMultipleLines {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -448,7 +448,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -472,12 +472,12 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
-		FormFields.editBlankMultiTextFieldWithEnterKey(fieldName = "${fieldTextField}");
+		FormFields.editBlankMultiTextFieldWithEnterKey(fieldName = ${fieldTextField});
 
 		FormPortlet.submitWithValidationError();
 
 		FormFields.editTextMultiline(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		FormPortlet.waitForValidationErrorNotPresent();
@@ -498,7 +498,7 @@ definition {
 	}
 
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanBeValidatedUsingTheContainsOption {
 		property portal.acceptance = "true";
 
@@ -507,7 +507,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Form.gotoAdvancedTab();
@@ -556,7 +556,7 @@ definition {
 	}
 
 	@description = "Verify that the Does Not Contain option can be used to validate a Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanBeValidatedUsingTheDoesNotContainOption {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -568,7 +568,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -590,13 +590,13 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "text");
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "Text must contain ''Test''");
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "test");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain ''Test''");
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@description = "Verify that the Does Not Match option can be used to validate a Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanBeValidatedUsingTheDoesNotMatchOption {
 		property portal.acceptance = "true";
 
@@ -627,7 +627,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -670,7 +670,7 @@ definition {
 	}
 
 	@description = "Verify that the Is Not Email option can be used to validate a Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanBeValidatedUsingTheIsNotEmailOption {
 		property portal.acceptance = "true";
 
@@ -679,7 +679,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			fieldType = "Text");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
@@ -724,7 +724,7 @@ definition {
 	}
 
 	@description = "Verify that the Is Not URL option can be used to validate a Text Field"
-	@priority = "4"
+	@priority = 4
 	test CanBeValidatedUsingTheIsNotURLOption {
 		property portal.acceptance = "true";
 
@@ -732,7 +732,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -776,7 +776,7 @@ definition {
 	}
 
 	@description = "LPS-125860 - Verify that Confirmation field property is working as expected"
-	@priority = "5"
+	@priority = 5
 	test CanRequireConfirmation {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
@@ -787,7 +787,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -807,20 +807,20 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
+			fieldName = ${fieldTextField});
 
 		FormFields.viewConfirmationFieldTextLabel(
 			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
+			fieldName = ${fieldTextField});
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "The information does not match.");
 
 		FormFields.editConfirmationFieldText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "The information does not match.");
@@ -841,7 +841,7 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can require Confirmation"
-	@priority = "5"
+	@priority = 5
 	test CanRequireConfirmationWithValidation {
 		property portal.acceptance = "true";
 
@@ -891,7 +891,7 @@ definition {
 
 	@description = "Verify that changes to a Field can be canceled"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test ChangesCanBeCanceled {
 		property portal.acceptance = "false";
 
@@ -900,7 +900,7 @@ definition {
 	}
 
 	@description = "Verify that the Confirmation can be placed Horizontally"
-	@priority = "5"
+	@priority = 5
 	test ConfirmationBoxCanBePlacedHorizontally {
 		property portal.acceptance = "true";
 
@@ -959,7 +959,7 @@ definition {
 	}
 
 	@description = "Verify that the Confirmation Error Message can be edited"
-	@priority = "5"
+	@priority = 5
 	test ConfirmationErrorMessageCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -991,13 +991,13 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Test Text");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Confirm Text Error");
 
 		FormFields.editConfirmationFieldText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Test Text");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Confirm Text Error");
@@ -1010,7 +1010,7 @@ definition {
 	}
 
 	@description = "Verify that the Confirmation Label can be edited"
-	@priority = "5"
+	@priority = 5
 	test ConfirmationLabelCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1046,13 +1046,13 @@ definition {
 		FormFields.viewTextLabel(fieldLabel = "Confirm Test Text");
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Test Text");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The information does not match.");
 
 		FormFields.editConfirmationFieldText(
-			fieldName = "${fieldTextField}",
+			fieldName = ${fieldTextField},
 			fieldValue = "Test Text");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "The information does not match.");
@@ -1065,7 +1065,7 @@ definition {
 	}
 
 	@description = "Verify that a Help Text can be added to a Text Field"
-	@priority = "5"
+	@priority = 5
 	test HelpTextCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -1073,7 +1073,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
 
@@ -1089,7 +1089,7 @@ definition {
 	}
 
 	@description = "LPS-129411 - Verify that a field can be hidden"
-	@priority = "5"
+	@priority = 5
 	test HiddenFieldCanBeEnabled {
 		property portal.acceptance = "true";
 
@@ -1097,7 +1097,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -1107,7 +1107,7 @@ definition {
 
 		for (var switchName : list "Show Label,Repeatable,Require Confirmation,Validation") {
 			AssertElementPresent(
-				key_switchOption = "${switchName}",
+				key_switchOption = ${switchName},
 				locator1 = "FormFields#SWITCH_NOT_VISIBLE");
 		}
 
@@ -1117,7 +1117,7 @@ definition {
 	}
 
 	@description = "LPS-129411 - Verify that hidden field is working in a published Form"
-	@priority = "5"
+	@priority = 5
 	test HiddenFieldIsWorking {
 		property portal.acceptance = "true";
 
@@ -1125,7 +1125,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		Form.gotoAdvancedTab();
 
@@ -1145,13 +1145,13 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeEdited {
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
@@ -1170,7 +1170,7 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@priority = "5"
+	@priority = 5
 	test LabelCanBeHidden {
 		property portal.acceptance = "true";
 
@@ -1178,7 +1178,7 @@ definition {
 
 		Form.editName(formName = "Form1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.viewTextLabel(fieldLabel = "Text");
 
@@ -1196,7 +1196,7 @@ definition {
 	}
 
 	@description = "Verify that Placeholder Text can be set"
-	@priority = "5"
+	@priority = 5
 	test PlaceholderTextCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -1204,7 +1204,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.setPlaceholder(fieldValue = "Test Text");
 
@@ -1218,7 +1218,7 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set"
-	@priority = "5"
+	@priority = 5
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 
@@ -1226,7 +1226,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.editPredefinedValue(key_predefinedValue = "Test Text");
 
@@ -1248,7 +1248,7 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
-	@priority = "5"
+	@priority = 5
 	test ReferenceCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1257,7 +1257,7 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.addTextFieldReference(
-			fieldPositionNumber = "0",
+			fieldPositionNumber = 0,
 			key_fieldReferenceText = "Text1234");
 
 		Form.save();
@@ -1272,7 +1272,7 @@ definition {
 	}
 
 	@description = "LPS-129419 - Verify that the Required Field Error Message can be Edited"
-	@priority = "5"
+	@priority = 5
 	test RequiredFieldErrorMessageCanBeEdited {
 		property portal.acceptance = "true";
 
@@ -1280,7 +1280,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.enableSwitch(fieldName = "Required Field");
 
@@ -1325,7 +1325,7 @@ definition {
 	}
 
 	@description = "LPS-129419 - Verify that the Required Field Error Message can be translated"
-	@priority = "5"
+	@priority = 5
 	test RequiredFieldErrorMessageCanBeTranslated {
 		property portal.acceptance = "true";
 
@@ -1333,7 +1333,7 @@ definition {
 
 		Form.editName(formName = "Form 1");
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormFields.enableSwitch(fieldName = "Required");
 
@@ -1381,7 +1381,7 @@ definition {
 	}
 
 	@description = "LPS-84111 - Verify that Text Field can be autosaved on form builder"
-	@priority = "5"
+	@priority = 5
 	test TextFieldCanBeAutosaved {
 		property portal.acceptance = "true";
 
@@ -1389,7 +1389,7 @@ definition {
 
 		Form.editName();
 
-		Form.addTextField(fieldPositionNumber = "0");
+		Form.addTextField(fieldPositionNumber = 0);
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
@@ -1397,7 +1397,7 @@ definition {
 
 		Form.save();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = 1);
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
@@ -1409,7 +1409,7 @@ definition {
 
 		// Pausing 60 seconds due to LPS-159468
 
-		Pause(locator1 = "60000");
+		Pause(locator1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -1426,7 +1426,7 @@ definition {
 
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
-	@priority = "5"
+	@priority = 5
 	test TypeCanBeChanged {
 		property portal.acceptance = "false";
 
@@ -1436,7 +1436,7 @@ definition {
 
 	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test ValidationIsResetAfterChangingFieldType {
 		property portal.acceptance = "false";
 

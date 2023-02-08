@@ -2,13 +2,13 @@ definition {
 
 	macro assertStatusBuildDisabled {
 		AssertElementPresent(
-			key_item = "${key_item}",
+			key_item = ${key_item},
 			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
 	}
 
 	macro clickStatusBuildHistory {
 		Click(
-			key_item = "${key_item}",
+			key_item = ${key_item},
 			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 	}
 
@@ -17,13 +17,13 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro deleteRoutine {
-		Testray.deleteComponent(itemName = "${itemName}");
+		Testray.deleteComponent(itemName = ${itemName});
 	}
 
 	macro deleteRoutineSetup {
@@ -32,8 +32,8 @@ definition {
 		Refresh();
 
 		Testray.changePagination(
-			numberItems = "20",
-			valuePagination = "150");
+			numberItems = 20,
+			valuePagination = 150);
 
 		if (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
@@ -48,21 +48,21 @@ definition {
 
 	macro editRoutine {
 		TestrayManage.editProductVersion(
-			caseName = "${newNameRoutine}",
+			caseName = ${newNameRoutine},
 			itemManage = "Edit",
-			valueName = "${routineName}");
+			valueName = ${routineName});
 	}
 
 	macro goToRoutine {
 		Click(
-			key_projectName = "${routineName}",
+			key_projectName = ${routineName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro selectOptionDropdownRoutine {
 		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
 
-		MenuItem.clickNoError(menuItem = "${menuItem}");
+		MenuItem.clickNoError(menuItem = ${menuItem});
 
 		Alert.viewSuccessMessage();
 	}
@@ -70,7 +70,7 @@ definition {
 	macro typeRoutineField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_name}");
+			value1 = ${key_name});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}

@@ -1,52 +1,52 @@
 definition {
 
 	macro assertCustomRangeNotApplied {
-		var key_timeRange = "${timeRange}";
+		var key_timeRange = ${timeRange};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
 	}
 
 	macro assertIndividualAttribute {
-		var key_individualAttribute = "${individualAttribute}";
+		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
 	macro assertIndividualAttributeNotPresent {
-		var key_individualAttribute = "${individualAttribute}";
+		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
 	macro assertIndividualAttributeValue {
-		var key_individualAttribute = "${individualAttribute}";
+		var key_individualAttribute = ${individualAttribute};
 
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE_VALUE",
-			value1 = "${individualAttributeValue}");
+			value1 = ${individualAttributeValue});
 	}
 
 	macro assertIndividualsActivitiesTimeRange {
-		var key_timeRange = "${timeRange}";
+		var key_timeRange = ${timeRange};
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
 	}
 
 	macro assertNoIndividualAttribute {
-		var key_individualAttribute = "${individualAttribute}";
+		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
 	macro assertSegmentInAssociatedSegmentsCard {
 		AssertElementPresent(
-			key_itemName = "${itemName}",
+			key_itemName = ${itemName},
 			locator1 = "ACIndividualsDashboard#ASSOCIATED_SEGMENT_ITEM");
 	}
 
 	macro clickBreakdownTab {
 		Click(
-			breakdownName = "${breakdownName}",
+			breakdownName = ${breakdownName},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
 	}
 
@@ -58,13 +58,13 @@ definition {
 
 	macro expandActivity {
 		Click(
-			key_pageTitle = "${eventName}",
+			key_pageTitle = ${eventName},
 			locator1 = "ACUtils#PAGE_TITLE");
 	}
 
 	macro filterKnownIndividualList {
 		Click(
-			key_rowName = "${rowName}",
+			key_rowName = ${rowName},
 			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTES_FILTER");
 
 		if (isSet(desc)) {
@@ -77,18 +77,18 @@ definition {
 
 	macro getChartPopoverDate {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 
 		SelectFrame.selectFrame(locator1 = "ACIndividualsDashboard#CHART_POPOVER");
 
 		var formattedDate = selenium.getText("ACIndividualsDashboard#CHART_POPOVER_ACTIVITIES_DATE");
 
-		return "${formattedDate}";
+		return ${formattedDate};
 	}
 
 	macro getChartPopoverDateWithoutBar {
@@ -98,7 +98,7 @@ definition {
 
 		var formattedDate = selenium.getText("ACIndividualsDashboard#CHART_POPOVER_ACTIVITIES_DATE");
 
-		return "${formattedDate}";
+		return ${formattedDate};
 	}
 
 	macro goToDistributionTab {
@@ -110,7 +110,7 @@ definition {
 	}
 
 	macro goToKnownIndividualDetails {
-		var key_individualName = "${individualName}";
+		var key_individualName = ${individualName};
 
 		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS")) && (maxIterations = "50")) {
 			Refresh();
@@ -128,25 +128,25 @@ definition {
 	}
 
 	macro goToTabName {
-		var key_tabName = "${tabName}";
+		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACIndividualsDashboard#INDIVIDUALS_TAB");
 	}
 
 	macro selectDataOnIndividualsActivitiesChart {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		Click(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
 	macro viewActivitiesNumberInPeriod {
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#ACTIVITIES_NUMBER",
-			value1 = "${activitiesNumber}");
+			value1 = ${activitiesNumber});
 	}
 
 	macro viewActivitiesOnGraph {
@@ -164,16 +164,16 @@ definition {
 			key_cardTitle = "Individual Events",
 			locator1 = "ACCards#CARD_TITLE");
 
-		var list1 = ListUtil.newListFromString("${typeList}");
-		var list2 = ListUtil.newListFromString("${valueList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${typeList});
+		var list2 = ListUtil.newListFromString(${valueList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var type = ListUtil.get("${list1}", "${i}");
-			var value = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var type = ListUtil.get(${list1}, ${i});
+			var value = ListUtil.get(${list2}, ${i});
 
-			while ((IsElementNotPresent(key_value = "${value}", key_visitors = "${type}", locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS")) && (maxIterations = "50")) {
+			while ((IsElementNotPresent(key_value = ${value}, key_visitors = ${type}, locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS")) && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
 				ACTimeFilter.clickTimeFilterButton();
@@ -188,65 +188,65 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_value = "${value}",
-				key_visitors = "${type}",
+				key_value = ${value},
+				key_visitors = ${type},
 				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 
 			if (isSet(notEquals)) {
 				AssertTextNotEquals(
-					key_value = "${value}",
-					key_visitors = "${type}",
+					key_value = ${value},
+					key_visitors = ${type},
 					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS",
-					value1 = "${notEquals}");
+					value1 = ${notEquals});
 			}
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
 	macro viewBreakdownNotPresent {
 		AssertElementNotPresent(
-			breakdownName = "${breakdownName}",
+			breakdownName = ${breakdownName},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
 	}
 
 	macro viewBreakdownRecharts {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		AssertTextEquals.assertPartialText(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_CARTESIAN_Y_AXIS_TICK",
-			value1 = "${tick}");
+			value1 = ${tick});
 
 		AssertAttributeValue(
 			attribute1 = "fill",
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_BAR_FILL_COLOR",
-			value1 = "${fillColor}");
+			value1 = ${fillColor});
 	}
 
 	macro viewDistributionBarByAttribute {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
-		while (IsElementNotPresent(index = "${index}", locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
+		while (IsElementNotPresent(index = ${index}, locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
 			TestUtils.hardRefresh();
 
 			ACUtils.waitForChartLoad();
 		}
 
 		MouseUp.mouseUp(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 
 		AssertElementPresent(
-			key_value = "${value}",
-			key_visitors = "${type}",
+			key_value = ${value},
+			key_visitors = ${type},
 			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 	}
 
@@ -254,44 +254,44 @@ definition {
 		AssertVisible(locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_AVATAR");
 
 		AssertVisible(
-			fullName = "${fullName}",
+			fullName = ${fullName},
 			locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_FULL_NAME");
 
 		AssertVisible(
 			locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_EMAIL",
-			userEmailAddress = "${userEmailAddress}");
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro viewKnownIndividualDetailsSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var itemName : list "${itemName}") {
+		for (var itemName : list ${itemName}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertVisible(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_DETAILS_VIEW_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
+				resultOrder = ${resultOrder});
 		}
 	}
 
 	macro viewKnownIndividualSpecificOrder {
-		var resultOrder = "0";
+		var resultOrder = 0;
 
-		for (var itemName : list "${itemName}") {
+		for (var itemName : list ${itemName}) {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertVisible(
-				key_itemName = "${itemName}",
+				key_itemName = ${itemName},
 				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_VIEW_SPECIFIC_ORDER",
-				resultOrder = "${resultOrder}");
+				resultOrder = ${resultOrder});
 		}
 	}
 
 	@summary = "This macro asserts in the individual chart bar. The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517"
 	macro viewRechartsBarOnIndividualsActivitiesChart {
 		if (!(isSet(index))) {
-			var index = "1";
+			var index = 1;
 		}
 
 		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
@@ -303,53 +303,53 @@ definition {
 
 			// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
 
-			Pause(locator1 = "2000");
+			Pause(locator1 = 2000);
 		}
 
 		AssertVisible(
-			index = "${index}",
+			index = ${index},
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
 	macro viewTimelineItem {
-		var list1 = ListUtil.newListFromString("${activityNameList}");
-		var list2 = ListUtil.newListFromString("${positionList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${activityNameList});
+		var list2 = ListUtil.newListFromString(${positionList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var activityName = ListUtil.get("${list1}", "${i}");
-			var position = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var activityName = ListUtil.get(${list1}, ${i});
+			var position = ListUtil.get(${list2}, ${i});
 
 			AssertElementPresent(
-				index = "${position}",
-				key_commonInformation = "${activityName}",
+				index = ${position},
+				key_commonInformation = ${activityName},
 				locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFIC_ORDER");
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 
 	macro viewTimelineItemNotPresent {
-		var list1 = ListUtil.newListFromString("${activityNameList}");
-		var list2 = ListUtil.newListFromString("${positionList}");
-		var size = ListUtil.size("${list1}");
-		var i = "0";
+		var list1 = ListUtil.newListFromString(${activityNameList});
+		var list2 = ListUtil.newListFromString(${positionList});
+		var size = ListUtil.size(${list1});
+		var i = 0;
 
-		while ("${i}" != "${size}") {
-			var activityName = ListUtil.get("${list1}", "${i}");
-			var position = ListUtil.get("${list2}", "${i}");
+		while (${i} != ${size}) {
+			var activityName = ListUtil.get(${list1}, ${i});
+			var position = ListUtil.get(${list2}, ${i});
 
 			AssertElementNotPresent(
-				index = "${position}",
-				key_commonInformation = "${activityName}",
+				index = ${position},
+				key_commonInformation = ${activityName},
 				locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFIC_ORDER");
 
 			var i = ${i} + 1;
 
-			var i = StringUtil.valueOf("${i}");
+			var i = StringUtil.valueOf(${i});
 		}
 	}
 

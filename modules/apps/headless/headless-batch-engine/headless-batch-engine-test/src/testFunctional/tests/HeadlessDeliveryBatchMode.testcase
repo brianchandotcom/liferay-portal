@@ -14,28 +14,28 @@ definition {
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanCreateAndUpdateBlogPostingWithBatchPostCreateStrategyUpsert {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I repeat the same request changing all the parameters of the second blog post") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2",
+				numberOfBlogPostings = 2,
 				testCase = "updateOneBlogPosting");
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -43,13 +43,13 @@ definition {
 			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "3");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 3);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanCreateBaseCommentWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
@@ -61,32 +61,32 @@ definition {
 
 		task ("When I use POST headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch?createStrategy=INSERT to create two base comments") {
 			var importTaskId = CommentAPI.getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(
-				blogPostingId = "${blogPostingId}",
+				blogPostingId = ${blogPostingId},
 				createStrategy = "INSERT",
-				numberOfCommentsToCreate = "2");
+				numberOfCommentsToCreate = 2);
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
 		task ("And Then the blog comments are created properly") {
 			var blogCommentsText = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingId = "${blogPostingId}",
+				blogPostingId = ${blogPostingId},
 				fieldName = "text");
 
 			TestUtils.assertEquals(
-				actual = "${blogCommentsText}",
+				actual = ${blogCommentsText},
 				expected = "<p>commentText1</p>,<p>commentText2</p>");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanCreateBlogPostingWithBatchPostCreateStrategyInsertWithOn_Error_Continue {
 		property portal.acceptance = "true";
 
@@ -94,15 +94,15 @@ definition {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				importStrategy = "ON_ERROR_CONTINUE",
-				numberOfBlogPostings = "2",
+				numberOfBlogPostings = 2,
 				testCase = "incorrectData");
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -110,27 +110,27 @@ definition {
 			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "1");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 1);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanCreateBlogPostingWithBatchPostCreateStrategyUpsert {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -138,63 +138,63 @@ definition {
 			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "2");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 2);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateBlogPostingWithBatchPutPartialUpdate {
 		property portal.acceptance = "true";
 
 		task ("When I use PUT 'blog-postings/batch?updateStrategy=PARTIAL_UPDATE with non existing id") {
 			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
-				numberOfBlogPostings = "1",
+				numberOfBlogPostings = 1,
 				testCase = "nonExistingId",
 				updateStrategy = "PARTIAL_UPDATE");
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 
 		task ("And Then blogPosting is not created ") {
-			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated(response = "${response}");
+			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated(response = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "0");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 0);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateBlogPostingWithBatchPutUpdateStrategyUpdate {
 		property portal.acceptance = "true";
 
 		task ("Given blog post created") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "1");
+				numberOfBlogPostings = 1);
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
 			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
-				numberOfBlogPostings = "1",
+				numberOfBlogPostings = 1,
 				testCase = "updateOneBlogPosting",
 				updateStrategy = "UPDATE");
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 
@@ -202,126 +202,126 @@ definition {
 			var response = BlogPostingAPI.getBlogPostings();
 
 			task ("no new blog posting created") {
-				var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated(response = "${response}");
+				var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated(response = ${response});
 
 				TestUtils.assertEquals(
-					actual = "${actualNumberOfBlogPostings}",
-					expected = "1");
+					actual = ${actualNumberOfBlogPostings},
+					expected = 1);
 			}
 
 			task ("exisitng blog posting not updated") {
-				var blogPostingData = BlogPostingAPI.getBlogPostingDataToString(response = "${response}");
+				var blogPostingData = BlogPostingAPI.getBlogPostingDataToString(response = ${response});
 
 				TestUtils.assertEquals(
-					actual = "${blogPostingData}",
+					actual = ${blogPostingData},
 					expected = "headline0,articleBody0,erc0");
 			}
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateTwoSameBlogPostingsWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I repeat the same request again changing the headline") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				hadline = "new headline",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotCreateTwoSameBlogPostingsWithBatchPostCreateStrategyInsertWhenOneOfThemAlreadyExisting {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I repeat the same request again changing all the data of second blog post") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "2",
+				numberOfBlogPostings = 2,
 				testCase = "updateOneBlogPosting");
 		}
 
 		task ("Then I receive executeStatus: FAILED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateBlogPostingWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I use POST with parameter createStrategy set to INSERT with the same data") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("Then I receive executeStatus: failed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CannotUpdateExternalReferenceCodeWithBatchPutUpdateStrategyUpdate {
 		property portal.acceptance = "true";
 
 		task ("Given blog post created") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "1");
+				numberOfBlogPostings = 1);
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
 			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
-				numberOfBlogPostings = "1",
+				numberOfBlogPostings = 1,
 				testCase = "updateAllFields",
 				updateStrategy = "UPDATE");
 		}
 
 		task ("Then I receive executeStatus: COMPLETED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -329,33 +329,33 @@ definition {
 			var blogPostingData = BlogPostingAPI.getBlogPostingDataToString();
 
 			TestUtils.assertEquals(
-				actual = "${blogPostingData}",
+				actual = ${blogPostingData},
 				expected = "headlineUpdated,articleBodyUpdated,erc0");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateBlogPostingWithBatchPostCreateStrategyUpsertWhenOneOfThemAlreadyExisting {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to UPSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I repeat the same request again") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -363,35 +363,35 @@ definition {
 			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "2");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 2);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateBlogPostingWithBatchPutCreateStrategyUpdateWithOn_Error_Continue {
 		property portal.acceptance = "true";
 
 		task ("Given blog post created") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "1");
+				numberOfBlogPostings = 1);
 		}
 
 		task ("When I use PUT 'blog-postings/batch?updateStrategy=UPDATE' with parameter importStrategy=ON_ERROR_CONTINUE with two data set with one non existing") {
 			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
 				importStrategy = "ON_ERROR_CONTINUE",
-				numberOfBlogPostings = "1",
+				numberOfBlogPostings = 1,
 				testCase = "updateOneBlogPosting",
 				updateStrategy = "UPDATE");
 		}
 
 		task ("Then I receive executeStatus: COMPLETED") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -399,13 +399,13 @@ definition {
 			var blogPostingData = BlogPostingAPI.getBlogPostingDataToString();
 
 			TestUtils.assertEquals(
-				actual = "${blogPostingData}",
+				actual = ${blogPostingData},
 				expected = "headline0,articleBody0,erc0");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateOneFieldOfBlogPostingWithBatchPutPartialUpdate {
 		property portal.acceptance = "true";
 
@@ -417,17 +417,17 @@ definition {
 
 		task ("When I use PUT 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=PARTIAL_UPDATE with created blogPostingId body parameter and one other body parameter to update ") {
 			var importTaskId = BlogPostingAPI.getIdOfUpdateOneBlogPostingBodyParameter(
-				blogPostingId = "${blogPostingId}",
+				blogPostingId = ${blogPostingId},
 				bodyParameterKey = "headline",
 				bodyParameterValue = "Updated Headline",
 				updateStrategy = "PARTIAL_UPDATE");
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -436,36 +436,36 @@ definition {
 
 			var blogPostingHeadline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
 				fieldName = "headline",
-				response = "${response}");
+				response = ${response});
 
 			TestUtils.assertEquals(
-				actual = "${blogPostingHeadline}",
+				actual = ${blogPostingHeadline},
 				expected = "Updated Headline");
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test CanUpdateWithBatchPostCreateStrategyUpsertBlogPostingCreatedWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
 		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
 			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("When I use POST with parameter createStrategy set to UPSERT with the same data") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "UPSERT",
-				numberOfBlogPostings = "2");
+				numberOfBlogPostings = 2);
 		}
 
 		task ("Then I receive executeStatus: completed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "COMPLETED");
 		}
 
@@ -473,13 +473,13 @@ definition {
 			var actualNumberOfBlogPostings = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 			TestUtils.assertEquals(
-				actual = "${actualNumberOfBlogPostings}",
-				expected = "2");
+				actual = ${actualNumberOfBlogPostings},
+				expected = 2);
 		}
 	}
 
 	@disable-webdriver = "true"
-	@priority = "4"
+	@priority = 4
 	test MessageErrorIsThrownWhenMethodNotImplemented {
 		property portal.acceptance = "true";
 
@@ -488,18 +488,18 @@ definition {
 		}
 
 		task ("Then I receive executeStatus: failed") {
-			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${executeStatus}",
+				actual = ${executeStatus},
 				expected = "FAILED");
 		}
 
 		task ("And Then the task returns an error message") {
-			var errorMessage = ImportTask.getErrorMessageOfImportTaskById(importTaskId = "${importTaskId}");
+			var errorMessage = ImportTask.getErrorMessageOfImportTaskById(importTaskId = ${importTaskId});
 
 			TestUtils.assertEquals(
-				actual = "${errorMessage}",
+				actual = ${errorMessage},
 				expected = "java.lang.UnsupportedOperationException: This method needs to be implemented");
 		}
 	}

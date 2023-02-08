@@ -27,8 +27,8 @@ definition {
 				key_name = "Projects_1 Project");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to created project and add a new team") {
@@ -61,8 +61,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("Go to project and go to tab cases") {
@@ -81,13 +81,13 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-163753 - Verify as an administrator I can add another Cases in the Add Another button"
-	@priority = "3"
+	@priority = 3
 	test AdminCanAddAnotherCase {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -96,8 +96,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			Button.click(button = "Save");
@@ -108,13 +108,13 @@ definition {
 
 			TestrayCases.verifyCase(
 				caseName = "Copy - Cases_1 Case",
-				casePriority = "5",
+				casePriority = 5,
 				key_caseComponent = "Components_1 Project 1");
 		}
 	}
 
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
-	@priority = "5"
+	@priority = 5
 	test AdminCanAddCase {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -122,21 +122,21 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
 		task ("Then the case is created with the new infos") {
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case",
-				casePriority = "5",
+				casePriority = 5,
 				key_caseComponent = "Components_1 Project 1");
 		}
 	}
 
 	@description = "This is a test for LPS-156791 - Verify if as an Administrator I am able to delete Cases without Subcomponents"
-	@priority = "5"
+	@priority = 5
 	test AdminCanDeleteCase {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -144,8 +144,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167574 - Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
-	@priority = "3"
+	@priority = 3
 	test AdminCanDeleteCasesInModalExportCases {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -171,15 +171,15 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("When the user select a cases for export") {
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
-	@priority = "5"
+	@priority = 5
 	test AdminCanEditCase {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -216,13 +216,13 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case",
-				casePriority = "5",
+				casePriority = 5,
 				key_caseComponent = "Components_1 Project 1");
 		}
 
@@ -236,22 +236,22 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 2",
 				description = "Cases_1 Case Description Edited",
-				duration = "30",
-				priority = "4",
+				duration = 30,
+				priority = 4,
 				steps = "http://test.edit.com");
 		}
 
 		task ("Then the case is edited with the new infos") {
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case Edited",
-				casePriority = "4",
+				casePriority = 4,
 				key_caseComponent = "Components_1 Project 2");
 		}
 	}
 
 	@description = "This is a test for LPS-156916 - Verify if as an Administrator I am able to Export Cases from another Project"
 	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = 3
 	test AdminCanExportCase {
 
 		// TODO LPS-156916 AdminCanExportCase pending implementation
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156919 - Verify if As an Administrator, I should be able to link and unlink Requirements to a Case"
-	@priority = "3"
+	@priority = 3
 	test AdminCanLinkAndUnlinkRequirements {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -267,8 +267,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-166791 - Verify that cases be added with an estimated duration less than zero"
-	@priority = "4"
+	@priority = 4
 	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -325,7 +325,7 @@ definition {
 				componentId = "Components_1 Project 1",
 				description = "",
 				duration = "-1",
-				priority = "5",
+				priority = 5,
 				steps = "");
 		}
 
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156933 - Verify if as an Administrator I should not be able to add a duplicate case"
-	@priority = "5"
+	@priority = 5
 	test AdminCannotAddDuplicatedCase {
 		task ("Given that the user add a new Case duplicate") {
 			TestrayCases.typeCasesField(
@@ -345,8 +345,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			TestrayCases.typeCasesField(
@@ -354,8 +354,8 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 
@@ -365,7 +365,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167573 - Verify that as administrator cases cannot be exported without linked Cases"
-	@priority = "3"
+	@priority = 3
 	test AdminCannotExportCasesWithoutCasesLinked {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -373,15 +373,15 @@ definition {
 				caseTypeId = "Manual Test",
 				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+				numberItems = 20,
+				valuePagination = 150);
 		}
 
 		task ("When the user try export cases without linked cases") {
@@ -399,7 +399,7 @@ definition {
 
 	@description = "This is a test for LPS-156950 - Verify if as an Administrator I should be able to Sort by Errors"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSortErrors {
 
 		// TODO LPS-156950 AdminCanSortErrors pending implementation
@@ -408,7 +408,7 @@ definition {
 
 	@description = "This is a test for LPS-156947 - Verify if as an Administrator I should be able to Sort by Product Version"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSortProductVersion {
 
 		// TODO LPS-156947 AdminCanSortProductVersion pending implementation
@@ -417,7 +417,7 @@ definition {
 
 	@description = "This is a test for LPS-156949 - Verify if as an Administrator I should be able to Sort by Status"
 	@ignore = "Test Stub"
-	@priority = "4"
+	@priority = 4
 	test AdminCanSortStatus {
 
 		// TODO LPS-156949 AdminCanSortStatus pending implementation
@@ -425,7 +425,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-164133 - Verify that the user can not create a case if all the required fields are not filled in"
-	@priority = "3"
+	@priority = 3
 	test AdminCanViewRequiredField {
 		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
@@ -433,8 +433,8 @@ definition {
 				caseTypeId = "",
 				componentId = "",
 				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
+				duration = 60,
+				priority = 5,
 				steps = "Auto Test Steps");
 		}
 

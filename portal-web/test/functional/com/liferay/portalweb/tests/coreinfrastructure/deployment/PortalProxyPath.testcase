@@ -10,7 +10,7 @@ definition {
 	}
 
 	@description = "Runs the smoke test with proxy path."
-	@priority = "5"
+	@priority = 5
 	test Smoke {
 		property portal.acceptance = "true";
 		property portal.proxy.path = "liferay";

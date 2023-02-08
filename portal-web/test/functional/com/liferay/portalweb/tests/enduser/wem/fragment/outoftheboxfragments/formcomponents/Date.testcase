@@ -37,7 +37,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-151158 and LPS-155502. The page creator could configure the Date fragment. View the behaviors of Help Text and Label."
-	@priority = "5"
+	@priority = 5
 	test ConfigureDate {
 		property portal.acceptance = "true";
 
@@ -76,7 +76,7 @@ definition {
 
 			task ("Remove the automatic added fragments") {
 				for (var fragmentName : list "Date,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
 		}

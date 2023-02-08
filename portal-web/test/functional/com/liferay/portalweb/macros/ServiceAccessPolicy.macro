@@ -5,29 +5,29 @@ definition {
 
 		FormFields.editText(
 			fieldName = "name",
-			fieldValue = "${policyName}");
+			fieldValue = ${policyName});
 
 		FormFields.editText(
 			fieldName = "title",
-			fieldValue = "${title}");
+			fieldValue = ${title});
 
 		if (isSet(serviceClass)) {
 			FormFields.editText(
 				fieldName = "serviceClass",
-				fieldValue = "${serviceClass}");
+				fieldValue = ${serviceClass});
 		}
 
 		if (isSet(methodName)) {
 			FormFields.editText(
 				fieldName = "MethodName",
-				fieldValue = "${methodName}");
+				fieldValue = ${methodName});
 		}
 
-		if ("${enabled}" == "true") {
+		if (${enabled} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
 
-		if ("${defaultSwitch}" == "true") {
+		if (${defaultSwitch} == "true") {
 			FormFields.enableCheckbox(fieldName = "default");
 		}
 
@@ -35,7 +35,7 @@ definition {
 	}
 
 	macro editServiceAccessPolicy {
-		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = "${policyName}");
+		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = ${policyName});
 
 		if (isSet(allowedServiceSignature)) {
 			Click(
@@ -44,38 +44,38 @@ definition {
 
 			Type(
 				locator1 = "ServiceAccessPolicy#ALLOWED_SERVICE_SIGNATURES_FIELD",
-				value1 = "${allowedServiceSignature}");
+				value1 = ${allowedServiceSignature});
 		}
 
-		if ("${enabled}" == "true") {
+		if (${enabled} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
-		else if ("${enabled}" == "false") {
+		else if (${enabled} == "false") {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
 		if (isSet(newName)) {
 			FormFields.editText(
 				fieldName = "name",
-				fieldValue = "${newName}");
+				fieldValue = ${newName});
 		}
 
 		if (isSet(title)) {
 			FormFields.editText(
 				fieldName = "title",
-				fieldValue = "${title}");
+				fieldValue = ${title});
 		}
 
 		if (isSet(serviceClass)) {
 			FormFields.editText(
 				fieldName = "serviceClass",
-				fieldValue = "${serviceClass}");
+				fieldValue = ${serviceClass});
 		}
 
 		if (isSet(methodName)) {
 			FormFields.editText(
 				fieldName = "MethodName",
-				fieldValue = "${methodName}");
+				fieldValue = ${methodName});
 		}
 
 		PortletEntry.save();
@@ -83,22 +83,22 @@ definition {
 
 	macro gotoServiceAccessPolicy {
 		AssertClick(
-			key_policyName = "${policyName}",
+			key_policyName = ${policyName},
 			locator1 = "ServiceAccessPolicy#POLICY_NAME",
-			value1 = "${policyName}");
+			value1 = ${policyName});
 	}
 
 	macro openServiceAccessPolicyAdmin {
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet");
 	}
 
 	macro openToServiceAccessPolicy {
-		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(
-			baseURL = "${baseURL}",
+			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=${groupId}");
 	}
 

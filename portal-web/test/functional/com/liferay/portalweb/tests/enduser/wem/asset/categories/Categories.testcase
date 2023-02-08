@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@description = "Add properties in category."
-	@priority = "3"
+	@priority = 3
 	test AddCategoryProperties {
 		property testray.component.names = "AUI,Categories";
 
@@ -48,7 +48,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "2");
+				propertyNumber = 2);
 		}
 
 		task ("View two properties of category") {
@@ -56,13 +56,13 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "2",
+				propertyNumber = 2,
 				vocabularyName = "Vocabulary Name");
 		}
 	}
 
 	@description = "Add a property in category."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryProperty {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -78,7 +78,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "0");
+				propertyNumber = 0);
 		}
 
 		task ("View the property of category") {
@@ -86,13 +86,13 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "0",
+				propertyNumber = 0,
 				vocabularyName = "Vocabulary Name");
 		}
 	}
 
 	@description = "Add a category with Guest view permission."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryWithGuestViewPermission {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@description = "Add a category with Owner view permission."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryWithOwnerViewPermission {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "Add a category with Site Member view permission."
-	@priority = "4"
+	@priority = 4
 	test AddCategoryWithSiteMemberViewPermission {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@description = "Add a property in subcategory."
-	@priority = "3"
+	@priority = 3
 	test AddSubcategoryProperty {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary disallow multiple categories."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyDisallowMultipleCategories {
 		task ("Add a vocabulary disallow multiple categories") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for All Asset Types."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForAllAssetTypes {
 		task ("View the new vocabulary for All Asset Types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for Blogs Entry."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForBlogsEntry {
 		task ("Add a vocabulary for Blogs Entry") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for Document."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForDocument {
 		task ("Add a vocabulary for Document") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for User."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForUser {
 		task ("Add a vocabulary for User") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -277,7 +277,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for Web Content Article."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForWebContentArticle {
 		task ("Add a vocabulary for Web Content Article") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary for Wiki Page."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyForWikiPage {
 		task ("Add a vocabulary for Wiki Page") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary with Guest view permission."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyWithGuestViewPermission {
 		task ("View the new vocabulary with Guest view permission") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary with Owner view permission."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyWithOwnerViewPermission {
 		task ("View the new vocabulary with Owner view permission") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "Add a vocabulary with Site Member view permission."
-	@priority = "3"
+	@priority = 3
 	test AddVocabularyWithSiteMemberViewPermission {
 		task ("View the new vocabulary with Site Member view permission") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@description = "Cancel a vocabulary creation."
-	@priority = "3"
+	@priority = 3
 	test CancelVocabularyCreation {
 		task ("Cancel a vocabulary creation") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-167115. View warning message when creating a category without title."
-	@priority = "3"
+	@priority = 3
 	test CannotAddCategoryWithNullTitle {
 		task ("View cannot add a category without title") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-143167. The user cannot add duplicated categories properties."
-	@priority = "4"
+	@priority = 4
 	test CannotAddDuplicatedCategoryProperties {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -393,7 +393,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "0");
+				propertyNumber = 0);
 		}
 
 		task ("Add a duplicate property") {
@@ -406,12 +406,12 @@ definition {
 			Click(locator1 = "Button#ADD_ROW_LAST");
 
 			Type(
-				key_pathNumber = "1",
+				key_pathNumber = 1,
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD",
 				value1 = "Category Property");
 
 			Type(
-				key_pathNumber = "1",
+				key_pathNumber = 1,
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD",
 				value1 = "Category Property");
 
@@ -424,7 +424,7 @@ definition {
 	}
 
 	@description = "Cannot add a duplicate subcategory."
-	@priority = "3"
+	@priority = 3
 	test CannotAddDuplicateSubCategory {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -452,7 +452,7 @@ definition {
 	}
 
 	@description = "Cannot add a vocabulary without title."
-	@priority = "3"
+	@priority = 3
 	test CannotAddVocabularyWithNullTitle {
 		task ("View cannot add a vocabulary without title") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107730. Can not store 256 character in name field, key field and value field of category."
-	@priority = "4"
+	@priority = 4
 	test CannotType256CharactersInNameFieldKeyFieldAndValueField {
 		var actualText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256";
 		var inputText = "The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.The number of characters is 256.";
@@ -475,11 +475,11 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			PortletEntry.inputTitle(title = "${inputText}");
+			PortletEntry.inputTitle(title = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			Button.clickSave();
 
@@ -488,11 +488,11 @@ definition {
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please enter no more than 255 characters.");
 
-			PortletEntry.inputTitle(title = "${modifiedText}");
+			PortletEntry.inputTitle(title = ${modifiedText});
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
-				value1 = "${modifiedText}");
+				value1 = ${modifiedText});
 
 			PortletEntry.save();
 		}
@@ -500,38 +500,38 @@ definition {
 		task ("Can not store 256 characters in key field and value field of category") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${modifiedText}");
+				rowEntry = ${modifiedText});
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 			Type.sendKeys(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextNotEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${actualText}");
+				value1 = ${actualText});
 
 			Type.sendKeys(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextNotEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${actualText}");
+				value1 = ${actualText});
 		}
 	}
 
 	@description = "Delete an associated asset type of vocabulary."
-	@priority = "3"
+	@priority = 3
 	test DeleteAssociatedAssetTypeOfVocabulary {
 		task ("Add a vocabulary with two associated asset types") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
@@ -549,7 +549,7 @@ definition {
 			Vocabulary.addAssociatedAssetType(
 				assetType = "Web Content Article",
 				required = "true",
-				rowNumber = "2");
+				rowNumber = 2);
 
 			Button.clickNoError(button = "Save");
 
@@ -568,13 +568,13 @@ definition {
 				vocabularyName = "Vocabulary Name 1");
 
 			AssertElementNotPresent(
-				key_rowNumber = "2",
+				key_rowNumber = 2,
 				locator1 = "CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N");
 		}
 	}
 
 	@description = "Delete all categories of vocabulary."
-	@priority = "4"
+	@priority = 4
 	test DeleteCategories {
 		task ("Add three categories") {
 			for (var n : list "1,2,3") {
@@ -593,7 +593,7 @@ definition {
 	}
 
 	@description = "Delete the second category property."
-	@priority = "3"
+	@priority = 3
 	test DeleteSecondCategoryProperty {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -609,7 +609,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "2");
+				propertyNumber = 2);
 		}
 
 		task ("Delete the second category property") {
@@ -623,10 +623,10 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Property",
 				propertiesValueField = "Category Property",
-				propertyNumber = "1",
+				propertyNumber = 1,
 				vocabularyName = "Vocabulary Name");
 
-			var key_pathNumber = "1";
+			var key_pathNumber = 1;
 
 			AssertElementNotPresent(locator1 = "Categories#CATEGORY_DETAILS_PROPERTY_KEY_2");
 
@@ -635,7 +635,7 @@ definition {
 	}
 
 	@description = "Edit the category property."
-	@priority = "4"
+	@priority = 4
 	test EditCategoryProperty {
 		task ("Add a category") {
 			JSONCategory.addCategory(
@@ -651,7 +651,7 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Key",
 				propertiesValueField = "Category Value",
-				propertyNumber = "1");
+				propertyNumber = 1);
 		}
 
 		task ("Edit the category property") {
@@ -667,13 +667,13 @@ definition {
 				categoryName = "Category Name",
 				propertiesKeyField = "Category Key Edit",
 				propertiesValueField = "Category Value Edit",
-				propertyNumber = "0",
+				propertyNumber = 0,
 				vocabularyName = "Vocabulary Name");
 		}
 	}
 
 	@description = "Move a category to another vocabulary."
-	@priority = "3"
+	@priority = 3
 	test MoveCategoryToAnotherVocabulary {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
@@ -705,13 +705,13 @@ definition {
 	}
 
 	@description = "Move a subcategory to another category."
-	@priority = "3"
+	@priority = 3
 	test MoveSubcategoryToAnotherCategory {
 		task ("Add two categories") {
 			for (var categoryName : list "dog,cat") {
 				JSONCategory.addCategory(
 					groupName = "Test Site Name",
-					title = "${categoryName}",
+					title = ${categoryName},
 					vocabularyName = "Vocabulary Name");
 			}
 		}
@@ -721,7 +721,7 @@ definition {
 				JSONCategory.addSubcategory(
 					groupName = "Test Site Name",
 					parentCategoryName = "dog",
-					title = "${subcategoryName}",
+					title = ${subcategoryName},
 					vocabularyName = "Vocabulary Name");
 			}
 		}
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107730. Can input 254 characters to name field, key field and value field of category."
-	@priority = "4"
+	@priority = 4
 	test Type254CharactersIntoNameFieldKeyFieldAndValueField {
 		var inputText = "The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 254.The number of characters is 25";
 
@@ -756,62 +756,62 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			PortletEntry.inputTitle(title = "${inputText}");
+			PortletEntry.inputTitle(title = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			PortletEntry.save();
 
 			AssertVisible(
-				key_tableEntry = "${inputText}",
+				key_tableEntry = ${inputText},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 
 		task ("Assert input 254 characters to key field and value field of category") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${inputText}");
+				rowEntry = ${inputText});
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 			Type(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			Type(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			PortletEntry.save();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${inputText}");
+				rowEntry = ${inputText});
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 		}
 	}
 
 	@description = "This is a use case for LPS-107730. Can input 255 characters to name field, key field and value field of category."
-	@priority = "5"
+	@priority = 5
 	test Type255CharactersIntoNameFieldKeyFieldAndValueField {
 		property portal.acceptance = "true";
 
@@ -824,62 +824,62 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			PortletEntry.inputTitle(title = "${inputText}");
+			PortletEntry.inputTitle(title = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "TextInput#TITLE",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			PortletEntry.save();
 
 			AssertVisible(
-				key_tableEntry = "${inputText}",
+				key_tableEntry = ${inputText},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 
 		task ("Assert input 255 characters to key field and value field of category") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${inputText}");
+				rowEntry = ${inputText});
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 			Type(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			Type(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			PortletEntry.save();
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "${inputText}");
+				rowEntry = ${inputText});
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 
 			AssertTextEquals(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
-				value1 = "${inputText}");
+				value1 = ${inputText});
 		}
 	}
 
 	@description = "View the breadcrumb with Flattened Tree."
-	@priority = "3"
+	@priority = 3
 	test ViewBreadcrumbWithFlattenedTree {
 		property test.name.skip.portal.instance = "Categories#ViewBreadcrumbWithFlattenedTree";
 
@@ -928,7 +928,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of categories admin."
-	@priority = "4"
+	@priority = 4
 	test ViewDropdownMenuIconsInCategoriesAdmin {
 		task ("Given a Categories creator has a category within a vocabulary") {
 			JSONCategory.addCategory(
@@ -977,7 +977,7 @@ definition {
 	}
 
 	@description = "View the navigation."
-	@priority = "3"
+	@priority = 3
 	test ViewNavigation {
 		task ("Add a category") {
 			JSONCategory.addCategory(

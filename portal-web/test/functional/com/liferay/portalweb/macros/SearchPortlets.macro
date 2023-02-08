@@ -6,7 +6,7 @@ definition {
 
 	macro _clickAddPortlet {
 		Click.clickNoWaitForVisible(
-			key_portletName = "${portletName}",
+			key_portletName = ${portletName},
 			locator1 = "Search#ADD_PORTLET_LINK");
 	}
 
@@ -23,10 +23,10 @@ definition {
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "search");
 
-		for (var portletName : list "${searchPortletList}") {
-			SearchPortlets._clickAddPortlet(portletName = "${portletName}");
+		for (var portletName : list ${searchPortletList}) {
+			SearchPortlets._clickAddPortlet(portletName = ${portletName});
 
-			var key_portletName = "${portletName}";
+			var key_portletName = ${portletName};
 
 			AssertElementPresent(locator1 = "Portlet#LOADED");
 
@@ -35,10 +35,10 @@ definition {
 	}
 
 	macro chooseEmbeddedScope {
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Select(
 				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
-				value1 = "${searchScope}");
+				value1 = ${searchScope});
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|This Site).");
@@ -50,14 +50,14 @@ definition {
 
 		Click.clickNoMouseOver(
 			locator1 = "Search#SORT_PORTLET_SORT_OPTION",
-			sortOption = "${sortOption}");
+			sortOption = ${sortOption});
 	}
 
 	macro chooseWidgetScope {
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
+		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Click.clickNoMouseOver(
 				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
-				searchScope = "${searchScope}");
+				searchScope = ${searchScope});
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|This Site).");
@@ -67,13 +67,13 @@ definition {
 	macro configureCategoryFacet {
 		if (isSet(index)) {
 			SearchPortlets.gotoSearchFacetOptionsSpecific(
-				index = "${index}",
+				index = ${index},
 				portletName = "Category Facet",
 				portletOption = "Configuration");
 		}
 		else {
 			SearchPortlets.gotoSearchFacetOptionsSpecific(
-				index = "1",
+				index = 1,
 				portletName = "Category Facet",
 				portletOption = "Configuration");
 		}
@@ -81,24 +81,24 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(vocabularyScope)) {
-			if ("${vocabularyScope}" == "Select Vocabularies") {
+			if (${vocabularyScope} == "Select Vocabularies") {
 				Check.checkNotVisible(
-					key_radioName = "${vocabularyScope}",
+					key_radioName = ${vocabularyScope},
 					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
 
 				Click(
-					key_radioName = "${vocabularyScope}",
+					key_radioName = ${vocabularyScope},
 					locator1 = "Search#CATEGORY_FACET_EXPAND_VOCABULARIES");
 
-				for (var vocabularyName : list "${vocabularyName}") {
+				for (var vocabularyName : list ${vocabularyName}) {
 					Check.checkNotVisible(
-						key_vocabularyName = "${vocabularyName}",
+						key_vocabularyName = ${vocabularyName},
 						locator1 = "Search#CATEGORY_FACET_VOCABULARY_CHECKBOX");
 				}
 			}
-			else if ("${vocabularyScope}" == "All Vocabularies") {
+			else if (${vocabularyScope} == "All Vocabularies") {
 				Check.checkNotVisible(
-					key_radioName = "${vocabularyScope}",
+					key_radioName = ${vocabularyScope},
 					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
 			}
 			else {
@@ -122,42 +122,42 @@ definition {
 			Type(
 				key_fieldLabel = "Custom Parameter Name",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${customParameterName}");
+				value1 = ${customParameterName});
 		}
 
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${federatedSearchKey}");
+				value1 = ${federatedSearchKey});
 		}
 
 		if (isSet(filterField)) {
 			Type(
 				key_fieldLabel = "Filter Field",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${filterField}");
+				value1 = ${filterField});
 		}
 
 		if (isSet(filterQueryType)) {
 			Select(
 				key_fieldLabel = "Filter Query Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${filterQueryType}");
+				value1 = ${filterQueryType});
 		}
 
 		if (isSet(filterValue)) {
 			Type(
 				key_fieldLabel = "Filter Value",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${filterValue}");
+				value1 = ${filterValue});
 		}
 
 		if (isSet(occur)) {
 			Select(
 				key_fieldLabel = "Occur",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${occur}");
+				value1 = ${occur});
 		}
 
 		PortletEntry.save();
@@ -171,22 +171,22 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(destinationPage)) {
-			if (contains("${destinationPage}", " ")) {
-				var destinationPage = StringUtil.replace("${destinationPage}", " ", "-");
+			if (contains(${destinationPage}, " ")) {
+				var destinationPage = StringUtil.replace(${destinationPage}, " ", "-");
 			}
 
-			var destinationPage = StringUtil.toLowerCase("${destinationPage}");
+			var destinationPage = StringUtil.toLowerCase(${destinationPage});
 
 			Type(
 				locator1 = "SearchConfiguration#DESTINATION_PAGE",
-				value1 = "${destinationPage}");
+				value1 = ${destinationPage});
 		}
 
 		if (isSet(searchScope)) {
-			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+			if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
 				Select(
 					locator1 = "Select#SCOPE_CONFIGURATION",
-					value1 = "${searchScope}");
+					value1 = ${searchScope});
 			}
 			else {
 				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
@@ -209,32 +209,32 @@ definition {
 			Select(
 				key_fieldLabel = "Connection ID",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${connectionId}");
+				value1 = ${connectionId});
 		}
 
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${federatedSearchKey}");
+				value1 = ${federatedSearchKey});
 		}
 
 		if (isSet(indexes)) {
 			Type(
 				key_fieldLabel = "Indexes",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${indexes}");
+				value1 = ${indexes});
 		}
 
 		if (isSet(attributesKey)) {
 			Type(
 				locator1 = "TextInput#KEY",
-				value1 = "${attributesKey}");
+				value1 = ${attributesKey});
 
 			Type(
 				key_fieldLabel = "Value",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${attributesValue}");
+				value1 = ${attributesValue});
 		}
 
 		PortletEntry.save();
@@ -245,7 +245,7 @@ definition {
 	macro configureSearchBarWidget {
 		if (isSet(index)) {
 			SearchPortlets.gotoSearchBarWidgetOptionsSpecific(
-				index = "${index}",
+				index = ${index},
 				portletOption = "Configuration");
 		}
 		else {
@@ -257,14 +257,14 @@ definition {
 		if (isSet(keywordsParameterName)) {
 			Type(
 				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",
-				value1 = "${keywordsParameterName}");
+				value1 = ${keywordsParameterName});
 		}
 
 		if (isSet(searchScope)) {
-			if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+			if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
 				Select(
 					locator1 = "Select#SCOPE_CONFIGURATION",
-					value1 = "${searchScope}");
+					value1 = ${searchScope});
 			}
 			else {
 				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
@@ -274,14 +274,14 @@ definition {
 		if (isSet(scopeParameterName)) {
 			Type(
 				locator1 = "SearchConfiguration#SCOPE_PARAMETER_NAME",
-				value1 = "${scopeParameterName}");
+				value1 = ${scopeParameterName});
 		}
 
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${federatedSearchKey}");
+				value1 = ${federatedSearchKey});
 		}
 
 		PortletEntry.save();
@@ -300,13 +300,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		if ("${allowEmptySearches}" == "true") {
+		if (${allowEmptySearches} == "true") {
 			Check(
 				checkboxName = "Allow Empty Searches",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		if ("${basicFacetSelection}" == "true") {
+		if (${basicFacetSelection} == "true") {
 			Check(
 				checkboxName = "Basic Facet Selection",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -316,7 +316,7 @@ definition {
 			Type(
 				key_fieldLabel = "Federated Search Key",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${federatedSearchKey}");
+				value1 = ${federatedSearchKey});
 		}
 
 		PortletEntry.save();
@@ -335,96 +335,96 @@ definition {
 			Type(
 				key_fieldLabel = "Analyzer",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${analyzer}");
+				value1 = ${analyzer});
 		}
 
 		if (isSet(displayTemplate)) {
 			Select(
 				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "${displayTemplate}");
+				value1 = ${displayTemplate});
 		}
 
 		if (isSet(fields)) {
 			Type(
 				key_fieldLabel = "Fields",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fields}");
+				value1 = ${fields});
 		}
 
 		if (isSet(linkBehavior)) {
 			Select(
 				locator1 = "Select#SELECT_ID",
 				selectFieldId = "linkBehavior",
-				value1 = "${linkBehavior}");
+				value1 = ${linkBehavior});
 		}
 
 		if (isSet(maximumDocumentFrequency)) {
 			Type(
 				key_fieldLabel = "Maximum Document Frequency",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${maximumDocumentFrequency}");
+				value1 = ${maximumDocumentFrequency});
 		}
 
 		if (isSet(maximumItemDisplay)) {
 			Type(
 				key_maximumItems = "Maximum Item Display",
 				locator1 = "Search#SIMILAR_RESULTS_MAXIMUM_ITEM_DISPLAY",
-				value1 = "${maximumItemDisplay}");
+				value1 = ${maximumItemDisplay});
 		}
 
 		if (isSet(maximumQueryTerms)) {
 			Type(
 				key_fieldLabel = "Maximum Query Terms",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${maximumQueryTerms}");
+				value1 = ${maximumQueryTerms});
 		}
 
 		if (isSet(maximumWordLength)) {
 			Type(
 				key_fieldLabel = "Maximum Word Length",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${maximumWordLength}");
+				value1 = ${maximumWordLength});
 		}
 
 		if (isSet(minimumDocumentFrequency)) {
 			Type(
 				key_fieldLabel = "Minimum Document Frequency",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${minimumDocumentFrequency}");
+				value1 = ${minimumDocumentFrequency});
 		}
 
 		if (isSet(minimumShouldMatch)) {
 			Type(
 				key_fieldLabel = "Minimum Should Match",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${minimumShouldMatch}");
+				value1 = ${minimumShouldMatch});
 		}
 
 		if (isSet(minimumTermFrequency)) {
 			Type(
 				key_fieldLabel = "Minimum Term Frequency",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${minimumTermFrequency}");
+				value1 = ${minimumTermFrequency});
 		}
 
 		if (isSet(minimumWordLength)) {
 			Type(
 				key_fieldLabel = "Minimum Word Length",
 				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
-				value1 = "${minimumWordLength}");
+				value1 = ${minimumWordLength});
 		}
 
 		if (isSet(searchScope)) {
 			Select(
 				locator1 = "Select#SCOPE_CONFIGURATION",
-				value1 = "${searchScope}");
+				value1 = ${searchScope});
 		}
 
 		if (isSet(stopWords)) {
 			Type(
 				key_fieldLabel = "Stop Words",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${stopWords}");
+				value1 = ${stopWords});
 		}
 
 		PortletEntry.save();
@@ -435,12 +435,12 @@ definition {
 	macro configureWidgetScope {
 		SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 
-		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
+		if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 			Select(
 				locator1 = "Select#SCOPE_CONFIGURATION",
-				value1 = "${searchScope}");
+				value1 = ${searchScope});
 		}
 		else {
 			fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
@@ -452,18 +452,18 @@ definition {
 	}
 
 	macro getSearchTermURL {
-		if (contains("${searchPage}", " ")) {
-			var searchPage = StringUtil.replace("${searchPage}", " ", "-");
+		if (contains(${searchPage}, " ")) {
+			var searchPage = StringUtil.replace(${searchPage}, " ", "-");
 		}
 
-		var searchPage = StringUtil.toLowerCase("${searchPage}");
+		var searchPage = StringUtil.toLowerCase(${searchPage});
 		var portalURL = PropsUtil.get("portal.url");
 
 		var searchURL = "${portalURL}/web/guest/${searchPage}?q=";
 
 		var searchURL = "${searchURL}${searchTerm}";
 
-		return "${searchURL}";
+		return ${searchURL};
 	}
 
 	macro gotoConfigureSuggestionsOptions {
@@ -480,18 +480,18 @@ definition {
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
 
 		if (isSet(portletOption)) {
-			var key_menuItem = "${portletOption}";
+			var key_menuItem = ${portletOption};
 
 			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 
 	macro gotoResultDetails {
-		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 	}
 
 	macro gotoSearchBarWidgetOptions {
@@ -504,7 +504,7 @@ definition {
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON");
 
 		if (isSet(portletOption)) {
-			var key_menuItem = "${portletOption}";
+			var key_menuItem = ${portletOption};
 
 			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
@@ -512,17 +512,17 @@ definition {
 
 	macro gotoSearchBarWidgetOptionsSpecific {
 		MouseOver.mouseOverNotVisible(
-			key_index = "${index}",
+			key_index = ${index},
 			key_portletName = "Search Bar",
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		Click(
-			key_index = "${index}",
+			key_index = ${index},
 			key_portletName = "Search Bar",
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		if (isSet(portletOption)) {
-			var key_menuItem = "${portletOption}";
+			var key_menuItem = ${portletOption};
 
 			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
@@ -530,17 +530,17 @@ definition {
 
 	macro gotoSearchFacetOptionsSpecific {
 		MouseOver.mouseOverNotVisible(
-			key_index = "${index}",
-			key_portletName = "${portletName}",
+			key_index = ${index},
+			key_portletName = ${portletName},
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		Click(
-			key_index = "${index}",
-			key_portletName = "${portletName}",
+			key_index = ${index},
+			key_portletName = ${portletName},
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		if (isSet(portletOption)) {
-			var key_menuItem = "${portletOption}";
+			var key_menuItem = ${portletOption};
 
 			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
@@ -551,11 +551,11 @@ definition {
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
 		var browserType = PropsUtil.get("browser.type");
 
-		if (("${browserType}" == "safari") || ("${clickMagnifyingGlassIcon}" == "true")) {
+		if ((${browserType} == "safari") || (${clickMagnifyingGlassIcon} == "true")) {
 			Click(locator1 = "Icon#BASIC_SEARCH");
 		}
 		else {
@@ -570,9 +570,9 @@ definition {
 	macro searchWidget {
 		Type(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
-			value1 = "${searchTerm}");
+			value1 = ${searchTerm});
 
-		if ("${clickMagnifyingGlassIcon}" == "true") {
+		if (${clickMagnifyingGlassIcon} == "true") {
 			Click(locator1 = "Search#SEARCH_BAR_WIDGET_MAGNIFYING_GLASS_BUTTON");
 		}
 		else {
@@ -590,13 +590,13 @@ definition {
 			layoutName = "Similar Results Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = 1,
 			groupName = "Guest",
 			layoutName = "Similar Results Page",
 			widgetName = "Asset Publisher");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Similar Results Page",
 			widgetName = "Similar Results");
@@ -618,24 +618,24 @@ definition {
 			value1 = "keys=CONTROL,v");
 
 		WaitForElementPresent(
-			key_text = "${text}",
+			key_text = ${text},
 			locator1 = "CKEditor#BODY_TEXT");
 	}
 
 	macro viewResultDetails {
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
-			value1 = "${searchAssetTitle}");
+			value1 = ${searchAssetTitle});
 	}
 
 	macro viewUserResultDetails {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
-			value1 = "${userName}");
+			value1 = ${userName});
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_1",
-			value1 = "${pageName}");
+			value1 = ${pageName});
 	}
 
 }

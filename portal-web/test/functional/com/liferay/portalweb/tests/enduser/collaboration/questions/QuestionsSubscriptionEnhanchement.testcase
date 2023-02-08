@@ -15,7 +15,7 @@ definition {
 			layoutName = "Questions Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "2",
+			column = 2,
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
@@ -24,7 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159147. Verify if the user is notified when a followed question has a new answer."
-	@priority = "3"
+	@priority = 3
 	test CanBeNotifiedByAnswer {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -101,12 +101,12 @@ definition {
 		}
 
 		task ("Validate the notifications") {
-			Notifications.viewBadgeCount(notificationCount = "1");
+			Notifications.viewBadgeCount(notificationCount = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-159156. Verify if the user is notified when a followed topic has a new comment."
-	@priority = "3"
+	@priority = 3
 	test CanBeNotifiedByComment {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -180,12 +180,12 @@ definition {
 		}
 
 		task ("Validate the notifications") {
-			Notifications.viewBadgeCount(notificationCount = "1");
+			Notifications.viewBadgeCount(notificationCount = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-159158. Verify if the user is notified when a followed topic has a new question."
-	@priority = "3"
+	@priority = 3
 	test CanBeNotifiedByQuestion {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -243,12 +243,12 @@ definition {
 		}
 
 		task ("Validate the notifications") {
-			Notifications.viewBadgeCount(notificationCount = "1");
+			Notifications.viewBadgeCount(notificationCount = 1);
 		}
 	}
 
 	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeAQuestion {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe a tag if they want to."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeATag {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -311,7 +311,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
-	@priority = "5"
+	@priority = 5
 	test CanSubscribeATopic {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159138. Verify if the user is able to unsubscribe a question if they want to."
-	@priority = "5"
+	@priority = 5
 	test CanUnsubscribeAQuestion {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159144. Verify if the user is able to unsubscribe a tag if they want to."
-	@priority = "5"
+	@priority = 5
 	test CanUnsubscribeATag {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-159160. Verify if the user is able to unsubscribe a topic if they want to"
-	@priority = "5"
+	@priority = 5
 	test CanUnsubscribeATopic {
 		task ("Create a Topic") {
 			JSONMBMessage.addCategory(

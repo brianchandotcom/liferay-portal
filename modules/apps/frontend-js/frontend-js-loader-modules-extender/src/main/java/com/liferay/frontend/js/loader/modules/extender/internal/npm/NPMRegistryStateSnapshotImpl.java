@@ -16,7 +16,6 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
 import com.github.yuchi.semver.Range;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -24,7 +23,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,7 +33,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -192,29 +189,23 @@ public class NPMRegistryStateSnapshotImpl implements NPMRegistryStateSnapshot {
 			throw new RuntimeException(noSuchAlgorithmException);
 		}
 
-		// Hash dynamic JS modules that do not honor immutability of packages
+		_update(messageDigest, _exactMatchMap);
+		_update(messageDigest, _globalAliases);
+		_update(messageDigest, _partialMatchMap);
 
-		List<DynamicJSModule> dynamicJSModules = new ArrayList<>();
-
-		for (JSModule jsModule : _resolvedJSModules.values()) {
-			if (jsModule instanceof DynamicJSModule) {
-				dynamicJSModules.add((DynamicJSModule)jsModule);
-			}
-		}
+		List<JSModule> jsModules = new ArrayList<>(_resolvedJSModules.values());
 
 		Collections.sort(
-			dynamicJSModules,
-			(dynamicJSModule1, dynamicJSModule2) -> {
-				String resolvedId = dynamicJSModule1.getResolvedId();
+			jsModules,
+			(jsModule1, jsModule2) -> {
+				String resolvedId = jsModule1.getResolvedId();
 
-				return resolvedId.compareTo(dynamicJSModule2.getResolvedId());
+				return resolvedId.compareTo(jsModule2.getResolvedId());
 			});
 
-		for (DynamicJSModule dynamicJSModule : dynamicJSModules) {
-			_update(messageDigest, dynamicJSModule);
+		for (JSModule jsModule : jsModules) {
+			_update(messageDigest, jsModule);
 		}
-
-		// Hash JS packages
 
 		List<JSPackage> jsPackages = new ArrayList<>(
 			_resolvedJSPackages.values());
@@ -231,53 +222,13 @@ public class NPMRegistryStateSnapshotImpl implements NPMRegistryStateSnapshot {
 			_update(messageDigest, jsPackage);
 		}
 
-		// Hash the partial match map because may alter the resolutions
-
-		ArrayList<Map.Entry<String, String>> entries = new ArrayList<>(
-			_partialMatchMap.entrySet());
-
-		Collections.sort(
-			entries,
-			(entry1, entry2) -> {
-				String key1 = entry1.getKey();
-				String key2 = entry2.getKey();
-
-				if (!Objects.equals(key1, key2)) {
-					return key1.compareTo(key2);
-				}
-
-				String value = entry1.getValue();
-
-				return value.compareTo(entry2.getValue());
-			});
-
-		for (Map.Entry<String, String> entry : entries) {
-			_update(messageDigest, entry.getKey());
-			_update(messageDigest, entry.getValue());
-		}
-
-		// Hash the list of applied patches because Liferay Support's patches
-		// break the immutability convention of packages
-
-		List<String> installedPatches = Arrays.asList(
-			PatcherUtil.getInstalledPatches());
-
-		Collections.sort(installedPatches);
-
-		for (String installedPatch : installedPatches) {
-			_update(messageDigest, installedPatch);
-		}
-
 		return StringUtil.bytesToHexString(messageDigest.digest());
 	}
 
-	private void _update(
-		MessageDigest messageDigest, DynamicJSModule dynamicJSModule) {
+	private void _update(MessageDigest messageDigest, JSModule jsModule) {
+		_update(messageDigest, jsModule.getResolvedId());
 
-		_update(messageDigest, dynamicJSModule.getResolvedId());
-
-		List<String> dependencies = new ArrayList<>(
-			dynamicJSModule.getDependencies());
+		List<String> dependencies = new ArrayList<>(jsModule.getDependencies());
 
 		Collections.sort(dependencies);
 
@@ -287,9 +238,6 @@ public class NPMRegistryStateSnapshotImpl implements NPMRegistryStateSnapshot {
 	}
 
 	private void _update(MessageDigest messageDigest, JSPackage jsPackage) {
-
-		// Hash the fields besides (name and version) for extra safety
-
 		_update(messageDigest, jsPackage.getMainModuleName());
 		_update(messageDigest, jsPackage.getName());
 		_update(messageDigest, jsPackage.getVersion());
@@ -340,6 +288,31 @@ public class NPMRegistryStateSnapshotImpl implements NPMRegistryStateSnapshot {
 		for (JSModuleAlias jsModuleAlias : jsModuleAliases) {
 			_update(messageDigest, jsModuleAlias.getAlias());
 			_update(messageDigest, jsModuleAlias.getModuleName());
+		}
+	}
+
+	private void _update(MessageDigest messageDigest, Map<String, String> map) {
+		List<Map.Entry<String, String>> entries = new ArrayList<>(
+			map.entrySet());
+
+		Collections.sort(
+			entries,
+			(entry1, entry2) -> {
+				String key1 = entry1.getKey();
+				String key2 = entry2.getKey();
+
+				if (!Objects.equals(key1, key2)) {
+					return key1.compareTo(key2);
+				}
+
+				String value = entry1.getValue();
+
+				return value.compareTo(entry2.getValue());
+			});
+
+		for (Map.Entry<String, String> entry : entries) {
+			_update(messageDigest, entry.getKey());
+			_update(messageDigest, entry.getValue());
 		}
 	}
 

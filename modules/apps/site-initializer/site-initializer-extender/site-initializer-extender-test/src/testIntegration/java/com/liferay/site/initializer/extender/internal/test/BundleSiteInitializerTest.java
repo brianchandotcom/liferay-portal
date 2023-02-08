@@ -273,6 +273,8 @@ public class BundleSiteInitializerTest {
 
 		try {
 			siteInitializer.initialize(group.getGroupId());
+
+			_assertAccounts2(serviceContext);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -312,6 +314,61 @@ public class BundleSiteInitializerTest {
 
 			//FileUtil.deltree(unzipFolder);
 		}
+	}
+
+	private void _assertAccounts2(ServiceContext serviceContext) throws Exception{
+
+		AccountResource.Builder accountResourceBuilder =
+			_accountResourceFactory.create();
+
+		AccountResource accountResource = accountResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Account account1 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0001");
+
+		Assert.assertNotNull(account1);
+		Assert.assertEquals("Test Account 1", account1.getName());
+		Assert.assertEquals("person", account1.getTypeAsString());
+
+		_assertUserAccounts(account1.getId(), 1, userAccountResource);
+
+		Account account2 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0002");
+
+		Assert.assertNotNull(account2);
+		Assert.assertEquals("Test Account Guest", account2.getName());
+		Assert.assertEquals("guest", account2.getTypeAsString());
+
+		_assertUserAccounts(account2.getId(), 1, userAccountResource);
+
+		Account account3 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0003");
+
+		Assert.assertNotNull(account3);
+		Assert.assertEquals("Test Account 3", account3.getName());
+		Assert.assertEquals("person", account3.getTypeAsString());
+
+		_assertUserAccounts(account3.getId(), 0, userAccountResource);
+
+		Account account4 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0004");
+
+		Assert.assertNotNull(account4);
+		Assert.assertEquals("Test Account 4", account4.getName());
+		Assert.assertEquals("bussiness", account4.getTypeAsString());
+
+		_assertUserAccounts(account4.getId(), 0, userAccountResource);
+
 	}
 
 	@Test

@@ -179,13 +179,15 @@ definition {
 
 		Calendar._editName(calendarName = "Calendar Name");
 
-		Calendar.chooseCalendarColor(myCalendarColor = "8C66D9");
+		Calendar.chooseCalendarColor(myCalendarColor = "#E0C240");
 
 		Button.clickSave();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarMyCalendars.viewColorMyCalendars(myCalendarColor = "8C66D9");
+		AssertElementPresent(
+			key_myCalendarColor = "#E6804D",
+			locator1 = "CalendarEditCalendar#CHOOSE_MY_CALENDAR_COLOR");
 	}
 
 	@description = "LRQA-71797 - Verify that the user can Enable Comments on Calendar"

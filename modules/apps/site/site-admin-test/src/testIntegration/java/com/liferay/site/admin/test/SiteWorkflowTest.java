@@ -119,20 +119,20 @@ public class SiteWorkflowTest {
 	private void _updateGroupFromSiteTemplate(
 		Group group, boolean layoutSetVisibilityPrivate) {
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"layoutSetPrototypeId",
 			String.valueOf(_layoutSetPrototype.getLayoutSetPrototypeId()));
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"layoutSetVisibilityPrivate",
 			String.valueOf(layoutSetVisibilityPrivate));
 
 		ReflectionTestUtil.invoke(
 			_addGroupMVCActionCommandTest, "_updateGroupFromSiteTemplate",
-			new Class<?>[] {ActionRequest.class, Group.class}, actionRequest,
-			group);
+			new Class<?>[] {ActionRequest.class, Group.class},
+			mockLiferayPortletActionRequest, group);
 	}
 
 	@Inject(filter = "mvc.command.name=/site_admin/add_group")

@@ -105,7 +105,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
 	public Map<String, String> getGlobalAliases() {
-		return _globalAliases;
+		return _jsModulesCache._globalAliases;
 	}
 
 	/**
@@ -222,7 +222,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			return mapModuleName(mappedModuleName);
 		}
 
-		for (Map.Entry<String, String> entry : _globalAliases.entrySet()) {
+		Map<String, String> globalAliases = _jsModulesCache._globalAliases;
+
+		for (Map.Entry<String, String> entry : globalAliases.entrySet()) {
 			String resolvedId = entry.getKey();
 
 			if (resolvedId.equals(moduleName) ||
@@ -328,9 +330,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_activationThreadLocal.set(Boolean.FALSE);
 
-		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-		_refreshJSModuleCaches(tracked.values(), null);
+		_refreshJSModuleCaches(_bundleTracker.getTracked(), null);
 
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
@@ -473,7 +473,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			});
 	}
 
-	private void _processLegacyBridges(Bundle bundle) {
+	private void _processLegacyBridges(
+		Bundle bundle, Map<String, String> globalAliases) {
+
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -488,7 +490,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			for (String bridge : bridges) {
 				bridge = bridge.trim();
 
-				_globalAliases.put(
+				globalAliases.put(
 					bridge,
 					StringBundler.concat(
 						packageJSONObject.getString("name"), StringPool.AT,
@@ -507,6 +509,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			jsBundlesMap = _bundleTracker.getTracked();
 		}
 
+		Map<String, String> globalAliases = new HashMap<>();
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
@@ -515,7 +518,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		Map<String, String> exactMatchMap = new HashMap<>();
 
 		for (Bundle bundle : jsBundlesMap.keySet()) {
-			_processLegacyBridges(bundle);
+			_processLegacyBridges(bundle, globalAliases);
 		}
 
 		for (JSBundle jsBundle : jsBundlesMap.values()) {
@@ -557,8 +560,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		jsPackageVersions.sort(comparator.reversed());
 
 		_jsModulesCache = new JSModulesCache(
-			exactMatchMap, jsModules, jsPackages, jsPackageVersions,
-			resolvedJSModules, resolvedJSPackages);
+			globalAliases, exactMatchMap, jsModules, jsPackages,
+			jsPackageVersions, resolvedJSModules, resolvedJSPackages);
 
 		if (npmRegistryUpdatesListeners != null) {
 			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
@@ -583,7 +586,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private volatile Boolean _applyVersioning;
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
-	private final Map<String, String> _globalAliases = new HashMap<>();
 	private ServiceTrackerList<JavaScriptAwarePortalWebResources>
 		_javaScriptAwarePortalWebResources;
 
@@ -592,7 +594,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private volatile JSModulesCache _jsModulesCache = new JSModulesCache(
 		Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(),
-		Collections.emptyList(), Collections.emptyMap(),
+		Collections.emptyMap(), Collections.emptyList(), Collections.emptyMap(),
 		Collections.emptyMap());
 
 	@Reference
@@ -619,13 +621,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		private JSModulesCache(
-			Map<String, String> exactMatchMap, Map<String, JSModule> jsModules,
+			Map<String, String> exactMatchMap,
+			Map<String, String> globalAliases, Map<String, JSModule> jsModules,
 			Map<String, JSPackage> jsPackages,
 			List<JSPackageVersion> jsPackageVersions,
 			Map<String, JSModule> resolvedJSModules,
 			Map<String, JSPackage> resolvedJSPackages) {
 
 			_exactMatchMap = exactMatchMap;
+			_globalAliases = globalAliases;
 			_jsModules = jsModules;
 			_jsPackages = jsPackages;
 			_jsPackageVersions = jsPackageVersions;
@@ -636,6 +640,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		private final ConcurrentHashMap<String, JSPackage>
 			_cachedDependencyJSPackages = new ConcurrentHashMap<>();
 		private final Map<String, String> _exactMatchMap;
+		private final Map<String, String> _globalAliases;
 		private final Map<String, JSModule> _jsModules;
 		private final Map<String, JSPackage> _jsPackages;
 		private final List<JSPackageVersion> _jsPackageVersions;

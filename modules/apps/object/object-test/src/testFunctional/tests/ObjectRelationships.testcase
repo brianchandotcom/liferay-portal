@@ -326,7 +326,7 @@ definition {
 			ObjectAdmin.addObjectRelationshipViaUI(
 				label = "Relationship with Custom Object",
 				object = "Custom Object",
-				parameter = "Self Relationship",
+				parameterOption = "Self Relationship",
 				type = "One to Many");
 		}
 

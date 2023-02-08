@@ -16,13 +16,12 @@ package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
@@ -115,7 +114,7 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		ExceptionListener exceptionListener,
 		SemanticSearchConfiguration semanticSearchConfiguration) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688") ||
 			!semanticSearchConfiguration.textEmbeddingsEnabled()) {
 
 			return null;

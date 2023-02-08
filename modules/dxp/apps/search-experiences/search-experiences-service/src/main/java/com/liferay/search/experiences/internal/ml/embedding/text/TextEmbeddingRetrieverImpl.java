@@ -17,11 +17,10 @@ package com.liferay.search.experiences.internal.ml.embedding.text;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderInformation;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
@@ -58,7 +57,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	public EmbeddingProviderStatus getEmbeddingProviderStatus(
 		String embeddingProviderConfigurationJSON) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
 			return null;
 		}
 
@@ -115,7 +114,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public EmbeddingProviderStatus[] getEmbeddingProviderStatuses() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
 			return new EmbeddingProviderStatus[0];
 		}
 
@@ -137,7 +136,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public Double[] getTextEmbedding(String providerName, String text) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-163688")) {
 			return new Double[0];
 		}
 

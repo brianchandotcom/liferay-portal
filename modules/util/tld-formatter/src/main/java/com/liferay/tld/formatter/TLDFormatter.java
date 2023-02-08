@@ -108,6 +108,10 @@ public class TLDFormatter {
 	}
 
 	private void _formatTLD(Path file) throws Exception {
+		System.setProperty(
+			"javax.xml.parsers.SAXParserFactory",
+			"com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl");
+
 		String content = new String(
 			Files.readAllBytes(file), StandardCharsets.UTF_8);
 

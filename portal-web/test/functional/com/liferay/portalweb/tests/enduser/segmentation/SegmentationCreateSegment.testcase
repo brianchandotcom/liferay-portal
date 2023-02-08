@@ -3040,6 +3040,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the Segments page
+	When the user adds a new segment
+	Then the segment is created in the Global Site"
+	@priority = "4"
+	test SegmentInGlobalSiteByDefault {
+		property portal.acceptance = "true";
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Add segment with site scope selected") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "SegmentInGlobalSiteByDefault Test");
+		}
+
+		task ("Assert the segment is created in the Global Site") {
+			AssertTextEquals(
+				locator1 = "Segmentation#SCOPE_CARD_SITE",
+				siteName = "Global",
+				value1 = "Global");
+		}
+	}
+
 	@description = "LPS-167023 Given the Product Menu
 	When the user clicks on People
 	Then the Segments portlet is not present"

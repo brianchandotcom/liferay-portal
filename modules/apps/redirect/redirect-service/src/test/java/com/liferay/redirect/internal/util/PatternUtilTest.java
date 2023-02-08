@@ -49,6 +49,26 @@ public class PatternUtilTest {
 	}
 
 	@Test
+	public void testCaretPattern() {
+		Map<Pattern, String> patternStrings = PatternUtil.parse(
+			new String[] {"^xyz abc"});
+
+		Assert.assertEquals("^xyz", _getFirstPatternString(patternStrings));
+		Assert.assertEquals(
+			patternStrings.toString(), 1, patternStrings.size());
+	}
+
+	@Test
+	public void testCaretSlashPattern() {
+		Map<Pattern, String> patternStrings = PatternUtil.parse(
+			new String[] {"^/xyz abc"});
+
+		Assert.assertEquals("^xyz", _getFistPatternString(patternStrings));
+		Assert.assertEquals(
+			patternStrings.toString(), 1, patternStrings.size());
+	}
+
+	@Test
 	public void testEmptyPatternOrEmptyReplacement() {
 		Assert.assertTrue(
 			MapUtil.isEmpty(PatternUtil.parse(new String[] {" xyz"})));
@@ -66,6 +86,16 @@ public class PatternUtilTest {
 	@Test(expected = PatternSyntaxException.class)
 	public void testInvalidRegexPattern() {
 		PatternUtil.parse(new String[] {"*** a"});
+	}
+
+	@Test
+	public void testSlashPattern() {
+		Map<Pattern, String> patternStrings = PatternUtil.parse(
+			new String[] {"/xyz abc"});
+
+		Assert.assertEquals("^xyz", _getFistPatternString(patternStrings));
+		Assert.assertEquals(
+			patternStrings.toString(), 1, patternStrings.size());
 	}
 
 	@Test

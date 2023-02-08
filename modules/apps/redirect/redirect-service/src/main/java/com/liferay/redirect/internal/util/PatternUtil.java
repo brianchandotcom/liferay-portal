@@ -45,7 +45,11 @@ public class PatternUtil {
 
 	private static String _normalize(String patternString) {
 		if (patternString.startsWith(StringPool.CARET)) {
-			return patternString;
+			patternString = patternString.substring(1);
+		}
+
+		if (patternString.startsWith(StringPool.SLASH)) {
+			patternString = patternString.substring(1);
 		}
 
 		return StringPool.CARET + patternString;

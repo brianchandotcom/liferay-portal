@@ -60,7 +60,7 @@ public class AnalyticsDXPEntityBatchExporterImpl
 							dispatchTriggerName);
 				}
 
-				return;
+				continue;
 			}
 
 			Message message = new Message();

@@ -729,4 +729,35 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the Roles portlet
+	When the user tries to add a new role
+	And the user wants to add segments permissions
+	Then the segments permissions are allocated in Control Panel > Users"
+	@priority = "4"
+	test SegmentsPermissionsAllocatedInControlPanel {
+		property portal.acceptance = "true";
+		property custom.properties = "feature.flag.LPS-166954=true";
+		
+		task ("Create a new role through Roles Admin Portlet") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Regular Roles");
+
+			Role.add(roleTitle = "SegmentsPermissionsAllocatedInControlPanel Role");
+		}
+
+		task ("Assert the segments permissions are allocated in Control Panel > Users") {
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			Click.clickAt(
+				key_navItem = "Users",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			AssertElementPresent(
+				key_permissionNavHeader = "Control Panel",
+				key_permissionNavItem = "Segments",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+		}
+	}
+
 }

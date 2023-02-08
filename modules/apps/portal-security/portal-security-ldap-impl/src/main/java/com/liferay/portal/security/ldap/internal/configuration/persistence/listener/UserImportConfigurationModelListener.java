@@ -57,7 +57,26 @@ public class UserImportConfigurationModelListener extends BaseMessageListener {
 			ConfigurableUtil.createConfigurable(
 				LDAPImportConfiguration.class, properties);
 
-		_updateDefaultImportInterval(ldapImportConfiguration.importInterval());
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"LDAP user imports will be attempted every " +
+					ldapImportConfiguration.importInterval() + " minutes");
+		}
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			ldapImportConfiguration.importInterval(), TimeUnit.MINUTE);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntry,
+			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 	}
 
 	@Deactivate
@@ -122,28 +141,6 @@ public class UserImportConfigurationModelListener extends BaseMessageListener {
 		}
 
 		_ldapUserImporter.importUsers(companyId);
-	}
-
-	private void _updateDefaultImportInterval(int interval) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"LDAP user imports will be attempted every " + interval +
-					" minutes");
-		}
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, interval, TimeUnit.MINUTE);
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
-		_schedulerEngineHelper.register(
-			this, schedulerEntry,
-			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

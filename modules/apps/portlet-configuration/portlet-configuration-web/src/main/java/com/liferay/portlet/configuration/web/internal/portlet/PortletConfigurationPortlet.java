@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -73,6 +75,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
@@ -206,6 +209,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			portletLayoutListener.onSetup(
 				portlet.getPortletId(), layout.getPlid());
 		}
+
+		_updateLayoutStatus(
+			themeDisplay.getLayout(),
+			ServiceContextFactory.getInstance(actionRequest),
+			themeDisplay.getUserId());
 	}
 
 	public void editPublicRenderParameters(
@@ -611,6 +619,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			portletPreferences.store();
 		}
+
+		_updateLayoutStatus(
+			themeDisplay.getLayout(),
+			ServiceContextFactory.getInstance(actionRequest),
+			themeDisplay.getUserId());
 	}
 
 	@Activate
@@ -1019,6 +1032,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue(
 			"lfrIgoogleShowAddAppLink", String.valueOf(iGoogleShowAddAppLink));
+	}
+
+	private void _updateLayoutStatus(
+			Layout layout, ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		if (layout.isDraftLayout()) {
+			_layoutLocalService.updateStatus(
+				userId, layout.getPlid(), WorkflowConstants.STATUS_DRAFT,
+				serviceContext);
+		}
 	}
 
 	private void _updateNetvibes(

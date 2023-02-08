@@ -13,7 +13,135 @@ definition {
 		SignIn.signInTestSetup();
 	}
 
-    @priority = 3
+	@priority = 3
+	test LockUnlockDMFileEntryAndMBTread {
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=5000";
+		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#LockUnlockDMFileEntryAndMBTread";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		var key_dmDocumentTitle = "Document_1";
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Checkout");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Lock_ WHERE className LIKE '%com.liferay.document.library.kernel.model.DLFileEntry%'",
+			text = 1);
+
+		Refresh();
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Checkin");
+
+		Click(locator1 = "Button#SAVE");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Lock_ WHERE className LIKE '%com.liferay.document.library.kernel.model.DLFileEntry%'",
+			text = 0);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Checkout");
+
+		while ((IsTextEqual(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS", value1 = "Draft")) && (maxIterations = "6")) {
+			Refresh();
+		}
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Lock_ WHERE className LIKE '%com.liferay.document.library.kernel.model.DLFileEntry%'",
+			text = 0);
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "Message Boards Thread Subject");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		var key_threadSubject = "Message Boards Thread Subject";
+
+		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Lock");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Lock_ WHERE className LIKE '%com.liferay.message.boards.model.MBThread%'",
+			text = 1);
+
+		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Unlock");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.Lock_ WHERE className LIKE '%com.liferay.message.boards.model.MBThread%'",
+			text = 0);
+	}
+
+	@priority = 3
+	test SmokeWithClusteringEnabled {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property minimum.slave.ram = "24";
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithClusteringEnabled";
+
+		Clustering.viewClusterStatusInConsole();
+
+		Page.assertNodePortPG(nodePort = 8080);
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Test Page1");
+
+		Navigator.gotoPage(pageName = "Test Page1");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Navigator.gotoPage(pageName = "Test Page1");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.loginPG(
+			nodePort = 9080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Page.assertNodePortPG(nodePort = 9080);
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Test Page1",
+			url = "http://localhost:9080");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry1 Title");
+	}
+
+	@priority = 3
 	test SmokeWithJDBC {
 		property test.name.skip.portal.instance = "PortalReadWriteDatabaseConfiguration#SmokeWithJDBC";
 

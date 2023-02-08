@@ -3079,6 +3079,41 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
+	@description = "LPS-167023 Given the Segments page
+	When there is a segment belonging to a site
+	Then the scope column in the Segments table will display the name of the site is scoped to"
+	@priority = "3"
+	test SiteNameInScopeColumn {
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Add a segment scoped by Test Site Name") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "SiteNameInScopeColumn Test");
+
+			Segmentation.configureScope(site = "Test Site Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Go to Segment Admin on Test Site Name") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Assert the scope column in the Segments table will display the name of the site is scoped to") {
+			AssertElementPresent(
+				locator1 = "Segmentation#SCOPE_TABLE_SITE",
+				segmentName = "SiteNameInScopeColumn Test",
+				siteScope = "Test Site Name");
+		}
+	}
+
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = "4"
 	test ValidateDefaultSegmentNotDisplayed {

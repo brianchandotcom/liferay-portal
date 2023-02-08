@@ -1,20 +1,6 @@
-.portlet-user-personal-bar {
-	.personal-menu-dropdown {
-		.btn .sticker .inline-item {
-			font-size: 1.25rem;
-		}
-
-		.sticker-bottom-right.sticker-outside {
-			bottom: -0.5rem;
-			right: -0.5rem;
-		}
-
-		.sticker-lg .inline-item .lexicon-icon {
-			margin-top: -0.25rem;
-		}
-
-		.sticker-sm .inline-item .lexicon-icon {
-			margin-top: -0.125rem;
-		}
-	}
+.portlet-user-personal-bar
+	.personal-menu-dropdown
+	.sticker-bottom-right.sticker-outside {
+	bottom: -0.5rem;
+	right: -0.5rem;
 }

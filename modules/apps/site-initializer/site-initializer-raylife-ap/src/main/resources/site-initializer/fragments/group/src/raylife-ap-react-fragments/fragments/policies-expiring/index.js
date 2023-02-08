@@ -282,7 +282,7 @@ export default function () {
 				</ClaySelect>
 			</div>
 
-			{!!chartData.columns.length && (
+			{!chartData.columns[0].includes(0) && loadData && (
 				<DonutChart
 					LegendElement={LegendElement}
 					chartData={chartData}
@@ -291,7 +291,7 @@ export default function () {
 				/>
 			)}
 
-			{!chartData.columns.length && loadData && (
+			{chartData.columns[0].includes(0) && loadData && (
 				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
 					<span>No Data Applications</span>
 				</div>

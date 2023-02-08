@@ -319,7 +319,7 @@ export default function () {
 					className="d-flex total-premium-due-bar"
 					id="total-premium-due-bar"
 				>
-					{isLoading && (
+					{isLoading && !!sumPolicies ? (
 						<BarChart
 							barRatio={0}
 							barWidth={10}
@@ -332,6 +332,10 @@ export default function () {
 							titleTotal={false}
 							width={chartWidth}
 						/>
+					) : (
+						<div className="align-items-center d-flex flex-grow-1 justify-content-center py-7">
+							<span className="h5">No Data</span>
+						</div>
 					)}
 				</div>
 			</div>

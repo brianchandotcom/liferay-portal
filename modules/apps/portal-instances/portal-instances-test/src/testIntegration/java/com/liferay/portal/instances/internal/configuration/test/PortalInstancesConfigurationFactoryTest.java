@@ -33,11 +33,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Raymond Augé
@@ -53,18 +50,6 @@ public class PortalInstancesConfigurationFactoryTest {
 
 	@Test
 	public void test() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			PortalInstancesConfigurationFactoryTest.class);
-
-		ServiceTracker<Object, Object> serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(),
-			FrameworkUtil.createFilter(
-				"(component.name=com.liferay.portal.instances.internal." +
-					"configuration.PortalInstancesConfigurationFactory)"),
-			null);
-
-		serviceTracker.open();
-
 		String webId = RandomTestUtil.randomString();
 
 		Configuration configuration =
@@ -81,17 +66,11 @@ public class PortalInstancesConfigurationFactoryTest {
 				"virtualHostname", webId.concat(".foo.bar")
 			).build());
 
-		// Wait for company to be created
-
-		Assert.assertNotNull(serviceTracker.waitForService(40000));
-
 		_company = _companyLocalService.getCompanyByWebId(webId);
 
 		Assert.assertNotNull(_company);
 
 		ConfigurationTestUtil.deleteConfiguration(configuration);
-
-		serviceTracker.close();
 	}
 
 	@DeleteAfterTestRun

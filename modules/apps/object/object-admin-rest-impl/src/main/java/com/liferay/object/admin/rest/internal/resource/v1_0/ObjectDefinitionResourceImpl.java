@@ -57,6 +57,7 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -69,7 +70,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -224,7 +224,7 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 
 			throw new ObjectDefinitionStorageTypeException();
 		}
@@ -297,7 +297,7 @@ public class ObjectDefinitionResourceImpl
 		// TODO Move logic to service
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 
 			throw new ObjectDefinitionStorageTypeException();
 		}
@@ -725,9 +725,7 @@ public class ObjectDefinitionResourceImpl
 					}
 				};
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-135430"))) {
-
+				if (FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 					storageType = objectDefinition.getStorageType();
 				}
 

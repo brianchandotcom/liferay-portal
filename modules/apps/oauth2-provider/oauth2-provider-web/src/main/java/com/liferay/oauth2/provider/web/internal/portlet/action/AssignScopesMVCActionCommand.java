@@ -16,7 +16,9 @@ package com.liferay.oauth2.provider.web.internal.portlet.action;
 
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,10 +26,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,20 +55,17 @@ public class AssignScopesMVCActionCommand implements MVCActionCommand {
 		long oAuth2ApplicationId = ParamUtil.getLong(
 			actionRequest, "oAuth2ApplicationId");
 
-		String[] scopeAliases = ParamUtil.getStringValues(
-			actionRequest, "scopeAliases");
+		List<String> scopeAliasess = new ArrayList<>();
 
-		Stream<String> scopeAliasesStream = Arrays.stream(scopeAliases);
+		for (String scopeAlias :
+				ParamUtil.getStringValues(actionRequest, "scopeAliases")) {
 
-		List<String> scopeAliasesList = scopeAliasesStream.flatMap(
-			scopeAlias -> Arrays.stream(scopeAlias.split(StringPool.SPACE))
-		).collect(
-			Collectors.toList()
-		);
+			scopeAliasess.addAll(StringUtil.split(scopeAlias, CharPool.SPACE));
+		}
 
 		try {
 			_oAuth2ApplicationService.updateScopeAliases(
-				oAuth2ApplicationId, scopeAliasesList);
+				oAuth2ApplicationId, scopeAliasess);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -23,17 +23,16 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -228,7 +227,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private boolean _isDragAndDrop(boolean dragAndDrop) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-156421")) {
 			return dragAndDrop;
 		}
 

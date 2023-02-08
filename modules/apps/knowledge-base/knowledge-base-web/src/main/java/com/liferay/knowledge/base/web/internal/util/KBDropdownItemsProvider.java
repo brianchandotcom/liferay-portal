@@ -38,6 +38,7 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFo
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
@@ -1375,7 +1375,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private Boolean _isExpirationEnabled() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 			return true;
 		}
 

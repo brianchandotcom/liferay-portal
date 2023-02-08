@@ -19,13 +19,12 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.web.internal.configuration.KBServiceConfigurationProviderUtil;
 import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.time.Instant;
@@ -101,7 +100,7 @@ public class KBArticleViewDisplayContext {
 	public boolean isExpiringSoon(KBArticle kbArticle)
 		throws ConfigurationException {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 			return false;
 		}
 

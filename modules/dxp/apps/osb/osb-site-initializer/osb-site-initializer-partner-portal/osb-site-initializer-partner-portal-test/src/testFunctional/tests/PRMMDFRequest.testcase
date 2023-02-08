@@ -463,6 +463,8 @@ definition {
 				buttonLink = "mdf-requests",
 				buttonText = "MDF");
 
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
 			PRMMDFRequest.changeMDFStatus(
 				campaignName = "Campaign Name",
 				key_statusButton = "Approve");

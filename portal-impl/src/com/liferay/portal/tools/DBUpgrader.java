@@ -131,9 +131,7 @@ public class DBUpgrader {
 		String result = "Completed";
 
 		try {
-			_stopWatch = new StopWatch();
-
-			_stopWatch.start();
+			_initUpgradeStopwatch();
 
 			PortalClassPathUtil.initializeClassPaths(null);
 
@@ -172,22 +170,24 @@ public class DBUpgrader {
 			result = "Failed";
 		}
 		finally {
-			_stopWatch.stop();
+			if (PropsValues.UPGRADE_REPORT_ENABLED) {
+				stopUpgradeReportLogAppender();
+			}
 
 			System.out.println(
 				StringBundler.concat(
 					"\n", result, " Liferay upgrade process in ",
 					_stopWatch.getTime() / Time.SECOND, " seconds"));
-
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				stopUpgradeReportLogAppender();
-			}
 		}
 
 		System.out.println("Exiting DBUpgrader#main(String[]).");
 	}
 
 	public static void startUpgradeReportLogAppender() {
+		if (_stopWatch == null) {
+			_initUpgradeStopwatch();
+		}
+
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
 		serviceLatch.<Appender>waitFor(
@@ -206,6 +206,8 @@ public class DBUpgrader {
 
 	public static void stopUpgradeReportLogAppender() {
 		if (_appender != null) {
+			_stopWatch.stop();
+
 			_appender.stop();
 		}
 
@@ -378,6 +380,12 @@ public class DBUpgrader {
 				"No Release exists with the primary key " +
 					ReleaseConstants.DEFAULT_ID);
 		}
+	}
+
+	private static void _initUpgradeStopwatch() {
+		_stopWatch = new StopWatch();
+
+		_stopWatch.start();
 	}
 
 	private static void _registerModuleServiceLifecycle(

@@ -364,6 +364,7 @@ definition {
 	test WarningsLogged {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "UpgradeReport#WarningsLogged";
 
 		task ("Delete indexes.sql file from portal-impl.jar") {

@@ -62,8 +62,9 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 <c:if test="<%= orgLabors.isEmpty() %>">
 	<div class="contact-information-empty-results-message-wrapper">
-		<liferay-ui:empty-result-message
-			message="this-organization-does-not-have-any-opening-hours"
+		<liferay-frontend:empty-result-message
+			animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
+			title='<%= LanguageUtil.get(resourceBundle, "this-organization-does-not-have-any-opening-hours") %>'
 		/>
 	</div>
 </c:if>

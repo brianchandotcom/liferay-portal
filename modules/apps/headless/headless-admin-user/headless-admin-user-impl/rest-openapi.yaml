@@ -4180,6 +4180,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Ticket"
             tags: ["Ticket"]
+    "/user-accounts/{userAccountId}/image":
+        post:
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: "#/components/schemas/Image"
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserAccount"]
     "/user-accounts/{userAccountId}/password-reset-ticket":
         get:
             description:

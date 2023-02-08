@@ -3040,6 +3040,23 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the Product Menu
+	When the user clicks on People
+	Then the Segments portlet is not present"
+	@priority = "4"
+	test SegmentPortletNotPresentInProductMenu {
+		property portal.acceptance = "true";
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		Navigator.openURL();
+
+		ProductMenuHelper.expandCategory(category = "People");
+
+		AssertElementNotPresent(
+			key_portlet = "Segments",
+			locator1 = "ProductMenu#PORTLET");
+	}
+
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = "4"
 	test ValidateDefaultSegmentNotDisplayed {

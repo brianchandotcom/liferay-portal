@@ -22,10 +22,6 @@ definition {
 
 	@summary = "Change MDF status"
 	macro changeMDFStatus {
-		Click(
-			key_MDFName = "${campaignName}",
-			locator1 = "PRMMDFRequest#REQUEST_ID");
-
 		ClickNoError(
 			buttonId = "${key_statusButton}",
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
@@ -145,6 +141,13 @@ definition {
 		}
 
 		return "${nextDayDate}";
+	}
+
+	@summary = "Go to MDF"
+	macro goToMDF {
+		Click(
+			key_MDFName = "${campaignName}",
+			locator1 = "PRMMDFRequest#REQUEST_ID");
 	}
 
 	@summary = "Fill the date fields on Activity Form"

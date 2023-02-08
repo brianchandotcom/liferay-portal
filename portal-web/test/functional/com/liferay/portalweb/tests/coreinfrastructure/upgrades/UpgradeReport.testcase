@@ -368,7 +368,7 @@ definition {
 
 		task ("Delete indexes.sql file from portal-impl.jar") {
 			AntCommand(
-				locator1 = "build-test.xml",
+				locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 				value1 = "delete-indexes-sql");
 		}
 

@@ -9202,24 +9202,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
-	<target name="delete-indexes-sql">
-		<get-test-app-server-lib-portal-dir />
-
-		<unzip
-			dest="${test.app.server.lib.portal.dir}/portal-impl"
-			src="${test.app.server.lib.portal.dir}/portal-impl.jar"
-		/>
-
-		<delete file="${test.app.server.lib.portal.dir}/portal-impl.jar" />
-
-		<delete file="${test.app.server.lib.portal.dir}/portal-impl/com/liferay/portal/tools/sql/dependencies/indexes.sql" />
-
-		<jar
-			basedir="${test.app.server.lib.portal.dir}/portal-impl"
-			destfile="${test.app.server.lib.portal.dir}/portal-impl.jar"
-		/>
-	</target>
-
 	<target name="delete-license-file">
 		<fail message="Please set the property ${license.xml.file}." unless="license.xml.file" />
 

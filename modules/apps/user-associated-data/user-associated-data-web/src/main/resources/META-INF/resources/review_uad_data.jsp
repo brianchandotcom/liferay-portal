@@ -204,8 +204,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<clay:sheet-section>
 					<c:choose>
 						<c:when test="<%= totalReviewableUADEntitiesCount == 0 %>">
-							<liferay-ui:empty-result-message
-								message="all-data-that-requires-review-has-been-anonymized"
+							<liferay-frontend:empty-result-message
+								title='<%= LanguageUtil.get(resourceBundle, "all-data-that-requires-review-has-been-anonymized") %>'
 							/>
 						</c:when>
 						<c:otherwise>

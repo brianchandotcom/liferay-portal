@@ -15,20 +15,18 @@
 package com.liferay.portal.model.relationship.dynamic.data.mapping.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.relationship.Relationship;
 import com.liferay.portal.relationship.RelationshipResource;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,23 +60,20 @@ public class DDMStructureJournalRelationshipResource
 	}
 
 	private List<JournalFolder> _getStructureFolders(DDMStructure structure) {
-		List<DDMStructureLink> structureLinks =
-			_ddmStructureLinkLocalService.getStructureLinks(
-				structure.getStructureId());
-
-		Stream<DDMStructureLink> stream = structureLinks.stream();
-
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalFolder.class);
 
-		return stream.filter(
-			structureLink -> structureLink.getClassNameId() == classNameId
-		).map(
-			structureLink -> _journalFolderLocalService.fetchFolder(
-				structureLink.getClassPK())
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			_ddmStructureLinkLocalService.getStructureLinks(
+				structure.getStructureId()),
+			structureLink -> {
+				if (structureLink.getClassNameId() == classNameId) {
+					return _journalFolderLocalService.fetchFolder(
+						structureLink.getClassPK());
+				}
+
+				return null;
+			});
 	}
 
 	@Reference

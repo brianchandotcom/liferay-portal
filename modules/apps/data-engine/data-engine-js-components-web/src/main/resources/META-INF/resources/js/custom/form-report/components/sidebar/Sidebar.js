@@ -76,6 +76,7 @@ const SidebarContent = () => {
 							<ClayButton
 								className="close-sidebar"
 								displayType="secondary"
+								id={`${portletNamespace}close-sidebar`}
 								monospaced
 								onClick={() => toggleSidebar()}
 							>

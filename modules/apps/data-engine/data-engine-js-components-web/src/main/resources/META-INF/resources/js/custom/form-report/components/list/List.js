@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import moment from 'moment/min/moment-with-locales';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import {removeEmptyValues} from '../../utils/data';
 import Color from '../color/Color';
@@ -22,6 +22,15 @@ import {SidebarContext} from '../sidebar/SidebarContext';
 
 export default function List({data, field, summary, totalEntries, type}) {
 	const {portletNamespace, toggleSidebar} = useContext(SidebarContext);
+
+	useEffect(() => {
+		const firstLi = document.querySelector(
+			`#${portletNamespace}_entry_slidebar_0`
+		);
+		if (firstLi) {
+			firstLi.focus();
+		}
+	});
 
 	const formatDate = (field, isDateTime) => {
 		const locale = themeDisplay.getLanguageId().split('_', 1).join('');
@@ -55,14 +64,24 @@ export default function List({data, field, summary, totalEntries, type}) {
 		<div className="field-list">
 			<ul className="entries-list">
 				{Array.isArray(data) &&
-					data.map((field, index) => (
-						<li key={index} tabIndex={0}>
-							{checkType(field, type)}
+					data.map((value, index) => (
+						<li
+							id={`${portletNamespace}_entry_${
+								field ? field.name : 'slidebar'
+							}_${index}`}
+							index={index}
+							key={index}
+							tabIndex={0}
+						>
+							{checkType(value, type)}
 						</li>
 					))}
 
 				{data.length === 5 && totalEntries > 5 ? (
-					<li id={`${portletNamespace}-see-more`} key="see-more">
+					<li
+						id={`${portletNamespace}${field.name}-see-more`}
+						key="see-more"
+					>
 						<ClayButton
 							displayType="link"
 							onClick={() =>

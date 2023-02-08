@@ -1,0 +1,16 @@
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/
+publisher-dashboard:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: publisher-dashboard
+    htmlElementName: publisher-dashboard
+    instanceable: false
+    name: Publisher Dashboard
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - static/js/main.*.js
+    useESM: false

@@ -964,19 +964,19 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/card@3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.86.1.tgz#edadc3e00b20bcc183da986ff460bc26a4500be6"
-  integrity sha512-6wIJzBuN8FHIx+xfW2bUWBpUJ7WZO04y1QeFlxTxvN0h+iNJcYXnBS87pcMPcWzvseQzdW3x9vs+gVTzbSI3Dw==
+"@clayui/card@3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/card/-/card-3.87.0.tgz#d12967b4bb46d75081f0685d143dde51b7cf71d6"
+  integrity sha512-c1sRXmoiuq2I2v0R1k6WFojm6YobixCz0imZdAGxa1N6khXblo9sv1H7ABnoiMkIEsiOFlVhFQetx5BKM3Hidg==
   dependencies:
     "@clayui/button" "^3.83.0"
-    "@clayui/drop-down" "^3.86.1"
-    "@clayui/form" "^3.86.1"
+    "@clayui/drop-down" "^3.87.0"
+    "@clayui/form" "^3.87.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/label" "^3.85.0"
     "@clayui/layout" "^3.65.1"
     "@clayui/link" "^3.85.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     "@clayui/sticker" "^3.65.0"
     classnames "^2.2.6"
 
@@ -989,47 +989,47 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/core@^3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.86.1.tgz#fc81d7f0d64762f836101103fc385e5be0ee5bff"
-  integrity sha512-UoSVHUYPeo5rHg+eB7KzadSDLp27IZ88k2X7KISV6gg22xCoqlpDscTHXJufTGzIUbo8KkdxfttAglDuHdtFvQ==
+"@clayui/core@^3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.87.0.tgz#fa1ff5011a0f17b60f257854a8a9db24fe2418b1"
+  integrity sha512-4TRwB0wf1NYv0JymW7uWCKkyNnTTkdMI8Fe8SgVUxGuK1H8bGUgEWNDvjvkxnm3FWVs4ma7XUnxRP0p3UJ0Qlw==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/layout" "^3.65.1"
     "@clayui/loading-indicator" "^3.60.0"
-    "@clayui/modal" "^3.86.1"
+    "@clayui/modal" "^3.87.0"
     "@clayui/provider" "^3.77.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     "@tanstack/react-virtual" "3.0.0-beta.18"
     classnames "^2.2.6"
     react-dnd "^11.1.1"
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/drop-down@^3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.86.1.tgz#3de036bab97097a75bcf251db4e2ba4e101b2f64"
-  integrity sha512-2HvXml4ldyACYLBcR4a+mcaaeNuC0KL6YUom2/1jSPwlLjPrVhwLP0QigwhkWN+2hM/MB/TyWaYY4CA/qOobZQ==
+"@clayui/drop-down@^3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.87.0.tgz#03f44f63a6f439e43982ea093d05b41283c4393f"
+  integrity sha512-h72QC37lDuHHrZdm6oft8zYHKWq0O+SoMUybr6p43eFclFYmgI14Zsjl1T1MtpOJjbhQQLDSg9FMaCTH3Z7zFg==
   dependencies:
     "@clayui/button" "^3.83.0"
-    "@clayui/core" "^3.86.1"
-    "@clayui/form" "^3.86.1"
+    "@clayui/core" "^3.87.0"
+    "@clayui/form" "^3.87.0"
     "@clayui/icon" "^3.56.0"
     "@clayui/link" "^3.85.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/form@^3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.86.1.tgz#48a9cfe60c78042561f57ace5aa4e619e6b435bd"
-  integrity sha512-/zdk6muZcglwbxCITtXJVBLe0HDKO+udXCAqJmjS9jyo9yjBLYvxy7f2WPWt/kh73Jpkn9H6D94JsJrOzSG56A==
+"@clayui/form@^3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.87.0.tgz#110184bb523603e13d1ad3144d5e0a2c20bd482c"
+  integrity sha512-fHOhdCLNGIWFFYSKNc4Dbcq1+mnCDu3CG5B9jCvd7InoCvtsWo2SrQ2Bt0LlfYGM+NDhfBVGXoNhOIExletdRg==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/icon" "^3.56.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     classnames "^2.2.6"
 
 "@clayui/icon@3.56.0", "@clayui/icon@^3.56.0":
@@ -1071,26 +1071,26 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/modal@^3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.86.1.tgz#50da4ae0d88e5db4a4b9bd3bbd66f1c5c252788c"
-  integrity sha512-03Xn+NPInxfXwCK0IoslQpiwZNdTvFHWFP8LMDHAy4oA8z5a5I6T+UdAVth9yc7q7L53VjgsBhSL+2xe3x8enw==
+"@clayui/modal@^3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.87.0.tgz#5ba5d1de7aac0b7ec6a2e5c59d805b2a5b6275bd"
+  integrity sha512-WUy0IKXb9n7kebk8j/7hQuNeM2a3K115WN1SNobEc3K4E3f4gWBPPcFiEwGUov/kaP9wkYf12nkiaDop8yrI2Q==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/icon" "^3.56.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     aria-hidden "^1.2.2"
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/panel@3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.86.1.tgz#b823c210c07e3c9ce24af025274b87e49cdd698a"
-  integrity sha512-vn8Xw/kR66EBIXXgCpVX3deQJ6sb9k564I24Osr4exb38dimL2iAxxvWsDIDSFwKmA8L09K1W2rNZu8b9ijMiw==
+"@clayui/panel@3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.87.0.tgz#3fca653cf093ec26dfc7c406c994d9b8c0899f4e"
+  integrity sha512-9IHm+XEqmW/dFMq8Ao3QIeZ2vZV7EotE09mt47e2V+DKpq+5cXK0lGLi3R0ji4+Qlc0WZXYPqx+1DY3o0IZE+A==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/icon" "^3.56.0"
-    "@clayui/shared" "^3.86.1"
+    "@clayui/shared" "^3.87.0"
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
 
@@ -1101,10 +1101,10 @@
   dependencies:
     "@clayui/icon" "^3.56.0"
 
-"@clayui/shared@^3.86.1":
-  version "3.86.1"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.86.1.tgz#6bf76d447afff14c4b418e62d256706f592f14d5"
-  integrity sha512-VXFs70cWkXHyzKhW52Q3KCfi3SXyv7tx1R21BL8xwFWeHQGZoil7tv/8haBec54y2CY/orQedYjR2Bnf5YLqBw==
+"@clayui/shared@^3.87.0":
+  version "3.87.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.87.0.tgz#d0bff61c1261c43d983a1636953f96522d172680"
+  integrity sha512-Gat+qKqgJ31vUFZICiAd8uEtXqch4iqNPRLf8r61sCLuF0DwG3MwuKrqg5NSX47zCp8bC3+rj738B9R5mHtjAw==
   dependencies:
     "@clayui/button" "^3.83.0"
     "@clayui/link" "^3.85.0"

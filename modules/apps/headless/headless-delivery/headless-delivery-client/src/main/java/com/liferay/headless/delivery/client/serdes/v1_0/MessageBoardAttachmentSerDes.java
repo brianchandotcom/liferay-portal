@@ -55,6 +55,16 @@ public class MessageBoardAttachmentSerDes {
 
 		sb.append("{");
 
+		if (messageBoardAttachment.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(messageBoardAttachment.getActions()));
+		}
+
 		if (messageBoardAttachment.getContentUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -181,6 +191,14 @@ public class MessageBoardAttachmentSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (messageBoardAttachment.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions", String.valueOf(messageBoardAttachment.getActions()));
+		}
+
 		if (messageBoardAttachment.getContentUrl() == null) {
 			map.put("contentUrl", null);
 		}
@@ -271,7 +289,14 @@ public class MessageBoardAttachmentSerDes {
 			MessageBoardAttachment messageBoardAttachment,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setActions(
+						(Map)MessageBoardAttachmentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardAttachment.setContentUrl(
 						(String)jsonParserFieldValue);

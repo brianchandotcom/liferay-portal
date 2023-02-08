@@ -55,6 +55,16 @@ public class WikiPageAttachmentSerDes {
 
 		sb.append("{");
 
+		if (wikiPageAttachment.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(wikiPageAttachment.getActions()));
+		}
+
 		if (wikiPageAttachment.getContentUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +190,13 @@ public class WikiPageAttachmentSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (wikiPageAttachment.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(wikiPageAttachment.getActions()));
+		}
+
 		if (wikiPageAttachment.getContentUrl() == null) {
 			map.put("contentUrl", null);
 		}
@@ -269,7 +286,14 @@ public class WikiPageAttachmentSerDes {
 			WikiPageAttachment wikiPageAttachment, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setActions(
+						(Map)WikiPageAttachmentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {
 				if (jsonParserFieldValue != null) {
 					wikiPageAttachment.setContentUrl(
 						(String)jsonParserFieldValue);

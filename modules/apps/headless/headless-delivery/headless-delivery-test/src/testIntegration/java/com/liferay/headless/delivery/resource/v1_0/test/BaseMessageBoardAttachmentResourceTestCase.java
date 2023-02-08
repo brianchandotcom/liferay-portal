@@ -902,6 +902,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (messageBoardAttachment.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
 				if (messageBoardAttachment.getContentUrl() == null) {
 					valid = false;
@@ -1063,6 +1071,17 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)messageBoardAttachment1.getActions(),
+						(Map)messageBoardAttachment2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1251,6 +1270,11 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("contentUrl")) {
 			sb.append("'");

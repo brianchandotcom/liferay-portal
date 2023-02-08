@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 function fillField(fieldElement) {
 	if (fieldElement.jsonData && fieldElement instanceof HTMLElement) {
 		const textElement = fieldElement.querySelector('span:nth-child(2)');
@@ -55,7 +57,7 @@ export function updateProductFields(data) {
 	].forEach(fillField);
 
 	stockQuantityContainer.innerHTML = cpInstance.stockQuantity
-		? cpInstance.stockQuantity + Liferay.Language.get('in-stock')
+		? sub(Liferay.Language.get('x-in-stock'), cpInstance.stockQuantity)
 		: '';
 
 	document.querySelector(

@@ -62,6 +62,23 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 	}
 
 	@Override
+	public SXPElement addSXPElement(
+			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
+			String externalReferenceCode, boolean readOnly,
+			String schemaVersion, Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_ELEMENT);
+
+		return sxpElementLocalService.addSXPElement(
+			externalReferenceCode, getUserId(), descriptionMap,
+			elementDefinitionJSON, readOnly, schemaVersion, titleMap, type,
+			serviceContext);
+	}
+
+	@Override
 	public SXPElement deleteSXPElement(long sxpElementId)
 		throws PortalException {
 

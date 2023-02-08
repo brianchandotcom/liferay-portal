@@ -23,15 +23,14 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
@@ -678,7 +677,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("showCreationMenu", isShowCreationMenu());
 		props.put(
 			"showDesignImprovementsFF",
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-144527")));
+			FeatureFlagManagerUtil.isEnabled("LPS-144527"));
 		props.put("showInfoButton", isShowInfoButton());
 		props.put("showResultsBar", isShowResultsBar());
 		props.put("showSearch", isShowSearch());
@@ -707,8 +706,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	protected int processStartTag() throws Exception {
 		super.processStartTag();
 
-		Boolean showDesignImprovementsFF = GetterUtil.getBoolean(
-			PropsUtil.get("feature.flag.LPS-144527"));
+		Boolean showDesignImprovementsFF = FeatureFlagManagerUtil.isEnabled(
+			"LPS-144527");
 
 		JspWriter jspWriter = pageContext.getOut();
 

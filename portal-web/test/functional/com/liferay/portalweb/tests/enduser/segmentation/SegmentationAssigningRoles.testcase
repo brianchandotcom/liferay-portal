@@ -735,8 +735,8 @@ definition {
 	Then the segments permissions are allocated in Control Panel > Users"
 	@priority = "4"
 	test SegmentsPermissionsAllocatedInControlPanel {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
@@ -765,8 +765,8 @@ definition {
 	Then in General Permissions, the check Access in Control Panel permission is displayed"
 	@priority = "4"
 	test SegmentsPermissionsHaveAccessToControlPanel {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
@@ -825,14 +825,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given a user without Segments permissions
+	When the user clicks on Applications Menu > Control Panel
+	Then the Segments portlet is not present and the user cannot access to the Segments page"
+	@priority = "5"
+	test UserWithoutPermissionsCannotAccessSegmentsPortlet {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When Assign the user with regular role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert the Segments portlet is not present and the user cannot access to the Segments page") {
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			AssertTextEquals(
+				locator1 = "Portlet#ERROR",
+				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
 	@description = "LPS-167023 Given a user with Segments permissions
 	And with View Control Panel Menu permission
 	When the user clicks on Applications Menu > Control Panel > Segment
 	Then the user can access to the Segments page"
 	@priority = "5"
 	test UserWithPermissionsCanAccessSegmentsPortlet {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -905,8 +943,8 @@ definition {
 	Then the Segments portlet is not present and the user cannot access to the Segments page"
 	@priority = "5"
 	test UserWithSegmentPermissionsWithoutControlPanelCannotAccess {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(

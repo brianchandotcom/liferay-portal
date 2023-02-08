@@ -3045,8 +3045,8 @@ definition {
 	Then the segment is created in the Global Site"
 	@priority = "4"
 	test SegmentInGlobalSiteByDefault {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		task ("Add segment with site scope selected") {
 			LexiconEntry.gotoAdd();
@@ -3067,8 +3067,8 @@ definition {
 	Then the Segments portlet is not present"
 	@priority = "4"
 	test SegmentPortletNotPresentInProductMenu {
-		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

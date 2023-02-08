@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -27,8 +28,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -79,7 +78,7 @@ public class CheckKBArticleMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165476")) {
 			_kbArticleLocalService.checkKBArticles();
 		}
 	}

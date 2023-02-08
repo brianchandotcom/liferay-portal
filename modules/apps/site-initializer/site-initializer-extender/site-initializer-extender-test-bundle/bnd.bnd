@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site Initializer Extender Test Bundle
-Bundle-SymbolicName: com.liferay.site.initializer.extender.test.bundle
-Bundle-Version: 1.0.0
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-extender-test-bundle

@@ -23,6 +23,8 @@ import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalSer
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryLocalServiceBaseImpl;
+import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -179,9 +181,16 @@ public class NotificationQueueEntryLocalServiceImpl
 			long notificationQueueEntryId)
 		throws PortalException {
 
-		return notificationQueueEntryLocalService.updateStatus(
-			notificationQueueEntryId,
-			NotificationQueueEntryConstants.STATUS_UNSENT);
+		NotificationQueueEntry notificationQueueEntry =
+			getNotificationQueueEntry(notificationQueueEntryId);
+
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				notificationQueueEntry.getType());
+
+		notificationType.resendNotification(notificationQueueEntry);
+
+		return getNotificationQueueEntry(notificationQueueEntryId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -225,6 +234,9 @@ public class NotificationQueueEntryLocalServiceImpl
 	@Reference
 	private NotificationRecipientSettingLocalService
 		_notificationRecipientSettingLocalService;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 	@Reference
 	private Portal _portal;

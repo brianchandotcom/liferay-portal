@@ -700,22 +700,22 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::div/ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::div/ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']//button[@aria-label='${ariaLabel}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']//button[@aria-label='${ariaLabel}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::div/ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::div/ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']//button[@aria-label='${ariaLabel}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']//button[@aria-label='${ariaLabel}']</td>
 	<td></td>
 </tr>
 <tr>

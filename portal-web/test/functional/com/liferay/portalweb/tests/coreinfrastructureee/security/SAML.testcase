@@ -1313,6 +1313,12 @@ definition {
 
 			Navigator.gotoLoginPage();
 
+			if (IsElementPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
+				Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+				Navigator.gotoLoginPage();
+			}
+
 			AssertConsoleTextPresent(value1 = "org.opensaml.messaging.handler.MessageHandlerException: Message context was not authenticated");
 		}
 	}

@@ -32,6 +32,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -219,15 +219,13 @@ public class AnalyticsConfigurationRegistryImpl
 			AnalyticsConfiguration analyticsConfiguration =
 				getAnalyticsConfiguration(companyId);
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10757")) &&
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
 				analyticsConfiguration.wizardMode()) {
 
 				return;
 			}
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10757")) &&
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
 				analyticsConfiguration.firstSync()) {
 
 				_firstSync(companyId);
@@ -434,9 +432,7 @@ public class AnalyticsConfigurationRegistryImpl
 		try {
 			Set<String> dispatchTriggerNames = new HashSet<>();
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10632"))) {
-
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
 				Collections.addAll(
 					dispatchTriggerNames,
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -589,10 +585,8 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 			}
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10632")) ||
-				GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LRAC-10757"))) {
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
+				FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
 
 				Set<String> refreshDispatchTriggerNames = new HashSet<>();
 				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
@@ -667,9 +661,7 @@ public class AnalyticsConfigurationRegistryImpl
 					}
 				}
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LRAC-10632"))) {
-
+				if (FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
 					if (_analyticsSettingsManager.syncedContactSettingsChanged(
 							companyId)) {
 
@@ -703,10 +695,8 @@ public class AnalyticsConfigurationRegistryImpl
 						companyId,
 						refreshDispatchTriggerNames.toArray(new String[0]));
 
-					if (GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LRAC-10632")) &&
-						!GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LRAC-10757"))) {
+					if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
+						!FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
 
 						_analyticsDXPEntityBatchExporter.export(
 							companyId,
@@ -723,9 +713,7 @@ public class AnalyticsConfigurationRegistryImpl
 						unscheduleDispatchTriggerNames.toArray(new String[0]));
 				}
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LRAC-10632"))) {
-
+				if (FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
 					return;
 				}
 			}

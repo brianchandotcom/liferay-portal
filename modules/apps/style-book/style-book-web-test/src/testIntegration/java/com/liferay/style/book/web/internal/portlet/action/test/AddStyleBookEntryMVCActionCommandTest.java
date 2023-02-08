@@ -94,18 +94,20 @@ public class AddStyleBookEntryMVCActionCommandTest {
 
 	@Test
 	public void testAddStyleBookEntry() {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		String name = RandomTestUtil.randomString();
 
-		actionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter("name", name);
 
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_addStyleBookEntryMVCActionCommandTest, "_addStyleBookEntry",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
 		Assert.assertEquals(
 			1,
@@ -119,54 +121,63 @@ public class AddStyleBookEntryMVCActionCommandTest {
 
 	@Test(expected = StyleBookEntryNameException.class)
 	public void testAddStyleBookEntryWithEmptyName() {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter("name", StringPool.BLANK);
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockLiferayPortletActionRequest.addParameter("name", StringPool.BLANK);
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_addStyleBookEntryMVCActionCommandTest, "_addStyleBookEntry",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 	}
 
 	@Test(expected = StyleBookEntryNameException.class)
 	public void testAddStyleBookEntryWithInvalidCharPeriod() {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter("name", ".");
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockLiferayPortletActionRequest.addParameter("name", ".");
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_addStyleBookEntryMVCActionCommandTest, "_addStyleBookEntry",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 	}
 
 	@Test(expected = StyleBookEntryNameException.class)
 	public void testAddStyleBookEntryWithInvalidCharSlash() {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter("name", "/");
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockLiferayPortletActionRequest.addParameter("name", "/");
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_addStyleBookEntryMVCActionCommandTest, "_addStyleBookEntry",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 	}
 
 	@Test(expected = StyleBookEntryNameException.class)
 	public void testAddStyleBookEntryWithNameMaxLength() {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter("name", RandomTestUtil.randomString(256));
-		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString(256));
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
 			_addStyleBookEntryMVCActionCommandTest, "_addStyleBookEntry",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 	}
 
 	@Inject(filter = "mvc.command.name=/style_book/add_style_book_entry")

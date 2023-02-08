@@ -82,10 +82,10 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"rowIds",
 			new String[] {
 				String.valueOf(styleBookEntry1.getStyleBookEntryId()),
@@ -93,7 +93,7 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 			});
 
 		_deleteStyleBookEntryMVCActionCommandTest.processAction(
-			actionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest, new MockActionResponse());
 
 		Assert.assertEquals(
 			0,
@@ -110,15 +110,15 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), name,
 				StringPool.BLANK, _serviceContext);
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
 
 		_deleteStyleBookEntryMVCActionCommandTest.processAction(
-			actionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest, new MockActionResponse());
 
 		Assert.assertEquals(
 			0,
@@ -145,15 +145,15 @@ public class DeleteStyleBookEntryMVCActionCommandTest {
 		styleBookEntry = _styleBookEntryLocalService.updatePreviewFileEntryId(
 			styleBookEntry.getStyleBookEntryId(), fileEntry.getFileEntryId());
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
 
 		_deleteStyleBookEntryMVCActionCommandTest.processAction(
-			actionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest, new MockActionResponse());
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			styleBookEntry.getPreviewFileEntryId());

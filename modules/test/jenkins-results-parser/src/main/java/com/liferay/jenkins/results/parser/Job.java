@@ -84,6 +84,8 @@ public interface Job {
 
 	public String getTestPropertiesContent();
 
+	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster);
+
 	public boolean isDownstreamEnabled();
 
 	public boolean isSegmentEnabled();

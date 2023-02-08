@@ -42,6 +42,10 @@ import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,6 +53,49 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseJob implements Job {
+
+	private Document _configDocument;
+
+	protected Document getConfigDocument(JenkinsMaster jenkinsMaster) throws IOException, DocumentException {
+		if (_configDocument != null) {
+			return _configDocument;
+		}
+
+		String url = getJobURL(jenkinsMaster) + "/config.xml";
+
+		return Dom4JUtil.parse(JenkinsResultsParserUtil.toString(url));
+	}
+
+	@Override
+	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster) {
+		Document configDocument;
+		try {
+			configDocument = getConfigDocument(jenkinsMaster);
+
+			Node timeoutNode = 
+				Dom4JUtil.getNodeByXPath(
+					configDocument,
+					JenkinsResultsParserUtil.combine(
+						"/project/buildWrappers/",
+						"hudson.plugins.build__timeout.BuildTimeoutWrapper/",
+						"strategy[@class=\'hudson.plugins.build_timeout.impl.",
+						"AbsoluteTimeOutStrategy\']/timeoutMinutes"));
+
+			return Integer.valueOf(timeoutNode.getText());
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get timeout of job " + getJobName());
+
+			try {
+				return Integer.valueOf(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"build.default.timeout.minutes"));
+			}
+			catch (IOException ioException) {
+				return 135;
+			}
+		}
+	}
 
 	@Override
 	public int getAxisCount() {

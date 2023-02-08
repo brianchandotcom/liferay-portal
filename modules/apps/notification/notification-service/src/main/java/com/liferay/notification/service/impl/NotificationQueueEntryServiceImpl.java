@@ -14,7 +14,6 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryServiceBaseImpl;
@@ -73,9 +72,8 @@ public class NotificationQueueEntryServiceImpl
 			getPermissionChecker(), notificationQueueEntryId,
 			ActionKeys.UPDATE);
 
-		return notificationQueueEntryLocalService.updateStatus(
-			notificationQueueEntryId,
-			NotificationQueueEntryConstants.STATUS_UNSENT);
+		return notificationQueueEntryLocalService.resendNotificationQueueEntry(
+			notificationQueueEntryId);
 	}
 
 	@Reference

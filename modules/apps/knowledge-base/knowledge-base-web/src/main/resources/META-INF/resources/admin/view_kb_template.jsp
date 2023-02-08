@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <c:choose>
-	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 		<div class="knowledge-base-admin-content">
@@ -46,7 +46,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<c:if test='<%= portletTitleBasedNavigation && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+<c:if test='<%= portletTitleBasedNavigation && FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
 
 	<%
 	KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
@@ -99,6 +99,6 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 	</div>
 </c:if>

@@ -38,6 +38,7 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -55,12 +56,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1043,9 +1042,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				continue;
 			}
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-158675"))) {
-
+			if (FeatureFlagManagerUtil.isEnabled("LPS-158675")) {
 				zipEntryNames.put(
 					_getFilePath(fragmentCollectionKey, zipEntry.getName()),
 					zipEntry.getName());
@@ -1060,7 +1057,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158675"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-158675")) {
 			_addPortletFileEntriesWithFolders(
 				userId, groupId, fragmentCollection, zipFile,
 				resourceReferences, zipEntryNames, repository);

@@ -137,7 +137,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			<%
 			String tabs1Names = "properties,usages";
 
-			if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161038"))) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-161038")) {
 				tabs1Names += ",timeline";
 			}
 
@@ -168,7 +168,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						/>
 					</liferay-ui:section>
 
-					<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161038")) %>'>
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-161038") %>'>
 						<liferay-ui:section>
 							<liferay-change-tracking:timeline
 								className="<%= JournalArticle.class.getName() %>"

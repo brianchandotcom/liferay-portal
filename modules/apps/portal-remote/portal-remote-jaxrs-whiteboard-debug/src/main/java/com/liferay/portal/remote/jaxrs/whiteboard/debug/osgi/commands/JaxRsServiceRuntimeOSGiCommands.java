@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -85,15 +86,16 @@ public class JaxRsServiceRuntimeOSGiCommands {
 			System.out.println("Extensions report:");
 		}
 
-		Stream<ApplicationDTO> applicationDTOStream = Arrays.stream(
-			runtimeDTO.applicationDTOs);
+		Set<ExtensionDTO> extensionDTOsSet = new HashSet<>();
 
-		ExtensionDTO[] extensionDTOS = applicationDTOStream.flatMap(
-			adto -> Arrays.stream(adto.extensionDTOs)
-		).distinct(
-		).toArray(
-			ExtensionDTO[]::new
-		);
+		for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
+			for (ExtensionDTO extensionDTO : applicationDTO.extensionDTOs) {
+				extensionDTOsSet.add(extensionDTO);
+			}
+		}
+
+		ExtensionDTO[] extensionDTOS = extensionDTOsSet.toArray(
+			new ExtensionDTO[0]);
 
 		for (FailedExtensionDTO failedExtensionDTO :
 				runtimeDTO.failedExtensionDTOs) {
@@ -106,14 +108,16 @@ public class JaxRsServiceRuntimeOSGiCommands {
 
 			System.out.println("Resources report:");
 
-			applicationDTOStream = Arrays.stream(runtimeDTO.applicationDTOs);
+			Set<ResourceDTO> resourceDTOsSet = new HashSet<>();
 
-			ResourceDTO[] resourcesDTOs = applicationDTOStream.flatMap(
-				adto -> Arrays.stream(adto.resourceDTOs)
-			).distinct(
-			).toArray(
-				ResourceDTO[]::new
-			);
+			for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
+				for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
+					resourceDTOsSet.add(resourceDTO);
+				}
+			}
+
+			ResourceDTO[] resourcesDTOs = resourceDTOsSet.toArray(
+				new ResourceDTO[0]);
 
 			for (FailedResourceDTO failedResourceDTO :
 					runtimeDTO.failedResourceDTOs) {

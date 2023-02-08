@@ -24,9 +24,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -160,7 +159,7 @@ public class ObjectRelationshipExtensionProvider
 
 	@Override
 	public boolean isApplicableExtension(long companyId, String className) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162964"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-162964")) {
 			return false;
 		}
 

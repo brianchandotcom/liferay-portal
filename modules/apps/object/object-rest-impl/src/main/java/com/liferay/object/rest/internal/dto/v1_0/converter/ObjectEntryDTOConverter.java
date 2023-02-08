@@ -44,6 +44,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -134,8 +134,7 @@ public class ObjectEntryDTOConverter
 					StringUtil.replaceLast(objectFieldName, "Id", ""), value);
 			}
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-161364")) &&
+			if (FeatureFlagManagerUtil.isEnabled("LPS-161364") &&
 				nestedField.equals(objectRelationship.getName())) {
 
 				map.put(nestedField, value);
@@ -157,7 +156,7 @@ public class ObjectEntryDTOConverter
 		String relatedObjectEntryERC = GetterUtil.getString(
 			values.get(objectRelationshipERCObjectFieldName));
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161364")) &&
+		if (FeatureFlagManagerUtil.isEnabled("LPS-161364") &&
 			(map.get(objectRelationship.getName()) == null)) {
 
 			map.put(

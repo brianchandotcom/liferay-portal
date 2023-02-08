@@ -16,18 +16,16 @@ package com.liferay.comment.demo.data.creator.internal;
 
 import com.liferay.comment.demo.data.creator.CommentDemoDataCreator;
 import com.liferay.comment.demo.data.creator.MultipleCommentDemoDataCreator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,13 +42,15 @@ public class MultipleCommentDemoDataCreatorImpl
 		List<User> users = _userLocalService.getUsers(
 			0, Math.min(_userLocalService.getUsersCount(), _MAX_USERS));
 
-		Stream<User> usersStream = users.stream();
+		List<Long> userIds = TransformUtil.transform(
+			users,
+			user -> {
+				if (_isRegularUser(user)) {
+					return user.getUserId();
+				}
 
-		usersStream = usersStream.filter(this::_isRegularUser);
-
-		Stream<Long> userIdsStream = usersStream.map(UserModel::getUserId);
-
-		List<Long> userIds = userIdsStream.collect(Collectors.toList());
+				return null;
+			});
 
 		_addComments(
 			userIds, classedModel, _COMMENT_ID,

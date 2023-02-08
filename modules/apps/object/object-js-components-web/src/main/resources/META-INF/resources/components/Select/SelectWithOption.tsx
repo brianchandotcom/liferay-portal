@@ -49,6 +49,7 @@ export function SelectWithOption({
 	items,
 	label,
 	onSelectChange,
+	placeholder = Liferay.Language.get('choose-an-option'),
 	required,
 	tooltip,
 	value,
@@ -82,7 +83,7 @@ export function SelectWithOption({
 					aria-label={ariaLabel}
 					disabled={disabled}
 					onClick={() => setDropdownActive((active) => !active)}
-					placeholder={Liferay.Language.get('choose-an-option')}
+					placeholder={placeholder}
 					ref={inputRef}
 					value={value}
 				/>

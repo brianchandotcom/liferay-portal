@@ -41,6 +41,7 @@ export declare function SelectWithOption({
 	items,
 	label,
 	onSelectChange,
+	placeholder,
 	required,
 	tooltip,
 	value,

@@ -193,6 +193,9 @@ export function ThenContainer({
 								updateParameters(value);
 								setSelectedObjectDefinition(label);
 							}}
+							placeholder={Liferay.Language.get(
+								'choose-an-object'
+							)}
 							value={selectedObjectDefinition}
 						/>
 						{values.parameters?.relatedObjectEntries !==

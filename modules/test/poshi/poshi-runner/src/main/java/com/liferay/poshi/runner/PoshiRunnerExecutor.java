@@ -28,7 +28,7 @@ import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.TableUtil;
-import com.liferay.poshi.runner.var.type.BaseTable;
+import com.liferay.poshi.runner.var.type.DefaultTable;
 import com.liferay.poshi.runner.var.type.TableFactory;
 
 import java.lang.reflect.Method;
@@ -449,11 +449,13 @@ public class PoshiRunnerExecutor {
 			}
 		}
 		else if (element.attributeValue("table") != null) {
-			BaseTable<?> table =
-				(BaseTable<?>)PoshiVariablesUtil.replaceCommandVars(
+			DefaultTable table =
+				(DefaultTable)PoshiVariablesUtil.replaceCommandVars(
 					element.attributeValue("table"));
 
-			Iterator<?> iterator = table.iterator();
+			List<List<String>> rowList = table.getTable();
+
+			Iterator<?> iterator = rowList.iterator();
 
 			while (iterator.hasNext()) {
 				PoshiVariablesUtil.putIntoCommandMap(

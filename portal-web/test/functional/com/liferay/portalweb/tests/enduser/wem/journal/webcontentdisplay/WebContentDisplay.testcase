@@ -173,7 +173,7 @@ definition {
 		task ("View web content is shown in the first page") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Display (Test Page Name 1)");
+				webContentTitle = "Web Content Title");
 		}
 
 		task ("View web content is not shown in the second page") {
@@ -191,7 +191,7 @@ definition {
 
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Display (Test Page Name 1)");
+				webContentTitle = "Web Content Title");
 		}
 	}
 
@@ -962,7 +962,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		task ("View web content is shown in Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Display (Global)");
+				webContentTitle = "Web Content Title");
 		}
 
 		task ("Delete web content in Global site") {

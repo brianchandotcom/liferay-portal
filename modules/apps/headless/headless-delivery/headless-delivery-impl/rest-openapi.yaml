@@ -2556,6 +2556,16 @@ components:
             description:
                 A binary file attached to a message on a message board (`MessageBoardMessage`).
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
                 contentUrl:
                     description:
                         The file's relative URL.
@@ -5331,6 +5341,16 @@ components:
             description:
                 A binary file attached to a wiki page.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
                 contentUrl:
                     description:
                         The file's relative URL.

@@ -101,6 +101,8 @@ public class ViewNotificationTemplatesDisplayContext {
 				themeDisplay.getPpid(), "rich_text", "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
+				).put(
+					"liferay-ui:input-editor:name", "richTextLocalizedEditor"
 				).build(),
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY),

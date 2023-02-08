@@ -16,7 +16,6 @@ package com.liferay.portal.security.ldap.internal.configuration.persistence.list
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -34,7 +33,7 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -47,31 +46,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Shuyang Zhou
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
-	service = {
-		ConfigurationModelListener.class,
-		UserImportConfigurationModelListener.class
-	}
+	configurationPid = "com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
+	service = UserImportConfigurationModelListener.class
 )
-public class UserImportConfigurationModelListener
-	extends BaseMessageListener implements ConfigurationModelListener {
+public class UserImportConfigurationModelListener extends BaseMessageListener {
 
-	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
+	@Activate
+	protected void activate(Map<String, Object> properties) {
 		LDAPImportConfiguration ldapImportConfiguration =
 			ConfigurableUtil.createConfigurable(
 				LDAPImportConfiguration.class, properties);
-
-		if (ldapImportConfiguration.companyId() == 0) {
-			_updateDefaultImportInterval(
-				ldapImportConfiguration.importInterval());
-		}
-	}
-
-	@Activate
-	protected void activate() {
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(0L);
 
 		_updateDefaultImportInterval(ldapImportConfiguration.importInterval());
 	}

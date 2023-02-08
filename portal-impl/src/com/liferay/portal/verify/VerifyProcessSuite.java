@@ -14,8 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 /**
  * @author Alexander Chow
@@ -24,7 +23,7 @@ public class VerifyProcessSuite extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-157670"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
 			verify(new VerifyPermission());
 			verify(new VerifyGroup());
 			verify(new VerifyRole());

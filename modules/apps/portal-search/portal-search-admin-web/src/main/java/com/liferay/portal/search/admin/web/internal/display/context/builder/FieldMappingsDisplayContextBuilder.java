@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,8 +26,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adam Brandizzi
@@ -102,14 +101,10 @@ public class FieldMappingsDisplayContextBuilder {
 		getFieldMappingIndexDisplayContexts(
 			List<String> indexNames, String selectedIndexName) {
 
-		Stream<String> stream = indexNames.stream();
-
-		return stream.map(
+		return TransformUtil.transform(
+			indexNames,
 			indexName -> _getFieldMappingIndexDisplayContext(
-				indexName, selectedIndexName.equals(indexName))
-		).collect(
-			Collectors.toList()
-		);
+				indexName, selectedIndexName.equals(indexName)));
 	}
 
 	protected String getSelectedIndexName(List<String> indexNames) {

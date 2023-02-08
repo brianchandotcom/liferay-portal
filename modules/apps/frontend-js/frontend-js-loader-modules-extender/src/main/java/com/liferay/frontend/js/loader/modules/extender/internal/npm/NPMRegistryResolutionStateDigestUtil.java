@@ -19,7 +19,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +51,10 @@ import java.util.Objects;
  */
 public class NPMRegistryResolutionStateDigestUtil {
 
-	public static String digest(NPMRegistry npmRegistry) {
+	public static String digest(
+		Collection<JSModule> resolvedJSModules,
+		Collection<JSPackage> resolvedJSPackages) {
+
 		MessageDigest messageDigest;
 
 		try {
@@ -65,7 +68,7 @@ public class NPMRegistryResolutionStateDigestUtil {
 
 		List<DynamicJSModule> dynamicJSModules = new ArrayList<>();
 
-		for (JSModule jsModule : npmRegistry.getResolvedJSModules()) {
+		for (JSModule jsModule : resolvedJSModules) {
 			if (jsModule instanceof DynamicJSModule) {
 				dynamicJSModules.add((DynamicJSModule)jsModule);
 			}
@@ -85,8 +88,7 @@ public class NPMRegistryResolutionStateDigestUtil {
 
 		// Hash JS packages
 
-		List<JSPackage> jsPackages = new ArrayList<>(
-			npmRegistry.getResolvedJSPackages());
+		List<JSPackage> jsPackages = new ArrayList<>(resolvedJSPackages);
 
 		Collections.sort(
 			jsPackages,

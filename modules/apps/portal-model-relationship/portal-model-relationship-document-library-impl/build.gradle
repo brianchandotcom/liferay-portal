@@ -4,4 +4,5 @@ dependencies {
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:portal-relationship:portal-relationship-api")
+	compileOnly project(":core:petra:petra-function")
 }

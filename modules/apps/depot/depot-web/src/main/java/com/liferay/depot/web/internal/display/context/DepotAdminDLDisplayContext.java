@@ -17,13 +17,12 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -99,7 +98,7 @@ public class DepotAdminDLDisplayContext {
 	}
 
 	public boolean isShowFileSizePerMimeType() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-114786"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-114786")) {
 			return true;
 		}
 

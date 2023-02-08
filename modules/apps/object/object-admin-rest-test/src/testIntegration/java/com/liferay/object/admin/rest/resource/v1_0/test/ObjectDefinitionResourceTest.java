@@ -25,17 +25,16 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -265,7 +264,7 @@ public class ObjectDefinitionResourceTest
 			});
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			objectDefinition.setStorageType(StringPool.BLANK);
 		}
 

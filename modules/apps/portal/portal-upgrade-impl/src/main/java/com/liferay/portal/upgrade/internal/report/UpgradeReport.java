@@ -455,7 +455,14 @@ public class UpgradeReport {
 	}
 
 	private File _getReportFile() {
-		File reportsDir = new File(".", "reports");
+		File reportsDir = null;
+
+		if (DBUpgrader.isUpgradeTool()) {
+			reportsDir = new File(".", "reports");
+		}
+		else {
+			reportsDir = new File(PropsValues.LIFERAY_HOME, "reports");
+		}
 
 		if ((reportsDir != null) && !reportsDir.exists()) {
 			reportsDir.mkdirs();

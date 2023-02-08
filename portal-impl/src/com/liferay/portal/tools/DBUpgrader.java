@@ -127,8 +127,14 @@ public class DBUpgrader {
 		return _stopWatch.getTime();
 	}
 
+	public static boolean isUpgradeTool() {
+		return _upgradeTool;
+	}
+
 	public static void main(String[] args) {
 		String result = "Completed";
+
+		_upgradeTool = true;
 
 		try {
 			_initUpgradeStopwatch();
@@ -452,5 +458,6 @@ public class DBUpgrader {
 	private static volatile ServiceReference<Appender>
 		_appenderServiceReference;
 	private static volatile StopWatch _stopWatch;
+	private static volatile boolean _upgradeTool;
 
 }

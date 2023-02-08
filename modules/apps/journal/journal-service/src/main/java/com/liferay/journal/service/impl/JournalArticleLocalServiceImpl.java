@@ -7235,8 +7235,8 @@ public class JournalArticleLocalServiceImpl
 				serviceContext.setScopeGroupId(article.getGroupId());
 
 				journalArticleLocalService.updateStatus(
-					userId, article, WorkflowConstants.STATUS_APPROVED, null,
-					serviceContext, new HashMap<>());
+					userId, article.getId(), WorkflowConstants.STATUS_APPROVED,
+					new HashMap<>(), serviceContext);
 			});
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);

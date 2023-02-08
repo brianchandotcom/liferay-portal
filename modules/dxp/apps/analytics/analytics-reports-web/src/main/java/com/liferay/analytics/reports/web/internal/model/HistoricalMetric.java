@@ -16,15 +16,14 @@ package com.liferay.analytics.reports.web.internal.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * @author Cistina González
@@ -89,19 +88,18 @@ public class HistoricalMetric {
 	}
 
 	public JSONObject toJSONObject() {
-		Stream<HistogramMetric> stream = _histogramMetrics.stream();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		stream.forEach(
-			histogramMetric -> jsonArray.put(histogramMetric.toJSONObject()));
-
 		return JSONUtil.put(
-			"histogram", jsonArray
+			"histogram",
+			JSONUtil.toJSONArray(
+				_histogramMetrics,
+				histogramMetric -> histogramMetric.toJSONObject(), _log)
 		).put(
 			"value", _value
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HistoricalMetric.class.getName());
 
 	@JsonProperty("histogram")
 	private List<HistogramMetric> _histogramMetrics;

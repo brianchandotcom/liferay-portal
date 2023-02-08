@@ -15,6 +15,7 @@
 package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -89,6 +90,21 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			prefix, Collections.<String, String>emptyMap());
 	}
 
+	@Test
+	public void testSearchByQuotedRegexKeywords() throws Exception {
+		Group group = userSearchFixture.addGroup();
+
+		String tag = randomString();
+
+		User user = addUser(group, tag);
+
+		String[] regexSymbols = {"*", "(", ")", "[", "]", "{", "}"};
+
+		for (String regexSymbol : regexSymbols) {
+			_testSearchByQuotedRegexSymbol(user, regexSymbol, tag);
+		}
+	}
+
 	protected static String randomString() {
 		return RandomTestUtil.randomString(
 			NumericStringRandomizerBumper.INSTANCE);
@@ -122,6 +138,24 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		group.setActive(false);
 
 		GroupLocalServiceUtil.updateGroup(group);
+	}
+
+	private void _testSearchByQuotedRegexSymbol(
+			User user, String regexSymbol, String tag)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("\"");
+		sb.append(tag);
+		sb.append(regexSymbol);
+		sb.append("\"");
+
+		SearchContext searchContext = getSearchContext(sb.toString());
+
+		Map<String, String> expected = toMap(user, tag);
+
+		assertTags(tag, expected, searchContext);
 	}
 
 }

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -265,6 +266,12 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 				stagingGroupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
+
+			if (layout.isDraftLayout()) {
+				_layoutLocalService.updateStatus(
+					themeDisplay.getUserId(), layout.getPlid(),
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
+			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

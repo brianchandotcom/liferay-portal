@@ -39,6 +39,8 @@ public interface NPMRegistry {
 
 	public Collection<JSPackage> getJSPackages();
 
+	public String getResolutionStateDigest();
+
 	public JSModule getResolvedJSModule(String identifier);
 
 	public Collection<JSModule> getResolvedJSModules();

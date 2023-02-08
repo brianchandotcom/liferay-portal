@@ -18,6 +18,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +36,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class QueryPreProcessConfigurationImpl
 	implements QueryPreProcessConfiguration {
+
+	@Override
+	public boolean isKeywordField(String fieldName) {
+		return _keywordFields.contains(fieldName);
+	}
 
 	@Override
 	public boolean isSubstringSearchAlways(String fieldName) {
@@ -67,9 +74,16 @@ public class QueryPreProcessConfigurationImpl
 			_fieldNamePatterns.put(
 				fieldNamePattern, Pattern.compile(fieldNamePattern));
 		}
+
+		String[] keywordFields = queryPreProcessConfiguration.keywordFields();
+
+		for (String keywordField : keywordFields) {
+			_keywordFields.add(keywordField);
+		}
 	}
 
 	private final Map<String, Pattern> _fieldNamePatterns =
 		new LinkedHashMap<>();
+	private final List<String> _keywordFields = new LinkedList<>();
 
 }

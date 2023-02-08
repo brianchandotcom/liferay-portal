@@ -19,6 +19,8 @@ package com.liferay.portal.kernel.search.query;
  */
 public interface QueryPreProcessConfiguration {
 
+	public boolean isKeywordField(String fieldName);
+
 	public boolean isSubstringSearchAlways(String fieldName);
 
 }

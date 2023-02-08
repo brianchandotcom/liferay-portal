@@ -15,6 +15,7 @@
 package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -22,6 +23,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luan Maoski
@@ -50,11 +55,9 @@ public class UserModelPreFilterContributor
 		BooleanFilter contextBooleanFilter,
 		ModelSearchSettings modelSearchSettings, SearchContext searchContext) {
 
-		contextBooleanFilter.addTerm(
-			"defaultUser", Boolean.TRUE.toString(),
-			BooleanClauseOccur.MUST_NOT);
-
+		_filterByDefaultUser(contextBooleanFilter);
 		_filterByEmailAddress(contextBooleanFilter, searchContext);
+		_filterByType(contextBooleanFilter, searchContext);
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
@@ -182,6 +185,24 @@ public class UserModelPreFilterContributor
 		return termsFilter;
 	}
 
+	private void _filterByDefaultUser(BooleanFilter contextBooleanFilter) {
+		BooleanFilter defaultUserBooleanFilter = new BooleanFilter();
+
+		defaultUserBooleanFilter.addTerm("defaultUser", Boolean.TRUE);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker != null) && permissionChecker.isCompanyAdmin()) {
+			defaultUserBooleanFilter.addTerm(
+				Field.TYPE, String.valueOf(UserConstants.TYPE_SERVICE_ACCOUNT),
+				BooleanClauseOccur.MUST_NOT);
+		}
+
+		contextBooleanFilter.add(
+			defaultUserBooleanFilter, BooleanClauseOccur.MUST_NOT);
+	}
+
 	private void _filterByEmailAddress(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
@@ -205,5 +226,38 @@ public class UserModelPreFilterContributor
 
 		booleanFilter.add(emailAddressBooleanFilter, BooleanClauseOccur.MUST);
 	}
+
+	private void _filterByType(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] types = GetterUtil.getLongValues(
+			searchContext.getAttribute("types"),
+			new long[] {UserConstants.TYPE_USER});
+
+		String[] stringTypes = ArrayUtil.toStringArray(types);
+
+		if (((permissionChecker == null) ||
+			 !permissionChecker.isCompanyAdmin()) &&
+			ArrayUtil.contains(types, UserConstants.TYPE_SERVICE_ACCOUNT)) {
+
+			ArrayUtil.replace(
+				stringTypes, String.valueOf(UserConstants.TYPE_SERVICE_ACCOUNT),
+				"-1");
+		}
+
+		if (ArrayUtil.isNotEmpty(stringTypes)) {
+			TermsFilter termsFilter = new TermsFilter(Field.TYPE);
+
+			termsFilter.addValues(stringTypes);
+
+			contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

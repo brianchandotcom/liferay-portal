@@ -16,6 +16,7 @@ package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 			_log.error(exception);
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142518"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-142518")) {
 			super.include(httpServletRequest, httpServletResponse, key);
 		}
 	}

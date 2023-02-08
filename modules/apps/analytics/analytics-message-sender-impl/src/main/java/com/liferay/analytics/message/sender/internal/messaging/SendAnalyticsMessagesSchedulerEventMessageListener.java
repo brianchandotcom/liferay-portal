@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.sender.internal.messaging;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -81,7 +80,7 @@ public class SendAnalyticsMessagesSchedulerEventMessageListener
 	}
 
 	private boolean _isDisabled() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
+		if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
 			!_analyticsConfigurationRegistry.isActive()) {
 
 			return true;

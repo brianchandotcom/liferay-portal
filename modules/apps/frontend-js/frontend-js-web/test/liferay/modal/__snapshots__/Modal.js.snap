@@ -6,7 +6,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
 >
   <div
     aria-hidden="true"
-    data-aria-hidden="true"
+    data-suppressed="true"
   />
   <div
     class="cadmin"
@@ -14,7 +14,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
     <div
       aria-hidden="true"
       class="modal-backdrop fade show"
-      data-aria-hidden="true"
+      data-suppressed="true"
     />
     <div
       class="fade modal d-block liferay-modal show"

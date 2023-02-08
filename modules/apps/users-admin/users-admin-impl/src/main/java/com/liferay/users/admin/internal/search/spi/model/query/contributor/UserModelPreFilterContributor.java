@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luan Maoski
@@ -56,6 +60,7 @@ public class UserModelPreFilterContributor
 			BooleanClauseOccur.MUST_NOT);
 
 		_filterByEmailAddress(contextBooleanFilter, searchContext);
+		_filterByType(contextBooleanFilter, searchContext);
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
@@ -206,5 +211,40 @@ public class UserModelPreFilterContributor
 
 		booleanFilter.add(emailAddressBooleanFilter, BooleanClauseOccur.MUST);
 	}
+
+	private void _filterByType(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] types = GetterUtil.getLongValues(
+			searchContext.getAttribute("types"),
+			new long[] {UserConstants.TYPE_REGULAR});
+
+		String[] stringTypes = ArrayUtil.toStringArray(types);
+
+		if (((permissionChecker == null) ||
+			 !permissionChecker.isCompanyAdmin()) &&
+			(ArrayUtil.contains(
+				types, UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT) ||
+			 ArrayUtil.contains(types, UserConstants.TYPE_SERVICE_ACCOUNT))) {
+
+			ArrayUtil.replace(
+				stringTypes, String.valueOf(UserConstants.TYPE_SERVICE_ACCOUNT),
+				"-1");
+		}
+
+		if (ArrayUtil.isNotEmpty(stringTypes)) {
+			TermsFilter termsFilter = new TermsFilter(Field.TYPE);
+
+			termsFilter.addValues(stringTypes);
+
+			contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

@@ -41,7 +41,6 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -132,16 +131,14 @@ public class AMImageDLPluggableContentDataHandler
 			AdaptiveMedia<AMImageProcessor> adaptiveMedia)
 		throws Exception {
 
-		Optional<String> configurationUuidOptional =
-			adaptiveMedia.getValueOptional(
-				AMAttribute.getConfigurationUuidAMAttribute());
+		String configurationUuid = adaptiveMedia.getValue(
+			AMAttribute.getConfigurationUuidAMAttribute());
 
-		if (!configurationUuidOptional.isPresent()) {
+		if (configurationUuid == null) {
 			return;
 		}
 
-		String basePath = _getAMBasePath(
-			fileEntry, configurationUuidOptional.get());
+		String basePath = _getAMBasePath(fileEntry, configurationUuid);
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			try (InputStream inputStream = adaptiveMedia.getInputStream()) {
@@ -153,7 +150,7 @@ public class AMImageDLPluggableContentDataHandler
 						StringBundler.concat(
 							"Unable to find adaptive media for file entry ",
 							fileEntry.getFileEntryId(), " and configuration ",
-							configurationUuidOptional.get()),
+							configurationUuid),
 						exception);
 				}
 
@@ -267,18 +264,16 @@ public class AMImageDLPluggableContentDataHandler
 			return;
 		}
 
-		Optional<Long> contentLengthOptional = adaptiveMedia.getValueOptional(
+		Long contentLength = adaptiveMedia.getValue(
 			AMAttribute.getContentLengthAMAttribute());
 
-		Optional<Integer> widthOptional = adaptiveMedia.getValueOptional(
+		Integer width = adaptiveMedia.getValue(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 
-		Optional<Integer> heightOptional = adaptiveMedia.getValueOptional(
+		Integer height = adaptiveMedia.getValue(
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
 
-		if (!contentLengthOptional.isPresent() || !widthOptional.isPresent() ||
-			!heightOptional.isPresent()) {
-
+		if ((contentLength == null) || (width == null) || (height == null)) {
 			return;
 		}
 
@@ -296,9 +291,8 @@ public class AMImageDLPluggableContentDataHandler
 
 		try (InputStream inputStream = adaptiveMedia.getInputStream()) {
 			_amImageEntryLocalService.addAMImageEntry(
-				amImageConfigurationEntry, importedFileVersion,
-				heightOptional.get(), widthOptional.get(), inputStream,
-				contentLengthOptional.get());
+				amImageConfigurationEntry, importedFileVersion, height, width,
+				inputStream, contentLength);
 		}
 	}
 

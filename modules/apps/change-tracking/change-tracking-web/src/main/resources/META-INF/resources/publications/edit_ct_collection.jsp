@@ -52,7 +52,7 @@ else {
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 
-if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161313"))) {
+if (!FeatureFlagManagerUtil.isEnabled("LPS-161313")) {
 	showTemplates = false;
 }
 

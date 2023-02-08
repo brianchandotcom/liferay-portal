@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.asah.connector.test.util.MockHttpUtil;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -185,8 +186,9 @@ public class IndividualSegmentsCheckerTest {
 				new Class<?>[0]);
 
 			List<SegmentsEntry> segmentsEntryList =
-				_segmentsEntryLocalService.getSegmentsEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_segmentsEntryLocalService.getSegmentsEntriesBySource(
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(
 				segmentsEntryList.toString(), 1, segmentsEntryList.size());

@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -148,7 +148,7 @@ public class ObjectFieldUtil {
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectFilterLocalService objectFilterLocalService) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164948")) &&
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-164948") &&
 			Objects.equals(
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {

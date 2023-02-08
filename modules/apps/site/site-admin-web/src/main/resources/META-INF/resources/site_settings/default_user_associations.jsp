@@ -227,9 +227,9 @@ for (long defaultTeamId : defaultTeamIds) {
 
 					const rowColumns = [
 						Liferay.Util.escape(event.entityname),
-						`<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="${entityId}" title="<%= LanguageUtil.get(request, "remove") %>" type="button">
-							<%= UnicodeFormatter.toString(removeRoleIcon) %>
-						</button>`,
+						'<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="' +
+							entityId +
+							'" title="<%= LanguageUtil.get(request, "remove") %>" type="button"><%= UnicodeFormatter.toString(removeRoleIcon) %></button>',
 					];
 
 					searchContainer.addRow(rowColumns, entityId);

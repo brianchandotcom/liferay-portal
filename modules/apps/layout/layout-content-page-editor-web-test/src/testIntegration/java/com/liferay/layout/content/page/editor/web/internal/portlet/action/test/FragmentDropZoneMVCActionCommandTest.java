@@ -124,22 +124,23 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 	@Test
 	public void testAddFragmentEntryLinkWithDropZone() throws Exception {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"parentItemId", _layoutStructure.getMainItemId());
-		actionRequest.addParameter("position", "0");
+		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_addFragmentEntryLinkMVCActionCommand,
 			"_processAddFragmentEntryLink",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
@@ -172,22 +173,23 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 	@Test
 	public void testDuplicateFragmentEntryLinkWithDropZone() throws Exception {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"parentItemId", _layoutStructure.getMainItemId());
-		actionRequest.addParameter("position", "0");
+		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_addFragmentEntryLinkMVCActionCommand,
 			"_processAddFragmentEntryLink",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
@@ -208,29 +210,32 @@ public class FragmentDropZoneMVCActionCommandTest {
 		List<String> childrenItemIds =
 			fragmentLayoutStructureItem.getChildrenItemIds();
 
-		actionRequest = _getMockLiferayPortletActionRequest(
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
-		actionRequest.addParameter("parentItemId", childrenItemIds.get(0));
-		actionRequest.addParameter("position", "0");
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", childrenItemIds.get(0));
+		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		ReflectionTestUtil.invoke(
 			_addItemMVCActionCommand, "_addItemToLayoutData",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
-		actionRequest = _getMockLiferayPortletActionRequest(
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemId", fragmentLayoutStructureItem.getItemId());
 
 		jsonObject = ReflectionTestUtil.invoke(
 			_duplicateItemMVCActionCommand,
 			"_addDuplicateFragmentEntryLinkToLayoutDataJSONObject",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
 
@@ -286,22 +291,23 @@ public class FragmentDropZoneMVCActionCommandTest {
 	public void testUpdateConfigurationValuesFragmentEntryLinkWithDropZone()
 		throws Exception {
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"parentItemId", _layoutStructure.getMainItemId());
-		actionRequest.addParameter("position", "0");
+		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_addFragmentEntryLinkMVCActionCommand,
 			"_processAddFragmentEntryLink",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
@@ -331,12 +337,12 @@ public class FragmentDropZoneMVCActionCommandTest {
 		Assert.assertTrue(
 			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
 
-		actionRequest = _getMockLiferayPortletActionRequest(
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId));
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"editableValues",
 			_readFileToString("drop_zone_fragment_entry_editable_values.json"));
 
@@ -344,7 +350,8 @@ public class FragmentDropZoneMVCActionCommandTest {
 			_updateConfigurationValuesMVCActionCommand,
 			"_processUpdateConfigurationValues",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, new MockLiferayPortletActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
 

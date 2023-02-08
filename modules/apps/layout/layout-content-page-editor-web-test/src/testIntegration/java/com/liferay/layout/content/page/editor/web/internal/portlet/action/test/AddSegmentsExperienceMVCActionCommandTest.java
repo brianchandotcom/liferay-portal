@@ -127,13 +127,13 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
 		throws Exception {
 
-		MockLiferayPortletActionRequest mockActionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(name, segmentsEntryId);
 
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest, new MockActionResponse());
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

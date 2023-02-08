@@ -91,15 +91,16 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(_company.getGroupId());
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_company.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
 		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
 		Assert.assertNotNull(fragmentEntryLink);
 
@@ -120,15 +121,16 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(_group.getGroupId());
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
 		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
 		Assert.assertNotNull(fragmentEntryLink);
 
@@ -164,15 +166,16 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), _layout.getPlid());
 
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", fragmentEntry.getFragmentEntryKey());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -186,15 +189,16 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 	@Test(expected = NoSuchEntryException.class)
 	public void testAddInvalidFragmentEntryToLayout() throws Exception {
-		MockLiferayPortletActionRequest actionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(_group.getGroupId());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentEntryKey", RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
 	}
 
 	private FragmentEntry _getFragmentEntry(long groupId) throws Exception {

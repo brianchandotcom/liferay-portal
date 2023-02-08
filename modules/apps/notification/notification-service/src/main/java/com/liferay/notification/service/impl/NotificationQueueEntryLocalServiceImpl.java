@@ -109,12 +109,11 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteNotificationQueueEntries(long companyId, Date sentDate)
+	public void deleteNotificationQueueEntries(Date sentDate)
 		throws PortalException {
 
 		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntryPersistence.findByC_LtSentDate(
-					companyId, sentDate)) {
+				notificationQueueEntryPersistence.findByLtSentDate(sentDate)) {
 
 			notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 				notificationQueueEntry);
@@ -170,10 +169,10 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Override
 	public List<NotificationQueueEntry> getUnsentNotificationEntries(
-		long companyId, String type) {
+		String type) {
 
-		return notificationQueueEntryPersistence.findByC_T_S(
-			companyId, type, NotificationQueueEntryConstants.STATUS_UNSENT);
+		return notificationQueueEntryPersistence.findByT_S(
+			type, NotificationQueueEntryConstants.STATUS_UNSENT);
 	}
 
 	@Override

@@ -6,5 +6,6 @@ dependencies {
 	testCompile project(":apps:cookies:cookies-impl")
 	testCompile project(":core:petra:petra-string")
 
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

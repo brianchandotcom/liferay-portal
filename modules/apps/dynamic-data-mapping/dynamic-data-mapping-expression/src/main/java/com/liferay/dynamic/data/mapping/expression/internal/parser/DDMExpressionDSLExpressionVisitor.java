@@ -59,134 +59,134 @@ public class DDMExpressionDSLExpressionVisitor
 
 	@Override
 	public Object visitAdditionExpression(
-		@NotNull AdditionExpressionContext context) {
+		@NotNull AdditionExpressionContext additionExpressionContext) {
 
 		Expression<Number> expression1 = (Expression<Number>)_getExpression(
-			visitChild(context, 0));
+			visitChild(additionExpressionContext, 0));
 		Expression<Number> expression2 = (Expression<Number>)_getExpression(
-			visitChild(context, 2));
+			visitChild(additionExpressionContext, 2));
 
 		return DSLFunctionFactoryUtil.add(expression1, expression2);
 	}
 
 	@Override
 	public Object visitAndExpression(
-		@NotNull DDMExpressionParser.AndExpressionContext context) {
+		@NotNull DDMExpressionParser.AndExpressionContext andExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitAndExpression with and expression " +
-				context.getText());
+				andExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitBooleanParenthesis(
-		@NotNull BooleanParenthesisContext context) {
+		@NotNull BooleanParenthesisContext booleanParenthesisContext) {
 
-		return visitChild(context, 1);
+		return visitChild(booleanParenthesisContext, 1);
 	}
 
 	@Override
 	public Object visitDivisionExpression(
-		@NotNull DivisionExpressionContext context) {
+		@NotNull DivisionExpressionContext divisionExpressionContext) {
 
 		Expression<Number> expression1 = (Expression<Number>)_getExpression(
-			visitChild(context, 0));
+			visitChild(divisionExpressionContext, 0));
 		Expression<Number> expression2 = (Expression<Number>)_getExpression(
-			visitChild(context, 2));
+			visitChild(divisionExpressionContext, 2));
 
 		return DSLFunctionFactoryUtil.divide(expression1, expression2);
 	}
 
 	@Override
 	public Object visitEqualsExpression(
-		@NotNull EqualsExpressionContext context) {
+		@NotNull EqualsExpressionContext equalsExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitEqualsExpression with equals expression " +
-				context.getText());
+				equalsExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitExpression(
-		@NotNull DDMExpressionParser.ExpressionContext context) {
+		@NotNull DDMExpressionParser.ExpressionContext expressionContext) {
 
 		DDMExpressionParser.LogicalOrExpressionContext
-			logicalOrExpressionContext = context.logicalOrExpression();
+			logicalOrExpressionContext = expressionContext.logicalOrExpression();
 
 		return logicalOrExpressionContext.accept(this);
 	}
 
 	@Override
 	public Object visitFloatingPointLiteral(
-		@NotNull FloatingPointLiteralContext context) {
+		@NotNull FloatingPointLiteralContext floatingPointLiteralContext) {
 
-		return new BigDecimal(context.getText());
+		return new BigDecimal(floatingPointLiteralContext.getText());
 	}
 
 	@Override
 	public Object visitFunctionCallExpression(
-		@NotNull FunctionCallExpressionContext context) {
+		@NotNull FunctionCallExpressionContext functionCallExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitFunctionCallExpression with function " +
-				"call expression " + context.getText());
+				"call expression " + functionCallExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitGreaterThanExpression(
-		@NotNull GreaterThanExpressionContext context) {
+		@NotNull GreaterThanExpressionContext greaterThanExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitGreaterThanExpression with greater than " +
-				"expression " + context.getText());
+				"expression " + greaterThanExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitGreaterThanOrEqualsExpression(
-		@NotNull GreaterThanOrEqualsExpressionContext context) {
+		@NotNull GreaterThanOrEqualsExpressionContext greaterThanOrEqualsExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitGreaterThanOrEqualsExpression with " +
-				"greater than or equals expression " + context.getText());
+				"greater than or equals expression " + greaterThanOrEqualsExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitIntegerLiteral(
-		@NotNull DDMExpressionParser.IntegerLiteralContext context) {
+		@NotNull DDMExpressionParser.IntegerLiteralContext integerLiteralContext) {
 
-		return new BigDecimal(context.getText());
+		return new BigDecimal(integerLiteralContext.getText());
 	}
 
 	@Override
 	public Object visitLessThanExpression(
-		@NotNull LessThanExpressionContext context) {
+		@NotNull LessThanExpressionContext lessThanExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitLessThanExpression with less than " +
-				"expression " + context.getText());
+				"expression " + lessThanExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitLessThanOrEqualsExpression(
-		@NotNull LessThanOrEqualsExpressionContext context) {
+		@NotNull LessThanOrEqualsExpressionContext lessThanOrEqualsExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitLessThanOrEqualsExpression with less " +
-				"than or equals expression " + context.getText());
+				"than or equals expression " + lessThanOrEqualsExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitLogicalConstant(
-		@NotNull LogicalConstantContext context) {
+		@NotNull LogicalConstantContext logicalConstantContext) {
 
-		return Boolean.parseBoolean(context.getText());
+		return Boolean.parseBoolean(logicalConstantContext.getText());
 	}
 
 	@Override
 	public Object visitLogicalVariable(
-		@NotNull LogicalVariableContext context) {
+		@NotNull LogicalVariableContext logicalVariableContext) {
 
-		String variable = context.getText();
+		String variable = logicalVariableContext.getText();
 
 		Object variableValue = _variables.get(variable);
 
@@ -211,55 +211,55 @@ public class DDMExpressionDSLExpressionVisitor
 
 	@Override
 	public Object visitMinusExpression(
-		@NotNull MinusExpressionContext context) {
+		@NotNull MinusExpressionContext minusExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitMinusExpression with minus expression " +
-				context.getText());
+				minusExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitMultiplicationExpression(
-		@NotNull MultiplicationExpressionContext context) {
+		@NotNull MultiplicationExpressionContext multiplicationExpressionContext) {
 
 		Expression<Number> expression1 = (Expression<Number>)_getExpression(
-			visitChild(context, 0));
+			visitChild(multiplicationExpressionContext, 0));
 		Expression<Number> expression2 = (Expression<Number>)_getExpression(
-			visitChild(context, 2));
+			visitChild(multiplicationExpressionContext, 2));
 
 		return DSLFunctionFactoryUtil.multiply(expression1, expression2);
 	}
 
 	@Override
 	public Object visitNotEqualsExpression(
-		@NotNull NotEqualsExpressionContext context) {
+		@NotNull NotEqualsExpressionContext notEqualsExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitNotEqualsExpression with not equals " +
-				"expression " + context.getText());
+				"expression " + notEqualsExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitNotExpression(
-		@NotNull DDMExpressionParser.NotExpressionContext context) {
+		@NotNull DDMExpressionParser.NotExpressionContext notExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitNotExpression with not expression " +
-				context.getText());
+				notExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitNumericParenthesis(
-		@NotNull NumericParenthesisContext context) {
+		@NotNull NumericParenthesisContext numericParenthesisContext) {
 
-		return visitChild(context, 1);
+		return visitChild(numericParenthesisContext, 1);
 	}
 
 	@Override
 	public Object visitNumericVariable(
-		@NotNull NumericVariableContext context) {
+		@NotNull NumericVariableContext numericVariableContext) {
 
-		String variable = context.getText();
+		String variable = numericVariableContext.getText();
 
 		Object variableValue = _variables.get(variable);
 
@@ -273,51 +273,51 @@ public class DDMExpressionDSLExpressionVisitor
 
 	@Override
 	public Object visitOrExpression(
-		@NotNull DDMExpressionParser.OrExpressionContext context) {
+		@NotNull DDMExpressionParser.OrExpressionContext orExpressionContext) {
 
 		throw new UnsupportedOperationException(
 			"Unsupported method visitOrExpression with or expression " +
-				context.getText());
+				orExpressionContext.getText());
 	}
 
 	@Override
 	public Object visitStringLiteral(
-		@NotNull DDMExpressionParser.StringLiteralContext context) {
+		@NotNull DDMExpressionParser.StringLiteralContext stringLiteralContext) {
 
-		return StringUtil.unquote(context.getText());
+		return StringUtil.unquote(stringLiteralContext.getText());
 	}
 
 	@Override
 	public Object visitSubtractionExpression(
-		@NotNull SubtractionExpressionContext context) {
+		@NotNull SubtractionExpressionContext subtractionExpressionContext) {
 
 		Expression<Number> expression1 = (Expression<Number>)_getExpression(
-			visitChild(context, 0));
+			visitChild(subtractionExpressionContext, 0));
 		Expression<Number> expression2 = (Expression<Number>)_getExpression(
-			visitChild(context, 2));
+			visitChild(subtractionExpressionContext, 2));
 
 		return DSLFunctionFactoryUtil.subtract(expression1, expression2);
 	}
 
 	@Override
 	public Object visitToFloatingPointArray(
-		ToFloatingPointArrayContext context) {
+		ToFloatingPointArrayContext toFloatingPointArrayContext) {
 
-		return _getBigDecimalArray(context.FloatingPointLiteral());
+		return _getBigDecimalArray(toFloatingPointArrayContext.FloatingPointLiteral());
 	}
 
 	@Override
 	public Object visitToIntegerArray(
-		DDMExpressionParser.ToIntegerArrayContext context) {
+		DDMExpressionParser.ToIntegerArrayContext toIntegerArrayContext) {
 
-		return _getBigDecimalArray(context.IntegerLiteral());
+		return _getBigDecimalArray(toIntegerArrayContext.IntegerLiteral());
 	}
 
 	@Override
 	public Object visitToStringArray(
-		DDMExpressionParser.ToStringArrayContext context) {
+		DDMExpressionParser.ToStringArrayContext toStringArrayContext) {
 
-		List<TerminalNode> stringTerminalNodes = context.STRING();
+		List<TerminalNode> stringTerminalNodes = toStringArrayContext.STRING();
 
 		String[] values = new String[stringTerminalNodes.size()];
 

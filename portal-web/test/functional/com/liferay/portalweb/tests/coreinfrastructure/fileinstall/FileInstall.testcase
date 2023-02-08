@@ -129,8 +129,9 @@ definition {
 
 		var symbolicLink = "${liferayHome}/osgi/configs/com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration-abc.config";
 		var symbolicLinkResource = "${liferayHome}/osgi/temp/abc.config";
+		var config = '''urlsIncludes="abc"''';
 
-		FileUtil.write(${symbolicLinkResource}, "urlsIncludes=\"abc\"");
+		FileUtil.write(${symbolicLinkResource}, ${config});
 
 		AntCommand(
 			locator1 = "build-test.xml",

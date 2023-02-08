@@ -53,7 +53,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -208,32 +207,33 @@ public class ViewAuthorizationRequestMVCRenderCommand
 		Set<String> requestedScopeAliasesSet = new HashSet<>(
 			Arrays.asList(requestedScopeAliases));
 
-		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
-				oAuth2ApplicationScopeAliases.
-					getOAuth2ApplicationScopeAliasesId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<OAuth2ScopeGrant> stream = oAuth2ScopeGrants.stream();
-
 		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
 			_scopeLocator.getLiferayOAuth2Scopes(
 				oAuth2ApplicationScopeAliases.getCompanyId());
 
-		stream.filter(
-			oAuth2ScopeGrant -> !Collections.disjoint(
-				oAuth2ScopeGrant.getScopeAliasesList(),
-				requestedScopeAliasesSet)
-		).map(
-			oAuth2ScopeGrant -> _scopeLocator.getLiferayOAuth2Scope(
-				oAuth2ScopeGrant.getCompanyId(),
-				oAuth2ScopeGrant.getApplicationName(),
-				oAuth2ScopeGrant.getScope())
-		).filter(
-			liferayOAuth2Scopes::contains
-		).forEach(
-			assignableScopes::addLiferayOAuth2Scope
-		);
+		for (OAuth2ScopeGrant oAuth2ScopeGrant :
+				_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+					oAuth2ApplicationScopeAliases.
+						getOAuth2ApplicationScopeAliasesId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			if (Collections.disjoint(
+					oAuth2ScopeGrant.getScopeAliasesList(),
+					requestedScopeAliasesSet)) {
+
+				continue;
+			}
+
+			LiferayOAuth2Scope liferayOAuth2Scope =
+				_scopeLocator.getLiferayOAuth2Scope(
+					oAuth2ScopeGrant.getCompanyId(),
+					oAuth2ScopeGrant.getApplicationName(),
+					oAuth2ScopeGrant.getScope());
+
+			if (liferayOAuth2Scopes.contains(liferayOAuth2Scope)) {
+				assignableScopes.addLiferayOAuth2Scope(liferayOAuth2Scope);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -24,16 +24,24 @@ const DATE_INPUT_TESTID = 'date-input';
 describe('DateTimeInput', () => {
 	afterEach(cleanup);
 
-	it('renders type date', () => {
-		const mockOnChange = jest.fn();
+	const defaultValue = '2019/01/23';
 
-		const defaultValue = '2019-01-23';
-		const isoDefaultDate = '2019-01-23T00:00:00.000Z';
+	const valueDate = '2019-01-23';
+
+	const isoDefaultDate = '2019-01-23T00:00:00.000Z';
+
+	const expectedDateValueDisplayed = format(new Date(), 'yyyy/MM/dd');
+
+	const expectedDateValueOnChange = format(new Date(), 'yyyy-MM-dd');
+
+	it('renders type date-time', () => {
+		const mockOnChange = jest.fn();
 
 		const {asFragment, getByTestId} = render(
 			<DateTimeInput
 				onChange={mockOnChange}
 				propertyLabel="Test label"
+				propertyType="date-time"
 				value={isoDefaultDate}
 			/>
 		);
@@ -45,23 +53,21 @@ describe('DateTimeInput', () => {
 		testControlledDateInput({
 			element,
 			mockOnChangeFunc: mockOnChange,
-			newValue: '2019-01-24',
-			newValueExpected: '2019-01-24',
+			newValue: '2019/01/24',
+			newValueExpected: '2019/01/24',
 			newValueOnChange: '2019-01-24T00:00:00.000Z',
 			value: defaultValue,
 		});
 	});
 
-	it('renders now with wrong date', () => {
+	it('renders now with wrong date-time', () => {
 		const mockOnChange = jest.fn();
-
-		const defaultValue = '2019-01-23';
-		const isoDefaultDate = '2019-01-23T00:00:00.000Z';
 
 		const {asFragment, getByTestId} = render(
 			<DateTimeInput
 				onChange={mockOnChange}
 				propertyLabel="Test label"
+				propertyType="date-time"
 				value={isoDefaultDate}
 			/>
 		);
@@ -70,7 +76,7 @@ describe('DateTimeInput', () => {
 
 		const element = getByTestId(DATE_INPUT_TESTID);
 
-		const date = format(new Date(), 'yyyy-MM-dd');
+		const date = format(new Date(), 'yyyy/MM/dd');
 
 		testControlledDateInput({
 			element,
@@ -79,9 +85,118 @@ describe('DateTimeInput', () => {
 			newValueExpected: date,
 			newValueOnChange: parse(
 				date,
-				'yyyy-MM-dd',
+				'yyyy/MM/dd',
 				new Date()
 			).toISOString(),
+			value: defaultValue,
+		});
+	});
+
+	it('renders type date', () => {
+		const mockOnChange = jest.fn();
+
+		const {asFragment, getByTestId} = render(
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				propertyType="date"
+				value={valueDate}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(DATE_INPUT_TESTID);
+
+		const expectedDateValueOnChange = '2019-01-24';
+		const expectedDateValueDisplayed = '2019/01/24';
+
+		testControlledDateInput({
+			element,
+			mockOnChangeFunc: mockOnChange,
+			newValue: expectedDateValueDisplayed,
+			newValueExpected: expectedDateValueDisplayed,
+			newValueOnChange: expectedDateValueOnChange,
+			value: defaultValue,
+		});
+	});
+
+	it('renders now with wrong date', () => {
+		const mockOnChange = jest.fn();
+
+		const {asFragment, getByTestId} = render(
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				propertyType="date"
+				value={valueDate}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(DATE_INPUT_TESTID);
+
+		testControlledDateInput({
+			element,
+			mockOnChangeFunc: mockOnChange,
+			newValue: '2019/01/XX',
+			newValueExpected: expectedDateValueDisplayed,
+			newValueOnChange: expectedDateValueOnChange,
+			value: defaultValue,
+		});
+	});
+
+	it('renders date-time with no change in the input', () => {
+		const mockOnChange = jest.fn();
+
+		const {asFragment, getByTestId} = render(
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				propertyType="date-time"
+				value={defaultValue}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(DATE_INPUT_TESTID);
+
+		testControlledDateInput({
+			element,
+			inputChange: false,
+			mockOnChangeFunc: mockOnChange,
+			newValue: defaultValue,
+			newValueExpected: defaultValue,
+			newValueOnChange: defaultValue,
+			value: defaultValue,
+		});
+	});
+
+	it('renders date with no change in the input', () => {
+		const mockOnChange = jest.fn();
+
+		const {asFragment, getByTestId} = render(
+			<DateTimeInput
+				onChange={mockOnChange}
+				propertyLabel="Test label"
+				propertyType="date"
+				value={valueDate}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+
+		const element = getByTestId(DATE_INPUT_TESTID);
+
+		testControlledDateInput({
+			element,
+			inputChange: false,
+			mockOnChangeFunc: mockOnChange,
+			newValue: defaultValue,
+			newValueExpected: defaultValue,
+			newValueOnChange: defaultValue,
 			value: defaultValue,
 		});
 	});

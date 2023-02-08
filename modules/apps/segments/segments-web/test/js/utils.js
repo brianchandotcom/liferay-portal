@@ -38,6 +38,7 @@ export function testControlledInput({
 
 export function testControlledDateInput({
 	element,
+	inputChange = true,
 	mockOnChangeFunc,
 	newValue = 'Liferay',
 	newValueExpected,
@@ -54,11 +55,15 @@ export function testControlledDateInput({
 
 	fireEvent.blur(element);
 
-	expect(mockOnChangeFunc.mock.calls.length).toBe(1);
+	if (inputChange) {
+		expect(mockOnChangeFunc.mock.calls.length).toBe(1);
 
-	expect(mockOnChangeFunc.mock.calls[0][0]).toMatchObject({
-		value: newValueOnChange,
-	});
-
+		expect(mockOnChangeFunc.mock.calls[0][0]).toMatchObject({
+			value: newValueOnChange,
+		});
+	}
+	else {
+		expect(mockOnChangeFunc.mock.calls.length).toBe(0);
+	}
 	expect(element.value).toBe(newValueExpected);
 }

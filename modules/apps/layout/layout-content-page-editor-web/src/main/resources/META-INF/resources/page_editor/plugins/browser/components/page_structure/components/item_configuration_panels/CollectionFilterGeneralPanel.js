@@ -101,8 +101,8 @@ export function CollectionFilterGeneralPanel({item}) {
 			<div className="mb-3">
 				{isEmptyObject(filterableCollections) ? (
 					<p
+						aria-live="polite"
 						className="alert alert-info mt-2 text-center"
-						role="alert"
 					>
 						{Liferay.Language.get(
 							'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'

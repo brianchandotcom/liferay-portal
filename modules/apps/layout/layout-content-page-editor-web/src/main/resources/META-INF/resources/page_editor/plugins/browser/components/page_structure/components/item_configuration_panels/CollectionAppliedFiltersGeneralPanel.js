@@ -122,14 +122,17 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 	return (
 		<>
 			{isEmptyObject(filterableCollections) ? (
-				<p className="alert alert-info text-center" role="alert">
+				<p aria-live="polite" className="alert alert-info text-center">
 					{Liferay.Language.get(
 						'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
 					)}
 				</p>
 			) : (
 				<>
-					<p className="alert alert-info text-center" role="alert">
+					<p
+						aria-live="polite"
+						className="alert alert-info text-center"
+					>
 						{Liferay.Language.get(
 							'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
 						)}

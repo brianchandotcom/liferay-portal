@@ -89,7 +89,7 @@ const NetworkStatusBar = ({error, status}) => {
 
 	return (
 		<div className="page-editor__status-bar">
-			<span className="sr-only" role="alert">
+			<span aria-live="polite" className="sr-only">
 				{autoSaveMessageRef.current}
 			</span>
 

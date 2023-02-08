@@ -20,7 +20,7 @@ export default function KeyboardMovementText() {
 	const text = useMovementText();
 
 	return text ? (
-		<span className="sr-only" role="alert">
+		<span aria-live="assertive" className="sr-only">
 			{text}
 		</span>
 	) : null;

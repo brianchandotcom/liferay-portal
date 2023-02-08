@@ -66,48 +66,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-173817. Verify that is possible to export all visible MDFs"
-	@priority = "5"
-	test CanExportAllVisibleMDFs {
-
-		task ("Given I go to add three new MDF Requests") {
-
-			for (var n : list "1,2,3") {
-								
-				PRMNavigator.goToNavItem(navItem = "Marketing");
-
-				PRMMarketing.gotoAddNewMDF();
-
-				PRMMDFRequest.createNewRequest(
-					accountName = "Company Name 1",
-					additionalOptions = "6.x to DXP Migration",
-					campaignDescription = "Campaign Description",
-					campaignName ="Campaign Name ${n}",
-					countryName = "Global",
-					goalsOptions = "Lead generation",
-					targetMarketOptions = "Education,Energy",
-					targetRolesOptions = "Administrator",
-					activityDescription = "Activity Description",
-					activityName = "Activity Name 1",
-					budgetList = "Sponsorship Fee-2000,Room Rental-3000",
-					followUpStrategy = "test",
-					leadFollowUpList = "Other",
-					leadList = "No",
-					tactic = "Other",
-					targetOfLeads = "test",
-					typeOfActivity = "Miscellaneous Marketing");
-			}
-		}
-
-		task ("When I click on the 'Export MDF Report' button") {
-            Button.click(button = "Export MDF Report");
-        }
-
-		task ("Then the information of the visible MDF's will be inside the exported file") {
-			PRMMDFRequest.viewExportedMDF(campaignNameList = "Campaign Name 1,Campaign Name 2,Campaign Name 3");
-		}
-	}
-
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
 	@priority = 5
 	test CanExpandAndSeeMultipleActivities {
@@ -204,6 +162,45 @@ definition {
 				key_fieldName = "Activity name",
 				key_fieldValue = "Activity Name 2",
 				locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+		}
+	}
+
+	@description = "This is a test for LPS-173817. Verify that is possible to export all visible MDFs"
+	@priority = 5
+	test CanExportAllVisibleMDFs {
+		task ("Given I go to add three new MDF Requests") {
+			for (var n : list "1,2,3") {
+				PRMNavigator.goToNavItem(navItem = "Marketing");
+
+				PRMMarketing.gotoAddNewMDF();
+
+				PRMMDFRequest.createNewRequest(
+					accountName = "Company Name 1",
+					activityDescription = "Activity Description",
+					activityName = "Activity Name 1",
+					additionalOptions = "6.x to DXP Migration",
+					budgetList = "Sponsorship Fee-2000,Room Rental-3000",
+					campaignDescription = "Campaign Description",
+					campaignName = "Campaign Name ${n}",
+					countryName = "Global",
+					followUpStrategy = "test",
+					goalsOptions = "Lead generation",
+					leadFollowUpList = "Other",
+					leadList = "No",
+					tactic = "Other",
+					targetMarketOptions = "Education,Energy",
+					targetOfLeads = "test",
+					targetRolesOptions = "Administrator",
+					typeOfActivity = "Miscellaneous Marketing");
+			}
+		}
+
+		task ("When I click on the 'Export MDF Report' button") {
+			Button.click(button = "Export MDF Report");
+		}
+
+		task ("Then the information of the visible MDF's will be inside the exported file") {
+			PRMMDFRequest.viewExportedMDF(campaignNameList = "Campaign Name 1,Campaign Name 2,Campaign Name 3");
 		}
 	}
 

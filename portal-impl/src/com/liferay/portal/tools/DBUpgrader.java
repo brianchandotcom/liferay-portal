@@ -143,7 +143,7 @@ public class DBUpgrader {
 				true, false,
 				() -> {
 					if (PropsValues.UPGRADE_REPORT_ENABLED) {
-						_startUpgradeReportLogAppender();
+						startUpgradeReportLogAppender();
 					}
 				});
 
@@ -180,11 +180,40 @@ public class DBUpgrader {
 					_stopWatch.getTime() / Time.SECOND, " seconds"));
 
 			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				_stopUpgradeReportLogAppender();
+				stopUpgradeReportLogAppender();
 			}
 		}
 
 		System.out.println("Exiting DBUpgrader#main(String[]).");
+	}
+
+	public static void startUpgradeReportLogAppender() {
+		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
+
+		serviceLatch.<Appender>waitFor(
+			StringBundler.concat(
+				"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
+				Appender.class.getName(), "))"),
+			appender -> {
+				_appender = appender;
+
+				_appender.start();
+			});
+		serviceLatch.openOn(
+			() -> {
+			});
+	}
+
+	public static void stopUpgradeReportLogAppender() {
+		if (_appender != null) {
+			_appender.stop();
+		}
+
+		if (_appenderServiceReference != null) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			bundleContext.ungetService(_appenderServiceReference);
+		}
 	}
 
 	public static void upgradeModules() {
@@ -367,35 +396,6 @@ public class DBUpgrader {
 			).put(
 				"service.version", ReleaseInfo.getVersion()
 			).build());
-	}
-
-	private static void _startUpgradeReportLogAppender() {
-		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
-
-		serviceLatch.<Appender>waitFor(
-			StringBundler.concat(
-				"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
-				Appender.class.getName(), "))"),
-			appender -> {
-				_appender = appender;
-
-				_appender.start();
-			});
-		serviceLatch.openOn(
-			() -> {
-			});
-	}
-
-	private static void _stopUpgradeReportLogAppender() {
-		if (_appender != null) {
-			_appender.stop();
-		}
-
-		if (_appenderServiceReference != null) {
-			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-			bundleContext.ungetService(_appenderServiceReference);
-		}
 	}
 
 	private static void _updateCompanyKey() throws Exception {

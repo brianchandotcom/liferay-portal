@@ -28,6 +28,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.type.WebImage;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -73,7 +75,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -484,22 +485,22 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getTimeSpansJSONArray(ResourceBundle resourceBundle) {
-		Stream<TimeSpan> stream = Arrays.stream(TimeSpan.values());
+		List<TimeSpan> timeSpans = Arrays.asList(TimeSpan.values());
 
-		return JSONUtil.putAll(
-			stream.filter(
-				timeSpan -> timeSpan != TimeSpan.TODAY
-			).sorted(
-				Comparator.comparingInt(TimeSpan::getDays)
-			).map(
-				timeSpan -> JSONUtil.put(
-					"key", timeSpan.getKey()
-				).put(
-					"label",
-					ResourceBundleUtil.getString(
-						resourceBundle, timeSpan.getKey())
-				)
-			).toArray());
+		timeSpans = ListUtil.filter(
+			timeSpans, timeSpan -> timeSpan != TimeSpan.TODAY);
+
+		timeSpans.sort(Comparator.comparingInt(TimeSpan::getDays));
+
+		return JSONUtil.toJSONArray(
+			timeSpans,
+			timeSpan -> JSONUtil.put(
+				"key", timeSpan.getKey()
+			).put(
+				"label",
+				ResourceBundleUtil.getString(resourceBundle, timeSpan.getKey())
+			),
+			_log);
 	}
 
 	private JSONArray _getViewURLsJSONArray(
@@ -508,39 +509,34 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		Locale urlLocale) {
 
-		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
-			object);
+		List<Locale> locales = ListUtil.copy(
+			analyticsReportsInfoItem.getAvailableLocales(object));
 
-		Stream<Locale> stream = locales.stream();
+		locales.sort(
+			(locale1, locale2) -> {
+				if (Objects.equals(
+						locale1,
+						analyticsReportsInfoItem.getDefaultLocale(object))) {
+
+					return -1;
+				}
+
+				if (Objects.equals(
+						locale2,
+						analyticsReportsInfoItem.getDefaultLocale(object))) {
+
+					return 1;
+				}
+
+				String displayLanguage1 = locale1.getDisplayLanguage(locale);
+				String displayLanguage2 = locale2.getDisplayLanguage(locale);
+
+				return displayLanguage1.compareToIgnoreCase(displayLanguage2);
+			});
 
 		return JSONUtil.putAll(
-			stream.sorted(
-				(locale1, locale2) -> {
-					if (Objects.equals(
-							locale1,
-							analyticsReportsInfoItem.getDefaultLocale(
-								object))) {
-
-						return -1;
-					}
-
-					if (Objects.equals(
-							locale2,
-							analyticsReportsInfoItem.getDefaultLocale(
-								object))) {
-
-						return 1;
-					}
-
-					String displayLanguage1 = locale1.getDisplayLanguage(
-						locale);
-					String displayLanguage2 = locale2.getDisplayLanguage(
-						locale);
-
-					return displayLanguage1.compareToIgnoreCase(
-						displayLanguage2);
-				}
-			).map(
+			TransformUtil.transformToArray(
+				locales,
 				currentLocale -> JSONUtil.put(
 					"default",
 					Objects.equals(
@@ -562,8 +558,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					_getResourceURL(
 						infoItemReference, currentLocale, resourceRequest,
 						resourceResponse, "/analytics_reports/get_data")
-				)
-			).toArray());
+				),
+				JSONObject.class));
 	}
 
 	private String _toISODateFormat(LocalDate localDate) {

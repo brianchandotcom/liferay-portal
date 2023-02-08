@@ -76,7 +76,7 @@ public class IndividualSegmentsCheckerTest {
 	public void setUp() throws Exception {
 		_user = TestPropsValues.getUser();
 
-		_setIndividualSegmentsCheckerTest();
+		_setUpIndividualSegmentsChecker();
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class IndividualSegmentsCheckerTest {
 		return constructor.newInstance();
 	}
 
-	private void _setIndividualSegmentsCheckerTest() throws Exception {
+	private void _setUpIndividualSegmentsChecker() throws Exception {
 		Bundle bundle1 = FrameworkUtil.getBundle(
 			IndividualSegmentsCheckerTest.class);
 

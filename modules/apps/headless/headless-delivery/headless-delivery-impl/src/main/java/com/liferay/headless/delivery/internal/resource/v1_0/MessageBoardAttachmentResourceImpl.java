@@ -26,10 +26,13 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
@@ -91,7 +94,19 @@ public class MessageBoardAttachmentResourceImpl
 				Long messageBoardMessageId)
 		throws Exception {
 
-		return _getMessageBoardAttachmentsPage(messageBoardMessageId);
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			messageBoardMessageId);
+
+		return _getMessageBoardAttachmentsPage(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"createBatch",
+				addAction(
+					ActionKeys.VIEW, mbMessage.getMessageId(),
+					"postMessageBoardMessageMessageBoardAttachmentBatch",
+					mbMessage.getUserId(), MBConstants.RESOURCE_NAME,
+					mbMessage.getGroupId())
+			).build(),
+			mbMessage);
 	}
 
 	@Override
@@ -103,7 +118,19 @@ public class MessageBoardAttachmentResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		return _getMessageBoardAttachmentsPage(mbThread.getRootMessageId());
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			mbThread.getRootMessageId());
+
+		return _getMessageBoardAttachmentsPage(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_MESSAGE, mbThread.getThreadId(),
+					"postMessageBoardThreadMessageBoardAttachmentBatch",
+					mbThread.getUserId(), MBConstants.RESOURCE_NAME,
+					mbThread.getGroupId())
+			).build(),
+			mbMessage);
 	}
 
 	@Override
@@ -169,13 +196,11 @@ public class MessageBoardAttachmentResourceImpl
 	}
 
 	private Page<MessageBoardAttachment> _getMessageBoardAttachmentsPage(
-			Long messageBoardMessageId)
+			Map<String, Map<String, String>> actions, MBMessage mbMessage)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.getMessage(
-			messageBoardMessageId);
-
 		return Page.of(
+			actions,
 			transform(
 				mbMessage.getAttachmentsFileEntries(),
 				this::_toMessageBoardAttachment));

@@ -227,6 +227,12 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 					"postDocumentFolderDocument", folder.getUserId(),
 					DLConstants.RESOURCE_NAME, folder.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DOCUMENT, folder.getFolderId(),
+					"postDocumentFolderDocumentBatch", folder.getUserId(),
+					DLConstants.RESOURCE_NAME, folder.getGroupId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, folder.getFolderId(),

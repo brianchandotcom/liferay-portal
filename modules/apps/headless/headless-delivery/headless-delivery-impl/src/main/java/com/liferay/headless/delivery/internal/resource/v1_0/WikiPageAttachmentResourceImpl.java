@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -109,6 +110,12 @@ public class WikiPageAttachmentResourceImpl
 		WikiPage wikiPage = _wikiPageService.getPage(wikiPageId);
 
 		return Page.of(
+			HashMapBuilder.put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postWikiPageWikiPageAttachmentBatch",
+					WikiPage.class.getName(), wikiPageId)
+			).build(),
 			transform(
 				wikiPage.getAttachmentsFileEntries(),
 				this::_toWikiPageAttachment));

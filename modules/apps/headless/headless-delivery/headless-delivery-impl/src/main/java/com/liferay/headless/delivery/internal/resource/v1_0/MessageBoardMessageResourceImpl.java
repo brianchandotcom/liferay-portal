@@ -251,6 +251,13 @@ public class MessageBoardMessageResourceImpl
 					"postMessageBoardThreadMessageBoardMessage",
 					mbThread.getUserId(), MBConstants.RESOURCE_NAME,
 					mbThread.getGroupId())
+			).<String, Map<String, String>>put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_MESSAGE, mbThread.getThreadId(),
+					"postMessageBoardThreadMessageBoardMessageBatch",
+					mbThread.getUserId(), MBConstants.RESOURCE_NAME,
+					mbThread.getGroupId())
 			).put(
 				"get",
 				addAction(

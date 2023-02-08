@@ -237,6 +237,7 @@ public class UserAccountResourceImpl
 							"EmailAddress",
 						"getAccountUserAccountsByExternalReferenceCodePage",
 						"getAccountUserAccountsPage", "postAccountUserAccount",
+						"postAccountUserAccountBatch",
 						"postAccountUserAccountByEmailAddress",
 						"postAccountUserAccountByExternalReferenceCode",
 						"postAccountUserAccountByExternalReferenceCodeBy" +

@@ -162,6 +162,13 @@ public class MessageBoardThreadResourceImpl
 					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
 					mbCategory.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_MESSAGE, mbCategory.getCategoryId(),
+					"postMessageBoardSectionMessageBoardThreadBatch",
+					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
+					mbCategory.getGroupId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, mbCategory.getCategoryId(),

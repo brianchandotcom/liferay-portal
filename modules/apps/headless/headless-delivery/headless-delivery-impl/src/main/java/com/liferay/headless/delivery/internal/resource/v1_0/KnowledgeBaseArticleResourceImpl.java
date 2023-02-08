@@ -209,6 +209,12 @@ public class KnowledgeBaseArticleResourceImpl
 					"postKnowledgeBaseFolderKnowledgeBaseArticle",
 					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					KBActionKeys.ADD_KB_ARTICLE,
+					"postKnowledgeBaseFolderKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW,

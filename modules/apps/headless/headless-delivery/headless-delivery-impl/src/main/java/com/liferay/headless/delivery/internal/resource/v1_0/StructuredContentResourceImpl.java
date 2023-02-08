@@ -404,6 +404,13 @@ public class StructuredContentResourceImpl
 					journalFolder.getUserId(), JournalConstants.RESOURCE_NAME,
 					journalFolder.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_ARTICLE, journalFolder.getFolderId(),
+					"postStructuredContentFolderStructuredContentBatch",
+					journalFolder.getUserId(), JournalConstants.RESOURCE_NAME,
+					journalFolder.getGroupId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, journalFolder.getFolderId(),

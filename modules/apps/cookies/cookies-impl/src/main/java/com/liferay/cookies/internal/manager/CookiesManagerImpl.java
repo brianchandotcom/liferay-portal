@@ -230,11 +230,7 @@ public class CookiesManagerImpl implements CookiesManager {
 			return false;
 		}
 
-		Map<String, Cookie> cookiesMap = new HashMap<>();
-
-		if (httpServletRequest != null) {
-			cookiesMap = _getCookiesMap(httpServletRequest);
-		}
+		Map<String, Cookie> cookiesMap = _getCookiesMap(httpServletRequest);
 
 		for (String cookieName : cookieNames) {
 			Cookie cookie = cookiesMap.remove(
@@ -382,12 +378,8 @@ public class CookiesManagerImpl implements CookiesManager {
 				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
 		}
 
-		String consentCookieValue = null;
-
-		if (httpServletRequest != null) {
-			consentCookieValue = getCookieValue(
-				consentCookieName, httpServletRequest);
-		}
+		String consentCookieValue = getCookieValue(
+			consentCookieName, httpServletRequest);
 
 		if (Validator.isNotNull(consentCookieValue)) {
 			return GetterUtil.getBoolean(consentCookieValue);
@@ -503,6 +495,10 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	private Map<String, Cookie> _getCookiesMap(
 		HttpServletRequest httpServletRequest) {
+
+		if (httpServletRequest == null) {
+			return new HashMap<>();
+		}
 
 		Map<String, Cookie> cookiesMap =
 			(Map<String, Cookie>)httpServletRequest.getAttribute(

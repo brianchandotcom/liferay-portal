@@ -34,6 +34,7 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -97,6 +98,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -105,6 +107,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -158,6 +161,11 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-171440", "true"
+			).build());
+
 		_irrelevantObjectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				_objectDefinitionLocalService,
@@ -338,6 +346,10 @@ public class ObjectEntryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-171440", "false"
+			).build());
 
 		// Do not rely on @DeleteAfterTestRun because object entries that
 		// reference a required list type entry cannot be deleted before it is
@@ -868,6 +880,8 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertNotNull(objectEntry);
+
+		_testAddObjectEntryWithObjectValidationOldValueRule();
 	}
 
 	@Test
@@ -2520,6 +2534,106 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return values;
+	}
+
+	private void _testAddObjectEntryWithObjectValidationOldValueRule()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "alfa"),
+					new ObjectFieldBuilder(
+					).businessType(
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST
+					).defaultValue(
+						"listTypeEntryKey1"
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Bravo")
+					).listTypeDefinitionId(
+						_listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"bravo"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).required(
+						true
+					).state(
+						true
+					).build()));
+
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oldValue(\"bravo\") == \"listTypeEntryKey1\"");
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"alfa", "peter"
+			).put(
+				"bravo", "listTypeEntryKey2"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"isEmpty(oldValue(\"alfa\"))");
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"alfa", "john"
+			).put(
+				"bravo", "listTypeEntryKey3"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		String errorMessage = RandomTestUtil.randomString();
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(errorMessage),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oldValue(\"alfa\") == \"\"");
+
+		try {
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"alfa", "john"
+				).put(
+					"bravo", "listTypeEntryKey3"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+		catch (ModelListenerException modelListenerException) {
+			String message = modelListenerException.getMessage();
+
+			Assert.assertTrue(message.contains(errorMessage));
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private void _testScope(long groupId, String scope, boolean expectSuccess)

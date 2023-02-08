@@ -1,10 +1,10 @@
-@component-name = "portal-database-upgrade-tool"
+@component-name = "portal-database-upgrade-framework"
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Database Upgrade Tool";
+	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
 		SignIn.signIn();

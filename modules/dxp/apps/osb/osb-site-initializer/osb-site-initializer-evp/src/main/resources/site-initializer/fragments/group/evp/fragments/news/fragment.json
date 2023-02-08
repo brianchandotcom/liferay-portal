@@ -1,9 +1,9 @@
 {
-	"configurationPath": "configuration.json",
+	"configurationPath": "index.json",
 	"cssPath": "index.css",
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "News",
+	"name": "News Fragment",
 	"type": "component"
 }

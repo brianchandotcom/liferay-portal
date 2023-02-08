@@ -1,16 +1,10 @@
-.evp-news-container {
-	border: 1px solid;
-	border-radius: 8px;
+.evp-news .subscribe-action {
+	display: flex;
+	position: absolute;
+	right: 0;
+	top: -55px;
 }
 
-.evp-news-container img {
-	height: 24px;
-	width: 24px;
-}
-
-.evp-news-container .news-content .news-text {
-	display: -webkit-box;
-	overflow: hidden;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
+.evp-news .btn-secondary {
+	border: 0;
 }

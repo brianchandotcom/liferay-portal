@@ -17,6 +17,7 @@ package com.liferay.segments.asah.connector.internal.messaging.test;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -195,6 +196,7 @@ public class IndividualSegmentsCheckerTest {
 
 			SegmentsEntry segmentsEntry = segmentsEntryList.get(0);
 
+			Assert.assertEquals(StringPool.BLANK, segmentsEntry.getCriteria());
 			Assert.assertEquals(
 				"Test segment",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));

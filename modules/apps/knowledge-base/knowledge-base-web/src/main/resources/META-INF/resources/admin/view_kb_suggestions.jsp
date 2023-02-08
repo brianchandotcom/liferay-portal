@@ -62,7 +62,7 @@ request.setAttribute("view_kb_suggestions.jsp-searchContainer", kbCommentsSearch
 %>
 
 <c:choose>
-	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
 
 		<div class="knowledge-base-admin-content">
@@ -99,6 +99,6 @@ request.setAttribute("view_kb_suggestions.jsp-searchContainer", kbCommentsSearch
 	<liferay-util:include page="/admin/common/view_kb_suggestions_by_status.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-156421") %>'>
 	</div>
 </c:if>

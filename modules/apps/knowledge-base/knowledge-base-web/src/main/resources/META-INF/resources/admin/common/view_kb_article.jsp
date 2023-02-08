@@ -63,9 +63,9 @@ if (portletTitleBasedNavigation) {
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
 		<clay:container-fluid>
-			<ul class="<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) ? "justify-content-end" : "" %> navbar-nav navbar-nav-expand">
+			<ul class="<%= FeatureFlagManagerUtil.isEnabled("LPS-166643") ? "justify-content-end" : "" %> navbar-nav navbar-nav-expand">
 				<c:choose>
-					<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
 						<li class="nav-item">
 							<clay:link
 								aria-label='<%= LanguageUtil.get(request, "edit") %>'
@@ -90,7 +90,7 @@ if (portletTitleBasedNavigation) {
 					/>
 				</li>
 
-				<c:if test='<%= viewKBArticleDisplayContext.isSubscriptionEnabled(kbArticle) && GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166643")) %>'>
+				<c:if test='<%= viewKBArticleDisplayContext.isSubscriptionEnabled(kbArticle) && FeatureFlagManagerUtil.isEnabled("LPS-166643") %>'>
 					<li class="nav-item">
 						<clay:link
 							aria-label="<%= viewKBArticleDisplayContext.getSubscriptionLabel(kbArticle) %>"

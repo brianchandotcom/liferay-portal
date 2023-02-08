@@ -16,6 +16,7 @@ package com.liferay.notification.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.io.Serializable;
 
@@ -40,11 +41,7 @@ public class NotificationQueueConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (scope == ExtendedObjectClassDefinition.Scope.COMPANY) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-173894");
 	}
 
 }

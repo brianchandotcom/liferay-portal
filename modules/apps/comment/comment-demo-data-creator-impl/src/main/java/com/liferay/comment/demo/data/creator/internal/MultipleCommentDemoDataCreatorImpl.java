@@ -39,22 +39,18 @@ public class MultipleCommentDemoDataCreatorImpl
 
 	@Override
 	public void create(ClassedModel classedModel) throws PortalException {
-		List<User> users = _userLocalService.getUsers(
-			0, Math.min(_userLocalService.getUsersCount(), _MAX_USERS));
-
-		List<Long> userIds = TransformUtil.transform(
-			users,
-			user -> {
-				if (_isRegularUser(user)) {
-					return user.getUserId();
-				}
-
-				return null;
-			});
-
 		_addComments(
-			userIds, classedModel, _COMMENT_ID,
-			RandomUtil.nextInt(_MAX_COMMENTS), 1);
+			TransformUtil.transform(
+				_userLocalService.getUsers(
+					0, Math.min(_userLocalService.getUsersCount(), _MAX_USERS)),
+				user -> {
+					if (_isRegularUser(user)) {
+						return user.getUserId();
+					}
+
+					return null;
+				}),
+			classedModel, _COMMENT_ID, RandomUtil.nextInt(_MAX_COMMENTS), 1);
 	}
 
 	@Override

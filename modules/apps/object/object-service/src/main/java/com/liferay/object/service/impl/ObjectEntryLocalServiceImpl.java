@@ -1737,10 +1737,10 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
-	private Map<String, Object> _getColumnMap(
+	private Map<String, Object> _getColumns(
 		ObjectDefinition objectDefinition) {
 
-		Map<String, Object> columnMap = new HashMap<>();
+		Map<String, Object> columns = new HashMap<>();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -1768,10 +1768,10 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinition.getObjectDefinitionId(),
 					objectField.getName());
 
-			columnMap.put(objectField.getName(), column);
+			columns.put(objectField.getName(), column);
 		}
 
-		return columnMap;
+		return columns;
 	}
 
 	private String _getDBType(Alias<?> alias, long objectDefinitionId)
@@ -2286,7 +2286,7 @@ public class ObjectEntryLocalServiceImpl
 			selectExpressions.add(column);
 		}
 
-		Map<String, Object> columnMap = null;
+		Map<String, Object> columns = null;
 
 		for (ObjectField objectField :
 				dynamicObjectDefinitionTable.getObjectFields()) {
@@ -2481,8 +2481,8 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				if (columnMap == null) {
-					columnMap = _getColumnMap(objectDefinition);
+				if (columns == null) {
+					columns = _getColumns(objectDefinition);
 				}
 
 				DDMExpression<Expression<?>> ddmExpression =
@@ -2491,7 +2491,7 @@ public class ObjectEntryLocalServiceImpl
 							String.valueOf(script)
 						).build());
 
-				ddmExpression.setVariables(columnMap);
+				ddmExpression.setVariables(columns);
 
 				Expression<?> expression = ddmExpression.getDSLExpression();
 

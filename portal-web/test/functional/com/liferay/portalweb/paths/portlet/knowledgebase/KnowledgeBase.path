@@ -349,6 +349,19 @@
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-page-template')]]</td>
 	<td></td>
 </tr>
+
+<!--SIDE_BAR-->
+
+<tr>
+	<td>HOME_FOLDER</td>
+	<td>//div[contains(@class,'autofit-col-expand')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

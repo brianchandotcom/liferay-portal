@@ -700,7 +700,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_fragmentName}']//div[@draggable='true']</td>
 	<td></td>
 </tr>
 <tr>
@@ -710,7 +710,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM</td>
-	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']</td>
+	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_fragmentName}']//div[@draggable='true']</td>
 	<td></td>
 </tr>
 <tr>
@@ -720,12 +720,12 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_WIDGET</td>
-	<td>xpath=(//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_portletName}'])[${key_indexItem}]</td>
+	<td>xpath=(//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='${key_portletName}']//div[@draggable='true'])[${key_indexItem}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM</td>
-	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_portletName}']</td>
+	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='${key_portletName}']//div[@draggable='true']</td>
 	<td></td>
 </tr>
 <tr>

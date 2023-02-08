@@ -35,11 +35,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -117,13 +116,17 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		Set<String> dispatchTaskExecutorTypes =
 			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
 
-		Stream<String> stream = dispatchTaskExecutorTypes.parallelStream();
+		Set<String> filteredDispatchTaskExecutorTypes = new HashSet<>();
 
-		return stream.filter(
-			type -> !_dispatchTaskExecutorRegistry.isHiddenInUI(type)
-		).collect(
-			Collectors.toSet()
-		);
+		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
+			if (!_dispatchTaskExecutorRegistry.isHiddenInUI(
+					dispatchTaskExecutorType)) {
+
+				filteredDispatchTaskExecutorTypes.add(dispatchTaskExecutorType);
+			}
+		}
+
+		return filteredDispatchTaskExecutorTypes;
 	}
 
 	public DispatchTrigger getDispatchTrigger() {

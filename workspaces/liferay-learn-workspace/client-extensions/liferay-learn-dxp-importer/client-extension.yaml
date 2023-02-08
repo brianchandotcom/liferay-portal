@@ -1,0 +1,13 @@
+liferay-learn-dxp-importer:
+    homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
+    name: Liferay Learn DXP Importer
+    scopes:
+        - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Headless.Delivery.everything
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - liferay-json-web-services.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountEmailAddress: test@$[conf:dxp.lxc.liferay.com.virtualInstanceId]

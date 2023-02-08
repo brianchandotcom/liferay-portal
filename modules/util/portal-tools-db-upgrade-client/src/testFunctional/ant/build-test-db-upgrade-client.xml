@@ -9,6 +9,11 @@
 			<stop-one-java-process process.name="LocalProcess" />
 			<stop-one-java-process process.name="DBUpgrader" />
 
+			<exec executable="/bin/bash" logError="true" output="true">
+				<arg value="-c" />
+				<arg value="pkill -f db.upgrade" />
+			</exec>
+
 			<delete file="${db.upgrade.client.log}" />
 			<delete file="temp.log" />
 		</sequential>
@@ -509,6 +514,8 @@ upgrade.database.auto.run=false</echo>
 			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-debug-options.expect"
 		/>
+
+		<clean-database-upgrade-client />
 	</target>
 
 	<target name="check-upgrade-properties-app-db-set">
@@ -642,12 +649,5 @@ upgrade.database.auto.run=false</echo>
 		/>
 
 		<clean-database-upgrade-client />
-	</target>
-
-	<target name="kill-java-upgrade-process">
-		<exec executable="/bin/bash" logError="true" output="true">
-			<arg value="-c" />
-			<arg value="pkill -f db_upgrade" />
-		</exec>
 	</target>
 </project>

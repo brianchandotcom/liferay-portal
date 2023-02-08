@@ -171,10 +171,6 @@ definition {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-upgrade-debug-options");
-
-		AntCommand(
-			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
-			value1 = "kill-java-upgrade-process");
 	}
 
 	@description = "LPS-158522: Upgrade client can run with app server and database properties set"

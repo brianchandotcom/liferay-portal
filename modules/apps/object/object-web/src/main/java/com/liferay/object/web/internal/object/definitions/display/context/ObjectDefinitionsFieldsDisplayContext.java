@@ -28,13 +28,12 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -161,7 +160,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 	}
 
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164948"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
 			return ObjectCodeEditorUtil.getCodeEditorElements(
 				ddmExpressionOperator ->
 					_filterableDDMExpressionOperators.contains(

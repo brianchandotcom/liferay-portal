@@ -21,6 +21,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -29,14 +30,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -113,7 +112,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
 			objectDefinition.toString());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			objectDefinitionJSONObject.remove("storageType");
 		}
 

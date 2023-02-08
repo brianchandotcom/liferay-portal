@@ -19,11 +19,10 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -330,8 +329,7 @@ public class ObjectCodeEditorUtil {
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
 				if (StringUtil.equals(
 						ddmExpressionFunction._key, "old-value") &&
-					(!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-171440")) ||
+					(!FeatureFlagManagerUtil.isEnabled("LPS-171440") ||
 					 (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION !=
 						 2))) {
 
@@ -339,8 +337,7 @@ public class ObjectCodeEditorUtil {
 				}
 
 				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
-					!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-164948"))) {
+					!FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
 
 					continue;
 				}

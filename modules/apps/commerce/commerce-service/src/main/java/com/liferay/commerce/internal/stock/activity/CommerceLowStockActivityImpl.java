@@ -19,8 +19,11 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,10 +62,24 @@ public class CommerceLowStockActivityImpl implements CommerceLowStockActivity {
 		return _language.get(locale, "set-as-unpublished");
 	}
 
+	@Override
+	public Map<Locale, String> getLabelMap() {
+		Map<Locale, String> labelMap = new HashMap<>();
+
+		for (Locale locale : _languageUtil.getAvailableLocales()) {
+			labelMap.put(locale, getLabel(locale));
+		}
+
+		return labelMap;
+	}
+
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LanguageUtil _languageUtil;
 
 }

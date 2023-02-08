@@ -579,6 +579,19 @@ components:
                     readOnly: true
                     type: string
             type: object
+        LowStockAction:
+            properties:
+                key:
+                    type: string
+                label:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Low Stock Action
+                        hr_HR: Low Stock Action HR
+                        hu_HU: Low Stock Action HU
+                    readOnly: true
+                    type: object
         MappedProduct:
             properties:
                 actions:
@@ -2322,6 +2335,55 @@ paths:
             summary: Updates a group product by its ID.
             tags:
                 - GroupedProduct
+    /low-stock-actions:
+        get:
+            description:
+                Retrive low stock actions for products.
+            operationId: getLowStockActionsPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/LowStockAction"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/LowStockAction"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["LowStockAction"]
     /mapped-products/{mappedProductId}:
         delete:
             operationId: deleteMappedProduct

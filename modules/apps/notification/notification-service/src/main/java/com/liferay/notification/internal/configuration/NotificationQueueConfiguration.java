@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(
 	category = "notifications",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY, strictScope = true
+	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	description = "notification-queue-configuration-description",

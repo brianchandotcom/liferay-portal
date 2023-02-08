@@ -54,7 +54,29 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						%>
 
 						<c:if test="<%= workflowedModel != null %>">
-							<aui:workflow-status bean="<%= bean %>" model="<%= model %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= workflowedModel.getStatus() %>" />
+
+							<%
+							boolean hasGroupId = false;
+
+							Class<?> clazz = bean.getClass();
+
+							try {
+								if (Validator.isNotNull(clazz.getField("GROUPID_COLUMN_BITMASK"))) {
+									hasGroupId = true;
+								}
+							}
+							catch (NoSuchFieldException noSuchFieldException) {
+							}
+							%>
+
+							<c:choose>
+								<c:when test="<%= hasGroupId %>">
+									<aui:workflow-status bean="<%= bean %>" model="<%= model %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= workflowedModel.getStatus() %>" />
+								</c:when>
+								<c:otherwise>
+									<aui:workflow-status model="<%= model %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= workflowedModel.getStatus() %>" />
+								</c:otherwise>
+							</c:choose>
 						</c:if>
 					</c:if>
 				</div>

@@ -25,14 +25,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -160,9 +159,7 @@ public class ExportConfigurationMVCResourceCommand
 		if (!Scope.SYSTEM.equals(scope)) {
 			properties.put(scope.getPropertyKey(), scopePK);
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-155284"))) {
-
+			if (FeatureFlagManagerUtil.isEnabled("LPS-155284")) {
 				_configurationExportImportProcessor.prepareForExport(
 					pid, properties);
 			}

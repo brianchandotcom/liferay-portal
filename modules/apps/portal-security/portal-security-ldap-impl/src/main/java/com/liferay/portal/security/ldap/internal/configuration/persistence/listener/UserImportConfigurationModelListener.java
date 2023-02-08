@@ -19,7 +19,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -148,11 +147,6 @@ public class UserImportConfigurationModelListener extends BaseMessageListener {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference(
-		target = "(destination.name=" + LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT + ")"
-	)
-	private Destination _destination;
 
 	@Reference(
 		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"

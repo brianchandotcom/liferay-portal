@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -498,14 +499,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	private void _refreshJSModuleCaches(
-		Collection<JSBundle> jsBundles,
+		Map<Bundle, JSBundle> jsBundlesMap,
 		ServiceTrackerList<NPMRegistryUpdatesListener>
 			npmRegistryUpdatesListeners) {
 
-		if (jsBundles == null) {
-			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-			jsBundles = tracked.values();
+		if (jsBundlesMap == null) {
+			jsBundlesMap = _bundleTracker.getTracked();
 		}
 
 		Map<String, JSModule> jsModules = new HashMap<>();
@@ -515,7 +514,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
 		Map<String, String> exactMatchMap = new HashMap<>();
 
-		for (JSBundle jsBundle : jsBundles) {
+		for (Bundle bundle : jsBundlesMap.keySet()) {
+			_processLegacyBridges(bundle);
+		}
+
+		for (JSBundle jsBundle : jsBundlesMap.values()) {
 			for (JSPackage jsPackage : jsBundle.getJSPackages()) {
 				jsPackages.put(jsPackage.getId(), jsPackage);
 				jsPackageVersions.add(new JSPackageVersion(jsPackage));
@@ -670,18 +673,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 				return null;
 			}
 
-			_processLegacyBridges(bundle);
-
 			if (!_activationThreadLocal.get()) {
-				Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-				Collection<JSBundle> jsBundles = new ArrayList<>(
-					tracked.values());
-
-				jsBundles.add(jsBundle);
-
 				_refreshJSModuleCaches(
-					jsBundles, _getNPMRegistryUpdatesListeners());
+					HashMapBuilder.create(
+						_bundleTracker.getTracked()
+					).put(
+						bundle, jsBundle
+					).build(),
+					_getNPMRegistryUpdatesListeners());
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :

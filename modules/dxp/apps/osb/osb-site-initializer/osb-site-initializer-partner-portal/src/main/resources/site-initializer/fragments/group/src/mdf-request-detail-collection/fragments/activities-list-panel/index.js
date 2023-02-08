@@ -165,6 +165,8 @@ const CampaignActivityTable = ({mdfRequestActivity}) => {
 		),
 	};
 
+	const options = {timeZone: 'UTC'};
+
 	return (
 		<Table
 			items={[
@@ -186,7 +188,8 @@ const CampaignActivityTable = ({mdfRequestActivity}) => {
 					value: new Date(
 						mdfRequestActivity.startDate
 					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+						options
 					),
 				},
 				{
@@ -194,7 +197,8 @@ const CampaignActivityTable = ({mdfRequestActivity}) => {
 					value: new Date(
 						mdfRequestActivity.endDate
 					).toLocaleDateString(
-						Liferay.ThemeDisplay.getBCP47LanguageId()
+						Liferay.ThemeDisplay.getBCP47LanguageId(),
+						options
 					),
 				},
 			]}

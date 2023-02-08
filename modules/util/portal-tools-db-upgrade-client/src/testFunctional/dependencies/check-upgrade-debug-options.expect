@@ -9,8 +9,6 @@ expect {
 	timeout {send_user "\"agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y\" debug output is not present";exit 2}
 }
 
-set timeout 5
-
 expect {
 	"Listening for transport dt_socket at address: 8001" {}
 	timeout {send_user "\"Listening for transport dt_socket at address: 8001\" debug output is not present";exit 2}

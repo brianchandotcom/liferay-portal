@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
-	service = UserImportConfigurationModelListener.class
+	service = {}
 )
 public class UserImportConfigurationModelListener extends BaseMessageListener {
 

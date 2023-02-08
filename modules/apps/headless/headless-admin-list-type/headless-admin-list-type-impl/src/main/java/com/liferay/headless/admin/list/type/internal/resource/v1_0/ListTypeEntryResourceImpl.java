@@ -20,6 +20,7 @@ import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntry
 import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypeEntryEntityModel;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -148,7 +148,7 @@ public class ListTypeEntryResourceImpl
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-168886")) {
 			return ListTypeEntryUtil.toListTypeEntry(
 				null, contextAcceptLanguage.getPreferredLocale(),
 				_listTypeEntryService.addListTypeEntry(
@@ -171,7 +171,7 @@ public class ListTypeEntryResourceImpl
 			Long listTypeEntryId, ListTypeEntry listTypeEntry)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168886"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-168886")) {
 			return ListTypeEntryUtil.toListTypeEntry(
 				null, contextAcceptLanguage.getPreferredLocale(),
 				_listTypeEntryService.updateListTypeEntry(

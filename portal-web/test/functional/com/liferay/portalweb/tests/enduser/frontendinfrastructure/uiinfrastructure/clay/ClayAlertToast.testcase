@@ -124,6 +124,8 @@ definition {
 
 				fail("FAIL. Y coordinate positions do not match.");
 			}
+
+			takeScreenshot();
 		}
 	}
 

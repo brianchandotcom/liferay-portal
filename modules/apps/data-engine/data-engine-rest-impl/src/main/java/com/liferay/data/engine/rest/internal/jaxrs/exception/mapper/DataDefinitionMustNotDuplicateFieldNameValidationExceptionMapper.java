@@ -16,12 +16,9 @@ package com.liferay.data.engine.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -48,13 +45,10 @@ public class DataDefinitionMustNotDuplicateFieldNameValidationExceptionMapper
 		DataDefinitionValidationException.MustNotDuplicateFieldName
 			mustNotDuplicateFieldName) {
 
-		Set<String> duplicatedFieldNames =
-			mustNotDuplicateFieldName.getDuplicatedFieldNames();
-
-		Stream<String> stream = duplicatedFieldNames.stream();
-
 		return new Problem(
-			stream.collect(Collectors.joining(StringPool.COMMA)),
+			StringUtil.merge(
+				mustNotDuplicateFieldName.getDuplicatedFieldNames(),
+				StringPool.COMMA),
 			Response.Status.BAD_REQUEST, mustNotDuplicateFieldName.getMessage(),
 			DataDefinitionValidationException.MustNotDuplicateFieldName.class.
 				getName());

@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,14 +75,19 @@ public class LayoutGeneralScreenNavigationEntry
 			_formNavigatorCategoryProvider.getFormNavigatorCategories(
 				FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT);
 
-		Stream<FormNavigatorCategory> formNavigatorCategoryStream =
-			formNavigatorCategories.stream();
+		for (FormNavigatorCategory formNavigatorCategory :
+				formNavigatorCategories) {
 
-		return formNavigatorCategoryStream.anyMatch(
-			category -> ListUtil.isNotEmpty(
-				_formNavigatorEntryProvider.getFormNavigatorEntries(
-					FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
-					category.getKey(), user, layout)));
+			if (ListUtil.isNotEmpty(
+					_formNavigatorEntryProvider.getFormNavigatorEntries(
+						FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
+						formNavigatorCategory.getKey(), user, layout))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

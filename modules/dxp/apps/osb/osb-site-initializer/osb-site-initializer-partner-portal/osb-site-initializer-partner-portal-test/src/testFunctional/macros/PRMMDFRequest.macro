@@ -147,6 +147,13 @@ definition {
 		return ${nextDayDate};
 	}
 
+	@summary = "Go to MDF"
+	macro goToMDF {
+		Click(
+			key_MDFName = "${campaignName}",
+			locator1 = "PRMMDFRequest#REQUEST_ID");
+	}
+
 	@summary = "Fill the date fields on Activity Form"
 	macro insertDate {
 		if (!(isSet(activityIndex))) {

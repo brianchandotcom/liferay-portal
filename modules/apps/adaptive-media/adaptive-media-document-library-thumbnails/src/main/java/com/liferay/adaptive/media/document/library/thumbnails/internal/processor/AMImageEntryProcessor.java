@@ -50,7 +50,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -148,10 +147,14 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
 
-		Optional<Long> valueOptional = adaptiveMedia.getValueOptional(
+		Long value = adaptiveMedia.getValue(
 			AMAttribute.getContentLengthAMAttribute());
 
-		return valueOptional.orElse(0L);
+		if (value == null) {
+			return 0L;
+		}
+
+		return value;
 	}
 
 	@Override
@@ -196,10 +199,14 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
 
-		Optional<Long> valueOptional = adaptiveMedia.getValueOptional(
+		Long value = adaptiveMedia.getValue(
 			AMAttribute.getContentLengthAMAttribute());
 
-		return valueOptional.orElse(0L);
+		if (value == null) {
+			return 0L;
+		}
+
+		return value;
 	}
 
 	@Override

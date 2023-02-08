@@ -31,7 +31,6 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -228,9 +227,9 @@ public class AMImageEntryProcessorTest {
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMedia.getValueOptional(Mockito.any())
+			_adaptiveMedia.getValue(Mockito.any())
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		Mockito.when(
@@ -483,9 +482,9 @@ public class AMImageEntryProcessorTest {
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMedia.getValueOptional(Mockito.any())
+			_adaptiveMedia.getValue(Mockito.any())
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		Mockito.when(

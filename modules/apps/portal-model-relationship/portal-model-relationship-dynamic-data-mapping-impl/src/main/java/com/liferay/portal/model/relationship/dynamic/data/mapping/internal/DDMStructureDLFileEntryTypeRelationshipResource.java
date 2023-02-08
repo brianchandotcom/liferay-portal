@@ -17,16 +17,14 @@ package com.liferay.portal.model.relationship.dynamic.data.mapping.internal;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.relationship.Relationship;
 import com.liferay.portal.relationship.RelationshipResource;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,23 +53,20 @@ public class DDMStructureDLFileEntryTypeRelationshipResource
 	private List<DLFileEntryType> _getStructureFileEntryTypes(
 		DDMStructure structure) {
 
-		List<DDMStructureLink> ddmStructureLinks =
-			_ddmStructureLinkLocalService.getStructureLinks(
-				structure.getStructureId());
-
-		Stream<DDMStructureLink> stream = ddmStructureLinks.stream();
-
 		long classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntryType.class);
 
-		return stream.filter(
-			ddmStructureLink -> ddmStructureLink.getClassNameId() == classNameId
-		).map(
-			ddmStructureLink -> _dlFileEntryTypeLocalService.fetchFileEntryType(
-				ddmStructureLink.getClassPK())
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			_ddmStructureLinkLocalService.getStructureLinks(
+				structure.getStructureId()),
+			ddmStructureLink -> {
+				if (ddmStructureLink.getClassNameId() == classNameId) {
+					return _dlFileEntryTypeLocalService.fetchFileEntryType(
+						ddmStructureLink.getClassPK());
+				}
+
+				return null;
+			});
 	}
 
 	@Reference

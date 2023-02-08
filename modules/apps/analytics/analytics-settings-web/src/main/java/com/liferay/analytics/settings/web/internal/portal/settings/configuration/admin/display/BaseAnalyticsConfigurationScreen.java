@@ -18,12 +18,11 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.analytics.settings.web.internal.user.AnalyticsUsersManager;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -60,7 +59,7 @@ public abstract class BaseAnalyticsConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10757"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
 			return false;
 		}
 

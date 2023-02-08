@@ -97,6 +97,15 @@ const ImagePicker = ({
 
 		onFocus(event);
 
+		let url = itemSelectorURL;
+
+		if (Liferay.FeatureFlags['LPS-153332']) {
+			url = addParams(
+				`selectedFileEntryId=${selectedImageId}`,
+				itemSelectorURL
+			);
+		}
+
 		openSelectionModal({
 			onClose: () => onBlur(event),
 			onSelect: handleFieldChanged,
@@ -105,10 +114,7 @@ const ImagePicker = ({
 				Liferay.Language.get('select-x'),
 				Liferay.Language.get('image')
 			),
-			url: addParams(
-				`selectedFileEntryId=${selectedImageId}`,
-				itemSelectorURL
-			),
+			url,
 		});
 	};
 

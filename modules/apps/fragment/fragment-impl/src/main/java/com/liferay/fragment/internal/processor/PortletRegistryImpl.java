@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.fragment.contributor.PortletAliasRegistration;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -149,25 +148,22 @@ public class PortletRegistryImpl implements PortletRegistry {
 			return;
 		}
 
-		Stream<String> stream = fragmentEntryLinkPortletIds.stream();
+		List<Portlet> portlets = TransformUtil.transform(
+			fragmentEntryLinkPortletIds,
+			fragmentEntryLinkPortletId -> {
+				Portlet portlet = _portletLocalService.getPortletById(
+					fragmentEntryLinkPortletId);
 
-		List<Portlet> portlets = stream.map(
-			fragmentEntryLinkPortletId -> _portletLocalService.getPortletById(
-				fragmentEntryLinkPortletId)
-		).filter(
-			portlet -> {
 				if ((portlet == null) || !portlet.isActive() ||
 					portlet.isUndeployedPortlet()) {
 
-					return false;
+					return null;
 				}
 
-				return true;
-			}
-		).distinct(
-		).collect(
-			Collectors.toList()
-		);
+				return portlet;
+			});
+
+		ListUtil.distinct(portlets);
 
 		for (Portlet portlet : portlets) {
 			try {

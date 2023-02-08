@@ -144,8 +144,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
-	@priority = 5
-	test CanViewErrorMessageForUnsuporttedFiles {
+	@priority = "5"
+	test CannotCreateEnvelopeWithUnsupportedFiles {
 		property solutions.acceptance = "true";
 
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
@@ -154,11 +154,15 @@ definition {
 			dmDocumentFile = "Document_2.mp4",
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test CanViewErrorMessageForUnsuporttedFiles",
+			envelopeName = "Poshi Test CannotCreateEnvelopeWithUnsupportedFiles",
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
-		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
+		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
+
+		AssertElementPresent(
+			key_value = "Send",
+			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

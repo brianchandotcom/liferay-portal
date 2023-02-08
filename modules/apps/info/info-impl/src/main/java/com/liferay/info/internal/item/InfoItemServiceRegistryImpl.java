@@ -52,6 +52,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,8 +68,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -177,15 +176,9 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 	public <P> List<InfoItemClassDetails> getInfoItemClassDetails(
 		Class<P> serviceClass) {
 
-		List<String> infoItemClassNames = getInfoItemClassNames(serviceClass);
-
-		Stream<String> infoItemClassNamesStream = infoItemClassNames.stream();
-
-		return infoItemClassNamesStream.map(
-			itemClassName -> _getInfoItemClassDetails(itemClassName)
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			getInfoItemClassNames(serviceClass),
+			itemClassName -> _getInfoItemClassDetails(itemClassName));
 	}
 
 	@Override

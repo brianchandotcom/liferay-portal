@@ -63,6 +63,7 @@ const Main = ({
 	onChange,
 	onClick,
 	onFocus,
+	onKeyDown,
 	onKeywordBlur,
 	onKeywordChange,
 	onReferenceBlur,
@@ -110,6 +111,7 @@ const Main = ({
 					}
 				}}
 				onFocus={onFocus}
+				onKeyDown={onKeyDown}
 				placeholder={placeholder}
 				readOnly={readOnly}
 				required={required}

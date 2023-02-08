@@ -88,6 +88,7 @@ const Text = ({
 	onBlur,
 	onChange,
 	onFocus,
+	onKeyDown,
 	placeholder,
 	setError,
 	shouldUpdateValue,
@@ -180,6 +181,7 @@ const Text = ({
 						}}
 						onChange={handleChangeInput}
 						onFocus={onFocus}
+						onKeyDown={onKeyDown}
 						placeholder={placeholder}
 						ref={inputRef}
 						type="text"
@@ -456,6 +458,7 @@ const Main = ({
 	onBlur,
 	onChange,
 	onFocus,
+	onKeyDown,
 	options = [],
 	placeholder,
 	predefinedValue = '',
@@ -508,6 +511,7 @@ const Main = ({
 				onBlur={onBlur}
 				onChange={onChange}
 				onFocus={onFocus}
+				onKeyDown={onKeyDown}
 				options={optionsMemo}
 				placeholder={placeholder}
 				setError={setError}

@@ -8,4 +8,5 @@ dependencies {
 	compileOnly project(":apps:release-feature-flag:release-feature-flag-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
+	compileOnly project(":core:petra:petra-function")
 }

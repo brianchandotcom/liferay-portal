@@ -133,12 +133,20 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		).setActionName(
 			"/document_library/image_editor"
 		).setParameter(
-			"folderId", _getFolderId()
+			"folderId", getFolderId()
 		).buildPortletURL();
 	}
 
 	public String[] getExtensions() {
 		return _dlItemSelectorView.getExtensions();
+	}
+
+	public long getFolderId() throws PortalException {
+		if (_folderId == null) {
+			_folderId = _getFolderIdFromRequestParameters(_httpServletRequest);
+		}
+
+		return _folderId;
 	}
 
 	public String getItemSelectedEventName() {
@@ -164,7 +172,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_portletURL, liferayPortletResponse)
 		).setParameter(
-			"folderId", _getFolderId()
+			"folderId", getFolderId()
 		).setParameter(
 			"selectedTab", getTitle()
 		).buildPortletURL();
@@ -234,14 +242,14 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			return (List)
 				fileEntryTypeCapability.
 					getFoldersAndFileEntriesAndFileShortcuts(
-						_getStagingAwareGroupId(), _getFolderId(),
+						_getStagingAwareGroupId(), getFolderId(),
 						_getMimeTypes(), fileEntryTypeId, false,
 						WorkflowConstants.STATUS_APPROVED, startAndEnd[0],
 						startAndEnd[1], repositoryModelOrderByComparator);
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
-			_repository.getRepositoryId(), _getFolderId(),
+			_repository.getRepositoryId(), getFolderId(),
 			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), true, false,
 			startAndEnd[0], startAndEnd[1], repositoryModelOrderByComparator);
 	}
@@ -270,12 +278,12 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 			return fileEntryTypeCapability.
 				getFoldersAndFileEntriesAndFileShortcutsCount(
-					_getStagingAwareGroupId(), _getFolderId(), _getMimeTypes(),
+					_getStagingAwareGroupId(), getFolderId(), _getMimeTypes(),
 					fileEntryTypeId, false, WorkflowConstants.STATUS_APPROVED);
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-			_getStagingAwareGroupId(), _getFolderId(),
+			_getStagingAwareGroupId(), getFolderId(),
 			WorkflowConstants.STATUS_APPROVED, _getMimeTypes(), false, false);
 	}
 
@@ -301,7 +309,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 				DLFileEntryConstants.getClassName());
 			long defaultFileEntryTypeId =
 				DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
-					_getFolderId());
+					getFolderId());
 
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
 				if (assetVocabulary.isRequired(
@@ -317,7 +325,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		).setActionName(
 			"/document_library/upload_file_entry"
 		).setParameter(
-			"folderId", _getFolderId()
+			"folderId", getFolderId()
 		).buildPortletURL();
 	}
 
@@ -329,7 +337,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		if (!ModelResourcePermissionUtil.contains(
 				_folderModelResourcePermission,
 				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _getFolderId(),
+				_themeDisplay.getScopeGroupId(), getFolderId(),
 				ActionKeys.ADD_DOCUMENT)) {
 
 			_showDragAndDropZone = false;
@@ -337,9 +345,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		else {
 			if (DLUtil.hasWorkflowDefinitionLink(
 					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getFolderId(),
+					_themeDisplay.getScopeGroupId(), getFolderId(),
 					DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
-						_getFolderId()))) {
+						getFolderId()))) {
 
 				_showDragAndDropZone = false;
 			}
@@ -369,29 +377,28 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			infoItemItemSelectorCriterion.getItemSubtype());
 	}
 
-	private long _getFolderId() throws PortalException {
-		if (_folderId != null) {
-			return _folderId;
+	private long _getFolderIdFromRequestParameters(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (httpServletRequest.getParameter("folderId") != null) {
+			return ParamUtil.getLong(
+				httpServletRequest, "folderId",
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		}
 
-		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
 		long selectedFileEntryId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(_httpServletRequest),
-			"_com_liferay_journal_web_portlet_JournalPortlet_" +
-				"selectedFileEntryId");
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
+			"selectedFileEntryId");
 
 		if (selectedFileEntryId != 0) {
 			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 				selectedFileEntryId);
 
-			_folderId = fileEntry.getFolderId();
+			return fileEntry.getFolderId();
 		}
 
-		_folderId = ParamUtil.getLong(
-			_httpServletRequest, "folderId", _folderId);
-
-		return _folderId;
+		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
 	private long[] _getGroupIds() throws PortalException {
@@ -454,9 +461,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		Repository repository = null;
 
-		if (_getFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (getFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
-				_getFolderId());
+				getFolderId());
 
 			if ((dlFolder != null) && dlFolder.isMountPoint()) {
 				repository = RepositoryProviderUtil.getRepository(
@@ -464,7 +471,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			}
 			else {
 				repository = RepositoryProviderUtil.getFolderRepository(
-					_getFolderId());
+					getFolderId());
 			}
 		}
 		else {
@@ -501,7 +508,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		searchContext.setAttribute("mimeTypes", _getMimeTypes());
 		searchContext.setEnd(startAndEnd[1]);
-		searchContext.setFolderIds(new long[] {_getFolderId()});
+		searchContext.setFolderIds(new long[] {getFolderId()});
 		searchContext.setGroupIds(_getGroupIds());
 		searchContext.setStart(startAndEnd[0]);
 

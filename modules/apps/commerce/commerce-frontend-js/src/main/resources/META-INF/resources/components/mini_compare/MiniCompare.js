@@ -98,8 +98,12 @@ function MiniCompare(props) {
 	useEffect(() => {
 		if (triggerCheckCookieConsent()) {
 			checkCookieConsentForTypes(COOKIE_TYPES.FUNCTIONAL, {
-				alertMessage: Liferay.Language.get('product-comparison-cookies-alert'),
-				customTitle: Liferay.Language.get('product-comparison-cookies-title'),
+				alertMessage: Liferay.Language.get(
+					'product-comparison-cookies-alert'
+				),
+				customTitle: Liferay.Language.get(
+					'product-comparison-cookies-title'
+				),
 			})
 				.then(() => {
 					compareCookie.setValue(
@@ -110,17 +114,22 @@ function MiniCompare(props) {
 					alertCookies(
 						'success',
 						Liferay.Language.get('cookies-allowed'),
-						Liferay.Language.get('product-comparison-cookies-success')
+						Liferay.Language.get(
+							'product-comparison-cookies-success'
+						)
 					);
 				})
 				.catch(() => {
 					alertCookies(
 						'warning',
 						Liferay.Language.get('cookies-not-allowed'),
-						Liferay.Language.get('product-comparison-cookies-warning')
+						Liferay.Language.get(
+							'product-comparison-cookies-warning'
+						)
 					);
 				});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [functionalCookiesConsent, items, props.commerceChannelGroupId]);
 
 	useEffect(() => {

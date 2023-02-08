@@ -15,7 +15,7 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import React from 'react';
 
-const ProductOptionSelect = () => (
+const ProductOptionText = () => (
 	<ClayForm.Group>
 		<label htmlFor="placeholder">Placeholder</label>
 
@@ -23,4 +23,4 @@ const ProductOptionSelect = () => (
 	</ClayForm.Group>
 );
 
-export default ProductOptionSelect;
+export default ProductOptionText;

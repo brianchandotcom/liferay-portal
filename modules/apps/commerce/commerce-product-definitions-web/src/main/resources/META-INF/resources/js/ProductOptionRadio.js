@@ -15,7 +15,7 @@
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import React from 'react';
 
-const ProductOptionSelect = () => (
+const ProductOptionRadio = () => (
 	<ClayForm.Group>
 		<label htmlFor="placeholder">Placeholder</label>
 
@@ -29,4 +29,4 @@ const ProductOptionSelect = () => (
 	</ClayForm.Group>
 );
 
-export default ProductOptionSelect;
+export default ProductOptionRadio;

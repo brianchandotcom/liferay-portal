@@ -45,6 +45,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -73,7 +74,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -671,8 +671,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 
 		if (infoFieldType instanceof TextInfoFieldType) {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-161631")) &&
+			if (FeatureFlagManagerUtil.isEnabled("LPS-161631") &&
 				GetterUtil.getBoolean(
 					infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
 

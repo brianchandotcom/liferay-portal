@@ -46,9 +46,15 @@
 									<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle panel-toggler panel-header-link <%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %>" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenu<%= childPanelCategoryClass.getSimpleName() %>" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" role="button">
 										<%@ include file="/portlet/product_menu_title.jspf" %>
 
-										<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+										<clay:icon
+											cssClass="collapse-icon-closed"
+											symbol="angle-right"
+										/>
 
-										<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+										<clay:icon
+											cssClass="collapse-icon-open"
+											symbol="angle-down"
+										/>
 									</a>
 								</c:if>
 							</div>

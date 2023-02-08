@@ -169,14 +169,6 @@ definition {
 				key_value = "Send",
 				locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
 		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.emptyCP();
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Success Message appear"

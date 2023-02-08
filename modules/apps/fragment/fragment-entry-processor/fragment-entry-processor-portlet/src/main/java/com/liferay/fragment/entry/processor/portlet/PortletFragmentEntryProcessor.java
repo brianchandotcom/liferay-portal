@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -60,8 +61,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -256,18 +255,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			List<String> portletIds =
+			List<String> portletNames = TransformUtil.transform(
 				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink);
+					fragmentEntryLink),
+				portletId -> PortletIdCodec.decodePortletName(portletId));
 
-			Stream<String> stream = portletIds.stream();
-
-			List<String> portletNames = stream.map(
-				portletId -> PortletIdCodec.decodePortletName(portletId)
-			).distinct(
-			).collect(
-				Collectors.toList()
-			);
+			ListUtil.distinct(portletNames);
 
 			if (!portletNames.contains(currentPortletName)) {
 				continue;

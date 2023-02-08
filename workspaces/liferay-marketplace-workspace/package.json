@@ -1,0 +1,11 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/publisher-dashboard"
+		]
+	},
+	"dependencies": {
+		"@liferay/npm-scripts": "^47.13.1"
+	}
+}

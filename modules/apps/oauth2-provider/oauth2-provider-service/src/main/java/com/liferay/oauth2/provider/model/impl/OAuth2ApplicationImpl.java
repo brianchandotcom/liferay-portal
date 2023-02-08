@@ -15,13 +15,12 @@
 package com.liferay.oauth2.provider.model.impl;
 
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,14 +29,8 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 
 	@Override
 	public List<GrantType> getAllowedGrantTypesList() {
-		Stream<String> stream = Arrays.stream(
-			StringUtil.split(getAllowedGrantTypes()));
-
-		return stream.map(
-			GrantType::valueOf
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transformToList(
+			StringUtil.split(getAllowedGrantTypes()), GrantType::valueOf);
 	}
 
 	@Override
@@ -55,14 +48,9 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 	public void setAllowedGrantTypesList(
 		List<GrantType> allowedGrantTypesList) {
 
-		Stream<GrantType> stream = allowedGrantTypesList.stream();
-
 		setAllowedGrantTypes(
-			stream.map(
-				GrantType::toString
-			).collect(
-				Collectors.joining(StringPool.COMMA)
-			));
+			com.liferay.petra.string.StringUtil.merge(
+				allowedGrantTypesList, GrantType::toString, StringPool.COMMA));
 	}
 
 	@Override

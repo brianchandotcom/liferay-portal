@@ -17,9 +17,8 @@ package com.liferay.fragment.collection.contributor.inputs;
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -60,7 +59,7 @@ public class InputsFragmentCollectionContributor
 	}
 
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161631"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-161631")) {
 			return fragmentEntries;
 		}
 

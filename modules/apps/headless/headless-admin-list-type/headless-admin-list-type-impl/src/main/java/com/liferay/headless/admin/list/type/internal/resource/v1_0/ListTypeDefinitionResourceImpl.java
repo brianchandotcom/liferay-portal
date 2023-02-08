@@ -26,6 +26,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -134,7 +134,7 @@ public class ListTypeDefinitionResourceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167536") &&
 			ArrayUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();
@@ -156,7 +156,7 @@ public class ListTypeDefinitionResourceImpl
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536")) &&
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167536") &&
 			ArrayUtil.isNotEmpty(listTypeDefinition.getListTypeEntries())) {
 
 			throw new UnsupportedOperationException();

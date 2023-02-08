@@ -20,13 +20,12 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -42,7 +41,7 @@ public class MappingTypesUtil {
 
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
 			for (InfoItemClassDetails infoItemClassDetails :
 					infoItemServiceRegistry.getInfoItemClassDetails(
 						themeDisplay.getScopeGroupId(), itemCapabilityKey,

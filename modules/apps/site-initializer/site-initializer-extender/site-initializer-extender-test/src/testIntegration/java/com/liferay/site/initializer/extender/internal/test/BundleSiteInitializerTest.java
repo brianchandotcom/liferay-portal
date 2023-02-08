@@ -241,7 +241,8 @@ public class BundleSiteInitializerTest {
 
 		try {
 			_test1(
-				group, _getServiceContext(group), _siteInitializerRegistry.getSiteInitializer(
+				group, _getServiceContext(group),
+				_siteInitializerRegistry.getSiteInitializer(
 					bundle1.getSymbolicName()));
 		}
 		finally {
@@ -259,7 +260,8 @@ public class BundleSiteInitializerTest {
 
 		try {
 			_test2(
-				group, _getServiceContext(group), _siteInitializerRegistry.getSiteInitializer(
+				group, _getServiceContext(group),
+				_siteInitializerRegistry.getSiteInitializer(
 					bundle2.getSymbolicName()));
 		}
 		finally {
@@ -267,108 +269,6 @@ public class BundleSiteInitializerTest {
 		}
 
 		GroupLocalServiceUtil.deleteGroup(group);
-	}
-
-	private void _test2(Group group, ServiceContext serviceContext, SiteInitializer siteInitializer) throws Exception{
-
-		try {
-			siteInitializer.initialize(group.getGroupId());
-
-			_assertAccounts2(serviceContext);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			// TODO We should not need to delete the object definition manually
-			// because of DataGuardTestRule. However,
-			// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
-			// for PortalRunMode#isTestMode which is not returning true when the
-			// DataGuardTestRule runs.
-
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition1");
-
-			if (objectDefinition1 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition1.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition2");
-
-			if (objectDefinition2 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition2.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition3 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition3");
-
-			if (objectDefinition3 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition3.getObjectDefinitionId());
-			}
-
-			//FileUtil.deltree(unzipFolder);
-		}
-	}
-
-	private void _assertAccounts2(ServiceContext serviceContext) throws Exception{
-
-		AccountResource.Builder accountResourceBuilder =
-			_accountResourceFactory.create();
-
-		AccountResource accountResource = accountResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		UserAccountResource.Builder userAccountResourceBuilder =
-			_userAccountResourceFactory.create();
-
-		UserAccountResource userAccountResource =
-			userAccountResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		Account account1 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0001");
-
-		Assert.assertNotNull(account1);
-		Assert.assertEquals("Test Account 1", account1.getName());
-		Assert.assertEquals("person", account1.getTypeAsString());
-
-		_assertUserAccounts(account1.getId(), 1, userAccountResource);
-
-		Account account2 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0002");
-
-		Assert.assertNotNull(account2);
-		Assert.assertEquals("Test Account Guest", account2.getName());
-		Assert.assertEquals("guest", account2.getTypeAsString());
-
-		_assertUserAccounts(account2.getId(), 1, userAccountResource);
-
-		Account account3 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0003");
-
-		Assert.assertNotNull(account3);
-		Assert.assertEquals("Test Account 3", account3.getName());
-		Assert.assertEquals("person", account3.getTypeAsString());
-
-		_assertUserAccounts(account3.getId(), 0, userAccountResource);
-
-		Account account4 = accountResource.getAccountByExternalReferenceCode(
-			"TESTACC0004");
-
-		Assert.assertNotNull(account4);
-		Assert.assertEquals("Test Account 4", account4.getName());
-		Assert.assertEquals("bussiness", account4.getTypeAsString());
-
-		_assertUserAccounts(account4.getId(), 0, userAccountResource);
-
 	}
 
 	@Test
@@ -390,7 +290,8 @@ public class BundleSiteInitializerTest {
 
 		try {
 			_test1(
-				group, _getServiceContext(group), _siteInitializerFactory.create(
+				group, _getServiceContext(group),
+				_siteInitializerFactory.create(
 					new File(tempFolder1, "site-initializer"), null));
 		}
 		finally {
@@ -412,7 +313,8 @@ public class BundleSiteInitializerTest {
 
 		try {
 			_test2(
-				group, _getServiceContext(group), _siteInitializerFactory.create(
+				group, _getServiceContext(group),
+				_siteInitializerFactory.create(
 					new File(tempFolder2, "site-initializer"), null));
 		}
 		finally {
@@ -466,6 +368,61 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("person", account3.getTypeAsString());
 
 		_assertUserAccounts(account3.getId(), 0, userAccountResource);
+	}
+
+	private void _assertAccounts2(ServiceContext serviceContext)
+		throws Exception {
+
+		AccountResource.Builder accountResourceBuilder =
+			_accountResourceFactory.create();
+
+		AccountResource accountResource = accountResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Account account1 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0001");
+
+		Assert.assertNotNull(account1);
+		Assert.assertEquals("Test Account 1", account1.getName());
+		Assert.assertEquals("person", account1.getTypeAsString());
+
+		_assertUserAccounts(account1.getId(), 1, userAccountResource);
+
+		Account account2 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0002");
+
+		Assert.assertNotNull(account2);
+		Assert.assertEquals("Test Account Guest", account2.getName());
+		Assert.assertEquals("guest", account2.getTypeAsString());
+
+		_assertUserAccounts(account2.getId(), 1, userAccountResource);
+
+		Account account3 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0003");
+
+		Assert.assertNotNull(account3);
+		Assert.assertEquals("Test Account 3", account3.getName());
+		Assert.assertEquals("person", account3.getTypeAsString());
+
+		_assertUserAccounts(account3.getId(), 0, userAccountResource);
+
+		Account account4 = accountResource.getAccountByExternalReferenceCode(
+			"TESTACC0004");
+
+		Assert.assertNotNull(account4);
+		Assert.assertEquals("Test Account 4", account4.getName());
+		Assert.assertEquals("bussiness", account4.getTypeAsString());
+
+		_assertUserAccounts(account4.getId(), 0, userAccountResource);
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
@@ -2067,17 +2024,7 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
-	private Bundle _installBundle(BundleContext bundleContext, String location)
-		throws Exception {
-
-		try (InputStream inputStream =
-				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
-
-			return bundleContext.installBundle(location, inputStream);
-		}
-	}
-
-	private ServiceContext _getServiceContext(Group group) throws Exception{
+	private ServiceContext _getServiceContext(Group group) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
@@ -2097,8 +2044,20 @@ public class BundleSiteInitializerTest {
 		return serviceContext;
 	}
 
-	private void _test1(Group group, ServiceContext serviceContext,
-						SiteInitializer siteInitializer) throws Exception {
+	private Bundle _installBundle(BundleContext bundleContext, String location)
+		throws Exception {
+
+		try (InputStream inputStream =
+				BundleSiteInitializerTest.class.getResourceAsStream(location)) {
+
+			return bundleContext.installBundle(location, inputStream);
+		}
+	}
+
+	private void _test1(
+			Group group, ServiceContext serviceContext,
+			SiteInitializer siteInitializer)
+		throws Exception {
 
 		try {
 			siteInitializer.initialize(group.getGroupId());
@@ -2142,6 +2101,56 @@ public class BundleSiteInitializerTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private void _test2(
+			Group group, ServiceContext serviceContext,
+			SiteInitializer siteInitializer)
+		throws Exception {
+
+		try {
+			siteInitializer.initialize(group.getGroupId());
+
+			_assertAccounts2(serviceContext);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
+			// TODO We should not need to delete the object definition manually
+			// because of DataGuardTestRule. However,
+			// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
+			// for PortalRunMode#isTestMode which is not returning true when the
+			// DataGuardTestRule runs.
+
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition1");
+
+			if (objectDefinition1 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition1.getObjectDefinitionId());
+			}
+
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition2");
+
+			if (objectDefinition2 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition2.getObjectDefinitionId());
+			}
+
+			ObjectDefinition objectDefinition3 =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(), "C_TestObjectDefinition3");
+
+			if (objectDefinition3 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition3.getObjectDefinitionId());
+			}
+
+			//FileUtil.deltree(unzipFolder);
 		}
 	}
 

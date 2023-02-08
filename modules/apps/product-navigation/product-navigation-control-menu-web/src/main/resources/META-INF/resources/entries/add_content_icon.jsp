@@ -44,7 +44,6 @@ String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationContro
 			).buildString()
 		%>'
 		displayType="unstyled"
-		href="javascript:void(0);"
 		icon="plus"
 		id='<%= portletNamespace + "addToggleId" %>'
 		small="<%= true %>"

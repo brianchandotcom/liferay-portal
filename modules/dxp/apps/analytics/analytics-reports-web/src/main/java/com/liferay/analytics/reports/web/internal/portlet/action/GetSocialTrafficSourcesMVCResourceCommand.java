@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -122,21 +121,21 @@ public class GetSocialTrafficSourcesMVCResourceCommand
 			return _jsonFactory.createJSONArray();
 		}
 
-		Stream<ReferringSocialMedia> stream = referringSocialMediaList.stream();
-
 		Comparator<ReferringSocialMedia> comparator = Comparator.comparingInt(
 			ReferringSocialMedia::getTrafficAmount);
 
-		return JSONUtil.putAll(
-			stream.filter(
-				referringSocialMedia ->
-					referringSocialMedia.getTrafficAmount() > 0
-			).sorted(
-				comparator.reversed()
-			).map(
-				referringSocialMedia -> referringSocialMedia.toJSONObject(
-					resourceBundle)
-			).toArray());
+		referringSocialMediaList = ListUtil.filter(
+			referringSocialMediaList,
+			referringSocialMedia ->
+				referringSocialMedia.getTrafficAmount() > 0);
+
+		referringSocialMediaList.sort(comparator.reversed());
+
+		return JSONUtil.toJSONArray(
+			referringSocialMediaList,
+			referringSocialMedia -> referringSocialMedia.toJSONObject(
+				resourceBundle),
+			_log);
 	}
 
 	private List<ReferringSocialMedia> _getReferringSocialMediaList(

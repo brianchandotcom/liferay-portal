@@ -1,0 +1,44 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-166216=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test CanLoadOpenAPIProfileWithoutErrors {
+		property portal.acceptance = "true";
+
+		task ("When navigate to /o/openapi/openapi.json endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "openapi",
+				version = "");
+		}
+
+		task ("Then global rest api loaded without errors") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertTextEquals(
+				locator1 = "Select#HEADLESS_SERVERS",
+				value1 = "${portalURL}/o");
+
+			AssertConsoleTextNotPresent(value1 = "Failed to load Global REST API");
+		}
+	}
+
+}

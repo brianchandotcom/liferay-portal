@@ -48,6 +48,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -745,7 +746,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162765"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-162765")) {
 			return Collections.emptyList();
 		}
 

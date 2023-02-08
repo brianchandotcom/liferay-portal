@@ -36,9 +36,15 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 					<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle list-group-heading panel-header pl-0 text-decoration-none" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
 						<span class="category-name font-weight-semi-bold text-truncate text-uppercase"><%= panelApp.getLabel(locale) %></span>
 
-						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+						<clay:icon
+							cssClass="collapse-icon-closed"
+							symbol="angle-right"
+						/>
 
-						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+						<clay:icon
+							cssClass="collapse-icon-open"
+							symbol="angle-down"
+						/>
 					</a>
 				</div>
 

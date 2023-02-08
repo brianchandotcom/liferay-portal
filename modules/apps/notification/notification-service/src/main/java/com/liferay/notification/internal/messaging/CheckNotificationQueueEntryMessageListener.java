@@ -15,6 +15,7 @@
 package com.liferay.notification.internal.messaging;
 
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.internal.configuration.NotificationQueueConfiguration;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.type.NotificationType;
@@ -81,7 +82,9 @@ public class CheckNotificationQueueEntryMessageListener
 			_notificationTypeServiceTracker.getNotificationType(
 				NotificationConstants.TYPE_EMAIL);
 
-		notificationType.sendUnsentNotifications();
+		notificationType.resendNotifications(
+			NotificationQueueEntryConstants.STATUS_FAILED,
+			NotificationConstants.TYPE_EMAIL);
 
 		NotificationQueueConfiguration notificationQueueConfiguration =
 			_getNotificationQueueConfiguration();

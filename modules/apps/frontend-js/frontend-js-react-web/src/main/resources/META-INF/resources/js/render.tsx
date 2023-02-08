@@ -47,6 +47,10 @@ export default function render(
 	},
 	container: Element
 ) {
+	if (!container) {
+		return;
+	}
+
 	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
 

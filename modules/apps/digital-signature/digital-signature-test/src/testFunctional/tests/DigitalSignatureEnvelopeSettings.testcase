@@ -148,21 +148,27 @@ definition {
 	test CannotCreateEnvelopeWithUnsupportedFiles {
 		property solutions.acceptance = "true";
 
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		task ("Given that Digital Signature is enabled with proper credentials") {
+			DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+		}
 
-		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Document_2.mp4",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Poshi Test CannotCreateEnvelopeWithUnsupportedFiles",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
+		task ("When a Digital Envelope is created with an unsupported file type attached") {
+			DigitalSignature.createEnvelope(
+				dmDocumentFile = "Document_2.mp4",
+				emailMessage = "Email Message",
+				emailSubject = "Email Subject",
+				envelopeName = "Poshi Test CannotCreateEnvelopeWithUnsupportedFiles",
+				recipientEmail = "test@liferay.com",
+				recipientFullName = "Recipient Full Name");
+		}
 
-		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
+		task ("Then the Envelope cannot be sent and an error should display indicating the file type is unsupported") {
+			AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
 
-		AssertElementPresent(
-			key_value = "Send",
-			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+			AssertElementPresent(
+				key_value = "Send",
+				locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+		}
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

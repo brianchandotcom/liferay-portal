@@ -8,14 +8,19 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
     data-field-name="numericField"
     tabindex="0"
   >
-    <input
-      class="form-control ddm-form-field-type__numeric--rtl"
-      id="numericField"
-      name="numericField_masked"
-      placeholder="+__ (__) ____-____"
-      type="text"
-      value="+12 (34) 5678-9012"
-    />
+    <div
+      data-tooltip-align="top"
+      title="+12 (34) 5678-9012"
+    >
+      <input
+        class="form-control ddm-form-field-type__numeric--rtl"
+        id="numericField"
+        name="numericField_masked"
+        placeholder="+__ (__) ____-____"
+        type="text"
+        value="+12 (34) 5678-9012"
+      />
+    </div>
     <input
       name="numericField"
       type="hidden"
@@ -38,12 +43,16 @@ exports[`Field Numeric renders the default markup 1`] = `
     class="form-group hide"
     tabindex="0"
   >
-    <input
-      class="form-control ddm-form-field-type__numeric--rtl"
-      name="undefined"
-      type="text"
-      value=""
-    />
+    <div
+      data-tooltip-align="top"
+    >
+      <input
+        class="form-control ddm-form-field-type__numeric--rtl"
+        name="undefined"
+        type="text"
+        value=""
+      />
+    </div>
     <input
       name="undefined_edited"
       type="hidden"

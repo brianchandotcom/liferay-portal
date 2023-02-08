@@ -422,7 +422,8 @@ public class SegmentsDisplayContext {
 
 		if (Objects.equals(
 				segmentsEntry.getSource(),
-				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND)) {
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) &&
+			Validator.isNull(segmentsEntry.getCriteria())) {
 
 			String asahFaroURL = _prefsProps.getString(
 				segmentsEntry.getCompanyId(), "liferayAnalyticsURL");
@@ -451,7 +452,8 @@ public class SegmentsDisplayContext {
 	public String getSegmentsEntryURLTarget(SegmentsEntry segmentsEntry) {
 		if (Objects.equals(
 				segmentsEntry.getSource(),
-				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND)) {
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) &&
+			Validator.isNull(segmentsEntry.getCriteria())) {
 
 			return "_blank";
 		}

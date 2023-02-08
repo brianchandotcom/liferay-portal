@@ -12,15 +12,19 @@ exports[`PieChart renders 1`] = `
     >
       <div
         class="recharts-wrapper"
+        role="region"
         style="position: relative; cursor: default; width: 700px; height: 300px;"
       >
         <svg
           class="recharts-surface"
+          cx="50%"
+          cy="50%"
           height="300"
-          version="1.1"
           viewBox="0 0 700 300"
           width="700"
         >
+          <title />
+          <desc />
           <defs>
             <clippath
               id="recharts1-clip"
@@ -35,27 +39,29 @@ exports[`PieChart renders 1`] = `
           </defs>
           <g
             class="recharts-layer recharts-pie"
+            tabindex="0"
           >
             <g
               class="recharts-layer"
             >
               <g
                 class="recharts-layer recharts-pie-sector"
+                tabindex="-1"
               />
               <g
                 class="recharts-layer recharts-pie-sector"
+                tabindex="-1"
               />
             </g>
           </g>
         </svg>
         <div
           class="recharts-tooltip-wrapper"
-          style="transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px;"
+          role="dialog"
+          style="transform: translate(undefinedpx, undefinedpx); pointer-events: none; visibility: hidden; position: absolute; top: 0px; left: 0px;"
+          tabindex="-1"
         />
       </div>
-      <div
-        style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-      />
     </div>
     <div
       class="legend-container well well-lg"
@@ -81,6 +87,7 @@ exports[`PieChart renders 1`] = `
               />
             </svg>
             <p
+              tabindex="0"
               x="0em"
               y="1em"
             >
@@ -89,6 +96,11 @@ exports[`PieChart renders 1`] = `
                 x="2.5em"
               >
                 label1
+              </span>
+              <span
+                class="sr-only"
+              >
+                : 2 entries 50%
               </span>
             </p>
           </li>
@@ -109,6 +121,7 @@ exports[`PieChart renders 1`] = `
               />
             </svg>
             <p
+              tabindex="0"
               x="0em"
               y="1em"
             >
@@ -117,6 +130,11 @@ exports[`PieChart renders 1`] = `
                 x="2.5em"
               >
                 label2
+              </span>
+              <span
+                class="sr-only"
+              >
+                : 2 entries 50%
               </span>
             </p>
           </li>

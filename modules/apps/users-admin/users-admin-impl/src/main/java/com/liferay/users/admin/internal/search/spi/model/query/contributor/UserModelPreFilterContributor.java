@@ -56,6 +56,7 @@ public class UserModelPreFilterContributor
 			BooleanClauseOccur.MUST_NOT);
 
 		_filterByEmailAddress(contextBooleanFilter, searchContext);
+		_filterByType(contextBooleanFilter, searchContext);
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
@@ -205,6 +206,22 @@ public class UserModelPreFilterContributor
 					"emailAddressDomain", emailAddress + StringPool.STAR)));
 
 		booleanFilter.add(emailAddressBooleanFilter, BooleanClauseOccur.MUST);
+	}
+
+	private void _filterByType(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		long[] types = GetterUtil.getLongValues(
+			searchContext.getAttribute("types"),
+			new long[] {UserConstants.TYPE_REGULAR});
+
+		if (ArrayUtil.isNotEmpty(types)) {
+			TermsFilter termsFilter = new TermsFilter(Field.TYPE);
+
+			termsFilter.addValues(ArrayUtil.toStringArray(types));
+
+			contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 }

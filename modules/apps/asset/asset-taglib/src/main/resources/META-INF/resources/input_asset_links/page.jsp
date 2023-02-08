@@ -73,20 +73,17 @@
 			</p>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="text-right"
-		>
-			<span class="lfr-portal-tooltip ml-1">
-				<clay:link
-					aria-label='<%= LanguageUtil.get(request, "remove") %>'
-					cssClass="modify-link"
-					data-rowId="<%= assetLinkEntry.getEntryId() %>"
-					href="javascript:void(0);"
-					icon="times-circle"
-					title='<%= LanguageUtil.get(request, "remove") %>'
-					type="button"
-				/>
-			</span>
+		<liferay-ui:search-container-column-text>
+			<clay:button
+				aria-label='<%= LanguageUtil.get(request, "remove") %>'
+				borderless="<%= true %>"
+				cssClass="float-right lfr-portal-tooltip modify-link"
+				data-rowId="<%= assetLinkEntry.getEntryId() %>"
+				displayType="secondary"
+				icon="times-circle"
+				title='<%= LanguageUtil.get(request, "remove") %>'
+				type="button"
+			/>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

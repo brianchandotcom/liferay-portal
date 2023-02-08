@@ -51,15 +51,7 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
-
-		npmRegistryUpdate.registerJSModule(
-			_jsPackage,
-			FragmentEntryFragmentRendererReactUtil.getModuleName(
-				fragmentEntryLink),
-			_dependencies, _getJs(fragmentEntryLink), null);
-
-		npmRegistryUpdate.finish();
+		_updateNPMRegistry(MethodType.ADD, null, fragmentEntryLink);
 	}
 
 	@Override
@@ -68,14 +60,7 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
-
-		npmRegistryUpdate.unregisterJSModule(
-			_jsPackage.getJSModule(
-				FragmentEntryFragmentRendererReactUtil.getModuleName(
-					fragmentEntryLink)));
-
-		npmRegistryUpdate.finish();
+		_updateNPMRegistry(MethodType.REMOVE, fragmentEntryLink, null);
 	}
 
 	@Override
@@ -87,20 +72,8 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
-		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
-
-		npmRegistryUpdate.unregisterJSModule(
-			_jsPackage.getJSModule(
-				FragmentEntryFragmentRendererReactUtil.getModuleName(
-					originalFragmentEntryLink)));
-
-		npmRegistryUpdate.registerJSModule(
-			_jsPackage,
-			FragmentEntryFragmentRendererReactUtil.getModuleName(
-				fragmentEntryLink),
-			_dependencies, _getJs(fragmentEntryLink), null);
-
-		npmRegistryUpdate.finish();
+		_updateNPMRegistry(
+			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
 	}
 
 	@Activate
@@ -170,6 +143,34 @@ public class FragmentEntryLinkModelListener
 			});
 	}
 
+	private void _updateNPMRegistry(
+		MethodType methodType, FragmentEntryLink oldFragmentEntryLink,
+		FragmentEntryLink newFragmentEntryLink) {
+
+		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
+
+		if ((methodType == MethodType.REMOVE) ||
+			(methodType == MethodType.UPDATE)) {
+
+			npmRegistryUpdate.unregisterJSModule(
+				_jsPackage.getJSModule(
+					FragmentEntryFragmentRendererReactUtil.getModuleName(
+						oldFragmentEntryLink)));
+		}
+
+		if ((methodType == MethodType.ADD) ||
+			(methodType == MethodType.UPDATE)) {
+
+			npmRegistryUpdate.registerJSModule(
+				_jsPackage,
+				FragmentEntryFragmentRendererReactUtil.getModuleName(
+					newFragmentEntryLink),
+				_dependencies, _getJs(newFragmentEntryLink), null);
+		}
+
+		npmRegistryUpdate.finish();
+	}
+
 	private static final String _DEPENDENCY_PORTAL_REACT =
 		"liferay!frontend-js-react-web$react";
 
@@ -186,5 +187,11 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	private enum MethodType {
+
+		ADD, REMOVE, UPDATE
+
+	}
 
 }

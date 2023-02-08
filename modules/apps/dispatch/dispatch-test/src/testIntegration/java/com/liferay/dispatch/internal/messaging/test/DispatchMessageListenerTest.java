@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -43,8 +44,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -130,9 +129,8 @@ public class DispatchMessageListenerTest {
 		List<DispatchLog> dispatchLogs, int executeCount,
 		boolean overlapAllowed) {
 
-		Stream<DispatchLog> stream = dispatchLogs.stream();
-
-		List<DispatchLog> sortedDispatchLogs = stream.filter(
+		dispatchLogs = ListUtil.filter(
+			dispatchLogs,
 			dispatchLog -> {
 				if (DispatchTaskStatus.valueOf(dispatchLog.getStatus()) ==
 						DispatchTaskStatus.SUCCESSFUL) {
@@ -141,13 +139,12 @@ public class DispatchMessageListenerTest {
 				}
 
 				return false;
-			}
-		).sorted(
+			});
+
+		List<DispatchLog> sortedDispatchLogs = ListUtil.sort(
+			dispatchLogs,
 			(dispatchLog1, dispatchLog2) -> DateUtil.compareTo(
-				dispatchLog1.getCreateDate(), dispatchLog2.getCreateDate())
-		).collect(
-			Collectors.toList()
-		);
+				dispatchLog1.getCreateDate(), dispatchLog2.getCreateDate()));
 
 		if (sortedDispatchLogs.isEmpty()) {
 			return;

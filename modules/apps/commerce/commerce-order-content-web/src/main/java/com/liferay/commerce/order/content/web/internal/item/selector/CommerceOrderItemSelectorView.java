@@ -24,15 +24,14 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -91,9 +90,7 @@ public class CommerceOrderItemSelectorView
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get("feature.flag.COMMERCE-9410"))) {
-
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-9410")) {
 			return true;
 		}
 

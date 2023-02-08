@@ -54,49 +54,6 @@ import org.json.JSONObject;
  */
 public abstract class BaseJob implements Job {
 
-	private Document _configDocument;
-
-	protected Document getConfigDocument(JenkinsMaster jenkinsMaster) throws IOException, DocumentException {
-		if (_configDocument != null) {
-			return _configDocument;
-		}
-
-		String url = getJobURL(jenkinsMaster) + "/config.xml";
-
-		return Dom4JUtil.parse(JenkinsResultsParserUtil.toString(url));
-	}
-
-	@Override
-	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster) {
-		Document configDocument;
-		try {
-			configDocument = getConfigDocument(jenkinsMaster);
-
-			Node timeoutNode = 
-				Dom4JUtil.getNodeByXPath(
-					configDocument,
-					JenkinsResultsParserUtil.combine(
-						"/project/buildWrappers/",
-						"hudson.plugins.build__timeout.BuildTimeoutWrapper/",
-						"strategy[@class=\'hudson.plugins.build_timeout.impl.",
-						"AbsoluteTimeOutStrategy\']/timeoutMinutes"));
-
-			return Integer.valueOf(timeoutNode.getText());
-		}
-		catch (Exception exception) {
-			System.out.println("Unable to get timeout of job " + getJobName());
-
-			try {
-				return Integer.valueOf(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"build.default.timeout.minutes"));
-			}
-			catch (IOException ioException) {
-				return 135;
-			}
-		}
-	}
-
 	@Override
 	public int getAxisCount() {
 		List<AxisTestClassGroup> axisTestClassGroups = getAxisTestClassGroups();
@@ -657,6 +614,37 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public int getTimeoutMinutes(JenkinsMaster jenkinsMaster) {
+		Document configDocument;
+
+		try {
+			configDocument = getConfigDocument(jenkinsMaster);
+
+			Node timeoutNode = Dom4JUtil.getNodeByXPath(
+				configDocument,
+				JenkinsResultsParserUtil.combine(
+					"/project/buildWrappers/",
+					"hudson.plugins.build__timeout.BuildTimeoutWrapper/",
+					"strategy[@class=\'hudson.plugins.build_timeout.impl.",
+					"AbsoluteTimeOutStrategy\']/timeoutMinutes"));
+
+			return Integer.valueOf(timeoutNode.getText());
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get timeout of job " + getJobName());
+
+			try {
+				return Integer.valueOf(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"build.default.timeout.minutes"));
+			}
+			catch (IOException ioException) {
+				return 135;
+			}
+		}
+	}
+
+	@Override
 	public boolean isDownstreamEnabled() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.downstream.enabled");
@@ -847,6 +835,18 @@ public abstract class BaseJob implements Job {
 				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
 
 		return batchTestClassGroups;
+	}
+
+	protected Document getConfigDocument(JenkinsMaster jenkinsMaster)
+		throws DocumentException, IOException {
+
+		if (_configDocument != null) {
+			return _configDocument;
+		}
+
+		String url = getJobURL(jenkinsMaster) + "/config.xml";
+
+		return Dom4JUtil.parse(JenkinsResultsParserUtil.toString(url));
 	}
 
 	protected JSONObject getJobJSONObject(
@@ -1045,6 +1045,7 @@ public abstract class BaseJob implements Job {
 	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
 	private String _companyDefaultLocale;
+	private Document _configDocument;
 	private List<BatchTestClassGroup> _dependentBatchTestClassGroups;
 	private boolean _initializeJobProperties;
 	private JobHistory _jobHistory;

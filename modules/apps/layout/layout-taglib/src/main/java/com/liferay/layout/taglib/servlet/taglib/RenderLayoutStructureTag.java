@@ -60,6 +60,7 @@ import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -883,7 +883,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		throws Exception {
 
 		if ((infoForm == null) ||
-			(GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169923")) &&
+			(FeatureFlagManagerUtil.isEnabled("LPS-169923") &&
 			 !_hasAddPermission(
 				 PortalUtil.getClassName(
 					 formStyledLayoutStructureItem.getClassNameId())))) {

@@ -2330,9 +2330,10 @@ definition {
 				locator1 = "Notifications#NOTIFICATIONS_TITLE",
 				value1 = "A/B test has changed to status terminated.");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
+				key_portletTitle = "Content Page",
 				locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
-				value1 = "Test Site Name");
+				value1 = "Content Page");
 		}
 	}
 

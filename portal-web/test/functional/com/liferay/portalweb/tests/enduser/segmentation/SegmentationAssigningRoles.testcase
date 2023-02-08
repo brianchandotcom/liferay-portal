@@ -737,7 +737,7 @@ definition {
 	test SegmentsPermissionsAllocatedInControlPanel {
 		property portal.acceptance = "true";
 		property custom.properties = "feature.flag.LPS-166954=true";
-		
+
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
 
@@ -797,7 +797,7 @@ definition {
 	@priority = "3"
 	test SegmentsPermissionsNotAllocatedInSiteAdministration {
 		property custom.properties = "feature.flag.LPS-166954=true";
-		
+
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
 
@@ -822,6 +822,80 @@ definition {
 				key_permissionNavHeader = "Site and Asset Library Administration",
 				key_permissionNavItem = "Segments",
 				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+		}
+	}
+
+	@description = "LPS-167023 Given a user with Segments permissions
+	And with View Control Panel Menu permission
+	When the user clicks on Applications Menu > Control Panel > Segment
+	Then the user can access to the Segments page"
+	@priority = "5"
+	test UserWithPermissionsCanAccessSegmentsPortlet {
+		property portal.acceptance = "true";
+		property custom.properties = "feature.flag.LPS-166954=true";
+
+		task ("Add user and set password") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a new role through Roles Admin Portlet") {
+			JSONRole.addRegularRole(roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role");
+		}
+
+		task ("Define permissions and check Access in Control Panel permission is displayed") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
+				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_segments_web_internal_portlet_SegmentsPortlet",
+				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				roleType = "regular");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.segments",
+				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				roleType = "regular");
+		}
+
+		task ("When Assign the user with regular role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
+				userEmailAddress = "userea@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert the user can access to the Segments page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Segments");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no segments.");
 		}
 	}
 

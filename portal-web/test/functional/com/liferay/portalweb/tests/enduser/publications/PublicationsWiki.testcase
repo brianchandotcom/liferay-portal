@@ -77,4 +77,73 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "Assert that the search results shows only wiki pages from the active publication"
+	@priority = "3"
+	test ViewSearchResultsFromActivePublication {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
+		WikiPage.addCP(
+			wikiPageContent = "Original content",
+			wikiPageTitle = "Wiki Page Production");
+
+		JSONPublications.addPublication(publicationName = "Publication 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1");
+
+		WikiPage.addCP(
+			wikiPageContent = "Publication 1",
+			wikiPageTitle = "Wiki Page Publication 1");
+
+		Publications.workOnProduction();
+
+		JSONPublications.addPublication(publicationName = "Publication 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2");
+
+		WikiPage.addCP(
+			wikiPageContent = "Publication 2",
+			wikiPageTitle = "Wiki Page Publication 2");
+
+		WikiPage.editPageCP(
+			wikiPageContentEdit = "Wiki Page Content Edit",
+			wikiPageTitle = "Wiki Page Production");
+
+		Navigator.gotoPage(pageName = "Home");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Wiki Page Production/Wiki Page,Wiki Page Content Edit/Wiki Page,Wiki Page Publication 2/Wiki Page",
+			searchTerm = "Wiki");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1");
+
+		Refresh();
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Wiki Page Production/Wiki Page,Original content/Wiki Page,Wiki Page Publication 1/Wiki Page",
+			searchTerm = "Wiki");
+
+		Publications.workOnProduction();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetSummary = "Original content",
+			searchAssetTitle = "Wiki Page Production",
+			searchAssetType = "Wiki Page");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Wiki Page Publication 1",
+			searchAssetType = "Wiki Page");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Wiki Page Publication 2",
+			searchAssetType = "Wiki Page");
+	}
+
 }

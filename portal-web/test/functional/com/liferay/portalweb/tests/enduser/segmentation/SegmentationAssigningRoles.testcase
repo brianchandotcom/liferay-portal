@@ -760,4 +760,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-167023 Given the Roles portlet
+	When the user tries to add a new role
+	And the user wants to add segments permissions
+	Then the segments permissions are not allocated in Site and Asset Library Administration > People"
+	@priority = "3"
+	test SegmentsPermissionsNotAllocatedInSiteAdministration {
+		property custom.properties = "feature.flag.LPS-166954=true";
+		
+		task ("Create a new role through Roles Admin Portlet") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Regular Roles");
+
+			Role.add(roleTitle = "SegmentsPermissionsNotAllocatedInSiteAdministration Role");
+		}
+
+		task ("Assert the segments permissions are not allocated in Site and Asset Library Administration > People") {
+			Navigator.gotoNavItem(navItem = "Define Permissions");
+
+			AssertClick(
+				key_navItem = "Site and Asset Library Administration",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED",
+				value1 = "Site and Asset Library Administration");
+
+			Click.clickAt(
+				key_navItem = "People",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			AssertElementNotPresent(
+				key_permissionNavHeader = "Site and Asset Library Administration",
+				key_permissionNavItem = "Segments",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION");
+		}
+	}
+
 }

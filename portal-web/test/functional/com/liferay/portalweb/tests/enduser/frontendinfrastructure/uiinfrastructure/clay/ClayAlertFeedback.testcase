@@ -45,8 +45,8 @@ definition {
 	@description = "Check if each nav section of clay sample portlet looks normal from screenshot"
 	@priority = "3"
 	test IconCanDisplayTooltip {
-		
-        // TODO LPS-133020 IconCanDisplayTooltip pending implementation
+
+		// TODO LPS-133020 IconCanDisplayTooltip pending implementation
 
 	}
 

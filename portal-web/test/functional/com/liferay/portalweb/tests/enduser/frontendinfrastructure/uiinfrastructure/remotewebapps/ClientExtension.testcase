@@ -96,6 +96,14 @@ definition {
 		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
+	@description = "Add Client Extension with DB Partitioning enabled."
+	@priority = "5"
+	test CanBeDisplayedWithDBPartitioning {
+
+		// TODO LPS-153746 CanBeDisplayedWithDBPartitioning pending implementation
+
+	}
+
 	@description = "Verify that the client extension is not available on the workflow page"
 	@priority = 3
 	test CannotConfigureWorkflowSiteLevel {
@@ -825,14 +833,6 @@ definition {
 		task ("And Then showing Label 'UI' is present") {
 			ClientExtensionGeneral.viewTableEntryType(entryType = "UI");
 		}
-	}
-
-	@description = "Add Client Extension with DB Partitioning enabled."
-	@priority = "5"
-	test CanBeDisplayedWithDBPartitioning {
-
-		// TODO LPS-153746 CanBeDisplayedWithDBPartitioning pending implementation
-
 	}
 
 }

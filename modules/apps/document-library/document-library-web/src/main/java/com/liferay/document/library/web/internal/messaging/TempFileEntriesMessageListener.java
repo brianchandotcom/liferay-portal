@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
@@ -137,9 +136,6 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		TempFileEntriesMessageListener.class);
 
 	private volatile DLConfiguration _dlConfiguration;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

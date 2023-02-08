@@ -17,7 +17,6 @@ package com.liferay.saml.internal.messaging;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
@@ -74,9 +73,6 @@ public class SamlSpAuthRequestMessageListener extends SamlMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		_samlSpAuthRequestLocalService.deleteExpiredSamlSpAuthRequests();
 	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;

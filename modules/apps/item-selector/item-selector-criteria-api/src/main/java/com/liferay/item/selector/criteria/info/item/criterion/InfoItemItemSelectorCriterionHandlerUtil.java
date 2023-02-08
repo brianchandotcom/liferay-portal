@@ -17,12 +17,11 @@ package com.liferay.item.selector.criteria.info.item.criterion;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Jürgen Kappler
@@ -42,10 +41,8 @@ public class InfoItemItemSelectorCriterionHandlerUtil {
 			return itemSelectorViews;
 		}
 
-		Stream<ItemSelectorView<InfoItemItemSelectorCriterion>> stream =
-			itemSelectorViews.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			itemSelectorViews,
 			itemSelectorView -> {
 				if (!(itemSelectorView instanceof InfoItemSelectorView)) {
 					return false;
@@ -57,10 +54,7 @@ public class InfoItemItemSelectorCriterionHandlerUtil {
 				return Objects.equals(
 					infoItemSelectorView.getClassName(),
 					infoItemItemSelectorCriterion.getItemType());
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 	}
 
 }

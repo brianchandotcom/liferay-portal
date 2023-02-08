@@ -89,15 +89,31 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 				})
 				.then(({ok, responseContent}) => {
 					if (!ok) {
-						_handleFormError(
-							isElement
-								? Liferay.Language.get(
-										'unable-to-import-because-the-element-configuration-is-invalid'
-								  )
-								: Liferay.Language.get(
-										'unable-to-import-because-the-blueprint-configuration-is-invalid'
-								  )
-						);
+						if (
+							responseContent.title ===
+							'Duplicate external reference code'
+						) {
+							_handleFormError(
+								isElement
+									? Liferay.Language.get(
+											'unable-to-import-element-with-the-same-external-reference-code-with-the-same-as-an-existing-element'
+									  )
+									: Liferay.Language.get(
+											'unable-to-import-blueprint-with-the-same-external-reference-code-with-the-same-as-an-existing-blueprint'
+									  )
+							);
+						}
+						else {
+							_handleFormError(
+								isElement
+									? Liferay.Language.get(
+											'unable-to-import-because-the-element-configuration-is-invalid'
+									  )
+									: Liferay.Language.get(
+											'unable-to-import-because-the-blueprint-configuration-is-invalid'
+									  )
+							);
+						}
 
 						if (process.env.NODE_ENV === 'development') {
 							console.error(responseContent.title);

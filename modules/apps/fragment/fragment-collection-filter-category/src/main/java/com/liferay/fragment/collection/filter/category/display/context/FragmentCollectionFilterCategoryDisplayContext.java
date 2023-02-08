@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,8 +39,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Rubén Pulido
@@ -109,19 +108,15 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 					return new ArrayList<>();
 				}
 
-				Stream<AssetCategory> stream = assetCategories.stream();
-
-				return stream.map(
+				return TransformUtil.transform(
+					assetCategories,
 					assetCategory -> HashMapBuilder.put(
 						"id", String.valueOf(assetCategory.getCategoryId())
 					).put(
 						"label",
 						assetCategory.getTitle(
 							_fragmentRendererContext.getLocale())
-					).build()
-				).collect(
-					Collectors.toList()
-				);
+					).build());
 			}
 		).put(
 			"enableDropdown", !_fragmentRendererContext.isEditMode()

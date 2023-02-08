@@ -20,6 +20,7 @@
 page import="com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler" %><%@
 page import="com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer" %><%@
 page import="com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil" %><%@
+page import="com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterNode" %><%@
 page import="com.liferay.portal.kernel.dao.db.DBManagerUtil" %><%@

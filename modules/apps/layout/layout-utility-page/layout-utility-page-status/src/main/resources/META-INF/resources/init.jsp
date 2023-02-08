@@ -20,7 +20,8 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.layout.utility.page.status.internal.display.context.StatusDisplayContext" %><%@
+<%@ page import="com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants" %><%@
+page import="com.liferay.layout.utility.page.status.internal.display.context.StatusDisplayContext" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@

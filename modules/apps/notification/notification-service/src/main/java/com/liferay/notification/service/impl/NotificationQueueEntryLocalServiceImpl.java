@@ -168,11 +168,10 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<NotificationQueueEntry> getUnsentNotificationEntries(
-		String type) {
+	public List<NotificationQueueEntry> getNotificationEntries(
+		String type, int status) {
 
-		return notificationQueueEntryPersistence.findByT_S(
-			type, NotificationQueueEntryConstants.STATUS_UNSENT);
+		return notificationQueueEntryPersistence.findByT_S(type, status);
 	}
 
 	@Override

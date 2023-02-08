@@ -17,6 +17,7 @@ package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -24,8 +25,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -64,7 +63,7 @@ public class TemplatesPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161313"))) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-161313")) {
 			return false;
 		}
 

@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -54,8 +55,9 @@ SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.g
 <c:choose>
 	<c:when test="<%= searchResultSummaryDisplayContexts.isEmpty() %>">
 		<div class="sheet">
-			<liferay-ui:empty-result-message
-				message='<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>'
+			<liferay-frontend:empty-result-message
+				description='<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>'
+				title='<%= LanguageUtil.format(request, "no-results-were-found", false) %>'
 			/>
 		</div>
 	</c:when>

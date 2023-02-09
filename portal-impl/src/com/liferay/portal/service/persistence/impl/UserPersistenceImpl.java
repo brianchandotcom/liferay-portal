@@ -1745,7 +1745,7 @@ public class UserPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
+		"user.companyId = ? AND user.defaultUser = [$FALSE$] AND type_ = 0";
 
 	private FinderPath _finderPathFetchByContactId;
 	private FinderPath _finderPathCountByContactId;
@@ -3111,7 +3111,7 @@ public class UserPersistenceImpl
 		"user.userId > ? AND ";
 
 	private static final String _FINDER_COLUMN_GTU_C_COMPANYID_2 =
-		"user.companyId = ? AND user.defaultUser = [$FALSE$]";
+		"user.companyId = ? AND user.defaultUser = [$FALSE$] AND type_ = 0";
 
 	private FinderPath _finderPathFetchByC_U;
 	private FinderPath _finderPathCountByC_U;
@@ -3927,10 +3927,10 @@ public class UserPersistenceImpl
 		"user.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_1 =
-		"user.createDate IS NULL AND user.defaultUser = [$FALSE$]";
+		"user.createDate IS NULL AND user.defaultUser = [$FALSE$] AND type_ = 0";
 
 	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_2 =
-		"user.createDate = ? AND user.defaultUser = [$FALSE$]";
+		"user.createDate = ? AND user.defaultUser = [$FALSE$] AND type_ = 0";
 
 	private FinderPath _finderPathWithPaginationFindByC_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_MD;
@@ -4517,10 +4517,10 @@ public class UserPersistenceImpl
 		"user.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_1 =
-		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
+		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$] AND  type_ = 0";
 
 	private static final String _FINDER_COLUMN_C_MD_MODIFIEDDATE_2 =
-		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$] AND  type_ = 0";
 
 	private FinderPath _finderPathWithPaginationFindByC_DU;
 	private FinderPath _finderPathWithoutPaginationFindByC_DU;
@@ -6956,7 +6956,7 @@ public class UserPersistenceImpl
 		"user.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
-		"user.status = ? AND user.defaultUser = [$FALSE$]";
+		"user.status = ? AND user.defaultUser = [$FALSE$]  AND  type_ = 0";
 
 	private FinderPath _finderPathWithPaginationFindByC_CD_MD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD_MD;
@@ -7628,10 +7628,10 @@ public class UserPersistenceImpl
 		"user.createDate = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_1 =
-		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$]";
+		"user.modifiedDate IS NULL AND user.defaultUser = [$FALSE$] AND  type_ = 0";
 
 	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_2 =
-		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$]";
+		"user.modifiedDate = ? AND user.defaultUser = [$FALSE$] AND  type_ = 0";
 
 	private FinderPath _finderPathFetchByC_DU_T;
 	private FinderPath _finderPathCountByC_DU_T;

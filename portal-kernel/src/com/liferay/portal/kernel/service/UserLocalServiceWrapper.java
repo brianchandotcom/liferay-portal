@@ -1601,6 +1601,11 @@ public class UserLocalServiceWrapper
 	}
 
 	@Override
+	public long[] getRoleUserIds(long roleId, long type) {
+		return _userLocalService.getRoleUserIds(roleId, type);
+	}
+
+	@Override
 	public java.util.List<User> getRoleUsers(long roleId) {
 		return _userLocalService.getRoleUsers(roleId);
 	}

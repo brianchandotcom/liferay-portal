@@ -51,6 +51,10 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.docx",

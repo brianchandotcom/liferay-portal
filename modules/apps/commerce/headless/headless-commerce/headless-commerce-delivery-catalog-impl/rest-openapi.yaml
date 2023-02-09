@@ -538,6 +538,10 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                specificationGroupKey:
+                    type: string
+                specificationGroupTitle:
+                    type: string
                 specificationId:
                     example: 30129
                     format: int64
@@ -545,6 +549,8 @@ components:
                     type: integer
                 specificationKey:
                     example: specification-key
+                    type: string
+                specificationTitle:
                     type: string
                 value:
                     type: string

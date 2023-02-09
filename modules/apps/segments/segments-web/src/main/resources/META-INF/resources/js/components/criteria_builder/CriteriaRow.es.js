@@ -29,10 +29,8 @@ import {
 	SUPPORTED_PROPERTY_TYPES,
 } from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
-import {unescapeSingleQuotes} from '../../utils/odata.es';
 import {
 	createNewGroup,
-	dateToInternationalHuman,
 	getSupportedOperatorsFromType,
 	objectToFormData,
 } from '../../utils/utils.es';
@@ -43,6 +41,7 @@ import DecimalInput from '../inputs/DecimalInput.es';
 import IntegerInput from '../inputs/IntegerInput.es';
 import SelectEntityInput from '../inputs/SelectEntityInput.es';
 import StringInput from '../inputs/StringInput.es';
+import CriteriaRowReadable from './CriteriaRowReadable.es';
 
 const acceptedDragTypes = [DragTypes.CRITERIA_ROW, DragTypes.PROPERTY];
 
@@ -237,35 +236,6 @@ class CriteriaRow extends Component {
 					onChange({...criterion, displayValue: value});
 				}
 			});
-	};
-
-	_getReadableCriteriaString = ({
-		operatorLabel,
-		propertyLabel,
-		type,
-		value,
-	}) => {
-		let parsedValue = null;
-
-		if (type === PROPERTY_TYPES.DATE) {
-			parsedValue = dateToInternationalHuman(value.replaceAll('-', '/'));
-		}
-		else if (type === PROPERTY_TYPES.DATE_TIME) {
-			parsedValue = dateToInternationalHuman(value);
-		}
-		else {
-			parsedValue = value;
-		}
-
-		return (
-			<span>
-				<b className="mr-1 text-dark">{propertyLabel}</b>
-
-				<span className="mr-1 operator">{operatorLabel}</span>
-
-				<b>{unescapeSingleQuotes(parsedValue)}</b>
-			</span>
-		);
 	};
 
 	/**
@@ -601,7 +571,6 @@ class CriteriaRow extends Component {
 			});
 		}
 
-		const operatorLabel = selectedOperator ? selectedOperator.label : '';
 		const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
 		const classes = getCN('criterion-row-root', {
@@ -626,15 +595,11 @@ class CriteriaRow extends Component {
 									value,
 								})
 							) : (
-								<span className="criterion-string">
-									{this._getReadableCriteriaString({
-										error,
-										operatorLabel,
-										propertyLabel,
-										type: selectedProperty.type,
-										value: criterion.displayValue || value,
-									})}
-								</span>
+								<CriteriaRowReadable
+									criterion={criterion}
+									selectedOperator={selectedOperator}
+									selectedProperty={selectedProperty}
+								/>
 							)}
 						</div>
 					)

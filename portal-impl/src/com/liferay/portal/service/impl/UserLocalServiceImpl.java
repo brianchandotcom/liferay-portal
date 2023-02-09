@@ -2536,6 +2536,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return _rolePersistence.getUserPrimaryKeys(roleId);
 	}
 
+	@Override
+	public long[] getRoleUserIds(long roleId, long type) {
+		List<User> users = _rolePersistence.getUsers(roleId);
+
+		users = ListUtil.filter(users, user -> user.getType() == type);
+
+		return ListUtil.toLongArray(users, User.USER_ID_ACCESSOR);
+	}
+
 	/**
 	 * Returns the number of users with the status belonging to the role.
 	 *

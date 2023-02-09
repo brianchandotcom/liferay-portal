@@ -22,14 +22,14 @@ import java.util.Objects;
 /**
  * @author Michael C. Han
  */
-public class Action {
+public abstract class Action {
 
 	public Action(
-			String name, String description, String executionType,
-			String script, String scriptLanguage, String scriptRequiredContexts,
-			int priority)
+			ActionType actionType, String name, String description,
+			String executionType, int priority)
 		throws KaleoDefinitionValidationException {
 
+		_actionType = actionType;
 		_name = name;
 		_description = description;
 
@@ -40,9 +40,6 @@ public class Action {
 			_executionType = ExecutionType.ON_TIMER;
 		}
 
-		_script = script;
-		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
-		_scriptRequiredContexts = scriptRequiredContexts;
 		_priority = priority;
 	}
 
@@ -65,6 +62,10 @@ public class Action {
 		return true;
 	}
 
+	public ActionType getActionType() {
+		return _actionType;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -81,29 +82,15 @@ public class Action {
 		return _priority;
 	}
 
-	public String getScript() {
-		return _script;
-	}
-
-	public ScriptLanguage getScriptLanguage() {
-		return _scriptLanguage;
-	}
-
-	public String getScriptRequiredContexts() {
-		return _scriptRequiredContexts;
-	}
-
 	@Override
 	public int hashCode() {
 		return _name.hashCode();
 	}
 
+	private final ActionType _actionType;
 	private final String _description;
 	private final ExecutionType _executionType;
 	private final String _name;
 	private final int _priority;
-	private final String _script;
-	private final ScriptLanguage _scriptLanguage;
-	private final String _scriptRequiredContexts;
 
 }

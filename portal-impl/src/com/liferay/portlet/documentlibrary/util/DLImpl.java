@@ -160,8 +160,7 @@ public class DLImpl implements DL {
 
 			if (!folders.contains(rootFolder)) {
 				throw new InvalidFolderException(
-					InvalidFolderException.INVALID_ROOT_FOLDER,
-					rootFolderId);
+					InvalidFolderException.INVALID_ROOT_FOLDER, rootFolderId);
 			}
 
 			folders = ListUtil.subList(folders, 0, folders.indexOf(rootFolder));

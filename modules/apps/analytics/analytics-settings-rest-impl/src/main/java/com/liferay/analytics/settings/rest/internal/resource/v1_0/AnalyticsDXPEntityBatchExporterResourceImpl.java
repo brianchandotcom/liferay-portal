@@ -15,8 +15,10 @@
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
-import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatchExporterConstants;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.AnalyticsDXPEntityBatchExporterResource;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,22 +36,16 @@ public class AnalyticsDXPEntityBatchExporterResourceImpl
 	extends BaseAnalyticsDXPEntityBatchExporterResourceImpl {
 
 	@Override
-	public void postAnalyticsDXPEntityBatchExporter() throws Exception {
-		_analyticsDXPEntityBatchExporter.export(
+	public void postConfigurationWizardMode() throws Exception {
+		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),
-			new String[] {
-				AnalyticsDXPEntityBatchExporterConstants.
-					DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
-				AnalyticsDXPEntityBatchExporterConstants.
-					DISPATCH_TRIGGER_NAME_ORDER,
-				AnalyticsDXPEntityBatchExporterConstants.
-					DISPATCH_TRIGGER_NAME_PRODUCT,
-				AnalyticsDXPEntityBatchExporterConstants.
-					DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
-			});
+			Collections.singletonMap("wizardMode", false));
 	}
 
 	@Reference
 	private AnalyticsDXPEntityBatchExporter _analyticsDXPEntityBatchExporter;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 }

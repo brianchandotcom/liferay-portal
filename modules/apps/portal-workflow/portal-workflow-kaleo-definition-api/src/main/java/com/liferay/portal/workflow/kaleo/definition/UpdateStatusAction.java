@@ -14,11 +14,29 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+
 /**
  * @author Rafael Praxedes
  */
-public enum ActionType {
+public class UpdateStatusAction extends Action {
 
-	SCRIPT, UPDATE_STATUS
+	public UpdateStatusAction(
+			String name, String description, String executionType, int status,
+			int priority)
+		throws KaleoDefinitionValidationException {
+
+		super(
+			ActionType.UPDATE_STATUS, name, description, executionType,
+			priority);
+
+		_status = status;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	private final int _status;
 
 }

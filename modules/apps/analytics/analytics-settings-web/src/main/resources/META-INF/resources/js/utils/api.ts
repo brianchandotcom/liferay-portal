@@ -30,7 +30,7 @@ export function deleteConnection() {
 }
 
 export function sync() {
-	return request('/analytics-dxp-entity-batch-exporter', {
+	return request('/disable-wizard-mode', {
 		method: 'POST',
 	});
 }

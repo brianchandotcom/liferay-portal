@@ -1,4 +1,6 @@
 {
+	"object-fields": [
+		{
 	"DBType": "String",
 	"businessType": "Aggregation",
 	"externalReferenceCode": "TESTOBJECTFIELD1",
@@ -8,23 +10,6 @@
 	"label": {
 		"en_US": "aggregationTestField"
 	},
-	"listTypeDefinitionId": 0,
-	"name": "aggregationTestField",
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
-	"objectFieldSettings": [
-		{
-			"name": "objectRelationshipName",
-			"value": "testOR2"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Aggregation",
-			"externalReferenceCode": "TESTOBJECTFIELD2",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "integerTestField"
-			},
 			"listTypeDefinitionId": 0,
 			"name": "integerTestField",
 			"objectFieldSettings": [
@@ -45,5 +30,5 @@
 			"state": false
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]"
 }

@@ -22,6 +22,7 @@ import com.liferay.dispatch.internal.messaging.SingleNodeClusterModeDispatchTask
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,12 +43,16 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -75,7 +80,7 @@ public class DispatchTriggerDisplayContextTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testGetDispatchTaskExecutorTypes() throws Exception {
+	public void testCreationMenu() throws Exception {
 		Set<String> dispatchTaskExecutorTypes =
 			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
 
@@ -97,14 +102,31 @@ public class DispatchTriggerDisplayContextTest {
 
 		Assert.assertNotNull(dispatchTriggerDisplayContext);
 
-		Set<String> executorTypes = ReflectionTestUtil.invoke(
-			dispatchTriggerDisplayContext, "getDispatchTaskExecutorTypes",
-			new Class<?>[0], null);
+		ReflectionTestUtil.setFieldValue(
+			(Object)ReflectionTestUtil.getFieldValue(
+				dispatchTriggerDisplayContext, "dispatchRequestHelper"),
+			"_currentURL", StringPool.BLANK);
 
-		Assert.assertFalse(
-			executorTypes.contains(
+		Map<?, ?> creationMenu = ReflectionTestUtil.invoke(
+			dispatchTriggerDisplayContext, "getCreationMenu", new Class<?>[0],
+			null);
+
+		List<Map<?, ?>> dropdownItems = (List<Map<?, ?>>)creationMenu.get(
+			"primaryItems");
+
+		String dispatchTaskExecutorTypeHiddenInUILabel =
+			ReflectionTestUtil.invoke(
+				dispatchTriggerDisplayContext, "getDispatchTaskExecutorName",
+				new Class<?>[] {String.class, Locale.class},
 				HiddenInUIDispatchTaskExecutor.
-					DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI));
+					DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI,
+				LocaleUtil.US);
+
+		for (Map<?, ?> dropdownItem : dropdownItems) {
+			Assert.assertNotEquals(
+				dispatchTaskExecutorTypeHiddenInUILabel,
+				dropdownItem.get("label"));
+		}
 	}
 
 	@Test
@@ -177,10 +199,15 @@ public class DispatchTriggerDisplayContextTest {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest(mockHttpServletRequest);
+		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
+			new MockLiferayPortletRenderResponse();
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			mockLiferayPortletRenderResponse);
 
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest,
-			new MockLiferayPortletRenderResponse());
+			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
 
 		return mockLiferayPortletRenderRequest.getAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT);

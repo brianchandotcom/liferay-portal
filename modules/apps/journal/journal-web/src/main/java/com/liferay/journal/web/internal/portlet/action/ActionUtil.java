@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -243,9 +242,7 @@ public class ActionUtil {
 			return fileScriptContent;
 		}
 
-		return new String(
-			Base64.decode(
-				ParamUtil.getString(uploadPortletRequest, "scriptContent")));
+		return FileUtil.read(uploadPortletRequest.getFile("scriptContent"));
 	}
 
 	private static String _getFileScriptContent(

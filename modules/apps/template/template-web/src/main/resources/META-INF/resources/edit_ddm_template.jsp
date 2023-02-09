@@ -85,18 +85,8 @@ else {
 				<li class="tbar-item">
 					<div class="tbar-section text-right">
 						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />
-
-						<%
-						String taglibOnClickSaveAndContinue = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveAndContinue');";
-						%>
-
-						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClickSaveAndContinue %>" primary="<%= false %>" type="submit" value="save-and-continue" />
-
-						<%
-						String taglibOnClickSaveTemplate = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
-						%>
-
-						<aui:button cssClass="btn-sm" onClick="<%= taglibOnClickSaveTemplate %>" type="submit" value="save" />
+						<aui:button cssClass="btn-sm mr-3 save-and-continue-button" primary="<%= false %>" type="submit" value="save-and-continue" />
+						<aui:button cssClass="btn-sm save-button" type="submit" value="save" />
 					</div>
 				</li>
 			</ul>
@@ -117,15 +107,3 @@ else {
 		</div>
 	</div>
 </aui:form>
-
-<aui:script>
-	Liferay.after('<portlet:namespace />saveAndContinue', () => {
-		document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = true;
-
-		Liferay.fire('<portlet:namespace />saveTemplate');
-	});
-
-	Liferay.after('<portlet:namespace />saveTemplate', () => {
-		submitForm(document.<portlet:namespace />fm);
-	});
-</aui:script>

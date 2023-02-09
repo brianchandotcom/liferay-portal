@@ -22,7 +22,9 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 
 <aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
 
-<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" />
+<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity">
+	<aui:validator name="min"><%= 1 %></aui:validator>
+</aui:input>
 
 <aui:input label="tier-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
 	<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>

@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +60,6 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -206,12 +205,18 @@ public class ViewDisplayContextFactory {
 	}
 
 	private Map<String, List<PLOEntry>> _getKeyPLOEntriesMap(long companyId) {
-		List<PLOEntry> ploEntries = _ploEntryLocalService.getPLOEntries(
-			companyId);
+		Map<String, List<PLOEntry>> map = new HashMap<>();
 
-		Stream<PLOEntry> ploEntryStream = ploEntries.stream();
+		for (PLOEntry ploEntry :
+				_ploEntryLocalService.getPLOEntries(companyId)) {
 
-		return ploEntryStream.collect(Collectors.groupingBy(PLOEntry::getKey));
+			List<PLOEntry> ploEntriesList = map.computeIfAbsent(
+				ploEntry.getKey(), key -> new ArrayList<>());
+
+			ploEntriesList.add(ploEntry);
+		}
+
+		return map;
 	}
 
 	private String _getLanguageIdsString(

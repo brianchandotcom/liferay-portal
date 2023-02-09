@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.dxp.entity.rest.internal.dto.v1_0.converter;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
@@ -298,6 +299,19 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		List<Field> fields = new ArrayList<>();
 
 		List<String> includeAttributeNames = new ArrayList<>();
+
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), AccountEntry.class.getName())) {
+
+			AccountEntry accountEntry = (AccountEntry)baseModel;
+
+			AnalyticsConfiguration analyticsConfiguration =
+				_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+					accountEntry.getCompanyId());
+
+			includeAttributeNames = ListUtil.fromArray(
+				analyticsConfiguration.syncedAccountFieldNames());
+		}
 
 		if (StringUtil.equals(
 				baseModel.getModelClassName(), User.class.getName())) {

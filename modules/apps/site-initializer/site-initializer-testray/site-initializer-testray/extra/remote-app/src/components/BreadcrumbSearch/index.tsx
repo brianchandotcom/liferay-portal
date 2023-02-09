@@ -41,7 +41,9 @@ const BreadcrumbSearch: React.FC<BreadccrumbSearchProps> = ({
 		onClickRow,
 		search,
 		setSearch,
-	} = useBreadcrumb([...defaultEntities].slice(0, maxEntitiesToSearch));
+	} = useBreadcrumb([...defaultEntities].slice(0, maxEntitiesToSearch), {
+		active: true,
+	});
 
 	const MAX_BREADCRUMB_REACHED = breadCrumb.length === maxEntitiesToSearch;
 

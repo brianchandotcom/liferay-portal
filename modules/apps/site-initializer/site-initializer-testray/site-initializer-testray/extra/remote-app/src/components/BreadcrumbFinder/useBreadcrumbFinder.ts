@@ -33,6 +33,9 @@ const BREADCRUMB_HEIGHT = 90;
 const INPUT_FOCUS_DELAY = 10;
 
 const useBreadcrumbFinder = () => {
+	const [active, setActive] = useState(false);
+	const [index, setIndex] = useState(0);
+
 	const navigate = useNavigate();
 
 	const {
@@ -44,10 +47,7 @@ const useBreadcrumbFinder = () => {
 		search,
 		setBreadCrumb,
 		setSearch,
-	} = useBreadcrumb(defaultEntities);
-
-	const [active, setActive] = useState(false);
-	const [index, setIndex] = useState(0);
+	} = useBreadcrumb(defaultEntities, {active});
 
 	const listRef = useRef<HTMLUListElement>(null);
 

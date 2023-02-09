@@ -55,7 +55,7 @@ const getEntityUrlAndNormalizer = (
 	url: getResource(ids, search),
 });
 
-const useBreadcrumb = (entities: Entity[]) => {
+const useBreadcrumb = (entities: Entity[], {active}: {active: boolean}) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [breadCrumb, setBreadCrumb] = useState<BreadCrumb[]>([]);
@@ -73,6 +73,7 @@ const useBreadcrumb = (entities: Entity[]) => {
 	);
 
 	const {data} = useFetch<APIResponse<any>>(url, {
+		swrConfig: {stopFetching: !active},
 		transformData: transformer,
 	});
 

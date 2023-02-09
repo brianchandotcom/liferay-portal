@@ -13,12 +13,13 @@
  */
 
 import {useMemo} from 'react';
-import useSWR from 'swr';
+import useSWR, {SWRConfiguration} from 'swr';
 
 import Rest, {APIParametersOptions} from '../services/rest/Rest';
 
 type FetchOptions<Data> = {
 	params?: APIParametersOptions;
+	swrConfig?: SWRConfiguration & {stopFetching?: boolean};
 	transformData?: (data: Data) => Data;
 };
 
@@ -46,10 +47,11 @@ export function useFetch<Data = any, Error = any>(
 	url: string | null,
 	fetchParameters?: FetchOptions<Data>
 ) {
-	const {params, transformData} = fetchParameters ?? {};
+	const {params, swrConfig, transformData} = fetchParameters ?? {};
 
-	const {data, error, isValidating, mutate} = useSWR<Data, Error>(() =>
-		getBaseURL(url, params)
+	const {data, error, isValidating, mutate} = useSWR<Data, Error>(
+		() => (swrConfig?.stopFetching ? null : getBaseURL(url, params)),
+		swrConfig
 	);
 
 	const memoizedData = useMemo(() => {

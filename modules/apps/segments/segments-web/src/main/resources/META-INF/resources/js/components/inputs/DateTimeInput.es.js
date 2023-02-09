@@ -19,7 +19,8 @@ import React from 'react';
 
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 
-const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
+const OUTPUT_DATE_FORMAT = 'yyyy-MM-dd';
+const INPUT_DATE_FORMAT = 'yyyy/MM/dd';
 
 class DateTimeInput extends React.Component {
 	static propTypes = {
@@ -63,18 +64,33 @@ class DateTimeInput extends React.Component {
 	};
 
 	_saveDateTimeValue = () => {
-		const dateInput = dateFns.format(this.state.value, INPUT_DATE_FORMAT);
+		let dateInput = '';
+		let dateOutput = '';
+
+		try {
+			dateInput = dateFns.format(
+				new Date(this.state.value),
+				INPUT_DATE_FORMAT
+			);
+			dateOutput = dateFns.format(
+				new Date(this.state.value),
+				OUTPUT_DATE_FORMAT
+			);
+		}
+		catch (error) {
+			dateInput = 'Invalid Date';
+		}
 
 		if (this.state.previousValue !== dateInput) {
-			const newDateInput =
-				dateInput !== 'Invalid Date'
-					? dateInput
-					: dateFns.format(new Date(), INPUT_DATE_FORMAT);
+			if (dateInput === 'Invalid Date') {
+				dateInput = dateFns.format(new Date(), INPUT_DATE_FORMAT);
+				dateOutput = dateFns.format(new Date(), OUTPUT_DATE_FORMAT);
+			}
 
 			this.setState(
 				{
-					previousValue: newDateInput,
-					value: newDateInput,
+					previousValue: dateInput,
+					value: dateInput,
 				},
 				() => {
 					this.props.onChange({
@@ -83,14 +99,12 @@ class DateTimeInput extends React.Component {
 							this.props.propertyType === PROPERTY_TYPES.DATE_TIME
 								? dateFns
 										.parse(
-											this.state.value,
-											INPUT_DATE_FORMAT
+											dateOutput,
+											OUTPUT_DATE_FORMAT,
+											new Date()
 										)
 										.toISOString()
-								: dateFns.format(
-										this.state.value,
-										INPUT_DATE_FORMAT
-								  ),
+								: dateOutput,
 					});
 				}
 			);
@@ -104,10 +118,26 @@ class DateTimeInput extends React.Component {
 		return (
 			<div className="criterion-input date-input">
 				<ClayDatePicker
-					aria-label={`${propertyLabel}: ${Liferay.Language.get(
-						'select-date'
-					)}`}
+					ariaLabels={{
+						buttonChooseDate: `${propertyLabel}: ${Liferay.Language.get(
+							'select-date'
+						)}`,
+						buttonDot: `${Liferay.Language.get(
+							'select-current-date'
+						)}`,
+						buttonNextMonth: `${Liferay.Language.get(
+							'select-next-month'
+						)}`,
+						buttonPreviousMonth: `${Liferay.Language.get(
+							'select-previous-month'
+						)}`,
+						dialog: `${Liferay.Language.get('select-date')}`,
+						input: `${propertyLabel}: ${Liferay.Language.get(
+							'input-a-value'
+						)}`,
+					}}
 					data-testid="date-input"
+					dateFormat="yyyy/MM/dd"
 					disabled={disabled}
 					expanded={expanded}
 					months={[

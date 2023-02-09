@@ -577,6 +577,14 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionFactoryUtil.sum(
 					MainExampleTable.INSTANCE.mainExampleIdColumn)));
+		Assert.assertEquals(
+			"(MainExample.mainExampleId + ReferenceExample.referenceExampleId)",
+			String.valueOf(
+				DSLFunctionFactoryUtil.withParentheses(
+					DSLFunctionFactoryUtil.add(
+						MainExampleTable.INSTANCE.mainExampleIdColumn,
+						ReferenceExampleTable.INSTANCE.
+							referenceExampleIdColumn))));
 	}
 
 	@Test

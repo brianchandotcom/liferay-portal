@@ -656,6 +656,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				workspaceExtension.getEnvironment());
 
 		dockerfile.instruction(
+			"COPY --chown=liferay:liferay client-extensions /home/liferay/osgi" +
+				"/client-extensions");
+		dockerfile.instruction(
 			"COPY --chown=liferay:liferay deploy /mnt/liferay/deploy");
 		dockerfile.instruction(
 			"COPY --chown=liferay:liferay patching /mnt/liferay/patching");

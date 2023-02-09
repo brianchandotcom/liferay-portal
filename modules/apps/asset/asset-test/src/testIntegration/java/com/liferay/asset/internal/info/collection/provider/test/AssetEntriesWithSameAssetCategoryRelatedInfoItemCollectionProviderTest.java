@@ -116,7 +116,7 @@ public class
 			assetCategory, serviceContext);
 
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BlogsEntry.class.getName());
+			AssetEntry.class.getName());
 
 		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
 

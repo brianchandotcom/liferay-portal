@@ -276,34 +276,35 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return true;
 	}
 
-	private BooleanFilter _getAnyAssetCategoryOfTheSameVocabularyBooleanFilter(
-			AssetEntry assetEntry, SearchContext searchContext)
+	private BooleanFilter
+			_getAnyAssetCategoryOfTheSameAssetVocabularyBooleanFilter(
+				AssetEntry assetEntry, SearchContext searchContext)
 		throws Exception {
 
-		Map<Long, List<Long>> assetEntryVocabulariesMap = new HashMap<>();
+		Map<Long, List<Long>> assetEntryAssetVocabulariesMap = new HashMap<>();
 
-		Map<Long, List<Long>> otherAssetCategoriesVocabulariesMap =
+		Map<Long, List<Long>> otherAssetCategoriesAssetVocabulariesMap =
 			new HashMap<>();
 
-		for (long assetEntryCategoryId : assetEntry.getCategoryIds()) {
+		for (long assetEntryAssetCategoryId : assetEntry.getCategoryIds()) {
 			AssetCategory assetCategory =
 				_assetCategoryLocalService.fetchAssetCategory(
-					assetEntryCategoryId);
+					assetEntryAssetCategoryId);
 
 			if (assetCategory == null) {
 				continue;
 			}
 
-			List<Long> categoriesList =
-				assetEntryVocabulariesMap.computeIfAbsent(
+			List<Long> assetCategoryIds =
+				assetEntryAssetVocabulariesMap.computeIfAbsent(
 					assetCategory.getVocabularyId(), key -> new ArrayList<>());
 
-			categoriesList.add(assetEntryCategoryId);
+			assetCategoryIds.add(assetEntryAssetCategoryId);
 
-			if (!otherAssetCategoriesVocabulariesMap.containsKey(
+			if (!otherAssetCategoriesAssetVocabulariesMap.containsKey(
 					assetCategory.getVocabularyId())) {
 
-				otherAssetCategoriesVocabulariesMap.put(
+				otherAssetCategoriesAssetVocabulariesMap.put(
 					assetCategory.getVocabularyId(),
 					ListUtil.filter(
 						ListUtil.toList(
@@ -319,12 +320,12 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		List<BooleanFilter> booleanFilters = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry :
-				assetEntryVocabulariesMap.entrySet()) {
+				assetEntryAssetVocabulariesMap.entrySet()) {
 
-			Long vocabularyId = entry.getKey();
+			Long assetVocabularyId = entry.getKey();
 
 			List<Long> otherAssetCategoryIds =
-				otherAssetCategoriesVocabulariesMap.get(vocabularyId);
+				otherAssetCategoriesAssetVocabulariesMap.get(assetVocabularyId);
 
 			if (ListUtil.isEmpty(otherAssetCategoryIds)) {
 				continue;
@@ -362,7 +363,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				assetCategoryRuleTuple.getObject(0),
 				"anyAssetCategoryOfTheSameVocabulary")) {
 
-			return _getAnyAssetCategoryOfTheSameVocabularyBooleanFilter(
+			return _getAnyAssetCategoryOfTheSameAssetVocabularyBooleanFilter(
 				assetEntry, searchContext);
 		}
 

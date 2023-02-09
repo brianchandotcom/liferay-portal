@@ -47,7 +47,12 @@ const WrappedComponent: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
 }) => {
 	return (
-		<AppContextProvider connected={false} liferayAnalyticsURL="" token="">
+		<AppContextProvider
+			connected={false}
+			liferayAnalyticsURL=""
+			token=""
+			wizardMode
+		>
 			{children}
 		</AppContextProvider>
 	);

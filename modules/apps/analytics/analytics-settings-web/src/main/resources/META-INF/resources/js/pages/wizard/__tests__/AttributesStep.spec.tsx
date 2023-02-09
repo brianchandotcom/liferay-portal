@@ -64,6 +64,7 @@ describe('Attributes Step', () => {
 				connected={false}
 				liferayAnalyticsURL=""
 				token=""
+				wizardMode
 			>
 				<AttributesStepContent onDataChange={onDataChange} />
 			</AppContextProvider>

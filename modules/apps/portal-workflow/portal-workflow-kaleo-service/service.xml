@@ -35,6 +35,8 @@
 		<column name="scriptLanguage" type="String" />
 		<column name="scriptRequiredContexts" type="String" />
 		<column name="priority" type="int" />
+		<column name="type" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Order -->
 

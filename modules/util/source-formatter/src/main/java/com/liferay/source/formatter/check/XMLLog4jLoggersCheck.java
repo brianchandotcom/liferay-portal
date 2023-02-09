@@ -20,9 +20,8 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.File;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -54,7 +53,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
-		Set<String> srcPaths = _getSrcPaths();
+		List<String> srcPaths = _getSrcPaths();
 
 		for (Element loggersElement :
 				(List<Element>)rootElement.elements("Loggers")) {
@@ -71,7 +70,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 				String path = StringUtil.replace(
 					name, CharPool.PERIOD, CharPool.SLASH);
 
-				if (_srcPaths.contains(path)) {
+				if (srcPaths.contains(path)) {
 					continue;
 				}
 
@@ -93,7 +92,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 		}
 	}
 
-	private Set<String> _getSrcPaths() throws Exception {
+	private synchronized List<String> _getSrcPaths() throws Exception {
 		if (!_srcPaths.isEmpty()) {
 			return _srcPaths;
 		}
@@ -105,12 +104,15 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 			new String[] {"**/com/liferay/**/*.java"});
 
 		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
 			_srcPaths.add(fileName.substring(fileName.indexOf("com/liferay/")));
 		}
 
 		return _srcPaths;
 	}
 
-	private final Set<String> _srcPaths = new HashSet<>();
+	private final List<String> _srcPaths = new ArrayList<>();
 
 }

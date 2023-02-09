@@ -177,6 +177,10 @@ $h4 liferay.workspace.modules.dir
 Set the folder that contains all module projects. Set to `*` to search all
 subdirectories. The default value is `modules`.
 
+$h4 liferay.workspace.modules.excludes.dir
+Set the list of directories to exclude from build lifecycle. This will also
+search sub directories for matches.
+
 $h4 liferay.workspace.modules.jsp.precompile.enabled
 Set this to true to compile the JSP files in OSGi modules and have them added
 to the distributable Zip/Tar. The default value is `false`.

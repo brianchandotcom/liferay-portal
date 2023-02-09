@@ -5,32 +5,41 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "User",
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Site Member",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "EVP Manager",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Finance User",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Employee",
 			"scope": 4
 		}

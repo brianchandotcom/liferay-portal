@@ -420,7 +420,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_INACTIVE_LABEL_VIEW_CONTROL_MENU</td>
-	<td>//*[contains(@class, 'align-items-center')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//li//*[contains(text(),'${key_experienceName}')]/parent::div//following-sibling::div//span[normalize-space(text())='Inactive']</td>
 	<td></td>
 </tr>
 <tr>

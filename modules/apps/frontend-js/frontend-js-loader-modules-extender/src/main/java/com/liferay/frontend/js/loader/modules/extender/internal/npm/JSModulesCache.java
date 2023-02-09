@@ -21,6 +21,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
@@ -44,7 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Iván Zaera
  */
-public class JSModulesCache {
+public class JSModulesCache implements NPMRegistryStateSnapshot {
 
 	public JSModulesCache(
 		Map<String, String> exactMatchMap, Map<String, String> globalAliases,
@@ -64,6 +65,15 @@ public class JSModulesCache {
 		_resolvedJSPackages = resolvedJSPackages;
 	}
 
+	@Override
+	public String getDigest() {
+		if (_resolutionStateDigest == null) {
+			_resolutionStateDigest = _computeResolutionStateDigest();
+		}
+
+		return _resolutionStateDigest;
+	}
+
 	public Map<String, String> getGlobalAliases() {
 		return _globalAliases;
 	}
@@ -76,14 +86,6 @@ public class JSModulesCache {
 		return _jsPackages;
 	}
 
-	public String getResolutionStateDigest() {
-		if (_resolutionStateDigest == null) {
-			_resolutionStateDigest = _computeResolutionStateDigest();
-		}
-
-		return _resolutionStateDigest;
-	}
-
 	public Map<String, JSModule> getResolvedJSModules() {
 		return _resolvedJSModules;
 	}
@@ -92,6 +94,7 @@ public class JSModulesCache {
 		return _resolvedJSPackages;
 	}
 
+	@Override
 	public String mapModuleName(String moduleName) {
 		String mappedModuleName = _exactMatchMap.get(moduleName);
 
@@ -126,6 +129,7 @@ public class JSModulesCache {
 		return moduleName;
 	}
 
+	@Override
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 

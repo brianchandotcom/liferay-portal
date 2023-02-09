@@ -1661,6 +1661,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9767. Verify that a Tier Price entry cannot be saved with 0 quantity and an alert is shown"
+	@priority = "3"
+	test CannotCreateTierPriceWithZeroQuantity {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When admin goes to the Price Lists navigating in Entries tab") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+		}
+
+		task ("And clicks on a SKU to add a Tier Price giving Quantity as 0") {
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				key_text = "Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "0");
+
+			Click(locator1 = "Button#SUBMIT");
+		}
+
+		task ("Then an alert message is shown under the quantity field") {
+			AssertTextEquals(
+				key_alertMessage = "Please enter a value greater than or equal to 1.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter a value greater than or equal to 1.");
+		}
+
+		task ("And the Tier Price is not saved") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			AssertElementNotPresent(
+				key_field = "Tier Price",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7597. We cannot delete base price lists and base promotions."
 	@priority = "3"
 	test CanNotDeleteBasePriceListsAndPromotions {

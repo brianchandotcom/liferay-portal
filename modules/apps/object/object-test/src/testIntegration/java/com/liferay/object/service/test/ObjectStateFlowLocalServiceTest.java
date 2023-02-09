@@ -81,7 +81,6 @@ public class ObjectStateFlowLocalServiceTest {
 		_step1ListTypeEntry = _addListTypeEntry("step1");
 		_step2ListTypeEntry = _addListTypeEntry("step2");
 		_step3ListTypeEntry = _addListTypeEntry("step3");
-		_step4ListTypeEntry = _addListTypeEntry("step4");
 
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -320,6 +319,8 @@ public class ObjectStateFlowLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectStateTransitions() throws Exception {
+		ListTypeEntry listTypeEntry = _addListTypeEntry("step4");
+
 		List<ObjectState> objectStates =
 			_objectStateLocalService.getObjectStateFlowObjectStates(
 				_objectStateFlow.getObjectStateFlowId());
@@ -355,7 +356,7 @@ public class ObjectStateFlowLocalServiceTest {
 						TestPropsValues.getUserId(),
 						_objectStateFlow.getObjectStateFlowId(),
 						objectState.getObjectStateId(),
-						_step4ListTypeEntry.getListTypeEntryId())));
+						listTypeEntry.getListTypeEntryId())));
 		}
 
 		newObjectStateFlow.setObjectStates(newObjectStates);
@@ -483,6 +484,5 @@ public class ObjectStateFlowLocalServiceTest {
 	private ListTypeEntry _step1ListTypeEntry;
 	private ListTypeEntry _step2ListTypeEntry;
 	private ListTypeEntry _step3ListTypeEntry;
-	private ListTypeEntry _step4ListTypeEntry;
 
 }

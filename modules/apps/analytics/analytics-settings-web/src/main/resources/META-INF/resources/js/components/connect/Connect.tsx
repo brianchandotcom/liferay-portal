@@ -20,7 +20,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {Events, useData, useDispatch} from '../../App';
+import {EPageView, Events, useData, useDispatch} from '../../App';
 import {fetchConnection} from '../../utils/api';
 import BasePage from '../BasePage';
 import Loading from '../Loading';
@@ -32,7 +32,12 @@ interface IConnectProps {
 }
 
 const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
-	const {connected, liferayAnalyticsURL, token: initialToken} = useData();
+	const {
+		connected,
+		liferayAnalyticsURL,
+		pageView,
+		token: initialToken,
+	} = useData();
 	const dispatch = useDispatch();
 
 	const [token, setToken] = useState(initialToken);
@@ -96,6 +101,14 @@ const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 				<BasePage.Footer>
 					{connected ? (
 						<>
+							{pageView === EPageView.Wizard && (
+								<ClayButton
+									onClick={() => onConnect && onConnect()}
+								>
+									{Liferay.Language.get('next')}
+								</ClayButton>
+							)}
+
 							<ClayButton
 								className="mr-3"
 								displayType="primary"
@@ -114,32 +127,34 @@ const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 							</ClayButton>
 						</>
 					) : (
-						<ClayButton
-							disabled={!token || submitting}
-							onClick={async () => {
-								setSubmitting(true);
+						<>
+							<ClayButton
+								disabled={!token || submitting}
+								onClick={async () => {
+									setSubmitting(true);
 
-								const {ok} = await fetchConnection(token);
+									const {ok} = await fetchConnection(token);
 
-								setSubmitting(false);
+									setSubmitting(false);
 
-								if (ok) {
-									dispatch({
-										payload: {
-											connected: true,
-											token,
-										},
-										type: Events.Connect,
-									});
+									if (ok) {
+										dispatch({
+											payload: {
+												connected: true,
+												token,
+											},
+											type: Events.Connect,
+										});
 
-									onConnect && onConnect();
-								}
-							}}
-						>
-							{submitting && <Loading inline />}
+										onConnect && onConnect();
+									}
+								}}
+							>
+								{submitting && <Loading inline />}
 
-							{Liferay.Language.get('connect')}
-						</ClayButton>
+								{Liferay.Language.get('connect')}
+							</ClayButton>
+						</>
 					)}
 				</BasePage.Footer>
 			</ClayForm>

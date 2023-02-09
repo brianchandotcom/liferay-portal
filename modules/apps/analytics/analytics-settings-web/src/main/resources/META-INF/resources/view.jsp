@@ -30,6 +30,8 @@ AnalyticsSettingsDisplayContext analyticsSettingsDisplayContext = new AnalyticsS
 				"liferayAnalyticsURL", analyticsSettingsDisplayContext.getLiferayAnalyticsURL()
 			).put(
 				"token", analyticsSettingsDisplayContext.getToken()
+			).put(
+				"wizardMode", analyticsSettingsDisplayContext.isWizardMode()
 			).build()
 		%>'
 	/>

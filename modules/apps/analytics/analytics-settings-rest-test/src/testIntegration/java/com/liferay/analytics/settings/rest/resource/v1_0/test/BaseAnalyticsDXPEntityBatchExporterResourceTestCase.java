@@ -111,7 +111,7 @@ public abstract class BaseAnalyticsDXPEntityBatchExporterResourceTestCase {
 	}
 
 	@Test
-	public void testPostAnalyticsDXPEntityBatchExporter() throws Exception {
+	public void testPostDisableWizardMode() throws Exception {
 		Assert.assertTrue(false);
 	}
 

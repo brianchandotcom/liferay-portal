@@ -32,13 +32,15 @@ describe('App', () => {
 	});
 
 	it('renders wizard view when not connected', () => {
-		const {getAllByTestId} = render(<App {...INITIAL_PROPS} />);
+		const {getAllByTestId} = render(<App {...INITIAL_PROPS} wizardMode />);
 
 		expect(getAllByTestId(EPageView.Wizard)).toBeTruthy();
 	});
 
 	it('renders default view when connected', () => {
-		const {getAllByTestId} = render(<App {...INITIAL_PROPS} connected />);
+		const {getAllByTestId} = render(
+			<App {...INITIAL_PROPS} connected wizardMode={false} />
+		);
 
 		expect(getAllByTestId(EPageView.Default)).toBeTruthy();
 	});

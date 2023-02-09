@@ -12,10 +12,10 @@
  * details.
  */
 
-package testapi.api;
+package com.example.test.api;
 
 /**
- * @author Liferay
+ * @author simon
  */
 public interface TestApi {
 }

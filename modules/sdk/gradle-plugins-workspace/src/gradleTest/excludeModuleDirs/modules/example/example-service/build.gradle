@@ -1,0 +1,11 @@
+buildService {
+	apiDir = "../example-api/src/main/java"
+}
+
+dependencies {
+	compile project(":modules:example:example-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+group = "example"

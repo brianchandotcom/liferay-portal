@@ -1,4 +1,4 @@
-Bundle-Name: testApi
-Bundle-SymbolicName: testapi
+Bundle-Name: test-api
+Bundle-SymbolicName: com.example.test
 Bundle-Version: 1.0.0
-Export-Package: testapi.api
+Export-Package: com.example.test.api

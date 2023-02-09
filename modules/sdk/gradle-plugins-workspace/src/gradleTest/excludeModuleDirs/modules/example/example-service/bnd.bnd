@@ -1,5 +1,5 @@
-Bundle-Name: sample2-service
-Bundle-SymbolicName: sample2.service
+Bundle-Name: example-service
+Bundle-SymbolicName: example.service
 Bundle-Version: 1.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

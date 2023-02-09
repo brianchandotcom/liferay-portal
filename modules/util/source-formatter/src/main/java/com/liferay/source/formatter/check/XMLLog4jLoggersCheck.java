@@ -49,11 +49,15 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 	private void _checkLoggers(String fileName, String content)
 		throws Exception {
 
+		List<String> srcPaths = _getSrcPaths();
+
+		if (srcPaths.isEmpty()) {
+			return;
+		}
+
 		Document document = SourceUtil.readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		List<String> srcPaths = _getSrcPaths();
 
 		for (Element loggersElement :
 				(List<Element>)rootElement.elements("Loggers")) {

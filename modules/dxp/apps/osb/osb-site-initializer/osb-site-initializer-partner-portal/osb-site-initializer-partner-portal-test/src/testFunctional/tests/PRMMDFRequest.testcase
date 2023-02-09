@@ -564,6 +564,78 @@ definition {
 				typeOfActivity = ${typeOfActivity});
 		}
 	}
+	@description = "This is a test for LPS-174501. Verify that the only user with the right roles can see/change the state manager"
+	@priority = 5
+	test OnlyManagersCanSeeStateManager {
+		task ("Given I go to add a new MDF Request") {
+			PRMUtils.gotoPRM();
+
+			PRMNavigator.goToNavItem(navItem = "Marketing");
+
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the partner goes to the MDF Detail page") {
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+		task ("Then the State Manager isn't visible") {
+			
+			PRMMDFRequest.CanNotViewStateManager();
+		}
+
+		task ("When the Manager goes to the MDF Detail page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+		}
+
+		task ("Then the State Manager is visible") {
+			PRMMDFRequest.viewMDFStatus(key_status = "Pending Marketing Review");
+
+			PRMMDFRequest.viewStateManager();
+		}
+
+		task ("And the Manager can change the MDF Status") {
+			PRMMDFRequest.changeMDFStatus(
+				campaignName = "Campaign Name",
+				key_statusButton = "Approve");
+
+			PRMMDFRequest.viewMDFStatus(key_status = "Approved");
+		}	
+	}
 
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
 	@priority = 5

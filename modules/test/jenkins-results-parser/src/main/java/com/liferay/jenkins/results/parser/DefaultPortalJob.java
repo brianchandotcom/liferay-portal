@@ -83,13 +83,22 @@ public class DefaultPortalJob
 	}
 
 	protected DefaultPortalJob(
-		BuildProfile buildProfile, String jobName, String testSuiteName) {
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String testSuiteName) {
 
 		super(buildProfile, jobName);
 
+		_portalGitWorkingDirectory = portalGitWorkingDirectory;
 		_testSuiteName = testSuiteName;
 
 		_initialize();
+	}
+
+	protected DefaultPortalJob(
+		BuildProfile buildProfile, String jobName, String testSuiteName) {
+
+		this(buildProfile, jobName, null, testSuiteName);
 	}
 
 	protected DefaultPortalJob(JSONObject jsonObject) {

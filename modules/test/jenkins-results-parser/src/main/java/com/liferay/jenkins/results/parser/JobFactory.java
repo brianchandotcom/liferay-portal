@@ -577,7 +577,8 @@ public class JobFactory {
 			}
 			else {
 				job = new DefaultPortalJob(
-					buildProfile, jobName, testSuiteName);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName);
 			}
 		}
 

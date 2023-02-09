@@ -427,23 +427,37 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	}
 
 	private void _expireLock(Lock lock) {
-		LockListener lockListener = _getLockListener(lock.getClassName());
-
-		String key = lock.getKey();
-
-		if (lockListener != null) {
-			lockListener.onBeforeExpire(key);
-		}
-
 		try {
-			lockPersistence.remove(lock);
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					LockListener lockListener = _getLockListener(
+						lock.getClassName());
 
-			lockPersistence.flush();
+					String key = lock.getKey();
+
+					if (lockListener != null) {
+						lockListener.onBeforeExpire(key);
+					}
+
+					try {
+						lockPersistence.remove(lock);
+
+						lockPersistence.flush();
+					}
+					finally {
+						if (lockListener != null) {
+							lockListener.onAfterExpire(key);
+						}
+					}
+
+					return null;
+				});
 		}
-		finally {
-			if (lockListener != null) {
-				lockListener.onAfterExpire(key);
-			}
+		catch (Throwable throwable) {
+			_log.error("Unable to expire lock", throwable);
+
+			ReflectionUtil.throwException(throwable);
 		}
 	}
 

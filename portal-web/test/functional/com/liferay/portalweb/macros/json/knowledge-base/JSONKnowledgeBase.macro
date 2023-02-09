@@ -122,6 +122,10 @@ definition {
 			var urlTitle = "";
 		}
 
+		if (!(isSet(kbDescription))) {
+			var kbDescription = "";
+		}
+
 		if (!(isSet(expirationDate)) || !(isSet(reviewDate))) {
 			var displayDateYear = DateUtil.getCurrentYear();
 
@@ -145,7 +149,7 @@ definition {
 				-d title=${kbArticleTitle} \
 				-d urlTitle=${urlTitle} \
 				-d content=<p>${kbArticleContent}</p> \
-				-d description= \
+				-d description=${kbDescription} \
 				-d sections= \
 				-d sourceURL= \
 				-d expirationDate=${expirationDate} \

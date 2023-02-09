@@ -422,6 +422,34 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@Schema
+	public String getCreatorEmailAddress() {
+		return creatorEmailAddress;
+	}
+
+	public void setCreatorEmailAddress(String creatorEmailAddress) {
+		this.creatorEmailAddress = creatorEmailAddress;
+	}
+
+	@JsonIgnore
+	public void setCreatorEmailAddress(
+		UnsafeSupplier<String, Exception> creatorEmailAddressUnsafeSupplier) {
+
+		try {
+			creatorEmailAddress = creatorEmailAddressUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String creatorEmailAddress;
+
 	@Schema(example = "USD")
 	public String getCurrencyCode() {
 		return currencyCode;
@@ -3406,6 +3434,20 @@ public class Order implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(createDate));
+
+			sb.append("\"");
+		}
+
+		if (creatorEmailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorEmailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(creatorEmailAddress));
 
 			sb.append("\"");
 		}

@@ -192,6 +192,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_WIDGET_SELECT</td>
+	<td>//select[contains(@id,'kbArticlesSections')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_HEADER</td>
 	<td>//span[@class='taglib-asset-categories-summary']</td>
 	<td></td>

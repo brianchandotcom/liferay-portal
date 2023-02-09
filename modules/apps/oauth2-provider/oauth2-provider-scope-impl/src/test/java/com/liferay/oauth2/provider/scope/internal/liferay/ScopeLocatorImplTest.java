@@ -38,8 +38,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.hamcrest.CoreMatchers;
 
@@ -360,18 +358,13 @@ public class ScopeLocatorImplTest {
 	private Set<String> _getScopes(
 		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes) {
 
-		Stream<LiferayOAuth2Scope> stream = liferayOAuth2Scopes.stream();
+		Set<String> set = new HashSet<>();
 
-		return stream.flatMap(
-			liferayOAuth2Scope -> {
-				Set<String> singletonSet = Collections.singleton(
-					liferayOAuth2Scope.getScope());
+		for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
+			set.add(liferayOAuth2Scope.getScope());
+		}
 
-				return singletonSet.stream();
-			}
-		).collect(
-			Collectors.toSet()
-		);
+		return set;
 	}
 
 	private void _set(Object object, String fieldName, Object value) {

@@ -69,3 +69,5 @@ export const CONSTANTS = {
 		},
 	],
 };
+
+export const productAutoERC = 'RAYAP-001';

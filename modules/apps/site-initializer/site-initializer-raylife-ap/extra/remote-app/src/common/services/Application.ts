@@ -13,9 +13,15 @@
  */
 
 import {Parameters, parametersFormater} from '.';
+import {InitialStateTypes} from '../../routes/applications/context/NewApplicationAutoContextProvider';
+import {NewApplicationFormStepsType} from '../utils/applicationType';
+import {productAutoERC} from '../utils/constants';
 import {axios} from './liferay/api';
+import {Liferay} from './liferay/liferay';
 
 const DeliveryAPI = 'o/c/raylifeapplications';
+
+const userId = Liferay.ThemeDisplay.getUserId();
 
 export function getApplications(parameters: Parameters = {}) {
 	const parametersList = Object.keys(parameters);
@@ -48,9 +54,13 @@ export function deleteApplicationByExternalReferenceCode(
 		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
 	);
 }
-const products: any = localStorage.getItem('raylife-ap-storage');
 
-const adaptToFormApplicationRequest = (state: any, status: any) => ({
+const products: string = localStorage.getItem('raylife-ap-storage') as string;
+
+const adaptToFormApplicationRequest = (
+	state: NewApplicationFormStepsType,
+	status: string
+) => ({
 	address: state?.contactInfo?.form?.streetAddress,
 	addressApt: state?.contactInfo?.form?.apt,
 	applicationCreateDate: new Date(),
@@ -69,7 +79,6 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 		driverInfo: {
 			form: state?.driverInfo?.form,
 		},
-		ownership: state?.contactInfo?.ownership,
 		vehicleInfo: {
 			form: state?.vehicleInfo?.form,
 		},
@@ -78,12 +87,18 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 	firstName: state?.contactInfo?.form?.firstName,
 	lastName: state?.contactInfo?.form?.lastName,
 	phone: state?.contactInfo?.form?.phone,
+	productId: productAutoERC,
 	productName: JSON.parse(products)?.productName,
+	r_userToApplications_userId: userId,
 	state: state?.contactInfo?.form?.state,
+	submitDate: new Date(),
 	zip: state?.contactInfo?.form?.zipCode,
 });
 
-export function createOrUpdateRaylifeApplication(state: any, status: any) {
+export function createOrUpdateRaylifeApplication(
+	state: InitialStateTypes,
+	status: string
+) {
 	const payload = adaptToFormApplicationRequest(state?.steps, status);
 
 	if (state.applicationId) {
@@ -93,7 +108,10 @@ export function createOrUpdateRaylifeApplication(state: any, status: any) {
 	return axios.post(`${DeliveryAPI}/`, payload);
 }
 
-export function exitRaylifeApplication(state: any, status: any) {
+export function exitRaylifeApplication(
+	state: InitialStateTypes,
+	status: string
+) {
 	const payload = adaptToFormApplicationRequest(state?.steps, status);
 
 	return axios.patch(`${DeliveryAPI}/${state.applicationId}`, payload);

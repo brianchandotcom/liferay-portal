@@ -17,7 +17,7 @@ import React, {ReactNode, createContext, useEffect, useReducer} from 'react';
 import {getApplicationByExternalReferenceCode} from '../../../common/services';
 import {ActionMap} from '../../../types';
 
-type ContactInfoFormTypes = {
+export type ContactInfoFormTypes = {
 	apt: string;
 	city: string;
 	dateOfBirth: string;
@@ -45,7 +45,7 @@ const ContactInfoForm: ContactInfoFormTypes = {
 	zipCode: '',
 };
 
-type CoverageFormTypes = {
+export type CoverageFormTypes = {
 	bodilyInjury: string;
 	medical: string;
 	propertyDamage: string;

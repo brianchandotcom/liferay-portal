@@ -52,17 +52,17 @@ public class CommercePriceListAccountRelLocalServiceImpl
 			int order, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePriceListAccountRel existingCommercePriceListAccountRel =
+		CommercePriceListAccountRel commercePriceListAccountRel =
 			commercePriceListAccountRelPersistence.fetchByCAI_CPI(
 				commerceAccountId, commercePriceListId);
 
-		if (existingCommercePriceListAccountRel != null) {
+		if (commercePriceListAccountRel != null) {
 			throw new DuplicateCommercePriceListAccountRelException();
 		}
 
 		User user = _userLocalService.getUser(userId);
 
-		CommercePriceListAccountRel commercePriceListAccountRel =
+		commercePriceListAccountRel =
 			commercePriceListAccountRelPersistence.create(
 				counterLocalService.increment());
 

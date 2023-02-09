@@ -54,24 +54,20 @@ public class CommercePriceListCommerceAccountGroupRelLocalServiceImpl
 		throws PortalException {
 
 		CommercePriceListCommerceAccountGroupRel
-			existingCommercePriceListCommerceAccountGroupRel =
+			commercePriceListCommerceAccountGroupRel =
 				commercePriceListCommerceAccountGroupRelPersistence.
 					fetchByCAGI_CPI(
 						commercePriceListId, commerceAccountGroupId);
 
-		if (existingCommercePriceListCommerceAccountGroupRel != null) {
+		if (commercePriceListCommerceAccountGroupRel != null) {
 			throw new DuplicateCommercePriceListCommerceAccountGroupRelException();
 		}
 
 		User user = _userLocalService.getUser(userId);
 
-		long commercePriceListCommerceAccountGroupRelId =
-			counterLocalService.increment();
-
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel =
-				commercePriceListCommerceAccountGroupRelPersistence.create(
-					commercePriceListCommerceAccountGroupRelId);
+		commercePriceListCommerceAccountGroupRel =
+			commercePriceListCommerceAccountGroupRelPersistence.create(
+				counterLocalService.increment());
 
 		commercePriceListCommerceAccountGroupRel.setUuid(
 			serviceContext.getUuid());

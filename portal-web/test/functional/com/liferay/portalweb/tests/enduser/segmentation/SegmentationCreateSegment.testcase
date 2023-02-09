@@ -2343,19 +2343,19 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Segmentation#SCOPE_CARD_SITE",
-				siteName = "Test Site Name",
-				value1 = "Test Site Name");
+				siteName = "Global",
+				value1 = "Global");
 		}
 
 		task ("Configure the site scope to the global site") {
-			Segmentation.configureScope(site = "Global");
+			Segmentation.configureScope(site = "Test Site Name");
 		}
 
 		task ("Assert the new site replaced the previous one") {
 			AssertTextEquals(
 				locator1 = "Segmentation#SCOPE_CARD_SITE",
-				siteName = "Global",
-				value1 = "Global");
+				siteName = "Test Site Name",
+				value1 = "Test Site Name");
 		}
 	}
 

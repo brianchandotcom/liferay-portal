@@ -53,11 +53,11 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 		throws PortalException {
 
 		CommerceDiscountCommerceAccountGroupRel
-			existingCommerceDiscountCommerceAccountGroupRel =
+			commerceDiscountCommerceAccountGroupRel =
 				commerceDiscountCommerceAccountGroupRelPersistence.
 					fetchByCDI_CAGI(commerceDiscountId, commerceAccountGroupId);
 
-		if (existingCommerceDiscountCommerceAccountGroupRel != null) {
+		if (commerceDiscountCommerceAccountGroupRel != null) {
 			throw new DuplicateCommerceDiscountCommerceAccountGroupRelException();
 		}
 
@@ -66,10 +66,9 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceImpl
 		long commerceDiscountCommerceAccountGroupRelId =
 			counterLocalService.increment();
 
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel =
-				commerceDiscountCommerceAccountGroupRelPersistence.create(
-					commerceDiscountCommerceAccountGroupRelId);
+		commerceDiscountCommerceAccountGroupRel =
+			commerceDiscountCommerceAccountGroupRelPersistence.create(
+				commerceDiscountCommerceAccountGroupRelId);
 
 		commerceDiscountCommerceAccountGroupRel.setCompanyId(
 			user.getCompanyId());

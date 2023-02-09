@@ -52,17 +52,17 @@ public class CommercePriceListChannelRelLocalServiceImpl
 			int order, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePriceListChannelRel existingCommercePriceListChannelRel =
+		CommercePriceListChannelRel commercePriceListChannelRel =
 			commercePriceListChannelRelPersistence.fetchByCCI_CPI(
 				commerceChannelId, commercePriceListId);
 
-		if (existingCommercePriceListChannelRel != null) {
+		if (commercePriceListChannelRel != null) {
 			throw new DuplicateCommercePriceListChannelRelException();
 		}
 
 		User user = _userLocalService.getUser(userId);
 
-		CommercePriceListChannelRel commercePriceListChannelRel =
+		commercePriceListChannelRel =
 			commercePriceListChannelRelPersistence.create(
 				counterLocalService.increment());
 

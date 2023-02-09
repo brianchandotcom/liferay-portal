@@ -52,11 +52,11 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceDiscountAccountRel existingCommerceDiscountAccountRel =
+		CommerceDiscountAccountRel commerceDiscountAccountRel =
 			commerceDiscountAccountRelPersistence.fetchByCAI_CDI(
 				commerceAccountId, commerceDiscountId);
 
-		if (existingCommerceDiscountAccountRel != null) {
+		if (commerceDiscountAccountRel != null) {
 			throw new DuplicateCommerceDiscountAccountRelException();
 		}
 
@@ -64,7 +64,7 @@ public class CommerceDiscountAccountRelLocalServiceImpl
 
 		long commerceDiscountAccountRelId = counterLocalService.increment();
 
-		CommerceDiscountAccountRel commerceDiscountAccountRel =
+		commerceDiscountAccountRel =
 			commerceDiscountAccountRelPersistence.create(
 				commerceDiscountAccountRelId);
 

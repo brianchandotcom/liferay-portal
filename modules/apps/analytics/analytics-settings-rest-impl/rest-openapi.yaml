@@ -133,14 +133,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/analytics-dxp-entity-batch-exporter":
-        post:
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["AnalyticsDXPEntityBatchExporter"]
     "/channels":
         get:
             operationId: getChannelsPage
@@ -273,6 +265,14 @@ paths:
                                     $ref: "#/components/schemas/CommerceChannel"
                                 type: array
             tags: ["CommerceChannel"]
+    "/configuration/wizard-mode":
+        post:
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AnalyticsDXPEntityBatchExporter"]
     "/contacts/account-groups":
         get:
             operationId: getContactAccountGroupsPage

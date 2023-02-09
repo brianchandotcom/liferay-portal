@@ -37,7 +37,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
 </div>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166479")) %>'>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166479") %>'>
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="theme-spritemap-client-extension" /></h3>
 

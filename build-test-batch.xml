@@ -369,7 +369,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 							<set-portal-impl-system-ext-properties />
 
 							<if>
-								<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+								<or>
+									<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+									<isset property="database.${database.type}.docker.image" />
+								</or>
 								<then>
 									<antcall target="start-docker-containers" />
 								</then>
@@ -425,7 +428,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 							</if>
 
 							<if>
-								<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+								<or>
+									<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+									<isset property="database.${database.type}.docker.image" />
+								</or>
 								<then>
 									<antcall target="stop-docker-containers" />
 								</then>

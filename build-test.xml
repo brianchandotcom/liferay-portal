@@ -498,7 +498,10 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 		<sequential>
 			<if>
-				<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+				<or>
+					<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+					<isset property="database.${database.type}.docker.image" />
+				</or>
 				<then>
 					<local name="export.dmp.file.path" />
 

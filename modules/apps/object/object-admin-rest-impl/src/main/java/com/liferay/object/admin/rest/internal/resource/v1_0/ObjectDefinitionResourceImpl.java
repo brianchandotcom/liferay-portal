@@ -690,6 +690,7 @@ public class ObjectDefinitionResourceImpl
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());
+				modifiable = objectDefinition.getModifiable();
 				name = objectDefinition.getShortName();
 				objectActions = transformToArray(
 					_objectActionLocalService.getObjectActions(

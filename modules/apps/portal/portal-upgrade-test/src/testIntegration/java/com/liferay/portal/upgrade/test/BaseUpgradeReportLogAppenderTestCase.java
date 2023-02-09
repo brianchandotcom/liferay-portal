@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
@@ -47,37 +48,27 @@ import org.apache.logging.log4j.core.Appender;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sam Ziemer
  */
-@RunWith(Arquillian.class)
-public class UpgradeReportLogAppenderTest {
+public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_db = DBManagerUtil.getDB();
-
-		_db.runSQL(
-			"create table UpgradeReportTable1 (id_ LONG not null primary key)");
-		_db.runSQL(
-			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
-	}
-
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable1)");
 		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable2)");
+
+		ReflectionTestUtil.setFieldValue(
+			DBUpgrader.class, "_upgradeTool", _originalUpgradeTool);
 	}
 
 	@After
@@ -86,7 +77,7 @@ public class UpgradeReportLogAppenderTest {
 
 		_reportContent = null;
 
-		File reportsDir = new File(".", "reports");
+		File reportsDir = new File(getFilePath(), "reports");
 
 		if ((reportsDir != null) && reportsDir.exists()) {
 			File reportFile = new File(reportsDir, "upgrade_report.info");
@@ -213,7 +204,8 @@ public class UpgradeReportLogAppenderTest {
 	public void testLogEvents() throws Exception {
 		_appender.start();
 
-		Log log = LogFactoryUtil.getLog(UpgradeReportLogAppenderTest.class);
+		Log log = LogFactoryUtil.getLog(
+			BaseUpgradeReportLogAppenderTestCase.class);
 
 		log.warn("Warning");
 		log.warn("Warning");
@@ -328,6 +320,23 @@ public class UpgradeReportLogAppenderTest {
 				latestSchemaVersion.toString(), StringPool.NEW_LINE));
 	}
 
+	protected static void setUpClass(boolean upgradeTool) throws Exception {
+		_db = DBManagerUtil.getDB();
+
+		_db.runSQL(
+			"create table UpgradeReportTable1 (id_ LONG not null primary key)");
+		_db.runSQL(
+			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
+
+		_originalUpgradeTool = ReflectionTestUtil.getFieldValue(
+			DBUpgrader.class, "_upgradeTool");
+
+		ReflectionTestUtil.setFieldValue(
+			DBUpgrader.class, "_upgradeTool", upgradeTool);
+	}
+
+	protected abstract String getFilePath();
+
 	private void _assertReport(String testString) throws Exception {
 		if (_reportContent == null) {
 			_reportContent = _getReportContent();
@@ -338,7 +347,7 @@ public class UpgradeReportLogAppenderTest {
 	}
 
 	private String _getReportContent() throws Exception {
-		File reportsDir = new File(".", "reports");
+		File reportsDir = new File(getFilePath(), "reports");
 
 		Assert.assertTrue(reportsDir.exists());
 
@@ -350,6 +359,7 @@ public class UpgradeReportLogAppenderTest {
 	}
 
 	private static DB _db;
+	private static boolean _originalUpgradeTool;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 

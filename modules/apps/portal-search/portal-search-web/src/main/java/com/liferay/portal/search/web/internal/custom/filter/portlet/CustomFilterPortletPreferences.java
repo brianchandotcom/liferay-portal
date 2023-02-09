@@ -59,9 +59,7 @@ public interface CustomFilterPortletPreferences {
 
 	public String getCustomHeadingString();
 
-	public Optional<String> getFederatedSearchKeyOptional();
-
-	public String getFederatedSearchKeyString();
+	public String getFederatedSearchKey();
 
 	public Optional<String> getFilterFieldOptional();
 

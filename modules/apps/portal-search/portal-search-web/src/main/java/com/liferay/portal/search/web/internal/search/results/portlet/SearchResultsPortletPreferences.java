@@ -44,9 +44,7 @@ public interface SearchResultsPortletPreferences {
 
 	public static final String PREFERENCE_KEY_VIEW_IN_CONTEXT = "viewInContext";
 
-	public Optional<String> getFederatedSearchKeyOptional();
-
-	public String getFederatedSearchKeyString();
+	public String getFederatedSearchKey();
 
 	public Optional<String> getFieldsToDisplayOptional();
 

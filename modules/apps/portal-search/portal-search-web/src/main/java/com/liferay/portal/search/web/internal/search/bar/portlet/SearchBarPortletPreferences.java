@@ -58,9 +58,7 @@ public interface SearchBarPortletPreferences {
 
 	public String getDestinationString();
 
-	public Optional<String> getFederatedSearchKeyOptional();
-
-	public String getFederatedSearchKeyString();
+	public String getFederatedSearchKey();
 
 	public String getKeywordsParameterName();
 

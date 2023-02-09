@@ -49,14 +49,10 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String> getFederatedSearchKeyOptional() {
+	public String getFederatedSearchKey() {
 		return _portletPreferencesHelper.getString(
-			SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
-	}
-
-	@Override
-	public String getFederatedSearchKeyString() {
-		return getFederatedSearchKeyOptional().orElse(StringPool.BLANK);
+			SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,
+			StringPool.BLANK);
 	}
 
 	@Override

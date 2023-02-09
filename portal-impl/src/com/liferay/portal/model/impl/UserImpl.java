@@ -841,6 +841,15 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public boolean isRegularUser() {
+		if (getType() == UserConstants.TYPE_USER) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isReminderQueryComplete() {
 		if (isDefaultUser()) {
 			return true;
@@ -856,6 +865,15 @@ public class UserImpl extends UserBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isServiceAccountUser() {
+		if (getType() == UserConstants.TYPE_SERVICE_ACCOUNT) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

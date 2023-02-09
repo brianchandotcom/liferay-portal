@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.workflow.kaleo.definition.Action;
+import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
+import com.liferay.portal.workflow.kaleo.definition.UpdateStatusAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoActionLocalServiceBaseImpl;
 
@@ -73,15 +76,29 @@ public class KaleoActionLocalServiceImpl
 
 		kaleoAction.setExecutionType(executionType.getValue());
 
-		kaleoAction.setScript(action.getScript());
-
-		ScriptLanguage scriptLanguage = action.getScriptLanguage();
-
-		kaleoAction.setScriptLanguage(scriptLanguage.getValue());
-
-		kaleoAction.setScriptRequiredContexts(
-			action.getScriptRequiredContexts());
 		kaleoAction.setPriority(action.getPriority());
+
+		if (action instanceof ScriptAction) {
+			ScriptAction scriptAction = (ScriptAction)action;
+
+			kaleoAction.setScript(scriptAction.getScript());
+
+			ScriptLanguage scriptLanguage = scriptAction.getScriptLanguage();
+
+			kaleoAction.setScriptLanguage(scriptLanguage.getValue());
+
+			kaleoAction.setScriptRequiredContexts(
+				scriptAction.getScriptRequiredContexts());
+		}
+		else if (action instanceof UpdateStatusAction) {
+			UpdateStatusAction updateStatusAction = (UpdateStatusAction)action;
+
+			kaleoAction.setStatus(updateStatusAction.getStatus());
+		}
+
+		ActionType actionType = action.getActionType();
+
+		kaleoAction.setType(actionType.name());
 
 		return kaleoActionPersistence.update(kaleoAction);
 	}

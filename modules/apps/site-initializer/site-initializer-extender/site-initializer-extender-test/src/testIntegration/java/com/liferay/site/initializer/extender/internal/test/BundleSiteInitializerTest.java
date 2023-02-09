@@ -109,7 +109,6 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -230,11 +229,13 @@ public class BundleSiteInitializerTest {
 	public void testInitializeFromBundle() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Bundle bundle1 = _getTestBundle("/com.liferay.site.initializer.extender.test.bundle.1.jar");
+		Bundle bundle1 = _getTestBundle(
+			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
 
 		bundle1.start();
 
-		Bundle bundle2 = _getTestBundle("/com.liferay.site.initializer.extender.test.bundle.2.jar");
+		Bundle bundle2 = _getTestBundle(
+			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
 		bundle2.start();
 
@@ -293,37 +294,14 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
-	private Bundle _getTestBundle(String path) throws Exception{
-		Bundle testBundle = FrameworkUtil.getBundle(
-			BundleSiteInitializerTest.class);
-
-		return  _installBundle(
-			testBundle.getBundleContext(),
-			path);
-	}
-
-	private File _getTestFile(String path) throws Exception{
-		File tempFile = FileUtil.createTempFile();
-
-		FileUtil.write(
-			tempFile,
-			BundleSiteInitializerTest.class.getResourceAsStream(path));
-
-		File tempFolder1 = FileUtil.createTempFolder();
-
-		FileUtil.unzip(tempFile, tempFolder1);
-
-		tempFile.delete();
-
-		return tempFolder1;
-	}
-
 	@Test
 	public void testInitializeFromFile() throws Exception {
 		Group group = GroupTestUtil.addGroup();
-		File tempFolder1 = _getTestFile("/com.liferay.site.initializer.extender.test.bundle.1.jar");
-		File tempFolder2 = _getTestFile("/com.liferay.site.initializer.extender.test.bundle.2.jar");
-		
+		File tempFolder1 = _getTestFile(
+			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
+		File tempFolder2 = _getTestFile(
+			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
+
 		ServiceContext serviceContext = _getServiceContext(group);
 
 		try {
@@ -2083,6 +2061,29 @@ public class BundleSiteInitializerTest {
 		return serviceContext;
 	}
 
+	private Bundle _getTestBundle(String path) throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(
+			BundleSiteInitializerTest.class);
+
+		return _installBundle(testBundle.getBundleContext(), path);
+	}
+
+	private File _getTestFile(String path) throws Exception {
+		File tempFile = FileUtil.createTempFile();
+
+		FileUtil.write(
+			tempFile,
+			BundleSiteInitializerTest.class.getResourceAsStream(path));
+
+		File tempFolder1 = FileUtil.createTempFolder();
+
+		FileUtil.unzip(tempFile, tempFolder1);
+
+		tempFile.delete();
+
+		return tempFolder1;
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -2098,47 +2099,44 @@ public class BundleSiteInitializerTest {
 			SiteInitializer siteInitializer)
 		throws Exception {
 
+		siteInitializer.initialize(group.getGroupId());
 
-			siteInitializer.initialize(group.getGroupId());
-
-			_assertAccounts1(serviceContext);
-			_assertAssetListEntries(group);
-			_assertAssetVocabularies(group);
-			_assertCommerceCatalogs(group);
-			_assertCommerceChannel(group);
-			_assertCommerceInventoryWarehouse(group);
-			_assertCommerceSpecificationProducts(serviceContext);
-			_assertCPDefinition(group);
-			_assertCPInstanceProperties(group);
-			_assertDDMStructure(group);
-			_assertDDMTemplate(group);
-			_assertDLFileEntry(group);
-			_assertExpandoColumns(serviceContext);
-			_assertFragmentEntries(group, serviceContext);
-			_assertJournalArticles(group);
-			_assertKBArticles(group);
-			_assertLayoutPageTemplateEntries(group);
-			_assertLayoutSets(group);
-			_assertLayouts(group, serviceContext);
-			_assertLayoutUtilityPageEntries(group);
-			_assertListTypeDefinitions(serviceContext);
-			_assertNotificationTemplate(serviceContext);
-			_assertObjectDefinitions(group, serviceContext);
-			_assertOrganizations(serviceContext);
-			_assertPermissions(group);
-			_assertPortletSettings(group);
-			_assertClientExtension(group);
-			_assertSAPEntries(group);
-			_assertSegmentsEntries(group.getGroupId());
-			_assertSiteConfiguration(group.getGroupId());
-			_assertSiteSettings(group.getGroupId());
-			_assertSiteNavigationMenu(group);
-			_assertStyleBookEntry(group);
-			_assertUserGroups(group);
-			_assertUserRoles(group);
-			_assertWorkflowDefinitions(group, serviceContext);
-
-
+		_assertAccounts1(serviceContext);
+		_assertAssetListEntries(group);
+		_assertAssetVocabularies(group);
+		_assertCommerceCatalogs(group);
+		_assertCommerceChannel(group);
+		_assertCommerceInventoryWarehouse(group);
+		_assertCommerceSpecificationProducts(serviceContext);
+		_assertCPDefinition(group);
+		_assertCPInstanceProperties(group);
+		_assertDDMStructure(group);
+		_assertDDMTemplate(group);
+		_assertDLFileEntry(group);
+		_assertExpandoColumns(serviceContext);
+		_assertFragmentEntries(group, serviceContext);
+		_assertJournalArticles(group);
+		_assertKBArticles(group);
+		_assertLayoutPageTemplateEntries(group);
+		_assertLayoutSets(group);
+		_assertLayouts(group, serviceContext);
+		_assertLayoutUtilityPageEntries(group);
+		_assertListTypeDefinitions(serviceContext);
+		_assertNotificationTemplate(serviceContext);
+		_assertObjectDefinitions(group, serviceContext);
+		_assertOrganizations(serviceContext);
+		_assertPermissions(group);
+		_assertPortletSettings(group);
+		_assertClientExtension(group);
+		_assertSAPEntries(group);
+		_assertSegmentsEntries(group.getGroupId());
+		_assertSiteConfiguration(group.getGroupId());
+		_assertSiteSettings(group.getGroupId());
+		_assertSiteNavigationMenu(group);
+		_assertStyleBookEntry(group);
+		_assertUserGroups(group);
+		_assertUserRoles(group);
+		_assertWorkflowDefinitions(group, serviceContext);
 	}
 
 	private void _test2(
@@ -2146,9 +2144,9 @@ public class BundleSiteInitializerTest {
 			SiteInitializer siteInitializer)
 		throws Exception {
 
-			siteInitializer.initialize(group.getGroupId());
+		siteInitializer.initialize(group.getGroupId());
 
-			_assertAccounts2(serviceContext);
+		_assertAccounts2(serviceContext);
 	}
 
 	@Inject

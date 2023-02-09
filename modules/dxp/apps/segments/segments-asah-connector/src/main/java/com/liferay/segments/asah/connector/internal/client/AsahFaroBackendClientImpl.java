@@ -380,26 +380,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		return uriVariables;
 	}
 
-	private String _invoke(Http.Options httpOptions) throws Exception {
-		String response = _http.URLtoString(httpOptions);
-
-		Http.Response httpResponse = httpOptions.getResponse();
-
-		if (httpResponse.getResponseCode() != HttpURLConnection.HTTP_OK) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Response code " + httpResponse.getResponseCode());
-			}
-
-			throw new NestableRuntimeException(
-				StringBundler.concat(
-					"Unexpected response status ",
-					httpResponse.getResponseCode(), " with response message: ",
-					response));
-		}
-
-		return response;
-	}
-
 	private MultivaluedMap<String, Object> _getUriVariables(
 		int cur, int delta, List<OrderByField> orderByFields,
 		String fieldNameContext) {
@@ -436,6 +416,26 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		uriVariables.put("sort", sort);
 
 		return uriVariables;
+	}
+
+	private String _invoke(Http.Options httpOptions) throws Exception {
+		String response = _http.URLtoString(httpOptions);
+
+		Http.Response httpResponse = httpOptions.getResponse();
+
+		if (httpResponse.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Response code " + httpResponse.getResponseCode());
+			}
+
+			throw new NestableRuntimeException(
+				StringBundler.concat(
+					"Unexpected response status ",
+					httpResponse.getResponseCode(), " with response message: ",
+					response));
+		}
+
+		return response;
 	}
 
 	private String _patch(long companyId, String path, Object object)

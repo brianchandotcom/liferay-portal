@@ -126,6 +126,8 @@ export default function EditListTypeDefinition({
 							<ListTypeTable
 								pickListId={values.id}
 								readOnly={readOnly}
+								setValues={setValues}
+								values={values}
 							/>
 						)}
 					</Card>

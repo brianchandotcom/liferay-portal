@@ -26,6 +26,8 @@ import {IModalState} from './ListTypeEntriesModal';
 interface IProps {
 	pickListId: number;
 	readOnly: boolean;
+	setValues: (values: Partial<PickList>) => void;
+	values: Partial<PickList>;
 }
 
 interface ItemData {
@@ -42,7 +44,12 @@ interface fdsItem {
 	value: string;
 }
 
-export default function ListTypeTable({pickListId, readOnly}: IProps) {
+export default function ListTypeTable({
+	pickListId,
+	readOnly,
+	setValues,
+	values,
+}: IProps) {
 	const [dataSetProps, setDataSetProps] = useState<IFrontendDataSetProps>();
 
 	useEffect(() => {
@@ -67,12 +74,14 @@ export default function ListTypeTable({pickListId, readOnly}: IProps) {
 
 		Liferay.on('handleAddItems', handleAddItems);
 
-		setDataSetProps(getDataSetProps(fireModal, pickListId!, readOnly));
+		setDataSetProps(
+			getDataSetProps(fireModal, pickListId!, readOnly, setValues, values)
+		);
 
 		return () => {
 			Liferay.detach('handleAddItems');
 		};
-	}, [pickListId, readOnly]);
+	}, [pickListId, readOnly, setValues, values]);
 
 	return dataSetProps && Object.keys(dataSetProps).length ? (
 		<FrontendDataSet {...dataSetProps} />
@@ -82,7 +91,9 @@ export default function ListTypeTable({pickListId, readOnly}: IProps) {
 function getDataSetProps(
 	fireModal: (modalProps: IModalState) => void,
 	pickListId: number,
-	readOnly: boolean
+	readOnly: boolean,
+	setValues: (values: Partial<PickList>) => void,
+	values: Partial<PickList>
 ): IFrontendDataSetProps {
 	const onActionDropdownItemClick = ({action, itemData}: fdsItem) => {
 		if (action.id === 'addListTypeEntry') {
@@ -94,6 +105,18 @@ function getDataSetProps(
 				modalType: 'edit',
 				name_i18n: itemData.name_i18n,
 				readOnly,
+			});
+		}
+
+		if (action.id === 'deleteListTypeEntry') {
+			const {listTypeEntries} = values;
+			const newListTypeEntries = listTypeEntries?.filter(
+				(listTypeEntry) => listTypeEntry.key !== itemData.key
+			);
+
+			setValues({
+				...values,
+				listTypeEntries: newListTypeEntries as PickListItem[],
 			});
 		}
 	};
@@ -152,6 +175,7 @@ function getDataSetProps(
 						href:
 							'/o/headless-admin-list-type/v1.0/list-type-entries/{id}',
 						icon: 'trash',
+						id: 'deleteListTypeEntry',
 						label: 'Delete',
 						target: 'async',
 					},

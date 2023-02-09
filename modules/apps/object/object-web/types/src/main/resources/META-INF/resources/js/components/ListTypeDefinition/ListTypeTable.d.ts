@@ -17,9 +17,13 @@
 interface IProps {
 	pickListId: number;
 	readOnly: boolean;
+	setValues: (values: Partial<PickList>) => void;
+	values: Partial<PickList>;
 }
 export default function ListTypeTable({
 	pickListId,
 	readOnly,
+	setValues,
+	values,
 }: IProps): JSX.Element | null;
 export {};

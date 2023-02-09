@@ -19,7 +19,7 @@ import BasePage from '../../components/BasePage';
 import Properties from '../../components/properties/Properties';
 import {ESteps, IGenericStepProps} from './WizardPage';
 
-const Step: React.FC<IGenericStepProps> = ({onCancel, onChangeStep}) => (
+const Step: React.FC<IGenericStepProps> = ({onChangeStep}) => (
 	<BasePage
 		description={Liferay.Language.get('property-description')}
 		title={Liferay.Language.get('property-assignment')}
@@ -28,12 +28,15 @@ const Step: React.FC<IGenericStepProps> = ({onCancel, onChangeStep}) => (
 
 		<BasePage.Footer>
 			<ClayButton.Group spaced>
-				<ClayButton onClick={() => onChangeStep(ESteps.People)}>
-					{Liferay.Language.get('next')}
+				<ClayButton
+					displayType="secondary"
+					onClick={() => onChangeStep(ESteps.ConnectAC)}
+				>
+					{Liferay.Language.get('previous')}
 				</ClayButton>
 
-				<ClayButton displayType="secondary" onClick={onCancel}>
-					{Liferay.Language.get('cancel')}
+				<ClayButton onClick={() => onChangeStep(ESteps.People)}>
+					{Liferay.Language.get('next')}
 				</ClayButton>
 			</ClayButton.Group>
 		</BasePage.Footer>

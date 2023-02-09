@@ -523,7 +523,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return ArrayUtil.filter(
 			commerceChannelIds.toArray(new String[0]),
 			commerceChannelId -> !ArrayUtil.contains(
-				removeCommerceChannelIds, String.valueOf(commerceChannelId)));
+				removeCommerceChannelIds,
+				GetterUtil.getLong(commerceChannelId)));
 	}
 
 	public void updateCompanyConfiguration(
@@ -591,7 +592,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return ArrayUtil.filter(
 			siteIds.toArray(new String[0]),
 			siteId -> !ArrayUtil.contains(
-				removeSiteIds, String.valueOf(siteId)));
+				removeSiteIds, GetterUtil.getLong(siteId)));
 	}
 
 	@Activate

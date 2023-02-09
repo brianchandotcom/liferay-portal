@@ -155,7 +155,8 @@ export class SearchBuilder {
 				}
 
 				searchCondition = SearchBuilder[customOperator](key, value);
-			} else {
+			}
+			else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

@@ -37,6 +37,7 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 	return (
 		<ListView
 			managementToolbarProps={{
+				filterSchema: 'buildResultsHistory',
 				title: i18n.translate('test-history'),
 				visible: true,
 			}}

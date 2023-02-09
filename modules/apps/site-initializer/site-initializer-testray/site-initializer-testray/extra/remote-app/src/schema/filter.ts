@@ -18,6 +18,7 @@ import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProductVersion,
+	TestrayRoutine,
 	TestrayRun,
 	TestrayTeam,
 	UserAccount,
@@ -70,7 +71,7 @@ const baseFilters: Filter = {
 	assignee: {
 		label: i18n.translate('assignee'),
 		name: 'assignee',
-		resource: '/headless-admin-user/v1.0/user-accounts',
+		resource: '/user-accounts',
 		transformData(item) {
 			return dataToOptions(
 				transformData<UserAccount>(item),
@@ -116,6 +117,20 @@ const baseFilters: Filter = {
 		resource: '/productversions?fields=id,name&sort=name:asc&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProductVersion>(item));
+		},
+		type: 'select',
+	},
+	routine: {
+		label: i18n.translate('routines'),
+		name: 'routines',
+		options: [{label: 'Solutions', value: 'solutions'}],
+		resource: ({projectId}) =>
+			`/routines?fields=id,name&pageSize=100&filter=${SearchBuilder.eq(
+				'projectId',
+				projectId as string
+			)}`,
+		transformData(item) {
+			return dataToOptions(transformData<TestrayRoutine>(item));
 		},
 		type: 'select',
 	},
@@ -210,6 +225,64 @@ const filterSchema = {
 				name: 'comments',
 				type: 'textarea',
 			},
+		] as RendererFields[],
+	},
+	buildResultsHistory: {
+		fields: [
+			{
+				disabled: 'false',
+				label: i18n.translate('product-version-name'),
+				name:
+					'buildToCaseResult/r_productVersionToBuilds_c_productVersion',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('environment'),
+				name: 'runToCaseResult/name',
+				type: 'text',
+			},
+			baseFilters.routine,
+			baseFilters.assignee,
+			{
+				label: i18n.translate('status'),
+				name: 'dueStatus',
+				options: [
+					'Blocked',
+					'Failed',
+					'In Progress',
+					'Passed',
+					'Test Fix',
+					'Untested',
+				],
+				type: 'checkbox',
+			},
+			{
+				label: i18n.translate('issues'),
+				name: 'issues',
+				type: 'textarea',
+			},
+			{
+				label: i18n.translate('errors'),
+				name: 'errors',
+				type: 'textarea',
+			},
+			{
+				label: i18n.translate('case-result-warning'),
+				name: 'warnings',
+				type: 'text',
+			},
+			{
+				label: i18n.sub('x-create-date', 'min'),
+				name: 'minCreateDate',
+				type: 'date',
+			},
+			{
+				label: i18n.sub('x-create-date', 'max'),
+				name: 'maxCreateDate',
+				type: 'date',
+			},
+
+			baseFilters.team,
 		] as RendererFields[],
 	},
 	buildRuns: {

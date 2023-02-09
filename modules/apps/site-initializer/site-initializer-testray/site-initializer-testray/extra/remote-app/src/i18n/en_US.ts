@@ -87,6 +87,7 @@ export default {
 	'case-name': 'Case Name',
 	'case-parameters': 'Case Parameters',
 	'case-result': 'Case Result',
+	'case-result-warning': 'Case Result Warning',
 	'case-results-status': 'Case Results Status',
 	'case-type': 'Case Type',
 	'case-types': 'Case Types',
@@ -219,11 +220,13 @@ export default {
 		'Mark at least one case type for processing.',
 	'mark-at-least-one-user-for-assignment':
 		'Mark at least one user for assignment.',
+	'max': 'Max',
 	'merge-selected-subtasks-into-the-highest-scoring-subtask':
 		'Merge selected subtasks into the highest scoring subtask.',
 	'merge-subtasks': 'Merge Subtasks',
 	'merged-with': 'Merged With',
 	'metrics': 'Metrics',
+	'min': 'Min',
 	'minimum-x-characters': 'Minimum {0} characters.',
 	'modified-date': 'Modified Date',
 	'move-selected-tests-to-a-new-subtask':
@@ -269,6 +272,7 @@ export default {
 	'priority': 'Priority',
 	'processing': 'Processing',
 	'product-version': 'Product Version',
+	'product-version-name': 'Product Version Name',
 	'progress': 'Progress',
 	'progress-score': 'Progress (Score)',
 	'project': 'Project',
@@ -418,6 +422,7 @@ export default {
 	'warning': 'Warning',
 	'warnings': 'Warnings',
 	'warnings-x': 'Warnings ({0})',
+	'x-create-date': '{0}. Create Date',
 	'x-is-a-required-field': '{0} is a required field.',
 	'x-items': '{0} Items',
 	'x-items-cannot-be-deleted': '{0} items cannot be deleted',

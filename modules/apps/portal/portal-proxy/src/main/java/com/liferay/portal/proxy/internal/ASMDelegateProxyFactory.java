@@ -66,7 +66,7 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 				catch (ClassNotFoundException classNotFoundException) {
 					byte[] classData = _generateASMWrapperClassData(
 						StringUtil.replace(asmWrapperClassName, '.', '/'),
-						interfaceClass, delegateObject, defaultObject);
+						interfaceClass, delegateObject);
 
 					asmWrapperClass = (Class<?>)_defineClassMethod.invoke(
 						classLoader, asmWrapperClassName, classData, 0,
@@ -75,7 +75,7 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 
 				Constructor<?> constructor =
 					asmWrapperClass.getDeclaredConstructor(
-						delegateObject.getClass(), defaultObject.getClass());
+						delegateObject.getClass(), interfaceClass);
 
 				constructor.setAccessible(true);
 
@@ -90,17 +90,15 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 
 	private <T> byte[] _generateASMWrapperClassData(
 		String asmWrapperClassBinaryName, Class<T> interfaceClass,
-		Object delegateObject, T defaultObject) {
+		Object delegateObject) {
 
 		String interfaceClassBinaryName = _getClassBinaryName(interfaceClass);
+		String interfaceClassDescriptor = Type.getDescriptor(interfaceClass);
 
 		Class<?> delegateObjectClass = delegateObject.getClass();
 
 		String delegateObjectClassDescriptor = Type.getDescriptor(
 			delegateObjectClass);
-
-		String defaultObjectClassDescriptor = Type.getDescriptor(
-			defaultObject.getClass());
 
 		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
@@ -119,7 +117,7 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 
 		fieldVisitor = classWriter.visitField(
 			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_default",
-			defaultObjectClassDescriptor, null, null);
+			interfaceClassDescriptor, null, null);
 
 		fieldVisitor.visitEnd();
 
@@ -129,7 +127,7 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 			Opcodes.ACC_PRIVATE, "<init>",
 			Type.getMethodDescriptor(
 				Type.VOID_TYPE, Type.getType(delegateObjectClass),
-				Type.getType(defaultObjectClassDescriptor)),
+				Type.getType(interfaceClassDescriptor)),
 			null, null);
 
 		methodVisitor.visitCode();
@@ -153,7 +151,7 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 
 		methodVisitor.visitFieldInsn(
 			Opcodes.PUTFIELD, asmWrapperClassBinaryName, "_default",
-			defaultObjectClassDescriptor);
+			interfaceClassDescriptor);
 
 		methodVisitor.visitInsn(Opcodes.RETURN);
 
@@ -171,28 +169,29 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 				_generateMethod(
 					classWriter, delegateMethod, asmWrapperClassBinaryName,
 					"_delegate", delegateObjectClassDescriptor,
-					_getClassBinaryName(delegateObjectClass));
+					_getClassBinaryName(delegateObjectClass),
+					Opcodes.INVOKEVIRTUAL);
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
 				_generateMethod(
 					classWriter, method, asmWrapperClassBinaryName, "_default",
-					defaultObjectClassDescriptor,
-					_getClassBinaryName(defaultObject.getClass()));
+					interfaceClassDescriptor, interfaceClassBinaryName,
+					Opcodes.INVOKEINTERFACE);
 			}
 		}
 
 		_generateMethod(
 			classWriter, _equalsMethod, asmWrapperClassBinaryName, "_delegate",
 			delegateObjectClassDescriptor,
-			_getClassBinaryName(delegateObjectClass));
+			_getClassBinaryName(delegateObjectClass), Opcodes.INVOKEVIRTUAL);
 		_generateMethod(
 			classWriter, _hashCodeMethod, asmWrapperClassBinaryName,
 			"_delegate", delegateObjectClassDescriptor,
-			_getClassBinaryName(delegateObjectClass));
+			_getClassBinaryName(delegateObjectClass), Opcodes.INVOKEVIRTUAL);
 		_generateMethod(
 			classWriter, _toStringMethod, asmWrapperClassBinaryName,
 			"_delegate", delegateObjectClassDescriptor,
-			_getClassBinaryName(delegateObjectClass));
+			_getClassBinaryName(delegateObjectClass), Opcodes.INVOKEVIRTUAL);
 
 		classWriter.visitEnd();
 
@@ -202,7 +201,8 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 	private void _generateMethod(
 		ClassWriter classWriter, Method method,
 		String asmWrapperClassBinaryName, String fieldName,
-		String targetClassDescriptor, String targetClassBinaryName) {
+		String targetClassDescriptor, String targetClassBinaryName,
+		int opcode) {
 
 		Class<?>[] exceptions = method.getExceptionTypes();
 
@@ -235,8 +235,9 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 		}
 
 		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKEVIRTUAL, targetClassBinaryName, method.getName(),
-			Type.getMethodDescriptor(method), false);
+			opcode, targetClassBinaryName, method.getName(),
+			Type.getMethodDescriptor(method),
+			opcode == Opcodes.INVOKEINTERFACE);
 
 		Type type = Type.getType(method.getReturnType());
 

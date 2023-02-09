@@ -235,6 +235,142 @@ public class
 	}
 
 	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByAnyAssetCategoryOfTheSameVocabularyMultipleVocabularies()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		AssetVocabulary assetVocabulary1 =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetVocabulary assetVocabulary2 =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetVocabulary1AssetCategory1 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary1);
+
+		AssetCategory assetVocabulary1AssetCategory2 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary1);
+
+		AssetCategory assetVocabulary1AssetCategory3 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary1);
+
+		AssetCategory assetVocabulary2AssetCategory1 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary2);
+
+		AssetCategory assetVocabulary2AssetCategory2 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary2);
+
+		AssetCategory assetVocabulary2AssetCategory3 = _addAssetCategory(
+			_group, serviceContext, assetVocabulary2);
+
+		_addJournalArticle(new long[0], serviceContext);
+		_addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary2AssetCategory1.getCategoryId()
+			},
+			serviceContext);
+		_addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory2.getCategoryId(),
+				assetVocabulary2AssetCategory1.getCategoryId()
+			},
+			serviceContext);
+		_addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory2.getCategoryId(),
+				assetVocabulary1AssetCategory3.getCategoryId(),
+				assetVocabulary2AssetCategory2.getCategoryId(),
+				assetVocabulary2AssetCategory3.getCategoryId()
+			},
+			serviceContext);
+
+		JournalArticle expectedJournalArticle1 = _addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary1AssetCategory2.getCategoryId()
+			},
+			serviceContext);
+
+		JournalArticle expectedJournalArticle2 = _addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary1AssetCategory3.getCategoryId()
+			},
+			serviceContext);
+
+		JournalArticle expectedJournalArticle3 = _addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary2AssetCategory1.getCategoryId(),
+				assetVocabulary2AssetCategory3.getCategoryId()
+			},
+			serviceContext);
+
+		JournalArticle expectedJournalArticle4 = _addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary1AssetCategory2.getCategoryId(),
+				assetVocabulary2AssetCategory1.getCategoryId(),
+				assetVocabulary2AssetCategory3.getCategoryId()
+			},
+			serviceContext);
+
+		JournalArticle relatedJournalArticle = _addJournalArticle(
+			new long[] {
+				assetVocabulary1AssetCategory1.getCategoryId(),
+				assetVocabulary2AssetCategory1.getCategoryId()
+			},
+			serviceContext);
+
+		_reindex();
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setRelatedItemObject(
+			_getAssetEntry(
+				JournalArticle.class.getName(),
+				relatedJournalArticle.getResourcePrimKey()));
+
+		collectionQuery.setConfiguration(
+			HashMapBuilder.put(
+				"assetCategoryRule",
+				new String[] {"anyAssetCategoryOfTheSameVocabulary"}
+			).build());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_assertInfoPage(
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					expectedJournalArticle1.getResourcePrimKey()),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					expectedJournalArticle2.getResourcePrimKey()),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					expectedJournalArticle3.getResourcePrimKey()),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					expectedJournalArticle4.getResourcePrimKey()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByItemType()
 		throws Exception {
 

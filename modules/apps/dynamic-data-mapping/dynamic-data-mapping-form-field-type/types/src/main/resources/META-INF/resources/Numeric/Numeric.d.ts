@@ -26,6 +26,7 @@ interface IProps {
 	dataType: NumericDataType;
 	decimalPlaces: number;
 	defaultLanguageId: Locale;
+	focused: boolean;
 	id: string;
 	inputMask?: boolean;
 	inputMaskFormat?: string;

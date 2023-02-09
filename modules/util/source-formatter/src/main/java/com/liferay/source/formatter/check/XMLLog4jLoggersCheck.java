@@ -20,8 +20,9 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.File;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -49,9 +50,9 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 	private void _checkLoggers(String fileName, String content)
 		throws Exception {
 
-		List<String> srcPaths = _getSrcPaths();
+		Set<String> classNames = _getClassNames();
 
-		if (srcPaths.isEmpty()) {
+		if (classNames.isEmpty()) {
 			return;
 		}
 
@@ -67,21 +68,16 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 
 				String name = loggerElement.attributeValue("name");
 
-				if (!name.startsWith("com.liferay")) {
-					continue;
-				}
+				if (!name.startsWith("com.liferay") ||
+					classNames.contains(name)) {
 
-				String path = StringUtil.replace(
-					name, CharPool.PERIOD, CharPool.SLASH);
-
-				if (srcPaths.contains(path)) {
 					continue;
 				}
 
 				boolean exists = false;
 
-				for (String srcPath : srcPaths) {
-					if (srcPath.startsWith(path)) {
+				for (String className : classNames) {
+					if (className.startsWith(name)) {
 						exists = true;
 
 						break;
@@ -96,12 +92,12 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized List<String> _getSrcPaths() throws Exception {
-		if (_srcPaths != null) {
-			return _srcPaths;
+	private synchronized Set<String> _getClassNames() throws Exception {
+		if (_classNames != null) {
+			return _classNames;
 		}
 
-		_srcPaths = new ArrayList<>();
+		_classNames = new HashSet<>();
 
 		File file = getPortalDir();
 
@@ -110,15 +106,19 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 			new String[] {"**/com/liferay/**/*.java"});
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+			fileName = fileName.substring(
+				0, fileName.lastIndexOf(CharPool.PERIOD));
 
-			_srcPaths.add(fileName.substring(fileName.indexOf("com/liferay/")));
+			fileName = StringUtil.replace(
+				fileName, File.separatorChar, CharPool.PERIOD);
+
+			_classNames.add(
+				fileName.substring(fileName.indexOf("com.liferay")));
 		}
 
-		return _srcPaths;
+		return _classNames;
 	}
 
-	private List<String> _srcPaths;
+	private Set<String> _classNames;
 
 }

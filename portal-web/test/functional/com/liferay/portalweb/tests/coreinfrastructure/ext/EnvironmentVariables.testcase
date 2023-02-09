@@ -41,9 +41,10 @@ definition {
 			var setenvFile = "${tomcatBinDir}/setenv.sh";
 
 			var fileContent = FileUtil.read("${setenvFile}");
+			var companyId = JSONCompany.getCompanyId();
 
 			var newFileContent = '''${fileContent}
-export LIFERAY_PROPS_BY_COMPANY_20097=feature.flag.COMMERCE-8087=true
+export LIFERAY_PROPS_BY_COMPANY_${companyId}=feature.flag.COMMERCE-8087=true
 
 CATALINA_OPTS="$CATALINA_OPTS -Dcompany-id-properties=true"
 ''';
@@ -90,9 +91,10 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcompany-id-properties=true"
 			var setenvFile = "${tomcatBinDir}/setenv.sh";
 
 			var fileContent = FileUtil.read("${setenvFile}");
+			var companyId = JSONCompany.getCompanyId();
 
 			var newFileContent = '''${fileContent}
-export LIFERAY_PROPS_BY_COMPANY_20097=feature.flag.COMMERCE-8087=true
+export LIFERAY_PROPS_BY_COMPANY_${companyId}=feature.flag.COMMERCE-8087=true
 ''';
 
 			FileUtil.write("${setenvFile}", "${newFileContent}");

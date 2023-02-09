@@ -19,6 +19,8 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		ObjectAdmin.deleteAllCommerceOrdersAndSitesViaAPI();
 	}
 
 	@description = "LPS-145665 - Verify that it's possible to activate and deactivate an Action"

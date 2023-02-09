@@ -729,6 +729,16 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
+	macro deleteAllCommerceOrdersAndSitesViaAPI {
+		var ordersCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
+
+		if (${ordersCount} != 0) {
+			CommerceJSONOrdersAPI._deleteAllCommerceOrdersAndCheck();
+		}
+
+		CommerceJSONSitesAPI._deleteCommerceSites();
+	}
+
 	macro deleteAllCustomObjectsViaAPI {
 		JSONObject.deleteAllCustomObjects(
 			userEmailAddress = ${userEmailAddress},

@@ -163,7 +163,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
 		return portletSharedSearchResponse.getFederatedSearchResponse(
-			customFilterPortletPreferences.getFederatedSearchKeyOptional());
+			customFilterPortletPreferences.getFederatedSearchKey());
 	}
 
 	private boolean _isRenderNothing(SearchRequest searchRequest) {

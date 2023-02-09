@@ -114,8 +114,7 @@ public class SearchInsightsPortlet extends MVCPortlet {
 
 		SearchResponse searchResponse =
 			portletSharedSearchResponse.getFederatedSearchResponse(
-				searchInsightsPortletPreferences.
-					getFederatedSearchKeyOptional());
+				searchInsightsPortletPreferences.getFederatedSearchKey());
 
 		if (_isCompanyAdmin() &&
 			(_isRequestStringPresent(searchResponse) ||

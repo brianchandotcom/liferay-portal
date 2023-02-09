@@ -65,6 +65,7 @@ import com.liferay.journal.internal.upgrade.v4_1_0.JournalArticleExternalReferen
 import com.liferay.journal.internal.upgrade.v4_3_1.BasicWebContentAssetEntryClassTypeIdUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_4_0.GlobalJournalArticleUrlTitleUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v4_4_3.JournalArticleLayoutClassedModelUsageUpgradeProcess;
+import com.liferay.journal.internal.upgrade.v4_4_4.JournalFeedTypeUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -261,8 +262,10 @@ public class JournalServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
+
 		registry.register(
-			"3.1.0", "3.2.0",
+			"3.1.1", "3.2.0",
 			new CTModelUpgradeProcess(
 				"JournalArticleLocalization", "JournalArticleResource",
 				"JournalArticle", "JournalFolder"));
@@ -287,8 +290,10 @@ public class JournalServiceUpgradeStepRegistrator
 
 		registry.register("3.4.1", "3.4.2", new DummyUpgradeStep());
 
+		registry.register("3.4.2", "3.4.3", new DummyUpgradeStep());
+
 		registry.register(
-			"3.4.2", "3.5.0",
+			"3.4.3", "3.5.0",
 			new JournalArticleContentUpgradeProcess(
 				_journalContentCompatibilityConverter));
 
@@ -353,6 +358,14 @@ public class JournalServiceUpgradeStepRegistrator
 				_layoutLocalService, _layoutClassedModelUsageLocalService,
 				_portletPreferencesLocalService,
 				_portletPreferenceValueLocalService));
+
+		registry.register(
+			"4.4.3", "4.4.4",
+			new JournalFeedTypeUpgradeProcess(
+				_assetCategoryLocalService,
+				_assetEntryAssetCategoryRelLocalService,
+				_assetEntryLocalService, _assetVocabularyLocalService,
+				_companyLocalService, _userLocalService));
 	}
 
 	private void _deleteTempImages() throws Exception {

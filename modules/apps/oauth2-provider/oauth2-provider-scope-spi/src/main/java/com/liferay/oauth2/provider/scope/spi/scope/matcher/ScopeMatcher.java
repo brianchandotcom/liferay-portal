@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.scope.spi.scope.matcher;
 
+import com.liferay.petra.function.transform.TransformUtil;
+
 import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -59,13 +59,15 @@ public interface ScopeMatcher {
 	 * @review
 	 */
 	public default Collection<String> filter(Collection<String> names) {
-		Stream<String> stream = names.stream();
+		return TransformUtil.transform(
+			names,
+			name -> {
+				if (match(name)) {
+					return name;
+				}
 
-		return stream.filter(
-			this::match
-		).collect(
-			Collectors.toList()
-		);
+				return null;
+			});
 	}
 
 	/**

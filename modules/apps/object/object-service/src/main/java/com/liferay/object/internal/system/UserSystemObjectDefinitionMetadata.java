@@ -22,10 +22,12 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -123,6 +125,52 @@ public class UserSystemObjectDefinitionMetadata
 	@Override
 	public String getTitleObjectFieldName() {
 		return "givenName";
+	}
+
+	@Override
+	public void getVariablesSystem(
+		String contentType, Object object, boolean oldValues,
+		JSONObject payloadJSONObject, Map<String, Object> variables) {
+
+		if (object instanceof JSONObject) {
+			Map<String, Object> map = ObjectMapperUtil.readValue(
+				Map.class, object);
+
+			Map<String, Object> jsonObjectMap = (Map<String, Object>)map.get(
+				"_jsonObject");
+
+			variables.putAll((Map<String, Object>)jsonObjectMap.get("map"));
+		}
+		else if (object instanceof Map) {
+			variables.putAll((Map<String, Object>)object);
+		}
+
+		Map<String, Object> map = (Map<String, Object>)payloadJSONObject.get(
+			"modelDTO" + contentType);
+
+		if (oldValues) {
+			map = (Map<String, Object>)payloadJSONObject.get(
+				"originalDTO" + contentType);
+		}
+
+		if (map != null) {
+			variables.putAll(map);
+		}
+
+		Map<String, Object> extendedProperties =
+			(Map<String, Object>)payloadJSONObject.get("extendedProperties");
+
+		if (extendedProperties != null) {
+			variables.putAll(extendedProperties);
+		}
+
+		if (variables.containsKey("firstName")) {
+			variables.put("givenName", variables.get("firstName"));
+		}
+
+		if (variables.containsKey("middleName")) {
+			variables.put("additionalName", variables.get("middleName"));
+		}
 	}
 
 	@Override

@@ -18,7 +18,9 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -63,6 +65,43 @@ public interface SystemObjectDefinitionMetadata {
 	public Table getTable();
 
 	public String getTitleObjectFieldName();
+
+	public default void getVariablesSystem(
+		String contentType, Object object, boolean oldValues,
+		JSONObject payloadJSONObject, Map<String, Object> variables) {
+
+		if (object instanceof JSONObject) {
+			Map<String, Object> map = ObjectMapperUtil.readValue(
+				Map.class, object);
+
+			Map<String, Object> jsonObjectMap = (Map<String, Object>)map.get(
+				"_jsonObject");
+
+			variables.putAll((Map<String, Object>)jsonObjectMap.get("map"));
+		}
+		else if (object instanceof Map) {
+			variables.putAll((Map<String, Object>)object);
+		}
+
+		Map<String, Object> map = (Map<String, Object>)payloadJSONObject.get(
+			"modelDTO" + contentType);
+
+		if (oldValues) {
+			map = (Map<String, Object>)payloadJSONObject.get(
+				"originalDTO" + contentType);
+		}
+
+		if (map != null) {
+			variables.putAll(map);
+		}
+
+		Map<String, Object> extendedProperties =
+			(Map<String, Object>)payloadJSONObject.get("extendedProperties");
+
+		if (extendedProperties != null) {
+			variables.putAll(extendedProperties);
+		}
+	}
 
 	public int getVersion();
 

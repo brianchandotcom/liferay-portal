@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -369,6 +370,10 @@ public interface ObjectDefinitionLocalService
 
 	public ObjectDefinition publishCustomObjectDefinition(
 			long userId, long objectDefinitionId)
+		throws PortalException;
+
+	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
+			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);

@@ -531,6 +531,18 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition
+			restrictObjectDefinitionByAccountEntry(
+				long objectDefinitionId,
+				com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.
+			restrictObjectDefinitionByAccountEntry(
+				objectDefinitionId, objectRelationship);
+	}
+
+	@Override
 	public void undeployObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 

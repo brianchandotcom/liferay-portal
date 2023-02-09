@@ -27,6 +27,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.Locale;
 
@@ -156,12 +157,23 @@ public class SXPBlueprintDTOConverter
 
 		try {
 			for (ElementInstance elementInstance : elementInstances) {
-				SXPElement sxpElement = elementInstance.getSxpElement();
+				SXPElement elementInstanceSXPElement =
+					elementInstance.getSxpElement();
 
-				sxpElement.setTitle(
-					_language.get(locale, sxpElement.getTitle()));
-				sxpElement.setDescription(
-					_language.get(locale, sxpElement.getDescription()));
+				Long elementInstanceSXPElementId =
+					(Long)elementInstanceSXPElement.getId();
+
+				if (elementInstanceSXPElementId != null) {
+					com.liferay.search.experiences.model.SXPElement sxpElement =
+						_sxpElementLocalService.getSXPElement(
+							elementInstanceSXPElementId);
+
+					elementInstanceSXPElement.setTitle(
+						_language.get(locale, sxpElement.getTitle(locale)));
+					elementInstanceSXPElement.setDescription(
+						_language.get(
+							locale, sxpElement.getDescription(locale)));
+				}
 			}
 
 			return elementInstances;
@@ -183,5 +195,8 @@ public class SXPBlueprintDTOConverter
 
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
+	@Reference
+	private SXPElementLocalService _sxpElementLocalService;
 
 }

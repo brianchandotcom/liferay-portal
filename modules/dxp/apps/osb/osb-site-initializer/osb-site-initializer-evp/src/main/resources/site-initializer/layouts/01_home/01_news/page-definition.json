@@ -14,7 +14,7 @@
 			"paddingTop": 0,
 			"widthType": "Fluid"
 		},
-		"name": "News Content"
+		"name": "News Container"
 	},
 	"pageElements": [
 		{
@@ -119,13 +119,14 @@
 		},
 		{
 			"definition": {
+				"cssClasses": ["mt-n2"],
 				"fragment": {"key": "DIALECT-dialect-button"},
 				"fragmentConfig": {
 					"uppercase": false,
 					"style": "primary",
 					"type": "borderless",
 					"inverted": false,
-					"buttonSize": "btn-sm"
+					"buttonSize": ""
 				},
 				"fragmentFields": [
 					{
@@ -136,7 +137,7 @@
 						}
 					}
 				],
-				"fragmentStyle": {"textAlign": "center"},
+				"fragmentStyle": {"paddingBottom": "2", "textAlign": "center"},
 				"indexed": true,
 				"name": "Button News"
 			},

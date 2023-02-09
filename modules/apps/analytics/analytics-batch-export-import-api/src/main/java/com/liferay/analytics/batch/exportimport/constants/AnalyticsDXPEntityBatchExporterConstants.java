@@ -34,15 +34,6 @@ public class AnalyticsDXPEntityBatchExporterConstants {
 	public static final String DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES =
 		"export-user-analytics-dxp-entities";
 
-	public static final String[] DISPATCH_TRIGGER_NAMES = ArrayUtil.append(
-		AnalyticsDXPEntityBatchExporterConstants.
-			DISPATCH_TRIGGER_NAMES_DXP_ENTITIES,
-		new String[] {
-			DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
-			DISPATCH_TRIGGER_NAME_ORDER, DISPATCH_TRIGGER_NAME_PRODUCT,
-			DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
-		});
-
 	public static final String[] DISPATCH_TRIGGER_NAMES_DXP_ENTITIES = {
 		"export-account-group-analytics-dxp-entities",
 		"export-analytics-association-analytics-dxp-entities",
@@ -54,5 +45,18 @@ public class AnalyticsDXPEntityBatchExporterConstants {
 		"export-team-analytics-dxp-entities",
 		"export-user-group-analytics-dxp-entities"
 	};
+
+	public static String[] dispatchTriggerNames = null;
+
+	static {
+		dispatchTriggerNames = ArrayUtil.append(
+			AnalyticsDXPEntityBatchExporterConstants.
+				DISPATCH_TRIGGER_NAMES_DXP_ENTITIES,
+			new String[] {
+				DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
+				DISPATCH_TRIGGER_NAME_ORDER, DISPATCH_TRIGGER_NAME_PRODUCT,
+				DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
+			});
+	}
 
 }

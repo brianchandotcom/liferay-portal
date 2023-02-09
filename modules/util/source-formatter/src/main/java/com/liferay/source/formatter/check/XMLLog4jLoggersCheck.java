@@ -93,9 +93,11 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 	}
 
 	private synchronized List<String> _getSrcPaths() throws Exception {
-		if (!_srcPaths.isEmpty()) {
+		if (_srcPaths != null) {
 			return _srcPaths;
 		}
+
+		_srcPaths = new ArrayList<>();
 
 		File file = getPortalDir();
 
@@ -113,6 +115,6 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 		return _srcPaths;
 	}
 
-	private final List<String> _srcPaths = new ArrayList<>();
+	private List<String> _srcPaths;
 
 }

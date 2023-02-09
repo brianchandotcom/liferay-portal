@@ -51,7 +51,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AnalyticsDXPEntityBatchExporterResource {
 
-	public void postAnalyticsDXPEntityBatchExporter() throws Exception;
+	public void postConfigurationWizardMode() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

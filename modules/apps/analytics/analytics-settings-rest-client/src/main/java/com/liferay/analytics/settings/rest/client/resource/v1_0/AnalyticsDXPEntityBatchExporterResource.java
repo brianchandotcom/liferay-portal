@@ -36,10 +36,9 @@ public interface AnalyticsDXPEntityBatchExporterResource {
 		return new Builder();
 	}
 
-	public void postAnalyticsDXPEntityBatchExporter() throws Exception;
+	public void postConfigurationWizardMode() throws Exception;
 
-	public HttpInvoker.HttpResponse
-			postAnalyticsDXPEntityBatchExporterHttpResponse()
+	public HttpInvoker.HttpResponse postConfigurationWizardModeHttpResponse()
 		throws Exception;
 
 	public static class Builder {
@@ -121,9 +120,9 @@ public interface AnalyticsDXPEntityBatchExporterResource {
 	public static class AnalyticsDXPEntityBatchExporterResourceImpl
 		implements AnalyticsDXPEntityBatchExporterResource {
 
-		public void postAnalyticsDXPEntityBatchExporter() throws Exception {
+		public void postConfigurationWizardMode() throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				postAnalyticsDXPEntityBatchExporterHttpResponse();
+				postConfigurationWizardModeHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -163,7 +162,7 @@ public interface AnalyticsDXPEntityBatchExporterResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAnalyticsDXPEntityBatchExporterHttpResponse()
+				postConfigurationWizardModeHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -190,7 +189,7 @@ public interface AnalyticsDXPEntityBatchExporterResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/analytics-settings-rest/v1.0/analytics-dxp-entity-batch-exporter");
+						"/o/analytics-settings-rest/v1.0/configuration/wizard-mode");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

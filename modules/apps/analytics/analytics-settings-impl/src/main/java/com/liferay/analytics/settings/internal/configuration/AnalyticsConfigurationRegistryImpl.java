@@ -386,20 +386,13 @@ public class AnalyticsConfigurationRegistryImpl
 	private void _disable(long companyId) {
 		try {
 			if (companyId != CompanyConstants.SYSTEM) {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LRAC-10632")) ||
-					GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LRAC-10757"))) {
+				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
+					companyId,
+					AnalyticsDXPEntityBatchExporterConstants.
+						dispatchTriggerNames);
 
-					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
-						companyId,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAMES);
-				}
-				else {
-					_analyticsMessageLocalService.deleteAnalyticsMessages(
-						companyId);
-				}
+				_analyticsMessageLocalService.deleteAnalyticsMessages(
+					companyId);
 
 				_deleteAnalyticsAdmin(companyId);
 				_deleteSAPEntry(companyId);
@@ -726,16 +719,22 @@ public class AnalyticsConfigurationRegistryImpl
 			String[] previousSyncedContactFieldNames =
 				GetterUtil.getStringValues(
 					dictionary.get("previousSyncedContactFieldNames"));
+
+			Arrays.sort(previousSyncedContactFieldNames);
+
 			String[] previousSyncedUserFieldNames = GetterUtil.getStringValues(
 				dictionary.get("previousSyncedUserFieldNames"));
+
+			Arrays.sort(previousSyncedUserFieldNames);
+
 			String[] syncedContactFieldNames = GetterUtil.getStringValues(
 				dictionary.get("syncedContactFieldNames"));
+
+			Arrays.sort(syncedContactFieldNames);
+
 			String[] syncedUserFieldNames = GetterUtil.getStringValues(
 				dictionary.get("syncedUserFieldNames"));
 
-			Arrays.sort(previousSyncedContactFieldNames);
-			Arrays.sort(previousSyncedUserFieldNames);
-			Arrays.sort(syncedContactFieldNames);
 			Arrays.sort(syncedUserFieldNames);
 
 			if (!Arrays.equals(

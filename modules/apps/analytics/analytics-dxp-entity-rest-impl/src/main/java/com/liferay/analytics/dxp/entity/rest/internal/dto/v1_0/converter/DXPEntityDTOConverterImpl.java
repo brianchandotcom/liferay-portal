@@ -336,20 +336,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		_addFieldAttributes(baseModel, fields, includeAttributeNames);
 
 		if (StringUtil.equals(
-				baseModel.getModelClassName(), Organization.class.getName())) {
-
-			Field field = new Field();
-
-			field.setName("parentOrganizationName");
-
-			Organization organization = (Organization)baseModel;
-
-			field.setValue(organization.getParentOrganizationName());
-
-			fields.add(field);
-		}
-
-		if (StringUtil.equals(
 				baseModel.getModelClassName(), Group.class.getName())) {
 
 			for (Field field : fields) {
@@ -361,6 +347,20 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					break;
 				}
 			}
+		}
+
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), Organization.class.getName())) {
+
+			Field field = new Field();
+
+			field.setName("parentOrganizationName");
+
+			Organization organization = (Organization)baseModel;
+
+			field.setValue(organization.getParentOrganizationName());
+
+			fields.add(field);
 		}
 
 		return fields.toArray(new Field[0]);

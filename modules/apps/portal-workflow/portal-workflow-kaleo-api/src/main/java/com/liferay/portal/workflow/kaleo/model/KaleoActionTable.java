@@ -80,6 +80,10 @@ public class KaleoActionTable extends BaseTable<KaleoActionTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<KaleoActionTable, Integer> priority = createColumn(
 		"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<KaleoActionTable, String> type = createColumn(
+		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KaleoActionTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private KaleoActionTable() {
 		super("KaleoAction", KaleoActionTable::new);

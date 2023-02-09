@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoActionTable;
@@ -3812,6 +3813,12 @@ public class KaleoActionPersistenceImpl
 		"(kaleoAction.executionType IS NULL OR kaleoAction.executionType = '')";
 
 	public KaleoActionPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
+
 		setModelClass(KaleoAction.class);
 
 		setModelImplClass(KaleoActionImpl.class);
@@ -4474,6 +4481,11 @@ public class KaleoActionPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -4549,6 +4561,8 @@ public class KaleoActionPersistenceImpl
 		ctStrictColumnNames.add("scriptLanguage");
 		ctStrictColumnNames.add("scriptRequiredContexts");
 		ctStrictColumnNames.add("priority");
+		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("status");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
@@ -4812,6 +4826,9 @@ public class KaleoActionPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoActionPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

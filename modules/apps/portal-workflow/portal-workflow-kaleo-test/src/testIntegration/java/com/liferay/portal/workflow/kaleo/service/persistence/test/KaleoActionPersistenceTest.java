@@ -163,6 +163,10 @@ public class KaleoActionPersistenceTest {
 
 		newKaleoAction.setPriority(RandomTestUtil.nextInt());
 
+		newKaleoAction.setType(RandomTestUtil.randomString());
+
+		newKaleoAction.setStatus(RandomTestUtil.nextInt());
+
 		_kaleoActions.add(_persistence.update(newKaleoAction));
 
 		KaleoAction existingKaleoAction = _persistence.findByPrimaryKey(
@@ -224,6 +228,10 @@ public class KaleoActionPersistenceTest {
 			newKaleoAction.getScriptRequiredContexts());
 		Assert.assertEquals(
 			existingKaleoAction.getPriority(), newKaleoAction.getPriority());
+		Assert.assertEquals(
+			existingKaleoAction.getType(), newKaleoAction.getType());
+		Assert.assertEquals(
+			existingKaleoAction.getStatus(), newKaleoAction.getStatus());
 	}
 
 	@Test
@@ -310,7 +318,7 @@ public class KaleoActionPersistenceTest {
 			true, "kaleoDefinitionVersionId", true, "kaleoNodeName", true,
 			"name", true, "description", true, "executionType", true,
 			"scriptLanguage", true, "scriptRequiredContexts", true, "priority",
-			true);
+			true, "type", true, "status", true);
 	}
 
 	@Test
@@ -566,6 +574,10 @@ public class KaleoActionPersistenceTest {
 		kaleoAction.setScriptRequiredContexts(RandomTestUtil.randomString());
 
 		kaleoAction.setPriority(RandomTestUtil.nextInt());
+
+		kaleoAction.setType(RandomTestUtil.randomString());
+
+		kaleoAction.setStatus(RandomTestUtil.nextInt());
 
 		_kaleoActions.add(_persistence.update(kaleoAction));
 

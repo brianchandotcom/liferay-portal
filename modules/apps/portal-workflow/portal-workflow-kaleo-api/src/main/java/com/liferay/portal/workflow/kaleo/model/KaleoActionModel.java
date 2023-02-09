@@ -398,6 +398,35 @@ public interface KaleoActionModel
 	 */
 	public void setPriority(int priority);
 
+	/**
+	 * Returns the type of this kaleo action.
+	 *
+	 * @return the type of this kaleo action
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this kaleo action.
+	 *
+	 * @param type the type of this kaleo action
+	 */
+	public void setType(String type);
+
+	/**
+	 * Returns the status of this kaleo action.
+	 *
+	 * @return the status of this kaleo action
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this kaleo action.
+	 *
+	 * @param status the status of this kaleo action
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public KaleoAction cloneWithOriginalValues();
 

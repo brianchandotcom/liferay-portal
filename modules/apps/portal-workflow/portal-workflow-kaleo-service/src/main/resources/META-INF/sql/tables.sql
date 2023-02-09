@@ -20,6 +20,8 @@ create table KaleoAction (
 	scriptLanguage VARCHAR(75) null,
 	scriptRequiredContexts STRING null,
 	priority INTEGER,
+	type_ VARCHAR(75) null,
+	status INTEGER,
 	primary key (kaleoActionId, ctCollectionId)
 );
 

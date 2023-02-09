@@ -79,7 +79,8 @@ public class KaleoActionModelImpl
 		{"kaleoNodeName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"executionType", Types.VARCHAR},
 		{"script", Types.CLOB}, {"scriptLanguage", Types.VARCHAR},
-		{"scriptRequiredContexts", Types.VARCHAR}, {"priority", Types.INTEGER}
+		{"scriptRequiredContexts", Types.VARCHAR}, {"priority", Types.INTEGER},
+		{"type_", Types.VARCHAR}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,10 +108,12 @@ public class KaleoActionModelImpl
 		TABLE_COLUMNS_MAP.put("scriptLanguage", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("scriptRequiredContexts", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoAction (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,kaleoActionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER,primary key (kaleoActionId, ctCollectionId))";
+		"create table KaleoAction (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,kaleoActionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER,type_ VARCHAR(75) null,status INTEGER,primary key (kaleoActionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoAction";
 
@@ -369,6 +372,12 @@ public class KaleoActionModelImpl
 		attributeSetterBiConsumers.put(
 			"priority",
 			(BiConsumer<KaleoAction, Integer>)KaleoAction::setPriority);
+		attributeGetterFunctions.put("type", KaleoAction::getType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<KaleoAction, String>)KaleoAction::setType);
+		attributeGetterFunctions.put("status", KaleoAction::getStatus);
+		attributeSetterBiConsumers.put(
+			"status", (BiConsumer<KaleoAction, Integer>)KaleoAction::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -785,6 +794,39 @@ public class KaleoActionModelImpl
 		_priority = priority;
 	}
 
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -863,6 +905,8 @@ public class KaleoActionModelImpl
 		kaleoActionImpl.setScriptLanguage(getScriptLanguage());
 		kaleoActionImpl.setScriptRequiredContexts(getScriptRequiredContexts());
 		kaleoActionImpl.setPriority(getPriority());
+		kaleoActionImpl.setType(getType());
+		kaleoActionImpl.setStatus(getStatus());
 
 		kaleoActionImpl.resetOriginalValues();
 
@@ -913,6 +957,9 @@ public class KaleoActionModelImpl
 			this.<String>getColumnOriginalValue("scriptRequiredContexts"));
 		kaleoActionImpl.setPriority(
 			this.<Integer>getColumnOriginalValue("priority"));
+		kaleoActionImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		kaleoActionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return kaleoActionImpl;
 	}
@@ -1112,6 +1159,16 @@ public class KaleoActionModelImpl
 
 		kaleoActionCacheModel.priority = getPriority();
 
+		kaleoActionCacheModel.type = getType();
+
+		String type = kaleoActionCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			kaleoActionCacheModel.type = null;
+		}
+
+		kaleoActionCacheModel.status = getStatus();
+
 		return kaleoActionCacheModel;
 	}
 
@@ -1195,8 +1252,12 @@ public class KaleoActionModelImpl
 	private String _scriptLanguage;
 	private String _scriptRequiredContexts;
 	private int _priority;
+	private String _type;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<KaleoAction, Object> function = _attributeGetterFunctions.get(
 			columnName);
 
@@ -1246,6 +1307,18 @@ public class KaleoActionModelImpl
 		_columnOriginalValues.put(
 			"scriptRequiredContexts", _scriptRequiredContexts);
 		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1300,6 +1373,10 @@ public class KaleoActionModelImpl
 		columnBitmasks.put("scriptRequiredContexts", 524288L);
 
 		columnBitmasks.put("priority", 1048576L);
+
+		columnBitmasks.put("type_", 2097152L);
+
+		columnBitmasks.put("status", 4194304L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

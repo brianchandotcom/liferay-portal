@@ -77,7 +77,7 @@ public class KaleoActionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -121,6 +121,10 @@ public class KaleoActionCacheModel
 		sb.append(scriptRequiredContexts);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", type=");
+		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -220,6 +224,15 @@ public class KaleoActionCacheModel
 
 		kaleoActionImpl.setPriority(priority);
 
+		if (type == null) {
+			kaleoActionImpl.setType("");
+		}
+		else {
+			kaleoActionImpl.setType(type);
+		}
+
+		kaleoActionImpl.setStatus(status);
+
 		kaleoActionImpl.resetOriginalValues();
 
 		return kaleoActionImpl;
@@ -259,6 +272,9 @@ public class KaleoActionCacheModel
 		scriptRequiredContexts = objectInput.readUTF();
 
 		priority = objectInput.readInt();
+		type = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -348,6 +364,15 @@ public class KaleoActionCacheModel
 		}
 
 		objectOutput.writeInt(priority);
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -371,5 +396,7 @@ public class KaleoActionCacheModel
 	public String scriptLanguage;
 	public String scriptRequiredContexts;
 	public int priority;
+	public String type;
+	public int status;
 
 }

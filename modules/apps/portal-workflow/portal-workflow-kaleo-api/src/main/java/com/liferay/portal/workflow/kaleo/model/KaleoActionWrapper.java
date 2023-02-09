@@ -66,6 +66,8 @@ public class KaleoActionWrapper
 		attributes.put("scriptLanguage", getScriptLanguage());
 		attributes.put("scriptRequiredContexts", getScriptRequiredContexts());
 		attributes.put("priority", getPriority());
+		attributes.put("type", getType());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -198,6 +200,18 @@ public class KaleoActionWrapper
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -404,6 +418,26 @@ public class KaleoActionWrapper
 	@Override
 	public String getScriptRequiredContexts() {
 		return model.getScriptRequiredContexts();
+	}
+
+	/**
+	 * Returns the status of this kaleo action.
+	 *
+	 * @return the status of this kaleo action
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
+	}
+
+	/**
+	 * Returns the type of this kaleo action.
+	 *
+	 * @return the type of this kaleo action
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -639,6 +673,26 @@ public class KaleoActionWrapper
 	@Override
 	public void setScriptRequiredContexts(String scriptRequiredContexts) {
 		model.setScriptRequiredContexts(scriptRequiredContexts);
+	}
+
+	/**
+	 * Sets the status of this kaleo action.
+	 *
+	 * @param status the status of this kaleo action
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
+	 * Sets the type of this kaleo action.
+	 *
+	 * @param type the type of this kaleo action
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

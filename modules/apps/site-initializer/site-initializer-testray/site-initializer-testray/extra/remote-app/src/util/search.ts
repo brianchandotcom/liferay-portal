@@ -12,6 +12,7 @@
  * details.
  */
 
+import {RendererFields} from '../components/Form/Renderer';
 import {FilterVariables} from '../schema/filter';
 
 type Filter = {
@@ -20,7 +21,15 @@ type Filter = {
 type Key = string;
 type Value = string | number | boolean;
 
-export type Operators = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le' | 'startsWith';
+export type Operators =
+	| 'contains'
+	| 'eq'
+	| 'ge'
+	| 'gt'
+	| 'le'
+	| 'lt'
+	| 'ne'
+	| 'startsWith';
 
 export interface SearchBuilderConstructor {
 	useURIEncode?: boolean;
@@ -49,8 +58,12 @@ export class SearchBuilder {
 		return `contains(${key}, '${value}')`;
 	}
 
-	static eq(key: Key, value: Value) {
-		return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
+	static eq(key: Key, value: Value, withoutQuotingMark = false) {
+		return `${key} eq ${
+			typeof value === 'boolean' || withoutQuotingMark
+				? value
+				: `'${value}'`
+		}`;
 	}
 
 	/**
@@ -146,7 +159,10 @@ export class SearchBuilder {
 			if (!value) {
 				continue;
 			}
-			const schema = filterSchema.fields.find(({name}) => key === name);
+			const schema = filterSchema.fields.find(
+				({name}) => key === name
+			) as RendererFields;
+
 			const customOperator = schema?.operator;
 
 			if (customOperator && SearchBuilder[customOperator]) {
@@ -154,7 +170,11 @@ export class SearchBuilder {
 					value = new Date(value).toISOString();
 				}
 
-				searchCondition = SearchBuilder[customOperator](key, value);
+				searchCondition = SearchBuilder[customOperator](
+					key.replace('$', ''),
+					value,
+					schema.type === 'number'
+				);
 			}
 			else {
 				searchCondition = Array.isArray(value)
@@ -166,7 +186,7 @@ export class SearchBuilder {
 									: _value
 							)
 					  )
-					: SearchBuilder.eq(key, value);
+					: SearchBuilder.eq(key, value, schema.type === 'number');
 			}
 
 			_filter.push(searchCondition);

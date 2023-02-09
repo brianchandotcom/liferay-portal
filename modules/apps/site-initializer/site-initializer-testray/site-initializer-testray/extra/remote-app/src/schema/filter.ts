@@ -123,7 +123,6 @@ const baseFilters: Filter = {
 	routine: {
 		label: i18n.translate('routines'),
 		name: 'routines',
-		options: [{label: 'Solutions', value: 'solutions'}],
 		resource: ({projectId}) =>
 			`/routines?fields=id,name&pageSize=100&filter=${SearchBuilder.eq(
 				'projectId',
@@ -280,15 +279,16 @@ const filterSchema = {
 			},
 			{
 				label: i18n.sub('x-create-date', 'min'),
-				name: 'minCreateDate',
+				name: 'dateCreated',
+				operator: 'gt',
 				type: 'date',
 			},
 			{
 				label: i18n.sub('x-create-date', 'max'),
-				name: 'maxCreateDate',
+				name: 'dateCreated$',
+				operator: 'lt',
 				type: 'date',
 			},
-
 			overrides(baseFilters.team, {
 				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
 			}),

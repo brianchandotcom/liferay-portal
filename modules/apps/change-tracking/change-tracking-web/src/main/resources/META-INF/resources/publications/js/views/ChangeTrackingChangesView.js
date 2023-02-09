@@ -2894,16 +2894,20 @@ export default function ChangeTrackingChangesView({
 							<ManageCollaborators {...collaboratorsData} />
 						</ClayToolbar.Item>
 
-						<ClayToolbar.Item>
-							<MoveChangesModal
-								changes={selectedChanges}
-								ctCollectionId={ctCollectionId}
-								moveChangesURL={moveChangesURL}
-								namespace={namespace}
-								publications={ctCollections}
-								spritemap={spritemap}
-							/>
-						</ClayToolbar.Item>
+						{Liferay.FeatureFlags['LPS-171364'] ? (
+							<ClayToolbar.Item>
+								<MoveChangesModal
+									changes={selectedChanges}
+									ctCollectionId={ctCollectionId}
+									moveChangesURL={moveChangesURL}
+									namespace={namespace}
+									publications={ctCollections}
+									spritemap={spritemap}
+								/>
+							</ClayToolbar.Item>
+						) : (
+							''
+						)}
 
 						{renderToolbarAction(
 							'secondary',

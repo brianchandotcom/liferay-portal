@@ -216,7 +216,25 @@ public class AnalyticsConfigurationRegistryImpl
 				_enable((Long)dictionary.get("companyId"));
 			}
 
-			_sync((Long)dictionary.get("companyId"), dictionary);
+			AnalyticsConfiguration analyticsConfiguration =
+				getAnalyticsConfiguration(companyId);
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LRAC-10757")) &&
+				analyticsConfiguration.wizardMode()) {
+
+				return;
+			}
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LRAC-10757")) &&
+				analyticsConfiguration.firstSync()) {
+
+				_firstSync(companyId);
+			}
+			else {
+				_sync((Long)dictionary.get("companyId"), dictionary);
+			}
 		}
 	}
 
@@ -408,6 +426,106 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
+	private void _firstSync(long companyId) {
+		try {
+			Set<String> dispatchTriggerNames = new HashSet<>();
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LRAC-10632"))) {
+
+				Collections.addAll(
+					dispatchTriggerNames,
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
+
+				if (_analyticsSettingsManager.syncedContactSettingsEnabled(
+						companyId)) {
+
+					dispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
+				}
+			}
+
+			if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+					companyId)) {
+
+				dispatchTriggerNames.add(
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
+			}
+
+			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
+					companyId)) {
+
+				Collections.addAll(
+					dispatchTriggerNames,
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_ORDER,
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_PRODUCT);
+			}
+
+			_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
+				companyId, dispatchTriggerNames.toArray(new String[0]));
+
+			_analyticsDXPEntityBatchExporter.export(
+				companyId, dispatchTriggerNames.toArray(new String[0]));
+
+			AnalyticsConfiguration analyticsConfiguration =
+				getAnalyticsConfiguration(companyId);
+
+			Collection<EntityModelListener<?>> entityModelListeners =
+				_entityModelListenerRegistry.getEntityModelListeners();
+
+			for (EntityModelListener<?> entityModelListener :
+					entityModelListeners) {
+
+				entityModelListener.syncAll(companyId);
+			}
+
+			if (GetterUtil.getBoolean(
+					analyticsConfiguration.syncAllContacts())) {
+
+				_syncContacts(companyId);
+			}
+			else {
+				_syncOrganizationUsers(
+					companyId, analyticsConfiguration.syncedOrganizationIds());
+				_syncUserGroupUsers(
+					companyId, analyticsConfiguration.syncedUserGroupIds());
+			}
+
+			Message message = new Message();
+
+			message.put("command", AnalyticsMessagesProcessorCommand.SEND);
+			message.put("companyId", companyId);
+			message.put("principalName", _getAnalyticsAdminUserId(companyId));
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Queueing send analytics messages message");
+			}
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_messageBus.sendMessage(
+						AnalyticsMessagesDestinationNames.
+							ANALYTICS_MESSAGES_PROCESSOR,
+						message);
+
+					return null;
+				});
+
+			_analyticsSettingsManager.updateCompanyConfiguration(
+				companyId, Collections.singletonMap("firstSync", false));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
 	private long _getAnalyticsAdminUserId(long companyId) {
 		User user = _userLocalService.fetchUserByScreenName(
 			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
@@ -454,28 +572,13 @@ public class AnalyticsConfigurationRegistryImpl
 			if (Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LRAC-10632"))) {
+				Collection<EntityModelListener<?>> entityModelListeners =
+					_entityModelListenerRegistry.getEntityModelListeners();
 
-					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-						companyId,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
+				for (EntityModelListener<?> entityModelListener :
+						entityModelListeners) {
 
-					_analyticsDXPEntityBatchExporter.export(
-						companyId,
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
-				}
-				else {
-					Collection<EntityModelListener<?>> entityModelListeners =
-						_entityModelListenerRegistry.getEntityModelListeners();
-
-					for (EntityModelListener<?> entityModelListener :
-							entityModelListeners) {
-
-						entityModelListener.syncAll(companyId);
-					}
+					entityModelListener.syncAll(companyId);
 				}
 			}
 

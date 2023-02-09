@@ -31,6 +31,7 @@ import javax.portlet.MutableResourceParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.RenderURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
@@ -38,7 +39,7 @@ import javax.portlet.annotations.PortletSerializable;
 /**
  * @author Cristina González
  */
-public class MockLiferayPortletURL implements LiferayPortletURL {
+public class MockLiferayPortletURL implements LiferayPortletURL, RenderURL {
 
 	@Override
 	public void addParameterIncludedInPath(String name) {
@@ -62,6 +63,11 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 
 	@Override
 	public String getCacheability() {
+		return null;
+	}
+
+	@Override
+	public String getFragmentIdentifier() {
 		return null;
 	}
 
@@ -200,6 +206,10 @@ public class MockLiferayPortletURL implements LiferayPortletURL {
 
 	@Override
 	public void setEscapeXml(boolean escapeXml) {
+	}
+
+	@Override
+	public void setFragmentIdentifier(String s) {
 	}
 
 	@Override

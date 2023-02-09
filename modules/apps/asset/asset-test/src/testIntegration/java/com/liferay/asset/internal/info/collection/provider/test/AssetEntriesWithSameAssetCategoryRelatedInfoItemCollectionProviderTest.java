@@ -15,7 +15,6 @@
 package com.liferay.asset.internal.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -309,10 +308,6 @@ public class
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetEntryAssetCategoryRelLocalService
-		_assetEntryAssetCategoryRelLocalService;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

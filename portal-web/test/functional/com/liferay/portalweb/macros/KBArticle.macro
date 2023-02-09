@@ -90,6 +90,11 @@ definition {
 				locator1 = "KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD",
 				value1 = "${kbArticleTitleFormatted}");
 		}
+		else if (isSet(kbDescription)) {
+			Type(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${kbDescription}");
+		}
 		else {
 			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleTitle}");
 
@@ -1208,6 +1213,17 @@ definition {
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = "${kbArticleTitle}");
 
+			if (isSet(kbDescription)) {
+				AssertTextEquals(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE",
+					value1 = "Description");
+
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION",
+					value1 = "${kbDescription}");
+			}
+
 			if (isSet(kbStatus)) {
 				AssertTextEquals(
 					key_kbArticleStatus = "${kbStatus}",
@@ -1537,6 +1553,26 @@ definition {
 			AssertTextEquals(
 				locator1 = "KnowledgeBaseArticle#CUSTOM_FIELD_VALUE",
 				value1 = "${customFieldValue}");
+		}
+
+		if (isSet(kbDescription)) {
+			if ("${description}" == "Disabled") {
+				AssertElementNotPresent(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE");
+
+				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
+			}
+			else {
+				AssertTextEquals(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE",
+					value1 = "Description");
+
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION",
+					value1 = "${kbDescription}");
+			}
 		}
 	}
 

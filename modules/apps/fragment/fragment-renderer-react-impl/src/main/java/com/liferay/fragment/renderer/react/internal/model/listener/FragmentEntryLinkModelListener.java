@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,9 +49,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = ModelListener.class)
+@Component(service = {ModelListener.class, IdentifiableOSGiService.class})
 public class FragmentEntryLinkModelListener
-	extends BaseModelListener<FragmentEntryLink> {
+	extends BaseModelListener<FragmentEntryLink>
+	implements IdentifiableOSGiService {
+
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return FragmentEntryLinkModelListener.class.getName();
+	}
 
 	@Override
 	public void onAfterCreate(FragmentEntryLink fragmentEntryLink) {
@@ -132,6 +140,20 @@ public class FragmentEntryLinkModelListener
 		npmRegistryUpdate.finish();
 	}
 
+	private static void _onNotify(
+		MethodType methodType, String osgiServiceIdentifier,
+		FragmentEntryLink oldFragmentEntryLink,
+		FragmentEntryLink newFragmentEntryLink) {
+
+		FragmentEntryLinkModelListener fragmentEntryLinkModelListener =
+			(FragmentEntryLinkModelListener)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		fragmentEntryLinkModelListener._updateNPMRegistry(
+			methodType, oldFragmentEntryLink, newFragmentEntryLink);
+	}
+
 	private String _getJs(FragmentEntryLink fragmentEntryLink) {
 		return StringUtil.replace(
 			fragmentEntryLink.getJs(),
@@ -166,8 +188,8 @@ public class FragmentEntryLinkModelListener
 
 		try {
 			MethodHandler methodHandler = new MethodHandler(
-				_updateNPMRegistryMethodKey, methodType, oldFragmentEntryLink,
-				newFragmentEntryLink);
+				_onNotifyMethodKey, methodType, getOSGiServiceIdentifier(),
+				oldFragmentEntryLink, newFragmentEntryLink);
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -217,9 +239,9 @@ public class FragmentEntryLinkModelListener
 
 	private static final List<String> _dependencies = Collections.singletonList(
 		_DEPENDENCY_PORTAL_REACT);
-	private static final MethodKey _updateNPMRegistryMethodKey = new MethodKey(
-		FragmentEntryLinkModelListener.class, "_updateNPMRegistry",
-		MethodType.class, FragmentEntryLink.class, FragmentEntryLink.class);
+	private static final MethodKey _onNotifyMethodKey = new MethodKey(
+		FragmentEntryLinkModelListener.class, "_onNotify", MethodType.class,
+		String.class, FragmentEntryLink.class, FragmentEntryLink.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

@@ -274,12 +274,6 @@ const filterSchema = {
 			},
 			{...baseFilters.team},
 			overrides(baseFilters.component, {name: 'componentId'}),
-			{
-				label: i18n.translate('date created'),
-				name: 'dateCreated',
-				operator: 'gt',
-				type: 'date',
-			},
 		] as RendererFields[],
 	},
 	requirementCases: {

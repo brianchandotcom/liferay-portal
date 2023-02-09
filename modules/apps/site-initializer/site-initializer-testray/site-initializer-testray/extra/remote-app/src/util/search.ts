@@ -85,15 +85,15 @@ export class SearchBuilder {
 	}
 
 	static ge(key: Key, value: Value) {
-		return `${key} ge '${value}'`;
+		return `${key} ge ${value}`;
 	}
 
 	static lt(key: Key, value: Value) {
-		return `${key} lt '${value}'`;
+		return `${key} lt ${value}`;
 	}
 
 	static le(key: Key, value: Value) {
-		return `${key} le '${value}'`;
+		return `${key} le ${value}`;
 	}
 
 	static startsWith(key: Key, value: Value) {
@@ -155,8 +155,7 @@ export class SearchBuilder {
 				}
 
 				searchCondition = SearchBuilder[customOperator](key, value);
-			}
-			else {
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

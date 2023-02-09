@@ -26,4 +26,8 @@ public interface NPMRegistryStateSnapshot {
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency);
 
+	public JSModule getResolvedJSModule(String identifier);
+
+	public JSPackage getResolvedJSPackage(String identifier);
+
 }

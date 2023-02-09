@@ -19,7 +19,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.resolution.Brows
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -38,12 +38,12 @@ public class JSBrowserModule implements BrowserModule {
 
 	public JSBrowserModule(
 		BrowserModulesResolution browserModulesResolution, JSModule jsModule,
-		NPMRegistry npmRegistry) {
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
 
 		_browserModulesResolution = browserModulesResolution;
 		_jsModule = jsModule;
 
-		_populateDependenciesMap(npmRegistry);
+		_populateDependenciesMap(npmRegistryStateSnapshot);
 	}
 
 	@Override
@@ -71,7 +71,9 @@ public class JSBrowserModule implements BrowserModule {
 		return _jsModule.getResolvedURL();
 	}
 
-	private void _populateDependenciesMap(NPMRegistry npmRegistry) {
+	private void _populateDependenciesMap(
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
+
 		JSPackage jsPackage = _jsModule.getJSPackage();
 
 		for (String dependencyPackageName :
@@ -99,7 +101,7 @@ public class JSBrowserModule implements BrowserModule {
 				}
 				else {
 					JSPackage dependencyJSPackage =
-						npmRegistry.resolveJSPackageDependency(
+						npmRegistryStateSnapshot.resolveJSPackageDependency(
 							jsPackageDependency);
 
 					if (dependencyJSPackage == null) {

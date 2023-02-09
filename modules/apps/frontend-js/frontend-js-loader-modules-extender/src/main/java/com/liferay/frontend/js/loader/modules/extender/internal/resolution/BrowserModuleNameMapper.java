@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,13 +26,13 @@ import java.util.Map;
 public class BrowserModuleNameMapper {
 
 	public static String mapModuleName(
-		NPMRegistry npmRegistry, String moduleName) {
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot, String moduleName) {
 
-		return mapModuleName(npmRegistry, moduleName, null);
+		return mapModuleName(npmRegistryStateSnapshot, moduleName, null);
 	}
 
 	public static String mapModuleName(
-		NPMRegistry npmRegistry, String moduleName,
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot, String moduleName,
 		Map<String, String> dependenciesMap) {
 
 		String mappedModuleName = moduleName;
@@ -42,7 +42,7 @@ public class BrowserModuleNameMapper {
 				moduleName, dependenciesMap, dependenciesMap);
 		}
 
-		return npmRegistry.mapModuleName(mappedModuleName);
+		return npmRegistryStateSnapshot.mapModuleName(mappedModuleName);
 	}
 
 	private static String _map(

@@ -18,7 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.configuration.De
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryStateSnapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -49,22 +49,24 @@ import org.osgi.service.component.annotations.Reference;
 public class BrowserModulesResolver {
 
 	public BrowserModulesResolution resolve(
-		List<String> moduleNames, HttpServletRequest httpServletRequest) {
+		List<String> moduleNames, HttpServletRequest httpServletRequest,
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
 
 		BrowserModulesResolution browserModulesResolution =
 			new BrowserModulesResolution(
 				_jsonFactory, _details.explainResolutions());
 
 		BrowserModulesMap browserModulesMap = new BrowserModulesMap(
-			browserModulesResolution, _npmRegistry);
+			browserModulesResolution, npmRegistryStateSnapshot);
 
 		for (String moduleName : moduleNames) {
 			_resolve(
 				browserModulesMap, moduleName, browserModulesResolution,
-				httpServletRequest);
+				httpServletRequest, npmRegistryStateSnapshot);
 		}
 
-		_populateMappedModuleNames(browserModulesResolution);
+		_populateMappedModuleNames(
+			browserModulesResolution, npmRegistryStateSnapshot);
 
 		return browserModulesResolution;
 	}
@@ -76,14 +78,15 @@ public class BrowserModulesResolver {
 	}
 
 	private void _populateMappedModuleNames(
-		BrowserModulesResolution browserModulesResolution) {
+		BrowserModulesResolution browserModulesResolution,
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
 
 		Set<JSPackage> jsPackages = new HashSet<>();
 
 		for (String moduleName :
 				browserModulesResolution.getResolvedModuleNames()) {
 
-			JSPackage jsPackage = _npmRegistry.getResolvedJSPackage(
+			JSPackage jsPackage = npmRegistryStateSnapshot.getResolvedJSPackage(
 				ModuleNameUtil.getPackageName(moduleName));
 
 			if (jsPackage == null) {
@@ -108,7 +111,8 @@ public class BrowserModulesResolver {
 	private boolean _processBrowserModule(
 		BrowserModulesMap browserModulesMap, BrowserModule browserModule,
 		BrowserModulesResolution browserModulesResolution,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
 
 		String moduleName = browserModule.getName();
 
@@ -131,7 +135,7 @@ public class BrowserModulesResolver {
 				moduleName, dependency);
 
 			dependencyModuleName = BrowserModuleNameMapper.mapModuleName(
-				_npmRegistry, dependencyModuleName,
+				npmRegistryStateSnapshot, dependencyModuleName,
 				browserModule.getDependenciesMap());
 
 			dependenciesMap.put(dependency, dependencyModuleName);
@@ -142,7 +146,8 @@ public class BrowserModulesResolver {
 			if (dependencyBrowserModule != null) {
 				_processBrowserModule(
 					browserModulesMap, dependencyBrowserModule,
-					browserModulesResolution, httpServletRequest);
+					browserModulesResolution, httpServletRequest,
+					npmRegistryStateSnapshot);
 			}
 			else {
 				browserModulesResolution.addError(
@@ -182,10 +187,11 @@ public class BrowserModulesResolver {
 	private void _resolve(
 		BrowserModulesMap browserModulesMap, String moduleName,
 		BrowserModulesResolution browserModulesResolution,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		NPMRegistryStateSnapshot npmRegistryStateSnapshot) {
 
 		String mappedModuleName = BrowserModuleNameMapper.mapModuleName(
-			_npmRegistry, moduleName);
+			npmRegistryStateSnapshot, moduleName);
 
 		BrowserModule browserModule = browserModulesMap.get(mappedModuleName);
 
@@ -204,7 +210,7 @@ public class BrowserModulesResolver {
 
 		_processBrowserModule(
 			browserModulesMap, browserModule, browserModulesResolution,
-			httpServletRequest);
+			httpServletRequest, npmRegistryStateSnapshot);
 	}
 
 	@Reference
@@ -214,8 +220,5 @@ public class BrowserModulesResolver {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private NPMRegistry _npmRegistry;
 
 }

@@ -2,3 +2,7 @@ able-theme-spritemap:
     name: Able Theme Spritemap
     type: themeSpritemap
     url: spritemap.svg
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static

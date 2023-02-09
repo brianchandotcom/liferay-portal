@@ -2,3 +2,7 @@ able-theme-favicon:
     name: Able Theme Favicon
     type: themeFavicon
     url: favicon.ico
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static

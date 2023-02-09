@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
 import com.liferay.portal.osgi.web.portlet.container.test.util.PortletContainerTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -30,7 +32,12 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -59,6 +66,69 @@ public class UncontrolledExceptionErrorTest
 		super.setUp();
 
 		_user = _userLocalService.getDefaultUser(group.getCompanyId());
+	}
+
+	@Test
+	public void testUncontrolledExceptionCustomizedError() throws Exception {
+		UncontrolledExceptionErrorPortlet uncontrolledExceptionErrorPortlet =
+			_setUpUncontrolledExceptionErrorPortlet();
+
+		String expectedErrorMessage = RandomTestUtil.randomString();
+
+		registerService(
+			ResourceBundle.class,
+			new ResourceBundle() {
+
+				@Override
+				public Enumeration<String> getKeys() {
+					return Collections.enumeration(
+						Arrays.asList(
+							"is-temporarily-unavailable[" +
+								UncontrolledExceptionErrorPortlet.PORTLET_NAME +
+									"]"));
+				}
+
+				@Override
+				protected Object handleGetObject(String key) {
+					if (Objects.equals(
+							key,
+							"is-temporarily-unavailable[" +
+								UncontrolledExceptionErrorPortlet.PORTLET_NAME +
+									"]")) {
+
+						return expectedErrorMessage;
+					}
+
+					return null;
+				}
+
+			},
+			HashMapDictionaryBuilder.<String, Object>put(
+				"language.id", LocaleUtil.toLanguageId(_user.getLocale())
+			).build());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.html.portal.render_portlet_jsp",
+				LoggerTestUtil.ERROR)) {
+
+			PortletContainerTestUtil.Response response =
+				PortletContainerTestUtil.request(
+					PortletURLBuilder.create(
+						_portletURLFactory.create(
+							PortletContainerTestUtil.getHttpServletRequest(
+								group, layout),
+							UncontrolledExceptionErrorPortlet.PORTLET_NAME,
+							layout.getPlid(), PortletRequest.RENDER_PHASE)
+					).buildString());
+
+			Assert.assertTrue(
+				uncontrolledExceptionErrorPortlet.isCalledRender());
+
+			_assertLogEntryMessage(logCapture);
+
+			_assertUncontrolledExceptionErrorHTML(
+				expectedErrorMessage, response.getBody());
+		}
 	}
 
 	@Test

@@ -34,12 +34,14 @@ import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.definition.ResourceActionAssignment;
 import com.liferay.portal.workflow.kaleo.definition.RoleAssignment;
 import com.liferay.portal.workflow.kaleo.definition.RoleRecipient;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
 import com.liferay.portal.workflow.kaleo.definition.TemplateLanguage;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
+import com.liferay.portal.workflow.kaleo.definition.UpdateStatusAction;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
@@ -275,11 +277,23 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				actionElement, "description", action.getDescription());
 		}
 
-		ScriptLanguage scriptLanguage = action.getScriptLanguage();
+		if (action instanceof ScriptAction) {
+			ScriptAction scriptAction = (ScriptAction)action;
 
-		populateScriptingElement(
-			actionElement, action.getScript(), scriptLanguage.getValue(),
-			action.getScriptRequiredContexts());
+			ScriptLanguage scriptLanguage = scriptAction.getScriptLanguage();
+
+			populateScriptingElement(
+				actionElement, scriptAction.getScript(),
+				scriptLanguage.getValue(),
+				scriptAction.getScriptRequiredContexts());
+		}
+		else if (action instanceof UpdateStatusAction) {
+			UpdateStatusAction updateStatusAction = (UpdateStatusAction)action;
+
+			addTextElement(
+				actionElement, "status-code",
+				String.valueOf(updateStatusAction.getStatus()));
+		}
 
 		if (action.getPriority() > 0) {
 			addTextElement(

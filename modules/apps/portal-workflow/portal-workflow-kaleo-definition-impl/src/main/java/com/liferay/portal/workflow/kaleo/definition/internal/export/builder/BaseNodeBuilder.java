@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Action;
+import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.definition.AddressRecipient;
 import com.liferay.portal.workflow.kaleo.definition.AssigneesRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
@@ -38,9 +39,11 @@ import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.definition.ResourceActionAssignment;
 import com.liferay.portal.workflow.kaleo.definition.RoleAssignment;
 import com.liferay.portal.workflow.kaleo.definition.RoleRecipient;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
 import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
+import com.liferay.portal.workflow.kaleo.definition.UpdateStatusAction;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
@@ -58,6 +61,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Reference;
@@ -239,14 +243,24 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 		Set<Action> actions = new HashSet<>();
 
 		for (KaleoAction kaleoAction : kaleoActions) {
-			Action action = new Action(
-				kaleoAction.getName(), kaleoAction.getDescription(),
-				kaleoAction.getExecutionType(), kaleoAction.getScript(),
-				kaleoAction.getScriptLanguage(),
-				kaleoAction.getScriptRequiredContexts(),
-				kaleoAction.getPriority());
+			if (Objects.equals(kaleoAction.getType(), ActionType.SCRIPT)) {
+				actions.add(
+					new ScriptAction(
+						kaleoAction.getName(), kaleoAction.getDescription(),
+						kaleoAction.getExecutionType(), kaleoAction.getScript(),
+						kaleoAction.getScriptLanguage(),
+						kaleoAction.getScriptRequiredContexts(),
+						kaleoAction.getPriority()));
+			}
+			else if (Objects.equals(
+						kaleoAction.getType(), ActionType.UPDATE_STATUS)) {
 
-			actions.add(action);
+				actions.add(
+					new UpdateStatusAction(
+						kaleoAction.getName(), kaleoAction.getDescription(),
+						kaleoAction.getExecutionType(), kaleoAction.getStatus(),
+						kaleoAction.getPriority()));
+			}
 		}
 
 		return actions;

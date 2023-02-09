@@ -1088,7 +1088,7 @@ public class BundleSiteInitializerTest {
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		_assertObjectActions(3, objectDefinition1);
-		_assertObjectEntries(group.getGroupId(), objectDefinition1, 5);
+		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectFields(objectDefinition1, 8);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 

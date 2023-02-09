@@ -54,13 +54,14 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -323,18 +324,18 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
-		Collection<InfoItemFormVariation> infoItemFormVariations =
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_group.getGroupId());
+				_group.getGroupId()));
 
 		Assert.assertTrue(!infoItemFormVariations.isEmpty());
 
-		Stream<InfoItemFormVariation> stream = infoItemFormVariations.stream();
+		Collections.sort(
+			infoItemFormVariations,
+			Comparator.comparing(InfoItemFormVariation::getKey));
 
-		InfoItemFormVariation infoItemFormVariation = stream.sorted(
-			Comparator.comparing(InfoItemFormVariation::getKey)
-		).findFirst(
-		).get();
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariations.get(0);
 
 		return GetterUtil.getLong(infoItemFormVariation.getKey());
 	}

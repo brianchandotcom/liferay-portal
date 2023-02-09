@@ -389,7 +389,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		long selectedFileEntryId = ParamUtil.getLong(
 			PortalUtil.getOriginalServletRequest(httpServletRequest),
-			"selectedFileEntryId");
+			"selectedItemIds");
 
 		if (selectedFileEntryId != 0) {
 			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(

@@ -101,7 +101,7 @@ const ImagePicker = ({
 
 		if (Liferay.FeatureFlags['LPS-153332']) {
 			url = addParams(
-				`selectedFileEntryId=${selectedImageId}`,
+				`selectedItemIds=${selectedImageId}`,
 				itemSelectorURL
 			);
 		}

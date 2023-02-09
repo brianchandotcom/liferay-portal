@@ -21,10 +21,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.engine.SearchEngineInformation;
@@ -59,17 +56,13 @@ public class JournalArticleTextEmbeddingModelDocumentContributor
 			return;
 		}
 
-		try {
-			if (!_journalArticleLocalService.isLatestVersion(
-					journalArticle.getGroupId(), journalArticle.getArticleId(),
-					journalArticle.getVersion(),
-					WorkflowConstants.STATUS_APPROVED)) {
+		JournalArticle latestArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				journalArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED);
 
-				return;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		if ((latestArticle == null) ||
+			(latestArticle.getVersion() != journalArticle.getVersion())) {
 
 			return;
 		}
@@ -107,9 +100,6 @@ public class JournalArticleTextEmbeddingModelDocumentContributor
 
 		return value.getString(_language.getLocale(languageId));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleTextEmbeddingModelDocumentContributor.class);
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

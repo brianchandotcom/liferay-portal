@@ -1043,7 +1043,7 @@ public class BundleSiteInitializerTest {
 			layoutStructureItems.size());
 	}
 
-	private void _assertLayoutUtilityPageEntries(Group group) {
+	private void _assertLayoutUtilityPageEntries1(Group group) {
 		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
 				fetchDefaultLayoutUtilityPageEntry(
@@ -1054,21 +1054,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Default Layout Utility Page Entry",
 			defaultLayoutUtilityPageEntry.getName());
-
-	private void _assertLayoutUtilityPageEntries1(Group group) {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByExternalReferenceCode(
-					"test-layout-utility-page-entry", group.getGroupId());
-
-		Assert.assertNotNull(layoutUtilityPageEntry);
-		Assert.assertEquals(
-			"Test Layout Utility Page Entry", layoutUtilityPageEntry.getName());
-		Assert.assertEquals(
-			LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND,
-			layoutUtilityPageEntry.getType());
-		Assert.assertFalse(
-			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
 	}
 
 	private void _assertListTypeDefinitions1(ServiceContext serviceContext)

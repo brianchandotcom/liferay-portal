@@ -78,8 +78,6 @@ public class CommerceServiceTest {
 
 		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
 
-		_user = UserTestUtil.addUser(_company);
-
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
 
@@ -90,6 +88,8 @@ public class CommerceServiceTest {
 			null, _group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
+
+		_user = UserTestUtil.addUser(_company);
 	}
 
 	@After

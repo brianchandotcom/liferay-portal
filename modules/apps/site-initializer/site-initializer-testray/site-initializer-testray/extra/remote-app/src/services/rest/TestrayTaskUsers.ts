@@ -106,7 +106,7 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 
 		response = await this.getAll({
 			fields: 'id',
-			filter: searchUtil.eq('taskId', taskId),
+			filter: SearchBuilder.eq('taskId', taskId),
 			pageSize: 100,
 		});
 

@@ -97,7 +97,7 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 			onActiveChange={setActive}
 			trigger={
 				<div>
-					<Tooltip position="down" title={i18n.translate('manage')}>
+					<Tooltip position="bottom" title={i18n.translate('manage')}>
 						<div className="testray-sidebar-item">
 							<ClayButtonWithIcon
 								aria-label={i18n.translate('manage')}

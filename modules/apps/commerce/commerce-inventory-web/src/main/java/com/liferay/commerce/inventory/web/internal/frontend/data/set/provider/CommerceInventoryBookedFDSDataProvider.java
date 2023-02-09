@@ -71,7 +71,8 @@ public class CommerceInventoryBookedFDSDataProvider
 			commerceInventoryBookedQuantities =
 				_commerceInventoryBookedQuantityService.
 					getCommerceInventoryBookedQuantities(
-						_portal.getCompanyId(httpServletRequest), sku,
+						_portal.getCompanyId(httpServletRequest),
+						fdsKeywords.getKeywords(), sku,
 						fdsPagination.getStartPosition(),
 						fdsPagination.getEndPosition());
 
@@ -106,7 +107,8 @@ public class CommerceInventoryBookedFDSDataProvider
 
 		return _commerceInventoryBookedQuantityService.
 			getCommerceInventoryBookedQuantitiesCount(
-				_portal.getCompanyId(httpServletRequest), sku);
+				_portal.getCompanyId(httpServletRequest),
+				fdsKeywords.getKeywords(), sku);
 	}
 
 	private String _getAccountName(CommerceOrderItem commerceOrderItem)

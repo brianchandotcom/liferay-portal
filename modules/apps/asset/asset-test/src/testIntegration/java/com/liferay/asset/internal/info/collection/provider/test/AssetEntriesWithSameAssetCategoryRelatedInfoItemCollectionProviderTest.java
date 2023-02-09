@@ -61,6 +61,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -109,36 +110,31 @@ public class
 		AssetCategory assetCategory = _addAssetCategory(
 			_group, serviceContext, assetVocabulary);
 
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
 		JournalArticle journalArticle = _addJournalArticle(
-			assetCategory, serviceContext);
+			assetCategoryIds, serviceContext);
 		JournalArticle relatedJournalArticle = _addJournalArticle(
-			assetCategory, serviceContext);
+			assetCategoryIds, serviceContext);
 
-		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			AssetEntry.class.getName());
-
-		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+		_reindex();
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
 		collectionQuery.setRelatedItemObject(
-			_getAssetEntry(relatedJournalArticle));
+			_getAssetEntry(
+				JournalArticle.class.getName(),
+				relatedJournalArticle.getResourcePrimKey()));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			InfoPage<AssetEntry> collectionInfoPage =
+			_assertInfoPage(
 				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
-					collectionQuery);
-
-			List<? extends AssetEntry> pageItems =
-				collectionInfoPage.getPageItems();
-
-			Assert.assertEquals(pageItems.toString(), 1, pageItems.size());
-
-			AssetEntry assetEntry = pageItems.get(0);
-
-			Assert.assertEquals(_getAssetEntry(journalArticle), assetEntry);
+					collectionQuery),
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -202,12 +198,14 @@ public class
 			_group, serviceContext, assetVocabulary);
 
 		JournalArticle relatedJournalArticle = _addJournalArticle(
-			assetCategory, serviceContext);
+			new long[] {assetCategory.getCategoryId()}, serviceContext);
 
 		CollectionQuery collectionQuery = new CollectionQuery();
 
 		collectionQuery.setRelatedItemObject(
-			_getAssetEntry(relatedJournalArticle));
+			_getAssetEntry(
+				JournalArticle.class.getName(),
+				relatedJournalArticle.getResourcePrimKey()));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -238,11 +236,10 @@ public class
 	}
 
 	private JournalArticle _addJournalArticle(
-			AssetCategory assetCategory, ServiceContext serviceContext)
+			long[] assetCategoryIds, ServiceContext serviceContext)
 		throws Exception {
 
-		serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		return JournalTestUtil.addArticle(
 			serviceContext.getScopeGroupId(),
@@ -259,16 +256,40 @@ public class
 		Assert.assertEquals(name, infoField.getName());
 	}
 
-	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
+	private void _assertInfoPage(
+		InfoPage<AssetEntry> infoPage, AssetEntry... expectedAssetEntries) {
+
+		List<? extends AssetEntry> pageItems = infoPage.getPageItems();
+
+		Assert.assertEquals(
+			pageItems.toString(), expectedAssetEntries.length,
+			pageItems.size());
+
+		for (AssetEntry expectedAssetEntry : expectedAssetEntries) {
+			boolean expectedAssetEntryFound = false;
+
+			for (AssetEntry assetEntry : pageItems) {
+				if (!Objects.equals(assetEntry, expectedAssetEntry)) {
+					continue;
+				}
+
+				expectedAssetEntryFound = true;
+
+				break;
+			}
+
+			Assert.assertTrue(expectedAssetEntryFound);
+		}
+	}
+
+	private AssetEntry _getAssetEntry(String className, long classPK)
 		throws Exception {
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				JournalArticle.class.getName());
+				className);
 
-		return assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
+		return assetRendererFactory.getAssetEntry(className, classPK);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {
@@ -304,6 +325,13 @@ public class
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockHttpServletRequest;
+	}
+
+	private void _reindex() throws Exception {
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetEntry.class.getName());
+
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
 	}
 
 	@Inject

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -135,6 +136,76 @@ public class
 				_getAssetEntry(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByItemType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _addAssetCategory(
+			_group, serviceContext, assetVocabulary);
+
+		BlogsEntry blogsEntry = _addBlogsEntry(
+			new long[] {assetCategory.getCategoryId()}, serviceContext);
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		JournalArticle journalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+
+		JournalArticle relatedJournalArticle = _addJournalArticle(
+			assetCategoryIds, serviceContext);
+
+		_reindex();
+
+		CollectionQuery collectionQuery = new CollectionQuery();
+
+		collectionQuery.setRelatedItemObject(
+			_getAssetEntry(
+				JournalArticle.class.getName(),
+				relatedJournalArticle.getResourcePrimKey()));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			InfoPage<AssetEntry> collectionInfoPage =
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery);
+
+			AssetEntry blogsEntryAssetEntry = _getAssetEntry(
+				BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+			_assertInfoPage(
+				collectionInfoPage,
+				_getAssetEntry(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey()),
+				blogsEntryAssetEntry);
+
+			collectionQuery.setConfiguration(
+				HashMapBuilder.put(
+					"item_types", new String[] {BlogsEntry.class.getName()}
+				).build());
+
+			collectionInfoPage =
+				_relatedInfoItemCollectionProvider.getCollectionInfoPage(
+					collectionQuery);
+
+			_assertInfoPage(collectionInfoPage, blogsEntryAssetEntry);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -233,6 +304,17 @@ public class
 			TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
+	}
+
+	private BlogsEntry _addBlogsEntry(
+			long[] assetCategoryIds, ServiceContext serviceContext)
+		throws Exception {
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		return _blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

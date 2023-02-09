@@ -49,6 +49,10 @@ public class AnalyticsSettingsDisplayContext extends BaseDisplayContext {
 		return !Validator.isBlank(_analyticsConfiguration.token());
 	}
 
+	public boolean isWizardMode() {
+		return _analyticsConfiguration.wizardMode();
+	}
+
 	private final AnalyticsConfiguration _analyticsConfiguration;
 
 }

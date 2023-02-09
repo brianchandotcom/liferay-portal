@@ -49,7 +49,7 @@ public class SearchResultsPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				searchResultsPortletPreferences.getFederatedSearchKeyString());
+				searchResultsPortletPreferences.getFederatedSearchKey());
 
 		_paginate(
 			searchResultsPortletPreferences, portletSharedSearchSettings,

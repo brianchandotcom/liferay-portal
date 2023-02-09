@@ -62,7 +62,7 @@ public class SearchBarPortletSharedSearchContributor
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
-				searchBarPortletPreferences.getFederatedSearchKeyString());
+				searchBarPortletPreferences.getFederatedSearchKey());
 
 		if (!_shouldContributeToCurrentPageSearch(
 				searchBarPortletPreferences, portletSharedSearchSettings)) {

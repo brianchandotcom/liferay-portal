@@ -62,7 +62,7 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
 				lowLevelSearchOptionsPortletPreferences.
-					getFederatedSearchKeyString());
+					getFederatedSearchKey());
 
 		searchRequestBuilder.connectionId(
 			connectionIdOptional.orElse(null)

@@ -116,8 +116,8 @@ public class SearchBarPrecedenceHelper {
 			_getSearchBarPortletPreferences(portletId, themeDisplay);
 
 		if (!Objects.equals(
-				searchBarPortletPreferences1.getFederatedSearchKeyString(),
-				searchBarPortletPreferences2.getFederatedSearchKeyString())) {
+				searchBarPortletPreferences1.getFederatedSearchKey(),
+				searchBarPortletPreferences2.getFederatedSearchKey())) {
 
 			return false;
 		}

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -76,8 +75,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			if ((!GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-163688")) &&
 				 Objects.equals(
-					 MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-					 "Rescore by Text Embedding")) ||
+					 sxpElement.getExternalReferenceCode(),
+					 "RESCORE_BY_TEXT_EMBEDDING")) ||
 				externalReferenceCodes.contains(
 					sxpElement.getExternalReferenceCode())) {
 

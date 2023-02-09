@@ -95,7 +95,10 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(
 			themeDisplay.getLayout());
 
-		if (cdnHostEnabled || themeSpritemapCET.getEnableSVG4Everybody()) {
+		if (cdnHostEnabled ||
+			((themeSpritemapCET != null) &&
+			 themeSpritemapCET.getEnableSVG4Everybody())) {
+
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =

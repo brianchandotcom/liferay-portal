@@ -65,11 +65,22 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	const onApply = () => {
 		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
 
-		const entries = Object.keys(filterCleaned).map((key) => ({
-			label: fields?.find(({name}) => name === key)?.label,
-			name: key,
-			value: filterCleaned[key],
-		}));
+		const entries = Object.keys(filterCleaned).map((key) => {
+			const field = fields?.find(({name}) => name === key);
+			let value = filterCleaned[key];
+
+			if (field && field.type === 'select') {
+				value = (field.options as any[]).filter(
+					(option) => String(option.value) === String(value)
+				);
+			}
+
+			return {
+				label: field?.label,
+				name: key,
+				value,
+			};
+		});
 
 		dispatch({
 			payload: {filters: {entries, filter: filterCleaned}},

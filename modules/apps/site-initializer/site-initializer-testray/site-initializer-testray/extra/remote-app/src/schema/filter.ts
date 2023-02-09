@@ -32,15 +32,18 @@ type Filter = {
 	[key: string]: RendererFields;
 };
 
+export type FilterVariables = {
+	appliedFilter: {
+		[key: string]: string;
+	};
+	defaultFilter: string | SearchBuilder;
+	filterSchema: FilterSchema;
+};
+
 export type FilterSchema = {
 	fields: RendererFields[];
 	name?: string;
-	onApply?: (data: {
-		appliedFilter: {
-			[key: string]: string;
-		};
-		defaultFilter: any;
-	}) => string;
+	onApply?: (filterVariables: FilterVariables) => string;
 };
 
 export type FilterSchemas = {
@@ -141,6 +144,14 @@ const baseFilters: Filter = {
 	},
 };
 
+const overrides = (
+	object: RendererFields,
+	newObject: Partial<RendererFields>
+) => ({
+	...object,
+	...newObject,
+});
+
 const filterSchema = {
 	buildCaseTypes: {
 		fields: [baseFilters.priority, baseFilters.team] as RendererFields[],
@@ -148,7 +159,7 @@ const filterSchema = {
 	buildComponents: {
 		fields: [
 			baseFilters.priority,
-			baseFilters.caseType,
+			overrides(baseFilters.caseType, {disabled: false}),
 			baseFilters.team,
 			baseFilters.run,
 		] as RendererFields[],
@@ -252,25 +263,24 @@ const filterSchema = {
 	cases: {
 		fields: [
 			baseFilters.priority,
-			baseFilters.caseType,
+			overrides(baseFilters.caseType, {
+				name: 'r_caseTypeToCases_c_caseTypeId',
+			}),
 			{
-				disabled: true,
 				label: i18n.translate('case-name'),
 				name: 'name',
+				operator: 'contains',
 				type: 'text',
 			},
 			{...baseFilters.team},
-			baseFilters.component,
+			overrides(baseFilters.component, {name: 'componentId'}),
+			{
+				label: i18n.translate('date created'),
+				name: 'dateCreated',
+				operator: 'gt',
+				type: 'date',
+			},
 		] as RendererFields[],
-		onApply({appliedFilter, defaultFilter}: any) {
-			const filter: string = '';
-
-			if (defaultFilter instanceof SearchBuilder) {
-				console.warn(appliedFilter, defaultFilter, this.fields);
-			}
-
-			return filter;
-		},
 	},
 	requirementCases: {
 		fields: [

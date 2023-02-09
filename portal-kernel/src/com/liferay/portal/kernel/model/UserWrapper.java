@@ -1430,8 +1430,18 @@ public class UserWrapper
 	}
 
 	@Override
+	public boolean isRegularUser() {
+		return model.isRegularUser();
+	}
+
+	@Override
 	public boolean isReminderQueryComplete() {
 		return model.isReminderQueryComplete();
+	}
+
+	@Override
+	public boolean isServiceAccountUser() {
+		return model.isServiceAccountUser();
 	}
 
 	@Override

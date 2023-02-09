@@ -2,7 +2,7 @@
 	{
 		"externalReferenceCode": "TESTACC0001",
 		"name": "Test Account 1",
-		"type": "person"
+		"type": "business"
 	},
 	{
 		"externalReferenceCode": "TESTACC0002",
@@ -12,6 +12,6 @@
 	{
 		"externalReferenceCode": "TESTACC0004",
 		"name": "Test Account 4",
-		"type": "business"
+		"type": "person"
 	}
 ]

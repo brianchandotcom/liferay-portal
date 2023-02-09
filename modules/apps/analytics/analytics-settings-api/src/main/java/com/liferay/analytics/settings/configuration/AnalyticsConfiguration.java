@@ -36,6 +36,9 @@ public interface AnalyticsConfiguration {
 	@Meta.AD(required = false)
 	public String[] commerceSyncEnabledAnalyticsChannelIds();
 
+	@Meta.AD(deflt = "true", required = false)
+	public boolean firstSync();
+
 	@Meta.AD(required = false)
 	public String[] previousCommerceSyncEnabledAnalyticsChannelIds();
 
@@ -155,5 +158,8 @@ public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
 	public String token();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean wizardMode();
 
 }

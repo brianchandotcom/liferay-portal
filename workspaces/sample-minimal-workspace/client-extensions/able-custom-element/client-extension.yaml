@@ -1,3 +1,7 @@
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static
 able-custom-element:
     cssURLs:
         - style.css
@@ -10,7 +14,3 @@ able-custom-element:
     urls:
         - index.js
     useESM: false
-assemble:
-    - from: assets
-      include: "**/*"
-      into: static

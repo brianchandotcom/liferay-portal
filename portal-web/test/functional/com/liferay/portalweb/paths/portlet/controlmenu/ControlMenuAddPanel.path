@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>CLOSE_ADD_PANEL</td>
-	<td>//div[contains(@class,'lfr-add-panel')]//a[contains(@class,'sidenav-close')]</td>
+	<td>//div[contains(@class,'lfr-add-panel')]//button[contains(@class,'sidenav-close')]</td>
 	<td></td>
 </tr>
 <tr>

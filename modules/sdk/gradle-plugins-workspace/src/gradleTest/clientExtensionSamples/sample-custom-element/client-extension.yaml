@@ -1,3 +1,7 @@
+assemble:
+    - from: assets
+      include: "**/*"
+      into: static
 sample-custom-element:
     cssURLs:
         - style.css

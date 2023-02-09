@@ -16,7 +16,7 @@ import {
 } from 'date-fns';
 
 export function durationAsMilliseconds(days = 0, fullHours) {
-	const [hours, minutes] = fullHours.split(':');
+	const [hours = 0, minutes = 0] = fullHours.split(':');
 
 	return (
 		hoursToMilliseconds(Number(days) * 24 + Number(hours)) +

@@ -140,7 +140,7 @@ const Renderer: React.FC<RendererProps> = ({
 					return _options;
 				};
 
-				if (['text', 'textarea'].includes(type)) {
+				if (['date', 'text', 'textarea'].includes(type)) {
 					return (
 						<div key={index}>
 							<Form.Input
@@ -169,18 +169,6 @@ const Renderer: React.FC<RendererProps> = ({
 								/>
 							)}
 						</div>
-					);
-				}
-
-				if (type === 'date') {
-					return (
-						<Form.DatePicker
-							key={index}
-							name={name}
-							onChange={onChange}
-							value={currentValue}
-							{...(field as any)}
-						/>
 					);
 				}
 

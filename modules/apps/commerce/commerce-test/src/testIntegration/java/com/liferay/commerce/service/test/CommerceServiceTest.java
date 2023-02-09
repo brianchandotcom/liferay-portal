@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -89,6 +90,10 @@ public class CommerceServiceTest {
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		_user = UserTestUtil.addUser(_company);
 	}
 
@@ -96,6 +101,9 @@ public class CommerceServiceTest {
 	public void tearDown() throws Exception {
 		_commerceOrderLocalService.deleteCommerceOrders(
 			_commerceChannel.getGroupId());
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -160,10 +168,10 @@ public class CommerceServiceTest {
 
 		User user = UserTestUtil.addUser(_company);
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.addBusinessCommerceAccount(
@@ -223,10 +231,10 @@ public class CommerceServiceTest {
 
 		User user = UserTestUtil.addUser(_company);
 
-		PrincipalThreadLocal.setName(user.getUserId());
-
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
@@ -283,6 +291,9 @@ public class CommerceServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

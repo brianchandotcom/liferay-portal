@@ -58,10 +58,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -104,18 +104,18 @@ public class ExportImportDisplayPagesTest {
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
-		Collection<InfoItemFormVariation> infoItemFormVariations =
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				_serviceContext1.getScopeGroupId());
+				_serviceContext1.getScopeGroupId()));
 
 		Assert.assertTrue(!infoItemFormVariations.isEmpty());
 
-		Stream<InfoItemFormVariation> stream = infoItemFormVariations.stream();
+		Collections.sort(
+			infoItemFormVariations,
+			Comparator.comparing(InfoItemFormVariation::getKey));
 
-		InfoItemFormVariation infoItemFormVariation = stream.sorted(
-			Comparator.comparing(InfoItemFormVariation::getKey)
-		).findFirst(
-		).get();
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariations.get(0);
 
 		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
 

@@ -171,6 +171,11 @@ public class KaleoServiceUpgradeStepRegistrator
 				"KaleoTaskForm", "KaleoTaskFormInstance",
 				"KaleoTaskInstanceToken", "KaleoTimer",
 				"KaleoTimerInstanceToken", "KaleoTransition"));
+
+		registry.register(
+			"3.5.0", "3.5.1",
+			new com.liferay.portal.workflow.kaleo.internal.upgrade.v3_5_1.
+				KaleoActionUpgradeProcess());
 	}
 
 }

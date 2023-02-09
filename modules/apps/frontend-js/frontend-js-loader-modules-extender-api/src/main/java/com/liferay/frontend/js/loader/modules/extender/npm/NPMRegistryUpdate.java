@@ -42,7 +42,7 @@ public interface NPMRegistryUpdate {
 	 */
 	public void finish();
 
-	public JSModule registerJSModule(
+	public void registerJSModule(
 		JSPackage jsPackage, String moduleName, Collection<String> dependencies,
 		String js, String map);
 

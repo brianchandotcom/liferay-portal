@@ -16,6 +16,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
@@ -95,8 +96,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 	public void addJSBundleTracker(JSBundleTracker jsBundleTracker) {
 	}
 
-	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
-		_refreshJSModuleCaches(null, null, _getNPMRegistryUpdatesListeners());
+	public void finishUpdate(NPMRegistryUpdateImpl npmRegistryUpdateImpl) {
+		_refreshJSModuleCaches(
+			null, null, npmRegistryUpdateImpl,
+			_getNPMRegistryUpdatesListeners());
 	}
 
 	@Override
@@ -260,7 +263,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_activationThreadLocal.set(Boolean.FALSE);
 
-		_refreshJSModuleCaches(null, null, null);
+		_refreshJSModuleCaches(null, null, null, null);
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
@@ -370,6 +373,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private void _refreshJSModuleCaches(
 		Map<Bundle, JSBundle> jsBundlesMap,
 		Collection<JSConfigGeneratorPackage> jsConfigGeneratorPackages,
+		NPMRegistryUpdateImpl npmRegistryUpdateImpl,
 		ServiceTrackerList<NPMRegistryUpdatesListener>
 			npmRegistryUpdatesListeners) {
 
@@ -437,8 +441,55 @@ public class NPMRegistryImpl implements NPMRegistry {
 				}
 
 				for (JSModule jsModule : jsPackage.getJSModules()) {
+					if (npmRegistryUpdateImpl != null) {
+						if (npmRegistryUpdateImpl.isUnregistered(
+								jsModule.getId())) {
+
+							continue;
+						}
+
+						NPMRegistryUpdateImpl.JSModuleUpdate jsModuleUpdate =
+							npmRegistryUpdateImpl.getJSModuleUpdate(
+								jsModule.getId());
+
+						if (jsModuleUpdate != null) {
+							jsModule = new DynamicJSModule(
+								jsPackage, jsModuleUpdate.getModuleName(),
+								jsModuleUpdate.getDependencies(),
+								jsModuleUpdate.getJS(),
+								jsModuleUpdate.getMap());
+						}
+					}
+
 					jsModules.put(jsModule.getId(), jsModule);
 					resolvedJSModules.put(jsModule.getResolvedId(), jsModule);
+				}
+
+				if (npmRegistryUpdateImpl != null) {
+					for (NPMRegistryUpdateImpl.JSModuleRegistration
+							jsModuleRegistration :
+								npmRegistryUpdateImpl.getJSModuleRegistrations(
+									jsPackage)) {
+
+						JSModule jsModule = new DynamicJSModule(
+							jsPackage, jsModuleRegistration.getModuleName(),
+							jsModuleRegistration.getDependencies(),
+							jsModuleRegistration.getJS(),
+							jsModuleRegistration.getMap());
+
+						if (jsModules.containsKey(jsModule.getName())) {
+							throw new IllegalStateException(
+								StringBundler.concat(
+									"Unable to register dynamic module ",
+									jsModule.getId(),
+									": a JS module with the same name already ",
+									"exists"));
+						}
+
+						jsModules.put(jsModule.getId(), jsModule);
+						resolvedJSModules.put(
+							jsModule.getResolvedId(), jsModule);
+					}
 				}
 			}
 		}
@@ -511,7 +562,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 					).put(
 						bundle, jsBundle
 					).build(),
-					null, _getNPMRegistryUpdatesListeners());
+					null, null, _getNPMRegistryUpdatesListeners());
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -536,7 +587,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			if (!_activationThreadLocal.get()) {
 				_refreshJSModuleCaches(
-					null, null, _getNPMRegistryUpdatesListeners());
+					null, null, null, _getNPMRegistryUpdatesListeners());
 			}
 		}
 
@@ -574,7 +625,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			jsConfigGeneratorPackages.add(jsConfigGeneratorPackage);
 
 			_refreshJSModuleCaches(
-				null, jsConfigGeneratorPackages,
+				null, jsConfigGeneratorPackages, null,
 				_getNPMRegistryUpdatesListeners());
 
 			return jsConfigGeneratorPackage;
@@ -592,7 +643,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			JSConfigGeneratorPackage jsConfigGeneratorPackage) {
 
 			_refreshJSModuleCaches(
-				null, null, _getNPMRegistryUpdatesListeners());
+				null, null, null, _getNPMRegistryUpdatesListeners());
 		}
 
 	}

@@ -233,7 +233,31 @@
 																{
 																	"id": "link",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"itemReference": {
+																							"className": "com.liferay.portal.kernel.model.Layout",
+																							"fields": [
+																								{
+																									"fieldName": "friendlyURL",
+																									"fieldValue": "/all-news"
+																								},
+																								{
+																									"fieldName": "privatePage",
+																									"fieldValue": "false"
+																								},
+																								{
+																									"fieldName": "siteKey",
+																									"fieldValue": "EVP"
+																								}
+																							]
+																						}
+																					}
+																				}
+																			}
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "View all News"

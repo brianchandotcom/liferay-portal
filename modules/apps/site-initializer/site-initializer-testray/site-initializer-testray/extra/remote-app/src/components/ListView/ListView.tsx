@@ -100,7 +100,7 @@ const ListView: React.FC<ListViewProps> = ({
 		sort,
 	} = listViewContext;
 
-	const filterSchemaName: any = managementToolbarProps.filterSchema ?? '';
+	const filterSchemaName = managementToolbarProps.filterSchema ?? '';
 	const filterSchema = (filterSchemas as any)[
 		filterSchemaName
 	] as FilterSchemaType;
@@ -114,18 +114,16 @@ const ListView: React.FC<ListViewProps> = ({
 		() => ({
 			appliedFilter: filters.filter,
 			defaultFilter: variables?.filter,
+			filterSchema,
 		}),
-		[variables?.filter, filters.filter]
+		[filters.filter, variables?.filter, filterSchema]
 	);
 
 	const getURLSearchParams = useCallback(
 		() => ({
 			filter: onApplyFilterMemo
 				? onApplyFilterMemo(filterVariables)
-				: SearchBuilder.createFilter(
-						filterVariables.appliedFilter,
-						filterVariables.defaultFilter
-				  ) || '',
+				: SearchBuilder.createFilter(filterVariables) || '',
 			forceRefetch,
 			page: listViewContext.page,
 			pageSize: listViewContext.pageSize,
@@ -206,10 +204,6 @@ const ListView: React.FC<ListViewProps> = ({
 		}
 	}, [items, tableProps, selectedRows, dispatch]);
 
-	if (error) {
-		return <span>{error.message}</span>;
-	}
-
 	if (loading) {
 		return <Loading />;
 	}
@@ -247,7 +241,12 @@ const ListView: React.FC<ListViewProps> = ({
 				/>
 			)}
 
-			{!items.length && <EmptyState />}
+			{!items.length && (
+				<EmptyState
+					description={error?.message}
+					type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
+				/>
+			)}
 
 			{children &&
 				children(response as APIResponse, {

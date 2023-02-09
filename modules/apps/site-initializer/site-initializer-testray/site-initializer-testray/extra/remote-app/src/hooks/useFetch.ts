@@ -66,7 +66,7 @@ export function useFetch<Data = any, Error = any>(
 		data: memoizedData,
 		error,
 		isValidating,
-		loading: !data,
+		loading: error ? false : !data,
 		mutate,
 		revalidate: () => mutate((response) => response, {revalidate: true}),
 	};

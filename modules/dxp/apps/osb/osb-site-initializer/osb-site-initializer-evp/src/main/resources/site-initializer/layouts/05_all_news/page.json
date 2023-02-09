@@ -28,6 +28,11 @@
 			"actionIds": ["VIEW"],
 			"roleName": "Finance User",
 			"scope": 4
+		},
+		{
+			"actionIds": ["VIEW"],
+			"roleName": "Employee",
+			"scope": 4
 		}
 	],
 	"private": false,

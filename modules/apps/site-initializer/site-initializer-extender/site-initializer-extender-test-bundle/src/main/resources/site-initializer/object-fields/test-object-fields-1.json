@@ -1,15 +1,15 @@
 {
 	"object-fields": [
 		{
-	"DBType": "String",
-	"businessType": "Aggregation",
-	"externalReferenceCode": "TESTOBJECTFIELD1",
-	"indexed": true,
-	"indexedAsKeyword": false,
-	"indexedLanguageId": "en_US",
-	"label": {
-		"en_US": "aggregationTestField"
-	},
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "TESTOBJECTFIELD1",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "aggregationTestField"
+			},
 			"listTypeDefinitionId": 0,
 			"name": "integerTestField",
 			"objectFieldSettings": [

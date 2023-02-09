@@ -2835,7 +2835,7 @@ definition {
 
 			AssertNotVisible(
 				locator1 = "Segmentation#SCOPE_CARD_SITE",
-				siteName = "Test Site Name");
+				siteName = "Global");
 		}
 	}
 

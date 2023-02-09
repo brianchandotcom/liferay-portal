@@ -628,7 +628,7 @@ public abstract class BaseJob implements Job {
 					"strategy[@class=\'hudson.plugins.build_timeout.impl.",
 					"AbsoluteTimeOutStrategy\']/timeoutMinutes"));
 
-			return Integer.valueOf(timeoutNode.getText());
+			return Integer.valueOf(timeoutNode.getText()) + 15;
 		}
 		catch (Exception exception) {
 			System.out.println("Unable to get timeout of job " + getJobName());

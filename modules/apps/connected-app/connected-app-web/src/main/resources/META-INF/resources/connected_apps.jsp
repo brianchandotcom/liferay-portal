@@ -77,7 +77,7 @@
 			%>
 
 			<c:if test="<%= connectedApps.isEmpty() %>">
-				<span class="text-muted">
+				<span class="text-secondary">
 					<liferay-ui:message key="no-applications-have-been-approved-yet" />
 				</span>
 			</c:if>

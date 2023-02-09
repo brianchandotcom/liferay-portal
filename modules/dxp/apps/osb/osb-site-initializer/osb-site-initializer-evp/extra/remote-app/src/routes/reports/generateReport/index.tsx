@@ -113,7 +113,8 @@ const GenerateReport = () => {
 			const body = [
 				field?.r_organization_c_evpOrganizationId,
 				field?.r_organization_c_evpOrganization?.organizationName,
-				field?.r_organization_c_evpOrganization?.taxId,
+				field?.r_organization_c_evpOrganization
+					?.taxIdentificationNumber,
 				field?.fullName,
 				dayjs(field?.dateCreated).format('MM-DD-YYYY'),
 				field?.requestDescription,

@@ -18,6 +18,7 @@ export declare type TData = {
 	liferayAnalyticsURL: string;
 	pageView: EPageView;
 	token: string;
+	wizardMode: boolean;
 };
 declare type TView = {
 	[key in EPageView]: React.FC;
@@ -32,6 +33,7 @@ export declare const initialState: {
 	liferayAnalyticsURL: string;
 	pageView: EPageView;
 	token: string;
+	wizardMode: boolean;
 };
 export declare const AppContextData: React.Context<TData>;
 declare const useData: () => TData;
@@ -44,6 +46,7 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	connected: boolean;
 	liferayAnalyticsURL: string;
 	token: string;
+	wizardMode: boolean;
 }
 declare const AppContextProvider: React.FC<IAppProps>;
 declare const App: React.FC<IAppProps>;

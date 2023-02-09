@@ -25,6 +25,7 @@ export type TData = {
 	liferayAnalyticsURL: string;
 	pageView: EPageView;
 	token: string;
+	wizardMode: boolean;
 };
 
 type TView = {
@@ -46,6 +47,7 @@ export const initialState = {
 	liferayAnalyticsURL: '',
 	pageView: EPageView.Wizard,
 	token: '',
+	wizardMode: true,
 };
 
 export const AppContextData = React.createContext<TData>(initialState);
@@ -63,6 +65,7 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	connected: boolean;
 	liferayAnalyticsURL: string;
 	token: string;
+	wizardMode: boolean;
 }
 
 const AppContent = () => {
@@ -82,11 +85,12 @@ const AppContextProvider: React.FC<IAppProps> = ({
 	connected,
 	liferayAnalyticsURL,
 	token,
+	wizardMode,
 }) => {
 	const [state, dispatch] = useReducer(reducer, {
 		connected,
 		liferayAnalyticsURL,
-		pageView: connected ? EPageView.Default : EPageView.Wizard,
+		pageView: wizardMode ? EPageView.Wizard : EPageView.Default,
 		token,
 	});
 

@@ -51,6 +51,10 @@ public class TabsTag extends BaseContainerTag {
 		return _displayType;
 	}
 
+	public List<String> getPanels() {
+		return _panels;
+	}
+
 	public List<TabsItem> getTabsItems() {
 		return _tabsItems;
 	}

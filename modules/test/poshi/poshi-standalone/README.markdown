@@ -10,7 +10,14 @@ This repository contains the minimal configuration to begin writing and running 
 
 ## Setup
 
-To create the necessary files to use Poshi Standalone, run the following command from the desired directory in a terminal/command line window:
+Poshi Standalone should be run using Liferay's Gradlew wrapper, which can be easily set up if Gradle or another Gradle wrapper is already installed.
+
+To set up Liferay's Gradle wrapper file in the project directory, run this command in a terminal/command line window:
+```
+gradle wrapper --gradle-distribution-url https://github.com/liferay/liferay-binaries-cache-2020/raw/master/gradle-6.6.1.LIFERAY-PATCHED-1-bin.zip
+```
+
+To create the necessary files to use Poshi Standalone, run the following command from the same directory used to generate the gradle wrapper files:
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-standalone/setup.sh)"
 ```

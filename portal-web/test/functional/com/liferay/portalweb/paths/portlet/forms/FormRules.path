@@ -209,7 +209,7 @@
 </tr>
 <tr>
 	<td>RULE_DELETE_ACTION_FIELD</td>
-	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]//div[contains(@class,'form-group-item') and not(contains(@class, 'form-group-item-label'))][${key_actionRowNumber}]//div[contains(@class,'select-field-trigger')]//..//..//..//..//..//..//..//..//button[@type="button"]//*[name()='svg'][contains(@class,'lexicon-icon-trash')]</td>
+	<td>//ul[contains(@class, 'timeline')][2]//li[contains(@class,'timeline-item')]/following-sibling::li[contains(@class, 'timeline-item')][${key_actionRowNumber}]/div[@class='container-trash']/button</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,6 +24,7 @@ const languages = Liferay.Language.available;
 const languageLabels = Object.values(languages).map((language) => {
 	return {label: language};
 });
+const defaultLanguage = languageLabels[0].label;
 
 interface ISearchableProps {
 	disabled?: boolean;
@@ -52,7 +53,7 @@ export function SearchableContainer({
 			objectField.indexedLanguageId &&
 			languages[objectField.indexedLanguageId];
 
-		return label ?? undefined;
+		return label || defaultLanguage;
 	}, [objectField.indexedLanguageId]);
 
 	return (

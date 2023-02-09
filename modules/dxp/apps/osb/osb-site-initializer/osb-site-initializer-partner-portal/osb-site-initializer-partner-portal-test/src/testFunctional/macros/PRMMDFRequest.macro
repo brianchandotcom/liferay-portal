@@ -308,7 +308,7 @@ definition {
 		Click(
 			key_textButton = "Activity Name 1",
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
-			
+
 		AssertElementPresent(
 			key_fieldName = "Activity name",
 			key_nameValue = "${activityName}",
@@ -389,5 +389,5 @@ definition {
 			key_nameValue = "${targetRolesOptions}",
 			locator1 = "PRMMDFRequest#DETAIL_FIELD");
 	}
-	
+
 }

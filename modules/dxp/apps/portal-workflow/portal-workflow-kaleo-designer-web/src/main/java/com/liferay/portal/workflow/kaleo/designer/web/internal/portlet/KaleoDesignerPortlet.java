@@ -361,20 +361,14 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<Object> sortedSupportedScriptLanguages = ListUtil.sort(
-			new ArrayList<>(ScriptingUtil.getSupportedLanguages()));
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (Object supportedScriptLanguage : sortedSupportedScriptLanguages) {
-			jsonArray.put(
-				JSONUtil.put(
-					"scriptLanguage",
-					StringUtil.toLowerCase(
-						supportedScriptLanguage.toString())));
-		}
-
-		writeJSON(resourceRequest, resourceResponse, jsonArray);
+		writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.toJSONArray(
+				ListUtil.sort(
+					new ArrayList<>(ScriptingUtil.getSupportedLanguages())),
+				language -> JSONUtil.put(
+					"scriptLanguage", StringUtil.toLowerCase(language)),
+				_log));
 	}
 
 	private void _serveUsers(

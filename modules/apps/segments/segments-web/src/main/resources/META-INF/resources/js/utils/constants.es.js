@@ -16,6 +16,8 @@
  * Constants for OData query.
  */
 
+import {sub} from 'frontend-js-web';
+
 export const CONJUNCTIONS = {
 	AND: 'and',
 	OR: 'or',
@@ -30,12 +32,31 @@ export const NOT_OPERATORS = {
 	NOT_EQ: 'not-eq',
 };
 
+export const HAS_OPERATORS = {
+	HAS: 'has',
+	NOT_HAS: 'has-not',
+};
+
 export const RELATIONAL_OPERATORS = {
 	EQ: 'eq',
 	GE: 'ge',
 	GT: 'gt',
 	LE: 'le',
 	LT: 'lt',
+};
+
+export const DATE_OPERATORS = {
+	BETWEEN: 'between',
+	EVER: 'ever',
+};
+
+export const SINCE_VALUES = {
+	last7Days: sub(Liferay.Language.get('last-x-days'), 7),
+	last24Hours: sub(Liferay.Language.get('last-x-hours'), 24),
+	last28Days: sub(Liferay.Language.get('last-x-days'), 28),
+	last30Days: sub(Liferay.Language.get('last-x-days'), 30),
+	last90Days: sub(Liferay.Language.get('last-x-days'), 90),
+	yesterday: Liferay.Language.get('yesterday'),
 };
 
 /**
@@ -48,6 +69,7 @@ export const PROPERTY_TYPES = {
 	DATE: 'date',
 	DATE_TIME: 'date-time',
 	DOUBLE: 'double',
+	EVENT: 'event',
 	ID: 'id',
 	INTEGER: 'integer',
 	STRING: 'string',
@@ -60,6 +82,7 @@ export const PROPERTY_TYPES = {
 const {AND, OR} = CONJUNCTIONS;
 const {EQ, GE, GT, LE, LT} = RELATIONAL_OPERATORS;
 const {NOT_CONTAINS, NOT_EQ} = NOT_OPERATORS;
+const {HAS, NOT_HAS} = HAS_OPERATORS;
 const {CONTAINS} = FUNCTIONAL_OPERATORS;
 const {
 	BOOLEAN,
@@ -67,10 +90,20 @@ const {
 	DATE,
 	DATE_TIME,
 	DOUBLE,
+	EVENT,
 	ID,
 	INTEGER,
 	STRING,
 } = PROPERTY_TYPES;
+const {BETWEEN, EVER} = DATE_OPERATORS;
+const {
+	last7Days,
+	last24Hours,
+	last28Days,
+	last30Days,
+	last90Days,
+	yesterday,
+} = SINCE_VALUES;
 
 export const SUPPORTED_CONJUNCTIONS = [
 	{
@@ -118,12 +151,67 @@ export const SUPPORTED_OPERATORS = [
 	},
 ];
 
+export const SUPPORTED_EVENT_OPERATORS = [
+	{
+		label: Liferay.Language.get('at-least'),
+		name: GT,
+	},
+	{
+		label: Liferay.Language.get('at-most'),
+		name: LT,
+	},
+	{
+		label: Liferay.Language.get('has'),
+		name: HAS,
+	},
+	{
+		label: Liferay.Language.get('has-not'),
+		name: NOT_HAS,
+	},
+];
+
+export const SUPPORTED_EVENT_DATE_OPERATORS = [
+	{
+		label: Liferay.Language.get('between'),
+		name: BETWEEN,
+	},
+	{
+		label: Liferay.Language.get('on'),
+		name: EQ,
+	},
+	{
+		label: Liferay.Language.get('ever'),
+		name: EVER,
+	},
+	{
+		label: Liferay.Language.get('after'),
+		name: GT,
+	},
+	{
+		label: Liferay.Language.get('before'),
+		name: LT,
+	},
+];
+
 export const SUPPORTED_PROPERTY_TYPES = {
 	[BOOLEAN]: [EQ, NOT_EQ],
 	[COLLECTION]: [EQ, NOT_EQ, CONTAINS, NOT_CONTAINS],
 	[DATE]: [EQ, GE, GT, LE, LT, NOT_EQ],
 	[DATE_TIME]: [EQ, GE, GT, LE, LT, NOT_EQ],
 	[DOUBLE]: [EQ, GE, GT, LE, LT, NOT_EQ],
+	[EVENT]: {
+		DATE: [BETWEEN, EQ, EVER, GT, LT],
+		INTEGER: [GT, LT],
+		NOT: [HAS, NOT_HAS],
+		SINCE: [
+			last7Days,
+			last24Hours,
+			last28Days,
+			last30Days,
+			last90Days,
+			yesterday,
+		],
+	},
 	[ID]: [EQ, NOT_EQ],
 	[INTEGER]: [EQ, GE, GT, LE, LT, NOT_EQ],
 	[STRING]: [EQ, NOT_EQ, CONTAINS, NOT_CONTAINS],

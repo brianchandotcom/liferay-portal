@@ -21,7 +21,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -51,6 +55,29 @@ public class CE02EnableWebSecurity {
 			"/**", corsConfiguration);
 
 		return urlBasedCorsConfigurationSource;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
+		throws Exception {
+
+		return httpSecurity.cors(
+		).and(
+		).csrf(
+		).disable(
+		).sessionManagement(
+		).sessionCreationPolicy(
+			SessionCreationPolicy.STATELESS
+		).and(
+		).authorizeHttpRequests(
+			customizer -> customizer.antMatchers(
+				"/"
+			).permitAll(
+			).anyRequest(
+			).authenticated()
+		).oauth2ResourceServer(
+			OAuth2ResourceServerConfigurer::jwt
+		).build();
 	}
 
 	private List<String> _getLiferayAllowedOrigins() {

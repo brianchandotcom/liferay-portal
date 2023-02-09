@@ -16,25 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:tabs
-	names="Alerts,Badges,Buttons,Cards,Dropdowns,Form Elements,Icons,Labels,Links,Management Toolbars,Navigation Bars,Pagination Bars,Progress Bars,Stickers,Tabs"
-	refresh="<%= false %>"
+<%
+List<TabsItem> tabsItems = claySampleDisplayContext.getTabsItems();
+%>
+
+<clay:tabs
+	tabsItems="<%= tabsItems %>"
 >
 
 	<%
-	String[] sections = {"alerts", "badges", "buttons", "cards", "dropdowns", "form_elements", "icons", "labels", "links", "management_toolbars", "navigation_bars", "pagination_bars", "progress_bars", "stickers", "tabs"};
-
-	for (int i = 0; i < sections.length; i++) {
+	for (TabsItem tabsItem : tabsItems) {
 	%>
 
-		<liferay-ui:section>
-			<clay:container-fluid>
-				<liferay-util:include page='<%= "/partials/" + sections[i] + ".jsp" %>' servletContext="<%= application %>" />
-			</clay:container-fluid>
-		</liferay-ui:section>
+		<clay:tabs-panel>
+			<liferay-util:include page='<%= "/partials/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
+		</clay:tabs-panel>
 
 	<%
 	}
 	%>
 
-</liferay-ui:tabs>
+</clay:tabs>

@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
@@ -31,19 +30,14 @@ import javax.servlet.jsp.tagext.BodyTag;
 public class TabsPanelTag extends BaseContainerTag implements BodyTag {
 
 	@Override
-	public int doEndTag() throws JspException {
-		_tabsTag.addPanel(bodyContent.getString());
-
-		return super.doEndTag();
-	}
-
-	@Override
 	public int doStartTag() throws JspException {
 		_tabsTag = (TabsTag)findAncestorWithClass(this, TabsTag.class);
 
 		if (_tabsTag == null) {
 			throw new JspException();
 		}
+
+		_tabsTag.setPanelsCount(_tabsTag.getPanelsCount() + 1);
 
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
@@ -69,28 +63,10 @@ public class TabsPanelTag extends BaseContainerTag implements BodyTag {
 		return super.processCssClasses(cssClasses);
 	}
 
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write(bodyContent.getString());
-
-		return super.processEndTag();
-	}
-
-	@Override
-	protected int processStartTag() throws Exception {
-		super.processStartTag();
-
-		return EVAL_BODY_BUFFERED;
-	}
-
 	private boolean _isActive() {
 		List<TabsItem> tabsItems = _tabsTag.getTabsItems();
 
-		List<String> panels = _tabsTag.getPanels();
-
-		TabsItem tabsItem = tabsItems.get(panels.size());
+		TabsItem tabsItem = tabsItems.get(_tabsTag.getPanelsCount() - 1);
 
 		Boolean active = (Boolean)tabsItem.get("active");
 

@@ -13,18 +13,28 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+
+const Panel = ({children}) => {
+	const ref = useRef();
+
+	useEffect(() => {
+		ref.current.appendChild(children);
+	}, [children]);
+
+	return <div ref={ref}></div>;
+};
 
 export default function Tabs({
 	activation,
 	additionalProps: _additionalProps,
+	children: panelsContent,
 	componentId: _componentId,
 	cssClass,
 	displayType,
 	fade,
 	justified,
 	locale: _locale,
-	panels,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
 	tabsItems,
@@ -66,11 +76,10 @@ export default function Tabs({
 				</ClayTabs.List>
 
 				<ClayTabs.Panels>
-					{panels.map((panel, i) => (
-						<ClayTabs.TabPanel
-							dangerouslySetInnerHTML={{__html: panel}}
-							key={i}
-						/>
+					{Array.from(panelsContent).map((panelContent, i) => (
+						<ClayTabs.TabPanel key={i}>
+							<Panel>{panelContent}</Panel>
+						</ClayTabs.TabPanel>
 					))}
 				</ClayTabs.Panels>
 			</ClayTabs>

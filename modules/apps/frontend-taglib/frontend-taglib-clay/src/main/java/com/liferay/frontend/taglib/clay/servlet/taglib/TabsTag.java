@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -31,10 +31,6 @@ import javax.servlet.jsp.JspWriter;
  * @author Carlos Lancha
  */
 public class TabsTag extends BaseContainerTag {
-
-	public void addPanel(String panel) {
-		_panels.add(panel);
-	}
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -51,8 +47,8 @@ public class TabsTag extends BaseContainerTag {
 		return _displayType;
 	}
 
-	public List<String> getPanels() {
-		return _panels;
+	public int getPanelsCount() {
+		return _panelsCount;
 	}
 
 	public List<TabsItem> getTabsItems() {
@@ -83,6 +79,10 @@ public class TabsTag extends BaseContainerTag {
 		_justified = justified;
 	}
 
+	public void setPanelsCount(int panelsCount) {
+		_panelsCount = panelsCount;
+	}
+
 	public void setTabsItems(List<TabsItem> tabsItems) {
 		_tabsItems = tabsItems;
 	}
@@ -95,7 +95,7 @@ public class TabsTag extends BaseContainerTag {
 		_displayType = null;
 		_fade = false;
 		_justified = false;
-		_panels = new ArrayList<>();
+		_panelsCount = 0;
 		_tabsItems = null;
 	}
 
@@ -110,19 +110,16 @@ public class TabsTag extends BaseContainerTag {
 		props.put("displayType", _displayType);
 		props.put("fade", _fade);
 		props.put("justified", _justified);
-		props.put("panels", _panels);
 		props.put("tabsItems", _tabsItems);
 
 		return super.prepareProps(props);
 	}
 
 	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
+	protected String processBodyCssClasses(Set<String> cssClasses) {
+		cssClasses.add("tab-content");
 
-		jspWriter.write("</div>");
-
-		return super.processEndTag();
+		return super.processBodyCssClasses(cssClasses);
 	}
 
 	@Override
@@ -172,7 +169,7 @@ public class TabsTag extends BaseContainerTag {
 			jspWriter.write("</li>");
 		}
 
-		jspWriter.write("</ul><div class=\"tab-content\">");
+		jspWriter.write("</ul>");
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -183,7 +180,7 @@ public class TabsTag extends BaseContainerTag {
 	private String _displayType;
 	private boolean _fade;
 	private boolean _justified;
-	private List<String> _panels = new ArrayList<>();
+	private int _panelsCount;
 	private List<TabsItem> _tabsItems;
 
 }

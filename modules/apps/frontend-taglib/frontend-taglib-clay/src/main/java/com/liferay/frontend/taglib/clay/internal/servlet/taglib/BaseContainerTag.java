@@ -55,6 +55,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
+			if (_hasBodyContent()) {
+				processEndBodyTag();
+			}
+
 			return processEndTag();
 		}
 		catch (Exception exception) {
@@ -68,7 +72,13 @@ public class BaseContainerTag extends AttributesTagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			return processStartTag();
+			_includeBody = processStartTag();
+
+			if (_hasBodyContent()) {
+				processStartBodyTag();
+			}
+
+			return _includeBody;
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -267,6 +277,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_elementClasses = null;
 		_hydratedContainerElement = "div";
 		_id = null;
+		_includeBody = EVAL_BODY_INCLUDE;
 		_namespace = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
@@ -305,11 +316,19 @@ public class BaseContainerTag extends AttributesTagSupport {
 			props.put("defaultEventHandler", defaultEventHandler);
 		}
 
+		props.put("_hasBodyContent", _hasBodyContent());
+
 		props.put("id", getId());
 
 		props.putAll(getDynamicAttributes());
 
 		return props;
+	}
+
+	protected String processBodyCssClasses(Set<String> cssClasses) {
+		cssClasses.add("tag-body-content");
+
+		return StringUtil.merge(cssClasses, StringPool.SPACE);
 	}
 
 	protected String processCssClasses(Set<String> cssClasses) {
@@ -328,6 +347,12 @@ public class BaseContainerTag extends AttributesTagSupport {
 	@Deprecated
 	protected Map<String, Object> processData(Map<String, Object> data) {
 		return data;
+	}
+
+	protected void processEndBodyTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("</div>");
 	}
 
 	protected int processEndTag() throws Exception {
@@ -390,6 +415,16 @@ public class BaseContainerTag extends AttributesTagSupport {
 		return EVAL_PAGE;
 	}
 
+	protected void processStartBodyTag() throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div ");
+
+		writeBodyCssClassAttribute();
+
+		jspWriter.write(">");
+	}
+
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
@@ -419,12 +454,12 @@ public class BaseContainerTag extends AttributesTagSupport {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	protected void writeCssClassAttribute() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
+	protected void writeBodyCssClassAttribute() throws Exception {
+		_writeCssClassAttribute(processBodyCssClasses(new LinkedHashSet<>()));
+	}
 
-		jspWriter.write(" class=\"");
-		jspWriter.write(processCssClasses(new LinkedHashSet<>()));
-		jspWriter.write("\"");
+	protected void writeCssClassAttribute() throws Exception {
+		_writeCssClassAttribute(processCssClasses(new LinkedHashSet<>()));
 	}
 
 	protected void writeDynamicAttributes() throws Exception {
@@ -445,6 +480,16 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write(" id=\"");
 		jspWriter.write(getId());
 		jspWriter.write("\"");
+	}
+
+	private boolean _hasBodyContent() {
+		if ((_includeBody == EVAL_BODY_INCLUDE) &&
+			(getHydratedModuleName() != null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isPositionInLine() {
@@ -481,6 +526,14 @@ public class BaseContainerTag extends AttributesTagSupport {
 		return false;
 	}
 
+	private void _writeCssClassAttribute(String cssClasses) throws Exception {
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write(" class=\"");
+		jspWriter.write(cssClasses);
+		jspWriter.write("\"");
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContainerTag.class);
 
@@ -494,6 +547,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 	private String _elementClasses;
 	private String _hydratedContainerElement = "div";
 	private String _id;
+	private int _includeBody = EVAL_BODY_INCLUDE;
 	private String _namespace;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;

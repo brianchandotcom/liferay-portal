@@ -86,6 +86,18 @@ export default function render(
 
 		container.classList.add('lfr-tooltip-scope');
 
+		if (renderData._hasBodyContent) {
+			const children = container.querySelectorAll(
+				'.tag-body-content > *'
+			);
+
+			if (children.length) {
+				renderData.children = children;
+			}
+
+			delete renderData._hasBodyContent;
+		}
+
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
 			<ClayIconSpriteContext.Provider value={spritemap}>

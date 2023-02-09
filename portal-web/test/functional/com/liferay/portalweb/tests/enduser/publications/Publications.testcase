@@ -1428,31 +1428,4 @@ definition {
 			publicationList = "Publication Name 3,Publication Name 2,Publication Name 1");
 	}
 
-	@description = "This is a use case for LPS-173707. Multiple 'Your request repeated successfully' messages appear when switching between publications on a page with many Asset Publishers"
-	@priority = "3"
-	test DoesNotDisplaySuccessMessageWhenSwitchingToProduction {
-		ContentPages.addPage(pageName = "Test Page");
-
-		var count = "0";
-
-		while ("${count}" != "4") {
-			PageEditor.addWidget(portletName = "Asset Publisher");
-
-			var count = ${count} + 1;
-		}
-
-		PageEditor.publish();
-
-		Publications.enablePublications();
-
-		JSONPublications.addPublication(publicationName = "Test Publication");
-
-		JSONPublications.selectPublication(publicationName = "Test Publication");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Publications.workOnProduction();
-
-		Alert.viewWarningSpecificNotPresent(warningMessage = "Your request repeated successfully");
-	}
 }

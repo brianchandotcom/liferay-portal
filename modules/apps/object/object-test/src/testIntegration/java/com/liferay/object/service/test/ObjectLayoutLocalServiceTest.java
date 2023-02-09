@@ -40,9 +40,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -65,7 +67,10 @@ public class ObjectLayoutLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			new TransactionalTestRule(
+				Propagation.REQUIRED, "com.liferay.object.service"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -402,6 +407,55 @@ public class ObjectLayoutLocalServiceTest {
 
 		_objectLayoutLocalService.deleteObjectLayout(
 			objectLayout.getObjectLayoutId());
+	}
+
+	@Test
+	public void testDeleteObjectLayout() throws Exception {
+		ObjectLayout objectLayout = _addObjectLayout();
+
+		List<ObjectLayoutTab> objectLayoutTabs =
+			_objectLayoutTabPersistence.findByObjectLayoutId(
+				objectLayout.getObjectLayoutId());
+
+		Assert.assertFalse(objectLayoutTabs.isEmpty());
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			List<ObjectLayoutBox> objectLayoutBoxes =
+				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
+					objectLayoutTab.getObjectLayoutTabId());
+
+			objectLayoutTab.setObjectLayoutBoxes(objectLayoutBoxes);
+
+			Assert.assertFalse(objectLayoutBoxes.isEmpty());
+
+			for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+				List<ObjectLayoutRow> objectLayoutRows =
+					_objectLayoutRowPersistence.findByObjectLayoutBoxId(
+						objectLayoutBox.getObjectLayoutBoxId());
+
+				Assert.assertFalse(objectLayoutRows.isEmpty());
+			}
+		}
+
+		_objectLayoutLocalService.deleteObjectLayout(objectLayout);
+
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			List<ObjectLayoutBox> objectLayoutBoxes =
+				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
+					objectLayoutTab.getObjectLayoutTabId());
+
+			Assert.assertTrue(objectLayoutBoxes.isEmpty());
+
+			for (ObjectLayoutBox objectLayoutBox :
+					objectLayoutTab.getObjectLayoutBoxes()) {
+
+				List<ObjectLayoutRow> objectLayoutRows =
+					_objectLayoutRowPersistence.findByObjectLayoutBoxId(
+						objectLayoutBox.getObjectLayoutBoxId());
+
+				Assert.assertTrue(objectLayoutRows.isEmpty());
+			}
+		}
 	}
 
 	@Test

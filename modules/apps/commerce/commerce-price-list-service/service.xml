@@ -434,6 +434,7 @@
 		<exception>CommercePriceListParentPriceListGroupId</exception>
 		<exception>CommerceTierPriceEntryDisplayDate</exception>
 		<exception>CommerceTierPriceEntryExpirationDate</exception>
+		<exception>CommerceTierPriceEntryQuantity</exception>
 		<exception>DuplicateCommerceBasePriceList</exception>
 		<exception>DuplicateCommercePriceEntry</exception>
 		<exception>DuplicateCommercePriceList</exception>

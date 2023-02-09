@@ -35,10 +35,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -78,7 +76,15 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
-		for (String dispatchTaskExecutorType : getDispatchTaskExecutorTypes()) {
+		for (String dispatchTaskExecutorType :
+				_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes()) {
+
+			if (_dispatchTaskExecutorRegistry.isHiddenInUI(
+					dispatchTaskExecutorType)) {
+
+				continue;
+			}
+
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(
@@ -110,23 +116,6 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 			locale,
 			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutorName(
 				dispatchTaskExecutorType));
-	}
-
-	public Set<String> getDispatchTaskExecutorTypes() {
-		Set<String> dispatchTaskExecutorTypes =
-			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
-
-		Set<String> filteredDispatchTaskExecutorTypes = new HashSet<>();
-
-		for (String dispatchTaskExecutorType : dispatchTaskExecutorTypes) {
-			if (!_dispatchTaskExecutorRegistry.isHiddenInUI(
-					dispatchTaskExecutorType)) {
-
-				filteredDispatchTaskExecutorTypes.add(dispatchTaskExecutorType);
-			}
-		}
-
-		return filteredDispatchTaskExecutorTypes;
 	}
 
 	public DispatchTrigger getDispatchTrigger() {

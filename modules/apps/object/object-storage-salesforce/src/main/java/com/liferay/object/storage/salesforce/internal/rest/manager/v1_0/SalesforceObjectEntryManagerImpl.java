@@ -475,7 +475,12 @@ public class SalesforceObjectEntryManagerImpl
 
 				Map<String, String> valueMap = (HashMap<String, String>)value;
 
-				value = valueMap.get("key");
+				ListTypeEntry listTypeEntry =
+					_listTypeEntryLocalService.getListTypeEntry(
+						objectField.getListTypeDefinitionId(),
+						valueMap.get("key"));
+
+				value = listTypeEntry.getExternalReferenceCode();
 			}
 
 			map.put(

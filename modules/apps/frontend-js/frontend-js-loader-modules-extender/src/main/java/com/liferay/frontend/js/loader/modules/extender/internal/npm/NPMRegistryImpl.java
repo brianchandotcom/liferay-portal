@@ -101,7 +101,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Override
 	public Map<String, String> getGlobalAliases() {
-		return _jsModulesCache.getGlobalAliases();
+		return _npmRegistryStateSnapshotImpl.getGlobalAliases();
 	}
 
 	/**
@@ -124,7 +124,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getJSModule(String identifier) {
-		Map<String, JSModule> jsModules = _jsModulesCache.getJSModules();
+		Map<String, JSModule> jsModules =
+			_npmRegistryStateSnapshotImpl.getJSModules();
 
 		return jsModules.get(identifier);
 	}
@@ -137,7 +138,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSPackage getJSPackage(String identifier) {
-		Map<String, JSPackage> jsPackages = _jsModulesCache.getJSPackages();
+		Map<String, JSPackage> jsPackages =
+			_npmRegistryStateSnapshotImpl.getJSPackages();
 
 		return jsPackages.get(identifier);
 	}
@@ -149,19 +151,20 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public Collection<JSPackage> getJSPackages() {
-		Map<String, JSPackage> jsPackages = _jsModulesCache.getJSPackages();
+		Map<String, JSPackage> jsPackages =
+			_npmRegistryStateSnapshotImpl.getJSPackages();
 
 		return jsPackages.values();
 	}
 
 	@Override
 	public NPMRegistryStateSnapshot getNPMRegistryStateSnapshot() {
-		return _jsModulesCache;
+		return _npmRegistryStateSnapshotImpl;
 	}
 
 	@Override
 	public String getResolutionStateDigest() {
-		return _jsModulesCache.getDigest();
+		return _npmRegistryStateSnapshotImpl.getDigest();
 	}
 
 	/**
@@ -172,7 +175,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	 */
 	@Override
 	public JSModule getResolvedJSModule(String identifier) {
-		return _jsModulesCache.getResolvedJSModule(identifier);
+		return _npmRegistryStateSnapshotImpl.getResolvedJSModule(identifier);
 	}
 
 	/**
@@ -183,14 +186,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSModule> getResolvedJSModules() {
 		Map<String, JSModule> resolvedJSModules =
-			_jsModulesCache.getResolvedJSModules();
+			_npmRegistryStateSnapshotImpl.getResolvedJSModules();
 
 		return resolvedJSModules.values();
 	}
 
 	@Override
 	public JSPackage getResolvedJSPackage(String identifier) {
-		return _jsModulesCache.getResolvedJSPackage(identifier);
+		return _npmRegistryStateSnapshotImpl.getResolvedJSPackage(identifier);
 	}
 
 	/**
@@ -202,14 +205,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Override
 	public Collection<JSPackage> getResolvedJSPackages() {
 		Map<String, JSPackage> resolvedJSPackages =
-			_jsModulesCache.getResolvedJSPackages();
+			_npmRegistryStateSnapshotImpl.getResolvedJSPackages();
 
 		return resolvedJSPackages.values();
 	}
 
 	@Override
 	public String mapModuleName(String moduleName) {
-		return _jsModulesCache.mapModuleName(moduleName);
+		return _npmRegistryStateSnapshotImpl.mapModuleName(moduleName);
 	}
 
 	/**
@@ -224,7 +227,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 
-		return _jsModulesCache.resolveJSPackageDependency(jsPackageDependency);
+		return _npmRegistryStateSnapshotImpl.resolveJSPackageDependency(
+			jsPackageDependency);
 	}
 
 	@Override
@@ -449,7 +453,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		jsPackageVersions.sort(comparator.reversed());
 
-		_jsModulesCache = new JSModulesCache(
+		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
 			globalAliases, exactMatchMap, jsModules, jsPackages,
 			jsPackageVersions, partialMatchMap, resolvedJSModules,
 			resolvedJSPackages);
@@ -480,14 +484,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSBundleProcessor _jsBundleProcessor;
 
-	private volatile JSModulesCache _jsModulesCache = new JSModulesCache(
-		Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(),
-		Collections.emptyMap(), Collections.emptyList(), Collections.emptyMap(),
-		Collections.emptyMap(), Collections.emptyMap());
-
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private volatile NPMRegistryStateSnapshotImpl
+		_npmRegistryStateSnapshotImpl = new NPMRegistryStateSnapshotImpl(
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyList(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap());
 	private ServiceTrackerList<NPMRegistryUpdatesListener>
 		_npmRegistryUpdatesListeners;
 	private volatile ServiceTracker<ServletContext, JSConfigGeneratorPackage>

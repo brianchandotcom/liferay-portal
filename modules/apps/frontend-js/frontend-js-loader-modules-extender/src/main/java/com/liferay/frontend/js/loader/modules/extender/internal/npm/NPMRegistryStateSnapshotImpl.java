@@ -45,9 +45,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Iván Zaera
  */
-public class JSModulesCache implements NPMRegistryStateSnapshot {
+public class NPMRegistryStateSnapshotImpl implements NPMRegistryStateSnapshot {
 
-	public JSModulesCache(
+	public NPMRegistryStateSnapshotImpl(
 		Map<String, String> exactMatchMap, Map<String, String> globalAliases,
 		Map<String, JSModule> jsModules, Map<String, JSPackage> jsPackages,
 		List<JSPackageVersion> jsPackageVersions,
@@ -67,11 +67,11 @@ public class JSModulesCache implements NPMRegistryStateSnapshot {
 
 	@Override
 	public String getDigest() {
-		if (_resolutionStateDigest == null) {
-			_resolutionStateDigest = _computeResolutionStateDigest();
+		if (_digest == null) {
+			_digest = _computeDigest();
 		}
 
-		return _resolutionStateDigest;
+		return _digest;
 	}
 
 	public Map<String, String> getGlobalAliases() {
@@ -182,7 +182,7 @@ public class JSModulesCache implements NPMRegistryStateSnapshot {
 		return jsPackage;
 	}
 
-	private String _computeResolutionStateDigest() {
+	private String _computeDigest() {
 		MessageDigest messageDigest;
 
 		try {
@@ -357,13 +357,13 @@ public class JSModulesCache implements NPMRegistryStateSnapshot {
 
 	private final ConcurrentHashMap<String, JSPackage>
 		_cachedDependencyJSPackages = new ConcurrentHashMap<>();
+	private volatile String _digest;
 	private final Map<String, String> _exactMatchMap;
 	private final Map<String, String> _globalAliases;
 	private final Map<String, JSModule> _jsModules;
 	private final Map<String, JSPackage> _jsPackages;
 	private final List<JSPackageVersion> _jsPackageVersions;
 	private final Map<String, String> _partialMatchMap;
-	private volatile String _resolutionStateDigest;
 	private final Map<String, JSModule> _resolvedJSModules;
 	private final Map<String, JSPackage> _resolvedJSPackages;
 

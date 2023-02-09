@@ -292,7 +292,6 @@ public class CommerceSearchResource {
 
 			searchItemModel.setIcon("document");
 			searchItemModel.setSubtitle(order.getAccountName());
-
 			searchItemModel.setUrl(
 				String.valueOf(
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(

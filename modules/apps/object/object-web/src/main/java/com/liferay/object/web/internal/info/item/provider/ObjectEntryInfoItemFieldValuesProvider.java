@@ -25,6 +25,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.WebImage;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -337,7 +339,15 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				return StringPool.BLANK;
 			}
 
-			return listTypeEntry.getName(serviceContext.getLocale());
+			return ListUtil.fromArray(
+				new KeyLocalizedLabelPair(
+					listTypeEntry.getName(serviceContext.getLocale()),
+					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						serviceContext.getLocale()
+					).values(
+						listTypeEntry.getNameMap()
+					).build()));
 		}
 		else if (Validator.isNotNull(objectField.getRelationshipType()) &&
 				 (GetterUtil.getLong(value) > 0)) {

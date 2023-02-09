@@ -20,6 +20,7 @@ import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalRef
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ExceptionMapper.class
 )
+@Provider
 public class DuplicateSXPBlueprintExternalReferenceCodeExceptionMapper
 	extends BaseExceptionMapper
 		<DuplicateSXPBlueprintExternalReferenceCodeException> {

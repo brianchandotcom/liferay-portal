@@ -33,10 +33,11 @@ export type RendererFields = {
 		| 'autocomplete'
 		| 'checkbox'
 		| 'date'
-		| 'text'
-		| 'textarea'
+		| 'multiselect'
+		| 'number'
 		| 'select'
-		| 'multiselect';
+		| 'text'
+		| 'textarea';
 } & Partial<AutoCompleteProps>;
 
 type RendererProps = {
@@ -140,7 +141,7 @@ const Renderer: React.FC<RendererProps> = ({
 					return _options;
 				};
 
-				if (['date', 'text', 'textarea'].includes(type)) {
+				if (['date', 'number', 'text', 'textarea'].includes(type)) {
 					return (
 						<div key={index}>
 							<Form.Input

@@ -239,10 +239,15 @@ const filterSchema = {
 			{
 				label: i18n.translate('environment'),
 				name: 'runToCaseResult/name',
+				operator: 'contains',
 				type: 'text',
 			},
-			baseFilters.routine,
-			baseFilters.assignee,
+			overrides(baseFilters.routine, {
+				name: 'buildToCaseResult/routineId',
+			}),
+			overrides(baseFilters.assignee, {
+				name: 'userId',
+			}),
 			{
 				label: i18n.translate('status'),
 				name: 'dueStatus',
@@ -259,17 +264,19 @@ const filterSchema = {
 			{
 				label: i18n.translate('issues'),
 				name: 'issues',
+				operator: 'contains',
 				type: 'textarea',
 			},
 			{
 				label: i18n.translate('errors'),
 				name: 'errors',
+				operator: 'contains',
 				type: 'textarea',
 			},
 			{
 				label: i18n.translate('case-result-warning'),
 				name: 'warnings',
-				type: 'text',
+				type: 'number',
 			},
 			{
 				label: i18n.sub('x-create-date', 'min'),
@@ -282,7 +289,9 @@ const filterSchema = {
 				type: 'date',
 			},
 
-			baseFilters.team,
+			overrides(baseFilters.team, {
+				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+			}),
 		] as RendererFields[],
 	},
 	buildRuns: {

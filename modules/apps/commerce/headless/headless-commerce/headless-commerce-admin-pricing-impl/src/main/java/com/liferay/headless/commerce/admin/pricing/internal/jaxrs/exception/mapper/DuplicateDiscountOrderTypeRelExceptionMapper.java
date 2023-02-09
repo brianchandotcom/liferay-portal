@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DuplicateCommerceDiscountOrderTypeRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DuplicateDiscountOrderTypeRelExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateCommerceDiscountOrderTypeRelExceptionMapper
+public class DuplicateDiscountOrderTypeRelExceptionMapper
 	extends BaseExceptionMapper
 		<DuplicateCommerceDiscountOrderTypeRelException> {
 

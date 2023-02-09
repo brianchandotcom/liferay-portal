@@ -49,6 +49,9 @@ public class DSLFunctionType {
 	public static final DSLFunctionType SUBTRACTION = new DSLFunctionType(
 		" - ");
 
+	public static final DSLFunctionType WITH_PARENTHESES = new DSLFunctionType(
+		"(", ")");
+
 	public DSLFunctionType(String delimiter) {
 		this("", delimiter, "");
 	}

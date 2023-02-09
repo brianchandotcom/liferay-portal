@@ -176,4 +176,9 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 		return new AggregateExpression<>(false, expression, "sum");
 	}
 
+	@Override
+	public Expression<Long> withParentheses(Expression<?> expression) {
+		return new DSLFunction<>(DSLFunctionType.WITH_PARENTHESES, expression);
+	}
+
 }

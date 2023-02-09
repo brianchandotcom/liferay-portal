@@ -84,4 +84,6 @@ public interface DSLFunctionFactory {
 
 	public Expression<Number> sum(Expression<? extends Number> expression);
 
+	public Expression<Long> withParentheses(Expression<?> expression);
+
 }

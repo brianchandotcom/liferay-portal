@@ -16,7 +16,6 @@ package com.liferay.users.admin.internal.security.permission.wrapper;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -86,8 +85,7 @@ public class ServiceAccountUserPermissionCheckerWrapper
 
 		User user = _userLocalService.fetchUser(primKey);
 
-		if ((user != null) &&
-			(user.getType() == UserConstants.TYPE_SERVICE_ACCOUNT) &&
+		if ((user != null) && user.isServiceAccountUser() &&
 			!_permissionChecker.isCompanyAdmin()) {
 
 			return false;

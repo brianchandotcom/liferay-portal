@@ -15,7 +15,6 @@
 package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
@@ -43,9 +42,7 @@ public class UserModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(User user) -> {
-				if (!(user.isDefaultUser() &&
-					  (user.getType() != UserConstants.TYPE_SERVICE_ACCOUNT))) {
-
+				if (!(user.isDefaultUser() && !user.isServiceAccountUser())) {
 					batchIndexingActionable.addDocuments(
 						modelIndexerWriterDocumentHelper.getDocument(user));
 				}

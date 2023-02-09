@@ -196,6 +196,10 @@ public class CompositePasswordEncryptor
 		else if (algorithm.startsWith(TYPE_PBKDF2)) {
 			passwordEncryptor = _serviceTrackerMap.getService(TYPE_PBKDF2);
 		}
+		else if (algorithm.indexOf(CharPool.SLASH) > 0) {
+			passwordEncryptor = _serviceTrackerMap.getService(
+				algorithm.substring(0, algorithm.indexOf(CharPool.SLASH)));
+		}
 		else {
 			passwordEncryptor = _serviceTrackerMap.getService(algorithm);
 		}

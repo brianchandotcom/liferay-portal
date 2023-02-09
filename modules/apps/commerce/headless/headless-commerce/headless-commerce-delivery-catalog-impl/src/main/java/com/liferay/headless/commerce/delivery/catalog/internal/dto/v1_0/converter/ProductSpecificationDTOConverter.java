@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductSpecification;
@@ -57,8 +58,12 @@ public class ProductSpecificationDTOConverter
 
 		CPDefinition cpDefinition =
 			cpDefinitionSpecificationOptionValue.getCPDefinition();
+
 		CPSpecificationOption cpSpecificationOption =
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+
+		CPOptionCategory cpOptionCategory =
+			cpSpecificationOption.getCPOptionCategory();
 
 		return new ProductSpecification() {
 			{
@@ -70,9 +75,12 @@ public class ProductSpecificationDTOConverter
 						getCPOptionCategoryId();
 				priority = cpDefinitionSpecificationOptionValue.getPriority();
 				productId = cpDefinition.getCProductId();
+				specificationGroupKey = cpOptionCategory.getKey();
+				specificationGroupTitle = cpOptionCategory.getTitle(languageId);
 				specificationId =
 					cpSpecificationOption.getCPSpecificationOptionId();
 				specificationKey = cpSpecificationOption.getKey();
+				specificationTitle = cpSpecificationOption.getTitle(languageId);
 				value = cpDefinitionSpecificationOptionValue.getValue(
 					languageId);
 			}

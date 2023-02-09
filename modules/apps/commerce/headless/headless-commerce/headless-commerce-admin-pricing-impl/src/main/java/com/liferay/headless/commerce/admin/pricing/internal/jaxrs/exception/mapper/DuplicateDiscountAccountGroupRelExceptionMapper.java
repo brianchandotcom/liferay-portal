@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.inventory.internal.jaxrs.exception.mapper;
+package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.DuplicateCommerceChannelRelException;
+import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountCommerceAccountGroupRelException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -28,22 +28,23 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.DuplicateCommerceChannelRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DuplicateDiscountAccountGroupRelExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateCommerceChannelRelExceptionMapper
-	extends BaseExceptionMapper<DuplicateCommerceChannelRelException> {
+public class DuplicateDiscountAccountGroupRelExceptionMapper
+	extends BaseExceptionMapper
+		<DuplicateCommerceDiscountCommerceAccountGroupRelException> {
 
 	@Override
 	protected Problem getProblem(
-		DuplicateCommerceChannelRelException
-			duplicateCommerceChannelRelException) {
+		DuplicateCommerceDiscountCommerceAccountGroupRelException
+			duplicateCommerceDiscountCommerceAccountGroupRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "Duplicate channel relation");
+			Response.Status.CONFLICT, "Duplicate account group relation");
 	}
 
 }

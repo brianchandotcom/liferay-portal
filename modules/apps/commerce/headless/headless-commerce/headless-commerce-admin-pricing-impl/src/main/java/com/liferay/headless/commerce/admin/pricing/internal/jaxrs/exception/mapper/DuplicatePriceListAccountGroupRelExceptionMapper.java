@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.price.list.exception.DuplicateCommercePriceListOrderTypeRelException;
+import com.liferay.commerce.price.list.exception.DuplicateCommercePriceListCommerceAccountGroupRelException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -30,21 +30,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DuplicateCommercePriceListOrderTypeRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Pricing.DuplicatePriceListAccountGroupRelExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateCommercePriceListOrderTypeRelExceptionMapper
+public class DuplicatePriceListAccountGroupRelExceptionMapper
 	extends BaseExceptionMapper
-		<DuplicateCommercePriceListOrderTypeRelException> {
+		<DuplicateCommercePriceListCommerceAccountGroupRelException> {
 
 	@Override
 	protected Problem getProblem(
-		DuplicateCommercePriceListOrderTypeRelException
-			duplicateCommercePriceListOrderTypeRelException) {
+		DuplicateCommercePriceListCommerceAccountGroupRelException
+			duplicateCommercePriceListCommerceAccountGroupRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "Duplicate order type relation");
+			Response.Status.CONFLICT, "Duplicate account group relation");
 	}
 
 }

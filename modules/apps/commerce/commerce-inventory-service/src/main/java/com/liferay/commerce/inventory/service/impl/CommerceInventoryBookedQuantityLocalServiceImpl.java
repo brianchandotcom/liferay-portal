@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -61,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceInventoryBookedQuantityLocalServiceImpl
 	extends CommerceInventoryBookedQuantityLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
 			long userId, String sku, int quantity, Date expirationDate,
@@ -301,6 +304,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(

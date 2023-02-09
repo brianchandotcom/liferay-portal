@@ -246,19 +246,16 @@ definition {
 
 		Form.gotoAdvancedTab();
 
-		var reff = selenium.getAttribute("//div[contains(@data-field-name,'fieldReference')]/input@value");
+		var fieldReferenceValue = selenium.getAttribute("//div[contains(@data-field-name,'fieldReference')]//input@value");
 
-		echo("Creating new Option complete with Values ${reff}...");
+		echo("Creating new Option complete with Values ${fieldReferenceValue}...");
 
 		Click(
 			key_bodyText = "Test",
 			key_fieldName = "Copy of Paragraph",
 			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_TEXT");
 
-		AssertElementNotPresent(
-			key_fieldName = "",
-			key_fieldValue = ${reff},
-			locator1 = "Translation#TARGET_LANGUAGE_FIELD");
+		AssertElementNotPresent(locator1 = "//div[contains(@data-field-name,'fieldReference')]//input[@value='${fieldReferenceValue}']");
 	}
 
 	@description = "Verify that a Paragraph Field can be edited"

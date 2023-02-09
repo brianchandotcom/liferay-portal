@@ -966,11 +966,11 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			return;
 		}
 
+		Set<String> excludePaths = new HashSet<>();
+
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		List<? extends ZipEntry> zipEntries = Collections.list(enumeration);
-
-		Set<String> excludePaths = new HashSet<>();
 
 		for (ZipEntry zipEntry : zipEntries) {
 			String name = zipEntry.getName();
@@ -982,9 +982,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 				continue;
 			}
-
-			String path = name.substring(
-				0, name.lastIndexOf(StringPool.SLASH) + 1);
 
 			if (name.endsWith(
 					FragmentExportImportConstants.FILE_NAME_COLLECTION)) {
@@ -1000,6 +997,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					fragmentJSON);
+
+				String path = name.substring(
+					0, name.lastIndexOf(StringPool.SLASH) + 1);
 
 				for (String resourcePath :
 						new String[] {

@@ -18,8 +18,11 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +42,12 @@ public class MBMessageTextEmbeddingModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, MBMessage mbMessage) {
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Solr")) {
+
+			return;
+		}
+
 		addTextEmbeddings(
 			mbMessage, _textEmbeddingRetriever::getTextEmbedding,
 			mbMessage.getCompanyId(), document);
@@ -49,6 +58,9 @@ public class MBMessageTextEmbeddingModelDocumentContributor
 		return StringBundler.concat(
 			mbMessage.getSubject(), StringPool.SPACE, mbMessage.getBody());
 	}
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 	@Reference
 	private TextEmbeddingRetriever _textEmbeddingRetriever;

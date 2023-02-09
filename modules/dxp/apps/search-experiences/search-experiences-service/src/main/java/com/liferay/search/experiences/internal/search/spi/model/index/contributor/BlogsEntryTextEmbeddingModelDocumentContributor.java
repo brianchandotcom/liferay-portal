@@ -18,8 +18,11 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +42,12 @@ public class BlogsEntryTextEmbeddingModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, BlogsEntry blogsEntry) {
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Solr")) {
+
+			return;
+		}
+
 		addTextEmbeddings(
 			blogsEntry, _textEmbeddingRetriever::getTextEmbedding,
 			blogsEntry.getCompanyId(), document);
@@ -49,6 +58,9 @@ public class BlogsEntryTextEmbeddingModelDocumentContributor
 		return StringBundler.concat(
 			blogsEntry.getTitle(), StringPool.SPACE, blogsEntry.getContent());
 	}
+
+	@Reference
+	private SearchEngineInformation _searchEngineInformation;
 
 	@Reference
 	private TextEmbeddingRetriever _textEmbeddingRetriever;

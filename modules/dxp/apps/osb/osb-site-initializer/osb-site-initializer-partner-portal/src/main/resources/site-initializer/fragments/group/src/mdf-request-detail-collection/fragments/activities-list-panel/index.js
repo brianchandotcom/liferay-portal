@@ -273,41 +273,43 @@ const RangeDate = ({endDate, startDate}) => (
 	</div>
 );
 
-const Panel = ({children, mdfRequestActivity}) => (
-	<ClayPanel
-		className="border-brand-primary-lighten-4"
-		collapsable
-		displayTitle={
-			<ClayPanel.Title className="py-2 text-dark">
-				<RangeDate
-					endDate={mdfRequestActivity.endDate}
-					startDate={mdfRequestActivity.startDate}
-				/>
+const Panel = ({children, mdfRequestActivity}) => {
+	return (
+		<ClayPanel
+			className="border-brand-primary-lighten-4"
+			collapsable
+			displayTitle={
+				<ClayPanel.Title className="py-2 text-dark">
+					<RangeDate
+						endDate={mdfRequestActivity.endDate}
+						startDate={mdfRequestActivity.startDate}
+					/>
 
-				<h4 className="mb-1">
-					{mdfRequestActivity.name} ({mdfRequestActivity.id})
-				</h4>
+					<h4 className="mb-1">
+						{mdfRequestActivity.name} ({mdfRequestActivity.id})
+					</h4>
 
-				<h5 className="align-items-center d-flex mb-1">
-					Activity Status:
-					<div
-						className={
-							activityStatusClassName[
-								mdfRequestActivity.activityStatus.key
-							]
-						}
-					>
-						{mdfRequestActivity.activityStatus.name}
-					</div>
-				</h5>
-			</ClayPanel.Title>
-		}
-		showCollapseIcon
-		spritemap
-	>
-		<ClayPanel.Body>{children}</ClayPanel.Body>
-	</ClayPanel>
-);
+					<p className="align-items-center d-flex mb-1">
+						Activity Status:
+						<div
+							className={
+								activityStatusClassName[
+									mdfRequestActivity.activityStatus.key
+								]
+							}
+						>
+							{mdfRequestActivity.activityStatus.name}
+						</div>
+					</p>
+				</ClayPanel.Title>
+			}
+			showCollapseIcon
+			spritemap
+		>
+			<ClayPanel.Body>{children}</ClayPanel.Body>
+		</ClayPanel>
+	);
+};
 
 export default function () {
 	const [activities, setActivities] = useState();

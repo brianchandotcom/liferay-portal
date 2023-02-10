@@ -10,6 +10,7 @@
  */
 
 import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActivity';
+import {Status} from '../../../../../common/utils/constants/status';
 
 export default function getNewActivity(): MDFRequestActivity {
 	return {
@@ -56,6 +57,7 @@ export default function getNewActivity(): MDFRequestActivity {
 			webinarTopic: '',
 			weeksAiring: '',
 		},
+		activityStatus: Status.APPROVED,
 		budgets: [],
 		endDate: undefined,
 		mdfRequestAmount: 0,

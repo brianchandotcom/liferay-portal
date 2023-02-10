@@ -28,6 +28,11 @@ import getTotalMDFRequest from '../../../common/utils/getTotalMDFRequest';
 import createMDFRequestActivitiesProxyAPI from './createMDFRequestActivitiesProxyAPI';
 import createMDFRequestProxyAPI from './createMDFRequestProxyAPI';
 
+const ACTIVITY_STATUS_APPROVED = {
+	key: 'approved',
+	name: 'Approved',
+};
+
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
@@ -73,12 +78,14 @@ export default async function submitForm(
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values?.activities?.map(async (activity) => {
+				const currentActivity = {...activity, ACTIVITY_STATUS_APPROVED};
+
 				if (
 					Liferay.FeatureFlags['LPS-164528'] &&
 					values.mdfRequestStatus !== Status.DRAFT
 				) {
 					return await createMDFRequestActivitiesProxyAPI(
-						activity,
+						currentActivity,
 						values.company,
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
@@ -88,7 +95,7 @@ export default async function submitForm(
 				if (activity.id) {
 					return await updateMDFRequestActivities(
 						ResourceName.ACTIVITY_DXP,
-						activity,
+						currentActivity,
 						values.company,
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCodeSF
@@ -97,7 +104,7 @@ export default async function submitForm(
 
 				return await createMDFRequestActivities(
 					ResourceName.ACTIVITY_DXP,
-					activity,
+					currentActivity,
 					values.company,
 					dtoMDFRequest?.id,
 					dtoMDFRequest?.externalReferenceCodeSF

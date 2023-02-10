@@ -147,19 +147,21 @@ public class PLOPortlet extends MVCPortlet {
 		try {
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-			Map<String, List<PLOEntry>> map = new HashMap<>();
+			Map<String, List<PLOEntry>> keyPLOEntries = new HashMap<>();
 
 			for (PLOEntry ploEntry :
 					_ploEntryService.getPLOEntries(
 						_portal.getCompanyId(resourceRequest))) {
 
-				List<PLOEntry> ploEntrysList = map.computeIfAbsent(
+				List<PLOEntry> ploEntries = keyPLOEntries.computeIfAbsent(
 					ploEntry.getLanguageId(), key -> new ArrayList<>());
 
-				ploEntrysList.add(ploEntry);
+				ploEntries.add(ploEntry);
 			}
 
-			for (Map.Entry<String, List<PLOEntry>> entry : map.entrySet()) {
+			for (Map.Entry<String, List<PLOEntry>> entry :
+					keyPLOEntries.entrySet()) {
+
 				StringBundler sb = new StringBundler();
 
 				for (PLOEntry ploEntry : entry.getValue()) {

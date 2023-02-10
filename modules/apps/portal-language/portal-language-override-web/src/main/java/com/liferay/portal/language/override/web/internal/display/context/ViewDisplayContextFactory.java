@@ -205,18 +205,18 @@ public class ViewDisplayContextFactory {
 	}
 
 	private Map<String, List<PLOEntry>> _getKeyPLOEntriesMap(long companyId) {
-		Map<String, List<PLOEntry>> map = new HashMap<>();
+		Map<String, List<PLOEntry>> keyPLOEntriesMap = new HashMap<>();
 
 		for (PLOEntry ploEntry :
 				_ploEntryLocalService.getPLOEntries(companyId)) {
 
-			List<PLOEntry> ploEntriesList = map.computeIfAbsent(
+			List<PLOEntry> ploEntries = keyPLOEntriesMap.computeIfAbsent(
 				ploEntry.getKey(), key -> new ArrayList<>());
 
-			ploEntriesList.add(ploEntry);
+			ploEntries.add(ploEntry);
 		}
 
-		return map;
+		return keyPLOEntriesMap;
 	}
 
 	private String _getLanguageIdsString(

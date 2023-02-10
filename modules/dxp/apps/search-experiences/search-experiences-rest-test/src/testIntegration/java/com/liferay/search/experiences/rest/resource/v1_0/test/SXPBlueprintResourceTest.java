@@ -59,6 +59,9 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 				).put(
 					"elementInstances", JSONFactoryUtil.createJSONArray()
 				).put(
+					"externalReferenceCode",
+					sxpBlueprint.getExternalReferenceCode()
+				).put(
 					"schemaVersion", postSXPBlueprint.getSchemaVersion()
 				).put(
 					"title_i18n", JSONUtil.put("en_US", sxpBlueprint.getTitle())

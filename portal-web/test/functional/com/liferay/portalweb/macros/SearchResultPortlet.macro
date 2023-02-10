@@ -32,6 +32,13 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		if (isSet(displayTemplate)) {
+			Select(
+				key_fieldLabel = "Display Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${displayTemplate}");
+		}
+
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",

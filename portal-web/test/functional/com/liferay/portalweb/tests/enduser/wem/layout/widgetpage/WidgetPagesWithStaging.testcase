@@ -1,0 +1,101 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-172971. As a page admin, I can edit the friendly URL of page set with staging."
+	@priority = "3"
+	test EditFriendlyURLOfPageSetInStagingSite {
+		task ("Given a page admin has a page set with child pages") {
+			Site.openSitesAdmin();
+
+			Site.addCustomCP(
+				siteName = "Site Name",
+				siteTemplateName = "Welcome");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Page Set",
+				sitePageType = "Page Set");
+
+			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${pageName}",
+					parentLayoutName = "Test Page Set",
+					type = "content");
+			}
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page admin navigates to the Pages admin in staging site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could edit the friendly URL of page set") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Set");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/presentation");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
+
+		task ("When the page admin navigates to the page set via new friendly URL in live site") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+		}
+
+		task ("Then the page admin is redirected to the first child page") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
+}

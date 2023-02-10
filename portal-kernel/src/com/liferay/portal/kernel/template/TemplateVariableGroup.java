@@ -118,6 +118,23 @@ public class TemplateVariableGroup {
 		return templateVariableDefinition;
 	}
 
+	public TemplateVariableDefinition addVariable(
+		String label, Class<?> clazz, String dataType, String name,
+		String accessor, String help) {
+
+		if (isRestrictedVariable(name)) {
+			return null;
+		}
+
+		TemplateVariableDefinition templateVariableDefinition =
+			new TemplateVariableDefinition(
+				label, clazz, dataType, name, accessor, help, false, null);
+
+		_templateVariableDefinitions.add(templateVariableDefinition);
+
+		return templateVariableDefinition;
+	}
+
 	public void empty() {
 		_templateVariableDefinitions.clear();
 	}

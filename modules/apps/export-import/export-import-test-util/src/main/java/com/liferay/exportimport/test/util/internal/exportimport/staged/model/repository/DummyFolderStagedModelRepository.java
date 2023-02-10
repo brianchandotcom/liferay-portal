@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,8 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,15 +126,11 @@ public class DummyFolderStagedModelRepository
 	public DummyFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
+		List<DummyFolder> dummyFolders = ListUtil.filter(
+			_dummyFolders,
 			dummyFolder ->
 				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getGroupId() == groupId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummyFolder.getGroupId() == groupId));
 
 		if (dummyFolders.isEmpty()) {
 			return null;
@@ -148,25 +143,15 @@ public class DummyFolderStagedModelRepository
 	public List<DummyFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		return dummyFoldersStream.filter(
+		return ListUtil.filter(
+			_dummyFolders,
 			dummyFolder ->
 				Objects.equals(dummyFolder.getUuid(), uuid) &&
-				(dummyFolder.getCompanyId() == companyId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummyFolder.getCompanyId() == companyId));
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		return dummyFoldersStream.filter(
-			d -> d.getGroupId() == groupId
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(_dummyFolders, d -> d.getGroupId() == groupId);
 	}
 
 	@Override
@@ -319,13 +304,8 @@ public class DummyFolderStagedModelRepository
 	}
 
 	public DummyFolder getFolder(long folderId) {
-		Stream<DummyFolder> dummyFoldersStream = _dummyFolders.stream();
-
-		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
-			f -> f.getId() == folderId
-		).collect(
-			Collectors.toList()
-		);
+		List<DummyFolder> dummyFolders = ListUtil.filter(
+			_dummyFolders, f -> f.getId() == folderId);
 
 		if (dummyFolders.isEmpty()) {
 			throw new RuntimeException(new NoSuchModelException());
@@ -380,13 +360,8 @@ public class DummyFolderStagedModelRepository
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
 				while (iterator.hasNext()) {
-					Stream<DummyFolder> dummyFoldersStream = result.stream();
-
-					result = dummyFoldersStream.filter(
-						getPredicate(String.valueOf(iterator.next()))
-					).collect(
-						Collectors.toList()
-					);
+					result = ListUtil.filter(
+						result, getPredicate(String.valueOf(iterator.next())));
 				}
 			}
 			catch (Exception exception) {
@@ -402,7 +377,7 @@ public class DummyFolderStagedModelRepository
 			return _dummyFolders.size();
 		}
 
-		public Predicate<? super DummyFolder> getPredicate(String expression) {
+		public Predicate<DummyFolder> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
 				return d ->
 					d.getGroupId() == Long.valueOf(

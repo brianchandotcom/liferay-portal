@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Collections;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -142,10 +141,6 @@ public class FragmentEntryLinkModelListener
 
 		_notifyCluster(
 			MethodType.UPDATE, originalFragmentEntryLink, fragmentEntryLink);
-	}
-
-	@Activate
-	protected void activate() {
 	}
 
 	@Deactivate

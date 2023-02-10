@@ -61,6 +61,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
+import org.apache.logging.log4j.ThreadContext;
 
 /**
  * @author Sam Ziemer
@@ -117,6 +118,18 @@ public class UpgradeReport {
 
 		_persistenceManager = persistenceManager;
 
+		String dateInfo = _getDateInfo();
+		String timeInfo = _getUpgradeTimeInfo();
+		String portalVersionsInfo = _getPortalVersionsInfo();
+		String dialectInfo = _getDialectInfo();
+		String propertiesInfo = _getPropertiesInfo();
+		String dlStorageInfo = _getDLStorageInfo();
+		String databaseTablesInfo = _getDatabaseTablesInfo();
+		String upgradeProcessesInfo = _getUpgradeProcessesInfo();
+		String errorLogEventsInfo = _getLogEventsInfo("errors");
+		String warningLogEventsInfo = _getLogEventsInfo("warnings");
+		String releaseManagerOSGiInfo = (releaseManagerOSGiCommands == null) ? StringPool.BLANK : releaseManagerOSGiCommands.check();
+
 		try {
 			File reportFile = _getReportFile();
 
@@ -124,15 +137,10 @@ public class UpgradeReport {
 				reportFile,
 				StringUtil.merge(
 					new String[] {
-						_getDateInfo(), _getUpgradeTimeInfo(),
-						_getPortalVersionsInfo(), _getDialectInfo(),
-						_getPropertiesInfo(), _getDLStorageInfo(),
-						_getDatabaseTablesInfo(), _getUpgradeProcessesInfo(),
-						_getLogEventsInfo("errors"),
-						_getLogEventsInfo("warnings"),
-						(releaseManagerOSGiCommands == null) ?
-							StringPool.BLANK :
-								releaseManagerOSGiCommands.check()
+						dateInfo, timeInfo, portalVersionsInfo, dialectInfo,
+						propertiesInfo, dlStorageInfo, databaseTablesInfo,
+						upgradeProcessesInfo, errorLogEventsInfo,
+						warningLogEventsInfo, releaseManagerOSGiInfo
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 
@@ -144,6 +152,26 @@ public class UpgradeReport {
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report", ioException);
+		}
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.put("upgrade.report.date", dateInfo);
+			ThreadContext.put("upgrade.report.time", timeInfo);
+			ThreadContext.put("upgrade.report.portalVersion", portalVersionsInfo);
+			ThreadContext.put("upgrade.report.dialect", dialectInfo);
+			ThreadContext.put("upgrade.report.properties", propertiesInfo);
+			ThreadContext.put("upgrade.report.dlstorage", dlStorageInfo);
+			ThreadContext.put("upgrade.report.databasetables", databaseTablesInfo);
+			ThreadContext.put("upgrade.report.upgradeprocesses", upgradeProcessesInfo);
+			ThreadContext.put("upgrade.report.errorlogevents", errorLogEventsInfo);
+			ThreadContext.put("upgrade.report.warninglogevents", warningLogEventsInfo);
+			ThreadContext.put("upgrade.report.releasemanagerOSGi", releaseManagerOSGiInfo);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Upgrade report generated");
+			}
+
+			ThreadContext.clearMap();
 		}
 	}
 

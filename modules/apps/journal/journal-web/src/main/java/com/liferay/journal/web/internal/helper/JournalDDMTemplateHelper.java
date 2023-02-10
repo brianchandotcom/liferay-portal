@@ -61,6 +61,11 @@ public class JournalDDMTemplateHelper {
 				templateVariableDefinition.getName(),
 				templateVariableDefinition.getAccessor());
 		}
+		else if (dataType.equals("reserved-article")) {
+			dataContent = _getVariableReferenceCode(
+				".vars[\"" + templateVariableDefinition.getName() + "\"]",
+				templateVariableDefinition.getAccessor());
+		}
 		else if (dataType.equals("service-locator")) {
 			Class<?> templateVariableDefinitionClass =
 				templateVariableDefinition.getClazz();

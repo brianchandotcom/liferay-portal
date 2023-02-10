@@ -130,7 +130,9 @@ export function ScopeContainer({
 				/>
 
 				<AutoComplete
-					creationLanguageId={values.defaultLanguageId as Locale}
+					creationLanguageId={
+						values.defaultLanguageId as Liferay.Language.Locale
+					}
 					disabled={
 						values.system || !hasUpdateObjectDefinitionPermission
 					}

@@ -29,7 +29,7 @@ interface AutoCompleteProps<
 > extends React.HTMLAttributes<HTMLElement> {
 	children: (item: T) => React.ReactNode;
 	contentRight?: React.ReactNode;
-	creationLanguageId: Locale;
+	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	emptyStateMessage: string;
 	error?: string;

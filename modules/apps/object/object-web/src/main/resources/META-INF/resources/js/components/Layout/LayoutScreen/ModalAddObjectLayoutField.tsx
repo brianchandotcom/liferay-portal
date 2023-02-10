@@ -186,7 +186,7 @@ export default function ModalAddObjectLayoutField({
 							</>
 						}
 						creationLanguageId={
-							selectedObjectField?.indexedLanguageId as Locale
+							selectedObjectField?.indexedLanguageId as Liferay.Language.Locale
 						}
 						emptyStateMessage={Liferay.Language.get(
 							'there-are-no-fields-for-this-object'

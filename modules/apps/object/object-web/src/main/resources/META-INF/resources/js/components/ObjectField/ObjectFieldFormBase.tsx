@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, { ClayToggle } from '@clayui/form';
+import ClayForm, {ClayToggle} from '@clayui/form';
 import {
 	API,
 	AutoComplete,
@@ -29,10 +29,10 @@ import React, {
 	useState,
 } from 'react';
 
-import { toCamelCase } from '../../utils/string';
-import { AggregationFormBase } from './AggregationFormBase';
-import { AttachmentFormBase } from './AttachmentFormBase';
-import { FORMULA_OUTPUT_OPTIONS, FormulaOutput } from './formulaFieldUtil';
+import {toCamelCase} from '../../utils/string';
+import {AggregationFormBase} from './AggregationFormBase';
+import {AttachmentFormBase} from './AttachmentFormBase';
+import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 
@@ -64,7 +64,7 @@ type TObjectRelationship = {
 };
 
 export type ObjectFieldErrors = FormError<
-	ObjectField & { [key in ObjectFieldSettingName]: unknown }
+	ObjectField & {[key in ObjectFieldSettingName]: unknown}
 >;
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
@@ -126,14 +126,14 @@ async function getFieldSettingsByBusinessType(
 		}
 
 		if (businessType === 'Picklist' && objectFieldSettings?.length) {
-			const [{ value }] = objectFieldSettings;
-			const { objectStates } = value as ObjectFieldPicklistSetting;
+			const [{value}] = objectFieldSettings;
+			const {objectStates} = value as ObjectFieldPicklistSetting;
 			const defaultPicklistValue = objectStates.find(
-				({ key }) => key === defaultValue
+				({key}) => key === defaultValue
 			);
 
 			if (!defaultPicklistValue && defaultValue) {
-				setValues({ defaultValue: undefined });
+				setValues({defaultValue: undefined});
 			}
 		}
 	}
@@ -208,19 +208,19 @@ export default function ObjectFieldFormBase({
 		values.listTypeDefinitionId !== 0;
 
 	const filteredPicklistItems = useMemo(() => {
-		return pickListItems.filter(({ name }) => {
+		return pickListItems.filter(({name}) => {
 			return stringIncludesQuery(name, picklistDefaultValueQuery);
 		});
 	}, [picklistDefaultValueQuery, pickListItems]);
 
 	const filteredPicklist = useMemo(() => {
-		return pickLists.filter(({ name }) => {
+		return pickLists.filter(({name}) => {
 			return stringIncludesQuery(name as string, picklistQuery);
 		});
 	}, [picklistQuery, pickLists]);
 
 	const selectedPicklist = useMemo(() => {
-		return pickLists.find(({ id }) => values.listTypeDefinitionId === id);
+		return pickLists.find(({id}) => values.listTypeDefinitionId === id);
 	}, [pickLists, values.listTypeDefinitionId]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
@@ -256,7 +256,7 @@ export default function ObjectFieldFormBase({
 		if (
 			objectDefinition?.accountEntryRestricted &&
 			objectDefinition?.accountEntryRestrictedObjectFieldName ===
-			values.name
+				values.name
 		) {
 			return true;
 		}
@@ -365,7 +365,7 @@ export default function ObjectFieldFormBase({
 				<SingleSelect<FormulaOutput>
 					error={errors.output}
 					label={Liferay.Language.get('output')}
-					onChange={({ label, value }) => {
+					onChange={({label, value}) => {
 						let newObjectFieldSettings: ObjectFieldSetting[] = [];
 
 						if (values.objectFieldSettings) {
@@ -395,33 +395,35 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-					<AutoComplete<Partial<PickList>>
-						creationLanguageId={creationLanguageId2 as Liferay.Language.Locale}
-						disabled={disabled}
-						emptyStateMessage={Liferay.Language.get('option-not-found')}
-						error={errors.listTypeDefinitionId}
-						items={filteredPicklist}
-						label={Liferay.Language.get('picklist')}
-						onChangeQuery={setPicklistQuery}
-						onSelectItem={(item) => {
-							setValues({
-								defaultValue: '',
-								listTypeDefinitionExternalReferenceCode:
-									item.externalReferenceCode,
-								listTypeDefinitionId: item.id,
-								state: false,
-							});
-						}}
-						query={picklistQuery}
-						value={selectedPicklist?.name}
-					>
-						{({ name }) => (
-							<div className="d-flex justify-content-between">
-								<div>{name}</div>
-							</div>
-						)}
-					</AutoComplete>
-				)}
+				<AutoComplete<Partial<PickList>>
+					creationLanguageId={
+						creationLanguageId2 as Liferay.Language.Locale
+					}
+					disabled={disabled}
+					emptyStateMessage={Liferay.Language.get('option-not-found')}
+					error={errors.listTypeDefinitionId}
+					items={filteredPicklist}
+					label={Liferay.Language.get('picklist')}
+					onChangeQuery={setPicklistQuery}
+					onSelectItem={(item) => {
+						setValues({
+							defaultValue: '',
+							listTypeDefinitionExternalReferenceCode:
+								item.externalReferenceCode,
+							listTypeDefinitionId: item.id,
+							state: false,
+						});
+					}}
+					query={picklistQuery}
+					value={selectedPicklist?.name}
+				>
+					{({name}) => (
+						<div className="d-flex justify-content-between">
+							<div>{name}</div>
+						</div>
+					)}
+				</AutoComplete>
+			)}
 
 			{children}
 
@@ -432,7 +434,7 @@ export default function ObjectFieldFormBase({
 							disabled={getMandatoryToggleDisabledState()}
 							label={Liferay.Language.get('mandatory')}
 							name="required"
-							onToggle={(required) => setValues({ required })}
+							onToggle={(required) => setValues({required})}
 							toggled={values.required || values.state}
 						/>
 					)}
@@ -445,7 +447,7 @@ export default function ObjectFieldFormBase({
 							name="state"
 							onToggle={async (state) => {
 								if (state) {
-									setValues({ required: state, state });
+									setValues({required: state, state});
 									setPickListItems(
 										await API.getPickListItems(
 											values.listTypeDefinitionId!
@@ -467,7 +469,9 @@ export default function ObjectFieldFormBase({
 
 			{values.state && (
 				<AutoComplete<PickListItem>
-					creationLanguageId={creationLanguageId2 as Liferay.Language.Locale}
+					creationLanguageId={
+						creationLanguageId2 as Liferay.Language.Locale
+					}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.defaultValue}
 					items={filteredPicklistItems}
@@ -483,11 +487,11 @@ export default function ObjectFieldFormBase({
 					required
 					value={
 						filteredPicklistItems.find(
-							({ key }) => key === values.defaultValue
+							({key}) => key === values.defaultValue
 						)?.name
 					}
 				>
-					{({ name }) => (
+					{({name}) => (
 						<div className="d-flex justify-content-between">
 							<div>{name}</div>
 						</div>

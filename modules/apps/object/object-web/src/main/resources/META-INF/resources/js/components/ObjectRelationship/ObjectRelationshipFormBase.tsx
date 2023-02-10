@@ -211,7 +211,9 @@ export function ObjectRelationshipFormBase({
 			/>
 
 			<AutoComplete<ObjectDefinition>
-				creationLanguageId={creationLanguageId as Locale}
+				creationLanguageId={
+					creationLanguageId as Liferay.Language.Locale
+				}
 				disabled={readonly}
 				emptyStateMessage={Liferay.Language.get(
 					'no-objects-were-found'

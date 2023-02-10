@@ -384,7 +384,9 @@ export function AggregationFormBase({
 
 			{selectedAggregationFunction?.value !== 'COUNT' && (
 				<AutoComplete<ObjectField>
-					creationLanguageId={creationLanguageId2 as Locale}
+					creationLanguageId={
+						creationLanguageId2 as Liferay.Language.Locale
+					}
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'
 					)}

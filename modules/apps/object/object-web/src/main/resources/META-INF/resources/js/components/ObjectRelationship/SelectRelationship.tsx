@@ -97,7 +97,7 @@ export default function SelectRelationship({
 
 	return (
 		<AutoComplete<LabelNameObject>
-			creationLanguageId={creationLanguageId as Locale}
+			creationLanguageId={creationLanguageId as Liferay.Language.Locale}
 			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
 			error={error}
 			items={filteredOptions ?? []}

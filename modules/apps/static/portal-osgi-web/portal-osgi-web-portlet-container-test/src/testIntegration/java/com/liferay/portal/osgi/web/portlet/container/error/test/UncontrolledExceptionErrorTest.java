@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -32,6 +33,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -39,7 +42,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -219,5 +225,45 @@ public class UncontrolledExceptionErrorTest
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private class UncontrolledExceptionErrorPortlet extends MVCPortlet {
+
+		public static final String PORTLET_NAME =
+			"com_liferay_portal_portlet_container_error_test_" +
+				"UncontrolledExceptionErrorPortlet";
+
+		public UncontrolledExceptionErrorPortlet() {
+			_title = RandomTestUtil.randomString();
+		}
+
+		public boolean isCalledRender() {
+			return _calledRender;
+		}
+
+		@Override
+		public void render(
+				RenderRequest renderRequest, RenderResponse renderResponse)
+			throws IOException, PortletException {
+
+			super.render(renderRequest, renderResponse);
+
+			_calledRender = true;
+
+			throw new RuntimeException();
+		}
+
+		protected String getTitle() {
+			return _title;
+		}
+
+		@Override
+		protected String getTitle(RenderRequest renderRequest) {
+			return getTitle();
+		}
+
+		private boolean _calledRender;
+		private final String _title;
+
+	}
 
 }

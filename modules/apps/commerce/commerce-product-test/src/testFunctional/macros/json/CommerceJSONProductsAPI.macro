@@ -427,6 +427,24 @@ definition {
 		}
 	}
 
+	macro _getCommerceFieldValue {
+		var portalURL = JSONCompany.getPortalURL();
+		var title = StringUtil.replace(${title}, " ", "%20");
+		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/site-pages?fields=${field}\&search=${title} \
+				-u test@liferay.com:test \
+				-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get(${curl});
+
+		echo(${curl});
+
+		return ${curl};
+	}
+
 	macro _getCommerceProductIds {
 		var baseURL = ${baseURL};
 

@@ -1,0 +1,97 @@
+load("ext://uibutton", "cmd_button", "text_input", "location")
+
+db_container_name = "mysql"
+db_username = "dxpcloud"
+db_password = "passw0rd"
+mysql_data_volume = "mysqlData"
+
+cmd_button(
+    "Kill mysql!",
+    argv=[
+        "sh",
+        "-c",
+        "docker container rm -f %s" % db_container_name,
+    ],
+    resource=db_container_name,
+    icon_name="delete",
+    text="Kill mysql!"
+)
+
+cmd_button(
+    "Drop mysql Data Volume!",
+    argv=[
+        "sh",
+        "-c",
+        "docker volume rm -f %s" % mysql_data_volume,
+    ],
+    resource=db_container_name,
+    icon_name="delete",
+    text="Drop mysql Data Volume!",
+)
+
+dxp_envs = {
+    "LIFERAY_USERS_PERIOD_REMINDER_PERIOD_QUERIES_PERIOD_ENABLED": "false",
+    "LCP_PROJECT_ENVIRONMENT": "local",
+    "LCP_PROJECT_ID": "local",
+    "LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME": "com.mysql.cj.jdbc.Driver",
+    "LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD": db_password,
+    "LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL": "jdbc:mysql://%s/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false&enabledTLSProtocols=TLSv1,TLSv1.1,TLSv1.2"
+    % db_container_name,
+    "LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME": db_username,
+    "LIFERAY_UPGRADE_PERIOD_DATABASE_PERIOD_AUTO_PERIOD_RUN": "true",
+    "LIFERAY_DISABLE_TRIAL_LICENSE": "false",
+}
+
+dxp_resource_deps = [db_container_name]
+
+mysql_cmd = [
+    "docker container rm -f db &&",
+    "docker run",
+    "--network k3d-localdev",
+    "--name %s" % db_container_name,
+    "--rm",
+    "-e MYSQL_DATABASE=lportal",
+    "-e MYSQL_PASSWORD=%s" % db_password,
+    "-e MYSQL_ROOT_PASSWORD=%s" % db_password,
+    "-e MYSQL_USER=%s" % db_username,
+    "-e LCP_DBNAME=lportal",
+    "-e LCP_MASTER_USER_NAME=%s" % db_username,
+    "-e LCP_MASTER_USER_PASSWORD=%s" % db_password,
+    "-p 3307:3306",
+    "-v %s:/var/lib/mysql" % mysql_data_volume,
+    "mysql:5.7",
+    "mysqld",
+    "--character-set-server=utf8",
+    "--collation-server=utf8_general_ci",
+    "--character-set-filesystem=utf8",
+    "--max_allowed_packet=32M",
+]
+
+local_resource(
+    db_container_name,
+    serve_cmd=" ".join(mysql_cmd),
+    trigger_mode=TRIGGER_MODE_MANUAL,
+    labels=["DXP"],
+    readiness_probe=probe(
+        failure_threshold=30,
+        exec=exec_action(
+            [
+                "docker",
+                "run",
+                "--rm",
+                "--network",
+                "k3d-localdev",
+                "mysql:5.7",
+                "mysqladmin",
+                "ping",
+                "-h",
+                db_container_name,
+                "-u%s" % db_username,
+                "-p%s" % db_password,
+            ]
+        ),
+    ),
+)
+
+def on_down():
+  local("docker container stop %s" % db_container_name)

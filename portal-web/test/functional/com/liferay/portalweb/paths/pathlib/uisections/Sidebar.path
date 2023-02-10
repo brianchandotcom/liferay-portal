@@ -47,12 +47,12 @@
 </tr>
 <tr>
 	<td>DDM_ANY</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'${key_text}')]//following-sibling::input</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'${key_text}')]//following-sibling::div/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_FIELD_REFERENCE</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input[contains(@class,'form-control') and (@type='text')]</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::div/input[contains(@class,'form-control') and (@type='text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>DDM_LABEL</td>
-	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::input</td>
+	<td>//div[contains(@class,'sidebar')]//label[contains(.,'Label')]//following-sibling::div/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

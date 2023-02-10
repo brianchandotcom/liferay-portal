@@ -1,0 +1,26 @@
+[
+	{
+		"key": "approved",
+		"name": "Approved",
+		"name_i18n": {
+			"en-US": "Approved"
+		},
+		"type": "string"
+	},
+	{
+		"key": "active",
+		"name": "Active",
+		"name_i18n": {
+			"en-US": "Active"
+		},
+		"type": "string"
+	},
+	{
+		"key": "expired",
+		"name": "Expired",
+		"name_i18n": {
+			"en-US": "Expired"
+		},
+		"type": "string"
+	}
+]

@@ -364,6 +364,51 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"defaultValue": "approved",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Activity Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Activity Status$]",
+			"name": "activityStatus",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "approved",
+								"objectStateTransitions": [
+									{
+										"key": "active"
+									}
+								]
+							},
+							{
+								"key": "active",
+								"objectStateTransitions": [
+									{
+										"key": "expired"
+									}
+								]
+							},
+							{
+								"key": "expired",
+								"objectStateTransitions": [
+								]
+							}
+						]
+					}
+				}
+			],
+			"required": true,
+			"state": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

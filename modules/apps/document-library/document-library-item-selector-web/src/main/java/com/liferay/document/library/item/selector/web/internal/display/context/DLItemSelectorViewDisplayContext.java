@@ -143,7 +143,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public long getFolderId() throws PortalException {
 		if (_folderId == null) {
-			_folderId = _getFolderIdFromRequestParameters(_httpServletRequest);
+			_folderId = _getFolderId(_httpServletRequest);
 		}
 
 		return _folderId;
@@ -377,8 +377,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			infoItemItemSelectorCriterion.getItemSubtype());
 	}
 
-	private long _getFolderIdFromRequestParameters(
-			HttpServletRequest httpServletRequest)
+	private long _getFolderId(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		if (httpServletRequest.getParameter("folderId") != null) {

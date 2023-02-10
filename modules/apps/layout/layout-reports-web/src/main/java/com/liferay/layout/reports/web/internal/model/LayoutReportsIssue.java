@@ -14,6 +14,7 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 /**
  * @author Cristina González
@@ -52,11 +52,13 @@ public class LayoutReportsIssue {
 
 		_key = key;
 
-		Stream<Detail> stream = _details.stream();
+		long total = 0;
 
-		_total = stream.mapToLong(
-			Detail::getTotal
-		).sum();
+		for (LayoutReportsIssue.Detail detail : _details) {
+			total += detail.getTotal();
+		}
+
+		_total = total;
 	}
 
 	@Override
@@ -96,18 +98,20 @@ public class LayoutReportsIssue {
 		String configureLayoutSeoURL, String configurePagesSeoURL,
 		ResourceBundle resourceBundle) {
 
-		Stream<Detail> stream = _details.stream();
-
 		return JSONUtil.put(
 			"details",
-			JSONUtil.putAll(
-				stream.filter(
-					detail -> detail.getTotal() > 0
-				).map(
-					detail -> detail.toJSONObject(
+			TransformUtil.transformToArray(
+				_details,
+				detail -> {
+					if (detail.getTotal() <= 0) {
+						return null;
+					}
+
+					return detail.toJSONObject(
 						configureLayoutSeoURL, configurePagesSeoURL,
-						resourceBundle)
-				).toArray())
+						resourceBundle);
+				},
+				JSONObject.class)
 		).put(
 			"key", _key.toString()
 		).put(

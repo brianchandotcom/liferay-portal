@@ -95,9 +95,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Java JDK"
+						"en_US": "Java Version"
 					},
-					"name": "javaJDK",
+					"name": "javaVersion",
 					"required": false,
 					"type": "String"
 				},

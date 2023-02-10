@@ -20,8 +20,10 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceDefinitionManager;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -34,7 +36,10 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,6 +115,24 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				combinedTableReferenceInfos.get(childClassNameId);
 
 			if (childTableReferenceInfo == null) {
+				CTCollection ctCollection =
+					_ctCollectionPersistence.fetchByPrimaryKey(ctCollectionId);
+
+				if ((ctCollection != null) &&
+					(ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) &&
+					(ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_PENDING)) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No table reference definition for " +
+								childClassNameId);
+					}
+
+					continue;
+				}
+
 				throw new IllegalArgumentException(
 					"No table reference definition for " + childClassNameId);
 			}
@@ -298,6 +321,12 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		return preparedStatement;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTClosureFactoryImpl.class);
+
+	@Reference
+	private CTCollectionPersistence _ctCollectionPersistence;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

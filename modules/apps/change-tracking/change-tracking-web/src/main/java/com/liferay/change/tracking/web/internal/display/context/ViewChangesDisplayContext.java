@@ -1120,7 +1120,9 @@ public class ViewChangesDisplayContext {
 									modelClassNameId, classPKs);
 						}
 
-						model = ctModelMap.get(classPK);
+						if (ctModelMap != null) {
+							model = ctModelMap.get(classPK);
+						}
 					}
 					else {
 						model = _ctDisplayRendererRegistry.fetchCTModel(

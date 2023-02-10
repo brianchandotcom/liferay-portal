@@ -12,7 +12,38 @@
 .popover {
 	max-width: 900px !important;
 	width: 480px !important;
-	z-index: 99;
+	z-index: 9;
+}
+
+.css-tlfecz-indicatorContainer:first-child,
+.css-1gtu0rj-indicatorContainer:first-child {
+	display: none !important;
+}
+
+.popover .inline-scroller {
+	max-height: unset !important;
+}
+
+.filter-popover {
+	padding: 0 !important;
+	width: 300px !important;
+
+	& .filter-search {
+		background-color: #ffffff;
+		overflow: none;
+		position: sticky;
+		top: 0;
+		z-index: 9;
+	}
+
+	& .form-renderer {
+		padding: 16px;
+	}
+
+	.popover-body {
+		max-height: 600px !important;
+		padding: 0;
+	}
 }
 
 .compare-runs-popover {
@@ -91,6 +122,9 @@ body {
 }
 
 .popover-footer {
-	padding: 0 12px 12px;
+	background-color: #ffffff;
+	bottom: 0;
+	padding: 3px 16px 16px;
+	position: sticky;
 	z-index: 999;
 }

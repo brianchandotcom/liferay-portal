@@ -545,6 +545,12 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			return false;
 		}
 
+		if (!_layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry()) {
+			_deletePermission = true;
+
+			return true;
+		}
+
 		_deletePermission = _hasAssignDefaultLayoutUtilityPagePermission();
 
 		return _deletePermission;

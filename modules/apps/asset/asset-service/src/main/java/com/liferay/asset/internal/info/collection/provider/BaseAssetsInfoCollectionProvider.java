@@ -38,6 +38,7 @@ public abstract class BaseAssetsInfoCollectionProvider {
 				companyId, true));
 		assetEntryQuery.setEnablePermissions(true);
 		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setListable(null);
 
 		if (pagination != null) {
 			assetEntryQuery.setStart(pagination.getStart());

@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
@@ -56,7 +57,11 @@ public class OpenAPIUtil {
 				continue;
 			}
 
-			scopes.add(_getOperationScope(post));
+			String operationScope = _getOperationScope(post);
+
+			if (Validator.isNotNull(operationScope)) {
+				scopes.add(operationScope);
+			}
 		}
 
 		return scopes;
@@ -117,7 +122,11 @@ public class OpenAPIUtil {
 				continue;
 			}
 
-			scopes.add(_getOperationScope(get));
+			String operationScope = _getOperationScope(get);
+
+			if (Validator.isNotNull(operationScope)) {
+				scopes.add(operationScope);
+			}
 		}
 
 		return scopes;
@@ -125,6 +134,10 @@ public class OpenAPIUtil {
 
 	private static String _getOperationScope(Operation operation) {
 		List<Parameter> parameters = operation.getParameters();
+
+		if (parameters.isEmpty()) {
+			return null;
+		}
 
 		StringBundler sb = new StringBundler(parameters.size() * 2);
 

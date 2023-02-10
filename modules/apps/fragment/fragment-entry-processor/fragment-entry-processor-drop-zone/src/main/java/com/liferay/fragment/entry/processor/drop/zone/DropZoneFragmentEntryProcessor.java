@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -123,6 +124,12 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return html;
 		}
 
+		if (httpServletRequest != null) {
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_FORM,
+				fragmentEntryProcessorContext.getInfoForm());
+		}
+
 		List<String> dropZoneItemIds = layoutStructureItem.getChildrenItemIds();
 
 		if (fragmentEntryProcessorContext.isEditMode()) {
@@ -217,6 +224,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			dropZoneElement.html(dropZoneHTML);
 
 			element.replaceWith(dropZoneElement);
+		}
+
+		if (httpServletRequest != null) {
+			httpServletRequest.removeAttribute(InfoDisplayWebKeys.INFO_FORM);
 		}
 
 		Element bodyElement = document.body();

@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
-import com.liferay.document.library.kernel.exception.DuplicateFolderExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FolderNameException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
@@ -127,8 +126,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		validateFolder(groupId, parentFolderId, name);
 
 		long folderId = counterLocalService.increment();
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		DLFolder dlFolder = dlFolderPersistence.create(folderId);
 
@@ -1425,25 +1422,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				StringBundler.concat(
 					"Folder name ", folderName,
 					" is invalid because it contains a /"));
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		DLFolder dlFolder = dlFolderPersistence.fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (dlFolder != null) {
-			throw new DuplicateFolderExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate folder external reference code ",
-					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

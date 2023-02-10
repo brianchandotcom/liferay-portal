@@ -58,7 +58,7 @@ public class RecentContentInfoCollectionProvider
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
 			collectionQuery.getPagination(),
-			new com.liferay.info.sort.Sort(Field.MODIFIED_DATE, true));
+			new com.liferay.info.sort.Sort(Field.MODIFIED_DATE, true), null);
 
 		try {
 			SearchContext searchContext = _getSearchContext();

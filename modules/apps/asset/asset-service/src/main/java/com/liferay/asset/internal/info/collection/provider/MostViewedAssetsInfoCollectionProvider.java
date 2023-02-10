@@ -50,7 +50,7 @@ public class MostViewedAssetsInfoCollectionProvider
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			collectionQuery.getPagination(), new Sort("viewCount", true));
+			collectionQuery.getPagination(), new Sort("viewCount", true), null);
 
 		try {
 			return InfoPage.of(

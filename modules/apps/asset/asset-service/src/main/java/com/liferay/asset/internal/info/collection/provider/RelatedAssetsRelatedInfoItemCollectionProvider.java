@@ -55,7 +55,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 		try {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
-				collectionQuery.getPagination(), collectionQuery.getSort());
+				collectionQuery.getPagination(), collectionQuery.getSort(),
+				null);
 
 			assetEntryQuery.setLinkedAssetEntryIds(
 				new long[] {assetEntry.getEntryId()});

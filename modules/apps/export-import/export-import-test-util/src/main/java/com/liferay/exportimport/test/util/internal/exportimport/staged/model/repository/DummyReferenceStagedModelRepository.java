@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,8 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -125,15 +124,11 @@ public class DummyReferenceStagedModelRepository
 	public DummyReference fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		Stream<DummyReference> dummyReferenceStream = _dummyReferences.stream();
-
-		List<DummyReference> dummies = dummyReferenceStream.filter(
+		List<DummyReference> dummies = ListUtil.filter(
+			_dummyReferences,
 			dummyReference ->
 				Objects.equals(dummyReference.getUuid(), uuid) &&
-				(dummyReference.getGroupId() == groupId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummyReference.getGroupId() == groupId));
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -146,15 +141,11 @@ public class DummyReferenceStagedModelRepository
 	public List<DummyReference> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		Stream<DummyReference> dummyReferenceStream = _dummyReferences.stream();
-
-		return dummyReferenceStream.filter(
+		return ListUtil.filter(
+			_dummyReferences,
 			dummyReference ->
 				Objects.equals(dummyReference.getUuid(), uuid) &&
-				(dummyReference.getCompanyId() == companyId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummyReference.getCompanyId() == companyId));
 	}
 
 	@Override
@@ -355,14 +346,8 @@ public class DummyReferenceStagedModelRepository
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
 				while (iterator.hasNext()) {
-					Stream<DummyReference> dummyReferenceStream =
-						result.stream();
-
-					result = dummyReferenceStream.filter(
-						getPredicate(String.valueOf(iterator.next()))
-					).collect(
-						Collectors.toList()
-					);
+					result = ListUtil.filter(
+						result, getPredicate(String.valueOf(iterator.next())));
 				}
 			}
 			catch (Exception exception) {
@@ -378,9 +363,7 @@ public class DummyReferenceStagedModelRepository
 			return _dummyReferences.size();
 		}
 
-		public Predicate<? super DummyReference> getPredicate(
-			String expression) {
-
+		public Predicate<DummyReference> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
 				return d ->
 					d.getGroupId() == Long.valueOf(

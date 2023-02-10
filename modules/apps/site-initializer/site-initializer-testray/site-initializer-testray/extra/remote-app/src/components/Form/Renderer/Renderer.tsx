@@ -29,6 +29,7 @@ export type RendererFields = {
 	name: string;
 	operator?: Operators;
 	options?: RenderedFieldOptions;
+	removeQuoteMark?: boolean;
 	type:
 		| 'autocomplete'
 		| 'checkbox'

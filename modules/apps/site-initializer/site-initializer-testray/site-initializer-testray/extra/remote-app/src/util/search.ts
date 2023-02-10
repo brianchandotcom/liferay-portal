@@ -58,12 +58,8 @@ export class SearchBuilder {
 		return `contains(${key}, '${value}')`;
 	}
 
-	static eq(key: Key, value: Value, withoutQuotingMark = false) {
-		return `${key} eq ${
-			typeof value === 'boolean' || withoutQuotingMark
-				? value
-				: `'${value}'`
-		}`;
+	static eq(key: Key, value: Value) {
+		return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
 	}
 
 	/**
@@ -163,6 +159,9 @@ export class SearchBuilder {
 				({name}) => key === name
 			) as RendererFields;
 
+			const removeQuoteMark =
+				schema.removeQuoteMark || schema.type === 'number';
+
 			const customOperator = schema?.operator;
 
 			if (customOperator && SearchBuilder[customOperator]) {
@@ -172,11 +171,9 @@ export class SearchBuilder {
 
 				searchCondition = SearchBuilder[customOperator](
 					key.replace('$', ''),
-					value,
-					schema.type === 'number'
+					value
 				);
-			}
-			else {
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,
@@ -186,10 +183,14 @@ export class SearchBuilder {
 									: _value
 							)
 					  )
-					: SearchBuilder.eq(key, value, schema.type === 'number');
+					: SearchBuilder.eq(key, value);
 			}
 
-			_filter.push(searchCondition);
+			_filter.push(
+				removeQuoteMark
+					? searchCondition.replaceAll(`'`, '')
+					: searchCondition
+			);
 		}
 
 		return _filter.join(' and ');

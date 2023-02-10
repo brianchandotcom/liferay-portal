@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -168,32 +167,27 @@ public class CollectionItemsDetailDisplayContext {
 	}
 
 	private long _getInfoCollectionProviderItemCount(String collectionPK) {
-		Optional<InfoCollectionProvider<?>> infoCollectionProviderOptional =
-			Optional.empty();
+		InfoCollectionProvider<?> infoCollectionProvider = null;
 
-		for (InfoCollectionProvider<?> infoCollectionProvider :
+		for (InfoCollectionProvider<?> curInfoCollectionProvider :
 				(List<InfoCollectionProvider<?>>)
 					(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 						InfoCollectionProvider.class)) {
 
 			if (!Objects.equals(
-					infoCollectionProvider.getKey(), collectionPK)) {
+					curInfoCollectionProvider.getKey(), collectionPK)) {
 
 				continue;
 			}
 
-			infoCollectionProviderOptional = Optional.of(
-				infoCollectionProvider);
+			infoCollectionProvider = curInfoCollectionProvider;
 
 			break;
 		}
 
-		if (!infoCollectionProviderOptional.isPresent()) {
+		if (infoCollectionProvider == null) {
 			return 0;
 		}
-
-		InfoCollectionProvider<?> infoCollectionProvider =
-			infoCollectionProviderOptional.get();
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
 			new CollectionQuery());

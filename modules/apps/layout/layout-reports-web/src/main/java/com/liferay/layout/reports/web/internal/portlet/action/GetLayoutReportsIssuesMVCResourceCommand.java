@@ -19,7 +19,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
-import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -50,10 +50,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.Format;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -166,22 +164,16 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				_layoutReportsGooglePageSpeedConfigurationProvider.getStrategy(
 					group));
 
-		List<LayoutReportsIssue> layoutReportsIssues =
-			layoutReportsDataProvider.getLayoutReportsIssues(
-				resourceBundle.getLocale(), url);
-
-		Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
-
 		return JSONUtil.put(
 			"issues",
 			JSONUtil.putAll(
-				stream.map(
+				TransformUtil.transformToArray(
+					layoutReportsDataProvider.getLayoutReportsIssues(
+						resourceBundle.getLocale(), url),
 					layoutReportsIssue -> layoutReportsIssue.toJSONObject(
 						_getConfigureLayoutSeoURL(themeDisplay),
-						_getConfigurePagesSeoURL(themeDisplay), resourceBundle)
-				).toArray(
-					size -> new JSONObject[size]
-				))
+						_getConfigurePagesSeoURL(themeDisplay), resourceBundle),
+					JSONObject.class))
 		).put(
 			"timestamp", System.currentTimeMillis()
 		);

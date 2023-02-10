@@ -57,6 +57,9 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 				).put(
 					"elementDefinition", JSONFactoryUtil.createJSONObject()
 				).put(
+					"externalReferenceCode",
+					sxpElement.getExternalReferenceCode()
+				).put(
 					"schemaVersion", postSXPElement.getSchemaVersion()
 				).put(
 					"title_i18n", JSONUtil.put("en_US", sxpElement.getTitle())

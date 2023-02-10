@@ -111,28 +111,8 @@ public class UncontrolledExceptionErrorTest
 				"language.id", LocaleUtil.toLanguageId(_user.getLocale())
 			).build());
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"portal_web.docroot.html.portal.render_portlet_jsp",
-				LoggerTestUtil.ERROR)) {
-
-			PortletContainerTestUtil.Response response =
-				PortletContainerTestUtil.request(
-					PortletURLBuilder.create(
-						_portletURLFactory.create(
-							PortletContainerTestUtil.getHttpServletRequest(
-								group, layout),
-							_PORTLET_NAME, layout.getPlid(),
-							PortletRequest.RENDER_PHASE)
-					).buildString());
-
-			Assert.assertTrue(
-				uncontrolledExceptionErrorPortlet.isCalledRender());
-
-			_assertLogEntryMessage(logCapture);
-
-			_assertUncontrolledExceptionErrorHTML(
-				expectedErrorMessage, response.getBody());
-		}
+		_testUncontrolledExceptionError(
+			uncontrolledExceptionErrorPortlet, expectedErrorMessage);
 	}
 
 	@Test
@@ -140,31 +120,11 @@ public class UncontrolledExceptionErrorTest
 		UncontrolledExceptionErrorPortlet uncontrolledExceptionErrorPortlet =
 			_setUpUncontrolledExceptionErrorPortlet();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"portal_web.docroot.html.portal.render_portlet_jsp",
-				LoggerTestUtil.ERROR)) {
-
-			PortletContainerTestUtil.Response response =
-				PortletContainerTestUtil.request(
-					PortletURLBuilder.create(
-						_portletURLFactory.create(
-							PortletContainerTestUtil.getHttpServletRequest(
-								group, layout),
-							_PORTLET_NAME, layout.getPlid(),
-							PortletRequest.RENDER_PHASE)
-					).buildString());
-
-			Assert.assertTrue(
-				uncontrolledExceptionErrorPortlet.isCalledRender());
-
-			_assertLogEntryMessage(logCapture);
-
-			_assertUncontrolledExceptionErrorHTML(
-				_language.format(
-					_user.getLocale(), "is-temporarily-unavailable",
-					uncontrolledExceptionErrorPortlet.getTitle()),
-				response.getBody());
-		}
+		_testUncontrolledExceptionError(
+			uncontrolledExceptionErrorPortlet,
+			_language.format(
+				_user.getLocale(), "is-temporarily-unavailable",
+				uncontrolledExceptionErrorPortlet.getTitle()));
 	}
 
 	private void _assertLogEntryMessage(LogCapture logCapture) {
@@ -210,6 +170,35 @@ public class UncontrolledExceptionErrorTest
 			_PORTLET_NAME);
 
 		return uncontrolledExceptionErrorPortlet;
+	}
+
+	private void _testUncontrolledExceptionError(
+			UncontrolledExceptionErrorPortlet uncontrolledExceptionErrorPortlet,
+			String expectedError)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.html.portal.render_portlet_jsp",
+				LoggerTestUtil.ERROR)) {
+
+			PortletContainerTestUtil.Response response =
+				PortletContainerTestUtil.request(
+					PortletURLBuilder.create(
+						_portletURLFactory.create(
+							PortletContainerTestUtil.getHttpServletRequest(
+								group, layout),
+							_PORTLET_NAME, layout.getPlid(),
+							PortletRequest.RENDER_PHASE)
+					).buildString());
+
+			Assert.assertTrue(
+				uncontrolledExceptionErrorPortlet.isCalledRender());
+
+			_assertLogEntryMessage(logCapture);
+
+			_assertUncontrolledExceptionErrorHTML(
+				expectedError, response.getBody());
+		}
 	}
 
 	private static final String _PORTLET_NAME =

@@ -13,7 +13,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import dateFns from 'date-fns';
+import {format, isValid, parse, parseISO} from 'date-fns';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -40,11 +40,8 @@ class DateTimeInput extends React.Component {
 			returnVal = {
 				expanded: false,
 				initialValue: props.value,
-				previousValue: dateFns.format(
-					new Date(props.value),
-					INPUT_DATE_FORMAT
-				),
-				value: dateFns.format(new Date(props.value), INPUT_DATE_FORMAT),
+				previousValue: format(new Date(props.value), INPUT_DATE_FORMAT),
+				value: format(new Date(props.value), INPUT_DATE_FORMAT),
 			};
 		}
 
@@ -64,29 +61,21 @@ class DateTimeInput extends React.Component {
 	};
 
 	_saveDateTimeValue = () => {
+		const dateObj = parseISO(this.state.value.replaceAll('/', '-'));
+
 		let dateInput = '';
 		let dateOutput = '';
 
-		try {
-			dateInput = dateFns.format(
-				new Date(this.state.value),
-				INPUT_DATE_FORMAT
-			);
-			dateOutput = dateFns.format(
-				new Date(this.state.value),
-				OUTPUT_DATE_FORMAT
-			);
+		if (isValid(dateObj)) {
+			dateInput = format(new Date(this.state.value), INPUT_DATE_FORMAT);
+			dateOutput = format(new Date(this.state.value), OUTPUT_DATE_FORMAT);
 		}
-		catch (error) {
-			dateInput = 'Invalid Date';
+		else {
+			dateInput = format(new Date(), INPUT_DATE_FORMAT);
+			dateOutput = format(new Date(), OUTPUT_DATE_FORMAT);
 		}
 
-		if (this.state.previousValue !== dateInput) {
-			if (dateInput === 'Invalid Date') {
-				dateInput = dateFns.format(new Date(), INPUT_DATE_FORMAT);
-				dateOutput = dateFns.format(new Date(), OUTPUT_DATE_FORMAT);
-			}
-
+		if (this.state.previousValue !== dateInput || !isValid(dateObj)) {
 			this.setState(
 				{
 					previousValue: dateInput,
@@ -97,13 +86,11 @@ class DateTimeInput extends React.Component {
 						type: this.props.propertyType,
 						value:
 							this.props.propertyType === PROPERTY_TYPES.DATE_TIME
-								? dateFns
-										.parse(
-											dateOutput,
-											OUTPUT_DATE_FORMAT,
-											new Date()
-										)
-										.toISOString()
+								? parse(
+										dateOutput,
+										OUTPUT_DATE_FORMAT,
+										new Date()
+								  ).toISOString()
 								: dateOutput,
 					});
 				}

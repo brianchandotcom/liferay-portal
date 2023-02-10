@@ -29,6 +29,6 @@ public class SearchContextAttributes {
 		"search.lucene.syntax";
 
 	public static final String ATTRIBUTE_PERMISSIONED_SEARCHER =
-		"permissionedSearch";
+		"permissioned.search";
 
 }

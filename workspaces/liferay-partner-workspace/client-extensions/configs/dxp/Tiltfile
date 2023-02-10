@@ -1,0 +1,36 @@
+load("ext://uibutton", "cmd_button", "text_input", "location")
+
+dxp_data_volume = "dxpData"
+
+cmd_button(
+    "Kill DXP!",
+    argv=[
+        "sh",
+        "-c",
+        "docker container rm -f dxp-server",
+    ],
+    resource="dxp.lfr.dev",
+    icon_name="delete",
+    text="Kill DXP!",
+)
+
+cmd_button(
+    "Drop DXP Data Volume!",
+    argv=[
+        "sh",
+        "-c",
+        "docker volume rm -f %s" % dxp_data_volume,
+    ],
+    resource="dxp.lfr.dev",
+    icon_name="delete",
+    text="Drop DXP Data Volume!",
+)
+
+dxp_buildargs = {
+    "DXP_BASE_IMAGE": "liferay/dxp:7.4.13-u61"
+}
+
+dxp_envs = {
+    "LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER3__NUMBER5__NUMBER4__NUMBER3__NUMBER0_": "true",
+    "LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER6__NUMBER4__NUMBER5__NUMBER2__NUMBER8_": "true"
+}

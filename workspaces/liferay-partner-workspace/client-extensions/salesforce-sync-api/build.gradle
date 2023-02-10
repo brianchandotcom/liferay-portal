@@ -1,0 +1,34 @@
+buildscript {
+  dependencies {
+    classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.3"
+  }
+  repositories {
+    maven {
+      url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+  }
+}
+
+apply plugin: "java"
+apply plugin: "org.springframework.boot"
+
+dependencies {
+  implementation "com.github.librepdf:openpdf:1.3.27"
+  implementation "org.springframework.boot:spring-boot-starter-oauth2-client:2.7.3"
+  implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.7.3"
+  implementation "org.springframework.boot:spring-boot-starter-web:2.7.3"
+  implementation "org.springframework.boot:spring-boot-starter-webflux:2.7.3"
+  implementation "com.fasterxml.jackson.core:jackson-databind:2.13.3"
+}
+
+repositories {
+  maven {
+    url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+  }
+}
+
+try {
+  tasks.named("assembleClientExtension") {
+    from bootJar
+  }
+} catch (Exception e) {}

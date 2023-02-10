@@ -96,7 +96,7 @@ const baseFilters: Filter = {
 		label: i18n.translate('Component'),
 		name: 'componentId',
 		resource: ({projectId}) =>
-			`/components?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+			`/components?fields=id,name&sort=name:asc&pageSize=200&filter=${SearchBuilder.eq(
 				'projectId',
 				projectId as string
 			)}`,
@@ -114,7 +114,11 @@ const baseFilters: Filter = {
 	productVersion: {
 		label: i18n.translate('product-version'),
 		name: 'productVersion',
-		resource: '/productversions?fields=id,name&sort=name:asc&pageSize=100',
+		resource: ({projectId}) =>
+			`/productversions?fields=id,name&sort=name:asc&pageSize=100&filter=${SearchBuilder.eq(
+				'projectId',
+				projectId as string
+			)}`,
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProductVersion>(item));
 		},
@@ -228,13 +232,12 @@ const filterSchema = {
 	},
 	buildResultsHistory: {
 		fields: [
-			{
-				disabled: 'false',
+			overrides(baseFilters.productVersion, {
 				label: i18n.translate('product-version-name'),
 				name:
-					'buildToCaseResult/r_productVersionToBuilds_c_productVersion',
-				type: 'text',
-			},
+					'buildToCaseResult/r_productVersionToBuilds_c_productVersionId',
+				type: 'multiselect',
+			}),
 			{
 				label: i18n.translate('environment'),
 				name: 'runToCaseResult/name',
@@ -291,6 +294,7 @@ const filterSchema = {
 			},
 			overrides(baseFilters.team, {
 				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				type: 'multiselect',
 			}),
 		] as RendererFields[],
 	},
@@ -380,26 +384,34 @@ const filterSchema = {
 			{
 				label: i18n.translate('key'),
 				name: 'key',
+				operator: 'contains',
 				type: 'text',
 			},
 			{
 				label: i18n.translate('link'),
 				name: 'linkURL',
+				operator: 'contains',
 				type: 'text',
 			},
-			baseFilters.team,
-			baseFilters.component,
+			overrides(baseFilters.team, {
+				name: 'componentToRequirements/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {type: 'multiselect'}),
 			{
-				...baseFilters.component,
 				label: i18n.translate('jira-components'),
-				name: 'jira-components',
+				name: 'components',
+				operator: 'contains',
+				type: 'text',
 			},
 			{
 				label: i18n.translate('summary'),
 				name: 'summary',
+				operator: 'contains',
 				type: 'text',
 			},
 			{
+				disabled: true,
 				label: i18n.translate('case'),
 				name: 'case',
 				type: 'textarea',

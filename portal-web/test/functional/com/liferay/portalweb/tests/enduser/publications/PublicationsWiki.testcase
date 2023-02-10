@@ -78,27 +78,33 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-173707. Multiple 'Your request repeated successfully' messages appear when switching between publications on a page with many Asset Publishers"
-	@priority = "3"
+	@priority = 3
 	test DoesNotDisplaySuccessMessageWhenSwitchingToProduction {
+		Navigator.openURL();
+
 		ContentPages.addPage(pageName = "Test Page");
 
-		var count = "0";
+		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		while ("${count}" != "4") {
-			PageEditor.addWidget(portletName = "Asset Publisher");
+		var count = 0;
+
+		while (${count} != 3) {
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Asset Publisher");
 
 			var count = ${count} + 1;
 		}
 
 		PageEditor.publish();
 
-		Publications.enablePublications();
-
 		JSONPublications.addPublication(publicationName = "Test Publication");
 
 		JSONPublications.selectPublication(publicationName = "Test Publication");
 
-		Navigator.gotoPage(pageName = "Test Page");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Page",
+			siteName = "Guest");
 
 		Publications.workOnProduction();
 

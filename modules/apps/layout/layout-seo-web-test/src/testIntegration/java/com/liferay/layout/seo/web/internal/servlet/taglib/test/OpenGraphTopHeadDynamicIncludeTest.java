@@ -1592,12 +1592,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				LocaleUtil.fromLanguageId(availableLanguageId));
 		}
 
-		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
-			_layout.getGroupId());
-
-		if (!availableLocales.contains(siteDefaultLocale)) {
-			availableLocales.add(siteDefaultLocale);
-		}
+		availableLocales.add(
+			_portal.getSiteDefaultLocale(_layout.getGroupId()));
 
 		return availableLocales;
 	}

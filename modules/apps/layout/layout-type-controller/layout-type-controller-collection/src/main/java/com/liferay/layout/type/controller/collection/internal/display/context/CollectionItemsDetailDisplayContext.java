@@ -167,32 +167,24 @@ public class CollectionItemsDetailDisplayContext {
 	}
 
 	private long _getInfoCollectionProviderItemCount(String collectionPK) {
-		InfoCollectionProvider<?> infoCollectionProvider = null;
-
-		for (InfoCollectionProvider<?> curInfoCollectionProvider :
+		for (InfoCollectionProvider<?> infoCollectionProvider :
 				(List<InfoCollectionProvider<?>>)
 					(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 						InfoCollectionProvider.class)) {
 
 			if (!Objects.equals(
-					curInfoCollectionProvider.getKey(), collectionPK)) {
+					infoCollectionProvider.getKey(), collectionPK)) {
 
 				continue;
 			}
 
-			infoCollectionProvider = curInfoCollectionProvider;
+			InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
+				new CollectionQuery());
 
-			break;
+			return infoPage.getTotalCount();
 		}
 
-		if (infoCollectionProvider == null) {
-			return 0;
-		}
-
-		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
-			new CollectionQuery());
-
-		return infoPage.getTotalCount();
+		return 0;
 	}
 
 	private final AssetListAssetEntryProvider _assetListAssetEntryProvider;

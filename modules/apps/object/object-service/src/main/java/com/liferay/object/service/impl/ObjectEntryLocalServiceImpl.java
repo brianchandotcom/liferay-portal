@@ -449,6 +449,8 @@ public class ObjectEntryLocalServiceImpl
 
 		indexer.delete(objectEntry);
 
+		ObjectActionThreadLocal.clearObjectActionIds();
+
 		return objectEntry;
 	}
 

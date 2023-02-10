@@ -204,6 +204,143 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-172971. As a page admin, I can edit friendly URL of page sets."
+	@priority = "4"
+	test EditFriendlyURLOfPageSet {
+		task ("Given a page admin has a page set with child pages") {
+			Site.openSitesAdmin();
+
+			Site.addCustomCP(
+				siteName = "Site Name",
+				siteTemplateName = "Welcome");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Page Set",
+				sitePageType = "Page Set");
+
+			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "${pageName}",
+					parentLayoutName = "Test Page Set",
+					type = "content");
+			}
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could edit the friendly URL of page set") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Set");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/presentation");
+		}
+
+		task ("When the page admin navigates to the page set via new friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+		}
+
+		task ("Then the page admin is redirected to the first child page") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could delete the new friendly URL of page set") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Set");
+
+			PagesAdmin.gotoFriendlyURLHistory();
+
+			MouseOver(
+				key_oldFriendlyURL = "/test-page-set",
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+			Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+			PagesAdmin.removeOldFriendlyURL(oldFriendlyURL = "/presentation");
+
+			IFrame.closeFrame();
+
+			PortletEntry.save();
+		}
+
+		task ("When the page admin navigates to the page set via new friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+		}
+
+		task ("Then the page admin is redirected to not found") {
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could delete the page set and child pages") {
+			for (var pageName : list "Test Page Name 1,Test Page Name 2,Test Page Set") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Site Name",
+					layoutName = "${pageName}");
+			}
+		}
+
+		task ("When the page admin navigates to the page set via friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-set");
+		}
+
+		task ("Then the page admin is redirected to not found") {
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-71160. Can edit the SEO settings in a widget page via control menu."
 	@priority = 5
 	test EditPageViaControlMenu {

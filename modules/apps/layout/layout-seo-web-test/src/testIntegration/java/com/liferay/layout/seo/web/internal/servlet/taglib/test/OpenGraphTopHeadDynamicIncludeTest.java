@@ -93,12 +93,10 @@ import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1032,16 +1030,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
 		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 
-		Stream<String> stream = Arrays.stream(
-			_layout.getAvailableLanguageIds());
+		Set<Locale> locales = new HashSet<>();
 
-		_assertAlternateLocalesTag(
-			document,
-			stream.map(
-				LocaleUtil::fromLanguageId
-			).collect(
-				Collectors.toSet()
-			));
+		for (String availableLanguageId : _layout.getAvailableLanguageIds()) {
+			locales.add(LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+
+		_assertAlternateLocalesTag(document, locales);
 	}
 
 	@Test
@@ -1588,13 +1583,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			return _language.getAvailableLocales(_group.getGroupId());
 		}
 
-		Stream<String> stream = Arrays.stream(
-			infoItemLanguagesProvider.getAvailableLanguageIds(_layout));
+		Set<Locale> availableLocales = new HashSet<>();
 
-		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
+		for (String availableLanguageId :
+				infoItemLanguagesProvider.getAvailableLanguageIds(_layout)) {
 
-		Set<Locale> availableLocales = localesStream.collect(
-			Collectors.toSet());
+			availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
 
 		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			_layout.getGroupId());

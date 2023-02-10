@@ -85,16 +85,26 @@ public class AMServlet extends HttpServlet {
 				throw new AMException.AMNotFound();
 			}
 
+			boolean download = ParamUtil.getBoolean(
+				httpServletRequest, "download");
+
 			long fileEntryId = _getFileEntryId(
 				String.valueOf(adaptiveMedia.getURI()));
 
 			if (fileEntryId > 0) {
+				String cacheControlValue =
+					HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE;
+
+				if (download) {
+					cacheControlValue =
+						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
+				}
+
 				httpServletResponse.addHeader(
 					HttpHeaders.CACHE_CONTROL,
 					FileEntryHttpHeaderCustomizerUtil.getHttpHeaderValue(
 						_dlAppLocalService.getFileEntry(fileEntryId),
-						HttpHeaders.CACHE_CONTROL,
-						HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
+						HttpHeaders.CACHE_CONTROL, cacheControlValue));
 			}
 
 			Optional<Long> contentLengthOptional =
@@ -114,9 +124,6 @@ public class AMServlet extends HttpServlet {
 				AMAttribute.getFileNameAMAttribute());
 
 			String fileName = fileNameOptional.orElse(null);
-
-			boolean download = ParamUtil.getBoolean(
-				httpServletRequest, "download");
 
 			if (download) {
 				ServletResponseUtil.sendFile(

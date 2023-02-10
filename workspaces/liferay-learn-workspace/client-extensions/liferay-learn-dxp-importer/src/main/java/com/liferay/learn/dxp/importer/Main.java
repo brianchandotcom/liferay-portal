@@ -112,6 +112,8 @@ public class Main {
 			tokenProperties.load(inputStream);
 		}
 
+        _syncRepo(new File("dependencies/sync.sh"));
+
 		File markdownImportDirFile = new File(
 			System.getenv("MARKDOWN_IMPORT_DIR"));
 
@@ -831,6 +833,36 @@ public class Main {
 		}
 
 		return line;
+	}
+
+    protected void _syncRepo(File syncScript) throws IOException {
+		try {
+			ProcessBuilder processBuilder = new ProcessBuilder(
+				"sh", syncScript.getPath());
+
+			processBuilder.redirectErrorStream(true);
+
+			Process process = processBuilder.start();
+
+			process.waitFor();
+
+			int exitValue = process.exitValue();
+
+			if (exitValue != 0) {
+				InputStream inputStream = process.getInputStream();
+
+				String error = StringUtil.read(inputStream);
+
+				_log.error(
+					"Unsuccessfully executed shell script with output " +
+						"of: " + error);
+
+				inputStream.close();
+			}
+		}
+		catch (InterruptedException ie) {
+			_log.error(ie, ie);
+		}
 	}
 
 	private BasedSequence _toBasedSequence(String string) {

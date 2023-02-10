@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -420,24 +419,22 @@ public class DefaultCommerceCheckoutStepHttpHelper
 						if ((commercePaymentMethodGroupRel != null) &&
 							commercePaymentMethodGroupRel.isActive()) {
 
-							Stream<CommercePaymentMethod>
-								commercePaymentMethodsStream =
-									commercePaymentMethods.stream();
+							for (CommercePaymentMethod
+									curCommercePaymentMethod :
+										commercePaymentMethods) {
 
-							commercePaymentMethod =
-								commercePaymentMethodsStream.filter(
-									curCommercePaymentMethod -> {
-										String key =
-											curCommercePaymentMethod.getKey();
+								String key = curCommercePaymentMethod.getKey();
 
-										return key.equals(
-											commercePaymentMethodGroupRel.
-												getEngineKey());
-									}
-								).findFirst(
-								).orElse(
-									commercePaymentMethods.get(0)
-								);
+								if (key.equals(
+										commercePaymentMethodGroupRel.
+											getEngineKey())) {
+
+									commercePaymentMethod =
+										curCommercePaymentMethod;
+
+									break;
+								}
+							}
 						}
 					}
 
@@ -850,22 +847,22 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			}
 
 			if (commerceShippingOptionAccountEntryRel != null) {
-				Stream<CommerceShippingOption> commerceShippingOptionsStream =
-					commerceShippingOptions.stream();
+				CommerceShippingOption defaultCommerceShippingOption = null;
 
-				CommerceShippingOption defaultCommerceShippingOption =
-					commerceShippingOptionsStream.filter(
-						commerceShippingOption -> {
-							String key = commerceShippingOption.getKey();
+				for (CommerceShippingOption commerceShippingOption :
+						commerceShippingOptions) {
 
-							return key.equals(
-								commerceShippingOptionAccountEntryRel.
-									getCommerceShippingOptionKey());
-						}
-					).findFirst(
-					).orElse(
-						null
-					);
+					String key = commerceShippingOption.getKey();
+
+					if (key.equals(
+							commerceShippingOptionAccountEntryRel.
+								getCommerceShippingOptionKey())) {
+
+						defaultCommerceShippingOption = commerceShippingOption;
+
+						break;
+					}
+				}
 
 				if (defaultCommerceShippingOption != null) {
 					return _updateCommerceOrder(

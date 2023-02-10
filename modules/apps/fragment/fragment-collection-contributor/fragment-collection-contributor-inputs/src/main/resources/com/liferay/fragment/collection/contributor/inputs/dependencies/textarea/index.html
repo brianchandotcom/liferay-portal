@@ -5,13 +5,13 @@
 		<textarea aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
 
 		<p class="mt-1 text-secondary [#if !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
-			<span aria-live="assertive" class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">
+			<span class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />
 				</svg>
 
-				<span data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentEntryLinkNamespace}-length-warning-text"></span>
-			</span>:
+				<span aria-live="assertive" data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentEntryLinkNamespace}-length-warning-text"></span>:
+			</span>
 			<span id="${fragmentEntryLinkNamespace}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
 		</p>
 

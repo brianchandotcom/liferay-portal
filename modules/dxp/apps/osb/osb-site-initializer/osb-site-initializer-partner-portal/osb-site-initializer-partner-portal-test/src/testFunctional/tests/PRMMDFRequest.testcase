@@ -258,7 +258,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-173507. Verify that the detail page displays all the information the partner entered on MDF Request Form"
-	@priority = "5"
+	@priority = 5
 	test DetailPageDisplaysAllMDFInformation {
 		task ("Given I go to add a new MDF Request") {
 			var accountName = "Company Name 1";
@@ -284,22 +284,22 @@ definition {
 			PRMMarketing.gotoAddNewMDF();
 
 			PRMMDFRequest.createNewRequest(
-				accountName = "${accountName}",
-				activityDescription = "${activityDescription}",
-				activityName = "${activityName}",
-				budgetList = "${budgetList}",
+				accountName = ${accountName},
+				activityDescription = ${activityDescription},
+				activityName = ${activityName},
+				budgetList = ${budgetList},
 				campaignDescription = "Campaign Description",
-				campaignName = "${campaignName}",
-				countryName = "${countryName}",
-				followUpStrategy = "${followUpStrategy}",
-				goalsOptions = "${goalsOptions}",
-				leadFollowUpList = "${leadFollowUpList}",
-				leadList = "${leadList}",
-				tactic = "${tactic}",
-				targetMarketOptions = "${targetMarketOptions}",
-				targetOfLeads = "${targetOfLeads}",
-				targetRolesOptions = "${targetRolesOptions}",
-				typeOfActivity = "${typeOfActivity}");
+				campaignName = ${campaignName},
+				countryName = ${countryName},
+				followUpStrategy = ${followUpStrategy},
+				goalsOptions = ${goalsOptions},
+				leadFollowUpList = ${leadFollowUpList},
+				leadList = ${leadList},
+				tactic = ${tactic},
+				targetMarketOptions = ${targetMarketOptions},
+				targetOfLeads = ${targetOfLeads},
+				targetRolesOptions = ${targetRolesOptions},
+				typeOfActivity = ${typeOfActivity});
 		}
 
 		task ("When I go to View MDF details page") {
@@ -308,23 +308,23 @@ definition {
 
 		task ("Then verify that all the filled in fields are present") {
 			PRMMDFRequest.viewMDFActivityDetails(
-				activityDescription = "${activityDescription}",
-				activityName = "${activityName}",
-				budget = "${budget}",
-				endDate = "${endDate}",
-				expense = "${expense}",
-				leadList = "${leadList}",
-				startDate = "${startDate}",
-				tactic = "${tactic}",
-				typeOfActivity = "${typeOfActivity}");
+				activityDescription = ${activityDescription},
+				activityName = ${activityName},
+				budget = ${budget},
+				endDate = ${endDate},
+				expense = ${expense},
+				leadList = ${leadList},
+				startDate = ${startDate},
+				tactic = ${tactic},
+				typeOfActivity = ${typeOfActivity});
 
 			PRMMDFRequest.viewMDFCompanyDetails(
-				accountName = "${accountName}",
-				campaignName = "${campaignName}",
-				countryName = "${countryName}",
-				goalsOptions = "${goalsOptions}",
-				targetMarketOptions = "${targetMarketOptions}",
-				targetRolesOptions = "${targetRolesOptions}");
+				accountName = ${accountName},
+				campaignName = ${campaignName},
+				countryName = ${countryName},
+				goalsOptions = ${goalsOptions},
+				targetMarketOptions = ${targetMarketOptions},
+				targetRolesOptions = ${targetRolesOptions});
 		}
 	}
 

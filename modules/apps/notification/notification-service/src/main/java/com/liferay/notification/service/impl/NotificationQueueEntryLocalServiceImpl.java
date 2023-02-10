@@ -16,6 +16,7 @@ package com.liferay.notification.service.impl;
 
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.exception.MustNotResendNotificationException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -183,6 +184,16 @@ public class NotificationQueueEntryLocalServiceImpl
 
 		NotificationQueueEntry notificationQueueEntry =
 			getNotificationQueueEntry(notificationQueueEntryId);
+
+		if (notificationQueueEntry.getStatus() ==
+				NotificationQueueEntryConstants.STATUS_SENT) {
+
+			throw new MustNotResendNotificationException(
+				String.format(
+					"Must not resend notification with Id %d, because it has " +
+						"already been sent",
+					notificationQueueEntry.getNotificationQueueEntryId()));
+		}
 
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(

@@ -17,6 +17,8 @@ package com.liferay.poshi.core.elements;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -60,6 +62,14 @@ public class DescriptionPoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 
 		String message = getDoubleQuotedContent(poshiScript);
+
+		Matcher matcher = _messagePattern.matcher(message);
+
+		if (matcher.find()) {
+			throw new PoshiScriptParserException(
+				"Description cannot contain <> in its message, please remove",
+				message, (PoshiElement)getParent());
+		}
 
 		addAttribute("message", message);
 	}
@@ -116,5 +126,7 @@ public class DescriptionPoshiElement extends PoshiElement {
 	}
 
 	private static final String _ELEMENT_NAME = "description";
+
+	private static final Pattern _messagePattern = Pattern.compile("<.*>");
 
 }

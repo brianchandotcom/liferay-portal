@@ -403,12 +403,11 @@ public class SearchBarPortletDisplayContextFactory {
 				String scopeParameterName =
 					searchSettings.getScopeParameterName();
 
-				if (scopeParameterName == null) {
-					scopeParameterName =
-						searchBarPortletPreferences.getScopeParameterName();
+				if (scopeParameterName != null) {
+					return scopeParameterName;
 				}
 
-				return scopeParameterName;
+				return searchBarPortletPreferences.getScopeParameterName();
 			}
 		}
 

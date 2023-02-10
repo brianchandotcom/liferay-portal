@@ -54,7 +54,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				startDate,
 			}),
 			nestedFields:
-				'case,component.team,build.productVersion,build.routine,run,user',
+				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user',
 			transformData: (caseResult) => ({
 				...caseResult,
 				build: caseResult?.r_buildToCaseResult_c_build
@@ -74,17 +74,28 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 							caseType:
 								caseResult?.r_caseToCaseResult_c_case
 									?.r_caseTypeToCases_c_caseType,
-							component:
-								caseResult?.r_caseToCaseResult_c_case
-									?.r_componentToCases_c_component,
+							component: caseResult?.r_caseToCaseResult_c_case
+								?.r_componentToCases_c_component
+								? {
+										...caseResult?.r_caseToCaseResult_c_case
+											?.r_componentToCases_c_component,
+										team:
+											caseResult
+												?.r_caseToCaseResult_c_case
+												.r_componentToCases_c_component
+												.r_teamToComponents_c_team,
+								  }
+								: undefined,
 					  }
 					: undefined,
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
-							team:
-								caseResult.r_componentToCaseResult_c_component
-									.r_teamToComponents_c_team,
+							team: caseResult.r_componentToCaseResult_c_component
+								.r_teamToComponents_c_team
+								? caseResult.r_componentToCaseResult_c_component
+										.r_teamToComponents_c_team
+								: undefined,
 					  }
 					: undefined,
 				run: caseResult?.r_runToCaseResult_c_run

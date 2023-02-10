@@ -59,6 +59,9 @@ const Build = () => {
 	return (
 		<Container className="mt-4">
 			<ListViewRest
+				initialContext={{
+					columns: {environment: false},
+				}}
 				managementToolbarProps={{
 					filterSchema: 'buildResults',
 					title: i18n.translate('tests'),
@@ -69,12 +72,28 @@ const Build = () => {
 					columns: [
 						{
 							clickable: true,
+							key: 'caseType',
+							render: (
+								_,
+								{case: testrayCase}: TestrayCaseResult
+							) => testrayCase?.caseType?.name,
+							value: i18n.translate('case-type'),
+						},
+						{
+							clickable: true,
 							key: 'priority',
 							render: (
 								_,
 								{case: testrayCase}: TestrayCaseResult
 							) => testrayCase?.priority,
 							value: i18n.translate('priority'),
+						},
+						{
+							clickable: true,
+							key: 'team',
+							render: (_, testrayCaseResult: TestrayCaseResult) =>
+								testrayCaseResult.case?.component?.team?.name,
+							value: i18n.translate('team'),
 						},
 						{
 							key: 'component',
@@ -101,6 +120,13 @@ const Build = () => {
 									?.toString()
 									.padStart(2, '0'),
 							value: i18n.translate('run'),
+						},
+						{
+							clickable: true,
+							key: 'environment',
+							render: (_, item: TestrayCaseResult) =>
+								item?.run?.name,
+							value: i18n.translate('environment'),
 						},
 						{
 							key: 'user',

@@ -184,25 +184,38 @@ const filterSchema = {
 	},
 	buildResults: {
 		fields: [
-			baseFilters.caseType,
-			baseFilters.priority,
-			baseFilters.team,
-			baseFilters.component,
+			overrides(baseFilters.caseType, {
+				name: 'caseToCaseResult/r_caseTypeToCases_c_caseTypeId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.priority, {
+				type: 'select',
+			}),
+			overrides(baseFilters.team, {
+				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {
+				name: 'componentToCaseResult/id',
+				type: 'multiselect',
+			}),
 			{
 				label: i18n.translate('environment'),
-				name: 'environment',
+				name: 'runToCaseResult/name',
+				operator: 'contains',
 				type: 'text',
 			},
-			baseFilters.run,
+			overrides(baseFilters.run, {name: 'runToCaseResult/id'}),
 			{
 				label: i18n.translate('case-name'),
-				name: 'caseName',
+				name: 'caseToCaseResult/name',
+				operator: 'contains',
 				type: 'text',
 			},
-			baseFilters.assignee,
+			overrides(baseFilters.assignee, {name: 'userId'}),
 			{
 				label: i18n.translate('status'),
-				name: 'status',
+				name: 'dueStatus',
 				options: [
 					'Blocked',
 					'Failed',
@@ -216,6 +229,7 @@ const filterSchema = {
 			{
 				label: i18n.translate('issues'),
 				name: 'issues',
+				operator: 'contains',
 				type: 'textarea',
 			},
 			{
@@ -225,7 +239,8 @@ const filterSchema = {
 			},
 			{
 				label: i18n.translate('comments'),
-				name: 'comments',
+				name: 'comment',
+				operator: 'contains',
 				type: 'textarea',
 			},
 		] as RendererFields[],

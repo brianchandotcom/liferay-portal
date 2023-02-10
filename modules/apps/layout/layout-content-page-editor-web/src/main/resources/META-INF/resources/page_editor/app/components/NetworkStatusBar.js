@@ -76,7 +76,7 @@ const NetworkStatusBar = ({error, status}) => {
 			!autoSaveMessageRef.current
 		) {
 			autoSaveMessageRef.current = Liferay.Language.get(
-				'page-editor-autosaves-your-work'
+				'changes-have-been-saved.-page-editor-will-autosave-new-changes'
 			);
 		}
 	}, [status]);

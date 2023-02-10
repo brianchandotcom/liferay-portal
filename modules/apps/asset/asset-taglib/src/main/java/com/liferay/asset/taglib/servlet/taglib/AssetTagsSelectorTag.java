@@ -265,11 +265,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			}
 		}
 
-		if (!(Validator.isNotNull(_className) && (_classPK > 0)) &&
-			_ignoreRequestValue) {
-
-			tagNames.addAll(StringUtil.split(_tagNames));
-		}
+		tagNames.addAll(StringUtil.split(_tagNames));
 
 		return new ArrayList<>(tagNames);
 	}

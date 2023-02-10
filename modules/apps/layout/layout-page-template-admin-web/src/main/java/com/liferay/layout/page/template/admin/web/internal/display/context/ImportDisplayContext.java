@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -182,15 +180,10 @@ public class ImportDisplayContext {
 			return null;
 		}
 
-		Stream<LayoutsImporterResultEntry> stream =
-			layoutsImporterResultEntries.stream();
-
-		_layoutsImporterResultEntriesWithWarnings = stream.filter(
+		_layoutsImporterResultEntriesWithWarnings = ListUtil.filter(
+			layoutsImporterResultEntries,
 			layoutsImporterResultEntry -> ArrayUtil.isNotEmpty(
-				layoutsImporterResultEntry.getWarningMessages())
-		).collect(
-			Collectors.toList()
-		);
+				layoutsImporterResultEntry.getWarningMessages()));
 
 		return _layoutsImporterResultEntriesWithWarnings;
 	}

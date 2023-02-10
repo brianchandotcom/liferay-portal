@@ -917,6 +917,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>localized</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>propsTransformer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1365,6 +1371,12 @@
 		<attribute>
 			<description></description>
 			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>localized</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

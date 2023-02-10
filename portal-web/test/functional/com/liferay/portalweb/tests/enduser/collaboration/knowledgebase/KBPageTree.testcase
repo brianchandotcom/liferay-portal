@@ -25,6 +25,34 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that the Sidebar can be expanded/collapsed by clicking on the icon that corresponds to the section where he is."
+	@priority = 3
+	test CanPageTreeExpandAndCollapseByClickingSameSectionIcon {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.closePageTreePanel(section = "Folders and Articles");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
+
+		KBArticle.closePageTreePanel(section = "Templates");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
+	}
+
 	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."
 	@priority = 5
 	test CanViewArticleInFolderThroughPageTreePanel {

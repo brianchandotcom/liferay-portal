@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -81,14 +82,12 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlags.add(liferaySiteInitializerFeatureFlag);
 			}
 			else {
-				if (!fileContent.contains("feature.flag")) {
-					continue;
-				}
-
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern2));
+				featureFlags.addAll(
+					_getFeatureFlagsByFeatureFlagManagerUtil(fileContent));
 			}
 		}
 
@@ -159,10 +158,46 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlags;
 	}
 
+	private List<String> _getFeatureFlagsByFeatureFlagManagerUtil(
+		String content) {
+
+		List<String> featureFlags = new ArrayList<>();
+
+		Matcher matcher = _featureFlagPattern3.matcher(content);
+
+		while (matcher.find()) {
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				JavaSourceUtil.getMethodCall(content, matcher.start()));
+
+			if (parameterList.isEmpty()) {
+				return featureFlags;
+			}
+
+			String parameter = null;
+
+			if (parameterList.size() == 1) {
+				parameter = parameterList.get(0);
+			}
+			else {
+				parameter = parameterList.get(1);
+			}
+
+			if ((parameter != null) && parameter.endsWith(StringPool.QUOTE) &&
+				parameter.startsWith(StringPool.QUOTE)) {
+
+				featureFlags.add(StringUtil.unquote(parameter));
+			}
+		}
+
+		return featureFlags;
+	}
+
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
 		"\"feature\\.flag\\.(.+?)\"");
 	private static final Pattern _featureFlagPattern2 = Pattern.compile(
 		"\\.feature\\.flag=(.+?)\"");
+	private static final Pattern _featureFlagPattern3 = Pattern.compile(
+		"FeatureFlagManagerUtil\\.isEnabled\\(");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 

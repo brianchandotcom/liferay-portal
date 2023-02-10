@@ -16,13 +16,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "This is a test for LPS-172971. As a page admin, I can edit the friendly URL of page set with staging."
-	@priority = "3"
+	@priority = 3
 	test EditFriendlyURLOfPageSetInStagingSite {
 		task ("Given a page admin has a page set with child pages") {
 			Site.openSitesAdmin();
@@ -40,7 +40,7 @@ definition {
 			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Site Name",
-					layoutName = "${pageName}",
+					layoutName = ${pageName},
 					parentLayoutName = "Test Page Set",
 					type = "content");
 			}

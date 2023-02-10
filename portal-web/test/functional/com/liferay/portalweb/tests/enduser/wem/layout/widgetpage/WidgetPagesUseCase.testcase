@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-172971. As a page admin, I can edit friendly URL of page sets."
-	@priority = "4"
+	@priority = 4
 	test EditFriendlyURLOfPageSet {
 		task ("Given a page admin has a page set with child pages") {
 			Site.openSitesAdmin();
@@ -223,7 +223,7 @@ definition {
 			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Site Name",
-					layoutName = "${pageName}",
+					layoutName = ${pageName},
 					parentLayoutName = "Test Page Set",
 					type = "content");
 			}
@@ -321,7 +321,7 @@ definition {
 			for (var pageName : list "Test Page Name 1,Test Page Name 2,Test Page Set") {
 				JSONLayout.deletePublicLayout(
 					groupName = "Site Name",
-					layoutName = "${pageName}");
+					layoutName = ${pageName});
 			}
 		}
 

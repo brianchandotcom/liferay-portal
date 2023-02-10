@@ -71,7 +71,7 @@ public class HttpSecurityConfig {
 	@Bean
 	public JwtDecoder jwtDecoder(
 			@Value("${${lxc.default.oauth.application}.oauth2.user.agent.client.id}") String clientId,
-			@Value("${${lxc.default.oauth.application}.oauth2.jwks.uri}") String jwkSetUrl)
+			@Value("${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.mainDomain}${${lxc.default.oauth.application}.oauth2.jwks.uri}") String jwkSetUrl)
 		throws Exception {
 
 		DefaultJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();

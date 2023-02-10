@@ -162,6 +162,7 @@ export default function CartQuickAdd() {
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayMultiSelect
+						allowsCustomLabel={false}
 						className="p3"
 						inputName="searchProducts"
 						items={selectedProducts}

@@ -358,8 +358,7 @@ AUI.add(
 						'0_json': JSON.stringify(criterionJSON),
 						'1_json': JSON.stringify(criterionJSON),
 						'2_json': JSON.stringify(uploadCriterionJSON),
-						'criteria':
-							'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
+						'criteria': 'file',
 						'itemSelectedEventName':
 							portletNamespace + 'selectDocumentLibrary',
 						'p_p_id': Liferay.PortletKeys.ITEM_SELECTOR,

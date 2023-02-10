@@ -1659,9 +1659,7 @@ AUI.add(
 						'documentLibrarySelectorURL'
 					);
 
-					let retVal = instance.getDocumentLibraryURL(
-						'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion'
-					);
+					let retVal = instance.getDocumentLibraryURL('file');
 
 					if (documentLibrarySelectorURL) {
 						retVal = documentLibrarySelectorURL;

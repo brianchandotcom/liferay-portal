@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -36,9 +37,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -61,6 +64,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockMultipartHttpServletRequest;
 
 /**
@@ -96,8 +101,10 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 	@Test
 	public void testUpdateTemplateEntry() throws Exception {
+		String script = "<#-- Modified script content -->";
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest();
+			_getMockLiferayPortletActionRequest(script);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
@@ -113,12 +120,6 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter(
 			"description_" + languageId, description);
-
-		String script = "<#-- Modified script content -->";
-
-		mockLiferayPortletActionRequest.addParameter(
-			"scriptContent",
-			Base64.encode(script.getBytes(StandardCharsets.UTF_8)));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"templateEntryId",
@@ -151,13 +152,50 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		Assert.assertEquals(script, ddmTemplate.getScript());
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private MockMultipartHttpServletRequest
+			_createMockMultipartHttpServletRequest(String script)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		byte[] bytes = script.getBytes(StandardCharsets.UTF_8);
+
+		mockMultipartHttpServletRequest.addFile(
+			new MockMultipartFile("scriptContent", bytes));
+
+		mockMultipartHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
+
+		String boundary = "WebKitFormBoundary" + StringUtil.randomString();
+
+		mockMultipartHttpServletRequest.setContent(
+			_getContent(boundary, bytes));
+		mockMultipartHttpServletRequest.setContentType(
+			MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
+
+		return mockMultipartHttpServletRequest;
+	}
+
+	private byte[] _getContent(String boundary, byte[] bytes) {
+		String start = StringBundler.concat(
+			StringPool.DOUBLE_DASH, boundary,
+			"\r\nContent-Disposition:form-data;name=\"scriptContent\";",
+			"filename=\"scriptContent\";\r\nContent-type:application/json",
+			"\r\n\r\n");
+
+		String end = StringBundler.concat(
+			"\r\n--", boundary, StringPool.DOUBLE_DASH);
+
+		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			String script)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest(
-				new MockMultipartHttpServletRequest());
+				_createMockMultipartHttpServletRequest(script));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));

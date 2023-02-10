@@ -216,7 +216,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		int end = searchContext.getEnd();
 		int start = searchContext.getStart();
 
-		if (!_permissionedSearch(searchContext)) {
+		if (!GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER))) {
+
 			Integer from = searchRequest.getFrom();
 			Integer size = searchRequest.getSize();
 
@@ -413,12 +416,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchContext searchContext) {
 
 		return _searchResponseBuilderFactory.builder(searchContext);
-	}
-
-	private boolean _permissionedSearch(SearchContext searchContext) {
-		return GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER));
 	}
 
 	private void _populateResponse(

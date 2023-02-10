@@ -245,3 +245,31 @@ export function getContextLink(url) {
 		headers: {Link: encodeURI(link)},
 	};
 }
+
+/**
+ * @param { import("graphql-hooks").APIError } error
+ */
+export function processGraphQLError(error) {
+	const _error = {
+		message: error.message ?? '',
+		type: 'danger',
+	};
+
+	if (error.fetchError) {
+		_error.message = error.fetchError.message;
+	}
+
+	if (error.graphQLErrors) {
+		for (const graphQLError of error.graphQLErrors) {
+			_error.message += `${graphQLError.message} -`;
+		}
+	}
+
+	if (error.httpError) {
+		console.error('Forbidden ', error.httpError);
+
+		_error.message = Liferay.Language.get('an-unexpected-error-occurred');
+	}
+
+	Liferay.Util.openToast(_error);
+}

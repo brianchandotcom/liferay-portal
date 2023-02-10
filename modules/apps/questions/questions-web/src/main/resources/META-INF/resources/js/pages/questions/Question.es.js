@@ -63,6 +63,7 @@ import {
 	getErrorObject,
 	getFullPath,
 	historyPushWithSlug,
+	processGraphQLError,
 } from '../../utils/utils.es';
 import FlagsContainer from './components/FlagsContainer';
 
@@ -91,7 +92,7 @@ export default withRouter(
 		const editorRef = useRef('');
 
 		const [isModerate, setIsModerate] = useState(false);
-		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
+		const [isPostButtonDisabled, setIsPostButtonDisabled] = useState(true);
 		const [isVisibleEditor, setIsVisibleEditor] = useState(false);
 		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 
@@ -220,8 +221,10 @@ export default withRouter(
 		};
 
 		const onCreateAnswer = async () => {
+			setIsPostButtonDisabled(true);
+
 			try {
-				await createAnswer({
+				const {error} = await createAnswer({
 					fetchOptionsOverrides: getContextLink(
 						`${sectionTitle}/${questionId}`
 					),
@@ -230,6 +233,12 @@ export default withRouter(
 						messageBoardThreadId: question.id,
 					},
 				});
+
+				if (error) {
+					setIsPostButtonDisabled(false);
+
+					return processGraphQLError(error);
+				}
 
 				editorRef.current.clearContent();
 
@@ -245,7 +254,11 @@ export default withRouter(
 				});
 				setIsVisibleEditor(false);
 			}
-			catch (error) {}
+			catch (error) {
+				processGraphQLError(error);
+			}
+
+			setIsPostButtonDisabled(false);
 		};
 
 		const deleteAnswer = useCallback(
@@ -625,7 +638,7 @@ export default withRouter(
 															'your-answer'
 														)}
 														onContentLengthValid={
-															setIsPostButtonDisable
+															setIsPostButtonDisabled
 														}
 														question={question}
 														ref={editorRef}
@@ -657,7 +670,7 @@ export default withRouter(
 												isVisibleEditor && (
 													<ClayButton
 														disabled={
-															isPostButtonDisable
+															isPostButtonDisabled
 														}
 														displayType="primary"
 														onClick={onCreateAnswer}

@@ -65,6 +65,7 @@ import {
 	getErrorObject,
 	getFullPath,
 	historyPushWithSlug,
+	processGraphQLError,
 } from '../../utils/utils.es';
 import useActiviyQuestionKebabOptions from './hooks/useActivityQuestionKebabOptions.es';
 import useFlagsContainer from './hooks/useFlagsContainer.es';
@@ -107,7 +108,7 @@ const Question = ({
 	const [error, setError] = useState(null);
 	const [isModerate, setIsModerate] = useState(false);
 	const [isPageScroll, setIsPageScroll] = useState(false);
-	const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
+	const [isPostButtonDisabled, setIsPostButtonDisabled] = useState(true);
 
 	const [isVisibleEditor, setIsVisibleEditor] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -257,8 +258,10 @@ const Question = ({
 	};
 
 	const onCreateAnswer = async () => {
+		setIsPostButtonDisabled(true);
+
 		try {
-			await createAnswer({
+			const {error} = await createAnswer({
 				fetchOptionsOverrides: getContextLink(
 					`${sectionTitle}/${questionId}`
 				),
@@ -267,6 +270,12 @@ const Question = ({
 					messageBoardThreadId: question.id,
 				},
 			});
+
+			if (error) {
+				setIsPostButtonDisabled(false);
+
+				return processGraphQLError(error);
+			}
 
 			editorRef.current.clearContent();
 
@@ -280,9 +289,14 @@ const Question = ({
 				pageSize: 20,
 				siteKey: context.siteKey,
 			});
+
 			setIsVisibleEditor(false);
 		}
-		catch (error) {}
+		catch (error) {
+			processGraphQLError(error);
+		}
+
+		setIsPostButtonDisabled(false);
 	};
 
 	const deleteAnswer = useCallback(
@@ -646,7 +660,7 @@ const Question = ({
 															'your-answer'
 														)}
 														onContentLengthValid={
-															setIsPostButtonDisable
+															setIsPostButtonDisabled
 														}
 														question={question}
 														ref={editorRef}
@@ -681,7 +695,7 @@ const Question = ({
 												isVisibleEditor && (
 													<ClayButton
 														disabled={
-															isPostButtonDisable
+															isPostButtonDisabled
 														}
 														displayType="primary"
 														onClick={onCreateAnswer}

@@ -20,7 +20,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import Alert from '../../components/Alert.es';
 import DefaultQuestionsEditor from '../../components/DefaultQuestionsEditor.es';
 import Link from '../../components/Link.es';
 import TagSelector from '../../components/TagSelector.es';
@@ -29,13 +28,12 @@ import {
 	createQuestionInRootQuery,
 	getSectionBySectionTitleQuery,
 } from '../../utils/client.es';
-import lang from '../../utils/lang.es';
 import {
 	deleteCache,
 	getContextLink,
 	historyPushWithSlug,
+	processGraphQLError,
 	slugToText,
-	useDebounceCallback,
 } from '../../utils/utils.es';
 
 const HEADLINE_MAX_LENGTH = 75;
@@ -50,7 +48,6 @@ export default withRouter(
 		const editorRef = useRef('');
 		const [hasEnoughContent, setHasEnoughContent] = useState(false);
 		const [headline, setHeadline] = useState('');
-		const [error, setError] = useState({});
 		const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
 		const [sectionId, setSectionId] = useState();
 		const [sections, setSections] = useState([]);
@@ -59,11 +56,6 @@ export default withRouter(
 
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
-
-		const [debounceCallback] = useDebounceCallback(
-			() => historyPushParser(`/questions/${sectionTitle}/`),
-			500
-		);
 
 		const [createQuestionInASection] = useMutation(
 			createQuestionInASectionQuery
@@ -120,57 +112,44 @@ export default withRouter(
 			getSectionBySectionTitle,
 		]);
 
-		const processError = (error) => {
-			if (error.message && error.message.includes('AssetTagException')) {
-				error.message = lang.sub(
-					Liferay.Language.get(
-						'the-x-cannot-contain-the-following-invalid-characters-x'
-					),
-					[
-						'Tag',
-						' & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~',
-					]
-				);
-			}
-
-			setError(error);
-		};
-
-		const processResponse = (error) =>
-			error ? processError(error.graphQLErrors[0]) : debounceCallback();
-
-		const createQuestion = () => {
+		const createQuestion = async () => {
 			setIsPostButtonDisable(true);
 			deleteCache();
-			if (
-				sectionTitle === context.rootTopicId &&
-				+context.rootTopicId === 0
-			) {
-				createQuestionInRoot({
-					fetchOptionsOverrides: getContextLink(sectionTitle),
-					variables: {
-						articleBody: editorRef.current.getContent(),
-						headline,
-						keywords: tags.map((tag) => tag.label),
-						siteKey: context.siteKey,
-					},
-				})
-					.then(({error}) => processResponse(error))
-					.catch(processError);
+
+			const shouldCreateQuestionInRoot =
+				sectionTitle === 'all' && Number(context.rootTopicId) === 0;
+
+			const payload = {
+				fetchOptionsOverrides: getContextLink(sectionTitle),
+				variables: {
+					articleBody: editorRef.current.getContent(),
+					headline,
+					keywords: tags.map((tag) => tag.label),
+					...(shouldCreateQuestionInRoot
+						? {siteKey: context.siteKey}
+						: {messageBoardSectionId: sectionId}),
+				},
+			};
+
+			const fn = shouldCreateQuestionInRoot
+				? createQuestionInRoot
+				: createQuestionInASection;
+
+			try {
+				const {error} = await fn(payload);
+
+				if (error) {
+					processGraphQLError(error);
+				}
+				else {
+					historyPushParser(`/questions/${sectionTitle}/`);
+				}
 			}
-			else {
-				createQuestionInASection({
-					fetchOptionsOverrides: getContextLink(sectionTitle),
-					variables: {
-						articleBody: editorRef.current.getContent(),
-						headline,
-						keywords: tags.map((tag) => tag.label),
-						messageBoardSectionId: sectionId,
-					},
-				})
-					.then(({error}) => processResponse(error))
-					.catch(processError);
+			catch (error) {
+				processGraphQLError(error);
 			}
+
+			setIsPostButtonDisable(false);
 		};
 
 		return (
@@ -282,8 +261,6 @@ export default withRouter(
 						</div>
 					</div>
 				</div>
-
-				<Alert info={error} />
 			</section>
 		);
 	}

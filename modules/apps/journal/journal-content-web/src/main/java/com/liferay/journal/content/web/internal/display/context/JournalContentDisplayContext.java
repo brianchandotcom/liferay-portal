@@ -89,7 +89,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -351,12 +350,15 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		List<DDMTemplate> ddmTemplates = getDDMTemplates();
+		boolean hasTemplate = false;
 
-		Stream<DDMTemplate> stream = ddmTemplates.stream();
+		for (DDMTemplate ddmTemplate : getDDMTemplates()) {
+			if (_ddmTemplateKey.equals(ddmTemplate.getTemplateKey())) {
+				hasTemplate = true;
 
-		boolean hasTemplate = stream.anyMatch(
-			template -> _ddmTemplateKey.equals(template.getTemplateKey()));
+				break;
+			}
+		}
 
 		if (!hasTemplate) {
 			_ddmTemplateKey = article.getDDMTemplateKey();

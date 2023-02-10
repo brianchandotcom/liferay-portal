@@ -483,7 +483,7 @@ const MillerColumnsItem = ({
 			)}
 
 			{hasChild && (
-				<ClayLayout.ContentCol className="miller-columns-item-child-indicator">
+				<ClayLayout.ContentCol className="miller-columns-item-child-indicator text-secondary">
 					<ClayIcon symbol={rtl ? 'caret-left' : 'caret-right'} />
 				</ClayLayout.ContentCol>
 			)}

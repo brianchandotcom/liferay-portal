@@ -46,6 +46,12 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
+		_unsyncPrintWriter.write(
+			"{\"actions\":\n\"{\"batch-create\": {\"method\": \"POST\"," +
+				"\"href\": \"");
+		_unsyncPrintWriter.write(
+			_ACTION_TEMPLATE + batchEngineImportConfiguration.getClassName());
+		_unsyncPrintWriter.write("\"}},");
 		_unsyncPrintWriter.write("{\"configuration\":\n");
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineImportConfiguration));
@@ -84,6 +90,9 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 			_itemsStarted = true;
 		}
 	}
+
+	private static final String _ACTION_TEMPLATE =
+		"/o/headless-batch-engine/v1.0/import-task/";
 
 	private boolean _itemsStarted;
 	private final ObjectWriter _objectWriter;

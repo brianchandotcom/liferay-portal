@@ -61,6 +61,13 @@ public class DescriptionPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
+		if (!poshiScript.endsWith("\"")) {
+			throw new PoshiScriptParserException(
+				"Invalid description message, please make message into " +
+					"single line or end with \"",
+				poshiScript, (PoshiElement)getParent());
+		}
+
 		String message = getDoubleQuotedContent(poshiScript);
 
 		Matcher matcher = _messagePattern.matcher(message);

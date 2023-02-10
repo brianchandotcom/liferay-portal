@@ -474,6 +474,10 @@
 			<category name="Styling" />
 			<description name="Checks if a Enhanced For Loop can be used instead of a Simple For Loop." />
 		</check>
+		<check name="JavaGetFeatureFlagCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that `FeatureFlagManagerUtil.isEnabled` should be used (instead of `PropsUtil.get` in `GetterUtil.getBoolean`)." />
+		</check>
 		<check name="JavaHibernateSQLCheck">
 			<category name="Performance" />
 			<description name="Finds calls to `com.liferay.portal.kernel.dao.orm.Session.createSQLQuery` (use `Session.createSynchronizedSQLQuery` instead)." />

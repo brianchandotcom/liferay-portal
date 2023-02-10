@@ -127,24 +127,6 @@ public class UncontrolledExceptionErrorTest
 				uncontrolledExceptionErrorPortlet.getTitle()));
 	}
 
-	private void _assertLogEntryMessage(LogCapture logCapture) {
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-		LogEntry logEntry = logEntries.get(0);
-
-		Assert.assertEquals("null", logEntry.getMessage());
-	}
-
-	private void _assertUncontrolledExceptionErrorHTML(
-		String expectedError, String responseBodyHTML) {
-
-		Assert.assertTrue(
-			"Page body should contain error message : " + expectedError,
-			responseBodyHTML.contains(expectedError));
-	}
-
 	private UncontrolledExceptionErrorPortlet
 			_setUpUncontrolledExceptionErrorPortlet()
 		throws Exception {
@@ -194,10 +176,19 @@ public class UncontrolledExceptionErrorTest
 			Assert.assertTrue(
 				uncontrolledExceptionErrorPortlet.isCalledRender());
 
-			_assertLogEntryMessage(logCapture);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			_assertUncontrolledExceptionErrorHTML(
-				expectedError, response.getBody());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals("null", logEntry.getMessage());
+
+			String responseBodyHTML = response.getBody();
+
+			Assert.assertTrue(
+				"Page body should contain error message : " + expectedError,
+				responseBodyHTML.contains(expectedError));
 		}
 	}
 

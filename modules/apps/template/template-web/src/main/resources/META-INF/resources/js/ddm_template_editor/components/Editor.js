@@ -108,6 +108,18 @@ export function Editor({autocompleteData, initialScript, mode}) {
 
 			changeDisabled(true);
 
+			const liferayForm = Liferay.Form.get(form.id);
+
+			if (liferayForm) {
+				const validator = liferayForm.formValidator;
+
+				validator.validate();
+
+				if (validator.hasErrors()) {
+					validator.focusInvalidField();
+				}
+			}
+
 			fetch(form.action, {body: formData, method: 'POST'})
 				.then((response) => {
 					if (response.redirected) {

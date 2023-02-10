@@ -1,10 +1,9 @@
 salesforce-sync-api-user-agent:
-  homePageURL: https://$[conf:ext.lxc.liferay.com.mainDomain]
   name: Salesforce Sync API OAuth Application User Agent
   type: oAuthApplicationUserAgent
 
 runtime:
   type: service
   template: service-springboot
-  cpu: 500m
-  memory: 256Mi
+  cpu: 1000m
+  memory: 512Mi

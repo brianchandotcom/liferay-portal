@@ -27,7 +27,7 @@ cmd_button(
 )
 
 dxp_buildargs = {
-    "DXP_BASE_IMAGE": "liferay/dxp:7.4.13-u61"
+    "DXP_BASE_IMAGE": "liferay/dxp:7.4.13-u63"
 }
 
 dxp_envs = {

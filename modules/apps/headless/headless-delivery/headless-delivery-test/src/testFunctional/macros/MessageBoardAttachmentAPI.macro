@@ -1,0 +1,80 @@
+definition {
+
+	macro _curlMessageBoardAttachment {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(attachmentPath)) {
+			if (isSet(messageBoardThreadId)) {
+				var api = "message-board-threads/${messageBoardThreadId}";
+			}
+			else {
+				var api = "/message-board-messages/${messageBoardMessageId}";
+			}
+
+			var command = '''
+				-u test@liferay.com:test \
+				-H Content-Type: multipart/form-data \
+				-F file=@${attachmentPath}
+			''';
+
+			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-attachments", "\ ${command}", "");
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/message-board-attachments/${messageBoardAttachmentId} \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json
+			''';
+		}
+
+		return "${curl}";
+	}
+
+	macro _getErcOfMessageBoardAttchment {
+		Variables.assertDefined(parameterList = "${messageBoardAttachmentId}");
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(messageBoardAttachmentId = "${messageBoardAttachmentId}");
+
+		var mbAttachmentErc = JSONCurlUtil.get("${curl}", "$.externalReferenceCode");
+
+		return "${mbAttachmentErc}";
+	}
+
+	macro assertCorrectErcInResponse {
+		Variables.assertDefined(parameterList = "${response}");
+
+		var mbAttachmentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		var expectedErc = MessageBoardAttachmentAPI._getErcOfMessageBoardAttchment(messageBoardAttachmentId = "${mbAttachmentId}");
+		var mbAttachmentErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${mbAttachmentErc}",
+			expected = "${expectedErc}");
+	}
+
+	macro createMessageBoardMessageMessageBoardAttachment {
+		Variables.assertDefined(parameterList = "${messageBoardMessageId},${attachmentPath}");
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
+			attachmentPath = "${attachmentPath}",
+			messageBoardMessageId = "${messageBoardMessageId}");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro createMessageBoardThreadMessageBoardAttachment {
+		Variables.assertDefined(parameterList = "${messageBoardThreadId},${attachmentPath}");
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
+			attachmentPath = "${attachmentPath}",
+			messageBoardThreadId = "${messageBoardThreadId}");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+}

@@ -1,0 +1,52 @@
+definition {
+
+	macro _curlMessageBoardThread {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		if (isSet(headline)) {
+			var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/message-board-threads \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json \
+					-d {
+						"headline": "${headline}"
+					}
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/message-board-threads/${messageBoardThreadId} \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json
+			''';
+		}
+
+		return "${curl}";
+	}
+
+	macro deleteMessageBoardThreadByThreadId {
+		Variables.assertDefined(parameterList = "${messageBoardThreadId}");
+
+		var curl = MessageBoardThreadAPI._curlMessageBoardThread(messageBoardThreadId = "${messageBoardThreadId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro setUpGlobalMessageBoardThreadId {
+		Variables.assertDefined(parameterList = "${headline}");
+
+		var curl = MessageBoardThreadAPI._curlMessageBoardThread(headline = "${headline}");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		var messageBoardThreadId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
+
+		static var staticMbThreadId = "${messageBoardThreadId}";
+
+		return "${staticMbThreadId}";
+	}
+
+}

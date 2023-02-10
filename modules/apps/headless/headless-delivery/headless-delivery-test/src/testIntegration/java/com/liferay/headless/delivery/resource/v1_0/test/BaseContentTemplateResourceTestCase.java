@@ -1014,10 +1014,18 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 		ContentTemplate getContentTemplate =
 			contentTemplateResource.getSiteContentTemplate(
-				postContentTemplate.getSiteId(), postContentTemplate.getId());
+				testGetSiteContentTemplate_getSiteId(postContentTemplate),
+				postContentTemplate.getId());
 
 		assertEquals(postContentTemplate, getContentTemplate);
 		assertValid(getContentTemplate);
+	}
+
+	protected Long testGetSiteContentTemplate_getSiteId(
+			ContentTemplate contentTemplate)
+		throws Exception {
+
+		return contentTemplate.getSiteId();
 	}
 
 	protected ContentTemplate testGetSiteContentTemplate_addContentTemplate()
@@ -1044,8 +1052,10 @@ public abstract class BaseContentTemplateResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" + contentTemplate.getSiteId() +
-												"\"");
+											"\"" +
+												testGraphQLGetSiteContentTemplate_getSiteId(
+													contentTemplate) + "\"");
+
 										put(
 											"contentTemplateId",
 											"\"" + contentTemplate.getId() +
@@ -1054,6 +1064,13 @@ public abstract class BaseContentTemplateResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/contentTemplate"))));
+	}
+
+	protected Long testGraphQLGetSiteContentTemplate_getSiteId(
+			ContentTemplate contentTemplate)
+		throws Exception {
+
+		return contentTemplate.getSiteId();
 	}
 
 	@Test

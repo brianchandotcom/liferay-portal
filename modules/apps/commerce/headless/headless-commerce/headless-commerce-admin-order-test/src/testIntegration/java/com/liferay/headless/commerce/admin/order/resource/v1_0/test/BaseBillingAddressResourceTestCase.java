@@ -222,10 +222,19 @@ public abstract class BaseBillingAddressResourceTestCase {
 		BillingAddress getBillingAddress =
 			billingAddressResource.
 				getOrderByExternalReferenceCodeBillingAddress(
-					postBillingAddress.getExternalReferenceCode());
+					testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+						postBillingAddress));
 
 		assertEquals(postBillingAddress, getBillingAddress);
 		assertValid(getBillingAddress);
+	}
+
+	protected String
+			testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+				BillingAddress billingAddress)
+		throws Exception {
+
+		return billingAddress.getExternalReferenceCode();
 	}
 
 	protected BillingAddress
@@ -256,14 +265,21 @@ public abstract class BaseBillingAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												billingAddress.
-													getExternalReferenceCode() +
-														"\"");
+												testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+													billingAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderByExternalReferenceCodeBillingAddress"))));
+	}
+
+	protected String
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+				BillingAddress billingAddress)
+		throws Exception {
+
+		return billingAddress.getExternalReferenceCode();
 	}
 
 	@Test
@@ -312,10 +328,17 @@ public abstract class BaseBillingAddressResourceTestCase {
 
 		BillingAddress getBillingAddress =
 			billingAddressResource.getOrderIdBillingAddress(
-				postBillingAddress.getId());
+				testGetOrderIdBillingAddress_getId(postBillingAddress));
 
 		assertEquals(postBillingAddress, getBillingAddress);
 		assertValid(getBillingAddress);
+	}
+
+	protected Long testGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
+		throws Exception {
+
+		return billingAddress.getId();
 	}
 
 	protected BillingAddress testGetOrderIdBillingAddress_addBillingAddress()
@@ -340,11 +363,21 @@ public abstract class BaseBillingAddressResourceTestCase {
 								"orderIdBillingAddress",
 								new HashMap<String, Object>() {
 									{
-										put("id", billingAddress.getId());
+										put(
+											"id",
+											testGraphQLGetOrderIdBillingAddress_getId(
+												billingAddress));
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderIdBillingAddress"))));
+	}
+
+	protected Long testGraphQLGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
+		throws Exception {
+
+		return billingAddress.getId();
 	}
 
 	@Test

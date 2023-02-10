@@ -1885,22 +1885,33 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			204,
 			messageBoardMessageResource.
 				deleteSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
-					messageBoardMessage.getSiteId(),
+					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						messageBoardMessage),
 					messageBoardMessage.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
-					messageBoardMessage.getSiteId(),
+					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						messageBoardMessage),
 					messageBoardMessage.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
-					messageBoardMessage.getSiteId(),
+					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						messageBoardMessage),
 					messageBoardMessage.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	protected MessageBoardMessage
@@ -1921,11 +1932,20 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage getMessageBoardMessage =
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCode(
-					postMessageBoardMessage.getSiteId(),
+					testGetSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						postMessageBoardMessage),
 					postMessageBoardMessage.getExternalReferenceCode());
 
 		assertEquals(postMessageBoardMessage, getMessageBoardMessage);
 		assertValid(getMessageBoardMessage);
+	}
+
+	protected Long
+			testGetSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	protected MessageBoardMessage
@@ -1956,8 +1976,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												messageBoardMessage.
-													getSiteId() + "\"");
+												testGraphQLGetSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+													messageBoardMessage) +
+														"\"");
+
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1969,6 +1991,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/messageBoardMessageByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	@Test
@@ -2019,7 +2049,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage putMessageBoardMessage =
 			messageBoardMessageResource.
 				putSiteMessageBoardMessageByExternalReferenceCode(
-					postMessageBoardMessage.getSiteId(),
+					testPutSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						postMessageBoardMessage),
 					postMessageBoardMessage.getExternalReferenceCode(),
 					randomMessageBoardMessage);
 
@@ -2029,7 +2060,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage getMessageBoardMessage =
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCode(
-					putMessageBoardMessage.getSiteId(),
+					testPutSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						putMessageBoardMessage),
 					putMessageBoardMessage.getExternalReferenceCode());
 
 		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
@@ -2041,7 +2073,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		putMessageBoardMessage =
 			messageBoardMessageResource.
 				putSiteMessageBoardMessageByExternalReferenceCode(
-					newMessageBoardMessage.getSiteId(),
+					testPutSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						newMessageBoardMessage),
 					newMessageBoardMessage.getExternalReferenceCode(),
 					newMessageBoardMessage);
 
@@ -2051,7 +2084,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		getMessageBoardMessage =
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByExternalReferenceCode(
-					putMessageBoardMessage.getSiteId(),
+					testPutSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+						putMessageBoardMessage),
 					putMessageBoardMessage.getExternalReferenceCode());
 
 		assertEquals(newMessageBoardMessage, getMessageBoardMessage);
@@ -2059,6 +2093,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Assert.assertEquals(
 			newMessageBoardMessage.getExternalReferenceCode(),
 			putMessageBoardMessage.getExternalReferenceCode());
+	}
+
+	protected Long
+			testPutSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	protected MessageBoardMessage
@@ -2086,11 +2128,19 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage getMessageBoardMessage =
 			messageBoardMessageResource.
 				getSiteMessageBoardMessageByFriendlyUrlPath(
-					postMessageBoardMessage.getSiteId(),
+					testGetSiteMessageBoardMessageByFriendlyUrlPath_getSiteId(
+						postMessageBoardMessage),
 					postMessageBoardMessage.getFriendlyUrlPath());
 
 		assertEquals(postMessageBoardMessage, getMessageBoardMessage);
 		assertValid(getMessageBoardMessage);
+	}
+
+	protected Long testGetSiteMessageBoardMessageByFriendlyUrlPath_getSiteId(
+			MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	protected MessageBoardMessage
@@ -2121,8 +2171,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												messageBoardMessage.
-													getSiteId() + "\"");
+												testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath_getSiteId(
+													messageBoardMessage) +
+														"\"");
+
 										put(
 											"friendlyUrlPath",
 											"\"" +
@@ -2134,6 +2186,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/messageBoardMessageByFriendlyUrlPath"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath_getSiteId(
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		return messageBoardMessage.getSiteId();
 	}
 
 	@Test

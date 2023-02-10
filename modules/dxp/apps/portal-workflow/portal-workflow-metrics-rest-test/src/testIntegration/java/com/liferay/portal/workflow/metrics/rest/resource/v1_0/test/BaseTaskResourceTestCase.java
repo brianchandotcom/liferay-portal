@@ -277,16 +277,23 @@ public abstract class BaseTaskResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			taskResource.deleteProcessTaskHttpResponse(
-				task.getProcessId(), task.getId()));
+				testDeleteProcessTask_getProcessId(task), task.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			taskResource.getProcessTaskHttpResponse(
-				task.getProcessId(), task.getId()));
+				testDeleteProcessTask_getProcessId(task), task.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			taskResource.getProcessTaskHttpResponse(task.getProcessId(), 0L));
+			taskResource.getProcessTaskHttpResponse(
+				testDeleteProcessTask_getProcessId(task), 0L));
+	}
+
+	protected Long testDeleteProcessTask_getProcessId(Task task)
+		throws Exception {
+
+		return task.getProcessId();
 	}
 
 	protected Task testDeleteProcessTask_addTask() throws Exception {
@@ -299,10 +306,14 @@ public abstract class BaseTaskResourceTestCase {
 		Task postTask = testGetProcessTask_addTask();
 
 		Task getTask = taskResource.getProcessTask(
-			postTask.getProcessId(), postTask.getId());
+			testGetProcessTask_getProcessId(postTask), postTask.getId());
 
 		assertEquals(postTask, getTask);
 		assertValid(getTask);
+	}
+
+	protected Long testGetProcessTask_getProcessId(Task task) throws Exception {
+		return task.getProcessId();
 	}
 
 	protected Task testGetProcessTask_addTask() throws Exception {
@@ -324,12 +335,22 @@ public abstract class BaseTaskResourceTestCase {
 								"processTask",
 								new HashMap<String, Object>() {
 									{
-										put("processId", task.getProcessId());
+										put(
+											"processId",
+											testGraphQLGetProcessTask_getProcessId(
+												task));
+
 										put("taskId", task.getId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/processTask"))));
+	}
+
+	protected Long testGraphQLGetProcessTask_getProcessId(Task task)
+		throws Exception {
+
+		return task.getProcessId();
 	}
 
 	@Test

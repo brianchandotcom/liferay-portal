@@ -446,10 +446,17 @@ public abstract class BaseRegionResourceTestCase {
 		Region postRegion = testGetCountryRegionByRegionCode_addRegion();
 
 		Region getRegion = regionResource.getCountryRegionByRegionCode(
-			postRegion.getCountryId(), postRegion.getRegionCode());
+			testGetCountryRegionByRegionCode_getCountryId(postRegion),
+			postRegion.getRegionCode());
 
 		assertEquals(postRegion, getRegion);
 		assertValid(getRegion);
+	}
+
+	protected Long testGetCountryRegionByRegionCode_getCountryId(Region region)
+		throws Exception {
+
+		return region.getCountryId();
 	}
 
 	protected Region testGetCountryRegionByRegionCode_addRegion()
@@ -473,7 +480,11 @@ public abstract class BaseRegionResourceTestCase {
 								"countryRegionByRegionCode",
 								new HashMap<String, Object>() {
 									{
-										put("countryId", region.getCountryId());
+										put(
+											"countryId",
+											testGraphQLGetCountryRegionByRegionCode_getCountryId(
+												region));
+
 										put(
 											"regionCode",
 											"\"" + region.getRegionCode() +
@@ -483,6 +494,13 @@ public abstract class BaseRegionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/countryRegionByRegionCode"))));
+	}
+
+	protected Long testGraphQLGetCountryRegionByRegionCode_getCountryId(
+			Region region)
+		throws Exception {
+
+		return region.getCountryId();
 	}
 
 	@Test

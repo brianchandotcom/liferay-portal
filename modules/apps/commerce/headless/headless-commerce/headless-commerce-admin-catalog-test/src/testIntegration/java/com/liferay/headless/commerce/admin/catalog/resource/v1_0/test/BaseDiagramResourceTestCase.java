@@ -326,10 +326,16 @@ public abstract class BaseDiagramResourceTestCase {
 		Diagram postDiagram = testGetProductIdDiagram_addDiagram();
 
 		Diagram getDiagram = diagramResource.getProductIdDiagram(
-			postDiagram.getProductId());
+			testGetProductIdDiagram_getProductId(postDiagram));
 
 		assertEquals(postDiagram, getDiagram);
 		assertValid(getDiagram);
+	}
+
+	protected Long testGetProductIdDiagram_getProductId(Diagram diagram)
+		throws Exception {
+
+		return diagram.getProductId();
 	}
 
 	protected Diagram testGetProductIdDiagram_addDiagram() throws Exception {
@@ -353,11 +359,18 @@ public abstract class BaseDiagramResourceTestCase {
 									{
 										put(
 											"productId",
-											diagram.getProductId());
+											testGraphQLGetProductIdDiagram_getProductId(
+												diagram));
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/productIdDiagram"))));
+	}
+
+	protected Long testGraphQLGetProductIdDiagram_getProductId(Diagram diagram)
+		throws Exception {
+
+		return diagram.getProductId();
 	}
 
 	@Test

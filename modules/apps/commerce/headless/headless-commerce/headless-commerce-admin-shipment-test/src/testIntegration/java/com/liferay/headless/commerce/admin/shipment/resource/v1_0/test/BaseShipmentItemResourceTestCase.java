@@ -611,7 +611,8 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 		ShipmentItem putShipmentItem =
 			shipmentItemResource.putShipmentByExternalReferenceCodeItem(
-				postShipmentItem.getExternalReferenceCode(),
+				testPutShipmentByExternalReferenceCodeItem_getExternalReferenceCode(
+					postShipmentItem),
 				randomShipmentItem);
 
 		assertEquals(randomShipmentItem, putShipmentItem);
@@ -619,10 +620,19 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 		ShipmentItem getShipmentItem =
 			shipmentItemResource.getShipmentByExternalReferenceCodeItem(
-				putShipmentItem.getExternalReferenceCode());
+				testPutShipmentByExternalReferenceCodeItem_getExternalReferenceCode(
+					putShipmentItem));
 
 		assertEquals(randomShipmentItem, getShipmentItem);
 		assertValid(getShipmentItem);
+	}
+
+	protected String
+			testPutShipmentByExternalReferenceCodeItem_getExternalReferenceCode(
+				ShipmentItem shipmentItem)
+		throws Exception {
+
+		return shipmentItem.getExternalReferenceCode();
 	}
 
 	protected ShipmentItem

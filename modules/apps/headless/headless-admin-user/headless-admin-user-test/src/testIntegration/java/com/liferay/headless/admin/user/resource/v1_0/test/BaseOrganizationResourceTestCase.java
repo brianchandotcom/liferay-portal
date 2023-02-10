@@ -618,8 +618,17 @@ public abstract class BaseOrganizationResourceTestCase {
 			204,
 			organizationResource.
 				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
-					organization.getExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					organization.getId()));
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return organization.getExternalReferenceCode();
 	}
 
 	protected Organization

@@ -729,6 +729,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode() +
 													"\"");
+
 										put(
 											"externalReferenceCode",
 											"\"" +

@@ -1350,8 +1350,18 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				deleteAccountAccountRoleUserAccountAssociationHttpResponse(
-					accountRole.getAccountId(), accountRole.getId(),
+					testDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
+						accountRole),
+					accountRole.getId(),
 					testDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long
+			testDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
+				AccountRole accountRole)
+		throws Exception {
+
+		return accountRole.getAccountId();
 	}
 
 	protected Long

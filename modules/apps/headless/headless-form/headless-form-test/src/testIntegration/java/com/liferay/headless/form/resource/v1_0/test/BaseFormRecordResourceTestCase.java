@@ -400,10 +400,17 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		FormRecord getFormRecord =
 			formRecordResource.getFormFormRecordByLatestDraft(
-				postFormRecord.getFormId());
+				testGetFormFormRecordByLatestDraft_getFormId(postFormRecord));
 
 		assertEquals(postFormRecord, getFormRecord);
 		assertValid(getFormRecord);
+	}
+
+	protected Long testGetFormFormRecordByLatestDraft_getFormId(
+			FormRecord formRecord)
+		throws Exception {
+
+		return formRecord.getFormId();
 	}
 
 	protected FormRecord testGetFormFormRecordByLatestDraft_addFormRecord()
@@ -428,12 +435,22 @@ public abstract class BaseFormRecordResourceTestCase {
 								"formFormRecordByLatestDraft",
 								new HashMap<String, Object>() {
 									{
-										put("formId", formRecord.getFormId());
+										put(
+											"formId",
+											testGraphQLGetFormFormRecordByLatestDraft_getFormId(
+												formRecord));
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/formFormRecordByLatestDraft"))));
+	}
+
+	protected Long testGraphQLGetFormFormRecordByLatestDraft_getFormId(
+			FormRecord formRecord)
+		throws Exception {
+
+		return formRecord.getFormId();
 	}
 
 	@Test

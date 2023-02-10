@@ -335,10 +335,17 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		DSEnvelope postDSEnvelope = testGetSiteDSEnvelope_addDSEnvelope();
 
 		DSEnvelope getDSEnvelope = dsEnvelopeResource.getSiteDSEnvelope(
-			postDSEnvelope.getSiteId(), postDSEnvelope.getId());
+			testGetSiteDSEnvelope_getSiteId(postDSEnvelope),
+			postDSEnvelope.getId());
 
 		assertEquals(postDSEnvelope, getDSEnvelope);
 		assertValid(getDSEnvelope);
+	}
+
+	protected Long testGetSiteDSEnvelope_getSiteId(DSEnvelope dsEnvelope)
+		throws Exception {
+
+		return dsEnvelope.getSiteId();
 	}
 
 	protected DSEnvelope testGetSiteDSEnvelope_addDSEnvelope()
@@ -364,8 +371,10 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" + dsEnvelope.getSiteId() +
-												"\"");
+											"\"" +
+												testGraphQLGetSiteDSEnvelope_getSiteId(
+													dsEnvelope) + "\"");
+
 										put(
 											"dsEnvelopeId",
 											"\"" + dsEnvelope.getId() + "\"");
@@ -373,6 +382,12 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/dSEnvelope"))));
+	}
+
+	protected Long testGraphQLGetSiteDSEnvelope_getSiteId(DSEnvelope dsEnvelope)
+		throws Exception {
+
+		return dsEnvelope.getSiteId();
 	}
 
 	@Test

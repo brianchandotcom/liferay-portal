@@ -569,6 +569,7 @@ public abstract class BaseProductResourceTestCase {
 										put(
 											"channelId",
 											testGraphQLGetChannelProduct_getChannelId());
+
 										put("productId", product.getId());
 									}
 								},

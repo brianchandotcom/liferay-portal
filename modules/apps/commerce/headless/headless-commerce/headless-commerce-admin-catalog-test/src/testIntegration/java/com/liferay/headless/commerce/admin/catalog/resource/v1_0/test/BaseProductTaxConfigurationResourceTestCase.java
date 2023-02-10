@@ -312,10 +312,18 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 
 		ProductTaxConfiguration getProductTaxConfiguration =
 			productTaxConfigurationResource.getProductIdTaxConfiguration(
-				postProductTaxConfiguration.getId());
+				testGetProductIdTaxConfiguration_getId(
+					postProductTaxConfiguration));
 
 		assertEquals(postProductTaxConfiguration, getProductTaxConfiguration);
 		assertValid(getProductTaxConfiguration);
+	}
+
+	protected Long testGetProductIdTaxConfiguration_getId(
+			ProductTaxConfiguration productTaxConfiguration)
+		throws Exception {
+
+		return productTaxConfiguration.getId();
 	}
 
 	protected ProductTaxConfiguration
@@ -343,12 +351,20 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 									{
 										put(
 											"id",
-											productTaxConfiguration.getId());
+											testGraphQLGetProductIdTaxConfiguration_getId(
+												productTaxConfiguration));
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productIdTaxConfiguration"))));
+	}
+
+	protected Long testGraphQLGetProductIdTaxConfiguration_getId(
+			ProductTaxConfiguration productTaxConfiguration)
+		throws Exception {
+
+		return productTaxConfiguration.getId();
 	}
 
 	@Test

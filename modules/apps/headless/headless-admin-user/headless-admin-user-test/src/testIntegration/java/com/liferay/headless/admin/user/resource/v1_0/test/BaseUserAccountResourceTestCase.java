@@ -717,7 +717,17 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(), null));
+					testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+						userAccount),
+					null));
+	}
+
+	protected String
+			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		return userAccount.getExternalReferenceCode();
 	}
 
 	protected UserAccount
@@ -769,8 +779,17 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
-					userAccount.getExternalReferenceCode(),
+					testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+						userAccount),
 					userAccount.getEmailAddress()));
+	}
+
+	protected String
+			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+				UserAccount userAccount)
+		throws Exception {
+
+		return userAccount.getExternalReferenceCode();
 	}
 
 	protected UserAccount

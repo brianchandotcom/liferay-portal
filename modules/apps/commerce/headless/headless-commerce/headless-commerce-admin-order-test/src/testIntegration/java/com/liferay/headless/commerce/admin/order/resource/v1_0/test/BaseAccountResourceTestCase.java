@@ -287,10 +287,19 @@ public abstract class BaseAccountResourceTestCase {
 
 		Account getAccount =
 			accountResource.getOrderByExternalReferenceCodeAccount(
-				postAccount.getExternalReferenceCode());
+				testGetOrderByExternalReferenceCodeAccount_getExternalReferenceCode(
+					postAccount));
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected String
+			testGetOrderByExternalReferenceCodeAccount_getExternalReferenceCode(
+				Account account)
+		throws Exception {
+
+		return account.getExternalReferenceCode();
 	}
 
 	protected Account testGetOrderByExternalReferenceCodeAccount_addAccount()
@@ -320,14 +329,21 @@ public abstract class BaseAccountResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												account.
-													getExternalReferenceCode() +
-														"\"");
+												testGraphQLGetOrderByExternalReferenceCodeAccount_getExternalReferenceCode(
+													account) + "\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderByExternalReferenceCodeAccount"))));
+	}
+
+	protected String
+			testGraphQLGetOrderByExternalReferenceCodeAccount_getExternalReferenceCode(
+				Account account)
+		throws Exception {
+
+		return account.getExternalReferenceCode();
 	}
 
 	@Test
@@ -367,10 +383,16 @@ public abstract class BaseAccountResourceTestCase {
 		Account postAccount = testGetOrderIdAccount_addAccount();
 
 		Account getAccount = accountResource.getOrderIdAccount(
-			postAccount.getId());
+			testGetOrderIdAccount_getId(postAccount));
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected Long testGetOrderIdAccount_getId(Account account)
+		throws Exception {
+
+		return account.getId();
 	}
 
 	protected Account testGetOrderIdAccount_addAccount() throws Exception {
@@ -392,11 +414,20 @@ public abstract class BaseAccountResourceTestCase {
 								"orderIdAccount",
 								new HashMap<String, Object>() {
 									{
-										put("id", account.getId());
+										put(
+											"id",
+											testGraphQLGetOrderIdAccount_getId(
+												account));
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderIdAccount"))));
+	}
+
+	protected Long testGraphQLGetOrderIdAccount_getId(Account account)
+		throws Exception {
+
+		return account.getId();
 	}
 
 	@Test

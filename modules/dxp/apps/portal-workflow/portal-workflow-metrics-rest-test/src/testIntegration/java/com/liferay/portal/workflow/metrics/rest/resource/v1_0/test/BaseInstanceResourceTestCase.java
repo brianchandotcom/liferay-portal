@@ -460,17 +460,25 @@ public abstract class BaseInstanceResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			instanceResource.deleteProcessInstanceHttpResponse(
-				instance.getProcessId(), instance.getId()));
+				testDeleteProcessInstance_getProcessId(instance),
+				instance.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.getProcessInstanceHttpResponse(
-				instance.getProcessId(), instance.getId()));
+				testDeleteProcessInstance_getProcessId(instance),
+				instance.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.getProcessInstanceHttpResponse(
-				instance.getProcessId(), 0L));
+				testDeleteProcessInstance_getProcessId(instance), 0L));
+	}
+
+	protected Long testDeleteProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
+		return instance.getProcessId();
 	}
 
 	protected Instance testDeleteProcessInstance_addInstance()
@@ -485,10 +493,17 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance postInstance = testGetProcessInstance_addInstance();
 
 		Instance getInstance = instanceResource.getProcessInstance(
-			postInstance.getProcessId(), postInstance.getId());
+			testGetProcessInstance_getProcessId(postInstance),
+			postInstance.getId());
 
 		assertEquals(postInstance, getInstance);
 		assertValid(getInstance);
+	}
+
+	protected Long testGetProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
+		return instance.getProcessId();
 	}
 
 	protected Instance testGetProcessInstance_addInstance() throws Exception {
@@ -512,12 +527,20 @@ public abstract class BaseInstanceResourceTestCase {
 									{
 										put(
 											"processId",
-											instance.getProcessId());
+											testGraphQLGetProcessInstance_getProcessId(
+												instance));
+
 										put("instanceId", instance.getId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/processInstance"))));
+	}
+
+	protected Long testGraphQLGetProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
+		return instance.getProcessId();
 	}
 
 	@Test

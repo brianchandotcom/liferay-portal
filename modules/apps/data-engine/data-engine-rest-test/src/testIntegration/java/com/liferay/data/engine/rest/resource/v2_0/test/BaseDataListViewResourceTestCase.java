@@ -204,7 +204,15 @@ public abstract class BaseDataListViewResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			dataListViewResource.deleteDataDefinitionDataListViewHttpResponse(
-				dataListView.getDataDefinitionId()));
+				testDeleteDataDefinitionDataListView_getDataDefinitionId(
+					dataListView)));
+	}
+
+	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId(
+			DataListView dataListView)
+		throws Exception {
+
+		return dataListView.getDataDefinitionId();
 	}
 
 	protected DataListView

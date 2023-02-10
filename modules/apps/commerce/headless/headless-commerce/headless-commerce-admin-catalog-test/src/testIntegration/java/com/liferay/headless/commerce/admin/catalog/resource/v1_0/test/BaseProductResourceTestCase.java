@@ -730,6 +730,7 @@ public abstract class BaseProductResourceTestCase {
 												product.
 													getExternalReferenceCode() +
 														"\"");
+
 										put("version", product.getVersion());
 									}
 								},
@@ -968,6 +969,7 @@ public abstract class BaseProductResourceTestCase {
 								new HashMap<String, Object>() {
 									{
 										put("id", product.getId());
+
 										put("version", product.getVersion());
 									}
 								},

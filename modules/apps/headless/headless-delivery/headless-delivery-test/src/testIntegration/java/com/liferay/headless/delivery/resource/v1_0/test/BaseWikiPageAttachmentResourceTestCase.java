@@ -333,6 +333,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode() +
 													"\"");
+
 										put(
 											"externalReferenceCode",
 											"\"" +

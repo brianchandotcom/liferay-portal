@@ -615,6 +615,7 @@ public abstract class BaseMappedProductResourceTestCase {
 											"\"" +
 												testGraphQLGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode() +
 													"\"");
+
 										put(
 											"sequence",
 											"\"" + mappedProduct.getSequence() +
@@ -960,11 +961,19 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		MappedProduct getMappedProduct =
 			mappedProductResource.getProductMappedProductBySequence(
-				postMappedProduct.getProductId(),
+				testGetProductMappedProductBySequence_getProductId(
+					postMappedProduct),
 				postMappedProduct.getSequence());
 
 		assertEquals(postMappedProduct, getMappedProduct);
 		assertValid(getMappedProduct);
+	}
+
+	protected Long testGetProductMappedProductBySequence_getProductId(
+			MappedProduct mappedProduct)
+		throws Exception {
+
+		return mappedProduct.getProductId();
 	}
 
 	protected MappedProduct
@@ -994,7 +1003,9 @@ public abstract class BaseMappedProductResourceTestCase {
 									{
 										put(
 											"productId",
-											mappedProduct.getProductId());
+											testGraphQLGetProductMappedProductBySequence_getProductId(
+												mappedProduct));
+
 										put(
 											"sequence",
 											"\"" + mappedProduct.getSequence() +
@@ -1004,6 +1015,13 @@ public abstract class BaseMappedProductResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productMappedProductBySequence"))));
+	}
+
+	protected Long testGraphQLGetProductMappedProductBySequence_getProductId(
+			MappedProduct mappedProduct)
+		throws Exception {
+
+		return mappedProduct.getProductId();
 	}
 
 	@Test

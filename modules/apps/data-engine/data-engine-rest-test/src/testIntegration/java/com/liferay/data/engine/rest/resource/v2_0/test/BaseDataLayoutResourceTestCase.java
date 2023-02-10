@@ -208,7 +208,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			dataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
-				dataLayout.getDataDefinitionId()));
+				testDeleteDataDefinitionDataLayout_getDataDefinitionId(
+					dataLayout)));
+	}
+
+	protected Long testDeleteDataDefinitionDataLayout_getDataDefinitionId(
+			DataLayout dataLayout)
+		throws Exception {
+
+		return dataLayout.getDataDefinitionId();
 	}
 
 	protected DataLayout testDeleteDataDefinitionDataLayout_addDataLayout()
@@ -660,11 +668,20 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		DataLayout getDataLayout =
 			dataLayoutResource.getSiteDataLayoutByContentTypeByDataLayoutKey(
-				postDataLayout.getSiteId(), postDataLayout.getContentType(),
+				testGetSiteDataLayoutByContentTypeByDataLayoutKey_getSiteId(
+					postDataLayout),
+				postDataLayout.getContentType(),
 				postDataLayout.getDataLayoutKey());
 
 		assertEquals(postDataLayout, getDataLayout);
 		assertValid(getDataLayout);
+	}
+
+	protected Long testGetSiteDataLayoutByContentTypeByDataLayoutKey_getSiteId(
+			DataLayout dataLayout)
+		throws Exception {
+
+		return dataLayout.getSiteId();
 	}
 
 	protected DataLayout
@@ -694,12 +711,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" + dataLayout.getSiteId() +
-												"\"");
+											"\"" +
+												testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_getSiteId(
+													dataLayout) + "\"");
+
 										put(
 											"contentType",
 											"\"" + dataLayout.getContentType() +
 												"\"");
+
 										put(
 											"dataLayoutKey",
 											"\"" +
@@ -710,6 +730,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/dataLayoutByContentTypeByDataLayoutKey"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_getSiteId(
+				DataLayout dataLayout)
+		throws Exception {
+
+		return dataLayout.getSiteId();
 	}
 
 	@Test

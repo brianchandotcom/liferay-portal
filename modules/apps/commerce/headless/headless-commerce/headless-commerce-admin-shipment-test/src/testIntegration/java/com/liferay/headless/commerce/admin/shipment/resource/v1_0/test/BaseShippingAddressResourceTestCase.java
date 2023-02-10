@@ -220,10 +220,19 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress getShippingAddress =
 			shippingAddressResource.
 				getShipmentByExternalReferenceCodeShippingAddress(
-					postShippingAddress.getExternalReferenceCode());
+					testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+						postShippingAddress));
 
 		assertEquals(postShippingAddress, getShippingAddress);
 		assertValid(getShippingAddress);
+	}
+
+	protected String
+			testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+				ShippingAddress shippingAddress)
+		throws Exception {
+
+		return shippingAddress.getExternalReferenceCode();
 	}
 
 	protected ShippingAddress
@@ -254,14 +263,21 @@ public abstract class BaseShippingAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												shippingAddress.
-													getExternalReferenceCode() +
-														"\"");
+												testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+													shippingAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/shipmentByExternalReferenceCodeShippingAddress"))));
+	}
+
+	protected String
+			testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+				ShippingAddress shippingAddress)
+		throws Exception {
+
+		return shippingAddress.getExternalReferenceCode();
 	}
 
 	@Test

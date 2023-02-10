@@ -42,21 +42,25 @@ public class JavaGetFeatureFlagCheck extends BaseFileCheck {
 
 			String parameter = parameterList.get(0);
 
-			Matcher matcher2 = _propsUtilGetPattern.matcher(parameter);
+			if (!parameter.startsWith("PropsUtil.get(")) {
+				continue;
+			}
 
-			if (matcher2.find()) {
-				parameterList = JavaSourceUtil.getParameterList(
-					JavaSourceUtil.getMethodCall(parameter, matcher2.start()));
+			parameterList = JavaSourceUtil.getParameterList(
+				JavaSourceUtil.getMethodCall(parameter, 0));
 
-				if (StringUtil.startsWith(
-						parameterList.get(0), "\"feature.flag.")) {
+			if (parameterList.size() != 1) {
+				continue;
+			}
 
-					addMessage(
-						fileName,
-						"Use 'FeatureFlagManagerUtil.isEnabled' instead of " +
-							"'PropsUtil.get' for feature flag",
-						getLineNumber(content, matcher1.start()));
-				}
+			if (StringUtil.startsWith(
+					parameterList.get(0), "\"feature.flag.")) {
+
+				addMessage(
+					fileName,
+					"Use 'FeatureFlagManagerUtil.isEnabled' instead of " +
+						"'PropsUtil.get' for feature flag",
+					getLineNumber(content, matcher1.start()));
 			}
 		}
 
@@ -65,7 +69,5 @@ public class JavaGetFeatureFlagCheck extends BaseFileCheck {
 
 	private static final Pattern _getterUtilGetBooleanPattern = Pattern.compile(
 		"GetterUtil\\.getBoolean\\(");
-	private static final Pattern _propsUtilGetPattern = Pattern.compile(
-		"PropsUtil\\.get\\(");
 
 }

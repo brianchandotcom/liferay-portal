@@ -112,8 +112,6 @@ public class WebBundleDeployer {
 
 		try {
 			wabBundleProcessor.destroy();
-
-			_handleCollidedWABs(bundle);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -132,39 +130,14 @@ public class WebBundleDeployer {
 		return true;
 	}
 
-	private void _handleCollidedWABs(Bundle bundle) {
-		String contextPath = WabUtil.getWebContextPath(bundle);
-
-		for (Bundle curBundle : _bundleContext.getBundles()) {
-			if (bundle.equals(curBundle) || isFragmentBundle(curBundle) ||
-				_wabBundleProcessors.containsKey(curBundle)) {
-
-				continue;
-			}
-
-			String curContextPath = WabUtil.getWebContextPath(curBundle);
-
-			if (contextPath.equals(curContextPath)) {
-				doStart(curBundle);
-
-				break;
-			}
-		}
-	}
-
 	private void _initWabBundle(Bundle bundle) {
 		try {
-			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
+			WabBundleProcessor wabBundleProcessor = new WabBundleProcessor(
 				bundle, _jspServletFactory, _jspTaglibHelper);
 
-			WabBundleProcessor oldWabBundleProcessor =
-				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
+			wabBundleProcessor.init(_properties);
 
-			if (oldWabBundleProcessor != null) {
-				return;
-			}
-
-			newWabBundleProcessor.init(_properties);
+			_wabBundleProcessors.put(bundle, wabBundleProcessor);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -104,7 +104,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Stream;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.Portlet;
@@ -478,18 +477,18 @@ public class LayoutsImporterTest {
 
 		Assert.assertEquals(role.getRoleId(), resourcePermission.getRoleId());
 
-		List<ResourceAction> resourceActions =
-			_resourceActionLocalService.getResourceActions(_testPortletName);
+		ResourceAction resourceAction = null;
 
-		Stream<ResourceAction> stream = resourceActions.stream();
+		for (ResourceAction curResourceAction :
+				_resourceActionLocalService.getResourceActions(
+					_testPortletName)) {
 
-		ResourceAction resourceAction = stream.filter(
-			resourceAction1 -> Objects.equals(
-				resourceAction1.getActionId(), "VIEW")
-		).findFirst(
-		).orElse(
-			null
-		);
+			if (Objects.equals(curResourceAction.getActionId(), "VIEW")) {
+				resourceAction = curResourceAction;
+
+				break;
+			}
+		}
 
 		Assert.assertNotNull(resourceAction);
 

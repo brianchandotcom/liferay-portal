@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,8 +51,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,23 +115,11 @@ public class DummyStagedModelRepository
 	}
 
 	public List<Dummy> fetchDummiesByFolderId(long folderId) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		return dummiesStream.filter(
-			d -> d.getFolderId() == folderId
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(_dummies, d -> d.getFolderId() == folderId);
 	}
 
 	public Dummy fetchDummyById(long id) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		List<Dummy> dummies = dummiesStream.filter(
-			d -> d.getId() == id
-		).collect(
-			Collectors.toList()
-		);
+		List<Dummy> dummies = ListUtil.filter(_dummies, d -> d.getId() == id);
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -148,15 +135,11 @@ public class DummyStagedModelRepository
 
 	@Override
 	public Dummy fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		List<Dummy> dummies = dummiesStream.filter(
+		List<Dummy> dummies = ListUtil.filter(
+			_dummies,
 			dummy ->
 				Objects.equals(dummy.getUuid(), uuid) &&
-				(dummy.getGroupId() == groupId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummy.getGroupId() == groupId));
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -169,15 +152,11 @@ public class DummyStagedModelRepository
 	public List<Dummy> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		Stream<Dummy> dummiesStream = _dummies.stream();
-
-		return dummiesStream.filter(
+		return ListUtil.filter(
+			_dummies,
 			dummy ->
 				Objects.equals(dummy.getUuid(), uuid) &&
-				(dummy.getCompanyId() == companyId)
-		).collect(
-			Collectors.toList()
-		);
+				(dummy.getCompanyId() == companyId));
 	}
 
 	@Override
@@ -371,13 +350,9 @@ public class DummyStagedModelRepository
 					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
 
 				while (iterator.hasNext()) {
-					Stream<Dummy> dummiesStream = result.stream();
-
-					result = dummiesStream.filter(
-						getPredicate(String.valueOf(iterator.next()))
-					).collect(
-						Collectors.toList()
-					);
+					result = ListUtil.filter(
+						(List<Dummy>)result,
+						getPredicate(String.valueOf(iterator.next())));
 				}
 			}
 			catch (Exception exception) {
@@ -393,7 +368,7 @@ public class DummyStagedModelRepository
 			return _dummies.size();
 		}
 
-		public Predicate<? super Dummy> getPredicate(String expression) {
+		public Predicate<Dummy> getPredicate(String expression) {
 			if (expression.startsWith("groupId=")) {
 				return d ->
 					d.getGroupId() == Long.valueOf(

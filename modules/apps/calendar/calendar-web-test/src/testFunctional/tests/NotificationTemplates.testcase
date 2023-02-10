@@ -80,11 +80,11 @@ definition {
 
 		NotificationTemplates.gotoNotificationTemplatesTab();
 
-		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
+		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Joe Bloggs");
 
 		NotificationTemplates.gotoReminderEmailTab();
 
-		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Test Test");
+		NotificationTemplates.viewUserNameDisplayedFromNameField(userName = "Joe Bloggs");
 	}
 
 }

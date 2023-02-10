@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -40,8 +41,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Eudaldo Alonso
@@ -70,19 +69,15 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferencesByPlid(plid);
 
-		Stream<PortletPreferences> stream = portletPreferencesList.stream();
-
-		portletPreferencesList = stream.filter(
+		portletPreferencesList = ListUtil.filter(
+			portletPreferencesList,
 			portletPreferences -> {
 				String portletId = portletPreferences.getPortletId();
 
 				return portletId.contains(_INSTANCE_SEPARATOR) &&
 					   (portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR_1) ||
 						portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR_2));
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 
 		_portletPreferencesMap.put(plid, portletPreferencesList);
 

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
+import com.liferay.fragment.renderer.react.internal.model.listener.FragmentEntryLinkModelListener;
 import com.liferay.fragment.renderer.react.internal.util.FragmentEntryFragmentRendererReactUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
@@ -94,6 +95,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		_fragmentEntryLinkModelListener.ensureInitialized();
 
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
@@ -252,6 +255,9 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLinkModelListener _fragmentEntryLinkModelListener;
 
 	@Reference
 	private JSONFactory _jsonFactory;

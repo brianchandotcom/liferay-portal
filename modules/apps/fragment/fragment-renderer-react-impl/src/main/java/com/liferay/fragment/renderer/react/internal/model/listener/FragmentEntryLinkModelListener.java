@@ -49,10 +49,57 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = {IdentifiableOSGiService.class, ModelListener.class})
+@Component(
+	service = {
+		FragmentEntryLinkModelListener.class, IdentifiableOSGiService.class,
+		ModelListener.class
+	}
+)
 public class FragmentEntryLinkModelListener
 	extends BaseModelListener<FragmentEntryLink>
 	implements IdentifiableOSGiService {
+
+	public void ensureInitialized() {
+		if (_initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			_jsPackage = _npmResolver.getJSPackage();
+
+			if (_jsPackage == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to initialize because JS package is null");
+				}
+
+				return;
+			}
+
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					FragmentConstants.TYPE_REACT, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
+
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				npmRegistryUpdate.registerJSModule(
+					_jsPackage,
+					FragmentEntryFragmentRendererReactUtil.getModuleName(
+						fragmentEntryLink),
+					_dependencies, _getJs(fragmentEntryLink), null);
+			}
+
+			npmRegistryUpdate.finish();
+
+			_initialized = true;
+		}
+	}
 
 	@Override
 	public String getOSGiServiceIdentifier() {
@@ -99,24 +146,6 @@ public class FragmentEntryLinkModelListener
 
 	@Activate
 	protected void activate() {
-		_jsPackage = _npmResolver.getJSPackage();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				FragmentConstants.TYPE_REACT, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		NPMRegistryUpdate npmRegistryUpdate = _npmRegistry.update();
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			npmRegistryUpdate.registerJSModule(
-				_jsPackage,
-				FragmentEntryFragmentRendererReactUtil.getModuleName(
-					fragmentEntryLink),
-				_dependencies, _getJs(fragmentEntryLink), null);
-		}
-
-		npmRegistryUpdate.finish();
 	}
 
 	@Deactivate
@@ -235,7 +264,7 @@ public class FragmentEntryLinkModelListener
 		"liferay!frontend-js-react-web$react";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryLinkModelListener.class.getName());
+		FragmentEntryLinkModelListener.class);
 
 	private static final List<String> _dependencies = Collections.singletonList(
 		_DEPENDENCY_PORTAL_REACT);
@@ -249,6 +278,7 @@ public class FragmentEntryLinkModelListener
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
+	private volatile boolean _initialized;
 	private JSPackage _jsPackage;
 
 	@Reference

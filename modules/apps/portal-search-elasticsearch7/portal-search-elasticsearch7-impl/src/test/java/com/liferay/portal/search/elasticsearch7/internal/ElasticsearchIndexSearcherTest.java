@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -75,15 +76,20 @@ public class ElasticsearchIndexSearcherTest {
 		searchContext.setEnd(50);
 		searchContext.setStart(0);
 
-		SearchRequest searchRequest = _mockSearchRequest();
+		int from = RandomTestUtil.randomInt(1, 1000);
+		int size = RandomTestUtil.randomInt(1, 1000);
 
-		_assertStartAndEnd(14, 4, searchRequest, searchContext);
+		SearchRequest searchRequest = _mockSearchRequest(from, size);
+
+		_assertStartAndEnd(from + size, from, searchRequest, searchContext);
 
 		searchContext.setAttribute(
 			SearchContextAttributes.ATTRIBUTE_KEY_PERMISSIONED_SEARCHER,
 			Boolean.TRUE);
 
-		_assertStartAndEnd(50, 0, searchRequest, searchContext);
+		_assertStartAndEnd(
+			searchContext.getEnd(), searchContext.getStart(), searchRequest,
+			searchContext);
 	}
 
 	@Test
@@ -152,17 +158,17 @@ public class ElasticsearchIndexSearcherTest {
 		return elasticsearchIndexSearcher;
 	}
 
-	private SearchRequest _mockSearchRequest() {
+	private SearchRequest _mockSearchRequest(int from, int size) {
 		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
 
 		Mockito.doReturn(
-			4
+			from
 		).when(
 			searchRequest
 		).getFrom();
 
 		Mockito.doReturn(
-			10
+			size
 		).when(
 			searchRequest
 		).getSize();

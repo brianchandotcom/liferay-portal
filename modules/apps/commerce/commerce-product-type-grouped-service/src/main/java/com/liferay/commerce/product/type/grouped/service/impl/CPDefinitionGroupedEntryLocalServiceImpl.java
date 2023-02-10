@@ -191,6 +191,17 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionGroupedEntry>
+			getEntryCProductCPDefinitionGroupedEntries(
+				long entryCProductId, int start, int end,
+				OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException {
+
+		return cpDefinitionGroupedEntryPersistence.findByEntryCProductId(
+			entryCProductId, start, end, orderByComparator);
+	}
+
+	@Override
 	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
 			long cpDefinitionGroupedEntryId, double priority, int quantity)
 		throws PortalException {

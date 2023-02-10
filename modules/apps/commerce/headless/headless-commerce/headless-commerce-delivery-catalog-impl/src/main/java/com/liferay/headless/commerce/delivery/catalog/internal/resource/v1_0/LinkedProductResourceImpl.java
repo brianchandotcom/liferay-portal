@@ -24,9 +24,9 @@ import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
-import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
+import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.LinkedProduct;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.LinkedProductDTOConverter;
@@ -84,7 +84,7 @@ public class LinkedProductResourceImpl
 
 		List<LinkedProduct> linkedProducts = ListUtil.concat(
 			transform(
-				_cpDefinitionGroupedEntryService.
+				_cpDefinitionGroupedEntryLocalService.
 					getEntryCProductCPDefinitionGroupedEntries(
 						productId, pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
@@ -100,7 +100,7 @@ public class LinkedProductResourceImpl
 						GroupedCPTypeConstants.NAME, contextUriInfo,
 						contextUser))),
 			transform(
-				_csDiagramEntryService.getCProductCSDiagramEntries(
+				_csDiagramEntryLocalService.getCProductCSDiagramEntries(
 					productId, pagination.getStartPosition(),
 					pagination.getEndPosition(), null),
 				csDiagramEntry -> _linkedProductDTOConverter.toDTO(
@@ -173,13 +173,14 @@ public class LinkedProductResourceImpl
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
-	private CPDefinitionGroupedEntryService _cpDefinitionGroupedEntryService;
+	private CPDefinitionGroupedEntryLocalService
+		_cpDefinitionGroupedEntryLocalService;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
 
 	@Reference
-	private CSDiagramEntryService _csDiagramEntryService;
+	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

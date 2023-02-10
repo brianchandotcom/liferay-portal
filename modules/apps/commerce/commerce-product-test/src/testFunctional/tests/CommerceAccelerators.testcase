@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-10054. Account users without roles should not be able to add products to cart"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartAsAccountUserWithoutRoles {
 		property portal.acceptance = "false";
 
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-10054. Account users without roles should not be able to add products to cart if the accounts has pending orders"
-	@priority = "3"
+	@priority = 3
 	test CannotAddToCartWithExistingOrdersAsAccountUserWithoutRoles {
 		property portal.acceptance = "false";
 

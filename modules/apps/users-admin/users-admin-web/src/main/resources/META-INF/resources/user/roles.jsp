@@ -49,10 +49,14 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 <liferay-util:buffer
 	var="removeRoleIcon"
 >
-	<liferay-ui:icon
+	<clay:button
+		cssClass="lfr-portal-tooltip modify-link"
+		data-groupId="TOKEN_DATA_GROUPID"
+		data-rowId="TOKEN_DATA_ROWID"
+		displayType="null"
 		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
+		small="<%= true %>"
+		title="TOKEN_TITLE"
 	/>
 </liferay-util:buffer>
 
@@ -121,7 +125,14 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && userDisplayContext.isAllowRemoveRole(role) %>">
-					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
+					<clay:button
+						cssClass="lfr-portal-tooltip modify-link"
+						data-rowId="<%= role.getRoleId() %>"
+						displayType="null"
+						icon="times-circle"
+						small="<%= true %>"
+						title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(role.getTitle(locale))) %>'
+					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -319,7 +330,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
+						<clay:button
+							cssClass="lfr-portal-tooltip modify-link"
+							data-groupId="<%= userGroupRole.getGroupId() %>"
+							data-rowId="<%= userGroupRole.getRoleId() %>"
+							displayType="null"
+							icon="remove"
+							small="<%= true %>"
+							title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale))) %>'
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:if>
 			</liferay-ui:search-container-row>
@@ -559,7 +578,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
+						<clay:button
+							cssClass="lfr-portal-tooltip modify-link"
+							data-groupId="<%= userGroupRole.getGroupId() %>"
+							data-rowId="<%= userGroupRole.getRoleId() %>"
+							displayType="null"
+							icon="times-circle"
+							small="<%= true %>"
+							title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(userGroupRole.getRole().getTitle(locale))) %>'
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:if>
 			</liferay-ui:search-container-row>
@@ -845,14 +872,22 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					rowColumns.push(Liferay.Util.escapeHTML(groupName));
 				}
 
-				if (groupId) {
-					rowColumns.push(
-						'<a class="modify-link" data-groupId="' +
-							groupId +
-							'" data-rowId="' +
-							roleId +
-							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+				var removeRoleButton = '<%= UnicodeFormatter.toString(removeRoleIcon) %>';
+
+				removeRoleButton = removeRoleButton
+					.replace('TOKEN_DATA_ROWID', roleId)
+					.replace(
+						'TOKEN_TITLE',
+						Liferay.Util.sub('<liferay-ui:message key="remove-x" />', name)
 					);
+
+				if (groupId) {
+					removeRoleButton = removeRoleButton.replace(
+						'TOKEN_DATA_GROUPID',
+						groupId
+					);
+
+					rowColumns.push(removeRoleButton);
 
 					for (
 						var i = 0;
@@ -889,11 +924,12 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					searchContainer.addRow(rowColumns, groupId + '-' + roleId);
 				}
 				else {
-					rowColumns.push(
-						'<a class="modify-link" data-rowId="' +
-							roleId +
-							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+					removeRoleButton = removeRoleButton.replace(
+						'data-groupId="TOKEN_DATA_GROUPID"',
+						''
 					);
+
+					rowColumns.push(removeRoleButton);
 
 					A.Array.removeItem(<portlet:namespace />deleteRoleIds, roleId);
 

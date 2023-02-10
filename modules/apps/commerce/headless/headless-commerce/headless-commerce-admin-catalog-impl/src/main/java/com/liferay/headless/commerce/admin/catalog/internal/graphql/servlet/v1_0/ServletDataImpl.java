@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Catego
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.DiagramResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.GroupedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.LinkedProductResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.LowStockActionResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.MappedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.OptionCategoryResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.OptionResourceImpl;
@@ -48,6 +49,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
@@ -157,6 +159,8 @@ public class ServletDataImpl implements ServletData {
 			_groupedProductResourceComponentServiceObjects);
 		Query.setLinkedProductResourceComponentServiceObjects(
 			_linkedProductResourceComponentServiceObjects);
+		Query.setLowStockActionResourceComponentServiceObjects(
+			_lowStockActionResourceComponentServiceObjects);
 		Query.setMappedProductResourceComponentServiceObjects(
 			_mappedProductResourceComponentServiceObjects);
 		Query.setOptionResourceComponentServiceObjects(
@@ -909,6 +913,11 @@ public class ServletDataImpl implements ServletData {
 							LinkedProductResourceImpl.class,
 							"getProductIdLinkedProductsPage"));
 					put(
+						"query#lowStockActions",
+						new ObjectValuePair<>(
+							LowStockActionResourceImpl.class,
+							"getLowStockActionsPage"));
+					put(
 						"query#productByExternalReferenceCodeMappedProducts",
 						new ObjectValuePair<>(
 							MappedProductResourceImpl.class,
@@ -1277,5 +1286,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<LinkedProductResource>
 		_linkedProductResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<LowStockActionResource>
+		_lowStockActionResourceComponentServiceObjects;
 
 }

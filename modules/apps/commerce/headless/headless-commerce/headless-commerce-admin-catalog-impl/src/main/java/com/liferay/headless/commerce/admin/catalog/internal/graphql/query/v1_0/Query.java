@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
@@ -46,6 +47,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResourc
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LowStockActionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
@@ -144,6 +146,14 @@ public class Query {
 
 		_linkedProductResourceComponentServiceObjects =
 			linkedProductResourceComponentServiceObjects;
+	}
+
+	public static void setLowStockActionResourceComponentServiceObjects(
+		ComponentServiceObjects<LowStockActionResource>
+			lowStockActionResourceComponentServiceObjects) {
+
+		_lowStockActionResourceComponentServiceObjects =
+			lowStockActionResourceComponentServiceObjects;
 	}
 
 	public static void setMappedProductResourceComponentServiceObjects(
@@ -614,6 +624,20 @@ public class Query {
 			linkedProductResource -> new LinkedProductPage(
 				linkedProductResource.getProductIdLinkedProductsPage(
 					productId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {lowStockActions{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrive low stock actions for products.")
+	public LowStockActionPage lowStockActions() throws Exception {
+		return _applyComponentServiceObjects(
+			_lowStockActionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			lowStockActionResource -> new LowStockActionPage(
+				lowStockActionResource.getLowStockActionsPage()));
 	}
 
 	/**
@@ -2789,6 +2813,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("LowStockActionPage")
+	public class LowStockActionPage {
+
+		public LowStockActionPage(Page lowStockActionPage) {
+			actions = lowStockActionPage.getActions();
+
+			items = lowStockActionPage.getItems();
+			lastPage = lowStockActionPage.getLastPage();
+			page = lowStockActionPage.getPage();
+			pageSize = lowStockActionPage.getPageSize();
+			totalCount = lowStockActionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<LowStockAction> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("MappedProductPage")
 	public class MappedProductPage {
 
@@ -3556,6 +3613,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			LowStockActionResource lowStockActionResource)
+		throws Exception {
+
+		lowStockActionResource.setContextAcceptLanguage(_acceptLanguage);
+		lowStockActionResource.setContextCompany(_company);
+		lowStockActionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		lowStockActionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		lowStockActionResource.setContextUriInfo(_uriInfo);
+		lowStockActionResource.setContextUser(_user);
+		lowStockActionResource.setGroupLocalService(_groupLocalService);
+		lowStockActionResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			MappedProductResource mappedProductResource)
 		throws Exception {
 
@@ -3879,6 +3952,8 @@ public class Query {
 		_groupedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<LinkedProductResource>
 		_linkedProductResourceComponentServiceObjects;
+	private static ComponentServiceObjects<LowStockActionResource>
+		_lowStockActionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MappedProductResource>
 		_mappedProductResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OptionResource>

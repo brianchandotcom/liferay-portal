@@ -942,6 +942,29 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean isParameterNameSchemaRelated(
+		String parameterName, String path, String schemaName) {
+
+		String parameterNameSubpath = "/{" + parameterName + "}";
+
+		if (StringUtil.endsWith(path, parameterNameSubpath)) {
+			return true;
+		}
+
+		String prefixPath = path.substring(
+			0, path.indexOf(parameterNameSubpath));
+
+		if (prefixPath.contains(
+				TextFormatter.format(schemaName, TextFormatter.I)) ||
+			prefixPath.contains(
+				TextFormatter.format(schemaName, TextFormatter.K))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isPathParameter(
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 

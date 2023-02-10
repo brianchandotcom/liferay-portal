@@ -821,4 +821,39 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-161063."
+	@priority = "4"
+	test WarnTracePresentWithDataInconsistency {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document",
+			groupName = "Guest",
+			mimeType = "text/txt",
+			sourceFileName = "Document_1.txt");
+
+		SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM DLFileEntry WHERE filename='Document_1.txt';");
+
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "DM Document",
+			groupName = "Guest");
+
+		SQL.executeMySQLStatement(mysqlStatement = "delete from DLFileEntry where fileEntryId = ${fileEntryId};");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "txt");
+
+		AssertConsoleTextPresent(value1 = "Unable to get asset renderer for class com.liferay.document.library.kernel.model.DLFileEntry with primary key ${fileEntryId}");
+
+		SearchResultPortlet.configureSearchResults(displayTemplate = "Card Layout");
+
+		AssertConsoleTextNotPresent(value1 = "Error executing FreeMarker template");
+	}
+
 }

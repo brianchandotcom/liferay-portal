@@ -78,7 +78,7 @@ definition {
 	}
 
 	@description = "Assert that the search results shows only wiki pages from the active publication"
-	@priority = "3"
+	@priority = 3
 	test ViewSearchResultsFromActivePublication {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -96,6 +96,10 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
 		WikiPage.addCP(
 			wikiPageContent = "Publication 1",
 			wikiPageTitle = "Wiki Page Publication 1");
@@ -106,6 +110,10 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 2");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node");
+
 		WikiPage.addCP(
 			wikiPageContent = "Publication 2",
 			wikiPageTitle = "Wiki Page Publication 2");
@@ -114,7 +122,7 @@ definition {
 			wikiPageContentEdit = "Wiki Page Content Edit",
 			wikiPageTitle = "Wiki Page Production");
 
-		Navigator.gotoPage(pageName = "Home");
+		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
@@ -124,13 +132,19 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1");
 
-		Refresh();
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Wiki Page Production/Wiki Page,Original content/Wiki Page,Wiki Page Publication 1/Wiki Page",
 			searchTerm = "Wiki");
 
 		Publications.workOnProduction();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Original content",

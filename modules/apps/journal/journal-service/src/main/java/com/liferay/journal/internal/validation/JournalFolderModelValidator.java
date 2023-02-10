@@ -26,6 +26,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.journal.util.JournalValidator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -141,20 +142,14 @@ public class JournalFolderModelValidator
 			restrictionType = parentFolder.getRestrictionType();
 		}
 
-		List<DDMStructure> folderDDMStructures =
-			_journalFolderLocalService.getDDMStructures(
-				_portal.getCurrentAndAncestorSiteGroupIds(folder.getGroupId()),
-				parentFolderId, restrictionType);
-
-		long[] ddmStructureIds = new long[folderDDMStructures.size()];
-
-		for (int i = 0; i < folderDDMStructures.size(); i++) {
-			DDMStructure folderDDMStructure = folderDDMStructures.get(i);
-
-			ddmStructureIds[i] = folderDDMStructure.getStructureId();
-		}
-
-		validateArticleDDMStructures(folderId, ddmStructureIds);
+		validateArticleDDMStructures(
+			folderId,
+			TransformUtil.transformToLongArray(
+				_journalFolderLocalService.getDDMStructures(
+					_portal.getCurrentAndAncestorSiteGroupIds(
+						folder.getGroupId()),
+					parentFolderId, restrictionType),
+				DDMStructure::getStructureId));
 	}
 
 	@Override
@@ -162,18 +157,11 @@ public class JournalFolderModelValidator
 		long[] ddmStructureIds = null;
 
 		try {
-			List<DDMStructure> ddmStructures =
+			ddmStructureIds = TransformUtil.transformToLongArray(
 				_journalFolderLocalService.getDDMStructures(
 					new long[] {folder.getGroupId()}, folder.getFolderId(),
-					folder.getRestrictionType());
-
-			ddmStructureIds = new long[ddmStructures.size()];
-
-			int i = 0;
-
-			for (DDMStructure ddmStructure : ddmStructures) {
-				ddmStructureIds[i] = ddmStructure.getStructureId();
-			}
+					folder.getRestrictionType()),
+				DDMStructure::getStructureId);
 		}
 		catch (PortalException portalException) {
 			ModelValidationResults.FailureBuilder failureBuilder =

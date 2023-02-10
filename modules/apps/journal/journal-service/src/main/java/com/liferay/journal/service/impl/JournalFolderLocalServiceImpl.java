@@ -36,6 +36,7 @@ import com.liferay.journal.service.base.JournalFolderLocalServiceBaseImpl;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.util.JournalValidator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -1427,25 +1428,14 @@ public class JournalFolderLocalServiceImpl
 				_getRestrictedAncestorFolder(getFolder(parentFolderId));
 
 			if (restrictedAncestorFolder != null) {
-				List<DDMStructureLink> ancestorDDMStructureLinks =
-					_ddmStructureLinkLocalService.getStructureLinks(
-						_classNameLocalService.getClassNameId(
-							JournalFolder.class),
-						restrictedAncestorFolder.getFolderId());
-
-				long[] ancestorDDMStructureIds =
-					new long[ancestorDDMStructureLinks.size()];
-
-				for (int i = 0; i < ancestorDDMStructureLinks.size(); i++) {
-					DDMStructureLink ddmStructureLink =
-						ancestorDDMStructureLinks.get(i);
-
-					ancestorDDMStructureIds[i] =
-						ddmStructureLink.getStructureId();
-				}
-
 				_validateArticleDDMStructures(
-					folderId, ancestorDDMStructureIds);
+					folderId,
+					TransformUtil.transformToLongArray(
+						_ddmStructureLinkLocalService.getStructureLinks(
+							_classNameLocalService.getClassNameId(
+								JournalFolder.class),
+							restrictedAncestorFolder.getFolderId()),
+						DDMStructureLink::getStructureId));
 			}
 		}
 

@@ -34,9 +34,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -87,7 +89,7 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition = _addListTypeDefinition(
 			listTypeDefinition, externalReferenceCode, userId, nameMap);
 
-		_addListTypeEntries(
+		_addOrUpdateListTypeEntries(
 			userId, listTypeDefinition.getListTypeDefinitionId(),
 			listTypeEntries);
 
@@ -154,14 +156,8 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition = listTypeDefinitionPersistence.update(
 			listTypeDefinition);
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536"))) {
-			return listTypeDefinition;
-		}
-
-		_listTypeEntryLocalService.deleteListTypeEntryByListTypeDefinitionId(
-			listTypeDefinitionId);
-
-		_addListTypeEntries(userId, listTypeDefinitionId, listTypeEntries);
+		_addOrUpdateListTypeEntries(
+			userId, listTypeDefinitionId, listTypeEntries);
 
 		return listTypeDefinition;
 	}
@@ -192,16 +188,60 @@ public class ListTypeDefinitionLocalServiceImpl
 		return listTypeDefinition;
 	}
 
-	private void _addListTypeEntries(
+	private void _addOrUpdateListTypeEntries(
 			long userId, long listTypeDefinitionId,
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167536"))) {
+			return;
+		}
+
+		List<ListTypeEntry> existingListTypeEntries = new ArrayList<>(
+			_listTypeEntryLocalService.getListTypeEntries(
+				listTypeDefinitionId));
+
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			_listTypeEntryLocalService.addListTypeEntry(
-				listTypeEntry.getExternalReferenceCode(), userId,
-				listTypeDefinitionId, listTypeEntry.getKey(),
+			ListTypeEntry existingListTypeEntry = null;
+
+			if (listTypeEntry.getListTypeEntryId() > 0) {
+				existingListTypeEntry =
+					_listTypeEntryLocalService.fetchListTypeEntry(
+						listTypeEntry.getListTypeEntryId());
+			}
+
+			if ((existingListTypeEntry == null) &&
+				Validator.isNotNull(listTypeEntry.getExternalReferenceCode())) {
+
+				existingListTypeEntry =
+					_listTypeEntryLocalService.
+						fetchListTypeEntryByExternalReferenceCode(
+							listTypeEntry.getExternalReferenceCode(),
+							listTypeEntry.getCompanyId(), listTypeDefinitionId);
+			}
+
+			if (existingListTypeEntry == null) {
+				_listTypeEntryLocalService.addListTypeEntry(
+					listTypeEntry.getExternalReferenceCode(), userId,
+					listTypeDefinitionId, listTypeEntry.getKey(),
+					listTypeEntry.getNameMap());
+
+				continue;
+			}
+
+			_listTypeEntryLocalService.updateListTypeEntry(
+				listTypeEntry.getExternalReferenceCode(),
+				existingListTypeEntry.getListTypeEntryId(),
 				listTypeEntry.getNameMap());
+
+			existingListTypeEntries.removeIf(
+				listTypeEntry1 -> StringUtil.equals(
+					listTypeEntry1.getKey(), listTypeEntry.getKey()));
+		}
+
+		for (ListTypeEntry listTypeEntry : existingListTypeEntries) {
+			_listTypeEntryLocalService.deleteListTypeEntry(
+				listTypeEntry.getListTypeEntryId());
 		}
 	}
 

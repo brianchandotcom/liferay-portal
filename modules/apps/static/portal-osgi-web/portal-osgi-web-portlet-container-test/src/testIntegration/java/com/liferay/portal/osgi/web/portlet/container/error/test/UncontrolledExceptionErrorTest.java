@@ -89,18 +89,16 @@ public class UncontrolledExceptionErrorTest
 				public Enumeration<String> getKeys() {
 					return Collections.enumeration(
 						Arrays.asList(
-							"is-temporarily-unavailable[" +
-								UncontrolledExceptionErrorPortlet.PORTLET_NAME +
-									"]"));
+							"is-temporarily-unavailable[" + _PORTLET_NAME +
+								"]"));
 				}
 
 				@Override
 				protected Object handleGetObject(String key) {
 					if (Objects.equals(
 							key,
-							"is-temporarily-unavailable[" +
-								UncontrolledExceptionErrorPortlet.PORTLET_NAME +
-									"]")) {
+							"is-temporarily-unavailable[" + _PORTLET_NAME +
+								"]")) {
 
 						return expectedErrorMessage;
 					}
@@ -123,8 +121,8 @@ public class UncontrolledExceptionErrorTest
 						_portletURLFactory.create(
 							PortletContainerTestUtil.getHttpServletRequest(
 								group, layout),
-							UncontrolledExceptionErrorPortlet.PORTLET_NAME,
-							layout.getPlid(), PortletRequest.RENDER_PHASE)
+							_PORTLET_NAME, layout.getPlid(),
+							PortletRequest.RENDER_PHASE)
 					).buildString());
 
 			Assert.assertTrue(
@@ -152,8 +150,8 @@ public class UncontrolledExceptionErrorTest
 						_portletURLFactory.create(
 							PortletContainerTestUtil.getHttpServletRequest(
 								group, layout),
-							UncontrolledExceptionErrorPortlet.PORTLET_NAME,
-							layout.getPlid(), PortletRequest.RENDER_PHASE)
+							_PORTLET_NAME, layout.getPlid(),
+							PortletRequest.RENDER_PHASE)
 					).buildString());
 
 			Assert.assertTrue(
@@ -205,15 +203,18 @@ public class UncontrolledExceptionErrorTest
 			).put(
 				"javax.portlet.init-param.view-template", "/error_test/view.jsp"
 			).put(
-				"javax.portlet.name",
-				UncontrolledExceptionErrorPortlet.PORTLET_NAME
+				"javax.portlet.name", _PORTLET_NAME
 			).put(
 				"javax.portlet.resource-bundle", "content.Language"
 			).build(),
-			UncontrolledExceptionErrorPortlet.PORTLET_NAME);
+			_PORTLET_NAME);
 
 		return uncontrolledExceptionErrorPortlet;
 	}
+
+	private static final String _PORTLET_NAME =
+		"com_liferay_portal_portlet_container_error_test_" +
+			"UncontrolledExceptionErrorPortlet";
 
 	@Inject
 	private Language _language;
@@ -227,10 +228,6 @@ public class UncontrolledExceptionErrorTest
 	private UserLocalService _userLocalService;
 
 	private class UncontrolledExceptionErrorPortlet extends MVCPortlet {
-
-		public static final String PORTLET_NAME =
-			"com_liferay_portal_portlet_container_error_test_" +
-				"UncontrolledExceptionErrorPortlet";
 
 		public UncontrolledExceptionErrorPortlet() {
 			_title = RandomTestUtil.randomString();

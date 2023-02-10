@@ -70,8 +70,8 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		setHeaders(
-			portletRequest, mimeResponse, fileName, contentType,
-			contentDispositionType, null);
+			portletRequest, mimeResponse, null, contentDispositionType,
+			contentType, fileName);
 
 		write(mimeResponse, bytes);
 	}
@@ -83,8 +83,8 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		setHeaders(
-			portletRequest, mimeResponse, fileName, contentType,
-			contentDispositionType, cacheControlValue);
+			portletRequest, mimeResponse, cacheControlValue,
+			contentDispositionType, contentType, fileName);
 
 		write(mimeResponse, bytes);
 	}
@@ -115,8 +115,8 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		setHeaders(
-			portletRequest, mimeResponse, fileName, contentType,
-			contentDispositionType, null);
+			portletRequest, mimeResponse, null, contentDispositionType,
+			contentType, fileName);
 
 		write(mimeResponse, inputStream, contentLength);
 	}
@@ -266,8 +266,8 @@ public class PortletResponseUtil {
 
 	protected static void setHeaders(
 		PortletRequest portletRequest, MimeResponse mimeResponse,
-		String fileName, String contentType, String contentDispositionType,
-		String cacheControlValue) {
+		String cacheControlValue, String contentDispositionType,
+		String contentType, String fileName) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Sending file of type " + contentType);

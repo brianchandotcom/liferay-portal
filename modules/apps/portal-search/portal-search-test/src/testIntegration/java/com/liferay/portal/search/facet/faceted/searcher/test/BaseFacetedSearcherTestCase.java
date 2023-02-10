@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -114,15 +115,8 @@ public abstract class BaseFacetedSearcherTestCase {
 		SearchContext searchContext = userSearchFixture.getSearchContext(
 			keywords);
 
-		long[] groupId = new long[_groups.size()];
-
-		for (int i = 0; i < _groups.size(); i++) {
-			Group group = _groups.get(i);
-
-			groupId[i] = group.getGroupId();
-		}
-
-		searchContext.setGroupIds(groupId);
+		searchContext.setGroupIds(
+			TransformUtil.transformToLongArray(_groups, Group::getGroupId));
 
 		return searchContext;
 	}

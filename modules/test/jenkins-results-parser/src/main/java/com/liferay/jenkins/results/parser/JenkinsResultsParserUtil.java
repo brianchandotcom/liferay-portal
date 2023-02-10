@@ -120,6 +120,10 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -2359,6 +2363,47 @@ public class JenkinsResultsParserUtil {
 		_jenkinsProperties = properties;
 
 		return properties;
+	}
+
+	public static Document getJobConfigDocument(
+			JenkinsMaster jenkinsMaster, String jobName)
+		throws DocumentException, IOException {
+
+		String url = combine(
+			jenkinsMaster.getURL(), "/job/", jobName, "/config.xml");
+
+		return Dom4JUtil.parse(toString(url));
+	}
+
+	public static int getJobTimeoutMinutes(
+		JenkinsMaster jenkinsMaster, String jobName) {
+
+		Document configDocument;
+
+		try {
+			configDocument = getJobConfigDocument(jenkinsMaster, jobName);
+
+			Node timeoutNode = Dom4JUtil.getNodeByXPath(
+				configDocument,
+				combine(
+					"/project/buildWrappers/",
+					"hudson.plugins.build__timeout.BuildTimeoutWrapper/",
+					"strategy[@class=\'hudson.plugins.build_timeout.impl.",
+					"AbsoluteTimeOutStrategy\']/timeoutMinutes"));
+
+			return Integer.valueOf(timeoutNode.getText()) + 15;
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get timeout of job " + jobName);
+
+			try {
+				return Integer.valueOf(
+					getBuildProperty("build.default.timeout.minutes"));
+			}
+			catch (IOException ioException) {
+				return 135;
+			}
+		}
 	}
 
 	public static String getJobVariant(JSONObject jsonObject) {

@@ -2061,19 +2061,19 @@ public class BundleSiteInitializerTest {
 		return serviceContext;
 	}
 
-	private Bundle _getTestBundle(String path) throws Exception {
+	private Bundle _getTestBundle(String location) throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
 			BundleSiteInitializerTest.class);
 
-		return _installBundle(testBundle.getBundleContext(), path);
+		return _installBundle(testBundle.getBundleContext(), location);
 	}
 
-	private File _getTestFile(String path) throws Exception {
+	private File _getTestFile(String location) throws Exception {
 		File tempFile = FileUtil.createTempFile();
 
 		FileUtil.write(
 			tempFile,
-			BundleSiteInitializerTest.class.getResourceAsStream(path));
+			BundleSiteInitializerTest.class.getResourceAsStream(location));
 
 		File tempFolder1 = FileUtil.createTempFolder();
 

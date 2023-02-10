@@ -406,8 +406,6 @@ public class SearchBarPortletDisplayContextFactory {
 				if (scopeParameterName != null) {
 					return scopeParameterName;
 				}
-
-				return searchBarPortletPreferences.getScopeParameterName();
 			}
 		}
 

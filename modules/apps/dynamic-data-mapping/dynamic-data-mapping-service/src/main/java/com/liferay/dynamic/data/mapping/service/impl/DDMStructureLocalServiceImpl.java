@@ -1540,15 +1540,16 @@ public class DDMStructureLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(
-			structure.getGroupId(), structure.getParentStructureId(),
-			structure.getClassNameId(), structureKey, nameMap,
-			structure.getDDMForm());
-
 		structure.setUserId(userId);
 		structure.setParentStructureId(parentStructureId);
 
 		if (Validator.isNotNull(structureKey)) {
+			structureKey = StringUtil.toUpperCase(structureKey.trim());
+
+			_validateStructureKey(
+				structureId, structure.getGroupId(), structure.getClassNameId(),
+				structureKey);
+
 			structure.setStructureKey(structureKey);
 		}
 
@@ -2189,6 +2190,30 @@ public class DDMStructureLocalServiceImpl
 
 			parentStructureId = parentStructure.getParentStructureId();
 		}
+	}
+
+	private void _validateStructureKey(
+			long structureId, long groupId, long classNameId,
+			String structureKey)
+		throws PortalException {
+
+		DDMStructure structure = ddmStructurePersistence.fetchByG_C_S(
+			groupId, classNameId, structureKey);
+
+		if ((structure == null) ||
+			(structure.getStructureId() == structureId)) {
+
+			return;
+		}
+
+		StructureDuplicateStructureKeyException
+			structureDuplicateStructureKeyException =
+				new StructureDuplicateStructureKeyException();
+
+		structureDuplicateStructureKeyException.setStructureKey(
+			structure.getStructureKey());
+
+		throw structureDuplicateStructureKeyException;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

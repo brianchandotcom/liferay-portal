@@ -54,30 +54,6 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `allowMavenLocal` | `boolean` | `false` | Whether to let the baseline come from the local Maven cache (by default: `${user.home}/.m2`). If the local Maven cache is not [configured](https://docs.gradle.org/current/userguide/dependency_management.html#sub:maven_local) as a project repository, this property has no effect.
 `lowestBaselineVersion` | `String` | `"1.0.0"` | The greatest project version to ignore for the baseline check. If the [project version](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html#org.gradle.api.tasks.bundling.Jar:version) is less than or equal to the value of this property, the [`baseline`](#baseline) task is skipped.
-<a name="lowestmajorversion"></a>`lowestMajorVersion` | `Integer` | Content of the file `${project.projectDir}/.lfrbuild-lowest-major-version`, where the default file name can be changed by setting the project property `baseline.lowest.major.version.file`. | The lowest major version of the released artifact to use in the baseline check.
-`lowestMajorVersionRequired` | `boolean` | `false` | Whether to fail the build if the [`lowestMajorVersion`](#lowestmajorversion) is not specified.
-
-If the `lowestMajorVersion` is not specified, the plugin runs the check using
-the most recent released non-snapshot bundle as baseline, which matches the
-[version range](http://ant.apache.org/ivy/history/latest-milestone/settings/version-matchers.html)
-`(,${project.version})`. Otherwise, if the `lowestMajorVersion` is equal to a
-value `L` and the project has version `M.x.y` (with `L` less or equal than `M`),
-multiple checks are performed in order, using the following version ranges as
-baseline:
-
-1. `[L.0.0, (L + 1).0.0)`
-
-1. `[(L + 1).0.0, (L + 2).0.0)`
-
-1. ...
-
-1. `[(M - 2).0.0, (M - 1).0.0)`
-
-1. `[(M - 1).0.0, M.0.0)`
-
-1. `[M.0.0, M.x.y)`
-
-The first failing check fails the whole build.
 
 ## Tasks
 
@@ -121,37 +97,8 @@ Moreover, it is possible to use Closures and Callables as values for the
 
 ### Helper Tasks
 
-If the [`lowestMajorVersion`](#lowestmajorversion) property is specified with a
-value `L`, the plugin creates a series of helper tasks of type [`BaselineTask`](#baselinetask)
-at the end of the [project evaluation](https://docs.gradle.org/current/userguide/build_lifecycle.html#N11BAE),
-one for each major version between `L` and the major version `M` of the project:
-
-1. Task `baseline${L + 1}`, which depends on `baseline${L + 2}` and uses the
-version range `[(L + 1).0.0, (L + 2).0.0)` as baseline.
-
-1. Task `baseline${L + 2}`, which depends on `baseline${L + 3}` and uses the
-version range `[(L + 2).0.0, (L + 3).0.0)` as baseline.
-
-1. ...
-
-1. Task `baseline${M - 2}`, which depends on `baseline${M - 1}` and uses the
-version range `[(M - 2).0.0, (M - 1).0.0)` as baseline.
-
-1. Task `baseline${M - 1}`, which depends on `baseline${M}` and uses the
-version range `[(M - 1).0.0, M.0.0)` as baseline.
-
-1. Task `baseline${M}`, which uses the version range `[M.0.0, M.x.y)` as
-baseline.
-
-The `baseline` task is also configured to use the version range
-`[L.0.0, (L + 1).0.0)` as baseline, and to depend on the task
-`baseline${L + 1}`. This means that running the `baseline` task runs the
-baseline check against multiple versions, starting from the most recent `M` and
-going back to `L`.
-
-Moreover, all tasks except `baseline${M}` have the property
-[`ignoreExcessiveVersionIncreases`](#ignoreexcessiveversionincreases) set to
-`true`.
+All tasks have the property [`ignoreExcessiveVersionIncreases`](#ignoreexcessiveversionincreases)
+set to `true`.
 
 ## Additional Configuration
 
@@ -162,9 +109,7 @@ There are additional configurations that can help you baseline your OSGi bundle.
 The plugin creates a configuration called `baseline` with a default dependency
 to a released non-snapshot version of the bundle:
 
-- version range `[L.0.0, (L + 1).0.0)` if the [`lowestMajorVersion`](#lowestmajorversion)
-property is specified with a value `L`.
-- version range `(,${project.version})` otherwise.
+- version range `(,${project.version})`
 
 It is possible to override this setting and use a different version of the
 bundle as baseline.

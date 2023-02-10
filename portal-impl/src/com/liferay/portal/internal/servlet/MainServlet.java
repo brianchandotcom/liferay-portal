@@ -18,6 +18,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.events.ShutdownHelperUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
@@ -135,9 +136,7 @@ public class MainServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Destroy plugins");
-		}
+		ShutdownHelperUtil.setShutdown(true);
 
 		ListIterator<ServiceRegistration<?>> listIterator =
 			_serviceRegistrations.listIterator(_serviceRegistrations.size());

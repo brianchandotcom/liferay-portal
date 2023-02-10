@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ShutdownHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
@@ -221,9 +222,11 @@ public class ServletContextHelperRegistrationImpl
 			}
 		}
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+		if (!ShutdownHelperUtil.isShutdown()) {
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
-		_clearResidualMBeans(bundleWiring.getClassLoader());
+			_clearResidualMBeans(bundleWiring.getClassLoader());
+		}
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class BatchEngineTaskMethodRegistryImpl
 		Map<String, BatchEngineTaskItemDelegateExecutorCreator>
 			batchEngineTaskItemDelegateExecutorCreatorMap =
 				_batchEngineTaskItemDelegateExecutorCreators.get(
-					_itemClasses.get(itemClassName));
+					getItemClass(itemClassName));
 
 		return batchEngineTaskItemDelegateExecutorCreatorMap.get(
 			taskItemDelegateName);

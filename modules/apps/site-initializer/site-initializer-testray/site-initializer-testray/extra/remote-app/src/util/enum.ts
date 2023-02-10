@@ -14,6 +14,6 @@
 
 export const enum DISPATCH_TRIGGER_TYPE {
 	AUTO_FILL = 'testray-auto-fill',
-	CREATE_TASK_SUBTASK = 'testray-test-flow',
+	CREATE_TASK_SUBTASK = 'testray-testflow',
 	IMPORT_RESULTS = 'testray-import-results',
 }

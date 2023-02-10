@@ -125,6 +125,10 @@ public class ObjectDefinitionResourceImpl
 							objectDefinition.getExternalReferenceCode(),
 							contextCompany.getCompanyId());
 
+			if (serviceBuilderObjectDefinition.isApproved()) {
+				continue;
+			}
+
 			_objectDefinitionService.publishCustomObjectDefinition(
 				serviceBuilderObjectDefinition.getObjectDefinitionId());
 		}

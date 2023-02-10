@@ -66,7 +66,7 @@ public class DDMStructureDLFileEntryTypeRelationshipResource
 
 				return _dlFileEntryTypeLocalService.fetchFileEntryType(
 					ddmStructureLink.getClassPK());
-		});
+			});
 	}
 
 	@Reference

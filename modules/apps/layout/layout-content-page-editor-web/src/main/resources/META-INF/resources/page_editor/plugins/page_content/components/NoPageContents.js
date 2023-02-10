@@ -15,10 +15,21 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
+import {config} from '../../../app/config/index';
+
 export default function NoPageContents() {
-	return (
+	const hasRestrictedForm = config.formTypes.some(
+		(formType) => formType?.isRestricted
+	);
+
+	return hasRestrictedForm && Liferay.FeatureFlags['LPS-169923'] ? (
+		<ClayAlert className="m-3" displayType="secondary">
+			{Liferay.Language.get(
+				'this-content-cannot-be-displayed-due-to-permission-restrictions'
+			)}
+		</ClayAlert>
+	) : (
 		<ClayAlert
-			aria-live="polite"
 			className="m-3"
 			displayType="info"
 			title={Liferay.Language.get('info')}

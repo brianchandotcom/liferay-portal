@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializerImpl;
 import com.liferay.item.selector.web.internal.util.ItemSelectorKeyUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -41,8 +42,6 @@ import com.liferay.portal.util.PortalImpl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -306,15 +305,14 @@ public class ItemSelectorImplTest {
 
 		String itemSelectorURL = StringBundler.concat(
 			"http://localhost/select/",
-			Stream.of(
-				itemSelectorCriteria
-			).map(
-				itemSelectorCriterion ->
-					ItemSelectorKeyUtil.getItemSelectorCriterionKey(
-						itemSelectorCriterion.getClass())
-			).collect(
-				Collectors.joining(StringPool.COMMA)
-			),
+			StringUtil.merge(
+				TransformUtil.transform(
+					itemSelectorCriteria,
+					itemSelectorParameter ->
+						ItemSelectorKeyUtil.getItemSelectorCriterionKey(
+							itemSelectorParameter.getClass()),
+					String.class),
+				StringPool.COMMA),
 			StringPool.SLASH, itemSelectedEventName,
 			"?p_p_state=popup&p_p_mode=view");
 

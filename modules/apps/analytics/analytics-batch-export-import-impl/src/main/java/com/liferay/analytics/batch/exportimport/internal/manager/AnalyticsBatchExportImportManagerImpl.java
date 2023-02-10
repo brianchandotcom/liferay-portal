@@ -94,7 +94,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					resourceLastModifiedDate.getTime()));
 		}
 
-		if (filterString != null) {
+		if (Validator.isNotNull(filterString)) {
 			if (resourceLastModifiedDate != null) {
 				parameters.put(
 					"filter",

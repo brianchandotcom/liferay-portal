@@ -55,6 +55,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -92,7 +93,11 @@ public class CompanyLogServletTest {
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(
 			_company.getCompanyId());
 
-		for (File file : companyLogDirectory.listFiles()) {
+		File[] files = companyLogDirectory.listFiles();
+
+		Arrays.sort(files, Collections.reverseOrder());
+
+		for (File file : files) {
 			_file = file;
 
 			break;
@@ -324,7 +329,7 @@ public class CompanyLogServletTest {
 
 		JSONArray companyLogsJSONArray = jsonObject.getJSONArray("companyLogs");
 
-		Arrays.sort(files);
+		Arrays.sort(files, Collections.reverseOrder());
 
 		for (int i = 0; i < files.length; i++) {
 			JSONObject companyLogJSONObject =

@@ -1,0 +1,74 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+	}
+
+	@description = "LRQA-29748: Set the user notification timeout to 1 second"
+	@priority = "4"
+	test SetTimeout {
+		property osgi.module.configurations = "userNotificationTimeout=1000";
+
+		task ("Given: set the user notification timeout to 1 second") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Frontend SPA Infrastructure",
+				configurationScope = "System Scope");
+
+			Type(
+				locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
+				value1 = 1000);
+
+			Click(
+				key_tab = "Save",
+				locator1 = "Button#TAB_SUBMIT_BTN");
+
+			Alert.viewSuccessMessage();
+
+			Refresh();
+		}
+
+		task ("When: Activate the slow script/portlet to cause a SPA timeout") {
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "sleep(1000); out.println('sample output text');");
+		}
+
+		task ("And When: pause for 1 second") {
+
+			// We need this pause to wait for notification timeout
+
+			Pause(locator1 = 1000);
+		}
+
+		task ("Then: notification timeout pop up immediately appears") {
+			if (!(IsElementPresent.isElementPresentNoSPARefresh(key_type = "info", locator1 = "ClayAlertToast#ALERT_TOAST"))) {
+				TestUtils.pass(message = "Test passed: Alert toast with action disappeared after 1 seconds");
+			}
+			else {
+				fail("Test failed: Clay Toast alert with action is still present after 1 seconds.");
+			}
+		}
+	}
+
+}

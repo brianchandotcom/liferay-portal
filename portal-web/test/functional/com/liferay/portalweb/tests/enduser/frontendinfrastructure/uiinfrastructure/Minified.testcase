@@ -22,28 +22,28 @@ definition {
 	@description = "Check for errors in the minified browser console"
 	@priority = 3
 	test SmokeMinifiedEnabled {
-		task ("Givine Minified property set to true") {
+		task ("Given: Minified property set to true") {
 			property custom.properties = "minified.enabled=true";
 			property test.assert.warning.exceptions = "true";
 		}
-		task ("When Restart portal") {
+
+		task ("When: Restart portal") {
 			Portlet.shutdownServer();
 
 			Portlet.startServer(deleteLiferayHome = "false");
 		}
 
-		task ("And When login") {
+		task ("And When: login") {
 			User.firstLoginPG();
 		}
 
-		task ("Then No liferay log or js console log errors") {
+		task ("Then: No liferay log or js console log errors") {
 			User.viewLoggedInPG();
-     	}
-
-		task ("And Then Smoke test passes") {
-			Smoke.runSmoke();
 		}
 
+		task ("And Then: Smoke test passes") {
+			Smoke.runSmoke();
+		}
 	}
 
 	@description = "Check for errors in the browser console on the jQuery page"

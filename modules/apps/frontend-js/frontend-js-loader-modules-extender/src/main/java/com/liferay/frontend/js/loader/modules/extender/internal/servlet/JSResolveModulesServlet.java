@@ -82,14 +82,22 @@ public class JSResolveModulesServlet extends HttpServlet {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
-			String url = absolutePortalURLBuilder.forServlet(
-				"/js_resolve_modules/" + npmRegistryStateSnapshot.getDigest()
-			).build();
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(
+				absolutePortalURLBuilder.forServlet(
+					"/js_resolve_modules/" +
+						npmRegistryStateSnapshot.getDigest()
+				).build());
+
+			sb.append(StringPool.QUESTION);
+
+			sb.append(httpServletRequest.getQueryString());
 
 			// Send a redirect so that the AMD loader knows that it must update
 			// its resolve path to the new URL
 
-			httpServletResponse.sendRedirect(url);
+			httpServletResponse.sendRedirect(sb.toString());
 
 			return;
 		}

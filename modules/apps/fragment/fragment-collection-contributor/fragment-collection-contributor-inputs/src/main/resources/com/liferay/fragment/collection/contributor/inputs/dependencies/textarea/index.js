@@ -45,7 +45,7 @@ function onInputKeyup(event) {
 	if (length > input.attributes.maxLength) {
 		enableLenghtWarning();
 	}
-	else {
+	else if (formGroup.classList.contains('has-error')) {
 		disableLengthWarning();
 	}
 }

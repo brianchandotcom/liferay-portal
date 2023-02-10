@@ -108,6 +108,15 @@ public class ListTypeEntryLocalServiceImpl
 	}
 
 	@Override
+	public ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return listTypeEntryPersistence.fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
+	@Override
 	public List<ListTypeEntry> getListTypeEntries(long listTypeDefinitionId) {
 		return listTypeEntryPersistence.findByListTypeDefinitionId(
 			listTypeDefinitionId);

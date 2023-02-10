@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -169,19 +168,25 @@ public class CollectionItemsDetailDisplayContext {
 	}
 
 	private long _getInfoCollectionProviderItemCount(String collectionPK) {
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			(List<InfoCollectionProvider<?>>)
-				(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
-					InfoCollectionProvider.class);
-
-		Stream<InfoCollectionProvider<?>> stream =
-			infoCollectionProviders.stream();
-
 		Optional<InfoCollectionProvider<?>> infoCollectionProviderOptional =
-			stream.filter(
-				infoCollectionProvider -> Objects.equals(
-					infoCollectionProvider.getKey(), collectionPK)
-			).findFirst();
+			Optional.empty();
+
+		for (InfoCollectionProvider<?> infoCollectionProvider :
+				(List<InfoCollectionProvider<?>>)
+					(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
+						InfoCollectionProvider.class)) {
+
+			if (!Objects.equals(
+					infoCollectionProvider.getKey(), collectionPK)) {
+
+				continue;
+			}
+
+			infoCollectionProviderOptional = Optional.of(
+				infoCollectionProvider);
+
+			break;
+		}
 
 		if (!infoCollectionProviderOptional.isPresent()) {
 			return 0;

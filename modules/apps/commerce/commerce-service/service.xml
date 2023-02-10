@@ -933,6 +933,7 @@
 		<exception>CommerceOrderPurchaseOrderNumber</exception>
 		<exception>CommerceOrderRequestedDeliveryDate</exception>
 		<exception>CommerceOrderShippingAddress</exception>
+		<exception>CommerceOrderShippingAndBilling</exception>
 		<exception>CommerceOrderShippingMethod</exception>
 		<exception>CommerceOrderStatus</exception>
 		<exception>CommerceOrderTypeDisplayDate</exception>

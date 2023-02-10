@@ -1,0 +1,80 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert that is possible to add a Wiki Page within a publication and then publish it"
+	@priority = 3
+	test CanAddWikiPageWithinPublications {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiPage.addCP(
+			contentImageName = "Document_2.jpg",
+			groupName = "Guest",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			siteURLKey = "guest",
+			wikiAdmin = "true",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Node",
+			changeOrder = 1,
+			changeSite = "Guest",
+			changeTitle = "Wiki Node Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Page",
+			changeOrder = 2,
+			changeSite = "Guest",
+			changeTitle = "Wiki Page Title",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
+}

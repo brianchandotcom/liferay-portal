@@ -17,6 +17,7 @@ package com.liferay.asset.kernel;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
@@ -83,40 +83,20 @@ public class AssetRendererFactoryRegistryUtil {
 		long companyId, boolean filterSelectable) {
 
 		if (companyId > 0) {
-			List<AssetRendererFactory<?>> assetRenderFactories =
-				_filterAssetRendererFactories(companyId, filterSelectable);
-
-			long[] classNameIds = new long[assetRenderFactories.size()];
-
-			int i = 0;
-
-			for (AssetRendererFactory<?> assetRendererFactory :
-					assetRenderFactories) {
-
-				classNameIds[i] = assetRendererFactory.getClassNameId();
-
-				i++;
-			}
-
-			return classNameIds;
+			return TransformUtil.transformToLongArray(
+				_filterAssetRendererFactories(companyId, filterSelectable),
+				AssetRendererFactory::getClassNameId);
 		}
 
-		int i = 0;
+		return TransformUtil.transformToLongArray(
+			_classNameAssetRenderFactoriesServiceTrackerMap.keySet(),
+			className -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+						className);
 
-		Set<String> classNames =
-			_classNameAssetRenderFactoriesServiceTrackerMap.keySet();
-
-		long[] classNameIds = new long[classNames.size()];
-
-		for (String className : classNames) {
-			AssetRendererFactory<?> assetRendererFactory =
-				_classNameAssetRenderFactoriesServiceTrackerMap.getService(
-					className);
-
-			classNameIds[i++] = assetRendererFactory.getClassNameId();
-		}
-
-		return classNameIds;
+				return assetRendererFactory.getClassNameId();
+			});
 	}
 
 	public static long[] getIndexableClassNameIds(

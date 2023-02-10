@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -347,37 +346,20 @@ public class ObjectEntryVariablesUtil {
 		Map<String, Object> variables = new HashMap<>();
 
 		if (objectDefinition.isSystem()) {
-			String contentType = _getContentType(
-				dtoConverterRegistry, objectDefinition,
-				systemObjectDefinitionMetadataRegistry);
-
-			Object object = payloadJSONObject.get(
-				"model" + objectDefinition.getName());
-
-			if (oldValues) {
-				String suffix = _getSuffix(
-					objectDefinition, systemObjectDefinitionMetadataRegistry);
-
-				object = payloadJSONObject.get("original" + suffix);
-			}
-
-			if (object == null) {
-				object = payloadJSONObject.get(
-					StringUtil.lowerCaseFirstLetter(
-						objectDefinition.getName()));
-			}
-
-			if (object == null) {
-				return payloadJSONObject.toMap();
-			}
-
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 				systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						objectDefinition.getName());
 
-			systemObjectDefinitionMetadata.getVariablesSystem(
-				contentType, object, oldValues, payloadJSONObject, variables);
+			variables = systemObjectDefinitionMetadata.getVariables(
+				_getContentType(
+					dtoConverterRegistry, objectDefinition,
+					systemObjectDefinitionMetadataRegistry),
+				objectDefinition, oldValues, payloadJSONObject);
+
+			if (variables == null) {
+				return payloadJSONObject.toMap();
+			}
 		}
 		else {
 			if (oldValues) {

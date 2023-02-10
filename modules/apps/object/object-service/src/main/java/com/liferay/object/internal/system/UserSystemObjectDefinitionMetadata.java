@@ -15,6 +15,7 @@
 package com.liferay.object.internal.system;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -127,12 +128,12 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
-	public void getVariablesSystem(
-		String contentType, Object object, boolean oldValues,
-		JSONObject payloadJSONObject, Map<String, Object> variables) {
+	public Map<String, Object> getVariables(
+		String contentType, ObjectDefinition objectDefinition,
+		boolean oldValues, JSONObject payloadJSONObject) {
 
-		super.getVariablesSystem(
-			contentType, object, oldValues, payloadJSONObject, variables);
+		Map<String, Object> variables = super.getVariables(
+			contentType, objectDefinition, oldValues, payloadJSONObject);
 
 		if (variables.containsKey("firstName")) {
 			variables.put("givenName", variables.get("firstName"));
@@ -141,6 +142,8 @@ public class UserSystemObjectDefinitionMetadata
 		if (variables.containsKey("middleName")) {
 			variables.put("additionalName", variables.get("middleName"));
 		}
+
+		return variables;
 	}
 
 	@Override

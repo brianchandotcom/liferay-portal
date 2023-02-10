@@ -14,14 +14,17 @@
 
 package com.liferay.object.system;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,9 +69,30 @@ public interface SystemObjectDefinitionMetadata {
 
 	public String getTitleObjectFieldName();
 
-	public default void getVariablesSystem(
-		String contentType, Object object, boolean oldValues,
-		JSONObject payloadJSONObject, Map<String, Object> variables) {
+	public default Map<String, Object> getVariables(
+		String contentType, ObjectDefinition objectDefinition,
+		boolean oldValues, JSONObject payloadJSONObject) {
+
+		Class<?> modelClass = getModelClass();
+
+		Object object = payloadJSONObject.get(
+			"model" + modelClass.getSimpleName());
+
+		if (oldValues) {
+			object = payloadJSONObject.get(
+				"original" + modelClass.getSimpleName());
+		}
+
+		if (object == null) {
+			object = payloadJSONObject.get(
+				StringUtil.lowerCaseFirstLetter(objectDefinition.getName()));
+		}
+
+		if (object == null) {
+			return null;
+		}
+
+		Map<String, Object> variables = new HashMap<>();
 
 		if (object instanceof JSONObject) {
 			Map<String, Object> map = ObjectMapperUtil.readValue(
@@ -101,6 +125,8 @@ public interface SystemObjectDefinitionMetadata {
 		if (extendedProperties != null) {
 			variables.putAll(extendedProperties);
 		}
+
+		return variables;
 	}
 
 	public int getVersion();

@@ -1686,6 +1686,12 @@ public class TestrayImporter {
 			string = _replaceEnvVarsSubrepository(string);
 		}
 
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(string) &&
+			(string.length() > 150)) {
+
+			string = string.substring(0, 150);
+		}
+
 		return string;
 	}
 

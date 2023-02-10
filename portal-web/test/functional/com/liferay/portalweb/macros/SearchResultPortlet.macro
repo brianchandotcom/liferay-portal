@@ -36,7 +36,7 @@ definition {
 			Select(
 				key_fieldLabel = "Display Template",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${displayTemplate}");
+				value1 = ${displayTemplate});
 		}
 
 		if (isSet(federatedSearchKey)) {

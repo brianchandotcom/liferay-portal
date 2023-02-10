@@ -822,7 +822,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-161063."
-	@priority = "4"
+	@priority = 4
 	test WarnTracePresentWithDataInconsistency {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document",

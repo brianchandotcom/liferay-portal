@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -43,6 +42,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactoryHelper;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -206,13 +204,10 @@ public class DDMFormImporter {
 			DDMForm ddmForm, String jsonFormSettings)
 		throws Exception {
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject(jsonFormSettings);
 
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-		return ddmFormFieldsStream.map(
+		return TransformUtil.transform(
+			ddmForm.getDDMFormFields(),
 			formField -> {
 				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
@@ -224,10 +219,7 @@ public class DDMFormImporter {
 				ddmFormFieldValue.setValue(unlocalizedValue);
 
 				return ddmFormFieldValue;
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 	}
 
 	private DDMStructure _createDDMStructure(

@@ -70,7 +70,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -413,12 +412,15 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			new DefaultLayoutListRetrieverContext();
 
 		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
-		defaultLayoutListRetrieverContext.setContextObject(
-			Optional.ofNullable(
-				_getContextObject()
-			).orElse(
-				_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM)
-			));
+
+		Object object = _getContextObject();
+
+		if (object == null) {
+			object = _httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+		}
+
+		defaultLayoutListRetrieverContext.setContextObject(object);
 		defaultLayoutListRetrieverContext.setInfoFilters(
 			_getInfoFilters(layoutListRetriever, listObjectReference));
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(

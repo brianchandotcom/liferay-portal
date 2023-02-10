@@ -138,30 +138,58 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 
 	const existingItem = cartItems.find(
 		(item) =>
-			item.productId === product.productId ||
-			item.productId === parentProduct.productId
+			item.productId === product.productId || item.sku === product.sku
 	);
 
 	const lastAllowedQuantity =
 		allowedOrderQuantities[allowedOrderQuantities.length - 1];
 
 	if (existingItem) {
-		const nextAllowedQuantity = allowedOrderQuantities.find(
-			(allowedQuantity) => allowedQuantity > existingItem.quantity
-		);
+		if (allowedOrderQuantities.length) {
+			const nextAllowedQuantity = allowedOrderQuantities.find(
+				(allowedQuantity) => {
+					if (multipleOrderQuantity > 1) {
+						return (
+							allowedQuantity > existingItem.quantity &&
+							allowedQuantity % multipleOrderQuantity === 0
+						);
+					}
 
-		allowedOrderQuantities.forEach((allowedQuantity) => {
-			if (allowedQuantity > existingItem.quantity) {
-				quantity = nextAllowedQuantity - existingItem.quantity;
+					return allowedQuantity > existingItem.quantity;
+				}
+			);
+
+			allowedOrderQuantities.forEach((allowedQuantity) => {
+				if (allowedQuantity > existingItem.quantity) {
+					quantity = nextAllowedQuantity - existingItem.quantity;
+				}
+			});
+
+			if (existingItem.quantity >= lastAllowedQuantity) {
+				quantity = 0;
 			}
-		});
-
-		if (existingItem.quantity >= lastAllowedQuantity) {
-			quantity = 0;
+		}
+		else {
+			if (existingItem.quantity >= multipleOrderQuantity) {
+				quantity = multipleOrderQuantity;
+			}
 		}
 
 		if (existingItem.quantity + quantity > maxOrderQuantity) {
-			quantity = 0;
+			if (multipleOrderQuantity > 1) {
+				quantity = 0;
+			}
+			else {
+				openToast({
+					message: sub(
+						Liferay.Language.get('max-quantity-per-order-is-x'),
+						maxOrderQuantity
+					),
+					type: 'danger',
+				});
+
+				return 0;
+			}
 		}
 	}
 	else if (allowedOrderQuantities.length) {
@@ -170,9 +198,51 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 				quantity >= minOrderQuantity &&
 				quantity % multipleOrderQuantity === 0
 		);
+
+		if (maxOrderQuantity < allowedOrderQuantities[0]) {
+			openToast({
+				message: sub(
+					Liferay.Language.get(
+						'the-maximum-allowed-quantity-for-x-is-x'
+					),
+					sku,
+					maxOrderQuantity
+				),
+				type: 'danger',
+			});
+
+			return 0;
+		}
+
+		if (minOrderQuantity > lastAllowedQuantity) {
+			openToast({
+				message: sub(
+					Liferay.Language.get('the-minimum-quantity-is-x'),
+					minOrderQuantity
+				),
+				type: 'danger',
+			});
+
+			return 0;
+		}
 	}
 	else if (multipleOrderQuantity > minOrderQuantity) {
 		quantity = multipleOrderQuantity;
+
+		if (multipleOrderQuantity > maxOrderQuantity) {
+			quantity = 0;
+		}
+	}
+	else if (multipleOrderQuantity < minOrderQuantity) {
+		openToast({
+			message: sub(
+				Liferay.Language.get('the-minimum-quantity-is-x'),
+				minOrderQuantity
+			),
+			type: 'danger',
+		});
+
+		return 0;
 	}
 
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {
@@ -184,7 +254,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 			message: sub(
 				Liferay.Language.get('the-maximum-allowed-quantity-for-x-is-x'),
 				sku,
-				lastAllowedQuantity
+				lastAllowedQuantity > 1 ? lastAllowedQuantity : maxOrderQuantity
 			),
 			type: 'danger',
 		});

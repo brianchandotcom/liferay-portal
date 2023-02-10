@@ -229,10 +229,6 @@ public class UncontrolledExceptionErrorTest
 
 	private class UncontrolledExceptionErrorPortlet extends MVCPortlet {
 
-		public UncontrolledExceptionErrorPortlet() {
-			_title = RandomTestUtil.randomString();
-		}
-
 		public boolean isCalledRender() {
 			return _calledRender;
 		}
@@ -256,6 +252,10 @@ public class UncontrolledExceptionErrorTest
 		@Override
 		protected String getTitle(RenderRequest renderRequest) {
 			return getTitle();
+		}
+
+		private UncontrolledExceptionErrorPortlet() {
+			_title = RandomTestUtil.randomString();
 		}
 
 		private boolean _calledRender;

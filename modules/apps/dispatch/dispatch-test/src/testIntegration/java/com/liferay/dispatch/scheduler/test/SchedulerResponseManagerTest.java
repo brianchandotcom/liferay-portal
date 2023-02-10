@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.internal.messaging.test;
+package com.liferay.dispatch.scheduler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.scheduler.SchedulerResponseManager;
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class SchedulerResponseTest {
+public class SchedulerResponseManagerTest {
 
 	@ClassRule
 	@Rule
@@ -52,7 +52,7 @@ public class SchedulerResponseTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testScheduledJobManualExecutionCompanyId() throws Exception {
+	public void testRun() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		TestMessageListener testMessageListener = new TestMessageListener();

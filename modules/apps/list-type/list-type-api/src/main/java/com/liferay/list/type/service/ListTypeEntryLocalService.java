@@ -221,6 +221,11 @@ public interface ListTypeEntryLocalService
 	public ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId);
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *

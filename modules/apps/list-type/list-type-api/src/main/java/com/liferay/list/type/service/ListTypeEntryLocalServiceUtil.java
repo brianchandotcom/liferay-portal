@@ -242,6 +242,14 @@ public class ListTypeEntryLocalServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
+	public static ListTypeEntry fetchListTypeEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return getService().fetchListTypeEntryByExternalReferenceCode(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
 	/**
 	 * Returns the list type entry with the matching UUID and company.
 	 *

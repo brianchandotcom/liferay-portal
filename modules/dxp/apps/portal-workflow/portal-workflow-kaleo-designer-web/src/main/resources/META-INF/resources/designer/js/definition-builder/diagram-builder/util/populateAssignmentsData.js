@@ -10,6 +10,7 @@
  */
 
 import {
+	retrieveAccountRoles,
 	retrieveRoleById,
 	retrieveRoles,
 	retrieveUsersBy,
@@ -80,6 +81,7 @@ const verifySectionsData = (
 };
 
 const populateAssignmentsData = (
+	accountEntryId,
 	initialElements,
 	setElements,
 	setBlockingErrors
@@ -111,27 +113,37 @@ const populateAssignmentsData = (
 				});
 		}
 		else if (assignmentType === 'roleType') {
-			retrieveRoles()
-				.then((response) => response.json())
-				.then(({items}) => {
-					taskNode.data.assignments.roleKey.forEach((key) => {
-						const role = items.find((item) => item.key === key);
+			Promise.all([
+				retrieveRoles(),
+				retrieveAccountRoles(accountEntryId),
+			]).then(([response1, response2]) =>
+				Promise.all([response1.json(), response2.json()]).then(
+					([roles, accountRoles]) => {
+						const items = roles.items.concat(accountRoles.items);
 
-						if (!taskNode.data.assignments.roleName) {
-							taskNode.data.assignments.roleName = [];
-						}
+						taskNode.data.assignments.roleKey.forEach((key) => {
+							const role = items.find(
+								(item) =>
+									item.key === key || item.displayName === key
+							);
 
-						taskNode.data.assignments.roleName.push(role?.name);
-					});
+							if (!taskNode.data.assignments.roleName) {
+								taskNode.data.assignments.roleName = [];
+							}
 
-					const nodeIndex = initialElements.findIndex(
-						(element) => element.id === taskNode.id
-					);
+							taskNode.data.assignments.roleName.push(role?.name);
+						});
 
-					initialElements[nodeIndex] = taskNode;
+						const nodeIndex = initialElements.findIndex(
+							(element) => element.id === taskNode.id
+						);
 
-					setElements([...initialElements]);
-				});
+						initialElements[nodeIndex] = taskNode;
+
+						setElements([...initialElements]);
+					}
+				)
+			);
 		}
 		else if (assignmentType === 'user') {
 			const sectionsData = [];

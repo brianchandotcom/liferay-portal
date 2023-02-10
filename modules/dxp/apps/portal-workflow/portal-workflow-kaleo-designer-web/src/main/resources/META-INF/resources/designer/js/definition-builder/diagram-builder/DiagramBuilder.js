@@ -43,6 +43,7 @@ const deserializeUtil = new DeserializeUtil();
 
 export default function DiagramBuilder() {
 	const {
+		accountEntryId,
 		currentEditor,
 		definitionId,
 		deserialize,
@@ -329,8 +330,13 @@ export default function DiagramBuilder() {
 
 			setElements(elements);
 
-			populateAssignmentsData(elements, setElements, setBlockingErrors);
-			populateNotificationsData(elements, setElements);
+			populateAssignmentsData(
+				accountEntryId,
+				elements,
+				setElements,
+				setBlockingErrors
+			);
+			populateNotificationsData(accountEntryId, elements, setElements);
 
 			setDeserialize(false);
 		}
@@ -371,8 +377,16 @@ export default function DiagramBuilder() {
 
 						setElements(elements);
 
-						populateAssignmentsData(elements, setElements);
-						populateNotificationsData(elements, setElements);
+						populateAssignmentsData(
+							accountEntryId,
+							elements,
+							setElements
+						);
+						populateNotificationsData(
+							accountEntryId,
+							elements,
+							setElements
+						);
 					}
 				);
 		}

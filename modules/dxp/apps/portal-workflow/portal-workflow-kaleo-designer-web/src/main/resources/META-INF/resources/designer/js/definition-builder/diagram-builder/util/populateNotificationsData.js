@@ -12,12 +12,17 @@
 import {isNode} from 'react-flow-renderer';
 
 import {
+	retrieveAccountRoles,
 	retrieveRoleById,
 	retrieveRoles,
 	retrieveUsersBy,
 } from '../../util/fetchUtil';
 
-const populateNotificationsData = (initialElements, setElements) => {
+const populateNotificationsData = (
+	accountEntryId,
+	initialElements,
+	setElements
+) => {
 	for (let i = 0; i < initialElements.length; i++) {
 		const element = initialElements[i];
 
@@ -41,36 +46,49 @@ const populateNotificationsData = (initialElements, setElements) => {
 						});
 				}
 				else if (recipient?.assignmentType?.[0] === 'roleType') {
-					retrieveRoles()
-						.then((response) => response.json())
-						.then(({items}) => {
-							initialElements[i].data.notifications.recipients[
-								index
-							].roleKey.forEach((key) => {
-								const role = items.find(
-									(item) => item.key === key
+					Promise.all([
+						retrieveRoles(),
+						retrieveAccountRoles(accountEntryId),
+					]).then(([response1, response2]) =>
+						Promise.all([response1.json(), response2.json()]).then(
+							([roles, accountRoles]) => {
+								const items = roles.items.concat(
+									accountRoles.items
 								);
-
-								if (
-									!initialElements[i].data.notifications
-										.recipients[index].roleName
-								) {
-									initialElements[
-										i
-									].data.notifications.recipients[
-										index
-									].roleName = [];
-								}
 
 								initialElements[
 									i
 								].data.notifications.recipients[
 									index
-								].roleName.push(role?.name);
-							});
+								].roleKey.forEach((key) => {
+									const role = items.find(
+										(item) =>
+											item.key === key ||
+											item.displayName === key
+									);
 
-							setElements([...initialElements]);
-						});
+									if (
+										!initialElements[i].data.notifications
+											.recipients[index].roleName
+									) {
+										initialElements[
+											i
+										].data.notifications.recipients[
+											index
+										].roleName = [];
+									}
+
+									initialElements[
+										i
+									].data.notifications.recipients[
+										index
+									].roleName.push(role?.name);
+								});
+
+								setElements([...initialElements]);
+							}
+						)
+					);
 				}
 				else if (
 					recipient?.assignmentType?.[0] === 'user' &&

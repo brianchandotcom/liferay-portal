@@ -482,6 +482,22 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.product.type.grouped.model.
+			CPDefinitionGroupedEntry>
+					getEntryCProductCPDefinitionGroupedEntries(
+						long entryCProductId, int start, int end,
+						com.liferay.portal.kernel.util.OrderByComparator
+							<com.liferay.commerce.product.type.grouped.model.
+								CPDefinitionGroupedEntry> orderByComparator)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.
+			getEntryCProductCPDefinitionGroupedEntries(
+				entryCProductId, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

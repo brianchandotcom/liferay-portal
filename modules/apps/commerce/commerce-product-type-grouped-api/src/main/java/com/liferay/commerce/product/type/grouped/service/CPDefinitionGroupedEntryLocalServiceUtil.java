@@ -398,6 +398,16 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static List<CPDefinitionGroupedEntry>
+			getEntryCProductCPDefinitionGroupedEntries(
+				long entryCProductId, int start, int end,
+				OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException {
+
+		return getService().getEntryCProductCPDefinitionGroupedEntries(
+			entryCProductId, start, end, orderByComparator);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

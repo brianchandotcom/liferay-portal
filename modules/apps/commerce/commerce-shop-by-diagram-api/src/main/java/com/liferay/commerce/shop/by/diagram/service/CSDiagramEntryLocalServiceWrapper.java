@@ -278,6 +278,17 @@ public class CSDiagramEntryLocalServiceWrapper
 			getCPDefinitionRelatedCSDiagramEntries(cpDefinitionId);
 	}
 
+	@Override
+	public java.util.List<CSDiagramEntry> getCProductCSDiagramEntries(
+			long cProductId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CSDiagramEntry>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _csDiagramEntryLocalService.getCProductCSDiagramEntries(
+			cProductId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns a range of all the cs diagram entries.
 	 *

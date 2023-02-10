@@ -233,6 +233,12 @@ public interface CSDiagramEntryLocalService
 	public List<CSDiagramEntry> getCPDefinitionRelatedCSDiagramEntries(
 		long cpDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CSDiagramEntry> getCProductCSDiagramEntries(
+			long cProductId, int start, int end,
+			OrderByComparator<CSDiagramEntry> orderByComparator)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the cs diagram entries.
 	 *

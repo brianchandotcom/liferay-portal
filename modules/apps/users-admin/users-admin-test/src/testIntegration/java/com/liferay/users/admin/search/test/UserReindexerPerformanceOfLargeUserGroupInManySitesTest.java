@@ -15,6 +15,7 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -287,17 +288,11 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	}
 
 	protected void reindex(List<User> users) {
-		long[] userIds = new long[users.size()];
-
-		for (int i = 0; i < users.size(); i++) {
-			User user = users.get(i);
-
-			userIds[i] = user.getUserId();
-		}
-
 		User user = users.get(0);
 
-		_reindexer.reindex(user.getCompanyId(), _CLASS_NAME, userIds);
+		_reindexer.reindex(
+			user.getCompanyId(), _CLASS_NAME,
+			TransformUtil.transformToLongArray(users, User::getUserId));
 	}
 
 	protected SearchResponse searchUsersInAllGroups(

@@ -205,7 +205,8 @@ public class UserGroupCascadeReindexUsersTest {
 			List<User> users, PerformActionMethod<User> performActionMethod)
 		throws Exception {
 
-		long[] userIds = _getAllUserIds(users);
+		long[] userIds = TransformUtil.transformToLongArray(
+			users, User::getUserId);
 
 		User user = users.get(0);
 
@@ -229,9 +230,9 @@ public class UserGroupCascadeReindexUsersTest {
 	protected void doTraverseWithIndividualFetches(
 		List<User> users, Consumer<User> consumer) {
 
-		long[] userIds = _getAllUserIds(users);
+		for (long userId :
+				TransformUtil.transformToLongArray(users, User::getUserId)) {
 
-		for (long userId : userIds) {
 			consumer.accept(_userLocalService.fetchUser(userId));
 		}
 	}
@@ -298,18 +299,6 @@ public class UserGroupCascadeReindexUsersTest {
 		sortedGroupsIds.sort(String::compareTo);
 
 		return sortedGroupsIds.toString();
-	}
-
-	private long[] _getAllUserIds(List<User> users) {
-		long[] userIds = new long[users.size()];
-
-		for (int i = 0; i < users.size(); i++) {
-			User user = users.get(i);
-
-			userIds[i] = user.getUserId();
-		}
-
-		return userIds;
 	}
 
 	private void _getDocument(Indexer<User> indexer, User user) {

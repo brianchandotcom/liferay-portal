@@ -37,7 +37,9 @@ const BaseActionsInfo = ({
 	setScript,
 	setScriptLanguage,
 	setSelectedActionType,
+	setUpdateStatus,
 	updateActionInfo,
+	updateStatus
 }) => {
 	useEffect(() => {
 		if (executionTypeOptions) {
@@ -53,6 +55,13 @@ const BaseActionsInfo = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const status = [
+		{key:'approved', label:'Approved', value:'approved'},
+		{key:'danied', label:'Danied', value:'danied'},
+		{key:'draft', label:'Draft', value:'draft'},
+		{key:'expired', label:'Expired', value:'expired'},
+	]
 
 	return (
 		<>
@@ -188,6 +197,42 @@ const BaseActionsInfo = ({
 						value={script}
 					/>
 				</ClayForm.Group>
+			)}
+
+			{selectedActionType?.type === 'status' && (
+				<ClayForm.Group>
+					<label htmlFor="update-status">
+						Status
+					</label>
+
+					<ClaySelect
+					aria-label="Select"
+					defaultValue={updateStatus}
+					id="update-status"
+					onChange={({target}) => {
+						setUpdateStatus(target.value);
+					}}
+					onClickCapture={() =>
+						updateActionInfo({
+							description,
+							executionType,
+							name,
+							priority,
+							scriptLanguage,
+							updateStatus,
+						})
+					}
+				>
+					{status &&
+						status.map((item) => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+				</ClaySelect>
+			</ClayForm.Group>
 			)}
 
 			{typeof executionTypeInput !== 'undefined' && (

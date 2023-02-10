@@ -33,6 +33,8 @@ const ActionsInfo = ({
 
 	const [script, setScript] = useState(actions?.script?.[index] || '');
 
+	const [updateStatus, setUpdateStatus] = useState(actions?.updateStatus?.[index].updateStatus || '');
+
 	const [description, setDescription] = useState(
 		actions?.description?.[index] || ''
 	);
@@ -58,6 +60,11 @@ const ActionsInfo = ({
 			label: Liferay.Language.get('java'),
 			type: 'script',
 			value: 'java',
+		},
+		{
+			label: Liferay.Language.get('update-status'),
+			type: 'status',
+			value: 'update-status',
 		},
 	];
 
@@ -114,7 +121,7 @@ const ActionsInfo = ({
 			(item.script ||
 				(selectedActionType?.type === 'functionActionExecutor' &&
 					item.script === '')) &&
-			item.executionType
+			item.executionType || item.updateStatus
 		) {
 			setSections((prev) => {
 				const updatedSection = [...prev];
@@ -147,6 +154,7 @@ const ActionsInfo = ({
 						({scriptLanguage}) => scriptLanguage
 					),
 					sectionsData: values.map((values) => values),
+					updateStatus: values.map((updateStatus) => updateStatus)
 				},
 			},
 		}));
@@ -177,7 +185,9 @@ const ActionsInfo = ({
 				setScript={setScript}
 				setScriptLanguage={setScriptLanguage}
 				setSelectedActionType={setSelectedActionType}
+				setUpdateStatus={setUpdateStatus}
 				updateActionInfo={updateActionInfo}
+				updateStatus={updateStatus}
 			/>
 
 			<div className="section-buttons-area">

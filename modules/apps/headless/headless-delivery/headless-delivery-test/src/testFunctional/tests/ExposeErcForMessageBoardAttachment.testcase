@@ -1,0 +1,87 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		MessageBoardThreadAPI.setUpGlobalMessageBoardThreadId(headline = "This is the mb thread");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		MessageBoardThreadAPI.deleteMessageBoardThreadByThreadId(messageBoardThreadId = "${staticMbThreadId}");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateChildMessageBoardMessageMessageBoardAttachementWithErc {
+		property portal.acceptance = "true";
+
+		task ("Given with postMessageBoardThreadMessageBoardMessage and messageBoardThreadId to create a message board message") {
+			var mbMessageId = MessageBoardMessageAPI.getIdOfCreatedMbMessageByMbThreadId(
+				headline = "This is the parent mb message",
+				messageBoardThreadId = "${staticMbThreadId}");
+		}
+
+		task ("And Given with postMessageBoardMessageMessageBoardMessage and parentMessageBoardMessageId to create a child message board message") {
+			var childMbMessageId = MessageBoardMessageAPI.getIdOfCreatedChildMbMessageByMbMessageId(
+				headline = "This is the child mb message",
+				parentMessageBoardMessageId = "${mbMessageId}");
+		}
+
+		task ("When with postMessageBoardMessageMessageBoardAttachmentsPage and messageBoardMessageId to create an attachment for child message board message") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_4.jpg");
+
+			var response = MessageBoardAttachmentAPI.createMessageBoardMessageMessageBoardAttachment(
+				attachmentPath = "${attachmentPath}",
+				messageBoardMessageId = "${childMbMessageId}");
+		}
+
+		task ("Then I can see external reference code equals to uuid in the response") {
+			MessageBoardAttachmentAPI.assertCorrectErcInResponse(response = "${response}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateMessageBoardAttachementForMessageBoardMessageInSectionWithErc {
+		property portal.acceptance = "true";
+
+		task ("Given with postSiteMessageBoardSection and siteId to create a message board section") {
+			var mbMessageId = MessageBoardMessageAPI.getIdOfCreatedMbMessageByMbThreadId(
+				headline = "This is the parent mb message",
+				messageBoardThreadId = "${staticMbThreadId}");
+		}
+
+		task ("And Given with postMessageBoardSectionMessageBoardThread and messageBoardSectionId to create a message board thread") {
+			var childMbMessageId = MessageBoardMessageAPI.getIdOfCreatedChildMbMessageByMbMessageId(
+				headline = "This is the child mb message",
+				parentMessageBoardMessageId = "${mbMessageId}");
+		}
+
+		task ("And Given with postMessageBoardThreadMessageBoardMessage and messageBoardThreadId to create a message board message") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_4.jpg");
+
+			var response = MessageBoardAttachmentAPI.createMessageBoardMessageMessageBoardAttachment(
+				attachmentPath = "${attachmentPath}",
+				messageBoardMessageId = "${childMbMessageId}");
+		}
+
+		task ("When with postMessageBoardMessageMessageBoardAttachmentsPage and messageBoardMessageId to create an attachment for message board message") {
+		}
+
+		task ("Then I can see external reference code equals to uuid in the response") {
+			MessageBoardAttachmentAPI.assertCorrectErcInResponse(response = "${response}");
+		}
+	}
+
+}

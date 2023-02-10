@@ -362,6 +362,11 @@ public class RenderLayoutStructureDisplayContext {
 
 		Layout layout = _themeDisplay.getLayout();
 
+		if (infoForm == null) {
+			infoForm = (InfoForm)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_FORM);
+		}
+
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 			defaultFragmentRendererContext.setInfoForm(infoForm);
 			defaultFragmentRendererContext.setMode(_mode);

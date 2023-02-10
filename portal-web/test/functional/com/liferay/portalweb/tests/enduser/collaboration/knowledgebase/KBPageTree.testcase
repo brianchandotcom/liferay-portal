@@ -110,6 +110,22 @@ definition {
 		KBArticle.viewDefaultCP(featureFlag = "true");
 	}
 
+	@description = "This test ensures that when the product menu is open, the sidebar is collapsed. They can't open at the same time."
+	@priority = 3
+	test PageTreeAndProductMenuCanNotOpenAtSameTime {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED");
+
+		ProductMenuHelper.openProductMenu();
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED");
+	}
+
 	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."
 	@priority = 5
 	test PageTreeIsCollapsedAfterOpeningProductMenu {

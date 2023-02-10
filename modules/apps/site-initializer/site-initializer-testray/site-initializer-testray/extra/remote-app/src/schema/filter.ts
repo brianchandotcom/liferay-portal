@@ -105,8 +105,25 @@ const baseFilters: Filter = {
 		},
 		type: 'select',
 	},
+	description: {
+		label: i18n.translate('description'),
+		name: 'description',
+		type: 'textarea',
+	},
+	hasRequirements: {
+		disabled: true,
+		label: i18n.translate('hasRequirements'),
+		name: 'caseToRequirementsCases',
+		options: ['true', 'false'],
+		type: 'select',
+	},
+	issues: {
+		label: i18n.translate('issues'),
+		name: 'issues',
+		type: 'textarea',
+	},
 	priority: {
-		label: 'Priority',
+		label: i18n.translate('priority'),
 		name: 'priority',
 		options: ['1', '2', '3', '4', '5'],
 		type: 'multiselect',
@@ -145,6 +162,11 @@ const baseFilters: Filter = {
 			return dataToOptions(transformData<TestrayRun>(item));
 		},
 		type: 'select',
+	},
+	steps: {
+		label: i18n.translate('steps'),
+		name: 'steps',
+		type: 'textarea',
 	},
 	team: {
 		label: i18n.translate('team'),
@@ -363,7 +385,10 @@ const filterSchema = {
 	},
 	cases: {
 		fields: [
-			baseFilters.priority,
+			overrides(baseFilters.priority, {
+				removeQuoteMark: true,
+				type: 'select',
+			}),
 			overrides(baseFilters.caseType, {
 				name: 'r_caseTypeToCases_c_caseTypeId',
 			}),
@@ -373,8 +398,18 @@ const filterSchema = {
 				operator: 'contains',
 				type: 'text',
 			},
-			{...baseFilters.team},
-			overrides(baseFilters.component, {name: 'componentId'}),
+			overrides(baseFilters.team, {
+				name: 'componentToCases/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.component, {
+				name: 'componentId',
+				type: 'multiselect',
+			}),
+			baseFilters.description,
+			baseFilters.steps,
+			baseFilters.issues,
+			baseFilters.hasRequirements,
 		] as RendererFields[],
 	},
 	requirementCases: {

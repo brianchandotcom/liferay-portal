@@ -50,7 +50,8 @@ public class HighestRatedAssetsInfoCollectionProvider
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			collectionQuery.getPagination(), new Sort("ratings", true), null);
+			collectionQuery.getPagination(), new Sort("ratings", true),
+			new Sort("title", true));
 
 		try {
 			return InfoPage.of(

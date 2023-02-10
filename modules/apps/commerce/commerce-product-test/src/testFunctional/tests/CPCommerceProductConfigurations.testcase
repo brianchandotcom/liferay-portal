@@ -1501,6 +1501,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10639. Sitemaps display the language tags properly"
+	@priority = 3
+	test CanViewLanguageTagsOnSitemapPage {
+		task ("Given an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce",
+				accountEntryType = "Business");
+		}
+
+		task ("And a product's name and friendly URL are translated") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			PortletEntry.changeLocale(
+				fieldName = "Name",
+				locale = "pt-BR");
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Sensor ABS");
+
+			PortletEntry.changeLocale(
+				fieldName = "Friendly URL",
+				locale = "pt-BR");
+
+			Type(
+				key_fieldLabel = "Friendly URL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "sensor-abs");
+
+			Button.clickPublish();
+		}
+
+		task ("And Uuid of the product is acquired") {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+			var basePortalURL = PropsUtil.get("portal.url");
+
+			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+
+			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
+				field = "uuid",
+				groupName = "Minium",
+				title = "Product Detail");
+		}
+
+		task ("When the Product Detail page sitemap link is opened") {
+			var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].uuid");
+
+			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+		}
+
+		task ("Then the default and translated product's friendly URL are shown") {
+			for (var productName : list "abs-sensor,sensor-abs") {
+				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+					key_basePortalURL = ${basePortalURL},
+					key_productName = ${productName},
+					locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL");
+			}
+
+			for (var productURLName : list "abs-sensor,sensor-abs") {
+				for (var product : list "abs-sensor:en-US,sensor-abs:pt-BR") {
+					var productName = StringUtil.extractFirst(${product}, ":");
+					var productNameLang = StringUtil.extractLast(${product}, ":");
+
+					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+						key_basePortalURL = ${basePortalURL},
+						key_productName = ${productName},
+						key_productNameLang = ${productNameLang},
+						key_productURLName = ${productURLName},
+						locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+				}
+			}
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
 	@priority = 3
 	test UseConfiguration {

@@ -80,7 +80,7 @@ public class ElasticsearchIndexSearcherTest {
 		_assertStartAndEnd(14, 4, searchRequest, searchContext);
 
 		searchContext.setAttribute(
-			SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER,
+			SearchContextAttributes.ATTRIBUTE_KEY_PERMISSIONED_SEARCHER,
 			Boolean.TRUE);
 
 		_assertStartAndEnd(50, 0, searchRequest, searchContext);

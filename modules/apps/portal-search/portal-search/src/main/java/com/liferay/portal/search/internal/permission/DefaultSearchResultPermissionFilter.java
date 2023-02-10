@@ -359,7 +359,7 @@ public class DefaultSearchResultPermissionFilter
 			long startTime = 0;
 
 			searchContext.setAttribute(
-				SearchContextAttributes.ATTRIBUTE_PERMISSIONED_SEARCHER,
+				SearchContextAttributes.ATTRIBUTE_KEY_PERMISSIONED_SEARCHER,
 				Boolean.TRUE);
 
 			while (true) {

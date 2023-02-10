@@ -69,6 +69,20 @@ const Assignments = (props) => {
 	});
 
 	useEffect(() => {
+		retrieveAccountRoles(accountEntryId)
+			.then((response) => response.json())
+			.then(({items}) => {
+				const accountRoleItems = items.map(({displayName, name}) => {
+					return {
+						roleKey: name,
+						roleName: displayName,
+						roleType: 'Account',
+					};
+				});
+
+				setAccountRoles(accountRoleItems);
+			});
+
 		if (assignmentType === 'roleType') {
 			const sectionsData = [];
 
@@ -83,22 +97,6 @@ const Assignments = (props) => {
 			}
 
 			setSections(sectionsData);
-
-			retrieveAccountRoles(accountEntryId)
-				.then((response) => response.json())
-				.then(({items}) => {
-					const accountRoleItems = items.map(
-						({displayName, name}) => {
-							return {
-								roleKey: name,
-								roleName: displayName,
-								roleType: 'Account',
-							};
-						}
-					);
-
-					setAccountRoles(accountRoleItems);
-				});
 		}
 		else if (assignmentType === 'user') {
 			setSections(assignments.sectionsData);

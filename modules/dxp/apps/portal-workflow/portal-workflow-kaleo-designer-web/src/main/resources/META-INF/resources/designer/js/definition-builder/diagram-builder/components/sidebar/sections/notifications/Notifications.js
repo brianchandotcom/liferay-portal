@@ -49,6 +49,20 @@ const Notifications = (props) => {
 	});
 
 	useEffect(() => {
+		retrieveAccountRoles(accountEntryId)
+			.then((response) => response.json())
+			.then(({items}) => {
+				const accountRoleItems = items.map(({displayName, name}) => {
+					return {
+						roleKey: name,
+						roleName: displayName,
+						roleType: 'Account',
+					};
+				});
+
+				setAccountRoles(accountRoleItems);
+			});
+
 		const sectionsData = [];
 
 		if (notifications) {
@@ -72,22 +86,6 @@ const Notifications = (props) => {
 			}
 
 			setSections(sectionsData);
-
-			retrieveAccountRoles(accountEntryId)
-				.then((response) => response.json())
-				.then(({items}) => {
-					const accountRoleItems = items.map(
-						({displayName, name}) => {
-							return {
-								roleKey: name,
-								roleName: displayName,
-								roleType: 'Account',
-							};
-						}
-					);
-
-					setAccountRoles(accountRoleItems);
-				});
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

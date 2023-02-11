@@ -116,7 +116,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			} else {
+			}
+			else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -167,8 +168,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 		case ListViewTypes.SET_PIN:
 			if (!state.filters.entries.length) {
-				// Avoid pinning without filter applied
-
 				return state;
 			}
 
@@ -181,7 +180,8 @@ const reducer = (state: InitialState, action: AppActions) => {
 					storageName,
 					JSON.stringify(state.filters)
 				);
-			} else {
+			}
+			else {
 				localStorage.removeItem(storageName);
 			}
 

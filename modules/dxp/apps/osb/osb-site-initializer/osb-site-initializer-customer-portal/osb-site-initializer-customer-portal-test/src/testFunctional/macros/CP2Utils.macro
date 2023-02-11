@@ -154,6 +154,12 @@ definition {
 		}
 	}
 
+	macro clearCloudEntries {
+		CustomerPortal.clearActivationStatus(
+			position = "${position}",
+			status = "${status}");
+	}
+
 	macro deleteSpecificObjectEntry {
 		var key_status = "${email}";
 

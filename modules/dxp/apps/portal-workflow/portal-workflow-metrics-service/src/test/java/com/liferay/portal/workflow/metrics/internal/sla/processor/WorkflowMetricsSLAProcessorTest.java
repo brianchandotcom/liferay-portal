@@ -21,7 +21,6 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.metrics.internal.sla.calendar.DefaultWorkflowMetricsSLACalendar;
-import com.liferay.portal.workflow.metrics.internal.sla.calendar.WorkflowMetricsSLACalendarRegistryImpl;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
@@ -605,19 +604,19 @@ public class WorkflowMetricsSLAProcessorTest {
 	}
 
 	private WorkflowMetricsSLACalendarRegistry
-			_mockWorkflowMetricsSLACalendarRegistry()
-		throws Exception {
+		_mockWorkflowMetricsSLACalendarRegistry() {
 
-		WorkflowMetricsSLACalendarRegistryImpl
-			workflowMetricsSLACalendarRegistryImpl =
-				new WorkflowMetricsSLACalendarRegistryImpl();
+		WorkflowMetricsSLACalendarRegistry workflowMetricsSLACalendarRegistry =
+			Mockito.mock(WorkflowMetricsSLACalendarRegistry.class);
 
-		ReflectionTestUtil.setFieldValue(
-			workflowMetricsSLACalendarRegistryImpl,
-			"_defaultWorkflowMetricsSLACalendar",
-			new DefaultWorkflowMetricsSLACalendar());
+		Mockito.when(
+			workflowMetricsSLACalendarRegistry.getWorkflowMetricsSLACalendar(
+				Mockito.anyString())
+		).thenReturn(
+			new DefaultWorkflowMetricsSLACalendar()
+		);
 
-		return workflowMetricsSLACalendarRegistryImpl;
+		return workflowMetricsSLACalendarRegistry;
 	}
 
 	private void _test(
@@ -654,17 +653,20 @@ public class WorkflowMetricsSLAProcessorTest {
 	}
 
 	private void _test(
-			LocalDateTime completionLocalDateTime,
-			LocalDateTime createLocalDateTime, List<Document> documents,
-			long elapsedTime,
-			WorkflowMetricsSLAInstanceResult
-				lastWorkflowMetricsSLAInstanceResult,
-			LocalDateTime nowLocalDateTime, boolean onTime, long remainingTime,
-			long startNodeId,
-			WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion,
-			WorkflowMetricsSLAStatus workflowMetricsSLAStatus)
-		throws Exception {
+		LocalDateTime completionLocalDateTime,
+		LocalDateTime createLocalDateTime, List<Document> documents,
+		long elapsedTime,
+		WorkflowMetricsSLAInstanceResult lastWorkflowMetricsSLAInstanceResult,
+		LocalDateTime nowLocalDateTime, boolean onTime, long remainingTime,
+		long startNodeId,
+		WorkflowMetricsSLADefinitionVersion workflowMetricsSLADefinitionVersion,
+		WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
+
+		Mockito.when(
+			workflowMetricsSLADefinitionVersion.getCalendarKey()
+		).thenReturn(
+			""
+		);
 
 		WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor =
 			new WorkflowMetricsSLAProcessor();

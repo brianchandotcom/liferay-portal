@@ -2,9 +2,9 @@ definition {
 
 	macro _addPage {
 		SitePages._selectPageType(
-			collectionName = "${collectionName}",
-			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}");
+			collectionName = ${collectionName},
+			pageTemplateName = ${pageTemplateName},
+			sitePageType = ${sitePageType});
 
 		//Button.clickAdd();
 		//this is a comment that ends with COMMA,
@@ -12,15 +12,15 @@ definition {
 		//SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		SitePages._addPageToNavigationMenu(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus});
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		// if (isSet(categoryName)) {
 		//	AssetCategorization.addCategory(
-		// 		categoryName = "${categoryName}",
-		// 		vocabularyName = "${vocabularyName}");
+		// 		categoryName = ${categoryName},
+		// 		vocabularyName = ${vocabularyName});
 		// }
 
 		//
@@ -32,13 +32,13 @@ definition {
 
 		//quarantine...
 
-		if ("${sitePageType}" == "Embedded") {
+		if (${sitePageType} == "Embedded") {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
 		//workaround...
 
-		if ("${sitePageType}" == "Embedded") {
+		if (${sitePageType} == "Embedded") {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
@@ -46,8 +46,8 @@ definition {
 
 		if (isSet(openGraph)) {
 			SitePages._configureOpenGraph(
-				customDescription = "${customDescription}",
-				customTitle = "${customTitle}");
+				customDescription = ${customDescription},
+				customTitle = ${customTitle});
 		}
 
 		//TODO find a better fix as we should not be navigating like this for every test. Workaround caused by LPS-104246

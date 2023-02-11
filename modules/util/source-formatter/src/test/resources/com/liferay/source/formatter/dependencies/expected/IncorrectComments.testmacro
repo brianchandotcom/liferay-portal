@@ -2,9 +2,9 @@ definition {
 
 	macro _addPage {
 		SitePages._selectPageType(
-			collectionName = "${collectionName}",
-			pageTemplateName = "${pageTemplateName}",
-			sitePageType = "${sitePageType}");
+			collectionName = ${collectionName},
+			pageTemplateName = ${pageTemplateName},
+			sitePageType = ${sitePageType});
 
 		//Button.clickAdd();
 
@@ -14,15 +14,15 @@ definition {
 		//SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		SitePages._addPageToNavigationMenu(
-			assertCheckboxMissing = "${assertCheckboxMissing}",
-			navigationMenus = "${navigationMenus}");
+			assertCheckboxMissing = ${assertCheckboxMissing},
+			navigationMenus = ${navigationMenus});
 
-		PortletEntry.inputName(name = "${pageName}");
+		PortletEntry.inputName(name = ${pageName});
 
 		//if (isSet(categoryName)) {
 		//	AssetCategorization.addCategory(
-		//		categoryName = "${categoryName}",
-		//		vocabularyName = "${vocabularyName}");
+		//		categoryName = ${categoryName},
+		//		vocabularyName = ${vocabularyName});
 		//}
 		//Button.clickAdd();
 
@@ -32,22 +32,22 @@ definition {
 
 		// Quarantine...
 
-		if ("${sitePageType}" == "Embedded") {
-			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+		if (${sitePageType} == "Embedded") {
+			Page.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
 
 		// Workaround...
 
-		if ("${sitePageType}" == "Embedded") {
-			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+		if (${sitePageType} == "Embedded") {
+			Page.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
 
 		// This is a commit
 
 		if (isSet(openGraph)) {
 			SitePages._configureOpenGraph(
-				customDescription = "${customDescription}",
-				customTitle = "${customTitle}");
+				customDescription = ${customDescription},
+				customTitle = ${customTitle});
 		}
 
 		// TODO find a better fix as we should not be navigating like this for every test. Workaround caused by LPS-104246

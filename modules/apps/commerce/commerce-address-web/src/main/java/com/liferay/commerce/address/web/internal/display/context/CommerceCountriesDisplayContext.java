@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -72,16 +72,11 @@ public class CommerceCountriesDisplayContext
 	public long[] getCommerceChannelRelCommerceChannelIds()
 		throws PortalException {
 
-		List<CommerceChannelRel> commerceChannelRels =
+		return TransformUtil.transformToLongArray(
 			_commerceChannelRelService.getCommerceChannelRels(
 				Country.class.getName(), getCountryId(), null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
-
-		return stream.mapToLong(
-			CommerceChannelRel::getCommerceChannelId
-		).toArray();
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			CommerceChannelRel::getCommerceChannelId);
 	}
 
 	public List<CommerceChannel> getCommerceChannels() throws PortalException {

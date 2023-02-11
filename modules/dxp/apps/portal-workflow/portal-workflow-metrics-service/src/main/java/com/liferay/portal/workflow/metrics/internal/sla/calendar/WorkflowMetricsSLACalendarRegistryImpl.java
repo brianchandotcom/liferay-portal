@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = false, service = WorkflowMetricsSLACalendarRegistry.class
-)
+@Component(service = WorkflowMetricsSLACalendarRegistry.class)
 public class WorkflowMetricsSLACalendarRegistryImpl
 	implements WorkflowMetricsSLACalendarRegistry {
 

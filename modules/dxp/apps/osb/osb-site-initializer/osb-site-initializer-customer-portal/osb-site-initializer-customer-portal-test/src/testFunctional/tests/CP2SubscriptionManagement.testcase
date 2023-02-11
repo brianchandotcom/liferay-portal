@@ -76,15 +76,19 @@ definition {
 	@description = "Automation ID: LPS-147025 | Test Summary: Verify if the Expired status reflects the dates displayed"
 	@priority = 4
 	test IfExpiredStatusReflectsDate {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		task ("Given that I go to the subscriptions page") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
+
+			CP2Utils.onboardingFlow();
+
+			CP2Subscription.changeTheStatusToDisplayCards(status = "All");
 		}
 
-		task ("Assert if the Expired status reflects the dates") {
+		task ("Then I claim that the Expired status reflects the dates") {
 			AssertElementPresent(
 				date = "01/14/2021 - 03/13/2021",
 				locator1 = "CustomerPortalSite#CARD_DATE",
@@ -95,15 +99,17 @@ definition {
 	@description = "Automation ID: LPS-147026 | Test Summary: Verify if the Future status reflects the dates displayed"
 	@priority = 4
 	test IfFutureStatusReflectsDate {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		task ("Given that I go to the subscriptions page") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
 				title = "Test Account Portal");
+
+			CP2Subscription.changeTheStatusToDisplayCards(status = "All");
 		}
 
-		task ("Assert if the Future status reflects the dates") {
+		task ("Then I claim that the Future status reflects the dates") {
 			AssertElementPresent(
 				date = "01/14/2023 - 03/13/2026",
 				locator1 = "CustomerPortalSite#CARD_DATE",

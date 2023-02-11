@@ -42,7 +42,7 @@ public class DefaultWorkflowMetricsSLACalendar
 
 	@Override
 	public String getKey() {
-		return "default";
+		return WorkflowMetricsSLACalendar.DEFAULT_KEY;
 	}
 
 	@Override

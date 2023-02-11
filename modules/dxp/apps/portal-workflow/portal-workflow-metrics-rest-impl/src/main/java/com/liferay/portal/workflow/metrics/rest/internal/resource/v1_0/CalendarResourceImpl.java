@@ -49,7 +49,8 @@ public class CalendarResourceImpl extends BaseCalendarResourceImpl {
 				new Calendar() {
 					{
 						defaultCalendar = Objects.equals(
-							workflowMetricsSLACalendar.getKey(), "default");
+							workflowMetricsSLACalendar.getKey(),
+							WorkflowMetricsSLACalendar.DEFAULT_KEY);
 						key = workflowMetricsSLACalendar.getKey();
 						title = workflowMetricsSLACalendar.getTitle(
 							contextAcceptLanguage.getPreferredLocale());

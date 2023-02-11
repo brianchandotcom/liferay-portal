@@ -47,7 +47,8 @@ public class WorkflowMetricsSLACalendarRegistryImpl
 			return workflowMetricsSLACalendar;
 		}
 
-		return _serviceTrackerMap.getService("default");
+		return _serviceTrackerMap.getService(
+			WorkflowMetricsSLACalendar.DEFAULT_KEY);
 	}
 
 	@Override

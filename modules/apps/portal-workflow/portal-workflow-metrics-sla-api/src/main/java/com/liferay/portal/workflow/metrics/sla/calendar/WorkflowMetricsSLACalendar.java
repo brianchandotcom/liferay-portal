@@ -24,6 +24,8 @@ import java.util.Locale;
  */
 public interface WorkflowMetricsSLACalendar {
 
+	public static final String DEFAULT_KEY = "default";
+
 	public Duration getDuration(
 		LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime);
 

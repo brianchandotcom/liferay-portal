@@ -100,13 +100,14 @@ definition {
 	@priority = 4
 	test CanViewActivationKeysPage {
 		task ("Go to Test Account") {
-				CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
 
-				CP2NavigationMenu.goToProductActivation();
-			}
+			CP2NavigationMenu.goToProductActivation();
+		}
+
 		var accountsList = "7.1,7.2,7.3,7.4";
 
-		for (var account : list "${accountsList}") {
+		for (var account : list ${accountsList}) {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 

@@ -100,6 +100,12 @@ definition {
 			value1 = ${role});
 	}
 
+	macro clearCloudEntries {
+		CustomerPortal.clearActivationStatus(
+			position = ${position},
+			status = ${status});
+	}
+
 	macro clickAtFilterMenu {
 		Click.pauseClickAt(
 			key_text = ${text},
@@ -154,14 +160,8 @@ definition {
 		}
 	}
 
-	macro clearCloudEntries {
-		CustomerPortal.clearActivationStatus(
-			position = "${position}",
-			status = "${status}");
-	}
-
 	macro deleteSpecificObjectEntry {
-		var key_status = "${email}";
+		var key_status = ${email};
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -169,7 +169,7 @@ definition {
 			portlet = ${portlet});
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			ObjectPortlet.deleteEntry(entry = "${email}");
+			ObjectPortlet.deleteEntry(entry = ${email});
 		}
 	}
 

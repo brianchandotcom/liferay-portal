@@ -1,11 +1,11 @@
 definition {
-    
-    macro changeTheStatusToDisplayCards {
-        var key_status = "${status}";
 
-        Click(locator1 = "CP2Subscription#SUBSCRIPTION_STATUS");
+	macro changeTheStatusToDisplayCards {
+		var key_status = ${status};
 
-        Click(locator1 = "CP2Subscription#SUBSCRIPTION_CHANGE_STATUS");
-    }
+		Click(locator1 = "CP2Subscription#SUBSCRIPTION_STATUS");
+
+		Click(locator1 = "CP2Subscription#SUBSCRIPTION_CHANGE_STATUS");
+	}
 
 }

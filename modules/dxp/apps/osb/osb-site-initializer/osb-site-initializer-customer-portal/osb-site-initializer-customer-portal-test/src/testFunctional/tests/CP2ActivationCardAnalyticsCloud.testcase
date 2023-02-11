@@ -107,7 +107,7 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2Utils.clearCloudEntries(
-				position = "3",
+				position = 3,
 				status = "Active");
 
 			CP2Utils.deleteSpecificObjectEntry(
@@ -163,7 +163,7 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2Utils.clearCloudEntries(
-				position = "3",
+				position = 3,
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(

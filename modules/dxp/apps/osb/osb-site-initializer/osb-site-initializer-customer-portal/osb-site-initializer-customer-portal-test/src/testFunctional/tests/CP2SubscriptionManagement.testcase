@@ -77,7 +77,7 @@ definition {
 	@priority = 4
 	test IfExpiredStatusReflectsDate {
 		task ("Given that I go to the subscriptions page") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -100,7 +100,7 @@ definition {
 	@priority = 4
 	test IfFutureStatusReflectsDate {
 		task ("Given that I go to the subscriptions page") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
 			CustomerPortal.enterOnProject(
 				status = "Future",

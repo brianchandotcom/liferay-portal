@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -377,6 +380,21 @@ public class ViewConflictsDisplayContext {
 					));
 
 				jsonObject.put("actions", actionsJSONArray);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Unresolved conflict in ",
+							jsonObject.getString("title"), " with ctEntryId:",
+							String.valueOf(ctEntry.getCtEntryId()),
+							", classNameId:",
+							String.valueOf(ctEntry.getModelClassNameId()),
+							", classPK:",
+							String.valueOf(ctEntry.getModelClassPK()),
+							", caused by: ",
+							jsonObject.getString("conflictDescription"), ". ",
+							jsonObject.getString("conflictResolution")));
+				}
 			}
 		}
 		else {
@@ -415,6 +433,9 @@ public class ViewConflictsDisplayContext {
 
 		return jsonObject;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewConflictsDisplayContext.class);
 
 	private final long _activeCtCollectionId;
 	private final Map<Long, List<ConflictInfo>> _conflictInfoMap;

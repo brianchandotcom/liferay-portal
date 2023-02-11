@@ -12,10 +12,10 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayPopover from '@clayui/popover';
-import {useContext, useMemo, useState} from 'react';
+import {useCallback, useContext, useMemo, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
 import useFormActions from '../../hooks/useFormActions';
@@ -24,6 +24,7 @@ import {FilterSchema} from '../../schema/filter';
 import {SearchBuilder} from '../../util/search';
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
+import {FieldOptions} from '../Form/Renderer/Renderer';
 
 type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
@@ -46,9 +47,10 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 		return initialValues;
 	}, [fields]);
 
-	const [, dispatch] = useContext(ListViewContext);
+	const [listViewContext, dispatch] = useContext(ListViewContext);
+	const [fieldOptions, setFieldOptions] = useState<FieldOptions>({});
 	const [filter, setFilter] = useState('');
-	const [form, setForm] = useState(initialFilters);
+	const [form, setForm] = useState(listViewContext.filters.filter);
 	const formActions = useFormActions();
 
 	const onChange = formActions.form.onChange({form, setForm});
@@ -62,18 +64,13 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 		});
 	};
 
-	const onApply = () => {
+	const onApply = useCallback(() => {
 		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
 
 		const entries = Object.keys(filterCleaned).map((key) => {
 			const field = fields?.find(({name}) => name === key);
-			let value = filterCleaned[key];
 
-			if (field && field.type === 'select') {
-				value = (field.options as any[]).filter(
-					(option) => String(option.value) === String(value)
-				);
-			}
+			const value = filterCleaned[key];
 
 			return {
 				label: field?.label,
@@ -86,23 +83,26 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			payload: {filters: {entries, filter: filterCleaned}},
 			type: ListViewTypes.SET_UPDATE_FILTERS_AND_SORT,
 		});
-	};
+	}, [dispatch, fields, form]);
 
 	return (
 		<ClayPopover
 			alignPosition="bottom-right"
 			className="filter-popover"
-			closeOnClickOutside={true}
+			closeOnClickOutside
 			disableScroll={false}
 			trigger={
-				<ClayButton className="nav-link" displayType="unstyled">
-					<span className="d-flex justify-content-center navbar-breakpoint-down-d-none">
-						<ClayIcon
-							className="inline-item inline-item-after"
+				<div>
+					<ClayManagementToolbar.Item>
+						<ClayButtonWithIcon
+							aria-label={i18n.translate('filter')}
+							className="nav-btn nav-btn-monospaced"
+							displayType="unstyled"
 							symbol="filter"
+							title={i18n.translate('filter')}
 						/>
-					</span>
-				</ClayButton>
+					</ClayManagementToolbar.Item>
+				</div>
 			}
 		>
 			<div className="dropdown-header filter-search">
@@ -122,10 +122,12 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 
 			<div className="form-filters">
 				<Form.Renderer
+					fieldOptions={fieldOptions}
 					fields={fields}
 					filter={filter}
 					form={form}
 					onChange={onChange}
+					setFieldOptions={setFieldOptions}
 				/>
 			</div>
 

@@ -15,6 +15,7 @@
 import {Context} from '@clayui/modal';
 import {Size} from '@clayui/modal/lib/types';
 import {ReactElement, useContext} from 'react';
+import {useParams} from 'react-router-dom';
 
 import Form from '../components/Form';
 
@@ -28,6 +29,7 @@ interface ModalOptions {
 
 const useModalContext = () => {
 	const [state, dispatch] = useContext(Context);
+	const params = useParams();
 
 	const onOpenModal = ({
 		body,
@@ -38,7 +40,15 @@ const useModalContext = () => {
 	}: ModalOptions) => {
 		dispatch({
 			payload: {
-				body,
+				body: (
+					<>
+						{body}
+
+						<span className="d-none" id="testray-modal-params">
+							{JSON.stringify(params)}
+						</span>
+					</>
+				),
 				footer: footer
 					? [
 							undefined,

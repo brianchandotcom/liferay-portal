@@ -247,8 +247,15 @@ export function getContextLink(url) {
 }
 
 /**
- * @param { import("graphql-hooks").APIError } error
+ * Assign the properties for error, used by graphql-hooks/APIError.
+ * @param {Object} error
+ * @param {Object} error.fetchError
+ * @param {string?} error.fetchError.message
+ * @param {Object[]} error.graphQLErrors
+ * @param {string} error.graphQLErrors[].message
+ * @param {Object} error.httpError
  */
+
 export function processGraphQLError(error) {
 	const _error = {
 		message: error.message ?? '',

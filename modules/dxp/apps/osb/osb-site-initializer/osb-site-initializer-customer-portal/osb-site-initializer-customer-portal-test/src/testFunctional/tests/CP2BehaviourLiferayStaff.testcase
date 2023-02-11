@@ -90,7 +90,7 @@ definition {
 
 			CP2Utils.assertThatTheOrganizationIsNotPresent(text = "Liferay Staff");
 
-			CP2Utils.assertTextVisible(= "This user does not belong to an organization.");
+			CP2Utils.assertTextVisible(text = "This user does not belong to an organization.");
 		}
 
 		task ("And I assert that no project is showing") {

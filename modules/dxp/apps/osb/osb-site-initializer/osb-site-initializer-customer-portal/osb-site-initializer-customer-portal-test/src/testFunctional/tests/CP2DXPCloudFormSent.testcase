@@ -122,9 +122,13 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(
-				position = 1,
+			CP2Utils.clearCloudEntries(
+				position = "1",
 				status = "In-Progress");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "DXP Cloud Environments");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",

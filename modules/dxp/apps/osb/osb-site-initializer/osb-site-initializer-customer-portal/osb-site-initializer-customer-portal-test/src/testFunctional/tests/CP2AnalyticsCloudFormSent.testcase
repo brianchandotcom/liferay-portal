@@ -62,7 +62,7 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 
-			CustomerPortal.fullOnboardingFlow();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Go to product Activation then open a new tab") {
@@ -110,10 +110,13 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
-				entry = "ERC-003",
-				position = 3,
+			CP2Utils.clearCloudEntries(
+				position = "3",
 				status = "In-Progress");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Analytics Cloud Workspaces");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",
@@ -141,7 +144,7 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 
-			CustomerPortal.fullOnboardingFlow();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Go to the product activation page and assert the subtitle") {
@@ -191,10 +194,13 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
-				entry = "ERC-003",
-				position = 3,
+			CP2Utils.clearCloudEntries(
+				position = "3",
 				status = "In-Progress");
+
+			CP2Utils.deleteSpecificObjectEntry(
+				email = "test@liferay.com",
+				portlet = "Analytics Cloud Workspaces");
 
 			CP2Utils.deleteSpecificObjectEntry(
 				email = "test@liferay.com",

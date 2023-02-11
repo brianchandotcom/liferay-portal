@@ -114,8 +114,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			String className = testClassResult.getClassName();
 
 			if (className.contains(
-					"com.liferay.portal.log.assertor." +
-						"PortalLogAssertorTest")) {
+					"com.liferay.portal.log.assertor.PortalLogAssertorTest")) {
 
 				portalLogTestClassResult = testClassResult;
 			}
@@ -146,8 +145,8 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				}
 				else {
 					errorDetails = errorDetails.replace(
-						"Portal log assert failure, see above log for " +
-							"more information:",
+						"Portal log assert failure, see above log for more " +
+							"information:",
 						"");
 
 					errorDetails = errorDetails.trim();
@@ -175,6 +174,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				String testName = testResult.getTestName();
 
 				sb.append(testName, 5, testName.length() - 1);
+
 				sb.append(" | ");
 			}
 		}

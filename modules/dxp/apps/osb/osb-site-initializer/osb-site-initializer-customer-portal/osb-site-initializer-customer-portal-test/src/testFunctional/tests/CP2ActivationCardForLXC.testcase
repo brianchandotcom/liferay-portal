@@ -76,7 +76,8 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-161274 | Test Summary: Verify that when you have more than one subscription the start date reflected on the card is earliest and the end date furthest"
-	@priority = 4
+	@ignore = "true"
+	@priority = "4"
 	test AssertThatTheDatesAreCorrectlyReflectedOnTheCard {
 
 		// Needs a project that has more than one subscription
@@ -144,7 +145,8 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-161270 | Test Summary: Verify that when the form has not yet been submitted, the card status is not Activated and the links are properly displayed and visible for the correct users"
-	@priority = 4
+	@ignore = "true"
+	@priority = "4"
 	test AssertTheCardLinkReflectsTheCorrectStatus {
 
 		// TODO LPS-161270 AssertTheCardLinkReflectsTheCorrectStatus pending implementation

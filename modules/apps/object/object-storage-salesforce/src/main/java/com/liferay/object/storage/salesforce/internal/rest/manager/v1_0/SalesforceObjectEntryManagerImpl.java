@@ -589,8 +589,10 @@ public class SalesforceObjectEntryManagerImpl
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 				ListTypeEntry listTypeEntry =
-					_listTypeEntryLocalService.fetchListTypeEntry(
-						objectField.getListTypeDefinitionId(), (String)value);
+					_listTypeEntryLocalService.
+						fetchListTypeEntryByExternalReferenceCode(
+							(String)value, objectDefinition.getCompanyId(),
+							objectField.getListTypeDefinitionId());
 
 				if (listTypeEntry == null) {
 					continue;

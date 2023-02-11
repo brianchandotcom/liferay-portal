@@ -14,8 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.sla.calendar;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.Collection;
 
 /**
  * @author Rafael Praxedes
@@ -24,7 +23,7 @@ public interface WorkflowMetricsSLACalendarRegistry {
 
 	public WorkflowMetricsSLACalendar getWorkflowMetricsSLACalendar(String key);
 
-	public Map<String, String> getWorkflowMetricsSLACalendarTitles(
-		Locale locale);
+	public Collection<WorkflowMetricsSLACalendar>
+		getWorkflowMetricsSLACalendars();
 
 }

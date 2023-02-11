@@ -20,12 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Collection;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -56,23 +51,10 @@ public class WorkflowMetricsSLACalendarRegistryImpl
 	}
 
 	@Override
-	public Map<String, String> getWorkflowMetricsSLACalendarTitles(
-		Locale locale) {
+	public Collection<WorkflowMetricsSLACalendar>
+		getWorkflowMetricsSLACalendars() {
 
-		return Stream.of(
-			_serviceTrackerMap.keySet()
-		).flatMap(
-			Set::stream
-		).collect(
-			Collectors.toMap(
-				Function.identity(),
-				key -> {
-					WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
-						_serviceTrackerMap.getService(key);
-
-					return workflowMetricsSLACalendar.getTitle(locale);
-				})
-		);
+		return _serviceTrackerMap.values();
 	}
 
 	@Activate

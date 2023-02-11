@@ -55,6 +55,7 @@ definition {
 		}
 	}
 
+<<<<<<< HEAD
 	@description = "Automation ID: LPS-161108 | Test Summary: Verify that projects that does not have Keys shows alert message with the text 'Unable to download key, please try again.' when the user click at 'Export All Key Details (csv)' at Action dropdown button."
 	@priority = 5
 	test ErrorMessageFromIndividualKeysDownload {
@@ -96,6 +97,8 @@ definition {
 		}
 	}
 
+=======
+>>>>>>> 372c572 (LPS-175274 Delete test ErrorMessageFromIndividualKeysDownload)
 	@description = "Verify that user can see the correct option of download when they select two keys with the same expiration date."
 	@ignore = "true"
 	@priority = 5

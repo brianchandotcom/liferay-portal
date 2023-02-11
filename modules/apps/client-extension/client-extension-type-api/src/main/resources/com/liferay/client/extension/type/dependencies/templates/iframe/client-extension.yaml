@@ -1,4 +1,0 @@
-${id}:
-    name: ${name}
-    type: iframe
-    url: https://arnab-datta.github.io/counter-app

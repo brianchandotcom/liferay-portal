@@ -1,8 +1,0 @@
-assemble:
-    - from: assets
-      include: "**/*"
-      into: static
-${id}:
-    name: ${name}
-    type: themeFavicon
-    url: favicon.ico

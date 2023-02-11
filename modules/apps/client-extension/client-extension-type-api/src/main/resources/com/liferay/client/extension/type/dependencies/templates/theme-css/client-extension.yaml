@@ -1,9 +1,0 @@
-assemble:
-    - from: build/buildTheme
-      include: "css/*.css"
-      into: static
-${id}:
-    clayURL: css/clay.css
-    mainURL: css/main.css
-    name: ${name}
-    type: 

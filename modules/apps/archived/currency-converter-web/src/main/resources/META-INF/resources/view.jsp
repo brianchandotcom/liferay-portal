@@ -42,7 +42,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 
 <aui:form action="<%= convertURL %>" cssClass="form-inline" method="post" name="fm">
 	<aui:field-wrapper>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="number" size="3" type="text" value="<%= number %>" />
+		<aui:input inlineField="<%= true %>" label="" name="number" size="3" type="text" value="<%= number %>" />
 
 		<aui:select inlineField="<%= true %>" label="" name="from">
 

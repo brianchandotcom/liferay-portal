@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.web.internal.fragment.renderer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -131,11 +130,7 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 			KBArticle kbArticle = _getKBArticle(
 				httpServletRequest, fragmentRendererContext);
 
-			if ((kbArticle == null) &&
-				Objects.equals(
-					FragmentEntryLinkConstants.EDIT,
-					fragmentRendererContext.getMode())) {
-
+			if ((kbArticle == null) && fragmentRendererContext.isEditMode()) {
 				_printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
 					"the-navigation-tree-for-the-displayed-knowledge-base-" +

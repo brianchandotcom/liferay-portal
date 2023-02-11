@@ -54,4 +54,10 @@ public interface FragmentEntryProcessorContext {
 
 	public long[] getSegmentsEntryIds();
 
+	public boolean isEditMode();
+
+	public boolean isIndexMode();
+
+	public boolean isViewMode();
+
 }

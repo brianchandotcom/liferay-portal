@@ -31,8 +31,6 @@ page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionL
 
 <%@ page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

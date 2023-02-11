@@ -132,8 +132,7 @@ page import="java.util.TreeMap" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

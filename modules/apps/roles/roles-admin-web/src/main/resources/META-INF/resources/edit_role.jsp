@@ -104,7 +104,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="title-field-help" name="title" />
+				<aui:input helpMessage="title-field-help" name="title" />
 				<aui:input name="description" />
 
 				<c:if test="<%= role != null %>">
@@ -151,7 +151,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 						<aui:input name="name" type="hidden" value="<%= roleName %>" />
 					</c:when>
 					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
+						<aui:input helpMessage="key-field-help" label="key" name="name" />
 					</c:otherwise>
 				</c:choose>
 

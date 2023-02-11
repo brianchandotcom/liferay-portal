@@ -31,8 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.client.extension.model.ClientExtensionEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

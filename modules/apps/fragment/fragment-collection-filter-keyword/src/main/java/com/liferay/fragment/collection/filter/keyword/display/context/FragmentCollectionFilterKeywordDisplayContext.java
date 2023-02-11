@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.collection.filter.keyword.display.context;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -62,9 +60,7 @@ public class FragmentCollectionFilterKeywordDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		return Objects.equals(
-			_fragmentRendererContext.getMode(),
-			FragmentEntryLinkConstants.EDIT);
+		return _fragmentRendererContext.isEditMode();
 	}
 
 	public boolean isShowLabel() {

@@ -43,7 +43,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 					bodyClasses="flex-fill"
 					title='<%= LanguageUtil.get(request, "details") %>'
 				>
-					<aui:input autoFocus="<%= true %>" name="name" required="<%= true %>" />
+					<aui:input name="name" required="<%= true %>" />
 
 					<aui:select disabled="<%= true %>" name="type" required="<%= true %>">
 

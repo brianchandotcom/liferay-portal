@@ -155,15 +155,3 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 		</liferay-util:whitespace-remover>
 	</div>
 </c:if>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.componentReady('<portlet:namespace />entriesManagementToolbar').then(
-			() => {
-				Liferay.Util.focusFormField(
-					document.getElementsByName('<portlet:namespace />keywords')[0]
-				);
-			}
-		);
-	</aui:script>
-</c:if>

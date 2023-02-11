@@ -36,11 +36,3 @@ List<BlogsEntry> results = searchContainer.getResults();
 %>
 
 <%@ include file="/blogs_aggregator/view_entries.jspf" %>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(
-			document.<portlet:namespace />fm1.<portlet:namespace />keywords
-		);
-	</aui:script>
-</c:if>

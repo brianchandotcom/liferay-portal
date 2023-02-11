@@ -52,13 +52,5 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:form>
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(
-					document.<portlet:namespace />fm.<portlet:namespace />fileName
-				);
-			</aui:script>
-		</c:if>
 	</c:otherwise>
 </c:choose>

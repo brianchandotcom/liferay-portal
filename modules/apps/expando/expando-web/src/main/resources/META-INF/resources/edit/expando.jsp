@@ -155,7 +155,7 @@ else {
 						<aui:input label="field-name" name="key" type="resource" value="<%= expandoColumn.getName() %>" />
 					</c:when>
 					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="field-name" maxlength='<%= ModelHintsUtil.getMaxLength(ExpandoColumn.class.getName(), "name") %>' name="name" required="<%= true %>" />
+						<aui:input label="field-name" maxlength='<%= ModelHintsUtil.getMaxLength(ExpandoColumn.class.getName(), "name") %>' name="name" required="<%= true %>" />
 					</c:otherwise>
 				</c:choose>
 

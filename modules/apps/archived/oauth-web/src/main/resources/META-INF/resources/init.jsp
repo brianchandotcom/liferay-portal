@@ -61,8 +61,6 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.LinkedHashMap" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

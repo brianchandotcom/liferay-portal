@@ -45,7 +45,7 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 		<aui:model-context bean="<%= fragmentCollection %>" model="<%= FragmentCollection.class %>" />
 
 		<liferay-frontend:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+			<aui:input label="name" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 		</liferay-frontend:fieldset>

@@ -149,7 +149,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 							<aui:input name="autoFeedId" type="hidden" value="<%= true %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= newFeedId %>" />
+							<aui:input cssClass="lfr-input-text-container" field="feedId" fieldParam="newFeedId" label="id" name="newFeedId" value="<%= newFeedId %>" />
 
 							<aui:input label="autogenerate-id" name="autoFeedId" type="checkbox" />
 						</c:otherwise>
@@ -160,7 +160,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input autoFocus="<%= (feed != null) && !journalWebConfiguration.journalFeedForceAutogenerateId() && (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
+			<aui:input cssClass="lfr-input-text-container" name="name" />
 
 			<aui:input cssClass="lfr-textarea-container" name="description" />
 

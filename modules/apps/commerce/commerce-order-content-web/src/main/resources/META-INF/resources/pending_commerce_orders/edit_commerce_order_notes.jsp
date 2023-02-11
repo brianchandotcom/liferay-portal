@@ -59,7 +59,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 					</div>
 
 					<div class="lfr-discussion-body">
-						<aui:input autoFocus="<%= true %>" label="" name="content" placeholder="type-your-note-here" />
+						<aui:input label="" name="content" placeholder="type-your-note-here" />
 
 						<div class="order-notes-submit-actions">
 							<c:if test="<%= manageRestrictedNotesPermission %>">

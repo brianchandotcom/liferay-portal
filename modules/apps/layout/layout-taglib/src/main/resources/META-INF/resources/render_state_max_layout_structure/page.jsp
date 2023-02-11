@@ -14,16 +14,18 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/render_state_max_layout_structure/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<style type="text/css">
+	.master-layout-fragment .portlet-header {
+		display: none;
+	}
+</style>
 
-<liferay-frontend:defineObjects />
+<%
+RenderMaxStateLayoutStructureDisplayContext renderMaxStateLayoutStructureDisplayContext = new RenderMaxStateLayoutStructureDisplayContext();
+%>
 
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
-
-<%@ include file="/init-ext.jsp" %>
+<liferay-layout:render-layout-structure
+	layoutStructure="<%= renderMaxStateLayoutStructureDisplayContext.getLayoutStructure(themeDisplay.getLayout()) %>"
+/>

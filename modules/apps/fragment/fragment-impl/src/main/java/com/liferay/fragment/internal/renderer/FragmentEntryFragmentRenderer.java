@@ -15,7 +15,6 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
@@ -191,9 +190,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext) {
 
 		if (fragmentEntryLink.isTypeInput() ||
-			!Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.VIEW) ||
+			!fragmentRendererContext.isViewMode() ||
 			(fragmentRendererContext.getPreviewClassPK() > 0) ||
 			!fragmentRendererContext.isUseCachedContent()) {
 
@@ -252,12 +249,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext.getFragmentEntryLink();
 
 		if (Validator.isNotNull(css)) {
-			if (Objects.equals(
-					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.EDIT) ||
-				Objects.equals(
-					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.INDEX)) {
+			if (fragmentRendererContext.isEditMode() ||
+				fragmentRendererContext.isIndexMode()) {
 
 				sb.append("<style>");
 				sb.append(css);
@@ -412,10 +405,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentEntryLink, defaultFragmentEntryProcessorContext);
 		}
 
-		if (Objects.equals(
-				defaultFragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
+		if (defaultFragmentEntryProcessorContext.isEditMode()) {
 			html = _writePortletPaths(
 				fragmentEntryLink, html, httpServletRequest,
 				httpServletResponse);

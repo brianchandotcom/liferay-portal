@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -125,10 +124,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 				);
 			}
 		).put(
-			"enableDropdown",
-			!Objects.equals(
-				_fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)
+			"enableDropdown", !_fragmentRendererContext.isEditMode()
 		).put(
 			"fragmentEntryLinkId",
 			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())

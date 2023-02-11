@@ -30,7 +30,7 @@
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="url" name="preferences--initUrl--" value="<%= initUrl %>" />
+			<aui:input cssClass="lfr-input-text-container" label="url" name="preferences--initUrl--" value="<%= initUrl %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label='<%= LanguageUtil.get(request, "scope") + " (" + LanguageUtil.get(request, "regex") + ")" %>' name="preferences--scope--" value="<%= scope %>" />
 

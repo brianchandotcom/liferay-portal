@@ -55,7 +55,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 			</c:if>
 
 			<aui:fieldset>
-				<aui:select autoFocus="<%= true %>" cssClass="reminder-query-question" label="question" name="reminderQueryQuestion">
+				<aui:select cssClass="reminder-query-question" label="question" name="reminderQueryQuestion">
 
 					<%
 					for (String question : user.getReminderQueryQuestions()) {
@@ -74,7 +74,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED, PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED) %>">
 					<div class="hide" id="customQuestionContainer">
-						<aui:input autoFocus="<%= true %>" bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
+						<aui:input bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
 					</div>
 				</c:if>
 

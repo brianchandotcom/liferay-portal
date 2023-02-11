@@ -143,7 +143,7 @@ renderResponse.setTitle(headerTitle);
 							</div>
 						</c:if>
 
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+						<aui:input name="name" />
 
 						<aui:input name="url" />
 

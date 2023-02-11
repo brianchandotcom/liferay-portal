@@ -56,7 +56,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 			collapsible="<%= true %>"
 			label="details"
 		>
-			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+			<aui:input label="name" name="title" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 

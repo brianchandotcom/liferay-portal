@@ -51,7 +51,7 @@ else {
 		<div class="sheet">
 			<div class="panel-group panel-group-flush">
 				<aui:fieldset>
-					<aui:input autoFocus="<%= true %>" name="name" />
+					<aui:input name="name" />
 
 					<aui:input label="code" name="regionCode" />
 

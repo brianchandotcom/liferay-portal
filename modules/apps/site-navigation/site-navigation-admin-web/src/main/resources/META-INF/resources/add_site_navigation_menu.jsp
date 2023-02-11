@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-menu"));
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+				<aui:input label="name" name="name" placeholder="name" />
 			</aui:fieldset>
 		</div>
 	</div>

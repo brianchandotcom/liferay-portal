@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.renderer.react.internal.renderer;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -193,12 +192,8 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		sb.append("</div>");
 
 		if (Validator.isNotNull(fragmentEntryLink.getCss())) {
-			if (Objects.equals(
-					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.EDIT) ||
-				Objects.equals(
-					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.INDEX)) {
+			if (fragmentRendererContext.isEditMode() ||
+				fragmentRendererContext.isIndexMode()) {
 
 				sb.append("<style>");
 				sb.append(fragmentEntryLink.getCss());

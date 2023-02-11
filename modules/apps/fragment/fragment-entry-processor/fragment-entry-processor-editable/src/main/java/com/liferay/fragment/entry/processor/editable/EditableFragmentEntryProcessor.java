@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
@@ -245,10 +244,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			editableElementParser.replace(element, value, configJSONObject);
 
-			if (!Objects.equals(
-					fragmentEntryProcessorContext.getMode(),
-					FragmentEntryLinkConstants.EDIT)) {
-
+			if (!fragmentEntryProcessorContext.isEditMode()) {
 				if (Validator.isNull(mapperType)) {
 					mapperType = element.attr("data-lfr-editable-type");
 				}
@@ -265,10 +261,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 		}
 
-		if (Objects.equals(
-				fragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.VIEW)) {
-
+		if (fragmentEntryProcessorContext.isViewMode()) {
 			for (Element element : document.select("lfr-editable")) {
 				element.removeAttr("id");
 				element.removeAttr("type");

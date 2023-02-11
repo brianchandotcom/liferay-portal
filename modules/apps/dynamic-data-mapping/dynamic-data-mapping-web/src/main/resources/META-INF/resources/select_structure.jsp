@@ -34,7 +34,6 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 	searchActionURL="<%= ddmDisplayContext.getSelectStructureSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
 	searchFormName="searchForm"
-	searchInputAutoFocus="<%= true %>"
 	selectable="<%= false %>"
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.drop.zone;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -40,7 +39,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -127,10 +125,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		List<String> dropZoneItemIds = layoutStructureItem.getChildrenItemIds();
 
-		if (Objects.equals(
-				fragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
+		if (fragmentEntryProcessorContext.isEditMode()) {
 			boolean idsAvailable = true;
 
 			for (Element element : elements) {

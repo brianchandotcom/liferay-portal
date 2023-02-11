@@ -252,7 +252,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						</c:if>
 					</aui:field-wrapper>
 
-					<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+					<aui:input name="name" />
 
 					<liferay-ui:panel-container
 						cssClass="lfr-structure-entry-details-container"

@@ -62,7 +62,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
+				<aui:input name="comments" />
 			</aui:fieldset>
 		</div>
 	</div>

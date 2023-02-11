@@ -27,8 +27,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="java.text.NumberFormat" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

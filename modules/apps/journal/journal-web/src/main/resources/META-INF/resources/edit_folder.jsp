@@ -101,7 +101,7 @@ renderResponse.setTitle(title);
 				collapsible="<%= true %>"
 				label="details"
 			>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+				<aui:input name="name" />
 
 				<aui:input name="description" />
 			</liferay-frontend:fieldset>

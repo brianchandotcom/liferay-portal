@@ -72,7 +72,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 			>
 				<div class="row">
 					<div class="col">
-						<aui:input autoFocus="<%= true %>" label="name" name="title" />
+						<aui:input label="name" name="title" />
 					</div>
 
 					<div class="col-auto">

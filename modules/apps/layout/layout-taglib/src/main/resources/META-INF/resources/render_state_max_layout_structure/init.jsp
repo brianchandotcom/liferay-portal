@@ -14,16 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %>
 
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
-
-<%@ include file="/init-ext.jsp" %>
+<%@ page import="com.liferay.layout.taglib.internal.display.context.RenderMaxStateLayoutStructureDisplayContext" %>

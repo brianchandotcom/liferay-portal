@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -103,7 +102,6 @@ public class RenderFragmentEntryDisplayContext {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
 		defaultFragmentRendererContext.setUseCachedContent(false);
 
 		return defaultFragmentRendererContext;

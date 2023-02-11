@@ -62,7 +62,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
+				<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
 
 				<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" name="description" />
 

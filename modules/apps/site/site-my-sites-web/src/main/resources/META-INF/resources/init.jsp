@@ -48,8 +48,6 @@ page import="com.liferay.site.my.sites.web.internal.frontend.taglib.clay.servlet
 <%@ page import="java.util.List" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

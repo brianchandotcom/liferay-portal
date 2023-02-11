@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.background.image;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -190,10 +188,7 @@ public class BackgroundImageFragmentEntryProcessor
 			}
 		}
 
-		if (Objects.equals(
-				fragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.VIEW)) {
-
+		if (fragmentEntryProcessorContext.isViewMode()) {
 			for (Element element :
 					document.select("[data-lfr-background-image-id]")) {
 

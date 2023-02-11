@@ -33,8 +33,6 @@ page import="com.liferay.translator.web.internal.util.TranslatorUtil" %>
 
 <%@ page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.WindowState" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

@@ -16,7 +16,6 @@ package com.liferay.fragment.renderer.categorization.inputs.internal;
 
 import com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -140,10 +139,7 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write("<div");
 
-			if (Objects.equals(
-					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.EDIT)) {
-
+			if (fragmentRendererContext.isEditMode()) {
 				printWriter.write(" inert");
 			}
 
@@ -238,10 +234,7 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse, PrintWriter printWriter)
 		throws Exception {
 
-		if (!Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
+		if (!fragmentRendererContext.isEditMode()) {
 			return;
 		}
 

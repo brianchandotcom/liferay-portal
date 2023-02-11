@@ -48,7 +48,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				bodyClasses="flex-fill"
 				title='<%= LanguageUtil.get(request, "details") %>'
 			>
-				<aui:input autoFocus="<%= true %>" name="name" />
+				<aui:input name="name" />
 
 				<aui:select label="currency" name="commerceCurrencyCode" required="<%= true %>" title="currency">
 

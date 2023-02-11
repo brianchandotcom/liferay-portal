@@ -56,7 +56,6 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 			</label>
 
 			<liferay-ui:input-localized
-				autoFocus="<%= true %>"
 				cssClass="form-group"
 				maxLength="<%= String.valueOf(titleMaxLength) %>"
 				name="title"

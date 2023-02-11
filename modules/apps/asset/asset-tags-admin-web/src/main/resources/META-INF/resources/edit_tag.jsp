@@ -68,7 +68,7 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 		<liferay-frontend:fieldset>
 			<aui:input name="tagId" type="hidden" value="<%= assetTagsDisplayContext.getTagId() %>" />
 
-			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" placeholder="name" />
+			<aui:input cssClass="tag-name" name="name" placeholder="name" />
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

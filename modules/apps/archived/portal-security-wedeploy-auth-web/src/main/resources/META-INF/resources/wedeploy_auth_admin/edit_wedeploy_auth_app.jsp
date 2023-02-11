@@ -35,7 +35,7 @@ portletDisplay.setURLBack(redirect);
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:input autoFocus="<%= true %>" name="name" />
+		<aui:input name="name" />
 
 		<aui:input name="redirectURI" />
 	</liferay-frontend:edit-form-body>

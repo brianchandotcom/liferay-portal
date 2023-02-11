@@ -29,7 +29,6 @@ renderResponse.setTitle(viewClientExtensionEntryDisplayContext.getTitle());
 	<liferay-frontend:edit-form-body>
 		<aui:field-wrapper label="name" name="name">
 			<liferay-ui:input-localized
-				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 				disabled="<%= true %>"
 				name="name"
 				xml="<%= viewClientExtensionEntryDisplayContext.getName() %>"

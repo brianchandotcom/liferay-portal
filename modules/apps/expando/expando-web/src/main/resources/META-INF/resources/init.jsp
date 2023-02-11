@@ -80,8 +80,7 @@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

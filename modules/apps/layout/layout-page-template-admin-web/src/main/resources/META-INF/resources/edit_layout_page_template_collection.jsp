@@ -48,7 +48,7 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 		<aui:model-context bean="<%= layoutPageTemplateCollection %>" model="<%= LayoutPageTemplateCollection.class %>" />
 
 		<liferay-frontend:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+			<aui:input label="name" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 		</liferay-frontend:fieldset>

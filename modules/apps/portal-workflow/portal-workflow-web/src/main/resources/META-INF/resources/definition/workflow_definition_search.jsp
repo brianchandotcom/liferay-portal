@@ -21,7 +21,6 @@ WorkflowDefinitionDisplayTerms displayTerms = new WorkflowDefinitionDisplayTerms
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_workflow_definition_search"

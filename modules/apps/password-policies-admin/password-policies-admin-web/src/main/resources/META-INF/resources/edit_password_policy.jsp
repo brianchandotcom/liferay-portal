@@ -53,9 +53,9 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= !defaultPolicy && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= defaultPolicy %>" name="name" required="<%= true %>" />
+				<aui:input disabled="<%= defaultPolicy %>" name="name" required="<%= true %>" />
 
-				<aui:input autoFocus="<%= defaultPolicy && windowState.equals(WindowState.MAXIMIZED) %>" name="description" />
+				<aui:input name="description" />
 			</aui:fieldset>
 
 			<liferay-ui:panel-container

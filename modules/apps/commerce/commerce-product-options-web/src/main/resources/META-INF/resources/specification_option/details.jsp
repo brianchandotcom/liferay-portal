@@ -39,7 +39,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 	elementClasses="mt-4"
 >
 	<aui:fieldset>
-		<aui:input autoFocus="<%= true %>" label="label" name="title" />
+		<aui:input label="label" name="title" />
 
 		<aui:input name="description" />
 

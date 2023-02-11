@@ -66,7 +66,7 @@ sb.append("\n");
 			collapsible="<%= true %>"
 			label="source"
 		>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFramePortletInstanceConfiguration.src() %>" />
+			<aui:input cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFramePortletInstanceConfiguration.src() %>" />
 
 			<aui:input inlineLabel="right" label="relative-to-context-path" labelCssClass="simple-toggle-switch" name="preferences--relative--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.relative() %>" />
 		</liferay-frontend:fieldset>

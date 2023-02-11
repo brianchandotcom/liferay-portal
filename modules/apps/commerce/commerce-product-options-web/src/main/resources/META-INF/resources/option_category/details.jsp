@@ -33,7 +33,7 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 	elementClasses="mt-4"
 >
 	<aui:fieldset>
-		<aui:input autoFocus="<%= true %>" name="title" />
+		<aui:input name="title" />
 
 		<aui:input name="description" />
 

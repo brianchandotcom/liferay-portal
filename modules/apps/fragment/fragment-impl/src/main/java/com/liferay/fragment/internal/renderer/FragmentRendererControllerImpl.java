@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,10 +134,7 @@ public class FragmentRendererControllerImpl
 			LocaleThreadLocal.setThemeDisplayLocale(currentLocale);
 		}
 
-		if (Objects.equals(
-				fragmentRendererContext.getMode(),
-				FragmentEntryLinkConstants.EDIT)) {
-
+		if (fragmentRendererContext.isEditMode()) {
 			return _layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(
 				unsyncStringWriter.toString());
 		}

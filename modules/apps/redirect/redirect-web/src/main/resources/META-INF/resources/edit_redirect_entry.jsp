@@ -92,7 +92,7 @@ renderResponse.setTitle(editRedirectEntryDisplayContext.getTitle());
 				</div>
 
 				<div class="input-group-item">
-					<aui:input autoFocus="<%= editRedirectEntryDisplayContext.isAutoFocusSourceURL() %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= URLCodec.decodeURL(editRedirectEntryDisplayContext.getSourceURL()) %>" />
+					<aui:input label="" name="sourceURL" required="<%= true %>" type="text" value="<%= URLCodec.decodeURL(editRedirectEntryDisplayContext.getSourceURL()) %>" />
 				</div>
 			</div>
 		</aui:field-wrapper>

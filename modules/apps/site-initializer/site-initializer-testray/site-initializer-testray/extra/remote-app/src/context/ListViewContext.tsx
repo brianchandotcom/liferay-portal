@@ -15,7 +15,10 @@
 
 import {ReactNode, createContext, useReducer} from 'react';
 
+import useStorage from '../hooks/useStorage';
 import {ActionMap, SortDirection, SortOption} from '../types';
+
+const STORAGE_NAME_PREFIX = '@testray/listview-';
 
 export type Sort = {
 	direction: SortDirection;
@@ -28,20 +31,24 @@ export type Entry = {
 	value: string;
 };
 
+type ListViewFilter = {
+	entries: Entry[];
+	filter: {
+		[key: string]: string;
+	};
+};
+
 export type InitialState = {
 	checkAll: boolean;
 	columns: {
 		[key: string]: boolean;
 	};
-	filters: {
-		entries: Entry[];
-		filter: {
-			[key: string]: string;
-		};
-	};
+	filters: ListViewFilter;
+	id: string;
 	keywords: string;
 	page: number;
 	pageSize: number;
+	pin: boolean;
 	selectedRows: number[];
 	sort: Sort;
 };
@@ -53,9 +60,11 @@ const initialState: InitialState = {
 		entries: [],
 		filter: {},
 	},
+	id: '',
 	keywords: '',
 	page: 1,
 	pageSize: 20,
+	pin: false,
 	selectedRows: [],
 	sort: {direction: SortOption.ASC, key: ''},
 };
@@ -67,6 +76,7 @@ export enum ListViewTypes {
 	SET_COLUMNS = 'SET_COLUMNS',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
+	SET_PIN = 'SET_PIN',
 	SET_REMOVE_FILTER = 'SET_REMOVE_FILTER',
 	SET_SEARCH = 'SET_SEARCH',
 	SET_SORT = 'SET_SORT',
@@ -80,6 +90,7 @@ type ListViewPayload = {
 	[ListViewTypes.SET_COLUMNS]: {columns: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
+	[ListViewTypes.SET_PIN]: undefined;
 	[ListViewTypes.SET_REMOVE_FILTER]: string;
 	[ListViewTypes.SET_SEARCH]: string;
 	[ListViewTypes.SET_SORT]: Sort;
@@ -105,8 +116,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 				selectedRows = state.checkAll ? [] : rowIds;
 
 				state.checkAll = !state.checkAll;
-			}
-			else {
+			} else {
 				const rowAlreadyInserted = state.selectedRows.includes(
 					rowIds as number
 				);
@@ -153,6 +163,31 @@ const reducer = (state: InitialState, action: AppActions) => {
 				...state,
 				page: 1,
 				pageSize: action.payload,
+			};
+
+		case ListViewTypes.SET_PIN:
+			if (!state.filters.entries.length) {
+				// Avoid pinning without filter applied
+
+				return state;
+			}
+
+			const pin = !state.pin;
+
+			const storageName = STORAGE_NAME_PREFIX + state.id;
+
+			if (pin) {
+				localStorage.setItem(
+					storageName,
+					JSON.stringify(state.filters)
+				);
+			} else {
+				localStorage.removeItem(storageName);
+			}
+
+			return {
+				...state,
+				pin,
 			};
 
 		case ListViewTypes.SET_REMOVE_FILTER: {
@@ -202,11 +237,20 @@ const reducer = (state: InitialState, action: AppActions) => {
 export type ListViewContextProviderProps = Partial<InitialState>;
 
 const ListViewContextProvider: React.FC<
-	ListViewContextProviderProps & {children: ReactNode}
-> = ({children, ...initialStateProps}) => {
+	ListViewContextProviderProps & {children: ReactNode; id: string}
+> = ({children, id, ...initialStateProps}) => {
+	const [filterPinnedStorage] = useStorage<ListViewFilter>(
+		STORAGE_NAME_PREFIX + id
+	);
+
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,
 		...initialStateProps,
+		...(filterPinnedStorage && {
+			filters: filterPinnedStorage,
+			pin: !!filterPinnedStorage.entries.length,
+		}),
+		id,
 	});
 
 	return (

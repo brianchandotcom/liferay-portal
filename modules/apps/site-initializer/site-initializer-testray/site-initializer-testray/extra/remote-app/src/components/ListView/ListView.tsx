@@ -288,7 +288,7 @@ const ListViewWithContext: React.FC<
 		initialContext?: ListViewContextProviderProps;
 	}
 > = ({initialContext, ...otherProps}) => (
-	<ListViewContextProvider {...initialContext}>
+	<ListViewContextProvider {...initialContext} id={otherProps.resource}>
 		<ListViewMemoized {...otherProps} />
 	</ListViewContextProvider>
 );

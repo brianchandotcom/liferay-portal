@@ -20,6 +20,11 @@
 	<td>//option[contains(@value, '${key_number}') and contains(text(), '${key_options}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBSCRIPTION_STATUS</td>
+	<td>//button[contains(@aria-controls, 'clay-dropdown-menu-2')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

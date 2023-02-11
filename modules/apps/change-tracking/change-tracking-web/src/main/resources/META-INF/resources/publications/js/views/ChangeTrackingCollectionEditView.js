@@ -229,6 +229,7 @@ export default function ChangeTrackingCollectionEditView({
 					fieldValue={nameField}
 					label={Liferay.Language.get('name')}
 					maxLength={nameFieldMaxLength}
+					name="publication-name"
 					onChange={(event) => {
 						setNameField(event.target.value);
 					}}
@@ -245,6 +246,7 @@ export default function ChangeTrackingCollectionEditView({
 					fieldValue={descriptionField}
 					label={Liferay.Language.get('description')}
 					maxLength={descriptionFieldMaxLength}
+					name="publication-description"
 					onChange={(event) => {
 						setDescriptionField(event.target.value);
 					}}

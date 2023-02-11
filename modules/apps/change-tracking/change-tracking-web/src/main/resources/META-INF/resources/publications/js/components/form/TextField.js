@@ -22,6 +22,7 @@ const TextField = ({
 	fieldValue,
 	label,
 	maxLength,
+	name,
 	onChange,
 	placeholderValue,
 	required,
@@ -60,7 +61,7 @@ const TextField = ({
 	return (
 		<>
 			<ClayForm.Group className={nameErrorMessage ? 'has-error' : ''}>
-				<label>
+				<label htmlFor={name ? name : null}>
 					{label}
 
 					{required && ' '}
@@ -83,6 +84,7 @@ const TextField = ({
 				<ClayInput
 					aria-label={ariaLabel ? ariaLabel : null}
 					component={componentType}
+					name={name ? name : null}
 					onBlur={validateOnBlur}
 					onChange={onChange}
 					placeholder={placeholderValue ? placeholderValue : null}

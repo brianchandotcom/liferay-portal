@@ -1008,6 +1008,11 @@ public class TestrayImporter {
 							axisTestClassGroup instanceof
 								JUnitAxisTestClassGroup) {
 
+							testrayCaseResults.add(
+								TestrayFactory.newTestrayCaseResult(
+									testrayBuild, getTopLevelBuild(),
+									axisTestClassGroup, null));
+
 							for (TestClass testClass :
 									axisTestClassGroup.getTestClasses()) {
 

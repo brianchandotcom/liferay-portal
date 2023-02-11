@@ -20,6 +20,8 @@ import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.TestClassResult;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
@@ -103,6 +105,84 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		if (result == null) {
 			return "Failed to finish build on CI";
+		}
+
+		TestClassResult portalLogTestClassResult = null;
+		TestClassResult poshiTestClassResult = null;
+
+		for (TestClassResult testClassResult : build.getTestClassResults()) {
+			String className = testClassResult.getClassName();
+
+			if (className.contains(
+					"com.liferay.portal.log.assertor." +
+						"PortalLogAssertorTest")) {
+
+				portalLogTestClassResult = testClassResult;
+			}
+
+			if (className.equals("com.liferay.poshi.runner.PoshiRunner")) {
+				poshiTestClassResult = testClassResult;
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		if (portalLogTestClassResult != null) {
+			for (TestResult testResult :
+					portalLogTestClassResult.getTestResults()) {
+
+				if (!testResult.isFailing()) {
+					continue;
+				}
+
+				sb.append("PortalLogAssertorTest#");
+				sb.append(testResult.getTestName());
+				sb.append(": ");
+
+				String errorDetails = testResult.getErrorDetails();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+					sb.append("Failed for unknown reason");
+				}
+				else {
+					errorDetails = errorDetails.replace(
+						"Portal log assert failure, see above log for " +
+							"more information:",
+						"");
+
+					errorDetails = errorDetails.trim();
+
+					if (errorDetails.length() > 1000) {
+						errorDetails = errorDetails.substring(0, 1000);
+
+						errorDetails += "...";
+					}
+
+					sb.append(errorDetails);
+					sb.append(" | ");
+				}
+			}
+		}
+
+		if (poshiTestClassResult != null) {
+			for (TestResult testResult :
+					poshiTestClassResult.getTestResults()) {
+
+				if (!testResult.isFailing()) {
+					continue;
+				}
+
+				String testName = testResult.getTestName();
+
+				sb.append(testName, 5, testName.length() - 1);
+				sb.append(" | ");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 3);
+
+			return sb.toString();
 		}
 
 		if (result.equals("ABORTED")) {

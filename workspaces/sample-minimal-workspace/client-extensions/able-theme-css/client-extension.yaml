@@ -1,9 +1,0 @@
-able-theme-css:
-    clayURL: css/clay.css
-    mainURL: css/main.css
-    name: Able Theme CSS
-    type: themeCSS
-assemble:
-    - from: build/buildTheme
-      include: "css/*.css"
-      into: static

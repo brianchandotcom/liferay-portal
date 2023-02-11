@@ -1,8 +1,0 @@
-able-global-js:
-    name: Able Global JS
-    type: globalJS
-    url: global.js
-assemble:
-    - from: assets
-      include: "**/*"
-      into: static

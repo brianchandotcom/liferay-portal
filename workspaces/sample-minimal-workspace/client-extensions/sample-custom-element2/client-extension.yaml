@@ -1,0 +1,16 @@
+assemble:
+    - from: build/
+      include: "static/**/*"
+      into: static/
+sample-custom-element-2:
+    cssURLs:
+        - static/css/main.*.css
+    friendlyURLMapping: sample-custom-element2
+    htmlElementName: sample-custom-element2
+    instanceable: false
+    name: Sample Custom Element 2
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - static/js/main.*.js
+    useESM: false

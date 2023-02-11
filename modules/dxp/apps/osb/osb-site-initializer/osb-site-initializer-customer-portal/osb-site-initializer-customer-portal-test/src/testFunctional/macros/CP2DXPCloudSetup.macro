@@ -21,18 +21,6 @@ definition {
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro clearAndDeleteDXPCloudEntries {
-		var entry = "ERC-001";
-
-		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
-			entry = ${entry},
-			portlet = "DXP Cloud Environments");
-
-		CustomerPortal.clearActivationStatus(
-			position = ${position},
-			status = ${status});
-	}
-
 	macro clickOnAddAnotherAdminButton {
 		Click(locator1 = "CP2DXPCloudSetup#ADD_ANOTHER_ADMIN");
 	}
@@ -75,19 +63,6 @@ definition {
 		CustomerPortal.checkToggleHideWidget();
 
 		CreateObject.saveObject();
-	}
-
-	macro deleteEntryCloudEnvironments {
-		var key_status = ${entry};
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = ${portlet});
-
-		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			ObjectPortlet.deleteEntry(entry = ${entry});
-		}
 	}
 
 	macro notViewSetupDXPCloufEXtraInfo {

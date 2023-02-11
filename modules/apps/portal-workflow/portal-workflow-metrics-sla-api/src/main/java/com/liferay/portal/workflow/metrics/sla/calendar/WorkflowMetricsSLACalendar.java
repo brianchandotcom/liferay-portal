@@ -27,6 +27,8 @@ public interface WorkflowMetricsSLACalendar {
 	public Duration getDuration(
 		LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime);
 
+	public String getKey();
+
 	public LocalDateTime getOverdueLocalDateTime(
 		LocalDateTime nowLocalDateTime, Duration remainingDuration);
 

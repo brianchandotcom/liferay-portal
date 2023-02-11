@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.sla.calendar;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
@@ -77,8 +78,9 @@ public class WorkflowMetricsSLACalendarRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, WorkflowMetricsSLACalendar.class,
-			"sla.calendar.key");
+			bundleContext, WorkflowMetricsSLACalendar.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, WorkflowMetricsSLACalendar::getKey));
 	}
 
 	@Deactivate

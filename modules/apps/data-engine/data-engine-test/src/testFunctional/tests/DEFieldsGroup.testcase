@@ -1608,7 +1608,7 @@ definition {
 
 		DERenderer.removeRepeatableField(
 			fieldLabel = "Text",
-			index = "2");
+			index = 2);
 
 		Button.clickPublish();
 

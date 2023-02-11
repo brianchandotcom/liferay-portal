@@ -74,7 +74,7 @@ definition {
 	}
 
 	@description = "LPS-170580 - Verify alert in the middle of stack is closed, the others fill the stack"
-	@priority = "4"
+	@priority = 4
 	test CanTransitionToFillGapOfDeletedToast {
 		task ("Given the known first (top) alert position from two stacked toast alert success messages") {
 			ClayAlertToast.openToastAlert(key_text = "Success Submit");
@@ -83,10 +83,10 @@ definition {
 
 			var position_x = ClayAlertToast.getElementRectanglePositionX(
 				code = "#ToastAlertContainer .alert-success",
-				index = "0");
+				index = 0);
 			var position_y = ClayAlertToast.getElementRectanglePositionY(
 				code = "#ToastAlertContainer .alert-success",
-				index = "0");
+				index = 0);
 
 			ClayAlertToast.closeToastAlert(key_type = "success");
 
@@ -108,18 +108,18 @@ definition {
 		task ("Then the alerts transition to fill the stack") {
 			var positionAlertX = ClayAlertToast.getElementRectanglePositionX(
 				code = "#ToastAlertContainer .alert-success",
-				index = "0");
+				index = 0);
 			var positionAlertY = ClayAlertToast.getElementRectanglePositionY(
 				code = "#ToastAlertContainer .alert-success",
-				index = "0");
+				index = 0);
 
-			if ("${positionAlertX}" != "${position_x}") {
+			if (${positionAlertX} != ${position_x}) {
 				takeScreenshot();
 
 				fail("FAIL. X coordinate positions do not match.");
 			}
 
-			if ("${positionAlertY}" != "${position_y}") {
+			if (${positionAlertY} != ${position_y}) {
 				takeScreenshot();
 
 				fail("FAIL. Y coordinate positions do not match.");

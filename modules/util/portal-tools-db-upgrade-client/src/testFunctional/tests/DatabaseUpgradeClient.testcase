@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can run with additional settings"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientAdditionalSettings {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can create custom log output"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientCustomLog {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientGogoShell {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and check upgrade"
-	@priority = "4"
+	@priority = 4
 	test CheckUpgradeClientGogoShellCommandOutput {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell with a failed upgrade"
-	@priority = "4"
+	@priority = 4
 	test CheckUpgradeClientGogoShellFailedUpgrade {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and display help commands"
-	@priority = "5"
+	@priority = 5
 	test CheckUpgradeClientGogoShellHelpOutput {
 		property portal.acceptance = "true";
 
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client displays help screen"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientHelp {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client should not be able to run on versions greater than Java SE 8 "
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientJavaVersion {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client cannot start a second upgrade process"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientSecondProcess {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client completes when disconnected"
-	@priority = "4"
+	@priority = 4
 	test CheckUpgradeClientShDisconnect {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client only upgrades core"
-	@priority = "2"
+	@priority = 2
 	test CheckUpgradeClientUpgradeCoreOnly {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -146,13 +146,13 @@ definition {
 
 		var schemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.web';");
 
-		if (!(contains("${schemaVersion}", "0.0.1"))) {
+		if (!(contains(${schemaVersion}, "0.0.1"))) {
 			fail("The upgrade client upgrades core and modules.");
 		}
 	}
 
 	@description = "LPS-158522: Upgrade client contains necessary files"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeClientZipContents {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@description = "LPS-171012: Debug support is added for upgrade jvm"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradeDebugOptions {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can run with app server and database properties set"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradePropertiesAppDBSet {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can run with app server properties set"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradePropertiesAppExtSet {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can run with database properties set"
-	@priority = "3"
+	@priority = 3
 	test CheckUpgradePropertiesDBExtSet {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client can run with no properties set"
-	@priority = "4"
+	@priority = 4
 	test CheckUpgradePropertiesNoneSet {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@description = "LPS-163243: The user can execute the upgrade:executeAll command on Gogo shell to execute all remaining upgrade processes"
-	@priority = "3"
+	@priority = 3
 	test ExecuteAllPendingUpgradesFromGogoShell {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@description = "LPS-168551:  Upgrade client throws error when portal-ext.properties exists in home directory"
-	@priority = "3"
+	@priority = 3
 	test HomeExtPropertiesReturnsError {
 		AntCommand(
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",

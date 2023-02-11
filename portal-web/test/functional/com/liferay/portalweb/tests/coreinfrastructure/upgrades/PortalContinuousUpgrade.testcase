@@ -162,7 +162,7 @@ definition {
 			expectedCount = 1);
 	}
 
-	@priority = "4"
+	@priority = 4
 	test AutoUpgradeFromLatest7413UpdateWithDBPartitionEnabledAndHeadlessAPI {
 		property database.bare.enabled = "true";
 		property database.partition.enabled = "true";
@@ -236,7 +236,7 @@ definition {
 		SQL.assertDatabaseCount(
 			databaseFilter = "lpartition%",
 			databaseSubstring = "lpartition",
-			expectedCount = "1");
+			expectedCount = 1);
 	}
 
 }

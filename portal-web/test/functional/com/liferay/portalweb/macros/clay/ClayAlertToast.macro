@@ -2,7 +2,7 @@ definition {
 
 	macro closeToastAlert {
 		Click(
-			key_type = "${key_type}",
+			key_type = ${key_type},
 			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON");
 	}
 
@@ -19,9 +19,9 @@ definition {
 		return positionX;
 		''';
 
-		var position_x = selenium.getEval("${javascript}");
+		var position_x = selenium.getEval(${javascript});
 
-		return "${position_x}";
+		return ${position_x};
 	}
 
 	macro getElementRectanglePositionY {
@@ -37,14 +37,14 @@ definition {
 		return positionY;
 		''';
 
-		var position_y = selenium.getEval("${javascript}");
+		var position_y = selenium.getEval(${javascript});
 
-		return "${position_y}";
+		return ${position_y};
 	}
 
 	macro openToastAlert {
 		Click(
-			key_text = "${key_text}",
+			key_text = ${key_text},
 			locator1 = "Button#ANY");
 	}
 

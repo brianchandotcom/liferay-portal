@@ -1,7 +1,7 @@
 definition {
 
 	macro activeCustomObject {
-		ObjectPortlet.selectCustomObject(label = "${objectLabel}");
+		ObjectPortlet.selectCustomObject(label = ${objectLabel});
 
 		CreateObject.checkToggleActive();
 
@@ -17,14 +17,14 @@ definition {
 
 		var menuItem = "Select Existing One";
 
-		if (IsElementPresent(key_menuItem = "${menuItem}", locator1 = "MenuItem#ANY_MENU_ITEM")) {
-			MenuItem.click(menuItem = "${menuItem}");
+		if (IsElementPresent(key_menuItem = ${menuItem}, locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = ${menuItem});
 		}
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		ClickNoError(
-			key_titleFieldName = "${titleFieldName}",
+			key_titleFieldName = ${titleFieldName},
 			locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
 
 		WaitForSPARefresh();
@@ -42,33 +42,33 @@ definition {
 		WaitForSPARefresh();
 
 		AssertElementPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
 	macro assertCustomObject {
 		AssertElementPresent(
-			key_labelName = "${labelName}",
+			key_labelName = ${labelName},
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	macro assertCustomObjectNotPresent {
 		AssertElementNotPresent(
-			key_labelName = "${labelName}",
+			key_labelName = ${labelName},
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
 	macro assertCustomObjectWithIndex {
 		AssertElementPresent(
-			key_index = "${index}",
-			key_labelName = "${labelName}",
+			key_index = ${index},
+			key_labelName = ${labelName},
 			locator1 = "CreateObject#OBJECT_NAME_INDEX");
 	}
 
 	macro assertDisabledAllFields {
 		for (var fieldsDisabled : list "Name,Label,Scope,Panel Category Key") {
 			AssertElementPresent(
-				key_nameDisabled = "${fieldsDisabled}",
+				key_nameDisabled = ${fieldsDisabled},
 				locator1 = "CreateObject#VIEW_OBJECT_DATA_DISABLED");
 		}
 
@@ -77,13 +77,13 @@ definition {
 
 	macro assertEntrySelectedOnRelationshipField {
 		AssertElementPresent(
-			key_entry = "${entry}",
+			key_entry = ${entry},
 			locator1 = "CreateObject#VIEW_ENTRY_SELECTED_ON_RELATIONSHIP_FIELD");
 	}
 
 	macro assertFieldAddedOnBlock {
 		AssertElementPresent(
-			key_fieldLabelName = "${fieldLabelName}",
+			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
@@ -99,7 +99,7 @@ definition {
 		}
 
 		AssertElementPresent(
-			fieldLabel = "${fieldLabel}",
+			fieldLabel = ${fieldLabel},
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
@@ -115,7 +115,7 @@ definition {
 		}
 
 		AssertElementNotPresent(
-			fieldLabel = "${fieldLabel}",
+			fieldLabel = ${fieldLabel},
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
@@ -124,29 +124,29 @@ definition {
 
 		Type(
 			locator1 = "ObjectField#LABEL_INPUT",
-			value1 = "${fieldLabel}");
+			value1 = ${fieldLabel});
 
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldName = ${fieldName},
 			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME");
 	}
 
 	macro assertObjectLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "${labelName}");
+			value1 = ${labelName});
 	}
 
 	macro assertObjectNotPresent {
 		AssertElementNotPresent(
-			key_tabName = "${objectLabel}",
+			key_tabName = ${objectLabel},
 			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 	}
 
 	macro assertObjectPluralLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "${pluralLabelName}");
+			value1 = ${pluralLabelName});
 	}
 
 	macro assertOneColumnOnFieldEntry {
@@ -157,7 +157,7 @@ definition {
 
 	macro assertRelatedObject {
 		AssertElementPresent(
-			key_relatedObject = "${relatedObject}",
+			key_relatedObject = ${relatedObject},
 			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
@@ -173,7 +173,7 @@ definition {
 
 	macro assertSearchableSectionOptionsAppears {
 		AssertElementPresent(
-			key_radioOption = "${radioOption}",
+			key_radioOption = ${radioOption},
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
 
@@ -182,32 +182,32 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Deletion Type",
-			key_value = "${deletionType}",
+			key_value = ${deletionType},
 			locator1 = "CreateObject#ASSERT_DELETION_TYPE_VALUE");
 	}
 
 	macro assertTitleFieldIsSelected {
 		AssertElementPresent(
 			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "${fieldLabel}");
+			value1 = ${fieldLabel});
 	}
 
 	macro assertValuesOnObjectData {
 		var key_fieldType = "form-control";
 
 		AssertElementPresent(
-			fieldLabel = "${fieldLabel}",
+			fieldLabel = ${fieldLabel},
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
 	macro assertValuesOnScope {
 		AssertTextEquals(
 			locator1 = "CreateObject#VIEW_OBJECT_SCOPE",
-			value1 = "${valueScope}");
+			value1 = ${valueScope});
 
 		AssertTextEquals(
 			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
-			value1 = "${valuePanelCategory}");
+			value1 = ${valuePanelCategory});
 	}
 
 	macro checkToggleActive {
@@ -239,12 +239,12 @@ definition {
 
 		if (isSet(entryName)) {
 			Click.clickNoMouseOver(
-				key_entryName = "${entryName}",
+				key_entryName = ${entryName},
 				locator1 = "ObjectPortlet#DELETE_RELATIONSHIP_ENTRY");
 		}
 		else if (isSet(labelName)) {
 			Click(
-				key_objectLabel = "${labelName}",
+				key_objectLabel = ${labelName},
 				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -263,7 +263,7 @@ definition {
 
 	macro deleteObjectViaUI {
 		Click(
-			key_objectLabel = "${objectLabel}",
+			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -276,17 +276,17 @@ definition {
 	macro editLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
-			value1 = "${labelName}");
+			value1 = ${labelName});
 	}
 
 	macro editPluralLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
-			value1 = "${pluralLabelName}");
+			value1 = ${pluralLabelName});
 	}
 
 	macro inactiveCustomObject {
-		ObjectPortlet.selectCustomObject(label = "${objectLabel}");
+		ObjectPortlet.selectCustomObject(label = ${objectLabel});
 
 		CreateObject.checkToggleInactive();
 
@@ -307,14 +307,14 @@ definition {
 		Click(locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD");
 
 		Click(
-			key_menuItem = "${accountRestrictedField}",
+			key_menuItem = ${accountRestrictedField},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro selectDeletionType {
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.goToRelationshipsDetails(fieldName = "${fieldName}");
+		ObjectAdmin.goToRelationshipsDetails(fieldName = ${fieldName});
 
 		WaitForSPARefresh();
 
@@ -322,7 +322,7 @@ definition {
 
 		Select(
 			locator1 = "CreateObject#SELECT_DELETION_TYPE",
-			value1 = "${deletionType}");
+			value1 = ${deletionType});
 
 		PortletEntry.save();
 	}
@@ -331,7 +331,7 @@ definition {
 		Click(locator1 = "CreateObject#PANEL_CATEGORY_KEY");
 
 		Click(
-			key_menuItem = "${panelCategoryKey}",
+			key_menuItem = ${panelCategoryKey},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
@@ -339,13 +339,13 @@ definition {
 		Click(locator1 = "CreateObject#TITLE_FIELD");
 
 		Click(
-			key_menuItem = "${fieldLabel}",
+			key_menuItem = ${fieldLabel},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 	macro viewAccountRestrictedFieldIsRequiredOnEntries {
 		AssertElementPresent(
-			key_fieldName = "${relationshipName}",
+			key_fieldName = ${relationshipName},
 			locator1 = "FormFields#TEXT_FIELD");
 
 		Button.clickSave();
@@ -355,20 +355,20 @@ definition {
 
 	macro viewErrorValueInvalid {
 		AssertElementPresent(
-			key_className = "${className}",
-			key_errorMessage = "${errorMessage}",
+			key_className = ${className},
+			key_errorMessage = ${errorMessage},
 			locator1 = "CreateObject#ERROR_MESSAGE");
 	}
 
 	macro viewObject {
 		Click(
-			key_labelName = "${labelName}",
+			key_labelName = ${labelName},
 			locator1 = "CreateObject#VIEW_OBJECT");
 	}
 
 	macro withdrawObjectTask {
 		Click(
-			key_taskName = "${objectLabel}",
+			key_taskName = ${objectLabel},
 			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");
 
 		Click(locator1 = "WorkflowSubmissions#SUBMISSIONS_DETAILS_PAGE_ELLIPSIS");

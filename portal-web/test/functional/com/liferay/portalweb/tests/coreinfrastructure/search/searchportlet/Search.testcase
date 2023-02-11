@@ -1837,7 +1837,7 @@ definition {
 			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
 	}
 
-	@priority = "4"
+	@priority = 4
 	test EmptyRepeatableDDMFieldNotDisplayedWithCustomFacet {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1886,11 +1886,11 @@ definition {
 
 		var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
 
-		var journalArticleDocumentType = JSONCurlUtil.get("${curl}");
+		var journalArticleDocumentType = JSONCurlUtil.get(${curl});
 
-		var aggregationField = RegexUtil.replace("${journalArticleDocumentType}", "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", "1");
+		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", 1);
 
-		SearchFacetPortlet.configureCustomFacet(aggregationField = "${aggregationField}");
+		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
 		AssertElementNotPresent(
 			facetValueName = "Custom Facet",

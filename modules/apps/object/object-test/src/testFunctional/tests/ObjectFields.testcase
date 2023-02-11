@@ -2721,7 +2721,7 @@ definition {
 	}
 
 	@description = "Verify that the Is Not Equals to operator is available when adding filters for the integer fields to select data from the object"
-	@priority = "4"
+	@priority = 4
 	test IsEqualToIsAvailableForIntegerFields {
 		task ("Given: A custom object with an integer field type") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2777,7 +2777,7 @@ definition {
 			Type(
 				key_text = "Value",
 				locator1 = "TextInput#ANY",
-				value1 = "1");
+				value1 = 1);
 
 			ObjectCustomViews.clickSaveOnModal();
 		}
@@ -2785,7 +2785,7 @@ definition {
 		task ("Then: The new filter is created") {
 			ObjectCustomViews.assertPresentEntriesOnFilters(
 				filterBy = "Custom Integer",
-				filterValue = "1");
+				filterValue = 1);
 		}
 	}
 
@@ -2859,7 +2859,7 @@ definition {
 	}
 
 	@description = "Verify that the Is Not Equals to operator is available when adding filters for the long integer fields to select data from the object"
-	@priority = "4"
+	@priority = 4
 	test IsNotEqualToIsAvailableForLongIntegerFields {
 		task ("Given: A custom object with a long integer field type") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2915,7 +2915,7 @@ definition {
 			Type(
 				key_text = "Value",
 				locator1 = "TextInput#ANY",
-				value1 = "1");
+				value1 = 1);
 
 			ObjectCustomViews.clickSaveOnModal();
 		}
@@ -2923,7 +2923,7 @@ definition {
 		task ("Then: The new filter is created") {
 			ObjectCustomViews.assertPresentEntriesOnFilters(
 				filterBy = "Custom Long Integer",
-				filterValue = "1");
+				filterValue = 1);
 		}
 	}
 

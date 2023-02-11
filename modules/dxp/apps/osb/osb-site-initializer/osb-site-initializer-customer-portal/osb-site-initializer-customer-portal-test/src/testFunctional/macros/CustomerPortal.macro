@@ -296,12 +296,10 @@ definition {
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
 			CustomerPortal.viewCPObjectCustomInfo(position = ${position});
 
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "activationStatus",
-				value = "");
+			Refresh();
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "manageContactsURL",
+				label = "activationStatus",
 				value = "");
 
 			Click(locator1 = "Button#SAVE");
@@ -399,7 +397,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
-			portlet = "Koroneiki Account");
+			portlet = "Koroneiki Accounts");
 
 		CustomerPortal.viewCPObjectInfo();
 
@@ -450,14 +448,6 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
 		CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Non-Production");
-	}
-
-	macro fullOnboardingFlow {
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CustomerPortal.clickOnSkipForNowButton();
 	}
 
 	macro getValueFieldKoroneikiByAccountName {

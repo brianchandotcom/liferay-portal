@@ -1,9 +1,2 @@
-Remove dates and other superfluous information from batch-engine.json and
-foo-object-definition.json.
-
 Use meaning external reference codes instead of generated UUID for
-foo-object-definition.json.
-
-Fix create_remote_app.sh
-	name: ${CUSTOM_ELEMENT_NAME}
-	This should be something like "Fox Remote App" instead of "fox-remote-app"
+sample-object-definition.json.

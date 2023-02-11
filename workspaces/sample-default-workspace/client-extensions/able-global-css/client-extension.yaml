@@ -1,8 +1,0 @@
-able-global-css:
-    name: Able Global CSS
-    type: globalCSS
-    url: global.css
-assemble:
-    - from: assets
-      include: "**/*"
-      into: static

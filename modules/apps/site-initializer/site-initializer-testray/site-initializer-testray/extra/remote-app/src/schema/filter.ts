@@ -520,7 +520,9 @@ const filterSchema = {
 		fields: [
 			{
 				label: i18n.translate('team-name'),
-				name: 'team',
+				name: 'name',
+				operator: 'contains',
+				type: 'text',
 			},
 		] as RendererFields[],
 	},

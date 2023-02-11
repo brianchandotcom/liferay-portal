@@ -56,18 +56,25 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="user-tools" />
 		</div>
 
-		<%
-		List<UserToolAssetAddonEntry> selectedUserToolAssetAddonEntries = journalContentDisplayContext.getSelectedUserToolAssetAddonEntries();
+		<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("showAvailableLocales") %>' id='<%= refererPortletName + "showAvailableLocales" %>' label="translations" name="userToolAssetAddonEntryKeys" type="checkbox" value="showAvailableLocales" />
 
-		for (UserToolAssetAddonEntry userToolAssetAddonEntry : journalContentDisplayContext.getEnabledUserToolAssetAddonEntries()) {
-		%>
+		<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePrint") %>' id='<%= refererPortletName + "enablePrint" %>' label="print" name="userToolAssetAddonEntryKeys" type="checkbox" value="enablePrint" />
 
-			<aui:input checked="<%= selectedUserToolAssetAddonEntries.contains(userToolAssetAddonEntry) %>" id="<%= refererPortletName + userToolAssetAddonEntry.getKey() %>" label="<%= userToolAssetAddonEntry.getLabel(locale) %>" name="userToolAssetAddonEntryKeys" type="checkbox" value="<%= userToolAssetAddonEntry.getKey() %>" />
+		<c:if test='<%= journalContentDisplayContext.isEnabledConversion("pdf") %>'>
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enablePDF") %>' id='<%= refererPortletName + "enablePDF" %>' label='<%= LanguageUtil.format(request, "download-as-x", "PDF") %>' name="userToolAssetAddonEntryKeys" type="checkbox" value="enablePDF" />
+		</c:if>
 
-		<%
-		}
-		%>
+		<c:if test='<%= journalContentDisplayContext.isEnabledConversion("doc") %>'>
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableDOC") %>' id='<%= refererPortletName + "enableDOC" %>' label='<%= LanguageUtil.format(request, "download-as-x", "DOC") %>' name="userToolAssetAddonEntryKeys" type="checkbox" value="enableDOC" />
+		</c:if>
 
+		<c:if test='<%= journalContentDisplayContext.isEnabledConversion("odt") %>'>
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableODT") %>' id='<%= refererPortletName + "enableODT" %>' label='<%= LanguageUtil.format(request, "download-as-x", "ODT") %>' name="userToolAssetAddonEntryKeys" type="checkbox" value="enableODT" />
+		</c:if>
+
+		<c:if test='<%= journalContentDisplayContext.isEnabledConversion("txt") %>'>
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledUserToolAssetAddonEntry("enableTXT") %>' id='<%= refererPortletName + "enableTXT" %>' label='<%= LanguageUtil.format(request, "download-as-x", "TXT") %>' name="userToolAssetAddonEntryKeys" type="checkbox" value="enableTXT" />
+		</c:if>
 	</clay:sheet-section>
 
 	<clay:sheet-section>
@@ -75,18 +82,15 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="content-metadata" />
 		</div>
 
-		<%
-		List<ContentMetadataAssetAddonEntry> selectedContentMetadataAssetAddonEntries = journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries();
+		<aui:input checked='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRelatedAssets") %>' id='<%= refererPortletName + "enableRelatedAssets" %>' label="related-assets" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="enableRelatedAssets" />
 
-		for (ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry : journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries()) {
-		%>
+		<aui:input checked='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableRatings") %>' id='<%= refererPortletName + "enableRatings" %>' label="ratings" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="enableRatings" />
 
-			<aui:input checked="<%= selectedContentMetadataAssetAddonEntries.contains(contentMetadataAssetAddonEntry) %>" id="<%= refererPortletName + contentMetadataAssetAddonEntry.getKey() %>" label="<%= contentMetadataAssetAddonEntry.getLabel(locale) %>" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="<%= contentMetadataAssetAddonEntry.getKey() %>" />
+		<c:if test="<%= journalContentDisplayContext.articleCommentsEnabled() %>">
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableComments") %>' id='<%= refererPortletName + "enableComments" %>' label="comments" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="enableComments" />
 
-		<%
-		}
-		%>
-
+			<aui:input checked='<%= journalContentDisplayContext.isEnabledContentMetadataAssetAddonEntry("enableCommentRatings") %>' id='<%= refererPortletName + "enableCommentRatings" %>' label="comment-ratings" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="enableCommentRatings" />
+		</c:if>
 	</clay:sheet-section>
 
 	<clay:sheet-section>

@@ -89,14 +89,6 @@
 							'timers',
 						],
 					},
-					'liferay-asset-addon-entry-selector': {
-						path: 'asset_addon_entry_selector.js',
-						requires: [
-							'aui-component',
-							'liferay-portlet-base',
-							'liferay-util-window',
-						],
-					},
 					'liferay-asset-categories-selector': {
 						path: 'asset_categories_selector.js',
 						requires: ['aui-tree', 'liferay-asset-tags-selector'],

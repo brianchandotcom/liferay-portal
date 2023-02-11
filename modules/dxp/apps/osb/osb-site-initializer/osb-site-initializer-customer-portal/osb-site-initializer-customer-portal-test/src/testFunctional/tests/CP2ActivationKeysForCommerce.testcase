@@ -99,15 +99,14 @@ definition {
 	@description = "LPS-146072 - Verify that when selecting the 'Commerce' product the 'Activation Keys' page opens"
 	@priority = 4
 	test CanViewActivationKeysPage {
-		var accountsList = "7.4,7.3,7.2,7.1,7.0";
-
-		for (var account : list ${accountsList}) {
-			task ("Go to Test Account") {
-				CustomerPortal.enterOnProject(title = "Test Account QA ${account}");
+		task ("Go to Test Account") {
+				CustomerPortal.enterOnProject(title = "Test Account QA 7.0");
 
 				CP2NavigationMenu.goToProductActivation();
 			}
+		var accountsList = "7.1,7.2,7.3,7.4";
 
+		for (var account : list "${accountsList}") {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
@@ -120,10 +119,8 @@ definition {
 				CustomerPortal.assertPageTitle(title = ${pageTitle});
 			}
 
-			task ("Go to Customer Portal") {
-				ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-				CustomerPortal.waitCP20PageToLoad(userFirstName = ${userFirstName});
+			task ("Then I look for the next project and enter the same") {
+				CP2Utils.clickBreadcrumb(project = "Test Account QA ${account}");
 			}
 		}
 	}

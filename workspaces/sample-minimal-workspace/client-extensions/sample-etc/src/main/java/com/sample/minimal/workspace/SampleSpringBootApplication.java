@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sample.minimal.workspace.easy;
+package com.sample.minimal.workspace;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,10 +23,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Brian Wing Shun Chan
  */
 @SpringBootApplication
-public class EasySpringBootApplication {
+public class SampleSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EasySpringBootApplication.class, args);
+		SpringApplication.run(SpringBootApplication.class, args);
 	}
 
 }

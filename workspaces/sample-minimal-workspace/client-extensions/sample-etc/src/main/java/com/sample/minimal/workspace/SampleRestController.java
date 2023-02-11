@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sample.minimal.workspace.easy;
+package com.sample.minimal.workspace;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,7 +41,7 @@ import reactor.core.publisher.Mono;
  * @author Brian Wing Shun Chan
  */
 @RestController
-public class EasyRestController {
+public class SampleRestController {
 
 	@GetMapping("/dad-joke")
 	public ResponseEntity<String> getDadJoke(@AuthenticationPrincipal Jwt jwt) {
@@ -59,8 +59,8 @@ public class EasyRestController {
 			HttpStatus.OK);
 	}
 
-	@PostMapping("/easy-object/action/1")
-	public ResponseEntity<String> postEasyObjectAction1(
+	@PostMapping("/sample-object/action/1")
+	public ResponseEntity<String> postSampleObjectAction1(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
@@ -81,8 +81,8 @@ public class EasyRestController {
 		return new ResponseEntity<>(json, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/easy-object/action/2")
-	public ResponseEntity<String> postEasyObjectAction2(
+	@PostMapping("/sample-object/action/2")
+	public ResponseEntity<String> postSampleObjectAction2(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
@@ -103,8 +103,8 @@ public class EasyRestController {
 		return new ResponseEntity<>(json, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/easy-workflow/action/1")
-	public ResponseEntity<String> postEasyWorkflowAction1(
+	@PostMapping("/sample-workflow/action/1")
+	public ResponseEntity<String> postSampleWorkflowAction1(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
@@ -166,7 +166,7 @@ public class EasyRestController {
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private static final Log _log = LogFactory.getLog(EasyRestController.class);
+	private static final Log _log = LogFactory.getLog(SampleRestController.class);
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;

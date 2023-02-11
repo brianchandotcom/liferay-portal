@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sample.minimal.workspace.easy;
+package com.sample.minimal.workspace;
 
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
@@ -57,7 +57,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 @EnableWebSecurity
-public class EasyEnableWebSecurity {
+public class SampleEnableWebSecurity {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -171,7 +171,7 @@ public class EasyEnableWebSecurity {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		EasyEnableWebSecurity.class);
+		SampleEnableWebSecurity.class);
 
 	@Value("${dxp.domains}")
 	private String _dxpDomains;

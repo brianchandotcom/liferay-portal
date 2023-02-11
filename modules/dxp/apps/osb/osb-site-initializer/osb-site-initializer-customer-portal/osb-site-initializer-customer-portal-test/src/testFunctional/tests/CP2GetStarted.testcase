@@ -46,10 +46,6 @@ definition {
 	@description = "Automation ID: LPS-145260 | Test Summary: Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again"
 	@priority = 4
 	test GetStartedDontAppearASecondTime {
-		task ("Creating objects") {
-			CustomerPortal.showCPObject(title = "Account Flag");
-		}
-
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
@@ -102,10 +98,6 @@ definition {
 	@description = "Automation ID: LPS-143374 | Test Summary: Verify if the button 'Start Project Setup' is present."
 	@priority = 4
 	test IsStartProjectButtonPresent {
-		task ("Creating objects") {
-			CustomerPortal.showCPObject(title = "Account Flag");
-		}
-
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
@@ -130,10 +122,6 @@ definition {
 	@description = "Automation ID: LPS-145255 | Test Summary: Verify if the get started page is shown for user when admin profile logs in for the first time"
 	@priority = 5
 	test IsStartProjectShowingInFirstTime {
-		task ("Creating objects") {
-			CustomerPortal.showCPObject(title = "Account Flag");
-		}
-
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 
@@ -158,10 +146,6 @@ definition {
 	@description = "Automation ID: LPS-145259 | Test Summary: Verify that the Get Started button takes the user to the Invite Your Team Members page"
 	@priority = 5
 	test StartPojectButtonRedirectsToYourTeamMembers {
-		task ("Creating objects") {
-			CustomerPortal.showCPObject(title = "Account Flag");
-		}
-
 		task ("Change the user role in the project") {
 			Account.openAccountsAdmin();
 

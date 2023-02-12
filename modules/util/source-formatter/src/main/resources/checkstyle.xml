@@ -474,7 +474,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.LambdaCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that `lambda` statements are as simple as possible." />
-			<message key="lambda.simplify" value="Simplify lambda statement with single statement" />
+			<message key="lambda.simplify.1" value="Simplify lambda statement with single statement" />
+			<message key="lambda.simplify.2" value="Simplify lambda statement by method reference(instance::method)" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ListUtilCheck">
 			<property name="category" value="Styling" />

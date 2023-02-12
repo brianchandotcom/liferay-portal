@@ -17,7 +17,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext)request.getAttribute(ProductNavigationProductMenuWebKeys.LAYOUTS_TREE_DISPLAY_CONTEXT);
+LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext)request.getAttribute(LayoutsTreeDisplayContext.class.getName());
 %>
 
 <react:component

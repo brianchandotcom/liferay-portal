@@ -16,11 +16,7 @@ package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
@@ -42,38 +38,41 @@ public class SiteSettingsConfigurationScreenContributorTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, SiteSettingsConfigurationScreenContributor.class,
 			new ServiceTrackerCustomizer
 				<SiteSettingsConfigurationScreenContributor,
-				 ConfigurationScreen>() {
+				 ServiceRegistration<?>>() {
 
 				@Override
-				public ConfigurationScreen addingService(
+				public ServiceRegistration<?> addingService(
 					ServiceReference<SiteSettingsConfigurationScreenContributor>
 						serviceReference) {
 
-					return _registerConfigurationScreen(
-						_bundleContext.getService(serviceReference));
+					return bundleContext.registerService(
+						ConfigurationScreen.class,
+						new SiteSettingsConfigurationScreen(
+							bundleContext.getService(serviceReference),
+							_servletContext),
+						null);
 				}
 
 				@Override
 				public void modifiedService(
 					ServiceReference<SiteSettingsConfigurationScreenContributor>
 						serviceReference,
-					ConfigurationScreen configurationScreen) {
+					ServiceRegistration<?> serviceRegistration) {
 				}
 
 				@Override
 				public void removedService(
 					ServiceReference<SiteSettingsConfigurationScreenContributor>
 						serviceReference,
-					ConfigurationScreen configurationScreen) {
+					ServiceRegistration<?> serviceRegistration) {
 
-					_unregisterConfigurationScreen(
-						_bundleContext.getService(serviceReference));
+					serviceRegistration.unregister();
+
+					bundleContext.ungetService(serviceReference);
 				}
 
 			});
@@ -84,41 +83,8 @@ public class SiteSettingsConfigurationScreenContributorTracker {
 		_serviceTracker.close();
 	}
 
-	private ConfigurationScreen _registerConfigurationScreen(
-		SiteSettingsConfigurationScreenContributor
-			siteSettingsConfigurationScreenContributor) {
-
-		SiteSettingsConfigurationScreen configurationScreen =
-			new SiteSettingsConfigurationScreen(
-				siteSettingsConfigurationScreenContributor, _servletContext);
-
-		_serviceRegistrationMap.put(
-			siteSettingsConfigurationScreenContributor.getKey(),
-			_bundleContext.registerService(
-				ConfigurationScreen.class, configurationScreen,
-				new HashMapDictionary<>()));
-
-		return configurationScreen;
-	}
-
-	private void _unregisterConfigurationScreen(
-		SiteSettingsConfigurationScreenContributor
-			siteSettingsConfigurationScreenContributor) {
-
-		ServiceRegistration<ConfigurationScreen> serviceRegistration =
-			_serviceRegistrationMap.remove(
-				siteSettingsConfigurationScreenContributor.getKey());
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private BundleContext _bundleContext;
-	private final Map<String, ServiceRegistration<ConfigurationScreen>>
-		_serviceRegistrationMap = new ConcurrentHashMap<>();
 	private ServiceTracker
-		<SiteSettingsConfigurationScreenContributor, ConfigurationScreen>
+		<SiteSettingsConfigurationScreenContributor, ServiceRegistration<?>>
 			_serviceTracker;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")

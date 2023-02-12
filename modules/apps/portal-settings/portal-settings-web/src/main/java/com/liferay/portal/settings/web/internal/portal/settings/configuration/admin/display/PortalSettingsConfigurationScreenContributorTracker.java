@@ -16,11 +16,7 @@ package com.liferay.portal.settings.web.internal.portal.settings.configuration.a
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
@@ -42,22 +38,24 @@ public class PortalSettingsConfigurationScreenContributorTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, PortalSettingsConfigurationScreenContributor.class,
 			new ServiceTrackerCustomizer
 				<PortalSettingsConfigurationScreenContributor,
-				 ConfigurationScreen>() {
+				 ServiceRegistration<?>>() {
 
 				@Override
-				public ConfigurationScreen addingService(
+				public ServiceRegistration<?> addingService(
 					ServiceReference
 						<PortalSettingsConfigurationScreenContributor>
 							serviceReference) {
 
-					return _registerConfigurationScreen(
-						_bundleContext.getService(serviceReference));
+					return bundleContext.registerService(
+						ConfigurationScreen.class,
+						new PortalSettingsConfigurationScreen(
+							bundleContext.getService(serviceReference),
+							_servletContext),
+						null);
 				}
 
 				@Override
@@ -65,7 +63,7 @@ public class PortalSettingsConfigurationScreenContributorTracker {
 					ServiceReference
 						<PortalSettingsConfigurationScreenContributor>
 							serviceReference,
-					ConfigurationScreen configurationScreen) {
+					ServiceRegistration<?> serviceRegistration) {
 				}
 
 				@Override
@@ -73,10 +71,11 @@ public class PortalSettingsConfigurationScreenContributorTracker {
 					ServiceReference
 						<PortalSettingsConfigurationScreenContributor>
 							serviceReference,
-					ConfigurationScreen configurationScreen) {
+					ServiceRegistration<?> serviceRegistration) {
 
-					_unregisterConfigurationScreen(
-						_bundleContext.getService(serviceReference));
+					serviceRegistration.unregister();
+
+					bundleContext.ungetService(serviceReference);
 				}
 
 			});
@@ -87,41 +86,8 @@ public class PortalSettingsConfigurationScreenContributorTracker {
 		_serviceTracker.close();
 	}
 
-	private ConfigurationScreen _registerConfigurationScreen(
-		PortalSettingsConfigurationScreenContributor
-			portalSettingsConfigurationScreenContributor) {
-
-		PortalSettingsConfigurationScreen configurationScreen =
-			new PortalSettingsConfigurationScreen(
-				portalSettingsConfigurationScreenContributor, _servletContext);
-
-		_serviceRegistrationMap.put(
-			portalSettingsConfigurationScreenContributor.getKey(),
-			_bundleContext.registerService(
-				ConfigurationScreen.class, configurationScreen,
-				new HashMapDictionary<>()));
-
-		return configurationScreen;
-	}
-
-	private void _unregisterConfigurationScreen(
-		PortalSettingsConfigurationScreenContributor
-			portalSettingsConfigurationScreenContributor) {
-
-		ServiceRegistration<ConfigurationScreen> serviceRegistration =
-			_serviceRegistrationMap.remove(
-				portalSettingsConfigurationScreenContributor.getKey());
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private BundleContext _bundleContext;
-	private final Map<String, ServiceRegistration<ConfigurationScreen>>
-		_serviceRegistrationMap = new ConcurrentHashMap<>();
 	private ServiceTracker
-		<PortalSettingsConfigurationScreenContributor, ConfigurationScreen>
+		<PortalSettingsConfigurationScreenContributor, ServiceRegistration<?>>
 			_serviceTracker;
 
 	@Reference(

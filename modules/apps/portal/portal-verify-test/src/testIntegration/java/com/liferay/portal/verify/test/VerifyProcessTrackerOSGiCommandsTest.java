@@ -200,7 +200,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 					"upgrade.to.schema.version", "1.0.0"
 				).build());
 
-		return () -> upgradeStepServiceRegistration.unregister();
+		return upgradeStepServiceRegistration::unregister;
 	}
 
 	private SafeCloseable _registerInitialVerifyProcess() {
@@ -214,7 +214,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 						"verify.process.name", _VERIFY_PROCESS_NAME
 					).build());
 
-		return () -> initialDeploymentVerifyProcessRegistration.unregister();
+		return initialDeploymentVerifyProcessRegistration::unregister;
 	}
 
 	private SafeCloseable _registerRunOnPortalUpgradeVerifyProcess() {
@@ -228,7 +228,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 						"verify.process.name", "verify.process.name"
 					).build());
 
-		return () -> runOnPortalUpgradeVerifyProcessRegistration.unregister();
+		return runOnPortalUpgradeVerifyProcessRegistration::unregister;
 	}
 
 	private SafeCloseable _registerVerifyProcess() {
@@ -238,7 +238,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 				MapUtil.singletonDictionary(
 					"verify.process.name", "verify.process.name"));
 
-		return () -> verifyProcessRegistration.unregister();
+		return verifyProcessRegistration::unregister;
 	}
 
 	private void _simulateUpgradeProcessExecution() {

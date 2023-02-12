@@ -89,7 +89,7 @@ public class DefaultDDMExpressionParameterAccessor
 	private Supplier<Long> _getGroupIdSupplier = () -> 0L;
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");
 	private final Supplier<JSONArray> _getObjectFieldsJSONArraySupplier =
-		() -> JSONFactoryUtil.createJSONArray();
+		JSONFactoryUtil::createJSONArray;
 	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 

@@ -110,6 +110,7 @@ public class LambdaCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_SIMPLIFY_LAMBDA_1 = "lambda.simplify.1";
+
 	private static final String _MSG_SIMPLIFY_LAMBDA_2 = "lambda.simplify.2";
 
 }

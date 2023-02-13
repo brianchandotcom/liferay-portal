@@ -746,14 +746,14 @@ public class AssetListAssetEntryProviderImpl
 			assetRendererFactory.getClassTypeReader();
 
 		try {
-			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				_portal.getSharedContentSiteGroupIds(
-					assetListEntry.getCompanyId(), assetListEntry.getGroupId(),
-					assetListEntry.getUserId()),
-				LocaleUtil.getDefault());
-
 			availableClassTypeIds = TransformUtil.transformToLongArray(
-				classTypes, ClassType::getClassTypeId);
+				classTypeReader.getAvailableClassTypes(
+					_portal.getSharedContentSiteGroupIds(
+						assetListEntry.getCompanyId(),
+						assetListEntry.getGroupId(),
+						assetListEntry.getUserId()),
+					LocaleUtil.getDefault()),
+				ClassType::getClassTypeId);
 		}
 		catch (PortalException portalException) {
 			_log.error(

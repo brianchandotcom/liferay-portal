@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.search.internal.configuration.AsahSearchKeywordsConfiguration;
 import com.liferay.portal.search.internal.util.AsahUtil;
-import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
 
 import java.net.HttpURLConnection;
 
@@ -110,7 +109,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 			return jsonObject;
 		}
 		catch (Exception exception) {
-			throw new InvalidWebCacheItemException(exception);
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -157,7 +156,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 			return;
 		}
 
-		throw new InvalidWebCacheItemException(
+		throw new RuntimeException(
 			StringBundler.concat(
 				"Response body: ", jsonObject, "\nResponse code: ",
 				response.getResponseCode()));

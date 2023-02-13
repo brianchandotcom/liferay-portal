@@ -386,9 +386,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL);
 
 		if (staging) {
-			String stagingGroupKeyAddition = "-staging";
 			int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
 				Group.class.getName(), "groupKey");
+			String stagingGroupKeyAddition = "-staging";
 
 			if (groupKey.length() <=
 					(groupKeyMaxLength - stagingGroupKeyAddition.length())) {
@@ -404,6 +404,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				while (fetchGroup(user.getCompanyId(), groupKey) != null) {
 					counter++;
+
 					groupKey = _createLongStagingGroupKey(
 						groupKey, stagingGroupKeyAddition, groupKeyMaxLength,
 						counter);
@@ -5261,6 +5262,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		groupKey = groupKey.substring(
 			0, groupKeyMaxLength - createdStagingGroupKeyAddition.length());
+
 		groupKey = groupKey.concat(createdStagingGroupKeyAddition);
 
 		return groupKey;

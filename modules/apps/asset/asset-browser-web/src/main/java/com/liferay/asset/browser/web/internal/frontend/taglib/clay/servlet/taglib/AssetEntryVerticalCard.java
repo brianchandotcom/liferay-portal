@@ -27,14 +27,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -69,53 +67,6 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public Map<String, String> getDynamicAttributes() {
-		if (_assetBrowserDisplayContext.isMultipleSelection() ||
-			(_assetEntry.getEntryId() ==
-				_assetBrowserDisplayContext.getRefererAssetEntryId())) {
-
-			return null;
-		}
-
-		Map<String, String> data = HashMapBuilder.put(
-			"data-assetclassname", _assetEntry.getClassName()
-		).put(
-			"data-assetclassnameid",
-			String.valueOf(_assetEntry.getClassNameId())
-		).put(
-			"data-assetclasspk", String.valueOf(_assetEntry.getClassPK())
-		).put(
-			"data-assettitle",
-			_assetRenderer.getTitle(_themeDisplay.getLocale())
-		).put(
-			"data-assettype",
-			_assetRendererFactory.getTypeName(
-				_themeDisplay.getLocale(),
-				_assetBrowserDisplayContext.getSubtypeSelectionId())
-		).put(
-			"data-entityid", String.valueOf(_assetEntry.getEntryId())
-		).build();
-
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			_assetEntry.getGroupId());
-
-		if (group != null) {
-			try {
-				data.put(
-					"data-groupdescriptivename",
-					group.getDescriptiveName(_themeDisplay.getLocale()));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-
-		return data;
 	}
 
 	@Override

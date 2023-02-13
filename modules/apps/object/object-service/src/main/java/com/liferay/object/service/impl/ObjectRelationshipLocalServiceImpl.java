@@ -152,10 +152,12 @@ public class ObjectRelationshipLocalServiceImpl
 				StringBundler.concat(
 					"insert into ", objectRelationship.getDBTableName(), " (",
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1),
 					", ",
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName2"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_2),
 					") values (", primaryKey1, ", ", primaryKey2, ")"));
 
 			return;
@@ -232,9 +234,9 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1, objectDefinition2, false);
 
 		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName1");
+			ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_1);
 		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
-			"pkObjectFieldDBColumnName2");
+			ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_2);
 
 		runSQL(
 			StringBundler.concat(
@@ -364,7 +366,8 @@ public class ObjectRelationshipLocalServiceImpl
 					"delete from ", objectRelationship.getDBTableName(),
 					" where ",
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1),
 					" = ", primaryKey1));
 		}
 	}
@@ -399,10 +402,12 @@ public class ObjectRelationshipLocalServiceImpl
 					"delete from ", objectRelationship.getDBTableName(),
 					" where ",
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1),
 					" = ", primaryKey1, " and ",
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName2"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_2),
 					" = ", primaryKey2));
 		}
 	}
@@ -876,9 +881,11 @@ public class ObjectRelationshipLocalServiceImpl
 			dynamicObjectRelationshipMappingTable =
 				new DynamicObjectRelationshipMappingTable(
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1),
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName2"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_2),
 					objectRelationship.getDBTableName());
 
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn1 =

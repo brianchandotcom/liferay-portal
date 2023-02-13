@@ -466,11 +466,15 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertTrue(
 			_hasColumn(
 				objectRelationship.getDBTableName(),
-				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName1")));
+				pkObjectFieldDBColumnNames.get(
+					ObjectRelationshipConstants.
+						PK_OBJECT_FIELD_DB_COLUMN_NAME_1)));
 		Assert.assertTrue(
 			_hasColumn(
 				objectRelationship.getDBTableName(),
-				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName2")));
+				pkObjectFieldDBColumnNames.get(
+					ObjectRelationshipConstants.
+						PK_OBJECT_FIELD_DB_COLUMN_NAME_2)));
 
 		ObjectRelationship reverseObjectRelationship =
 			_objectRelationshipLocalService.fetchReverseObjectRelationship(
@@ -630,11 +634,15 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertTrue(
 			_hasColumn(
 				objectRelationship.getDBTableName(),
-				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName1")));
+				pkObjectFieldDBColumnNames.get(
+					ObjectRelationshipConstants.
+						PK_OBJECT_FIELD_DB_COLUMN_NAME_1)));
 		Assert.assertTrue(
 			_hasColumn(
 				objectRelationship.getDBTableName(),
-				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName2")));
+				pkObjectFieldDBColumnNames.get(
+					ObjectRelationshipConstants.
+						PK_OBJECT_FIELD_DB_COLUMN_NAME_2)));
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

@@ -73,9 +73,11 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 			dynamicObjectRelationshipMappingTable =
 				new DynamicObjectRelationshipMappingTable(
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1),
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName2"),
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_2),
 					objectRelationship.getDBTableName());
 
 		Column<DynamicObjectRelationshipMappingTable, ?>
@@ -84,7 +86,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 					getPKObjectFieldColumn(
 						dynamicObjectRelationshipMappingTable,
 						pkObjectFieldDBColumnNames.get(
-							"pkObjectFieldDBColumnName2"));
+							ObjectRelationshipConstants.
+								PK_OBJECT_FIELD_DB_COLUMN_NAME_2));
 
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable =
 			getDynamicObjectDefinitionTable(relatedObjectDefinition);
@@ -96,7 +99,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 				getPKObjectFieldColumn(
 					dynamicObjectRelationshipMappingTable,
 					pkObjectFieldDBColumnNames.get(
-						"pkObjectFieldDBColumnName1"))
+						ObjectRelationshipConstants.
+							PK_OBJECT_FIELD_DB_COLUMN_NAME_1))
 			).from(
 				dynamicObjectRelationshipMappingTable
 			).where(

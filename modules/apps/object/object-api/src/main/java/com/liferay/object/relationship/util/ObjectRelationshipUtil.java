@@ -14,6 +14,7 @@
 
 package com.liferay.object.relationship.util;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
@@ -64,17 +65,19 @@ public class ObjectRelationshipUtil {
 				objectDefinition2.getObjectDefinitionId()) {
 
 			return HashMapBuilder.put(
-				"pkObjectFieldDBColumnName1", pkObjectFieldDBColumnName1
+				ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_1,
+				pkObjectFieldDBColumnName1
 			).put(
-				"pkObjectFieldDBColumnName2", pkObjectFieldDBColumnName2
+				ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_2,
+				pkObjectFieldDBColumnName2
 			).build();
 		}
 
 		return HashMapBuilder.put(
-			"pkObjectFieldDBColumnName1",
+			ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_1,
 			pkObjectFieldDBColumnName1.concat(reverse ? "2" : "1")
 		).put(
-			"pkObjectFieldDBColumnName2",
+			ObjectRelationshipConstants.PK_OBJECT_FIELD_DB_COLUMN_NAME_2,
 			pkObjectFieldDBColumnName2.concat(reverse ? "1" : "2")
 		).build();
 	}

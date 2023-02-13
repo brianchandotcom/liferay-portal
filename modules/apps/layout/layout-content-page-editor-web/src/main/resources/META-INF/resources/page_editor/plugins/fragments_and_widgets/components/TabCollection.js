@@ -126,7 +126,7 @@ function TabCollectionCollapse({children, open, setOpen, title}) {
 			role="none"
 		>
 			<button
-				aria-expanded={open}
+				aria-expanded={open ? 'true' : 'false'}
 				aria-haspopup="menu"
 				className={classNames(
 					'btn',

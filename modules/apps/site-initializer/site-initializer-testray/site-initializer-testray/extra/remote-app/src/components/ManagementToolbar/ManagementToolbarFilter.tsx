@@ -12,9 +12,9 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayManagementToolbar from '@clayui/management-toolbar';
-import ClayPopover from '@clayui/popover';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import {useCallback, useContext, useMemo, useState} from 'react';
 
 import {ListViewContext, ListViewTypes} from '../../context/ListViewContext';
@@ -89,26 +89,28 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	}, [dispatch, fields, form]);
 
 	return (
-		<ClayPopover
-			alignPosition="bottom-right"
-			className="filter-popover"
-			closeOnClickOutside
-			disableScroll={false}
+		<ClayDropDown
+			menuElementAttrs={{
+				className: 'management-toolbar-filter-dropdown',
+			}}
+			menuWidth="sm"
+			renderMenuOnClick
 			trigger={
-				<div>
-					<ClayManagementToolbar.Item>
-						<ClayButtonWithIcon
-							aria-label={i18n.translate('filter')}
-							className="nav-btn nav-btn-monospaced"
-							displayType="unstyled"
+				<ClayButton className="nav-link" displayType="unstyled">
+					<span className="navbar-breakpoint-down-d-none">
+						<ClayIcon
+							className="inline-item inline-item-after"
 							symbol="filter"
-							title={i18n.translate('filter')}
 						/>
-					</ClayManagementToolbar.Item>
-				</div>
+					</span>
+
+					<span className="navbar-breakpoint-d-none">
+						<ClayIcon symbol="filter" />
+					</span>
+				</ClayButton>
 			}
 		>
-			<div className="dropdown-header filter-search">
+			<div className="dropdown-header">
 				<p className="font-weight-bold my-2">
 					{i18n.translate('filter-results')}
 				</p>
@@ -119,11 +121,11 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					placeholder={i18n.translate('search-filters')}
 					value={filter}
 				/>
-
-				<Form.Divider />
 			</div>
 
-			<div className="form-filters">
+			<Form.Divider />
+
+			<div className="popover-body">
 				<Form.Renderer
 					fieldOptions={fieldOptions}
 					fields={fields}
@@ -134,9 +136,9 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 				/>
 			</div>
 
-			<div className="popover-footer">
-				<Form.Divider />
+			<Form.Divider />
 
+			<div className="popover-footer">
 				<ClayButton onClick={onApply}>
 					{i18n.translate('apply')}
 				</ClayButton>
@@ -149,7 +151,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					{i18n.translate('clear')}
 				</ClayButton>
 			</div>
-		</ClayPopover>
+		</ClayDropDown>
 	);
 };
 

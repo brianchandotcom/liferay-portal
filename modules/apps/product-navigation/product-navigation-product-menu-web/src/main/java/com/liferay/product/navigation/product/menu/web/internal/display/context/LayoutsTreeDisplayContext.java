@@ -333,7 +333,7 @@ public class LayoutsTreeDisplayContext {
 
 					sb.append(PortalUtil.getPortalURL(_httpServletRequest));
 					sb.append(_themeDisplay.getPathMain());
-					sb.append("/portal/edit_layout?cmd=parent_layout_id");
+					sb.append("/portal/edit_layout");
 
 					return sb.toString();
 				}

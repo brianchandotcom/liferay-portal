@@ -15,9 +15,7 @@ import getKebabCase from '../../../../../common/utils/getKebabCase';
 import {getPascalCase} from '../../../utils/getPascalCase';
 
 export function getProductName(activationKey) {
-	const productName = activationKey.productName.replace('DXP', '').trim();
-
-	const formatProductName = getPascalCase(productName).replace(
+	const formatProductName = getPascalCase(activationKey.productName).replace(
 		'Production',
 		'Prod'
 	);

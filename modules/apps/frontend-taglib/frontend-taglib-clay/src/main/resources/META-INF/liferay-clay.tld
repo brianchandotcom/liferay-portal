@@ -1545,6 +1545,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>itemsType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>managementToolbarDisplayContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

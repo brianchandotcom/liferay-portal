@@ -25,7 +25,6 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -298,16 +297,12 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			return null;
 		}
 
-		Stream<CommercePriceList> commercePriceListsStream =
-			commercePriceLists.stream();
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			if (commercePriceList.getCommercePriceListId() !=
+					commerceChannelAccountEntryRel.getClassPK()) {
 
-		if (commercePriceListsStream.mapToLong(
-				CommercePriceList::getCommercePriceListId
-			).anyMatch(
-				commercePriceListId ->
-					commercePriceListId ==
-						commerceChannelAccountEntryRel.getClassPK()
-			)) {
+				continue;
+			}
 
 			return _commercePriceListLocalService.getCommercePriceList(
 				commerceChannelAccountEntryRel.getClassPK());

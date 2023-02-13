@@ -19,7 +19,6 @@ import com.liferay.oauth2.provider.jsonws.internal.service.access.policy.scope.S
 import com.liferay.oauth2.provider.jsonws.internal.service.access.policy.scope.SAPEntryScopeDescriptorFinderRegistrator;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
 import com.liferay.oauth2.provider.scope.liferay.constants.OAuth2ProviderScopeLiferayConstants;
@@ -28,6 +27,7 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,8 +51,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -129,22 +127,19 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 				return authVerifierResult;
 			}
 
-			List<OAuth2ScopeGrant> oAuth2AuthorizationOAuth2ScopeGrants =
+			List<String> scopes = TransformUtil.transform(
 				_oAuth2ScopeGrantLocalService.
 					getOAuth2AuthorizationOAuth2ScopeGrants(
-						oAuth2Authorization.getOAuth2AuthorizationId());
+						oAuth2Authorization.getOAuth2AuthorizationId()),
+				oAuth2ScopeGrant -> {
+					if (!_jaxRsApplicationNames.contains(
+							oAuth2ScopeGrant.getApplicationName())) {
 
-			Stream<OAuth2ScopeGrant> stream =
-				oAuth2AuthorizationOAuth2ScopeGrants.stream();
+						return null;
+					}
 
-			List<String> scopes = stream.filter(
-				oAuth2ScopeGrant -> _jaxRsApplicationNames.contains(
-					oAuth2ScopeGrant.getApplicationName())
-			).map(
-				OAuth2ScopeGrant::getScope
-			).collect(
-				Collectors.toList()
-			);
+					return oAuth2ScopeGrant.getScope();
+				});
 
 			List<SAPEntryScope> sapEntryScopes =
 				_sapEntryScopeDescriptorFinderRegistrator.

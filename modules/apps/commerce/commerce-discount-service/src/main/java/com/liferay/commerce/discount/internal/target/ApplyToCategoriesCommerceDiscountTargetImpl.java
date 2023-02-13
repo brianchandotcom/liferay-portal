@@ -24,6 +24,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
 import com.liferay.commerce.discount.target.CommerceDiscountProductTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -38,12 +39,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,20 +66,13 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 	public void contributeDocument(
 		Document document, CommerceDiscount commerceDiscount) {
 
-		List<CommerceDiscountRel> commerceDiscountRels =
-			_commerceDiscountRelLocalService.getCommerceDiscountRels(
-				commerceDiscount.getCommerceDiscountId(),
-				AssetCategory.class.getName());
-
-		Stream<CommerceDiscountRel> stream = commerceDiscountRels.stream();
-
-		LongStream longStream = stream.mapToLong(
-			CommerceDiscountRel::getClassPK);
-
-		long[] assetCategoryIds = longStream.toArray();
-
 		document.addKeyword(
-			"commerce_discount_target_asset_category_ids", assetCategoryIds);
+			"commerce_discount_target_asset_category_ids",
+			TransformUtil.transformToLongArray(
+				_commerceDiscountRelLocalService.getCommerceDiscountRels(
+					commerceDiscount.getCommerceDiscountId(),
+					AssetCategory.class.getName()),
+				CommerceDiscountRel::getClassPK));
 	}
 
 	@Override
@@ -141,12 +132,8 @@ public class ApplyToCategoriesCommerceDiscountTargetImpl
 				assetCategories.addAll(assetCategory.getAncestors());
 			}
 
-			Stream<AssetCategory> stream = assetCategories.stream();
-
-			LongStream longStream = stream.mapToLong(
-				AssetCategory::getCategoryId);
-
-			return longStream.toArray();
+			return TransformUtil.transformToLongArray(
+				assetCategories, AssetCategory::getCategoryId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

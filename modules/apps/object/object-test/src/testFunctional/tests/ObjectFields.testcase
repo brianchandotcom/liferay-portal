@@ -2307,13 +2307,15 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectField.viewCountCharactersOnEntries(
-			fieldName = "customObjectFieldText",
-			viewCountCharacters = "0/280 Characters");
+		AssertElementPresent(
+			key_fieldName = "customObjectFieldText",
+			key_viewCountCharacters = "0/280 Characters",
+			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
 
-		ObjectField.viewCountCharactersOnEntries(
-			fieldName = "customObjectFieldLongText",
-			viewCountCharacters = "0/65000 Characters");
+		AssertElementPresent(
+			key_fieldName = "customObjectFieldLongText",
+			key_viewCountCharacters = "0/65000 Characters",
+			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
 	}
 
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"

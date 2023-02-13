@@ -135,13 +135,6 @@ definition {
 			value1 = ${newValue});
 	}
 
-	macro viewCountCharactersOnEntries {
-		AssertElementPresent(
-			key_fieldName = ${fieldName},
-			key_viewCountCharacters = ${viewCountCharacters},
-			locator1 = "ObjectField#VIEW_COUNT_CHARACTERS_ON_ENTRIES");
-	}
-
 	macro viewToogleOnSidePanelShowFilesInDM {
 		if (${isDisabled} == "Yes") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED");

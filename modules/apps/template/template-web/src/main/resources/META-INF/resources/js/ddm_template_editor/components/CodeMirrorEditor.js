@@ -294,6 +294,12 @@ CodeMirrorEditor.propTypes = {
 	inputChannel: PropTypes.shape({
 		onData: PropTypes.func.isRequired,
 	}),
-	mode: PropTypes.object,
+	mode: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.shape({
+			globalVars: PropTypes.bool.isRequired,
+			name: PropTypes.string.isRequired,
+		}),
+	]),
 	onChange: PropTypes.func.isRequired,
 };

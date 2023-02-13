@@ -195,7 +195,13 @@ export function Editor({autocompleteData, initialScript, mode}) {
 Editor.propTypes = {
 	autocompleteData: PropTypes.object.isRequired,
 	initialScript: PropTypes.string.isRequired,
-	mode: PropTypes.object,
+	mode: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.shape({
+			globalVars: PropTypes.bool.isRequired,
+			name: PropTypes.string.isRequired,
+		}),
+	]),
 };
 
 const exportScript = (script) => {

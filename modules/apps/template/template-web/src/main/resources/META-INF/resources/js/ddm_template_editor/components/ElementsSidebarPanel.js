@@ -89,6 +89,7 @@ export function ElementsSidebarPanel({className}) {
 						<ClayInput.GroupInsetItem after tag="span">
 							{searchValue ? (
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('clear')}
 									borderless
 									displayType="secondary"
 									monospaced={false}

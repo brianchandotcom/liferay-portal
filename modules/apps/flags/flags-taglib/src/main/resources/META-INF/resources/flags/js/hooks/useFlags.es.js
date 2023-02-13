@@ -46,6 +46,12 @@ const useFlags = ({
 		Object.keys(reasons)[0]
 	);
 
+	const clearFields = () => {
+		setOtherReason('');
+		setReporterEmailAddress('');
+		setSelectedReason(Object.keys(reasons)[0]);
+	};
+
 	const getReason = () => {
 		if (selectedReason === OTHER_REASON_VALUE) {
 			return otherReason || Liferay.Language.get('no-reason-specified');
@@ -77,11 +83,9 @@ const useFlags = ({
 
 		if (name === 'otherReason') {
 			setOtherReason(value);
-		}
-		else if (name === 'reporterEmailAddress') {
+		} else if (name === 'reporterEmailAddress') {
 			setReporterEmailAddress(value);
-		}
-		else if (name === 'selectedReason') {
+		} else if (name === 'selectedReason') {
 			setSelectedReason(value);
 		}
 	};
@@ -112,6 +116,7 @@ const useFlags = ({
 					setIsSending(false);
 					if (!error) {
 						setStatus(STATUS_SUCCESS);
+						clearFields();
 					}
 				}
 			})
@@ -137,6 +142,7 @@ const useFlags = ({
 		onClose,
 		reportDialogOpen,
 		selectedReason,
+		setStatus,
 		status,
 	};
 };

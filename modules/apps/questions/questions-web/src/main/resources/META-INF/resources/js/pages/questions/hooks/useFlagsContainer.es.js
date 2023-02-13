@@ -13,6 +13,7 @@
  */
 
 import {useFlags} from '@liferay/flags-taglib';
+import {useCallback, useState} from 'react';
 
 const useFlagsContainer = ({
 	btnProps = {
@@ -23,7 +24,9 @@ const useFlagsContainer = ({
 	context,
 	onlyIcon = true,
 	showIcon,
+	questionId,
 }) => {
+	const [reportedThreads, setReportedThreads] = useState({});
 	const {context: flagsContext, props: flagsProps} =
 		context?.flagsProperties || {};
 
@@ -57,9 +60,31 @@ const useFlagsContainer = ({
 		...props,
 	});
 
+	const handleClickShow = useCallback(() => {
+		if (flagsModal.status !== 'report' && !reportedThreads[questionId]) {
+			flagsModal.setStatus('report');
+		}
+
+		flagsModal.handleClickShow();
+	}, [flagsModal, questionId, reportedThreads]);
+
+	const handleSubmitReport = useCallback(
+		(event) => {
+			flagsModal.handleSubmitReport(event);
+
+			setReportedThreads((prevReportedThreads) => ({
+				...prevReportedThreads,
+				[questionId]: true,
+			}));
+		},
+		[flagsModal, questionId]
+	);
+
 	return {
 		flagsContext,
 		flagsModal: {...flagsModal, ...props},
+		handleClickShow,
+		handleSubmitReport,
 		isFlagEnabled,
 		props,
 	};

@@ -36,6 +36,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,8 +67,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -341,41 +340,21 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		document.addKeyword(
 			FIELD_USE_COUPON_CODE, commerceDiscount.isUseCouponCode());
 
-		List<CommerceDiscountAccountRel> commerceDiscountAccountRels =
-			_commerceDiscountAccountRelLocalService.
-				getCommerceDiscountAccountRels(
-					commerceDiscount.getCommerceDiscountId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-		Stream<CommerceDiscountAccountRel> commerceDiscountAccountRelsStream =
-			commerceDiscountAccountRels.stream();
-
-		LongStream commerceAccountIdLongStream =
-			commerceDiscountAccountRelsStream.mapToLong(
-				CommerceDiscountAccountRel::getCommerceAccountId);
-
-		long[] commerceAccountIds = commerceAccountIdLongStream.toArray();
-
-		document.addNumber("commerceAccountId", commerceAccountIds);
-
-		List<CommerceDiscountCommerceAccountGroupRel>
-			commerceDiscountCommerceAccountGroupRels =
-				_commerceDiscountCommerceAccountGroupRelLocalService.
-					getCommerceDiscountCommerceAccountGroupRels(
+		document.addNumber(
+			"commerceAccountId",
+			TransformUtil.transformToLongArray(
+				_commerceDiscountAccountRelLocalService.
+					getCommerceDiscountAccountRels(
 						commerceDiscount.getCommerceDiscountId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				CommerceDiscountAccountRel::getCommerceAccountId));
 
-		Stream<CommerceDiscountCommerceAccountGroupRel>
-			commerceDiscountCommerceAccountGroupRelsStream =
-				commerceDiscountCommerceAccountGroupRels.stream();
-
-		LongStream commerceAccountGroupIdLongStream =
-			commerceDiscountCommerceAccountGroupRelsStream.mapToLong(
-				CommerceDiscountCommerceAccountGroupRel::
-					getCommerceAccountGroupId);
-
-		long[] commerceAccountGroupIds =
-			commerceAccountGroupIdLongStream.toArray();
+		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
+			_commerceDiscountCommerceAccountGroupRelLocalService.
+				getCommerceDiscountCommerceAccountGroupRels(
+					commerceDiscount.getCommerceDiscountId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null),
+			CommerceDiscountCommerceAccountGroupRel::getCommerceAccountGroupId);
 
 		document.addNumber("commerceAccountGroupIds", commerceAccountGroupIds);
 		document.addNumber(
@@ -404,38 +383,16 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			groupIdList.add(commerceChannel.getGroupId());
 		}
 
-		Stream<Long> channelIdStream = channelIdList.stream();
-
-		long[] channelIds = channelIdStream.mapToLong(
-			l -> l
-		).toArray();
-
-		document.addNumber("commerceChannelId", channelIds);
-
-		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels =
-			_commerceDiscountOrderTypeRelLocalService.
-				getCommerceDiscountOrderTypeRels(
-					commerceDiscount.getCommerceDiscountId());
-
-		Stream<CommerceDiscountOrderTypeRel>
-			commerceDiscountOrderTypeRelsStream =
-				commerceDiscountOrderTypeRels.stream();
-
-		LongStream commerceOrderTypeIdLongStream =
-			commerceDiscountOrderTypeRelsStream.mapToLong(
-				CommerceDiscountOrderTypeRel::getCommerceOrderTypeId);
-
-		long[] commerceOrderTypeIds = commerceOrderTypeIdLongStream.toArray();
-
-		document.addNumber("commerceOrderTypeId", commerceOrderTypeIds);
-
-		Stream<Long> groupIdStream = groupIdList.stream();
-
-		long[] groupIds = groupIdStream.mapToLong(
-			l -> l
-		).toArray();
-
-		document.addNumber(FIELD_GROUP_IDS, groupIds);
+		document.addNumber(
+			"commerceChannelId", ArrayUtil.toLongArray(channelIdList));
+		document.addNumber(
+			"commerceOrderTypeId",
+			TransformUtil.transformToLongArray(
+				_commerceDiscountOrderTypeRelLocalService.
+					getCommerceDiscountOrderTypeRels(
+						commerceDiscount.getCommerceDiscountId()),
+				CommerceDiscountOrderTypeRel::getCommerceOrderTypeId));
+		document.addNumber(FIELD_GROUP_IDS, ArrayUtil.toLongArray(groupIdList));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

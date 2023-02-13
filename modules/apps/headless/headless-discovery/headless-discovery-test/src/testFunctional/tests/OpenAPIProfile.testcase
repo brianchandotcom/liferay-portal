@@ -15,12 +15,12 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	test CanLoadOpenAPIProfileWithoutErrors {
 		property portal.acceptance = "true";
 

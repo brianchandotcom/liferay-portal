@@ -1522,9 +1522,10 @@ definition {
 
 			ObjectAdmin.goToFieldsTab();
 
-			ObjectField.assertSource(
-				fieldLabel = "Create Date",
-				fieldSource = "System");
+			AssertElementPresent(
+				key_label = "Create Date",
+				key_source = "System",
+				locator1 = "ObjectField#SOURCE_FIELD");
 		}
 
 		task ("Add a new field and state that custom fields have the label Custom") {
@@ -1532,9 +1533,10 @@ definition {
 				fieldLabel = "Custom Field",
 				fieldType = "Text");
 
-			ObjectField.assertSource(
-				fieldLabel = "Custom Field",
-				fieldSource = "Custom");
+			AssertElementPresent(
+				key_label = "Custom Field",
+				key_source = "Custom",
+				locator1 = "ObjectField#SOURCE_FIELD");
 		}
 	}
 

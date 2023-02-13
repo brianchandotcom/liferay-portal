@@ -41,13 +41,6 @@ definition {
 			value1 = ${description});
 	}
 
-	macro assertSource {
-		AssertElementPresent(
-			key_label = ${fieldLabel},
-			key_source = ${fieldSource},
-			locator1 = "ObjectField#SOURCE_FIELD");
-	}
-
 	macro assertType {
 		AssertElementPresent(
 			locator1 = "ObjectField#TYPE_FIELD",

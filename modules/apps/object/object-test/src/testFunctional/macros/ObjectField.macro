@@ -28,12 +28,6 @@ definition {
 			locator1 = "ObjectField#HELP_TEXT");
 	}
 
-	macro assertName {
-		AssertTextEquals(
-			locator1 = "ObjectField#NAME_FIELD",
-			value1 = ${fieldName});
-	}
-
 	macro assertNameDisabled {
 		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 	}

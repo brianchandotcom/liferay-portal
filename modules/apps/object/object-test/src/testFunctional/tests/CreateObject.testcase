@@ -3616,7 +3616,9 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		ObjectField.assertName(fieldName = "customObjectFieldUpdate");
+		AssertTextEquals(
+			locator1 = "ObjectField#NAME_FIELD",
+			value1 = "customObjectFieldUpdate");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"

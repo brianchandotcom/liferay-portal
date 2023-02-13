@@ -1,52 +1,70 @@
 definition {
 
 	macro _curlMessageBoardMessage {
-		Variables.assertDefined(parameterList = "${headline}");
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardThreadId)) {
-			var api = "message-board-threads/${messageBoardThreadId}";
+			var api = "message-board-threads/${messageBoardThreadId}/message-board-messages";
+		}
+		else if (isSet(messageBoardMessageId)) {
+			var api = "message-board-messages/${messageBoardMessageId}";
 		}
 		else {
-			var api = "message-board-messages/${parentMessageBoardMessageId}";
+			var api = "message-board-messages/${parentMessageBoardMessageId}/message-board-messages";
 		}
 
 		var command = '''
 				-u test@liferay.com:test \
-				-H Content-Type: application/json \
+				-H Content-Type: application/json
+		''';
+
+		if (isSet(headline)) {
+			var body = '''
 				-d {
 					"headline": "${headline}"
 				}
-		''';
+			''';
 
-		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-messages", "\ ${command}", "");
+			var command = StringUtil.add(${command}, " \ ${body}", "");
+		}
 
-		return "${curl}";
+		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
+
+		return ${curl};
 	}
 
 	macro getIdOfCreatedChildMbMessageByMbMessageId {
-		Variables.assertDefined(parameterList = "${parentMessageBoardMessageId}");
+		Variables.assertDefined(parameterList = "${headline},${parentMessageBoardMessageId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
-			headline = "${headline}",
-			parentMessageBoardMessageId = "${parentMessageBoardMessageId}");
+			headline = ${headline},
+			parentMessageBoardMessageId = ${parentMessageBoardMessageId});
 
-		var mbMessageId = JSONCurlUtil.post("${curl}", "$.id");
+		var mbMessageId = JSONCurlUtil.post(${curl}, "$.id");
 
-		return "${mbMessageId}";
+		return ${mbMessageId};
 	}
 
 	macro getIdOfCreatedMbMessageByMbThreadId {
-		Variables.assertDefined(parameterList = "${messageBoardThreadId}");
+		Variables.assertDefined(parameterList = "${headline},${messageBoardThreadId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
-			headline = "${headline}",
-			messageBoardThreadId = "${messageBoardThreadId}");
+			headline = ${headline},
+			messageBoardThreadId = ${messageBoardThreadId});
 
-		var mbMessageId = JSONCurlUtil.post("${curl}", "$.id");
+		var mbMessageId = JSONCurlUtil.post(${curl}, "$.id");
 
-		return "${mbMessageId}";
+		return ${mbMessageId};
+	}
+
+	macro getMbMessageErcByMbMessageId {
+		Variables.assertDefined(parameterList = ${messageBoardMessageId});
+
+		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(messageBoardMessageId = ${messageBoardMessageId});
+
+		var mbMessageErc = JSONCurlUtil.get(${curl}, "$.externalReferenceCode");
+
+		return ${mbMessageErc};
 	}
 
 }

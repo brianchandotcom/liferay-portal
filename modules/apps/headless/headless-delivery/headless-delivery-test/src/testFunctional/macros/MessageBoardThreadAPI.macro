@@ -2,19 +2,28 @@ definition {
 
 	macro _curlMessageBoardThread {
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
 
 		if (isSet(headline)) {
-			var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/message-board-threads \
+			if (isSet(messageBoardSectionId)) {
+				var api = "message-board-sections/${messageBoardSectionId}";
+			}
+			else {
+				var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+					groupName = "Guest",
+					site = "true");
+
+				var api = "sites/${siteId}";
+			}
+
+			var command = '''
 					-u test@liferay.com:test \
 					-H Content-Type: application/json \
 					-d {
 						"headline": "${headline}"
 					}
 			''';
+
+			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-threads", "\ ${command}", "");
 		}
 		else {
 			var curl = '''
@@ -24,29 +33,39 @@ definition {
 			''';
 		}
 
-		return "${curl}";
+		return ${curl};
+	}
+
+	macro createMessageThreadInMessageBoardSection {
+		Variables.assertDefined(parameterList = "${headline},${messageBoardSectionId}");
+
+		var curl = MessageBoardThreadAPI._curlMessageBoardThread(
+			headline = ${headline},
+			messageBoardSectionId = ${messageBoardSectionId});
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
 	}
 
 	macro deleteMessageBoardThreadByThreadId {
-		Variables.assertDefined(parameterList = "${messageBoardThreadId}");
+		Variables.assertDefined(parameterList = ${messageBoardThreadId});
 
-		var curl = MessageBoardThreadAPI._curlMessageBoardThread(messageBoardThreadId = "${messageBoardThreadId}");
+		var curl = MessageBoardThreadAPI._curlMessageBoardThread(messageBoardThreadId = ${messageBoardThreadId});
 
-		JSONCurlUtil.delete("${curl}");
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro setUpGlobalMessageBoardThreadId {
-		Variables.assertDefined(parameterList = "${headline}");
+		Variables.assertDefined(parameterList = ${headline});
 
-		var curl = MessageBoardThreadAPI._curlMessageBoardThread(headline = "${headline}");
+		var curl = MessageBoardThreadAPI._curlMessageBoardThread(headline = ${headline});
 
-		var response = JSONCurlUtil.post("${curl}");
+		var messageBoardThreadId = JSONCurlUtil.post(${curl}, "$.['id']");
 
-		var messageBoardThreadId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
+		static var staticMbThreadId = ${messageBoardThreadId};
 
-		static var staticMbThreadId = "${messageBoardThreadId}";
-
-		return "${staticMbThreadId}";
+		return ${staticMbThreadId};
 	}
 
 }

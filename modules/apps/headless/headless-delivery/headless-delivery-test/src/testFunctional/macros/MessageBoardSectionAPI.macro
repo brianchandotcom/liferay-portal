@@ -1,0 +1,50 @@
+definition {
+
+	macro _curlMessageBoardSection {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(parentMessageBoardSectionId)) {
+			var api = "message-board-sections/${parentMessageBoardSectionId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var api = "sites/${siteId}";
+		}
+
+		var command = '''
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-d {
+				"title": "${title}"
+			}
+		''';
+
+		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-sections", "\ ${command}", "");
+
+		return ${curl};
+	}
+
+	macro getIdOfChildMessageBoardSection {
+		Variables.assertDefined(parameterList = "${title},${parentMessageBoardSectionId}");
+
+		var curl = MessageBoardSectionAPI._curlMessageBoardSection(title = ${title});
+
+		var mbSectionId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${mbSectionId};
+	}
+
+	macro getIdOfCreatedMessageBoardSection {
+		Variables.assertDefined(parameterList = ${title});
+
+		var curl = MessageBoardSectionAPI._curlMessageBoardSection(title = ${title});
+
+		var mbSectionId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${mbSectionId};
+	}
+
+}

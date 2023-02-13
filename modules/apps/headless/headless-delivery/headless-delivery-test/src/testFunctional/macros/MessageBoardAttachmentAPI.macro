@@ -20,61 +20,85 @@ definition {
 			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-attachments", "\ ${command}", "");
 		}
 		else {
-			var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/message-board-attachments/${messageBoardAttachmentId} \
-					-u test@liferay.com:test \
-					-H Content-Type: application/json
+			if (isSet(messageBoardAttachmentId)) {
+				var api = "message-board-attachments/${messageBoardAttachmentId}";
+			}
+			else {
+				var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+					groupName = "Guest",
+					site = "true");
+
+				var api = "sites/${siteId}/message-board-messages/by-external-reference-code/${messageBoardMessageErc}/message-board-attachments/by-external-reference-code/${messageBoardAttachmentErc}";
+			}
+
+			var command = '''
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
 			''';
+
+			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
 		}
 
-		return "${curl}";
+		return ${curl};
 	}
 
 	macro _getErcOfMessageBoardAttchment {
-		Variables.assertDefined(parameterList = "${messageBoardAttachmentId}");
+		Variables.assertDefined(parameterList = ${messageBoardAttachmentId});
 
-		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(messageBoardAttachmentId = "${messageBoardAttachmentId}");
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(messageBoardAttachmentId = ${messageBoardAttachmentId});
 
-		var mbAttachmentErc = JSONCurlUtil.get("${curl}", "$.externalReferenceCode");
+		var mbAttachmentErc = JSONCurlUtil.get(${curl}, "$.externalReferenceCode");
 
-		return "${mbAttachmentErc}";
+		return ${mbAttachmentErc};
 	}
 
 	macro assertCorrectErcInResponse {
-		Variables.assertDefined(parameterList = "${response}");
+		Variables.assertDefined(parameterList = ${response});
 
-		var mbAttachmentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+		var mbAttachmentId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
-		var expectedErc = MessageBoardAttachmentAPI._getErcOfMessageBoardAttchment(messageBoardAttachmentId = "${mbAttachmentId}");
-		var mbAttachmentErc = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+		var expectedErc = MessageBoardAttachmentAPI._getErcOfMessageBoardAttchment(messageBoardAttachmentId = ${mbAttachmentId});
+		var mbAttachmentErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 
 		TestUtils.assertEquals(
-			actual = "${mbAttachmentErc}",
-			expected = "${expectedErc}");
+			actual = ${mbAttachmentErc},
+			expected = ${expectedErc});
 	}
 
 	macro createMessageBoardMessageMessageBoardAttachment {
 		Variables.assertDefined(parameterList = "${messageBoardMessageId},${attachmentPath}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
-			attachmentPath = "${attachmentPath}",
-			messageBoardMessageId = "${messageBoardMessageId}");
+			attachmentPath = ${attachmentPath},
+			messageBoardMessageId = ${messageBoardMessageId});
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
 	}
 
 	macro createMessageBoardThreadMessageBoardAttachment {
 		Variables.assertDefined(parameterList = "${messageBoardThreadId},${attachmentPath}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
-			attachmentPath = "${attachmentPath}",
-			messageBoardThreadId = "${messageBoardThreadId}");
+			attachmentPath = ${attachmentPath},
+			messageBoardThreadId = ${messageBoardThreadId});
 
-		var response = JSONCurlUtil.post("${curl}");
+		var response = JSONCurlUtil.post(${curl});
 
-		return "${response}";
+		return ${response};
+	}
+
+	macro getMessageBoardAttachmentIdByMbMessageErcAndMbAttachmentErc {
+		Variables.assertDefined(parameterList = "${messageBoardMessageErc},${messageBoardAttachmentErc}");
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
+			messageBoardAttachmentErc = ${messageBoardAttachmentErc},
+			messageBoardMessageErc = ${messageBoardMessageErc});
+
+		var mbAttachmentId = JSONCurlUtil.get(${curl}, "$.id");
+
+		return ${mbAttachmentId};
 	}
 
 }

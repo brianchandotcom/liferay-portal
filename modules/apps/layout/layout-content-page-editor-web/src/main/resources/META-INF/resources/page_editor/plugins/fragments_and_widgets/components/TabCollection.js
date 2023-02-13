@@ -112,7 +112,7 @@ TabPortletItems.proptypes = {
 
 function TabCollectionCollapse({children, open, setOpen, title}) {
 	const handleOpen = (nextOpen) => {
-		setOpen(!nextOpen);
+		setOpen(nextOpen);
 	};
 
 	const {isActive, setElement} = useKeyboardNavigation({

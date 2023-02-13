@@ -31,8 +31,6 @@ import java.net.URL;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -80,9 +78,14 @@ public class SharepointConnectionTestUtil {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(httpURLConnection.getInputStream()))) {
 
-			Stream<String> payloadStream = bufferedReader.lines();
+			StringBundler sb = new StringBundler();
+			String line;
 
-			String payload = payloadStream.collect(Collectors.joining());
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+			}
+
+			String payload = sb.toString();
 
 			Matcher matcher = _pattern.matcher(payload);
 

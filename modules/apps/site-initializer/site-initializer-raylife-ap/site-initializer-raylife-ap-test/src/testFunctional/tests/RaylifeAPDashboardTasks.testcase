@@ -21,9 +21,9 @@ definition {
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
-			TeamExtranet.addSiteTemplateCP(
-				siteName = ${testSiteName},
-				siteTemplateName = "Raylife AP");
+ 			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
 	}
 

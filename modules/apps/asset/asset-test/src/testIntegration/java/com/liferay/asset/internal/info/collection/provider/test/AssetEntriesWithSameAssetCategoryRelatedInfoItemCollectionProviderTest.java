@@ -210,7 +210,7 @@ public class
 		collectionQuery.setConfiguration(
 			HashMapBuilder.put(
 				"assetCategoryRule",
-				new String[] {"anyAssetCategoryOfTheSameVocabulary"}
+				new String[] {"anyAssetCategoryOfTheSameAssetVocabulary"}
 			).build());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
@@ -343,7 +343,7 @@ public class
 		collectionQuery.setConfiguration(
 			HashMapBuilder.put(
 				"assetCategoryRule",
-				new String[] {"anyAssetCategoryOfTheSameVocabulary"}
+				new String[] {"anyAssetCategoryOfTheSameAssetVocabulary"}
 			).build());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);

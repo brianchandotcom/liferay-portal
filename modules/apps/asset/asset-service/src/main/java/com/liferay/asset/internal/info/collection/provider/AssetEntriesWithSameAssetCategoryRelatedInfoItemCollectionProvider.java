@@ -215,7 +215,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 							new ResourceBundleInfoLocalizedValue(
 								getClass(),
 								"any-category-of-the-same-vocabulary"),
-							"anyAssetCategoryOfTheSameVocabulary"),
+							"anyAssetCategoryOfTheSameAssetVocabulary"),
 						new SelectInfoFieldType.Option(
 							new ResourceBundleInfoLocalizedValue(
 								getClass(), "a-specific-category"),
@@ -361,7 +361,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		if ((assetCategoryRuleTuple.getSize() == 1) &&
 			Objects.equals(
 				assetCategoryRuleTuple.getObject(0),
-				"anyAssetCategoryOfTheSameVocabulary")) {
+				"anyAssetCategoryOfTheSameAssetVocabulary")) {
 
 			return _getAnyAssetCategoryOfTheSameAssetVocabularyBooleanFilter(
 				assetEntry, searchContext);
@@ -436,7 +436,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		}
 
 		if (Objects.equals(
-				assetCategoryRule, "anyAssetCategoryOfTheSameVocabulary")) {
+				assetCategoryRule,
+				"anyAssetCategoryOfTheSameAssetVocabulary")) {
 
 			return new Tuple(assetCategoryRule);
 		}

@@ -469,13 +469,6 @@ public class ObjectDefinitionLocalServiceImpl
 			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition2 = getObjectDefinition(
-			objectDefinitionId);
-
-		if (objectDefinition2.isAccountEntryRestricted()) {
-			return objectDefinition2;
-		}
-
 		ObjectDefinition objectDefinition1 = getObjectDefinition(
 			objectRelationship.getObjectDefinitionId1());
 
@@ -485,11 +478,18 @@ public class ObjectDefinitionLocalServiceImpl
 					"with account entry");
 		}
 
-		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+		ObjectDefinition objectDefinition2 = getObjectDefinition(
+			objectDefinitionId);
+
+		if (objectDefinition2.isAccountEntryRestricted()) {
+			return objectDefinition2;
+		}
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
 		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
-			objectField2.getObjectFieldId());
+			objectField.getObjectFieldId());
 
 		objectDefinition2.setAccountEntryRestricted(true);
 

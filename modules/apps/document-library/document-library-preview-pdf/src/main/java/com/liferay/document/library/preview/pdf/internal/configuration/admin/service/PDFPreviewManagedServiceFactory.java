@@ -15,6 +15,8 @@
 package com.liferay.document.library.preview.pdf.internal.configuration.admin.service;
 
 import com.liferay.document.library.preview.pdf.internal.configuration.PDFPreviewConfiguration;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -29,6 +33,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import org.osgi.framework.Constants;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
@@ -77,6 +83,33 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		return _systemPDFPreviewConfiguration.maxNumberOfPages();
 	}
 
+	public void updateCompanyPDFPreview(long companyId, long maxNumberOfPages)
+		throws Exception {
+
+		Dictionary<String, Object> properties = null;
+
+		Configuration configuration = _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				PDFPreviewConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				companyId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		properties.put("maxNumberOfPages", maxNumberOfPages);
+
+		configuration.update(properties);
+	}
+
 	@Override
 	public void updated(String pid, Dictionary<String, ?> dictionary)
 		throws ConfigurationException {
@@ -96,6 +129,48 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			_updateGroupConfiguration(groupId, pid, dictionary);
 		}
+	}
+
+	public void updateGroupPDFPreview(long groupId, long maxNumberOfPages)
+		throws Exception {
+
+		Dictionary<String, Object> properties = null;
+
+		Configuration configuration = _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				PDFPreviewConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		properties.put("maxNumberOfPages", maxNumberOfPages);
+
+		configuration.update(properties);
+	}
+
+	public void updateSystemPDFPreview(long maxNumberOfPages) throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			PDFPreviewConfiguration.class.getName(), StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
+		properties.put("maxNumberOfPages", maxNumberOfPages);
+
+		configuration.update(properties);
 	}
 
 	@Activate
@@ -142,6 +217,23 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		return supplier.get();
 	}
 
+	private Configuration _getScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				PDFPreviewConfiguration.class.getName() + ".scoped",
+				scope.getPropertyKey(), scopePK));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
+	}
+
 	private void _unmapPid(String pid) {
 		if (_companyIds.containsKey(pid)) {
 			long companyId = _companyIds.remove(pid);
@@ -179,6 +271,10 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	private final Map<Long, PDFPreviewConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
 	private final Map<Long, PDFPreviewConfiguration> _groupConfigurationBeans =
 		new ConcurrentHashMap<>();
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();

@@ -15,10 +15,13 @@
 package com.liferay.document.library.preview.pdf.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,6 +29,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
@@ -61,6 +65,52 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 			throw new PortalException(
 				"Invalid scope primary key 0 for " + scope + " scope");
 		}
+
+		try {
+			_updatePDFPreview(actionRequest, scope, scopePK);
+		}
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException) {
+
+			SessionErrors.add(
+				actionRequest, configurationModelListenerException.getClass());
+
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+		}
 	}
+
+	private void _updatePDFPreview(
+			ActionRequest actionRequest, String scope, long scopePK)
+		throws Exception {
+
+		long maxNumberOfPages = ParamUtil.getLong(
+			actionRequest, "maxNumberOfPages");
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			_pdfPreviewManagedServiceFactory.updateCompanyPDFPreview(
+				scopePK, maxNumberOfPages);
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			_pdfPreviewManagedServiceFactory.updateGroupPDFPreview(
+				scopePK, maxNumberOfPages);
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			_pdfPreviewManagedServiceFactory.updateSystemPDFPreview(
+				maxNumberOfPages);
+		}
+		else {
+			throw new PortalException("Unsupported scope: " + scope);
+		}
+	}
+
+	@Reference
+	private PDFPreviewManagedServiceFactory _pdfPreviewManagedServiceFactory;
 
 }

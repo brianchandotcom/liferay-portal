@@ -144,14 +144,6 @@ const renderPageContent = ({
 	);
 
 describe('ContentsSidebar', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-169923'] = false;
-	});
-
 	it('shows the content list', () => {
 		renderPageContent();
 
@@ -289,8 +281,12 @@ describe('ContentsSidebar', () => {
 	});
 
 	it('does not show the inline text belonging to a form without permissions', () => {
+		Liferay.FeatureFlags['LPS-169923'] = true;
+
 		renderPageContent({});
 
 		expect(screen.queryByText('A paragraph')).not.toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPS-169923'] = false;
 	});
 });

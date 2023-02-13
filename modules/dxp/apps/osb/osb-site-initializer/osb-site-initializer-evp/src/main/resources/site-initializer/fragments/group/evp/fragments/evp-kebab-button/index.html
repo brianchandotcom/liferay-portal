@@ -2,28 +2,34 @@
 [#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
 [#assign requestId = objectRequest.classPK! /]
 [#assign URL = (layoutURL?substring(0, layoutURL?lastIndexOf('/')))! /]
-[#assign approvedRoles =["Administrator", "Finance Manager"]/]
+[#assign approvedRoles =["Administrator", "Finance User"]/]
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign requestStatus = (restClient.get("/c/evprequests/" + requestId).requestStatus.key)! /]
 
 <div id="evp-kebab-button">
-[@liferay_ui["icon-menu"]
-direction="left-side"
-markupView="lexicon"
-showWhenSingleIcon=true
-]
-[@liferay_ui["icon"]
-message="Details"
-url=URL + "/l/" + requestId
-/]
+	[@liferay_ui["icon-menu"]
+		direction="left-side"
+		markupView="lexicon"
+		showWhenSingleIcon=true
+	]
 
-[#list userRoles as role]
-[#if approvedRoles?seqContains(role.name)]
+		[@liferay_ui["icon"]
+			message="Details"
+			url=URL + "/l/" + requestId
+		/]
 
-[@liferay_ui["icon"]
-message="Invoice"
-url=URL + "/payment-confirmation?id=" + requestId
-/]
+		[#list userRoles as role]
+			[#if approvedRoles?seqContains(role.name)]
 
-[#break] [/#if] [/#list]
-[/@]
+				[#if requestStatus != "closed"]
+					[@liferay_ui["icon"]
+						message="Invoice"
+						url=URL + "/payment-confirmation?id=" + requestId
+					/]
+				[/#if]
+
+				[#break]
+			[/#if]
+		[/#list]
+	[/@]
 </div>

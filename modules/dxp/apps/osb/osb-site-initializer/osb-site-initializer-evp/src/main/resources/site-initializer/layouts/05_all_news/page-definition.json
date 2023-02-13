@@ -168,7 +168,7 @@
 																},
 																{
 																	"fieldName": "siteKey",
-																	"fieldValue": "EVP"
+																	"fieldValue": "[$GROUP_KEY$]"
 																}
 															]
 														}

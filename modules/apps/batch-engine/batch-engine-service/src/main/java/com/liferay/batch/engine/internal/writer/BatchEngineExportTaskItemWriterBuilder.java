@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.auto.deploy.BatchEngineAutoDeployListener;
+import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -67,9 +67,16 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT) {
+			BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+				new BatchEngineUnitConfiguration();
+
+			batchEngineUnitConfiguration.setClassName(_itemClass.getName());
+			batchEngineUnitConfiguration.setVersion("v1.0");
+			batchEngineUnitConfiguration.setParameters(_parameters);
+
 			return new JSONTBatchEngineExportTaskItemWriterImpl(
-				fieldsMap.keySet(), _getBatchEngineImportConfiguration(),
-				_fieldNames, _outputStream);
+				fieldsMap.keySet(), batchEngineUnitConfiguration, _fieldNames,
+				_outputStream);
 		}
 
 		throw new IllegalArgumentException(

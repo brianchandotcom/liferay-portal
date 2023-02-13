@@ -146,9 +146,9 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
-		AssertElementPresent(
-			key_text = "${key_text}_1",
-			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "${key_text}_1");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
 

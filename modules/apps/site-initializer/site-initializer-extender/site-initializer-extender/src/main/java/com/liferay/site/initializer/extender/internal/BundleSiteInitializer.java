@@ -867,13 +867,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_replace(
 				json,
 				new String[] {
-					"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$GROUP_KEY$]",
-					"[$COMPANY_ID$]"
+					"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+					"[$GROUP_KEY$]"
 				},
 				new String[] {
+					String.valueOf(group.getCompanyId()),
 					group.getFriendlyURL(),
 					String.valueOf(serviceContext.getScopeGroupId()),
-					group.getGroupKey(), String.valueOf(group.getCompanyId())
+					group.getGroupKey()
 				}),
 			assetListEntryIdsStringUtilReplaceValues,
 			clientExtensionEntryIdsStringUtilReplaceValues,

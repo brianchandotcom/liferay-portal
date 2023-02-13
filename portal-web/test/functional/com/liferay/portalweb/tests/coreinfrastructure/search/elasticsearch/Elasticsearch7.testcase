@@ -824,6 +824,8 @@ definition {
 	@description = "This is a use case for LPS-161063."
 	@priority = 4
 	test WarnTracePresentWithDataInconsistency {
+		property test.name.skip.portal.instance = "Elasticsearch7#WarnTracePresentWithDataInconsistency";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document",
 			groupName = "Guest",

@@ -41,6 +41,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -79,7 +80,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -309,13 +309,11 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int end, int start) {
 
-		LongStream longStream = Arrays.stream(segmentsEntryIds);
+		List<String> typeSettings = new ArrayList<>();
 
-		List<String> typeSettings = longStream.mapToObj(
-			assetListEntry::getTypeSettings
-		).collect(
-			Collectors.toList()
-		);
+		for (long segmentsEntryId : segmentsEntryIds) {
+			typeSettings.add(assetListEntry.getTypeSettings(segmentsEntryId));
+		}
 
 		AssetEntryQuery assetEntryQuery = _createAssetEntryQuery(
 			assetListEntry, userId,
@@ -754,11 +752,8 @@ public class AssetListAssetEntryProviderImpl
 					assetListEntry.getUserId()),
 				LocaleUtil.getDefault());
 
-			Stream<ClassType> stream = classTypes.stream();
-
-			availableClassTypeIds = stream.mapToLong(
-				ClassType::getClassTypeId
-			).toArray();
+			availableClassTypeIds = TransformUtil.transformToLongArray(
+				classTypes, ClassType::getClassTypeId);
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -857,17 +852,18 @@ public class AssetListAssetEntryProviderImpl
 				keywords);
 		}
 
-		LongStream longStream = Arrays.stream(
-			_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
+		List<AssetEntryQuery> assetEntryQueries = new ArrayList<>();
+
+		for (long segmentsEntryId :
+				_getCombinedSegmentsEntryIds(
+					assetListEntry, segmentsEntryIds)) {
+
+			assetEntryQueries.add(
+				getAssetEntryQuery(assetListEntry, segmentsEntryId, userId));
+		}
 
 		return _dynamicSearch(
-			assetListEntry.getCompanyId(), assetCategoryIds,
-			longStream.mapToObj(
-				segmentsEntryId -> getAssetEntryQuery(
-					assetListEntry, segmentsEntryId, userId)
-			).collect(
-				Collectors.toList()
-			),
+			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQueries,
 			assetTagNames, keywords);
 	}
 
@@ -888,17 +884,18 @@ public class AssetListAssetEntryProviderImpl
 				keywords);
 		}
 
-		LongStream longStream = Arrays.stream(
-			_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds));
+		List<AssetEntryQuery> assetEntryQueries = new ArrayList<>();
+
+		for (long segmentsEntryId :
+				_getCombinedSegmentsEntryIds(
+					assetListEntry, segmentsEntryIds)) {
+
+			assetEntryQueries.add(
+				getAssetEntryQuery(assetListEntry, segmentsEntryId, userId));
+		}
 
 		return _dynamicSearchCount(
-			assetListEntry.getCompanyId(), assetCategoryIds,
-			longStream.mapToObj(
-				segmentsEntryId -> getAssetEntryQuery(
-					assetListEntry, segmentsEntryId, userId)
-			).collect(
-				Collectors.toList()
-			),
+			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQueries,
 			assetTagNames, keywords);
 	}
 

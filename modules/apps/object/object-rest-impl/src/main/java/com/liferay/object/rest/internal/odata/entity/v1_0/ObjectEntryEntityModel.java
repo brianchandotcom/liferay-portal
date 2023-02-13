@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.ws.rs.BadRequestException;
+
 /**
  * @author Javier de Arcos
  */
@@ -153,7 +155,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 				objectField.getName(), locale -> objectField.getName());
 		}
 
-		return null;
+		throw new BadRequestException(
+			"A property used in the filter criteria is not supported");
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(

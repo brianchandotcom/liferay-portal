@@ -71,7 +71,17 @@ const ManagementToolbarResultsBar: React.FC<ManagementToolbarResultsBarProps> = 
 							{`: ${
 								Array.isArray(entry.value)
 									? entry.value
-											.map(({label}) => label)
+											.map((entryValue) =>
+												String(
+													typeof entryValue ===
+														'object'
+														? entryValue.label
+														: entryValue
+												)
+											)
+											.sort((entryA, entryB) =>
+												entryA.localeCompare(entryB)
+											)
 											.join(', ')
 									: entry.value
 							}`}

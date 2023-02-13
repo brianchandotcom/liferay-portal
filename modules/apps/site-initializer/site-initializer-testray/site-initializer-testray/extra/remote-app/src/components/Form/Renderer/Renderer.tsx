@@ -211,7 +211,7 @@ const Renderer: React.FC<RendererProps> = ({
 				if (type === 'checkbox') {
 					const onCheckboxChange = (event: any) => {
 						const inputValue = event.target.value;
-						const formValue: unknown[] = form[name];
+						const formValue: unknown[] = form[name] ?? [];
 
 						onChange({
 							target: {

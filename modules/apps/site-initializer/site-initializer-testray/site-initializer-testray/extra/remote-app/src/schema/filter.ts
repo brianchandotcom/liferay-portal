@@ -93,7 +93,7 @@ const baseFilters: Filter = {
 		type: 'multiselect',
 	},
 	component: {
-		label: i18n.translate('Component'),
+		label: i18n.translate('component'),
 		name: 'componentId',
 		resource: ({projectId}) =>
 			`/components?fields=id,name&sort=name:asc&pageSize=200&filter=${SearchBuilder.eq(
@@ -112,7 +112,7 @@ const baseFilters: Filter = {
 	},
 	hasRequirements: {
 		disabled: true,
-		label: i18n.translate('hasRequirements'),
+		label: i18n.translate('has-requirements'),
 		name: 'caseToRequirementsCases',
 		options: ['true', 'false'],
 		type: 'select',

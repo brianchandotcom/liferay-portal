@@ -50,7 +50,10 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 	const [fieldOptions, setFieldOptions] = useState<FieldOptions>({});
 	const [filter, setFilter] = useState('');
-	const [form, setForm] = useState(listViewContext.filters.filter);
+	const [form, setForm] = useState(() => ({
+		...initialFilters,
+		...listViewContext.filters.filter,
+	}));
 	const formActions = useFormActions();
 
 	const onChange = formActions.form.onChange({form, setForm});

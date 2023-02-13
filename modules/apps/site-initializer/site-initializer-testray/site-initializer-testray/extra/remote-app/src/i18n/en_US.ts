@@ -182,6 +182,7 @@ export default {
 	'first-name': 'First Name',
 	'git-hash': 'Git Hash',
 	'github-compare-urls': 'GitHub Compare URLs',
+	'has-requirements': 'Has Requirements',
 	'hide': 'Hide',
 	'history': 'History',
 	'import-jira-issues': 'Import JIRA Issues',

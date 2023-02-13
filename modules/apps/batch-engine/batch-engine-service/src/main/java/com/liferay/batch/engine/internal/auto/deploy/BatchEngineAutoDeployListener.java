@@ -22,6 +22,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -62,8 +63,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  * @author Raymond Augé
  */
-@Component(service = AutoDeployListener.class)
-public class BatchEngineAutoDeployListener implements AutoDeployListener {
+@Component(service = {AutoDeployListener.class, BatchEngineUnitProcessor.class})
+public class BatchEngineAutoDeployListener
+	implements AutoDeployListener, BatchEngineUnitProcessor {
 
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
@@ -128,30 +130,37 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		return false;
 	}
 
-	private void _deploy(ZipFile zipFile) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info("Deploying batch engine file " + zipFile.getName());
-		}
+	@Override
+	public void processBatchEngineUnits(
+		Iterable<BatchEngineUnit> batchEngineUnits) {
 
-		for (BatchEngineUnit batchEngineUnit : _getBatchEngineUnits(zipFile)) {
+		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
 				_processBatchEngineUnit(batchEngineUnit);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-							"Successfully enqueued batch file " +
-									batchEngineUnit.getFileName());
+						"Successfully enqueued batch file " +
+							batchEngineUnit.getFileName());
 				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-							"Ignoring invalid batch file " +
-									batchEngineUnit.getFileName(),
-									exception);
+						"Ignoring invalid batch file " +
+							batchEngineUnit.getFileName(),
+						exception);
 				}
 			}
 		}
+	}
+
+	private void _deploy(ZipFile zipFile) throws Exception {
+		if (_log.isInfoEnabled()) {
+			_log.info("Deploying batch engine file " + zipFile.getName());
+		}
+
+		processBatchEngineUnits(_getBatchEngineUnits(zipFile));
 	}
 
 	private BatchEngineUnitConfiguration _getBatchEngineUnitConfiguration(

@@ -1,0 +1,70 @@
+definition {
+
+	macro configureSectionOnWidget {
+		Portlet.gotoPortletOptions(
+			portletName = "Knowledge Base Section",
+			portletOption = "Configuration");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION_DIALOG");
+
+		AddSelection(
+			locator1 = "KnowledgeBaseArticle#SECTION_WIDGET_SELECT",
+			value1 = ${sectionValue});
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro enableSectionInSystemSettings {
+		var baseURL = PropsUtil.get("portal.url");
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+
+		Type(
+			key_label = "Admin Knowledge Base Article Sections",
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = ${sectionValue});
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Button.clickUpdate();
+		}
+		else {
+			Button.clickSave();
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewPG {
+		AssertClick(
+			key_text = ${kbArticleTitle},
+			locator1 = "Link#ANY",
+			value1 = ${kbArticleTitle});
+
+		AssertVisible(
+			key_title = ${kbArticleTitle},
+			locator1 = "Header#H1_TITLE");
+
+		if (isSet(kbDescription)) {
+			if (${description} == "Disabled") {
+				AssertElementNotPresent(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE");
+
+				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
+			}
+			else {
+				AssertTextEquals(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE",
+					value1 = "Description");
+
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION",
+					value1 = ${kbDescription});
+			}
+		}
+	}
+
+}

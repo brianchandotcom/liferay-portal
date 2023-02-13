@@ -482,7 +482,12 @@ public class SalesforceObjectEntryManagerImpl
 				objectField.getExternalReferenceCode(),
 				Objects.equals(value, StringPool.BLANK) ? null : value);
 
-			if (Objects.equals(
+			String externalReferenceCode =
+				objectDefinition.getExternalReferenceCode();
+
+			if (Validator.isNotNull(externalReferenceCode) &&
+				externalReferenceCode.endsWith("__c") &&
+				Objects.equals(
 					objectField.getObjectFieldId(),
 					objectDefinition.getTitleObjectFieldId())) {
 

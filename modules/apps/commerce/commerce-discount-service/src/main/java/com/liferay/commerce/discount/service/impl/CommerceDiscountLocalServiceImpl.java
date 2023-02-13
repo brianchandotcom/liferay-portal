@@ -52,6 +52,7 @@ import com.liferay.commerce.product.model.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -84,6 +85,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -98,15 +100,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -1633,12 +1632,8 @@ public class CommerceDiscountLocalServiceImpl
 				assetCategories.addAll(assetCategory.getAncestors());
 			}
 
-			Stream<AssetCategory> stream = assetCategories.stream();
-
-			LongStream longStream = stream.mapToLong(
-				AssetCategory::getCategoryId);
-
-			return longStream.toArray();
+			return TransformUtil.transformToLongArray(
+				assetCategories, AssetCategory::getCategoryId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -1760,15 +1755,10 @@ public class CommerceDiscountLocalServiceImpl
 					commerceDiscountId.eq(
 						CommerceDiscountTable.INSTANCE.commerceDiscountId));
 
-			LongStream longStream = Arrays.stream(commerceAccountGroupIds);
-
 			predicate = predicate.and(
 				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
 					commerceAccountGroupId.in(
-						longStream.boxed(
-						).toArray(
-							Long[]::new
-						)));
+						ArrayUtil.toArray(commerceAccountGroupIds)));
 		}
 		else {
 			joinStep = joinStep.leftJoinOn(
@@ -1900,18 +1890,12 @@ public class CommerceDiscountLocalServiceImpl
 				assetCategoryIds = new long[] {0};
 			}
 
-			LongStream assetCategoryIdsLongStream = Arrays.stream(
-				assetCategoryIds);
-
 			predicate = predicate.or(
 				CommerceDiscountTable.INSTANCE.target.eq(
 					CommerceDiscountConstants.TARGET_CATEGORIES
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classPK.in(
-						assetCategoryIdsLongStream.boxed(
-						).toArray(
-							Long[]::new
-						))
+						ArrayUtil.toArray(assetCategoryIds))
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
 						_classNameLocalService.getClassNameId(
@@ -1928,18 +1912,12 @@ public class CommerceDiscountLocalServiceImpl
 				commercePricingClasses = new long[] {0};
 			}
 
-			LongStream commercePricingClassesLongStream = Arrays.stream(
-				commercePricingClasses);
-
 			predicate = predicate.or(
 				CommerceDiscountTable.INSTANCE.target.eq(
 					CommerceDiscountConstants.TARGET_PRODUCT_GROUPS
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classPK.in(
-						commercePricingClassesLongStream.boxed(
-						).toArray(
-							Long[]::new
-						))
+						ArrayUtil.toArray(commercePricingClasses))
 				).and(
 					CommerceDiscountRelTable.INSTANCE.classNameId.eq(
 						_classNameLocalService.getClassNameId(

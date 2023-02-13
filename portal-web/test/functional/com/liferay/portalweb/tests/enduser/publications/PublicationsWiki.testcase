@@ -77,6 +77,65 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "Can edit Wiki Pages Within Publications"
+	@priority = 3
+	test CanEditWikiPageWithinPublications {
+		task ("Create Wiki Node and Wiki Page with Attachment") {
+			JSONWiki.addWikiNode(
+				groupName = "Guest",
+				wikiNodeDescription = "Wiki Node Description",
+				wikiNodeName = "Wiki Node Test");
+
+			JSONWiki.addWikiPage(
+				groupName = "Guest",
+				wikiNodeName = "Wiki Node Test",
+				wikiPageContent = "Wiki Page Content",
+				wikiPageName = "Wiki Page Test");
+
+			JSONWiki.addAttachmentToWikiPage(
+				fileName = "Document_1.txt",
+				groupName = "Guest",
+				mimeType = "text/txt",
+				wikiNodeName = "Wiki Node Test",
+				wikiPageName = "Wiki Page Test");
+		}
+
+		JSONPublications.addPublication(publicationName = "Test Publication");
+
+		JSONPublications.selectPublication(publicationName = "Test Publication");
+
+		task ("Edit Wiki Node and Wiki Page") {
+			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+			WikiNode.editCP(
+				wikiNodeDescription = "Wiki Node Description",
+				wikiNodeDescriptionEdit = "Wiki Node Description Edit",
+				wikiNodeName = "Wiki Node Test",
+				wikiNodeNameEdit = "WIKI NODE");
+
+			WikiPage.editPageCP(
+				groupName = "Guest",
+				siteURLKey = "guest",
+				wikiNodeName = "WIKI NODE",
+				wikiPageContentEdit = "WIKI PAGE",
+				wikiPageTitle = "Wiki Page Test");
+		}
+
+		task ("Assert that Wiki Node and Wiki Page are edited") {
+			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+			WikiNode.viewCP(
+				numberOfWikiPages = 2,
+				wikiNodeName = "WIKI NODE");
+
+			WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Test");
+
+			WikiPage.viewCP(
+				wikiPageContent = "WIKI PAGE",
+				wikiPageTitle = "Wiki Page Test");
+		}
+	}
+
 	@description = "This is a use case for LPS-173707. Multiple 'Your request repeated successfully' messages appear when switching between publications on a page with many Asset Publishers"
 	@priority = 3
 	test DoesNotDisplaySuccessMessageWhenSwitchingToProduction {

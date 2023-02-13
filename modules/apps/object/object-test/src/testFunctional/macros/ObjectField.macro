@@ -28,10 +28,6 @@ definition {
 			locator1 = "ObjectField#HELP_TEXT");
 	}
 
-	macro assertMandatory {
-		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
-	}
-
 	macro assertName {
 		AssertTextEquals(
 			locator1 = "ObjectField#NAME_FIELD",

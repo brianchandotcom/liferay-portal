@@ -555,7 +555,7 @@ definition {
 
 			ObjectField.assertType(fieldType = "Text");
 
-			ObjectField.assertMandatory();
+			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 
 			Refresh();
 		}

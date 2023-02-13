@@ -191,6 +191,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>CUSTOM_FIELD_VALUE_ONE</td>
+		<td>//div[contains(@class,'dnd-tbody')]/div[1]/div[1]/span</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CUSTOM_FIELD_VALUE_TWO</td>
+		<td>//div[contains(@class,'dnd-tbody')]/div[2]/div[1]/span</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>CHANGE_POSITION_DEFAULT_SORT_SEARCH_RESULT</td>
 		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//p[contains(@class,'list-group-title') and contains(text(),'${key_columnName1}')]</td>
 		<td></td>

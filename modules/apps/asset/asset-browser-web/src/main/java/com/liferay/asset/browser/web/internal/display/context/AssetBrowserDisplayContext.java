@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,6 +62,7 @@ public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
 		AssetEntryLocalService assetEntryLocalService, AssetHelper assetHelper,
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
 		DepotEntryService depotEntryService,
 		HttpServletRequest httpServletRequest, Portal portal,
 		PortletURL portletURL, RenderRequest renderRequest,
@@ -69,12 +70,16 @@ public class AssetBrowserDisplayContext {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetHelper = assetHelper;
+		_assetEntryItemSelectorCriterion = assetEntryItemSelectorCriterion;
 		_depotEntryService = depotEntryService;
 		_httpServletRequest = httpServletRequest;
 		_portal = portal;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public SearchContainer<AssetEntry> getAssetEntrySearchContainer()
@@ -146,7 +151,8 @@ public class AssetBrowserDisplayContext {
 		Hits hits = _assetEntryLocalService.search(
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
 			themeDisplay.getUserId(), _getClassNameIds(),
-			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
+			getSubtypeSelectionId(), _getKeywords(),
+			_assetEntryItemSelectorCriterion.isShowNonindexable(),
 			_getStatuses(), assetEntrySearchContainer.getStart(),
 			assetEntrySearchContainer.getEnd(), sort);
 
@@ -188,17 +194,13 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
+		if (_assetEntryItemSelectorCriterion.getGroupId() ==
+				_themeDisplay.getRefererGroupId()) {
+
+			return _themeDisplay.getScopeGroupId();
 		}
 
-		_groupId = ParamUtil.getLong(_renderRequest, "groupId");
-
-		if (_groupId == 0) {
-			_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
-		}
-
-		return _groupId;
+		return _assetEntryItemSelectorCriterion.getGroupId();
 	}
 
 	public long getRefererAssetEntryId() {
@@ -213,22 +215,18 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public long[] getSelectedGroupIds() {
-		long[] selectedGroupIds = StringUtil.split(
-			ParamUtil.getString(_httpServletRequest, "selectedGroupIds"), 0L);
+		long[] selectedGroupIds =
+			_assetEntryItemSelectorCriterion.getSelectedGroupIds();
 
 		if (selectedGroupIds.length > 0) {
 			return selectedGroupIds;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
 			return _portal.getSharedContentSiteGroupIds(
-				themeDisplay.getCompanyId(),
+				_themeDisplay.getCompanyId(),
 				ParamUtil.getLong(_httpServletRequest, "selectedGroupId"),
-				themeDisplay.getUserId());
+				_themeDisplay.getUserId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -240,36 +238,15 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public long getSubtypeSelectionId() {
-		if (_subtypeSelectionId != null) {
-			return _subtypeSelectionId;
-		}
-
-		_subtypeSelectionId = ParamUtil.getLong(
-			_httpServletRequest, "subtypeSelectionId", -1);
-
-		return _subtypeSelectionId;
+		return _assetEntryItemSelectorCriterion.getSubtypeSelectionId();
 	}
 
 	public String getTypeSelection() {
-		if (_typeSelection != null) {
-			return _typeSelection;
-		}
-
-		_typeSelection = ParamUtil.getString(
-			_httpServletRequest, "typeSelection");
-
-		return _typeSelection;
+		return _assetEntryItemSelectorCriterion.getTypeSelection();
 	}
 
 	public boolean isMultipleSelection() {
-		if (_multipleSelection != null) {
-			return _multipleSelection;
-		}
-
-		_multipleSelection = ParamUtil.getBoolean(
-			_httpServletRequest, "multipleSelection");
-
-		return _multipleSelection;
+		return !_assetEntryItemSelectorCriterion.isSingleSelect();
 	}
 
 	public boolean isSearchEverywhere() {
@@ -295,7 +272,9 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public boolean isShowAssetEntryStatus() {
-		if (_isShowNonindexable() || _isShowScheduled()) {
+		if (_assetEntryItemSelectorCriterion.isShowNonindexable() ||
+			_assetEntryItemSelectorCriterion.isShowScheduled()) {
+
 			return true;
 		}
 
@@ -408,7 +387,7 @@ public class AssetBrowserDisplayContext {
 	private int[] _getStatuses() {
 		int[] statuses = {WorkflowConstants.STATUS_APPROVED};
 
-		if (_isShowScheduled()) {
+		if (_assetEntryItemSelectorCriterion.isShowScheduled()) {
 			statuses = new int[] {
 				WorkflowConstants.STATUS_APPROVED,
 				WorkflowConstants.STATUS_SCHEDULED
@@ -432,31 +411,11 @@ public class AssetBrowserDisplayContext {
 		return _searchWithDatabase;
 	}
 
-	private boolean _isShowNonindexable() {
-		if (_showNonindexable != null) {
-			return _showNonindexable;
-		}
-
-		_showNonindexable = ParamUtil.getBoolean(
-			_httpServletRequest, "showNonindexable");
-
-		return _showNonindexable;
-	}
-
-	private boolean _isShowScheduled() {
-		if (_showScheduled != null) {
-			return _showScheduled;
-		}
-
-		_showScheduled = ParamUtil.getBoolean(
-			_httpServletRequest, "showScheduled");
-
-		return _showScheduled;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetBrowserDisplayContext.class);
 
+	private final AssetEntryItemSelectorCriterion
+		_assetEntryItemSelectorCriterion;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private SearchContainer<AssetEntry> _assetEntrySearchContainer;
 	private final AssetHelper _assetHelper;
@@ -465,10 +424,8 @@ public class AssetBrowserDisplayContext {
 	private final DepotEntryService _depotEntryService;
 	private String _displayStyle;
 	private long[] _filterGroupIds;
-	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private Boolean _multipleSelection;
 	private String _orderByCol;
 	private String _orderByType;
 	private final Portal _portal;
@@ -479,9 +436,6 @@ public class AssetBrowserDisplayContext {
 	private Boolean _searchEverywhere;
 	private Boolean _searchWithDatabase;
 	private Boolean _showAddButton;
-	private Boolean _showNonindexable;
-	private Boolean _showScheduled;
-	private Long _subtypeSelectionId;
-	private String _typeSelection;
+	private final ThemeDisplay _themeDisplay;
 
 }

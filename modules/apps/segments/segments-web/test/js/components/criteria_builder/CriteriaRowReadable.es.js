@@ -110,99 +110,49 @@ const doubleProperty = {
 };
 
 const eventCriterion = {
+	assetId: '545188693724480037',
+	day: {
+		operator: 'gt',
+		value: '2023-02-07',
+	},
 	operatorName: 'gt',
 	operatorNot: true,
 	propertyName: 'downloadedDocuments',
-	propertyType: 'count',
-
-	query: {
-		conjunctionName: 'and',
-		groupId: 'group_2',
-		items: [
-			{
-				operatorName: 'eq',
-				propertyName: 'eventKey',
-				value: 'documentId',
-			},
-
-			{
-				operatorName: 'eq',
-				propertyName: 'day',
-				value: '2024-01-26T23:00:00.000Z',
-			},
-		],
-	},
 	value: 1,
 };
 
 const eventCriterionBetween = {
+	assetId: '545188693724480037',
+	day: {
+		operatorName: 'between',
+		value: {
+			end: '2024-01-26T23:00:00.000Z',
+			start: '2023-01-26T23:00:00.000Z',
+		},
+	},
 	operatorName: 'gt',
 	operatorNot: true,
 	propertyName: 'downloadedDocuments',
-	propertyType: 'count',
-
-	query: {
-		conjunctionName: 'and',
-		groupId: 'group_2',
-		items: [
-			{
-				operatorName: 'eq',
-				propertyName: 'eventKey',
-				value: 'documentId',
-			},
-
-			{
-				operatorName: 'between',
-				propertyName: 'day',
-				value: {
-					end: '2024-01-26T23:00:00.000Z',
-					start: '2023-01-26T23:00:00.000Z',
-				},
-			},
-		],
-	},
 	value: 1,
 };
 
 const eventCriterionEver = {
+	assetId: '545188693724480037',
 	operatorName: 'gt',
 	operatorNot: true,
 	propertyName: 'downloadedDocuments',
-	propertyType: 'count',
-
-	query: {
-		conjunctionName: 'and',
-		groupId: 'group_2',
-		operatorName: 'eq',
-		propertyName: 'eventKey',
-		value: 'documentId',
-	},
 	value: 1,
 };
 
 const eventCriterionSince = {
+	assetId: '545188693724480037',
+	day: {
+		operatorName: 'gt',
+		value: 'last28Days',
+	},
 	operatorName: 'gt',
 	operatorNot: true,
 	propertyName: 'downloadedDocuments',
-	propertyType: 'count',
-
-	query: {
-		conjunctionName: 'and',
-		groupId: 'group_2',
-		items: [
-			{
-				operatorName: 'eq',
-				propertyName: 'eventKey',
-				value: 'documentId',
-			},
-
-			{
-				operatorName: 'gt',
-				propertyName: 'day',
-				value: 'last28Days',
-			},
-		],
-	},
 	value: 1,
 };
 
@@ -342,9 +292,7 @@ describe('CriteriaRowReadable', () => {
 		expect(getByText('between')).toBeInTheDocument();
 		expect(
 			getByText(
-				dateToInternationalHuman(
-					eventCriterionBetween.query.items[1].value.start
-				),
+				dateToInternationalHuman(eventCriterionBetween.day.value.start),
 				{
 					exact: false,
 				}
@@ -352,9 +300,7 @@ describe('CriteriaRowReadable', () => {
 		).toBeInTheDocument();
 		expect(
 			getByText(
-				dateToInternationalHuman(
-					eventCriterionBetween.query.items[1].value.end
-				),
+				dateToInternationalHuman(eventCriterionBetween.day.value.end),
 				{
 					exact: false,
 				}

@@ -65,7 +65,7 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u62
+	${BLADE_PATH} init --liferay-version dxp-7.4-u63
 
 	echo -en "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
@@ -83,7 +83,7 @@ function refresh_sample_default_workspace {
 
 	mv gradle.properties.tmp gradle.properties
 
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.12"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "4.1.13"/' settings.gradle
 
 	touch modules/.touch
 	touch themes/.touch
@@ -98,13 +98,13 @@ function refresh_sample_minimal_workspace {
 	# Sample custom element 2 client extension
 	#
 
-	rm -fr sample-minimal-workspace/client-extensions/sample-custom-element-2
+	rm -fr sample-minimal-workspace/client-extensions/sample-custom-element2
 
-	../tools/create_remote_app.sh sample-custom-element-2 react
+	../tools/create_remote_app.sh sample-custom-element2 react
 
-	mkdir -p sample-custom-element-2/src/common/components
+	mkdir -p sample-custom-element2/src/common/components
 
-	cat <<EOF > sample-custom-element-2/src/common/components/DadJoke.js
+	cat <<EOF > sample-custom-element2/src/common/components/DadJoke.js
 import React from 'react';
 
 class DadJoke extends React.Component {
@@ -144,9 +144,9 @@ class DadJoke extends React.Component {
 export default DadJoke;
 EOF
 
-	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" sample-custom-element-2/package.json
+	sed -i "s/react-scripts test/react-scripts test --passWithNoTests --watchAll=false/" sample-custom-element2/package.json
 
-	mv sample-custom-element-2 sample-minimal-workspace/client-extensions
+	mv sample-custom-element2 sample-minimal-workspace/client-extensions
 
 	#
 	# Sample default workspace

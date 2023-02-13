@@ -37,7 +37,7 @@ class WebComponent extends HTMLElement {
 		super();
 
 		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'sample-oauth-application-user-agent'
+			'easy-oauth-application-user-agent'
 		);
 	}
 
@@ -68,7 +68,7 @@ class WebComponent extends HTMLElement {
 	}
 }
 
-const ELEMENT_ID = 'sample-custom-element-2';
+const ELEMENT_ID = 'sample-custom-element2';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, WebComponent);

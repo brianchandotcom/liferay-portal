@@ -2,7 +2,7 @@ assemble:
     - from: assets
       include: "**/*"
       into: static
-sample-custom-element-1:
+sample-custom-element1:
     cssURLs:
         - style.css
     friendlyURLMapping: vanilla-counter

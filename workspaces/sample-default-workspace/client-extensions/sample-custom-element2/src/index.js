@@ -68,7 +68,7 @@ class WebComponent extends HTMLElement {
 	}
 }
 
-const ELEMENT_ID = 'sample-custom-element-2';
+const ELEMENT_ID = 'sample-custom-element2';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, WebComponent);

@@ -17,6 +17,8 @@ package com.liferay.portal.search.internal.suggestions;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -81,10 +83,20 @@ public class SuggestionsRetrieverImpl implements SuggestionsRetriever {
 			return null;
 		}
 
-		return suggestionsContributor.getSuggestionsContributorResults(
-			liferayPortletRequest, liferayPortletResponse, searchContext,
-			suggestionsContributorConfiguration);
+		try {
+			return suggestionsContributor.getSuggestionsContributorResults(
+				liferayPortletRequest, liferayPortletResponse, searchContext,
+				suggestionsContributorConfiguration);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SuggestionsRetrieverImpl.class);
 
 	private ServiceTrackerMap<String, SuggestionsContributor>
 		_suggestionsContributorServiceTrackerMap;

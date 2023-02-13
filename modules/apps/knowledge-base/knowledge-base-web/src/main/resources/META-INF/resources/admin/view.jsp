@@ -27,6 +27,8 @@ boolean kbFolderView = parentResourceClassNameId == kbFolderClassNameId;
 
 KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, renderResponse, portletConfig);
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
+
+String displayStyle = kbAdminManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
 <c:choose>
@@ -132,6 +134,9 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					<%
 					KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse);
 					%>
+
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 
 					<liferay-ui:search-container
 						id="kbObjects"
@@ -276,6 +281,12 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 							resultRowSplitter="<%= kbFolderView ? new KBResultRowSplitter() : null %>"
 						/>
 					</liferay-ui:search-container>
+
+						</c:when>
+						<c:otherwise>
+							<h1> TODO TABLE VIEW </h1>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<liferay-frontend:empty-result-message

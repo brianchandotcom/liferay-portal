@@ -265,6 +265,23 @@ public class KBAdminManagementToolbarDisplayContext {
 		return creationMenu;
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = "descriptive";
+		}
+
+		_displayStyle = displayStyle;
+
+		return _displayStyle;
+	}
+
 	public List<DropdownItem> getEmptyStateActionDropdownItems() {
 		long kbFolderClassNameId = PortalUtil.getClassNameId(
 			KBFolderConstants.getClassName());
@@ -394,7 +411,7 @@ public class KBAdminManagementToolbarDisplayContext {
 			"/admin/view.jsp"
 		).buildPortletURL();
 
-		return new ViewTypeItemList(portletURL, _getDisplayStyle()) {
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addListViewTypeItem();
 				addTableViewTypeItem();
@@ -526,23 +543,6 @@ public class KBAdminManagementToolbarDisplayContext {
 		).setKeywords(
 			_getKeywords()
 		).buildPortletURL();
-	}
-
-	private String _getDisplayStyle() {
-		if (_displayStyle != null) {
-			return _displayStyle;
-		}
-
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = "descriptive";
-		}
-
-		_displayStyle = displayStyle;
-
-		return _displayStyle;
 	}
 
 	private String _getKeywords() {

@@ -41,6 +41,45 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
+	macro addNewAggregationFilterViaUI {
+		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
+
+		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		Click(
+			key_picklistOption = ${filterBy},
+			locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DROPDOWN_OPTION");
+
+		Click(
+			key_filterLabel = "Filter Type",
+			locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+		Click(
+			key_fieldType = ${filterType},
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		if (${filterType} == "Range") {
+			var dateIndex = 1;
+
+			for (var dateValue : list ${dateValueList}) {
+				Type(
+					key_dateIndex = ${dateIndex},
+					locator1 = "ObjectCustomViews#FIELD_VIEW_FILTER_DATE_INPUT",
+					value1 = ${dateValue});
+
+				var dateIndex = ${dateIndex} + 1;
+			}
+		}
+		else {
+			Type(
+				key_text = "Value",
+				locator1 = "TextInput#ANY",
+				value1 = ${filterValue});
+		}
+
+		ObjectCustomViews.clickSaveOnModal();
+	}
+
 	macro addNewDefaultSort {
 		Click(locator1 = "ObjectCustomViews#ADD_NEW_DEFAULT_SORT");
 	}

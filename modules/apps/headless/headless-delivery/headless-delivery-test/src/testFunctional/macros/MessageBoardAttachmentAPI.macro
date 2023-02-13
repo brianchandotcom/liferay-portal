@@ -89,16 +89,28 @@ definition {
 		return ${response};
 	}
 
-	macro getMessageBoardAttachmentIdByMbMessageErcAndMbAttachmentErc {
+	macro deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc {
 		Variables.assertDefined(parameterList = "${messageBoardMessageErc},${messageBoardAttachmentErc}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
 			messageBoardAttachmentErc = ${messageBoardAttachmentErc},
 			messageBoardMessageErc = ${messageBoardMessageErc});
 
-		var mbAttachmentId = JSONCurlUtil.get(${curl}, "$.id");
+		var response = JSONCurlUtil.delete(${curl});
 
-		return ${mbAttachmentId};
+		return ${response};
+	}
+
+	macro getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc {
+		Variables.assertDefined(parameterList = "${messageBoardMessageErc},${messageBoardAttachmentErc}");
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
+			messageBoardAttachmentErc = ${messageBoardAttachmentErc},
+			messageBoardMessageErc = ${messageBoardMessageErc});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 }

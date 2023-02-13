@@ -11,13 +11,13 @@ definition {
 		MessageBoardThreadAPI.setUpGlobalMessageBoardThreadId(headline = "This is the mb thread");
 	}
 
-	//tearDown {
-	//	var testPortalInstance = PropsUtil.get("test.portal.instance");
-	//	MessageBoardThreadAPI.deleteMessageBoardThreadByThreadId(messageBoardThreadId = ${staticMbThreadId});
-	//	if (${testPortalInstance} == "true") {
-	//		PortalInstances.tearDownCPNoSelenium();
-	//}
-	//}
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		MessageBoardThreadAPI.deleteMessageBoardThreadByThreadId(messageBoardThreadId = ${staticMbThreadId});
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+	}
+	}
 
 	@disable-webdriver = "true"
 	@priority = 4
@@ -30,7 +30,7 @@ definition {
 				messageBoardThreadId = ${staticMbThreadId});
 		}
 
-		task ("And Given with postMessageBoardMessageMessageBoardMessage and parentMessageBoardMessageId to create a child message board message") {
+		task ("Given with postMessageBoardMessageMessageBoardMessage and parentMessageBoardMessageId to create a child message board message") {
 			var childMbMessageId = MessageBoardMessageAPI.getIdOfCreatedChildMbMessageByMbMessageId(
 				headline = "This is the child mb message",
 				parentMessageBoardMessageId = ${mbMessageId});
@@ -159,17 +159,76 @@ definition {
 			var mbMessageErc = MessageBoardMessageAPI.getMbMessageErcByMbMessageId(messageBoardMessageId = ${mbMessageId});
 			var mbAttachmentErc = JSONUtil.getWithJSONPath(${responseToParse}, "$.externalReferenceCode");
 
-			var mbAttachmentId = MessageBoardAttachmentAPI.getMessageBoardAttachmentIdByMbMessageErcAndMbAttachmentErc(
+			var response = MessageBoardAttachmentAPI.getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
 				messageBoardAttachmentErc = ${mbAttachmentErc},
 				messageBoardMessageErc = ${mbMessageErc});
 		}
 
 		task ("Then I can see the correct details of message board message attachment") {
 			var expectId = JSONUtil.getWithJSONPath(${responseToParse}, "$.id");
+			var mbAttachmentId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
 			TestUtils.assertEquals(
 				actual = ${mbAttachmentId},
 				expected = ${expectId});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanReturnMessageBoardNotExistsWithDeleteMessageBoardAttachmentByNonexistentMessageBoardMessageErc {
+		task ("When with DELETE request, siteId, message board message's and message board attachment's external reference codes to delete the message board attachment") {
+			var response = MessageBoardAttachmentAPI.deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
+				messageBoardAttachmentErc = "nonexistent-attachment-erc",
+				messageBoardMessageErc = "nonexistent-attachment-erc");
+		}
+
+		task ("Then it will show user that there is no message board message exists") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No MBMessage exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanReturnMessageBoardNotExistsWithGetMessageBoardAttachmentByNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When with GET request, siteId, nonexistent message board message's and message board attachment's external reference codes to retrieve the message board attachment") {
+			var response = MessageBoardAttachmentAPI.getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
+				messageBoardAttachmentErc = "nonexistent-attachment-erc",
+				messageBoardMessageErc = "nonexistent-message-erc");
+		}
+
+		task ("Then it will show user that there is no message board message exists") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No MBMessage exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanReturnNoFileExistsWithGetMessageBoardAttachmentByNonexistentMessageBoardMessageAttachmentErc {
+		task ("Given with postMessageBoardThreadMessageBoardMessage and messageBoardThreadId to create a message board message") {
+			var mbMessageId = MessageBoardMessageAPI.getIdOfCreatedMbMessageByMbThreadId(
+				headline = "This is the mb message",
+				messageBoardThreadId = ${staticMbThreadId});
+		}
+
+		task ("When with GET request, siteId, message board message's erc and nonexistent message board attachment's erc to retrieve the message board attachment") {
+			var mbMessageErc = MessageBoardMessageAPI.getMbMessageErcByMbMessageId(messageBoardMessageId = ${mbMessageId});
+
+			var response = MessageBoardAttachmentAPI.getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
+				messageBoardAttachmentErc = "nonexistent-attachment-erc",
+				messageBoardMessageErc = ${mbMessageErc});
+		}
+
+		task ("Then it will show user that there is no file exists") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No DLFileEntry exists with the key");
 		}
 	}
 

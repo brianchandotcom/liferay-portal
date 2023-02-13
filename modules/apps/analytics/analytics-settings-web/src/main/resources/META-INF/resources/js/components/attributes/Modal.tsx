@@ -49,6 +49,7 @@ const columns: TColumn[] = [
 		label: Liferay.Language.get('attribute'),
 	},
 	{
+		expanded: true,
 		id: EColumn.Type,
 		label: Liferay.Language.get('data-type'),
 	},

@@ -99,16 +99,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 			return null;
 		}
 
-		if (objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-			objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-			return null;
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			return new CollectionEntityField(
 				new StringEntityField(
@@ -283,7 +276,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	private enum UnsupportedBusinessTypes {
 
-		BUSINESS_TYPE_ATTACHMENT(ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
+		BUSINESS_TYPE_AGGREGATION(
+			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION),
+		BUSINESS_TYPE_ATTACHMENT(ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT),
+		BUSINESS_TYPE_FORMULA(ObjectFieldConstants.BUSINESS_TYPE_FORMULA);
 
 		public String getValue() {
 			return _value;

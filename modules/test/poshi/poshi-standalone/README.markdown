@@ -6,21 +6,35 @@ This repository contains the minimal configuration to begin writing and running 
 
  1. Java JDK 8
 
- 1. [Gradle](https://gradle.org/install/) or [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) 6.6.1 or higher.
-
 ## Setup
 
-Poshi Standalone should be run using Liferay's Gradlew wrapper, which can be easily set up if Gradle or another Gradle wrapper is already installed.
-
-To set up Liferay's Gradle wrapper file in the project directory, run this command in a terminal/command line window:
-```
-gradle wrapper --gradle-distribution-url https://github.com/liferay/liferay-binaries-cache-2020/raw/master/gradle-6.6.1.LIFERAY-PATCHED-1-bin.zip
-```
-
-To create the necessary files to use Poshi Standalone, run the following command from the same directory used to generate the gradle wrapper files:
+Poshi Standalone runs using a custom Gradle Wrapper made by Liferay. To create the necessary configuration files to use Poshi Standalone, run the following command in a command line window (Linux, macOS, Git/Bash for Windows) from a new directory (or your project directory):
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-standalone/setup.sh)"
 ```
+
+For Windows Command shell and PowerShell:
+```
+curl -fsSL -o setup.bat https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-standalone/setup.bat && setup.bat && del setup.bat
+```
+
+The directory will now contain the following files:
+```
+├── gradle
+|   └── wrapper
+|       ├──  gradle-wrapper.jar
+|       └──  gradle-wrapper.properties
+├── build.gradle
+├── gradlew
+├── gradlew.bat
+├── poshi.properties
+├── poshi-ext.properties
+└── settings.gradle
+```
+
+Each `gradle` file is necessary in order to use the `gradlew` executable and typically will not need further modification. The `gradlew` (`gradlew.bat`) executable is a script that invokes a predefined version of Gradle. The first time you run the `gradlew` command, the custom Gradle binary files will be downloaded to `~/.gradle/wrapper/dists` (`%HOMEPATH%\.gradle\wrapper\dists` for Windows). Note the custom binary files will only be downloaded once per machine, and additional projects can also reference these binary files. More information about the Gradle Wrapper is available [here](https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+
+The `*.properties` files are explained further in the next section.
 
 ## Poshi Configuration
 

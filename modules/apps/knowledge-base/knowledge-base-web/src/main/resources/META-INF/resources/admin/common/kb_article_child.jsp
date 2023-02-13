@@ -30,6 +30,8 @@ if (portletTitleBasedNavigation) {
 List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(scopeGroupId, kbArticle.getResourcePrimKey(), status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
+
+ViewKBArticleDisplayContext viewKBArticleDisplayContext = new ViewKBArticleDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
@@ -66,7 +68,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					<span class="text-truncate-inline">
 						<span class="text-truncate">
 							<c:choose>
-								<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
+								<c:when test="<%= viewKBArticleDisplayContext.isKBArticleDescriptionEnabled() && Validator.isNotNull(childrenKBArticle.getDescription()) %>">
 									<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
 								</c:when>
 								<c:otherwise>

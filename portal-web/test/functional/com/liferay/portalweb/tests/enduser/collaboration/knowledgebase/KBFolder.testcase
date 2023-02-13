@@ -100,6 +100,41 @@ definition {
 		Button.viewNotPresent(button = "New");
 	}
 
+	@description = "This test checks that all articles in a folder can be deleted via Toolbar."
+	@priority = 3
+	test CanDeleteAllArticlesViaToolbar {
+		property custom.properties = "feature.flag.LPS-156421=true${line.separator}feature.flag.LPS-166643=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content 1",
+			kbArticleTitle = "Knowledge Base Article Title 1");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content 2",
+			kbArticleTitle = "Knowledge Base Article Title 2");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.selectFolderThroughPageTreePanel(kbFolderName = "KB Folder");
+
+		KBArticle.selectAllCP();
+
+		KBArticle.deleteCP();
+
+		KBArticle.viewDefaultCP(featureFlag = "true");
+	}
+
 	@priority = 4
 	@refactordone
 	test CanDeleteFolder {

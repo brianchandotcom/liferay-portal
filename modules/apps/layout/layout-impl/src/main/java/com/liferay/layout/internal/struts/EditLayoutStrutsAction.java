@@ -18,14 +18,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,10 +45,6 @@ public class EditLayoutStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
@@ -61,7 +56,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 			jsonObject.put(
 				"message",
 				_getLayoutTypeExceptionMessage(
-					themeDisplay, layoutTypeException));
+					httpServletRequest, layoutTypeException));
 
 			long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
@@ -95,10 +90,12 @@ public class EditLayoutStrutsAction implements StrutsAction {
 	}
 
 	private String _getLayoutTypeExceptionMessage(
-		ThemeDisplay themeDisplay, LayoutTypeException layoutTypeException) {
+		HttpServletRequest httpServletRequest,
+		LayoutTypeException layoutTypeException) {
 
 		if (layoutTypeException.getType() == LayoutTypeException.FIRST_LAYOUT) {
-			return themeDisplay.translate(
+			return _language.format(
+				httpServletRequest,
 				"you-cannot-move-this-page-because-the-resulting-order-would-" +
 					"place-a-page-of-type-x-as-the-first-page",
 				"layout.types." + layoutTypeException.getLayoutType());
@@ -107,7 +104,8 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		if (layoutTypeException.getType() ==
 				LayoutTypeException.NOT_PARENTABLE) {
 
-			return themeDisplay.translate(
+			return _language.get(
+				httpServletRequest,
 				"a-page-cannot-become-a-child-of-a-page-that-is-not-" +
 					"parentable");
 		}
@@ -128,6 +126,9 @@ public class EditLayoutStrutsAction implements StrutsAction {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

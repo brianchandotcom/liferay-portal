@@ -14,6 +14,8 @@
 
 package com.liferay.batch.engine.internal.auto.deploy;
 
+import com.liferay.batch.engine.unit.BatchEngineUnit;
+import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -28,21 +30,22 @@ import java.util.zip.ZipFile;
 /**
  * @author Igor Beslic
  */
-public class AdvancedBatchEngineZipUnitImpl<T>
-	implements BatchEngineZipUnit<T> {
+public class AdvancedBatchEngineZipUnitImpl<T> implements BatchEngineUnit {
 
 	public AdvancedBatchEngineZipUnitImpl(ZipFile zipFile, ZipEntry zipEntry) {
 		_zipFile = zipFile;
 		_zipEntry = zipEntry;
 	}
 
-	@Override
-	public T getBatchEngineConfiguration(Class<T> clazz) throws IOException {
-		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
-			AdvancedJSONReader<T> advancedJSONReader = new AdvancedJSONReader<>(
-				inputStream);
+	public BatchEngineUnitConfiguration getBatchEngineUnitConfiguration()
+		throws IOException {
 
-			return advancedJSONReader.getObject("configuration", clazz);
+		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
+			AdvancedJSONReader<BatchEngineUnitConfiguration>
+				advancedJSONReader = new AdvancedJSONReader<>(inputStream);
+
+			return advancedJSONReader.getObject(
+				"configuration", BatchEngineUnitConfiguration.class);
 		}
 	}
 
@@ -74,7 +77,7 @@ public class AdvancedBatchEngineZipUnitImpl<T>
 	}
 
 	@Override
-	public String getZipFileName() {
+	public String getFileName() {
 		return _zipFile.getName();
 	}
 

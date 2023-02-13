@@ -20,12 +20,14 @@ import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
@@ -42,8 +44,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,8 +90,9 @@ public class GoogleCloudTranslator implements Translator {
 
 		Translate translate = _getTranslate(translatorPacket.getCompanyId());
 
-		Set<String> supportedLanguageCodes = _getSupportedLanguageCodes(
-			translate.listSupportedLanguages());
+		Set<String> supportedLanguageCodes = SetUtil.fromCollection(
+			TransformUtil.transform(
+				translate.listSupportedLanguages(), Language::getCode));
 
 		if (!supportedLanguageCodes.contains(sourceLanguageCode) ||
 			!supportedLanguageCodes.contains(targetLanguageCode)) {
@@ -146,18 +147,6 @@ public class GoogleCloudTranslator implements Translator {
 		List<String> list = StringUtil.split(languageId, CharPool.UNDERLINE);
 
 		return list.get(0);
-	}
-
-	private Set<String> _getSupportedLanguageCodes(
-		List<Language> supportedLanguages) {
-
-		Stream<Language> stream = supportedLanguages.stream();
-
-		return stream.map(
-			Language::getCode
-		).collect(
-			Collectors.toSet()
-		);
 	}
 
 	private Translate _getTranslate(long companyId)

@@ -20,18 +20,15 @@ import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.function.ToLongFunction;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,21 +58,16 @@ public class AddedAllCommerceDiscountRuleTypeImpl
 			return false;
 		}
 
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
-
-		Stream<CommerceOrderItem> stream = commerceOrderItems.stream();
-
-		LongStream longStream = stream.mapToLong(_getOrderItemToLongFunction());
-
-		long[] orderItemDefinitionIds = longStream.toArray();
-
 		long[] cpDefinitionIds = StringUtil.split(
 			commerceDiscountRule.getSettingsProperty(
 				commerceDiscountRule.getType()),
 			0L);
 
-		return ArrayUtil.containsAll(orderItemDefinitionIds, cpDefinitionIds);
+		return ArrayUtil.containsAll(
+			TransformUtil.transformToLongArray(
+				commerceOrder.getCommerceOrderItems(),
+				CommerceOrderItem::getCPDefinitionId),
+			cpDefinitionIds);
 	}
 
 	@Override
@@ -89,17 +81,6 @@ public class AddedAllCommerceDiscountRuleTypeImpl
 			"content.Language", locale, getClass());
 
 		return _language.get(resourceBundle, "has-all-of-these-products");
-	}
-
-	private ToLongFunction<CommerceOrderItem> _getOrderItemToLongFunction() {
-		return new ToLongFunction<CommerceOrderItem>() {
-
-			@Override
-			public long applyAsLong(CommerceOrderItem commerceOrderItem) {
-				return commerceOrderItem.getCPDefinitionId();
-			}
-
-		};
 	}
 
 	@Reference

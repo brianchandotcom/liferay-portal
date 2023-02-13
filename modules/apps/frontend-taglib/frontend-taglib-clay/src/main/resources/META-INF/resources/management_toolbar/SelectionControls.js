@@ -13,6 +13,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
@@ -201,96 +202,96 @@ const SelectionControls = ({
 				/>
 			</ManagementToolbar.Item>
 
-			{active && (
-				<>
-					<ManagementToolbar.Item>
-						<span className="navbar-text">
-							{selectedItems === itemsTotal
-								? Liferay.Language.get('all-selected')
-								: `${sub(
-										Liferay.Language.get('x-of-x'),
-										selectedItems,
-										itemsTotal
-								  )} ${Liferay.Language.get('selected')}`}
-						</span>
-					</ManagementToolbar.Item>
+			<>
+				<ManagementToolbar.Item
+					className={classNames({
+						'sr-only': !active,
+					})}
+				>
+					<span aria-live="polite" className="navbar-text">
+						{selectedItems === itemsTotal
+							? Liferay.Language.get('all-selected')
+							: `${sub(
+									Liferay.Language.get('x-of-x'),
+									selectedItems,
+									itemsTotal
+							  )} ${Liferay.Language.get('selected')}`}
+					</span>
+				</ManagementToolbar.Item>
 
-					{supportsBulkActions && (
-						<>
+				{active && supportsBulkActions && (
+					<>
+						<ManagementToolbar.Item className="nav-item-shrink">
+							<LinkOrButton
+								aria-label={
+									showDesignImprovements
+										? Liferay.Language.get('clear')
+										: undefined
+								}
+								className="nav-link"
+								displayType="unstyled"
+								href={clearSelectionURL}
+								onClick={(event) => {
+									searchContainerRef.current?.select?.toggleAllRows(
+										false,
+										true
+									);
+
+									setActive(false);
+
+									setCheckboxStatus('unchecked');
+
+									onClearButtonClick(event);
+								}}
+								symbol={
+									showDesignImprovements
+										? 'times-circle'
+										: undefined
+								}
+								title={
+									showDesignImprovements
+										? Liferay.Language.get('clear')
+										: undefined
+								}
+							>
+								<span className="text-truncate-inline">
+									<span className="text-truncate">
+										{Liferay.Language.get('clear')}
+									</span>
+								</span>
+							</LinkOrButton>
+						</ManagementToolbar.Item>
+
+						{selectAllButtonVisible && (
 							<ManagementToolbar.Item className="nav-item-shrink">
 								<LinkOrButton
-									aria-label={
-										showDesignImprovements
-											? Liferay.Language.get('clear')
-											: undefined
-									}
 									className="nav-link"
 									displayType="unstyled"
-									href={clearSelectionURL}
+									href={selectAllURL}
 									onClick={(event) => {
 										searchContainerRef.current?.select?.toggleAllRows(
-											false,
+											true,
 											true
 										);
 
-										setActive(false);
+										setSelectAllButtonVisible(false);
 
-										setCheckboxStatus('unchecked');
+										setSelectedItems(itemsTotal);
 
-										onClearButtonClick(event);
+										onSelectAllButtonClick(event);
 									}}
-									symbol={
-										showDesignImprovements
-											? 'times-circle'
-											: undefined
-									}
-									title={
-										showDesignImprovements
-											? Liferay.Language.get('clear')
-											: undefined
-									}
 								>
 									<span className="text-truncate-inline">
 										<span className="text-truncate">
-											{Liferay.Language.get('clear')}
+											{Liferay.Language.get('select-all')}
 										</span>
 									</span>
 								</LinkOrButton>
 							</ManagementToolbar.Item>
-
-							{selectAllButtonVisible && (
-								<ManagementToolbar.Item className="nav-item-shrink">
-									<LinkOrButton
-										className="nav-link"
-										displayType="unstyled"
-										href={selectAllURL}
-										onClick={(event) => {
-											searchContainerRef.current?.select?.toggleAllRows(
-												true,
-												true
-											);
-
-											setSelectAllButtonVisible(false);
-
-											setSelectedItems(itemsTotal);
-
-											onSelectAllButtonClick(event);
-										}}
-									>
-										<span className="text-truncate-inline">
-											<span className="text-truncate">
-												{Liferay.Language.get(
-													'select-all'
-												)}
-											</span>
-										</span>
-									</LinkOrButton>
-								</ManagementToolbar.Item>
-							)}
-						</>
-					)}
-				</>
-			)}
+						)}
+					</>
+				)}
+			</>
 		</>
 	);
 };

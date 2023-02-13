@@ -78,15 +78,14 @@ const tabs = [
 const Question = ({
 	display = {
 		actions: true,
+		activity: false,
 		addAnswer: true,
 		breadcrumb: true,
 		flags: true,
-		kebab: false,
 		rating: true,
 		showAnswer: true,
 		showSignature: false,
 		styled: false,
-		tabs: true,
 	},
 	history,
 	questionId,
@@ -129,6 +128,7 @@ const Question = ({
 	});
 
 	const {kebabOptions, setIsSubscribe} = useActiviyQuestionKebabOptions({
+		activityPage: display.activity,
 		context,
 		onClickReport: () => flagsContainerProps.flagsModal.handleClickShow(),
 		question,

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cancelDebounce, debounce} from 'frontend-js-web';
+import {cancelDebounce, debounce, openToast} from 'frontend-js-web';
 import {useRef} from 'react';
 
 import {client} from './client.es';
@@ -278,5 +278,5 @@ export function processGraphQLError(error) {
 		_error.message = Liferay.Language.get('an-unexpected-error-occurred');
 	}
 
-	Liferay.Util.openToast(_error);
+	openToast(_error);
 }

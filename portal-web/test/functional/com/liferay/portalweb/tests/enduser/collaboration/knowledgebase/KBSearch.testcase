@@ -160,7 +160,7 @@ definition {
 	}
 
 	@description = "This test ensures that no results are shown after the user clears the search query by clicking the X in the search field."
-	@priority = "4"
+	@priority = 4
 	test SidebarReturnsToTreeViewAfterClearingSearchResults {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

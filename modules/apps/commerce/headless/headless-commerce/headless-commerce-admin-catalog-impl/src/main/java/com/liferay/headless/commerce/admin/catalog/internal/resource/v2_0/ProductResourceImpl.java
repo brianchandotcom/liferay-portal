@@ -124,15 +124,12 @@ import com.liferay.upload.UniqueFileNameProvider;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -658,13 +655,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		List<AssetTag> assetEntryAssetTags = _assetTagService.getTags(
 			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
 
-		Stream<AssetTag> stream = assetEntryAssetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).toArray(
-			String[]::new
-		);
+		return transformToArray(
+			assetEntryAssetTags, AssetTag::getName, String.class);
 	}
 
 	private CPDefinition _getCPDefinition(
@@ -969,14 +961,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceChannelRelService.deleteCommerceChannelRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			Stream<ProductChannel> stream = Arrays.stream(productChannels);
+			List<Long> channelIds = new ArrayList<>();
 
-			List<Long> channelIds = stream.map(
-				productChannel -> {
-					if (productChannel.getExternalReferenceCode() == null) {
-						return productChannel.getChannelId();
-					}
-
+			for (ProductChannel productChannel : productChannels) {
+				if (productChannel.getExternalReferenceCode() == null) {
+					channelIds.add(productChannel.getChannelId());
+				}
+				else {
 					CommerceChannel commerceChannel = null;
 
 					try {
@@ -992,15 +983,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 						}
 					}
 
-					if (commerceChannel == null) {
-						return null;
+					if (commerceChannel != null) {
+						channelIds.add(commerceChannel.getCommerceChannelId());
 					}
-
-					return commerceChannel.getCommerceChannelId();
 				}
-			).collect(
-				Collectors.toList()
-			);
+			}
 
 			for (Long commerceChannelId : channelIds) {
 				if (commerceChannelId == null) {
@@ -1029,17 +1016,16 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_commerceAccountGroupRelService.deleteCommerceAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-			Stream<ProductAccountGroup> productAccountGroupStream =
-				Arrays.stream(productAccountGroups);
+			List<Long> accountGroupIds = new ArrayList<>();
 
-			List<Long> accountGroupIds = productAccountGroupStream.map(
-				productAccountGroup -> {
-					if (productAccountGroup.getExternalReferenceCode() ==
-							null) {
+			for (ProductAccountGroup productAccountGroup :
+					productAccountGroups) {
 
-						return productAccountGroup.getAccountGroupId();
-					}
-
+				if (productAccountGroup.getExternalReferenceCode() == null) {
+					accountGroupIds.add(
+						productAccountGroup.getAccountGroupId());
+				}
+				else {
 					CommerceAccountGroup commerceAccountGroup = null;
 
 					try {
@@ -1056,15 +1042,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 						}
 					}
 
-					if (commerceAccountGroup == null) {
-						return null;
+					if (commerceAccountGroup != null) {
+						accountGroupIds.add(
+							commerceAccountGroup.getCommerceAccountGroupId());
 					}
-
-					return commerceAccountGroup.getCommerceAccountGroupId();
 				}
-			).collect(
-				Collectors.toList()
-			);
+			}
 
 			for (Long accountGroupId : accountGroupIds) {
 				if (accountGroupId == null) {

@@ -45,7 +45,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -187,13 +186,8 @@ public class ProductDTOConverter
 		List<AssetTag> assetEntryAssetTags = _assetTagService.getTags(
 			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId());
 
-		Stream<AssetTag> stream = assetEntryAssetTags.stream();
-
-		return stream.map(
-			AssetTag::getName
-		).toArray(
-			String[]::new
-		);
+		return TransformUtil.transformToArray(
+			assetEntryAssetTags, AssetTag::getName, String.class);
 	}
 
 	private Category _toCategory(AssetCategory assetCategory) {

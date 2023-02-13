@@ -47,10 +47,6 @@ definition {
 			value1 = ${fieldType});
 	}
 
-	macro assertTypeDisabled {
-		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
-	}
-
 	macro assertValueOnLimitCharacters {
 		AssertElementPresent(
 			key_maxValue = ${maxValue},

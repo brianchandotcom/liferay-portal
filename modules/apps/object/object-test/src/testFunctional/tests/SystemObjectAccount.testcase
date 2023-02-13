@@ -435,7 +435,7 @@ definition {
 		for (var label : list "Name,Description,Type") {
 			ObjectAdmin.goToFieldsDetails(label = ${label});
 
-			ObjectField.assertTypeDisabled();
+			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 
 			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 

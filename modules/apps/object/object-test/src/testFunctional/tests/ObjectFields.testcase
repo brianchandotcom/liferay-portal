@@ -865,7 +865,7 @@ definition {
 
 			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
-			ObjectField.assertTypeDisabled();
+			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 
 			Click(locator1 = "ObjectField#LABEL_RELATIONSHIP");
 
@@ -1208,7 +1208,7 @@ definition {
 		task ("Then the Field Name and Type inputs are disabled and cannot be edited") {
 			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
-			ObjectField.assertTypeDisabled();
+			AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 		}
 	}
 
@@ -1733,7 +1733,7 @@ definition {
 
 				AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
-				ObjectField.assertTypeDisabled();
+				AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 
 				ObjectField.save();
 

@@ -89,8 +89,8 @@ public class VerifyLayout extends VerifyProcess {
 				_log.error(
 					StringBundler.concat(
 						"Detected reserved friendly URL \"", friendlyURL,
-						"\" Update the friendly URL for the layout with ",
-						" plid ", plid, "."));
+						"\" Update the friendly URL for the layout with  plid ",
+						plid, "."));
 			}
 		}
 	}

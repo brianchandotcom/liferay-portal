@@ -2828,7 +2828,7 @@ definition {
 
 			AssertTextEquals(
 				key_fieldFieldLabel = ${webContentSelectFromListFieldLabel},
-				locator1 = "DDMField#SELECT_FROM_LIST",
+				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER",
 				value1 = ${webContentSelectFromList});
 		}
 

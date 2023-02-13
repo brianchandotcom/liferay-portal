@@ -53,14 +53,14 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
-			updateParentLayoutId(httpServletRequest);
+			_updateParentLayoutId(httpServletRequest);
 
 			jsonObject.put("status", HttpServletResponse.SC_OK);
 		}
 		catch (LayoutTypeException layoutTypeException) {
 			jsonObject.put(
 				"message",
-				getLayoutTypeExceptionMessage(
+				_getLayoutTypeExceptionMessage(
 					themeDisplay, layoutTypeException));
 
 			long plid = ParamUtil.getLong(httpServletRequest, "plid");
@@ -94,7 +94,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	protected String getLayoutTypeExceptionMessage(
+	private String _getLayoutTypeExceptionMessage(
 		ThemeDisplay themeDisplay, LayoutTypeException layoutTypeException) {
 
 		if (layoutTypeException.getType() == LayoutTypeException.FIRST_LAYOUT) {
@@ -115,7 +115,7 @@ public class EditLayoutStrutsAction implements StrutsAction {
 		return StringPool.BLANK;
 	}
 
-	protected void updateParentLayoutId(HttpServletRequest httpServletRequest)
+	private void _updateParentLayoutId(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		long plid = ParamUtil.getLong(httpServletRequest, "plid");

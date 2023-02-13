@@ -157,7 +157,7 @@
 	</tr>
 	<tr>
 		<td>SORT_OPTION</td>
-		<td>//button[(@class='dropdown-item') and contains(.,'${key_sortOption}')]</td>
+		<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_sortOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -60,7 +60,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		Column<?, ?> objectDefinition1PKObjectFieldColumn =
 			getPKObjectFieldColumn(
 				objectDefinition1DynamicObjectDefinitionTable,
-				objectDefinition1);
+				objectDefinition1.getPKObjectFieldDBColumnName());
 
 		ObjectDefinition objectDefinition2 = _getObjectDefinition2(
 			objectRelationship);
@@ -116,7 +116,7 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 		Column<?, ?> objectDefinition2PKObjectFieldColumn =
 			getPKObjectFieldColumn(
 				objectDefinition2DynamicObjectDefinitionTable,
-				objectDefinition2);
+				objectDefinition2.getPKObjectFieldDBColumnName());
 		DynamicObjectDefinitionTable objectDefinition1ExtensionTable =
 			getExtensionDynamicObjectDefinitionTable(objectDefinition1);
 

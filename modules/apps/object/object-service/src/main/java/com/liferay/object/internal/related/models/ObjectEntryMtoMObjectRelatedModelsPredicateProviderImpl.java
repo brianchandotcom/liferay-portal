@@ -56,7 +56,7 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 		Column<?, ?> dynamicObjectDefinitionTableColumn =
 			getPKObjectFieldColumn(
 				getDynamicObjectDefinitionTable(objectDefinition),
-				objectDefinition);
+				objectDefinition.getPKObjectFieldDBColumnName());
 
 		ObjectDefinition relatedObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
@@ -83,7 +83,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 				(Column<DynamicObjectRelationshipMappingTable, ?>)
 					getPKObjectFieldColumn(
 						dynamicObjectRelationshipMappingTable,
-						relatedObjectDefinition);
+						pkObjectFieldDBColumnNames.get(
+							"pkObjectFieldDBColumnName2"));
 
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable =
 			getDynamicObjectDefinitionTable(relatedObjectDefinition);
@@ -93,7 +94,9 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 		return dynamicObjectDefinitionTableColumn.in(
 			DSLQueryFactoryUtil.select(
 				getPKObjectFieldColumn(
-					dynamicObjectRelationshipMappingTable, objectDefinition)
+					dynamicObjectRelationshipMappingTable,
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName1"))
 			).from(
 				dynamicObjectRelationshipMappingTable
 			).where(
@@ -101,7 +104,8 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 					DSLQueryFactoryUtil.select(
 						getPKObjectFieldColumn(
 							relatedDynamicObjectDefinitionTable,
-							relatedObjectDefinition)
+							relatedObjectDefinition.
+								getPKObjectFieldDBColumnName())
 					).from(
 						relatedDynamicObjectDefinitionTable
 					).innerJoinON(

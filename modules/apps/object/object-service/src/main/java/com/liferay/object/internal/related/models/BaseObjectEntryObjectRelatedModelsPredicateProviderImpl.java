@@ -64,10 +64,9 @@ public abstract class BaseObjectEntryObjectRelatedModelsPredicateProviderImpl
 	}
 
 	protected <T extends BaseTable<T>> Column<?, ?> getPKObjectFieldColumn(
-		BaseTable<T> baseTable, ObjectDefinition objectDefinition) {
+		BaseTable<T> baseTable, String pkObjectFieldDBColumnName) {
 
-		return baseTable.getColumn(
-			objectDefinition.getPKObjectFieldDBColumnName());
+		return baseTable.getColumn(pkObjectFieldDBColumnName);
 	}
 
 	protected final ObjectDefinition objectDefinition;

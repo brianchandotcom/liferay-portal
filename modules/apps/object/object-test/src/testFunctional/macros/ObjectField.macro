@@ -41,12 +41,6 @@ definition {
 			value1 = ${description});
 	}
 
-	macro assertSearchableLanguage {
-		AssertTextEquals(
-			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = ${selected});
-	}
-
 	macro assertSource {
 		AssertElementPresent(
 			key_label = ${fieldLabel},

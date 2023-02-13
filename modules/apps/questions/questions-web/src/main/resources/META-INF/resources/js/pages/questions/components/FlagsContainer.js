@@ -32,6 +32,7 @@ const FlagsContainer = ({
 		content,
 		context,
 		onlyIcon,
+		questionId: 'default-question',
 		showIcon,
 	});
 

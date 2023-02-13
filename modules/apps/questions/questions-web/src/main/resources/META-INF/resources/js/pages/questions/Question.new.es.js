@@ -125,12 +125,13 @@ const Question = ({
 	const flagsContainerProps = useFlagsContainer({
 		content: question,
 		context,
+		questionId: question.id,
 		showIcon: false,
 	});
 
 	const {kebabOptions, setIsSubscribe} = useActiviyQuestionKebabOptions({
 		context,
-		onClickReport: () => flagsContainerProps.flagsModal.handleClickShow(),
+		onClickReport: () => flagsContainerProps.handleClickShow(),
 		question,
 		questionId,
 		sectionTitle,
@@ -172,8 +173,7 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				}
-				else {
+				} else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -291,8 +291,7 @@ const Question = ({
 			});
 
 			setIsVisibleEditor(false);
-		}
-		catch (error) {
+		} catch (error) {
 			processGraphQLError(error);
 		}
 
@@ -722,9 +721,7 @@ const Question = ({
 			{flagsContainerProps.flagsModal.reportDialogOpen && (
 				<FlagsModal
 					handleClose={flagsContainerProps.flagsModal.onClose}
-					handleSubmit={
-						flagsContainerProps.flagsModal.handleSubmitReport
-					}
+					handleSubmit={flagsContainerProps.handleSubmitReport}
 					{...flagsContainerProps.flagsModal}
 				/>
 			)}

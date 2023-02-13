@@ -64,6 +64,17 @@ describe('', () => {
 				setEnd: () => {},
 				setStart: () => {},
 			});
+
+			const saveButton = global.document.createElement('button');
+			saveButton.classList.add('save-button');
+
+			const saveAndContinueButton = global.document.createElement(
+				'button'
+			);
+			saveAndContinueButton.classList.add('save-and-continue-button');
+
+			global.document.body.appendChild(saveButton);
+			global.document.body.appendChild(saveAndContinueButton);
 		}
 		global.Liferay.SideNavigation = {instance: () => {}};
 		global.Liferay.on = () => ({

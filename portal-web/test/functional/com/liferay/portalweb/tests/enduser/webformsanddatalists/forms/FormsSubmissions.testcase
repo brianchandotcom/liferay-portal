@@ -688,6 +688,84 @@ definition {
 		}
 	}
 
+	@description = "Verify if is not possible navigate through pages on public pages with is a URL validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithIsaURLValidationError {
+		property portal.acceptance = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Is a URL",
+				validationErrorMessage = "");
+
+			Form.closeSidebar();
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with is a URL validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "This is not a url");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "https://liferay.com");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Text",
+				fieldValue = "https://liferay.com");
+		}
+	}
+
 	@description = "Verify that Forms cannot navigate through pages when there is a empty required field"
 	@priority = 5
 	test CannotNavigateThroughThePagesWithEmptyRequiredField {

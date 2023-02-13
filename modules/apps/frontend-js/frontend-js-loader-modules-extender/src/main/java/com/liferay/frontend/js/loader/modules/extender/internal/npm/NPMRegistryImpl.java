@@ -63,6 +63,7 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -233,7 +234,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Activate
 	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws InvalidSyntaxException {
 
 		_bundleContext = bundleContext;
 
@@ -243,8 +245,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext,
-			"(&(objectClass=" + ServletContext.class.getName() +
-				")(osgi.web.contextpath=*))",
+			bundleContext.createFilter(
+				"(&(objectClass=" + ServletContext.class.getName() +
+					")(osgi.web.contextpath=*))"),
 			new NPMRegistryServiceTrackerCustomizer());
 
 		Details details = ConfigurableUtil.createConfigurable(

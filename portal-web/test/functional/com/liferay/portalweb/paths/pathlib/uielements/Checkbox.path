@@ -181,6 +181,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_DESCRIPTION_CHECKBOX</td>
+	<td>//label[contains(@for,'enableKBArticleDescription')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_FULLSCREEN</td>
 	<td>//input[contains(@id,'enableFullscreen')]</td>
 	<td></td>

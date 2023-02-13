@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, getPortletId} from 'frontend-js-web';
 
 import formatFieldValue from '../../utils/formatFieldValue.es';
 import setDataRecord from '../../utils/setDataRecord.es';
@@ -84,7 +84,9 @@ export default function pageLanguageUpdate({
 		});
 
 		fetch(
-			`/o/data-engine/v2.0/data-layouts/${ddmStructureLayoutId}/context`,
+			`/o/data-engine/v2.0/data-layouts/${ddmStructureLayoutId}/context?p_p_id=${getPortletId(
+				portletNamespace
+			)}`,
 			{
 				body: JSON.stringify({
 					dataRecordValues,

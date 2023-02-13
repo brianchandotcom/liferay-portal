@@ -14,20 +14,19 @@
 
 package com.liferay.sharepoint.rest.repository.internal.search.kql;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 /**
  * @author Adolfo Pérez
  */
 public interface KQLQuery {
 
 	public static KQLQuery and(KQLQuery... kqlQueries) {
-		Stream<KQLQuery> queryStream = Arrays.stream(kqlQueries);
+		KQLQuery finalKQLQuery = NullKQLQuery.INSTANCE;
 
-		return queryStream.reduce(
-			NullKQLQuery.INSTANCE,
-			(kqlQuery1, kqlQuery2) -> kqlQuery1.and(kqlQuery2));
+		for (KQLQuery kqlQuery : kqlQueries) {
+			finalKQLQuery = finalKQLQuery.and(kqlQuery);
+		}
+
+		return finalKQLQuery;
 	}
 
 	public static KQLQuery eq(String field, String value) {

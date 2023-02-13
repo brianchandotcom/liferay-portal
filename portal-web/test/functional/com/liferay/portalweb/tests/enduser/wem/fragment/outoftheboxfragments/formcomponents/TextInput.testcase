@@ -346,11 +346,11 @@ definition {
 				value1 = ${inputText});
 		}
 
-		task ("Then the pages designer can see just 280 characters in Text Input field") {
+		task ("Then the pages designer sees alert message below the Text Input field") {
 			AssertTextEquals(
-				key_text = "Region",
-				locator1 = "TextInput#ANY",
-				value1 = ${modifiedText});
+				key_alertMessage = "Maximum Number of Characters Exceeded: 281/280",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Maximum Number of Characters Exceeded: 281/280");
 		}
 
 		task ("When the pages designer types 280 characters in the Input Fragment") {

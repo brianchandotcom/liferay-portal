@@ -2980,6 +2980,56 @@ definition {
 			value1 = "An unexpected error occurred while uploading your file.");
 	}
 
+	@description = "Verify that the Range - Start/End operator is available when adding filters for the date fields to select date from the object"
+	@priority = 4
+	test RangeIsAvailableForDateFields {
+		task ("Given: A custom object with a date field type") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Date",
+				fieldName = "customDate",
+				fieldType = "Date");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Count",
+				relationship = "Relationship");
+		}
+
+		task ("When: A new filter is created with the custom date field with range selected") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Aggregation");
+
+			ObjectCustomViews.addNewAggregationFilterViaUI(
+				dateValueList = "2000-01-01, 2001-01-01",
+				filterBy = "Custom Date",
+				filterType = "Range");
+		}
+
+		task ("Then: The new filter is created") {
+			ObjectCustomViews.assertPresentEntriesOnFilters(
+				filterBy = "Custom Date",
+				filterValue = "2000-01-01, 2001-01-01");
+		}
+	}
+
 	@description = "LPS-143065 - Verify that the Request Files option is a required field"
 	@priority = 4
 	test RequestFilesIsRequired {

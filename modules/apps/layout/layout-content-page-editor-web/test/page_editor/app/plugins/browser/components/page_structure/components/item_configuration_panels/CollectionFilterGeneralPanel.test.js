@@ -101,12 +101,14 @@ describe('CollectionFilterGeneralPanel', () => {
 	});
 
 	it('shows a warning message if there are no compatible collections or filters', async () => {
-		const {findByRole} = renderComponent({
+		renderComponent({
 			collectionDisplays: {},
 			supportedFilters: {},
 		});
 
-		expect(await findByRole('alert')).toHaveTextContent(
+		const alert = document.querySelector('.alert');
+
+		expect(alert).toHaveTextContent(
 			'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
 		);
 	});

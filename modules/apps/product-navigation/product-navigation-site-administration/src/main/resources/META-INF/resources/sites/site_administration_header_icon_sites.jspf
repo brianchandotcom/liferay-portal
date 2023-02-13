@@ -15,14 +15,15 @@
 --%>
 
 <div class="icon-sites <%= (childPanelCategoriesSize == 1) ? "" : "collapsible-icon" %>">
-	<liferay-ui:icon
+	<clay:button
+		aria-label='<%= LanguageUtil.get(request, "go-to-other-site-or-library") %>'
+		borderless="<%= true %>"
+		cssClass="lfr-portal-tooltip text-white"
+		displayType="secondary"
 		icon="sites"
-		id="manageSitesLink"
-		label="<%= false %>"
-		linkCssClass="icon-monospaced"
-		markupView="lexicon"
-		message="go-to-other-site-or-library"
-		url="javascript:void(0);"
+		id='<%= liferayPortletResponse.getNamespace() + "manageSitesLink" %>'
+		monospaced="<%= true %>"
+		title='<%= LanguageUtil.get(request, "go-to-other-site-or-library") %>'
 	/>
 </div>
 

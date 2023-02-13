@@ -2029,6 +2029,7 @@ public class BundleSiteInitializerTest {
 		_assertAccounts1();
 		_assertAssetListEntries();
 		_assertAssetVocabularies();
+		_assertClientExtension();
 		_assertCommerceCatalogs();
 		_assertCommerceChannel();
 		_assertCommerceInventoryWarehouse();
@@ -2052,7 +2053,6 @@ public class BundleSiteInitializerTest {
 		_assertOrganizations();
 		_assertPermissions();
 		_assertPortletSettings();
-		_assertClientExtension();
 		_assertSAPEntries();
 		_assertSegmentsEntries();
 		_assertSiteConfiguration();

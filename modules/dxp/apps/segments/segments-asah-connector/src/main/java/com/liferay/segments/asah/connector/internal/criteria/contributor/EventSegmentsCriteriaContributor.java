@@ -17,16 +17,15 @@ package com.liferay.segments.asah.connector.internal.criteria.contributor;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.asah.connector.internal.criteria.mapper.SegmentsCriteriaJSONObjectMapperImpl;
 import com.liferay.segments.asah.connector.internal.odata.entity.EventEntityModel;
@@ -135,7 +134,7 @@ public class EventSegmentsCriteriaContributor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-171722"))) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-171722")) {
 			_serviceRegistration = bundleContext.registerService(
 				SegmentsCriteriaContributor.class, this,
 				HashMapDictionaryBuilder.<String, Object>put(

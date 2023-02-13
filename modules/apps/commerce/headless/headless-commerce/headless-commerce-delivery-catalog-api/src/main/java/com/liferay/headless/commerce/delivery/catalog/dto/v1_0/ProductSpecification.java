@@ -173,6 +173,64 @@ public class ProductSpecification implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
+	@Schema
+	public String getSpecificationGroupKey() {
+		return specificationGroupKey;
+	}
+
+	public void setSpecificationGroupKey(String specificationGroupKey) {
+		this.specificationGroupKey = specificationGroupKey;
+	}
+
+	@JsonIgnore
+	public void setSpecificationGroupKey(
+		UnsafeSupplier<String, Exception> specificationGroupKeyUnsafeSupplier) {
+
+		try {
+			specificationGroupKey = specificationGroupKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String specificationGroupKey;
+
+	@Schema
+	public String getSpecificationGroupTitle() {
+		return specificationGroupTitle;
+	}
+
+	public void setSpecificationGroupTitle(String specificationGroupTitle) {
+		this.specificationGroupTitle = specificationGroupTitle;
+	}
+
+	@JsonIgnore
+	public void setSpecificationGroupTitle(
+		UnsafeSupplier<String, Exception>
+			specificationGroupTitleUnsafeSupplier) {
+
+		try {
+			specificationGroupTitle =
+				specificationGroupTitleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String specificationGroupTitle;
+
 	@DecimalMin("0")
 	@Schema(example = "30129")
 	public Long getSpecificationId() {
@@ -229,6 +287,34 @@ public class ProductSpecification implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String specificationKey;
+
+	@Schema
+	public String getSpecificationTitle() {
+		return specificationTitle;
+	}
+
+	public void setSpecificationTitle(String specificationTitle) {
+		this.specificationTitle = specificationTitle;
+	}
+
+	@JsonIgnore
+	public void setSpecificationTitle(
+		UnsafeSupplier<String, Exception> specificationTitleUnsafeSupplier) {
+
+		try {
+			specificationTitle = specificationTitleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String specificationTitle;
 
 	@Schema
 	public String getValue() {
@@ -326,6 +412,34 @@ public class ProductSpecification implements Serializable {
 			sb.append(productId);
 		}
 
+		if (specificationGroupKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationGroupKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(specificationGroupKey));
+
+			sb.append("\"");
+		}
+
+		if (specificationGroupTitle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationGroupTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(specificationGroupTitle));
+
+			sb.append("\"");
+		}
+
 		if (specificationId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -346,6 +460,20 @@ public class ProductSpecification implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(specificationKey));
+
+			sb.append("\"");
+		}
+
+		if (specificationTitle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(specificationTitle));
 
 			sb.append("\"");
 		}

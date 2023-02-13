@@ -116,6 +116,50 @@ public class ProductSpecification implements Cloneable, Serializable {
 
 	protected Long productId;
 
+	public String getSpecificationGroupKey() {
+		return specificationGroupKey;
+	}
+
+	public void setSpecificationGroupKey(String specificationGroupKey) {
+		this.specificationGroupKey = specificationGroupKey;
+	}
+
+	public void setSpecificationGroupKey(
+		UnsafeSupplier<String, Exception> specificationGroupKeyUnsafeSupplier) {
+
+		try {
+			specificationGroupKey = specificationGroupKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String specificationGroupKey;
+
+	public String getSpecificationGroupTitle() {
+		return specificationGroupTitle;
+	}
+
+	public void setSpecificationGroupTitle(String specificationGroupTitle) {
+		this.specificationGroupTitle = specificationGroupTitle;
+	}
+
+	public void setSpecificationGroupTitle(
+		UnsafeSupplier<String, Exception>
+			specificationGroupTitleUnsafeSupplier) {
+
+		try {
+			specificationGroupTitle =
+				specificationGroupTitleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String specificationGroupTitle;
+
 	public Long getSpecificationId() {
 		return specificationId;
 	}
@@ -157,6 +201,27 @@ public class ProductSpecification implements Cloneable, Serializable {
 	}
 
 	protected String specificationKey;
+
+	public String getSpecificationTitle() {
+		return specificationTitle;
+	}
+
+	public void setSpecificationTitle(String specificationTitle) {
+		this.specificationTitle = specificationTitle;
+	}
+
+	public void setSpecificationTitle(
+		UnsafeSupplier<String, Exception> specificationTitleUnsafeSupplier) {
+
+		try {
+			specificationTitle = specificationTitleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String specificationTitle;
 
 	public String getValue() {
 		return value;

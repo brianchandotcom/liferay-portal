@@ -184,7 +184,10 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		ProductSpecification productSpecification =
 			randomProductSpecification();
 
+		productSpecification.setSpecificationGroupKey(regex);
+		productSpecification.setSpecificationGroupTitle(regex);
 		productSpecification.setSpecificationKey(regex);
+		productSpecification.setSpecificationTitle(regex);
 		productSpecification.setValue(regex);
 
 		String json = ProductSpecificationSerDes.toJSON(productSpecification);
@@ -193,7 +196,13 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		productSpecification = ProductSpecificationSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, productSpecification.getSpecificationGroupKey());
+		Assert.assertEquals(
+			regex, productSpecification.getSpecificationGroupTitle());
 		Assert.assertEquals(regex, productSpecification.getSpecificationKey());
+		Assert.assertEquals(
+			regex, productSpecification.getSpecificationTitle());
 		Assert.assertEquals(regex, productSpecification.getValue());
 	}
 
@@ -481,6 +490,26 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"specificationGroupKey", additionalAssertFieldName)) {
+
+				if (productSpecification.getSpecificationGroupKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"specificationGroupTitle", additionalAssertFieldName)) {
+
+				if (productSpecification.getSpecificationGroupTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("specificationId", additionalAssertFieldName)) {
 				if (productSpecification.getSpecificationId() == null) {
 					valid = false;
@@ -491,6 +520,16 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 			if (Objects.equals("specificationKey", additionalAssertFieldName)) {
 				if (productSpecification.getSpecificationKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"specificationTitle", additionalAssertFieldName)) {
+
+				if (productSpecification.getSpecificationTitle() == null) {
 					valid = false;
 				}
 
@@ -644,6 +683,32 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"specificationGroupKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSpecification1.getSpecificationGroupKey(),
+						productSpecification2.getSpecificationGroupKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"specificationGroupTitle", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSpecification1.getSpecificationGroupTitle(),
+						productSpecification2.getSpecificationGroupTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("specificationId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productSpecification1.getSpecificationId(),
@@ -659,6 +724,19 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						productSpecification1.getSpecificationKey(),
 						productSpecification2.getSpecificationKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"specificationTitle", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSpecification1.getSpecificationTitle(),
+						productSpecification2.getSpecificationTitle())) {
 
 					return false;
 				}
@@ -796,6 +874,26 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("specificationGroupKey")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					productSpecification.getSpecificationGroupKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("specificationGroupTitle")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					productSpecification.getSpecificationGroupTitle()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("specificationId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -805,6 +903,15 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			sb.append("'");
 			sb.append(
 				String.valueOf(productSpecification.getSpecificationKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("specificationTitle")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(productSpecification.getSpecificationTitle()));
 			sb.append("'");
 
 			return sb.toString();
@@ -868,8 +975,14 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				optionCategoryId = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
 				productId = RandomTestUtil.randomLong();
+				specificationGroupKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				specificationGroupTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				specificationId = RandomTestUtil.randomLong();
 				specificationKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				specificationTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				value = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

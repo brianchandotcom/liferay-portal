@@ -95,6 +95,35 @@ public class ProductSpecificationSerDes {
 			sb.append(productSpecification.getProductId());
 		}
 
+		if (productSpecification.getSpecificationGroupKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationGroupKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productSpecification.getSpecificationGroupKey()));
+
+			sb.append("\"");
+		}
+
+		if (productSpecification.getSpecificationGroupTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationGroupTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(productSpecification.getSpecificationGroupTitle()));
+
+			sb.append("\"");
+		}
+
 		if (productSpecification.getSpecificationId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -115,6 +144,20 @@ public class ProductSpecificationSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(productSpecification.getSpecificationKey()));
+
+			sb.append("\"");
+		}
+
+		if (productSpecification.getSpecificationTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationTitle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productSpecification.getSpecificationTitle()));
 
 			sb.append("\"");
 		}
@@ -187,6 +230,26 @@ public class ProductSpecificationSerDes {
 				String.valueOf(productSpecification.getProductId()));
 		}
 
+		if (productSpecification.getSpecificationGroupKey() == null) {
+			map.put("specificationGroupKey", null);
+		}
+		else {
+			map.put(
+				"specificationGroupKey",
+				String.valueOf(
+					productSpecification.getSpecificationGroupKey()));
+		}
+
+		if (productSpecification.getSpecificationGroupTitle() == null) {
+			map.put("specificationGroupTitle", null);
+		}
+		else {
+			map.put(
+				"specificationGroupTitle",
+				String.valueOf(
+					productSpecification.getSpecificationGroupTitle()));
+		}
+
 		if (productSpecification.getSpecificationId() == null) {
 			map.put("specificationId", null);
 		}
@@ -203,6 +266,15 @@ public class ProductSpecificationSerDes {
 			map.put(
 				"specificationKey",
 				String.valueOf(productSpecification.getSpecificationKey()));
+		}
+
+		if (productSpecification.getSpecificationTitle() == null) {
+			map.put("specificationTitle", null);
+		}
+		else {
+			map.put(
+				"specificationTitle",
+				String.valueOf(productSpecification.getSpecificationTitle()));
 		}
 
 		if (productSpecification.getValue() == null) {
@@ -257,6 +329,22 @@ public class ProductSpecificationSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "specificationGroupKey")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setSpecificationGroupKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "specificationGroupTitle")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setSpecificationGroupTitle(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "specificationId")) {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setSpecificationId(
@@ -266,6 +354,14 @@ public class ProductSpecificationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "specificationKey")) {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setSpecificationKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "specificationTitle")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setSpecificationTitle(
 						(String)jsonParserFieldValue);
 				}
 			}

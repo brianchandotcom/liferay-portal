@@ -26,6 +26,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -53,8 +54,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -268,16 +267,10 @@ public class MBCommentManagerImpl implements CommentManager {
 	public List<Comment> getChildComments(
 		long parentCommentId, int status, int start, int end) {
 
-		return Stream.of(
+		return TransformUtil.transform(
 			_mbMessageLocalService.getChildMessages(
-				parentCommentId, status, start, end)
-		).flatMap(
-			List::stream
-		).map(
-			MBCommentImpl::new
-		).collect(
-			Collectors.toList()
-		);
+				parentCommentId, status, start, end),
+			MBCommentImpl::new);
 	}
 
 	@Override
@@ -342,16 +335,10 @@ public class MBCommentManagerImpl implements CommentManager {
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		return Stream.of(
+		return TransformUtil.transform(
 			_mbMessageLocalService.getRootDiscussionMessages(
-				className, classPK, status, start, end)
-		).flatMap(
-			List::stream
-		).map(
-			MBCommentImpl::new
-		).collect(
-			Collectors.toList()
-		);
+				className, classPK, status, start, end),
+			MBCommentImpl::new);
 	}
 
 	@Override

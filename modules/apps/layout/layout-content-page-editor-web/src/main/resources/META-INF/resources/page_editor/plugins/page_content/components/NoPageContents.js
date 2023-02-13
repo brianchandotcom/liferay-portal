@@ -23,13 +23,14 @@ export default function NoPageContents() {
 	);
 
 	return hasRestrictedForm && Liferay.FeatureFlags['LPS-169923'] ? (
-		<ClayAlert className="m-3" displayType="secondary">
+		<ClayAlert aria-live="polite" className="m-3" displayType="secondary">
 			{Liferay.Language.get(
 				'this-content-cannot-be-displayed-due-to-permission-restrictions'
 			)}
 		</ClayAlert>
 	) : (
 		<ClayAlert
+			aria-live="polite"
 			className="m-3"
 			displayType="info"
 			title={Liferay.Language.get('info')}

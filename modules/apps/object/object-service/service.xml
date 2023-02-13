@@ -89,6 +89,7 @@
 		<column name="enableCategorization" type="boolean" />
 		<column name="enableComments" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />
+		<column name="modifiable" type="boolean" />
 		<column name="name" type="String" />
 		<column name="panelAppOrder" type="String" />
 		<column name="panelCategoryKey" type="String" />

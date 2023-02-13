@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -497,7 +498,7 @@ public class CookiesManagerImpl implements CookiesManager {
 		HttpServletRequest httpServletRequest) {
 
 		if (httpServletRequest == null) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		Map<String, Cookie> cookiesMap =

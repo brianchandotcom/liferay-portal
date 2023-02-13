@@ -794,6 +794,9 @@ public class AssetListAssetEntryProviderImpl
 	private long[] _getCombinedSegmentsEntryIds(
 		AssetListEntry assetListEntry, long[] segmentEntryIds) {
 
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			new ArrayList<>();
+
 		if ((segmentEntryIds.length > 1) &&
 			ArrayUtil.contains(
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT)) {
@@ -801,9 +804,6 @@ public class AssetListAssetEntryProviderImpl
 			segmentEntryIds = ArrayUtil.remove(
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT);
 		}
-
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			new ArrayList<>();
 
 		for (long segmentsEntryId : segmentEntryIds) {
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =

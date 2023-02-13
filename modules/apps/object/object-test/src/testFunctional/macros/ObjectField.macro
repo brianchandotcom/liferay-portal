@@ -22,18 +22,6 @@ definition {
 			value1 = ${folderName});
 	}
 
-	macro assertDocumentsAndMediaHomeFolderBySite {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(
-			key_viewHomeFolder = ${viewHomeFolder},
-			locator1 = "ObjectField#VIEW_HOME_FOLDER");
-
-		AssertElementPresent(
-			key_card = ${imageName},
-			locator1 = "Card#CARD");
-	}
-
 	macro assertHelpText {
 		AssertElementPresent(
 			key_helpText = ${helpText},

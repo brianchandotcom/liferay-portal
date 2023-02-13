@@ -244,6 +244,10 @@ public interface ObjectDefinitionLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	public ObjectDefinition enableAccountEntryRestricted(
+			long objectDefinitionId, ObjectRelationship objectRelationship)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition fetchObjectDefinition(long objectDefinitionId);
 
@@ -370,10 +374,6 @@ public interface ObjectDefinitionLocalService
 
 	public ObjectDefinition publishCustomObjectDefinition(
 			long userId, long objectDefinitionId)
-		throws PortalException;
-
-	public ObjectDefinition restrictObjectDefinitionByAccountEntry(
-			long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);

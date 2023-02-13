@@ -16,6 +16,7 @@ package com.liferay.sharepoint.soap.repository.connector.internal.util.test;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,8 +32,6 @@ import java.net.URL;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -80,9 +79,20 @@ public class SharepointConnectionTestUtil {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(httpURLConnection.getInputStream()))) {
 
-			Stream<String> payloadStream = bufferedReader.lines();
+			StringBundler sb = new StringBundler();
 
-			String payload = payloadStream.collect(Collectors.joining());
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+				sb.append(StringPool.BLANK);
+			}
+
+			if (sb.index() > 1) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			String payload = sb.toString();
 
 			Matcher matcher = _pattern.matcher(payload);
 

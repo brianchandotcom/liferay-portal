@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -90,7 +90,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
 			kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(), kaleoNode.getName(),
-			new Action(
+			new ScriptAction(
 				StringUtil.randomString(), StringUtil.randomString(),
 				"onAssignment", StringPool.BLANK, "groovy", StringPool.BLANK,
 				0),

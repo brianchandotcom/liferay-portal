@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -327,6 +328,43 @@ public class DSLQueryEntryPersistenceImplTest {
 					DSLQueryStatusEntryTable.INSTANCE.status.descending(),
 					DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId.
 						descending()
+				)));
+	}
+
+	@Test
+	public void testDSLQueryWithDSLFunction() {
+		Assert.assertEquals(
+			Arrays.asList(0L, 1L, 2L),
+			_dslQueryEntryPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					DSLFunctionFactoryUtil.subtract(
+						DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId,
+						new Scalar<>(1L)
+					).as(
+						"alias"
+					)
+				).from(
+					DSLQueryStatusEntryTable.INSTANCE
+				).orderBy(
+					DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId.
+						ascending()
+				)));
+
+		Assert.assertEquals(
+			Arrays.asList(2L, 1L, 0L),
+			_dslQueryEntryPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					DSLFunctionFactoryUtil.subtract(
+						new Scalar<>(3L),
+						DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId
+					).as(
+						"alias"
+					)
+				).from(
+					DSLQueryStatusEntryTable.INSTANCE
+				).orderBy(
+					DSLQueryStatusEntryTable.INSTANCE.dslQueryStatusEntryId.
+						ascending()
 				)));
 	}
 

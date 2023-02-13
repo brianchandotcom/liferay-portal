@@ -24,9 +24,6 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +35,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,34 +90,6 @@ public class AssetBrowserDisplayContext {
 		assetEntrySearchContainer.setOrderByCol(getOrderByCol());
 		assetEntrySearchContainer.setOrderByType(getOrderByType());
 
-		if (_isSearchWithDatabase()) {
-			long[] subtypeSelectionIds = ArrayUtil.filter(
-				new long[] {getSubtypeSelectionId()},
-				subtypeSelectionId -> subtypeSelectionId >= 0);
-
-			assetEntrySearchContainer.setResultsAndTotal(
-				() -> _assetEntryLocalService.getEntries(
-					_getFilterGroupIds(), _getClassNameIds(),
-					subtypeSelectionIds, _getKeywords(), _getKeywords(),
-					_getKeywords(), _getKeywords(), _getListable(), false,
-					false, assetEntrySearchContainer.getStart(),
-					assetEntrySearchContainer.getEnd(), "modifiedDate",
-					StringPool.BLANK, getOrderByType(), StringPool.BLANK),
-				_assetEntryLocalService.getEntriesCount(
-					_getFilterGroupIds(), _getClassNameIds(),
-					subtypeSelectionIds, _getKeywords(), _getKeywords(),
-					_getKeywords(), _getKeywords(), _getListable(), false,
-					false));
-
-			if (isMultipleSelection()) {
-				assetEntrySearchContainer.setRowChecker(
-					new AddAssetEntryChecker(
-						_renderResponse, getRefererAssetEntryId()));
-			}
-
-			return assetEntrySearchContainer;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -136,9 +104,6 @@ public class AssetBrowserDisplayContext {
 
 		if (Objects.equals(getOrderByCol(), "modified-date")) {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-		}
-		else if (Objects.equals(getOrderByCol(), "relevance")) {
-			sort = new Sort(null, Sort.SCORE_TYPE, false);
 		}
 		else if (Objects.equals(getOrderByCol(), "title")) {
 			sort = new Sort(
@@ -263,13 +228,6 @@ public class AssetBrowserDisplayContext {
 			return _orderByCol;
 		}
 
-		if (isSearch()) {
-			_orderByCol = ParamUtil.getString(
-				_httpServletRequest, "orderByCol", "relevance");
-
-			return _orderByCol;
-		}
-
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_httpServletRequest, AssetBrowserPortletKeys.ASSET_BROWSER,
 			"modified-date");
@@ -282,22 +240,10 @@ public class AssetBrowserDisplayContext {
 			return _orderByType;
 		}
 
-		if (Objects.equals(getOrderByCol(), "relevance")) {
-			return "desc";
-		}
-
 		_orderByType = SearchOrderByUtil.getOrderByType(
 			_httpServletRequest, AssetBrowserPortletKeys.ASSET_BROWSER, "asc");
 
 		return _orderByType;
-	}
-
-	protected boolean isSearch() {
-		if (_isSearchWithDatabase() || Validator.isNull(_getKeywords())) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private long[] _getClassNameIds() {
@@ -348,19 +294,6 @@ public class AssetBrowserDisplayContext {
 		return _keywords;
 	}
 
-	private Boolean _getListable() {
-		Boolean listable = null;
-
-		if (Validator.isNotNull(
-				ParamUtil.getString(_httpServletRequest, "listable", null))) {
-
-			listable = ParamUtil.getBoolean(
-				_httpServletRequest, "listable", true);
-		}
-
-		return listable;
-	}
-
 	private int[] _getStatuses() {
 		int[] statuses = {WorkflowConstants.STATUS_APPROVED};
 
@@ -372,20 +305,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return statuses;
-	}
-
-	private boolean _isSearchWithDatabase() {
-		if (_searchWithDatabase != null) {
-			return _searchWithDatabase;
-		}
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			AssetBrowserDisplayContext.class.getClassLoader(), "portlet");
-
-		_searchWithDatabase = GetterUtil.getBoolean(
-			configuration.get("search.with.database"));
-
-		return _searchWithDatabase;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -410,8 +329,6 @@ public class AssetBrowserDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _searchEverywhere;
-	private Boolean _searchWithDatabase;
-	private Boolean _showAddButton;
 	private final ThemeDisplay _themeDisplay;
 
 }

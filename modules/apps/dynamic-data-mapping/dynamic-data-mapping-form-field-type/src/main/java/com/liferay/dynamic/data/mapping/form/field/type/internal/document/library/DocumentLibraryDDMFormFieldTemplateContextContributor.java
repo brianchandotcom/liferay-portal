@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.document.libra
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
@@ -337,7 +338,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
 		try {
-			return _dlAppService.getFileEntryByUuidAndGroupId(
+			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 				valueJSONObject.getString("uuid"),
 				valueJSONObject.getLong("groupId"));
 		}
@@ -693,6 +694,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

@@ -165,19 +165,39 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 				}
 			});
 
+			if (multipleOrderQuantity > 1 && !nextAllowedQuantity) {
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							'quantity-must-be-a-multiple-of-x'
+						),
+						multipleOrderQuantity
+					),
+					type: 'danger',
+				});
+
+				return 0;
+			}
+
 			if (existingItem.quantity >= lastAllowedQuantity) {
 				quantity = 0;
 			}
 		}
-		else {
-			if (existingItem.quantity >= multipleOrderQuantity) {
-				quantity = multipleOrderQuantity;
-			}
+		else if (existingItem.quantity >= multipleOrderQuantity) {
+			quantity = multipleOrderQuantity;
 		}
 
 		if (existingItem.quantity + quantity > maxOrderQuantity) {
 			if (multipleOrderQuantity > 1) {
-				quantity = 0;
+				openToast({
+					message: sub(
+						Liferay.Language.get('max-quantity-per-order-is-x'),
+						maxOrderQuantity
+					),
+					type: 'danger',
+				});
+
+				return 0;
 			}
 			else {
 				openToast({
@@ -202,10 +222,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		if (maxOrderQuantity < allowedOrderQuantities[0]) {
 			openToast({
 				message: sub(
-					Liferay.Language.get(
-						'the-maximum-allowed-quantity-for-x-is-x'
-					),
-					sku,
+					Liferay.Language.get('max-quantity-per-order-is-x'),
 					maxOrderQuantity
 				),
 				type: 'danger',
@@ -230,19 +247,23 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		quantity = multipleOrderQuantity;
 
 		if (multipleOrderQuantity > maxOrderQuantity) {
-			quantity = 0;
+			openToast({
+				message: sub(
+					Liferay.Language.get('the-maximum-quantity-is-x'),
+					maxOrderQuantity
+				),
+				type: 'danger',
+			});
+
+			return 0;
 		}
 	}
 	else if (multipleOrderQuantity < minOrderQuantity) {
-		openToast({
-			message: sub(
-				Liferay.Language.get('the-minimum-quantity-is-x'),
-				minOrderQuantity
-			),
-			type: 'danger',
-		});
+		quantity = multipleOrderQuantity;
 
-		return 0;
+		while (quantity < minOrderQuantity) {
+			quantity += multipleOrderQuantity;
+		}
 	}
 
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {

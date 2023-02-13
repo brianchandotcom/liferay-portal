@@ -2317,7 +2317,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		ObjectField.assertNameDisabled();
+		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Type of a Field after the Object is published"

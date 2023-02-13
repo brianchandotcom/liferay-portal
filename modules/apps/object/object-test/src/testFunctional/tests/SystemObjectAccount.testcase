@@ -437,7 +437,7 @@ definition {
 
 			ObjectField.assertTypeDisabled();
 
-			ObjectField.assertNameDisabled();
+			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
 			Refresh();
 		}

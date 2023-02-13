@@ -863,7 +863,7 @@ definition {
 
 			ObjectField.typeLabel(content = "Custom Aggregation Update");
 
-			ObjectField.assertNameDisabled();
+			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
 			ObjectField.assertTypeDisabled();
 
@@ -1206,7 +1206,7 @@ definition {
 		}
 
 		task ("Then the Field Name and Type inputs are disabled and cannot be edited") {
-			ObjectField.assertNameDisabled();
+			AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
 			ObjectField.assertTypeDisabled();
 		}
@@ -1729,7 +1729,7 @@ definition {
 
 				ObjectField.typeLabel(content = "Custom Field Update");
 
-				ObjectField.assertNameDisabled();
+				AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 
 				ObjectField.assertTypeDisabled();
 

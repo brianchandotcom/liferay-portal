@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -79,20 +78,14 @@ public abstract class BaseCommerceDiscountCalculation
 			return null;
 		}
 
-		Stream<CommerceDiscount> commerceDiscountsStream =
-			commerceDiscounts.stream();
+		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
+			if (commerceDiscount.getCommerceDiscountId() ==
+					commerceChannelAccountEntryRel.getClassPK()) {
 
-		if (commerceDiscountsStream.mapToLong(
-				CommerceDiscount::getCommerceDiscountId
-			).anyMatch(
-				commerceDiscountId ->
-					commerceDiscountId ==
-						commerceChannelAccountEntryRel.getClassPK()
-			)) {
-
-			return Collections.singletonList(
-				commerceDiscountLocalService.getCommerceDiscount(
-					commerceChannelAccountEntryRel.getClassPK()));
+				return Collections.singletonList(
+					commerceDiscountLocalService.getCommerceDiscount(
+						commerceChannelAccountEntryRel.getClassPK()));
+			}
 		}
 
 		return null;

@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.preview.pdf.internal.portlet.action;
 
+import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -27,11 +29,13 @@ public class PDFPreviewConfigurationDisplayContext {
 
 	public PDFPreviewConfigurationDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, String scope,
-		long scopePK) {
+		LiferayPortletResponse liferayPortletResponse,
+		PDFPreviewManagedServiceFactory pdfPreviewManagedServiceFactory,
+		String scope, long scopePK) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_pdfPreviewManagedServiceFactory = pdfPreviewManagedServiceFactory;
 		_scope = scope;
 		_scopePK = scopePK;
 	}
@@ -50,8 +54,32 @@ public class PDFPreviewConfigurationDisplayContext {
 		).buildString();
 	}
 
+	public long getMaxNumberOfPages() {
+		if (_scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return _pdfPreviewManagedServiceFactory.getCompanyMaxNumberOfPages(
+				_scopePK);
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			return _pdfPreviewManagedServiceFactory.getGroupMaxNumberOfPages(
+				_scopePK);
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return _pdfPreviewManagedServiceFactory.getSystemMaxNumberOfPages();
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + _scope);
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PDFPreviewManagedServiceFactory
+		_pdfPreviewManagedServiceFactory;
 	private final String _scope;
 	private final long _scopePK;
 

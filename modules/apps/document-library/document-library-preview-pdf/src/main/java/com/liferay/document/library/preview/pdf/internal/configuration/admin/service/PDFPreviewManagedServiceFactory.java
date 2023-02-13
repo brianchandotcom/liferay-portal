@@ -1,0 +1,191 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.preview.pdf.internal.configuration.admin.service;
+
+import com.liferay.document.library.preview.pdf.internal.configuration.PDFPreviewConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Dictionary;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
+
+import org.osgi.framework.Constants;
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedServiceFactory;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Alicia García
+ */
+@Component(
+	configurationPid = "com.liferay.document.library.preview.pdf.internal.configuration.PDFPreviewConfiguration",
+	property = Constants.SERVICE_PID + "=com.liferay.document.library.preview.pdf.internal.configuration.PDFPreviewConfiguration.scoped",
+	service = {
+		ManagedServiceFactory.class, PDFPreviewManagedServiceFactory.class
+	}
+)
+public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
+
+	@Override
+	public void deleted(String pid) {
+		_unmapPid(pid);
+	}
+
+	public long getCompanyMaxNumberOfPages(long companyId) {
+		PDFPreviewConfiguration pdfPreviewConfiguration =
+			_getCompanyPDFPreviewConfiguration(companyId);
+
+		return pdfPreviewConfiguration.maxNumberOfPages();
+	}
+
+	public long getGroupMaxNumberOfPages(long groupId) {
+		PDFPreviewConfiguration pdfPreviewConfiguration =
+			_getGroupPDFPreviewConfiguration(groupId);
+
+		return pdfPreviewConfiguration.maxNumberOfPages();
+	}
+
+	@Override
+	public String getName() {
+		return "com.liferay.document.library.preview.pdf.internal." +
+			"configuration.PDFPreviewConfiguration.scoped";
+	}
+
+	public long getSystemMaxNumberOfPages() {
+		return _systemPDFPreviewConfiguration.maxNumberOfPages();
+	}
+
+	@Override
+	public void updated(String pid, Dictionary<String, ?> dictionary)
+		throws ConfigurationException {
+
+		_unmapPid(pid);
+
+		long companyId = GetterUtil.getLong(
+			dictionary.get("companyId"), CompanyConstants.SYSTEM);
+
+		if (companyId != CompanyConstants.SYSTEM) {
+			_updateCompanyConfiguration(companyId, pid, dictionary);
+		}
+
+		long groupId = GetterUtil.getLong(
+			dictionary.get("groupId"), GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			_updateGroupConfiguration(groupId, pid, dictionary);
+		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_systemPDFPreviewConfiguration = ConfigurableUtil.createConfigurable(
+			PDFPreviewConfiguration.class, properties);
+	}
+
+	private PDFPreviewConfiguration _getCompanyPDFPreviewConfiguration(
+		long companyId) {
+
+		return _getPDFPreviewConfiguration(
+			companyId, _companyConfigurationBeans,
+			() -> _systemPDFPreviewConfiguration);
+	}
+
+	private PDFPreviewConfiguration _getGroupPDFPreviewConfiguration(
+		long groupId) {
+
+		return _getPDFPreviewConfiguration(
+			groupId, _groupConfigurationBeans,
+			() -> {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				long companyId = CompanyThreadLocal.getCompanyId();
+
+				if (group != null) {
+					companyId = group.getCompanyId();
+				}
+
+				return _getCompanyPDFPreviewConfiguration(companyId);
+			});
+	}
+
+	private PDFPreviewConfiguration _getPDFPreviewConfiguration(
+		long key, Map<Long, PDFPreviewConfiguration> configurationBeans,
+		Supplier<PDFPreviewConfiguration> supplier) {
+
+		if (configurationBeans.containsKey(key)) {
+			return configurationBeans.get(key);
+		}
+
+		return supplier.get();
+	}
+
+	private void _unmapPid(String pid) {
+		if (_companyIds.containsKey(pid)) {
+			long companyId = _companyIds.remove(pid);
+
+			_companyConfigurationBeans.remove(companyId);
+		}
+
+		if (_groupIds.containsKey(pid)) {
+			long groupId = _groupIds.remove(pid);
+
+			_groupConfigurationBeans.remove(groupId);
+		}
+	}
+
+	private void _updateCompanyConfiguration(
+		long companyId, String pid, Dictionary<String, ?> dictionary) {
+
+		_companyConfigurationBeans.put(
+			companyId,
+			ConfigurableUtil.createConfigurable(
+				PDFPreviewConfiguration.class, dictionary));
+		_companyIds.put(pid, companyId);
+	}
+
+	private void _updateGroupConfiguration(
+		long groupId, String pid, Dictionary<String, ?> dictionary) {
+
+		_groupConfigurationBeans.put(
+			groupId,
+			ConfigurableUtil.createConfigurable(
+				PDFPreviewConfiguration.class, dictionary));
+		_groupIds.put(pid, groupId);
+	}
+
+	private final Map<Long, PDFPreviewConfiguration>
+		_companyConfigurationBeans = new ConcurrentHashMap<>();
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
+	private final Map<Long, PDFPreviewConfiguration> _groupConfigurationBeans =
+		new ConcurrentHashMap<>();
+	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private volatile PDFPreviewConfiguration _systemPDFPreviewConfiguration;
+
+}

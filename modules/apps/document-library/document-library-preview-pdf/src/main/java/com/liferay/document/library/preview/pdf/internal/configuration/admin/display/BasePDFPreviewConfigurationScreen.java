@@ -15,6 +15,7 @@
 package com.liferay.document.library.preview.pdf.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
 import com.liferay.document.library.preview.pdf.internal.portlet.action.PDFPreviewConfigurationDisplayContext;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
@@ -72,7 +73,8 @@ public abstract class BasePDFPreviewConfigurationScreen
 					portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),
-					getScope(), _getScopePk(httpServletRequest)));
+					pdfPreviewManagedServiceFactory, getScope(),
+					_getScopePk(httpServletRequest)));
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(
@@ -89,6 +91,9 @@ public abstract class BasePDFPreviewConfigurationScreen
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected PDFPreviewManagedServiceFactory pdfPreviewManagedServiceFactory;
 
 	@Reference
 	protected Portal portal;

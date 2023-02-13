@@ -58,6 +58,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
@@ -3370,6 +3371,29 @@ public class JournalArticleLocalServiceImpl
 		long resourcePrimKey) {
 
 		return journalArticlePersistence.findByR_I(resourcePrimKey, true);
+	}
+
+	@Override
+	public List<Long> getJournalArticleGroupIdsByUrlTitle(
+		long companyId, String urlTitle) {
+
+		return journalArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				FriendlyURLEntryLocalizationTable.INSTANCE.groupId
+			).from(
+				FriendlyURLEntryLocalizationTable.INSTANCE
+			).where(
+				FriendlyURLEntryLocalizationTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					FriendlyURLEntryLocalizationTable.INSTANCE.classNameId.eq(
+						_portal.getClassNameId(JournalArticle.class.getName())
+					).and(
+						FriendlyURLEntryLocalizationTable.INSTANCE.urlTitle.eq(
+							urlTitle)
+					)
+				)
+			));
 	}
 
 	/**

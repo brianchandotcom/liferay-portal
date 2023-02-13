@@ -17,7 +17,6 @@ package com.liferay.asset.internal.search;
 import com.liferay.asset.kernel.search.AssetSearcherFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.search.BaseSearcher;
-import com.liferay.portlet.asset.util.AssetSearcher;
 
 import org.osgi.service.component.annotations.Component;
 

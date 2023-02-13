@@ -5,25 +5,25 @@
 
 	<target name="clean-up-httpd-server">
 		<replaceregexp
-			file="${apache.http.dir}/conf/httpd.conf"
+			file="${apache.http.conf.file}"
 			flags="s"
 			match="(IncludeOptional.*conf)(.*)"
 			replace="\1"
 		/>
 
-		<print-file file.name="${apache.http.dir}/conf/httpd.conf" />
+		<print-file file.name="${apache.http.conf.file}" />
 	</target>
 
 	<target name="configure-httpd-server">
 		<if>
 			<not>
 				<resourcecontains
-					resource="${apache.http.dir}/conf/httpd.conf"
+					resource="${apache.http.conf.file}"
 					substring="Listen 88"
 				/>
 			</not>
 			<then>
-				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
+				<echo append="true" file="${apache.http.conf.file}"><![CDATA[
 
 Listen 88]]></echo>
 			</then>
@@ -32,12 +32,12 @@ Listen 88]]></echo>
 		<if>
 			<not>
 				<resourcecontains
-					resource="${apache.http.dir}/conf/httpd.conf"
+					resource="${apache.http.conf.file}"
 					substring="VirtualHost *:88"
 				/>
 			</not>
 			<then>
-				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
+				<echo append="true" file="${apache.http.conf.file}"><![CDATA[
 
 <VirtualHost *:88>
 	ServerName localhost
@@ -63,12 +63,12 @@ Listen 88]]></echo>
 					<if>
 						<not>
 							<resourcecontains
-								resource="${apache.http.dir}/conf/httpd.conf"
+								resource="${apache.http.conf.file}"
 								substring="Listen ${test.app.server.leading.port.number}8"
 							/>
 						</not>
 						<then>
-							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
+							<echo append="true" file="${apache.http.conf.file}"><![CDATA[
 
 Listen ${test.app.server.leading.port.number}8]]></echo>
 						</then>
@@ -77,12 +77,12 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 					<if>
 						<not>
 							<resourcecontains
-								resource="${apache.http.dir}/conf/httpd.conf"
+								resource="${apache.http.conf.file}"
 								substring="VirtualHost *:${test.app.server.leading.port.number}0"
 							/>
 						</not>
 						<then>
-							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
+							<echo append="true" file="${apache.http.conf.file}"><![CDATA[
 
 <VirtualHost *:${test.app.server.leading.port.number}8>
 	ServerName localhost
@@ -106,7 +106,7 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 			</then>
 		</if>
 
-		<print-file file.name="${apache.http.dir}/conf/httpd.conf" />
+		<print-file file.name="${apache.http.conf.file}" />
 	</target>
 
 	<target name="start-httpd-server">

@@ -51,7 +51,7 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "Long",
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -59,7 +59,7 @@
 			},
 			"name": "assignedUsers",
 			"required": false,
-			"type": "Long"
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

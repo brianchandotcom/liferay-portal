@@ -16,8 +16,8 @@ package com.liferay.asset.browser.web.internal.display.context;
 
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
-import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -91,31 +92,31 @@ public class AssetBrowserDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public AssetBrowserSearch getAssetBrowserSearch()
-		throws PortalException, PortletException {
+	public SearchContainer<AssetEntry> getAssetEntrySearchContainer()
+		throws PortalException {
 
-		if (_assetBrowserSearch != null) {
-			return _assetBrowserSearch;
+		if (_assetEntrySearchContainer != null) {
+			return _assetEntrySearchContainer;
 		}
 
-		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
-			_renderRequest, getPortletURL());
+		SearchContainer<AssetEntry> assetEntrySearchContainer =
+			new SearchContainer<>(_renderRequest, _portletURL, null, null);
 
-		assetBrowserSearch.setOrderByCol(getOrderByCol());
-		assetBrowserSearch.setOrderByType(getOrderByType());
+		assetEntrySearchContainer.setOrderByCol(getOrderByCol());
+		assetEntrySearchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearchWithDatabase()) {
 			long[] subtypeSelectionIds = ArrayUtil.filter(
 				new long[] {getSubtypeSelectionId()},
 				subtypeSelectionId -> subtypeSelectionId >= 0);
 
-			assetBrowserSearch.setResultsAndTotal(
+			assetEntrySearchContainer.setResultsAndTotal(
 				() -> _assetEntryLocalService.getEntries(
 					_getFilterGroupIds(), _getClassNameIds(),
 					subtypeSelectionIds, _getKeywords(), _getKeywords(),
 					_getKeywords(), _getKeywords(), _getListable(), false,
-					false, assetBrowserSearch.getStart(),
-					assetBrowserSearch.getEnd(), "modifiedDate",
+					false, assetEntrySearchContainer.getStart(),
+					assetEntrySearchContainer.getEnd(), "modifiedDate",
 					StringPool.BLANK, getOrderByType(), StringPool.BLANK),
 				_assetEntryLocalService.getEntriesCount(
 					_getFilterGroupIds(), _getClassNameIds(),
@@ -124,12 +125,12 @@ public class AssetBrowserDisplayContext {
 					false));
 
 			if (isMultipleSelection()) {
-				assetBrowserSearch.setRowChecker(
+				assetEntrySearchContainer.setRowChecker(
 					new AddAssetEntryChecker(
 						_renderResponse, getRefererAssetEntryId()));
 			}
 
-			return assetBrowserSearch;
+			return assetEntrySearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -161,21 +162,21 @@ public class AssetBrowserDisplayContext {
 			themeDisplay.getCompanyId(), _getFilterGroupIds(),
 			themeDisplay.getUserId(), _getClassNameIds(),
 			getSubtypeSelectionId(), _getKeywords(), _isShowNonindexable(),
-			_getStatuses(), assetBrowserSearch.getStart(),
-			assetBrowserSearch.getEnd(), sort);
+			_getStatuses(), assetEntrySearchContainer.getStart(),
+			assetEntrySearchContainer.getEnd(), sort);
 
-		assetBrowserSearch.setResultsAndTotal(
+		assetEntrySearchContainer.setResultsAndTotal(
 			() -> _assetHelper.getAssetEntries(hits), hits.getLength());
 
 		if (isMultipleSelection()) {
-			assetBrowserSearch.setRowChecker(
+			assetEntrySearchContainer.setRowChecker(
 				new AddAssetEntryChecker(
 					_renderResponse, getRefererAssetEntryId()));
 		}
 
-		_assetBrowserSearch = assetBrowserSearch;
+		_assetEntrySearchContainer = assetEntrySearchContainer;
 
-		return _assetBrowserSearch;
+		return _assetEntrySearchContainer;
 	}
 
 	public AssetRendererFactory<?> getAssetRendererFactory() {
@@ -251,77 +252,6 @@ public class AssetBrowserDisplayContext {
 
 		return Arrays.asList(
 			_getSitesAndLibrariesBreadcrumb(), _getHomeBreadcrumb());
-	}
-
-	public PortletURL getPortletURL() throws PortletException {
-		return PortletURLBuilder.create(
-			PortletURLUtil.clone(
-				_portletURL, _portal.getLiferayPortletResponse(_renderResponse))
-		).setParameter(
-			"eventName", getEventName()
-		).setParameter(
-			"groupId", getGroupId()
-		).setParameter(
-			"listable",
-			() -> {
-				if (_getListable() != null) {
-					return _getListable();
-				}
-
-				return null;
-			}
-		).setParameter(
-			"multipleSelection",
-			() -> {
-				if (isMultipleSelection()) {
-					return Boolean.TRUE.toString();
-				}
-
-				return null;
-			}
-		).setParameter(
-			"refererAssetEntryId", getRefererAssetEntryId()
-		).setParameter(
-			"selectedGroupId",
-			() -> {
-				long selectedGroupId = ParamUtil.getLong(
-					_httpServletRequest, "selectedGroupId");
-
-				if (selectedGroupId > 0) {
-					return selectedGroupId;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"selectedGroupIds",
-			() -> {
-				long[] selectedGroupIds = getSelectedGroupIds();
-
-				if (selectedGroupIds.length > 0) {
-					return StringUtil.merge(selectedGroupIds);
-				}
-
-				return null;
-			}
-		).setParameter(
-			"showAddButton",
-			() -> {
-				if (isShowAddButton()) {
-					return Boolean.TRUE.toString();
-				}
-
-				return null;
-			}
-		).setParameter(
-			"showNonindexable", _isShowNonindexable()
-		).setParameter(
-			"showScheduled", _isShowScheduled()
-		).setParameter(
-			"subtypeSelectionId", getSubtypeSelectionId()
-		).setParameter(
-			"typeSelection", getTypeSelection()
-		).buildPortletURL();
 	}
 
 	public long getRefererAssetEntryId() {
@@ -644,8 +574,8 @@ public class AssetBrowserDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetBrowserDisplayContext.class);
 
-	private AssetBrowserSearch _assetBrowserSearch;
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private SearchContainer<AssetEntry> _assetEntrySearchContainer;
 	private final AssetHelper _assetHelper;
 	private AssetRendererFactory<?> _assetRendererFactory;
 	private long[] _classNameIds;

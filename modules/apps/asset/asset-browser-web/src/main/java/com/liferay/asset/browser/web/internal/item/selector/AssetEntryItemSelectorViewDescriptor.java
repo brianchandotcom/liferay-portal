@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
-import javax.portlet.PortletException;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -79,12 +77,7 @@ public class AssetEntryItemSelectorViewDescriptor
 	public SearchContainer<AssetEntry> getSearchContainer()
 		throws PortalException {
 
-		try {
-			return _assetBrowserDisplayContext.getAssetBrowserSearch();
-		}
-		catch (PortletException portletException) {
-			throw new PortalException(portletException);
-		}
+		return _assetBrowserDisplayContext.getAssetEntrySearchContainer();
 	}
 
 	@Override

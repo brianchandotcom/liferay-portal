@@ -67,7 +67,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			assetBrowserDisplayContext.getAssetBrowserSearch());
+			assetBrowserDisplayContext.getAssetEntrySearchContainer());
 
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
 

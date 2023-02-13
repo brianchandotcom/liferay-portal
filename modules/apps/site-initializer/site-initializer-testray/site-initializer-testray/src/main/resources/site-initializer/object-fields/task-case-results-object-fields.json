@@ -112,30 +112,6 @@
 			"required": false,
 			"state": false,
 			"system": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Aggregation",
-			"externalReferenceCode": "TOTAL-CASE-RESULTS",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total Case Results"
-			},
-			"name": "totalCaseResults",
-			"objectFieldSettings": [
-				{
-					"name": "objectRelationshipName",
-					"value": "subtaskToSubtasksCasesResults"
-				},
-				{
-					"name": "function",
-					"value": "COUNT"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Task$]"

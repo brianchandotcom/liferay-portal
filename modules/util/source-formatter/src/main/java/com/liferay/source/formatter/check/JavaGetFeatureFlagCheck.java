@@ -27,6 +27,11 @@ import java.util.regex.Pattern;
 public class JavaGetFeatureFlagCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isLiferaySourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

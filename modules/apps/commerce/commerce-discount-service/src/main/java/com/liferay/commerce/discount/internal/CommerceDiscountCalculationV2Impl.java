@@ -34,6 +34,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,7 +49,6 @@ import java.math.RoundingMode;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,16 +134,12 @@ public class CommerceDiscountCalculationV2Impl
 		if ((commercePriceListDiscountRels != null) &&
 			!commercePriceListDiscountRels.isEmpty()) {
 
-			Stream<CommercePriceListDiscountRel> stream =
-				commercePriceListDiscountRels.stream();
-
-			long[] commerceDiscountIds = stream.mapToLong(
-				CommercePriceListDiscountRel::getCommerceDiscountId
-			).toArray();
-
 			List<CommerceDiscount> commerceDiscounts =
 				commerceDiscountLocalService.getPriceListCommerceDiscounts(
-					commerceDiscountIds, cpInstance.getCPDefinitionId());
+					TransformUtil.transformToLongArray(
+						commercePriceListDiscountRels,
+						CommercePriceListDiscountRel::getCommerceDiscountId),
+					cpInstance.getCPDefinitionId());
 
 			if (commerceDiscounts.isEmpty()) {
 				return null;

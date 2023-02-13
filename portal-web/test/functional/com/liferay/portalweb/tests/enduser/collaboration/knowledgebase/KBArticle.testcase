@@ -138,12 +138,19 @@ definition {
 	}
 
 	@description = "This test ensures that users can add an article with the description."
-	@ignore = "Test Stub"
 	@priority = 5
 	test CanAddArticleWithDescription {
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbDescription = "Knowledge Base Article Description");
 
-		// TODO LPS-172372
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbDescription = "Knowledge Base Article Description");
 	}
 
 	@priority = 4

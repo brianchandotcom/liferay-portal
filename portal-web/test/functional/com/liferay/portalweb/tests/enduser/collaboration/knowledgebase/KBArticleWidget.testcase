@@ -94,12 +94,36 @@ definition {
 	}
 
 	@description = "This test ensures that the description can be displayed on the KB article widget after enabling it in the configuration."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
 
-		// TODO LPS-172372
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
+		KBArticle.selectArticlesToDisplayOnWidget(
+			kbArticle = "true",
+			kbArticleTitle = "KB Article Title");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.viewPG(
+			description = "Disabled",
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
+
+		KBArticle.enableDescriptionOnPortlet(portletName = "Knowledge Base Article");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
+
+		KBArticle.viewPG(
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
 	}
 
 	@priority = 3

@@ -29,12 +29,40 @@ definition {
 	}
 
 	@description = "This test ensures that the description can be displayed on the KB search widget after enabling it in the configuration."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanViewDescriptionAfterEnablingInConfiguration {
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Knowledge Base Display Page",
+			widgetName = "Knowledge Base Search");
 
-		// TODO LPS-172372
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Article Content",
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
 
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBSearch.searchWidget(searchTerm = "KB Article Title");
+
+		KBSearch.viewSearchResultPG(
+			description = "Disabled",
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.enableDescriptionOnPortlet(portletName = "Knowledge Base Search");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBSearch.searchWidget(searchTerm = "KB Article Title");
+
+		KBSearch.viewSearchResultPG(
+			kbArticleTitle = "KB Article Title",
+			kbDescription = "KB Article Description");
 	}
 
 }

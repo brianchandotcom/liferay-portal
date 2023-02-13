@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -182,17 +181,6 @@ public class AssetBrowserDisplayContext {
 		return _assetRendererFactory;
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, AssetBrowserPortletKeys.ASSET_BROWSER, "list");
-
-		return _displayStyle;
-	}
-
 	public long getGroupId() {
 		if (_assetEntryItemSelectorCriterion.getGroupId() ==
 				_themeDisplay.getRefererGroupId()) {
@@ -258,17 +246,6 @@ public class AssetBrowserDisplayContext {
 			ParamUtil.getString(_httpServletRequest, "scope"), "everywhere");
 
 		return _searchEverywhere;
-	}
-
-	public boolean isShowAddButton() {
-		if (_showAddButton != null) {
-			return _showAddButton;
-		}
-
-		_showAddButton = ParamUtil.getBoolean(
-			_httpServletRequest, "showAddButton");
-
-		return _showAddButton;
 	}
 
 	public boolean isShowAssetEntryStatus() {
@@ -422,7 +399,6 @@ public class AssetBrowserDisplayContext {
 	private AssetRendererFactory<?> _assetRendererFactory;
 	private long[] _classNameIds;
 	private final DepotEntryService _depotEntryService;
-	private String _displayStyle;
 	private long[] _filterGroupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;

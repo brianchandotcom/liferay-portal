@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.internal.search;
 
 import com.liferay.asset.kernel.configuration.provider.AssetCategoryConfigurationProviderUtil;
 import com.liferay.asset.kernel.model.AssetCategory;

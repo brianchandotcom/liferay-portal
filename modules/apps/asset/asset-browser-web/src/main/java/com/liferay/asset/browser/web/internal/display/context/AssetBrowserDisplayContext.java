@@ -23,28 +23,19 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
-import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
-import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,12 +47,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -75,17 +62,15 @@ public class AssetBrowserDisplayContext {
 
 	public AssetBrowserDisplayContext(
 		AssetEntryLocalService assetEntryLocalService, AssetHelper assetHelper,
-		DepotEntryService depotEntryService, GroupService groupService,
-		HttpServletRequest httpServletRequest, Language language, Portal portal,
+		DepotEntryService depotEntryService,
+		HttpServletRequest httpServletRequest, Portal portal,
 		PortletURL portletURL, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetHelper = assetHelper;
 		_depotEntryService = depotEntryService;
-		_groupService = groupService;
 		_httpServletRequest = httpServletRequest;
-		_language = language;
 		_portal = portal;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
@@ -202,29 +187,6 @@ public class AssetBrowserDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEventName() {
-		if (_eventName != null) {
-			return _eventName;
-		}
-
-		_eventName = ParamUtil.getString(
-			_httpServletRequest, "itemSelectedEventName");
-
-		if (Validator.isNull(_eventName)) {
-			_eventName = ParamUtil.getString(
-				_httpServletRequest, "eventName",
-				_renderResponse.getNamespace() + "selectAsset");
-		}
-
-		return _eventName;
-	}
-
-	public String getGroupCssIcon(long groupId) throws PortalException {
-		Group group = _groupService.getGroup(groupId);
-
-		return group.getIconCssClass();
-	}
-
 	public long getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -237,21 +199,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return _groupId;
-	}
-
-	public String getGroupLabel(long groupId, Locale locale)
-		throws PortalException {
-
-		Group group = _groupService.getGroup(groupId);
-
-		return group.getDescriptiveName(locale);
-	}
-
-	public List<BreadcrumbEntry> getPortletBreadcrumbEntries()
-		throws PortalException, PortletException {
-
-		return Arrays.asList(
-			_getSitesAndLibrariesBreadcrumb(), _getHomeBreadcrumb());
 	}
 
 	public long getRefererAssetEntryId() {
@@ -355,34 +302,6 @@ public class AssetBrowserDisplayContext {
 		return false;
 	}
 
-	public boolean isShowBreadcrumb() {
-		String scopeGroupType = ParamUtil.getString(
-			_httpServletRequest, "scopeGroupType");
-
-		if (Validator.isNotNull(scopeGroupType) &&
-			scopeGroupType.equals(
-				ItemSelectorCriteriaConstants.SCOPE_GROUP_TYPE_PAGE)) {
-
-			return false;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (Objects.equals(
-				ItemSelectorPortletKeys.ITEM_SELECTOR,
-				portletDisplay.getPortletName()) ||
-			ParamUtil.getBoolean(_httpServletRequest, "showBreadcrumb")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -463,18 +382,6 @@ public class AssetBrowserDisplayContext {
 		return _filterGroupIds;
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumb() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(themeDisplay.getSiteGroupName());
-
-		return breadcrumbEntry;
-	}
-
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -496,30 +403,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return listable;
-	}
-
-	private BreadcrumbEntry _getSitesAndLibrariesBreadcrumb()
-		throws PortletException {
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(
-			_language.get(_httpServletRequest, "sites-and-libraries"));
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(
-					_portletURL,
-					_portal.getLiferayPortletResponse(_renderResponse))
-			).setParameter(
-				"groupType", "site"
-			).setParameter(
-				"scopeGroupType",
-				ParamUtil.getString(_httpServletRequest, "scopeGroupType")
-			).setParameter(
-				"showGroupSelector", true
-			).buildString());
-
-		return breadcrumbEntry;
 	}
 
 	private int[] _getStatuses() {
@@ -581,13 +464,10 @@ public class AssetBrowserDisplayContext {
 	private long[] _classNameIds;
 	private final DepotEntryService _depotEntryService;
 	private String _displayStyle;
-	private String _eventName;
 	private long[] _filterGroupIds;
 	private Long _groupId;
-	private final GroupService _groupService;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private final Language _language;
 	private Boolean _multipleSelection;
 	private String _orderByCol;
 	private String _orderByType;

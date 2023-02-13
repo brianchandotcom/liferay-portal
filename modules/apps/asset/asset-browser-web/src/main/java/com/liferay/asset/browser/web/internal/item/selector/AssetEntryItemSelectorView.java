@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -101,8 +100,8 @@ public class AssetEntryItemSelectorView
 			AssetBrowserDisplayContext assetBrowserDisplayContext =
 				new AssetBrowserDisplayContext(
 					_assetEntryLocalService, _assetHelper, _depotEntryService,
-					_groupService, httpServletRequest, _language, _portal,
-					portletURL, renderRequest, renderResponse);
+					httpServletRequest, _portal, portletURL, renderRequest,
+					renderResponse);
 
 			_itemSelectorViewDescriptorRenderer.renderHTML(
 				httpServletRequest, servletResponse, itemSelectorCriterion,
@@ -199,9 +198,6 @@ public class AssetEntryItemSelectorView
 
 	@Reference
 	private DepotEntryService _depotEntryService;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<AssetEntryItemSelectorCriterion>

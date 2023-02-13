@@ -55,6 +55,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	showInfoButton="<%= kbAdminManagementToolbarDisplayContext.isShowInfoButton() %>"
 	sortingOrder="<%= kbAdminManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= kbAdminManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

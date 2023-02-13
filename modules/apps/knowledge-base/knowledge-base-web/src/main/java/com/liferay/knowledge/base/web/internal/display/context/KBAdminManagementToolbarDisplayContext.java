@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -44,12 +46,14 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -379,6 +383,25 @@ public class KBAdminManagementToolbarDisplayContext {
 		return _searchContainer.getTotal();
 	}
 
+	public List<ViewTypeItem> getViewTypeItems() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169675"))) {
+			return null;
+		}
+
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/admin/view.jsp"
+		).buildPortletURL();
+
+		return new ViewTypeItemList(portletURL, _getDisplayStyle()) {
+			{
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
+	}
+
 	public boolean isDisabled() {
 		return !_searchContainer.hasResults();
 	}
@@ -505,6 +528,23 @@ public class KBAdminManagementToolbarDisplayContext {
 		).buildPortletURL();
 	}
 
+	private String _getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = "descriptive";
+		}
+
+		_displayStyle = displayStyle;
+
+		return _displayStyle;
+	}
+
 	private String _getKeywords() {
 		return ParamUtil.getString(_httpServletRequest, "keywords");
 	}
@@ -601,6 +641,7 @@ public class KBAdminManagementToolbarDisplayContext {
 			KBActionKeys.ADD_KB_FOLDER);
 	}
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

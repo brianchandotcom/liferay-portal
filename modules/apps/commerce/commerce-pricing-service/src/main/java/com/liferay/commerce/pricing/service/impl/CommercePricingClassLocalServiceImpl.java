@@ -21,6 +21,7 @@ import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
 import com.liferay.commerce.pricing.service.base.CommercePricingClassLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -59,8 +60,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -240,18 +239,10 @@ public class CommercePricingClassLocalServiceImpl
 
 	@Override
 	public long[] getCommercePricingClassByCPDefinition(long cpDefinitionId) {
-		List<CommercePricingClassCPDefinitionRel>
-			commercePricingClassCPDefinitionRels =
-				_commercePricingClassCPDefinitionRelLocalService.
-					getCommercePricingClassByCPDefinitionId(cpDefinitionId);
-
-		Stream<CommercePricingClassCPDefinitionRel> stream =
-			commercePricingClassCPDefinitionRels.stream();
-
-		LongStream longStream = stream.mapToLong(
+		return TransformUtil.transformToLongArray(
+			_commercePricingClassCPDefinitionRelLocalService.
+				getCommercePricingClassByCPDefinitionId(cpDefinitionId),
 			CommercePricingClassCPDefinitionRel::getCommercePricingClassId);
-
-		return longStream.toArray();
 	}
 
 	@Override

@@ -53,12 +53,6 @@ definition {
 			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
-	macro assertValueOnLimitCharactersNotPresent {
-		AssertElementNotPresent(
-			key_maxValue = ${maxValue},
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-	}
-
 	macro checkLimitCharacters {
 		Click(
 			key_labelName = "Limit Characters",

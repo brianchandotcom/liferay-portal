@@ -1393,7 +1393,9 @@ definition {
 
 		ObjectField.typeValueOnLimitCharacters(newValue = 281);
 
-		ObjectField.assertValueOnLimitCharactersNotPresent(maxValue = 281);
+		AssertElementNotPresent(
+			key_maxValue = 281,
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 		ObjectField.assertValueOnLimitCharacters(maxValue = 28);
 	}

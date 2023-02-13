@@ -227,17 +227,12 @@ public class BundleSiteInitializerTest {
 
 	@Test
 	public void testInitializeFromBundle() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		Bundle bundle1 = _getTestBundle(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
-
-		bundle1.start();
-
 		Bundle bundle2 = _getTestBundle(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
 
-		bundle2.start();
+		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = _getServiceContext(group);
 
@@ -254,55 +249,21 @@ public class BundleSiteInitializerTest {
 		finally {
 			bundle1.uninstall();
 			bundle2.uninstall();
-			GroupLocalServiceUtil.deleteGroup(group);
-			ServiceContextThreadLocal.popServiceContext();
 
-			// TODO We should not need to delete the object definition manually
-			// because of DataGuardTestRule. However,
-			// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
-			// for PortalRunMode#isTestMode which is not returning true when the
-			// DataGuardTestRule runs.
-
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition1");
-
-			if (objectDefinition1 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition1.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition2");
-
-			if (objectDefinition2 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition2.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition3 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition3");
-
-			if (objectDefinition3 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition3.getObjectDefinitionId());
-			}
-
-			//FileUtil.deltree(unzipFolder);
+			_deleteLeftovers(group, serviceContext);
 		}
 	}
 
 	@Test
 	public void testInitializeFromFile() throws Exception {
 		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext = _getServiceContext(group);
+
 		File tempFolder1 = _getTestFile(
 			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
 		File tempFolder2 = _getTestFile(
 			"/com.liferay.site.initializer.extender.test.bundle.2.jar");
-
-		ServiceContext serviceContext = _getServiceContext(group);
 
 		try {
 			_test1(
@@ -317,42 +278,8 @@ public class BundleSiteInitializerTest {
 		finally {
 			FileUtil.deltree(tempFolder1);
 			FileUtil.deltree(tempFolder2);
-			GroupLocalServiceUtil.deleteGroup(group);
 
-			// TODO We should not need to delete the object definition manually
-			// because of DataGuardTestRule. However,
-			// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
-			// for PortalRunMode#isTestMode which is not returning true when the
-			// DataGuardTestRule runs.
-
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition1");
-
-			if (objectDefinition1 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition1.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition2");
-
-			if (objectDefinition2 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition2.getObjectDefinitionId());
-			}
-
-			ObjectDefinition objectDefinition3 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_TestObjectDefinition3");
-
-			if (objectDefinition3 != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition3.getObjectDefinitionId());
-			}
-
-			//FileUtil.deltree(unzipFolder);
+			_deleteLeftovers(group, serviceContext);
 		}
 	}
 
@@ -2015,6 +1942,49 @@ public class BundleSiteInitializerTest {
 			workflowDefinitionLink2.getWorkflowDefinitionName());
 	}
 
+	private void _deleteLeftovers(Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		GroupLocalServiceUtil.deleteGroup(group);
+		ServiceContextThreadLocal.popServiceContext();
+
+		// TODO We should not need to delete the object definition manually
+		// because of DataGuardTestRule. However,
+		// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks
+		// for PortalRunMode#isTestMode which is not returning true when the
+		// DataGuardTestRule runs.
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(), "C_TestObjectDefinition1");
+
+		if (objectDefinition1 != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition1.getObjectDefinitionId());
+		}
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(), "C_TestObjectDefinition2");
+
+		if (objectDefinition2 != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition2.getObjectDefinitionId());
+		}
+
+		ObjectDefinition objectDefinition3 =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(), "C_TestObjectDefinition3");
+
+		if (objectDefinition3 != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition3.getObjectDefinitionId());
+		}
+
+		//FileUtil.deltree(unzipFolder);
+
+	}
+
 	private Configuration _getFactoryConfiguration(
 			String factoryPid, ExtendedObjectClassDefinition.Scope scope,
 			Serializable scopePK)
@@ -2065,7 +2035,11 @@ public class BundleSiteInitializerTest {
 		Bundle testBundle = FrameworkUtil.getBundle(
 			BundleSiteInitializerTest.class);
 
-		return _installBundle(testBundle.getBundleContext(), location);
+		Bundle bundle = _installBundle(testBundle.getBundleContext(), location);
+
+		bundle.start();
+
+		return bundle;
 	}
 
 	private File _getTestFile(String location) throws Exception {

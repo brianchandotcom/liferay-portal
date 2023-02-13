@@ -3009,8 +3009,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 </#macro>
 
 <#macro getTestGetterMethods
-	javaMethodSignature
 	getterJavaMethodParametersMap
+	javaMethodSignature
 	testNamePrefix
 >
 	<#list getterJavaMethodParametersMap?values as javaMethodParameter>

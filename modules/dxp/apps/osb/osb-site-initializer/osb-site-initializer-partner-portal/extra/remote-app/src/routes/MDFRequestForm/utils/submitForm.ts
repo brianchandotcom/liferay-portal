@@ -120,5 +120,13 @@ export default async function submitForm(
 		}
 	}
 
-	Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`);
+	if (values.id) {
+		Liferay.Util.navigate(
+			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
+		);
+	}
+
+	Liferay.Util.navigate(
+		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
+	);
 }

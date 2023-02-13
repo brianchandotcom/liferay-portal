@@ -873,8 +873,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				new String[] {
 					group.getFriendlyURL(),
 					String.valueOf(serviceContext.getScopeGroupId()),
-					group.getGroupKey(),
-					String.valueOf(group.getCompanyId())
+					group.getGroupKey(), String.valueOf(group.getCompanyId())
 				}),
 			assetListEntryIdsStringUtilReplaceValues,
 			clientExtensionEntryIdsStringUtilReplaceValues,

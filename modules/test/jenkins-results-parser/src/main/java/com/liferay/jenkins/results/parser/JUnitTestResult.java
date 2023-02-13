@@ -214,19 +214,10 @@ public class JUnitTestResult extends BaseTestResult {
 
 		_className = caseJSONObject.getString("className");
 		_duration = (long)(caseJSONObject.getDouble("duration") * 1000);
+		_errorDetails = caseJSONObject.optString("errorDetails", null);
+		_errorStackTrace = caseJSONObject.optString("errorStackTrace", null);
 		_status = caseJSONObject.getString("status");
 		_testName = caseJSONObject.getString("name");
-
-		if (_status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
-			caseJSONObject.has("errorStackTrace")) {
-
-			_errorDetails = caseJSONObject.optString("errorDetails");
-			_errorStackTrace = caseJSONObject.optString("errorStackTrace");
-		}
-		else {
-			_errorDetails = null;
-			_errorStackTrace = null;
-		}
 	}
 
 	protected String getEncodedTestName() {

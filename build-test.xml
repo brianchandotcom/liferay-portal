@@ -1836,11 +1836,11 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<propertyregex
 						input="${test.url}"
 						property="proxy.url"
-						regexp="(http:\/\/.*)(:[0-9][0-9])([0-9]+)"
-						select="\1\2"
+						regexp="(http:\/\/.*)(:[0-9]+)"
+						select="\1"
 					/>
 
-					<var name="test.url" value="${proxy.url}/${portal.proxy.path}" />
+					<var name="test.url" value="${proxy.url}:88/${portal.proxy.path}" />
 				</then>
 			</if>
 		</sequential>
@@ -2222,11 +2222,25 @@ war.path=${app.server.portal.dir}/</echo>
 							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
-						<replace
-							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-							token="web.server.http.port=8080"
-							value="web.server.http.port=${test.app.server.leading.port.number}080"
-						/>
+						<get-testcase-property property.name="portal.proxy.path" />
+
+						<if>
+							<isset property="portal.proxy.path" />
+							<then>
+								<replace
+									file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+									token="web.server.http.port=88"
+									value="web.server.http.port=${test.app.server.leading.port.number}8"
+								/>
+							</then>
+							<else>
+								<replace
+									file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+									token="web.server.http.port=8080"
+									value="web.server.http.port=${test.app.server.leading.port.number}080"
+								/>
+							</else>
+						</if>
 
 						<math
 							datatype="int"
@@ -7376,7 +7390,7 @@ ${docker.start.error}</fail>
 										<elseif>
 											<isset property="portal.proxy.path" />
 											<then>
-												<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}0/${portal.proxy.path}/web/guest" />
+												<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
 											</then>
 										</elseif>
 										<elseif>
@@ -7974,7 +7988,7 @@ war.path=${app.server.portal.dir}/</echo>
 				<elseif>
 					<isset property="portal.proxy.path" />
 					<then>
-						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}0/${portal.proxy.path}/web/guest" />
+						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
 					</then>
 				</elseif>
 				<elseif>
@@ -11464,7 +11478,7 @@ portal.proxy.path=/${portal.proxy.path}</echo>
 				<replace
 					file="portal-impl/src/portal-ext.properties"
 					token="web.server.http.port=8080"
-					value=""
+					value="web.server.http.port=88"
 				/>
 			</then>
 		</if>

@@ -19,13 +19,27 @@
 			<not>
 				<resourcecontains
 					resource="${apache.http.dir}/conf/httpd.conf"
-					substring="VirtualHost *:80"
+					substring="Listen 88"
 				/>
 			</not>
 			<then>
 				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
-<VirtualHost *:80>
+Listen 88]]></echo>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<resourcecontains
+					resource="${apache.http.dir}/conf/httpd.conf"
+					substring="VirtualHost *:88"
+				/>
+			</not>
+			<then>
+				<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
+
+<VirtualHost *:88>
 	ServerName localhost
 	ProxyPreserveHost On
 	ProxyPass /${portal.proxy.path} http://localhost:8080
@@ -50,13 +64,13 @@
 						<not>
 							<resourcecontains
 								resource="${apache.http.dir}/conf/httpd.conf"
-								substring="Listen ${test.app.server.leading.port.number}0"
+								substring="Listen ${test.app.server.leading.port.number}8"
 							/>
 						</not>
 						<then>
 							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
-Listen ${test.app.server.leading.port.number}0]]></echo>
+Listen ${test.app.server.leading.port.number}8]]></echo>
 						</then>
 					</if>
 
@@ -70,7 +84,7 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 						<then>
 							<echo append="true" file="${apache.http.dir}/conf/httpd.conf"><![CDATA[
 
-<VirtualHost *:${test.app.server.leading.port.number}0>
+<VirtualHost *:${test.app.server.leading.port.number}8>
 	ServerName localhost
 	ProxyPreserveHost On
 	ProxyPass /${portal.proxy.path} http://localhost:${test.app.server.leading.port.number}080

@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.liferay.batch.engine.internal.auto.deploy.BatchEngineAutoDeployListener;
+import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -69,24 +69,23 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 	}
 
 	private String _getExpectedContent(
-		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-			batchEngineImportConfiguration,
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration,
 		List<String> fieldNames, List<Item> items) {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("{\"actions\":\n{\"createBatch\": {\"href\": ");
 		sb.append("\"/o/headless-batch-engine/v1.0/import-task/");
-		sb.append(batchEngineImportConfiguration.getClassName());
+		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\", \"method\": \"POST\"}},");
 		sb.append("\"configuration\": {\"className\": \"");
-		sb.append(batchEngineImportConfiguration.getClassName());
+		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\",\n\"companyId\" :");
-		sb.append(batchEngineImportConfiguration.getCompanyId());
+		sb.append(batchEngineUnitConfiguration.getCompanyId());
 		sb.append(",\n\"userId\": ");
-		sb.append(batchEngineImportConfiguration.getUserId());
+		sb.append(batchEngineUnitConfiguration.getUserId());
 		sb.append(",\n\"version\": \"");
-		sb.append(batchEngineImportConfiguration.getVersion());
+		sb.append(batchEngineUnitConfiguration.getVersion());
 		sb.append("\"\n},");
 
 		if (fieldNames.isEmpty()) {
@@ -116,18 +115,16 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		BatchEngineAutoDeployListener.BatchEngineImportConfiguration
-			batchEngineImportConfiguration =
-				new BatchEngineAutoDeployListener.
-					BatchEngineImportConfiguration();
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+			new BatchEngineUnitConfiguration();
 
-		batchEngineImportConfiguration.setClassName(Item.class.getName());
-		batchEngineImportConfiguration.setVersion("v1.0");
+		batchEngineUnitConfiguration.setClassName(Item.class.getName());
+		batchEngineUnitConfiguration.setVersion("v1.0");
 
 		try (JSONTBatchEngineExportTaskItemWriterImpl
 				jsontBatchEngineExportTaskItemWriterImpl =
 					new JSONTBatchEngineExportTaskItemWriterImpl(
-						fieldsMap.keySet(), batchEngineImportConfiguration,
+						fieldsMap.keySet(), batchEngineUnitConfiguration,
 						fieldNames, unsyncByteArrayOutputStream)) {
 
 			for (Item[] items : getItemGroups()) {
@@ -138,7 +135,7 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		JSONAssert.assertEquals(
 			_getExpectedContent(
-				batchEngineImportConfiguration, fieldNames, getItems()),
+				batchEngineUnitConfiguration, fieldNames, getItems()),
 			unsyncByteArrayOutputStream.toString(), true);
 	}
 

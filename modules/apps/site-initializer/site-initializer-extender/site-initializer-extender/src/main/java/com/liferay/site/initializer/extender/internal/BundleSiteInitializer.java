@@ -1234,8 +1234,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Map<String, ObjectDefinition>
-			accountEntryRestrictedObjectDefinitions = new HashMap<>();
+		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
+			new HashMap<>();
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".object-actions.json")) {
@@ -1354,10 +1354,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						"accountEntryTo" +
 							localServiceObjectDefinition.getShortName());
 
-			_objectDefinitionLocalService.
-				enableAccountEntryRestricted(
-					localServiceObjectDefinition.getObjectDefinitionId(),
-					objectRelationship);
+			_objectDefinitionLocalService.enableAccountEntryRestricted(
+				localServiceObjectDefinition.getObjectDefinitionId(),
+				objectRelationship);
 		}
 
 		_invoke(

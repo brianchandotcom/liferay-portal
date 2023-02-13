@@ -465,6 +465,38 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition enableAccountEntryRestricted(
+			long objectDefinitionId, ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition2 = getObjectDefinition(
+			objectDefinitionId);
+
+		if (objectDefinition2.isAccountEntryRestricted()) {
+			return objectDefinition2;
+		}
+
+		ObjectDefinition objectDefinition1 = getObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+
+		if (!Objects.equals(objectDefinition1.getShortName(), "AccountEntry")) {
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				"It is only possible to restrict custom object definitions " +
+					"with account entry");
+		}
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
+			objectField2.getObjectFieldId());
+
+		objectDefinition2.setAccountEntryRestricted(true);
+
+		return objectDefinitionPersistence.update(objectDefinition2);
+	}
+
+	@Override
 	public ObjectDefinition fetchObjectDefinition(long companyId, String name) {
 		return objectDefinitionPersistence.fetchByC_N(companyId, name);
 	}
@@ -590,40 +622,6 @@ public class ObjectDefinitionLocalServiceImpl
 			_deployObjectDefinitionMethodKey, objectDefinition);
 
 		return objectDefinition;
-	}
-
-	@Override
-	public ObjectDefinition enableAccountEntryRestricted(
-			long objectDefinitionId, ObjectRelationship objectRelationship)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition = getObjectDefinition(
-			objectDefinitionId);
-
-		if (objectDefinition.isAccountEntryRestricted()) {
-			return objectDefinition;
-		}
-
-		ObjectDefinition objectDefinition1 =
-			getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (!Objects.equals(
-			objectDefinition1.getShortName(), "AccountEntry")) {
-
-			throw new ObjectDefinitionAccountEntryRestrictedException(
-				"It is only possible to restrict custom object definitions " +
-				"with account entry");
-		}
-
-		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		objectDefinition.setAccountEntryRestrictedObjectFieldId(
-			objectField2.getObjectFieldId());
-		objectDefinition.setAccountEntryRestricted(true);
-
-		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	@Override

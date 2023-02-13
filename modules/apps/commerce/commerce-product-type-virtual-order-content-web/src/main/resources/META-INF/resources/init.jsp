@@ -31,7 +31,6 @@ page import="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtual
 page import="com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderActionKeys" %><%@
 page import="com.liferay.commerce.product.type.virtual.order.content.web.internal.display.context.CommerceVirtualOrderItemContentDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.order.content.web.internal.portlet.CommerceVirtualOrderItemContentPortlet" %><%@
-page import="com.liferay.commerce.product.type.virtual.order.content.web.internal.security.resource.permission.CommerceVirtualOrderItemPermission" %><%@
 page import="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

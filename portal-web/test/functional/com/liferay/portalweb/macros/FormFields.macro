@@ -581,9 +581,11 @@ definition {
 
 		MenuItem.click(menuItem = ${validationArgument});
 
-		Type(
-			locator1 = "FormFields#VALIDATION_INPUT",
-			value1 = ${validationInput});
+		if (isSet(validationInput)) {
+			Type(
+				locator1 = "FormFields#VALIDATION_INPUT",
+				value1 = ${validationInput});
+		}
 
 		Type(
 			locator1 = "FormFields#VALIDATION_ERROR_MESSAGE",

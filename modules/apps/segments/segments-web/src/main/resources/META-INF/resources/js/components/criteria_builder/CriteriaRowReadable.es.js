@@ -48,7 +48,7 @@ class CriteriaRowReadable extends Component {
 			'DATE'
 		);
 
-		const isEverOperator = !criterion.query.items;
+		const isEverOperator = !criterion.day;
 
 		if (isEverOperator) {
 			return dateOperators.find(
@@ -57,22 +57,21 @@ class CriteriaRowReadable extends Component {
 		}
 
 		const isBetweenOperator =
-			criterion?.query.items[1].operatorName === DATE_OPERATORS.BETWEEN;
-		const isSinceOperator = SINCE_VALUES[criterion?.query.items[1].value]
+			criterion?.day?.operatorName === DATE_OPERATORS.BETWEEN;
+		const isSinceOperator = SINCE_VALUES[criterion?.day?.value]
 			? true
 			: false;
 
 		const dateOperatorLabel = dateOperators.find(
-			(operator) =>
-				operator.name === criterion?.query.items[1].operatorName
+			(operator) => operator.name === criterion?.day?.operatorName
 		)?.label;
 
 		if (isBetweenOperator) {
 			const startParsedValue = dateToInternationalHuman(
-				criterion?.query.items[1].value?.start
+				criterion?.day?.value?.start
 			);
 			const endParsedValue = dateToInternationalHuman(
-				criterion?.query.items[1].value?.end
+				criterion?.day?.value?.end
 			);
 
 			return (
@@ -92,8 +91,8 @@ class CriteriaRowReadable extends Component {
 			? Liferay.Language.get('since')
 			: dateOperatorLabel;
 		const value = isSinceOperator
-			? SINCE_VALUES[criterion?.query.items[1].value]
-			: criterion?.query.items[1].value;
+			? SINCE_VALUES[criterion?.day?.value]
+			: criterion?.day?.value;
 
 		return this._renderCriteriaString({
 			operatorLabel,
@@ -129,9 +128,7 @@ class CriteriaRowReadable extends Component {
 
 		const eventCriteriaPart = this._renderCriteriaString({
 			propertyLabel,
-			value: criterion.query.items
-				? criterion.query.items[0]?.value
-				: criterion.query.value,
+			value: criterion.assetId,
 		});
 
 		const dateCriteriaPart = this._renderEventDateString(criterion);

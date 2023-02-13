@@ -1,0 +1,49 @@
+definition {
+
+	macro searchWidget {
+		Type(
+			locator1 = "KnowledgeBase#SEARCH_WIDGET_BAR",
+			value1 = ${searchTerm});
+
+		KeyPress(
+			locator1 = "KnowledgeBase#SEARCH_WIDGET_BAR",
+			value1 = "\RETURN");
+	}
+
+	macro viewSearchResultPG {
+		AssertTextEquals.assertPartialText(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#SEARCH_WIDGET_ARTICLE_TITLE",
+			value1 = ${kbArticleTitle});
+
+		AssertClick(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#SEARCH_WIDGET_ARTICLE_TITLE",
+			value1 = ${kbArticleTitle});
+
+		AssertVisible(
+			key_title = ${kbArticleTitle},
+			locator1 = "Header#H1_TITLE");
+
+		if (isSet(kbDescription)) {
+			if (${description} == "Disabled") {
+				AssertElementNotPresent(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE");
+
+				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
+			}
+			else {
+				AssertTextEquals(
+					key_title = "Description",
+					locator1 = "Header#H3_TITLE",
+					value1 = "Description");
+
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION",
+					value1 = ${kbDescription});
+			}
+		}
+	}
+
+}

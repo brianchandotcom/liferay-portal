@@ -16,18 +16,28 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:sheet>
-	<clay:sheet-header>
-		<h2>
-			<liferay-ui:message key="pdf-preview-configuration-name" />
-		</h2>
-	</clay:sheet-header>
+<%
+PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (PDFPreviewConfigurationDisplayContext)request.getAttribute(PDFPreviewConfigurationDisplayContext.class.getName());
+%>
 
-	<clay:sheet-section>
-		<aui:input label="maximum-number-of-pages" name="maxNumberOfPages" value="<%= 0 %>" />
+<aui:form action="<%= pdfPreviewConfigurationDisplayContext.getEditPDFPreviewConfigurationURL() %>" method="post" name="fm">
+	<clay:sheet>
+		<clay:sheet-header>
+			<h2>
+				<liferay-ui:message key="pdf-preview-configuration-name" />
+			</h2>
+		</clay:sheet-header>
 
-		<p class="text-muted">
-			<liferay-ui:message key="maximum-number-of-pages-help" />
-		</p>
-	</clay:sheet-section>
-</clay:sheet>
+		<clay:sheet-section>
+			<aui:input label="maximum-number-of-pages" name="maxNumberOfPages" value="<%= 0 %>" />
+
+			<p class="text-muted">
+				<liferay-ui:message key="maximum-number-of-pages-help" />
+			</p>
+		</clay:sheet-section>
+
+		<clay:sheet-footer>
+			<aui:button primary="<%= true %>" type="submit" />
+		</clay:sheet-footer>
+	</clay:sheet>
+</aui:form>

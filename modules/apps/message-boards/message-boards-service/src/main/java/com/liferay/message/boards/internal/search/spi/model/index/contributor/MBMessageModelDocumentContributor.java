@@ -45,7 +45,6 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,17 +104,23 @@ public class MBMessageModelDocumentContributor
 		document.addKeywordSortable("urlSubject", mbMessage.getUrlSubject());
 
 		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
-			document.addKeyword(
-				"answered",
-				Stream.of(
+			Boolean anyMatch = false;
+
+			for (MBMessage message :
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),
-						WorkflowConstants.STATUS_APPROVED)
-				).flatMap(
-					List::stream
-				).anyMatch(
-					MBMessage::isAnswer
-				));
+						WorkflowConstants.STATUS_APPROVED)) {
+
+				if (!message.isAnswer()) {
+					continue;
+				}
+
+				anyMatch = true;
+
+				break;
+			}
+
+			document.addKeyword("answered", anyMatch);
 			document.addKeyword(
 				"childMessagesCount",
 				_mbMessageLocalService.getChildMessagesCount(

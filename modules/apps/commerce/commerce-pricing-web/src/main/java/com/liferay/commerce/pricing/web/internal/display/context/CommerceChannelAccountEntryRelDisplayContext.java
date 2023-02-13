@@ -190,12 +190,13 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 	public List<CommerceChannel> getFilteredCommerceChannels()
 		throws PortalException {
 
+		long[] commerceChannelIds = _getFilteredCommerceChannelIds();
+
 		return ListUtil.filter(
 			_commerceChannelService.getCommerceChannels(
 				_commercePricingRequestHelper.getCompanyId()),
 			commerceChannel -> !ArrayUtil.contains(
-				_getFilteredCommerceChannelIds(),
-				commerceChannel.getCommerceChannelId()));
+				commerceChannelIds, commerceChannel.getCommerceChannelId()));
 	}
 
 	public String getModalTitle() {
@@ -291,15 +292,15 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 				long commerceChannelId =
 					channelAccountEntryRel.getCommerceChannelId();
 
-				if ((commerceChannelAccountEntryRel == null) ||
-					(commerceChannelId !=
+				if ((commerceChannelAccountEntryRel != null) &&
+					(commerceChannelId ==
 						commerceChannelAccountEntryRel.
 							getCommerceChannelId())) {
 
-					return commerceChannelId;
+					return null;
 				}
 
-				return null;
+				return commerceChannelId;
 			});
 	}
 

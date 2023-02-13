@@ -2,7 +2,7 @@ assemble:
     - from: build/
       include: "*.js"
       into: static/
-navigation-js:
-    name: navigation-js
+dot-com-global-js:
+    name: Dot Com Global JS
     type: globalJS
     url: .*.js

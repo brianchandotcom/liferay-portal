@@ -32,7 +32,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		CustomerPortal.customerPortalApisTearDown();
+		CustomerPortal.customerPortalTearDown();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();

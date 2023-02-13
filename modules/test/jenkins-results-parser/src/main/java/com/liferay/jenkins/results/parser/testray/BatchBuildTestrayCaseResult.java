@@ -141,7 +141,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 				String errorDetails = testResult.getErrorDetails();
 
 				if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-					sb.append("Failed for unknown reason");
+					sb.append("Failed for unknown reason | ");
 				}
 				else {
 					errorDetails = errorDetails.replace(

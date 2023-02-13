@@ -272,6 +272,15 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static ObjectDefinition enableAccountEntryRestricted(
+			long objectDefinitionId,
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return getService().enableAccountEntryRestricted(
+			objectDefinitionId, objectRelationship);
+	}
+
 	public static ObjectDefinition fetchObjectDefinition(
 		long objectDefinitionId) {
 
@@ -457,15 +466,6 @@ public class ObjectDefinitionLocalServiceUtil {
 
 		return getService().publishCustomObjectDefinition(
 			userId, objectDefinitionId);
-	}
-
-	public static ObjectDefinition restrictObjectDefinitionByAccountEntry(
-			long objectDefinitionId,
-			com.liferay.object.model.ObjectRelationship objectRelationship)
-		throws PortalException {
-
-		return getService().restrictObjectDefinitionByAccountEntry(
-			objectDefinitionId, objectRelationship);
 	}
 
 	public static void undeployObjectDefinition(

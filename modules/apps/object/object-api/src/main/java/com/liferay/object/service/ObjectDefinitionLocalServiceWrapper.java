@@ -303,6 +303,17 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition
+			enableAccountEntryRestricted(
+				long objectDefinitionId,
+				com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.enableAccountEntryRestricted(
+			objectDefinitionId, objectRelationship);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition fetchObjectDefinition(
 		long objectDefinitionId) {
 
@@ -528,18 +539,6 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, objectDefinitionId);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectDefinition
-			restrictObjectDefinitionByAccountEntry(
-				long objectDefinitionId,
-				com.liferay.object.model.ObjectRelationship objectRelationship)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectDefinitionLocalService.
-			restrictObjectDefinitionByAccountEntry(
-				objectDefinitionId, objectRelationship);
 	}
 
 	@Override

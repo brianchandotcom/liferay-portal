@@ -59,7 +59,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -108,10 +107,9 @@ public class ExportImportDisplayPagesTest {
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
 				_serviceContext1.getScopeGroupId()));
 
-		Assert.assertTrue(!infoItemFormVariations.isEmpty());
+		Assert.assertFalse(infoItemFormVariations.isEmpty());
 
-		Collections.sort(
-			infoItemFormVariations,
+		infoItemFormVariations.sort(
 			Comparator.comparing(InfoItemFormVariation::getKey));
 
 		InfoItemFormVariation infoItemFormVariation =

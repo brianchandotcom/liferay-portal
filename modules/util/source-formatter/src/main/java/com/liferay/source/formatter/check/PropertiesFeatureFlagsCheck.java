@@ -85,8 +85,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
 				featureFlags.addAll(
-					_getFeatureFlags(fileContent, _featureFlagPattern2));
-				featureFlags.addAll(
 					_getFeatureFlagsByFeatureFlagManagerUtil(fileContent));
 			}
 		}
@@ -163,7 +161,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		List<String> featureFlags = new ArrayList<>();
 
-		Matcher matcher = _featureFlagPattern3.matcher(content);
+		Matcher matcher = _featureFlagPattern2.matcher(content);
 
 		while (matcher.find()) {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
@@ -195,8 +193,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
 		"\"feature\\.flag\\.(.+?)\"");
 	private static final Pattern _featureFlagPattern2 = Pattern.compile(
-		"\\.feature\\.flag=(.+?)\"");
-	private static final Pattern _featureFlagPattern3 = Pattern.compile(
 		"FeatureFlagManagerUtil\\.isEnabled\\(");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");

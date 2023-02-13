@@ -107,29 +107,18 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			return "Failed to finish build on CI";
 		}
 
-		TestClassResult portalLogTestClassResult = null;
-		TestClassResult poshiTestClassResult = null;
-
 		for (TestClassResult testClassResult : build.getTestClassResults()) {
 			String className = testClassResult.getClassName();
 
-			if (className.contains(
+			if (!className.equals(
 					"com.liferay.portal.log.assertor.PortalLogAssertorTest")) {
 
-				portalLogTestClassResult = testClassResult;
+				continue;
 			}
 
-			if (className.equals("com.liferay.poshi.runner.PoshiRunner")) {
-				poshiTestClassResult = testClassResult;
-			}
-		}
+			StringBuilder sb = new StringBuilder();
 
-		StringBuilder sb = new StringBuilder();
-
-		if (portalLogTestClassResult != null) {
-			for (TestResult testResult :
-					portalLogTestClassResult.getTestResults()) {
-
+			for (TestResult testResult : testClassResult.getTestResults()) {
 				if (!testResult.isFailing()) {
 					continue;
 				}
@@ -161,28 +150,12 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 					sb.append(" | ");
 				}
 			}
-		}
 
-		if (poshiTestClassResult != null) {
-			for (TestResult testResult :
-					poshiTestClassResult.getTestResults()) {
+			if (sb.length() > 0) {
+				sb.setLength(sb.length() - 3);
 
-				if (!testResult.isFailing()) {
-					continue;
-				}
-
-				String testName = testResult.getTestName();
-
-				sb.append(testName, 5, testName.length() - 1);
-
-				sb.append(" | ");
+				return sb.toString();
 			}
-		}
-
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 3);
-
-			return sb.toString();
 		}
 
 		if (result.equals("ABORTED")) {

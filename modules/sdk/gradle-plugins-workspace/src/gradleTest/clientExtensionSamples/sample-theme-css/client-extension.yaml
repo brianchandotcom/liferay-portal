@@ -1,3 +1,10 @@
+assemble:
+    - from: assets
+      include: "img/*"
+      into: static
+    - from: build/buildTheme
+      include: "css/*.css"
+      into: static
 sample-theme-css:
     clayURL: "css/clay.css"
     mainURL: "css/main.css"

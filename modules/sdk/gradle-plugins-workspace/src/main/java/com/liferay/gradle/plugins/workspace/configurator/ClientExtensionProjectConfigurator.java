@@ -24,7 +24,6 @@ import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.AssetsFolderConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ConfigurationTypeConfigurer;
@@ -95,35 +94,26 @@ public class ClientExtensionProjectConfigurator
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
 
+		NodeBuildConfigurer nodeBuildConfigurer = new NodeBuildConfigurer();
+
 		_clientExtensionConfigurers.put(
 			"configuration",
 			Collections.singletonList(new ConfigurationTypeConfigurer()));
 		_clientExtensionConfigurers.put(
-			"customElement",
-			Arrays.asList(
-				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+			"customElement", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
-			"globalCSS",
-			Arrays.asList(
-				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+			"globalCSS", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
-			"globalJS",
-			Arrays.asList(
-				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+			"globalJS", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
 			"themeCSS",
-			Arrays.asList(
-				new AssetsFolderConfigurer(), new ThemeCSSTypeConfigurer()));
+			Arrays.asList(nodeBuildConfigurer, new ThemeCSSTypeConfigurer()));
 		_clientExtensionConfigurers.put(
-			"themeFavicon",
-			Collections.singletonList(new AssetsFolderConfigurer()));
+			"themeFavicon", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
-			"themeJS",
-			Arrays.asList(
-				new AssetsFolderConfigurer(), new NodeBuildConfigurer()));
+			"themeJS", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
-			"themeSpritemap",
-			Collections.singletonList(new AssetsFolderConfigurer()));
+			"themeSpritemap", Collections.singletonList(nodeBuildConfigurer));
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,

@@ -28,8 +28,8 @@
 <VirtualHost *:80>
 	ServerName localhost
 	ProxyPreserveHost On
-	ProxyPass /liferay http://localhost:8080
-	ProxyPassReverse /liferay http://localhost:8080
+	ProxyPass /${portal.proxy.path} http://localhost:8080
+	ProxyPassReverse /${portal.proxy.path} http://localhost:8080
 </VirtualHost>]]></echo>
 			</then>
 		</if>
@@ -73,8 +73,8 @@ Listen ${test.app.server.leading.port.number}0]]></echo>
 <VirtualHost *:${test.app.server.leading.port.number}0>
 	ServerName localhost
 	ProxyPreserveHost On
-	ProxyPass /liferay http://localhost:${test.app.server.leading.port.number}080
-	ProxyPassReverse /liferay http://localhost:${test.app.server.leading.port.number}080
+	ProxyPass /${portal.proxy.path} http://localhost:${test.app.server.leading.port.number}080
+	ProxyPassReverse /${portal.proxy.path} http://localhost:${test.app.server.leading.port.number}080
 </VirtualHost>]]></echo>
 						</then>
 					</if>

@@ -14626,7 +14626,9 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-httpd.xml" target="clean-up-httpd-server" />
 
-				<ant antfile="build-test-httpd.xml" target="configure-httpd-server" />
+				<ant antfile="build-test-httpd.xml" target="configure-httpd-server">
+					<property name="portal.proxy.path" value="${portal.proxy.path}" />
+				</ant>
 
 				<ant antfile="build-test-httpd.xml" target="start-httpd-server" />
 			</then>

@@ -314,6 +314,8 @@ public class UserIndexerIndexedFieldsTest {
 		).put(
 			Field.STATUS, String.valueOf(user.getStatus())
 		).put(
+			Field.TYPE, String.valueOf(user.getType())
+		).put(
 			Field.USER_ID, String.valueOf(user.getUserId())
 		).put(
 			Field.USER_NAME, StringUtil.toLowerCase(user.getFullName())

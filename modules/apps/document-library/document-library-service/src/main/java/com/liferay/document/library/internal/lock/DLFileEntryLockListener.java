@@ -16,7 +16,7 @@ package com.liferay.document.library.internal.lock;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLFileEntryService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.lock.BaseLockListener;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
@@ -45,7 +45,7 @@ public class DLFileEntryLockListener extends BaseLockListener {
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_LOCK_POLICY == 1) {
-				_dlFileEntryService.checkInFileEntry(
+				_dlAppService.checkInFileEntry(
 					fileEntryId, DLVersionNumberIncrease.fromMajorVersion(true),
 					"Automatic timeout checkin", new ServiceContext());
 
@@ -54,7 +54,7 @@ public class DLFileEntryLockListener extends BaseLockListener {
 				}
 			}
 			else {
-				_dlFileEntryService.cancelCheckOut(fileEntryId);
+				_dlAppService.cancelCheckOut(fileEntryId);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -72,6 +72,6 @@ public class DLFileEntryLockListener extends BaseLockListener {
 		DLFileEntryLockListener.class);
 
 	@Reference
-	private DLFileEntryService _dlFileEntryService;
+	private DLAppService _dlAppService;
 
 }

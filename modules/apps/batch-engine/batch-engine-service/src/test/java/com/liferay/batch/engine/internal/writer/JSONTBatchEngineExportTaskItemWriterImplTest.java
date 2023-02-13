@@ -77,7 +77,10 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("{\"configuration\": {\"className\": \"");
+		sb.append("{\"actions\":{\"batch-create\": {\"method\": \"POST\",");
+		sb.append("\"href\": \"/o/headless-batch-engine/v1.0/import-task/");
+		sb.append(batchEngineImportConfiguration.getClassName());
+		sb.append("\"}},\"configuration\": {\"className\": \"");
 		sb.append(batchEngineImportConfiguration.getClassName());
 		sb.append("\",\n\"userId\": ");
 		sb.append(batchEngineImportConfiguration.getUserId());

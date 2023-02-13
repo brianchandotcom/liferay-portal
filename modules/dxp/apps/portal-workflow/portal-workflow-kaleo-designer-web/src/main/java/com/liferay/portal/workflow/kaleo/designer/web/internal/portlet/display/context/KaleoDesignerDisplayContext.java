@@ -501,6 +501,82 @@ public class KaleoDesignerDisplayContext {
 		return sortingURL.toString();
 	}
 
+	public JSONArray getStatusesJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_APPROVED)
+			).put(
+				"value", WorkflowConstants.STATUS_APPROVED
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_DENIED)
+			).put(
+				"value", WorkflowConstants.STATUS_DENIED
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_DRAFT)
+			).put(
+				"value", WorkflowConstants.STATUS_DRAFT
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_EXPIRED)
+			).put(
+				"value", WorkflowConstants.STATUS_EXPIRED
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_IN_TRASH)
+			).put(
+				"value", WorkflowConstants.STATUS_IN_TRASH
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_INACTIVE)
+			).put(
+				"value", WorkflowConstants.STATUS_INACTIVE
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_INCOMPLETE)
+			).put(
+				"value", WorkflowConstants.STATUS_INCOMPLETE
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_PENDING)
+			).put(
+				"value", WorkflowConstants.STATUS_PENDING
+			),
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					WorkflowConstants.LABEL_SCHEDULED)
+			).put(
+				"value", WorkflowConstants.STATUS_SCHEDULED
+			));
+	}
+
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		if (kaleoDefinitionVersion == null) {
 			return _getLanguage("new-workflow");

@@ -60,6 +60,8 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"portletNamespace", PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.KALEO_DESIGNER)
 		).put(
+			"statuses", kaleoDesignerDisplayContext.getStatusesJSONArray()
+		).put(
 			"title", (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale)
 		).put(
 			"translations", (kaleoDefinitionVersion == null) ? new HashMap<>() : kaleoDefinitionVersion.getTitleMap()

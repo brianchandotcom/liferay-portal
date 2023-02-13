@@ -28,6 +28,7 @@ import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -67,8 +68,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -501,18 +500,10 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		if (!recurse) {
-			List<ExtRepositoryFolder> extRepositoryObjects =
+			return TransformUtil.transform(
 				getExtRepositoryObjects(
-					ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey);
-
-			Stream<ExtRepositoryFolder> extRepositoryFolderStream =
-				extRepositoryObjects.stream();
-
-			return extRepositoryFolderStream.map(
-				ExtRepositoryModel::getExtRepositoryModelKey
-			).collect(
-				Collectors.toList()
-			);
+					ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey),
+				ExtRepositoryModel::getExtRepositoryModelKey);
 		}
 
 		List<String> subfolderKeys = new ArrayList<>();

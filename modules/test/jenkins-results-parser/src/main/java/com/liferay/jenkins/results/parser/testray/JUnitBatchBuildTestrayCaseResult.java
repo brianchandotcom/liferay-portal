@@ -247,6 +247,20 @@ public class JUnitBatchBuildTestrayCaseResult
 				testClassName.startsWith(getName() + "$")) {
 
 				_testClassResults.add(testClassResult);
+
+				continue;
+			}
+
+			if (testClassName.equals("junit.framework.TestSuite")) {
+				for (TestResult testResult : testClassResult.getTestResults()) {
+					String testName = testResult.getTestName();
+
+					if (testName.equals(getName())) {
+						_testClassResults.add(testClassResult);
+
+						break;
+					}
+				}
 			}
 		}
 
@@ -257,7 +271,21 @@ public class JUnitBatchBuildTestrayCaseResult
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (TestClassResult testClassResult : _getTestClassResults()) {
-			testResults.addAll(testClassResult.getTestResults());
+			String testClassName = testClassResult.getClassName();
+
+			if (!testClassName.equals("junit.framework.TestSuite")) {
+				testResults.addAll(testClassResult.getTestResults());
+
+				continue;
+			}
+
+			for (TestResult testResult : testClassResult.getTestResults()) {
+				String testName = testResult.getTestName();
+
+				if (testName.equals(getName())) {
+					testResults.add(testResult);
+				}
+			}
 		}
 
 		return testResults;

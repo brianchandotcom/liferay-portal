@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -48,8 +49,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,17 +82,14 @@ public class AssetListEntryExportImportContentProcessor
 
 		_addGroupMappingsElement(portletDataContext, groupIds);
 
-		long[] classNameIds = GetterUtil.getLongValues(
-			StringUtil.split(
-				unicodeProperties.getProperty("classNameIds", null)));
+		String[] classNameIds = StringUtil.split(
+			unicodeProperties.getProperty("classNameIds", null));
 
-		LongStream classNameIdsLongStream = Arrays.stream(classNameIds);
-
-		String[] classNames = classNameIdsLongStream.mapToObj(
-			classNameId -> _portal.getClassName(classNameId)
-		).toArray(
-			String[]::new
-		);
+		String[] classNames = TransformUtil.transform(
+			classNameIds,
+			classNameId -> _portal.getClassName(
+				GetterUtil.getLong(classNameId)),
+			String.class);
 
 		unicodeProperties.setProperty(
 			"classNames", StringUtil.merge(classNames, ","));
@@ -216,30 +212,33 @@ public class AssetListEntryExportImportContentProcessor
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long[] oldGroupIds = GetterUtil.getLongValues(
-			StringUtil.split(unicodeProperties.getProperty("groupIds", null)));
-
-		LongStream oldGroupIdsLongStream = Arrays.stream(oldGroupIds);
+		String[] oldGroupIds = StringUtil.split(
+			unicodeProperties.getProperty("groupIds", null));
 
 		unicodeProperties.put(
 			"groupIds",
 			StringUtil.merge(
-				oldGroupIdsLongStream.map(
-					oldGroupId -> MapUtil.getLong(
-						groupIds, oldGroupId, oldGroupId)
-				).filter(
-					oldGroupId ->
-						_groupLocalService.fetchGroup(oldGroupId) != null
-				).toArray()));
+				TransformUtil.transformToLongArray(
+					Arrays.asList(oldGroupIds),
+					oldGroupId -> {
+						long groupId = GetterUtil.getLong(oldGroupId);
+
+						Group group = _groupLocalService.fetchGroup(
+							MapUtil.getLong(groupIds, groupId, groupId));
+
+						if (group != null) {
+							return groupId;
+						}
+
+						return null;
+					})));
 
 		String[] classNames = StringUtil.split(
 			unicodeProperties.getProperty("classNames"));
 
-		Stream<String> classNamesStream = Arrays.stream(classNames);
-
-		long[] classNameIds = classNamesStream.mapToLong(
-			className -> _portal.getClassNameId(className)
-		).toArray();
+		long[] classNameIds = TransformUtil.transformToLongArray(
+			Arrays.asList(classNames),
+			className -> _portal.getClassNameId(className));
 
 		unicodeProperties.setProperty(
 			"classNameIds", StringUtil.merge(classNameIds));
@@ -267,16 +266,13 @@ public class AssetListEntryExportImportContentProcessor
 			Class<?> clazz = _assetRendererFactoryClassProvider.getClass(
 				assetRendererFactory);
 
-			long[] classTypeIds = GetterUtil.getLongValues(
-				StringUtil.split(
-					unicodeProperties.getProperty(
-						"classTypeIds" + clazz.getSimpleName())));
+			String[] classTypeIds = StringUtil.split(
+				unicodeProperties.getProperty(
+					"classTypeIds" + clazz.getSimpleName()));
 
 			if (ArrayUtil.isEmpty(classTypeIds)) {
 				continue;
 			}
-
-			LongStream classTypeIdsLongStream = Arrays.stream(classTypeIds);
 
 			Map<Long, Long> dlFileEntryTypeIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -285,10 +281,11 @@ public class AssetListEntryExportImportContentProcessor
 			unicodeProperties.setProperty(
 				"classTypeIds" + clazz.getSimpleName(),
 				StringUtil.merge(
-					classTypeIdsLongStream.map(
+					TransformUtil.transformToLongArray(
+						Arrays.asList(classTypeIds),
 						classTypeId -> _getClassTypeId(
-							classTypeId, ddmStructureIds, dlFileEntryTypeIds)
-					).toArray()));
+							GetterUtil.getLong(classTypeId), ddmStructureIds,
+							dlFileEntryTypeIds))));
 
 			long anyClassType = GetterUtil.getLong(
 				unicodeProperties.getProperty(

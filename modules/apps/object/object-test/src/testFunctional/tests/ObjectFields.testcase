@@ -1679,13 +1679,16 @@ definition {
 			ObjectPortlet.assertEntryColumnPresent(column = "External Reference Code");
 		}
 
+		var entryOne = selenium.getText("ObjectCustomViews#CUSTOM_FIELD_VALUE_ONE");
+		var entryTwo = selenium.getText("ObjectCustomViews#CUSTOM_FIELD_VALUE_TWO");
+
 		task ("Click on arrows and assert the entries change the position") {
 			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry A",
+				entryName = ${entryOne},
 				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry B",
+				entryName = ${entryTwo},
 				position = 2);
 
 			Click(
@@ -1693,11 +1696,11 @@ definition {
 				locator1 = "ObjectPortlet#ARROW_ORDER_COLUMN");
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry B",
+				entryName = ${entryTwo},
 				position = 1);
 
 			ObjectCustomViews.viewFieldsEntryByPosition(
-				entryName = "Entry A",
+				entryName = ${entryOne},
 				position = 2);
 		}
 	}

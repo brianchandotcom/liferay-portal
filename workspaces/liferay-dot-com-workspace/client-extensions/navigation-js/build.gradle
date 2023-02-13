@@ -1,3 +1,0 @@
-apply plugin: "com.liferay.node"
-
-createClientExtensionConfig.dependsOn packageRunBuild

@@ -27,6 +27,11 @@ const valueInputElement = document.getElementById(
 	`${fragmentEntryLinkNamespace}-value-input`
 );
 
+if (layoutMode === 'edit') {
+	buttonElement.setAttribute('disabled', true);
+	uiInputElement.setAttribute('disabled', true);
+}
+
 buttonElement.addEventListener('click', toggleDropdown);
 buttonElement.addEventListener('blur', handleResultListBlur);
 uiInputElement.addEventListener('click', toggleDropdown);

@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Add Client Extension with DB Partitioning enabled."
-	@priority = "5"
+	@priority = 5
 	test CanBeDisplayedWithDBPartitioning {
 		property database.partition.enabled = "true";
 		property database.types = "mysql";

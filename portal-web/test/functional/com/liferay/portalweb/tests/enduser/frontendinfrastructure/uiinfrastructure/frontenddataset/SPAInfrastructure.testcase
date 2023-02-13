@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "LRQA-29748: Set the user notification timeout to 1 second"
-	@priority = "4"
+	@priority = 4
 	test SetTimeout {
 		property osgi.module.configurations = "userNotificationTimeout=1000";
 
@@ -56,7 +56,7 @@ definition {
 
 		task ("And When: pause for 1 second") {
 
-			// We need this pause to wait for notification timeout
+			// We need this pause to wait for notification timeout. See LRQA-29748
 
 			Pause(locator1 = 1000);
 		}

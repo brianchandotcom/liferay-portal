@@ -144,7 +144,7 @@ public class
 	}
 
 	@Test
-	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByAnyAssetCategoryOfTheSameVocabulary()
+	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByAnyAssetCategoryOfTheSameAssetVocabulary()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -235,7 +235,7 @@ public class
 	}
 
 	@Test
-	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByAnyAssetCategoryOfTheSameVocabularyMultipleVocabularies()
+	public void testGetCollectionInfoPageWithSameAssetCategoryFilteringByAnyAssetCategoryOfTheSameAssetVocabularyMultipleAssetVocabularies()
 		throws Exception {
 
 		ServiceContext serviceContext =

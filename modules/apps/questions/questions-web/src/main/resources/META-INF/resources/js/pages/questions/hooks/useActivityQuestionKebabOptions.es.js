@@ -22,6 +22,7 @@ import {deleteCache, getFullPath} from '../../../utils/utils.es';
 const FEEDBACK_DELAY = 2000;
 
 const useActiviyQuestionKebabOptions = ({
+	activityPage,
 	context,
 	onClickReport,
 	question,
@@ -102,21 +103,20 @@ const useActiviyQuestionKebabOptions = ({
 				}/questions/${sectionTitle}/${questionId}`,
 				label: Liferay.Language.get('view-question'),
 				symbolLeft: 'shortcut',
+				visible: activityPage,
 			},
 			{
 				label: Liferay.Language.get('share'),
 				onClick: onClickShare,
 				symbolLeft: 'share',
+				visible: window.isSecureContext,
 			},
 			{
 				label: Liferay.Language.get('report'),
 				onClick: () => onClickReport(),
 				symbolLeft: 'flag-empty',
 			},
-		];
-
-		if (question?.actions?.replace) {
-			options.push({
+			{
 				href: `${getFullPath(
 					context.historyRouterBasePath || 'questions'
 				)}${
@@ -126,33 +126,33 @@ const useActiviyQuestionKebabOptions = ({
 				}/questions/${sectionTitle}/${questionId}/edit`,
 				label: Liferay.Language.get('edit'),
 				symbolLeft: 'pencil',
-			});
-		}
-
-		if (question?.actions?.subscribe || question?.actions?.unsubscribe) {
-			options.push({
+				visible: question?.actions?.replace,
+			},
+			{
 				label: isSubscribed
 					? Liferay.Language.get('unsubscribe')
 					: Liferay.Language.get('subscribe'),
 				onClick: () => onSubscribe(question),
 				symbolLeft: isSubscribed ? 'bell-off' : 'bell-on',
-			});
-		}
-		if (question?.actions?.delete) {
-			options.push(
-				{
-					type: 'divider',
-				},
-				{
-					label: Liferay.Language.get('delete'),
-					onClick: () => setShowDeleteModalPanel(true),
-					symbolLeft: 'trash',
-				}
-			);
-		}
+				visible:
+					question?.actions?.subscribe ||
+					question?.actions?.unsubscribe,
+			},
+			{
+				type: 'divider',
+				visible: question?.actions?.delete,
+			},
+			{
+				label: Liferay.Language.get('delete'),
+				onClick: () => setShowDeleteModalPanel(true),
+				symbolLeft: 'trash',
+				visible: question?.actions?.delete,
+			},
+		];
 
-		return options;
+		return options.filter(({visible = true}) => visible);
 	}, [
+		activityPage,
 		context.historyRouterBasePath,
 		isSubscribed,
 		onClickReport,

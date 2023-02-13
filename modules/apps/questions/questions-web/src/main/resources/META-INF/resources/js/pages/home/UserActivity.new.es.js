@@ -183,16 +183,15 @@ export default withRouter(
 						<Question
 							display={{
 								actions: false,
+								activity: true,
 								addAnswer: false,
 								breadcrumb: false,
 								flags: false,
-								kebab: true,
 								preview: true,
 								rating: false,
 								showAnswer: false,
 								showSignature: true,
 								styled: true,
-								tabs: true,
 							}}
 							history={history}
 							questionId={currentQuestion?.friendlyUrlPath}

@@ -13,3 +13,21 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<clay:sheet>
+	<clay:sheet-header>
+		<h2>
+			<liferay-ui:message key="pdf-preview-configuration-name" />
+		</h2>
+	</clay:sheet-header>
+
+	<clay:sheet-section>
+		<aui:input label="maximum-number-of-pages" name="maxNumberOfPages" value="<%= 0 %>" />
+
+		<p class="text-muted">
+			<liferay-ui:message key="maximum-number-of-pages-help" />
+		</p>
+	</clay:sheet-section>
+</clay:sheet>

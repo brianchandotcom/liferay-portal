@@ -11,7 +11,8 @@ Export-Package:\
 	com.liferay.batch.engine.pagination,\
 	com.liferay.batch.engine.service,\
 	com.liferay.batch.engine.service.persistence,\
-	com.liferay.batch.engine.strategy
+	com.liferay.batch.engine.strategy,\
+	com.liferay.batch.engine.unit
 Import-Package:\
 	org.hibernate.proxy,\
 	\

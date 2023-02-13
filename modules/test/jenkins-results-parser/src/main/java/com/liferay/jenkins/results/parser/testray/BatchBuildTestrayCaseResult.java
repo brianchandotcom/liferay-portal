@@ -20,8 +20,6 @@ import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
-import com.liferay.jenkins.results.parser.TestClassResult;
-import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
@@ -105,57 +103,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		if (result == null) {
 			return "Failed to finish build on CI";
-		}
-
-		for (TestClassResult testClassResult : build.getTestClassResults()) {
-			String className = testClassResult.getClassName();
-
-			if (!className.equals(
-					"com.liferay.portal.log.assertor.PortalLogAssertorTest")) {
-
-				continue;
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			for (TestResult testResult : testClassResult.getTestResults()) {
-				if (!testResult.isFailing()) {
-					continue;
-				}
-
-				sb.append("PortalLogAssertorTest#");
-				sb.append(testResult.getTestName());
-				sb.append(": ");
-
-				String errorDetails = testResult.getErrorDetails();
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-					sb.append("Failed for unknown reason | ");
-				}
-				else {
-					errorDetails = errorDetails.replace(
-						"Portal log assert failure, see above log for more " +
-							"information:",
-						"");
-
-					errorDetails = errorDetails.trim();
-
-					if (errorDetails.length() > 1000) {
-						errorDetails = errorDetails.substring(0, 1000);
-
-						errorDetails += "...";
-					}
-
-					sb.append(errorDetails);
-					sb.append(" | ");
-				}
-			}
-
-			if (sb.length() > 0) {
-				sb.setLength(sb.length() - 3);
-
-				return sb.toString();
-			}
 		}
 
 		if (result.equals("ABORTED")) {

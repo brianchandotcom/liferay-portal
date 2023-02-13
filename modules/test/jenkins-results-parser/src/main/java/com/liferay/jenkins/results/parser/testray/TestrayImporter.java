@@ -1008,10 +1008,19 @@ public class TestrayImporter {
 							axisTestClassGroup instanceof
 								JUnitAxisTestClassGroup) {
 
-							testrayCaseResults.add(
-								TestrayFactory.newTestrayCaseResult(
-									testrayBuild, getTopLevelBuild(),
-									axisTestClassGroup, null));
+							PortalLogTestrayCaseResult
+								portalLogTestrayCaseResult =
+									TestrayFactory.
+										newPortalLogTestrayCaseResult(
+											testrayBuild, getTopLevelBuild(),
+											axisTestClassGroup);
+
+							if (!JenkinsResultsParserUtil.isNullOrEmpty(
+									portalLogTestrayCaseResult.getErrors())) {
+
+								testrayCaseResults.add(
+									portalLogTestrayCaseResult);
+							}
 
 							for (TestClass testClass :
 									axisTestClassGroup.getTestClasses()) {

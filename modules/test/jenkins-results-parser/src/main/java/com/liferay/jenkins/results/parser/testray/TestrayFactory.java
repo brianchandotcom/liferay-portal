@@ -34,6 +34,14 @@ import java.util.Map;
  */
 public class TestrayFactory {
 
+	public static PortalLogTestrayCaseResult newPortalLogTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
+		AxisTestClassGroup axisTestClassGroup) {
+
+		return new PortalLogTestrayCaseResult(
+			testrayBuild, topLevelBuild, axisTestClassGroup);
+	}
+
 	public static TestrayAttachment newTestrayAttachment(
 		TestrayCaseResult testrayCaseResult, String name, String key) {
 

@@ -294,10 +294,11 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
 
-		long vocabularyId = _getVocabularyId(assetCategory, taxonomyCategory);
+		long assetVocabularyId = _getAssetVocabularyId(
+			assetCategory, taxonomyCategory);
 
-		long parentCategoryId = _getParentTaxonomyCategoryId(
-			assetCategory, taxonomyCategory, vocabularyId);
+		long parentAssetCategoryId = _getParentAssetCategoryId(
+			assetCategory, taxonomyCategory, assetVocabularyId);
 
 		if (!ArrayUtil.contains(
 				assetCategory.getAvailableLanguageIds(),
@@ -332,8 +333,8 @@ public class TaxonomyCategoryResourceImpl
 		return _toTaxonomyCategory(
 			_assetCategoryLocalService.updateCategory(
 				contextUser.getUserId(), assetCategory.getCategoryId(),
-				parentCategoryId, assetCategory.getTitleMap(),
-				assetCategory.getDescriptionMap(), vocabularyId,
+				parentAssetCategoryId, assetCategory.getTitleMap(),
+				assetCategory.getDescriptionMap(), assetVocabularyId,
 				_merge(
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
@@ -462,6 +463,23 @@ public class TaxonomyCategoryResourceImpl
 			GetterUtil.getLong(taxonomyCategoryId));
 	}
 
+	private long _getAssetVocabularyId(
+			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		if ((taxonomyCategory.getTaxonomyVocabularyId() != null) &&
+			(taxonomyCategory.getTaxonomyVocabularyId() > 0)) {
+
+			AssetVocabulary existingAssetVocabulary =
+				_assetVocabularyService.getVocabulary(
+					taxonomyCategory.getTaxonomyVocabularyId());
+
+			return existingAssetVocabulary.getVocabularyId();
+		}
+
+		return assetCategory.getVocabularyId();
+	}
+
 	private Page<TaxonomyCategory> _getCategoriesPage(
 			Map<String, Map<String, String>> actions, Aggregation aggregation,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
@@ -484,7 +502,7 @@ public class TaxonomyCategoryResourceImpl
 						document.get(Field.ASSET_CATEGORY_ID)))));
 	}
 
-	private long _getParentTaxonomyCategoryId(
+	private long _getParentAssetCategoryId(
 			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory,
 			long vocabularyId)
 		throws Exception {
@@ -559,23 +577,6 @@ public class TaxonomyCategoryResourceImpl
 					"assetCategoryId = this_.categoryId)"));
 
 		return _assetCategoryLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	private long _getVocabularyId(
-			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
-		throws Exception {
-
-		if ((taxonomyCategory.getTaxonomyVocabularyId() != null) &&
-			(taxonomyCategory.getTaxonomyVocabularyId() > 0)) {
-
-			AssetVocabulary existingAssetVocabulary =
-				_assetVocabularyService.getVocabulary(
-					taxonomyCategory.getTaxonomyVocabularyId());
-
-			return existingAssetVocabulary.getVocabularyId();
-		}
-
-		return assetCategory.getVocabularyId();
 	}
 
 	private String[] _merge(
@@ -684,10 +685,11 @@ public class TaxonomyCategoryResourceImpl
 			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		long vocabularyId = _getVocabularyId(assetCategory, taxonomyCategory);
+		long assetVocabularyId = _getAssetVocabularyId(
+			assetCategory, taxonomyCategory);
 
-		long parentCategoryId = _getParentTaxonomyCategoryId(
-			assetCategory, taxonomyCategory, vocabularyId);
+		long parentAssetCategoryId = _getParentAssetCategoryId(
+			assetCategory, taxonomyCategory, assetVocabularyId);
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
@@ -709,8 +711,8 @@ public class TaxonomyCategoryResourceImpl
 		assetCategory.setDescriptionMap(descriptionMap);
 
 		return _assetCategoryService.updateCategory(
-			assetCategory.getCategoryId(), parentCategoryId, titleMap,
-			descriptionMap, vocabularyId,
+			assetCategory.getCategoryId(), parentAssetCategoryId, titleMap,
+			descriptionMap, assetVocabularyId,
 			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
 			ServiceContextRequestUtil.createServiceContext(
 				assetCategory.getGroupId(), contextHttpServletRequest,

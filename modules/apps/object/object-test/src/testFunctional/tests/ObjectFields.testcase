@@ -2090,9 +2090,16 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectField.assertOptionAndDescription(
-			description = "Upload files or select from Documents and Media.",
-			option = "Attachment");
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		AssertElementPresent(
+			key_fieldType = "Attachment",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "Attachment",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "Upload files or select from Documents and Media.");
 	}
 
 	@description = "LPS-143065 - Verify if there is an option on Request Files: Directly from User's Computer"

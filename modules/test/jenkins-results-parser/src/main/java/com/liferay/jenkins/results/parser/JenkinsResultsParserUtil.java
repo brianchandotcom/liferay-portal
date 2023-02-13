@@ -660,6 +660,8 @@ public class JenkinsResultsParserUtil {
 				duration = System.currentTimeMillis() - start;
 
 				if (duration >= timeout) {
+					process.destroy();
+
 					throw new TimeoutException(
 						"Timeout occurred while executing Bash commands: " +
 							Arrays.toString(commands));

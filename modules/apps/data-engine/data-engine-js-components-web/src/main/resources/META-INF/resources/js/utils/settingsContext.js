@@ -281,6 +281,10 @@ const getValueLocalized = (
 	defaultLanguageId,
 	editingLanguageId
 ) => {
+	if (value === null) {
+		return value;
+	}
+
 	if (
 		isLocalizedObjectValue({localizable, value}) &&
 		value[editingLanguageId] !== undefined

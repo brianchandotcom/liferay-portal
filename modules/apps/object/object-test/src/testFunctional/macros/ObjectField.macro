@@ -28,12 +28,6 @@ definition {
 			locator1 = "ObjectField#HELP_TEXT");
 	}
 
-	macro assertLabel {
-		AssertTextEquals(
-			locator1 = "ObjectField#LABEL_LOCALIZED",
-			value1 = ${content});
-	}
-
 	macro assertMandatory {
 		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}

@@ -3511,7 +3511,9 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
-		ObjectField.assertLabel(content = "Text Update");
+		AssertTextEquals(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "Text Update");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
@@ -3546,7 +3548,9 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
-		ObjectField.assertLabel(content = "Text Update");
+		AssertTextEquals(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "Text Update");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"

@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.base.CommercePriceListServiceBaseImpl;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -238,14 +238,10 @@ public class CommercePriceListServiceImpl
 			OrderByComparator<CommercePriceList> orderByComparator)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
+		long[] groupIds = TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterFindByG_C_NotS(
@@ -263,14 +259,10 @@ public class CommercePriceListServiceImpl
 			OrderByComparator<CommercePriceList> orderByComparator)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
+		long[] groupIds = TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterFindByG_C_T_NotS(
@@ -286,14 +278,10 @@ public class CommercePriceListServiceImpl
 	public int getCommercePriceListsCount(long companyId, int status)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
+		long[] groupIds = TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterCountByG_C_NotS(
@@ -328,14 +316,10 @@ public class CommercePriceListServiceImpl
 			Sort sort)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
+		long[] groupIds = TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 
 		return commercePriceListLocalService.searchCommercePriceLists(
 			companyId, groupIds, keywords, status, start, end, sort);
@@ -346,14 +330,10 @@ public class CommercePriceListServiceImpl
 			long companyId, String keywords, int status)
 		throws PortalException {
 
-		List<CommerceCatalog> commerceCatalogs = _commerceCatalogService.search(
-			companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCatalog> stream = commerceCatalogs.stream();
-
-		long[] groupIds = stream.mapToLong(
-			CommerceCatalog::getGroupId
-		).toArray();
+		long[] groupIds = TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 
 		return commercePriceListLocalService.searchCommercePriceListsCount(
 			companyId, groupIds, keywords, status);

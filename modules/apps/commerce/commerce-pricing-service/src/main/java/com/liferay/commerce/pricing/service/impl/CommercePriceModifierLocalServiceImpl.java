@@ -33,6 +33,7 @@ import com.liferay.commerce.pricing.type.CommercePriceModifierType;
 import com.liferay.commerce.pricing.type.CommercePriceModifierTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -60,8 +61,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -597,12 +596,8 @@ public class CommercePriceModifierLocalServiceImpl
 				assetCategories.addAll(assetCategory.getAncestors());
 			}
 
-			Stream<AssetCategory> stream = assetCategories.stream();
-
-			LongStream longStream = stream.mapToLong(
-				AssetCategory::getCategoryId);
-
-			return longStream.toArray();
+			return TransformUtil.transformToLongArray(
+				assetCategories, AssetCategory::getCategoryId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

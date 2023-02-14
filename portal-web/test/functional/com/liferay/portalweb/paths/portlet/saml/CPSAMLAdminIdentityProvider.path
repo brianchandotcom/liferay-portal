@@ -23,6 +23,11 @@
 	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-authn-request-signature-required')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNING_ALLOWS_DYNAMIC_ACS_URL_CHECKBOX</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-authn-request-signing-allows-dynamic-acs-url')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

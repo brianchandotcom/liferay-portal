@@ -41,13 +41,15 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 			andExpressionContext) {
 
 		ParseTree leftParseTree = andExpressionContext.getChild(0);
-		ParseTree rightParseTree = andExpressionContext.getChild(2);
 
 		Object left = leftParseTree.accept(this);
+
+		ParseTree rightParseTree = andExpressionContext.getChild(2);
+
 		Object right = rightParseTree.accept(this);
 
-		if ((right instanceof FilterByCount.Day) &&
-			(left instanceof FilterByCount.Event)) {
+		if ((left instanceof FilterByCount.Event) &&
+			(right instanceof FilterByCount.Day)) {
 
 			return new FilterByCount(
 				(FilterByCount.Day)right, (FilterByCount.Event)left);
@@ -55,21 +57,21 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 		throw new UnsupportedOperationException(
 			StringBundler.concat(
-				"Trying to create a FilterByCount Expression with  ",
+				"Trying to create a filter by count expression with  ",
 				String.valueOf(left.getClass()), " and ",
 				String.valueOf(right.getClass())));
 	}
 
 	@Override
-	public Object visitChildren(@NotNull RuleNode node) {
+	public Object visitChildren(@NotNull RuleNode ruleNode) {
 		Object result = defaultResult();
 
-		for (int i = 0; i < node.getChildCount(); i++) {
-			if (!shouldVisitNextChild(node, result)) {
+		for (int i = 0; i < ruleNode.getChildCount(); i++) {
+			if (!shouldVisitNextChild(ruleNode, result)) {
 				break;
 			}
 
-			ParseTree parseTree = node.getChild(i);
+			ParseTree parseTree = ruleNode.getChild(i);
 
 			Object object = parseTree.accept(this);
 

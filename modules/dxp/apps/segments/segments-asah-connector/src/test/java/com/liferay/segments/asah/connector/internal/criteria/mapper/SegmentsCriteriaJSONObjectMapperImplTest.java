@@ -15,9 +15,10 @@
 package com.liferay.segments.asah.connector.internal.criteria.mapper;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.segments.asah.connector.internal.expression.parser.test.util.IndividualSegmentsExpressionUtil;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
@@ -54,10 +55,10 @@ public class SegmentsCriteriaJSONObjectMapperImplTest {
 
 		criteria.addCriterion(
 			segmentsCriteriaContributor.getKey(), Criteria.Type.ANALYTICS,
-			StringBundler.concat(
-				"activities.filterByCount(filter='(activityKey eq ",
-				"''Page#pageViewed#585976064510133365'' and day gt ",
-				"''last24Hours'')',operator='ge',value=1)"),
+			IndividualSegmentsExpressionUtil.getFilterByCount(
+				IndividualSegmentsExpressionUtil.getFilter(
+					"Page#pageViewed#585976064510133365", "gt", "last24Hours"),
+				"ge", 1),
 			Criteria.Conjunction.AND);
 
 		JSONObject jsonObject = segmentsCriteriaJSONObjectMapper.toJSONObject(
@@ -68,12 +69,30 @@ public class SegmentsCriteriaJSONObjectMapperImplTest {
 			jsonObject.get("propertyKey"));
 		Assert.assertEquals("and", jsonObject.get("conjunctionId"));
 		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"groupId\":\"group_0\",\"items\":[{\"propertyName\":",
-				"\"pageViewed\",\"assetId\":\"585976064510133365\",\"day\":{",
-				"\"operatorName\":\"gt\",\"value\":\"last24Hours\"},",
-				"\"operatorName\":\"ge\",\"value\":\"1\"}],",
-				"\"conjunctionName\":\"and\"}"),
+			JSONUtil.put(
+				"conjunctionName", "and"
+			).put(
+				"groupId", "group_0"
+			).put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"assetId", "585976064510133365"
+					).put(
+						"day",
+						JSONUtil.put(
+							"operatorName", "gt"
+						).put(
+							"value", "last24Hours"
+						)
+					).put(
+						"operatorName", "ge"
+					).put(
+						"propertyName", "pageViewed"
+					).put(
+						"value", "1"
+					))
+			).toString(),
 			String.valueOf(jsonObject.get("query")));
 	}
 

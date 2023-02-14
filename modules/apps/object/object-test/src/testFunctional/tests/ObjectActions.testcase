@@ -494,6 +494,75 @@ definition {
 		}
 	}
 
+	@description = "LPS-175182 - Verify if actions works with oldValue function when trigger is On After Update (Update an object Entry) using any field"
+	@priority = 5
+	test CanCreateActionUpdateAnObjectEntryUsingOldValueWithOnAfterUpdateTrigger {
+		task ("Given: An object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175182",
+				objectName = "CustomObject175182",
+				pluralLabelName = "Custom Objects 175182");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175182");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175182");
+		}
+
+		task ("When: An action is created and the oldValue function is used in the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175182");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				fieldName = "Custom Field",
+				inputExpression = '''oldValue("customField") == "Entry Test"''',
+				inputMethod = "true",
+				inputValue = "Object entry updated",
+				objectLabel = "Custom Object 175182",
+				thenAction = "Update an Object Entry",
+				whenAction = "On After Update");
+		}
+
+		task ("Then: The object entry is updated when the condition is met") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject175182",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175182");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test")
+
+			ObjectAdmin.editEntryName(newEntryValue = "Entry Test Edited");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175182");
+
+			ObjectPortlet.viewEntry(entry = "Object entry updated");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175182");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-172234 - Verify it's possible to create a groovy script action with the trigger On Order Status Update"
 	@priority = 3
 	test CanCreateActionUsingGroovyScripWithOnOrderStatusUpdate {

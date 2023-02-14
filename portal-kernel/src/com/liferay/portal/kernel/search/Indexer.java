@@ -137,6 +137,12 @@ public interface Indexer<T> {
 	@Bufferable
 	public void reindex(T object) throws SearchException;
 
+	public default void reindex(T object, boolean notify)
+		throws SearchException {
+
+		reindex(object);
+	}
+
 	public Hits search(SearchContext searchContext) throws SearchException;
 
 	public Hits search(

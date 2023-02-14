@@ -43,6 +43,10 @@ public interface IndexerWriter<T extends BaseModel<?>> {
 
 	public void reindex(T baseModel);
 
+	public default void reindex(T baseModel, boolean notify) {
+		reindex(baseModel);
+	}
+
 	public void setEnabled(boolean enabled);
 
 	public void updatePermissionFields(T baseModel);

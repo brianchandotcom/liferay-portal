@@ -264,6 +264,11 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
+	public void reindex(T baseModel, boolean notify) throws SearchException {
+		_indexerWriter.reindex(baseModel, notify);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		return _indexerSearcher.search(searchContext);
 	}

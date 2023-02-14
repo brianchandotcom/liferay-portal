@@ -306,11 +306,9 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, String userId,
 		int end, int start) {
 
-		List<String> typeSettings = new ArrayList<>();
-
-		for (long segmentsEntryId : segmentsEntryIds) {
-			typeSettings.add(assetListEntry.getTypeSettings(segmentsEntryId));
-		}
+		List<String> typeSettings = TransformUtil.transformToList(
+			segmentsEntryIds,
+			segmentsEntryId -> assetListEntry.getTypeSettings(segmentsEntryId));
 
 		AssetEntryQuery assetEntryQuery = _createAssetEntryQuery(
 			assetListEntry, userId,
@@ -794,9 +792,6 @@ public class AssetListAssetEntryProviderImpl
 	private long[] _getCombinedSegmentsEntryIds(
 		AssetListEntry assetListEntry, long[] segmentEntryIds) {
 
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			new ArrayList<>();
-
 		if ((segmentEntryIds.length > 1) &&
 			ArrayUtil.contains(
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT)) {
@@ -805,22 +800,15 @@ public class AssetListAssetEntryProviderImpl
 				segmentEntryIds, SegmentsEntryConstants.ID_DEFAULT);
 		}
 
-		for (long segmentsEntryId : segmentEntryIds) {
-			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				_assetListEntrySegmentsEntryRelLocalService.
-					fetchAssetListEntrySegmentsEntryRel(
-						assetListEntry.getAssetListEntryId(), segmentsEntryId);
-
-			if (assetListEntrySegmentsEntryRel == null) {
-				continue;
-			}
-
-			assetListEntrySegmentsEntryRels.add(assetListEntrySegmentsEntryRel);
-		}
-
 		long[] combinedSegmentsEntryIds = TransformUtil.transformToLongArray(
 			ListUtil.sort(
-				assetListEntrySegmentsEntryRels,
+				TransformUtil.transformToList(
+					segmentEntryIds,
+					segmentsEntryId ->
+						_assetListEntrySegmentsEntryRelLocalService.
+							fetchAssetListEntrySegmentsEntryRel(
+								assetListEntry.getAssetListEntryId(),
+								segmentsEntryId)),
 				Comparator.comparing(
 					AssetListEntrySegmentsEntryRel::getPriority)),
 			AssetListEntrySegmentsEntryRelModel::getSegmentsEntryId);
@@ -854,18 +842,12 @@ public class AssetListAssetEntryProviderImpl
 				keywords);
 		}
 
-		List<AssetEntryQuery> assetEntryQueries = new ArrayList<>();
-
-		for (long segmentsEntryId :
-				_getCombinedSegmentsEntryIds(
-					assetListEntry, segmentsEntryIds)) {
-
-			assetEntryQueries.add(
-				getAssetEntryQuery(assetListEntry, segmentsEntryId, userId));
-		}
-
 		return _dynamicSearch(
-			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQueries,
+			assetListEntry.getCompanyId(), assetCategoryIds,
+			TransformUtil.transformToList(
+				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds),
+				segmentsEntryId -> getAssetEntryQuery(
+					assetListEntry, segmentsEntryId, userId)),
 			assetTagNames, keywords);
 	}
 
@@ -886,18 +868,12 @@ public class AssetListAssetEntryProviderImpl
 				keywords);
 		}
 
-		List<AssetEntryQuery> assetEntryQueries = new ArrayList<>();
-
-		for (long segmentsEntryId :
-				_getCombinedSegmentsEntryIds(
-					assetListEntry, segmentsEntryIds)) {
-
-			assetEntryQueries.add(
-				getAssetEntryQuery(assetListEntry, segmentsEntryId, userId));
-		}
-
 		return _dynamicSearchCount(
-			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQueries,
+			assetListEntry.getCompanyId(), assetCategoryIds,
+			TransformUtil.transformToList(
+				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds),
+				segmentsEntryId -> getAssetEntryQuery(
+					assetListEntry, segmentsEntryId, userId)),
 			assetTagNames, keywords);
 	}
 
@@ -958,25 +934,15 @@ public class AssetListAssetEntryProviderImpl
 			return SegmentsEntryConstants.ID_DEFAULT;
 		}
 
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			new ArrayList<>();
-
-		for (long segmentsEntryId : segmentsEntryIds) {
-			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				_assetListEntrySegmentsEntryRelLocalService.
-					fetchAssetListEntrySegmentsEntryRel(
-						assetListEntry.getAssetListEntryId(), segmentsEntryId);
-
-			if (assetListEntrySegmentsEntryRel == null) {
-				continue;
-			}
-
-			assetListEntrySegmentsEntryRels.add(assetListEntrySegmentsEntryRel);
-		}
-
 		List<AssetListEntrySegmentsEntryRel>
 			sortedAssetListEntrySegmentsEntryRels = ListUtil.sort(
-				assetListEntrySegmentsEntryRels,
+				TransformUtil.transformToList(
+					segmentsEntryIds,
+					segmentsEntryId ->
+						_assetListEntrySegmentsEntryRelLocalService.
+							fetchAssetListEntrySegmentsEntryRel(
+								assetListEntry.getAssetListEntryId(),
+								segmentsEntryId)),
 				Comparator.comparing(
 					AssetListEntrySegmentsEntryRel::getPriority));
 
@@ -1295,25 +1261,15 @@ public class AssetListAssetEntryProviderImpl
 	private long[] _sortSegmentsByPriority(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
 
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			new ArrayList<>();
-
-		for (long segmentsEntryId : segmentsEntryIds) {
-			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				_assetListEntrySegmentsEntryRelLocalService.
-					fetchAssetListEntrySegmentsEntryRel(
-						assetListEntry.getAssetListEntryId(), segmentsEntryId);
-
-			if (assetListEntrySegmentsEntryRel == null) {
-				continue;
-			}
-
-			assetListEntrySegmentsEntryRels.add(assetListEntrySegmentsEntryRel);
-		}
-
 		return TransformUtil.transformToLongArray(
 			ListUtil.sort(
-				assetListEntrySegmentsEntryRels,
+				TransformUtil.transformToList(
+					segmentsEntryIds,
+					segmentsEntryId ->
+						_assetListEntrySegmentsEntryRelLocalService.
+							fetchAssetListEntrySegmentsEntryRel(
+								assetListEntry.getAssetListEntryId(),
+								segmentsEntryId)),
 				Comparator.comparing(
 					AssetListEntrySegmentsEntryRel::getPriority)),
 			AssetListEntrySegmentsEntryRel::getSegmentsEntryId);

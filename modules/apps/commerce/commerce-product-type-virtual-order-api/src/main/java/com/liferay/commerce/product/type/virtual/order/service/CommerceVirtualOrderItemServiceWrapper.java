@@ -38,6 +38,28 @@ public class CommerceVirtualOrderItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.type.virtual.order.model.
+		CommerceVirtualOrderItem fetchCommerceVirtualOrderItem(
+				long commerceVirtualOrderItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceVirtualOrderItemService.fetchCommerceVirtualOrderItem(
+			commerceVirtualOrderItemId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.type.virtual.order.model.
+		CommerceVirtualOrderItem
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					long commerceOrderItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceVirtualOrderItemService.
+			fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+				commerceOrderItemId);
+	}
+
+	@Override
 	public java.io.File getFile(long commerceVirtualOrderItemId)
 		throws Exception {
 

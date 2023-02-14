@@ -50,6 +50,93 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class CommerceVirtualOrderItemServiceHttp {
 
+	public static com.liferay.commerce.product.type.virtual.order.model.
+		CommerceVirtualOrderItem fetchCommerceVirtualOrderItem(
+				HttpPrincipal httpPrincipal, long commerceVirtualOrderItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceVirtualOrderItemServiceUtil.class,
+				"fetchCommerceVirtualOrderItem",
+				_fetchCommerceVirtualOrderItemParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceVirtualOrderItemId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.type.virtual.order.model.
+				CommerceVirtualOrderItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.type.virtual.order.model.
+		CommerceVirtualOrderItem
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					HttpPrincipal httpPrincipal, long commerceOrderItemId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceVirtualOrderItemServiceUtil.class,
+				"fetchCommerceVirtualOrderItemByCommerceOrderItemId",
+				_fetchCommerceVirtualOrderItemByCommerceOrderItemIdParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceOrderItemId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.type.virtual.order.model.
+				CommerceVirtualOrderItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.io.File getFile(
 			HttpPrincipal httpPrincipal, long commerceVirtualOrderItemId)
 		throws Exception {
@@ -57,7 +144,7 @@ public class CommerceVirtualOrderItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceVirtualOrderItemServiceUtil.class, "getFile",
-				_getFileParameterTypes0);
+				_getFileParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceVirtualOrderItemId);
@@ -98,7 +185,7 @@ public class CommerceVirtualOrderItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceVirtualOrderItemServiceUtil.class,
 				"updateCommerceVirtualOrderItem",
-				_updateCommerceVirtualOrderItemParameterTypes1);
+				_updateCommerceVirtualOrderItemParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceVirtualOrderItemId, fileEntryId, url,
@@ -136,11 +223,18 @@ public class CommerceVirtualOrderItemServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceVirtualOrderItemServiceHttp.class);
 
-	private static final Class<?>[] _getFileParameterTypes0 = new Class[] {
+	private static final Class<?>[]
+		_fetchCommerceVirtualOrderItemParameterTypes0 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_fetchCommerceVirtualOrderItemByCommerceOrderItemIdParameterTypes1 =
+			new Class[] {long.class};
+	private static final Class<?>[] _getFileParameterTypes2 = new Class[] {
 		long.class
 	};
 	private static final Class<?>[]
-		_updateCommerceVirtualOrderItemParameterTypes1 = new Class[] {
+		_updateCommerceVirtualOrderItemParameterTypes3 = new Class[] {
 			long.class, long.class, String.class, int.class, long.class,
 			int.class, int.class, boolean.class
 		};

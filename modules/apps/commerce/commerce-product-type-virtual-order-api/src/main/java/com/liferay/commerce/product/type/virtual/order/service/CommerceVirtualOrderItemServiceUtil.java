@@ -36,6 +36,23 @@ public class CommerceVirtualOrderItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.type.virtual.order.service.impl.CommerceVirtualOrderItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static CommerceVirtualOrderItem fetchCommerceVirtualOrderItem(
+			long commerceVirtualOrderItemId)
+		throws PortalException {
+
+		return getService().fetchCommerceVirtualOrderItem(
+			commerceVirtualOrderItemId);
+	}
+
+	public static CommerceVirtualOrderItem
+			fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+				long commerceOrderItemId)
+		throws PortalException {
+
+		return getService().fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+			commerceOrderItemId);
+	}
+
 	public static java.io.File getFile(long commerceVirtualOrderItemId)
 		throws Exception {
 

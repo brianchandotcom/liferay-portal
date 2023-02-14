@@ -305,10 +305,14 @@ definition {
 		}
 
 		task ("View collection items shown in Collection Display") {
-			for (var i : list "1,2,3") {
+			var n = 1;
+
+			for (var i : list "3,2,1") {
 				PageEditor.viewCollectionItem(
 					assetTitle = "Web Content Title ${i}",
-					row = ${i});
+					row = ${n});
+
+				var n = ${n} + 1;
 			}
 		}
 

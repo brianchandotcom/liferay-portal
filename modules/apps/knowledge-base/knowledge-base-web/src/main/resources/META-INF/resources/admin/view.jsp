@@ -137,7 +137,7 @@ String displayStyle = kbAdminManagementToolbarDisplayContext.getDisplayStyle();
 							<liferay-util:include page="/admin/view_descriptive.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<h1> TODO TABLE VIEW </h1>
+							<liferay-util:include page="/admin/view_table.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>

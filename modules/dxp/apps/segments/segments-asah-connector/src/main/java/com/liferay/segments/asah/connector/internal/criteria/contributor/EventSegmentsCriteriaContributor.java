@@ -35,7 +35,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.field.Field;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -78,12 +78,46 @@ public class EventSegmentsCriteriaContributor
 
 	@Override
 	public List<Field> getFields(PortletRequest portletRequest) {
-		return Collections.singletonList(
+		return Arrays.asList(
 			new Field(
-				"downloadDocumentsAndMedia",
+				"documentDownloaded",
 				_language.get(
 					_portal.getLocale(portletRequest),
 					"downloaded-document-and-media"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"formSubmitted",
+				_language.get(
+					_portal.getLocale(portletRequest), "submitted-form"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"formViewed",
+				_language.get(_portal.getLocale(portletRequest), "viewed-form"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"pageViewed",
+				_language.get(_portal.getLocale(portletRequest), "viewed-page"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"blogCommented",
+				_language.get(
+					_portal.getLocale(portletRequest), "commented-on-blog"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"blogViewed",
+				_language.get(
+					_portal.getLocale(portletRequest), "viewed-blog"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"documentPreviewed",
+				_language.get(
+					_portal.getLocale(portletRequest),
+					"viewed-document-and-media"),
+				"event", null, _getSelectEntity(portletRequest)),
+			new Field(
+				"webContentViewed",
+				_language.get(
+					_portal.getLocale(portletRequest), "viewed-web-content"),
 				"event", null, _getSelectEntity(portletRequest)));
 	}
 

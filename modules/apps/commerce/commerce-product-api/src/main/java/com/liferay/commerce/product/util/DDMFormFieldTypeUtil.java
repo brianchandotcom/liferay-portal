@@ -16,10 +16,9 @@ package com.liferay.commerce.product.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
@@ -30,14 +29,10 @@ public class DDMFormFieldTypeUtil {
 		List<DDMFormFieldType> ddmFormFieldTypes,
 		String[] ddmFormFieldTypesAllowed) {
 
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
-
-		return stream.filter(
+		return ListUtil.filter(
+			ddmFormFieldTypes,
 			fieldType -> ArrayUtil.contains(
-				ddmFormFieldTypesAllowed, fieldType.getName())
-		).collect(
-			Collectors.toList()
-		);
+				ddmFormFieldTypesAllowed, fieldType.getName()));
 	}
 
 }

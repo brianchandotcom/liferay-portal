@@ -943,9 +943,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 
 			AssertCssValue(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator1 = "//button[normalize-space()='Layout Elements']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='Container']",
 				locator2 = "box-shadow",
 				value1 = "rgb(128, 172, 255) 0px 0px 0px 2px, rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
 
@@ -961,9 +959,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET");
 
 			AssertCssValue(
-				key_indexItem = 1,
-				key_portletName = "Blogs",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='Blogs']",
 				locator2 = "box-shadow",
 				value1 = "rgb(128, 172, 255) 0px 0px 0px 2px, rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
 
@@ -989,9 +985,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
 
 			AssertCssValue(
-				key_collectionName = "Layout Elements",
-				key_fragmentName = "Container",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
+				locator1 = "//button[normalize-space()='Layout Elements']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='Container']",
 				locator2 = "box-shadow",
 				value1 = "rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
 		}

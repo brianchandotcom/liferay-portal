@@ -253,8 +253,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 							setUpTestableTomcatTask, workspaceExtension);
 					}
 
-					_disableModulesExcludeProjectTasks(
-						_excludeProjectPathMap, project);
+					_disableTasks(_excludeProjectPathMap, project);
 				}
 
 			});
@@ -553,7 +552,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		};
 	}
 
-	private void _disableModulesExcludeProjectTasks(
+	private void _disableTasks(
 		Map<String, Path> excludeProjectPathMap, Project project) {
 
 		File projectDir = project.getProjectDir();
@@ -625,11 +624,11 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 		}
 
-		Set<Map.Entry<String, Path>> excludeProjectEntrys =
+		Set<Map.Entry<String, Path>> excludeProjectEntries =
 			excludeProjectPathMap.entrySet();
 
 		for (Map.Entry<String, Path> modulesExcludeEntry :
-				excludeProjectEntrys) {
+				excludeProjectEntries) {
 
 			String modulesExcludeName = modulesExcludeEntry.getKey();
 

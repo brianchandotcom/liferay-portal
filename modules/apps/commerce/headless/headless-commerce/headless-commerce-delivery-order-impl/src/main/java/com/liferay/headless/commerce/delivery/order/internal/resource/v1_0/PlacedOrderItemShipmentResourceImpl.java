@@ -70,11 +70,7 @@ public class PlacedOrderItemShipmentResourceImpl
 					getCommerceShipmentItemsByCommerceOrderItemId(
 						placedOrderItemId),
 				commerceShipmentItem -> _toPlaceOrderItemShipment(
-					commerceShipmentItem.getCommerceShipmentItemId())),
-			null,
-			_commerceShipmentItemService.
-				getCommerceShipmentItemsCountByCommerceOrderItemId(
-					placedOrderItemId));
+					commerceShipmentItem.getCommerceShipmentItemId())));
 	}
 
 	private PlacedOrderItemShipment _toPlaceOrderItemShipment(

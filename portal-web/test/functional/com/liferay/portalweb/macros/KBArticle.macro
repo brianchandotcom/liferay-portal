@@ -1053,6 +1053,40 @@ definition {
 		}
 	}
 
+	macro viewActionsDetailsToolbar {
+		AssertVisible(
+			key_text = "pencil",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(
+			key_text = "info-circle-open",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(locator1 = "Button#SUBSCRIBE");
+
+		AssertVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		if (isSet(moreActions)) {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.viewVisible(menuItem = "Edit");
+
+			MenuItem.viewVisible(menuItem = "Add Child Article");
+
+			MenuItem.viewVisible(menuItem = "Subscribe");
+
+			MenuItem.viewVisible(menuItem = "History");
+
+			MenuItem.viewVisible(menuItem = "Print");
+
+			MenuItem.viewVisible(menuItem = "Move");
+
+			MenuItem.viewVisible(menuItem = "Permissions");
+
+			MenuItem.viewVisible(menuItem = "Delete");
+		}
+	}
+
 	macro viewArticleHistoryCP {
 		Click(
 			key_rowEntry = ${kbArticleTitle},

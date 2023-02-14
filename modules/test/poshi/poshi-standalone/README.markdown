@@ -56,20 +56,43 @@ Property Name | Default Value | Description
 [`test.base.dir.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testbasedirname) | `src/test` (from Poshi source) | Sets the path of the main directory containing Poshi files used for the test project.
 [`test.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testname) | `PortalSmoke#Smoke` (from Poshi source) | Sets the test case(s) to run. The tests can be specified by the test case command name, the test case file's name, or a comma-delimited list of both that runs sequentially. To run sequentially, the tests must be configured with proper teardowns.
 
-#### Google Chrome
-Currently, only Google Chrome is supported and is set to use Chrome by default.
+#### Browsers
+Currently, Firefox, Google Chrome and Microsoft Edge are the only supported browsers and Chrome is set by default. To change the browser, set the following property in [`poshi.properties`](poshi.properties) or `poshi-ext.properties`:
+```
+browser.type=chrome
+#browser.type=edge
+#browser.type=firefox
+```
 
-Optionally, an alternate Google Chrome binary can also be set in [`poshi.properties`](poshi.properties) or `poshi-ext.properties`. If not set, the default installation directory Google Chrome binary will be used.
+Poshi will use the the default installation path of the specified browser. If another browser binary path is required, an additional property can be set.
+
+##### Google Chrome
 ```
 browser.chrome.bin.file=path/to/chrome/binary
 ```
+##### Firefox
+```
+browser.firefox.bin.file=path/to/firefox/binary
+```
+##### Microsoft Edge (pending)
+```
+browser.edge.bin.file=path/to/edge/binary
+```
 
-ChromeDriver will automatically be downloaded based on the Chrome binary version.
+Each respective [browser driver](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/) is automatically downloaded based on the browser type and version.
 
-The current CI environment uses Chrome 86, and that can be matched by installing Chromium 86.
-* For Linux (64 bit), download `chrome-linux.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/800217/).
-* For MacOS, download `chrome-mac.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac/800208/).
-* For Windows (64 bit), download `chrome-win.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/800185/)
+##### Selenium Grid
+
+If you have a local (or remote) Selenium Grid available, then use the following property:
+```
+selenium.remote.driver.url=http://<HOSTNAME_AND_PORT_OF_SELENIUM_GRID_SERVER>
+```
+##### Liferay CI
+
+The current CI environment primarily uses Chrome 100, and that can be matched by installing Chromium 100.
+* For Linux (64 bit), download `chrome-linux.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Linux_x64/972765/).
+* For MacOS, download `chrome-mac.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Mac/972767/).
+* For Windows (64 bit), download `chrome-win.zip` [here](https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/972766/)
 
 ### Gradle Configuration
 

@@ -23,4 +23,4 @@ curl -LSs -o poshi.properties https://raw.githubusercontent.com/liferay/liferay-
 touch poshi-ext.properties
 touch settings.gradle
 
-echo "Poshi Standalone files generated"
+echo "Generated Poshi Standalone files."

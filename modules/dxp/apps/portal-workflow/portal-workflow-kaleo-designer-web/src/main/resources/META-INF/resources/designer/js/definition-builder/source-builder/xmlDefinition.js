@@ -88,6 +88,10 @@ XMLDefinition.prototype = {
 						key: 'scriptLanguage',
 						locator: 'script-language',
 					},
+					{
+						key: 'status',
+						locator: 'status',
+					},
 				],
 				resultListLocator: tagName || 'action',
 			},
@@ -378,6 +382,10 @@ XMLDefinition.prototype = {
 				{
 					key: 'transitions',
 					locator: 'transitions',
+				},
+				{
+					key: 'status',
+					locator: 'status',
 				},
 				instance.getSchemaActions(),
 				instance.getSchemaAssignments(),

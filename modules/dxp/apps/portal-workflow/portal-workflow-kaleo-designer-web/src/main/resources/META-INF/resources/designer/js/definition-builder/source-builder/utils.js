@@ -25,6 +25,7 @@ export function parseActions(node) {
 			item,
 			'script-language'
 		);
+		actions.updateStatus = parseProperty(actions, item, 'status');
 	});
 
 	return actions;
@@ -302,6 +303,9 @@ function parseProperty(data, item, property) {
 	}
 	else if (property === 'script-language') {
 		newProperty = 'scriptLanguage';
+	}
+	else if (property === 'status') {
+		newProperty = 'status';
 	}
 	else if (property === 'template-language') {
 		newProperty = 'templateLanguage';

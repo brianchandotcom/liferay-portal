@@ -200,7 +200,8 @@ public class DBUpgrader {
 
 	public static void upgradePortal() throws Exception {
 		try {
-			UpgradeLogContext.setContext("core");
+			UpgradeLogContext.setContext(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			VerifyProperties.verify();
 

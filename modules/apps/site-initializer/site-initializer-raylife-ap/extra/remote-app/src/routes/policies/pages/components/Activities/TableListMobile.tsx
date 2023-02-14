@@ -90,7 +90,7 @@ const TableListMobile: React.FC<Props> = ({headers, rows}) => {
 			<div className="w-100">
 				<div className="bg-neutral-0 box-activites col d-flex">
 					<h2 className="border-link-active font ml-1 mt-2">
-						Activies
+						Activities
 					</h2>
 				</div>
 

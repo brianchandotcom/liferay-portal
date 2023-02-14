@@ -44,7 +44,7 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 		<div className="table-list-container">
 			<div className="bg-neutral-0 d-flex w-100">
 				<div className="align-items-center box-activites col d-flex">
-					<h2 className="border-link-active font mt-2">Activies</h2>
+					<h2 className="border-link-active font mt-2">Activities</h2>
 				</div>
 
 				<div className="align-items-center blue-line-activites border border-bottom box-activites col d-flex position-relative">
@@ -119,7 +119,7 @@ const TableList: React.FC<Props> = ({headers, rows}) => {
 				<div className="bg-neutral-0 box-info d-flex ml-1 rounded w-50">
 					<li className="bg-neutral-0 box-info d-flex flex-column float-right rounded w-100">
 						<div>
-							<p className="font-table ml-0 pt-4">
+							<p className="font-table ml-0 pl-3 pt-4">
 								{selectedRow.message}
 							</p>
 						</div>

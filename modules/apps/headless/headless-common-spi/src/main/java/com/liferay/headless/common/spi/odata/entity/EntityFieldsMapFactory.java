@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.IdEntityField;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier de Arcos
@@ -29,10 +27,11 @@ import java.util.stream.Stream;
 public class EntityFieldsMapFactory {
 
 	public static Map<String, EntityField> create(EntityField... entityFields) {
-		Stream<EntityField> stream = Arrays.stream(entityFields);
+		Map<String, EntityField> entityFieldsMap = new HashMap<>();
 
-		Map<String, EntityField> entityFieldsMap = stream.collect(
-			Collectors.toMap(EntityField::getName, entityField -> entityField));
+		for (EntityField entityField : entityFields) {
+			entityFieldsMap.put(entityField.getName(), entityField);
+		}
 
 		entityFieldsMap.put(
 			"id",

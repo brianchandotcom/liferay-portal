@@ -40,7 +40,6 @@ export default function Tabs({
 	tabsItems,
 	...otherProps
 }) {
-
 	return (
 		<>
 			<ClayTabs
@@ -52,18 +51,16 @@ export default function Tabs({
 				{...otherProps}
 			>
 				<ClayTabs.List>
-					{tabsItems.map(
-						({active, disabled, href, label}, i) => (
-							<ClayTabs.Item
-								active={active}
-								disabled={disabled}
-								href={href}
-								key={i}
-							>
-								{label}
-							</ClayTabs.Item>
-						)
-					)}
+					{tabsItems.map(({active, disabled, href, label}, i) => (
+						<ClayTabs.Item
+							active={active}
+							disabled={disabled}
+							href={href}
+							key={i}
+						>
+							{label}
+						</ClayTabs.Item>
+					))}
 				</ClayTabs.List>
 
 				<ClayTabs.Panels>

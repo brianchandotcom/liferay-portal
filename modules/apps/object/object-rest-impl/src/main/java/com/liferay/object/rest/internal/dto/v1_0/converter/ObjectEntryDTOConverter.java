@@ -121,8 +121,8 @@ public class ObjectEntryDTOConverter
 
 	private void _addNestedFields(
 			DTOConverterContext dtoConverterContext, Map<String, Object> map,
-			int nestedFieldsDepth, long objectEntryId, String objectFieldName,
-			ObjectRelationship objectRelationship)
+			int nestedFieldsDepth, String objectFieldName,
+			ObjectRelationship objectRelationship, long primaryKey)
 		throws Exception {
 
 		UriInfo uriInfo = dtoConverterContext.getUriInfo();
@@ -148,13 +148,13 @@ public class ObjectEntryDTOConverter
 
 		if (objectDefinition.isSystem()) {
 			value = _objectEntryLocalService.getSystemModelAttributes(
-				objectDefinition, objectEntryId);
+				objectDefinition, primaryKey);
 		}
 		else {
 			value = _toDTO(
-				_getDTOConverterContext(dtoConverterContext, objectEntryId),
+				_getDTOConverterContext(dtoConverterContext, primaryKey),
 				nestedFieldsDepth - 1,
-				_objectEntryLocalService.getObjectEntry(objectEntryId));
+				_objectEntryLocalService.getObjectEntry(primaryKey));
 		}
 
 		String objectFieldNameNestedField = StringUtil.replaceLast(
@@ -178,9 +178,9 @@ public class ObjectEntryDTOConverter
 	}
 
 	private void _addObjectRelationshipNames(
-		Map<String, Object> map, long objectEntryId, ObjectField objectField,
+		Map<String, Object> map, ObjectField objectField,
 		String objectFieldName, ObjectRelationship objectRelationship,
-		Map<String, Serializable> values) {
+		long primaryKey, Map<String, Serializable> values) {
 
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
@@ -198,7 +198,7 @@ public class ObjectEntryDTOConverter
 				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
 		}
 
-		map.put(objectFieldName, objectEntryId);
+		map.put(objectFieldName, primaryKey);
 
 		map.put(objectRelationshipERCObjectFieldName, relatedObjectEntryERC);
 	}
@@ -491,22 +491,22 @@ public class ObjectEntryDTOConverter
 						 objectField.getRelationshipType(),
 						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				long objectEntryId = GetterUtil.getLong(serializable);
+				long primaryKey = GetterUtil.getLong(serializable);
 
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
 						fetchObjectRelationshipByObjectFieldId2(
 							objectField.getObjectFieldId());
 
-				if (objectEntryId > 0) {
+				if (primaryKey > 0) {
 					_addNestedFields(
 						dtoConverterContext, map, nestedFieldsDepth,
-						objectEntryId, objectFieldName, objectRelationship);
+						objectFieldName, objectRelationship, primaryKey);
 				}
 
 				_addObjectRelationshipNames(
-					map, objectEntryId, objectField, objectFieldName,
-					objectRelationship, values);
+					map, objectField, objectFieldName, objectRelationship,
+					primaryKey, values);
 			}
 			else if ((nestedFieldsDepth == 0) &&
 					 Objects.equals(
@@ -519,8 +519,8 @@ public class ObjectEntryDTOConverter
 							objectField.getObjectFieldId());
 
 				_addObjectRelationshipNames(
-					map, (long)serializable, objectField, objectFieldName,
-					objectRelationship, values);
+					map, objectField, objectFieldName, objectRelationship,
+					(long)serializable, values);
 			}
 			else {
 				map.put(objectFieldName, serializable);

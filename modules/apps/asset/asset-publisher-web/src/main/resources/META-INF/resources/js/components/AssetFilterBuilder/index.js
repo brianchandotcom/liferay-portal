@@ -346,7 +346,7 @@ function AssetFilterBuilder({
 				))}
 			</ul>
 
-			<div className="addbutton-timeline-item">
+			<div className="position-relative">
 				<div className="add-condition timeline-increment-icon">
 					<ClayButton
 						aria-label={Liferay.Language.get('add-condition')}

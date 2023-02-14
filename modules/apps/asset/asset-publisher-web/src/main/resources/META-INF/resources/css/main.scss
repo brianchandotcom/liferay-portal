@@ -1,8 +1,6 @@
-.portlet-asset-publisher {
-	.addbutton-timeline-item {
-		position: relative;
-	}
+@import 'atlas-variables';
 
+.portlet-asset-publisher {
 	.asset-content,
 	.asset-full-content {
 		word-wrap: break-word;
@@ -21,15 +19,6 @@
 		font-weight: 700;
 	}
 
-	.component-title .icon-monospaced {
-		height: 1.3rem;
-		line-height: 1.3rem;
-	}
-
-	.metadata-author {
-		font-size: 0.875rem;
-	}
-
 	.portlet {
 		&:hover,
 		&.open,
@@ -41,7 +30,7 @@
 	}
 
 	.preview-asset-entry {
-		border: 1px solid #0b5fff;
+		border: 1px solid $primary;
 		border-radius: 0;
 	}
 
@@ -59,25 +48,19 @@
 	.timeline-increment-icon.add-condition {
 		.form-builder-timeline-add-item {
 			border-radius: 100%;
-			color: #fff;
 			margin-left: 10px;
 			margin-top: -72px;
-			padding: 0;
 		}
 	}
 
 	.timeline-item {
 		&:first-child {
 			.timeline-icon {
-				background-color: #869cad;
+				background-color: $gray-500;
 			}
 
 			&:before {
 				top: 30px;
-			}
-
-			.lfr-autorow-controls {
-				display: none;
 			}
 		}
 
@@ -93,7 +76,6 @@
 			display: inline-block;
 			margin: 0 8px 8px 0;
 			vertical-align: middle;
-			width: auto;
 		}
 
 		.container-trash {
@@ -103,10 +85,6 @@
 			right: 0;
 			top: 0;
 
-			&:hover {
-				color: #65b6f0;
-			}
-
 			> .btn {
 				opacity: 0;
 			}
@@ -114,62 +92,6 @@
 			> .btn:focus {
 				opacity: 1;
 			}
-		}
-
-		.categoriesselector-content,
-		.tagselector-content {
-			.textboxlistentry-holder {
-				padding: 0 0 4px;
-
-				> .textboxlistentry {
-					margin: 4px 5px;
-				}
-			}
-		}
-
-		.categoriesselector-content {
-			position: relative;
-
-			.textboxlistentry-holder {
-				border-bottom: 2px solid #869cad;
-				margin-bottom: 10px;
-				min-height: 2.5em;
-			}
-
-			.btn-toolbar-content {
-				background-color: #fff;
-				bottom: -6px;
-				padding: 15px 5px;
-				position: absolute;
-				right: 0;
-			}
-		}
-
-		.categoriesselector-content,
-		.tagselector-content {
-			li:not(.textboxlist-input-container) {
-				background-color: #e7f1f9;
-				border: 0;
-				color: #65b6f0;
-
-				.textboxlistentry-remove {
-					color: #65b6f0;
-				}
-			}
-
-			.textboxlist-input-container {
-				height: 32px;
-				line-height: 32px;
-
-				& .field-input-text {
-					margin: 0;
-					padding: 0;
-				}
-			}
-		}
-
-		.timeline-increment {
-			z-index: 0;
 		}
 	}
 }

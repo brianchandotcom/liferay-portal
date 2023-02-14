@@ -15,13 +15,17 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.CharArrayWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -312,8 +316,7 @@ public class Dom4JUtil {
 
 				try {
 					String documentTypeDefinition =
-						"<!DOCTYPE definition [\n<!ENTITY micro" +
-							"  \"&#181;\">\n]>\n";
+						"<!DOCTYPE definition [" + _getEntities() + "]>\n";
 
 					orgW3CDomDocument = documentBuilder.parse(
 						new InputSource(
@@ -408,6 +411,22 @@ public class Dom4JUtil {
 
 			truncateElement(iterator.next(), size);
 		}
+	}
+
+	private static String _getEntities() throws IOException, TimeoutException {
+		URL url = new URL(
+			"http://mirrors.lax.liferay.com/www.w3.org/TR/html5-author" +
+				"/entities.json");
+
+		File entitiesFile = new File("entities.html");
+
+		JenkinsResultsParserUtil.toFile(url, entitiesFile);
+
+		JenkinsResultsParserUtil.executeBashCommands(
+			"sed -ni '/^  \"&/s/\"&\\([^;\"]*\\)[^0-9]*\\[\\([0-9]*\\)\\]." +
+				"*/<!ENTITY \\1 \"\\&#\\2;\">/p' " + entitiesFile);
+
+		return JenkinsResultsParserUtil.read(entitiesFile);
 	}
 
 }

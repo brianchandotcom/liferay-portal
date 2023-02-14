@@ -49,7 +49,9 @@ const createURLFilter = async (data: RequestFilterType) => {
 	let formattedTimeFinalRequestDate;
 
 	if (data.fullName) {
-		filterUrl.push(`contains(${FIELDSREPORT.FULLNAME},'${data.fullName}')`);
+		filterUrl.push(
+			`contains(${FIELDSREPORT.FULLNAME},'${data.fullName.trim()}')`
+		);
 	}
 
 	if (data.requestStatus.length !== 0) {
@@ -72,7 +74,7 @@ const createURLFilter = async (data: RequestFilterType) => {
 
 	if (data.organizationName) {
 		filterUrl.push(
-			`organization/organizationName eq '${data.organizationName}'`
+			`organization/organizationName eq '${data.organizationName.trim()}'`
 		);
 	}
 

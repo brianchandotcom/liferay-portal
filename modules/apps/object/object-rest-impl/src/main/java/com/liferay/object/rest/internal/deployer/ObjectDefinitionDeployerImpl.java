@@ -27,12 +27,15 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValues
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.UnsupportedOperationExceptionMapper;
+import com.liferay.object.rest.internal.manager.v1_0.ObjectEntry1toMObjectRelationshipElementsParserImpl;
+import com.liferay.object.rest.internal.manager.v1_0.ObjectEntryMtoMObjectRelationshipElementsParserImpl;
 import com.liferay.object.rest.internal.openapi.v1_0.ObjectEntryOpenAPIResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
@@ -415,6 +418,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							).put(
 								"openapi.resource.path",
 								objectDefinition.getRESTContextPath()
+							).build()),
+						_bundleContext.registerService(
+							ObjectRelationshipElementsParser.class,
+							new ObjectEntry1toMObjectRelationshipElementsParserImpl(
+								objectDefinition),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"companyId", objectDefinition.getCompanyId()
+							).build()),
+						_bundleContext.registerService(
+							ObjectRelationshipElementsParser.class,
+							new ObjectEntryMtoMObjectRelationshipElementsParserImpl(
+								objectDefinition),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"companyId", objectDefinition.getCompanyId()
 							).build())));
 
 				return serviceRegistrationsMap;

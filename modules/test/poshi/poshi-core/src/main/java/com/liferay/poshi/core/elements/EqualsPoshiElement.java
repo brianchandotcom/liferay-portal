@@ -53,6 +53,10 @@ public class EqualsPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
+		if (poshiScript.startsWith("(") && poshiScript.endsWith(")")) {
+			poshiScript = poshiScript.substring(1, poshiScript.length() - 1);
+		}
+
 		String[] equalsContentArray = poshiScript.split("==");
 
 		String arg1 = equalsContentArray[0].trim();

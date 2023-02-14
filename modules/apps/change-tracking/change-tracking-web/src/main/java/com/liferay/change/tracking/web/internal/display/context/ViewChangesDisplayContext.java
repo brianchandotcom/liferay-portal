@@ -301,7 +301,8 @@ public class ViewChangesDisplayContext {
 					WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null),
 				ctCollection -> JSONUtil.put(
-					"ctCollectionId", ctCollection.getCtCollectionId()
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId())
 				).put(
 					"name", ctCollection.getName()
 				))

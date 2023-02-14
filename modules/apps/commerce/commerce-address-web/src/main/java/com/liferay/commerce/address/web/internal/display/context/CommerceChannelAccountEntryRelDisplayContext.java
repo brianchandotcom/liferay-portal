@@ -265,15 +265,20 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
 
-		if (commerceChannelAccountEntryRel == null) {
-			return new long[0];
-		}
-
-		return TransformUtil.transformToLongArray(
+		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels =
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null),
+					QueryUtil.ALL_POS, null);
+
+		if (commerceChannelAccountEntryRel == null) {
+			return TransformUtil.transformToLongArray(
+				commerceChannelAccountEntryRels,
+				CommerceChannelAccountEntryRel::getCommerceChannelId);
+		}
+
+		return TransformUtil.transformToLongArray(
+			commerceChannelAccountEntryRels,
 			curCommerceChannelAccountEntryRel -> {
 				if (commerceChannelAccountEntryRel.getCommerceChannelId() ==
 						curCommerceChannelAccountEntryRel.
@@ -282,7 +287,7 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 					return null;
 				}
 
-				return commerceChannelAccountEntryRel.getCommerceChannelId();
+				return curCommerceChannelAccountEntryRel.getCommerceChannelId();
 			});
 	}
 

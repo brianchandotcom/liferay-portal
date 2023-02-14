@@ -85,7 +85,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
 
 			if ((companyMaxNumberOfPages != 0) &&
-				(companyMaxNumberOfPages < systemMaxNumberOfPages)) {
+				((systemMaxNumberOfPages == 0) ||
+				 (companyMaxNumberOfPages < systemMaxNumberOfPages))) {
 
 				return companyMaxNumberOfPages;
 			}
@@ -105,14 +106,17 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
 
 			if ((groupMaxNumberOfPages != 0) &&
-				(groupMaxNumberOfPages < systemMaxNumberOfPages) &&
-				(groupMaxNumberOfPages < companyMaxNumberOfPages)) {
+				((systemMaxNumberOfPages == 0) ||
+				 (groupMaxNumberOfPages < systemMaxNumberOfPages)) &&
+				((companyMaxNumberOfPages == 0) ||
+				 (groupMaxNumberOfPages < companyMaxNumberOfPages))) {
 
 				return groupMaxNumberOfPages;
 			}
 
 			if ((companyMaxNumberOfPages != 0) &&
-				(companyMaxNumberOfPages < systemMaxNumberOfPages)) {
+				((systemMaxNumberOfPages == 0) ||
+				 (companyMaxNumberOfPages < systemMaxNumberOfPages))) {
 
 				return companyMaxNumberOfPages;
 			}

@@ -1575,6 +1575,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-162313. The user is able to select Hidden Pages for Web Content structure."
+	@priority = 4
+	test SelectHiddenPageInLinkToPageField {
+		task ("Given a user has a widget page hidden from Menu Display") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Widget Page",
+				sitePageType = "Widget Page");
+
+			PagesAdmin.toggleHiddenFromNavigationMenuWidget(toggleValue = "enable");
+
+			PortletEntry.save();
+		}
+
+		task ("When the user creates a web content based on structure with Link a Page field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Link to Page",
+				fieldName = "Link to Page");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Then the user could select the hidden page in Link a Page field") {
+			DERenderer.inputDataInLinkToPageField(
+				linkToPageContent = "Test Widget Page",
+				linkToPageFieldLabel = "Link to Page");
+
+			DERenderer.assertContentInLinktoPageField(
+				linkToPageContent = "Pages > Test Widget Page",
+				linkToPageFieldLabel = "Link to Page");
+
+			PortletEntry.publish();
+		}
+	}
+
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Web Content from a Structure with all possible fields and using a Template with all posible fields."
 	@priority = 5
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {

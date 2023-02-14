@@ -83,14 +83,30 @@ definition {
 
 			AssertElementPresent(locator1 = "//script[contains(@src,'https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js') and contains(@type,'module')]");
 		}
-	}
+}
 
 	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
 	@priority = 3
 	test OsgiClientExtensionWorkspaceLabelIsPresent {
+		task ("Given config file for client extension of type custom element created") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
 
-		// TODO LPS-171621 OsgiClientExtensionWorkspaceLabelIsPresent pending implementation
+		task ("When open the Client Extension list") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Client Extensions");
+		}
 
+		task ("Then Modified Date column is present") {
+			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
+		}
+
+		task ("And Then showing Label 'Workspace' is present") {
+			ClientExtensionGeneral.viewTableEntryType(entryType = "Workspace");
+		}
 	}
 
 }

@@ -1737,9 +1737,7 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
-	private Map<String, Object> _getColumns(
-		ObjectDefinition objectDefinition) {
-
+	private Map<String, Object> _getColumns(ObjectDefinition objectDefinition) {
 		Map<String, Object> columns = new HashMap<>();
 
 		List<ObjectField> objectFields =

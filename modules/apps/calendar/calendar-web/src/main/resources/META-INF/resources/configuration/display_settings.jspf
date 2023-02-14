@@ -39,6 +39,11 @@
 			<aui:option label="3" value="<%= 3 %>" />
 			<aui:option label="4" value="<%= 4 %>" />
 			<aui:option label="5" value="<%= 5 %>" />
+			<aui:option label="7" value="<%= 7 %>" />
+			<aui:option label="10" value="<%= 10 %>" />
+			<aui:option label="14" value="<%= 14 %>" />
+			<aui:option label="21" value="<%= 21 %>" />
+			<aui:option label="31" value="<%= 31 %>" />
 		</aui:select>
 
 		<aui:select label="maximum-events-to-display" name="eventsPerPage">

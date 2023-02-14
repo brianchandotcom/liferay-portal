@@ -2831,6 +2831,10 @@ definition {
 
 		ObjectAdmin.assertRequiredErrorPresent();
 
+		Click(
+			key_modalTitle = "New Validation",
+			locator1 = "Button#CLOSE_MODAL");
+
 		ObjectCustomValidation.addObjectValidation(
 			validationName = "Custom Validation",
 			validationType = "Groovy");

@@ -155,12 +155,20 @@ public class ObjectEntryDTOConverter
 				objectRelationship.getObjectDefinitionId1());
 
 		if (objectDefinition.isSystem()) {
-			value = _toDTO(
-				objectDefinition.getCompanyId(), primaryKey,
-				_systemObjectDefinitionMetadataRegistry.
-					getSystemObjectDefinitionMetadata(
-						objectDefinition.getName()),
-				dtoConverterContext.getUser());
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-172094"))) {
+
+				value = _objectEntryLocalService.getSystemModelAttributes(
+					objectDefinition, primaryKey);
+			}
+			else {
+				value = _toDTO(
+					objectDefinition.getCompanyId(), primaryKey,
+					_systemObjectDefinitionMetadataRegistry.
+						getSystemObjectDefinitionMetadata(
+							objectDefinition.getName()),
+					dtoConverterContext.getUser());
+			}
 		}
 		else {
 			value = _toDTO(

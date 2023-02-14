@@ -44,12 +44,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ValidatorException;
@@ -303,22 +300,22 @@ public class AMImageConfigurationHelperImpl
 			getAMImageConfigurationEntries(
 				companyId, amImageConfigurationEntry -> true);
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+		AMImageConfigurationEntry oldAMImageConfigurationEntry = null;
 
-		Optional<AMImageConfigurationEntry>
-			oldAMImageConfigurationEntryOptional =
-				amImageConfigurationEntryStream.filter(
-					amImageConfigurationEntry -> oldUuid.equals(
-						amImageConfigurationEntry.getUUID())
-				).findFirst();
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
 
-		AMImageConfigurationEntry oldAMImageConfigurationEntry =
-			oldAMImageConfigurationEntryOptional.orElseThrow(
-				() ->
-					new AMImageConfigurationException.
-						NoSuchAMImageConfigurationException(
-							"{uuid=" + oldUuid + "}"));
+			if (oldUuid.equals(amImageConfigurationEntry.getUUID())) {
+				oldAMImageConfigurationEntry = amImageConfigurationEntry;
+
+				break;
+			}
+		}
+
+		if (oldAMImageConfigurationEntry == null) {
+			throw new AMImageConfigurationException.
+				NoSuchAMImageConfigurationException("{uuid=" + oldUuid + "}");
+		}
 
 		if (!name.equals(oldAMImageConfigurationEntry.getName())) {
 			_checkDuplicatesName(amImageConfigurationEntries, name);
@@ -367,17 +364,20 @@ public class AMImageConfigurationHelperImpl
 			String name)
 		throws AMImageConfigurationException {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+		AMImageConfigurationEntry duplicateNameAMImageConfigurationEntry = null;
 
-		Optional<AMImageConfigurationEntry>
-			duplicateNameAMImageConfigurationEntryOptional =
-				amImageConfigurationEntryStream.filter(
-					amImageConfigurationEntry -> name.equals(
-						amImageConfigurationEntry.getName())
-				).findFirst();
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
 
-		if (duplicateNameAMImageConfigurationEntryOptional.isPresent()) {
+			if (name.equals(amImageConfigurationEntry.getName())) {
+				duplicateNameAMImageConfigurationEntry =
+					amImageConfigurationEntry;
+
+				break;
+			}
+		}
+
+		if (duplicateNameAMImageConfigurationEntry != null) {
 			throw new AMImageConfigurationException.
 				DuplicateAMImageConfigurationNameException();
 		}
@@ -388,17 +388,20 @@ public class AMImageConfigurationHelperImpl
 			String uuid)
 		throws AMImageConfigurationException {
 
-		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-			amImageConfigurationEntries.stream();
+		AMImageConfigurationEntry duplicateUuidAMImageConfigurationEntry = null;
 
-		Optional<AMImageConfigurationEntry>
-			duplicateUuidAMImageConfigurationEntryOptional =
-				amImageConfigurationEntryStream.filter(
-					amImageConfigurationEntry -> uuid.equals(
-						amImageConfigurationEntry.getUUID())
-				).findFirst();
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
 
-		if (duplicateUuidAMImageConfigurationEntryOptional.isPresent()) {
+			if (uuid.equals(amImageConfigurationEntry.getUUID())) {
+				duplicateUuidAMImageConfigurationEntry =
+					amImageConfigurationEntry;
+
+				break;
+			}
+		}
+
+		if (duplicateUuidAMImageConfigurationEntry != null) {
 			throw new AMImageConfigurationException.
 				DuplicateAMImageConfigurationUuidException();
 		}
@@ -540,27 +543,17 @@ public class AMImageConfigurationHelperImpl
 			ModifiableSettings modifiableSettings =
 				settings.getModifiableSettings();
 
-			Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
-				amImageConfigurationEntries.stream();
-
-			List<String> imageVariants = amImageConfigurationEntryStream.map(
-				_amImageConfigurationEntryParser::getConfigurationString
-			).collect(
-				Collectors.toList()
-			);
+			List<String> imageVariants = TransformUtil.transform(
+				amImageConfigurationEntries,
+				_amImageConfigurationEntryParser::getConfigurationString);
 
 			modifiableSettings.setValues(
 				"imageVariants", imageVariants.toArray(new String[0]));
 
 			modifiableSettings.store();
 
-			amImageConfigurationEntryStream =
-				amImageConfigurationEntries.stream();
-
 			_portalCache.put(
-				companyId,
-				amImageConfigurationEntryStream.collect(
-					Collectors.toCollection(ArrayList::new)));
+				companyId, new ArrayList<>(amImageConfigurationEntries));
 		}
 		catch (SettingsException | ValidatorException exception) {
 			throw new AMRuntimeException.InvalidConfiguration(exception);

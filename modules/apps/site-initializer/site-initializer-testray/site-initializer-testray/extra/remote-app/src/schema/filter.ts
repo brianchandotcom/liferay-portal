@@ -24,6 +24,7 @@ import {
 	UserAccount,
 } from '../services/rest';
 import {SearchBuilder} from '../util/search';
+import {CaseResultStatuses} from '../util/statuses';
 
 export type Filters = {
 	[key: string]: RendererFields[];
@@ -108,6 +109,16 @@ const baseFilters: Filter = {
 	description: {
 		label: i18n.translate('description'),
 		name: 'description',
+		type: 'textarea',
+	},
+	dueStatus: {
+		label: i18n.translate('status'),
+		name: 'dueStatus',
+		type: 'checkbox',
+	},
+	erros: {
+		label: i18n.translate('errors'),
+		name: 'errors',
 		type: 'textarea',
 	},
 	hasRequirements: {
@@ -235,30 +246,40 @@ const filterSchema = {
 				type: 'text',
 			},
 			overrides(baseFilters.assignee, {name: 'userId'}),
-			{
-				label: i18n.translate('status'),
-				name: 'dueStatus',
+			overrides(baseFilters.dueStatus, {
 				options: [
-					'Blocked',
-					'Failed',
-					'In Progress',
-					'Passed',
-					'Test Fix',
-					'Untested',
+					{
+						label: 'Blocked',
+						value: CaseResultStatuses.BLOCKED,
+					},
+					{
+						label: 'Failed',
+						value: CaseResultStatuses.FAILED,
+					},
+					{
+						label: 'In Progress',
+						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: 'Passed',
+						value: CaseResultStatuses.PASSED,
+					},
+					{
+						label: 'Test Fix',
+						value: CaseResultStatuses.TEST_FIX,
+					},
+					{
+						label: 'Untested',
+						value: CaseResultStatuses.UNTESTED,
+					},
 				],
-				type: 'checkbox',
-			},
-			{
-				label: i18n.translate('issues'),
-				name: 'issues',
+			}),
+			overrides(baseFilters.issues, {
 				operator: 'contains',
-				type: 'textarea',
-			},
-			{
-				label: i18n.translate('errors'),
-				name: 'errors',
-				type: 'textarea',
-			},
+			}),
+			overrides(baseFilters.erros, {
+				operator: 'contains',
+			}),
 			{
 				label: i18n.translate('comments'),
 				name: 'comment',
@@ -287,31 +308,40 @@ const filterSchema = {
 			overrides(baseFilters.assignee, {
 				name: 'userId',
 			}),
-			{
-				label: i18n.translate('status'),
-				name: 'dueStatus',
+			overrides(baseFilters.dueStatus, {
 				options: [
-					'Blocked',
-					'Failed',
-					'In Progress',
-					'Passed',
-					'Test Fix',
-					'Untested',
+					{
+						label: 'Blocked',
+						value: CaseResultStatuses.BLOCKED,
+					},
+					{
+						label: 'Failed',
+						value: CaseResultStatuses.FAILED,
+					},
+					{
+						label: 'In Progress',
+						value: CaseResultStatuses.IN_PROGRESS,
+					},
+					{
+						label: 'Passed',
+						value: CaseResultStatuses.PASSED,
+					},
+					{
+						label: 'Test Fix',
+						value: CaseResultStatuses.TEST_FIX,
+					},
+					{
+						label: 'Untested',
+						value: CaseResultStatuses.UNTESTED,
+					},
 				],
-				type: 'checkbox',
-			},
-			{
-				label: i18n.translate('issues'),
-				name: 'issues',
+			}),
+			overrides(baseFilters.issues, {
 				operator: 'contains',
-				type: 'textarea',
-			},
-			{
-				label: i18n.translate('errors'),
-				name: 'errors',
+			}),
+			overrides(baseFilters.erros, {
 				operator: 'contains',
-				type: 'textarea',
-			},
+			}),
 			{
 				label: i18n.translate('case-result-warning'),
 				name: 'warnings',

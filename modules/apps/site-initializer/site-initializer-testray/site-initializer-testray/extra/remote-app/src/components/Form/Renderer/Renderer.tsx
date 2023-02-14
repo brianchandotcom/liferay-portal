@@ -211,7 +211,7 @@ const Renderer: React.FC<RendererProps> = ({
 				if (type === 'checkbox') {
 					const onCheckboxChange = (event: any) => {
 						const inputValue = event.target.value;
-						const formValue: unknown[] = form[name] ?? [];
+						const formValue: unknown[] = form[name];
 
 						onChange({
 							target: {
@@ -229,25 +229,30 @@ const Renderer: React.FC<RendererProps> = ({
 						<div key={index}>
 							<label>{label}</label>
 
-							{options.map((option, index) => (
-								<Form.Checkbox
-									checked={form[name]?.includes(option)}
-									disabled={disabled}
-									key={index}
-									label={
-										typeof option === 'string'
-											? option
-											: option.label
-									}
-									name={name}
-									onChange={onCheckboxChange}
-									value={
-										typeof option === 'string'
-											? option
-											: option.value
-									}
-								/>
-							))}
+							{options.map((option, index) => {
+								const optionValue =
+									typeof option === 'string'
+										? option
+										: option.value;
+
+								return (
+									<Form.Checkbox
+										checked={form[name]?.includes(
+											optionValue
+										)}
+										disabled={disabled}
+										key={index}
+										label={
+											typeof option === 'string'
+												? option
+												: option.label
+										}
+										name={name}
+										onChange={onCheckboxChange}
+										value={optionValue}
+									/>
+								);
+							})}
 						</div>
 					);
 				}

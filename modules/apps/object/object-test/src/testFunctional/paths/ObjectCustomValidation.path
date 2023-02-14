@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>CHOOSE_OPTION_TYPE_VALIDATION</td>
-		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_validationType}')]</td>
+		<td>//div[contains(@class,'dropdown-menu')]//div[contains(text(),'${key_validationType}')]</td>
 		<td></td>
 	</tr>
 	<tr>

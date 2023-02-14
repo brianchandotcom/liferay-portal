@@ -47,7 +47,10 @@ public class DuplicateSXPBlueprintExternalReferenceCodeExceptionMapper
 			duplicateSXPBlueprintExternalReferenceCodeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Duplicate external reference code");
+			null, Response.Status.BAD_REQUEST,
+			duplicateSXPBlueprintExternalReferenceCodeException.getMessage(),
+			DuplicateSXPBlueprintExternalReferenceCodeException.class.
+				getSimpleName());
 	}
 
 	@Override

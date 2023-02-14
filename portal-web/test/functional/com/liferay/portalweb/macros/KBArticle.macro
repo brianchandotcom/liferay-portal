@@ -1026,15 +1026,24 @@ definition {
 	}
 
 	macro subscribeCP {
-		if (isSet(kbArticleTitle)) {
+		if (isSet(subscribeActionToolbar)) {
 			Click(
-				key_rowEntry = ${kbArticleTitle},
-				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+				key_kbArticleTitle = ${kbArticleTitle},
+				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE");
 
-			MenuItem.click(menuItem = "Subscribe");
+			Click(locator1 = "Button#SUBSCRIBE");
 		}
 		else {
-			LexiconEntry.gotoHeaderMenuItem(menuItem = "Subscribe");
+			if (isSet(kbArticleTitle)) {
+				Click(
+					key_rowEntry = ${kbArticleTitle},
+					locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+				MenuItem.click(menuItem = "Subscribe");
+			}
+			else {
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Subscribe");
+			}
 		}
 
 		Alert.viewSuccessMessage();

@@ -1,10 +1,12 @@
 definition {
 
 	macro assertCompanyLogContent {
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
+		var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
+			groupKey = "Guest",
+			portalInstanceName = ${portalInstanceName});
 
-		if (!(contains(${logContent}, "companyId=${companyId}")) && !(contains(${logContent}, "#${companyId}"))) {
-			fail("The ${portalInstanceName} company log file content does not contain the company ID.");
+		if (!(contains(${logContent}, "for group ${groupId}"))) {
+			fail("The ${portalInstanceName} company log file content does not contain the group ID.");
 		}
 	}
 
@@ -22,9 +24,11 @@ definition {
 		ListUtil.remove(${portalInstanceNames}, ${portalInstanceName});
 
 		for (var additionalPortalInstanceName : list ${portalInstanceNames}) {
-			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${additionalPortalInstanceName});
+			var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
+				groupKey = "Guest",
+				portalInstanceName = ${additionalPortalInstanceName});
 
-			if (contains(${logContent}, "companyId=${companyId}")) {
+			if (contains(${logContent}, "for group ${groupId}")) {
 				fail("The ${portalInstanceName} company log file contains logs from the ${additionalPortalInstanceName} company");
 			}
 		}

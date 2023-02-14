@@ -40,6 +40,9 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -47,7 +50,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,6 +64,7 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -66,11 +72,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -147,8 +155,12 @@ public class ObjectEntryDTOConverter
 				objectRelationship.getObjectDefinitionId1());
 
 		if (objectDefinition.isSystem()) {
-			value = _objectEntryLocalService.getSystemModelAttributes(
-				objectDefinition, primaryKey);
+			value = _toDTO(
+				objectDefinition.getCompanyId(), primaryKey,
+				_systemObjectDefinitionMetadataRegistry.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName()),
+				dtoConverterContext.getUser());
 		}
 		else {
 			value = _toDTO(
@@ -362,6 +374,41 @@ public class ObjectEntryDTOConverter
 				};
 			}
 		};
+	}
+
+	private Object _toDTO(
+			long companyId, long primaryKey,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
+			User user)
+		throws Exception {
+
+		BaseModel<?> baseModel =
+			systemObjectDefinitionMetadata.getBaseModelByExternalReferenceCode(
+				systemObjectDefinitionMetadata.getExternalReferenceCode(
+					primaryKey),
+				companyId);
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
+		DTOConverter<BaseModel<?>, ?> dtoConverter =
+			(DTOConverter<BaseModel<?>, ?>)
+				_dtoConverterRegistry.getDTOConverter(
+					jaxRsApplicationDescriptor.getApplicationName(),
+					baseModel.getModelClassName(),
+					jaxRsApplicationDescriptor.getVersion());
+
+		if (dtoConverter == null) {
+			throw new InternalServerErrorException(
+				"No DTO converter found for " + baseModel.getModelClassName());
+		}
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry,
+				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
+
+		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 
 	private ObjectEntry[] _toObjectEntries(
@@ -598,6 +645,9 @@ public class ObjectEntryDTOConverter
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -623,6 +673,10 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

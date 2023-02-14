@@ -32,77 +32,77 @@ public class ClaySampleDisplayContext {
 		_tabsItems = TabsItemListBuilder.add(
 			tabsItem -> {
 				tabsItem.setActive(true);
-				tabsItem.setLabel("alerts");
+				tabsItem.setLabel("Alerts");
 				tabsItem.setPanelId("alerts");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("badges");
+				tabsItem.setLabel("Badges");
 				tabsItem.setPanelId("badges");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("buttons");
+				tabsItem.setLabel("Buttons");
 				tabsItem.setPanelId("buttons");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("cards");
+				tabsItem.setLabel("Cards");
 				tabsItem.setPanelId("cards");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("dropdowns");
+				tabsItem.setLabel("Dropdowns");
 				tabsItem.setPanelId("dropdowns");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("form_elements");
+				tabsItem.setLabel("Form Elements");
 				tabsItem.setPanelId("form_elements");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("icons");
+				tabsItem.setLabel("Icons");
 				tabsItem.setPanelId("icons");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("labels");
+				tabsItem.setLabel("Labels");
 				tabsItem.setPanelId("labels");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("links");
+				tabsItem.setLabel("Links");
 				tabsItem.setPanelId("links");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("management_toolbars");
+				tabsItem.setLabel("Management Toolbars");
 				tabsItem.setPanelId("management_toolbars");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("navigation_bars");
+				tabsItem.setLabel("Navigation Bars");
 				tabsItem.setPanelId("navigation_bars");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("pagination_bars");
+				tabsItem.setLabel("Pagination Bars");
 				tabsItem.setPanelId("pagination_bars");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("progress_bars");
+				tabsItem.setLabel("Progress Bars");
 				tabsItem.setPanelId("progress_bars");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("stickers");
-				tabsItem.setPanelId("stickers");
+				tabsItem.setLabel("Stickers");
+				tabsItem.setPanelId("Stickers");
 			}
 		).add(
 			tabsItem -> {
-				tabsItem.setLabel("tabs");
+				tabsItem.setLabel("Tabs");
 				tabsItem.setPanelId("tabs");
 			}
 		).build();

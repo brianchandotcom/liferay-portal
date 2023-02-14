@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.verify.VerifyException;
@@ -83,10 +85,13 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 
 			System.out.println(
-				"No verify process with name " + bundleSymbolicName);
+				"No verify process exists for " + bundleSymbolicName);
 
 			return;
 		}
+
+		String message =
+			"Verify process " + ClassUtil.getClassName(verifyProcess);
 
 		Release release = _fetchRelease(verifyProcess);
 
@@ -94,19 +99,16 @@ public class VerifyProcessTrackerOSGiCommands {
 			(!release.isVerified() &&
 			 (release.getState() == ReleaseConstants.STATE_GOOD))) {
 
-			System.out.println(
-				bundleSymbolicName + " verify process has not executed");
+			System.out.println(message + " has not been executed");
 		}
 		else {
 			if (release.isVerified()) {
-				System.out.println(
-					bundleSymbolicName + " verify process succeeded");
+				System.out.println(message + " succeeded");
 			}
 			else if (release.getState() ==
 						ReleaseConstants.STATE_VERIFY_FAILURE) {
 
-				System.out.println(
-					bundleSymbolicName + " verify process failed");
+				System.out.println(message + " failed");
 			}
 		}
 	}
@@ -153,8 +155,11 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	@Descriptor("Show the verify process name if the verify process exists")
 	public void show(String bundleSymbolicName) {
+		VerifyProcess verifyProcess;
+
 		try {
-			_getVerifyProcess(_serviceTrackerMap, bundleSymbolicName);
+			verifyProcess = _getVerifyProcess(
+				_serviceTrackerMap, bundleSymbolicName);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
@@ -162,12 +167,16 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 
 			System.out.println(
-				"No verify process with name " + bundleSymbolicName);
+				"No verify process exists for " + bundleSymbolicName);
 
 			return;
 		}
 
-		System.out.println("Registered verify process " + bundleSymbolicName);
+		System.out.println(
+			StringBundler.concat(
+				"Registered verify process ",
+				ClassUtil.getClassName(verifyProcess), " for module ",
+				bundleSymbolicName));
 	}
 
 	@Activate
@@ -296,8 +305,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 
 			System.out.println(
-				"Executing verify process registered for " +
-					release.getServletContextName());
+				"Executing verify " + ClassUtil.getClassName(verifyProcess));
 
 			try {
 				UpgradeLogContext.setContext(bundle.getSymbolicName());
@@ -341,7 +349,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		if (verifyProcess == null) {
 			throw new IllegalArgumentException(
-				"No verify processes with name " + bundleSymbolicName);
+				"No verify processes exists for " + bundleSymbolicName);
 		}
 
 		return verifyProcess;

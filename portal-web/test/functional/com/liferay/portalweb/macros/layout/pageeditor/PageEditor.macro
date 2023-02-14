@@ -1917,9 +1917,16 @@ definition {
 				text = ${selectedName});
 
 			if (isSet(filterCollection)) {
-				PageEditor.gotoEllipsisMenuItemInItemSelector(
-					fieldLabel = "Collection",
-					menuItem = "Prefilter Collection");
+				if (contains(${selectedName}, "Items")) {
+					PageEditor.gotoEllipsisMenuItemInItemSelector(
+						fieldLabel = "Collection",
+						menuItem = "Filter Collection");
+				}
+				else {
+					PageEditor.gotoEllipsisMenuItemInItemSelector(
+						fieldLabel = "Collection",
+						menuItem = "Prefilter Collection");
+				}
 
 				if (isSet(clearFilter)) {
 					Click(

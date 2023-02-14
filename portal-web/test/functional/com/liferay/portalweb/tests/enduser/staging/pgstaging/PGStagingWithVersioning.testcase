@@ -203,7 +203,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
 			PagesAdmin.addChildPage(
-				childPageName = "Child Page",
+				childPageName = "Child Test Page",
 				parentPageName = "Staging Test Page");
 
 			Navigator.openStagingSiteURL(siteName = "Site Name");
@@ -213,7 +213,7 @@ definition {
 			Staging.markAsReadyForPublication();
 
 			Navigator.gotoStagedSitePage(
-				pageName = "Child Page",
+				pageName = "Child Test Page",
 				siteName = "Site Name");
 
 			Staging.addPageVariationPG(pageVariationName = "Child Page Variation Name");
@@ -238,11 +238,11 @@ definition {
 
 			Staging.viewVariationTooltipMessage(
 				pageName = "Staging Test Page",
-				title = "This is the page variation that is marked as ready for the publish process.");
+				title = "This is the page variation that is marked as ready for publication.");
 
 			Staging.viewVariationTooltipMessage(
-				pageName = "Child Page",
-				title = "There is not a version of this page marked as ready for the publish process.");
+				pageName = "Child Test Page",
+				title = "There is no version of this page marked as ready for publication.");
 		}
 	}
 

@@ -133,12 +133,12 @@
 </tr>
 <tr>
 	<td>PAGES_TO_PUBLISH_PAGE_NAME</td>
-	<td>//span[contains(@class,'tree-label') and contains(.,'${key_pageName}')]</td>
+	<td>//span[contains(@id,'pages-tree') and contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE</td>
-	<td>//span[contains(@class,'tree-label') and contains(.,'${key_pageName}')]//span[contains(@title,'${key_title}')]</td>
+	<td>//span[contains(@data-restore-title,'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

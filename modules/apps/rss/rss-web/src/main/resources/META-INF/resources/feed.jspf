@@ -39,12 +39,11 @@
 
 						<c:if test="<%= (syndFeed.getPublishedDate() != null) && rssPortletInstanceConfiguration.showFeedDescription() %>">
 							<div class="feed-date feed-published-date small">
-								<liferay-ui:icon
-									icon="calendar"
-									label="<%= true %>"
-									markupView="lexicon"
-									message="<%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %>"
+								<clay:icon
+									symbol="calendar"
 								/>
+
+								<span><%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %></span>
 							</div>
 						</c:if>
 
@@ -78,12 +77,11 @@
 
 									<c:if test="<%= syndEntry.getPublishedDate() != null %>">
 										<div class="feed-date small">
-											<liferay-ui:icon
-												icon="calendar"
-												label="<%= true %>"
-												markupView="lexicon"
-												message="<%= dateFormatDateTime.format(syndEntry.getPublishedDate()) %>"
+											<clay:icon
+												symbol="calendar"
 											/>
+
+											<span><%= dateFormatDateTime.format(syndFeed.getPublishedDate()) %></span>
 										</div>
 									</c:if>
 

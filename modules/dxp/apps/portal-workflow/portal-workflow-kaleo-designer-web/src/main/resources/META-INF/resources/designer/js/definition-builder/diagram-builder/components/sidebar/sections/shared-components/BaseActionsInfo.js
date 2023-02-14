@@ -146,6 +146,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
+							updateStatus
 						})
 					}
 				>

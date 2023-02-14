@@ -137,12 +137,13 @@ public class SXPBlueprintLocalServiceTest {
 			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
 
 		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
-			sxpBlueprint.getUserId(), sxpBlueprint.getSXPBlueprintId(),
 			sxpBlueprint.getConfigurationJSON(),
 			sxpBlueprint.getDescriptionMap(),
 			sxpBlueprint.getElementInstancesJSON(),
-			sxpBlueprint.getSchemaVersion(), sxpBlueprint.getTitleMap(),
-			ServiceContextTestUtil.getServiceContext());
+			sxpBlueprint.getSchemaVersion(),
+			ServiceContextTestUtil.getServiceContext(),
+			sxpBlueprint.getSXPBlueprintId(), sxpBlueprint.getTitleMap(),
+			sxpBlueprint.getUserId());
 
 		Assert.assertEquals(
 			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
@@ -176,11 +177,12 @@ public class SXPBlueprintLocalServiceTest {
 		throws Exception {
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			externalReferenceCode, userId, "{}",
-			Collections.singletonMap(LocaleUtil.US, ""), null, "",
+			"{}", Collections.singletonMap(LocaleUtil.US, ""), null,
+			externalReferenceCode, "",
+			ServiceContextTestUtil.getServiceContext(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext());
+			userId);
 
 		_sxpBlueprints.add(sxpBlueprint);
 

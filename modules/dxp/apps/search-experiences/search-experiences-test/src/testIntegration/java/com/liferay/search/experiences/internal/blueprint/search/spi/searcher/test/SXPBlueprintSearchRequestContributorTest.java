@@ -97,7 +97,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 		Class<?> clazz = getClass();
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(),
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(
@@ -105,10 +104,10 @@ public class SXPBlueprintSearchRequestContributorTest {
 					testName.getMethodName(), ".json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			"", "",
+			"", null, "", _serviceContext,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			TestPropsValues.getUserId());
 	}
 
 	@Test

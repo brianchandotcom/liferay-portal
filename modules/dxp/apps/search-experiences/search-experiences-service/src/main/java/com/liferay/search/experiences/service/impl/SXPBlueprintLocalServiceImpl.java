@@ -52,12 +52,11 @@ public class SXPBlueprintLocalServiceImpl
 	extends SXPBlueprintLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public SXPBlueprint addSXPBlueprint(
-			String externalReferenceCode, long userId, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion, ServiceContext serviceContext,
+			Map<Locale, String> titleMap, long userId)
 		throws PortalException {
 
 		_validate(titleMap, serviceContext);
@@ -163,12 +162,11 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String schemaVersion,
+			ServiceContext serviceContext, long sxpBlueprintId,
+			Map<Locale, String> titleMap, long userId)
 		throws PortalException {
 
 		_validate(titleMap, serviceContext);

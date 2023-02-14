@@ -86,7 +86,6 @@ public class SXPParameterDataCreatorTest {
 			_group, _user.getUserId());
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, _user.getUserId(),
 			JSONUtil.put(
 				"generalConfiguration",
 				JSONUtil.put(
@@ -96,10 +95,10 @@ public class SXPParameterDataCreatorTest {
 				"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
 			).toString(),
 			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
-			StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, StringPool.BLANK, _serviceContext,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			_user.getUserId());
 	}
 
 	@Test

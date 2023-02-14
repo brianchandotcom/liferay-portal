@@ -221,16 +221,17 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.updateSXPBlueprint(
-				sxpBlueprintId, _getConfigurationJSON(sxpBlueprint),
+				_getConfigurationJSON(sxpBlueprint),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
 				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
+				ServiceContextFactory.getInstance(contextHttpServletRequest),
+				sxpBlueprintId,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n())));
 	}
 
 	@Override
@@ -247,17 +248,17 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				sxpBlueprint.getExternalReferenceCode(),
 				_getConfigurationJSON(sxpBlueprint),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
-				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
+				_getElementInstancesJSON(sxpBlueprint),
+				sxpBlueprint.getExternalReferenceCode(), _getSchemaVersion(),
+				ServiceContextFactory.getInstance(contextHttpServletRequest),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n())));
 	}
 
 	@Override
@@ -275,12 +276,12 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				null, sxpBlueprint.getConfigurationJSON(),
+				sxpBlueprint.getConfigurationJSON(),
 				sxpBlueprint.getDescriptionMap(),
-				sxpBlueprint.getElementInstancesJSON(),
+				sxpBlueprint.getElementInstancesJSON(), null,
 				sxpBlueprint.getSchemaVersion(),
-				TitleMapUtil.copy(sxpBlueprint.getTitleMap()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+				ServiceContextFactory.getInstance(contextHttpServletRequest),
+				TitleMapUtil.copy(sxpBlueprint.getTitleMap())));
 	}
 
 	@Override

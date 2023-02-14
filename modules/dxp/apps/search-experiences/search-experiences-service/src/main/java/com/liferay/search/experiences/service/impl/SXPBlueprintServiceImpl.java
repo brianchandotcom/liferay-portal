@@ -46,21 +46,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
-	@Override
 	public SXPBlueprint addSXPBlueprint(
-			String externalReferenceCode, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion, ServiceContext serviceContext,
+			Map<Locale, String> titleMap)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_BLUEPRINT);
 
 		return sxpBlueprintLocalService.addSXPBlueprint(
-			externalReferenceCode, getUserId(), configurationJSON,
-			descriptionMap, elementInstancesJSON, schemaVersion, titleMap,
-			serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			externalReferenceCode, schemaVersion, serviceContext, titleMap,
+			getUserId());
 	}
 
 	@Override
@@ -103,20 +102,20 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		return sxpBlueprint;
 	}
 
-	@Override
 	public SXPBlueprint updateSXPBlueprint(
-			long sxpBlueprintId, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String schemaVersion,
+			ServiceContext serviceContext, long sxpBlueprintId,
+			Map<Locale, String> titleMap)
 		throws PortalException {
 
 		_sxpBlueprintModelResourcePermission.check(
 			getPermissionChecker(), sxpBlueprintId, ActionKeys.UPDATE);
 
 		return sxpBlueprintLocalService.updateSXPBlueprint(
-			getUserId(), sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			schemaVersion, serviceContext, sxpBlueprintId, titleMap,
+			getUserId());
 	}
 
 	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")

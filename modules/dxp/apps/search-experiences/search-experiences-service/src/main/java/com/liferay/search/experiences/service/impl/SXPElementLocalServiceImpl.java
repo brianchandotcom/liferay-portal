@@ -52,11 +52,10 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPElement addSXPElement(
-			String externalReferenceCode, long userId,
 			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
-			boolean readOnly, String schemaVersion,
-			Map<Locale, String> titleMap, int type,
-			ServiceContext serviceContext)
+			String externalReferenceCode, boolean readOnly,
+			String schemaVersion, ServiceContext serviceContext,
+			Map<Locale, String> titleMap, int type, long userId)
 		throws PortalException {
 
 		_validate(titleMap, type, serviceContext);

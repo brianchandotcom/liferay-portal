@@ -169,12 +169,12 @@ public class SXPElementLocalServiceTest {
 		throws Exception {
 
 		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
-			externalReferenceCode, userId,
-			Collections.singletonMap(LocaleUtil.US, ""), "{}", false,
-			RandomTestUtil.randomString(),
+			Collections.singletonMap(LocaleUtil.US, ""), "{}",
+			externalReferenceCode, false, RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			0, ServiceContextTestUtil.getServiceContext());
+			0, userId);
 
 		_sxpElements.add(sxpElement);
 

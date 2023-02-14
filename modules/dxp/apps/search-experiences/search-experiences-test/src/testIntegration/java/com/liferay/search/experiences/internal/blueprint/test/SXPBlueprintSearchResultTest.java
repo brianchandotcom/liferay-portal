@@ -165,11 +165,12 @@ public class SXPBlueprintSearchResultTest {
 		_journalArticleBuilder = new JournalArticleBuilder(
 			_group, _journalArticles, _serviceContext, _user);
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, _user.getUserId(), _configurationJSONObject.toString(),
-			Collections.singletonMap(LocaleUtil.US, ""), null, "",
+			_configurationJSONObject.toString(),
+			Collections.singletonMap(LocaleUtil.US, ""), null, null, "",
+			_serviceContext,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			_user.getUserId());
 	}
 
 	@Test
@@ -2469,12 +2470,12 @@ public class SXPBlueprintSearchResultTest {
 
 	private void _updateSXPBlueprint() throws Exception {
 		_sxpBlueprintLocalService.updateSXPBlueprint(
-			_sxpBlueprint.getUserId(), _sxpBlueprint.getSXPBlueprintId(),
 			_sxpBlueprint.getConfigurationJSON(),
 			_sxpBlueprint.getDescriptionMap(),
 			_sxpBlueprint.getElementInstancesJSON(),
-			_sxpBlueprint.getSchemaVersion(), _sxpBlueprint.getTitleMap(),
-			_serviceContext);
+			_sxpBlueprint.getSchemaVersion(), _serviceContext,
+			_sxpBlueprint.getSXPBlueprintId(), _sxpBlueprint.getTitleMap(),
+			_sxpBlueprint.getUserId());
 	}
 
 	private static final LocalTime _LOCAL_TIME_04 = LocalTime.of(4, 0, 0);

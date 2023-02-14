@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,9 +33,6 @@ import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -54,19 +52,10 @@ public class EntityFieldsUtil {
 			return Collections.emptyList();
 		}
 
-		List<ExpandoColumn> expandoColumns =
-			expandoColumnLocalService.getColumns(expandoTable.getTableId());
-
-		Stream<ExpandoColumn> expandoColumnsStream = expandoColumns.stream();
-
-		return expandoColumnsStream.map(
+		return TransformUtil.transform(
+			expandoColumnLocalService.getColumns(expandoTable.getTableId()),
 			expandoColumn -> _getEntityField(
-				expandoBridgeIndexer, expandoColumn)
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+				expandoBridgeIndexer, expandoColumn));
 	}
 
 	private static EntityField _getEntityField(

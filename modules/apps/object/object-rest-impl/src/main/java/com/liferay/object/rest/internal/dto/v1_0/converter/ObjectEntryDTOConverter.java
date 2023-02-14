@@ -120,8 +120,42 @@ public class ObjectEntryDTOConverter
 	}
 
 	private void _addNestedFields(
-		Map<String, Object> map, String nestedFields, String objectFieldName,
-		ObjectRelationship objectRelationship, Object value) {
+			DTOConverterContext dtoConverterContext, Map<String, Object> map,
+			int nestedFieldsDepth, long objectEntryId, String objectFieldName,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
+
+		if (uriInfo == null) {
+			return;
+		}
+
+		MultivaluedMap<String, String> queryParameters =
+			uriInfo.getQueryParameters();
+
+		String nestedFields = queryParameters.getFirst("nestedFields");
+
+		if (nestedFields == null) {
+			return;
+		}
+
+		Object value = null;
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (objectDefinition.isSystem()) {
+			value = _objectEntryLocalService.getSystemModelAttributes(
+				objectDefinition, objectEntryId);
+		}
+		else {
+			value = _toDTO(
+				_getDTOConverterContext(dtoConverterContext, objectEntryId),
+				nestedFieldsDepth - 1,
+				_objectEntryLocalService.getObjectEntry(objectEntryId));
+		}
 
 		String objectFieldNameNestedField = StringUtil.replaceLast(
 			objectFieldName.substring(
@@ -457,56 +491,17 @@ public class ObjectEntryDTOConverter
 						 objectField.getRelationshipType(),
 						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				long objectEntryId = 0;
+				long objectEntryId = GetterUtil.getLong(serializable);
 
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
 						fetchObjectRelationshipByObjectFieldId2(
 							objectField.getObjectFieldId());
 
-				if (serializable != null) {
-					if (GetterUtil.getLong(serializable) > 0) {
-						objectEntryId = (long)serializable;
-					}
-
-					UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-					if (uriInfo != null) {
-						MultivaluedMap<String, String> queryParameters =
-							uriInfo.getQueryParameters();
-
-						String nestedFields = queryParameters.getFirst(
-							"nestedFields");
-
-						if ((objectEntryId != 0) && (nestedFields != null)) {
-							ObjectDefinition relatedObjectDefinition =
-								_objectDefinitionLocalService.
-									getObjectDefinition(
-										objectRelationship.
-											getObjectDefinitionId1());
-
-							if (relatedObjectDefinition.isSystem()) {
-								_addNestedFields(
-									map, nestedFields, objectFieldName,
-									objectRelationship,
-									_objectEntryLocalService.
-										getSystemModelAttributes(
-											relatedObjectDefinition,
-											objectEntryId));
-							}
-							else {
-								_addNestedFields(
-									map, nestedFields, objectFieldName,
-									objectRelationship,
-									_toDTO(
-										_getDTOConverterContext(
-											dtoConverterContext, objectEntryId),
-										nestedFieldsDepth - 1,
-										_objectEntryLocalService.getObjectEntry(
-											objectEntryId)));
-							}
-						}
-					}
+				if (objectEntryId > 0) {
+					_addNestedFields(
+						dtoConverterContext, map, nestedFieldsDepth,
+						objectEntryId, objectFieldName, objectRelationship);
 				}
 
 				_addObjectRelationshipNames(

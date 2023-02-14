@@ -15,6 +15,7 @@
 package com.liferay.segments.asah.connector.internal.expression;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionLexer;
@@ -40,27 +41,34 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 
 	@Test
 	public void testAcceptMultipleFilterByCount() {
+		String filter = StringBundler.concat(
+			String.format(
+				_FILTER_BY_COUNT,
+				String.format(
+					_FILTER, "Page#pageViewed#545188693724480043", "gt",
+					"last24Hours"),
+				"ge", 1),
+			" and (",
+			String.format(
+				_FILTER_BY_COUNT,
+				String.format(
+					_FILTER, "Page#pageViewed#545188693724480041", "lt",
+					"2023-02-09"),
+				"ge", 1),
+			" or ",
+			String.format(
+				_FILTER_BY_COUNT,
+				String.format(
+					_FILTER, "Page#pageViewed#545188693724480037", "gt",
+					"2023-02-08"),
+				"ge", 1),
+			")");
+
 		IndividualSegmentsExpressionParser individualSegmentsExpressionParser =
 			new IndividualSegmentsExpressionParser(
 				new CommonTokenStream(
 					new IndividualSegmentsExpressionLexer(
-						new ANTLRInputStream(
-							StringBundler.concat(
-								"activities.filterByCount(filter='",
-								"(activityKey eq ",
-								"''Page#pageViewed#545188693724480043'' and ",
-								"day gt ''last24Hours'')',operator='ge',",
-								"value=1)) and ",
-								"((activities.filterByCount(filter='",
-								"(activityKey eq ",
-								"''Page#pageViewed#545188693724480041'' and ",
-								"day lt ''2023-02-09'')',operator='ge',",
-								"value=1)) or ",
-								"(activities.filterByCount(filter='(",
-								"activityKey eq ",
-								"''Page#pageViewed#545188693724480037'' and ",
-								"day gt ''2023-02-08'')',",
-								"operator='ge',value=1")))));
+						new ANTLRInputStream(filter))));
 
 		IndividualSegmentsExpressionParser.ExpressionContext expressionContext =
 			individualSegmentsExpressionParser.expression();
@@ -69,23 +77,70 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 			new JSONObjectIndividualSegmentsExpressionVisitorImpl());
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				"{\"groupId\":\"group_2\",\"items\":[",
-				"{\"propertyName\":\"pageViewed\",",
-				"\"assetId\":\"545188693724480043\",",
-				"\"day\":{\"operatorName\":\"gt\",\"value\":\"last24Hours\"},",
-				"\"operatorName\":\"ge\",\"value\":\"1\"},",
-				"{\"groupId\":\"group_1\",\"items\":[",
-				"{\"propertyName\":\"pageViewed\",",
-				"\"assetId\":\"545188693724480041\",",
-				"\"day\":{\"operatorName\":\"lt\",\"value\":\"2023-02-09\"},",
-				"\"operatorName\":\"ge\",\"value\":\"1\"},",
-				"{\"propertyName\":\"pageViewed\",",
-				"\"assetId\":\"545188693724480037\",",
-				"\"day\":{\"operatorName\":\"gt\",\"value\":\"2023-02-08\"},",
-				"\"operatorName\":\"ge\",\"value\":\"1\"}],",
-				"\"conjunctionName\":\"or\"}],",
-				"\"conjunctionName\":\"and\"}"),
+			JSONUtil.put(
+				"conjunctionName", "and"
+			).put(
+				"groupId", "group_2"
+			).put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"assetId", "545188693724480043"
+					).put(
+						"day",
+						JSONUtil.put(
+							"operatorName", "gt"
+						).put(
+							"value", "last24Hours"
+						)
+					).put(
+						"operatorName", "ge"
+					).put(
+						"propertyName", "pageViewed"
+					).put(
+						"value", "1"
+					),
+					JSONUtil.put(
+						"conjunctionName", "or"
+					).put(
+						"groupId", "group_1"
+					).put(
+						"items",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"assetId", "545188693724480041"
+							).put(
+								"day",
+								JSONUtil.put(
+									"operatorName", "lt"
+								).put(
+									"value", "2023-02-09"
+								)
+							).put(
+								"operatorName", "ge"
+							).put(
+								"propertyName", "pageViewed"
+							).put(
+								"value", "1"
+							),
+							JSONUtil.put(
+								"assetId", "545188693724480037"
+							).put(
+								"day",
+								JSONUtil.put(
+									"operatorName", "gt"
+								).put(
+									"value", "2023-02-08"
+								)
+							).put(
+								"operatorName", "ge"
+							).put(
+								"propertyName", "pageViewed"
+							).put(
+								"value", "1"
+							))
+					))
+			).toString(),
 			jsonObject.toString());
 	}
 
@@ -96,12 +151,13 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 				new CommonTokenStream(
 					new IndividualSegmentsExpressionLexer(
 						new ANTLRInputStream(
-							StringBundler.concat(
-								"activities.filterByCount(filter='",
-								"(activityKey eq ",
-								"''Page#pageViewed#545188693724480037'' and ",
-								"day gt ''2023-02-07'')',",
-								"operator='ge',value=1)")))));
+							String.format(
+								_FILTER_BY_COUNT,
+								String.format(
+									_FILTER,
+									"Page#pageViewed#545188693724480037", "gt",
+									"2023-02-07"),
+								"ge", 1)))));
 
 		IndividualSegmentsExpressionParser.ExpressionContext expressionContext =
 			individualSegmentsExpressionParser.expression();
@@ -109,8 +165,8 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 		JSONObject jsonObject = (JSONObject)expressionContext.accept(
 			new JSONObjectIndividualSegmentsExpressionVisitorImpl());
 
-		Assert.assertEquals("1", jsonObject.get("value"));
-		Assert.assertEquals("545188693724480037", jsonObject.get("assetId"));
+		Assert.assertEquals(1, jsonObject.getInt("value"));
+		Assert.assertEquals(545188693724480037L, jsonObject.getLong("assetId"));
 		Assert.assertEquals("ge", jsonObject.get("operatorName"));
 		Assert.assertEquals("pageViewed", jsonObject.get("propertyName"));
 
@@ -119,5 +175,11 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 		Assert.assertEquals("2023-02-07", dayJSONObject.get("value"));
 		Assert.assertEquals("gt", dayJSONObject.get("operatorName"));
 	}
+
+	private static final String _FILTER =
+		"(activityKey eq ''%s'' and day %s ''%s'')";
+
+	private static final String _FILTER_BY_COUNT =
+		"activities.filterByCount(filter='%s',operator='%s',value=%d)";
 
 }

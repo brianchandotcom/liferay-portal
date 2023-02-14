@@ -149,7 +149,7 @@ export function MenuItem({item}) {
 			>
 				<ClayCard
 					className={classNames(
-						'site_navigation_menu_editor_MenuItem',
+						'mb-3 site_navigation_menu_editor_MenuItem',
 						{
 							active: selected,
 							dragging: isDragging,

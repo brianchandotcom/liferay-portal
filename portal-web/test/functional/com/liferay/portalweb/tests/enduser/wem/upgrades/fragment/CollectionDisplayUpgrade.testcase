@@ -69,7 +69,7 @@ definition {
 
 				var n = 1;
 
-				for (var i : list "40,39,38,37,36") {
+				for (var i : list "9,8,7,6,5") {
 					PageEditor.viewCollectionItem(
 						assetTitle = "Web Content Title ${i}",
 						row = ${n});

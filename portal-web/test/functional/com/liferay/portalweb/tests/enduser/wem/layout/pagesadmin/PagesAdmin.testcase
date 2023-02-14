@@ -1566,10 +1566,14 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			for (var rowNumber : list "1,2,3,4,5") {
+			var i = 1;
+
+			for (var rowNumber : list "5,4,3,2,1") {
 				Page.viewCollectionItem(
 					itemName = "Web Content Title ${rowNumber}",
-					key_rowNumber = ${rowNumber});
+					key_rowNumber = ${i});
+
+				var i = ${i} + 1;
 			}
 		}
 
@@ -1578,19 +1582,23 @@ definition {
 		}
 
 		task ("View four web contents are shown in collecion items") {
-			for (var rowNumber : list "1,2,3,4") {
+			var i = 1;
+
+			for (var rowNumber : list "5,4,3,2") {
 				Page.viewCollectionItem(
 					itemName = "Web Content Title ${rowNumber}",
-					key_rowNumber = ${rowNumber});
+					key_rowNumber = ${i});
+
+				var i = ${i} + 1;
 			}
 
-			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 1");
 		}
 
-		task ("View fifth web content is shown in the next page") {
+		task ("View first web content is shown in the next page") {
 			Click(locator1 = "Pagination#NEXT_LINK");
 
-			Page.viewCollectionItem(itemName = "Web Content Title 5");
+			Page.viewCollectionItem(itemName = "Web Content Title 1");
 		}
 	}
 

@@ -30,15 +30,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Priority;
 
@@ -94,18 +92,18 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 
 		Configuration configuration = context.getConfiguration();
 
-		Stream<CheckPattern> stream = _checkPatterns.stream();
+		HashSet<String> scopes = new HashSet<>();
+
+		for (CheckPattern checkPattern : _checkPatterns) {
+			for (String scope : checkPattern.getScopes()) {
+				if (Validator.isNotNull(scope)) {
+					scopes.add(scope);
+				}
+			}
+		}
 
 		_serviceRegistration = _bundleContext.registerService(
-			ScopeFinder.class,
-			new CollectionScopeFinder(
-				stream.flatMap(
-					c -> Arrays.stream(c.getScopes())
-				).filter(
-					Validator::isNotNull
-				).collect(
-					Collectors.toSet()
-				)),
+			ScopeFinder.class, new CollectionScopeFinder(scopes),
 			_buildProperties(configuration));
 
 		return true;

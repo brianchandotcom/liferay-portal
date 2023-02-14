@@ -65,7 +65,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 <clay:sheet-section>
 	<clay:content-row
-		containerElement="h3"
+		containerElement="div"
 		cssClass="sheet-subtitle"
 	>
 		<clay:content-col
@@ -240,7 +240,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 <clay:sheet-section>
 	<clay:content-row
-		containerElement="h3"
+		containerElement="div"
 		cssClass="sheet-subtitle"
 	>
 		<clay:content-col
@@ -480,7 +480,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 <clay:sheet-section>
 	<clay:content-row
-		containerElement="h3"
+		containerElement="div"
 		cssClass="sheet-subtitle"
 	>
 		<clay:content-col

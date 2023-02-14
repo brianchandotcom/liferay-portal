@@ -388,8 +388,19 @@ public class AnalyticsConfigurationRegistryImpl
 			if (companyId != CompanyConstants.SYSTEM) {
 				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
 					companyId,
-					AnalyticsDXPEntityBatchExporterConstants.
-						dispatchTriggerNames);
+					ArrayUtil.append(
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES,
+						new String[] {
+							AnalyticsDXPEntityBatchExporterConstants.
+								DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
+							AnalyticsDXPEntityBatchExporterConstants.
+								DISPATCH_TRIGGER_NAME_ORDER,
+							AnalyticsDXPEntityBatchExporterConstants.
+								DISPATCH_TRIGGER_NAME_PRODUCT,
+							AnalyticsDXPEntityBatchExporterConstants.
+								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
+						}));
 
 				_analyticsMessageLocalService.deleteAnalyticsMessages(
 					companyId);

@@ -47,10 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 
@@ -190,43 +187,29 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	private void _linkFileEntries(
 		DDMForm ddmForm, DDMFormValues ddmFormValues) {
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-		ddmFormFieldsStream.filter(
-			ddmFormField -> Objects.equals(
-				ddmFormField.getType(), "document_library")
-		).map(
-			field -> {
-				List<DDMFormFieldValue> ddmFormFieldValues =
-					ddmFormValues.getDDMFormFieldValues();
-
-				Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
-					ddmFormFieldValues.stream();
-
-				return ddmFormFieldValuesStream.filter(
-					value -> Objects.equals(field.getName(), value.getName())
-				).collect(
-					Collectors.toList()
-				);
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			if (!Objects.equals(ddmFormField.getType(), "document_library")) {
+				continue;
 			}
-		).forEach(
-			ddmFormFieldValues -> {
-				try {
-					for (DDMFormFieldValue ddmFormFieldValue :
-							ddmFormFieldValues) {
+
+			try {
+				for (DDMFormFieldValue ddmFormFieldValue :
+						ddmFormValues.getDDMFormFieldValues()) {
+
+					if (Objects.equals(
+							ddmFormField.getName(),
+							ddmFormFieldValue.getName())) {
 
 						_setValue(ddmFormFieldValue);
 					}
 				}
-				catch (Exception exception) {
-					_log.error(exception);
-
-					throw new BadRequestException(exception);
-				}
 			}
-		);
+			catch (Exception exception) {
+				_log.error(exception);
+
+				throw new BadRequestException(exception);
+			}
+		}
 	}
 
 	private void _setValue(DDMFormFieldValue ddmFormFieldValue)

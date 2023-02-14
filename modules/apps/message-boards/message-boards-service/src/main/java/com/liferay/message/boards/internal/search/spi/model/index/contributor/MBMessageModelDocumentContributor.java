@@ -104,23 +104,21 @@ public class MBMessageModelDocumentContributor
 		document.addKeywordSortable("urlSubject", mbMessage.getUrlSubject());
 
 		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
-			Boolean anyMatch = false;
+			boolean answered = false;
 
 			for (MBMessage message :
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),
 						WorkflowConstants.STATUS_APPROVED)) {
 
-				if (!message.isAnswer()) {
-					continue;
+				if (message.isAnswer()) {
+					answered = true;
+
+					break;
 				}
-
-				anyMatch = true;
-
-				break;
 			}
 
-			document.addKeyword("answered", anyMatch);
+			document.addKeyword("answered", answered);
 			document.addKeyword(
 				"childMessagesCount",
 				_mbMessageLocalService.getChildMessagesCount(

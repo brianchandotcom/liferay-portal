@@ -152,6 +152,67 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-174885. Resolve typical conflicts when using wiki with publications"
+	@priority = 3
+	test CanResolveConflictingPublicationsAutomatically {
+		task ("Add Wiki Node and Wiki Page") {
+			JSONWiki.addWikiNode(
+				groupName = "Guest",
+				wikiNodeDescription = "Wiki Node Description",
+				wikiNodeName = "Wiki Node Name");
+
+			JSONWiki.addWikiPage(
+				groupName = "Guest",
+				wikiNodeName = "Wiki Node Name",
+				wikiPageContent = "Wiki Page Content",
+				wikiPageName = "Wiki Page Test");
+		}
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		task ("Edit Wiki Name Content within Publication Name 1") {
+			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+			WikiPage.editPageCP(
+				groupName = "Guest",
+				siteURLKey = "guest",
+				wikiNodeName = "Wiki Node Name",
+				wikiPageContentEdit = "Some content for Publication Name 1",
+				wikiPageTitle = "Wiki Page Test");
+		}
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		task ("Edit Wiki Name Content within Publication Name 2") {
+			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+			WikiPage.editPageCP(
+				groupName = "Guest",
+				siteURLKey = "guest",
+				wikiNodeName = "Wiki Node Name",
+				wikiPageContentEdit = "Some content for Publication Name 2",
+				wikiPageTitle = "Wiki Page Test");
+		}
+
+		task ("Publish publications and assert that was successful") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 2");
+
+			Publications.publishPublication(publicationName = "Publication Name 2");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 1");
+
+			Publications.publishPublication(publicationName = "Publication Name 1");
+		}
+	}
+
 	@description = "This is a use case for LPS-173707. Multiple 'Your request repeated successfully' messages appear when switching between publications on a page with many Asset Publishers"
 	@priority = 3
 	test DoesNotDisplaySuccessMessageWhenSwitchingToProduction {

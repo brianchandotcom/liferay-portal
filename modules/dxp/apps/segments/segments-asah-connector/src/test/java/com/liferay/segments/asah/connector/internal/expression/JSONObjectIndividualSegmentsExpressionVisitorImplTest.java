@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionLexer;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionParser;
+import com.liferay.segments.asah.connector.internal.expression.parser.test.util.IndividualSegmentsExpressionUtil;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -42,25 +43,19 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 	@Test
 	public void testAcceptMultipleFilterByCount() {
 		String filter = StringBundler.concat(
-			String.format(
-				_FILTER_BY_COUNT,
-				String.format(
-					_FILTER, "Page#pageViewed#545188693724480043", "gt",
-					"last24Hours"),
+			IndividualSegmentsExpressionUtil.getFilterByCount(
+				IndividualSegmentsExpressionUtil.getFilter(
+					"Page#pageViewed#545188693724480043", "gt", "last24Hours"),
 				"ge", 1),
 			" and (",
-			String.format(
-				_FILTER_BY_COUNT,
-				String.format(
-					_FILTER, "Page#pageViewed#545188693724480041", "lt",
-					"2023-02-09"),
+			IndividualSegmentsExpressionUtil.getFilterByCount(
+				IndividualSegmentsExpressionUtil.getFilter(
+					"Page#pageViewed#545188693724480041", "lt", "2023-02-09"),
 				"ge", 1),
 			" or ",
-			String.format(
-				_FILTER_BY_COUNT,
-				String.format(
-					_FILTER, "Page#pageViewed#545188693724480037", "gt",
-					"2023-02-08"),
+			IndividualSegmentsExpressionUtil.getFilterByCount(
+				IndividualSegmentsExpressionUtil.getFilter(
+					"Page#pageViewed#545188693724480037", "gt", "2023-02-08"),
 				"ge", 1),
 			")");
 
@@ -151,10 +146,8 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 				new CommonTokenStream(
 					new IndividualSegmentsExpressionLexer(
 						new ANTLRInputStream(
-							String.format(
-								_FILTER_BY_COUNT,
-								String.format(
-									_FILTER,
+							IndividualSegmentsExpressionUtil.getFilterByCount(
+								IndividualSegmentsExpressionUtil.getFilter(
 									"Page#pageViewed#545188693724480037", "gt",
 									"2023-02-07"),
 								"ge", 1)))));
@@ -175,11 +168,5 @@ public class JSONObjectIndividualSegmentsExpressionVisitorImplTest {
 		Assert.assertEquals("2023-02-07", dayJSONObject.get("value"));
 		Assert.assertEquals("gt", dayJSONObject.get("operatorName"));
 	}
-
-	private static final String _FILTER =
-		"(activityKey eq ''%s'' and day %s ''%s'')";
-
-	private static final String _FILTER_BY_COUNT =
-		"activities.filterByCount(filter='%s',operator='%s',value=%d)";
 
 }

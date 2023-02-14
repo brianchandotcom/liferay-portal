@@ -17,6 +17,7 @@ package com.liferay.segments.asah.connector.internal.expression;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionLexer;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionParser;
+import com.liferay.segments.asah.connector.internal.expression.parser.test.util.IndividualSegmentsExpressionUtil;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -43,9 +44,9 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImplTest {
 				new CommonTokenStream(
 					new IndividualSegmentsExpressionLexer(
 						new ANTLRInputStream(
-							"activityKey eq " +
-								"'Page#pageViewed#545188693724480037' and " +
-									"day eq '2023-02-06'"))));
+							IndividualSegmentsExpressionUtil.getFilter(
+								"Page#pageViewed#545188693724480037", "eq",
+								"2023-02-06")))));
 
 		IndividualSegmentsExpressionParser.ExpressionContext expressionContext =
 			individualSegmentsExpressionParser.expression();

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -799,13 +800,23 @@ public class DLAdminDisplayContext {
 	private Hits _getHits(SearchContainer<RepositoryEntry> searchContainer)
 		throws PortalException {
 
+		long searchRepositoryId = ParamUtil.getLong(
+			_httpServletRequest, "searchRepositoryId");
+
+		Group group = GroupLocalServiceUtil.fetchGroup(searchRepositoryId);
+
+		if (group != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setScopeGroupId(searchRepositoryId);
+		}
+
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
 		searchContext.setAttribute("paginationType", "regular");
-
-		long searchRepositoryId = ParamUtil.getLong(
-			_httpServletRequest, "searchRepositoryId");
 
 		if (searchRepositoryId == 0) {
 			searchRepositoryId = _themeDisplay.getScopeGroupId();

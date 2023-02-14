@@ -41,18 +41,11 @@ export default function Tabs({
 	...otherProps
 }) {
 
-	// TO REMOVE ONCE CLAY IS RELEASED
-
-	const activeIndex = tabsItems.indexOf(
-		tabsItems.find((item) => item.active)
-	);
-
 	return (
 		<>
 			<ClayTabs
 				activation={activation}
 				className={cssClass}
-				defaultActive={activeIndex}
 				displayType={displayType}
 				fade={fade}
 				justified={justified}
@@ -60,11 +53,9 @@ export default function Tabs({
 			>
 				<ClayTabs.List>
 					{tabsItems.map(
-						({/* active,*/ disabled, href, label}, i) => (
+						({active, disabled, href, label}, i) => (
 							<ClayTabs.Item
-
-								// active={active} REMOVE COMMENT ONCE CLAY IS RELEASED
-
+								active={active}
 								disabled={disabled}
 								href={href}
 								key={i}

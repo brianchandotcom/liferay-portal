@@ -91,6 +91,16 @@ public class OAuth2RedirectURIInterpolatorTest {
 				"https://localhost/foo", "@protocol@://localhost/foo",
 				"https://localhost@port-with-colon@/foo"),
 			true);
+
+		// Secure, over port 80
+
+		_testInterpolateRedirectURIsList(
+			80, "https://localhost/foo", "https://localhost/foo",
+			"https://localhost/foo",
+			Arrays.asList(
+				"https://localhost/foo", "@protocol@://localhost/foo",
+				"https://localhost@port-with-colon@/foo"),
+			true);
 	}
 
 	private void _testInterpolateRedirectURIsList(

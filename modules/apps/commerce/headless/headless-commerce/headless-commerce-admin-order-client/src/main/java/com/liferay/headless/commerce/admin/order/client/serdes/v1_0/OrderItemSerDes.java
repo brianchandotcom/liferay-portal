@@ -515,6 +515,30 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getUnitPriceWithTaxAmount());
 		}
 
+		if (orderItem.getVirtualItemURLs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"virtualItemURLs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < orderItem.getVirtualItemURLs().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(orderItem.getVirtualItemURLs()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < orderItem.getVirtualItemURLs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -875,6 +899,15 @@ public class OrderItemSerDes {
 				String.valueOf(orderItem.getUnitPriceWithTaxAmount()));
 		}
 
+		if (orderItem.getVirtualItemURLs() == null) {
+			map.put("virtualItemURLs", null);
+		}
+		else {
+			map.put(
+				"virtualItemURLs",
+				String.valueOf(orderItem.getVirtualItemURLs()));
+		}
+
 		return map;
 	}
 
@@ -1174,6 +1207,12 @@ public class OrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					orderItem.setUnitPriceWithTaxAmount(
 						new BigDecimal((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "virtualItemURLs")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setVirtualItemURLs(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 		}

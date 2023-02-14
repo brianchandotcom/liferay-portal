@@ -176,7 +176,7 @@ definition {
 
 	@description = "This is a use case for LPS-124900 TC-4 and LPS-139642 TC-5: Users should be logged out when they don't have a valid access token because OIDC Provider expires the session."
 	@priority = 4
-	test AssertUserIsLoggedOutWithHigherRefreshToken {
+	test AssertUserIsLoggedOutWhenAccessTokenIsExpiredByOIDCProvider {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"30\"";
 		property test.name.skip.portal.instance = "OpenIDConnect#AssertUserIsLoggedOutWithHigherRefreshToken";

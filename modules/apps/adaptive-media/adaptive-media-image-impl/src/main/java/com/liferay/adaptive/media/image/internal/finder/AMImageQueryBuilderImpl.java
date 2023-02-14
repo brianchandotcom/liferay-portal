@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -158,21 +157,6 @@ public class AMImageQueryBuilderImpl
 		}
 
 		_sortCriteria.put(amAttribute, sortOrder);
-
-		return this;
-	}
-
-	@Override
-	public <V> AMImageQueryBuilder.FuzzySortStep with(
-		AMAttribute<AMImageProcessor, V> amAttribute,
-		Optional<V> valueOptional) {
-
-		if (valueOptional == null) {
-			throw new IllegalArgumentException(
-				"Adaptive media attribute value optional is null");
-		}
-
-		valueOptional.ifPresent(value -> _amAttributes.put(amAttribute, value));
 
 		return this;
 	}

@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.Assert;
@@ -122,7 +121,7 @@ public class AMImageQueryBuilderImplTest {
 		_amImageQueryBuilderImpl.forFileVersion(
 			fileVersion
 		).with(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, Optional.of(100)
+			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, Integer.valueOf(100)
 		);
 
 		Map<AMAttribute<AMImageProcessor, ?>, Object> amAttributes =
@@ -197,7 +196,7 @@ public class AMImageQueryBuilderImplTest {
 		_amImageQueryBuilderImpl.forFileVersion(
 			fileVersion
 		).with(
-			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, (Optional<Integer>)null
+			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, null
 		);
 	}
 

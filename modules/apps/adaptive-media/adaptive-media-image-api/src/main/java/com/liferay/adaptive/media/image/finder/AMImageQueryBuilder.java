@@ -22,7 +22,6 @@ import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -167,50 +166,6 @@ public interface AMImageQueryBuilder
 		 *
 		 * @param amAttribute the attribute used to sort the adaptive media
 		 *        images
-		 * @param valueOptional a non-<code>null</code> optional value for the
-		 *        attribute
-		 */
-		public <V> FuzzySortStep with(
-			AMAttribute<AMImageProcessor, V> amAttribute,
-			Optional<V> valueOptional);
-
-		/**
-		 * An intermediate method that sorts the adaptive media based on
-		 * specific attribute values. Sorting is done using a distance
-		 * comparator that returns the adaptive media images that are a closer
-		 * match first.
-		 *
-		 * <p>
-		 * The distance comparator is implemented based on the value returned by
-		 * the method {@link AMAttribute#distance(Object, Object)}.
-		 * </p>
-		 *
-		 * <p>
-		 * If the method {@link StrictSortStep#orderBy} is invoked in the same
-		 * query builder, it takes precedence and this method has no effect.
-		 * </p>
-		 *
-		 * <p>
-		 * If this method is invoked with multiple attributes, they will be used
-		 * in the following order:
-		 * </p>
-		 *
-		 * <ol>
-		 * <li>
-		 * The first attribute sorts all the adaptive media images.
-		 * </li>
-		 * <li>
-		 * If two or more adaptive media images are located at the same
-		 * distance, the second attribute is used to sort those elements.
-		 * </li>
-		 * <li>
-		 * If the second attribute doesn't resolve all the cases, the third
-		 * attribute is used, and so on.
-		 * </li>
-		 * </ol>
-		 *
-		 * @param amAttribute the attribute used to sort the adaptive media
-		 *        images
 		 * @param value the attribute's value
 		 */
 		public <V> FuzzySortStep with(
@@ -253,7 +208,6 @@ public interface AMImageQueryBuilder
 		 *
 		 * <p>
 		 * This method takes precedence over the methods
-		 * {@link FuzzySortStep#with(AMAttribute, Optional)} and
 		 * {@link FuzzySortStep#with(AMAttribute, Object)}.
 		 * </p>
 		 *

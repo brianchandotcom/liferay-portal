@@ -1,0 +1,37 @@
+diff --git a/org/springframework/validation/DataBinder.java b/org/springframework/validation/DataBinder.java
+index c2fcea3ebaf1..4c10bd9d6a41 100644
+--- a/org/springframework/validation/DataBinder.java
++++ b/org/springframework/validation/DataBinder.java
+@@ -465,7 +465,16 @@ public class DataBinder implements PropertyEditorRegistry, TypeConverter {
+ 	 * @see org.springframework.web.bind.ServletRequestDataBinder
+ 	 */
+ 	public void setDisallowedFields(String... disallowedFields) {
+-		this.disallowedFields = PropertyAccessorUtils.canonicalPropertyNames(disallowedFields);
++		if (disallowedFields == null) {
++			this.disallowedFields = null;
++		}
++		else {
++			String[] fieldPatterns = new String[disallowedFields.length];
++			for (int i = 0; i < fieldPatterns.length; i++) {
++				fieldPatterns[i] = PropertyAccessorUtils.canonicalPropertyName(disallowedFields[i]).toLowerCase();
++			}
++			this.disallowedFields = fieldPatterns;
++		}
+ 	}
+ 
+ 	/**
+@@ -796,7 +805,7 @@ public class DataBinder implements PropertyEditorRegistry, TypeConverter {
+ 		String[] allowed = getAllowedFields();
+ 		String[] disallowed = getDisallowedFields();
+ 		return ((ObjectUtils.isEmpty(allowed) || PatternMatchUtils.simpleMatch(allowed, field)) &&
+-				(ObjectUtils.isEmpty(disallowed) || !PatternMatchUtils.simpleMatch(disallowed, field)));
++				(ObjectUtils.isEmpty(disallowed) || !PatternMatchUtils.simpleMatch(disallowed, field.toLowerCase())));
+ 	}
+ 
+ 	/**
+@@ -930,3 +939,4 @@ public class DataBinder implements PropertyEditorRegistry, TypeConverter {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

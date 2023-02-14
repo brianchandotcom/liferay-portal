@@ -1,0 +1,106 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		Picklist.deleteAllPicklistsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as mandatory of a  previously picklist imported "
+	@priority = 4
+	test CanAddEntryWithMandatoryPicklistFieldImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a multi select picklist field of a picklist previously imported"
+	@priority = 4
+	test CanAddEntryWithMultiSelectPicklistImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a picklist and a object previously imported"
+	@priority = 4
+	test CanAddEntryWithPicklistAndCustomObjectImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a picklist previously imported"
+	@priority = 4
+	test CanAddEntryWithPicklistImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
+	@priority = 4
+	test CanAddEntryWithStateOfPicklistImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "
+	@priority = 3
+	test CanAddEntryWithTranslationPicklistImported {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to export Picklist (download)"
+	@priority = 5
+	test CanExportPicklist {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to import the Picklist"
+	@priority = 5
+	test CanImportPicklist {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It's possible to see an error importing incorrect JSON"
+	@priority = 4
+	test CannotImportWrongPicklist {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-175645 - It’s possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
+	@priority = 5
+	test CanOverwritePicklistWhenERCisDuplicated {
+
+		// TODO pending implementation
+
+	}
+
+}

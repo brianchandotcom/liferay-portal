@@ -69,7 +69,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -1505,7 +1505,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return;
 		}
 
-		JSONObject jsonObject = _jsonFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		Iterator<String> iterator = jsonObject.keys();
 
@@ -1734,7 +1734,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private JSONFactoryUtil _jsonFactoryUtil;
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

@@ -265,30 +265,22 @@ public class CommerceChannelAccountEntryRelDisplayContext {
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			fetchCommerceChannelAccountEntryRel();
 
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels =
+		long[] commerceChannelIds = TransformUtil.transformToLongArray(
 			_commerceChannelAccountEntryRelService.
 				getCommerceChannelAccountEntryRels(
 					_accountEntry.getAccountEntryId(), _type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					QueryUtil.ALL_POS, null),
+			CommerceChannelAccountEntryRel::getCommerceChannelId);
 
 		if (commerceChannelAccountEntryRel == null) {
-			return TransformUtil.transformToLongArray(
-				commerceChannelAccountEntryRels,
-				CommerceChannelAccountEntryRel::getCommerceChannelId);
+			return commerceChannelIds;
 		}
 
-		return TransformUtil.transformToLongArray(
-			commerceChannelAccountEntryRels,
-			curCommerceChannelAccountEntryRel -> {
-				if (commerceChannelAccountEntryRel.getCommerceChannelId() ==
-						curCommerceChannelAccountEntryRel.
-							getCommerceChannelId()) {
-
-					return null;
-				}
-
-				return curCommerceChannelAccountEntryRel.getCommerceChannelId();
-			});
+		return ArrayUtil.filter(
+			commerceChannelIds,
+			commerceChannelId ->
+				commerceChannelAccountEntryRel.getCommerceChannelId() !=
+					commerceChannelId);
 	}
 
 	private final AccountEntry _accountEntry;

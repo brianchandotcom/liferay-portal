@@ -17,13 +17,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-174054: Display a list of headless resources in new FDS View modal"
-	@priority = "5"
+	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
 		property custom.properties = "feature.flag.LPS-164563=true";
 

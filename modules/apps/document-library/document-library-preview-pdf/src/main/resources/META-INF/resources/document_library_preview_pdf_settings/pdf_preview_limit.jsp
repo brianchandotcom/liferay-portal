@@ -40,7 +40,7 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<aui:input label="maximum-number-of-pages" name="maxNumberOfPages" value="<%= pdfPreviewConfigurationDisplayContext.getMaxNumberOfPages() %>" />
+			<aui:input label="maximum-number-of-pages" min="0" name="maxNumberOfPages" value="<%= pdfPreviewConfigurationDisplayContext.getMaxNumberOfPages() %>" />
 
 			<p class="text-muted">
 				<liferay-ui:message key="maximum-number-of-pages-help" />

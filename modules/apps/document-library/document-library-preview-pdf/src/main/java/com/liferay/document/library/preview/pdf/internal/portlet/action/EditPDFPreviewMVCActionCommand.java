@@ -95,7 +95,7 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			if ((systemMaxNumberOfPages != 0) &&
+			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
 				(systemMaxNumberOfPages < maxNumberOfPages)) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
@@ -107,7 +107,7 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			if ((systemMaxNumberOfPages != 0) &&
+			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
 				(systemMaxNumberOfPages < maxNumberOfPages)) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
@@ -119,7 +119,7 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 				_pdfPreviewManagedServiceFactory.getCompanyMaxNumberOfPages(
 					group.getCompanyId());
 
-			if ((companyMaxNumberOfPages != 0) &&
+			if ((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
 				(companyMaxNumberOfPages < maxNumberOfPages)) {
 
 				throw new PDFPreviewException(companyMaxNumberOfPages);

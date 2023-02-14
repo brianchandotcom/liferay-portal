@@ -382,11 +382,6 @@ public class ObjectLayoutLocalServiceTest {
 
 		ObjectLayout objectLayout = objectLayouts.get(0);
 
-		Assert.assertNull(objectLayout.getObjectLayoutTabs());
-
-		objectLayout = _objectLayoutLocalService.getObjectLayout(
-			objectLayout.getObjectLayoutId());
-
 		_assertObjectLayout(objectLayout);
 
 		_objectLayoutLocalService.deleteObjectLayout(

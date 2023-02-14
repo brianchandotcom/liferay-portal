@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.auto.deploy;
+package com.liferay.batch.engine.internal.installer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -60,14 +60,14 @@ public class AdvancedJSONReaderTest {
 				_getFile("advanced_sample.json"))) {
 
 			AdvancedJSONReader
-				<BatchEngineAutoDeployListener.BatchEngineImportConfiguration>
+				<BatchEngineFileInstaller.BatchEngineImportConfiguration>
 					advancedJSONReader = new AdvancedJSONReader<>(inputStream);
 
-			BatchEngineAutoDeployListener.BatchEngineImportConfiguration
+			BatchEngineFileInstaller.BatchEngineImportConfiguration
 				batchEngineImportConfiguration = advancedJSONReader.getObject(
 					"configuration",
-					BatchEngineAutoDeployListener.
-						BatchEngineImportConfiguration.class);
+					BatchEngineFileInstaller.BatchEngineImportConfiguration.
+						class);
 
 			Assert.assertEquals(2410, batchEngineImportConfiguration.companyId);
 			Assert.assertEquals(245647, batchEngineImportConfiguration.userId);
@@ -82,7 +82,7 @@ public class AdvancedJSONReaderTest {
 				_getFile("advanced_sample.json"))) {
 
 			AdvancedJSONReader
-				<BatchEngineAutoDeployListener.BatchEngineImportConfiguration>
+				<BatchEngineFileInstaller.BatchEngineImportConfiguration>
 					advancedJSONReader = new AdvancedJSONReader<>(inputStream);
 
 			try (ByteArrayOutputStream byteArrayOutputStream =
@@ -102,7 +102,7 @@ public class AdvancedJSONReaderTest {
 	}
 
 	private File _getFile(String fileName) throws Exception {
-		URL url = BatchEngineAutoDeployListenerTest.class.getResource(fileName);
+		URL url = BatchEngineFileInstallerTest.class.getResource(fileName);
 
 		Assert.assertEquals("file", url.getProtocol());
 

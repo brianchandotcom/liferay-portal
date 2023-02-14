@@ -5,6 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Service Builder";
 
+	@disable-webdriver = "true"
 	@priority = 4
 	test RemoveRedundantIndex {
 		property test.name.skip.portal.instance = "ServiceBuilderIndexes#RemoveRedundantIndex";
@@ -29,9 +30,7 @@ definition {
 			}
 		}
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "build-service -Dgradle.file.path=/modules/util/portal-tools-service-builder-test-service");
+		AntCommands.runCommand("build-test.xml", "build-service -Dgradle.file.path=modules/util/portal-tools-service-builder-test-service");
 
 		task ("Confirm that the redundant index was removed from indexes.sql by buildService") {
 			var expectedText = '''create unique index IX_32712A55 on RedundantIndexEntry (name[$COLUMN_LENGTH:75$], companyId);''';

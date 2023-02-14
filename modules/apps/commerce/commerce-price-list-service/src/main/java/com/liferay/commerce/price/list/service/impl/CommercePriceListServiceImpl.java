@@ -238,10 +238,7 @@ public class CommercePriceListServiceImpl
 			OrderByComparator<CommercePriceList> orderByComparator)
 		throws PortalException {
 
-		long[] groupIds = TransformUtil.transformToLongArray(
-			_commerceCatalogService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceCatalog::getGroupId);
+		long[] groupIds = _getGroupIds(companyId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterFindByG_C_NotS(
@@ -259,10 +256,7 @@ public class CommercePriceListServiceImpl
 			OrderByComparator<CommercePriceList> orderByComparator)
 		throws PortalException {
 
-		long[] groupIds = TransformUtil.transformToLongArray(
-			_commerceCatalogService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceCatalog::getGroupId);
+		long[] groupIds = _getGroupIds(companyId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterFindByG_C_T_NotS(
@@ -278,10 +272,7 @@ public class CommercePriceListServiceImpl
 	public int getCommercePriceListsCount(long companyId, int status)
 		throws PortalException {
 
-		long[] groupIds = TransformUtil.transformToLongArray(
-			_commerceCatalogService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceCatalog::getGroupId);
+		long[] groupIds = _getGroupIds(companyId);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return commercePriceListPersistence.filterCountByG_C_NotS(
@@ -316,13 +307,9 @@ public class CommercePriceListServiceImpl
 			Sort sort)
 		throws PortalException {
 
-		long[] groupIds = TransformUtil.transformToLongArray(
-			_commerceCatalogService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceCatalog::getGroupId);
-
 		return commercePriceListLocalService.searchCommercePriceLists(
-			companyId, groupIds, keywords, status, start, end, sort);
+			companyId, _getGroupIds(companyId), keywords, status, start, end,
+			sort);
 	}
 
 	@Override
@@ -330,13 +317,8 @@ public class CommercePriceListServiceImpl
 			long companyId, String keywords, int status)
 		throws PortalException {
 
-		long[] groupIds = TransformUtil.transformToLongArray(
-			_commerceCatalogService.search(
-				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceCatalog::getGroupId);
-
 		return commercePriceListLocalService.searchCommercePriceListsCount(
-			companyId, groupIds, keywords, status);
+			companyId, _getGroupIds(companyId), keywords, status);
 	}
 
 	@Override
@@ -420,6 +402,13 @@ public class CommercePriceListServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), groupId, actionId);
+	}
+
+	private long[] _getGroupIds(long companyId) throws PortalException {
+		return TransformUtil.transformToLongArray(
+			_commerceCatalogService.search(
+				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceCatalog::getGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -235,7 +235,7 @@ export type TestrayRequirementCase = {
 };
 
 export type TestrayRun = {
-	build: TestrayBuild;
+	build?: TestrayBuild;
 	dateCreated: string;
 	dateModified: string;
 	description: string;
@@ -248,7 +248,7 @@ export type TestrayRun = {
 	jenkinsJobKey: string;
 	name: string;
 	number: string;
-	r_buildToRuns_c_build: TestrayBuild;
+	r_buildToRuns_c_build?: TestrayBuild;
 	status: string;
 };
 

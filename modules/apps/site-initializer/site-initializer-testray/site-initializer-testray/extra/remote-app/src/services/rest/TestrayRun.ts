@@ -15,11 +15,12 @@
 import TestrayError from '../../TestrayError';
 import yupSchema from '../../schema/yup';
 import {DISPATCH_TRIGGER_TYPE} from '../../util/enum';
+import {SearchBuilder} from '../../util/search';
 import {DispatchTriggerStatuses} from '../../util/statuses';
 import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import Rest from './Rest';
 import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
-import {TestrayRun} from './types';
+import {APIResponse, TestrayRun} from './types';
 
 type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
 
@@ -55,6 +56,9 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 					...run,
 					applicationServer,
 					browser,
+					build: run?.r_buildToRuns_c_build
+						? run?.r_buildToRuns_c_build
+						: undefined,
 					database,
 					javaJDK,
 					operatingSystem,
@@ -67,15 +71,31 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 	public async autofill(
 		objectEntryId1: number,
 		objectEntryId2: number,
-		autoFillType: 'Build' | 'Run'
+		autofillType: 'Build' | 'Run'
 	) {
-		const name = `AUTOFILL-${objectEntryId1}/${objectEntryId2}-${autoFillType}-${new Date().getTime()}`;
+		const name = `AUTOFILL-${objectEntryId1}/${objectEntryId2}-${autofillType}-${new Date().getTime()}`;
+
+		if (autofillType === 'Build') {
+			const response = await this.getAll({
+				filter: SearchBuilder.in('id', [
+					objectEntryId1,
+					objectEntryId2,
+				]),
+			});
+
+			const [runA, runB] =
+				this.transformDataFromList(response as APIResponse<TestrayRun>)
+					?.items ?? [];
+
+			objectEntryId1 = runA.build?.id as number;
+			objectEntryId2 = runB.build?.id as number;
+		}
 
 		const response = await liferayDispatchTriggerImpl.create({
 			active: true,
 			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.AUTO_FILL,
 			dispatchTaskSettings: {
-				autoFillType,
+				autofillType,
 				objectEntryId1,
 				objectEntryId2,
 			},

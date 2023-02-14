@@ -1197,14 +1197,26 @@ export default function ChangeTrackingRenderView({
 							<tr>
 								{(state.view === VIEW_LEFT ||
 									state.view === VIEW_SPLIT) && (
-									<td className="publications-render-view-content">
+									<td
+										className={
+											state.view === VIEW_SPLIT
+												? 'publications-render-view-content publications-render-view-content-split'
+												: 'publications-render-view-content'
+										}
+									>
 										{renderPreviewLeft()}
 									</td>
 								)}
 
 								{(state.view === VIEW_RIGHT ||
 									state.view === VIEW_SPLIT) && (
-									<td className="publications-render-view-content">
+									<td
+										className={
+											state.view === VIEW_SPLIT
+												? 'publications-render-view-content publications-render-view-content-split'
+												: 'publications-render-view-content'
+										}
+									>
 										{renderPreviewRight()}
 									</td>
 								)}

@@ -356,12 +356,33 @@ table.publications-render-view {
 		vertical-align: top;
 	}
 
+	td.publications-render-view-content iframe {
+		pointer-events: none;
+	}
+
 	td.publications-render-view-content:first-child {
 		padding-left: 24px;
 	}
 
 	td.publications-render-view-content:last-child {
 		padding-right: 24px;
+	}
+
+	td.publications-render-view-content-split iframe {
+		width: 1100px;
+		zoom: 0.5;
+		-moz-transform: scale(0.5);
+		-moz-transform-origin: 0 0;
+		-o-transform: scale(0.5);
+		-o-transform-origin: 0 0;
+		-webkit-transform: scale(0.5);
+		-webkit-transform-origin: 0 0;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio: 0) {
+		td.publications-render-view-content-split iframe {
+			zoom: 1;
+		}
 	}
 }
 

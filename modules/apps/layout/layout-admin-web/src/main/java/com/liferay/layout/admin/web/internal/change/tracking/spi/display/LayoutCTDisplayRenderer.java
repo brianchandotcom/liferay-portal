@@ -142,10 +142,9 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			url, "previewCTCollectionId", layout.getCtCollectionId());
 
 		return StringBundler.concat(
-			"<div style=\"pointer-events: none;\"><iframe frameborder=\"0\" ",
-			"onload=\"this.style.height = (this.contentWindow.document.body.",
-			"scrollHeight+20) + 'px';\" src=\"", url,
-			"\" width=\"100%\"></iframe></div>");
+			"<iframe frameborder=\"0\" onload=\"this.style.height = ",
+			"(this.contentWindow.document.body.scrollHeight+20) + 'px';\" ",
+			"src=\"", url, "\" width=\"100%\"></iframe>");
 	}
 
 	@Override

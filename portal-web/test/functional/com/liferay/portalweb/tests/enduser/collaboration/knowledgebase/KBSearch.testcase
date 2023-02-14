@@ -28,6 +28,27 @@ definition {
 		}
 	}
 
+	@description = "This test checks that user can access a folder in the search results from the side bar."
+	@priority = 4
+	test CanAccessFolderFromSearchResultsInSidebar {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.searchForKB(knowledgeBaseName = "KB");
+
+		KBArticle.selectFolderThroughPageTreePanel(kbFolderName = "KB Folder");
+
+		KBArticle.viewDefaultCP(featureFlag = "true");
+	}
+
 	@description = "This test checks that an article can be searched for in the admin search bar."
 	@ignore = "Test Stub"
 	@priority = 4

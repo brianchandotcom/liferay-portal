@@ -3057,6 +3057,8 @@ definition {
 		property portal.acceptance = "true";
 
 		Navigator.openURL();
+		
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "People");
 

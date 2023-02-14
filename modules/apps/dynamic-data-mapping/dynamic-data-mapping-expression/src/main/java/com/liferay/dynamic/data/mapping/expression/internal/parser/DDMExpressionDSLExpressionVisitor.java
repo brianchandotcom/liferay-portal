@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDM
 import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.ToFloatingPointArrayContext;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -265,7 +266,16 @@ public class DDMExpressionDSLExpressionVisitor
 	public Object visitNumericParenthesis(
 		@NotNull NumericParenthesisContext numericParenthesisContext) {
 
-		return visitChild(numericParenthesisContext, 1);
+		Expression<Number> expression = (Expression<Number>)_getExpression(
+			visitChild(numericParenthesisContext, 1));
+
+		if (expression instanceof DSLFunction) {
+			DSLFunction<Number> dslFunction = (DSLFunction<Number>)expression;
+
+			return DSLFunctionFactoryUtil.withParentheses(dslFunction);
+		}
+
+		return expression;
 	}
 
 	@Override

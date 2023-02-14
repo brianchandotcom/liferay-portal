@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile project(":apps:account:account-api")
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
+	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:notification:notification-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")

@@ -15,6 +15,8 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -391,6 +393,55 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayout.getObjectLayoutId());
 	}
 
+	@Test
+	public void testUpdateObjectLayout() throws Exception {
+		List<ScreenNavigationCategory> screenNavigationCategories =
+			_screenNavigationRegistry.getScreenNavigationCategories(
+				_objectDefinition.getClassName(), TestPropsValues.getUser(),
+				ObjectLayoutTab.class);
+
+		Assert.assertTrue(screenNavigationCategories.isEmpty());
+
+		ObjectLayoutTab objectLayoutTab1 = _addObjectLayoutTab();
+
+		ObjectLayout objectLayout = _objectLayoutLocalService.addObjectLayout(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Collections.singletonList(objectLayoutTab1));
+
+		screenNavigationCategories =
+			_screenNavigationRegistry.getScreenNavigationCategories(
+				_objectDefinition.getClassName(), TestPropsValues.getUser(),
+				ObjectLayoutTab.class);
+
+		Assert.assertEquals(
+			screenNavigationCategories.toString(), 1,
+			screenNavigationCategories.size());
+
+		_addObjectLayout();
+
+		screenNavigationCategories =
+			_screenNavigationRegistry.getScreenNavigationCategories(
+				_objectDefinition.getClassName(), TestPropsValues.getUser(),
+				ObjectLayoutTab.class);
+
+		Assert.assertEquals(
+			screenNavigationCategories.toString(), 1,
+			screenNavigationCategories.size());
+
+		_objectLayoutLocalService.updateObjectLayout(
+			objectLayout.getObjectLayoutId(), false, objectLayout.getNameMap(),
+			Arrays.asList(objectLayoutTab1));
+
+		screenNavigationCategories =
+			_screenNavigationRegistry.getScreenNavigationCategories(
+				_objectDefinition.getClassName(), TestPropsValues.getUser(),
+				ObjectLayoutTab.class);
+
+		Assert.assertTrue(screenNavigationCategories.isEmpty());
+	}
+
 	private long _addObjectField() throws Exception {
 		String name = RandomTestUtil.randomString();
 
@@ -547,5 +598,8 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Inject
 	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;
+
+	@Inject
+	private ScreenNavigationRegistry _screenNavigationRegistry;
 
 }

@@ -75,31 +75,7 @@ public class DLFileEntryKeywordQueryContributor
 			try {
 				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
 
-				String exactMatch = StringUtils.substringBetween(
-					keywords, StringPool.QUOTE);
-
-				if (Validator.isNotNull(exactMatch)) {
-					fileNameBooleanQuery.add(
-						_getMatchQuery(
-							"fileName", exactMatch, MatchQuery.Type.PHRASE),
-						BooleanClauseOccur.MUST);
-
-					String notExactKeyword = keywords.replaceFirst(
-						Pattern.quote(
-							StringPool.QUOTE + exactMatch + StringPool.QUOTE),
-						"");
-
-					if (Validator.isNotNull(notExactKeyword)) {
-						fileNameBooleanQuery.add(
-							_getShouldBooleanQuery(notExactKeyword),
-							BooleanClauseOccur.MUST);
-					}
-				}
-				else {
-					fileNameBooleanQuery.add(
-						_getShouldBooleanQuery(keywords),
-						BooleanClauseOccur.MUST);
-				}
+				_addKeywordsToQuery(fileNameBooleanQuery, keywords);
 
 				booleanQuery.add(
 					_getMatchQuery(
@@ -122,6 +98,34 @@ public class DLFileEntryKeywordQueryContributor
 
 	@Reference
 	protected QueryHelper queryHelper;
+
+	private void _addKeywordsToQuery(
+			BooleanQuery fileNameBooleanQuery, String keywords)
+		throws ParseException {
+
+		String exactMatch = StringUtils.substringBetween(
+			keywords, StringPool.QUOTE);
+
+		if (Validator.isNotNull(exactMatch)) {
+			fileNameBooleanQuery.add(
+				_getMatchQuery("fileName", exactMatch, MatchQuery.Type.PHRASE),
+				BooleanClauseOccur.MUST);
+
+			String notExactKeyword = keywords.replaceFirst(
+				Pattern.quote(StringPool.QUOTE + exactMatch + StringPool.QUOTE),
+				"");
+
+			if (Validator.isNotNull(notExactKeyword)) {
+				fileNameBooleanQuery.add(
+					_getShouldBooleanQuery(notExactKeyword),
+					BooleanClauseOccur.MUST);
+			}
+		}
+		else {
+			fileNameBooleanQuery.add(
+				_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
+		}
+	}
 
 	private MatchQuery _getMatchQuery(
 		String field, String keywords, MatchQuery.Type phrase) {

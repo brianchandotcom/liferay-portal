@@ -29,17 +29,17 @@ definition {
 			fieldName = "authServerWellKnownURI",
 			fieldValue = ${wellknownURI});
 
-		FormFields.editTextMultiline(
+		OAuthClient.clearAndType(
 			fieldName = "infoJSON",
 			fieldValue = ${clientInfo});
 
 		if (isSet(authRequestParametersJSON)) {
-			FormFields.editTextMultiline(
+			OAuthClient.clearAndType(
 				fieldName = "authRequestParametersJSON",
 				fieldValue = ${authRequestParametersJSON});
 		}
 		else {
-			FormFields.editTextMultiline(
+			OAuthClient.clearAndType(
 				fieldName = "authRequestParametersJSON",
 				fieldValue = '''
 					{
@@ -50,12 +50,12 @@ definition {
 		}
 
 		if (isSet(tokenRequestParametersJSON)) {
-			FormFields.editTextMultiline(
+			OAuthClient.clearAndType(
 				fieldName = "tokenRequestParametersJSON",
 				fieldValue = ${tokenRequestParametersJSON});
 		}
 		else {
-			FormFields.editTextMultiline(
+			OAuthClient.clearAndType(
 				fieldName = "tokenRequestParametersJSON",
 				fieldValue = '''
 					{
@@ -68,7 +68,7 @@ definition {
 		if (isSet(userMapperJSON)) {
 			var userMapperInfo = FileUtil.read("${jsonFileBaseDir}/${userMapperJSON}");
 
-			FormFields.editTextMultiline(
+			OAuthClient.clearAndType(
 				fieldName = "OIDCUserInfo",
 				fieldValue = ${userMapperInfo});
 		}
@@ -126,6 +126,22 @@ definition {
 		}
 
 		ClickNoError(locator1 = "Button#SAVE");
+	}
+
+	macro clearAndType {
+		var key_fieldName = ${fieldName};
+
+		DoubleClick(locator1 = "FormFields#TEXT_MULTILINE_FIELD");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+
+		KeyPress(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "\BACK_SPACE");
+
+		Type(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = ${fieldValue});
 	}
 
 	macro deleteClient {

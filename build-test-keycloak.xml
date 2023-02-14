@@ -31,7 +31,7 @@
 				</daemons>
 			</parallel>
 
-			<waitfor maxwait="60" maxwaitunit="second">
+			<waitfor maxwait="120" maxwaitunit="second">
 				<http url="http://127.0.0.1:18080/" />
 			</waitfor>
 		</sequential>

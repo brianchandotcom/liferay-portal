@@ -1,13 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
 import App from './App';
 import { AppContextProvider } from './manage-app-state/AppManageState';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<AppContextProvider>
-			<App />
-		</AppContextProvider>
-	</React.StrictMode>
-);
+class WebComponent extends HTMLElement {
+	connectedCallback() {
+		ReactDOM.render(
+		<React.StrictMode>
+			<AppContextProvider>
+				<App />
+			</AppContextProvider>
+		</React.StrictMode>, this);
+	}
+}
+const ELEMENT_ID = 'liferay-marketplace-custom-element';
+
+if (!customElements.get(ELEMENT_ID)) {
+	customElements.define(ELEMENT_ID, WebComponent);
+}

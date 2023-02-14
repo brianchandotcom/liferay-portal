@@ -73,16 +73,15 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			(Long)dtoConverterContext.getId());
 
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
 		Locale locale = dtoConverterContext.getLocale();
 
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
 			locale);
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
 
 		Order order = new Order() {
 			{

@@ -19,6 +19,9 @@ package com.liferay.layout.utility.page.constants;
  */
 public class LayoutUtilityPageExportImportConstants {
 
+	public static final String FILE_NAME_DEFAULT_UTILITY_PAGES =
+		"default-utility-pages.json";
+
 	public static final String FILE_NAME_UTILITY_PAGE = "utility-page.json";
 
 }

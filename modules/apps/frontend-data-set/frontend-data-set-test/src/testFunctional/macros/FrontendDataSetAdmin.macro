@@ -1,0 +1,11 @@
+definition {
+    macro searchProvider {
+        Click(locator1 = "CreateObject#OBJECT_LABEL");
+        Type(
+            locator1 = "CreateObject#OBJECT_LABEL",
+            value1 = "${key_provider}");
+        KeyPress(
+            locator1 = "CreateObject#OBJECT_LABEL",
+            value1 = "\ENTER");
+    }
+}

@@ -25,15 +25,22 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -44,6 +51,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -53,6 +61,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.Objects;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -238,6 +249,33 @@ public class CommerceMediaServlet extends HttpServlet {
 		}
 	}
 
+	private void _sendError(
+		HttpServletResponse httpServletResponse, int status, String message) {
+
+		try {
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			JSONObject jsonObject = JSONUtil.put(
+				CommerceMediaConstants.ERROR,
+				JSONUtil.put(
+					CommerceMediaConstants.CODE, status
+				).put(
+					CommerceMediaConstants.MESSAGE, message
+				));
+
+			printWriter.write(jsonObject.toString());
+
+			httpServletResponse.setStatus(status);
+			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			httpServletResponse.setStatus(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	private void _sendMediaBytes(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String contentDisposition)
@@ -247,6 +285,96 @@ public class CommerceMediaServlet extends HttpServlet {
 			httpServletRequest.getPathInfo());
 
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+		String commerceVirtualOrderItemPath = pathArray[0];
+
+		if (Objects.equals(
+				CommerceMediaConstants.VIRTUAL_ORDER_ITEM,
+				commerceVirtualOrderItemPath)) {
+
+			long commerceVirtualOrderItemId = GetterUtil.getLongStrict(
+				pathArray[1]);
+			long fileEntryId = GetterUtil.getLongStrict(pathArray[3]);
+
+			try {
+				CommerceVirtualOrderItem commerceVirtualOrderItem =
+					_commerceVirtualOrderItemService.
+						fetchCommerceVirtualOrderItem(
+							commerceVirtualOrderItemId);
+
+				if (commerceVirtualOrderItem == null) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The order item " + commerceVirtualOrderItemId +
+							" was not found.");
+
+					return;
+				}
+
+				if (commerceVirtualOrderItem.getFileEntryId() != fileEntryId) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						StringBundler.concat(
+							"The virtual item was not found with oder item id ",
+							commerceVirtualOrderItemId, " and virtual item ",
+							fileEntryId));
+
+					return;
+				}
+
+				FileEntry fileEntry = _getFileEntry(fileEntryId);
+
+				if (fileEntry == null) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The virtual item " + fileEntryId + " was not found.");
+
+					return;
+				}
+
+				ServletResponseUtil.sendFile(
+					httpServletRequest, httpServletResponse,
+					fileEntry.getFileName(),
+					_file.getBytes(fileEntry.getContentStream()),
+					fileEntry.getMimeType(),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+
+				int usages = commerceVirtualOrderItem.getUsages() + 1;
+
+				_commerceVirtualOrderItemLocalService.
+					updateCommerceVirtualOrderItem(
+						commerceVirtualOrderItem.
+							getCommerceVirtualOrderItemId(),
+						commerceVirtualOrderItem.getFileEntryId(),
+						commerceVirtualOrderItem.getUrl(),
+						commerceVirtualOrderItem.getActivationStatus(),
+						commerceVirtualOrderItem.getDuration(), usages,
+						commerceVirtualOrderItem.getMaxUsages(),
+						commerceVirtualOrderItem.isActive());
+
+				return;
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+
+				if (portalException instanceof PrincipalException) {
+					_sendError(
+						httpServletResponse,
+						HttpServletResponse.SC_UNAUTHORIZED,
+						"You do not have permission to access the requested " +
+							"resource");
+
+					return;
+				}
+
+				_sendError(
+					httpServletResponse,
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"An unexpected rror occurred.");
+
+				return;
+			}
+		}
 
 		if (pathArray.length < 2) {
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
@@ -325,6 +453,13 @@ public class CommerceMediaServlet extends HttpServlet {
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
+
+	@Reference
+	private CommerceVirtualOrderItemLocalService
+		_commerceVirtualOrderItemLocalService;
+
+	@Reference
+	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

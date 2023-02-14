@@ -47,7 +47,10 @@ public class DuplicateSXPElementExternalReferenceCodeExceptionMapper
 			duplicateSXPElementExternalReferenceCodeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Duplicate external reference code");
+			null, Response.Status.BAD_REQUEST,
+			duplicateSXPElementExternalReferenceCodeException.getMessage(),
+			DuplicateSXPElementExternalReferenceCodeException.class.
+				getSimpleName());
 	}
 
 	@Override

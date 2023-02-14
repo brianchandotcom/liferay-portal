@@ -26,12 +26,16 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -67,6 +71,27 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		throws PortalException {
 
 		return getURL(commerceAccountId, cpAttachmentFileEntryId, true, false);
+	}
+
+	@Override
+	public String getDownloadVirtualOrderItemURL(
+			long commerceVirtualOrderItemId)
+		throws PortalException {
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			_commerceVirtualOrderItemLocalService.fetchCommerceVirtualOrderItem(
+				commerceVirtualOrderItemId);
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(
+			commerceVirtualOrderItem.getFileEntryId());
+
+		return StringBundler.concat(
+			_portal.getPathModule(), StringPool.SLASH,
+			CommerceMediaConstants.SERVLET_PATH, StringPool.SLASH,
+			CommerceMediaConstants.VIRTUAL_ORDER_ITEM, StringPool.SLASH,
+			commerceVirtualOrderItemId, StringPool.SLASH,
+			CommerceMediaConstants.FILE, StringPool.SLASH,
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -221,6 +246,10 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
+	private CommerceVirtualOrderItemLocalService
+		_commerceVirtualOrderItemLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -229,6 +258,9 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

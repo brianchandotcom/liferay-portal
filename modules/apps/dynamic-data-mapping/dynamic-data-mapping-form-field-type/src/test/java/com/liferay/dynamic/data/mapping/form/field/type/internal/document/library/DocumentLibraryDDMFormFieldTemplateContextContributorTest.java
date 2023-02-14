@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
@@ -92,6 +93,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		super.setUp();
 
 		_setUpCompanyLocalService();
+		_setUpDLAppLocalService();
 		_setUpDLAppService();
 		_setUpFileEntry();
 		_setUpGroupLocalService();
@@ -564,17 +566,23 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			"_companyLocalService", companyLocalService);
 	}
 
-	private void _setUpDLAppService() throws Exception {
+	private void _setUpDLAppLocalService() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_documentLibraryDDMFormFieldTemplateContextContributor,
-			"_dlAppService", _dlAppService);
+			"_dlAppLocalService", _dlAppLocalService);
 
 		Mockito.when(
-			_dlAppService.getFileEntryByUuidAndGroupId(
+			_dlAppLocalService.getFileEntryByUuidAndGroupId(
 				_FILE_ENTRY_UUID, _GROUP_ID)
 		).thenReturn(
 			_fileEntry
 		);
+	}
+
+	private void _setUpDLAppService() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			"_dlAppService", _dlAppService);
 
 		Folder folder = _mockFolder(_PRIVATE_FOLDER_ID);
 
@@ -773,6 +781,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	private static final long _REPOSITORY_ID = RandomTestUtil.randomLong();
 
+	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
+		DLAppLocalService.class);
 	private final DLAppService _dlAppService = Mockito.mock(DLAppService.class);
 	private final DocumentLibraryDDMFormFieldTemplateContextContributor
 		_documentLibraryDDMFormFieldTemplateContextContributor =

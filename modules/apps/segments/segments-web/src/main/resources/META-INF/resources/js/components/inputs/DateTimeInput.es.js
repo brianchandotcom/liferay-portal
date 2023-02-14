@@ -37,11 +37,19 @@ class DateTimeInput extends React.Component {
 		let returnVal = null;
 
 		if (props.value !== state.initialValue) {
+			const actualValue =
+				PROPERTY_TYPES.DATE_TIME === props.propertyType
+					? format(new Date(props.value), INPUT_DATE_FORMAT)
+					: format(
+							new Date(props.value.replaceAll('-', '/')),
+							INPUT_DATE_FORMAT
+					  );
+
 			returnVal = {
 				expanded: false,
 				initialValue: props.value,
-				previousValue: format(new Date(props.value), INPUT_DATE_FORMAT),
-				value: format(new Date(props.value), INPUT_DATE_FORMAT),
+				previousValue: actualValue,
+				value: actualValue,
 			};
 		}
 

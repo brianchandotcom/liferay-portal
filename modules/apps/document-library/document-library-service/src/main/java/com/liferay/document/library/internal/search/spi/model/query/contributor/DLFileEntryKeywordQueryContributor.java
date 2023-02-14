@@ -106,7 +106,11 @@ public class DLFileEntryKeywordQueryContributor
 		String exactMatch = StringUtils.substringBetween(
 			keywords, StringPool.QUOTE);
 
-		if (Validator.isNotNull(exactMatch)) {
+		if (Validator.isNull(exactMatch)) {
+			fileNameBooleanQuery.add(
+				_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
+		}
+		else {
 			fileNameBooleanQuery.add(
 				_getMatchQuery("fileName", exactMatch, MatchQuery.Type.PHRASE),
 				BooleanClauseOccur.MUST);
@@ -116,14 +120,8 @@ public class DLFileEntryKeywordQueryContributor
 				"");
 
 			if (Validator.isNotNull(notExactKeyword)) {
-				fileNameBooleanQuery.add(
-					_getShouldBooleanQuery(notExactKeyword),
-					BooleanClauseOccur.MUST);
+				_addKeywordsToQuery(fileNameBooleanQuery, notExactKeyword);
 			}
-		}
-		else {
-			fileNameBooleanQuery.add(
-				_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
 		}
 	}
 

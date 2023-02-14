@@ -530,6 +530,22 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	macro deleteProject {
+		var portalURL = JSONCompany.getPortalURL();
+		var projectId = StringUtil.replace(${projectId}, " ", "%20");
+		var projectId = JSONTestrayAPI.getProject(projectName = ${projectName});
+
+		echo(${projectId});
+
+		var curl = '''
+			${portalURL}/o/c/projects/${projectId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
 	@summary = "This calls the JSON WS API to get object id"
 	macro getObjectId {
 		var portalURL = JSONCompany.getPortalURL();
@@ -544,38 +560,20 @@ definition {
 		return ${objectId};
 	}
 
-	macro deleteProject {
-		var portalURL = JSONCompany.getPortalURL();
-
-		var projectId = StringUtil.replace("${projectId}"," ","%20");
-
-		var projectId = JSONTestrayAPI.getProject(projectName = "${projectName}");
-
-		echo("${projectId}");
-
-		var curl = '''
-			${portalURL}/o/c/projects/${projectId} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
-		''';
-
-			JSONCurlUtil.delete("${curl}");
-	}
-
 	macro getProject {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/c/projects/?search=${projectName} \
-			-u test@liferay.com:test \
-			-H 'accept: application/json' \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
 		''';
 
-		var projectId = JSONCurlUtil.get("${curl}", "$.items[?(@.name=='${projectName}')].id");
+		var projectId = JSONCurlUtil.get(${curl}, "$.items[?(@.name=='${projectName}')].id");
 
-		echo("${projectId}");
+		echo(${projectId});
 
-		return "${projectId}";
+		return ${projectId};
 	}
 
 }

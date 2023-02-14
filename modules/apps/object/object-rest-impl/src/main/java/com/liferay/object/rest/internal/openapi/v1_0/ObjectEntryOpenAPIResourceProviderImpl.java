@@ -17,8 +17,8 @@ package com.liferay.object.rest.internal.openapi.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -36,23 +36,24 @@ public class ObjectEntryOpenAPIResourceProviderImpl
 	public ObjectEntryOpenAPIResource getObjectEntryOpenAPIResource(
 		ObjectDefinition objectDefinition) {
 
-		return _serviceTrackerMap.getService(
+		return _scopedServiceTrackerMap.getService(
+			objectDefinition.getCompanyId(),
 			objectDefinition.getOSGiJaxRsName("ObjectEntryOpenAPIResource"));
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, ObjectEntryOpenAPIResource.class,
-			"openapi.resource.key");
+			"openapi.resource.key", () -> null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_scopedServiceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, ObjectEntryOpenAPIResource>
-		_serviceTrackerMap;
+	private ScopedServiceTrackerMap<ObjectEntryOpenAPIResource>
+		_scopedServiceTrackerMap;
 
 }

@@ -398,7 +398,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								_openAPIResource,
 								_systemObjectDefinitionMetadataRegistry),
 							HashMapDictionaryBuilder.<String, Object>put(
-								"companyId", objectDefinition.getCompanyId()
+								"companyId",
+								String.valueOf(objectDefinition.getCompanyId())
 							).put(
 								"openapi.resource", "true"
 							).put(

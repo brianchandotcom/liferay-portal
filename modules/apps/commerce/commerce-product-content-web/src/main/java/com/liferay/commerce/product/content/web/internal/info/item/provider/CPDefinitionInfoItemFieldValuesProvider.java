@@ -47,15 +47,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -185,16 +182,10 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId());
 
-			Stream<AssetCategory> stream = assetCategories.stream();
+			if (ListUtil.isNotEmpty(assetCategories)) {
+				AssetCategory assetCategory = assetCategories.get(0);
 
-			Stream<Map<Locale, String>> assetCategoriesTitleMapStream =
-				stream.map(AssetCategory::getTitleMap);
-
-			Optional<Map<Locale, String>> assetCategoriesTitleMapOptional =
-				assetCategoriesTitleMapStream.findAny();
-
-			assetCategoriesTitleMapOptional.ifPresent(
-				assetCategoriesTitleMap -> cpDefinitionInfoFieldValues.add(
+				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CPDefinitionInfoItemFields.categoriesInfoField,
 						InfoLocalizedValue.<String>builder(
@@ -202,8 +193,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 							LocaleUtil.fromLanguageId(
 								cpDefinition.getDefaultLanguageId())
 						).values(
-							assetCategoriesTitleMap
-						).build())));
+							assetCategory.getTitleMap()
+						).build()));
+			}
 
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(

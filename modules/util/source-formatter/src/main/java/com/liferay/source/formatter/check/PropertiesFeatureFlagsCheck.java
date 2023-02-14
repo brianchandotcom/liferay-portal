@@ -49,7 +49,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!fileName.endsWith("portal.properties")) {
+		if (!absolutePath.endsWith("/portal-impl/src/portal.properties")) {
 			return content;
 		}
 

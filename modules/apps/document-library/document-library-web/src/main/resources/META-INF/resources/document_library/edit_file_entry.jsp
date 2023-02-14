@@ -270,8 +270,6 @@ renderResponse.setTitle(headerTitle);
 
 			<div class="sheet">
 				<div class="panel-group panel-group-flush">
-					<aui:fieldset>
-
 						<%
 						long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
 						%>
@@ -494,7 +492,6 @@ renderResponse.setTitle(headerTitle);
 								</c:if>
 							</c:if>
 						</c:if>
-					</aui:fieldset>
 
 					<c:choose>
 						<c:when test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">

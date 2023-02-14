@@ -142,28 +142,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			long companyId, long maxNumberOfPages)
 		throws Exception {
 
-		Dictionary<String, Object> properties = null;
-
-		Configuration configuration = _getScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
-
-		if (configuration == null) {
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				PDFPreviewConfiguration.class.getName() + ".scoped",
-				StringPool.QUESTION);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				companyId
-			).build();
-		}
-		else {
-			properties = configuration.getProperties();
-		}
-
-		properties.put("maxNumberOfPages", maxNumberOfPages);
-
-		configuration.update(properties);
+		_updateScopedConfiguration(
+			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.COMPANY,
+			companyId);
 	}
 
 	@Override
@@ -191,28 +172,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			long groupId, long maxNumberOfPages)
 		throws Exception {
 
-		Dictionary<String, Object> properties = null;
-
-		Configuration configuration = _getScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
-
-		if (configuration == null) {
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				PDFPreviewConfiguration.class.getName() + ".scoped",
-				StringPool.QUESTION);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId
-			).build();
-		}
-		else {
-			properties = configuration.getProperties();
-		}
-
-		properties.put("maxNumberOfPages", maxNumberOfPages);
-
-		configuration.update(properties);
+		_updateScopedConfiguration(
+			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.GROUP,
+			groupId);
 	}
 
 	public void updateSystemPDFPreviewConfiguration(long maxNumberOfPages)
@@ -325,6 +287,32 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			ConfigurableUtil.createConfigurable(
 				PDFPreviewConfiguration.class, dictionary));
 		_groupIds.put(pid, groupId);
+	}
+
+	private void _updateScopedConfiguration(
+			long maxNumberOfPages, ExtendedObjectClassDefinition.Scope scope,
+			long scopePK)
+		throws Exception {
+
+		Dictionary<String, Object> properties;
+		Configuration configuration = _getScopedConfiguration(scope, scopePK);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				PDFPreviewConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				scope.getPropertyKey(), scopePK
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		properties.put("maxNumberOfPages", maxNumberOfPages);
+
+		configuration.update(properties);
 	}
 
 	private final Map<Long, PDFPreviewConfiguration>

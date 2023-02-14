@@ -454,7 +454,7 @@ const Select = ({
 				<ClayDropDown.Menu
 					active={expand}
 					alignElementRef={triggerElementRef}
-					alignmentPosition={0}
+					alignmentPosition={5}
 					className="ddm-btn-full ddm-select-dropdown"
 					onKeyDown={(event) => {
 						switch (event.keyCode) {

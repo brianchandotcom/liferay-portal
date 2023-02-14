@@ -25,7 +25,11 @@ import {
 	UserAccount,
 } from '../services/rest';
 import {SearchBuilder} from '../util/search';
-import {CaseResultStatuses, TaskStatuses} from '../util/statuses';
+import {
+	CaseResultStatuses,
+	SubTaskStatuses,
+	TaskStatuses,
+} from '../util/statuses';
 
 export type Filters = {
 	[key: string]: RendererFields[];
@@ -521,23 +525,32 @@ const filterSchema = {
 		fields: [
 			{
 				label: i18n.translate('subtask-name'),
-				name: 'subtaskName',
+				name: 'name',
+				operator: 'contains',
 				type: 'text',
 			},
 			{
 				label: i18n.translate('errors'),
 				name: 'errors',
+				operator: 'contains',
 				type: 'text',
 			},
-			baseFilters.assignee,
+			overrides(baseFilters.assignee, {name: 'userId'}),
 			{
 				label: i18n.translate('status'),
-				name: 'status',
-				options: ['Complete', 'In Analysis', 'Open'],
+				name: 'dueStatus',
+				options: [
+					{label: 'Complete', value: SubTaskStatuses.COMPLETE},
+					{label: 'In Analysis', value: SubTaskStatuses.IN_ANALYSIS},
+					{label: 'Open', value: SubTaskStatuses.OPEN},
+				],
 				type: 'checkbox',
 			},
-			baseFilters.team,
+			overrides(baseFilters.team, {
+				disabled: true,
+			}),
 			{
+				disabled: true,
 				label: i18n.translate('component'),
 				name: 'commponent',
 				type: 'text',

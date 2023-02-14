@@ -1,4 +1,4 @@
 Bundle-Name: test-api
-Bundle-SymbolicName: com.example.test
+Bundle-SymbolicName: com.example.test.api
 Bundle-Version: 1.0.0
 Export-Package: com.example.test.api

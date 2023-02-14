@@ -17,5 +17,5 @@ package com.example.test.api;
 /**
  * @author simon
  */
-public interface TestApi {
+public interface TestAPI {
 }

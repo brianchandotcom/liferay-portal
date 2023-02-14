@@ -625,11 +625,11 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 		}
 
-		Set<Map.Entry<String, Path>> excludeProjectEntrys =
+		Set<Map.Entry<String, Path>> excludeProjectEntries =
 			excludeProjectPathMap.entrySet();
 
 		for (Map.Entry<String, Path> modulesExcludeEntry :
-				excludeProjectEntrys) {
+				excludeProjectEntries) {
 
 			String modulesExcludeName = modulesExcludeEntry.getKey();
 

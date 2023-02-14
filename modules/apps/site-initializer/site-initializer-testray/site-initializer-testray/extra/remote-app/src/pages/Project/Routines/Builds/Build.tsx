@@ -127,6 +127,7 @@ const Build = () => {
 							render: (_, item: TestrayCaseResult) =>
 								item?.run?.name,
 							value: i18n.translate('environment'),
+							width: '250',
 						},
 						{
 							key: 'user',

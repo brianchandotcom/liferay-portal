@@ -57,10 +57,9 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -153,19 +152,21 @@ public class OrganizationResourceDTOConverter
 									return null;
 								}
 
-								Set<Locale> locales =
-									_language.getCompanyAvailableLocales(
-										organization.getCompanyId());
-
-								Stream<Locale> localesStream = locales.stream();
+								Map<String, String> countries = new HashMap<>();
 
 								Country country = _countryService.getCountry(
 									organization.getCountryId());
 
-								return localesStream.collect(
-									Collectors.toMap(
-										LocaleUtil::toBCP47LanguageId,
-										country::getName));
+								for (Locale locale :
+										_language.getCompanyAvailableLocales(
+											organization.getCompanyId())) {
+
+									countries.put(
+										LocaleUtil.toBCP47LanguageId(locale),
+										country.getName());
+								}
+
+								return countries;
 							});
 						setAddressRegion(
 							() -> {

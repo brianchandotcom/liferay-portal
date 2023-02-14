@@ -453,9 +453,9 @@ public class PoshiRunnerExecutor {
 				(DefaultTable)PoshiVariablesUtil.replaceCommandVars(
 					element.attributeValue("table"));
 
-			List<List<String>> rowList = table.getTable();
+			List<List<String>> rows = table.getRows();
 
-			Iterator<?> iterator = rowList.iterator();
+			Iterator<?> iterator = rows.iterator();
 
 			while (iterator.hasNext()) {
 				PoshiVariablesUtil.putIntoCommandMap(

@@ -109,6 +109,10 @@ Sets the name of a Java process to print JStack output for when tests fail.
 
 Sets a boolean that determines whether BrowserMob Proxy is enabled. The proxy can be configured with `com.liferay.poshi.runner.util.ProxyUtil`.
 
+### proxy.server.port
+
+Sets the port number assigned to the BrowserMob Proxy server.
+
 ### save.screenshot
 
 Sets a boolean for whether a screenshot is saved when tests fail.

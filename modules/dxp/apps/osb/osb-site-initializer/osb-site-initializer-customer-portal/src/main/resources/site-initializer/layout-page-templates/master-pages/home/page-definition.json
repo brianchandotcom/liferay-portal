@@ -452,6 +452,9 @@
 										"pageElements": [
 											{
 												"definition": {
+													"fragmentStyle": {
+														"marginRight": "9"
+													},
 													"widgetInstance": {
 														"widgetConfig": {
 															"languageIds": "en_US,ja_JP,pt_BR,es_ES"

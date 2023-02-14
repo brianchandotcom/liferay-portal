@@ -27,112 +27,137 @@ const statusReport = {
 	[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
 };
 
-const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => (
-	<ClayCard
-		className={classNames(
-			'border border-brand-primary-lighten-4 card-interactive shadow-none',
-			{
-				'card-horizontal mb-3': compressed,
-				'cp-project-card-lg mr-5 mb-4': !compressed,
-			}
-		)}
-		onClick={onClick}
-	>
-		<ClayCard.Body
-			className={classNames({
-				'mx-2 py-4 my-3': !compressed,
-				'py-4': compressed,
-			})}
+const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
+	const hideSLAStatus =
+		!koroneikiAccount.hasSLAGoldPlatinum ||
+		koroneikiAccount.status === 'Expired';
+
+	const SLAStatus = () => {
+		if (loading) {
+			return <Skeleton height={20} width={54} />;
+		}
+
+		if (hideSLAStatus) {
+			return null;
+		}
+
+		return <StatusTag currentStatus={koroneikiAccount.status} />;
+	};
+
+	const SLAStatusDate = () => {
+		if (loading) {
+			return <Skeleton className="mt-1" height={20} width={100} />;
+		}
+
+		if (hideSLAStatus) {
+			return null;
+		}
+
+		return (
+			<div className="text-neutral-5 text-paragraph-sm">
+				{statusReport[koroneikiAccount.status]}
+
+				<span className="font-weight-bold ml-1 text-paragraph">
+					{getDateCustomFormat(
+						koroneikiAccount.status === SLA_STATUS_TYPES.future
+							? koroneikiAccount.slaFutureStartDate
+							: koroneikiAccount.slaCurrentEndDate,
+						FORMAT_DATE_TYPES.day2DMonthSYearN
+					)}
+				</span>
+			</div>
+		);
+	};
+
+	return (
+		<ClayCard
+			className={classNames(
+				'border border-brand-primary-lighten-4 card-interactive shadow-none',
+				{
+					'card-horizontal mb-3': compressed,
+					'cp-project-card-lg mr-5 mb-4': !compressed,
+				}
+			)}
+			onClick={onClick}
 		>
-			<ClayCard.Row
+			<ClayCard.Body
 				className={classNames({
-					'flex-column': !compressed,
+					'mx-2 py-4 my-3': !compressed,
+					'py-4': compressed,
 				})}
 			>
-				<div
-					className={classNames('text-truncate-inline', {
-						'autofit-col autofit-col-expand': compressed,
-					})}
-				>
-					<h4 className="mb-1 text-neutral-7 text-truncate">
-						{loading ? (
-							<Skeleton
-								className="mb-1"
-								height={34}
-								width={300}
-							/>
-						) : (
-							koroneikiAccount.name
-						)}
-					</h4>
-
-					{compressed &&
-						(loading ? (
-							<Skeleton
-								className="mb-1"
-								height={24}
-								width={120}
-							/>
-						) : (
-							<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
-								{koroneikiAccount.code}
-							</div>
-						))}
-				</div>
-
-				<div
+				<ClayCard.Row
 					className={classNames({
-						'autofit-col text-right align-items-end': compressed,
-						'd-block': !loading,
-						'mt-6 pt-3': !compressed,
+						'flex-column': !compressed,
 					})}
 				>
-					{loading ? (
-						<Skeleton height={20} width={54} />
-					) : (
-						<StatusTag currentStatus={koroneikiAccount.status} />
-					)}
+					<div
+						className={classNames('text-truncate-inline', {
+							'autofit-col autofit-col-expand': compressed,
+						})}
+					>
+						<h4 className="mb-1 text-neutral-7 text-truncate">
+							{loading ? (
+								<Skeleton
+									className="mb-1"
+									height={34}
+									width={300}
+								/>
+							) : (
+								koroneikiAccount.name
+							)}
+						</h4>
 
-					{loading ? (
-						<Skeleton className="mt-1" height={20} width={100} />
-					) : (
-						<div className="text-neutral-5 text-paragraph-sm">
-							{statusReport[koroneikiAccount.status]}
+						{compressed &&
+							(loading ? (
+								<Skeleton
+									className="mb-1"
+									height={24}
+									width={120}
+								/>
+							) : (
+								<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
+									{koroneikiAccount.code}
+								</div>
+							))}
+					</div>
 
-							<span className="font-weight-bold ml-1 text-paragraph">
-								{getDateCustomFormat(
-									koroneikiAccount.status ===
-										SLA_STATUS_TYPES.future
-										? koroneikiAccount.slaFutureStartDate
-										: koroneikiAccount.slaCurrentEndDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
-								)}
-							</span>
-						</div>
-					)}
+					<div
+						className={classNames({
+							'autofit-col text-right align-items-end h-100': compressed,
+							'd-block': !loading,
+							'mt-6 pt-3': !compressed,
+						})}
+					>
+						<SLAStatus />
 
-					{compressed &&
-						(loading ? (
-							<Skeleton
-								className="mt-1"
-								height={20}
-								width={120}
-							/>
-						) : (
-							<div className="text-align-end text-neutral-5 text-paragraph-sm">
-								{i18n.translate('support-region')}
+						<SLAStatusDate />
 
-								<span className="font-weight-bold ml-1">
-									{i18n.translate(
-										getKebabCase(koroneikiAccount.region)
-									)}
-								</span>
-							</div>
-						))}
-				</div>
-			</ClayCard.Row>
-		</ClayCard.Body>
-	</ClayCard>
-);
+						{compressed &&
+							(loading ? (
+								<Skeleton
+									className="mt-1"
+									height={20}
+									width={120}
+								/>
+							) : (
+								<div className="text-align-end text-neutral-5 text-paragraph-sm">
+									{i18n.translate('support-region')}
+
+									<span className="font-weight-bold ml-1">
+										{i18n.translate(
+											getKebabCase(
+												koroneikiAccount.region
+											)
+										)}
+									</span>
+								</div>
+							))}
+					</div>
+				</ClayCard.Row>
+			</ClayCard.Body>
+		</ClayCard>
+	);
+};
 
 export default memo(ProjectCard);

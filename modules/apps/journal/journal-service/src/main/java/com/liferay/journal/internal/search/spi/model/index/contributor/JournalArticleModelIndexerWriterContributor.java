@@ -14,11 +14,21 @@
 
 package com.liferay.journal.internal.search.spi.model.index.contributor;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,11 +69,94 @@ public class JournalArticleModelIndexerWriterContributor
 		return journalArticle.getCompanyId();
 	}
 
+	@Override
+	public IndexerWriterMode getIndexerWriterMode(
+		JournalArticle journalArticle) {
+
+		if (_portal.getClassNameId(DDMStructure.class) ==
+				journalArticle.getClassNameId()) {
+
+			return IndexerWriterMode.DELETE;
+		}
+
+		if (_isIndexAllArticleVersions()) {
+			if ((journalArticle.getCtCollectionId() == 0) &&
+				!CTCollectionThreadLocal.isProductionMode()) {
+
+				return IndexerWriterMode.SKIP;
+			}
+
+			return IndexerWriterMode.UPDATE;
+		}
+
+		JournalArticle latestIndexableArticle =
+			_fetchLatestIndexableArticleVersion(
+				journalArticle.getResourcePrimKey());
+
+		if (journalArticle.getId() == latestIndexableArticle.getId()) {
+			return IndexerWriterMode.UPDATE;
+		}
+
+		if ((journalArticle.getCtCollectionId() == 0) &&
+			!CTCollectionThreadLocal.isProductionMode()) {
+
+			return IndexerWriterMode.SKIP;
+		}
+
+		return IndexerWriterMode.DELETE;
+	}
+
+	private JournalArticle _fetchLatestIndexableArticleVersion(
+		long resourcePrimKey) {
+
+		JournalArticle latestIndexableArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				resourcePrimKey,
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if (latestIndexableArticle == null) {
+			latestIndexableArticle =
+				_journalArticleLocalService.fetchLatestArticle(resourcePrimKey);
+		}
+
+		return latestIndexableArticle;
+	}
+
+	private boolean _isIndexAllArticleVersions() {
+		JournalServiceConfiguration journalServiceConfiguration = null;
+
+		try {
+			journalServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleModelIndexerWriterContributor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

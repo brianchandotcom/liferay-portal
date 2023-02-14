@@ -793,6 +793,11 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                virtualItemURLs:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
             type: object
         OrderNote:
             properties:

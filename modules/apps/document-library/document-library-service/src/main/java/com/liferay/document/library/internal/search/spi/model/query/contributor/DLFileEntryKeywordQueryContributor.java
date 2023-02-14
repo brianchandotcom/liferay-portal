@@ -117,12 +117,12 @@ public class DLFileEntryKeywordQueryContributor
 				_getMatchQuery("fileName", exactMatch, MatchQuery.Type.PHRASE),
 				BooleanClauseOccur.MUST);
 
-			String notExactKeyword = keywords.replaceFirst(
+			String remainingKeywords = keywords.replaceFirst(
 				Pattern.quote(StringPool.QUOTE + exactMatch + StringPool.QUOTE),
 				"");
 
-			if (Validator.isNotNull(notExactKeyword)) {
-				_addKeywordsToQuery(fileNameBooleanQuery, notExactKeyword);
+			if (Validator.isNotNull(remainingKeywords)) {
+				_addKeywordsToQuery(fileNameBooleanQuery, remainingKeywords);
 			}
 		}
 	}

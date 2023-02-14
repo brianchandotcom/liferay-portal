@@ -17,18 +17,13 @@ package com.liferay.journal.internal.search;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -47,9 +42,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.batch.BatchIndexingHelper;
+import com.liferay.portal.search.batch.BatchIndexingActionable;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -312,78 +310,47 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	private void _reindexArticles(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery;
+		BatchIndexingActionable batchIndexingActionable =
+			_modelIndexerWriterContributor.getBatchIndexingActionable();
 
-		if (isIndexAllArticleVersions()) {
-			indexableActionableDynamicQuery =
-				_journalArticleLocalService.
-					getIndexableActionableDynamicQuery();
+		batchIndexingActionable.setCompanyId(GetterUtil.getLong(companyId));
 
-			indexableActionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> {
-					Property property = PropertyFactoryUtil.forName(
-						"classNameId");
+		_modelIndexerWriterContributor.customize(
+			batchIndexingActionable,
+			new ModelIndexerWriterDocumentHelper() {
 
-					dynamicQuery.add(
-						property.ne(
-							_portal.getClassNameId(DDMStructure.class)));
-				});
-			indexableActionableDynamicQuery.setInterval(
-				_batchIndexingHelper.getBulkSize(
-					JournalArticle.class.getName()));
-			indexableActionableDynamicQuery.setPerformActionMethod(
-				(JournalArticle article) -> {
-					try {
-						indexableActionableDynamicQuery.addDocuments(
-							getDocument(article));
-					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index journal article " +
-									article.getId(),
-								portalException);
-						}
-					}
-				});
-		}
-		else {
-			indexableActionableDynamicQuery =
-				_journalArticleResourceLocalService.
-					getIndexableActionableDynamicQuery();
-
-			indexableActionableDynamicQuery.setInterval(
-				_batchIndexingHelper.getBulkSize(
-					JournalArticleResource.class.getName()));
-
-			indexableActionableDynamicQuery.setPerformActionMethod(
-				(JournalArticleResource articleResource) -> {
-					JournalArticle latestIndexableArticle =
-						_fetchLatestIndexableArticleVersion(
-							articleResource.getResourcePrimKey());
-
-					if (latestIndexableArticle == null) {
-						return;
-					}
+				@Override
+				public <T extends BaseModel<?>> Document getDocument(
+					T baseModel) {
 
 					try {
-						indexableActionableDynamicQuery.addDocuments(
-							getDocument(latestIndexableArticle));
+						return _indexerDocumentBuilder.getDocument(baseModel);
 					}
-					catch (PortalException portalException) {
+					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index journal article " +
-									latestIndexableArticle.getId(),
-								portalException);
+								"Unable to index JournalArticle with primary " +
+									"key " + baseModel.getPrimaryKeyObj(),
+								exception);
 						}
+
+						return null;
 					}
-				});
+				}
+
+			});
+
+		try {
+			batchIndexingActionable.performActions();
 		}
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-
-		indexableActionableDynamicQuery.performActions();
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Error reindexing all JournalArticle for company: " +
+						companyId,
+					exception);
+			}
+		}
 	}
 
 	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey)
@@ -446,10 +413,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		JournalArticleIndexer.class);
 
 	@Reference
-	private BatchIndexingHelper _batchIndexingHelper;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private IndexerDocumentBuilder _indexerDocumentBuilder;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
@@ -463,14 +430,16 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
-	@Reference
-	private JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
-
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private KeywordQueryContributor _keywordQueryContributor;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelIndexerWriterContributor<JournalArticle>
+		_modelIndexerWriterContributor;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"

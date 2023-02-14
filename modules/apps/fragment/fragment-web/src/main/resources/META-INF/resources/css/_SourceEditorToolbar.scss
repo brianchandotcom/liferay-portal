@@ -1,37 +1,11 @@
-@import 'variables';
-
 .source-editor-toolbar {
 	background-color: $toolbarBackgroundColor;
 	border-bottom: solid $toolbarBorderWidth $toolbarBorderColor;
 	box-sizing: border-box;
 	height: $toolbarHeight;
 	min-height: $toolbarHeight;
-
-	.empty-toolbar {
-		opacity: 0.5;
-		padding-left: 1em;
-	}
-
-	.toggle-icon {
-		height: 100%;
-		opacity: 1;
-
-		& > .btn-sm {
-			height: 100%;
-
-			& > .inline-item {
-				height: 100%;
-			}
-		}
-
-		&.hidden {
-			opacity: 0.5;
-		}
-	}
 }
 
 .source-editor-toolbar__syntax {
 	opacity: 0.5;
-	text-align: right;
-	text-transform: capitalize;
 }

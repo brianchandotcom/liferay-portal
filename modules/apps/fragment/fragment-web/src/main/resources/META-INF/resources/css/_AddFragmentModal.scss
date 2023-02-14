@@ -1,13 +1,7 @@
-@import 'atlas-variables';
-
 .fragment-type-card {
 	cursor: pointer;
 	flex-basis: 0;
 	flex-grow: 1;
-
-	.card {
-		height: 100%;
-	}
 
 	&:first-child {
 		margin-right: 12px;

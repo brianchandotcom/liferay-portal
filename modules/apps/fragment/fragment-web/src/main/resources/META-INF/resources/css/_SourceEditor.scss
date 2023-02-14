@@ -1,7 +1,3 @@
-@import 'atlas-variables';
-
-@import 'variables';
-
 .source-editor {
 	border-bottom: solid $editorBorderWidth $editorBorderColor;
 	border-right: solid $editorBorderWidth $editorBorderColor;
@@ -34,9 +30,9 @@
 	}
 
 	&__fixed-text {
-		background-color: #fff;
-		border-bottom: solid thin #f0f0f0;
-		border-left: 2.25ch solid #f0f0f0;
+		background-color: $white;
+		border-bottom: solid thin $light-l1;
+		border-left: 2.25ch solid $light-l1;
 		font-size: 0.85rem;
 		line-height: 1.5rem;
 		padding: 0 0 0 0.75ch;

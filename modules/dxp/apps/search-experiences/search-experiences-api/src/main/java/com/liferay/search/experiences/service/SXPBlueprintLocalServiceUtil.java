@@ -46,16 +46,18 @@ public class SXPBlueprintLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SXPBlueprint addSXPBlueprint(
-			String externalReferenceCode, long userId, String configurationJSON,
+			String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementInstancesJSON, String schemaVersion,
-			Map<java.util.Locale, String> titleMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			Map<java.util.Locale, String> titleMap, long userId)
 		throws PortalException {
 
 		return getService().addSXPBlueprint(
-			externalReferenceCode, userId, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			externalReferenceCode, schemaVersion, serviceContext, titleMap,
+			userId);
 	}
 
 	/**
@@ -365,16 +367,17 @@ public class SXPBlueprintLocalServiceUtil {
 	}
 
 	public static SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId, String configurationJSON,
+			String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON, String schemaVersion,
-			Map<java.util.Locale, String> titleMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long sxpBlueprintId, Map<java.util.Locale, String> titleMap,
+			long userId)
 		throws PortalException {
 
 		return getService().updateSXPBlueprint(
-			userId, sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			schemaVersion, serviceContext, sxpBlueprintId, titleMap, userId);
 	}
 
 	/**

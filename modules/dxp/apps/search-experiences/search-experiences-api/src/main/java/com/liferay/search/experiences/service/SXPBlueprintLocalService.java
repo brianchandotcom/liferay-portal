@@ -70,10 +70,10 @@ public interface SXPBlueprintLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint addSXPBlueprint(
-			String externalReferenceCode, long userId, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion, ServiceContext serviceContext,
+			Map<Locale, String> titleMap, long userId)
 		throws PortalException;
 
 	/**
@@ -323,10 +323,10 @@ public interface SXPBlueprintLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId, String configurationJSON,
-			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String configurationJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, String schemaVersion,
+			ServiceContext serviceContext, long sxpBlueprintId,
+			Map<Locale, String> titleMap, long userId)
 		throws PortalException;
 
 	/**

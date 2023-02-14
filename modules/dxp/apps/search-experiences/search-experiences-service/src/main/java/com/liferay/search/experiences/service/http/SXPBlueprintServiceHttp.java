@@ -52,12 +52,12 @@ public class SXPBlueprintServiceHttp {
 
 	public static com.liferay.search.experiences.model.SXPBlueprint
 			addSXPBlueprint(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				String configurationJSON,
+				HttpPrincipal httpPrincipal, String configurationJSON,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String elementInstancesJSON, String schemaVersion,
-				java.util.Map<java.util.Locale, String> titleMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				String elementInstancesJSON, String externalReferenceCode,
+				String schemaVersion,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				java.util.Map<java.util.Locale, String> titleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,9 +66,9 @@ public class SXPBlueprintServiceHttp {
 				_addSXPBlueprintParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, configurationJSON,
-				descriptionMap, elementInstancesJSON, schemaVersion, titleMap,
-				serviceContext);
+				methodKey, configurationJSON, descriptionMap,
+				elementInstancesJSON, externalReferenceCode, schemaVersion,
+				serviceContext, titleMap);
 
 			Object returnObj = null;
 
@@ -223,12 +223,12 @@ public class SXPBlueprintServiceHttp {
 
 	public static com.liferay.search.experiences.model.SXPBlueprint
 			updateSXPBlueprint(
-				HttpPrincipal httpPrincipal, long sxpBlueprintId,
-				String configurationJSON,
+				HttpPrincipal httpPrincipal, String configurationJSON,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				String elementInstancesJSON, String schemaVersion,
-				java.util.Map<java.util.Locale, String> titleMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				long sxpBlueprintId,
+				java.util.Map<java.util.Locale, String> titleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -237,8 +237,9 @@ public class SXPBlueprintServiceHttp {
 				_updateSXPBlueprintParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, sxpBlueprintId, configurationJSON, descriptionMap,
-				elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+				methodKey, configurationJSON, descriptionMap,
+				elementInstancesJSON, schemaVersion, serviceContext,
+				sxpBlueprintId, titleMap);
 
 			Object returnObj = null;
 
@@ -273,9 +274,10 @@ public class SXPBlueprintServiceHttp {
 
 	private static final Class<?>[] _addSXPBlueprintParameterTypes0 =
 		new Class[] {
-			String.class, String.class, java.util.Map.class, String.class,
-			String.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class,
+			java.util.Map.class
 		};
 	private static final Class<?>[] _deleteSXPBlueprintParameterTypes1 =
 		new Class[] {long.class};
@@ -287,9 +289,9 @@ public class SXPBlueprintServiceHttp {
 		};
 	private static final Class<?>[] _updateSXPBlueprintParameterTypes4 =
 		new Class[] {
-			long.class, String.class, java.util.Map.class, String.class,
-			String.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, java.util.Map.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class, long.class,
+			java.util.Map.class
 		};
 
 }

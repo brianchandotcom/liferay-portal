@@ -39,16 +39,17 @@ public class SXPBlueprintServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SXPBlueprint addSXPBlueprint(
-			String externalReferenceCode, String configurationJSON,
+			String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementInstancesJSON, String schemaVersion,
-			Map<java.util.Locale, String> titleMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			Map<java.util.Locale, String> titleMap)
 		throws PortalException {
 
 		return getService().addSXPBlueprint(
-			externalReferenceCode, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			externalReferenceCode, schemaVersion, serviceContext, titleMap);
 	}
 
 	public static SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
@@ -81,16 +82,16 @@ public class SXPBlueprintServiceUtil {
 	}
 
 	public static SXPBlueprint updateSXPBlueprint(
-			long sxpBlueprintId, String configurationJSON,
+			String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON, String schemaVersion,
-			Map<java.util.Locale, String> titleMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long sxpBlueprintId, Map<java.util.Locale, String> titleMap)
 		throws PortalException {
 
 		return getService().updateSXPBlueprint(
-			sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			configurationJSON, descriptionMap, elementInstancesJSON,
+			schemaVersion, serviceContext, sxpBlueprintId, titleMap);
 	}
 
 	public static SXPBlueprintService getService() {

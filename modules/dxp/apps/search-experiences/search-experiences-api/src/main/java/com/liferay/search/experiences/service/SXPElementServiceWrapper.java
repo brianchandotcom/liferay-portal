@@ -39,13 +39,13 @@ public class SXPElementServiceWrapper
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, String externalReferenceCode,
 			boolean readOnly, String schemaVersion,
-			java.util.Map<java.util.Locale, String> titleMap, int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			java.util.Map<java.util.Locale, String> titleMap, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpElementService.addSXPElement(
 			descriptionMap, elementDefinitionJSON, externalReferenceCode,
-			readOnly, schemaVersion, titleMap, type, serviceContext);
+			readOnly, schemaVersion, serviceContext, titleMap, type);
 	}
 
 	@Override

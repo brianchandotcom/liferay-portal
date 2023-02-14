@@ -44,6 +44,46 @@ public class CommerceVirtualOrderItemServiceImpl
 	extends CommerceVirtualOrderItemServiceBaseImpl {
 
 	@Override
+	public CommerceVirtualOrderItem fetchCommerceVirtualOrderItem(
+			long commerceVirtualOrderItemId)
+		throws PortalException {
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			commerceVirtualOrderItemLocalService.fetchCommerceVirtualOrderItem(
+				commerceVirtualOrderItemId);
+
+		if (commerceVirtualOrderItem != null) {
+			_commerceVirtualOrderItemModelResourcePermission.check(
+				getPermissionChecker(), commerceVirtualOrderItem,
+				CommerceVirtualOrderActionKeys.
+					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
+		}
+
+		return commerceVirtualOrderItem;
+	}
+
+	@Override
+	public CommerceVirtualOrderItem
+			fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+				long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			commerceVirtualOrderItemLocalService.
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					commerceOrderItemId);
+
+		if (commerceVirtualOrderItem != null) {
+			_commerceVirtualOrderItemModelResourcePermission.check(
+				getPermissionChecker(), commerceVirtualOrderItem,
+				CommerceVirtualOrderActionKeys.
+					DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
+		}
+
+		return commerceVirtualOrderItem;
+	}
+
+	@Override
 	public File getFile(long commerceVirtualOrderItemId) throws Exception {
 		PermissionChecker permissionChecker = getPermissionChecker();
 

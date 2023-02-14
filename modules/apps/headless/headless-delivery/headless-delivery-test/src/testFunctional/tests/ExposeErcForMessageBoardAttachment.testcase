@@ -62,9 +62,11 @@ definition {
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardThread and messageBoardSectionId to create a message board thread") {
-			var mbThreadId = MessageBoardThreadAPI.getIdOfCreatedMessageThreadInMessageBoardSection(
+			var response = MessageBoardThreadAPI.createMessageThreadInMessageBoardSection(
 				headline = "This is the mb thread in section",
 				messageBoardSectionId = ${mbSectionId});
+
+			var mbThreadId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardThreadMessageBoardMessage and messageBoardThreadId to create a message board message") {
@@ -216,7 +218,7 @@ definition {
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "No DLFileEntry exists with the key");
+				expected = "No FileEntry exists with the key");
 		}
 	}
 

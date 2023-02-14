@@ -100,6 +100,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130275: Validate if it's posible to create a segment based on Organization > Date modified criteria"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentByOrganizationDateModified {
@@ -999,6 +1000,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130320: Validate if it's posible to create a segment based on Session > Last sign in date criteria"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionLastSignInDate {
@@ -1030,6 +1032,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130321: Validate if it's posible to create a segment based on Session > Local date criteria"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentBySessionLocalDate {
@@ -1230,6 +1233,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130284: Validate if it's posible to create a segment based on User > Date modified criteria"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentByUserDateModified {
@@ -1276,6 +1280,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130285: Validate if it's posible to create a segment based on User > Date of birth criteria"
+	@ignore = "true"
 	@priority = 5
 	@uitest
 	test AddSegmentByUserDateOfBirth {

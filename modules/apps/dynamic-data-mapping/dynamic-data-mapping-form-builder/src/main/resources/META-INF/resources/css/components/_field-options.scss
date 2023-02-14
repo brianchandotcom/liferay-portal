@@ -38,7 +38,7 @@ $c: '.ddm-field-options';
 		.key-value-editor {
 			label,
 			p {
-				color: #c4cfd6;
+				color: $gray-600;
 				display: inline-block;
 				margin-right: 5px;
 			}
@@ -46,7 +46,7 @@ $c: '.ddm-field-options';
 			input {
 				background: transparent;
 				border: none;
-				color: #6b6c7e;
+				color: $gray-600;
 				display: inline-block;
 				outline: none;
 

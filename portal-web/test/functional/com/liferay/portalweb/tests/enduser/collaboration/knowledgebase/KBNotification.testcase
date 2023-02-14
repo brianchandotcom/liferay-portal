@@ -32,12 +32,62 @@ definition {
 	}
 
 	@description = "This test checks that a user can subscribe and unsubscribe from an article."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanSubscribeToArticleViaToolbar {
+		property custom.properties = "feature.flag.LPS-166643=true${line.separator}jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-166644
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.subscribeCP(
+			kbArticleTitle = "Knowledge Base Article Title",
+			subscribeActionToolbar = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		KBArticle.editCP(
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit",
+			skipNavigation = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Notifications.viewBadgeCount(notificationCount = 1);
+
+		Notifications.gotoNotifications();
+
+		Notifications.navigateToContent(contentBody = "Knowledge Base Article Title Edit");
 	}
 
 	@description = "This test ensures that users can subscribe to the KB home folder from the navigation pane."

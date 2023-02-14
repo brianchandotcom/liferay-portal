@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -383,16 +384,15 @@ public class InputAssetLinksDisplayContext {
 
 		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
 
-		portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			getEventName(), assetEntryItemSelectorCriterion);
-
-		if (_assetEntryId > 0) {
-			portletURL.setParameter(
-				"refererAssetEntryId", String.valueOf(_assetEntryId));
-		}
-
-		return portletURL;
+		return PortletURLBuilder.create(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				getEventName(), assetEntryItemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", true
+		).setParameter(
+			"refererAssetEntryId", _assetEntryId
+		).buildPortletURL();
 	}
 
 	private boolean _isStagedLocally() {

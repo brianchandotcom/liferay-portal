@@ -2287,12 +2287,15 @@ public class AssetPublisherDisplayContext {
 		assetEntryItemSelectorCriterion.setTypeSelection(
 			assetRendererFactory.getClassName());
 
-		return String.valueOf(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 				scopeGroup, _themeDisplay.getScopeGroupId(),
 				_portletResponse.getNamespace() + "selectAsset",
-				assetEntryItemSelectorCriterion));
+				assetEntryItemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", true
+		).buildString();
 	}
 
 	private String _getSegmentsAnonymousUserId() {

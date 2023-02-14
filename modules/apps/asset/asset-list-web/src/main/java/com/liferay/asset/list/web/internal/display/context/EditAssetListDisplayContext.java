@@ -1197,10 +1197,14 @@ public class EditAssetListDisplayContext {
 		assetEntryItemSelectorCriterion.setTypeSelection(
 			assetRendererFactory.getClassName());
 
-		return _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			_portletResponse.getNamespace() + "selectAsset",
-			assetEntryItemSelectorCriterion);
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				_portletResponse.getNamespace() + "selectAsset",
+				assetEntryItemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", true
+		).buildPortletURL();
 	}
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {

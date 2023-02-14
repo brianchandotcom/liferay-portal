@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.upgrade.util.UpgradeLogContext;
+import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.verify.VerifyProperties;
 
 import java.util.Collections;

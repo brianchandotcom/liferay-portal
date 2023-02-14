@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.portal.upgrade.log;
 
 import com.liferay.portal.dao.db.BaseDB;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;

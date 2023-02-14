@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
+import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradeLogContext;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.OutputStream;

@@ -34,7 +34,7 @@ import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
-import com.liferay.portal.upgrade.util.UpgradeLogContext;
+import com.liferay.portal.upgrade.log.UpgradeLogContext;
 
 import java.io.OutputStream;
 

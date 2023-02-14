@@ -182,9 +182,9 @@ public class VarPoshiElement extends PoshiElement {
 		if (value.endsWith("\"") && value.startsWith("\"")) {
 			if (value.contains("\n")) {
 				throw new PoshiScriptParserException(
-					"Invalid variable assignment syntax, use the triple " +
-						"quotes(''') to wrap multiline literal string " +
-							"instead of double quotes",
+					"Invalid variable assignment syntax, please use triple " +
+						"quotes (''') to wrap a multiline string instead of " +
+							"double quotes",
 					value, (PoshiElement)getParent());
 			}
 

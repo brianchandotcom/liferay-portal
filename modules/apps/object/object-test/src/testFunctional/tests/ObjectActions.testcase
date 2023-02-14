@@ -542,7 +542,7 @@ definition {
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175182");
 
-			ObjectPortlet.viewEntryDetails(entry = "Entry Test")
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
 
 			ObjectAdmin.editEntryName(newEntryValue = "Entry Test Edited");
 

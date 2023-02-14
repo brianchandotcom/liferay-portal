@@ -64,6 +64,7 @@ definition {
 			actionName = ${actionName},
 			active = ${active},
 			click = "save",
+			fieldName = ${fieldName},
 			inputExpression = ${inputExpression},
 			inputMethod = ${inputMethod},
 			inputValue = ${inputValue},
@@ -901,6 +902,7 @@ definition {
 			actionName = ${actionName},
 			active = ${active},
 			click = "save",
+			fieldName = ${fieldName},
 			inputExpression = ${inputExpression},
 			inputExpressionValue = ${inputExpressionValue},
 			inputMethod = ${inputMethod},
@@ -969,6 +971,33 @@ definition {
 				ClickNoError.clickNoMouseOver(
 					key_objectLabel = ${objectLabel},
 					locator1 = "ObjectAdmin#CHOOSE_OBJECT_LABEL");
+
+				if (${inputMethod} == "true") {
+					Click(locator1 = "ObjectAction#INPUT_METHOD");
+
+					Type(
+						locator1 = "ObjectAction#INPUT_VALUE",
+						value1 = ${inputValue});
+				}
+				else if (${inputMethod} == "false") {
+					Type(
+						locator1 = "ObjectAction#INPUT_NEW_VALUE",
+						value1 = ${inputExpressionValue});
+				}
+			}
+
+			if (${thenAction} == "Update an Object Entry") {
+				Click(locator1 = "Button#PLUS");
+
+				SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+				Check.checkToggleSwitch(
+					checkboxName = ${fieldName},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				PortletEntry.save();
+
+				SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
 
 				if (${inputMethod} == "true") {
 					Click(locator1 = "ObjectAction#INPUT_METHOD");

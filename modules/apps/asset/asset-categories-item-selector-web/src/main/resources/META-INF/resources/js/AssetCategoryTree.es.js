@@ -16,7 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {getOpener} from 'frontend-js-web';
+import {getOpener, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 const nodeByName = (items, name) => {
@@ -122,7 +122,16 @@ export function AssetCategoryTree({
 			return;
 		}
 
-		selection.toggle(item.id);
+		if (!multiSelection) {
+			selection.toggle(item.id);
+
+			return;
+		}
+
+		selection.toggle(item.id, {
+			parentSelection: false,
+			selectionMode: event.shiftKey ? 'multiple-recursive' : null,
+		});
 	};
 
 	const onKeyDown = (event, item, selection) => {
@@ -133,67 +142,114 @@ export function AssetCategoryTree({
 				return;
 			}
 
-			selection.toggle(item.id);
+			if (!multiSelection) {
+				selection.toggle(item.id);
+
+				return;
+			}
+
+			selection.toggle(item.id, {
+				parentSelection: false,
+				selectionMode: event.shiftKey ? 'multiple-recursive' : null,
+			});
 		}
 	};
 
 	return filteredItems.length ? (
-		<ClayTreeView
-			items={filteredItems}
-			onItemsChange={(items) => onItems(items)}
-			onSelectionChange={(keys) => setSelectionChange(keys)}
-			selectedKeys={selectedKeys}
-			selectionMode={multiSelection ? 'multiple' : 'single'}
-			showExpanderOnHover={false}
-		>
-			{(item, selection, expand) => (
-				<ClayTreeView.Item>
-					<ClayTreeView.ItemStack
-						onClick={(event) =>
-							onClick(event, item, selection, expand)
-						}
-						onKeyDown={(event) => onKeyDown(event, item, selection)}
-					>
-						{multiSelection && !item.disabled && (
-							<ClayCheckbox
-								onChange={() => selection.toggle(item.id)}
-								tabIndex="-1"
-							/>
-						)}
-
-						<ClayIcon symbol={item.icon} />
-
-						{item.name}
-					</ClayTreeView.ItemStack>
-
-					<ClayTreeView.Group items={item.children}>
-						{(item) => (
-							<ClayTreeView.Item
-								onClick={(event) =>
-									onClick(event, item, selection)
-								}
-								onKeyDown={(event) =>
-									onKeyDown(event, item, selection)
-								}
-							>
-								{multiSelection && !item.disabled && (
-									<ClayCheckbox
-										onChange={() =>
-											selection.toggle(item.id)
-										}
-										tabIndex="-1"
-									/>
-								)}
-
-								<ClayIcon symbol={item.icon} />
-
-								{item.name}
-							</ClayTreeView.Item>
-						)}
-					</ClayTreeView.Group>
-				</ClayTreeView.Item>
+		<>
+			{multiSelection && (
+				<p
+					className="mb-4"
+					dangerouslySetInnerHTML={{
+						__html: sub(
+							Liferay.Language.get(
+								'press-x-to-select-or-deselect-a-parent-node-and-all-its-child-items'
+							),
+							'<kbd class="c-kbd c-kbd-light">⇧</kbd>'
+						),
+					}}
+				/>
 			)}
-		</ClayTreeView>
+
+			<ClayTreeView
+				items={filteredItems}
+				onItemsChange={(items) => onItems(items)}
+				onSelectionChange={(keys) => setSelectionChange(keys)}
+				selectedKeys={selectedKeys}
+				selectionMode={multiSelection ? 'multiple' : 'single'}
+				showExpanderOnHover={false}
+			>
+				{(item, selection, expand) => (
+					<ClayTreeView.Item>
+						<ClayTreeView.ItemStack
+							onClick={(event) =>
+								onClick(event, item, selection, expand)
+							}
+							onKeyDown={(event) =>
+								onKeyDown(event, item, selection)
+							}
+						>
+							{multiSelection && !item.disabled && (
+								<Checkbox
+									checked={selection.has(item.id)}
+									onChange={(event) => {
+										selection.toggle(item.id, {
+											parentSelection: false,
+											selectionMode: event.nativeEvent
+												.shiftKey
+												? 'multiple-recursive'
+												: null,
+										});
+									}}
+									onClick={(event) => event.stopPropagation()}
+									tabIndex="-1"
+								/>
+							)}
+
+							<ClayIcon symbol={item.icon} />
+
+							{item.name}
+						</ClayTreeView.ItemStack>
+
+						<ClayTreeView.Group items={item.children}>
+							{(item) => (
+								<ClayTreeView.Item
+									onClick={(event) =>
+										onClick(event, item, selection)
+									}
+									onKeyDown={(event) =>
+										onKeyDown(event, item, selection)
+									}
+								>
+									{multiSelection && !item.disabled && (
+										<Checkbox
+											checked={selection.has(item.id)}
+											onChange={(event) => {
+												selection.toggle(item.id, {
+													parentSelection: false,
+													selectionMode: event
+														.nativeEvent.shiftKey
+														? 'multiple-recursive'
+														: null,
+												});
+											}}
+											onClick={(event) =>
+												event.stopPropagation()
+											}
+											tabIndex="-1"
+										/>
+									)}
+
+									<ClayIcon symbol={item.icon} />
+
+									{item.name}
+								</ClayTreeView.Item>
+							)}
+						</ClayTreeView.Group>
+					</ClayTreeView.Item>
+				)}
+			</ClayTreeView>
+		</>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get(
@@ -205,3 +261,5 @@ export function AssetCategoryTree({
 		/>
 	);
 }
+
+const Checkbox = (props) => <ClayCheckbox {...props} />;

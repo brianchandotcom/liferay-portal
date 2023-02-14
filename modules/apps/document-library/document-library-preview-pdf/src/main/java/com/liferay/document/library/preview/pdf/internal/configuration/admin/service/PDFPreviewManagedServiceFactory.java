@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.preview.pdf.internal.configuration.admin.service;
 
+import com.liferay.document.library.preview.pdf.exception.PDFPreviewException;
 import com.liferay.document.library.preview.pdf.internal.configuration.PDFPreviewConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -179,6 +180,55 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		_updateScopedConfiguration(
 			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.GROUP,
 			groupId);
+	}
+
+	public void updatePDFPreview(
+			long maxNumberOfPages, String scope, long scopePK)
+		throws Exception {
+
+		long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				(systemMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(systemMaxNumberOfPages);
+			}
+
+			updateCompanyPDFPreviewConfiguration(scopePK, maxNumberOfPages);
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				(systemMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(systemMaxNumberOfPages);
+			}
+
+			Group group = _groupLocalService.getGroup(scopePK);
+
+			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(
+				group.getCompanyId());
+
+			if ((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				(companyMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(companyMaxNumberOfPages);
+			}
+
+			updateGroupPDFPreviewConfiguration(scopePK, maxNumberOfPages);
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			updateSystemPDFPreviewConfiguration(maxNumberOfPages);
+		}
+		else {
+			throw new PortalException("Unsupported scope: " + scope);
+		}
 	}
 
 	public void updateSystemPDFPreviewConfiguration(long maxNumberOfPages)

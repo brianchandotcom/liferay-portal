@@ -31,12 +31,13 @@ export default function SourceBuilder() {
 		definitionName,
 		elements,
 		setCurrentEditor,
-		setShowInvalidContentMessage,
-		showInvalidContentMessage,
 		version,
 	} = useContext(DefinitionBuilderContext);
 	const editorRef = useRef();
 	const [showImportSuccessMessage, setShowImportSuccessMessage] = useState(
+		false
+	);
+	const [showInvalidContentMessage, setShowInvalidContentMessage] = useState(
 		false
 	);
 
@@ -107,6 +108,9 @@ export default function SourceBuilder() {
 
 			reader.readAsText(files[0]);
 		}
+		else if (files[0].type !== 'text/xml') {
+			setShowInvalidContentMessage(true);
+		}
 	}
 
 	return (
@@ -117,16 +121,6 @@ export default function SourceBuilder() {
 						<ClayToolbar.Item>
 							<span>{Liferay.Language.get('source')}</span>
 						</ClayToolbar.Item>
-
-						{showInvalidContentMessage && (
-							<ClayToolbar.Item className="error ml-4">
-								<span>
-									{Liferay.Language.get(
-										'please-enter-valid-content'
-									)}
-								</span>
-							</ClayToolbar.Item>
-						)}
 
 						<ClayToolbar.Item>
 							<div className="import-file">
@@ -172,6 +166,19 @@ export default function SourceBuilder() {
 						{Liferay.Language.get(
 							'definition-imported-successfully'
 						)}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
+
+			{showInvalidContentMessage && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={5000}
+						displayType="danger"
+						onClose={() => showInvalidContentMessage(false)}
+						title={`${Liferay.Language.get('error')}:`}
+					>
+						{Liferay.Language.get('please-select-a-valid-xml-file')}
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
 			)}

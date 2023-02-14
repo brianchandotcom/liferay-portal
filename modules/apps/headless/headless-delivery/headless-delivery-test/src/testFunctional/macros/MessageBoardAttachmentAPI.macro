@@ -3,41 +3,37 @@ definition {
 	macro _curlMessageBoardAttachment {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(attachmentPath)) {
-			if (isSet(messageBoardThreadId)) {
-				var api = "message-board-threads/${messageBoardThreadId}";
-			}
-			else {
-				var api = "/message-board-messages/${messageBoardMessageId}";
-			}
+		if (isSet(messageBoardThreadId)) {
+			var api = "message-board-threads/${messageBoardThreadId}/message-board-attachments";
+		}
+		else if (isSet(messageBoardMessageId)) {
+			var api = "message-board-messages/${messageBoardMessageId}/message-board-attachments";
+		}
+		else if (isSet(messageBoardAttachmentId)) {
+			var api = "message-board-attachments/${messageBoardAttachmentId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
 
-			var command = '''
-				-u test@liferay.com:test \
+			var api = "sites/${siteId}/message-board-messages/by-external-reference-code/${messageBoardMessageErc}/message-board-attachments/by-external-reference-code/${messageBoardAttachmentErc}";
+		}
+
+		var command = '''
+				-u test@liferay.com:test
+			''';
+
+		if (isSet(attachmentPath)) {
+			var body = '''
 				-H Content-Type: multipart/form-data \
 				-F file=@${attachmentPath}
 			''';
 
-			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-attachments", "\ ${command}", "");
+			var command = StringUtil.add(${command}, " \ ${body}", "");
 		}
-		else {
-			if (isSet(messageBoardAttachmentId)) {
-				var api = "message-board-attachments/${messageBoardAttachmentId}";
-			}
-			else {
-				var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-					groupName = "Guest",
-					site = "true");
 
-				var api = "sites/${siteId}/message-board-messages/by-external-reference-code/${messageBoardMessageErc}/message-board-attachments/by-external-reference-code/${messageBoardAttachmentErc}";
-			}
-
-			var command = '''
-				-u test@liferay.com:test \
-				-H Content-Type: application/json
-			''';
-
-			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
-		}
+		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
 
 		return ${curl};
 	}

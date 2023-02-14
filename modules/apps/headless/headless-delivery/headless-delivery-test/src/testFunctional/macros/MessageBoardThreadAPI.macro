@@ -3,35 +3,36 @@ definition {
 	macro _curlMessageBoardThread {
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(headline)) {
-			if (isSet(messageBoardSectionId)) {
-				var api = "message-board-sections/${messageBoardSectionId}";
-			}
-			else {
-				var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-					groupName = "Guest",
-					site = "true");
-
-				var api = "sites/${siteId}";
-			}
-
-			var command = '''
-					-u test@liferay.com:test \
-					-H Content-Type: application/json \
-					-d {
-						"headline": "${headline}"
-					}
-			''';
-
-			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}/message-board-threads", "\ ${command}", "");
+		if (isSet(messageBoardSectionId)) {
+			var api = "message-board-sections/${messageBoardSectionId}/message-board-threads";
+		}
+		else if (isSet(messageBoardThreadId)) {
+			var api = "message-board-threads/${messageBoardThreadId}";
 		}
 		else {
-			var curl = '''
-				${portalURL}/o/headless-delivery/v1.0/message-board-threads/${messageBoardThreadId} \
-					-u test@liferay.com:test \
-					-H Content-Type: application/json
-			''';
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var api = "sites/${siteId}/message-board-threads";
 		}
+
+		var command = '''
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		if (isSet(headline)) {
+			var body = '''
+				-d {
+					"headline": "${headline}"
+				}
+			''';
+
+			var command = StringUtil.add(${command}, " \ ${body}", "");
+		}
+
+		var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api}", "\ ${command}", "");
 
 		return ${curl};
 	}

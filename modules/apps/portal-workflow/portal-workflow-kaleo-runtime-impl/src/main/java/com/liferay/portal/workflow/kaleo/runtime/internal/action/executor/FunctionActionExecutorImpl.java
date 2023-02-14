@@ -67,13 +67,13 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 	}
 
 	@Override
-	public String[] getActionExecutorLanguages() {
-		return _actionExecutorLanguages;
+	public String[] getActionExecutorKeys() {
+		return _actionExecutorKeys;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_actionExecutorLanguages[0] = (String)properties.get(KEY);
+		_actionExecutorKeys[0] = (String)properties.get(KEY);
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionActionExecutorImplConfiguration =
@@ -191,7 +191,7 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FunctionActionExecutorImpl.class);
 
-	private final String[] _actionExecutorLanguages = new String[1];
+	private final String[] _actionExecutorKeys = new String[1];
 	private long _companyId;
 
 	@Reference

@@ -54,8 +54,8 @@ public class DRLActionExecutor implements ActionExecutor {
 	}
 
 	@Override
-	public String[] getActionExecutorLanguages() {
-		return _ACTION_EXECUTOR_LANGUAGES;
+	public String[] getActionExecutorKeys() {
+		return _ACTION_EXECUTOR_KEYS;
 	}
 
 	protected void doExecute(
@@ -80,7 +80,7 @@ public class DRLActionExecutor implements ActionExecutor {
 			executionContext, resultsWorkflowContext);
 	}
 
-	private static final String[] _ACTION_EXECUTOR_LANGUAGES = {"drl"};
+	private static final String[] _ACTION_EXECUTOR_KEYS = {"drl"};
 
 	@Reference
 	private RulesContextBuilder _rulesContextBuilder;

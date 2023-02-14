@@ -78,7 +78,7 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 				bundleContext,
 				(actionExecutor, emitter) -> {
 					for (String actionExecutorLanguage :
-							actionExecutor.getActionExecutorLanguages()) {
+							actionExecutor.getActionExecutorKeys()) {
 
 						emitter.emit(actionExecutorLanguage);
 					}

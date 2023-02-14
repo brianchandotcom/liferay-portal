@@ -46,11 +46,11 @@ public class UpdateStatusActionExecutor implements ActionExecutor {
 	}
 
 	@Override
-	public String[] getActionExecutorLanguages() {
-		return _ACTION_EXECUTOR_LANGUAGES;
+	public String[] getActionExecutorKeys() {
+		return _ACTION_EXECUTOR_KEYS;
 	}
 
-	private static final String[] _ACTION_EXECUTOR_LANGUAGES = {
+	private static final String[] _ACTION_EXECUTOR_KEYS = {
 		ActionType.UPDATE_STATUS.name()
 	};
 

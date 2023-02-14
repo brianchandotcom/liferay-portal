@@ -151,8 +151,8 @@ export function MenuItem({item}) {
 					className={classNames(
 						'site_navigation_menu_editor_MenuItem',
 						{
-							'dragging': isDragging,
-							'site_navigation_menu_editor_MenuItem--selected': selected,
+							active: selected,
+							dragging: isDragging,
 						}
 					)}
 					ref={handlerRef}

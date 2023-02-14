@@ -4,13 +4,6 @@
 	margin-bottom: 1.5rem;
 	width: 40ch;
 
-	&--selected {
-		& .card,
-		& .label.label-secondary {
-			background: $primary-l3;
-		}
-	}
-
 	&.dragging {
 		opacity: 0.4;
 	}

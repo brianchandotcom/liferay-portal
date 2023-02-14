@@ -19,6 +19,7 @@ import com.liferay.document.library.preview.pdf.internal.configuration.admin.ser
 import com.liferay.document.library.preview.pdf.internal.portlet.action.PDFPreviewConfigurationDisplayContext;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,7 +74,7 @@ public abstract class BasePDFPreviewConfigurationScreen
 					portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),
-					pdfPreviewManagedServiceFactory, getScope(),
+					groupService, pdfPreviewManagedServiceFactory, getScope(),
 					_getScopePk(httpServletRequest)));
 
 			RequestDispatcher requestDispatcher =
@@ -88,6 +89,9 @@ public abstract class BasePDFPreviewConfigurationScreen
 				"Unable to render pdf_preview_limit.jsp", exception);
 		}
 	}
+
+	@Reference
+	protected GroupService groupService;
 
 	@Reference
 	protected Language language;

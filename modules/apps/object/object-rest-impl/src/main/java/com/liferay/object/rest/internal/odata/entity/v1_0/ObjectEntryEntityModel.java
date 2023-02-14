@@ -21,6 +21,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.odata.entity.v1_0.UnsupportedBusinessTypes;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -276,24 +277,5 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;
-
-	private enum UnsupportedBusinessTypes {
-
-		BUSINESS_TYPE_AGGREGATION(
-			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION),
-		BUSINESS_TYPE_ATTACHMENT(ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT),
-		BUSINESS_TYPE_FORMULA(ObjectFieldConstants.BUSINESS_TYPE_FORMULA);
-
-		public String getValue() {
-			return _value;
-		}
-
-		private UnsupportedBusinessTypes(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 }

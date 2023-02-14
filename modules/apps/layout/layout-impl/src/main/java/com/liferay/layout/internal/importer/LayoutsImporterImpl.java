@@ -1211,9 +1211,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
-		if (overwrite) {
-			_setDefaultLayoutUtilityPageEntries(groupId, zipFile);
-		}
+		_setDefaultLayoutUtilityPageEntries(groupId, overwrite, zipFile);
 	}
 
 	private void _processLayoutUtilityPageTemplateEntry(
@@ -1498,7 +1496,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(
-			long groupId, ZipFile zipFile)
+			long groupId, boolean overwrite, ZipFile zipFile)
 		throws Exception {
 
 		String json = _getDefaultUtilityPagesJSON(zipFile);
@@ -1516,16 +1514,26 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			String name = jsonObject.getString(type);
 
-			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
-					groupId, name,
-					LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
-						type));
+			String internalValue =
+				LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
+					type);
 
-			if (layoutUtilityPageEntry != null) {
+			LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
 				_layoutUtilityPageEntryLocalService.
-					setDefaultLayoutUtilityPageEntry(
-						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+					fetchDefaultLayoutUtilityPageEntry(groupId, internalValue);
+
+			if ((defaultLayoutUtilityPageEntry == null) || overwrite) {
+				LayoutUtilityPageEntry layoutUtilityPageEntry =
+					_layoutUtilityPageEntryLocalService.
+						fetchLayoutUtilityPageEntry(
+							groupId, name, internalValue);
+
+				if (layoutUtilityPageEntry != null) {
+					_layoutUtilityPageEntryLocalService.
+						setDefaultLayoutUtilityPageEntry(
+							layoutUtilityPageEntry.
+								getLayoutUtilityPageEntryId());
+				}
 			}
 		}
 	}

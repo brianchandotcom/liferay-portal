@@ -36,11 +36,11 @@ const SIZE_RATIOS = {
 		height: '',
 		width: '',
 	},
-	'mobile-portrait': {
+	'portrait-phone': {
 		height: 16,
 		width: 10,
 	},
-	'tablet-portrait': {
+	'tablet': {
 		height: 3,
 		width: 4,
 	},
@@ -49,12 +49,14 @@ const SIZE_RATIOS = {
 /**
  * Available preview sizes in order.
  */
-const PREVIEW_SIZES = [
-	'desktop',
-	'tablet-portrait',
-	'mobile-portrait',
-	'full-size',
-];
+const PREVIEW_SIZES = ['desktop', 'tablet', 'portrait-phone', 'full-size'];
+
+const PREVIEW_SIZES_LABELS = {
+	'desktop': Liferay.Language.get('desktop'),
+	'full-size': Liferay.Language.get('full-size'),
+	'portrait-phone': Liferay.Language.get('portrait-phone'),
+	'tablet': Liferay.Language.get('tablet'),
+};
 
 const stopEventPropagation = (event) => {
 	event.preventDefault();
@@ -167,6 +169,7 @@ const FragmentPreview = ({
 			<div className="btn-group fragment-preview__toolbar">
 				{PREVIEW_SIZES.map((previewSize) => (
 					<ClayButtonWithIcon
+						aria-label={PREVIEW_SIZES_LABELS[previewSize]}
 						borderless={true}
 						className={classNames({
 							active: currentPreviewSize === previewSize,
@@ -176,6 +179,7 @@ const FragmentPreview = ({
 						onClick={() => setCurrentPreviewSize(previewSize)}
 						size="sm"
 						symbol={previewSize}
+						title={PREVIEW_SIZES_LABELS[previewSize]}
 					/>
 				))}
 			</div>

@@ -1168,7 +1168,9 @@ public class ResourceOpenAPIParser {
 	private static boolean _isValidParameter(String name, String schemaName) {
 		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
 
-		if (!name.equals(schemaVarName + "Id") && !name.equals(schemaVarName)) {
+		if (!name.equals("id") && !name.equals(schemaVarName + "Id") &&
+			!name.equals(schemaVarName)) {
+
 			return true;
 		}
 

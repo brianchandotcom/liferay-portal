@@ -24,6 +24,18 @@ export const WORKFLOW_STATUS_APPROVED = 0;
 export const PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
 	'the-product-quantity-is-not-valid'
 );
+export const MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
+	'max-quantity-per-order-is-x'
+);
+export const MINIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
+	'the-minimum-quantity-is-x'
+);
+export const PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
+	'quantity-must-be-a-multiple-of-x'
+);
+export const MAXIMUM_ALLOWED_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(
+	'the-maximum-allowed-quantity-for-x-is-x'
+);
 export const UNEXPECTED_ERROR = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );

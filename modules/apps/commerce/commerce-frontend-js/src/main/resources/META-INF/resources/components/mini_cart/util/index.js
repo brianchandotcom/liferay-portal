@@ -16,8 +16,13 @@ import {openToast, sub} from 'frontend-js-web';
 
 import {
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
+	MAXIMUM_ALLOWED_QUANTITY_NOT_VALID_ERROR,
+	MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
+	MINIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 	ORDER_DETAILS_ENDPOINT,
 	ORDER_UUID_PARAMETER,
+	PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR,
+	PRODUCT_QUANTITY_NOT_VALID_ERROR,
 } from './constants';
 
 export function parseOptions(jsonString) {
@@ -167,12 +172,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 
 			if (multipleOrderQuantity > 1 && !nextAllowedQuantity) {
 				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'quantity-must-be-a-multiple-of-x'
-						),
-						multipleOrderQuantity
-					),
+					message: sub(PRODUCT_QUANTITY_NOT_VALID_ERROR),
 					type: 'danger',
 				});
 
@@ -191,7 +191,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 			if (multipleOrderQuantity > 1) {
 				openToast({
 					message: sub(
-						Liferay.Language.get('max-quantity-per-order-is-x'),
+						MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 						maxOrderQuantity
 					),
 					type: 'danger',
@@ -202,7 +202,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 			else {
 				openToast({
 					message: sub(
-						Liferay.Language.get('max-quantity-per-order-is-x'),
+						MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 						maxOrderQuantity
 					),
 					type: 'danger',
@@ -222,7 +222,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		if (maxOrderQuantity < allowedOrderQuantities[0]) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('max-quantity-per-order-is-x'),
+					MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 					maxOrderQuantity
 				),
 				type: 'danger',
@@ -234,7 +234,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		if (minOrderQuantity > lastAllowedQuantity) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('the-minimum-quantity-is-x'),
+					MINIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 					minOrderQuantity
 				),
 				type: 'danger',
@@ -249,7 +249,7 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		if (multipleOrderQuantity > maxOrderQuantity) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('the-maximum-quantity-is-x'),
+					MAXIMUM_PRODUCT_QUANTITY_NOT_VALID_ERROR,
 					maxOrderQuantity
 				),
 				type: 'danger',
@@ -267,13 +267,21 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 	}
 
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {
-		quantity = 0;
+		openToast({
+			message: sub(
+				PRODUCT_MULTIPLE_OF_QUANTITY_NOT_VALID_ERROR,
+				multipleOrderQuantity
+			),
+			type: 'danger',
+		});
+
+		return 0;
 	}
 
 	if (quantity === 0) {
 		openToast({
 			message: sub(
-				Liferay.Language.get('the-maximum-allowed-quantity-for-x-is-x'),
+				MAXIMUM_ALLOWED_QUANTITY_NOT_VALID_ERROR,
 				sku,
 				lastAllowedQuantity > 1 ? lastAllowedQuantity : maxOrderQuantity
 			),

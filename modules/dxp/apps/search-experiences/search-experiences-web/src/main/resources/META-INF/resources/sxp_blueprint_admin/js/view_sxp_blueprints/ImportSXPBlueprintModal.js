@@ -90,8 +90,12 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 				.then(({ok, responseContent}) => {
 					if (!ok) {
 						if (
-							responseContent.title ===
-							'Duplicate external reference code'
+							responseContent.title.includes(
+								'Duplicate sxp blueprint'
+							) ||
+							responseContent.title.includes(
+								'Duplicate sxp element'
+							)
 						) {
 							_handleFormError(
 								isElement

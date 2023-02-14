@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -51,18 +48,6 @@ public class AutoDeployDir {
 
 	public static void deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
-
-		for (AutoDeployListener autoDeployListener : _serviceTrackerList) {
-			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
-				autoDeployListener.deploy(autoDeploymentContext);
-
-				File file = autoDeploymentContext.getFile();
-
-				file.delete();
-
-				return;
-			}
-		}
 
 		String[] dirNames = PropsUtil.getArray(
 			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
@@ -193,8 +178,6 @@ public class AutoDeployDir {
 		if (_autoDeployScanner != null) {
 			_autoDeployScanner.pause();
 		}
-
-		_serviceTrackerList.close();
 	}
 
 	protected AutoDeploymentContext buildAutoDeploymentContext(File file) {
@@ -341,9 +324,6 @@ public class AutoDeployDir {
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
-	private static final ServiceTrackerList<AutoDeployListener>
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			SystemBundleUtil.getBundleContext(), AutoDeployListener.class);
 	private static final Pattern _versionPattern = Pattern.compile(
 		"-[\\d]+((\\.[\\d]+)+(-.+)*)\\.war$");
 

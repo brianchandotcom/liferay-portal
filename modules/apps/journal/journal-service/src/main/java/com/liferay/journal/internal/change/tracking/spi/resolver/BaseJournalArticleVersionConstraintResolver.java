@@ -21,6 +21,8 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -66,15 +68,26 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 
 		JournalArticle ctArticle = constraintResolverContext.getSourceCTModel();
 
-		double latestVersion = constraintResolverContext.getInTarget(
-			() -> {
-				JournalArticle latestProductionArticle =
-					journalArticleLocalService.getLatestArticle(
-						ctArticle.getResourcePrimKey(),
-						WorkflowConstants.STATUS_ANY, false);
+		double latestVersion = 0.0;
 
-				return latestProductionArticle.getVersion();
-			});
+		try {
+			latestVersion = constraintResolverContext.getInTarget(
+				() -> {
+					JournalArticle latestProductionArticle =
+						journalArticleLocalService.getLatestArticle(
+							ctArticle.getResourcePrimKey(),
+							WorkflowConstants.STATUS_ANY, false);
+
+					return latestProductionArticle.getVersion();
+				});
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return;
+		}
 
 		List<JournalArticle> articles = ListUtil.filter(
 			journalArticleLocalService.getArticles(
@@ -103,5 +116,8 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseJournalArticleVersionConstraintResolver.class);
 
 }

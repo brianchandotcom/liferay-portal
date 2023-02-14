@@ -556,6 +556,34 @@ const filterSchema = {
 			},
 		] as RendererFields[],
 	},
+	testflow: {
+		fields: [
+			{
+				label: i18n.sub('task-x', 'name'),
+				name: 'name',
+				type: 'text',
+			},
+			{
+				label: i18n.translate('project-name'),
+				name: 'project',
+				type: 'multiselect',
+			},
+			overrides(baseFilters.routine, {
+				label: i18n.translate('routine-name'),
+				type: 'multiselect',
+			}),
+			{
+				label: i18n.translate('build-name'),
+				name: 'buildName',
+				type: 'text',
+			},
+			overrides(baseFilters.status, {
+				options: ['Abandoned', 'Complete', 'In Analisis'],
+				type: 'checkbox',
+			}),
+			baseFilters.assignee,
+		] as RendererFields[],
+	},
 } as const;
 
 export {filterSchema};

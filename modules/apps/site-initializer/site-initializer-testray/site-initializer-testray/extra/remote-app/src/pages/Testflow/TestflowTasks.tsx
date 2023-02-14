@@ -158,7 +158,7 @@ const TestFlowTasks = () => {
 		<>
 			<TaskHeaderActions />
 
-			<Container collapsable title={i18n.translate('task-details')}>
+			<Container collapsable title={i18n.sub('task-x', 'details')}>
 				<div className="d-flex flex-wrap">
 					<div className="col-4 col-lg-4 col-md-12 p-0">
 						<QATable

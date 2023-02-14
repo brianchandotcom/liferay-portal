@@ -38,6 +38,7 @@ const TestFlow = () => {
 			<ListView
 				managementToolbarProps={{
 					addButton: () => modal.open(),
+					filterSchema: 'testflow',
 					title: i18n.translate('tasks'),
 				}}
 				resource={testrayTaskImpl.resource}
@@ -156,8 +157,7 @@ const TestFlow = () => {
 											groupSize={3}
 										/>
 									);
-								}
-								catch {
+								} catch {
 									return '';
 								}
 							},

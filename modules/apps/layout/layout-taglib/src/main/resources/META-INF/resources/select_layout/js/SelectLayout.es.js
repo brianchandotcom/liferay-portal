@@ -38,12 +38,13 @@ const SelectLayout = ({
 	selectedLayoutIds,
 }) => {
 	const [filter, setFilter] = useState();
+	const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
 	const empty = !nodes.length;
 
 	return (
-		<ClayLayout.ContainerFluid className="p-4 select-layout">
-			<ClayForm.Group>
+		<ClayLayout.ContainerFluid className="p-0 select-layout">
+			<ClayForm.Group className="m-0 p-3 select-layout-filter">
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
 						<ClayInput
@@ -67,14 +68,37 @@ const SelectLayout = ({
 			{empty ? (
 				<EmptyState />
 			) : (
-				<SelectLayoutTree
-					filter={filter}
-					followURLOnTitleClick={followURLOnTitleClick}
-					itemSelectorSaveEvent={itemSelectorSaveEvent}
-					items={nodes}
-					multiSelection={multiSelection}
-					selectedLayoutIds={selectedLayoutIds}
-				/>
+				<>
+					{Boolean(selectedItemsCount) && multiSelection && (
+						<ClayLayout.Container
+							className="align-items-center d-flex layout-tree-count-feedback px-4"
+							containerElement="section"
+							fluid
+						>
+							<div className="container p-0">
+								<p className="m-0 text-2">
+									{selectedItemsCount > 1
+										? `${selectedItemsCount} ${Liferay.Language.get(
+												'items-selected'
+										  )}`
+										: `${selectedItemsCount} ${Liferay.Language.get(
+												'item-selected'
+										  )}`}
+								</p>
+							</div>
+						</ClayLayout.Container>
+					)}
+
+					<SelectLayoutTree
+						filter={filter}
+						followURLOnTitleClick={followURLOnTitleClick}
+						itemSelectorSaveEvent={itemSelectorSaveEvent}
+						items={nodes}
+						multiSelection={multiSelection}
+						onItemsCountChange={setSelectedItemsCount}
+						selectedLayoutIds={selectedLayoutIds}
+					/>
+				</>
 			)}
 		</ClayLayout.ContainerFluid>
 	);

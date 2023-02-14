@@ -37,6 +37,7 @@ export function SelectLayoutTree({
 	followURLOnTitleClick,
 	itemSelectorSaveEvent,
 	items: initialItems = [],
+	onItemsCountChange,
 	multiSelection,
 	selectedLayoutIds,
 }) {
@@ -87,6 +88,10 @@ export function SelectLayoutTree({
 		});
 
 		updateSelectedItems(item, selection, recursive);
+
+		if (onItemsCountChange) {
+			onItemsCountChange(selectedItemsRef.current.size);
+		}
 
 		if (!selectedItemsRef.current.size) {
 			return;
@@ -170,7 +175,7 @@ export function SelectLayoutTree({
 	};
 
 	return filteredItems.length ? (
-		<>
+		<div className="pt-3 px-4">
 			{multiSelection && (
 				<p
 					className="mb-4"
@@ -184,6 +189,7 @@ export function SelectLayoutTree({
 					}}
 				/>
 			)}
+
 			<ClayTreeView
 				items={filteredItems}
 				onItemsChange={(items) => setItems(items)}
@@ -272,7 +278,7 @@ export function SelectLayoutTree({
 					</ClayTreeView.Item>
 				)}
 			</ClayTreeView>
-		</>
+		</div>
 	) : (
 		<ClayEmptyState
 			description={Liferay.Language.get(

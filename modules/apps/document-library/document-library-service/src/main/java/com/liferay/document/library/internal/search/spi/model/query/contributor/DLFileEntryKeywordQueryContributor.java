@@ -16,8 +16,6 @@ package com.liferay.document.library.internal.search.spi.model.query.contributor
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -30,7 +28,7 @@ import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
-import java.util.regex.PatternSyntaxException;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -86,18 +84,10 @@ public class DLFileEntryKeywordQueryContributor
 							"fileName", exactMatch, MatchQuery.Type.PHRASE),
 						BooleanClauseOccur.MUST);
 
-					String notExactKeyword = StringPool.BLANK;
-
-					try {
-						notExactKeyword = keywords.replaceFirst(
-							StringPool.QUOTE + exactMatch + StringPool.QUOTE,
-							"");
-					}
-					catch (PatternSyntaxException patternSyntaxException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(patternSyntaxException);
-						}
-					}
+					String notExactKeyword = keywords.replaceFirst(
+						Pattern.quote(
+							StringPool.QUOTE + exactMatch + StringPool.QUOTE),
+						"");
 
 					if (Validator.isNotNull(notExactKeyword)) {
 						fileNameBooleanQuery.add(
@@ -156,8 +146,5 @@ public class DLFileEntryKeywordQueryContributor
 
 		return booleanQuery;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryKeywordQueryContributor.class);
 
 }

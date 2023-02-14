@@ -113,6 +113,8 @@ definition {
 				wikiNodeName = "Wiki Node Test",
 				wikiNodeNameEdit = "WIKI NODE");
 
+			WikiNavigator.gotoNode(wikiNodeName = "WIKI NODE");
+
 			WikiPage.editPageCP(
 				groupName = "Guest",
 				siteURLKey = "guest",
@@ -121,18 +123,32 @@ definition {
 				wikiPageTitle = "Wiki Page Test");
 		}
 
-		task ("Assert that Wiki Node and Wiki Page are edited") {
-			WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		task ("View the publications changes for wiki") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
 
-			WikiNode.viewCP(
-				numberOfWikiPages = 2,
-				wikiNodeName = "WIKI NODE");
+			PublicationsChanges.viewChanges(
+				changeCategory = "Wiki Node",
+				changeOrder = 1,
+				changeSite = "Guest",
+				changeTitle = "WIKI NODE",
+				changeType = "Modified",
+				changeUser = "Test Test");
 
-			WikiNavigator.gotoCP(wikiPageTitle = "Wiki Page Test");
+			PublicationsChanges.viewChanges(
+				changeCategory = "Wiki Page",
+				changeOrder = 2,
+				changeSite = "Guest",
+				changeTitle = "Wiki Page Test",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
 
-			WikiPage.viewCP(
-				wikiPageContent = "WIKI PAGE",
-				wikiPageTitle = "Wiki Page Test");
+		task ("Publish the publication") {
+			JSONPublications.publishPublication(publicationName = "Test Publication");
+
+			Publications.viewPublicationPublished(publicationName = "Test Publication");
 		}
 	}
 

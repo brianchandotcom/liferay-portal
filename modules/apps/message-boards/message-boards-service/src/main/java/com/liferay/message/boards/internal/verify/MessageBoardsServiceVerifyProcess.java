@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Zsolt Berentey
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Component(
-	property = "verify.process.name=com.liferay.message.boards.service",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 @Deprecated
 public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 

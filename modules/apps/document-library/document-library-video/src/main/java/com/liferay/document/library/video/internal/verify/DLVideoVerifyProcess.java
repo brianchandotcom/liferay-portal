@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(
-	property = "verify.process.name=com.liferay.document.library.video",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 public class DLVideoVerifyProcess extends VerifyProcess {
 
 	@Override

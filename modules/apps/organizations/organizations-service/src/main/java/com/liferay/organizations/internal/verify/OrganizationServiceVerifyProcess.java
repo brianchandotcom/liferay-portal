@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
-@Component(
-	property = "verify.process.name=com.liferay.organizations.service",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	@Override

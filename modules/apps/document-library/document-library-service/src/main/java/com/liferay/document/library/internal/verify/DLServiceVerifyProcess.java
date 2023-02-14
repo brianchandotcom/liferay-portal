@@ -82,10 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Component(
-	property = "verify.process.name=com.liferay.document.library.service",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 @Deprecated
 public class DLServiceVerifyProcess extends VerifyProcess {
 

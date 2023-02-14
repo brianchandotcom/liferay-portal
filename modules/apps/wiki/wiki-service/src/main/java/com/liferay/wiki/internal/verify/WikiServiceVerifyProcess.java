@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gergely Mathe
  */
-@Component(
-	property = "verify.process.name=com.liferay.wiki.service",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override

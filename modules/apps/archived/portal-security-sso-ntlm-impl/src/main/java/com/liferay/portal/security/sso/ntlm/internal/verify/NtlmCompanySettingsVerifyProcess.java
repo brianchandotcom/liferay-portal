@@ -31,11 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Greenwald
  */
-@Component(
-	immediate = true,
-	property = "verify.process.name=com.liferay.portal.security.sso.ntlm",
-	service = VerifyProcess.class
-)
+@Component(immediate = true, service = VerifyProcess.class)
 public class NtlmCompanySettingsVerifyProcess
 	extends BaseCompanySettingsVerifyProcess {
 

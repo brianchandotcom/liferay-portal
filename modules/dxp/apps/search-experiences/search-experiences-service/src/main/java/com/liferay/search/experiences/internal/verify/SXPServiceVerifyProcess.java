@@ -26,11 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	enabled = false,
-	property = {
-		"initial.deployment=true",
-		"verify.process.name=com.liferay.search.experiences.service"
-	},
+	enabled = false, property = "initial.deployment=true",
 	service = VerifyProcess.class
 )
 public class SXPServiceVerifyProcess extends VerifyProcess {

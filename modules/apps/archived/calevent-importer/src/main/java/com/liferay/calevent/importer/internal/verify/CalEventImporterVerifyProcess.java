@@ -117,11 +117,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = "verify.process.name=com.liferay.calevent.importer",
-	service = VerifyProcess.class
-)
+@Component(immediate = true, service = VerifyProcess.class)
 public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 	@Override

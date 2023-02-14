@@ -41,10 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Rafael Praxedes
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Component(
-	property = "verify.process.name=com.liferay.dynamic.data.mapping.service",
-	service = VerifyProcess.class
-)
+@Component(service = VerifyProcess.class)
 @Deprecated
 public class DDMServiceVerifyProcess extends VerifyProcess {
 

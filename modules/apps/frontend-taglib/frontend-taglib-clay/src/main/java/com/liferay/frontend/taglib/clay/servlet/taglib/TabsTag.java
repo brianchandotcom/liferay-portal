@@ -148,9 +148,7 @@ public class TabsTag extends BaseContainerTag {
 				LinkTag linkTag = new LinkTag();
 
 				linkTag.setCssClass(itemCssClass);
-
 				linkTag.setHref((String)tabsItem.get("href"));
-
 				linkTag.setLabel(
 					LanguageUtil.get(
 						TagResourceBundleUtil.getResourceBundle(pageContext),
@@ -162,9 +160,7 @@ public class TabsTag extends BaseContainerTag {
 				ButtonTag buttonTag = new ButtonTag();
 
 				buttonTag.setCssClass(itemCssClass);
-
 				buttonTag.setDisplayType("unstyled");
-
 				buttonTag.setLabel(
 					LanguageUtil.get(
 						TagResourceBundleUtil.getResourceBundle(pageContext),

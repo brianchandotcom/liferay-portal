@@ -86,13 +86,11 @@ public class TabsPanelTag extends BaseContainerTag implements BodyTag {
 	}
 
 	private boolean _isActive() {
-		List<String> panels = _tabsTag.getPanels();
-
-		int panelsCount = panels.size();
-
 		List<TabsItem> tabsItems = _tabsTag.getTabsItems();
 
-		TabsItem tabsItem = tabsItems.get(panelsCount);
+		List<String> panels = _tabsTag.getPanels();
+
+		TabsItem tabsItem = tabsItems.get(panels.size());
 
 		Boolean active = (Boolean)tabsItem.get("active");
 

@@ -76,7 +76,8 @@ public class SegmentsEntryModelResourcePermissionWrapper
 
 			if (actionId.equals(ActionKeys.UPDATE) &&
 				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND.equals(
-					segmentsEntry.getSource())) {
+					segmentsEntry.getSource())&&
+				(segmentsEntry.getCriteria() == null)) {
 
 				return false;
 			}

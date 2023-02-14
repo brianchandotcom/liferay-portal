@@ -34,13 +34,13 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
+import com.liferay.object.rest.internal.util.DTOConverterUtil;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -50,9 +50,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -72,13 +70,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -162,11 +158,20 @@ public class ObjectEntryDTOConverter
 					objectDefinition, primaryKey);
 			}
 			else {
-				value = _toDTO(
-					objectDefinition.getCompanyId(), primaryKey,
+				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 					_systemObjectDefinitionMetadataRegistry.
 						getSystemObjectDefinitionMetadata(
-							objectDefinition.getName()),
+							objectDefinition.getName());
+
+				value = DTOConverterUtil.toDTO(
+					systemObjectDefinitionMetadata.
+						getBaseModelByExternalReferenceCode(
+							systemObjectDefinitionMetadata.
+								getExternalReferenceCode(primaryKey),
+							objectDefinition.getCompanyId()),
+					_dtoConverterRegistry,
+					systemObjectDefinitionMetadata.
+						getJaxRsApplicationDescriptor(),
 					dtoConverterContext.getUser());
 			}
 		}
@@ -382,41 +387,6 @@ public class ObjectEntryDTOConverter
 				};
 			}
 		};
-	}
-
-	private Object _toDTO(
-			long companyId, long primaryKey,
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
-			User user)
-		throws Exception {
-
-		BaseModel<?> baseModel =
-			systemObjectDefinitionMetadata.getBaseModelByExternalReferenceCode(
-				systemObjectDefinitionMetadata.getExternalReferenceCode(
-					primaryKey),
-				companyId);
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
-
-		DTOConverter<BaseModel<?>, ?> dtoConverter =
-			(DTOConverter<BaseModel<?>, ?>)
-				_dtoConverterRegistry.getDTOConverter(
-					jaxRsApplicationDescriptor.getApplicationName(),
-					baseModel.getModelClassName(),
-					jaxRsApplicationDescriptor.getVersion());
-
-		if (dtoConverter == null) {
-			throw new InternalServerErrorException(
-				"No DTO converter found for " + baseModel.getModelClassName());
-		}
-
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry,
-				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
-
-		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 
 	private ObjectEntry[] _toObjectEntries(

@@ -35,6 +35,7 @@ import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConvert
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.util.DTOConverterUtil;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -46,7 +47,6 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -96,7 +95,6 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -120,7 +118,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -1150,30 +1147,10 @@ public class DefaultObjectEntryManagerImpl
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
 		throws Exception {
 
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
-
-		DTOConverter<BaseModel<?>, ?> dtoConverter =
-			(DTOConverter<BaseModel<?>, ?>)
-				_dtoConverterRegistry.getDTOConverter(
-					jaxRsApplicationDescriptor.getApplicationName(),
-					baseModel.getModelClassName(),
-					jaxRsApplicationDescriptor.getVersion());
-
-		if (dtoConverter == null) {
-			throw new InternalServerErrorException(
-				"No DTO converter found for " + baseModel.getModelClassName());
-		}
-
-		User user = _userLocalService.getUser(
-			serviceBuilderObjectEntry.getUserId());
-
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry,
-				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
-
-		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
+		return DTOConverterUtil.toDTO(
+			baseModel, _dtoConverterRegistry,
+			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor(),
+			_userLocalService.getUser(serviceBuilderObjectEntry.getUserId()));
 	}
 
 	private List<ObjectEntry> _toObjectEntries(

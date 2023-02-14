@@ -48,6 +48,7 @@ public class UpgradeLogContext implements LogContext {
 		_contexts.put("component", component);
 	}
 
+	@Override
 	public Map<String, String> getContext(String logName) {
 		if (_isUpgradeClass(logName)) {
 			if (_contexts.isEmpty()) {
@@ -60,6 +61,7 @@ public class UpgradeLogContext implements LogContext {
 		return Collections.emptyMap();
 	}
 
+	@Override
 	public String getName() {
 		return "upgrade";
 	}

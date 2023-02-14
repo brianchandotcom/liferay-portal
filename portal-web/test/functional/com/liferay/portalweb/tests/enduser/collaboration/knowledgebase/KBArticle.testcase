@@ -987,6 +987,24 @@ definition {
 			locator1 = "BlogsEntry#CONTENT_VIDEO");
 	}
 
+	@description = "This test checks that all the correct actions appear after selecting an article."
+	@priority = 5
+	test CorrectActionsAppearInToolbarAfterSelectingArticle {
+		property custom.properties = "feature.flag.LPS-166643=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		KBArticle.viewActionsDetailsToolbar(moreActions = "true");
+	}
+
 	@priority = 3
 	@refactorneeded
 	test EditKBArticleWithCustomField {

@@ -38,16 +38,33 @@ definition {
 		else {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
+				layoutName = "Clay Page");
 		}
 	}
 
-	@description = "Check if each nav section of clay sample portlet looks normal from screenshot"
-	@priority = 3
+	@description = "LPS-110903 - Alerts are not styled correctly"
+	@priority = 5
 	test IconCanDisplayTooltip {
+		task ("Given Clay Sample Portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Page");
 
-		// TODO LPS-133020 IconCanDisplayTooltip pending implementation
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Page",
+				widgetName = "Clay Sample");
 
+			Navigator.gotoPage(pageName = "Clay Page");
+		}
+
+		task ("When an alert icon without text and hovered over the icon") {
+			CustomerPortal.putMouseOverButton(text = "Hover");
+		}
+
+		task ("Then a tooltip message should be displayed") {
+			AssertTextPresent(value1 = "Tooltip Content");
+		}
 	}
 
 }

@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -121,6 +122,17 @@ export default function ClaySampleToastAlert() {
 					>
 						{Liferay.Language.get('disappear-after-10-secs')}
 					</ClayButton>
+
+					<ClayTooltipProvider>
+						<div>
+							<ClayButton
+								data-tooltip-align="top"
+								title="Tooltip Content"
+							>
+								Hover
+							</ClayButton>
+						</div>
+					</ClayTooltipProvider>
 				</ClayButton.Group>
 			</div>
 		</div>

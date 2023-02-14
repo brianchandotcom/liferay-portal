@@ -265,6 +265,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				"ObjectAction", "description", "VARCHAR(75) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"ObjectValidationRule", "script", "TEXT null"));
+
+		registry.register(
+			"4.0.0", "4.1.0",
+			new com.liferay.object.internal.upgrade.v4_0_1.
+				ObjectDefinitionUpgradeProcess());
 	}
 
 	@Reference

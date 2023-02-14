@@ -69,6 +69,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -110,6 +111,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -245,6 +247,27 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		return new PageTemplateCollectionEntry(
 			_PAGE_TEMPLATE_COLLECTION_KEY_DEFAULT, pageTemplateCollection);
+	}
+
+	private String _getDefaultUtilityPagesJSON(ZipFile zipFile)
+		throws Exception {
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if ((zipEntry != null) &&
+				StringUtil.endsWith(
+					zipEntry.getName(),
+					LayoutUtilityPageExportImportConstants.
+						FILE_NAME_DEFAULT_UTILITY_PAGES)) {
+
+				return StringUtil.read(zipFile.getInputStream(zipEntry));
+			}
+		}
+
+		return null;
 	}
 
 	private List<DisplayPageTemplateEntry> _getDisplayPageTemplateEntries(
@@ -1187,6 +1210,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							new String[] {utilityPageTemplate.getName()})));
 			}
 		}
+
+		if (overwrite) {
+			_setDefaultLayoutUtilityPageEntries(groupId, zipFile);
+		}
 	}
 
 	private void _processLayoutUtilityPageTemplateEntry(
@@ -1470,6 +1497,39 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 	}
 
+	private void _setDefaultLayoutUtilityPageEntries(
+			long groupId, ZipFile zipFile)
+		throws Exception {
+
+		String json = _getDefaultUtilityPagesJSON(zipFile);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONObject jsonObject = _jsonFactoryUtil.createJSONObject(json);
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String type = iterator.next();
+
+			String name = jsonObject.getString(type);
+
+			LayoutUtilityPageEntry layoutUtilityPageEntry =
+				_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+					groupId, name,
+					LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
+						type));
+
+			if (layoutUtilityPageEntry != null) {
+				_layoutUtilityPageEntryLocalService.
+					setDefaultLayoutUtilityPageEntry(
+						layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+			}
+		}
+	}
+
 	private String _toTypeName(int layoutPageTemplateEntryType) {
 		if (layoutPageTemplateEntryType ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
@@ -1664,6 +1724,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private JSONFactoryUtil _jsonFactoryUtil;
 
 	@Reference
 	private Language _language;

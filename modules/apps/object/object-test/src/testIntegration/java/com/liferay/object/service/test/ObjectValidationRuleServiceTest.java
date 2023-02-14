@@ -79,7 +79,7 @@ public class ObjectValidationRuleServiceTest {
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				false, "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Arrays.asList(

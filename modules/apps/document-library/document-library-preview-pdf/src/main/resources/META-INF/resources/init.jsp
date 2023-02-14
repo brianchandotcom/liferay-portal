@@ -20,7 +20,9 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.document.library.preview.pdf.internal.portlet.action.PDFPreviewConfigurationDisplayContext" %>
+<%@ page import="com.liferay.document.library.preview.pdf.exception.PDFPreviewException" %><%@
+page import="com.liferay.document.library.preview.pdf.internal.portlet.action.PDFPreviewConfigurationDisplayContext" %><%@
+page import="com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException" %>
 
 <liferay-frontend:defineObjects />
 

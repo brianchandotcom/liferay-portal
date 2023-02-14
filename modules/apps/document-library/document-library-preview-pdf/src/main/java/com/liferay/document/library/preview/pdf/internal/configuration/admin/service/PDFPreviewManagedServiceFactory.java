@@ -83,7 +83,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		return _systemPDFPreviewConfiguration.maxNumberOfPages();
 	}
 
-	public void updateCompanyPDFPreview(long companyId, long maxNumberOfPages)
+	public void updateCompanyPDFPreviewConfiguration(
+			long companyId, long maxNumberOfPages)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -131,7 +132,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		}
 	}
 
-	public void updateGroupPDFPreview(long groupId, long maxNumberOfPages)
+	public void updateGroupPDFPreviewConfiguration(
+			long groupId, long maxNumberOfPages)
 		throws Exception {
 
 		Dictionary<String, Object> properties = null;
@@ -158,7 +160,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		configuration.update(properties);
 	}
 
-	public void updateSystemPDFPreview(long maxNumberOfPages) throws Exception {
+	public void updateSystemPDFPreviewConfiguration(long maxNumberOfPages)
+		throws Exception {
+
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			PDFPreviewConfiguration.class.getName(), StringPool.QUESTION);
 

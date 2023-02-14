@@ -22,6 +22,17 @@ PDFPreviewConfigurationDisplayContext pdfPreviewConfigurationDisplayContext = (P
 
 <aui:form action="<%= pdfPreviewConfigurationDisplayContext.getEditPDFPreviewConfigurationURL() %>" method="post" name="fm">
 	<clay:sheet>
+		<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="there-was-an-unknown-error" />
+
+		<liferay-ui:error exception="<%= PDFPreviewException.class %>">
+
+			<%
+			PDFPreviewException pdfPreviewException = (PDFPreviewException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= pdfPreviewException.getMaxNumberOfPages() %>" key="please-enter-a-maximum-number-of-pages-no-larger-than-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<clay:sheet-header>
 			<h2>
 				<liferay-ui:message key="pdf-preview-configuration-name" />

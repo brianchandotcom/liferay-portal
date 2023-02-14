@@ -15,12 +15,15 @@
 package com.liferay.document.library.preview.pdf.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.document.library.preview.pdf.exception.PDFPreviewException;
 import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,11 +72,10 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_updatePDFPreview(actionRequest, scope, scopePK);
 		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
+		catch (ConfigurationModelListenerException | PDFPreviewException
+					exception) {
 
-			SessionErrors.add(
-				actionRequest, configurationModelListenerException.getClass());
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
@@ -87,28 +89,58 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 		long maxNumberOfPages = ParamUtil.getLong(
 			actionRequest, "maxNumberOfPages");
 
+		long systemMaxNumberOfPages =
+			_pdfPreviewManagedServiceFactory.getSystemMaxNumberOfPages();
+
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			_pdfPreviewManagedServiceFactory.updateCompanyPDFPreview(
-				scopePK, maxNumberOfPages);
+			if ((systemMaxNumberOfPages != 0) &&
+				(systemMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(systemMaxNumberOfPages);
+			}
+
+			_pdfPreviewManagedServiceFactory.
+				updateCompanyPDFPreviewConfiguration(scopePK, maxNumberOfPages);
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			_pdfPreviewManagedServiceFactory.updateGroupPDFPreview(
+			if ((systemMaxNumberOfPages != 0) &&
+				(systemMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(systemMaxNumberOfPages);
+			}
+
+			Group group = _groupService.getGroup(scopePK);
+
+			long companyMaxNumberOfPages =
+				_pdfPreviewManagedServiceFactory.getCompanyMaxNumberOfPages(
+					group.getCompanyId());
+
+			if ((companyMaxNumberOfPages != 0) &&
+				(companyMaxNumberOfPages < maxNumberOfPages)) {
+
+				throw new PDFPreviewException(companyMaxNumberOfPages);
+			}
+
+			_pdfPreviewManagedServiceFactory.updateGroupPDFPreviewConfiguration(
 				scopePK, maxNumberOfPages);
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
-			_pdfPreviewManagedServiceFactory.updateSystemPDFPreview(
-				maxNumberOfPages);
+			_pdfPreviewManagedServiceFactory.
+				updateSystemPDFPreviewConfiguration(maxNumberOfPages);
 		}
 		else {
 			throw new PortalException("Unsupported scope: " + scope);
 		}
 	}
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private PDFPreviewManagedServiceFactory _pdfPreviewManagedServiceFactory;

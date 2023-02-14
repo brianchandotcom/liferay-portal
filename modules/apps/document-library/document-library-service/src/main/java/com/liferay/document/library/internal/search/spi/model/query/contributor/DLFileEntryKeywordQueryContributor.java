@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -108,7 +109,8 @@ public class DLFileEntryKeywordQueryContributor
 
 		if (Validator.isNull(exactMatch)) {
 			fileNameBooleanQuery.add(
-				_getShouldBooleanQuery(keywords), BooleanClauseOccur.MUST);
+				_getShouldBooleanQuery(StringUtil.trim(keywords)),
+				BooleanClauseOccur.MUST);
 		}
 		else {
 			fileNameBooleanQuery.add(

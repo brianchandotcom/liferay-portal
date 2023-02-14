@@ -14,6 +14,14 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function assertElementPresentNoWaitForSPAReFresh {
+		selenium.waitForElementPresent();
+
+		selenium.assertElementPresent();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function assertVisible {
 		WaitForSPARefresh();
 

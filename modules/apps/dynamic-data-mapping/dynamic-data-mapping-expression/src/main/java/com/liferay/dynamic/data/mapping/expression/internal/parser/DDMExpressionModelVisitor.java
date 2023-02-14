@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal.parser;
 
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionBaseVisitor;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArrayExpression;

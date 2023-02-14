@@ -26,26 +26,28 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccesso
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessorAware;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyResponse;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.AdditionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.BooleanParenthesisContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.DivisionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.EqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FloatingPointLiteralContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FunctionCallExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.FunctionParametersContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.GreaterThanOrEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LessThanOrEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LogicalConstantContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.LogicalVariableContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MinusExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.MultiplicationExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NotEqualsExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericParenthesisContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.NumericVariableContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.ToFloatingPointArrayContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionBaseVisitor;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.AdditionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.BooleanParenthesisContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.DivisionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.EqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.FloatingPointLiteralContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.FunctionCallExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.FunctionParametersContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.GreaterThanExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.GreaterThanOrEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LessThanExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LessThanOrEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LogicalConstantContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.LogicalVariableContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.MinusExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.MultiplicationExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NotEqualsExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NumericParenthesisContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NumericVariableContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.SubtractionExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.ToFloatingPointArrayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -77,6 +79,23 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  */
 public class DDMExpressionEvaluatorVisitor
 	extends DDMExpressionBaseVisitor<Object> {
+
+	public DDMExpressionEvaluatorVisitor(
+		Map<String, DDMExpressionFunctionFactory>
+			ddmExpressionFunctionFactories,
+		Map<String, Object> variables,
+		DDMExpressionActionHandler ddmExpressionActionHandler,
+		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
+		DDMExpressionObserver ddmExpressionObserver,
+		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
+
+		_ddmExpressionFunctionFactories = ddmExpressionFunctionFactories;
+		_variables = variables;
+		_ddmExpressionActionHandler = ddmExpressionActionHandler;
+		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
+		_ddmExpressionObserver = ddmExpressionObserver;
+		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
+	}
 
 	@Override
 	public Object visitAdditionExpression(
@@ -506,23 +525,6 @@ public class DDMExpressionEvaluatorVisitor
 		).toArray(
 			String[]::new
 		);
-	}
-
-	public DDMExpressionEvaluatorVisitor(
-		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactories,
-		Map<String, Object> variables,
-		DDMExpressionActionHandler ddmExpressionActionHandler,
-		DDMExpressionFieldAccessor ddmExpressionFieldAccessor,
-		DDMExpressionObserver ddmExpressionObserver,
-		DDMExpressionParameterAccessor ddmExpressionParameterAccessor) {
-
-		_ddmExpressionFunctionFactories = ddmExpressionFunctionFactories;
-		_variables = variables;
-		_ddmExpressionActionHandler = ddmExpressionActionHandler;
-		_ddmExpressionFieldAccessor = ddmExpressionFieldAccessor;
-		_ddmExpressionObserver = ddmExpressionObserver;
-		_ddmExpressionParameterAccessor = ddmExpressionParameterAccessor;
 	}
 
 	protected String getFunctionName(Token functionNameToken) {

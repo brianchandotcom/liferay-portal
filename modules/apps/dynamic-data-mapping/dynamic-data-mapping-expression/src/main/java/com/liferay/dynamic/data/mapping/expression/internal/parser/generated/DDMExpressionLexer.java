@@ -14,7 +14,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal.parser;
+package com.liferay.dynamic.data.mapping.expression.internal.parser.generated;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

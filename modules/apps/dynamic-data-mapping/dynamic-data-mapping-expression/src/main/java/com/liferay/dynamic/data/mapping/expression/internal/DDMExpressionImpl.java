@@ -24,9 +24,9 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionObserver;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionDSLExpressionVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionEvaluatorVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionLexer;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionModelVisitor;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionLexer;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.model.Expression;
 
 import java.math.BigDecimal;

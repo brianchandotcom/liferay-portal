@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseListener;
-import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionBaseListener;
+import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -64,9 +64,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -483,33 +481,14 @@ public class DDMExpressionEvaluatorVisitor
 	public Object visitToFloatingPointArray(
 		ToFloatingPointArrayContext context) {
 
-		List<TerminalNode> floatingPointLiteralTerminalNodes =
-			context.FloatingPointLiteral();
-
-		Stream<TerminalNode> stream =
-			floatingPointLiteralTerminalNodes.stream();
-
-		return stream.map(
-			floatingPoint -> new BigDecimal(floatingPoint.getText())
-		).toArray(
-			BigDecimal[]::new
-		);
+		return _getBigDecimalArray(context.FloatingPointLiteral());
 	}
 
 	@Override
 	public Object visitToIntegerArray(
 		DDMExpressionParser.ToIntegerArrayContext context) {
 
-		List<TerminalNode> integerLiteralTerminalNodes =
-			context.IntegerLiteral();
-
-		Stream<TerminalNode> stream = integerLiteralTerminalNodes.stream();
-
-		return stream.map(
-			integerLiteral -> new BigDecimal(integerLiteral.getText())
-		).toArray(
-			BigDecimal[]::new
-		);
+		return _getBigDecimalArray(context.IntegerLiteral());
 	}
 
 	@Override
@@ -518,13 +497,15 @@ public class DDMExpressionEvaluatorVisitor
 
 		List<TerminalNode> stringTerminalNodes = context.STRING();
 
-		Stream<TerminalNode> stream = stringTerminalNodes.stream();
+		String[] values = new String[stringTerminalNodes.size()];
 
-		return stream.map(
-			floatingPoint -> StringUtil.unquote(floatingPoint.getText())
-		).toArray(
-			String[]::new
-		);
+		for (int i = 0; i < stringTerminalNodes.size(); i++) {
+			TerminalNode terminalNode = stringTerminalNodes.get(i);
+
+			values[i] = StringUtil.unquote(terminalNode.getText());
+		}
+
+		return values;
 	}
 
 	protected String getFunctionName(Token functionNameToken) {
@@ -561,18 +542,20 @@ public class DDMExpressionEvaluatorVisitor
 			Class<?> ddmExpressionFunctionClass, int parametersTotal)
 		throws NoSuchMethodException {
 
+		Class<?> clazz = null;
 		Class<?>[] classes = _getInterfaces(ddmExpressionFunctionClass);
 
-		Optional<Class<?>> classOptional = Stream.of(
-			classes
-		).filter(
-			clazz -> _isDDMExpressionFunctionNestedFunction(
-				clazz, parametersTotal)
-		).findFirst();
+		for (Class<?> curClazz : classes) {
+			if (_isDDMExpressionFunctionNestedFunction(
+					curClazz, parametersTotal)) {
 
-		if (classOptional.isPresent()) {
-			Class<?> clazz = classOptional.get();
+				clazz = curClazz;
 
+				break;
+			}
+		}
+
+		if (clazz != null) {
 			return clazz.getDeclaredMethods()[0];
 		}
 
@@ -595,6 +578,18 @@ public class DDMExpressionEvaluatorVisitor
 		}
 
 		return new BigDecimal(value);
+	}
+
+	private BigDecimal[] _getBigDecimalArray(List<TerminalNode> terminalNodes) {
+		BigDecimal[] values = new BigDecimal[terminalNodes.size()];
+
+		for (int i = 0; i < terminalNodes.size(); i++) {
+			TerminalNode terminalNode = terminalNodes.get(i);
+
+			values[i] = new BigDecimal(terminalNode.getText());
+		}
+
+		return values;
 	}
 
 	private Class<?>[] _getInterfaces(Class<?> clazz) {

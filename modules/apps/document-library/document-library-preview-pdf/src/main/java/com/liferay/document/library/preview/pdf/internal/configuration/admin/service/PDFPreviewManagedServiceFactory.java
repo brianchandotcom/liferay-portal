@@ -61,29 +61,15 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		_unmapPid(pid);
 	}
 
-	public long getCompanyMaxNumberOfPages(long companyId) {
-		PDFPreviewConfiguration pdfPreviewConfiguration =
-			_getCompanyPDFPreviewConfiguration(companyId);
-
-		return pdfPreviewConfiguration.maxNumberOfPages();
-	}
-
-	public long getGroupMaxNumberOfPages(long groupId) {
-		PDFPreviewConfiguration pdfPreviewConfiguration =
-			_getGroupPDFPreviewConfiguration(groupId);
-
-		return pdfPreviewConfiguration.maxNumberOfPages();
-	}
-
 	public long getMaxNumberOfPages(String scope, long scopePK)
 		throws PortalException {
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(scopePK);
+			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(scopePK);
 
-			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+			long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((companyMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||
@@ -97,14 +83,14 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			long groupMaxNumberOfPages = getGroupMaxNumberOfPages(scopePK);
+			long groupMaxNumberOfPages = _getGroupMaxNumberOfPages(scopePK);
 
 			Group group = _groupLocalService.getGroup(scopePK);
 
-			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(
+			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
-			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+			long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((groupMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||
@@ -127,7 +113,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
-			return getSystemMaxNumberOfPages();
+			return _getSystemMaxNumberOfPages();
 		}
 
 		throw new IllegalArgumentException("Unsupported scope: " + scope);
@@ -137,19 +123,6 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	public String getName() {
 		return "com.liferay.document.library.preview.pdf.internal." +
 			"configuration.PDFPreviewConfiguration.scoped";
-	}
-
-	public long getSystemMaxNumberOfPages() {
-		return _systemPDFPreviewConfiguration.maxNumberOfPages();
-	}
-
-	public void updateCompanyPDFPreviewConfiguration(
-			long companyId, long maxNumberOfPages)
-		throws Exception {
-
-		_updateScopedConfiguration(
-			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.COMPANY,
-			companyId);
 	}
 
 	@Override
@@ -173,20 +146,11 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		}
 	}
 
-	public void updateGroupPDFPreviewConfiguration(
-			long groupId, long maxNumberOfPages)
-		throws Exception {
-
-		_updateScopedConfiguration(
-			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.GROUP,
-			groupId);
-	}
-
 	public void updatePDFPreview(
 			long maxNumberOfPages, String scope, long scopePK)
 		throws Exception {
 
-		long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+		long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
@@ -197,7 +161,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 				throw new PDFPreviewException(systemMaxNumberOfPages);
 			}
 
-			updateCompanyPDFPreviewConfiguration(scopePK, maxNumberOfPages);
+			_updateCompanyPDFPreviewConfiguration(scopePK, maxNumberOfPages);
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
@@ -210,7 +174,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 
 			Group group = _groupLocalService.getGroup(scopePK);
 
-			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(
+			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
 			if ((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
@@ -219,33 +183,16 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 				throw new PDFPreviewException(companyMaxNumberOfPages);
 			}
 
-			updateGroupPDFPreviewConfiguration(scopePK, maxNumberOfPages);
+			_updateGroupPDFPreviewConfiguration(scopePK, maxNumberOfPages);
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
-			updateSystemPDFPreviewConfiguration(maxNumberOfPages);
+			_updateSystemPDFPreviewConfiguration(maxNumberOfPages);
 		}
 		else {
 			throw new PortalException("Unsupported scope: " + scope);
 		}
-	}
-
-	public void updateSystemPDFPreviewConfiguration(long maxNumberOfPages)
-		throws Exception {
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			PDFPreviewConfiguration.class.getName(), StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
-		}
-
-		properties.put("maxNumberOfPages", maxNumberOfPages);
-
-		configuration.update(properties);
 	}
 
 	@Activate
@@ -255,12 +202,26 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			PDFPreviewConfiguration.class, properties);
 	}
 
+	private long _getCompanyMaxNumberOfPages(long companyId) {
+		PDFPreviewConfiguration pdfPreviewConfiguration =
+			_getCompanyPDFPreviewConfiguration(companyId);
+
+		return pdfPreviewConfiguration.maxNumberOfPages();
+	}
+
 	private PDFPreviewConfiguration _getCompanyPDFPreviewConfiguration(
 		long companyId) {
 
 		return _getPDFPreviewConfiguration(
 			companyId, _companyConfigurationBeans,
 			() -> _systemPDFPreviewConfiguration);
+	}
+
+	private long _getGroupMaxNumberOfPages(long groupId) {
+		PDFPreviewConfiguration pdfPreviewConfiguration =
+			_getGroupPDFPreviewConfiguration(groupId);
+
+		return pdfPreviewConfiguration.maxNumberOfPages();
 	}
 
 	private PDFPreviewConfiguration _getGroupPDFPreviewConfiguration(
@@ -309,6 +270,10 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		return configurations[0];
 	}
 
+	private long _getSystemMaxNumberOfPages() {
+		return _systemPDFPreviewConfiguration.maxNumberOfPages();
+	}
+
 	private void _unmapPid(String pid) {
 		if (_companyIds.containsKey(pid)) {
 			long companyId = _companyIds.remove(pid);
@@ -333,6 +298,15 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		_companyIds.put(pid, companyId);
 	}
 
+	private void _updateCompanyPDFPreviewConfiguration(
+			long companyId, long maxNumberOfPages)
+		throws Exception {
+
+		_updateScopedConfiguration(
+			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.COMPANY,
+			companyId);
+	}
+
 	private void _updateGroupConfiguration(
 		long groupId, String pid, Dictionary<String, ?> dictionary) {
 
@@ -341,6 +315,15 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			ConfigurableUtil.createConfigurable(
 				PDFPreviewConfiguration.class, dictionary));
 		_groupIds.put(pid, groupId);
+	}
+
+	private void _updateGroupPDFPreviewConfiguration(
+			long groupId, long maxNumberOfPages)
+		throws Exception {
+
+		_updateScopedConfiguration(
+			maxNumberOfPages, ExtendedObjectClassDefinition.Scope.GROUP,
+			groupId);
 	}
 
 	private void _updateScopedConfiguration(
@@ -362,6 +345,23 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		}
 		else {
 			properties = configuration.getProperties();
+		}
+
+		properties.put("maxNumberOfPages", maxNumberOfPages);
+
+		configuration.update(properties);
+	}
+
+	private void _updateSystemPDFPreviewConfiguration(long maxNumberOfPages)
+		throws Exception {
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			PDFPreviewConfiguration.class.getName(), StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
 		}
 
 		properties.put("maxNumberOfPages", maxNumberOfPages);

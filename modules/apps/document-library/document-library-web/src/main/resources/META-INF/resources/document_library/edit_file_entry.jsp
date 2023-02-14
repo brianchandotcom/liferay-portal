@@ -270,228 +270,229 @@ renderResponse.setTitle(headerTitle);
 
 			<div class="sheet">
 				<div class="panel-group panel-group-flush">
-						<%
-						long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
-						%>
 
-						<c:if test="<%= fileMaxSize != 0 %>">
-							<div class="alert alert-info">
-								<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileMaxSize, locale) %>" key="upload-documents-no-larger-than-x" translateArguments="<%= false %>" />
-							</div>
-						</c:if>
+					<%
+					long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
+					%>
 
-						<%
-						String folderName = StringPool.BLANK;
+					<c:if test="<%= fileMaxSize != 0 %>">
+						<div class="alert alert-info">
+							<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileMaxSize, locale) %>" key="upload-documents-no-larger-than-x" translateArguments="<%= false %>" />
+						</div>
+					</c:if>
 
-						if (folderId > 0) {
-							folder = DLAppLocalServiceUtil.getFolder(folderId);
+					<%
+					String folderName = StringPool.BLANK;
 
-							folder = folder.toEscapedModel();
+					if (folderId > 0) {
+						folder = DLAppLocalServiceUtil.getFolder(folderId);
 
-							folderId = folder.getFolderId();
-							folderName = folder.getName();
-						}
-						else {
-							folderName = LanguageUtil.get(request, "home");
-						}
-						%>
+						folder = folder.toEscapedModel();
 
-						<div class="form-group">
-							<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
-								<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+						folderId = folder.getFolderId();
+						folderName = folder.getName();
+					}
+					else {
+						folderName = LanguageUtil.get(request, "home");
+					}
+					%>
 
-								<aui:button name="selectFolderButton" value="select" />
+					<div class="form-group">
+						<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
+							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-								<%
-								String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-								%>
+							<aui:button name="selectFolderButton" value="select" />
 
-								<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+							<%
+							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+							%>
 
-								<script>
-									var selectFolderButton = document.getElementById(
-										'<portlet:namespace />selectFolderButton'
-									);
+							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 
-									if (selectFolderButton) {
-										selectFolderButton.addEventListener('click', (event) => {
-											Liferay.Util.openSelectionModal({
-												eventName: '<portlet:namespace />folderSelected',
-												multiple: false,
-												onSelect: function (selectedItem) {
-													if (!selectedItem) {
-														return;
-													}
+							<script>
+								var selectFolderButton = document.getElementById(
+									'<portlet:namespace />selectFolderButton'
+								);
 
-													var folderData = {
-														idString: 'folderId',
-														idValue: selectedItem.folderid,
-														nameString: 'folderName',
-														nameValue: selectedItem.foldername,
-													};
+								if (selectFolderButton) {
+									selectFolderButton.addEventListener('click', (event) => {
+										Liferay.Util.openSelectionModal({
+											eventName: '<portlet:namespace />folderSelected',
+											multiple: false,
+											onSelect: function (selectedItem) {
+												if (!selectedItem) {
+													return;
+												}
 
-													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-												},
-												title: '<liferay-ui:message arguments="folder" key="select-x" />',
+												var folderData = {
+													idString: 'folderId',
+													idValue: selectedItem.folderid,
+													nameString: 'folderName',
+													nameValue: selectedItem.foldername,
+												};
 
-												<%
-												ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
+												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+											},
+											title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
-												FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
+											<%
+											ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
 
-												folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
-												folderItemSelectorCriterion.setFolderId(folderId);
+											FolderItemSelectorCriterion folderItemSelectorCriterion = new FolderItemSelectorCriterion();
 
-												PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
-												%>
+											folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
+											folderItemSelectorCriterion.setFolderId(folderId);
 
-												url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
-											});
+											PortletURL selectFolderURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), portletDisplay.getNamespace() + "folderSelected", folderItemSelectorCriterion);
+											%>
+
+											url: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 										});
-									}
-								</script>
+									});
+								}
+							</script>
+						</c:if>
+					</div>
+
+					<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
+
+					<aui:input label="title" name="title" />
+
+					<c:if test="<%= dlEditFileEntryDisplayContext.isFileNameVisible() %>">
+						<div>
+							<aui:input label="file-name" name="fileName" type="text" />
+
+							<c:if test="<%= fileVersion != null %>">
+								<react:component
+									module="document_library/js/FileNameInput.es"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"initialValue", fileVersion.getFileName()
+										).put(
+											"required", Validator.isNotNull(fileVersion.getExtension())
+										).build()
+									%>'
+								/>
 							</c:if>
 						</div>
+					</c:if>
 
-						<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
+					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
+						<aui:input name="description" />
 
-						<aui:input label="title" name="title" />
+						<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
-						<c:if test="<%= dlEditFileEntryDisplayContext.isFileNameVisible() %>">
-							<div>
-								<aui:input label="file-name" name="fileName" type="text" />
+							<%
+							boolean inherited = false;
 
-								<c:if test="<%= fileVersion != null %>">
-									<react:component
-										module="document_library/js/FileNameInput.es"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"initialValue", fileVersion.getFileName()
-											).put(
-												"required", Validator.isNotNull(fileVersion.getExtension())
-											).build()
-										%>'
-									/>
-								</c:if>
-							</div>
-						</c:if>
+							if (folder != null) {
+								DLFolder dlFolder = (DLFolder)folder.getModel();
 
-						<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
-							<aui:input name="description" />
+								if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+									inherited = true;
+								}
+							}
 
-							<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
+							List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
+							%>
+
+							<c:choose>
+								<c:when test="<%= dlFileEntryTypes.size() > 1 %>">
+									<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= liferayPortletResponse.getNamespace() + "changeFileEntryType();" %>'>
+
+										<%
+										for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
+										%>
+
+											<c:if test="<%= (curDLFileEntryType.getFileEntryTypeId() == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) || (fileEntryTypeId == curDLFileEntryType.getFileEntryTypeId()) || DLFileEntryTypePermission.contains(permissionChecker, curDLFileEntryType, ActionKeys.VIEW) %>">
+												<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= fileEntryTypeId == curDLFileEntryType.getPrimaryKey() %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+											</c:if>
+
+										<%
+										}
+										%>
+
+									</aui:select>
+								</c:when>
+								<c:otherwise>
+									<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+								</c:otherwise>
+							</c:choose>
+
+							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
+
+							<c:if test="<%= fileEntryTypeId > 0 %>">
 
 								<%
-								boolean inherited = false;
+								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-								if (folder != null) {
-									DLFolder dlFolder = (DLFolder)folder.getModel();
+								boolean showLanguageSelector = false;
 
-									if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
-										inherited = true;
+								for (DDMStructure ddmStructure : ddmStructures) {
+									if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
+										showLanguageSelector = true;
+
+										break;
 									}
 								}
-
-								List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
 								%>
 
-								<c:choose>
-									<c:when test="<%= dlFileEntryTypes.size() > 1 %>">
-										<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= liferayPortletResponse.getNamespace() + "changeFileEntryType();" %>'>
+								<c:if test="<%= showLanguageSelector %>">
+									<div class="mb-3">
+										<react:component
+											module="document_library/js/LanguageSelector"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
+												).put(
+													"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
+												).put(
+													"selectedLanguageId", themeDisplay.getLanguageId()
+												).put(
+													"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
+												).build()
+											%>'
+										/>
+									</div>
+								</c:if>
+
+								<%
+								try {
+									boolean localizable = true;
+
+									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(ddmStructure, fileVersionId);
+								%>
+
+										<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">
 
 											<%
-											for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
+											DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
 											%>
 
-												<c:if test="<%= (curDLFileEntryType.getFileEntryTypeId() == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) || (fileEntryTypeId == curDLFileEntryType.getFileEntryTypeId()) || DLFileEntryTypePermission.contains(permissionChecker, curDLFileEntryType, ActionKeys.VIEW) %>">
-													<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= fileEntryTypeId == curDLFileEntryType.getPrimaryKey() %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
-												</c:if>
-
-											<%
-											}
-											%>
-
-										</aui:select>
-									</c:when>
-									<c:otherwise>
-										<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-									</c:otherwise>
-								</c:choose>
-
-								<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
-
-								<c:if test="<%= fileEntryTypeId > 0 %>">
-
-									<%
-									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-									boolean showLanguageSelector = false;
-
-									for (DDMStructure ddmStructure : ddmStructures) {
-										if (dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure)) {
-											showLanguageSelector = true;
-
-											break;
-										}
-									}
-									%>
-
-									<c:if test="<%= showLanguageSelector %>">
-										<div class="mb-3">
-											<react:component
-												module="document_library/js/LanguageSelector"
-												props='<%=
-													HashMapBuilder.<String, Object>put(
-														"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
-													).put(
-														"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
-													).put(
-														"selectedLanguageId", themeDisplay.getLanguageId()
-													).put(
-														"translatedLanguageIds", DDMStructureUtil.getTranslatedLanguageIds(ddmStructures, dlEditFileEntryDisplayContext, fileVersionId)
-													).build()
-												%>'
+											<liferay-data-engine:data-layout-renderer
+												containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
+												dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+												dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
+												languageId="<%= dlEditFileEntryDisplayContext.getDLFileEntryTypeLanguageId(ddmStructure, PortalUtil.getLocale(request)) %>"
+												namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
+												persistDefaultValues="<%= true %>"
+												persisted="<%= fileEntry != null %>"
 											/>
 										</div>
-									</c:if>
 
-									<%
-									try {
-										boolean localizable = true;
-
-										for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-											com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(ddmStructure, fileVersionId);
-									%>
-
-											<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">
-
-												<%
-												DDMFormValuesToMapConverter ddmFormValuesToMapConverter = (DDMFormValuesToMapConverter)request.getAttribute(DDMFormValuesToMapConverter.class.getName());
-												%>
-
-												<liferay-data-engine:data-layout-renderer
-													containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
-													dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-													dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
-													languageId="<%= dlEditFileEntryDisplayContext.getDLFileEntryTypeLanguageId(ddmStructure, PortalUtil.getLocale(request)) %>"
-													namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
-													persistDefaultValues="<%= true %>"
-													persisted="<%= fileEntry != null %>"
-												/>
-											</div>
-
-									<%
-											localizable = false;
-										}
+								<%
+										localizable = false;
 									}
-									catch (Exception exception) {
-										_log.error(exception);
-									}
-									%>
+								}
+								catch (Exception exception) {
+									_log.error(exception);
+								}
+								%>
 
-								</c:if>
 							</c:if>
 						</c:if>
+					</c:if>
 
 					<c:choose>
 						<c:when test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">

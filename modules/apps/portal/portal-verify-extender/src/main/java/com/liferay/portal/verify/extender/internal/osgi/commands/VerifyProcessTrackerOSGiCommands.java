@@ -274,6 +274,8 @@ public class VerifyProcessTrackerOSGiCommands {
 		WorkflowThreadLocal.setEnabled(false);
 
 		try {
+			Bundle bundle = FrameworkUtil.getBundle(verifyProcess.getClass());
+
 			if (release == null) {
 
 				// Verification state must be persisted even though not all
@@ -281,9 +283,6 @@ public class VerifyProcessTrackerOSGiCommands {
 
 				release = _releaseLocalService.createRelease(
 					_counterLocalService.increment());
-
-				Bundle bundle = FrameworkUtil.getBundle(
-					verifyProcess.getClass());
 
 				release.setServletContextName(bundle.getSymbolicName());
 
@@ -294,16 +293,7 @@ public class VerifyProcessTrackerOSGiCommands {
 				"Executing verify process registered for " + verifyProcessName);
 
 			try {
-				Class<?> clazz = verifyProcess.getClass();
-
-				Bundle bundle = FrameworkUtil.getBundle(clazz);
-
-				if (bundle == null) {
-					UpgradeLogContext.setContext("core");
-				}
-				else {
-					UpgradeLogContext.setContext(bundle.getSymbolicName());
-				}
+				UpgradeLogContext.setContext(bundle.getSymbolicName());
 
 				verifyProcess.verify();
 

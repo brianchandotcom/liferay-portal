@@ -72,12 +72,11 @@ public interface OptionValueResource {
 	public HttpInvoker.HttpResponse deleteOptionValueHttpResponse(Long id)
 		throws Exception;
 
-	public void deleteOptionValueBatch(
-			Long id, String callbackURL, Object object)
+	public void deleteOptionValueBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteOptionValueBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public OptionValue getOptionValue(Long id) throws Exception;
@@ -127,12 +126,11 @@ public interface OptionValueResource {
 			Long id, OptionValue optionValue)
 		throws Exception;
 
-	public void postOptionIdOptionValueBatch(
-			Long id, String callbackURL, Object object)
+	public void postOptionIdOptionValueBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postOptionIdOptionValueBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -512,12 +510,11 @@ public interface OptionValueResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteOptionValueBatch(
-				Long id, String callbackURL, Object object)
+		public void deleteOptionValueBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteOptionValueBatchHttpResponse(id, callbackURL, object);
+				deleteOptionValueBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -546,7 +543,7 @@ public interface OptionValueResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteOptionValueBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -581,8 +578,6 @@ public interface OptionValueResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/optionValues/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1113,12 +1108,11 @@ public interface OptionValueResource {
 		}
 
 		public void postOptionIdOptionValueBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postOptionIdOptionValueBatchHttpResponse(
-					id, callbackURL, object);
+				postOptionIdOptionValueBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1148,7 +1142,7 @@ public interface OptionValueResource {
 
 		public HttpInvoker.HttpResponse
 				postOptionIdOptionValueBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1183,8 +1177,6 @@ public interface OptionValueResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/options/optionValues/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

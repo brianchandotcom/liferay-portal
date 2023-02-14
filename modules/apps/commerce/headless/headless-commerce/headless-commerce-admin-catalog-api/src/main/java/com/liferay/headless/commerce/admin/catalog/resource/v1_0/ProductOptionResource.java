@@ -58,8 +58,7 @@ public interface ProductOptionResource {
 
 	public Response deleteProductOption(Long id) throws Exception;
 
-	public Response deleteProductOptionBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteProductOptionBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public ProductOption getProductOption(Long id) throws Exception;

@@ -80,8 +80,7 @@ public interface ProductGroupResource {
 
 	public void deleteProductGroup(Long id) throws Exception;
 
-	public Response deleteProductGroupBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteProductGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public ProductGroup getProductGroup(Long id) throws Exception;

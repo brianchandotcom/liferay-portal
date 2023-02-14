@@ -68,8 +68,7 @@ public interface SpecificationResource {
 
 	public Response deleteSpecification(Long id) throws Exception;
 
-	public Response deleteSpecificationBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteSpecificationBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Specification getSpecification(Long id) throws Exception;

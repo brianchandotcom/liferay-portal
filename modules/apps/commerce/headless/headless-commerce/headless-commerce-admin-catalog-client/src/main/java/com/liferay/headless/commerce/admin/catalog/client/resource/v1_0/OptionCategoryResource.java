@@ -67,12 +67,11 @@ public interface OptionCategoryResource {
 	public HttpInvoker.HttpResponse deleteOptionCategoryHttpResponse(Long id)
 		throws Exception;
 
-	public void deleteOptionCategoryBatch(
-			Long id, String callbackURL, Object object)
+	public void deleteOptionCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteOptionCategoryBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public OptionCategory getOptionCategory(Long id) throws Exception;
@@ -486,12 +485,11 @@ public interface OptionCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteOptionCategoryBatch(
-				Long id, String callbackURL, Object object)
+		public void deleteOptionCategoryBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteOptionCategoryBatchHttpResponse(id, callbackURL, object);
+				deleteOptionCategoryBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -520,7 +518,7 @@ public interface OptionCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteOptionCategoryBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -555,8 +553,6 @@ public interface OptionCategoryResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

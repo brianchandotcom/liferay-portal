@@ -70,8 +70,7 @@ public interface CatalogResource {
 
 	public Response deleteCatalog(Long id) throws Exception;
 
-	public Response deleteCatalogBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteCatalogBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Catalog getCatalog(Long id) throws Exception;

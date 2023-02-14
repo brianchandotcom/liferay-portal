@@ -47,11 +47,11 @@ public interface ProductSpecificationResource {
 		throws Exception;
 
 	public void deleteProductSpecificationBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteProductSpecificationBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public ProductSpecification getProductSpecification(Long id)
@@ -87,12 +87,12 @@ public interface ProductSpecificationResource {
 		throws Exception;
 
 	public void postProductIdProductSpecificationBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postProductIdProductSpecificationBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -254,12 +254,12 @@ public interface ProductSpecificationResource {
 		}
 
 		public void deleteProductSpecificationBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteProductSpecificationBatchHttpResponse(
-					id, callbackURL, object);
+					callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -289,7 +289,7 @@ public interface ProductSpecificationResource {
 
 		public HttpInvoker.HttpResponse
 				deleteProductSpecificationBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -324,8 +324,6 @@ public interface ProductSpecificationResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/productSpecifications/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -678,12 +676,12 @@ public interface ProductSpecificationResource {
 		}
 
 		public void postProductIdProductSpecificationBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postProductIdProductSpecificationBatchHttpResponse(
-					id, callbackURL, object);
+					callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -713,7 +711,7 @@ public interface ProductSpecificationResource {
 
 		public HttpInvoker.HttpResponse
 				postProductIdProductSpecificationBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -748,8 +746,6 @@ public interface ProductSpecificationResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/products/productSpecifications/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

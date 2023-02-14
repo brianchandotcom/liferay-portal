@@ -58,8 +58,7 @@ public interface ProductChannelResource {
 
 	public void deleteProductChannel(Long id) throws Exception;
 
-	public Response deleteProductChannelBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteProductChannelBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public ProductChannel getProductChannel(Long id) throws Exception;

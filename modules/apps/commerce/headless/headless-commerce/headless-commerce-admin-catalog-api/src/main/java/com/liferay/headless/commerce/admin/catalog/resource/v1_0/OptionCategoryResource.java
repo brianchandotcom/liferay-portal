@@ -68,8 +68,7 @@ public interface OptionCategoryResource {
 
 	public Response deleteOptionCategory(Long id) throws Exception;
 
-	public Response deleteOptionCategoryBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteOptionCategoryBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public OptionCategory getOptionCategory(Long id) throws Exception;

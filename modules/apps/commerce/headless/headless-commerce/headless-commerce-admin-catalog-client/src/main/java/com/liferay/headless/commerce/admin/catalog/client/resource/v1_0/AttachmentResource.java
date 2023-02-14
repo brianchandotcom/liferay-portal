@@ -129,12 +129,11 @@ public interface AttachmentResource {
 			Long id, Attachment attachment)
 		throws Exception;
 
-	public void postProductIdAttachmentBatch(
-			Long id, String callbackURL, Object object)
+	public void postProductIdAttachmentBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProductIdAttachmentBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Attachment postProductIdAttachmentByBase64(
@@ -1137,12 +1136,11 @@ public interface AttachmentResource {
 		}
 
 		public void postProductIdAttachmentBatch(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postProductIdAttachmentBatchHttpResponse(
-					id, callbackURL, object);
+				postProductIdAttachmentBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1172,7 +1170,7 @@ public interface AttachmentResource {
 
 		public HttpInvoker.HttpResponse
 				postProductIdAttachmentBatchHttpResponse(
-					Long id, String callbackURL, Object object)
+					String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1207,8 +1205,6 @@ public interface AttachmentResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/products/attachments/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

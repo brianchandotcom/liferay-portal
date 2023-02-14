@@ -75,13 +75,12 @@ public interface RelatedProductResource {
 		throws Exception;
 
 	public Response postProductIdRelatedProductBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Response deleteRelatedProduct(Long id) throws Exception;
 
-	public Response deleteRelatedProductBatch(
-			Long id, String callbackURL, Object object)
+	public Response deleteRelatedProductBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public RelatedProduct getRelatedProduct(Long id) throws Exception;

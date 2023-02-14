@@ -72,11 +72,11 @@ public interface CatalogResource {
 	public HttpInvoker.HttpResponse deleteCatalogHttpResponse(Long id)
 		throws Exception;
 
-	public void deleteCatalogBatch(Long id, String callbackURL, Object object)
+	public void deleteCatalogBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteCatalogBatchHttpResponse(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Catalog getCatalog(Long id) throws Exception;
@@ -505,12 +505,11 @@ public interface CatalogResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteCatalogBatch(
-				Long id, String callbackURL, Object object)
+		public void deleteCatalogBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteCatalogBatchHttpResponse(id, callbackURL, object);
+				deleteCatalogBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -539,7 +538,7 @@ public interface CatalogResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteCatalogBatchHttpResponse(
-				Long id, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -574,8 +573,6 @@ public interface CatalogResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-catalog/v1.0/catalog/batch");
-
-			httpInvoker.path("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -98,7 +98,7 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Response postProductIdAttachmentBatch(
-			Long id, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public Attachment postProductIdAttachmentByBase64(

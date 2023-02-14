@@ -69,8 +69,7 @@ public interface SkuResource {
 
 	public Sku postProductIdSku(Long id, Sku sku) throws Exception;
 
-	public Response postProductIdSkuBatch(
-			Long id, String callbackURL, Object object)
+	public Response postProductIdSkuBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<Sku> getSkusPage(
@@ -90,7 +89,7 @@ public interface SkuResource {
 
 	public Response deleteSku(Long id) throws Exception;
 
-	public Response deleteSkuBatch(Long id, String callbackURL, Object object)
+	public Response deleteSkuBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Sku getSku(Long id) throws Exception;

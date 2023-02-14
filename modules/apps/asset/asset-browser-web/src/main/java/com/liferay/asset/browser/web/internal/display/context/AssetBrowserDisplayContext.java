@@ -171,7 +171,7 @@ public class AssetBrowserDisplayContext {
 		long[] selectedGroupIds =
 			_assetEntryItemSelectorCriterion.getSelectedGroupIds();
 
-		if (selectedGroupIds.length > 0) {
+		if (ArrayUtil.isNotEmpty(selectedGroupIds)) {
 			return selectedGroupIds;
 		}
 

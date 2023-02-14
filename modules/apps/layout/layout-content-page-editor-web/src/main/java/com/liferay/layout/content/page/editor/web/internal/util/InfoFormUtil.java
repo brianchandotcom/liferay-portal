@@ -253,6 +253,8 @@ public class InfoFormUtil {
 					"infoItemSelectorURL",
 					(String)infoField.getAttribute(
 						CategoriesInfoFieldType.INFO_ITEM_SELECTOR_URL)
+				).put(
+					"modalSize", "md"
 				));
 		}
 

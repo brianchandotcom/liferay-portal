@@ -23,6 +23,7 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -40,8 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -186,10 +185,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 	}
 
 	private List<DropdownItem> _getFilterTypeDropdownItems() {
-		Stream<RelatedInfoItemCollectionProvider<?, ?>> stream =
-			_relatedInfoItemCollectionProviders.stream();
-
-		List<KeyValuePair> keyValuePairs = stream.map(
+		List<KeyValuePair> keyValuePairs = TransformUtil.transform(
+			_relatedInfoItemCollectionProviders,
 			relatedInfoItemCollectionProvider -> {
 				String collectionItemClassName =
 					relatedInfoItemCollectionProvider.
@@ -199,13 +196,10 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewDescriptor
 					collectionItemClassName,
 					ResourceActionsUtil.getModelResource(
 						_themeDisplay.getLocale(), collectionItemClassName));
-			}
-		).distinct(
-		).sorted(
-			new KeyValuePairComparator(false, true)
-		).collect(
-			Collectors.toList()
-		);
+			});
+
+		ListUtil.distinct(
+			keyValuePairs, new KeyValuePairComparator(false, true));
 
 		return new DropdownItemList() {
 			{

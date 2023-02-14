@@ -90,16 +90,20 @@ const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 				.then(({ok, responseContent}) => {
 					if (!ok) {
 						if (
-							responseContent.title ===
-							'Duplicate external reference code'
+							responseContent.type.includes(
+								'DuplicateSXPBlueprintExternalReferenceCodeException'
+							) ||
+							responseContent.type.includes(
+								'DuplicateSXPElementExternalReferenceCodeException'
+							)
 						) {
 							_handleFormError(
 								isElement
 									? Liferay.Language.get(
-											'unable-to-import-element-with-the-same-external-reference-code-with-the-same-as-an-existing-element'
+											'unable-to-import-element-with-the-same-external-reference-code-as-an-existing-element'
 									  )
 									: Liferay.Language.get(
-											'unable-to-import-blueprint-with-the-same-external-reference-code-with-the-same-as-an-existing-blueprint'
+											'unable-to-import-blueprint-with-the-same-external-reference-code-as-an-existing-blueprint'
 									  )
 							);
 						}

@@ -15,11 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10290. Checkout an order of a product with bulk pricing on the price list and tiered price on promotions"
-<<<<<<< HEAD
-	@priority = 3
-=======
-	@priority = "5"
->>>>>>> a597decff42f (COMMERCE-10634 Add tests to Relevant and fix priorities)
+	@priority = 5
 	test CanCheckoutProductWithBulkPriceAndPromotionTierPrice {
 		property portal.acceptance = "true";
 
@@ -199,7 +195,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10307. Can checkout an order of a product with price list with bulk and promotion with bulk"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithBulkPriceOnPromotionAndPriceList {
 		property portal.acceptance = "true";
 
@@ -295,7 +291,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10306. Can checkout an order of a product with price list with tier and promotion with bulk"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithBulkPriceOnPromotionAndTierPriceOnPriceList {
 		property portal.acceptance = "true";
 
@@ -391,7 +387,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10289. Can checkout an order of a product with tier price list and promotion tier"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithTierPriceAndPromotionTierPrice {
 		property portal.acceptance = "true";
 

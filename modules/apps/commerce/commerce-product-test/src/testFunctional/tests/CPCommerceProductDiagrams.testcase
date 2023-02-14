@@ -18,7 +18,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7025. AddANewPin"
-	@priority = "5"
+	@priority = 5
 	test AddANewPin {
 		property portal.acceptance = "true";
 
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"
-	@priority = "5"
+	@priority = 5
 	test AddDiagramProduct {
 		property portal.acceptance = "true";
 
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7024 A diagram product cannot be published without an image."
-	@priority = "5"
+	@priority = 5
 	test CannotPublishADiagramProductWithoutAnImage {
 		property portal.acceptance = "true";
 
@@ -277,7 +277,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7100. Verify user can change a diagram product type to SVG."
-	@priority = "5"
+	@priority = 5
 	test ChangeDiagramType {
 		property portal.acceptance = "true";
 
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7126. RemoveDiagramProduct"
-	@priority = "5"
+	@priority = 5
 	test RemoveDiagramProduct {
 		property portal.acceptance = "true";
 
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7021. Upload an already mapped new image"
-	@priority = "5"
+	@priority = 5
 	test UploadAlreadyMappedNewImage {
 		property portal.acceptance = "true";
 
@@ -726,7 +726,7 @@ definition {
 	}
 
 	@description = "This test asserts that the Mapped Products Table saves all info from pins"
-	@priority = "5"
+	@priority = 5
 	test VerifyMappedProductsTableSavesAllPins {
 		property portal.acceptance = "true";
 

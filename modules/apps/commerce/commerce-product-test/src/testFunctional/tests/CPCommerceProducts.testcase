@@ -123,7 +123,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
-	@priority = "5"
+	@priority = 5
 	test AddGroupedProduct {
 		property portal.acceptance = "true";
 
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
-	@priority = "5"
+	@priority = 5
 	test AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic {
 		property portal.acceptance = "true";
 
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete Products"
-	@priority = "5"
+	@priority = 5
 	test BulkDeleteProducts {
 		property portal.acceptance = "true";
 
@@ -415,7 +415,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9189. CanCheckApprovedProductDuplication"
-	@priority = "5"
+	@priority = 5
 	test CanCheckApprovedProductDuplication {
 		property portal.acceptance = "true";
 
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckApprovedProductStatusWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckApprovedProductWorkflowStatus {
 		property portal.acceptance = "true";
 
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -609,7 +609,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckDeniedProductStatusWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckDeniedProductWorkflowStatus {
 		property portal.acceptance = "true";
 
@@ -693,7 +693,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
-	@priority = "5"
+	@priority = 5
 	test CanCheckDraftProductStatus {
 		property portal.acceptance = "true";
 
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
-	@priority = "5"
+	@priority = 5
 	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -880,7 +880,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -946,7 +946,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckExpiredProductStatusWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckExpiredProductWorkflowStatus {
 		property portal.acceptance = "true";
 
@@ -969,7 +969,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckInactiveProductStatusWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckInactiveProductWorkflowStatus {
 		property portal.acceptance = "true";
 
@@ -992,7 +992,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9251. CanCheckIncompleteProductStatusWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckIncompleteProductWorkflowStatus {
 		property portal.acceptance = "true";
 
@@ -1061,7 +1061,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
-	@priority = "5"
+	@priority = 5
 	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1484,7 +1484,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8850. Verify that the list of filters is reduced to only show matching results"
-	@priority = "5"
+	@priority = 5
 	test CanVerifyFiltersListShowsOnlyMatchingResults {
 		property portal.acceptance = "true";
 
@@ -1535,7 +1535,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
-	@priority = "5"
+	@priority = 5
 	test ConfigureVirtualProduct {
 		property portal.acceptance = "true";
 
@@ -1631,7 +1631,7 @@ definition {
 			value1 = 10);
 	}
 
-	@priority = "5"
+	@priority = 5
 	test CreateProductBundleWithPriceTypeDynamic {
 		property portal.acceptance = "true";
 
@@ -1718,7 +1718,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6018. CreateProductBundleWithPriceTypeStatic"
-	@priority = "5"
+	@priority = 5
 	test CreateProductBundleWithPriceTypeStatic {
 		property portal.acceptance = "true";
 
@@ -1872,7 +1872,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8425. DuplicateAProductAndVerifyIfSkuPriceIsUnique"
-	@priority = "5"
+	@priority = 5
 	test DuplicateAProductAndVerifyIfSkuPriceIsUnique {
 		property portal.acceptance = "true";
 
@@ -1939,7 +1939,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5808. EditAProduct"
-	@priority = "5"
+	@priority = 5
 	test EditAProduct {
 		property portal.acceptance = "true";
 
@@ -1974,7 +1974,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
-	@priority = "5"
+	@priority = 5
 	test EditSkuAndDelete {
 		property portal.acceptance = "true";
 
@@ -2123,7 +2123,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
-	@priority = "5"
+	@priority = 5
 	test UseFilters {
 		property portal.acceptance = "true";
 
@@ -2227,7 +2227,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
-	@priority = "5"
+	@priority = 5
 	test UseFriendlyURL {
 		property portal.acceptance = "true";
 
@@ -2266,7 +2266,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6303. UseSchedule"
-	@priority = "5"
+	@priority = 5
 	test UseSchedule {
 		property portal.acceptance = "true";
 

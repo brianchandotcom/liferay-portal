@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5839. As a system admin i want to be able to create / update and delete a new currency"
-	@priority = "5"
+	@priority = 5
 	test CreateAndUpdateNewCurrency {
 		property portal.acceptance = "true";
 

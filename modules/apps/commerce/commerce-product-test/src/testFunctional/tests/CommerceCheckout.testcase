@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9052. Checkout process from mini-cart with buyer2 for different kind of orders made by buyer1"
-	@priority = "5"
+	@priority = 5
 	test AddEmptyOrderFromAUserAndCheckoutFromAnotherUserViaMiniCart {
 		property portal.acceptance = "true";
 

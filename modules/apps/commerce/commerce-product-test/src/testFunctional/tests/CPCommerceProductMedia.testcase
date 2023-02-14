@@ -63,7 +63,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
-	@priority = "5"
+	@priority = 5
 	test AddAnImageToAnOption {
 		property portal.acceptance = "true";
 
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6027. EditAnImage"
-	@priority = "5"
+	@priority = 5
 	test EditAnImage {
 		property portal.acceptance = "true";
 

@@ -21,7 +21,7 @@ definition {
 	}
 
 	@description = "Verify a default shipping option can be set, edited, and removed for an account."
-	@priority = "5"
+	@priority = 5
 	test AddEditAndRemoveNewDefaultShippingOption {
 		property portal.acceptance = "true";
 
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@description = "Verify the default account shipping option is pre-selected at checkout."
-	@priority = "5"
+	@priority = 5
 	test UseDefaultShippingOptionIntoTheCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";

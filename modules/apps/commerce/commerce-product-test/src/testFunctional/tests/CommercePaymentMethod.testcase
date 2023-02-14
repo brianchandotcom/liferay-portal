@@ -58,7 +58,7 @@ definition {
 	}
 
 	@description = "Verify an offline payment method can be added, edited, and deleted from system settings"
-	@priority = "5"
+	@priority = 5
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AddEditAndDeleteOfflinePaymentMethod";
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "Verify an activated offline payment method can be used for an order."
-	@priority = "5"
+	@priority = 5
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AnOfflinePaymentMethodCanBeUsedForAnOrder";
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "Verify offline payment methods display in the orders page for orders placed with a new offline payment method. Verify this payment method can be changed to another offline payment method."
-	@priority = "5"
+	@priority = 5
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AssertAndEditNewPaymentMethodInOrdersPage";

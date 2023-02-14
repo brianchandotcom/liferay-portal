@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8164 | A discontinued product cannot be replaced by another discontinued product"
-	@priority = "5"
+	@priority = 5
 	test CannotReplaceDiscontinuedProductWithDiscontinuedProduct {
 		property portal.acceptance = "true";
 
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9352 | Verify if discontinued products are replaced by the replacement product when adding a discontinued product to an order"
-	@priority = "5"
+	@priority = 5
 	test DiscontinuedProductIsReplacedWhenImportedFromOrders {
 		property portal.acceptance = "true";
 
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9348 | Replacement product's button redirects to the right product's product details page"
-	@priority = "5"
+	@priority = 5
 	test ReplacementProductButtonRedirectsToRightProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9347 | Replacement product's information is shown in product details"
-	@priority = "5"
+	@priority = 5
 	test ReplacementProductInformationIsDisplayedInProductDetails {
 		property portal.acceptance = "true";
 

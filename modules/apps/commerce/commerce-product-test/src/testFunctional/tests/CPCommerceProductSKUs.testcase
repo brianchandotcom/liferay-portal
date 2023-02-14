@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
-	@priority = "5"
+	@priority = 5
 	test CanNotUseTheSameSKUERCForDifferentSKU {
 		property portal.acceptance = "true";
 
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
-	@priority = "5"
+	@priority = 5
 	test RemoveASKU {
 		property portal.acceptance = "true";
 

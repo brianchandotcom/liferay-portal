@@ -769,7 +769,7 @@ definition {
 	}
 
 	@description = "Verify user can import wish list order in another order and do checkout"
-	@priority = "5"
+	@priority = 5
 	test CheckoutAfterImportFromWishList {
 		property portal.acceptance = "true";
 

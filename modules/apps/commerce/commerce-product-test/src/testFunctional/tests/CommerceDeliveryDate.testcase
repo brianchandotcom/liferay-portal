@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9324. A buyer user can set the requested delivery date during the checkout process"
-	@priority = "5"
+	@priority = 5
 	test CanSetDeliveryDate {
 		property portal.acceptance = "true";
 

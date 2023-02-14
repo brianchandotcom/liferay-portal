@@ -44,7 +44,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9317. User can delete a Delivery Term"
-	@priority = "5"
+	@priority = 5
 	test CanDeleteDeliveryTerm {
 		property portal.acceptance = "true";
 
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9316. User can edit a Delivery Term"
-	@priority = "5"
+	@priority = 5
 	test CanEditDeliveryTerm {
 		property portal.acceptance = "true";
 
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9318. User can not add Delivery Terms with same priority"
-	@priority = "5"
+	@priority = 5
 	test DeliveryTermMustBeUnique {
 		property portal.acceptance = "true";
 

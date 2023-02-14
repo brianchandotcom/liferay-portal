@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
-	@priority = "5"
+	@priority = 5
 	test AddEditAndRemoveItemToWarehouse {
 		property portal.acceptance = "true";
 
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6206. Add income items"
-	@priority = "5"
+	@priority = 5
 	test AddIncomeItems {
 		property portal.acceptance = "true";
 
@@ -435,7 +435,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5979. As a user of the storefront, I should be able to see the stock quantity value of the Warehouses based on the View permission of my role"
-	@priority = "5"
+	@priority = 5
 	test CanSFUsersSeeStockQuantityBasedOnViewPermissionForWarehouse {
 		property portal.acceptance = "true";
 
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6200. Consume booked quantities of one item in multiple warehouses"
-	@priority = "5"
+	@priority = 5
 	test ConsumeBookedQuantitiesFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
@@ -763,7 +763,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6201. Consume quantities of one item in multiple warehouses"
-	@priority = "5"
+	@priority = 5
 	test ConsumeQuantitiesFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
@@ -885,7 +885,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5706. As a system admin i want to be able to create / update and delete a new warehouse"
-	@priority = "5"
+	@priority = 5
 	test CreateEditAndDeleteWarehouseEntry {
 		property portal.acceptance = "true";
 
@@ -1061,7 +1061,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6199. Get available quantities of one item in multiple warehouses"
-	@priority = "5"
+	@priority = 5
 	test GetAvailableQuantityFromMultipleWarehouses {
 		property portal.acceptance = "true";
 
@@ -1114,7 +1114,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"
-	@priority = "5"
+	@priority = 5
 	test GetChannelSKUStockQuantity {
 		property portal.acceptance = "true";
 
@@ -1217,7 +1217,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6203. Get stock quantity of a SKU"
-	@priority = "5"
+	@priority = 5
 	test GetSKUStockQuantity {
 		property portal.acceptance = "true";
 
@@ -1269,7 +1269,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
-	@priority = "5"
+	@priority = 5
 	test GetWarehouseNameGivenChannel {
 		property portal.acceptance = "true";
 
@@ -1334,7 +1334,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6202. It should be possible to limit the warehouse stock quantity by channel"
-	@priority = "5"
+	@priority = 5
 	test LimitWarehouseStockQuantityByChannel {
 		property portal.acceptance = "true";
 

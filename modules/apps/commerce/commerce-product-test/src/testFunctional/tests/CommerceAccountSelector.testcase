@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5925. As a buyer, I want the account I have currently selected to be highlighted in the account selector bar"
-	@priority = "5"
+	@priority = 5
 	test AssertActiveAccountIsVisibleOnAccountSelectorBar {
 		property portal.acceptance = "true";
 
@@ -88,7 +88,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5924. As a buyer, I want the account I have currently selected to be highlighted in the account selector dropdown"
-	@priority = "5"
+	@priority = 5
 	test AssertActiveAccountIsVisibleOnAccountSelectorDropdown {
 		property portal.acceptance = "true";
 
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutAfterInFlowAccountCreation {
 		property portal.acceptance = "true";
 
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to be able to create a new Account from the account selector"
-	@priority = "5"
+	@priority = 5
 	test CanCreateNewAccountInFlow {
 		property portal.acceptance = "true";
 
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Buyer (without manage account permissions), I am not able to create an account"
-	@priority = "5"
+	@priority = 5
 	test CannotCreateAccountInFlowWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -438,7 +438,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9022. As a Sales Agent, I want to search for an account in the accounts list, and select it as active account"
-	@priority = "5"
+	@priority = 5
 	test CanSearchForAnInFlowAccountAndSelectItAsActive {
 		property portal.acceptance = "true";
 
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5927. As a buyer, I want to be able to select an account from the list (which is not the selected one), and have the selected account change to the newly selected account"
-	@priority = "5"
+	@priority = 5
 	test ChangeActiveAccountFromAccountsList {
 		property portal.acceptance = "true";
 
@@ -550,7 +550,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5929. As a buyer, I want to be able to select an order from the list (which is not the selected one), and have the selected order change to the newly selected order"
-	@priority = "5"
+	@priority = 5
 	test ChangeActiveOrderFromOrdersList {
 		property portal.acceptance = "true";
 
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"
-	@priority = "5"
+	@priority = 5
 	test CreateNewOrderFromAccountSelectorDropdown {
 		property portal.acceptance = "true";
 
@@ -646,7 +646,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"
-	@priority = "5"
+	@priority = 5
 	test SearchForAnAccountAndSelectItAsActive {
 		property portal.acceptance = "true";
 

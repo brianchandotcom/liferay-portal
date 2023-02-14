@@ -128,7 +128,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9988 | Can add a Channel Account Managers entry"
-	@priority = "5"
+	@priority = 5
 	test CanAddChannelAccountManagersEntry {
 		property portal.acceptance = "true";
 
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10004 | Can add account entry user as Channel Account Manager"
-	@priority = "5"
+	@priority = 5
 	test CanAddNewUserToAccountAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9993 | Can assert eligibles accounts list as Channel Account Manager"
-	@priority = "5"
+	@priority = 5
 	test CanAssertEligibleAccountsListAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9996 | Can assert that accounts valid for both permissions(Manage Available Accounts and Manage Available Account Via User Channel Rel) are not duplicated"
-	@priority = "5"
+	@priority = 5
 	test CanAssertEligibleAccountsNotDuplicated {
 		property portal.acceptance = "true";
 
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9992 | Can assert ineligible accounts are not present as Channel Account Manager"
-	@priority = "5"
+	@priority = 5
 	test CanAssertIneligibleAccountsNotPresentAsChannelAccountManager {
 		property portal.acceptance = "true";
 
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9995 | Can channel account manager without permission not see accounts"
-	@priority = "5"
+	@priority = 5
 	test CanChannelAccountManagerWithoutPermissionNotSeeAccounts {
 		property portal.acceptance = "true";
 
@@ -588,7 +588,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10005 | Can edit account details as Channel Account Manager"
-	@priority = "5"
+	@priority = 5
 	test CanEditAccountDetailsAsChannelAccountManager {
 		property portal.acceptance = "true";
 

@@ -193,7 +193,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7842. Verify user can override the default product display page for different products."
-	@priority = "5"
+	@priority = 5
 	test OverrideDefaultProductDisplayPageForDifferentProducts {
 		property portal.acceptance = "true";
 
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7841. Assert user can override the private default product display page with a private widget page."
-	@priority = "5"
+	@priority = 5
 	test OverridePrivateDefaultProductDisplayPageWithAPrivatePage {
 		property portal.acceptance = "true";
 
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7840. Assert user can override the private default product display page with a public content page."
-	@priority = "5"
+	@priority = 5
 	test OverridePrivateDefaultProductDisplayPageWithAPublicPage {
 		property portal.acceptance = "true";
 
@@ -554,7 +554,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7839. Assert user can override the public default product display page with a private content page."
-	@priority = "5"
+	@priority = 5
 	test OverridePublicDefaultProductDisplayPageWithAPrivatePage {
 		property portal.acceptance = "true";
 
@@ -652,7 +652,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-7838. Assert user can override the public default product display page with a public widget page."
-	@priority = "5"
+	@priority = 5
 	test OverridePublicDefaultProductDisplayPageWithAPublicPage {
 		property portal.acceptance = "true";
 
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
-	@priority = "5"
+	@priority = 5
 	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {
 		property portal.acceptance = "true";
 
@@ -850,7 +850,7 @@ definition {
 	}
 
 	@description = "Verify user is redirected to public content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
-	@priority = "5"
+	@priority = 5
 	test ViewDefaultProductDisplayPageWithPublicContentAndWidgetPages {
 		property portal.acceptance = "true";
 

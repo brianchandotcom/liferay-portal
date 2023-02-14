@@ -218,7 +218,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page"
-	@priority = "5"
+	@priority = 5
 	test GlobalSearchSearchEntryInAllContent {
 		property portal.acceptance = "true";
 
@@ -359,7 +359,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
-	@priority = "5"
+	@priority = 5
 	test GlobalSearchSearchProductsBySKUs {
 		property portal.acceptance = "true";
 
@@ -605,7 +605,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
-	@priority = "5"
+	@priority = 5
 	test SearchBarWidgetSearchProductByName {
 		property portal.acceptance = "true";
 
@@ -723,7 +723,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6155. As a buyer, I want to search for products by typing a Category in Search Bar widget and the results should be visible on Search Results widget"
-	@priority = "5"
+	@priority = 5
 	test SearchBarWidgetSearchProductsByCategory {
 		property portal.acceptance = "true";
 
@@ -888,7 +888,7 @@ definition {
 	}
 
 	@description = "Verify users can search products by partial SKU in the catalog"
-	@priority = "5"
+	@priority = 5
 	test SearchProductsByPartialSKU {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";

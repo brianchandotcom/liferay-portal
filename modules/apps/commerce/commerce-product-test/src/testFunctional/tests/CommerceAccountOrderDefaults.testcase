@@ -33,7 +33,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9723. The default Delivery Terms and Conditions should persist at checkout."
-	@priority = "5"
+	@priority = 5
 	test CanAddDefaultDeliveryTermWithCheckout {
 		property portal.acceptance = "true";
 
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9724. The default Payment Terms and Conditions should persist at checkout."
-	@priority = "5"
+	@priority = 5
 	test CanAddDefaultPaymentTermWithCheckout {
 		property portal.acceptance = "true";
 
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can edit and delete a default price list entry"
-	@priority = "5"
+	@priority = 5
 	test CanEditAndDeleteDefaultPriceList {
 		property portal.acceptance = "true";
 
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9729. As a sales manager, I want to set default account delivery terms per channel"
-	@priority = "5"
+	@priority = 5
 	test CanHaveAllChannelsLinkedToADeliveryTerm {
 		property portal.acceptance = "true";
 
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9730. As a sales manager, I want to set default account payment terms per channel"
-	@priority = "5"
+	@priority = 5
 	test CanHaveAllChannelsLinkedToAPaymentTerm {
 		property portal.acceptance = "true";
 
@@ -640,7 +640,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9923. All channels can be linked to a currency."
-	@priority = "5"
+	@priority = 5
 	test CanLinkAllChannelsToACurrency {
 		property portal.acceptance = "true";
 
@@ -1242,7 +1242,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can see the price list price that has the highest priority in hierarchy mode(default mode)."
-	@priority = "5"
+	@priority = 5
 	test CanSeeHighestPriorityPriceListPriceInHierarchyMode {
 		property portal.acceptance = "true";
 
@@ -1335,7 +1335,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can see the lowest price list price in the Catalog when the lowest mode is set."
-	@priority = "5"
+	@priority = 5
 	test CanSeeLowestPriceListPriceInLowestMode {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.pricing.configuration.CommercePricingConfiguration.config";
 		property osgi.module.configurations = "commercePriceListDiscovery=\"lowest\"";
@@ -1405,7 +1405,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9857. All sites should display the product discount when the discount is set to All Channels."
-	@priority = "5"
+	@priority = 5
 	test CanSelectAllOtherChannelsForDefaultDiscount {
 		property portal.acceptance = "true";
 
@@ -1461,7 +1461,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account billing address for each channel"
-	@priority = "5"
+	@priority = 5
 	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {
 		property portal.acceptance = "true";
 
@@ -1531,7 +1531,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can select only All Other Channels option after selecting default for each channel."
-	@priority = "5"
+	@priority = 5
 	test CanSelectOnlyAllOtherChannelsForDefaultPriceList {
 		property portal.acceptance = "true";
 
@@ -1611,7 +1611,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account shipping address for each channel"
-	@priority = "5"
+	@priority = 5
 	test CanSelectOnlyAllOtherChannelsForDefaultShippingAddress {
 		property portal.acceptance = "true";
 
@@ -1681,7 +1681,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9873. As a sales manager, I want to set default billing and shipping addresses per channel from details tab"
-	@priority = "5"
+	@priority = 5
 	test CanSetDefaultAddressFromDetailsTab {
 		property portal.acceptance = "true";
 
@@ -1884,7 +1884,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9733. As a sales manager, I want to set a default account billing address per channel when the buyer users are placing orders"
-	@priority = "5"
+	@priority = 5
 	test CanSetDefaultBillingAddressPerChannel {
 		property portal.acceptance = "true";
 
@@ -2090,7 +2090,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can set a default price list per channel and account."
-	@priority = "5"
+	@priority = 5
 	test CanSetDefaultPriceListPerChannel {
 		property portal.acceptance = "true";
 
@@ -2205,7 +2205,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9732. As a sales manager, I want to set a default account shipping address per channel when the buyer users are placing orders"
-	@priority = "5"
+	@priority = 5
 	test CanSetDefaultShippingAddressPerChannel {
 		property portal.acceptance = "true";
 
@@ -2367,7 +2367,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9858. The default discount can be updated."
-	@priority = "5"
+	@priority = 5
 	test CanUpdateDefaultDiscountsEntry {
 		property portal.acceptance = "true";
 
@@ -2567,7 +2567,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9782. Default delivery set to override should be default regardless of other eligibility criteria."
-	@priority = "5"
+	@priority = 5
 	test DefaultDeliveryTermCanOverrideOtherEligibilities {
 		property portal.acceptance = "true";
 
@@ -2690,7 +2690,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9856. The default discount can override Account eligibility."
-	@priority = "5"
+	@priority = 5
 	test DefaultDiscountCanOverrideAccountEligibility {
 		property portal.acceptance = "true";
 
@@ -2810,7 +2810,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9856. The default discount can override Channel eligibility."
-	@priority = "5"
+	@priority = 5
 	test DefaultDiscountCanOverrideChannelEligibility {
 		property portal.acceptance = "true";
 
@@ -3056,7 +3056,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9782. Default payment set to override should be default regardless of other eligibility criteria."
-	@priority = "5"
+	@priority = 5
 	test DefaultPaymentTermCanOverrideOtherEligibilities {
 		property portal.acceptance = "true";
 
@@ -3180,7 +3180,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9704. We can use Override Eligibility option while selecting a default price list to override other eligibilities."
-	@priority = "5"
+	@priority = 5
 	test DefaultPriceListCanOverrideOtherEligibilities {
 		property portal.acceptance = "true";
 
@@ -3368,7 +3368,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9785. Delivery eligibility rules scoped to channels should persist at checkout."
-	@priority = "5"
+	@priority = 5
 	test DeliveryEligibilityRulesCanPersistAtCheckout {
 		property portal.acceptance = "true";
 
@@ -3488,7 +3488,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9785. Payment eligibility rules scoped to channels should persist at checkout."
-	@priority = "5"
+	@priority = 5
 	test PaymentEligibilityRulesCanPersistAtCheckout {
 		property portal.acceptance = "true";
 

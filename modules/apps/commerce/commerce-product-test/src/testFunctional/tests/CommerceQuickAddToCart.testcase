@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10529. Buyer user can add same SKU multiple times"
-	@priority = "5"
+	@priority = 5
 	test CanAddSameSKUMultipleTimes {
 		property portal.acceptance = "true";
 
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10596. Buyer user can add SKU with maximum quantity"
-	@priority = "5"
+	@priority = 5
 	test CanAddSKUWithMaximumQuantity {
 		property portal.acceptance = "true";
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10530. Buyer user can add SKU with minimum quantity"
-	@priority = "5"
+	@priority = 5
 	test CanAddSKUWithMinimumQuantity {
 		property portal.acceptance = "true";
 
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10620. Buyer user can add to cart a product with a price list applied to it"
-	@priority = "5"
+	@priority = 5
 	test CanAddToCartProductWithPriceList {
 		property portal.acceptance = "true";
 
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10587. Buyer user can add to cart a product with a promotion"
-	@priority = "5"
+	@priority = 5
 	test CanAddToCartProductWithPromotion {
 		property portal.acceptance = "true";
 
@@ -594,7 +594,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10538. Buyer user cannot add non purchasable SKUs"
-	@priority = "5"
+	@priority = 5
 	test CannotAddNonPurchasableSKUs {
 		property portal.acceptance = "true";
 
@@ -718,7 +718,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10389. Buyer user cannot select invalid SKUs on quick add to cart"
-	@priority = "5"
+	@priority = 5
 	test CannotSelectInvalidSkusOnQuickAddToCart {
 		property portal.acceptance = "true";
 
@@ -1029,7 +1029,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10537. Buyer user can search all catalog SKUs"
-	@priority = "5"
+	@priority = 5
 	test CanSearchAllCatalogSKUs {
 		property portal.acceptance = "true";
 
@@ -1169,7 +1169,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10387. Can search SKUs on quick add to cart"
-	@priority = "5"
+	@priority = 5
 	test CanSearchSkusOnQuickAddToCart {
 		property portal.acceptance = "true";
 
@@ -1246,7 +1246,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10533. Buyer user can select and add to cart multiple option SKUs"
-	@priority = "5"
+	@priority = 5
 	test CanSelectMultipleOptionSKU {
 		property portal.acceptance = "true";
 

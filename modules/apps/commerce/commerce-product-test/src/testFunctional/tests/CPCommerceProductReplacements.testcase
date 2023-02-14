@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "Verify users can view the end of life date for a discontinued product in the product details page"
-	@priority = "5"
+	@priority = 5
 	test AssertEndOfLifeDateIsVisibleInProductDetailsPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8165. The existing replacement product can be edited"
-	@priority = "5"
+	@priority = 5
 	test CanEditReplacementProduct {
 		property portal.acceptance = "true";
 
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
-	@priority = "5"
+	@priority = 5
 	test CreateNewSKUWithReplacement {
 		property portal.acceptance = "true";
 
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "Verify a replacement product can be removed"
-	@priority = "5"
+	@priority = 5
 	test RemoveReplacementProduct {
 		property portal.acceptance = "true";
 
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@description = "Verify a replacement product can be set between different catalogs"
-	@priority = "5"
+	@priority = 5
 	test ReplacementCanBeSetBetweenDifferentCatalogs {
 		property portal.acceptance = "true";
 
@@ -355,7 +355,7 @@ definition {
 	}
 
 	@description = "Verify a product can be set as a replacement for a discontinued product"
-	@priority = "5"
+	@priority = 5
 	test SetReplacementProduct {
 		property portal.acceptance = "true";
 
@@ -404,7 +404,7 @@ definition {
 	}
 
 	@description = "Verify a product SKU cannot be set as its own replacement"
-	@priority = "5"
+	@priority = 5
 	test SKUCannotBeItsOwnReplacement {
 		property portal.acceptance = "true";
 

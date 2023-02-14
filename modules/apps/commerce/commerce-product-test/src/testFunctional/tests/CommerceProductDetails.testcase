@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6356. As a buyer, I want to be able to select the quantity of a product and add it to cart from Product details"
-	@priority = "5"
+	@priority = 5
 	test AddProductToCartFromProductDetails {
 		property portal.acceptance = "true";
 
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6354. As a buyer, I want to be able to add a product to wish list from Product Details and if I refresh the page, I want to be able to see that the product is already added to wishlist"
-	@priority = "5"
+	@priority = 5
 	test AddProductToWishListFromProductDetails {
 		property portal.acceptance = "true";
 
@@ -73,7 +73,11 @@ definition {
 	}
 
 	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"
-	@priority = "5"
+	@priority = 5
+	test AssertOnlyAllowedQuantitiesAreSelectableInProductDetails {
+		property portal.acceptance = "true";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -117,7 +121,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6363. As a buyer, I want to be able to select the quantity of a product in Product Details by multiple value, if set"
-	@priority = "5"
+	@priority = 5
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails {
 		property portal.acceptance = "true";
 
@@ -267,7 +271,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6367. As a buyer, I don't want to be able to add a product to the cart in Product Details if the product is not purchasable"
-	@priority = "5"
+	@priority = 5
 	test AssertProductCannotBeAddedToCartFromProductDetailsIfProductIsNotPurchasable {
 		property portal.acceptance = "true";
 
@@ -313,7 +317,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6362. As a buyer, I want to be able to select the quantity of a product in Product Details up to a maximum quantity, if set"
-	@priority = "5"
+	@priority = 5
 	test AssertQuantityInProductDetailsCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "true";
 
@@ -388,7 +392,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6360. As a buyer, I want to be able to select the quantity of a product in Product Details starting from a minimum quantity, if set"
-	@priority = "5"
+	@priority = 5
 	test AssertSelectableQuantitiesInProductDetailsStartFromMinimumQuantitySet {
 		property portal.acceptance = "true";
 
@@ -1343,7 +1347,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10197. Users cannot view and download owner limited products' attachments"
-	@priority = "5"
+	@priority = 5
 	test CanAssertOwnerLimitedFileAttacchmentNotVisibleForBuyer {
 		property portal.acceptance = "true";
 
@@ -1550,7 +1554,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
-	@priority = "5"
+	@priority = 5
 	test CanViewMultipleSkusProductIncomingQuantity {
 		property portal.acceptance = "true";
 
@@ -1690,7 +1694,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9676 | As a buyer, I want to be able to view a grouped product Detail page"
-	@priority = "5"
+	@priority = 5
 	test CanViewSingleSkuGroupedProductDetailPage {
 		property portal.acceptance = "true";
 
@@ -1906,7 +1910,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9677 | As a buyer, I want to be able to view a virtual product Detail page"
-	@priority = "5"
+	@priority = 5
 	test CanViewSingleSkuVirtualProductDetailPage {
 		property portal.acceptance = "true";
 
@@ -2088,7 +2092,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6370. As a buyer, I want to be able to select an option value, and add the product to cart in Product Details"
-	@priority = "5"
+	@priority = 5
 	test SelectOptionValueAndAddProductToCart {
 		property portal.acceptance = "true";
 
@@ -2121,7 +2125,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6658. As a buyer, I want to be able to select an option value(Bundled Product) and I want to see product details updating(Price, SKU and Availability)"
-	@priority = "5"
+	@priority = 5
 	test SelectOptionValueAndAssertBundledProductDetailsAreUpdated {
 		property portal.acceptance = "true";
 
@@ -2368,7 +2372,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6371. As a buyer, I want to be able to select an option value(SKU contributor) and I want to see product details updating(Price, SKU and Availability)"
-	@priority = "5"
+	@priority = 5
 	test SelectOptionValueAndAssertProductPriceIsUpdated {
 		property portal.acceptance = "true";
 
@@ -2496,7 +2500,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6364. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
-	@priority = "5"
+	@priority = 5
 	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity {
 		property portal.acceptance = "true";
 
@@ -2587,7 +2591,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6366. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@priority = "5"
+	@priority = 5
 	test ViewFirstSelectableQuantityInProductDetailsWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "true";
 
@@ -2685,7 +2689,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a promo price of a product in Product Details, if a promotion is set"
-	@priority = "5"
+	@priority = 5
 	test ViewProductDetailsPriceWithPromotion {
 		property portal.acceptance = "true";
 
@@ -2715,7 +2719,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6353. As a buyer, I want to be able to see product details in Product Details page(Product Availability, Number of Items in Stock, Product Name, Product SKU, Product MPN, Product Description, List Price, Product Specifications, Product Images/Attachments(if set))"
-	@priority = "5"
+	@priority = 5
 	test ViewProductDetailsWidget {
 		property portal.acceptance = "true";
 

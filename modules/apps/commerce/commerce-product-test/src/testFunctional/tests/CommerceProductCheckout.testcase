@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10245. Select a product with bulk price, no promotion ,no discount, link and do a checkout"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithBulkPrice {
 		property portal.acceptance = "true";
 
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10277."
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
 		property portal.acceptance = "true";
 
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10280. Set a promotion price lower then the price list and do the checkout"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithPromotionPriceLowerThenPricelist {
 		property portal.acceptance = "true";
 

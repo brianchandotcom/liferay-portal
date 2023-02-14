@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8403"
-	@priority = "5"
+	@priority = 5
 	test VerifyDisplayFrequencies {
 		property portal.acceptance = "true";
 
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8401"
-	@priority = "5"
+	@priority = 5
 	test VerifyDisplayTemplate {
 		property portal.acceptance = "true";
 
@@ -172,7 +172,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test View100Terms {
 		property portal.acceptance = "true";
 

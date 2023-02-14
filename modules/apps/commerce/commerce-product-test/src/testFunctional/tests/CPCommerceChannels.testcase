@@ -395,7 +395,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6120. AddTaxRateSettingsByAddressTaxCalculation"
-	@priority = "5"
+	@priority = 5
 	test AddTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "true";
 
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
-	@priority = "5"
+	@priority = 5
 	test AddTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "true";
 
@@ -662,7 +662,7 @@ definition {
 	}
 
 	@description = "Verify users without edit permission cannot change the currency of a channel."
-	@priority = "5"
+	@priority = 5
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@description = "Verify users can set and edit delivery term eligibility for shipping options."
-	@priority = "5"
+	@priority = 5
 	test CanSetAndEditDeliveryTermsEligibility {
 		property portal.acceptance = "true";
 
@@ -1174,7 +1174,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6102. CreateNewChannelCompileAll"
-	@priority = "5"
+	@priority = 5
 	test CreateNewChannelCompileAll {
 		property portal.acceptance = "true";
 
@@ -1636,7 +1636,7 @@ definition {
 	}
 
 	@description = "Verify users can configure payment method eligibility to specific payment terms."
-	@priority = "5"
+	@priority = 5
 	test PaymentMethodEligibleForSpecificPaymentTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1733,7 +1733,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6270. RemoveNotificationQueue"
-	@priority = "5"
+	@priority = 5
 	test RemoveNotificationQueue {
 		property portal.acceptance = "true";
 
@@ -2235,7 +2235,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
-	@priority = "5"
+	@priority = 5
 	test SearchProductDisplayPage {
 		property portal.acceptance = "true";
 
@@ -2299,7 +2299,7 @@ definition {
 	}
 
 	@description = "Verify users can set and edit payment term eligibility for payment methods."
-	@priority = "5"
+	@priority = 5
 	test SetAndEditPaymentMethodTermElgibility {
 		property portal.acceptance = "true";
 
@@ -2345,7 +2345,7 @@ definition {
 	}
 
 	@description = "Verify all shipping options are available when orders are made using different order types given shipping option eligibility is set to All Order Types."
-	@priority = "5"
+	@priority = 5
 	test ShippingOptionEligibleForAnyOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2462,7 +2462,7 @@ definition {
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific delivery terms."
-	@priority = "5"
+	@priority = 5
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2554,7 +2554,7 @@ definition {
 	}
 
 	@description = "Verify users can configure shipping option eligibility to specific order types."
-	@priority = "5"
+	@priority = 5
 	test ShippingOptionEligibleForSpecificOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2675,7 +2675,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The store admin can upload a custom jasper print template"
-	@priority = "5"
+	@priority = 5
 	test UploadCustomJasperPrintTemplate {
 		property portal.acceptance = "true";
 
@@ -2927,7 +2927,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-8300. The buyer can view the order preview with the uploaded template"
-	@priority = "5"
+	@priority = 5
 	test ViewOrderPreviewWithJasperTemplate {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";

@@ -84,7 +84,7 @@ definition {
 	}
 
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
-	@priority = "5"
+	@priority = 5
 	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "Verify buyers with the View Billing Address permission can set a new billing address during the checkout process."
-	@priority = "5"
+	@priority = 5
 	test ANewBillingAddressCanBeWrittenDuringCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@description = "Verify guests can set a new billing address during the checkout process."
-	@priority = "5"
+	@priority = 5
 	test ANewBillingAddressCanBeWrittenDuringCheckoutByGuestUser {
 		property portal.acceptance = "true";
 
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@description = "Verify buyers without the View Billing Address permission cannot view the billing address of pending and placed orders."
-	@priority = "5"
+	@priority = 5
 	test AssertBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -404,7 +404,7 @@ definition {
 	}
 
 	@description = "Verify buyers with the View Billing Address permission can view the billing address of an order at the order summary."
-	@priority = "5"
+	@priority = 5
 	test AssertBillingAddressIsVisibleToBuyerUserWithPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -464,7 +464,7 @@ definition {
 	}
 
 	@description = "Verify buyers without the View Billing Address permission cannot set a new billing address during the checkout process or view the billing address at the order summary."
-	@priority = "5"
+	@priority = 5
 	test AssertDefaultBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@description = "Verify an error message appears when a buyer tries placing an order without the View Billing Address permission if a default billing address is not set."
-	@priority = "5"
+	@priority = 5
 	test AssertErrorMessageWhenAnOrderIsPlacedByBuyerWithoutPermissionToViewBillingAddress {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "Verify guests can view the billing address of an order at the order summary."
-	@priority = "5"
+	@priority = 5
 	test AssertGuestCanViewBillingAddressDuringCheckout {
 		property portal.acceptance = "true";
 
@@ -779,7 +779,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9358"
-	@priority = "5"
+	@priority = 5
 	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1029,7 +1029,7 @@ definition {
 	}
 
 	@description = "COMMERCE-7982. A system admin can edit order measurement unit."
-	@priority = "5"
+	@priority = 5
 	test CanEditOrderMeasurementUnit {
 		property portal.acceptance = "true";
 
@@ -1153,7 +1153,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"
-	@priority = "5"
+	@priority = 5
 	test CanReorderAFailedPayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1286,7 +1286,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9338"
-	@priority = "5"
+	@priority = 5
 	test CanRetryAnIncompletePayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -1384,7 +1384,7 @@ definition {
 	}
 
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9408"
-	@priority = "5"
+	@priority = 5
 	test CanRetryAnIncompletePaymentWithAnOpenOrder {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -2163,7 +2163,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9699 CanUpdateOrderItemCustomFieldValue"
-	@priority = "5"
+	@priority = 5
 	test CanUpdateOrderItemCustomFieldValue {
 		property portal.acceptance = "true";
 
@@ -2295,7 +2295,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@priority = "5"
+	@priority = 5
 	test EditOrder {
 		property portal.acceptance = "true";
 
@@ -2366,7 +2366,7 @@ definition {
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
-	@priority = "5"
+	@priority = 5
 	test EditOrderCheckingOutViaOrderDetails {
 		property portal.acceptance = "true";
 
@@ -2695,7 +2695,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6213. Buyer Order Approval Workflow"
-	@priority = "5"
+	@priority = 5
 	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithBuyerOrderApprovalWorkflowActive";
@@ -2828,7 +2828,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
-	@priority = "5"
+	@priority = 5
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
@@ -2945,7 +2945,7 @@ definition {
 	}
 
 	@description = ""
-	@priority = "5"
+	@priority = 5
 	test MakeAnOrderWithThreeActiveMinimumOrderAmountsWithDifferentPriority {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
@@ -3055,7 +3055,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6216. Search Order from UI"
-	@priority = "5"
+	@priority = 5
 	test SearchOrder {
 		property portal.acceptance = "true";
 
@@ -3156,7 +3156,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
-	@priority = "5"
+	@priority = 5
 	test ViewOrderSKU {
 		property portal.acceptance = "true";
 

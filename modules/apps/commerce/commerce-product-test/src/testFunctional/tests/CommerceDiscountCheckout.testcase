@@ -127,7 +127,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-10344. Can checkout a product with two discounts, and one discount is applied to the discounted amount"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithTwoDiscount {
 		property portal.acceptance = "true";
 

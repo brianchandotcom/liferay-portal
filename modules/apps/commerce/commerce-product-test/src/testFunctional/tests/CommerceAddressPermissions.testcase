@@ -51,7 +51,7 @@ definition {
 	}
 
 	@description = "Verify buyers without the View Addresses permission cannot view addresses on the addresses list."
-	@priority = "5"
+	@priority = 5
 	test CanBuyerRoleViewAddressesWithPermission {
 		property portal.acceptance = "true";
 
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@description = "Verify buyers without the Manage Addresses permission cannot add a shipping and billing address at checkout, only select existing ones."
-	@priority = "5"
+	@priority = 5
 	test CanOnlySelectPreDefinedShippingAndBillingAddressesWhithouPermission {
 		property portal.acceptance = "true";
 

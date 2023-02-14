@@ -34,7 +34,7 @@ definition {
 	}
 
 	@description = "COMMERCE-10075 | Can import existing orders based on the product's Maximum and Multiple Order Quantity set(maximum > multiple)"
-	@priority = "5"
+	@priority = 5
 	test CanAssertInvalidQuantityNotImportedWhenMaximumIsHigherThanMultiple {
 		property portal.acceptance = "true";
 
@@ -128,12 +128,12 @@ definition {
 	}
 
 	@description = "COMMERCE-10240 | Can import existing orders based on the product's Maximum and Multiple Order Quantity set(maximum < multiple)"
-	@priority = "5"
+	@priority = 5
 	test CanAssertInvalidQuantityNotImportedWhenMaximumIsLowerThanMultiple {
 		property portal.acceptance = "true";
 
-		var maxOrderQuantity = "4";
-		var multipleOrderQuantity = "5";
+		var maxOrderQuantity = 4;
+		var multipleOrderQuantity = 5;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 2 placed orders are created") {
@@ -203,12 +203,12 @@ definition {
 	}
 
 	@description = "COMMERCE-10073 | Can import existing orders based on the product's Minimum and Multiple Order Quantity set(minimum > multiple)"
-	@priority = "5"
+	@priority = 5
 	test CanAssertInvalidQuantityNotImportedWhenMinimumIsHigherThanMultiple {
 		property portal.acceptance = "true";
 
-		var minOrderQuantity = "5";
-		var multipleOrderQuantity = "2";
+		var minOrderQuantity = 5;
+		var multipleOrderQuantity = 2;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 3 placed orders are created") {
@@ -297,12 +297,12 @@ definition {
 	}
 
 	@description = "COMMERCE-10074 | Can import existing orders based on the product's Minimum and Multiple Order Quantity set(minimum < multiple)"
-	@priority = "5"
+	@priority = 5
 	test CanAssertInvalidQuantityNotImportedWhenMinimumIsLowerThanMultiple {
 		property portal.acceptance = "true";
 
-		var minOrderQuantity = "3";
-		var multipleOrderQuantity = "4";
+		var minOrderQuantity = 3;
+		var multipleOrderQuantity = 4;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 3 placed orders are created") {
@@ -470,7 +470,7 @@ definition {
 	test CanImportValidMaximumQuantity {
 		property portal.acceptance = "false";
 
-		var maxOrderQuantity = "5";
+		var maxOrderQuantity = 5;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 2 placed orders are created") {
@@ -545,7 +545,7 @@ definition {
 	test CanImportValidMinimumQuantity {
 		property portal.acceptance = "false";
 
-		var minOrderQuantity = "5";
+		var minOrderQuantity = 5;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 2 placed orders are created") {
@@ -620,7 +620,7 @@ definition {
 	test CanImportValidMultipleQuantity {
 		property portal.acceptance = "false";
 
-		var multipleOrderQuantity = "3";
+		var multipleOrderQuantity = 3;
 		var orderIds = ListUtil.newList();
 
 		task ("Given 2 placed orders are created") {

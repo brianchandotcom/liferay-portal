@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "5"
+	@priority = 5
 	test AssertCheckoutStepsNotShownWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "5"
+	@priority = 5
 	test AssertDeliveryTermsNotEditableWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "5"
+	@priority = 5
 	test AssertPaymentTermsNotEditableWithoutPermissions {
 		property portal.acceptance = "true";
 
@@ -987,7 +987,7 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@priority = "5"
+	@priority = 5
 	test ViewAvailablePaymentTerms {
 		property portal.acceptance = "true";
 

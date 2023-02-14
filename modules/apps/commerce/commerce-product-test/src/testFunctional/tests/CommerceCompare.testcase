@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5912. Verify buyers can select a product for comparison from the product's details page."
-	@priority = "5"
+	@priority = 5
 	test AddComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5911. Verify products selected for comparison are visible in the mini compare widget at the bottom of the page."
-	@priority = "5"
+	@priority = 5
 	test AssertComparisonItemsAreVisibleOnMiniCompare {
 		property portal.acceptance = "true";
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5914. Verify buyers can deselect items that are being compared from the product's details page."
-	@priority = "5"
+	@priority = 5
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "true";
 
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@description = "COMMERCE-5919. Verify buyers can view product options and specifications, if set, when comparing items in the Compare page."
-	@priority = "5"
+	@priority = 5
 	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
 		property portal.acceptance = "true";
 

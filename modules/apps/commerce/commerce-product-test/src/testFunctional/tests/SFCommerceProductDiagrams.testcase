@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."
-	@priority = "5"
+	@priority = 5
 	test AssertDiagramFileIsRendered {
 		property portal.acceptance = "true";
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8209. Assert that a Buyer is able to add a part from Diagram to the cart"
-	@priority = "5"
+	@priority = 5
 	test AssertIfTheQuantityFromThePopupAreCorrect {
 		property portal.acceptance = "true";
 
@@ -468,7 +468,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8151 | As a buyer, using SBD I want discontinued products to be replaced by the replacement product when adding a discontinued product to an order"
-	@priority = "5"
+	@priority = 5
 	test CanAddReplacementProductToCart {
 		property portal.acceptance = "true";
 
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8971. Verify that the Diagram Product name and short description are displayed on the product card."
-	@priority = "5"
+	@priority = 5
 	test CanAssertDiagramNameAndDescriptionOnTheProductCard {
 		property portal.acceptance = "true";
 
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@description = "Verify users can search a diagram product's product details page by SKU, name, and description"
-	@priority = "5"
+	@priority = 5
 	test UseMappedProductSearchbar {
 		property portal.acceptance = "true";
 
@@ -850,7 +850,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8147. Verify all pin information mapping with mapped products, and a buyer can navigate from a diagram to a related diagram"
-	@priority = "5"
+	@priority = 5
 	test VerifyAllPinTypeAndMappedProductInformation {
 		property portal.acceptance = "true";
 
@@ -1231,7 +1231,7 @@ definition {
 	}
 
 	@description = "COMMERCE-8153. Verify the visibility rules"
-	@priority = "5"
+	@priority = 5
 	test VerifyTheVisibilityRules {
 		property portal.acceptance = "true";
 

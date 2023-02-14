@@ -97,7 +97,7 @@ definition {
 	}
 
 	@description = "Verify the shipping method selection step is skipped when a buyer without the 'Manage Commerce Order Shipping Options' permission checks out an order."
-	@priority = "5"
+	@priority = 5
 	test UsersWithoutManagePermissionSkipsShippingOptionStepDuringCheckout {
 		property portal.acceptance = "true";
 

@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for non-admin user"
-	@priority = "5"
+	@priority = 5
 	test AddToCartButtonAndQuantitySelectorAreDisabledForNewUser {
 		property portal.acceptance = "true";
 
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5530. AssertPromoProductPriceTotalIsDifferent"
-	@priority = "5"
+	@priority = 5
 	test AssertPromoProductPriceTotalIsDifferent {
 		property portal.acceptance = "true";
 
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-10315. It's not possible to save the Root Category for the Commerce Categories Navigation widget"
-	@priority = "5"
+	@priority = 5
 	test CanSaveCommerceCategoriesNavigationRootCategory {
 		property portal.acceptance = "true";
 
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-4958."
-	@priority = "5"
+	@priority = 5
 	test CheckoutWithDefaultShippingOption {
 		property portal.acceptance = "true";
 
@@ -554,7 +554,7 @@ definition {
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
-	@priority = "5"
+	@priority = 5
 	test DeactivateCommerceAccountAdminLogOut {
 		property portal.acceptance = "true";
 
@@ -636,7 +636,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-2658. Can be Drag and Drop fragments on a Minium site page."
-	@priority = "5"
+	@priority = 5
 	test FragmentsCanBeDragAndDroppedToMiniumSitePage {
 		property portal.acceptance = "true";
 
@@ -684,7 +684,7 @@ definition {
 			text = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InitializeNewMiniumSite {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
@@ -741,7 +741,7 @@ definition {
 		CommerceEntry.viewSpecificationGroupsEntries(specificationGroupsEntries = "Warranty,Fit,Dimensions,Quantity,Material");
 	}
 
-	@priority = "5"
+	@priority = 5
 	test InitializeNewSpeedwellSite {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
@@ -942,7 +942,7 @@ definition {
 	}
 
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
-	@priority = "5"
+	@priority = 5
 	test MiniumSiteFullFlowCheckingOutViaOrderDetails {
 		property portal.acceptance = "true";
 
@@ -1093,7 +1093,7 @@ definition {
 
 	}
 
-	@priority = "5"
+	@priority = 5
 	test SpeedwellSiteFullFlow {
 		property portal.acceptance = "true";
 

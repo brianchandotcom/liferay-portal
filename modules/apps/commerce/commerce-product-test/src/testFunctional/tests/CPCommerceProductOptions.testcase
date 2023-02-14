@@ -15,7 +15,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9633. CanAddToCartGeneratedProductSkus"
-	@priority = "5"
+	@priority = 5
 	test CanAddToCartGeneratedProductSkus {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9837. CanChangeOptionAndOptionValuePositions"
-	@priority = "5"
+	@priority = 5
 	test CanChangeOptionAndOptionValuePositions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -484,7 +484,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9833. CanCheckoutProductWithEveryOptionFieldType"
-	@priority = "5"
+	@priority = 5
 	test CanCheckoutProductWithEveryOptionFieldType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9823. CanEditRemoveReaddProductOption"
-	@priority = "5"
+	@priority = 5
 	test CanEditRemoveReaddProductOption {
 		property portal.acceptance = "true";
 
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
-	@priority = "5"
+	@priority = 5
 	test CanViewOptionOnTheOptionFacetWidget {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
@@ -869,7 +869,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
-	@priority = "5"
+	@priority = 5
 	test CreateAnOptionForAllTheFieldType {
 		property portal.acceptance = "true";
 

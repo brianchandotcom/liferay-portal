@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
-	@priority = "5"
+	@priority = 5
 	test CanAddNewUserUsingWidget {
 		property portal.acceptance = "true";
 

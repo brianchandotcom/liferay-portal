@@ -18,6 +18,7 @@ import com.liferay.document.library.preview.pdf.internal.configuration.PDFPrevie
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -71,6 +72,60 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			_getGroupPDFPreviewConfiguration(groupId);
 
 		return pdfPreviewConfiguration.maxNumberOfPages();
+	}
+
+	public long getMaxNumberOfPages(String scope, long scopePK)
+		throws PortalException {
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(scopePK);
+
+			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+
+			if ((companyMaxNumberOfPages != 0) &&
+				(companyMaxNumberOfPages < systemMaxNumberOfPages)) {
+
+				return companyMaxNumberOfPages;
+			}
+
+			return systemMaxNumberOfPages;
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
+
+			long groupMaxNumberOfPages = getGroupMaxNumberOfPages(scopePK);
+
+			Group group = _groupLocalService.getGroup(scopePK);
+
+			long companyMaxNumberOfPages = getCompanyMaxNumberOfPages(
+				group.getCompanyId());
+
+			long systemMaxNumberOfPages = getSystemMaxNumberOfPages();
+
+			if ((groupMaxNumberOfPages != 0) &&
+				(groupMaxNumberOfPages < systemMaxNumberOfPages) &&
+				(groupMaxNumberOfPages < companyMaxNumberOfPages)) {
+
+				return groupMaxNumberOfPages;
+			}
+
+			if ((companyMaxNumberOfPages != 0) &&
+				(companyMaxNumberOfPages < systemMaxNumberOfPages)) {
+
+				return companyMaxNumberOfPages;
+			}
+
+			return systemMaxNumberOfPages;
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return getSystemMaxNumberOfPages();
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + scope);
 	}
 
 	@Override

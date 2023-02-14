@@ -87,6 +87,7 @@ export default function DefinitionBuilder(props) {
 		showDefinitionInfo,
 		showInvalidContentMessage,
 		sourceView,
+		statuses: props.statuses,
 		version,
 	};
 

@@ -57,6 +57,7 @@ export default function DiagramBuilder() {
 		setDeserialize,
 		setElements,
 		setShowDefinitionInfo,
+		statuses,
 		version,
 	} = useContext(DefinitionBuilderContext);
 	const reactFlowWrapperRef = useRef(null);
@@ -390,6 +391,7 @@ export default function DiagramBuilder() {
 		setElementRectangle,
 		setSelectedItem,
 		setSelectedItemNewId,
+		statuses
 	};
 
 	return (

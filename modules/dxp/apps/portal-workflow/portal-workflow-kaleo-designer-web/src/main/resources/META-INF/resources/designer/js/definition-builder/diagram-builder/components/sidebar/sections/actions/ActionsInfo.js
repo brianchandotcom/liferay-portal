@@ -26,14 +26,14 @@ const ActionsInfo = ({
 	sectionsLength,
 	setSections,
 }) => {
-	const {functionActionExecutors, selectedItem, setSelectedItem} = useContext(
+	const {functionActionExecutors, selectedItem, setSelectedItem, statuses} = useContext(
 		DiagramBuilderContext
 	);
 	const {actions} = selectedItem.data;
 
 	const [script, setScript] = useState(actions?.script?.[index] || '');
 
-	const [updateStatus, setUpdateStatus] = useState(actions?.updateStatus?.[index].updateStatus || '');
+	const [updateStatus, setUpdateStatus] = useState(actions?.updateStatus?.[index] || '');
 
 	const [description, setDescription] = useState(
 		actions?.description?.[index] || ''
@@ -154,7 +154,7 @@ const ActionsInfo = ({
 						({scriptLanguage}) => scriptLanguage
 					),
 					sectionsData: values.map((values) => values),
-					updateStatus: values.map((updateStatus) => updateStatus)
+					updateStatus: values.map((updateStatus) => updateStatus.updateStatus)
 				},
 			},
 		}));
@@ -186,6 +186,7 @@ const ActionsInfo = ({
 				setScriptLanguage={setScriptLanguage}
 				setSelectedActionType={setSelectedActionType}
 				setUpdateStatus={setUpdateStatus}
+				statuses={statuses}
 				updateActionInfo={updateActionInfo}
 				updateStatus={updateStatus}
 			/>

@@ -38,6 +38,7 @@ const BaseActionsInfo = ({
 	setScriptLanguage,
 	setSelectedActionType,
 	setUpdateStatus,
+	statuses,
 	updateActionInfo,
 	updateStatus
 }) => {
@@ -55,13 +56,6 @@ const BaseActionsInfo = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const status = [
-		{key:'approved', label:'Approved', value:'approved'},
-		{key:'danied', label:'Danied', value:'danied'},
-		{key:'draft', label:'Draft', value:'draft'},
-		{key:'expired', label:'Expired', value:'expired'},
-	]
 
 	return (
 		<>
@@ -224,8 +218,8 @@ const BaseActionsInfo = ({
 						})
 					}
 				>
-					{status &&
-						status.map((item) => (
+					{statuses &&
+						statuses.map((item) => (
 							<ClaySelect.Option
 								key={item.value}
 								label={item.label}

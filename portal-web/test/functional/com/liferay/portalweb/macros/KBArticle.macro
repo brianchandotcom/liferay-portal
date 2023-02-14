@@ -475,6 +475,11 @@ definition {
 					kbArticleTitle = ${kbArticleTitle},
 					menuItem = "Edit");
 			}
+			else if (isSet(editActionToolbar)) {
+				Click(
+					key_text = "pencil",
+					locator1 = "Icon#ANY");
+			}
 			else {
 				Click(
 					key_rowEntry = ${kbArticleTitle},

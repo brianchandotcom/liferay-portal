@@ -117,6 +117,17 @@ export default function useFilters(setFilterTerm, productName) {
 						}complimentary eq false`;
 					}
 
+					if (
+						environmentType === 'Production' &&
+						!filters.environmentTypes.value.includes(
+							'Non-Production'
+						)
+					) {
+						return `${accumulatorEnvironmentTypesFilter}${
+							index > 0 ? ' or ' : ''
+						}contains(productName, '${environmentType}') and not contains(productName, 'Non-Production')`;
+					}
+
 					return `${accumulatorEnvironmentTypesFilter}${
 						index > 0 ? ' or ' : ''
 					}contains(productName, '${environmentType}')`;

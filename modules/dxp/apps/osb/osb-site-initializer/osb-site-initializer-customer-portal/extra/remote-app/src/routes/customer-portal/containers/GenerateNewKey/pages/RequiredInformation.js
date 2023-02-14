@@ -118,108 +118,102 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
+
+			return;
+		}
+
+		const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
+		const sizing = `Sizing ${
+			infoSelectedKey?.selectedSubscription?.instanceSize || 1
+		}`;
+
+		const isVirtualClusterOrProduction = infoSelectedKey?.licenseEntryType?.includes(
+			'Virtual Cluster'
+		)
+			? 'virtual-cluster'
+			: 'production';
+
+		const subscriptionStartDate = new Date(
+			infoSelectedKey.selectedSubscription.startDate
+		);
+
+		const permanentLicenseKeys = new Date(
+			subscriptionStartDate.setFullYear(
+				subscriptionStartDate.getFullYear() + DNE_YEARS
+			)
+		);
+
+		const hasExpirationDate =
+			infoSelectedKey?.doesNotAllowPermanentLicense ||
+			infoSelectedKey?.hasNotPermanentLicence;
+
+		const licenseKey = {
+			accountKey,
+			active: true,
+			description: values?.description,
+			expirationDate: hasExpirationDate
+				? infoSelectedKey?.selectedSubscription.endDate
+				: permanentLicenseKeys,
+			licenseEntryType: isVirtualClusterOrProduction,
+			maxClusterNodes: values?.maxClusterNodes || 0,
+			name: values?.name,
+			productKey: infoSelectedKey?.selectedSubscription.productKey,
+			productName,
+			productPurchaseKey:
+				infoSelectedKey?.selectedSubscription.productPurchaseKey,
+			productVersion: infoSelectedKey?.productVersion,
+			sizing,
+			startDate: infoSelectedKey?.selectedSubscription.startDate,
+		};
+
+		if (infoSelectedKey.hasNotPermanentLicence) {
+			await createNewGenerateKey(
+				accountKey,
+				provisioningServerAPI,
+				sessionId,
+				licenseKey
+			);
 		}
 		else {
-			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
-			const sizing = `Sizing ${
-				infoSelectedKey?.selectedSubscription?.instanceSize || 1
-			}`;
-			const isVirtualClusterOrProduction = infoSelectedKey?.licenseEntryType?.includes(
-				'Virtual Cluster'
-			)
-				? 'virtual-cluster'
-				: 'production';
+			await Promise.all(
+				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
+					licenseKey.macAddresses = macAddresses.replace('\n', ',');
+					licenseKey.hostName = hostName.replace('\n', ',');
+					licenseKey.ipAddresses = ipAddresses.replace('\n', ',');
 
-			const subscriptionStartDate = new Date(
-				infoSelectedKey.selectedSubscription.startDate
+					return createNewGenerateKey(
+						accountKey,
+						provisioningServerAPI,
+						sessionId,
+						licenseKey
+					);
+				})
 			);
-
-			const permanentLicenseKeys = new Date(
-				subscriptionStartDate.setFullYear(
-					subscriptionStartDate.getFullYear() + DNE_YEARS
-				)
-			);
-
-			const hasExpirationDate =
-				infoSelectedKey?.doesNotAllowPermanentLicense ||
-				infoSelectedKey?.hasNotPermanentLicence;
-
-			const licenseKey = {
-				accountKey,
-				active: true,
-				description: values?.description,
-				expirationDate: hasExpirationDate
-					? infoSelectedKey?.selectedSubscription.endDate
-					: permanentLicenseKeys,
-				licenseEntryType: isVirtualClusterOrProduction,
-				maxClusterNodes: values?.maxClusterNodes || 0,
-				name: values?.name,
-				productKey: infoSelectedKey?.selectedSubscription.productKey,
-				productName,
-				productPurchaseKey:
-					infoSelectedKey?.selectedSubscription.productPurchaseKey,
-				productVersion: infoSelectedKey?.productVersion,
-				sizing,
-				startDate: infoSelectedKey?.selectedSubscription.startDate,
-			};
-
-			if (infoSelectedKey.hasNotPermanentLicence) {
-				await createNewGenerateKey(
-					accountKey,
-					provisioningServerAPI,
-					sessionId,
-					licenseKey
-				);
-			}
-			else {
-				await Promise.all(
-					values?.keys?.map(
-						({hostName, ipAddresses, macAddresses}) => {
-							licenseKey.macAddresses = macAddresses.replace(
-								'\n',
-								','
-							);
-							licenseKey.hostName = hostName.replace('\n', ',');
-							licenseKey.ipAddresses = ipAddresses.replace(
-								'\n',
-								','
-							);
-
-							return createNewGenerateKey(
-								accountKey,
-								provisioningServerAPI,
-								sessionId,
-								licenseKey
-							);
-						}
-					)
-				);
-			}
-
-			await client.mutate({
-				context: {
-					displaySuccess: false,
-				},
-				mutation: patchOrderItemByExternalReferenceCode,
-				variables: {
-					externalReferenceCode: licenseKey.productPurchaseKey,
-					orderItem: {
-						customFields: [
-							{
-								customValue: {
-									data:
-										infoSelectedKey.selectedSubscription
-											.provisionedCount + 1,
-								},
-								name: 'provisionedCount',
-							},
-						],
-					},
-				},
-			});
-
-			navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
 		}
+
+		await client.mutate({
+			context: {
+				displaySuccess: false,
+			},
+			mutation: patchOrderItemByExternalReferenceCode,
+			variables: {
+				externalReferenceCode: licenseKey.productPurchaseKey,
+				orderItem: {
+					customFields: [
+						{
+							customValue: {
+								data:
+									infoSelectedKey.selectedSubscription
+										.provisionedCount + 1,
+							},
+							name: 'provisionedCount',
+						},
+					],
+				},
+			},
+		});
+
+		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
 	};
 
 	return (

@@ -19,10 +19,13 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
+
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -40,14 +43,14 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws PortalException {
 
-		String scriptLanguage = kaleoAction.getScriptLanguage();
+		String actionExecutorKey = _getActionExecutorKey(kaleoAction);
 
 		ActionExecutor actionExecutor = _serviceTrackerMap.getService(
-			scriptLanguage);
+			actionExecutorKey);
 
 		if (actionExecutor == null) {
 			throw new PortalException(
-				"No action executor for " + scriptLanguage);
+				"No action executor for " + actionExecutorKey);
 		}
 
 		actionExecutor.execute(kaleoAction, executionContext);
@@ -85,6 +88,16 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private String _getActionExecutorKey(KaleoAction kaleoAction) {
+		ActionType actionType = ActionType.valueOf(kaleoAction.getType());
+
+		if (Objects.equals(actionType, ActionType.UPDATE_STATUS)) {
+			return actionType.name();
+		}
+
+		return kaleoAction.getScriptLanguage();
 	}
 
 	private ServiceTrackerMap<String, ActionExecutor> _serviceTrackerMap;

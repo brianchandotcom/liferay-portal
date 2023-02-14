@@ -78,7 +78,7 @@ public class TextEmbeddingFieldCreationPortalInstanceLifecycleListener
 				new String[] {
 					_indexNameBuilder.getIndexName(company.getCompanyId())
 				},
-				"LiferayDocumentType",
+				"_doc",
 				JSONUtil.put(
 					"dynamic_templates", jsonArray
 				).toString()));

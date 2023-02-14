@@ -693,12 +693,14 @@ public class DDMFormInstanceLocalServiceImpl
 			!workflowDefinition.equals("no-workflow")) {
 
 			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
+				_kaleoDefinitionLocalService.fetchKaleoDefinition(
 					workflowDefinition, serviceContext);
 
-			latestWorkflowDefinition =
-				workflowDefinition + StringPool.AT +
-					kaleoDefinition.getVersion();
+			if (kaleoDefinition != null) {
+				latestWorkflowDefinition =
+					workflowDefinition + StringPool.AT +
+						kaleoDefinition.getVersion();
+			}
 		}
 
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(

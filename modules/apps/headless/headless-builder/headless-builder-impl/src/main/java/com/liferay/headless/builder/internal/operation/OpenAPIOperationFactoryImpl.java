@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.provider;
+package com.liferay.headless.builder.internal.operation;
 
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.headless.builder.operation.MediaType;
+import com.liferay.headless.builder.operation.OpenAPIOperationFactory;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.provider.OpenAPIYAMLOperationsProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -69,9 +69,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(service = OpenAPIYAMLOperationsProvider.class)
-public class OpenAPIYAMLOperationsProviderImpl
-	implements OpenAPIYAMLOperationsProvider {
+@Component(service = OpenAPIOperationFactory.class)
+public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 
 	@Override
 	public List<Operation> getOperations(

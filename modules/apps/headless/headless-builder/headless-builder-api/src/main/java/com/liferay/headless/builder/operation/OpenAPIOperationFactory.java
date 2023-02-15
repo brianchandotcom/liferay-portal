@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.headless.builder.provider;
+package com.liferay.headless.builder.operation;
 
-import com.liferay.headless.builder.operation.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * @author Carlos Correa
  */
-public interface OpenAPIYAMLOperationsProvider {
+public interface OpenAPIOperationFactory {
 
 	public List<Operation> getOperations(
 			long companyId, OpenAPIYAML openAPIYAML)

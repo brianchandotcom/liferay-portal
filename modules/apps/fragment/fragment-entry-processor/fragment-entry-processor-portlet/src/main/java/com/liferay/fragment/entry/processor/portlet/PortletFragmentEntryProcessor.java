@@ -27,7 +27,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -255,12 +254,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			List<String> portletNames = TransformUtil.transform(
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink),
-				portletId -> PortletIdCodec.decodePortletName(portletId));
+			Set<String> portletNames = new HashSet<>();
 
-			ListUtil.distinct(portletNames);
+			for (String portletId :
+					_portletRegistry.getFragmentEntryLinkPortletIds(
+						fragmentEntryLink)) {
+
+				portletNames.add(PortletIdCodec.decodePortletName(portletId));
+			}
 
 			if (!portletNames.contains(currentPortletName)) {
 				continue;

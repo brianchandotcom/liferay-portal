@@ -17,7 +17,6 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.fragment.contributor.PortletAliasRegistration;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -36,8 +35,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,22 +149,20 @@ public class PortletRegistryImpl implements PortletRegistry {
 			return;
 		}
 
-		List<Portlet> portlets = TransformUtil.transform(
-			fragmentEntryLinkPortletIds,
-			fragmentEntryLinkPortletId -> {
-				Portlet portlet = _portletLocalService.getPortletById(
-					fragmentEntryLinkPortletId);
+		Set<Portlet> portlets = new HashSet<>();
 
-				if ((portlet == null) || !portlet.isActive() ||
-					portlet.isUndeployedPortlet()) {
+		for (String fragmentEntryLinkPortletId : fragmentEntryLinkPortletIds) {
+			Portlet portlet = _portletLocalService.getPortletById(
+				fragmentEntryLinkPortletId);
 
-					return null;
-				}
+			if ((portlet == null) || !portlet.isActive() ||
+				portlet.isUndeployedPortlet()) {
 
-				return portlet;
-			});
+				continue;
+			}
 
-		ListUtil.distinct(portlets);
+			portlets.add(portlet);
+		}
 
 		for (Portlet portlet : portlets) {
 			try {

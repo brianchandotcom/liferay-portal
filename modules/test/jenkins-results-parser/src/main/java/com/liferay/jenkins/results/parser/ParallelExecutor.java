@@ -104,6 +104,13 @@ public class ParallelExecutor<T> {
 						result = future.get(timeoutSeconds, TimeUnit.SECONDS);
 					}
 					catch (TimeoutException timeoutException) {
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Parallel executor thread timed out after ",
+								JenkinsResultsParserUtil.toDurationString(
+									timeoutSeconds * 1000), "\n",
+								timeoutException.getMessage()));
+
 						future.cancel(true);
 
 						result = null;

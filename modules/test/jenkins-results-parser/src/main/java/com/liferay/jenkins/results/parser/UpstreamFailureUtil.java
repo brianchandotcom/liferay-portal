@@ -224,7 +224,7 @@ public class UpstreamFailureUtil {
 				String.valueOf(topLevelBuildReport.getBuildURL()),
 				"PORTAL_GIT_COMMIT");
 
-			if (!upstreamBranchSHA.equals(portalGitCommit)) {
+			if (!Objects.equals(upstreamBranchSHA, portalGitCommit)) {
 				continue;
 			}
 

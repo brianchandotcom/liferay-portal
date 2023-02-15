@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_PUBLISHER_ADD_REMOVE_FILTER_BUTTON</td>
+	<td>//div[contains(@class,'panel-body')]//button[contains(@class,'${key_button}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'panel-body')]//button[contains(.,'${key_button}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG_FACET_CLOUD_LAYOUT</td>
 	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${tagName}')]</td>
 	<td></td>

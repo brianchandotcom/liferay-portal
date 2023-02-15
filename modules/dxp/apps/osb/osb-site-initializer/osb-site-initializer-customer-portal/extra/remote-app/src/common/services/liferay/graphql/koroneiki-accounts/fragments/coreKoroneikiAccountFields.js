@@ -15,6 +15,7 @@ export const CORE_KORONEIKI_ACCOUNT_FIELDS = gql`
 	fragment CoreKoroneikiAccountFields on C_KoroneikiAccount {
 		accountKey
 		acWorkspaceGroupId
+		allowSelfProvisioning
 		code
 		dxpVersion
 		externalReferenceCode

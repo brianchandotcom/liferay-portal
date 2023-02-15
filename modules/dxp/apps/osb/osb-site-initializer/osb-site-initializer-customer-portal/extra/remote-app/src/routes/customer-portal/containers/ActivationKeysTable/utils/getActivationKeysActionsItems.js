@@ -20,44 +20,50 @@ export function getActivationKeysActionsItems(
 	handleAlertStatus,
 	handleRedirectPage,
 	handleDeactivatePage,
-	productName
+	productName,
+	allowSelfProvisioning
 ) {
-	return [
-		{
-			icon: (
-				<ClayIcon
-					className="mr-1 rounded text-neutral-4"
-					symbol="plus"
-				/>
-			),
-			label: i18n.translate('generate-new'),
-			onClick: handleRedirectPage,
-		},
-		{
-			icon: (
-				<ClayIcon
-					className="mr-1 text-neutral-4"
-					symbol="minus-circle"
-				/>
-			),
-			label: i18n.translate('deactivate'),
-			onClick: handleDeactivatePage,
-		},
-		{
-			icon: (
-				<ClayIcon className="mr-1 text-neutral-4" symbol="download" />
-			),
-			label: i18n.translate('export-all-key-details-csv'),
-			onClick: async () => {
-				const downloadedAggregated = await downloadAllKeysDetails(
-					accountKey,
-					provisioningServerAPI,
-					sessionId,
-					productName
-				);
+	const dropdownItems = [];
 
-				return handleAlertStatus(downloadedAggregated);
+	if (allowSelfProvisioning) {
+		dropdownItems.push(
+			{
+				icon: (
+					<ClayIcon
+						className="mr-1 rounded text-neutral-4"
+						symbol="plus"
+					/>
+				),
+				label: i18n.translate('generate-new'),
+				onClick: handleRedirectPage,
 			},
+			{
+				icon: (
+					<ClayIcon
+						className="mr-1 text-neutral-4"
+						symbol="minus-circle"
+					/>
+				),
+				label: i18n.translate('deactivate'),
+				onClick: handleDeactivatePage,
+			}
+		);
+	}
+
+	dropdownItems.push({
+		icon: <ClayIcon className="mr-1 text-neutral-4" symbol="download" />,
+		label: i18n.translate('export-all-key-details-csv'),
+		onClick: async () => {
+			const downloadedAggregated = await downloadAllKeysDetails(
+				accountKey,
+				provisioningServerAPI,
+				sessionId,
+				productName
+			);
+
+			return handleAlertStatus(downloadedAggregated);
 		},
-	];
+	});
+
+	return dropdownItems;
 }

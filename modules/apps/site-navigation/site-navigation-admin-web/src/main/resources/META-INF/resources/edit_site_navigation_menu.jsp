@@ -25,6 +25,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 %>
 
+<liferay-ui:success key="siteNavigationMenuItemsAdded" message='<%= GetterUtil.getString(SessionMessages.get(renderRequest, "siteNavigationMenuItemsAdded")) %>' />
+
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<react:component
 		componentId="siteNavigationMenuEditor"

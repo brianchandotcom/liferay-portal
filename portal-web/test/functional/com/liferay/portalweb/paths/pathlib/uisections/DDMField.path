@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>MULTIPLE_LINES</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::textarea</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//..//textarea</td>
 	<td></td>
 </tr>
 <tr>

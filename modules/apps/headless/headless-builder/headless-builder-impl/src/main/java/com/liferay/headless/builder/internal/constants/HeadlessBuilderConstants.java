@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.constants;
+package com.liferay.headless.builder.internal.constants;
 
 /**
  * @author Matija Petanjek

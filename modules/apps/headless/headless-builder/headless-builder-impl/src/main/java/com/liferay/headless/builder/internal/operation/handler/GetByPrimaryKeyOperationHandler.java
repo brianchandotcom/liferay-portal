@@ -14,7 +14,7 @@
 
 package com.liferay.headless.builder.internal.operation.handler;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.util.HeadlessBuilderUtil;
 import com.liferay.headless.builder.operation.MediaType;
 import com.liferay.headless.builder.operation.Operation;

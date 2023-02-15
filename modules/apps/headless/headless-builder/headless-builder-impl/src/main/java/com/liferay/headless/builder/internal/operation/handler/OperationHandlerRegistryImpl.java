@@ -14,7 +14,7 @@
 
 package com.liferay.headless.builder.internal.operation.handler;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
 import com.liferay.headless.builder.operation.handler.OperationHandlerRegistry;

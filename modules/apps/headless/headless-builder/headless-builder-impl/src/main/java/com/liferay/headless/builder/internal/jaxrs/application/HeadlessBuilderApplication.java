@@ -14,7 +14,7 @@
 
 package com.liferay.headless.builder.internal.jaxrs.application;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 
 import javax.ws.rs.core.Application;
 

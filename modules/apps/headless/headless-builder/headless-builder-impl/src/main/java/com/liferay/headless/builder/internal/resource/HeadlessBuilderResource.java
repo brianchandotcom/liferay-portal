@@ -15,6 +15,7 @@
 package com.liferay.headless.builder.internal.resource;
 
 import com.liferay.headless.builder.internal.dto.converter.HeadlessBuilderElementDTOConverter;
+import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.headless.builder.operation.MediaType;
 import com.liferay.headless.builder.operation.Method;
 import com.liferay.headless.builder.operation.Operation;
@@ -27,7 +28,6 @@ import com.liferay.headless.builder.operation.response.NotFoundOperationResponse
 import com.liferay.headless.builder.operation.response.OperationResponse;
 import com.liferay.headless.builder.operation.response.ResponseCode;
 import com.liferay.headless.builder.operation.response.SuccessfulOperationResponse;
-import com.liferay.headless.builder.util.URLUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.PrimaryKeyInfoFieldType;

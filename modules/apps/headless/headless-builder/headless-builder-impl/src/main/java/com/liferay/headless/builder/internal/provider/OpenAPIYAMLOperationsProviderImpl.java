@@ -14,13 +14,13 @@
 
 package com.liferay.headless.builder.internal.provider;
 
-import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.headless.builder.operation.MediaType;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
 import com.liferay.headless.builder.provider.OpenAPIYAMLOperationsProvider;
-import com.liferay.headless.builder.util.URLUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;

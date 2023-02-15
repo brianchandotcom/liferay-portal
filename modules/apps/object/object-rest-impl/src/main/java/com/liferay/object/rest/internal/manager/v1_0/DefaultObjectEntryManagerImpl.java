@@ -1141,24 +1141,6 @@ public class DefaultObjectEntryManagerImpl
 			defaultDTOConverterContext, serviceBuilderObjectEntry);
 	}
 
-	private ObjectEntry _toObjectEntry(
-		Map<String, Object> nestedObjectEntryProperties) {
-
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		if (nestedObjectEntryProperties.containsKey("externalReferenceCode")) {
-			objectEntry.setExternalReferenceCode(
-				(String)nestedObjectEntryProperties.get(
-					"externalReferenceCode"));
-
-			nestedObjectEntryProperties.remove("externalReferenceCode");
-		}
-
-		objectEntry.setProperties(nestedObjectEntryProperties);
-
-		return objectEntry;
-	}
-
 	private Map<String, Serializable> _toObjectValues(
 			long groupId, long userId, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry, long objectEntryId, Locale locale)
@@ -1304,8 +1286,9 @@ public class DefaultObjectEntryManagerImpl
 					for (Map<String, Object> nestedObjectEntryProperties :
 							nestedObjectEntryPropertiesList) {
 
-						ObjectEntry nestedObjectEntry = _toObjectEntry(
-							nestedObjectEntryProperties);
+						ObjectEntry nestedObjectEntry =
+							ObjectEntryValuesUtil.toObjectEntry(
+								nestedObjectEntryProperties);
 
 						_upsertAndRelateNestedObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
@@ -1335,8 +1318,9 @@ public class DefaultObjectEntryManagerImpl
 					_getRelatedActivatedObjectDefinition(
 						objectDefinition, objectRelationship);
 
-				ObjectEntry nestedObjectEntry = _toObjectEntry(
-					nestedObjectEntryProperties);
+				ObjectEntry nestedObjectEntry =
+					ObjectEntryValuesUtil.toObjectEntry(
+						nestedObjectEntryProperties);
 
 				_upsertAndRelateNestedObjectEntry(
 					dtoConverterContext, relatedObjectDefinition,

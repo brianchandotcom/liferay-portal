@@ -49,6 +49,8 @@
 			<var name="camelCase" method="StringUtil#replace('${camelCase}', ' ', '')"/>
 			<var name="payload" method="StringUtil#replace('${payload}', '${payload}', '${payload}}')"/>
 
+			<var name="parameters" method="JSONUtil2#_addJSONObject('JSON = ${parameters}', 'key = &quot;virtualHost&quot;', 'value = &quot;\&quot;${virtualHost}\&quot;&quot;')"/>
+
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />

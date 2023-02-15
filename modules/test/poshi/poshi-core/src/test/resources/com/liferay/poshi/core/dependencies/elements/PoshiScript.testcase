@@ -50,6 +50,7 @@ definition {
 
 			var camelCase = StringUtil.replace(${camelCase}, " ", "");
 			var payload = StringUtil.replace(${payload}, ${payload}, "${payload}}");
+			var parameters = JSONUtil2._addJSONObject(JSON = ${parameters}, key = "virtualHost", value = "\"${virtualHost}\"");
 
 			ProductMenu.gotoPortlet(
 				category = "Content",

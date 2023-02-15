@@ -320,6 +320,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_ITEM_HIGHLIGHT_1</td>
+	<td>//a[contains(@class,'link-secondary')]//span/b[text()='${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_ITEM_HIGHLIGHT_2</td>
+	<td>xpath=(//a[contains(@class,'link-secondary')]//span/b[text()='${key_itemName}'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_ITEM_LINK</td>
 	<td>//li[contains(@class,'treeview-item')]//a[contains(@class,'link-secondary')]//span[normalize-space(text())='${key_itemLinkName}']</td>
 	<td></td>

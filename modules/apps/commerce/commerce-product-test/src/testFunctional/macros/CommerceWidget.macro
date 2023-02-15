@@ -258,4 +258,97 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro updateProductPublisherConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = ${portletName},
+			portletOption = "Configuration");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(addFilter) && (${addFilter} == "true")) {
+			Click(
+				key_entry = "Filter",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			Click(
+				key_button = "add",
+				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_ADD_REMOVE_FILTER_BUTTON");
+
+			Click(
+				key_button = "Select",
+				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Tags",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click(
+				key_columnName = "name",
+				key_tableEntry = ${tag},
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECKBOX");
+
+			SelectFrameTop();
+
+			Button.click(button = "Done");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+			Click(
+				key_entry = "Filter",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			Button.click(button = "Save");
+
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+
+			for (var productName : list ${addFilterResultsList}) {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+
+		if (isSet(deleteFilter) && (${deleteFilter} == "true")) {
+			Portlet.gotoPortletOptions(
+				portletName = ${portletName},
+				portletOption = "Configuration");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+			Click(
+				key_entry = "Filter",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			Click.mouseOverClick(
+				key_button = "delete",
+				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_ADD_REMOVE_FILTER_BUTTON");
+
+			Button.click(button = "Save");
+
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+
+			for (var productName : list ${deleteFilterResultsList}) {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+	}
+
 }

@@ -31,7 +31,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 <liferay-ui:membership-policy-error />
 
 <clay:content-row
-	containerElement="h3"
+	containerElement="div"
 	cssClass="sheet-subtitle"
 >
 	<clay:content-col

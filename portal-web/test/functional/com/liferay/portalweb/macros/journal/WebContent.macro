@@ -2863,7 +2863,7 @@ definition {
 					key_fieldFieldLabel = ${webContentTextFieldLabel},
 					locator1 = "DDMField#MULTIPLE_LINES");
 
-				var actual = TestUtils.getElementTextContent(element = "//label[normalize-space(text())='${webContentTextFieldLabel}']//following-sibling::textarea");
+				var actual = TestUtils.getElementTextContent(element = "//label[normalize-space(text())='${webContentTextFieldLabel}']//..//textarea");
 
 				TestUtils.assertEquals(
 					actual = ${actual},

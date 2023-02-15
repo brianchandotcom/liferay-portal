@@ -1452,6 +1452,10 @@ public class LocalizationImpl implements Localization {
 	private String _getRootAttributeValue(
 		Document document, String name, String defaultValue) {
 
+		if (document == null) {
+			return defaultValue;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		return rootElement.attributeValue(name, defaultValue);

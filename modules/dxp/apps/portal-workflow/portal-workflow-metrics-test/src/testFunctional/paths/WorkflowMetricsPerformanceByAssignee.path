@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_NO_RESULTS</td>
-	<td>//p[contains(text(),'There is no data at the moment.')]</td>
+	<td>//div[@class= 'panel-body']//div[contains(text(),'There is no data at the moment.')]</td>
 	<td></td>
 </tr>
 <tr>

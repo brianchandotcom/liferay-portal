@@ -91,7 +91,7 @@ class CriteriaRowReadable extends Component {
 			? Liferay.Language.get('since')
 			: dateOperatorLabel;
 		const value = isSinceOperator
-			? SINCE_VALUES[criterion?.day?.value]
+			? SINCE_VALUES[criterion?.day?.value].toLowerCase()
 			: criterion?.day?.value;
 
 		return this._renderCriteriaString({

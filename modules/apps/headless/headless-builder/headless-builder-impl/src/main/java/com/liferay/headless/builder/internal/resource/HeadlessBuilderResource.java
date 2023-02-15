@@ -27,7 +27,6 @@ import com.liferay.headless.builder.operation.response.NotFoundOperationResponse
 import com.liferay.headless.builder.operation.response.OperationResponse;
 import com.liferay.headless.builder.operation.response.ResponseCode;
 import com.liferay.headless.builder.operation.response.SuccessfulOperationResponse;
-import com.liferay.headless.builder.resource.HeadlessBuilderResource;
 import com.liferay.headless.builder.util.URLUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -69,8 +68,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	},
 	scope = ServiceScope.PROTOTYPE, service = HeadlessBuilderResource.class
 )
-public class HeadlessBuilderResourceImpl
-	extends BaseHeadlessBuilderResourceImpl {
+public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 
 	@GET
 	@Path("{any: .*}")

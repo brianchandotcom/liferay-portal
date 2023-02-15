@@ -14,8 +14,6 @@
 
 package com.liferay.headless.builder.internal.resource;
 
-import com.liferay.headless.builder.resource.HeadlessBuilderResource;
-
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
@@ -26,8 +24,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Carlos Correa
  */
-public abstract class BaseHeadlessBuilderResourceImpl
-	implements HeadlessBuilderResource {
+public abstract class BaseHeadlessBuilderResource {
 
 	@GET
 	@Path("{any: .*}")

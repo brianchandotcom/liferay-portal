@@ -9,5 +9,4 @@ Export-Package:\
 	com.liferay.headless.builder.operation.handler,\
 	com.liferay.headless.builder.operation.response,\
 	com.liferay.headless.builder.provider,\
-	com.liferay.headless.builder.resource,\
 	com.liferay.headless.builder.util

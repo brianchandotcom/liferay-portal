@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.test;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -40,14 +41,21 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,6 +79,26 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			DBUpgrader.class, "_upgradeClient", _originalUpgradeClient);
 	}
 
+	@Before
+	public void setUp() {
+		PatternLayout.Builder builder = PatternLayout.newBuilder();
+
+		builder.withPattern("%level - %m%n %X");
+
+		_unsyncStringWriter = new UnsyncStringWriter();
+
+		_logContextAppender = WriterAppender.createAppender(
+			builder.build(), null, _unsyncStringWriter,
+			"logContextWriterAppender", false, false);
+
+		_logContextAppender.start();
+
+		_upgradeReportLogger = (Logger)LogManager.getLogger(
+			"com.liferay.portal.upgrade.internal.report.UpgradeReport");
+
+		_upgradeReportLogger.addAppender(_logContextAppender);
+	}
+
 	@After
 	public void tearDown() {
 		_appender.stop();
@@ -88,6 +116,34 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 			reportsDir.delete();
 		}
+
+		_upgradeReportLogger.removeAppender(_logContextAppender);
+
+		_logContextAppender.stop();
+
+		_logContextAppender = null;
+	}
+
+	@Test
+	public void testDatabaseTablesAreSorted() throws Exception {
+		_appender.start();
+
+		_appender.stop();
+
+		if (_reportContent == null) {
+			_reportContent = _getReportContent();
+		}
+
+		Matcher matcher = _pattern.matcher(_reportContent);
+
+		_assertDatabaseTablesAreSorted(matcher);
+
+		String databaseTables = _getLogContextKey(
+			"upgrade.report.databaseTables");
+
+		matcher = _logContextDatabaseTablePattern.matcher(databaseTables);
+
+		_assertDatabaseTablesAreSorted(matcher);
 	}
 
 	@Test
@@ -136,39 +192,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			}
 		}
 
-		Assert.assertTrue(table1Exists && table2Exists);
-	}
-
-	@Test
-	public void testDatabaseTablesIsSorted() throws Exception {
-		_appender.start();
-
-		_appender.stop();
-
-		if (_reportContent == null) {
-			_reportContent = _getReportContent();
-		}
-
-		Matcher matcher = _pattern.matcher(_reportContent);
-
-		int previousInitialCount = Integer.MAX_VALUE;
-		String previousTableName = null;
-
-		while (matcher.find()) {
-			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
-
-			String tableName = matcher.group(1);
-
-			if (initialCount == previousInitialCount) {
-				Assert.assertTrue(previousTableName.compareTo(tableName) < 0);
-			}
-			else {
-				Assert.assertTrue(initialCount < previousInitialCount);
-			}
-
-			previousInitialCount = initialCount;
-			previousTableName = tableName;
-		}
+		_assertLogContextContains(
+			"upgrade.report.databaseTables", "UpgradeReportTable1:0:1");
+		_assertLogContextContains(
+			"upgrade.report.databaseTables", "UpgradeReportTable2:1:0");
 	}
 
 	@Test
@@ -198,6 +225,13 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		Assert.assertTrue(
 			reportContent.indexOf(slowerUpgradeProcessName) <
 				reportContent.indexOf(fasterUpgradeProcessName));
+
+		String upgradeProcesses = _getLogContextKey(
+			"upgrade.report.longestUpgradeProcesses");
+
+		Assert.assertTrue(
+			upgradeProcesses.indexOf(slowerUpgradeProcessName) <
+				upgradeProcesses.indexOf(fasterUpgradeProcessName));
 	}
 
 	@Test
@@ -221,6 +255,12 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_assertReport("2 occurrences of the following warnings: Warning");
 		_assertReport(
 			"com.liferay.portal.UpgradeTest took 20401 ms to complete");
+
+		_assertLogContextContains(
+			"upgrade.report.warningsLogEvents", "2:Warning");
+		_assertLogContextContains(
+			"upgrade.report.longestUpgradeProcesses",
+			"com.liferay.portal.UpgradeTest:20401 ms");
 	}
 
 	@Test
@@ -249,6 +289,12 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			StringBundler.concat(
 				"There are upgrade processes available for ",
 				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
+
+		_assertLogContextContains(
+			"upgrade.report.releasemanagerOSGi",
+			StringBundler.concat(
+				"There are upgrade processes available for ",
+				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
 	}
 
 	@Test
@@ -260,6 +306,16 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_assertReport("No errors thrown during upgrade");
 		_assertReport("No upgrade processes registered");
 		_assertReport("No warnings thrown during upgrade");
+
+		_assertLogContextContains(
+			"upgrade.report.warningsLogEvents",
+			"No warnings thrown during upgrade");
+		_assertLogContextContains(
+			"upgrade.report.errorsLogEvents",
+			"No errors thrown during upgrade");
+		_assertLogContextContains(
+			"upgrade.report.longestUpgradeProcesses",
+			"No upgrade processes registered");
 	}
 
 	@Test
@@ -278,6 +334,18 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				Arrays.toString(PropsValues.LOCALES_ENABLED),
 				StringPool.NEW_LINE, PropsKeys.DL_STORE_IMPL, StringPool.EQUAL,
 				PropsValues.DL_STORE_IMPL));
+
+		_assertLogContextContains(
+			"upgrade.report.properties.liferay.home", PropsValues.LIFERAY_HOME);
+		_assertLogContextContains(
+			"upgrade.report.properties.locales",
+			Arrays.toString(PropsValues.LOCALES));
+		_assertLogContextContains(
+			"upgrade.report.properties.locales.enabled",
+			Arrays.toString(PropsValues.LOCALES_ENABLED));
+		_assertLogContextContains(
+			"upgrade.report.properties." + PropsKeys.DL_STORE_IMPL,
+			PropsValues.DL_STORE_IMPL);
 	}
 
 	@Test
@@ -318,6 +386,23 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				"Expected portal build number: ", ReleaseInfo.getBuildNumber(),
 				StringPool.NEW_LINE, "Expected portal schema version: ",
 				latestSchemaVersion.toString(), StringPool.NEW_LINE));
+
+		_assertLogContextContains(
+			"upgrade.report.initialPortalBuildNumber", "7100");
+		_assertLogContextContains(
+			"upgrade.report.initialPortalSchemaVersion", "1.0.0");
+		_assertLogContextContains(
+			"upgrade.report.finalPortalBuildNumber",
+			String.valueOf(ReleaseInfo.getBuildNumber()));
+		_assertLogContextContains(
+			"upgrade.report.finalPortalSchemaVersion",
+			latestSchemaVersion.toString());
+		_assertLogContextContains(
+			"upgrade.report.expectedPortalBuildNumber",
+			String.valueOf(ReleaseInfo.getBuildNumber()));
+		_assertLogContextContains(
+			"upgrade.report.expectedPortalSchemaVersion",
+			latestSchemaVersion.toString());
 	}
 
 	protected static void setUpClass(boolean upgradeClient) throws Exception {
@@ -337,6 +422,33 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 	protected abstract String getFilePath();
 
+	private void _assertDatabaseTablesAreSorted(Matcher matcher) {
+		int previousInitialCount = Integer.MAX_VALUE;
+		String previousTableName = null;
+
+		while (matcher.find()) {
+			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
+
+			String tableName = matcher.group(1);
+
+			if (initialCount == previousInitialCount) {
+				Assert.assertTrue(previousTableName.compareTo(tableName) < 0);
+			}
+			else {
+				Assert.assertTrue(initialCount < previousInitialCount);
+			}
+
+			previousInitialCount = initialCount;
+			previousTableName = tableName;
+		}
+	}
+
+	private void _assertLogContextContains(String key, String testString) {
+		String values = _getLogContextKey(key);
+
+		Assert.assertTrue(values.contains(testString));
+	}
+
 	private void _assertReport(String testString) throws Exception {
 		if (_reportContent == null) {
 			_reportContent = _getReportContent();
@@ -344,6 +456,43 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		Assert.assertTrue(
 			StringUtil.contains(_reportContent, testString, StringPool.BLANK));
+	}
+
+	private String _getLogContextContent() {
+		return _unsyncStringWriter.toString();
+	}
+
+	private String _getLogContextKey(String key) {
+		String logContext = _getLogContextContent();
+
+		Pattern pattern = Pattern.compile(
+			"(?s)INFO - Upgrade report generated in " +
+				_getReportFileAbsolutePath() + "\\n\\s+\\{(.+)\\}");
+
+		Matcher logContextMatcher = pattern.matcher(logContext);
+
+		Assert.assertTrue(logContextMatcher.matches());
+
+		Map<String, String> logContextValues = _getLogContextValues(
+			logContextMatcher.group(1));
+
+		Assert.assertTrue(logContextValues.containsKey(key));
+
+		return logContextValues.get(key);
+	}
+
+	private Map<String, String> _getLogContextValues(String logContext) {
+		HashMap<String, String> values = new HashMap<>();
+
+		String[] keys = logContext.split(",\\s*(?=upgrade.report.)");
+
+		for (String key : keys) {
+			String[] parts = key.split("=", 2);
+
+			values.put(parts[0], parts[1]);
+		}
+
+		return values;
 	}
 
 	private String _getReportContent() throws Exception {
@@ -358,12 +507,25 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		return FileUtil.read(reportFile);
 	}
 
+	private String _getReportFileAbsolutePath() {
+		File folder = new File(getFilePath(), "reports");
+
+		File report = new File(folder, "upgrade_report.info");
+
+		return report.getAbsolutePath();
+	}
+
 	private static DB _db;
+	private static Appender _logContextAppender;
+	private static final Pattern _logContextDatabaseTablePattern =
+		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalUpgradeClient;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
+	private static UnsyncStringWriter _unsyncStringWriter;
+	private static Logger _upgradeReportLogger;
 
-	@Inject (filter = "appender.name=UpgradeReportLogAppender")
+	@Inject(filter = "appender.name=UpgradeReportLogAppender")
 	private Appender _appender;
 
 	@Inject

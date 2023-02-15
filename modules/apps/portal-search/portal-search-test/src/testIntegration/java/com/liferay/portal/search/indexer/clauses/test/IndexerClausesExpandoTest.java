@@ -91,7 +91,7 @@ public class IndexerClausesExpandoTest {
 	}
 
 	@Test
-	public void testBaseIndexer() throws Exception {
+	public void testDefaultIndexer1() throws Exception {
 		_setUp(
 			HashMapBuilder.<Class<?>, String[]>put(
 				JournalArticle.class,
@@ -114,7 +114,7 @@ public class IndexerClausesExpandoTest {
 	}
 
 	@Test
-	public void testDefaultIndexer() throws Exception {
+	public void testDefaultIndexer2() throws Exception {
 		_setUp(
 			HashMapBuilder.<Class<?>, String[]>put(
 				BlogsEntry.class, new String[] {"Gamma Blog", "Omega Blog"}

@@ -103,7 +103,7 @@ public class IndexerClausesChangeTrackingTest {
 	}
 
 	@Test
-	public void testBaseIndexer() throws Exception {
+	public void testDefaultIndexer1() throws Exception {
 		Assert.assertEquals(
 			"class com.liferay.portal.search.internal.indexer.DefaultIndexer",
 			String.valueOf(journalArticleIndexer.getClass()));
@@ -146,7 +146,7 @@ public class IndexerClausesChangeTrackingTest {
 	}
 
 	@Test
-	public void testDefaultIndexer() throws Exception {
+	public void testDefaultIndexer2() throws Exception {
 		Assert.assertEquals(
 			"class com.liferay.portal.search.internal.indexer.DefaultIndexer",
 			String.valueOf(mbMessageIndexer.getClass()));

@@ -14,8 +14,8 @@
 
 package com.liferay.headless.builder.internal.dto.converter;
 
-import com.liferay.headless.builder.model.HeadlessBuilderEntry;
-import com.liferay.headless.builder.operation.Response;
+import com.liferay.headless.builder.internal.operation.HeadlessBuilderEntry;
+import com.liferay.headless.builder.internal.operation.Response;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;

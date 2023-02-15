@@ -14,9 +14,6 @@
 
 package com.liferay.headless.builder.internal.operation;
 
-import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.OperationRegistry;
-import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -36,16 +33,14 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Carlos Correa
  */
-@Component(immediate = true, service = OperationRegistry.class)
-public class OperationRegistryImpl implements OperationRegistry {
+@Component(service = OperationRegistry.class)
+public class OperationRegistry {
 
-	@Override
 	public List<Operation> getOperations() {
 		return _serviceTrackerList.toList();
 	}
 
-	@Override
-	public void register(Operation operation) throws Exception {
+	public void register(Operation operation) {
 		PathConfiguration pathConfiguration = operation.getPathConfiguration();
 
 		Pattern pattern = pathConfiguration.getPattern();
@@ -79,8 +74,7 @@ public class OperationRegistryImpl implements OperationRegistry {
 				).build()));
 	}
 
-	@Override
-	public void unregister(Operation operation) throws Exception {
+	public void unregister(Operation operation) {
 		ServiceRegistration<Operation> serviceRegistration =
 			_serviceRegistrations.remove(operation.getKey());
 

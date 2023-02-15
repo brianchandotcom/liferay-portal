@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation;
+package com.liferay.headless.builder.application;
 
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
-
-import java.util.List;
 
 /**
  * @author Carlos Correa
  */
-public interface OpenAPIOperationFactory {
+public interface HeadlessBuilderApplicationFactory {
 
-	public List<Operation> getOperations(
+	public HeadlessBuilderApplication getHeadlessBuilderApplication(
 			long companyId, OpenAPIYAML openAPIYAML)
 		throws Exception;
 

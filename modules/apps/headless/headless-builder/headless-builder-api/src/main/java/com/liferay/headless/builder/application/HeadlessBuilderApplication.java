@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation.handler;
-
-import com.liferay.headless.builder.operation.Operation;
+package com.liferay.headless.builder.application;
 
 /**
- * @author Carlos Correa
+ * @author Alejandro Tardín
  */
-public interface OperationHandlerRegistry {
+public interface HeadlessBuilderApplication {
 
-	public OperationHandler getOperationHandler(Operation operation)
-		throws Exception;
+	public Handle deploy() throws Exception;
+
+	public interface Handle {
+
+		public void undeploy() throws Exception;
+
+	}
 
 }

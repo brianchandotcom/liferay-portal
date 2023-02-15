@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation;
+package com.liferay.headless.builder.internal.operation;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Carlos Correa
  */
-public interface OperationRegistry {
+public interface PathConfiguration {
 
-	public List<Operation> getOperations();
+	public String getPath();
 
-	public void register(Operation operation) throws Exception;
+	public List<String> getPathParameterNames();
 
-	public void unregister(Operation operation) throws Exception;
+	public Pattern getPattern();
 
 }

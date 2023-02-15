@@ -14,28 +14,21 @@
 
 package com.liferay.headless.builder.internal.resource;
 
-import com.liferay.headless.builder.internal.dto.converter.HeadlessBuilderElementDTOConverter;
+import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.operation.Operation;
+import com.liferay.headless.builder.internal.operation.OperationContext;
+import com.liferay.headless.builder.internal.operation.OperationRegistry;
+import com.liferay.headless.builder.internal.operation.PathConfiguration;
+import com.liferay.headless.builder.internal.operation.handler.OperationHandler;
 import com.liferay.headless.builder.internal.util.URLUtil;
-import com.liferay.headless.builder.operation.MediaType;
-import com.liferay.headless.builder.operation.Method;
-import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.OperationContext;
-import com.liferay.headless.builder.operation.OperationRegistry;
-import com.liferay.headless.builder.operation.PathConfiguration;
-import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.operation.handler.OperationHandlerRegistry;
-import com.liferay.headless.builder.operation.response.NotFoundOperationResponse;
-import com.liferay.headless.builder.operation.response.OperationResponse;
-import com.liferay.headless.builder.operation.response.ResponseCode;
-import com.liferay.headless.builder.operation.response.SuccessfulOperationResponse;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import java.util.ArrayList;
@@ -54,7 +47,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -80,7 +76,7 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 
 		Operation operation = _getOperation(
 			_portal.getCompanyId(contextHttpServletRequest),
-			Method.valueOf(contextHttpServletRequest.getMethod()),
+			contextHttpServletRequest.getMethod(),
 			contextHttpServletRequest.getRequestURI());
 
 		if (operation == null) {
@@ -92,39 +88,36 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 		}
 
 		OperationHandler operationHandler =
-			_operationHandlerRegistry.getOperationHandler(operation);
+			_operationHandlerServiceTrackerMap.getService(
+				operation.getOperationType());
 
-		MediaType mediaType = MediaType.parse(
-			contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT));
+		String mediaType = contextHttpServletRequest.getHeader(
+			HttpHeaders.ACCEPT);
 
-		OperationResponse operationResponse = operationHandler.handle(
+		return operationHandler.handle(
 			operation, _getOperationContext(mediaType, operation));
-
-		return _toResponse(operationResponse);
 	}
 
-	private DTOConverterContext _getDTOConverterContext(
-		com.liferay.headless.builder.operation.Response response) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_operationHandlerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, OperationHandler.class,
+				HeadlessBuilderConstants.OPERATION_NAME);
+	}
 
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(null, null, null, null, null);
-
-		dtoConverterContext.setAttribute("response", response);
-
-		return dtoConverterContext;
+	@Deactivate
+	protected void deactivate() {
+		_operationHandlerServiceTrackerMap.close();
 	}
 
 	private Operation _getOperation(
-		long companyId, Method method, String path) {
+		long companyId, String method, String path) {
 
 		for (Operation operation : _operationRegistry.getOperations()) {
-			if (companyId != operation.getCompanyId()) {
-				continue;
-			}
+			if ((companyId != operation.getCompanyId()) ||
+				!Objects.equals(operation.getMethod(), method)) {
 
-			Method operationMethod = operation.getMethod();
-
-			if (!Objects.equals(operationMethod, method)) {
 				continue;
 			}
 
@@ -144,7 +137,7 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 	}
 
 	private OperationContext _getOperationContext(
-		MediaType mediaType, Operation operation) {
+		String mediaType, Operation operation) {
 
 		OperationContext.Builder builder = new OperationContext.Builder();
 
@@ -204,48 +197,8 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 		return infoFieldValues;
 	}
 
-	private Response _toResponse(OperationResponse operationResponse)
-		throws Exception {
-
-		if (Objects.equals(
-				operationResponse.getResponseCode(), ResponseCode.SUCCESSFUL)) {
-
-			SuccessfulOperationResponse successfulOperationResponse =
-				(SuccessfulOperationResponse)operationResponse;
-
-			return Response.status(
-				Response.Status.OK
-			).entity(
-				_dtoConverter.toDTO(
-					_getDTOConverterContext(
-						successfulOperationResponse.getResponse()),
-					successfulOperationResponse.getHeadlessBuilderEntry())
-			).build();
-		}
-		else if (Objects.equals(
-					operationResponse.getResponseCode(),
-					ResponseCode.NOT_FOUND)) {
-
-			NotFoundOperationResponse notFoundOperationResponse =
-				(NotFoundOperationResponse)operationResponse;
-
-			return Response.status(
-				Response.Status.NOT_FOUND
-			).entity(
-				new Problem(
-					Response.Status.NOT_FOUND,
-					notFoundOperationResponse.getMessage())
-			).build();
-		}
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Reference
-	private HeadlessBuilderElementDTOConverter _dtoConverter;
-
-	@Reference
-	private OperationHandlerRegistry _operationHandlerRegistry;
+	private ServiceTrackerMap<String, OperationHandler>
+		_operationHandlerServiceTrackerMap;
 
 	@Reference
 	private OperationRegistry _operationRegistry;

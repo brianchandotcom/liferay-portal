@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation;
+package com.liferay.headless.builder.internal.operation;
 
-import com.liferay.headless.builder.operation.response.ResponseCode;
 import com.liferay.info.field.InfoField;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -35,7 +34,7 @@ public interface Operation {
 
 	public String getKey();
 
-	public Method getMethod();
+	public String getMethod();
 
 	public String getOperationType();
 
@@ -43,7 +42,7 @@ public interface Operation {
 
 	public PathConfiguration getPathConfiguration();
 
-	public Response getResponse(MediaType mediaType, ResponseCode responseCode);
+	public Response getResponse(String mediaType, int responseCode);
 
 	public static class Builder {
 
@@ -57,7 +56,7 @@ public interface Operation {
 			return this;
 		}
 
-		public Builder withMethod(Method method) {
+		public Builder withMethod(String method) {
 			_method = method;
 
 			return this;
@@ -86,7 +85,7 @@ public interface Operation {
 		}
 
 		public Builder withResponse(
-			Response response, MediaType mediaType, ResponseCode responseCode) {
+			Response response, String mediaType, int responseCode) {
 
 			_responses.compute(
 				mediaType,
@@ -104,11 +103,11 @@ public interface Operation {
 		}
 
 		private long _companyId;
-		private Method _method;
+		private String _method;
 		private String _operationType;
 		private Map<String, InfoField> _parameterInfoFields = new HashMap<>();
 		private PathConfiguration _pathConfiguration;
-		private Map<MediaType, Map<ResponseCode, Response>> _responses =
+		private Map<String, Map<Integer, Response>> _responses =
 			new HashMap<>();
 
 	}
@@ -127,12 +126,12 @@ public interface Operation {
 		@Override
 		public String getKey() {
 			return StringBundler.concat(
-				getCompanyId(), StringPool.POUND, getMethod().name(),
-				StringPool.POUND, getPathConfiguration().getPath());
+				getCompanyId(), StringPool.POUND, getMethod(), StringPool.POUND,
+				getPathConfiguration().getPath());
 		}
 
 		@Override
-		public Method getMethod() {
+		public String getMethod() {
 			return _builder._method;
 		}
 
@@ -152,19 +151,16 @@ public interface Operation {
 		}
 
 		@Override
-		public Response getResponse(
-			MediaType mediaType, ResponseCode responseCode) {
+		public Response getResponse(String mediaType, int responseCode) {
+			Map<Integer, Response> responses;
 
-			Map<ResponseCode, Response> responses;
-
-			if (Objects.equals(MediaType.ALL, mediaType)) {
+			if (Objects.equals("*/*", mediaType)) {
 				if (_builder._responses.containsKey(mediaType)) {
 					responses = _builder._responses.get(mediaType);
 				}
 				else {
-					List<MediaType> mediaTypes = ListUtil.sort(
-						new ArrayList<>(_builder._responses.keySet()),
-						new MediaType.MediaTypeComparator());
+					List<String> mediaTypes = ListUtil.sort(
+						new ArrayList<>(_builder._responses.keySet()));
 
 					responses = _builder._responses.get(mediaTypes.get(0));
 				}

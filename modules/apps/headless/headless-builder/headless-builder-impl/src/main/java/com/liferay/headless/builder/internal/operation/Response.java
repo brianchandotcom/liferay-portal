@@ -12,39 +12,40 @@
  * details.
  */
 
-package com.liferay.headless.builder.model;
+package com.liferay.headless.builder.internal.operation;
+
+import com.liferay.info.field.InfoField;
+
+import java.util.Map;
 
 /**
  * @author Carlos Correa
  */
-public class HeadlessBuilderEntry {
+public class Response {
 
-	public Object getContent() {
-		return _content;
+	public Response(
+		String entityName, Map<String, InfoField> infoFields,
+		String schemaName) {
+
+		_entityName = entityName;
+		_infoFields = infoFields;
+		_schemaName = schemaName;
 	}
 
-	public String getName() {
-		return _name;
+	public String getEntityName() {
+		return _entityName;
 	}
 
-	public long getPrimaryKey() {
-		return _primaryKey;
+	public Map<String, InfoField> getInfoFields() {
+		return _infoFields;
 	}
 
-	public void setContent(Object content) {
-		_content = content;
+	public String getSchemaName() {
+		return _schemaName;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setPrimaryKey(long primaryKey) {
-		_primaryKey = primaryKey;
-	}
-
-	private Object _content;
-	private String _name;
-	private long _primaryKey;
+	private final String _entityName;
+	private final Map<String, InfoField> _infoFields;
+	private final String _schemaName;
 
 }

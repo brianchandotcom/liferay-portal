@@ -12,17 +12,39 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation.response;
-
-import com.liferay.headless.builder.operation.Response;
+package com.liferay.headless.builder.internal.operation;
 
 /**
  * @author Carlos Correa
  */
-public interface OperationResponse {
+public class HeadlessBuilderEntry {
 
-	public Response getResponse();
+	public Object getContent() {
+		return _content;
+	}
 
-	public ResponseCode getResponseCode();
+	public String getName() {
+		return _name;
+	}
+
+	public long getPrimaryKey() {
+		return _primaryKey;
+	}
+
+	public void setContent(Object content) {
+		_content = content;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setPrimaryKey(long primaryKey) {
+		_primaryKey = primaryKey;
+	}
+
+	private Object _content;
+	private String _name;
+	private long _primaryKey;
 
 }

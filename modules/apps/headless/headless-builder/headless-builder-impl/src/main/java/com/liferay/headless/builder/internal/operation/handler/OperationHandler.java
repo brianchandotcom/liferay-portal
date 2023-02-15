@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation;
+package com.liferay.headless.builder.internal.operation.handler;
+
+import com.liferay.headless.builder.internal.operation.Operation;
+import com.liferay.headless.builder.internal.operation.OperationContext;
+
+import javax.ws.rs.core.Response;
 
 /**
  * @author Carlos Correa
  */
-public enum Method {
+public interface OperationHandler {
 
-	GET
+	public Response handle(
+			Operation operation, OperationContext operationContext)
+		throws Exception;
 
 }

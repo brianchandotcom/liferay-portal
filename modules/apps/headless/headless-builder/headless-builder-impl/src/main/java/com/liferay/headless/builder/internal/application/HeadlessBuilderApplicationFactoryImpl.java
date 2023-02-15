@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.operation;
+package com.liferay.headless.builder.internal.application;
 
+import com.liferay.headless.builder.application.HeadlessBuilderApplication;
+import com.liferay.headless.builder.application.HeadlessBuilderApplicationFactory;
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.operation.Operation;
+import com.liferay.headless.builder.internal.operation.OperationRegistry;
+import com.liferay.headless.builder.internal.operation.PathConfiguration;
+import com.liferay.headless.builder.internal.operation.handler.OperationHandler;
 import com.liferay.headless.builder.internal.util.URLUtil;
-import com.liferay.headless.builder.operation.MediaType;
-import com.liferay.headless.builder.operation.OpenAPIOperationFactory;
-import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.PathConfiguration;
-import com.liferay.headless.builder.operation.handler.OperationHandler;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -69,11 +70,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(service = OpenAPIOperationFactory.class)
-public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
+@Component(service = HeadlessBuilderApplicationFactory.class)
+public class HeadlessBuilderApplicationFactoryImpl
+	implements HeadlessBuilderApplicationFactory {
 
 	@Override
-	public List<Operation> getOperations(
+	public HeadlessBuilderApplication getHeadlessBuilderApplication(
 			long companyId, OpenAPIYAML openAPIYAML)
 		throws Exception {
 
@@ -98,7 +100,17 @@ public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 					pathItem, components.getSchemas()));
 		}
 
-		return operations;
+		return () -> {
+			for (Operation operation : operations) {
+				_operationRegistry.register(operation);
+			}
+
+			return () -> {
+				for (Operation operation : operations) {
+					_operationRegistry.unregister(operation);
+				}
+			};
+		};
 	}
 
 	@Activate
@@ -224,8 +236,7 @@ public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 			).withCompanyId(
 				companyId
 			).withMethod(
-				com.liferay.headless.builder.operation.Method.valueOf(
-					method.name())
+				method.name()
 			).withOperationType(
 				operationDefinition.getType()
 			).withPathConfiguration(
@@ -266,22 +277,22 @@ public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 						schemaDefinition.getEntityName(),
 						schema.getPropertySchemas());
 
-					com.liferay.headless.builder.operation.response.ResponseCode
-						responseCode = _toResponseCode(entry.getKey());
+					ResponseCode responseCode = entry.getKey();
+
+					int httpCode = responseCode.getHttpCode();
 
 					if (Objects.equals(
-							com.liferay.headless.builder.operation.response.
-								ResponseCode.SUCCESSFUL,
-							responseCode)) {
+							Response.Status.OK.getStatusCode(), httpCode)) {
 
 						successfulInfoFields = infoFields;
 					}
 
 					builder.withResponse(
-						new com.liferay.headless.builder.operation.Response(
-							schemaDefinition.getEntityName(), infoFields,
-							schemaName),
-						MediaType.parse(entry2.getKey()), responseCode);
+						new com.liferay.headless.builder.internal.operation.
+							Response(
+								schemaDefinition.getEntityName(), infoFields,
+								schemaName),
+						entry2.getKey(), httpCode);
 				}
 			}
 
@@ -306,28 +317,6 @@ public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 		}
 
 		return operations;
-	}
-
-	private com.liferay.headless.builder.operation.response.ResponseCode
-		_toResponseCode(ResponseCode responseCode) {
-
-		Response.Status.Family family = Response.Status.Family.familyOf(
-			responseCode.getHttpCode());
-
-		if (Objects.equals(family, Response.Status.Family.SUCCESSFUL)) {
-			return com.liferay.headless.builder.operation.response.ResponseCode.
-				SUCCESSFUL;
-		}
-		else if (Objects.equals(family, Response.Status.Family.CLIENT_ERROR)) {
-			return com.liferay.headless.builder.operation.response.ResponseCode.
-				NOT_FOUND;
-		}
-		else if (Objects.equals(family, Response.Status.Family.SERVER_ERROR)) {
-			return com.liferay.headless.builder.operation.response.ResponseCode.
-				ERROR;
-		}
-
-		throw new IllegalStateException();
 	}
 
 	private void _validate(PathItem pathItem) throws Exception {
@@ -369,5 +358,8 @@ public class OpenAPIOperationFactoryImpl implements OpenAPIOperationFactory {
 
 	private ServiceTrackerMap<String, OperationHandler>
 		_operationHandlerServiceTrackerMap;
+
+	@Reference
+	private OperationRegistry _operationRegistry;
 
 }

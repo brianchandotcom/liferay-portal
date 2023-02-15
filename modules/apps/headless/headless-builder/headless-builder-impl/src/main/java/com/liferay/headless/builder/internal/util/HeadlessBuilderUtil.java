@@ -14,7 +14,7 @@
 
 package com.liferay.headless.builder.internal.util;
 
-import com.liferay.headless.builder.model.HeadlessBuilderEntry;
+import com.liferay.headless.builder.internal.operation.HeadlessBuilderEntry;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;

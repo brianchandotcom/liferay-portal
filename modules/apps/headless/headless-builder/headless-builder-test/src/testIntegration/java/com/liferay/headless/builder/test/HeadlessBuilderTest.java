@@ -17,9 +17,8 @@ package com.liferay.headless.builder.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
-import com.liferay.headless.builder.operation.OpenAPIOperationFactory;
-import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.OperationRegistry;
+import com.liferay.headless.builder.application.HeadlessBuilderApplication;
+import com.liferay.headless.builder.application.HeadlessBuilderApplicationFactory;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -47,7 +46,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -202,32 +200,26 @@ public class HeadlessBuilderTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		OpenAPIYAML openAPIYAML = _readOpenAPIYAML(
-			StringPool.SLASH + openApiYamlFile);
+		HeadlessBuilderApplication headlessBuilderApplication =
+			_headlessBuilderApplicationFactory.getHeadlessBuilderApplication(
+				companyId,
+				_readOpenAPIYAML(StringPool.SLASH + openApiYamlFile));
 
-		List<Operation> operations = _openAPIOperationFactory.getOperations(
-			companyId, openAPIYAML);
+		HeadlessBuilderApplication.Handle handle =
+			headlessBuilderApplication.deploy();
 
 		try {
-			for (Operation operation : operations) {
-				_operationRegistry.register(operation);
-			}
-
 			unsafeRunnable.run();
 		}
 		finally {
-			for (Operation operation : operations) {
-				_operationRegistry.unregister(operation);
-			}
+			handle.undeploy();
 		}
 	}
 
 	private BlogsEntry _blogsEntry;
 
 	@Inject
-	private OpenAPIOperationFactory _openAPIOperationFactory;
-
-	@Inject
-	private OperationRegistry _operationRegistry;
+	private HeadlessBuilderApplicationFactory
+		_headlessBuilderApplicationFactory;
 
 }

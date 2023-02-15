@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation;
+package com.liferay.headless.builder.internal.operation;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -25,9 +25,7 @@ import java.util.Map;
  */
 public interface OperationContext {
 
-	public Map<String, InfoFieldValue<?>> getInfoFieldValues();
-
-	public MediaType getMediaType();
+	public String getMediaType();
 
 	public InfoFieldValue<?> getPrimaryKeyInfoFieldValue();
 
@@ -45,7 +43,7 @@ public interface OperationContext {
 			return this;
 		}
 
-		public Builder withMediaType(MediaType mediaType) {
+		public Builder withMediaType(String mediaType) {
 			_mediaType = mediaType;
 
 			return this;
@@ -61,7 +59,7 @@ public interface OperationContext {
 
 		private Map<String, InfoFieldValue<?>> _infoFieldValues =
 			new HashMap<>();
-		private MediaType _mediaType;
+		private String _mediaType;
 		private InfoFieldValue<?> _primaryKeyInfoFieldValue;
 
 	}
@@ -73,12 +71,7 @@ public interface OperationContext {
 		}
 
 		@Override
-		public Map<String, InfoFieldValue<?>> getInfoFieldValues() {
-			return _builder._infoFieldValues;
-		}
-
-		@Override
-		public MediaType getMediaType() {
+		public String getMediaType() {
 			return _builder._mediaType;
 		}
 

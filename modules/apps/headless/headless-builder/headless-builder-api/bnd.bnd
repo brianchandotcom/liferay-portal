@@ -1,8 +1,4 @@
 Bundle-Name: Liferay Headless Builder API
 Bundle-SymbolicName: com.liferay.headless.builder.api
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.builder.model,\
-	com.liferay.headless.builder.operation,\
-	com.liferay.headless.builder.operation.handler,\
-	com.liferay.headless.builder.operation.response
+Export-Package: com.liferay.headless.builder.application

@@ -15,24 +15,23 @@
 package com.liferay.headless.builder.internal.operation.handler;
 
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.dto.converter.HeadlessBuilderElementDTOConverter;
+import com.liferay.headless.builder.internal.operation.Operation;
+import com.liferay.headless.builder.internal.operation.OperationContext;
+import com.liferay.headless.builder.internal.operation.Response;
 import com.liferay.headless.builder.internal.util.HeadlessBuilderUtil;
-import com.liferay.headless.builder.operation.MediaType;
-import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.OperationContext;
-import com.liferay.headless.builder.operation.Response;
-import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.operation.response.NotFoundOperationResponse;
-import com.liferay.headless.builder.operation.response.OperationResponse;
-import com.liferay.headless.builder.operation.response.ResponseCode;
-import com.liferay.headless.builder.operation.response.SuccessfulOperationResponse;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
@@ -44,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 
 	@Override
-	public OperationResponse handle(
+	public javax.ws.rs.core.Response handle(
 			Operation operation, OperationContext operationContext)
 		throws Exception {
 
@@ -56,10 +55,9 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 				"The operation context does not contain the primary key");
 		}
 
-		MediaType mediaType = operationContext.getMediaType();
-
 		Response response = operation.getResponse(
-			mediaType, ResponseCode.SUCCESSFUL);
+			operationContext.getMediaType(),
+			javax.ws.rs.core.Response.Status.OK.getStatusCode());
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			HeadlessBuilderUtil.getInfoItemService(
@@ -78,11 +76,15 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 			InfoItemFieldValues infoItemFieldValues =
 				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
-			return new SuccessfulOperationResponse(
-				HeadlessBuilderUtil.toHeadlessBuilderEntry(
-					infoItemFieldValues.getInfoFieldValues(), primaryKey,
-					response.getSchemaName()),
-				response);
+			return javax.ws.rs.core.Response.status(
+				javax.ws.rs.core.Response.Status.OK
+			).entity(
+				_dtoConverter.toDTO(
+					_getDTOConverterContext(response),
+					HeadlessBuilderUtil.toHeadlessBuilderEntry(
+						infoItemFieldValues.getInfoFieldValues(), primaryKey,
+						response.getSchemaName()))
+			).build();
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			String message = noSuchInfoItemException.getMessage();
@@ -93,10 +95,24 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 				message = throwable.getMessage();
 			}
 
-			return new NotFoundOperationResponse(
-				message,
-				operation.getResponse(mediaType, ResponseCode.NOT_FOUND));
+			return javax.ws.rs.core.Response.status(
+				javax.ws.rs.core.Response.Status.NOT_FOUND
+			).entity(
+				new Problem(javax.ws.rs.core.Response.Status.NOT_FOUND, message)
+			).build();
 		}
 	}
+
+	private DTOConverterContext _getDTOConverterContext(Response response) {
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(null, null, null, null, null);
+
+		dtoConverterContext.setAttribute("response", response);
+
+		return dtoConverterContext;
+	}
+
+	@Reference
+	private HeadlessBuilderElementDTOConverter _dtoConverter;
 
 }

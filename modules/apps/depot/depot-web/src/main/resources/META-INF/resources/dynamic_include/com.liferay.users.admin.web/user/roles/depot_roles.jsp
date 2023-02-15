@@ -34,18 +34,15 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 	<c:if test="<%= depotAdminRolesDisplayContext.isSelectable() %>">
 		<clay:content-col>
-			<span class="heading-end">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					id="selectDepotRoleLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:void(0);"
-				/>
-			</clay:content-col>
-		</span>
+			<clay:button
+				aria-label='<%= LanguageUtil.format(request, "select-x", "asset-library-roles") %>'
+				cssClass="heading-end modify-link"
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "selectDepotRoleLink" %>'
+				label='<%= LanguageUtil.get(request, "select") %>'
+				small="<%= true %>"
+			/>
+		</clay:content-col>
 	</c:if>
 </clay:content-row>
 

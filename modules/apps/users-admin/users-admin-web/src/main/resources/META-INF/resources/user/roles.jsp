@@ -76,17 +76,14 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<clay:content-col>
-				<span class="heading-end">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectRegularRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:void(0);"
-					/>
-				</span>
+				<clay:button
+					aria-label='<%= LanguageUtil.format(request, "select-x", "regular-roles") %>'
+					cssClass="heading-end modify-link"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "selectRegularRoleLink" %>'
+					label='<%= LanguageUtil.get(request, "select") %>'
+					small="<%= true %>"
+				/>
 			</clay:content-col>
 		</c:if>
 	</clay:content-row>
@@ -251,17 +248,14 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!organizations.isEmpty() || !organizationRoles.isEmpty()) %>">
 			<clay:content-col>
-				<span class="heading-end">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectOrganizationRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:void(0);"
-					/>
-				</span>
+				<clay:button
+					aria-label='<%= LanguageUtil.format(request, "select-x", "organization-roles") %>'
+					cssClass="heading-end modify-link"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "selectOrganizationRoleLink" %>'
+					label='<%= LanguageUtil.get(request, "select") %>'
+					small="<%= true %>"
+				/>
 			</clay:content-col>
 		</c:if>
 	</clay:content-row>
@@ -491,17 +485,14 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!groups.isEmpty() || !siteRoles.isEmpty()) %>">
 			<clay:content-col>
-				<span class="heading-end">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectSiteRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:void(0);"
-					/>
-				</span>
+				<clay:button
+					aria-label='<%= LanguageUtil.format(request, "select-x", "site-roles") %>'
+					cssClass="heading-end modify-link"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "selectSiteRoleLink" %>'
+					label='<%= LanguageUtil.get(request, "select") %>'
+					small="<%= true %>"
+				/>
 			</clay:content-col>
 		</c:if>
 	</clay:content-row>

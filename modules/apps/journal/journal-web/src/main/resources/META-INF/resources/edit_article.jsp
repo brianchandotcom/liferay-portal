@@ -299,7 +299,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>"
 					languageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					persistDefaultValues="<%= true %>"
 					persisted="<%= article != null %>"
 					submittable="<%= false %>"
 				/>

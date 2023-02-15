@@ -9,6 +9,35 @@ definition {
 		SignIn.signInTestSetup();
 	}
 
+	@description = "Runs Proxy Path redirect path. When portal.proxy.path is set, all resources load properly."
+	@priority = 5
+	test ProxyPathRedirect {
+
+		// This test should be revisited when Webdriver4 is ready
+
+		task ("Given proxy server setup with liferay") {
+			property portal.acceptance = "true";
+			property portal.proxy.path = "liferay";
+			property web.server.forwarded.port.enabled = "true";
+			property web.server.host = "localhost";
+			property web.server.protocol = "http";
+		}
+
+		task ("When on default home page") {
+			Smoke.viewWelcomeContentPage();
+
+			Navigator.openSpecificURL(
+				url = "http://localhost:8080/${variable}/liferay",
+				variable = "web");
+
+			Smoke.viewWelcomeContentPage();
+		}
+
+		task ("Then all resources load properly") {
+			AssertJavaScriptErrors();
+		}
+	}
+
 	@description = "Runs the smoke test with proxy path."
 	@priority = 5
 	test Smoke {

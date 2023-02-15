@@ -350,19 +350,13 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		boolean hasTemplate = false;
-
 		for (DDMTemplate ddmTemplate : getDDMTemplates()) {
 			if (_ddmTemplateKey.equals(ddmTemplate.getTemplateKey())) {
-				hasTemplate = true;
-
-				break;
+				return _ddmTemplateKey;
 			}
 		}
 
-		if (!hasTemplate) {
-			_ddmTemplateKey = article.getDDMTemplateKey();
-		}
+		_ddmTemplateKey = article.getDDMTemplateKey();
 
 		return _ddmTemplateKey;
 	}

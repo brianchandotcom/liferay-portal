@@ -224,7 +224,7 @@ public class JournalArticleModelIndexerWriterContributor
 			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 		for (JournalArticle versionJournalArticle : journalArticles) {
-			if (!Objects.equals(
+			if (Objects.equals(
 					versionJournalArticle.getId(), journalArticle.getId())) {
 
 				continue;

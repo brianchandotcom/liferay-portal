@@ -525,8 +525,6 @@ definition {
 
 	@priority = 4
 	test AssertNonAdminsCannotAddCertainWidgets {
-		property app.server.types = "tomcat";
-
 		JSONRole.addRegularRole(
 			roleKey = "Can Add Widgets",
 			roleTitle = "Can Add Widgets");
@@ -4128,8 +4126,6 @@ definition {
 
 	@description = "This is a use case for LPS-152937."
 	test SortAccentedWords {
-		property app.server.types = "tomcat,weblogic";
-
 		var digit = 1;
 
 		for (var content : list "Alicante,Barcelona,Álava,Alava") {

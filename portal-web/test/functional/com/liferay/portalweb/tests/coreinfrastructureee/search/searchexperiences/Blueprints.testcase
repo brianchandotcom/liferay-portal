@@ -796,8 +796,6 @@ definition {
 	}
 
 	test BoostCustomLiferayObjectType {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 501",
 			objectName = "CustomObject501",
@@ -2978,8 +2976,6 @@ definition {
 	}
 
 	test ViewBlueprintsPreviewLocalizedResults {
-		property app.server.types = "tomcat";
-
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -4130,8 +4126,6 @@ definition {
 
 	@description = "This is a use case for LPS-147066."
 	test ViewLinksToLiferayDocumentation {
-		property search.environment.suite.exclude = "true";
-
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

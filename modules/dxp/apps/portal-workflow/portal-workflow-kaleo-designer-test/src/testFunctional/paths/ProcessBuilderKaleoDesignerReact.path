@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>MANAGE_TRANSLATIONS_MODAL</td>
-	<td>//div[contains(text() ,'${key_modalTitle}')]/../../../..//*[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]</td>
+	<td>//div//*[contains(text() ,'${key_modalTitle}')]/../../../..//*[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
 <tr>

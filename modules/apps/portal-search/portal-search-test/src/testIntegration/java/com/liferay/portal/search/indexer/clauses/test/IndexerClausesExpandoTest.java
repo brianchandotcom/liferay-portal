@@ -35,7 +35,6 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -102,8 +101,10 @@ public class IndexerClausesExpandoTest {
 		_test(
 			new Class<?>[] {JournalArticle.class}, "gamma",
 			() -> {
-				Assert.assertTrue(
-					_journalArticleIndexer instanceof BaseIndexer);
+				Assert.assertEquals(
+					"class com.liferay.portal.search.internal.indexer." +
+						"DefaultIndexer",
+					String.valueOf(_journalArticleIndexer.getClass()));
 
 				_assertSearch("[Gamma Article]", _consumer);
 				_assertSearch(

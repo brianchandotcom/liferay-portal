@@ -703,7 +703,7 @@ definition {
 
 		var fileContent = FileUtil.read("${outputDir}/sxpElement.json");
 
-		var customElementJson = StringUtil.replace(${fileContent}, "Boost Asset Type", "Boost Results of Web Content Articles");
+		var customElementJson = StringUtil.replace(${fileContent}, "boost-asset-type", "Boost Results of Web Content Articles");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
@@ -4038,7 +4038,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
-			value1 = "Boost All Keywords Match");
+			value1 = "boost-all-keywords-match");
 	}
 
 	test ViewElementsAdminTableValues {

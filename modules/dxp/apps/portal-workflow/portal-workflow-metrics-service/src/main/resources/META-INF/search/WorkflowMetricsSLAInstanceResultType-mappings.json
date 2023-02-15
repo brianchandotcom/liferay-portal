@@ -1,0 +1,84 @@
+{
+	"date_detection": false,
+	"dynamic_templates": [
+		{
+			"template_long_sortable": {
+				"mapping": {
+					"store": true,
+					"type": "long"
+				},
+				"match": "*_sortable",
+				"match_mapping_type": "long"
+			}
+		}
+	],
+	"properties": {
+		"active": {
+			"store": true,
+			"type": "boolean"
+		},
+		"blocked": {
+			"store": true,
+			"type": "boolean"
+		},
+		"companyId": {
+			"store": true,
+			"type": "long"
+		},
+		"completionDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"deleted": {
+			"store": true,
+			"type": "boolean"
+		},
+		"elapsedTime": {
+			"store": true,
+			"type": "long"
+		},
+		"instanceCompleted": {
+			"store": true,
+			"type": "boolean"
+		},
+		"instanceId": {
+			"store": true,
+			"type": "long"
+		},
+		"modifiedDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"onTime": {
+			"store": true,
+			"type": "boolean"
+		},
+		"overdueDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"processId": {
+			"store": true,
+			"type": "long"
+		},
+		"remainingTime": {
+			"store": true,
+			"type": "long"
+		},
+		"slaDefinitionId": {
+			"store": true,
+			"type": "long"
+		},
+		"status": {
+			"store": true,
+			"type": "keyword"
+		},
+		"uid": {
+			"store": true,
+			"type": "keyword"
+		}
+	}
+}

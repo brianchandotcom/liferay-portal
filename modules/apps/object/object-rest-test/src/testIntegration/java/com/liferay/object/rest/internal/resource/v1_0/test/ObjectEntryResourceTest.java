@@ -141,9 +141,7 @@ public class ObjectEntryResourceTest {
 				"feature.flag.LPS-154672", "true"
 			).build());
 
-		for (FilterOperator filterOperator : FilterOperator.values()) {
-			_testFilterObjectEntriesByRelatedObjectEntries(filterOperator);
-		}
+		_testFilterObjectEntriesByRelatedObjectEntries();
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
@@ -544,15 +542,16 @@ public class ObjectEntryResourceTest {
 			endpoint, expectedObjectFieldName, expectedObjectFieldValue);
 	}
 
-	private void _testFilterObjectEntriesByRelatedObjectEntries(
-			FilterOperator filterOperator)
+	private void _testFilterObjectEntriesByRelatedObjectEntries()
 		throws Exception {
 
 		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-			_objectRelationship, filterOperator);
+		for (FilterOperator filterOperator : FilterOperator.values()) {
+			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
+				_objectRelationship, filterOperator);
+		}
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			_objectRelationship);
@@ -560,8 +559,10 @@ public class ObjectEntryResourceTest {
 		_objectRelationship = _addObjectRelationshipAndRelateObjectsEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
-			_objectRelationship, filterOperator);
+		for (FilterOperator filterOperator : FilterOperator.values()) {
+			_testFilterObjectEntriesByRelatedObjectEntriesInBothSidesOfRelationship(
+				_objectRelationship, filterOperator);
+		}
 	}
 
 	private void

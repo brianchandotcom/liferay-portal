@@ -1,0 +1,62 @@
+{
+	"author": "",
+	"babel": {
+		"plugins": [
+			[
+				"prismjs",
+				{
+					"css": true,
+					"languages": [
+						"apacheconf",
+						"bash",
+						"css",
+						"docker",
+						"graphql",
+						"groovy",
+						"html",
+						"ini",
+						"java",
+						"javascript",
+						"js",
+						"json",
+						"log",
+						"markdown",
+						"markup",
+						"properties",
+						"sh",
+						"shell",
+						"sql",
+						"xml",
+						"yaml"
+					],
+					"plugins": [
+						"copy-to-clipboard"
+					]
+				}
+			]
+		]
+	},
+	"dependencies": {
+		"mark.js": "^8.11.1",
+		"prismjs": "^1.29.0"
+	},
+	"description": "",
+	"devDependencies": {
+		"@babel/core": "^7.20.7",
+		"@babel/preset-env": "^7.20.2",
+		"babel-loader": "^9.1.0",
+		"babel-plugin-prismjs": "^2.1.0",
+		"css-loader": "^6.7.3",
+		"style-loader": "^3.3.1",
+		"webpack": "^5.75.0",
+		"webpack-cli": "^5.0.0"
+	},
+	"keywords": [
+	],
+	"license": "ISC",
+	"name": "@liferay/liferay-learn-global-js",
+	"scripts": {
+		"build": "webpack"
+	},
+	"version": "1.0.0"
+}

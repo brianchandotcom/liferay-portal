@@ -1491,7 +1491,7 @@ definition {
 		AssertElementPresent(locator1 = "Sites#SELECT_SITE_MODAL");
 
 		AssertTextEquals(
-			locator1 = "Sites#SELECT_SITE_MODAL_HEADER",
+			locator1 = "Modal#HEADER",
 			value1 = "Select Site");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

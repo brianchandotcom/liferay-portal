@@ -76,8 +76,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SalesforceObjectEntryManagerImpl
 	extends BaseObjectEntryManager implements ObjectEntryManager {
 
-	public static final String CUSTOM_OBJECT_SUFFIX = "__c";
-
 	@Override
 	public ObjectEntry addObjectEntry(
 			DTOConverterContext dtoConverterContext,
@@ -488,7 +486,7 @@ public class SalesforceObjectEntryManagerImpl
 				objectDefinition.getExternalReferenceCode();
 
 			if (Validator.isNotNull(externalReferenceCode) &&
-				externalReferenceCode.endsWith(CUSTOM_OBJECT_SUFFIX) &&
+				externalReferenceCode.endsWith(_CUSTOM_OBJECT_SUFFIX) &&
 				Objects.equals(
 					objectField.getObjectFieldId(),
 					objectDefinition.getTitleObjectFieldId())) {
@@ -612,6 +610,8 @@ public class SalesforceObjectEntryManagerImpl
 
 		return objectEntry;
 	}
+
+	private static final String _CUSTOM_OBJECT_SUFFIX = "__c";
 
 	private final Map<String, String> _defaultObjectFieldNames =
 		HashMapBuilder.put(

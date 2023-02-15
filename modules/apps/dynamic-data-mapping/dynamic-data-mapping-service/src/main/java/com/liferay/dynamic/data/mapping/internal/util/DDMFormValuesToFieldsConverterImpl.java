@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -70,7 +68,12 @@ public class DDMFormValuesToFieldsConverterImpl
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
-		Fields fields = _createFields(ddmStructure);
+		Fields fields = new Fields();
+
+		fields.put(
+			new Field(
+				ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
+				StringPool.BLANK));
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
@@ -105,9 +108,13 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		if (existingField == null) {
 			fields.put(field);
+
+			return;
 		}
-		else {
-			_addFieldValues(existingField, field);
+
+		for (Locale availableLocale : field.getAvailableLocales()) {
+			existingField.addValues(
+				availableLocale, field.getValues(availableLocale));
 		}
 	}
 
@@ -117,10 +124,9 @@ public class DDMFormValuesToFieldsConverterImpl
 		String[] fieldsDisplayValues = StringUtil.split(
 			(String)fieldsDisplayField.getValue());
 
-		fieldsDisplayValues = ArrayUtil.append(
-			fieldsDisplayValues, fieldsDisplayValue);
-
-		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
+		fieldsDisplayField.setValue(
+			StringUtil.merge(
+				ArrayUtil.append(fieldsDisplayValues, fieldsDisplayValue)));
 	}
 
 	private void _addFields(
@@ -139,7 +145,9 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		_addFieldDisplayValue(
 			fields.get(DDMImpl.FIELDS_DISPLAY_NAME),
-			_getFieldDisplayValue(ddmFormFieldValue));
+			StringBundler.concat(
+				ddmFormFieldValue.getName(), DDMImpl.INSTANCE_SEPARATOR,
+				ddmFormFieldValue.getInstanceId()));
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
@@ -147,13 +155,6 @@ public class DDMFormValuesToFieldsConverterImpl
 			_addFields(
 				ddmFormFieldAvailableLocales, ddmStructureId, ddmFormFieldsMap,
 				nestedDDMFormFieldValue, fields, defaultLocale);
-		}
-	}
-
-	private void _addFieldValues(Field existingField, Field newField) {
-		for (Locale availableLocale : newField.getAvailableLocales()) {
-			existingField.addValues(
-				availableLocale, newField.getValues(availableLocale));
 		}
 	}
 
@@ -169,25 +170,30 @@ public class DDMFormValuesToFieldsConverterImpl
 		field.setDefaultLocale(defaultLocale);
 		field.setName(ddmFormFieldValue.getName());
 
-		String type = ddmFormField.getDataType();
+		Value value = ddmFormFieldValue.getValue();
 
-		_setFieldValue(
-			field, ddmFormFieldAvailableLocales, type,
-			ddmFormFieldValue.getValue(), defaultLocale);
+		if (!value.isLocalized()) {
+			field.addValue(
+				defaultLocale,
+				FieldConstants.getSerializable(
+					defaultLocale, LocaleUtil.ROOT, ddmFormField.getDataType(),
+					value.getString(LocaleUtil.ROOT)));
+
+			return field;
+		}
+
+		for (Locale availableLocale :
+				ddmFormFieldAvailableLocales.get(field.getName())) {
+
+			field.addValue(
+				availableLocale,
+				FieldConstants.getSerializable(
+					availableLocale, availableLocale,
+					ddmFormField.getDataType(),
+					value.getString(availableLocale)));
+		}
 
 		return field;
-	}
-
-	private Fields _createFields(DDMStructure ddmStructure) {
-		Fields fields = new Fields();
-
-		Field fieldsDisplayField = new Field(
-			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
-			StringPool.BLANK);
-
-		fields.put(fieldsDisplayField);
-
-		return fields;
 	}
 
 	private Map<String, Set<Locale>> _getDDMFormFieldAvailableLocales(
@@ -218,52 +224,6 @@ public class DDMFormValuesToFieldsConverterImpl
 		}
 
 		return ddmFormFieldAvailableLocales;
-	}
-
-	private String _getFieldDisplayValue(DDMFormFieldValue ddmFormFieldValue) {
-		String fieldName = ddmFormFieldValue.getName();
-
-		return StringBundler.concat(
-			fieldName, DDMImpl.INSTANCE_SEPARATOR,
-			ddmFormFieldValue.getInstanceId());
-	}
-
-	private void _setFieldLocalizedValue(
-		Field field, Map<String, Set<Locale>> ddmFormFieldAvailableLocales,
-		String type, Value value) {
-
-		for (Locale availableLocale :
-				ddmFormFieldAvailableLocales.get(field.getName())) {
-
-			Serializable serializable = FieldConstants.getSerializable(
-				availableLocale, availableLocale, type,
-				value.getString(availableLocale));
-
-			field.addValue(availableLocale, serializable);
-		}
-	}
-
-	private void _setFieldUnlocalizedValue(
-		Field field, String type, Value value, Locale defaultLocale) {
-
-		Serializable serializable = FieldConstants.getSerializable(
-			defaultLocale, LocaleUtil.ROOT, type,
-			value.getString(LocaleUtil.ROOT));
-
-		field.addValue(defaultLocale, serializable);
-	}
-
-	private void _setFieldValue(
-		Field field, Map<String, Set<Locale>> ddmFormFieldAvailableLocales,
-		String type, Value value, Locale defaultLocale) {
-
-		if (value.isLocalized()) {
-			_setFieldLocalizedValue(
-				field, ddmFormFieldAvailableLocales, type, value);
-		}
-		else {
-			_setFieldUnlocalizedValue(field, type, value, defaultLocale);
-		}
 	}
 
 }

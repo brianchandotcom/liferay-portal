@@ -61,6 +61,25 @@ public class ObjectEntryValuesUtil {
 		}
 	}
 
+	public static com.liferay.object.rest.dto.v1_0.ObjectEntry toObjectEntry(
+		Map<String, Object> nestedObjectEntryProperties) {
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
+
+		if (nestedObjectEntryProperties.containsKey("externalReferenceCode")) {
+			objectEntry.setExternalReferenceCode(
+				(String)nestedObjectEntryProperties.get(
+					"externalReferenceCode"));
+
+			nestedObjectEntryProperties.remove("externalReferenceCode");
+		}
+
+		objectEntry.setProperties(nestedObjectEntryProperties);
+
+		return objectEntry;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryValuesUtil.class);
 

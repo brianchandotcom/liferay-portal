@@ -1,16 +1,4 @@
 {
 	"fieldSets": [
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "",
-					"label": "placeholder",
-					"localizable": true,
-					"name": "placeholder",
-					"type": "text"
-				}
-			]
-		}
 	]
 }

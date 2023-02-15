@@ -105,8 +105,7 @@ public class EventSegmentsCriteriaContributor
 				"event", null, _getSelectEntity(portletRequest)),
 			new Field(
 				"blogViewed",
-				_language.get(
-					_portal.getLocale(portletRequest), "viewed-blog"),
+				_language.get(_portal.getLocale(portletRequest), "viewed-blog"),
 				"event", null, _getSelectEntity(portletRequest)),
 			new Field(
 				"documentPreviewed",

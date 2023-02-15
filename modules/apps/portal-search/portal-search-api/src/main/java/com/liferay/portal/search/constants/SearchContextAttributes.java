@@ -19,6 +19,9 @@ package com.liferay.portal.search.constants;
  */
 public class SearchContextAttributes {
 
+	public static final String ATTRIBUTE_KEY_ACCURATE_COUNT_THRESHOLD =
+		"search.accurate.count.threshold";
+
 	public static final String ATTRIBUTE_KEY_BASIC_FACET_SELECTION =
 		"search.basic.facet.selection";
 
@@ -27,8 +30,5 @@ public class SearchContextAttributes {
 
 	public static final String ATTRIBUTE_KEY_LUCENE_SYNTAX =
 		"search.lucene.syntax";
-
-	public static final String ATTRIBUTE_KEY_PERMISSIONED_SEARCHER =
-		"permissioned.search";
 
 }

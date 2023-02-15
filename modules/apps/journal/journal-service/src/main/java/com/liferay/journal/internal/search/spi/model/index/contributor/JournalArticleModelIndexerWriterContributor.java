@@ -161,36 +161,13 @@ public class JournalArticleModelIndexerWriterContributor
 	}
 
 	@Override
+	public void modelDeleted(JournalArticle journalArticle) {
+		_reindexOtherArticleVersions(journalArticle);
+	}
+
+	@Override
 	public void modelIndexed(JournalArticle journalArticle) {
-		if (_portal.getClassNameId(DDMStructure.class) ==
-				journalArticle.getClassNameId()) {
-
-			return;
-		}
-
-		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.getArticles(
-				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new ArticleVersionComparator());
-
-		Indexer<JournalArticle> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
-
-		for (JournalArticle versionJournalArticle : journalArticles) {
-			if (!Objects.equals(
-					versionJournalArticle.getId(), journalArticle.getId())) {
-
-				continue;
-			}
-
-			try {
-				indexer.reindex(versionJournalArticle, false);
-			}
-			catch (SearchException searchException) {
-				throw new SystemException(searchException);
-			}
-		}
+		_reindexOtherArticleVersions(journalArticle);
 	}
 
 	private JournalArticle _fetchLatestIndexableArticleVersion(
@@ -228,6 +205,38 @@ public class JournalArticleModelIndexerWriterContributor
 		}
 
 		return false;
+	}
+
+	private void _reindexOtherArticleVersions(JournalArticle journalArticle) {
+		if (_portal.getClassNameId(DDMStructure.class) ==
+				journalArticle.getClassNameId()) {
+
+			return;
+		}
+
+		List<JournalArticle> journalArticles =
+			_journalArticleLocalService.getArticles(
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleVersionComparator());
+
+		Indexer<JournalArticle> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+		for (JournalArticle versionJournalArticle : journalArticles) {
+			if (!Objects.equals(
+					versionJournalArticle.getId(), journalArticle.getId())) {
+
+				continue;
+			}
+
+			try {
+				indexer.reindex(versionJournalArticle, false);
+			}
+			catch (SearchException searchException) {
+				throw new SystemException(searchException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

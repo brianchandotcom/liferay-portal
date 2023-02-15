@@ -89,35 +89,35 @@ public class EventSegmentsCriteriaContributor
 				"formSubmitted",
 				_language.get(
 					_portal.getLocale(portletRequest), "submitted-form"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"formViewed",
 				_language.get(_portal.getLocale(portletRequest), "viewed-form"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"pageViewed",
 				_language.get(_portal.getLocale(portletRequest), "viewed-page"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"blogCommented",
 				_language.get(
 					_portal.getLocale(portletRequest), "commented-on-blog"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"blogViewed",
 				_language.get(_portal.getLocale(portletRequest), "viewed-blog"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"documentPreviewed",
 				_language.get(
 					_portal.getLocale(portletRequest),
 					"viewed-document-and-media"),
-				"event", null, _getSelectEntity(portletRequest)),
+				"event"),
 			new Field(
 				"webContentViewed",
 				_language.get(
 					_portal.getLocale(portletRequest), "viewed-web-content"),
-				"event", null, _getSelectEntity(portletRequest)));
+				"event"));
 	}
 
 	@Override

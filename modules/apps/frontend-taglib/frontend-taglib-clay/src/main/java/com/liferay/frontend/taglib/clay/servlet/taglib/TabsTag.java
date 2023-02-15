@@ -137,9 +137,9 @@ public class TabsTag extends BaseContainerTag {
 
 			String label = (String)tabsItem.get("label");
 
-			Boolean isActive = (Boolean)tabsItem.get("active");
+			Boolean active = (Boolean)tabsItem.get("active");
 
-			if (Validator.isNotNull(isActive) && isActive) {
+			if ((active != null) && active) {
 				itemCssClass = itemCssClass + " active";
 			}
 

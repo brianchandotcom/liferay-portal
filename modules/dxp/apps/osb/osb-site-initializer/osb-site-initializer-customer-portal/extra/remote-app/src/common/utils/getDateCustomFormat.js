@@ -11,6 +11,7 @@
 import {Liferay} from '../services/liferay';
 
 export default function getDateCustomFormat(rawDate, format) {
+	rawDate = rawDate.substring(0, rawDate.length - 1);
 	const date = new Date(rawDate);
 
 	return date.toLocaleDateString(

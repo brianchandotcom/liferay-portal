@@ -191,10 +191,18 @@ public class CommerceCountryManagerImpl implements CommerceCountryManager {
 					channelFilterPredicate);
 
 				predicate = predicate.and(groupFilterPredicate);
-				predicate = predicate.and(
-					CountryTable.INSTANCE.billingAllowed.eq(billingAllowed));
-				predicate = predicate.and(
-					CountryTable.INSTANCE.shippingAllowed.eq(shippingAllowed));
+
+				if (billingAllowed) {
+					predicate = predicate.and(
+						CountryTable.INSTANCE.billingAllowed.eq(
+							billingAllowed));
+				}
+
+				if (shippingAllowed) {
+					predicate = predicate.and(
+						CountryTable.INSTANCE.shippingAllowed.eq(
+							shippingAllowed));
+				}
 
 				return predicate;
 			});

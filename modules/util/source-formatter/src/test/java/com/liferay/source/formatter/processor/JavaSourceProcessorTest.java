@@ -187,6 +187,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testGetFeatureFlag() throws Exception {
+		test(
+			"GetFeatureFlag.testjava",
+			"Use 'FeatureFlagManagerUtil.isEnabled' instead of " +
+				"'PropsUtil.get' for feature flag" ,26);
+	}
+
+	@Test
 	public void testIfClauseIncorrectLineBreaks() throws Exception {
 		test("IfClauseIncorrectLineBreaks.testjava");
 	}

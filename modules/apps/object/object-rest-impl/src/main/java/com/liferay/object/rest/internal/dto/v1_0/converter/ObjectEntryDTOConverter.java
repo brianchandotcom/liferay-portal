@@ -424,22 +424,27 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				DLFileEntry dlFileEntry = _dLFileEntryLocalService.getFileEntry(
-					fileEntryId);
+				DLFileEntry dlFileEntry =
+					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 
-				map.put(
-					objectFieldName,
-					new FileEntry() {
-						{
-							id = dlFileEntry.getFileEntryId();
-							link = LinkUtil.toLink(
-								_dlAppService, dlFileEntry, _dlURLHelper,
-								objectDefinition.getExternalReferenceCode(),
-								objectEntry.getExternalReferenceCode(),
-								_portal);
-							name = dlFileEntry.getFileName();
-						}
-					});
+				if (dlFileEntry != null) {
+					map.put(
+						objectFieldName,
+						new FileEntry() {
+							{
+								id = dlFileEntry.getFileEntryId();
+								link = LinkUtil.toLink(
+									_dlAppService, dlFileEntry, _dlURLHelper,
+									objectDefinition.getExternalReferenceCode(),
+									objectEntry.getExternalReferenceCode(),
+									_portal);
+								name = dlFileEntry.getFileName();
+							}
+						});
+				}
+				else {
+					map.put(objectFieldName, new FileEntry());
+				}
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),

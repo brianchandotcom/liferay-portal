@@ -23,7 +23,8 @@ public enum UnsupportedBusinessTypes {
 
 	BUSINESS_TYPE_AGGREGATION(ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION),
 	BUSINESS_TYPE_ATTACHMENT(ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT),
-	BUSINESS_TYPE_FORMULA(ObjectFieldConstants.BUSINESS_TYPE_FORMULA);
+	BUSINESS_TYPE_FORMULA(ObjectFieldConstants.BUSINESS_TYPE_FORMULA),
+	BUSINESS_TYPE_RICH_TEXT(ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT);
 
 	public String getValue() {
 		return _value;

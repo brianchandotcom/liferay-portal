@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>DETAILS_PORTRAIT</td>
-	<td>//a//img[contains(@src,'user_portrait')]</td>
+	<td>//div//img[contains(@src,'user_portrait')]</td>
 	<td></td>
 </tr>
 <tr>

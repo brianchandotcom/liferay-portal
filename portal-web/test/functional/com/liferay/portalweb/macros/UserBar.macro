@@ -61,7 +61,7 @@ definition {
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_PORTRAIT");
 
-		var accountDetailImage = selenium.getAttribute("//a//img[contains(@src,'user_portrait')]@src");
+		var accountDetailImage = selenium.getAttribute("//div//img[contains(@src,'user_portrait')]@src");
 		var accountImage = selenium.getAttribute("//button//img[contains(@src,'user_portrait')]@src");
 
 		if (${accountImage} != ${accountDetailImage}) {

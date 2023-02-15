@@ -29,7 +29,9 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -316,6 +318,14 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				}
 			},
 			testGroup.getCompanyId(), _instance, TestPropsValues.getUser());
+	}
+
+	@Override
+	protected Map<String, Map> testGetProcessTasksPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

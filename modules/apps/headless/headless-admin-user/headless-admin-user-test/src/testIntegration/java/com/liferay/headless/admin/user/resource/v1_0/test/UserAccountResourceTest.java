@@ -83,6 +83,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1040,6 +1041,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected Long testGetAccountUserAccountsPage_getAccountId() {
 		return _getAccountEntryId();
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetAccountUserAccountsPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

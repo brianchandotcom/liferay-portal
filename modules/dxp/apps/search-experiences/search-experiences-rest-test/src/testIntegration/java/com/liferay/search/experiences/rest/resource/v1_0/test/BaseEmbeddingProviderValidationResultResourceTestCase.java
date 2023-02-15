@@ -378,7 +378,10 @@ public abstract class BaseEmbeddingProviderValidationResultResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<EmbeddingProviderValidationResult> page) {
+	protected void assertValid(
+		Page<EmbeddingProviderValidationResult> page,
+		Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<EmbeddingProviderValidationResult>
@@ -411,9 +414,7 @@ public abstract class BaseEmbeddingProviderValidationResultResourceTestCase {
 		}
 	}
 
-	protected void assertValid(
-		Page<TextEmbeddingProviderValidationResult> page) {
-
+	protected void assertValid(Page<EmbeddingProviderValidationResult> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 

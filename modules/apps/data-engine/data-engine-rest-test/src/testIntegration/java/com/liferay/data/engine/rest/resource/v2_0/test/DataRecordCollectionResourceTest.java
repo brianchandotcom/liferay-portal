@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -263,6 +265,15 @@ public class DataRecordCollectionResourceTest
 		throws Exception {
 
 		return _ddmStructure.getStructureId();
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetDataDefinitionDataRecordCollectionsPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

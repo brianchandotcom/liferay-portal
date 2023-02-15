@@ -30,7 +30,7 @@ type HeadlessResource = {
 	version: string;
 };
 
-interface IItemProps {
+interface IHeadlessResourceItemProps {
 	headlessResource: HeadlessResource;
 	query: string;
 }
@@ -40,7 +40,10 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
-const HeadlessResourceItem = ({headlessResource, query}: IItemProps) => {
+const HeadlessResourceItem = ({
+	headlessResource,
+	query,
+}: IHeadlessResourceItemProps) => {
 	const fuzzyNameMatch = fuzzy.match(
 		query,
 		headlessResource.name,
@@ -155,7 +158,7 @@ const DropdownMenu = ({
 	);
 };
 
-interface IFDSViewsProps {
+interface IAddFDSViewProps {
 	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
@@ -165,7 +168,7 @@ const AddFDSView = ({
 	fdsViewsURL,
 	headlessResources: initialHeadlessResources,
 	namespace,
-}: IFDSViewsProps) => {
+}: IAddFDSViewProps) => {
 	const [selectedHeadlessResource, setSelectedHeadlessResource] = useState<
 		HeadlessResource
 	>();

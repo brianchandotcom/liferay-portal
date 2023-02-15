@@ -21,7 +21,7 @@ declare type HeadlessResource = {
 	name: string;
 	version: string;
 };
-interface IFDSViewsProps {
+interface IAddFDSViewProps {
 	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
 	namespace: string;
@@ -30,5 +30,5 @@ declare const AddFDSView: ({
 	fdsViewsURL,
 	headlessResources: initialHeadlessResources,
 	namespace,
-}: IFDSViewsProps) => JSX.Element;
+}: IAddFDSViewProps) => JSX.Element;
 export default AddFDSView;

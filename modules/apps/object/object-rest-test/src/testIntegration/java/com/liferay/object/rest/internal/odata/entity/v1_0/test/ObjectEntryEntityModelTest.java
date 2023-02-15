@@ -32,10 +32,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -44,6 +47,7 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -94,6 +98,11 @@ public class ObjectEntryEntityModelTest {
 
 	@Test
 	public void testGetEntityFieldsMap() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "true"
+			).build());
+
 		String value = "A" + RandomTestUtil.randomString();
 
 		List<ObjectField> customObjectFields = Arrays.asList(
@@ -157,6 +166,11 @@ public class ObjectEntryEntityModelTest {
 					relatedObjectDefinition)
 			).build(),
 			_getObjectDefinitionEntityFieldsMap(objectDefinition));
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-154672", "false"
+			).build());
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -261,6 +275,16 @@ public class ObjectEntryEntityModelTest {
 			new IdEntityField(
 				expectedRelatedObjectDefinitionIdObjectFieldName,
 				locale -> expectedObjectFieldName, String::valueOf));
+
+		if (GetterUtil.getBoolean(
+				com.liferay.portal.kernel.util.PropsUtil.get(
+					"feature.flag.LPS-154672"))) {
+
+			expectedEntityFieldsMap.put(
+				objectRelationship.getName(),
+				new ComplexEntityField(
+					objectRelationship.getName(), Collections.emptyList()));
+		}
 
 		return expectedEntityFieldsMap;
 	}

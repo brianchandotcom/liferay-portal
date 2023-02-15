@@ -140,6 +140,16 @@
 		<td>//div[@class=('fade modal d-block show')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>PICKLIST_NAME</td>
+		<td>//div[contains(@class, 'dnd-tbody')]//*[contains(text(), '${key_picklistItemName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>IMPORT_PICKLIST</td>
+		<td>//div[contains(@class, 'dropdown')]//button//*[name()='svg'][contains(@class,'download')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

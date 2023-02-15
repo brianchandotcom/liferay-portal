@@ -14,14 +14,13 @@
 
 package com.liferay.sharepoint.soap.repository.connector.schema;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringWriter;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -67,17 +66,9 @@ public final class XMLUtil {
 	public static List<org.w3c.dom.Node> toNodes(
 		Document document, Node... nodes) {
 
-		return Stream.of(
-			nodes
-		).map(
-			Node::toXmlString
-		).map(
-			XMLUtil::_toNode
-		).map(
-			node -> document.importNode(node, true)
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transformToList(
+			nodes,
+			node -> document.importNode(_toNode(node.toXmlString()), true));
 	}
 
 	public static String toString(org.w3c.dom.Node node) {

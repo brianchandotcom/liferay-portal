@@ -51,16 +51,14 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 		<clay:content-col
 			containerElement="span"
 		>
-			<span class="heading-end">
-				<liferay-ui:icon
-					id="selectAccountLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:void(0);"
-				/>
-			</span>
+			<clay:button
+				aria-label='<%= LanguageUtil.format(request, "select-x", "accounts") %>'
+				cssClass="heading-end"
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "selectAccountLink" %>'
+				label='<%= LanguageUtil.get(request, "select") %>'
+				small="<%= true %>"
+			/>
 		</clay:content-col>
 	</c:if>
 </clay:content-row>

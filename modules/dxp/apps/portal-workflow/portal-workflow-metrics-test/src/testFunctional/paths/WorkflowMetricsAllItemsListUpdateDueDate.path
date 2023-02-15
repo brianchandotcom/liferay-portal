@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>METRICS_UPDATE_DUE_DATE_NO_RESULTS_MESSAGE</td>
-	<td>//p[@class='small' and contains(.,'There is no data at the moment.')]</td>
+	<td>//div[@class='modal-body' and contains(.,'There is no data at the moment.')]</td>
 	<td></td>
 </tr>
 <tr>

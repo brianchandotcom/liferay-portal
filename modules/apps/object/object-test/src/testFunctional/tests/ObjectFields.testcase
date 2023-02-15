@@ -50,6 +50,131 @@ definition {
 		ObjectField.assertValueOnLimitCharacters(maxValue = 65000);
 	}
 
+	@description = "Verify that all fields from the related object are displayed when adding filters for the long integer fields to select data from the object"
+	@priority = 4
+	test AllFieldsFromRelatedObjectAreDisplayedWhenFilteringLongIntegerFields {
+		task ("Given: Two custom objects created with long integer fields and relationship with each other") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 1",
+				objectName = "CustomObject1",
+				pluralLabelName = "Custom Objects 1");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 2",
+				objectName = "CustomObject2",
+				pluralLabelName = "Custom Objects 2");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongInteger",
+				fieldLabelName = "Custom Long Integer Field",
+				fieldName = "customObjectField",
+				fieldType = "Long",
+				isRequired = "false",
+				objectName = "CustomObject1");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongInteger",
+				fieldLabelName = "Custom Long Integer Field",
+				fieldName = "customObjectField",
+				fieldType = "Long",
+				isRequired = "false",
+				objectName = "CustomObject2");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject1");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject2");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject1",
+				objectName_2 = "CustomObject2",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+		}
+
+		task ("And Given: The custom object with a relationship has a layout created") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject1");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 1");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Custom Long Integer Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			PortletEntry.save();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 1");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Long Integer Field");
+
+			PortletEntry.save();
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Create Date");
+
+			PortletEntry.save();
+		}
+
+		task ("When: An entry is added and the filter is set in the view entry page") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject1",
+				value = 123456789);
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject1",
+				value = 987654321);
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject1");
+		}
+
+		task ("Then: The related filtered entry is shown") {
+			ObjectCustomViews.clickOnFilterOnEntries();
+
+			ObjectCustomViews.defineDateOnFilter(
+				displayDateDay = DateUtil.getCurrentDate(),
+				displayDateMonth = DateUtil.getCurrentMonth(),
+				displayDateYear = DateUtil.getCurrentYear(),
+				filterName = "Create Date");
+
+			ObjectPortlet.viewEntry(entry = 123456789);
+		}
+	}
+
 	@description = "LPS-146523 - Verify if the scope of the object is Virtual Instance (Company) I will be able to add from any folders I have access to"
 	@priority = 4
 	test CanAddFromAnyFolderWhenScopedByCompany {

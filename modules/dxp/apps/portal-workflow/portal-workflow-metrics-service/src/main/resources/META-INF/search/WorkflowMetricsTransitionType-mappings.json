@@ -1,0 +1,79 @@
+{
+	"date_detection": false,
+	"dynamic_templates": [
+		{
+			"template_long_sortable": {
+				"mapping": {
+					"store": true,
+					"type": "long"
+				},
+				"match": "*_sortable",
+				"match_mapping_type": "long"
+			}
+		}
+	],
+	"properties": {
+		"companyId": {
+			"store": true,
+			"type": "long"
+		},
+		"createDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"deleted": {
+			"store": true,
+			"type": "boolean"
+		},
+		"id": {
+			"store": true,
+			"type": "long"
+		},
+		"modifiedDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"name": {
+			"store": true,
+			"type": "keyword"
+		},
+		"nodeId": {
+			"store": true,
+			"type": "long"
+		},
+		"processId": {
+			"store": true,
+			"type": "long"
+		},
+		"sourceNodeId": {
+			"store": true,
+			"type": "long"
+		},
+		"sourceNodeName": {
+			"store": true,
+			"type": "keyword"
+		},
+		"targetNodeId": {
+			"store": true,
+			"type": "long"
+		},
+		"targetNodeName": {
+			"store": true,
+			"type": "keyword"
+		},
+		"transitionId": {
+			"store": true,
+			"type": "long"
+		},
+		"uid": {
+			"store": true,
+			"type": "keyword"
+		},
+		"userId": {
+			"store": true,
+			"type": "long"
+		}
+	}
+}

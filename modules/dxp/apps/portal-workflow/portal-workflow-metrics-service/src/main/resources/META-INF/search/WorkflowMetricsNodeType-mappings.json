@@ -1,0 +1,86 @@
+{
+	"date_detection": false,
+	"dynamic_templates": [
+		{
+			"template_long_sortable": {
+				"mapping": {
+					"store": true,
+					"type": "long"
+				},
+				"match": "*_sortable",
+				"match_mapping_type": "long"
+			}
+		},
+		{
+			"template_string_sortable": {
+				"mapping": {
+					"normalizer": "keyword_lowercase",
+					"store": true,
+					"type": "keyword"
+				},
+				"match": "*_sortable",
+				"match_mapping_type": "string"
+			}
+		}
+	],
+	"properties": {
+		"companyId": {
+			"store": true,
+			"type": "long"
+		},
+		"createDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"deleted": {
+			"store": true,
+			"type": "boolean"
+		},
+		"id": {
+			"store": true,
+			"type": "long"
+		},
+		"initial": {
+			"store": true,
+			"type": "boolean"
+		},
+		"modifiedDate": {
+			"format": "yyyyMMddHHmmss",
+			"store": true,
+			"type": "date"
+		},
+		"name": {
+			"store": true,
+			"type": "keyword"
+		},
+		"nodeId": {
+			"store": true,
+			"type": "long"
+		},
+		"processId": {
+			"store": true,
+			"type": "long"
+		},
+		"terminal": {
+			"store": true,
+			"type": "boolean"
+		},
+		"type": {
+			"store": true,
+			"type": "keyword"
+		},
+		"uid": {
+			"store": true,
+			"type": "keyword"
+		},
+		"userId": {
+			"store": true,
+			"type": "long"
+		},
+		"version": {
+			"store": true,
+			"type": "keyword"
+		}
+	}
+}

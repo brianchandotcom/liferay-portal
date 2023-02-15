@@ -318,6 +318,25 @@ definition {
 		MenuItem.clickNoError(menuItem = "View");
 	}
 
+	macro importPicklist {
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+
+		Click(locator1 = "Picklist#IMPORT_PICKLIST");
+
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${picklistFileName}.json");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = ${filePath});
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${picklistName});
+
+		Button.clickImport();
+	}
+
 	macro optionsPicklist {
 		Click.javaScriptClick(
 			key_picklistName = ${picklistName},

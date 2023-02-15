@@ -1,7 +1,0 @@
-Bundle-Name: Liferay APIBuilder REST API
-Bundle-SymbolicName: com.liferay.apibuilder.rest.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.apibuilder.rest.dto,\
-	com.liferay.apibuilder.rest.provider,\
-	com.liferay.apibuilder.rest.resource

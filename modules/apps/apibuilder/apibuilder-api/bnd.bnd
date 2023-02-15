@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.apibuilder.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.apibuilder.constants,\
+	com.liferay.apibuilder.dto,\
 	com.liferay.apibuilder.exception,\
 	com.liferay.apibuilder.model,\
 	com.liferay.apibuilder.operation,\
@@ -11,4 +12,6 @@ Export-Package:\
 	com.liferay.apibuilder.operation.registrator,\
 	com.liferay.apibuilder.operation.registry,\
 	com.liferay.apibuilder.operation.response,\
+	com.liferay.apibuilder.provider,\
+	com.liferay.apibuilder.resource,\
 	com.liferay.apibuilder.util

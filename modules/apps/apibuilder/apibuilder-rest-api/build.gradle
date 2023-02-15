@@ -1,4 +1,0 @@
-dependencies {
-	compileOnly project(":apps:apibuilder:apibuilder-api")
-	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
-}

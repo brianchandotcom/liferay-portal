@@ -47,7 +47,9 @@ import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -107,8 +109,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -413,20 +413,20 @@ public class EditAssetListDisplayContext {
 					continue;
 				}
 
-				List<String> items = new ArrayList<>();
+				StringBundler sb = new StringBundler();
 
 				for (String keyword : keywords) {
 					if (keyword.contains(" ")) {
 						keyword = StringUtil.quote(keyword, CharPool.QUOTE);
 					}
 
-					items.add(keyword);
+					sb.append(keyword);
+					sb.append(StringPool.SPACE);
 				}
 
-				Stream<String> stream = items.stream();
+				sb.setIndex(sb.index() - 1);
 
-				queryValues = stream.collect(
-					Collectors.joining(StringPool.SPACE));
+				queryValues = sb.toString();
 
 				ruleJSONObject.put("selectedItems", queryValues);
 			}
@@ -518,21 +518,13 @@ public class EditAssetListDisplayContext {
 			return _availableSegmentsEntries;
 		}
 
-		long[] selectedSegmentsEntryIds = getSelectedSegmentsEntryIds();
-
-		List<SegmentsEntry> segmentsEntries =
+		_availableSegmentsEntries = ListUtil.filter(
 			SegmentsEntryServiceUtil.getSegmentsEntries(
 				_themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		Stream<SegmentsEntry> segmentsEntryStream = segmentsEntries.stream();
-
-		_availableSegmentsEntries = segmentsEntryStream.filter(
+				QueryUtil.ALL_POS, null),
 			segmentsEntry -> !ArrayUtil.contains(
-				selectedSegmentsEntryIds, segmentsEntry.getSegmentsEntryId())
-		).collect(
-			Collectors.toList()
-		);
+				getSelectedSegmentsEntryIds(),
+				segmentsEntry.getSegmentsEntryId()));
 
 		return _availableSegmentsEntries;
 	}
@@ -924,13 +916,8 @@ public class EditAssetListDisplayContext {
 	}
 
 	public long[] getSelectedGroupIds() throws PortalException {
-		List<Group> selectedGroups = getSelectedGroups();
-
-		Stream<Group> stream = selectedGroups.stream();
-
-		return stream.mapToLong(
-			Group::getGroupId
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			getSelectedGroups(), Group::getGroupId);
 	}
 
 	public List<Group> getSelectedGroups() throws PortalException {
@@ -958,14 +945,9 @@ public class EditAssetListDisplayContext {
 			return null;
 		}
 
-		Stream<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelsStream =
-				assetListEntrySegmentsEntryRels.stream();
-
-		_selectedSegmentsEntryIds =
-			assetListEntrySegmentsEntryRelsStream.mapToLong(
-				AssetListEntrySegmentsEntryRel::getSegmentsEntryId
-			).toArray();
+		_selectedSegmentsEntryIds = TransformUtil.transformToLongArray(
+			assetListEntrySegmentsEntryRels,
+			AssetListEntrySegmentsEntryRel::getSegmentsEntryId);
 
 		return _selectedSegmentsEntryIds;
 	}
@@ -1211,51 +1193,49 @@ public class EditAssetListDisplayContext {
 		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
 			getAssetListEntrySegmentsEntryRels();
 
-		Stream<AssetListEntrySegmentsEntryRel> stream =
-			assetListEntrySegmentsEntryRels.stream();
-
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
-		return JSONUtil.putAll(
-			stream.sorted(
-				Comparator.comparingInt(
-					AssetListEntrySegmentsEntryRel::getPriority)
-			).map(
-				assetListEntrySegmentsEntryRel -> JSONUtil.put(
-					"active",
-					getSegmentsEntryId() ==
-						assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-				).put(
-					"assetListEntrySegmentsEntryRelId",
-					assetListEntrySegmentsEntryRel.
-						getAssetListEntrySegmentsEntryRelId()
-				).put(
-					"deleteAssetListEntryVariationURL",
-					_getDeleteAssetListEntryVariationURL(
-						liferayPortletResponse, assetListEntrySegmentsEntryRel)
-				).put(
-					"editAssetListEntryURL",
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/edit_asset_list_entry.jsp"
-					).setBackURL(
-						getBackURL()
-					).setParameter(
-						"assetListEntryId",
-						assetListEntrySegmentsEntryRel.getAssetListEntryId()
-					).setParameter(
-						"segmentsEntryId",
-						assetListEntrySegmentsEntryRel.getSegmentsEntryId()
-					).buildString()
-				).put(
-					"name",
-					getSegmentsEntryName(
-						assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
-						_themeDisplay.getLocale())
-				)
-			).toArray());
+		assetListEntrySegmentsEntryRels.sort(
+			Comparator.comparingInt(
+				AssetListEntrySegmentsEntryRel::getPriority));
+
+		return JSONUtil.toJSONArray(
+			assetListEntrySegmentsEntryRels,
+			assetListEntrySegmentsEntryRel -> JSONUtil.put(
+				"active",
+				getSegmentsEntryId() ==
+					assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+			).put(
+				"assetListEntrySegmentsEntryRelId",
+				assetListEntrySegmentsEntryRel.
+					getAssetListEntrySegmentsEntryRelId()
+			).put(
+				"deleteAssetListEntryVariationURL",
+				_getDeleteAssetListEntryVariationURL(
+					liferayPortletResponse, assetListEntrySegmentsEntryRel)
+			).put(
+				"editAssetListEntryURL",
+				PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCPath(
+					"/edit_asset_list_entry.jsp"
+				).setBackURL(
+					getBackURL()
+				).setParameter(
+					"assetListEntryId",
+					assetListEntrySegmentsEntryRel.getAssetListEntryId()
+				).setParameter(
+					"segmentsEntryId",
+					assetListEntrySegmentsEntryRel.getSegmentsEntryId()
+				).buildString()
+			).put(
+				"name",
+				getSegmentsEntryName(
+					assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+					_themeDisplay.getLocale())
+			),
+			_log);
 	}
 
 	private Long[] _getClassTypeIds(

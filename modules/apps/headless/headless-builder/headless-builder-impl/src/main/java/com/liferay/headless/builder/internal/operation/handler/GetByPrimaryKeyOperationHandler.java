@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.handler;
+package com.liferay.headless.builder.internal.operation.handler;
 
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.util.HeadlessBuilderUtil;

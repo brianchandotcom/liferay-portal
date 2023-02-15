@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation.registry;
+package com.liferay.headless.builder.operation.handler;
 
 import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.handler.OperationHandler;
 
 /**
  * @author Carlos Correa

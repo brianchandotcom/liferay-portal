@@ -22,7 +22,7 @@ import com.liferay.headless.builder.operation.OperationContext;
 import com.liferay.headless.builder.operation.OperationRegistry;
 import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.operation.registry.OperationHandlerRegistry;
+import com.liferay.headless.builder.operation.handler.OperationHandlerRegistry;
 import com.liferay.headless.builder.operation.response.NotFoundOperationResponse;
 import com.liferay.headless.builder.operation.response.OperationResponse;
 import com.liferay.headless.builder.operation.response.ResponseCode;

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.operation.registry;
+package com.liferay.headless.builder.internal.operation.handler;
 
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.operation.registry.OperationHandlerRegistry;
+import com.liferay.headless.builder.operation.handler.OperationHandlerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 

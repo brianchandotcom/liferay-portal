@@ -36,15 +36,37 @@ public class URLUtil {
 	public static PathConfiguration getPathConfiguration(
 		String path, String version) {
 
+		final String absolutePath;
+
 		if (Validator.isBlank(version)) {
-			return new PathConfiguration(
-				Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_PATH + path);
+			absolutePath =
+				Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_PATH + path;
+		}
+		else {
+			absolutePath = StringBundler.concat(
+				Portal.PATH_MODULE, HeadlessBuilderConstants.BASE_PATH,
+				StringPool.SLASH, version, path);
 		}
 
-		return new PathConfiguration(
-			StringBundler.concat(
-				Portal.PATH_MODULE, HeadlessBuilderConstants.BASE_PATH,
-				StringPool.SLASH, version, path));
+		return new PathConfiguration() {
+
+			@Override
+			public String getPath() {
+				return absolutePath;
+			}
+
+			@Override
+			public List<String> getPathParameterNames() {
+				return URLUtil.getPathParameterNames(
+					absolutePath, getPattern());
+			}
+
+			@Override
+			public Pattern getPattern() {
+				return URLUtil.getPattern(absolutePath);
+			}
+
+		};
 	}
 
 	public static List<String> getPathParameterNames(

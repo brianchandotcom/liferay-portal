@@ -14,65 +14,18 @@
 
 package com.liferay.headless.builder.operation;
 
-import com.liferay.headless.builder.util.URLUtil;
-
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
  * @author Carlos Correa
  */
-public class PathConfiguration {
+public interface PathConfiguration {
 
-	public PathConfiguration(String path) {
-		_path = path;
+	public String getPath();
 
-		_pattern = URLUtil.getPattern(path);
+	public List<String> getPathParameterNames();
 
-		_pathParameterNames = URLUtil.getPathParameterNames(path, _pattern);
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if ((object == null) || (getClass() != object.getClass())) {
-			return false;
-		}
-
-		PathConfiguration that = (PathConfiguration)object;
-
-		if (Objects.equals(_path, that._path) &&
-			Objects.equals(_pattern, that._pattern)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public String getPath() {
-		return _path;
-	}
-
-	public List<String> getPathParameterNames() {
-		return _pathParameterNames;
-	}
-
-	public Pattern getPattern() {
-		return _pattern;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(_path, _pattern);
-	}
-
-	private final String _path;
-	private final List<String> _pathParameterNames;
-	private final Pattern _pattern;
+	public Pattern getPattern();
 
 }

@@ -210,7 +210,7 @@ public abstract class BaseWorkspace implements Workspace {
 				"Synchronize to GitHub dev did not start");
 		}
 
-		_parallelExecutor.waitFor();
+		_parallelExecutor.waitFor(60L * 5L);
 	}
 
 	@Override

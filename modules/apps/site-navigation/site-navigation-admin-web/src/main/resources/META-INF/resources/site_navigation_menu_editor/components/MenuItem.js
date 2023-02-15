@@ -223,6 +223,7 @@ export function MenuItem({item}) {
 												),
 												`${title} (${type})`
 											)}
+											className="delete-item-button"
 											displayType="unstyled"
 											onClick={() =>
 												item.children.length

@@ -3,6 +3,17 @@
 .site_navigation_menu_editor_MenuItem {
 	width: 40ch;
 
+	.delete-item-button {
+		opacity: 0;
+	}
+
+	&:hover,
+	&.active {
+		.delete-item-button {
+			opacity: 1;
+		}
+	}
+
 	&.dragging {
 		opacity: 0.4;
 	}

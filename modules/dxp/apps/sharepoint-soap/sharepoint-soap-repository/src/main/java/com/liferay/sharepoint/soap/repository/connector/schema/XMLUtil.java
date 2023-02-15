@@ -60,6 +60,10 @@ public final class XMLUtil {
 		return null;
 	}
 
+	public static org.w3c.dom.Node toNode(Document document, Node node) {
+		return document.importNode(_toNode(node.toXmlString()), true);
+	}
+
 	public static List<org.w3c.dom.Node> toNodes(
 		Document document, Node... nodes) {
 

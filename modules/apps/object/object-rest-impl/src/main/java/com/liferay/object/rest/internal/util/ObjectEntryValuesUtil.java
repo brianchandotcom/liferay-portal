@@ -67,13 +67,9 @@ public class ObjectEntryValuesUtil {
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
 
-		if (nestedObjectEntryProperties.containsKey("externalReferenceCode")) {
-			objectEntry.setExternalReferenceCode(
-				(String)nestedObjectEntryProperties.get(
-					"externalReferenceCode"));
-
-			nestedObjectEntryProperties.remove("externalReferenceCode");
-		}
+		objectEntry.setExternalReferenceCode(
+			(String)nestedObjectEntryProperties.remove(
+				"externalReferenceCode"));
 
 		objectEntry.setProperties(nestedObjectEntryProperties);
 

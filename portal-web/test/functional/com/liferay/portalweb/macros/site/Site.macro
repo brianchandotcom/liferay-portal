@@ -1496,9 +1496,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(
-			key_siteName = ${siteName},
-			locator1 = "Sites#SELECT_SITE_MODAL_CARD_BODY_SITE_NAME");
+		LexiconCard.viewCardPresent(card = ${siteName});
 	}
 
 	macro viewSiteAdminPermissionsCP {

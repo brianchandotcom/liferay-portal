@@ -19,8 +19,11 @@
 							"name": "keyword.operator.assignment.poshi"
 						}
 					},
-					"end": "(?=\")",
+					"end": "(?=\n)",
 					"patterns": [
+						{
+							"include": "#constants"
+						},
 						{
 							"include": "#string-quoted-double"
 						}
@@ -80,6 +83,14 @@
 				},
 				{
 					"include": "#comment-block"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"match": "[0-9]+",
+					"name": "constant.numeric.poshi"
 				}
 			]
 		},
@@ -256,6 +267,9 @@
 				},
 				{
 					"include": "#comments"
+				},
+				{
+					"include": "#constants"
 				},
 				{
 					"include": "#control-blocks"
@@ -454,6 +468,9 @@
 					"name": "parameter.variable"
 				},
 				{
+					"include": "#constants"
+				},
+				{
 					"include": "#invocations"
 				},
 				{
@@ -468,10 +485,6 @@
 				{
 					"match": "(\\-|\\+|\\*|\\/)",
 					"name": "keyword.operator.arithmetic.poshi"
-				},
-				{
-					"match": "[0-9]+",
-					"name": "constant.numeric.poshi"
 				}
 			]
 		},

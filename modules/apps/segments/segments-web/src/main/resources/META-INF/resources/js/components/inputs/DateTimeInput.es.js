@@ -31,33 +31,30 @@ class DateTimeInput extends React.Component {
 		value: propTypes.string,
 	};
 
-	state = {};
+	constructor(props) {
+		super(props);
+		const isoString =
+			PROPERTY_TYPES.DATE_TIME === props.propertyType
+				? props.value
+				: parse(
+						props.value,
+						OUTPUT_DATE_FORMAT,
+						new Date()
+				  ).toISOString();
 
-	static getDerivedStateFromProps(props, state) {
-		let returnVal = null;
+		const actualValue = format(new Date(isoString), INPUT_DATE_FORMAT);
 
-		if (props.value !== state.initialValue) {
-			const actualValue =
-				PROPERTY_TYPES.DATE_TIME === props.propertyType
-					? format(new Date(props.value), INPUT_DATE_FORMAT)
-					: format(
-							new Date(props.value.replaceAll('-', '/')),
-							INPUT_DATE_FORMAT
-					  );
-
-			returnVal = {
-				expanded: false,
-				initialValue: props.value,
-				previousValue: actualValue,
-				value: actualValue,
-			};
-		}
-
-		return returnVal;
+		this.state = {
+			expanded: false,
+			previousValue: actualValue,
+			value: actualValue,
+		};
 	}
 
 	_handleDateChange = (value) => {
-		this.setState({value});
+		this.setState({
+			value,
+		});
 	};
 
 	_handleExpandedChange = (expandedState) => {

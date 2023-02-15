@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>CHANGE_SPACE_ICON</td>
-	<td>//div[contains(@class,'icon-sites')]//a</td>
+	<td>//div[contains(@class,'icon-sites')]//button</td>
 	<td></td>
 </tr>
 <tr>

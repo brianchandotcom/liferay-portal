@@ -18,6 +18,7 @@ import {InputHTMLAttributes} from 'react';
 import {BaseWrapper} from '../Base';
 
 type InputProps = {
+	disabled?: boolean;
 	errors?: any;
 	id?: string;
 	label?: string;
@@ -28,6 +29,7 @@ type InputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
+	disabled = false,
 	errors = {},
 	label,
 	name,
@@ -40,6 +42,7 @@ const Input: React.FC<InputProps> = ({
 	...otherProps
 }) => (
 	<BaseWrapper
+		disabled={disabled}
 		error={errors[name]?.message}
 		id={id}
 		label={label}
@@ -48,6 +51,7 @@ const Input: React.FC<InputProps> = ({
 		<ClayInput
 			className="rounded-xs"
 			component={type === 'textarea' ? 'textarea' : 'input'}
+			disabled={disabled}
 			id={id}
 			name={name}
 			type={type}

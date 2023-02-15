@@ -36,9 +36,9 @@ const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 			return [];
 		}
 
-		const {
-			build: {project, ...build},
-		} = run;
+		const {...build} = run;
+
+		const project = run.build?.project;
 
 		return [
 			{

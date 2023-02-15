@@ -22,6 +22,7 @@ import InputWarning from '../../Form/Base/BaseWarning';
 type BaseWrapperProps = {
 	children: ReactNode;
 	description?: string;
+	disabled?: boolean;
 	error?: string;
 	id?: string;
 	label?: string;
@@ -31,6 +32,7 @@ type BaseWrapperProps = {
 const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	children,
 	description,
+	disabled,
 	error,
 	id,
 	label,
@@ -46,7 +48,10 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 				<label
 					className={classNames(
 						'font-weight-normal mb-1 mx-0 text-paragraph',
-						{required}
+						{
+							disabled,
+							required,
+						}
 					)}
 					htmlFor={id}
 				>

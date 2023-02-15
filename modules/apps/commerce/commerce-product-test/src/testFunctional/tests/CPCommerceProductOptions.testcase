@@ -560,13 +560,13 @@ definition {
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 
 			Type(
-				key_fieldLabel = "Option Numeric",
-				locator1 = "TextInput#NUMERIC",
+				key_text = "Option Numeric",
+				locator1 = "TextInput#ANY",
 				value1 = 9876543210);
 
 			Type(
-				key_fieldLabel = "Option Text",
-				locator1 = "TextInput#NUMERIC",
+				key_text = "Option Text",
+				locator1 = "TextInput#ANY",
 				value1 = "abc@#^");
 
 			Check.checkNotVisible(

@@ -35,7 +35,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 </liferay-util:buffer>
 
 <clay:content-row
-	containerElement="h3"
+	containerElement="div"
 	cssClass="sheet-subtitle"
 >
 	<clay:content-col

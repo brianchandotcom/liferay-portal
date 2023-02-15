@@ -23,7 +23,7 @@ ThemeCSSCET themeCSSCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
 <aui:field-wrapper cssClass="form-group">
-	<aui:input label="main-css-url" name="mainURL" required="<%= true %>" type="text" value="<%= themeCSSCET.getMainURL() %>" />
+	<aui:input label="main-css-url" name="mainURL" type="text" value="<%= themeCSSCET.getMainURL() %>" />
 
 	<div class="form-text">
 		<liferay-ui:message key="this-css-replaces-main-css" />
@@ -31,7 +31,7 @@ ThemeCSSCET themeCSSCET = editClientExtensionEntryDisplayContext.getCET();
 </aui:field-wrapper>
 
 <aui:field-wrapper cssClass="form-group">
-	<aui:input label="clay-css-url" name="clayURL" required="<%= true %>" type="text" value="<%= themeCSSCET.getClayURL() %>" />
+	<aui:input label="clay-css-url" name="clayURL" type="text" value="<%= themeCSSCET.getClayURL() %>" />
 
 	<div class="form-text">
 		<liferay-ui:message key="this-css-replaces-clay-css" />

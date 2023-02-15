@@ -74,9 +74,15 @@ int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("produ
 						</clay:sticker>
 					</c:if>
 
-					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+					<clay:icon
+						cssClass="collapse-icon-closed"
+						symbol="angle-right"
+					/>
 
-					<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					<clay:icon
+						cssClass="collapse-icon-open"
+						symbol="angle-down"
+					/>
 				</a>
 			</c:when>
 			<c:otherwise>

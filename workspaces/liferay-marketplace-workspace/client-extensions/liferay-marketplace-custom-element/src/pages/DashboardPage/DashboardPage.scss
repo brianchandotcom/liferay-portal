@@ -2,10 +2,8 @@
 	&-container {
 		display: flex;
 		flex-direction: column;
-		height: 100vh;
 		justify-content: space-between;
-		width: 100vw;
-		overflow-x: hidden;
+		width: 100%;
 	}
 
 	&-header-container {
@@ -23,6 +21,10 @@
 			align-items: center;
 			display: flex;
 			justify-content: space-between;
+
+			a {
+				margin-left: auto;
+			}
 		}
 
 		&-header-button {

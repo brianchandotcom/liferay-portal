@@ -422,11 +422,10 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productSpecification1, productSpecification2),
 			(List<ProductSpecification>)page.getItems());
-
 		assertValid(
 			page,
 			testGetProductIdProductSpecificationsPage_getExpectedActions(id));
-			
+
 		productSpecificationResource.deleteProductSpecification(
 			productSpecification1.getId());
 
@@ -442,7 +441,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		Map<String, Map> expectedActions = new HashMap<>();
 
 		return expectedActions;
->>>>>>> 56b81f3b2fa9 (LPS-169820 buildREST)
 	}
 
 	@Test

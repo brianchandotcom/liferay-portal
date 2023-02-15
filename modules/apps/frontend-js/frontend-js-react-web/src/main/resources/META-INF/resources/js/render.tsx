@@ -95,7 +95,7 @@ export default function render(
 				renderData.children = children;
 			}
 
-			delete renderData._hasBodyContent;
+			delete renderData.hasBodyContent;
 		}
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render

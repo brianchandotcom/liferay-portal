@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {LinkOrButton} from '@clayui/shared';
 import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
@@ -87,9 +88,14 @@ function ManagementToolbar({
 		() => normalizeDropdownItems(viewTypeItems),
 		[viewTypeItems]
 	);
-	const viewTypeIcon = useMemo(
-		() => viewTypeItems?.find((item) => item.active)?.icon,
+	const activeViewType = useMemo(
+		() => viewTypeItems?.find((item) => item.active),
 		[viewTypeItems]
+	);
+	const viewTypeIcon = activeViewType.icon;
+	const viewTypeTitle = sub(
+		Liferay.Language.get('select-view-currently-selected-x'),
+		activeViewType.label
 	);
 
 	return (
@@ -189,14 +195,10 @@ function ManagementToolbar({
 										trigger={
 											showDesignImprovementsFF ? (
 												<ClayButton
-													aria-label={Liferay.Language.get(
-														'show-view-options'
-													)}
+													aria-label={viewTypeTitle}
 													className="nav-link"
 													displayType="unstyled"
-													title={Liferay.Language.get(
-														'show-view-options'
-													)}
+													title={viewTypeTitle}
 												>
 													{viewTypeIcon && (
 														<ClayIcon
@@ -213,15 +215,11 @@ function ManagementToolbar({
 												</ClayButton>
 											) : (
 												<ClayButtonWithIcon
-													aria-label={Liferay.Language.get(
-														'show-view-options'
-													)}
+													aria-label={viewTypeTitle}
 													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
 													symbol={viewTypeIcon}
-													title={Liferay.Language.get(
-														'show-view-options'
-													)}
+													title={viewTypeTitle}
 												/>
 											)
 										}

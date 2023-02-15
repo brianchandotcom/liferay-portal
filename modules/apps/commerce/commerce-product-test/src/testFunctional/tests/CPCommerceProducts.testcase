@@ -1275,6 +1275,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for bug COMMERCE-10711. Verify a product image linked to an option value can be uploaded via headless API."
+	@priority = 3
+	test CanUploadProductImageLinkedToAnOptionValueViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When an image linked to an option value for the product Brake Fluid is uploaded via API") {
+			var responseBody = CommerceJSONProductsAPI._addCommerceProductImageLinkedToOptionValue(
+				optionName = "package-quantity",
+				optionValue = 112,
+				productERC = "MIN93016minium-initializer");
+
+			var status = JSONUtil.getWithJSONPath(${responseBody}, "$..['status']");
+
+			if (${status} != "") {
+				fail("Something went wrong with the API call");
+			}
+		}
+
+		task ("Then the image is uploaded successfully") {
+			CommerceProducts.openProductsAdmin();
+
+			AppBuilderAdmin.searchByItem(itemName = "Brake Fluid");
+
+			CommerceNavigator.gotoEntry(entryName = "Brake Fluid");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_entryName = "Simple Image Title API",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("And the option value is linked to the image") {
+			Click(
+				key_entryName = "Simple Image Title API",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "Dropdown#SELECTED_VALUE",
+				value1 = 112);
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9448. Verify a product image can be uploaded via headless API."
 	@priority = 3
 	test CanUploadProductImageViaAPI {

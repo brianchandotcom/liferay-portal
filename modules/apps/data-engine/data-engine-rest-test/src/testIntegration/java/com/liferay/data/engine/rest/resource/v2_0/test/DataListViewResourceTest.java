@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -115,6 +118,15 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		throws Exception {
 
 		return _dataDefinition.getId();
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetDataDefinitionDataListViewsPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

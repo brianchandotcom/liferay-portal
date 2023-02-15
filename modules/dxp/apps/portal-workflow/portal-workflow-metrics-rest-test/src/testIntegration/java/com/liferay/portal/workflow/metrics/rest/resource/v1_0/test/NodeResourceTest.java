@@ -25,7 +25,9 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.Workfl
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -118,6 +120,14 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		throws Exception {
 
 		return _addNode(node, processId, "1.0");
+	}
+
+	@Override
+	protected Map<String, Map> testGetProcessNodesPage_getExpectedActions(
+			Long processId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

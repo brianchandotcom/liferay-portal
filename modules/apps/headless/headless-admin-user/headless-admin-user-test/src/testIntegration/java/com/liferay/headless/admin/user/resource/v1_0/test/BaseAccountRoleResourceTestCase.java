@@ -313,7 +313,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 				page,
 				testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
 					irrelevantAccountExternalReferenceCode,
-					irrelevantUserAccountExternalReferenceCode));
+					irrelevantExternalReferenceCode));
 		}
 
 		AccountRole accountRole1 =
@@ -339,14 +339,13 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertValid(
 			page,
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
-				accountExternalReferenceCode,
-				userAccountExternalReferenceCode));
+				accountExternalReferenceCode, externalReferenceCode));
 	}
 
 	protected Map<String, Map>
 			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeAccountRolesPage_getExpectedActions(
 				String accountExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+				String externalReferenceCode)
 		throws Exception {
 
 		Map<String, Map> expectedActions = new HashMap<>();

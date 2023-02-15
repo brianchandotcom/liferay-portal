@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
@@ -435,6 +436,15 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		throws Exception {
 
 		return _dataDefinition.getId();
+	}
+
+	@Override
+	protected Map<String, Map>
+			testGetDataDefinitionDataLayoutsPage_getExpectedActions(
+				Long dataDefinitionId)
+		throws Exception {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

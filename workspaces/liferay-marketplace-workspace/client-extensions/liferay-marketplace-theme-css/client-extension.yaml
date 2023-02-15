@@ -1,0 +1,9 @@
+assemble:
+    - from: build/buildTheme/
+      include: "fonts/*"
+      into: static/
+liferay-marketplace-theme-css:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: Liferay Marketplace Theme CSS
+    type: themeCSS

@@ -1,0 +1,179 @@
+// Variables from atlas/variables/_globals for alerts
+// https://github.com/liferay/clay/blob/0568f0a1ffb82b0bc85321b10cb32ff5f68e2cc1/packages/clay-css/src/scss/atlas/variables/_globals.scss
+
+$grid-gutter-width: 30px; // 30px is the original from bootstrap instead of the 24px defined in Atlas. This variable is needed to be defined earlier for alerts.
+
+$primary: #0b63ce;
+$primary-d1: #0053f0;
+$primary-d2: #004ad7;
+$primary-d3: #003eb3;
+$primary-d4: #00318f;
+$primary-d5: #00256c;
+$primary-l1: #377cff;
+$primary-l2: #6399ff;
+$primary-l3: #8fb5ff;
+$primary-l4: #bbd2ff;
+
+$secondary: #ffc124;
+$secondary-d1: #f3ae00;
+$secondary-d2: #c28b00;
+$secondary-l1: #ffcb48;
+$secondary-l2: #ffd66d;
+$secondary-l3: #ffe092;
+
+$info: #2e5aac;
+$info-d1: #25488a;
+$info-d2: #1c3667;
+$info-l1: #8aa3d1;
+$info-l2: #e6ebf5;
+
+$success: #4aab3b;
+$success-d1: #3b892f;
+$success-d2: #2c6723;
+$success-l1: #9ad091;
+$success-l2: #e9f5e8;
+
+$warning: #b95000;
+$warning-d1: #944000;
+$warning-d2: #6f3000;
+$warning-l1: #d89d70;
+$warning-l2: #f7eae0;
+
+$danger: #da1414;
+$danger-d1: #ae1010;
+$danger-d2: #830c0c;
+$danger-l1: #ea7b7b;
+$danger-l2: #fbe3e3;
+
+$color-neutral-1: #282934;
+$color-neutral-2: #e2e2e4;
+$color-neutral-3: #c9c9cf;
+$color-neutral-4: #b1b2b9;
+$color-neutral-5: #999aa3;
+$color-neutral-6: #82828c;
+$color-neutral-7: #6c6c75;
+$color-neutral-8: #54555f;
+$color-neutral-9: #3f404b;
+$color-neutral-10: #282934;
+
+$chart-1: #4d2ec9;
+$chart-2: #fdcc4a;
+$chart-3: #ad9ee9;
+$chart-4: #fe8856;
+$chart-5: #002c62;
+$body-color: $color-neutral-8;
+
+$link-color: $primary;
+$link-hover-color: $primary-d2;
+
+// Site Color Variables
+
+$background-color: #f4f6f9;
+$black: #000;
+$default-color: $color-neutral-8;
+$white: #fff;
+
+$admonition-error: $danger-d1;
+$admonition-error-bg: $danger-l2;
+$admonition-error-highlight: $danger-l1;
+$admonition-important: $info-d1;
+$admonition-important-bg: $info-l2;
+$admonition-important-highlight: $info-l1;
+$admonition-note: $success-d1;
+$admonition-note-bg: $success-l2;
+$admonition-note-highlight: $success-l1;
+$admonition-tip: $success-d1;
+$admonition-tip-bg: $success-l2;
+$admonition-tip-highlight: $success-l1;
+$admonition-warning: $warning-d1;
+$admonition-warning-bg: $warning-l2;
+$admonition-warning-highlight: $warning-l1;
+
+// Variable Overrides
+
+$font-family-base: 'Source Sans Pro', 'Source Serif Pro', -apple-system,
+	blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, sans-serif,
+	'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+$font-weight-light: 200;
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;
+$font-weight-bolder: bolder;
+
+$small-font-size: 0.75rem; // 12px
+
+$h1-font-size: 2rem; // 32px
+$h2-font-size: 1.8125rem; // 29px
+$h3-font-size: 1.625rem; // 26px
+$h4-font-size: 1.4375rem; // 23px
+$h5-font-size: 1.125rem; // 18px
+$h6-font-size: 0.875rem; // 14px
+$breadcrumb-font-size: 0.8125rem; // 13px;
+$code-font-size: 16px; // set pixel value to prevent nested <pre> and <code> from scaling down font size
+$pre-font-size: 13px;
+$mobile-font-size: 1.75rem; // 28px
+
+$table-accent-bg: $background-color;
+$table-data-border-color: transparent;
+$table-margin-bottom: 1rem; // 16px
+
+// Custom Variables
+
+$h1-display-font-size: 3rem; // 48px
+
+$h6-line-height: 16px;
+$code-line-height: 24px; // set pixel value to prevent nested <pre> and <code> from scaling down line height
+$secondary-text-line-height: 1.429;
+
+$footer-height: 3.5rem; // 56px
+$header-height: 0;
+$info-bar-height: 4.8125rem; // 77px
+
+$spacing-default: 1.5rem; // 24px
+$spacing-lg: 2rem; // 32px
+$spacing-md: 1rem; // 16px
+$spacing-sm: 0.75rem; // 12px
+$spacing-xs: 0.5rem; // 8px
+
+// Primary Site Navigation Variables
+
+$color-action-primary-active: $primary-d2;
+$color-action-primary-active-lighten: #0053f050;
+$color-action-primary-default: $primary;
+$color-action-primary-hover: $primary-d1;
+$color-action-primary-hover-lighten: #edf3fe;
+$color-action-neutral-default: #2b3a4b;
+$color-brand-primary: $primary;
+$color-brand-primary-darken-5: $primary-d5;
+$color-brand-primary-lighten-1: rgba(255, 255, 255, 0.05);
+$color-brand-primary-lighten-2: rgba(255, 255, 255, 0.1);
+$color-brand-primary-lighten-3: rgba(255, 255, 255, 0.15);
+$color-brand-primary-lighten-4: rgba(255, 255, 255, 0.4);
+$display4-size: 2rem;
+$display4-weight: 600;
+$elevation-fluffy-1: 0 5px 15px rgba(19, 20, 31, 0.12);
+$hr-border-color: $color-neutral-2;
+
+:root {
+	--color-action-primary-active: #{$color-action-primary-active} !important;
+	--color-action-primary-active-lighten: #{$color-action-primary-active-lighten} !important;
+	--color-action-primary-default: #{$color-action-primary-default} !important;
+	--color-action-primary-hover: #{$color-action-primary-hover} !important;
+	--color-action-primary-hover-lighten: #{$color-action-primary-hover-lighten} !important;
+	--color-brand-primary: #{$color-brand-primary} !important;
+	--color-brand-primary-darken-5: #{$color-brand-primary-darken-5} !important;
+	--color-brand-primary-lighten-1: #{$color-brand-primary-lighten-1} !important;
+	--color-brand-primary-lighten-2: #{$color-brand-primary-lighten-2} !important;
+	--color-brand-primary-lighten-3: #{$color-brand-primary-lighten-3} !important;
+	--color-brand-primary-lighten-4: #{$color-brand-primary-lighten-4} !important;
+	--color-neutral-10: #{$color-neutral-10} !important;
+	--color-neutral-2: #{$color-neutral-2} !important;
+	--color-neutral-8: #{$color-neutral-8} !important;
+	--display4-size: #{$display4-size} !important;
+	--display4-weight: #{$display4-weight} !important;
+	--elevation-fluffy-1: #{$elevation-fluffy-1} !important;
+	--font-family-base: #{$font-family-base} !important;
+	--hr-border-color: #{$hr-border-color} !important;
+	--info: #{$info} !important;
+}

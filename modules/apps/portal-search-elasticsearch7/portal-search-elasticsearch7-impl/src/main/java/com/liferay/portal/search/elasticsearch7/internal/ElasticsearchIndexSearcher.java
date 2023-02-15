@@ -219,7 +219,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		if (!GetterUtil.getBoolean(
 				searchContext.getAttribute(
 					SearchContextAttributes.
-						ATTRIBUTE_KEY_PERMISSIONED_SEARCHER))) {
+						ATTRIBUTE_KEY_ACCURATE_COUNT_THRESHOLD))) {
 
 			Integer from = searchRequest.getFrom();
 			Integer size = searchRequest.getSize();

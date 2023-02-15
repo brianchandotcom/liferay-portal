@@ -84,7 +84,7 @@ public class ElasticsearchIndexSearcherTest {
 		_assertStartAndEnd(from + size, from, searchRequest, searchContext);
 
 		searchContext.setAttribute(
-			SearchContextAttributes.ATTRIBUTE_KEY_PERMISSIONED_SEARCHER,
+			SearchContextAttributes.ATTRIBUTE_KEY_ACCURATE_COUNT_THRESHOLD,
 			Boolean.TRUE);
 
 		_assertStartAndEnd(

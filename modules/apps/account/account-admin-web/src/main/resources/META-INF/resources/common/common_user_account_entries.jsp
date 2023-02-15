@@ -20,6 +20,20 @@
 boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 %>
 
+<liferay-util:buffer
+	var="removeButtonAccounts"
+>
+	<clay:button
+		aria-label="TOKEN_ARIA_LABEL"
+		cssClass="lfr-portal-tooltip remove-link"
+		data-entityId="TOKEN_ENTITY_ID"
+		displayType="unstyled"
+		icon="times-circle"
+		small="<%= true %>"
+		title="TOKEN_TITLE"
+	/>
+</liferay-util:buffer>
+
 <clay:content-row
 	containerElement="h3"
 	cssClass="sheet-subtitle"
@@ -104,7 +118,15 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 			<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) && AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
 				<liferay-ui:search-container-column-text>
-					<a class="remove-link" data-entityId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:void(0);"><%= removeAccountEntryIcon %></a>
+					<clay:button
+						aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(accountEntryDisplay.getName())) %>'
+						cssClass="lfr-portal-tooltip remove-link"
+						data-entityId="<%= accountEntryDisplay.getAccountEntryId() %>"
+						displayType="unstyled"
+						icon="times-circle"
+						small="<%= true %>"
+						title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(accountEntryDisplay.getName())) %>'
+					/>
 				</liferay-ui:search-container-column-text>
 			</c:if>
 		</liferay-ui:search-container-row>
@@ -170,15 +192,22 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 							for (const selectedItem of selectedItems) {
 								const entityId = selectedItem.entityid;
+								const entityName = A.Escape.html(selectedItem.entityname);
+								const label = Liferay.Util.sub(
+									'<liferay-ui:message key="remove-x" />',
+									entityName
+								);
+
+								let removeButton =
+									'<%= UnicodeFormatter.toString(removeButtonAccounts) %>';
+
+								removeButton = removeButton
+									.replace('TOKEN_ARIA_LABEL', label)
+									.replace('TOKEN_ENTITY_ID', entityId)
+									.replace('TOKEN_TITLE', label);
 
 								searchContainer.addRow(
-									[
-										selectedItem.entityname,
-										'',
-										'<a class="remove-link" data-entityId="' +
-											entityId +
-											'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
-									],
+									[selectedItem.entityname, '', removeButton],
 									entityId
 								);
 

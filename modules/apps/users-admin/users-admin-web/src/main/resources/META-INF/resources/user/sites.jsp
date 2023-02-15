@@ -58,12 +58,16 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 </clay:content-row>
 
 <liferay-util:buffer
-	var="removeGroupIcon"
+	var="removeButtonSites"
 >
-	<liferay-ui:icon
+	<clay:button
+		aria-label="TOKEN_ARIA_LABEL"
+		cssClass="lfr-portal-tooltip modify-link"
+		data-rowId="TOKEN_DATA_ROW_ID"
+		displayType="unstyled"
 		icon="times-circle"
-		markupView="lexicon"
-		message="remove"
+		small="<%= true %>"
+		title="TOKEN_TITLE"
 	/>
 </liferay-util:buffer>
 
@@ -119,8 +123,17 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (selUser != null) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= group.isManualMembership() %>">
-					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:void(0);"><%= removeGroupIcon %></a>
-				</c:if>
+					<clay:button
+						aria-label='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(group.getDescriptiveName(locale))) %>'
+						cssClass="lfr-portal-tooltip modify-link"
+						data-rowId="<%= group.getGroupId() %>"
+						displayType="unstyled"
+						icon="times-circle"
+						small="<%= true %>"
+						title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(group.getDescriptiveName(locale))) %>'
+					/>
+				</c:if
+			>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>
@@ -160,16 +173,24 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					onSelect: (selectedItem) => {
 						if (selectedItem) {
 							const entityId = selectedItem.entityid;
-
+							const entityName = A.Escape.html(selectedItem.entityname);
+							const label = Liferay.Util.sub(
+								'<liferay-ui:message key="remove-x" />',
+								entityName
+							);
 							const rowColumns = [];
 
-							rowColumns.push(A.Escape.html(selectedItem.entityname));
+							let removeButton =
+								'<%= UnicodeFormatter.toString(removeButtonSites) %>';
+
+							removeButton = removeButton
+								.replace('TOKEN_ARIA_LABEL', label)
+								.replace('TOKEN_DATA_ROW_ID', entityId)
+								.replace('TOKEN_TITLE', label);
+
+							rowColumns.push(entityName);
 							rowColumns.push('');
-							rowColumns.push(
-								'<a class="modify-link" data-rowId="' +
-									entityId +
-									'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
-							);
+							rowColumns.push(removeButton);
 
 							searchContainer.addRow(rowColumns, entityId);
 

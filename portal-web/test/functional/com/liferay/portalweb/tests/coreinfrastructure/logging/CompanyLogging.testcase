@@ -1,6 +1,7 @@
 @component-name = "portal-logging"
 definition {
 
+	property custom.properties = "feature.flag.LPS-170670=true";
 	property database.partition.enabled = "true";
 	property database.types = "mysql";
 	property portal.release = "true";
@@ -22,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
+	@description = "Any logs that would appear specifically in company A should never appear in the logs of company B"
 	@ignore = "true"
 	@priority = 5
 	test AssertCompanyLogsIsolated {
@@ -36,9 +37,44 @@ definition {
 				portalInstanceId = ${portalInstanceName},
 				virtualHost = ${portalInstanceName});
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+			CompanyLogging.openServerLogsAdmin();
 
 			CompanyLogging.assertCompanyLogIsolated(portalInstanceName = ${portalInstanceName});
+
+			GoBack();
+		}
+	}
+
+	@description = "If a company log is deleted, it should also be removed from the company logs portlet"
+	@ignore = "true"
+	@priority = 4
+	test CannotViewDeletedCompanyLog {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "CompanyLogging#CannotViewDeletedCompanyLog";
+
+		task ("Given a log exists for a company") {
+			CompanyLogging.openServerLogsAdmin();
+
+			var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "liferay.com");
+
+			AssertElementPresent(
+				key_logName = ${logName},
+				locator1 = "CompanyLogging#COMPANY_LOG_NAME");
+		}
+
+		task ("When the company log is deleted") {
+			var homeDir = PropsUtil.get("liferay.home.dir.name");
+			var companyId = JSONCompany.getCompanyId();
+
+			FileUtil.delete("${homeDir}/logs/companies/${companyId}/${logName}");
+		}
+
+		task ("Then the log is removed from the list in the UI") {
+			Refresh();
+
+			AssertElementNotPresent(
+				key_logName = ${logName},
+				locator1 = "CompanyLogging#COMPANY_LOG_NAME");
 		}
 	}
 
@@ -48,7 +84,18 @@ definition {
 	test CompanyLoggingDisabled {
 		property custom.properties = "company.log.enabled=false";
 
-		task ("When the user tries navigating to the company logging UI access point with company logs disabled") {
+		task ("Verify the user cannot access the company logs portlet with company logging disabled") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementNotPresent(
+				key_category = "Security",
+				key_portlet = "Server Logs",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("When the user tries navigating directly to the company logs page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
 		}
 
@@ -94,8 +141,8 @@ definition {
 			}
 		}
 
-		task ("When the Omniadmin navigates to the company logging UI access point") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
+		task ("When the Omniadmin navigates to the company logs portlet") {
+			CompanyLogging.openServerLogsAdmin();
 		}
 
 		task ("Then log files are present for all companies") {
@@ -115,6 +162,8 @@ definition {
 				CompanyLogging.assertCompanyLogContent(
 					logContent = ${logContent},
 					portalInstanceName = ${portalInstanceName});
+
+				GoBack();
 			}
 		}
 	}
@@ -167,8 +216,8 @@ definition {
 				virtualHostsURL = "http://www.able.com:8080");
 		}
 
-		task ("When the company admin navigates to the company logging UI access point") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/o/company-log");
+		task ("When the company admin navigates to the company logs portlet") {
+			CompanyLogging.openServerLogsAdmin(baseURL = "http://www.able.com:8080");
 		}
 
 		task ("Then only logs for that instance are shown") {
@@ -229,7 +278,7 @@ definition {
 				virtualHostsURL = "http://www.able.com:8080");
 		}
 
-		task ("When the company admin tries accessing the company logging UI to download a specific company log from a different company") {
+		task ("When the company admin tries to directly download a specific company log from a different company") {
 			var companyId = JSONCompany.getCompanyId();
 			var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "liferay.com");
 
@@ -245,7 +294,7 @@ definition {
 		}
 	}
 
-	@description = "A non-administrative user should get a permissions denied error when trying to access the UI to get company logging information"
+	@description = "A non-administrative user should get a permissions denied error when trying to access company logging information"
 	@ignore = "true"
 	@priority = 4
 	test GetCompanyLogsAsGuest {
@@ -253,23 +302,41 @@ definition {
 		property test.assert.warning.exceptions = "true";
 
 		task ("Given a non-administrative company user") {
-			JSONUser.addUser(
+			JSONUser.addUserWithRole(
+				roleTitle = "Power User",
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("When the user tries accessing the company logging UI to download a specific company log") {
+		task ("And given the user can access the company logs portlet") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = 90,
+				roleTitle = "Power User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_portal_company_log_web_internal_portlet_PortalCompanyLogPortlet",
+				roleTitle = "Power User");
+		}
+
+		task ("When the user navigates to the company logs portlet") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
+			CompanyLogging.openServerLogsAdmin();
+		}
+
+		task ("The the user cannot view any company logs") {
+			AssertElementNotPresent(
+				key_virtualHost = "",
+				locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
+		}
+
+		task ("When the user tries to directly download a specific company log") {
 			var companyId = JSONCompany.getCompanyId();
 			var logName = CompanyLogging.getCompanyLogName(portalInstanceName = "liferay.com");
 
@@ -289,30 +356,6 @@ definition {
 		}
 	}
 
-	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"
-	@ignore = "true"
-	@priority = 4
-	test GetEmptyCompanyLogs {
-		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "CompanyLogging#GetEmptyCompanyLogs";
-
-		task ("Given all company logs are deleted") {
-			var homeDir = PropsUtil.get("liferay.home.dir.name");
-
-			FileUtil.delete("${homeDir}/logs/companies");
-		}
-
-		task ("When the user navigates to the company logging UI access point") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
-		}
-
-		task ("Then a message is shown that indicates no logs are available") {
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "No log is available");
-		}
-	}
-
 	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"
 	@ignore = "true"
 	@priority = 4
@@ -329,7 +372,7 @@ definition {
 				locator1 = "//body",
 				value1 = "No webpage was found for the web address");
 
-			AssertConsoleTextPresent(value1 = "java.io.FileNotFoundException: Unable to find log file invalidLog.log for company ${companyId}");
+			AssertConsoleTextPresent(value1 = "java.io.FileNotFoundException: Unable to get file invalidLog.log for company ${companyId}");
 
 			CompanyLogging.assertNoLogDownloaded(logName = "invalidLog.log");
 		}

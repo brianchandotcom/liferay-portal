@@ -14,7 +14,6 @@
 
 package com.liferay.headless.builder.operation.provider;
 
-import com.liferay.headless.builder.exception.NoSuchOperationException;
 import com.liferay.headless.builder.operation.Method;
 import com.liferay.headless.builder.operation.Operation;
 
@@ -23,7 +22,6 @@ import com.liferay.headless.builder.operation.Operation;
  */
 public interface OperationProvider {
 
-	public Operation getOperation(long companyId, Method method, String path)
-		throws NoSuchOperationException;
+	public Operation getOperation(long companyId, Method method, String path);
 
 }

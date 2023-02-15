@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"osgi.jaxrs.application.base=" + HeadlessBuilderConstants.BASE_PATH,
-		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Headless.Builder.Feature)",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.Headless.Builder.Application"
 	},

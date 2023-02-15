@@ -16,9 +16,11 @@ package com.liferay.headless.builder.internal.resource;
 
 import com.liferay.headless.builder.internal.dto.converter.HeadlessBuilderElementDTOConverter;
 import com.liferay.headless.builder.operation.MediaType;
+import com.liferay.headless.builder.operation.Method;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.OperationContext;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
+import com.liferay.headless.builder.operation.provider.OperationProvider;
 import com.liferay.headless.builder.operation.registry.OperationHandlerRegistry;
 import com.liferay.headless.builder.operation.response.NotFoundOperationResponse;
 import com.liferay.headless.builder.operation.response.OperationResponse;
@@ -47,7 +49,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
@@ -76,14 +77,27 @@ public class HeadlessBuilderResourceImpl
 			throw new NotFoundException();
 		}
 
+		Operation operation = _operationProvider.getOperation(
+			_portal.getCompanyId(contextHttpServletRequest),
+			Method.valueOf(contextHttpServletRequest.getMethod()),
+			contextHttpServletRequest.getRequestURI());
+
+		if (operation == null) {
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).entity(
+				new Problem(Response.Status.NOT_FOUND, "Operation not found")
+			).build();
+		}
+
 		OperationHandler operationHandler =
-			_operationHandlerRegistry.getOperationHandler(_operation);
+			_operationHandlerRegistry.getOperationHandler(operation);
 
 		MediaType mediaType = MediaType.parse(
 			contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT));
 
 		OperationResponse operationResponse = operationHandler.handle(
-			_operation, _getOperationContext(mediaType, _operation));
+			operation, _getOperationContext(mediaType, operation));
 
 		return _toResponse(operationResponse);
 	}
@@ -200,11 +214,11 @@ public class HeadlessBuilderResourceImpl
 	@Reference
 	private HeadlessBuilderElementDTOConverter _dtoConverter;
 
-	@Context
-	private Operation _operation;
-
 	@Reference
 	private OperationHandlerRegistry _operationHandlerRegistry;
+
+	@Reference
+	private OperationProvider _operationProvider;
 
 	@Reference
 	private Portal _portal;

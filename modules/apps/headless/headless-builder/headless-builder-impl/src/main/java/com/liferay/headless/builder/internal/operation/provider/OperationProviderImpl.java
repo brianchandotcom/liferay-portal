@@ -14,14 +14,12 @@
 
 package com.liferay.headless.builder.internal.operation.provider;
 
-import com.liferay.headless.builder.exception.NoSuchOperationException;
 import com.liferay.headless.builder.operation.Method;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.headless.builder.operation.provider.OperationProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.UnsafeTriFunction;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -39,24 +37,26 @@ import org.osgi.service.component.annotations.Deactivate;
 public class OperationProviderImpl implements OperationProvider {
 
 	@Override
-	public Operation getOperation(long companyId, Method method, String path)
-		throws NoSuchOperationException {
+	public Operation getOperation(long companyId, Method method, String path) {
+		for (OperationMatcher operationMatcher :
+				_operationServiceTrackerMap.keySet()) {
 
-		for (UnsafeTriFunction
-				<Long, Method, String, Boolean, NoSuchOperationException>
-					unsafeTriFunction : _operationServiceTrackerMap.keySet()) {
-
-			if (unsafeTriFunction.apply(companyId, method, path)) {
-				return _operationServiceTrackerMap.getService(
-					unsafeTriFunction);
+			if (operationMatcher.matches(companyId, method, path)) {
+				return _operationServiceTrackerMap.getService(operationMatcher);
 			}
 		}
 
-		throw new NoSuchOperationException();
+		return null;
+	}
+
+	public interface OperationMatcher {
+
+		public boolean matches(long companyId, Method method, String path);
+
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
 		_operationServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, Operation.class, null,
@@ -97,9 +97,7 @@ public class OperationProviderImpl implements OperationProvider {
 		_operationServiceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap
-		<UnsafeTriFunction
-			<Long, Method, String, Boolean, NoSuchOperationException>,
-		 Operation> _operationServiceTrackerMap;
+	private ServiceTrackerMap<OperationMatcher, Operation>
+		_operationServiceTrackerMap;
 
 }

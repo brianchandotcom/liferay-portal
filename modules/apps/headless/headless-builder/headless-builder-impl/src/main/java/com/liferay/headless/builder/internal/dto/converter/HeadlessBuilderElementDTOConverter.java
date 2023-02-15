@@ -14,14 +14,15 @@
 
 package com.liferay.headless.builder.internal.dto.converter;
 
-import com.liferay.headless.builder.dto.HeadlessBuilderElement;
 import com.liferay.headless.builder.model.HeadlessBuilderEntry;
 import com.liferay.headless.builder.operation.Response;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.message.RootElementProvider;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,7 +35,9 @@ import org.osgi.service.component.annotations.Component;
 	service = {DTOConverter.class, HeadlessBuilderElementDTOConverter.class}
 )
 public class HeadlessBuilderElementDTOConverter
-	implements DTOConverter<HeadlessBuilderEntry, HeadlessBuilderElement> {
+	implements DTOConverter
+		<HeadlessBuilderEntry,
+		 HeadlessBuilderElementDTOConverter.HeadlessBuilderElement> {
 
 	@Override
 	public String getContentType() {
@@ -63,6 +66,26 @@ public class HeadlessBuilderElementDTOConverter
 		headlessBuilderElement.setName(headlessBuilderEntry.getName());
 
 		return headlessBuilderElement;
+	}
+
+	public static class HeadlessBuilderElement
+		extends HashMap<String, Object> implements RootElementProvider {
+
+		public String getName() {
+			return _name;
+		}
+
+		@Override
+		public String getRootElement() {
+			return _name;
+		}
+
+		public void setName(String name) {
+			_name = name;
+		}
+
+		private String _name;
+
 	}
 
 	private Object _getValue(

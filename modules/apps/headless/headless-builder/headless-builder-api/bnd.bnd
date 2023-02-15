@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.headless.builder.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.headless.builder.constants,\
-	com.liferay.headless.builder.dto,\
 	com.liferay.headless.builder.model,\
 	com.liferay.headless.builder.operation,\
 	com.liferay.headless.builder.operation.handler,\

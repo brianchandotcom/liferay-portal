@@ -363,7 +363,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 
-	@Inject
+	@Inject (filter = "appender.name=UpgradeReportLogAppender")
 	private Appender _appender;
 
 	@Inject

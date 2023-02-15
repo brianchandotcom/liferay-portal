@@ -3271,7 +3271,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private void _validateObjectStateTransition(
 			Map.Entry<String, Serializable> entry, long listTypeDefinitionId,
-			ObjectEntry objectEntry, long objectFieldId)
+			ObjectEntry objectEntry, long objectFieldId, long userId)
 		throws PortalException {
 
 		Map<String, Serializable> values = objectEntry.getValues();
@@ -3319,20 +3319,12 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (invalidObjectStateTransition) {
-			ObjectState targetObjectState =
-				_objectStateLocalService.getObjectStateFlowObjectState(
-					listTypeEntry.getListTypeEntryId(),
-					objectStateFlow.getObjectStateFlowId());
+			User user = _userLocalService.getUser(userId);
 
-			if (sourceObjectState.getObjectStateId() !=
-					targetObjectState.getObjectStateId()) {
-
-				throw new ObjectEntryValuesException.
-					InvalidObjectStateTransition(
-						sourceObjectState, targetObjectState,
-						originalListTypeEntry.getName(LocaleUtil.getDefault()),
-						listTypeEntry.getName(LocaleUtil.getDefault()));
-			}
+			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
+				sourceObjectState, targetObjectState,
+				originalListTypeEntry.getName(user.getLocale()),
+				listTypeEntry.getName(user.getLocale()));
 		}
 	}
 
@@ -3625,7 +3617,7 @@ public class ObjectEntryLocalServiceImpl
 			if ((objectEntry != null) && objectField.isState()) {
 				_validateObjectStateTransition(
 					entry, objectField.getListTypeDefinitionId(), objectEntry,
-					objectField.getObjectFieldId());
+					objectField.getObjectFieldId(), userId);
 			}
 		}
 	}

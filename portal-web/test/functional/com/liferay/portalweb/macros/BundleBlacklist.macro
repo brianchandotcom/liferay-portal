@@ -1,9 +1,18 @@
 definition {
 
 	macro blacklistModuleAndComponentConfiguration {
+		if (${label} == "Blacklist Component Names") {
+			var key_text = "ComponentNames";
+		}
+		else {
+			if (${label} == "Blacklist Bundle Symbolic Names") {
+				var key_text = "BundleSymbolicNames";
+			}
+		}
+
 		Type(
-			key_label = ${label},
-			locator1 = "TextArea#ANY_LABELED",
+			key_text = ${key_text},
+			locator1 = "TextArea#ANY",
 			value1 = ${symbolicName});
 
 		SystemSettings.saveConfiguration();

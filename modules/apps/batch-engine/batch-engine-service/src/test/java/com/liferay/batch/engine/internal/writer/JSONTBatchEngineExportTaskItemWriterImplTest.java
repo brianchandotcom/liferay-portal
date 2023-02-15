@@ -75,15 +75,16 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("{\"actions\":{\"batch-create\": {\"method\": \"POST\",");
-		sb.append("\"href\": \"/o/headless-batch-engine/v1.0/import-task/");
+		sb.append("{\"actions\":{\"createBatch\": {\"href\": ");
+		sb.append("\"/o/headless-batch-engine/v1.0/import-task/");
 		sb.append(batchEngineImportConfiguration.getClassName());
-		sb.append("\"}},\"configuration\": {\"className\": \"");
+		sb.append("\",\"method\": \"POST\"}},");
+		sb.append("\"configuration\": {\"className\": \"");
 		sb.append(batchEngineImportConfiguration.getClassName());
-		sb.append("\",\n\"userId\": ");
-		sb.append(batchEngineImportConfiguration.getUserId());
-		sb.append(",\n\"companyId\" :");
+		sb.append("\",\n\"companyId\" :");
 		sb.append(batchEngineImportConfiguration.getCompanyId());
+		sb.append(",\n\"userId\": ");
+		sb.append(batchEngineImportConfiguration.getUserId());
 		sb.append(",\n\"version\": \"");
 		sb.append(batchEngineImportConfiguration.getVersion());
 		sb.append("\"\n},");

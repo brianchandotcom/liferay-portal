@@ -47,11 +47,11 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 		_unsyncPrintWriter = new UnsyncPrintWriter(outputStream);
 
 		_unsyncPrintWriter.write(
-			"{\"actions\":\n{\"batch-create\": {\"method\": \"POST\"," +
-				"\"href\": \"");
+			"{\"actions\":\n{\"createBatch\": {\"href\": \"");
 		_unsyncPrintWriter.write(
 			_ACTION_TEMPLATE + batchEngineImportConfiguration.getClassName());
-		_unsyncPrintWriter.write("\"}},\n\"configuration\":\n");
+		_unsyncPrintWriter.write(
+			"\",\"method\": \"POST\"}},\n\"configuration\":\n");
 		_unsyncPrintWriter.write(
 			_objectWriter.writeValueAsString(batchEngineImportConfiguration));
 		_unsyncPrintWriter.write(",\n");

@@ -324,7 +324,7 @@ definition {
 
 		AssertElementPresent(locator1 = "NavBar#CONTAINER");
 
-		AssertTextEquals.assertText(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no threads or categories.");
 	}

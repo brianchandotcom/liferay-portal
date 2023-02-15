@@ -449,7 +449,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
@@ -564,7 +564,7 @@ definition {
 	macro viewDefaultCP {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}

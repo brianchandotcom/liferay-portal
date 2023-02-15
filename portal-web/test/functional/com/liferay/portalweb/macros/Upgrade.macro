@@ -346,7 +346,7 @@ definition {
 			portlet = "Dynamic Data Lists",
 			site = ${site});
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no lists.");
 

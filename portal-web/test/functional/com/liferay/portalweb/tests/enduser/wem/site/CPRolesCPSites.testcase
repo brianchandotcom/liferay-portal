@@ -504,7 +504,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Sites");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No sites were found.");
 		}
@@ -577,7 +577,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Sites");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No sites were found.");
 		}

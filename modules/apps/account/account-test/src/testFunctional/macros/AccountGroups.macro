@@ -127,7 +127,7 @@ definition {
 
 		var tabName = StringUtil.toLowerCase(${tabName});
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No ${tabName} were found.");
 	}

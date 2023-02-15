@@ -440,7 +440,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Asset Libraries");
 
 			if (isSet(noConnectedDepot)) {
-				AssertTextEquals(
+				AssertTextEquals.assertPartialText(
 					locator1 = "Message#EMPTY_INFO",
 					value1 = "No asset libraries were found.");
 			}

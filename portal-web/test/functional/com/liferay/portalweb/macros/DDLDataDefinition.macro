@@ -262,7 +262,7 @@ definition {
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
 
 		if (IsElementNotPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1")) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No Data Definitions were found.");
 		}

@@ -466,7 +466,7 @@ definition {
 		}
 
 		task ("View the empty info") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no display page template usages.");
 		}

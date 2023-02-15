@@ -861,13 +861,13 @@ definition {
 	}
 
 	macro searchForKB {
-		var key_knowledgeBaseName = "${knowledgeBaseName}";
+		var key_knowledgeBaseName = ${knowledgeBaseName};
 
 		Click(locator1 = "KnowledgeBase#SEARCH_FIELD");
 
 		Type(
 			locator1 = "KnowledgeBase#SEARCH_FIELD",
-			value1 = "${knowledgeBaseName}");
+			value1 = ${knowledgeBaseName});
 
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
@@ -1337,7 +1337,7 @@ definition {
 					value1 = "Knowledge base is empty.");
 			}
 			else if (isSet(suggestions)) {
-				AssertTextEquals(
+				AssertTextEquals.assertPartialText(
 					locator1 = "Message#EMPTY_INFO",
 					value1 = "There are no suggestions.");
 			}

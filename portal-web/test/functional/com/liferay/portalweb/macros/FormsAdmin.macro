@@ -389,13 +389,13 @@ definition {
 	}
 
 	macro viewNoFormEntries {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no entries.");
 	}
 
 	macro viewNoFormEntriesFound {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");
 	}

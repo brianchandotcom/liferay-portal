@@ -2677,7 +2677,7 @@ definition {
 		}
 
 		task ("Check the user is lead to the main tab Session Property Vocabularies") {
-			AssertTextPresent(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries for Session Property Vocabularies have been added yet.");
 		}
@@ -3026,10 +3026,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given the Segments page
-	When the user adds a new segment
-	Then the segment is created in the Global Site"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test SegmentInGlobalSiteByDefault {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -3048,10 +3046,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given the Product Menu
-	When the user clicks on People
-	Then the Segments portlet is not present"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test SegmentPortletNotPresentInProductMenu {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -3065,10 +3061,8 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
-	@description = "LPS-167023 Given the Segments page
-	When there is a segment belonging to a site
-	Then the scope column in the Segments table will display the name of the site is scoped to"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test SiteNameInScopeColumn {
 		property custom.properties = "feature.flag.LPS-166954=true";
 

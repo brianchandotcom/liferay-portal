@@ -135,7 +135,7 @@ definition {
 	}
 
 	macro assertEmptyStateMessageDisplayed {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
 	}

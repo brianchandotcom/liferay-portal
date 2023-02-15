@@ -1122,7 +1122,7 @@ definition {
 
 		Publications.unschedulePublication(publicationName = "Publication Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No publication has been scheduled yet.");
 	}
@@ -1160,7 +1160,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 	}

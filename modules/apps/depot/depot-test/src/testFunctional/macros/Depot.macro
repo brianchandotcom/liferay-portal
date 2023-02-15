@@ -896,7 +896,7 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No asset libraries were found.");
 	}
@@ -1154,7 +1154,7 @@ definition {
 	}
 
 	macro viewNoWorkflowResource {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");
 	}

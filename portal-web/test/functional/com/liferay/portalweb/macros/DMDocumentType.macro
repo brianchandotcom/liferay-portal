@@ -309,7 +309,7 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no results.");
 

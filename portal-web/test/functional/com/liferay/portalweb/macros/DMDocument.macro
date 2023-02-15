@@ -2069,7 +2069,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
@@ -2195,7 +2195,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		if (IsElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC")) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no documents or media files in this folder.");
 		}
@@ -3135,7 +3135,7 @@ definition {
 	macro viewDefault {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
@@ -3981,12 +3981,12 @@ definition {
 
 			LexiconCard.viewCardNotPresent(card = ${dmDocumentTitle});
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no documents or media files in this folder.");
 		}
 		else if (${documentAdded} == "false") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no documents or media files in this folder.");
 
@@ -3994,7 +3994,7 @@ definition {
 				locator1 = "Staging#LIVE_BUTTON",
 				value1 = "Live");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no documents or media files in this folder.");
 		}

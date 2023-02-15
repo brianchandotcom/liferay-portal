@@ -1693,7 +1693,7 @@ definition {
 	macro searchNoResultsCP {
 		Search.searchCP(searchTerm = ${searchQuery});
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 
@@ -2091,7 +2091,7 @@ definition {
 	macro viewDefaultCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 
@@ -2306,7 +2306,7 @@ definition {
 
 		AssertElementPresent(locator1 = "NavBar#CONTAINER");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 	}

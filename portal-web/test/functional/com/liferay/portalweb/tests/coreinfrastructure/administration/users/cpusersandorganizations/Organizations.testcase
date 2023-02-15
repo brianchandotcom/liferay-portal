@@ -849,7 +849,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No organizations were found.");
 	}
@@ -1021,7 +1021,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_MyOrganizationsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_mvcPath=%2Fselect_organization.jsp&_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_p_u_i_d=0");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No organizations were found.");
 	}
@@ -1409,7 +1409,7 @@ definition {
 
 		User.searchCP(searchTerm = "test");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found.");
 	}

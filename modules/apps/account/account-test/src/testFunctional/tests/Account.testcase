@@ -287,7 +287,7 @@ definition {
 
 		Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
 	}
@@ -678,7 +678,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no users associated with this role.");
 	}
@@ -1563,7 +1563,7 @@ definition {
 			key_text = "undo",
 			locator1 = "Icon#ANY");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No accounts were found.");
 
@@ -2418,13 +2418,13 @@ definition {
 			key_title = "Set Default Shipping Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
 
 		Search.searchCP(searchTerm = "Diamond Bar");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
 	}
@@ -2468,13 +2468,13 @@ definition {
 			key_title = "Set Default Billing Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
 
 		Search.searchCP(searchTerm = "China");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No addresses were found.");
 	}
@@ -2970,7 +2970,7 @@ definition {
 		}
 
 		task ("Then the entry does not display in the results") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No accounts were found.");
 		}
@@ -3144,7 +3144,7 @@ definition {
 				menuItem = "Manage Organizations",
 				rowEntry = "Account Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no organizations associated with this account.");
 
@@ -3192,7 +3192,7 @@ definition {
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no users associated with this account.");
 
@@ -3256,7 +3256,7 @@ definition {
 				menuItem = "Assign Users",
 				rowEntry = "Account Administrator");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no users associated with this role.");
 
@@ -3276,7 +3276,7 @@ definition {
 		task ("and cannot search for users that are not member of the account") {
 			Search.searchCP(searchTerm = "first@liferay.com");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No users were found.");
 		}

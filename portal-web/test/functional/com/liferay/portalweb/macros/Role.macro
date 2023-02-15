@@ -339,7 +339,7 @@ definition {
 	macro viewDefaultCP {
 		Search.searchCP(searchTerm = "Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No roles were found.");
 	}

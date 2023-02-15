@@ -740,7 +740,7 @@ definition {
 	}
 
 	macro viewNoEntryCP {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");
 	}

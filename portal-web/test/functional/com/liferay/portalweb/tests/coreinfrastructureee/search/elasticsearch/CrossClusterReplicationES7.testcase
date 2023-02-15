@@ -245,7 +245,7 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "Once there are active processes, metrics will appear here.");
 

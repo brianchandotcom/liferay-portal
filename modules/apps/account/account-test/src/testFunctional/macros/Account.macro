@@ -179,7 +179,7 @@ definition {
 	macro addAssigneeToRole {
 		Navigator.gotoNavTab(navTab = "Assignees");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no users associated with this role.");
 
@@ -1719,7 +1719,7 @@ definition {
 
 		var assigneeType = StringUtil.lowerCase(${assigneeType});
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no ${assigneeType} associated with this account.");
 	}

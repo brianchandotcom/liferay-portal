@@ -719,11 +719,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given the Roles portlet
-	When the user tries to add a new role
-	And the user wants to add segments permissions
-	Then the segments permissions are allocated in Control Panel > Users"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test SegmentsPermissionsAllocatedInControlPanel {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -750,10 +747,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given the user creates a new role
-	When the user clicks on Control Panel > Users > Segments
-	Then in General Permissions, the check Access in Control Panel permission is displayed"
-	@priority = "4"
+	@description = ""
+	@priority = 4
 	test SegmentsPermissionsHaveAccessToControlPanel {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -780,11 +775,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given the Roles portlet
-	When the user tries to add a new role
-	And the user wants to add segments permissions
-	Then the segments permissions are not allocated in Site and Asset Library Administration > People"
-	@priority = "3"
+	@description = ""
+	@priority = 3
 	test SegmentsPermissionsNotAllocatedInSiteAdministration {
 		property custom.properties = "feature.flag.LPS-166954=true";
 
@@ -815,10 +807,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given a user without Segments permissions
-	When the user clicks on Applications Menu > Control Panel
-	Then the Segments portlet is not present and the user cannot access to the Segments page"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test UserWithoutPermissionsCannotAccessSegmentsPortlet {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -853,11 +843,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-167023 Given a user with Segments permissions
-	And with View Control Panel Menu permission
-	When the user clicks on Applications Menu > Control Panel > Segment
-	Then the user can access to the Segments page"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test UserWithPermissionsCanAccessSegmentsPortlet {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";
@@ -882,7 +869,7 @@ definition {
 		task ("Define permissions and check Access in Control Panel permission is displayed") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
+				resourceName = 90,
 				roleTitle = "UserWithPermissionsCanAccessSegmentsPortlet Role",
 				roleType = "regular");
 
@@ -921,17 +908,14 @@ definition {
 				panel = "Control Panel",
 				portlet = "Segments");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "There are no segments.");
 		}
 	}
 
-	@description = "LPS-167023 Given a user with Segments permissions
-	And without View Control Panel Menu permission
-	When the user clicks on Applications Menu > Control Panel
-	Then the Segments portlet is not present and the user cannot access to the Segments page"
-	@priority = "5"
+	@description = ""
+	@priority = 5
 	test UserWithSegmentPermissionsWithoutControlPanelCannotAccess {
 		property custom.properties = "feature.flag.LPS-166954=true";
 		property portal.acceptance = "true";

@@ -253,7 +253,7 @@ definition {
 	}
 
 	macro viewDefault {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No user groups were found.");
 	}

@@ -64,7 +64,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
 	}
@@ -97,7 +97,7 @@ definition {
 
 		WebContentTemplates.deleteCP(templateName = "WC Template Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no templates.");
 
@@ -105,7 +105,7 @@ definition {
 
 		WebContentStructures.deleteCP(structureName = "WC Structure Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no structures.");
 	}

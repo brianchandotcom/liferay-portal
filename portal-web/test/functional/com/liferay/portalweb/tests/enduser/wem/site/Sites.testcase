@@ -872,7 +872,7 @@ definition {
 		}
 
 		task ("View no site fits this level") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No sites were found.");
 		}

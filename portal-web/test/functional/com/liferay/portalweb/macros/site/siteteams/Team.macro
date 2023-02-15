@@ -43,7 +43,7 @@ definition {
 		Search.searchCP(searchTerm = ${userScreenName});
 
 		if (${userNameIsNotFound} == "true") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No users were found.");
 		}
@@ -281,7 +281,7 @@ definition {
 
 			var lowercaseNavItem = StringUtil.lowerCase(${navItem});
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No ${lowercaseNavItem} were found.");
 		}

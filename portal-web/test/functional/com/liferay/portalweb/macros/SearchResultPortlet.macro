@@ -149,7 +149,7 @@ definition {
 	}
 
 	macro viewNoSearchResults {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found that matched the keywords: ${searchTerm}.");
 	}

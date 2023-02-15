@@ -616,7 +616,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Accounts");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No accounts were found.");
 

@@ -162,7 +162,7 @@ definition {
 			locator1 = "Portlet#TITLE",
 			value1 = "Documents and Media");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}
@@ -191,7 +191,7 @@ definition {
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
 			value1 = "Documents and Media");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}

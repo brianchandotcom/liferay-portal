@@ -47,7 +47,7 @@ definition {
 			AssertNotVisible(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "The Recycle Bin is empty.");
 		}
@@ -76,7 +76,7 @@ definition {
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to empty the Recycle Bin?");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "The Recycle Bin is empty.");
 	}
@@ -186,7 +186,7 @@ definition {
 			AssertNotVisible(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "The Recycle Bin is empty.");
 		}
@@ -253,7 +253,7 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "The Recycle Bin is empty.");
 

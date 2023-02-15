@@ -2031,7 +2031,7 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 	}

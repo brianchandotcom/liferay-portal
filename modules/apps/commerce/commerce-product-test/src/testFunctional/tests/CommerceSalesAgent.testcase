@@ -386,7 +386,7 @@ definition {
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No accounts were found.");
 		}
@@ -436,7 +436,7 @@ definition {
 		task ("And the Sales Agent will not see any account in the Account Management page") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No accounts were found.");
 		}

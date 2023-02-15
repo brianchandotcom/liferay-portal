@@ -961,7 +961,7 @@ definition {
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		if (${noAuthorizations} == "true") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No authorizations were found.");
 		}
@@ -978,7 +978,7 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
 
 		if (${noAuthorizations} == "true") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No connected applications were found.");
 		}

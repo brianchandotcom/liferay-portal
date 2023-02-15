@@ -77,6 +77,84 @@ definition {
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
+	@description = "Assert that is possible to delete a Wiki Page within a publication and then publish it"
+	@priority = 3
+	test CanDeleteWikiPageWithinPublications {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Wiki");
+
+		WikiNode.addCP(wikiNodeName = "Wiki Node Name");
+
+		WikiPage.addCP(
+			contentImageName = "Document_2.jpg",
+			groupName = "Guest",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			siteURLKey = "guest",
+			wikiAdmin = "true",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		WikiPage.deleteCP(
+			assetType = "Wiki Page",
+			wikiNodeName = "Wiki Node Name",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNode.deleteCP(
+			assetType = "Wiki Node",
+			wikiNodeName = "Wiki Node Name");
+
+		JSONRecycleBin.emptyRecycleBin();
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.filterChangesByItem(
+			checkboxName = "Guest",
+			menuItem = "Sites");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Page",
+			changeOrder = 2,
+			changeSite = "Guest",
+			changeTitle = "Wiki Page Title (1.0)",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.filterChangesByItem(
+			checkboxName = "Wiki Node",
+			menuItem = "Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Wiki Node",
+			changeSite = "Guest",
+			changeTitle = "Wiki Node Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "Can edit Wiki Pages Within Publications"
 	@priority = 3
 	test CanEditWikiPageWithinPublications {

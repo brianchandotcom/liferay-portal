@@ -85,7 +85,10 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 							</c:if>
 						</span>
 						<span class="mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
-							<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
+							<clay:icon
+								monospaced="<%= true %>"
+								symbol="times-circle"
+							/>
 						</span>
 					</div>
 

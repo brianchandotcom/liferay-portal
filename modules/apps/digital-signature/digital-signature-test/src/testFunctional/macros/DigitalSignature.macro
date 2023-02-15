@@ -54,6 +54,8 @@ definition {
 		Click(
 			dmDocumentTitle = "DM Document Title",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
+
+		SelectFrameTop();
 	}
 
 	macro createEnvelopeWithTwoDocuments {

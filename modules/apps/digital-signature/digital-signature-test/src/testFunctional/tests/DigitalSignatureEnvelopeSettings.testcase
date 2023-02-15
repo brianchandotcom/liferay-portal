@@ -144,7 +144,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
-	@priority = "5"
+	@priority = 5
 	test CannotCreateEnvelopeWithUnsupportedFiles {
 		property solutions.acceptance = "true";
 

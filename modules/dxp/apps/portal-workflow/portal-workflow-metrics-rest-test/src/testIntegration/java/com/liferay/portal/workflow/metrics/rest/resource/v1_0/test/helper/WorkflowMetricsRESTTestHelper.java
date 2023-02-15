@@ -1002,15 +1002,13 @@ public class WorkflowMetricsRESTTestHelper {
 		_deleteDocuments(
 			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				companyId),
-			"WorkflowMetricsSLATaskResultType", "companyId", companyId,
-			"processId", processId);
+			"companyId", companyId, "processId", processId);
 	}
 
 	public void deleteTasks(long companyId, long processId) throws Exception {
 		_deleteDocuments(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-			"WorkflowMetricsTaskType", "companyId", companyId, "processId",
-			processId);
+			"companyId", companyId, "processId", processId);
 	}
 
 	public Document[] getDocuments(long companyId) throws Exception {
@@ -1286,8 +1284,7 @@ public class WorkflowMetricsRESTTestHelper {
 		return documentBuilder.build();
 	}
 
-	private void _deleteDocuments(
-			String indexName, String indexType, Object... parameters)
+	private void _deleteDocuments(String indexName, Object... parameters)
 		throws Exception {
 
 		if (_searchEngineAdapter == null) {
@@ -1309,7 +1306,6 @@ public class WorkflowMetricsRESTTestHelper {
 		searchSearchRequest.setQuery(booleanQuery);
 
 		searchSearchRequest.setSize(10000);
-		searchSearchRequest.setTypes(indexType);
 
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
@@ -1329,7 +1325,6 @@ public class WorkflowMetricsRESTTestHelper {
 					indexName, document.getString("uid"), document);
 
 			updateDocumentRequest.setRefresh(true);
-			updateDocumentRequest.setType(indexType);
 			updateDocumentRequest.setUpsert(true);
 
 			_searchEngineAdapter.execute(updateDocumentRequest);

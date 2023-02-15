@@ -112,14 +112,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 						companyId),
 					_slaInstanceResultWorkflowMetricsIndexer.
 						creatDefaultDocument(
-							companyId, document.getLong("processId"))) {
-
-					{
-						setType(
-							_slaInstanceResultWorkflowMetricsIndexer.
-								getIndexType());
-					}
-				});
+							companyId, document.getLong("processId"))));
 		}
 
 		if (ListUtil.isNotEmpty(

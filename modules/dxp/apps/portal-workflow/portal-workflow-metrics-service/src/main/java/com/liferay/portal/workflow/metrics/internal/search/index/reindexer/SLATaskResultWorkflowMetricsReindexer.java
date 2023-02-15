@@ -103,14 +103,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						companyId, document.getLong("nodeId"),
 						document.getLong("processId"),
-						document.getString("name"))) {
-
-					{
-						setType(
-							_slaTaskResultWorkflowMetricsIndexer.
-								getIndexType());
-					}
-				});
+						document.getString("name"))));
 
 			_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
 				atomicCounter.incrementAndGet(), searchHits.getTotalHits(),

@@ -124,14 +124,7 @@ public class NodeWorkflowMetricsIndexerImpl
 						document.getLong("companyId"),
 						document.getLong("nodeId"),
 						document.getLong("processId"),
-						document.getString("name"))) {
-
-					{
-						setType(
-							_slaTaskResultWorkflowMetricsIndexer.
-								getIndexType());
-					}
-				});
+						document.getString("name"))));
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
@@ -141,24 +134,14 @@ public class NodeWorkflowMetricsIndexerImpl
 						document.getLong("companyId"),
 						document.getLong("processId"),
 						document.getLong("nodeId"), document.getString("name"),
-						document.getString("version"))) {
-
-					{
-						setType(_taskWorkflowMetricsIndex.getIndexType());
-					}
-				});
+						document.getString("version"))));
 		}
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
 				_nodeWorkflowMetricsIndex.getIndexName(
 					document.getLong("companyId")),
-				document) {
-
-				{
-					setType(_nodeWorkflowMetricsIndex.getIndexType());
-				}
-			});
+				document));
 
 		if (PortalRunMode.isTestMode()) {
 			bulkDocumentRequest.setRefresh(true);

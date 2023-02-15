@@ -44,7 +44,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class BatchEngineBundlerTrackerTest {
+public class BatchEngineBundleTrackerTest {
 
 	@ClassRule
 	@Rule
@@ -54,7 +54,7 @@ public class BatchEngineBundlerTrackerTest {
 	@Before
 	public void setUp() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			BatchEngineBundlerTrackerTest.class);
+			BatchEngineBundleTrackerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}
@@ -101,7 +101,7 @@ public class BatchEngineBundlerTrackerTest {
 
 		Bundle bundle = _bundleContext.installBundle(
 			bundleSymbolicName,
-			BatchEngineBundlerTrackerTest.class.getResourceAsStream(batchFile));
+			BatchEngineBundleTrackerTest.class.getResourceAsStream(batchFile));
 
 		try {
 			bundle.start();

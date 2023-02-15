@@ -43,7 +43,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Raymond Augé
  */
 @Component(immediate = true, service = {})
-public class BatchEngineBundlerTracker {
+public class BatchEngineBundleTracker {
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {
 		if (zipEntryName.endsWith("jsont")) {
@@ -59,7 +59,7 @@ public class BatchEngineBundlerTracker {
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,
-			new BatchEngineBundleBundleTrackerCustomizer());
+			new BatchEngineBundleTrackerCustomizer());
 
 		_bundleTracker.open();
 	}
@@ -161,7 +161,7 @@ public class BatchEngineBundlerTracker {
 
 	private BundleTracker<Void> _bundleTracker;
 
-	private class BatchEngineBundleBundleTrackerCustomizer
+	private class BatchEngineBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<Void> {
 
 		@Override

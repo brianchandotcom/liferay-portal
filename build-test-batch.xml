@@ -3198,6 +3198,52 @@ information. Make sure to commit in all build-iw results.
 		</run-batch-test>
 	</target>
 
+	<target name="build-lib-versions-jdk8">
+		<run-batch-test>
+			<test-action>
+				<ant dir="portal-impl" inheritAll="false" target="build-lib-versions" />
+
+				<exec executable="git" output="${project.dir}/build.lib.versions.diff.txt">
+					<arg value="diff" />
+					<arg value="--" />
+					<arg value="lib" />
+				</exec>
+
+				<loadfile
+					property="build.lib.versions.diff.txt.content"
+					srcfile="${project.dir}/build.lib.versions.diff.txt"
+				/>
+
+				<delete file="${project.dir}/build.lib.versions.diff.txt" />
+
+				<if>
+					<or>
+						<contains string="${build.lib.versions.diff.txt.content}" substring="versions.html" />
+						<and>
+							<contains string="${build.lib.versions.diff.txt.content}" substring="versions-complete.xml" />
+							<matches pattern=".*[+-]\s+&#60;((?!.*publish-date).*).*" string="${build.lib.versions.diff.txt.content}" />
+						</and>
+					</or>
+
+					<then>
+						<echo>${build.lib.versions.diff.txt.content}</echo>
+
+						<fail>
+.
+
+Detected build-lib-versions changes. See above build-lib-versions log for more
+information. Make sure to commit in all build-lib-versions results.
+						</fail>
+					</then>
+				</if>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="bundle-blacklist-restart-jdk8">
 		<run-bundle-blacklist-restart-test />
 	</target>

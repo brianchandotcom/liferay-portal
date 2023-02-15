@@ -23,7 +23,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as mandatory of a  previously picklist imported "
+	@description = "LPS-167536 - It's possible to add an object entry with a picklist field as mandatory of a  previously picklist imported "
 	@priority = 4
 	test CanAddEntryWithMandatoryPicklistFieldImported {
 
@@ -31,7 +31,7 @@ definition {
 
 	}
 
-	@description = "LPS-175645 - It's possible to add an object entry with a multi select picklist field of a picklist previously imported"
+	@description = "LPS-167536 - It's possible to add an object entry with a multi select picklist field of a picklist previously imported"
 	@priority = 4
 	test CanAddEntryWithMultiSelectPicklistImported {
 
@@ -122,7 +122,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
+	@description = "LPS-167536 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
 	@priority = 4
 	test CanAddEntryWithStateOfPicklistImported {
 		task ("Given a picklist imported and an object created") {
@@ -168,7 +168,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "
+	@description = "LPS-167536 - It's possible to add an object entry of a picklist with a translation of a previously picklist imported "
 	@priority = 3
 	test CanAddEntryWithTranslationPicklistImported {
 		task ("Given a picklist imported and an object created with a picklist field") {
@@ -234,7 +234,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It's possible to export Picklist (download)"
+	@description = "LPS-167536 - It's possible to export Picklist (download)"
 	@priority = 5
 	test CanExportPicklist {
 		property portal.acceptance = "true";
@@ -256,15 +256,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It's possible to import the Picklist"
-	@priority = 5
-	test CanImportPicklist {
-
-		// TODO pending implementation
-
-	}
-
-	@description = "LPS-175645 - It's possible to see an error importing incorrect JSON"
+	@description = "LPS-167536 - It's possible to see an error importing incorrect JSON"
 	@priority = 4
 	test CannotImportWrongPicklist {
 		task ("Given a Power User with access to Picklist") {
@@ -282,7 +274,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-175645 - It’s possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
+	@description = "LPS-167536 - It’s possible to overwrite Picklist when ERC is duplicated (Update Existing Picklist)"
 	@priority = 5
 	test CanOverwritePicklistWhenERCisDuplicated {
 

@@ -680,7 +680,7 @@ definition {
 
 	test InitializeNewMiniumSite {
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -736,7 +736,7 @@ definition {
 
 	test InitializeNewSpeedwellSite {
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,6 +36,10 @@ import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException
 import com.liferay.site.navigation.menu.item.util.SiteNavigationMenuItemUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+
+import java.util.Arrays;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -87,6 +92,19 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 			jsonObject.put(
 				"siteNavigationMenuItemId",
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(type);
+
+			SessionMessages.add(
+				actionRequest, "siteNavigationMenuItemsAdded",
+				_language.format(
+					themeDisplay.getLocale(), "x-x-was-added-to-this-menu",
+					Arrays.asList(
+						1,
+						siteNavigationMenuItemType.getLabel(
+							themeDisplay.getLocale()))));
 		}
 		catch (SiteNavigationMenuItemNameException
 					siteNavigationMenuItemNameException) {
@@ -122,5 +140,9 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

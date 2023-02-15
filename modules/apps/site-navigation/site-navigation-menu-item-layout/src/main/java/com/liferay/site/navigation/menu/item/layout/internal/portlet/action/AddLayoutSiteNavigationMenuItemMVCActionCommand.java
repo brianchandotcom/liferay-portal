@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,6 +39,7 @@ import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -160,6 +162,19 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 				jsonObject.put(
 					"siteNavigationMenuItemId",
 					layoutSiteNavigationMenuItemMap);
+
+				String message = _language.format(
+					themeDisplay.getLocale(), "x-x-was-added-to-this-menu",
+					Arrays.asList(jsonArray.length(), "page"));
+
+				if (jsonArray.length() > 1) {
+					message = _language.format(
+						themeDisplay.getLocale(), "x-x-were-added-to-this-menu",
+						Arrays.asList(jsonArray.length(), "pages"));
+				}
+
+				SessionMessages.add(
+					actionRequest, "siteNavigationMenuItemsAdded", message);
 			}
 		}
 		catch (SiteNavigationMenuItemNameException

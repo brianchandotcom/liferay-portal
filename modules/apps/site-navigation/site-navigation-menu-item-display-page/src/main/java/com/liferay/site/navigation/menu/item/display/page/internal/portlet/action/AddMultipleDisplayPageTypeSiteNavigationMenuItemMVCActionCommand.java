@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,8 +42,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,12 +78,12 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		String siteNavigationMenuItemType = ParamUtil.getString(
+		String siteNavigationMenuItemTypeString = ParamUtil.getString(
 			actionRequest, "siteNavigationMenuItemType");
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
-		if (Validator.isNotNull(siteNavigationMenuItemType) &&
+		if (Validator.isNotNull(siteNavigationMenuItemTypeString) &&
 			(siteNavigationMenuId > 0)) {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -101,7 +105,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					if ((itemJSONObject != null) &&
 						Objects.equals(
 							itemJSONObject.getString("className"),
-							siteNavigationMenuItemType)) {
+							siteNavigationMenuItemTypeString)) {
 
 						infoItemReferences.add(
 							new InfoItemReference(
@@ -117,7 +121,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					layoutDisplayPageMultiSelectionProvider =
 						_layoutDisplayPageMultiSelectionProviderRegistry.
 							getLayoutDisplayPageMultiSelectionProvider(
-								siteNavigationMenuItemType);
+								siteNavigationMenuItemTypeString);
 
 				if (layoutDisplayPageMultiSelectionProvider != null) {
 					infoItemReferences =
@@ -129,8 +133,34 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					_addSiteNavigationMenuItem(
 						themeDisplay.getScopeGroupId(), infoItemReference,
 						jsonObjects, 0, serviceContext, siteNavigationMenuId,
-						siteNavigationMenuItemType);
+						siteNavigationMenuItemTypeString);
 				}
+
+				SiteNavigationMenuItemType siteNavigationMenuItemType =
+					_siteNavigationMenuItemTypeRegistry.
+						getSiteNavigationMenuItemType(
+							siteNavigationMenuItemTypeString);
+
+				String message = _language.format(
+					themeDisplay.getLocale(), "x-x-was-added-to-this-menu",
+					Arrays.asList(
+						jsonArray.length(),
+						siteNavigationMenuItemType.getLabel(
+							themeDisplay.getLocale())));
+
+				if ((jsonArray.length() > 1) &&
+					(layoutDisplayPageMultiSelectionProvider != null)) {
+
+					message = _language.format(
+						themeDisplay.getLocale(), "x-x-were-added-to-this-menu",
+						Arrays.asList(
+							jsonArray.length(),
+							layoutDisplayPageMultiSelectionProvider.
+								getPluralLabel(themeDisplay.getLocale())));
+				}
+
+				SessionMessages.add(
+					actionRequest, "siteNavigationMenuItemsAdded", message);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -150,7 +180,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					StringBundler.concat(
 						"Unable to add multiple site navigation menu items ",
 						"for site navigation menu ID ", siteNavigationMenuId,
-						" and type ", siteNavigationMenuItemType));
+						" and type ", siteNavigationMenuItemTypeString));
 			}
 
 			jsonObject.put(
@@ -249,5 +279,9 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

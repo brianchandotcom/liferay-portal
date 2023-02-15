@@ -198,6 +198,9 @@ const Form = ({
 				name={`activities[${currentActivityIndex}].budgets`}
 				setFieldValue={setFieldValue}
 			/>
+			<div className="d-none total-mdf-request-amount">
+				{`Total MDF Requested Amount: ${currentActivity.mdfRequestAmount}`}
+			</div>
 		</>
 	);
 };

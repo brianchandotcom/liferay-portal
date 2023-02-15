@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.highlight.Highlight;
+import com.liferay.portal.search.searcher.SearchTimeValue;
 import com.liferay.portal.search.sort.Sort;
 
 import java.util.ArrayList;
@@ -104,6 +105,14 @@ public class SearchSearchRequest
 
 	public Boolean getScoreEnabled() {
 		return _scoreEnabled;
+	}
+
+	public String getScrollId() {
+		return _scrollId;
+	}
+
+	public SearchTimeValue getScrollSearchTimeValue() {
+		return _scrollSearchTimeValue;
 	}
 
 	public Object[] getSearchAfter() {
@@ -254,6 +263,16 @@ public class SearchSearchRequest
 		_scoreEnabled = scoreEnabled;
 	}
 
+	public void setScrollId(String scrollId) {
+		_scrollId = scrollId;
+	}
+
+	public void setScrollSearchTimeValue(
+		SearchTimeValue scrollSearchTimeValue) {
+
+		_scrollSearchTimeValue = scrollSearchTimeValue;
+	}
+
 	public void setSearchAfter(Object[] searchAfter) {
 		_searchAfter = searchAfter;
 	}
@@ -313,6 +332,8 @@ public class SearchSearchRequest
 	private boolean _luceneSyntax;
 	private String _preference;
 	private Boolean _scoreEnabled;
+	private String _scrollId;
+	private SearchTimeValue _scrollSearchTimeValue;
 	private Object[] _searchAfter;
 	private String[] _selectedFieldNames;
 	private Integer _size;

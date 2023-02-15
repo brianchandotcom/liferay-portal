@@ -25,6 +25,9 @@ public interface SearchRequestExecutor {
 	public ClosePointInTimeResponse executeSearchRequest(
 		ClosePointInTimeRequest closePointInTimeRequest);
 
+	public ClearScrollResponse executeSearchRequest(
+		ClearScrollRequest clearScrollRequest);
+
 	public CountSearchResponse executeSearchRequest(
 		CountSearchRequest countSearchRequest);
 

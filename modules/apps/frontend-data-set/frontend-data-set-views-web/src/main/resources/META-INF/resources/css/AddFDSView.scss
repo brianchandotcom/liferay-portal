@@ -1,3 +1,14 @@
-.dropdown-menu.autocomplete-dropdown-menu {
+.headless-resources-dropdown-menu {
 	max-height: 500px;
+	max-width: 750px;
+	width: 100%;
+}
+
+.headless-resource {
+	align-items: baseline;
+	justify-content: space-between;
+
+	.context {
+		font-size: 0.775rem;
+	}
 }

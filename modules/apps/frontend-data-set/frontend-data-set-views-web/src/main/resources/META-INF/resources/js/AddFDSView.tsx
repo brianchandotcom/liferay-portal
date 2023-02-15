@@ -12,15 +12,75 @@
  * details.
  */
 
-import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {navigate} from 'frontend-js-web';
-import React from 'react';
+import fuzzy from 'fuzzy';
+import React, {useState} from 'react';
 
 import '../css/AddFDSView.scss';
+
+type HeadlessResource = {
+	bundleLabel: string;
+	entityClassName: string;
+	name: string;
+	version: string;
+};
+
+interface IItemProps {
+	headlessResource: HeadlessResource;
+	query: string;
+}
+
+const FUZZY_OPTIONS = {
+	post: '</strong>',
+	pre: '<strong>',
+};
+
+const HeadlessResourceItem = ({headlessResource, query}: IItemProps) => {
+	const fuzzyNameMatch = fuzzy.match(
+		query,
+		headlessResource.name,
+		FUZZY_OPTIONS
+	);
+
+	const fuzzyBundleLabelMatch = fuzzy.match(
+		query,
+		headlessResource.bundleLabel,
+		FUZZY_OPTIONS
+	);
+
+	return (
+		<ClayLayout.ContentRow className="headless-resource">
+			{fuzzyNameMatch ? (
+				<span
+					dangerouslySetInnerHTML={{
+						__html: fuzzyNameMatch.rendered,
+					}}
+				/>
+			) : (
+				<span>{headlessResource.name}</span>
+			)}
+
+			<span className="context">
+				{fuzzyBundleLabelMatch ? (
+					<span
+						dangerouslySetInnerHTML={{
+							__html: fuzzyBundleLabelMatch.rendered,
+						}}
+					/>
+				) : (
+					<span>{headlessResource.bundleLabel}</span>
+				)}
+
+				{` ${headlessResource.version}`}
+			</span>
+		</ClayLayout.ContentRow>
+	);
+};
 
 const RequiredMark = () => (
 	<>
@@ -33,12 +93,64 @@ const RequiredMark = () => (
 	</>
 );
 
-type HeadlessResource = {
-	bundleLabel: string;
-	entityClassName: string;
-	name: string;
-	version: string;
+interface IDropdownMenuProps {
+	initialHeadlessResources: Array<HeadlessResource>;
+	setSelectedHeadlessResource: Function;
+}
+
+const DropdownMenu = ({
+	initialHeadlessResources,
+	setSelectedHeadlessResource,
+}: IDropdownMenuProps) => {
+	const [headlessResources, setHeadlessResources] = useState<
+		Array<HeadlessResource>
+	>(initialHeadlessResources || []);
+	const [query, setQuery] = useState('');
+
+	const onSearch = (query: string) => {
+		setQuery(query);
+
+		setHeadlessResources(
+			query
+				? initialHeadlessResources.filter(
+						({bundleLabel, name}: HeadlessResource) => {
+							const lowerCaseQuery = query.toLowerCase();
+
+							return (
+								bundleLabel
+									.toLowerCase()
+									.match(lowerCaseQuery) ||
+								name.toLowerCase().match(lowerCaseQuery)
+							);
+						}
+				  ) || []
+				: initialHeadlessResources
+		);
+	};
+
+	return (
+		<>
+			<ClayDropDown.Search onChange={onSearch} value={query} />
+
+			<ClayDropDown.ItemList items={headlessResources}>
+				{(item: HeadlessResource) => (
+					<ClayDropDown.Item
+						key={item.entityClassName}
+						onClick={() => {
+							setSelectedHeadlessResource(item);
+						}}
+					>
+						<HeadlessResourceItem
+							headlessResource={item}
+							query={query}
+						/>
+					</ClayDropDown.Item>
+				)}
+			</ClayDropDown.ItemList>
+		</>
+	);
 };
+
 interface IFDSViewsProps {
 	fdsViewsURL: string;
 	headlessResources: Array<HeadlessResource>;
@@ -47,9 +159,41 @@ interface IFDSViewsProps {
 
 const AddFDSView = ({
 	fdsViewsURL,
-	headlessResources,
+	headlessResources: initialHeadlessResources,
 	namespace,
 }: IFDSViewsProps) => {
+	const [selectedHeadlessResource, setSelectedHeadlessResource] = useState<
+		HeadlessResource
+	>();
+
+	const Dropdown = () => (
+		<ClayDropDown
+			menuElementAttrs={{className: 'headless-resources-dropdown-menu'}}
+			trigger={
+				<ClayButton
+					aria-labelledby={`${namespace}fdsHeadlessResourcesLabel`}
+					className="form-control form-control-select form-control-select-secondary"
+					displayType="secondary"
+					id={`${namespace}fdsHeadlessResourcesSelect`}
+				>
+					{selectedHeadlessResource ? (
+						<HeadlessResourceItem
+							headlessResource={selectedHeadlessResource}
+							query=""
+						/>
+					) : (
+						Liferay.Language.get('choose-an-option')
+					)}
+				</ClayButton>
+			}
+		>
+			<DropdownMenu
+				initialHeadlessResources={initialHeadlessResources}
+				setSelectedHeadlessResource={setSelectedHeadlessResource}
+			/>
+		</ClayDropDown>
+	);
+
 	return (
 		<ClayLayout.ContainerFluid formSize="lg">
 			<ClayForm>
@@ -76,36 +220,15 @@ const AddFDSView = ({
 
 						<ClayForm.Group>
 							<label
-								htmlFor={`${namespace}fdsViewProviderAutocomplete`}
-								id={`${namespace}fdsViewProviderAutocompleteLabel`}
+								htmlFor={`${namespace}fdsHeadlessResourcesSelect`}
+								id={`${namespace}fdsHeadlessResourcesLabel`}
 							>
 								{Liferay.Language.get('provider')}
 
 								<RequiredMark />
 							</label>
 
-							<ClayAutocomplete
-								aria-labelledby={`${namespace}fdsViewProviderAutocompleteLabel`}
-								id={`${namespace}fdsViewProviderAutocomplete`}
-								menuTrigger="focus"
-								messages={{
-									loading: '',
-									notFound: Liferay.Language.get(
-										'no-results-found'
-									),
-								}}
-								placeholder={Liferay.Language.get(
-									'choose-an-option'
-								)}
-							>
-								{headlessResources.map((headlessResource) => (
-									<ClayAutocomplete.Item
-										key={headlessResource.entityClassName}
-									>
-										{`${headlessResource.name} (${headlessResource.version} - ${headlessResource.bundleLabel})`}
-									</ClayAutocomplete.Item>
-								))}
-							</ClayAutocomplete>
+							<Dropdown />
 						</ClayForm.Group>
 					</ClayLayout.SheetSection>
 

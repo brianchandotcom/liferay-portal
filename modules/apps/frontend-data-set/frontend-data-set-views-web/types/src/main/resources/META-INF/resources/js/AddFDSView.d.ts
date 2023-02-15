@@ -28,7 +28,7 @@ interface IFDSViewsProps {
 }
 declare const AddFDSView: ({
 	fdsViewsURL,
-	headlessResources,
+	headlessResources: initialHeadlessResources,
 	namespace,
 }: IFDSViewsProps) => JSX.Element;
 export default AddFDSView;

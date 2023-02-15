@@ -151,11 +151,7 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 		Node node = getListItemsQuery.getDomNode();
 
-		for (Node childrenNode :
-				XMLUtil.toNodes(node.getOwnerDocument(), query)) {
-
-			node.appendChild(childrenNode);
-		}
+		node.appendChild(XMLUtil.toNode(node.getOwnerDocument(), query));
 
 		return getListItemsQuery;
 	}
@@ -169,11 +165,8 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 		Node node = queryOptions.getDomNode();
 
-		for (Node childrenNode :
-				XMLUtil.toNodes(node.getOwnerDocument(), queryOptionsList)) {
-
-			node.appendChild(childrenNode);
-		}
+		node.appendChild(
+			XMLUtil.toNode(node.getOwnerDocument(), queryOptionsList));
 
 		return queryOptions;
 	}

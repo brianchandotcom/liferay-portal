@@ -773,11 +773,17 @@ public class IndividualSegmentsExpressionParser extends Parser {
 	}
 
 	public static class FunctionParametersContext extends ParserRuleContext {
-		public TerminalNode COMMA() { return getToken(IndividualSegmentsExpressionParser.COMMA, 0); }
-		public LiteralContext literal() {
-			return getRuleContext(LiteralContext.class,0);
+		public LiteralContext literal(int i) {
+			return getRuleContext(LiteralContext.class,i);
+		}
+		public List<TerminalNode> COMMA() { return getTokens(IndividualSegmentsExpressionParser.COMMA); }
+		public List<LiteralContext> literal() {
+			return getRuleContexts(LiteralContext.class);
 		}
 		public TerminalNode VARIABLE_IDENTIFIER() { return getToken(IndividualSegmentsExpressionParser.VARIABLE_IDENTIFIER, 0); }
+		public TerminalNode COMMA(int i) {
+			return getToken(IndividualSegmentsExpressionParser.COMMA, i);
+		}
 		public FunctionParametersContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -800,12 +806,25 @@ public class IndividualSegmentsExpressionParser extends Parser {
 	public final FunctionParametersContext functionParameters() throws RecognitionException {
 		FunctionParametersContext _localctx = new FunctionParametersContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_functionParameters);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(86); match(VARIABLE_IDENTIFIER);
-			setState(87); match(COMMA);
-			setState(88); literal();
+			setState(91);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==COMMA) {
+				{
+				{
+				setState(87); match(COMMA);
+				setState(88); literal();
+				}
+				}
+				setState(93);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -919,20 +938,20 @@ public class IndividualSegmentsExpressionParser extends Parser {
 		enterRule(_localctx, 18, RULE_literal);
 		int _la;
 		try {
-			setState(95);
+			setState(99);
 			switch (_input.LA(1)) {
 			case FLOATING_POINT_LITERAL:
 				_localctx = new FloatingPointLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(90); match(FLOATING_POINT_LITERAL);
+				setState(94); match(FLOATING_POINT_LITERAL);
 				}
 				break;
 			case INTEGER_LITERAL:
 				_localctx = new IntegerLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(91); match(INTEGER_LITERAL);
+				setState(95); match(INTEGER_LITERAL);
 				}
 				break;
 			case T__2:
@@ -940,7 +959,7 @@ public class IndividualSegmentsExpressionParser extends Parser {
 				_localctx = new BooleanLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(92);
+				setState(96);
 				_la = _input.LA(1);
 				if ( !(_la==T__2 || _la==T__0) ) {
 				_errHandler.recoverInline(this);
@@ -952,14 +971,14 @@ public class IndividualSegmentsExpressionParser extends Parser {
 				_localctx = new NullLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(93); match(T__3);
+				setState(97); match(T__3);
 				}
 				break;
 			case STRING_LITERAL:
 				_localctx = new StringLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(94); match(STRING_LITERAL);
+				setState(98); match(STRING_LITERAL);
 				}
 				break;
 			default:
@@ -1051,12 +1070,12 @@ public class IndividualSegmentsExpressionParser extends Parser {
 			_ctx = _localctx;
 			_prevctx = _localctx;
 
-			setState(98); equalityExpression();
+			setState(102); equalityExpression();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(105);
+			setState(109);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1065,16 +1084,16 @@ public class IndividualSegmentsExpressionParser extends Parser {
 					{
 					_localctx = new AndExpressionContext(new LogicalAndExpressionContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_logicalAndExpression);
-					setState(100);
+					setState(104);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(101); match(AND);
-					setState(102); equalityExpression();
+					setState(105); match(AND);
+					setState(106); equalityExpression();
 					}
 					} 
 				}
-				setState(107);
+				setState(111);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
 			}
 		}
@@ -1163,12 +1182,12 @@ public class IndividualSegmentsExpressionParser extends Parser {
 			_ctx = _localctx;
 			_prevctx = _localctx;
 
-			setState(109); logicalAndExpression(0);
+			setState(113); logicalAndExpression(0);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(116);
+			setState(120);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1177,16 +1196,16 @@ public class IndividualSegmentsExpressionParser extends Parser {
 					{
 					_localctx = new OrExpressionContext(new LogicalOrExpressionContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_logicalOrExpression);
-					setState(111);
+					setState(115);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(112); match(OR);
-					setState(113); logicalAndExpression(0);
+					setState(116); match(OR);
+					setState(117); logicalAndExpression(0);
 					}
 					} 
 				}
-				setState(118);
+				setState(122);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
 			}
 		}
@@ -1293,13 +1312,13 @@ public class IndividualSegmentsExpressionParser extends Parser {
 		LogicalTermContext _localctx = new LogicalTermContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_logicalTerm);
 		try {
-			setState(123);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			setState(127);
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				_localctx = new ToLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(119); literal();
+				setState(123); literal();
 				}
 				break;
 
@@ -1307,7 +1326,7 @@ public class IndividualSegmentsExpressionParser extends Parser {
 				_localctx = new ToFunctionCallExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(120); functionCallExpression();
+				setState(124); functionCallExpression();
 				}
 				break;
 
@@ -1315,7 +1334,7 @@ public class IndividualSegmentsExpressionParser extends Parser {
 				_localctx = new ToFilterExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(121); filterExpression();
+				setState(125); filterExpression();
 				}
 				break;
 
@@ -1323,7 +1342,7 @@ public class IndividualSegmentsExpressionParser extends Parser {
 				_localctx = new ToFilterByCountExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(122); filterByCountExpression();
+				setState(126); filterByCountExpression();
 				}
 				break;
 			}
@@ -1361,37 +1380,39 @@ public class IndividualSegmentsExpressionParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\32\u0080\4\2\t\2"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\32\u0084\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\2\3\2\3\2\5\2\"\n\2\3\3\3\3"+
 		"\3\3\5\3\'\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4"+
 		"\66\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5?\n\5\3\6\3\6\3\6\3\7\3\7\3\7\3"+
 		"\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t"+
-		"\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\5\13b\n\13\3\f\3\f\3\f\3\f\3"+
-		"\f\3\f\7\fj\n\f\f\f\16\fm\13\f\3\r\3\r\3\r\3\r\3\r\3\r\7\ru\n\r\f\r\16"+
-		"\rx\13\r\3\16\3\16\3\16\3\16\5\16~\n\16\3\16\2\4\26\30\17\2\4\6\b\n\f"+
-		"\16\20\22\24\26\30\32\2\3\4\2\7\7\t\t\u0083\2!\3\2\2\2\4&\3\2\2\2\6\65"+
-		"\3\2\2\2\b>\3\2\2\2\n@\3\2\2\2\fC\3\2\2\2\16H\3\2\2\2\20S\3\2\2\2\22X"+
-		"\3\2\2\2\24a\3\2\2\2\26c\3\2\2\2\30n\3\2\2\2\32}\3\2\2\2\34\"\5\32\16"+
-		"\2\35\36\7\23\2\2\36\37\5\30\r\2\37 \7\24\2\2 \"\3\2\2\2!\34\3\2\2\2!"+
-		"\35\3\2\2\2\"\3\3\2\2\2#$\7\26\2\2$\'\5\4\3\2%\'\5\2\2\2&#\3\2\2\2&%\3"+
-		"\2\2\2\'\5\3\2\2\2()\7\31\2\2)*\7\20\2\2*\66\5\2\2\2+,\7\31\2\2,-\7\17"+
-		"\2\2-\66\5\2\2\2./\7\31\2\2/\60\7\25\2\2\60\66\5\2\2\2\61\62\7\31\2\2"+
-		"\62\63\7\22\2\2\63\66\5\2\2\2\64\66\5\4\3\2\65(\3\2\2\2\65+\3\2\2\2\65"+
-		".\3\2\2\2\65\61\3\2\2\2\65\64\3\2\2\2\66\7\3\2\2\2\678\7\31\2\289\7\f"+
-		"\2\29?\5\6\4\2:;\7\31\2\2;<\7\16\2\2<?\5\6\4\2=?\5\6\4\2>\67\3\2\2\2>"+
-		":\3\2\2\2>=\3\2\2\2?\t\3\2\2\2@A\5\30\r\2AB\7\2\2\3B\13\3\2\2\2CD\7\31"+
-		"\2\2DE\7\4\2\2EF\7\30\2\2FG\7\24\2\2G\r\3\2\2\2HI\7\31\2\2IJ\7\b\2\2J"+
-		"K\7\30\2\2KL\7\13\2\2LM\7\5\2\2MN\7\30\2\2NO\7\13\2\2OP\7\3\2\2PQ\7\21"+
-		"\2\2QR\7\24\2\2R\17\3\2\2\2ST\7\31\2\2TU\7\23\2\2UV\5\22\n\2VW\7\24\2"+
-		"\2W\21\3\2\2\2XY\7\31\2\2YZ\7\13\2\2Z[\5\24\13\2[\23\3\2\2\2\\b\7\r\2"+
-		"\2]b\7\21\2\2^b\t\2\2\2_b\7\6\2\2`b\7\30\2\2a\\\3\2\2\2a]\3\2\2\2a^\3"+
-		"\2\2\2a_\3\2\2\2a`\3\2\2\2b\25\3\2\2\2cd\b\f\1\2de\5\b\5\2ek\3\2\2\2f"+
-		"g\f\4\2\2gh\7\n\2\2hj\5\b\5\2if\3\2\2\2jm\3\2\2\2ki\3\2\2\2kl\3\2\2\2"+
-		"l\27\3\2\2\2mk\3\2\2\2no\b\r\1\2op\5\26\f\2pv\3\2\2\2qr\f\4\2\2rs\7\27"+
-		"\2\2su\5\26\f\2tq\3\2\2\2ux\3\2\2\2vt\3\2\2\2vw\3\2\2\2w\31\3\2\2\2xv"+
-		"\3\2\2\2y~\5\24\13\2z~\5\20\t\2{~\5\f\7\2|~\5\16\b\2}y\3\2\2\2}z\3\2\2"+
-		"\2}{\3\2\2\2}|\3\2\2\2~\33\3\2\2\2\n!&\65>akv}";
+		"\3\n\3\n\3\n\7\n\\\n\n\f\n\16\n_\13\n\3\13\3\13\3\13\3\13\3\13\5\13f\n"+
+		"\13\3\f\3\f\3\f\3\f\3\f\3\f\7\fn\n\f\f\f\16\fq\13\f\3\r\3\r\3\r\3\r\3"+
+		"\r\3\r\7\ry\n\r\f\r\16\r|\13\r\3\16\3\16\3\16\3\16\5\16\u0082\n\16\3\16"+
+		"\2\4\26\30\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2\3\4\2\7\7\t\t\u0088\2"+
+		"!\3\2\2\2\4&\3\2\2\2\6\65\3\2\2\2\b>\3\2\2\2\n@\3\2\2\2\fC\3\2\2\2\16"+
+		"H\3\2\2\2\20S\3\2\2\2\22X\3\2\2\2\24e\3\2\2\2\26g\3\2\2\2\30r\3\2\2\2"+
+		"\32\u0081\3\2\2\2\34\"\5\32\16\2\35\36\7\23\2\2\36\37\5\30\r\2\37 \7\24"+
+		"\2\2 \"\3\2\2\2!\34\3\2\2\2!\35\3\2\2\2\"\3\3\2\2\2#$\7\26\2\2$\'\5\4"+
+		"\3\2%\'\5\2\2\2&#\3\2\2\2&%\3\2\2\2\'\5\3\2\2\2()\7\31\2\2)*\7\20\2\2"+
+		"*\66\5\2\2\2+,\7\31\2\2,-\7\17\2\2-\66\5\2\2\2./\7\31\2\2/\60\7\25\2\2"+
+		"\60\66\5\2\2\2\61\62\7\31\2\2\62\63\7\22\2\2\63\66\5\2\2\2\64\66\5\4\3"+
+		"\2\65(\3\2\2\2\65+\3\2\2\2\65.\3\2\2\2\65\61\3\2\2\2\65\64\3\2\2\2\66"+
+		"\7\3\2\2\2\678\7\31\2\289\7\f\2\29?\5\6\4\2:;\7\31\2\2;<\7\16\2\2<?\5"+
+		"\6\4\2=?\5\6\4\2>\67\3\2\2\2>:\3\2\2\2>=\3\2\2\2?\t\3\2\2\2@A\5\30\r\2"+
+		"AB\7\2\2\3B\13\3\2\2\2CD\7\31\2\2DE\7\4\2\2EF\7\30\2\2FG\7\24\2\2G\r\3"+
+		"\2\2\2HI\7\31\2\2IJ\7\b\2\2JK\7\30\2\2KL\7\13\2\2LM\7\5\2\2MN\7\30\2\2"+
+		"NO\7\13\2\2OP\7\3\2\2PQ\7\21\2\2QR\7\24\2\2R\17\3\2\2\2ST\7\31\2\2TU\7"+
+		"\23\2\2UV\5\22\n\2VW\7\24\2\2W\21\3\2\2\2X]\7\31\2\2YZ\7\13\2\2Z\\\5\24"+
+		"\13\2[Y\3\2\2\2\\_\3\2\2\2][\3\2\2\2]^\3\2\2\2^\23\3\2\2\2_]\3\2\2\2`"+
+		"f\7\r\2\2af\7\21\2\2bf\t\2\2\2cf\7\6\2\2df\7\30\2\2e`\3\2\2\2ea\3\2\2"+
+		"\2eb\3\2\2\2ec\3\2\2\2ed\3\2\2\2f\25\3\2\2\2gh\b\f\1\2hi\5\b\5\2io\3\2"+
+		"\2\2jk\f\4\2\2kl\7\n\2\2ln\5\b\5\2mj\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2"+
+		"\2\2p\27\3\2\2\2qo\3\2\2\2rs\b\r\1\2st\5\26\f\2tz\3\2\2\2uv\f\4\2\2vw"+
+		"\7\27\2\2wy\5\26\f\2xu\3\2\2\2y|\3\2\2\2zx\3\2\2\2z{\3\2\2\2{\31\3\2\2"+
+		"\2|z\3\2\2\2}\u0082\5\24\13\2~\u0082\5\20\t\2\177\u0082\5\f\7\2\u0080"+
+		"\u0082\5\16\b\2\u0081}\3\2\2\2\u0081~\3\2\2\2\u0081\177\3\2\2\2\u0081"+
+		"\u0080\3\2\2\2\u0082\33\3\2\2\2\13!&\65>]eoz\u0081";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

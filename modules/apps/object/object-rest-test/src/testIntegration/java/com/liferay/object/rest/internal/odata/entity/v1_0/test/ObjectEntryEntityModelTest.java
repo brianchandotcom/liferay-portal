@@ -21,12 +21,10 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -57,7 +55,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -100,21 +97,6 @@ public class ObjectEntryEntityModelTest {
 		String value = "A" + RandomTestUtil.randomString();
 
 		List<ObjectField> customObjectFields = Arrays.asList(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_LONG
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).objectFieldSettings(
-				Arrays.asList(
-					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
-					_createObjectFieldSetting("fileSource", "userComputer"),
-					_createObjectFieldSetting("maximumFileSize", "100"))
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(value)
-			).build(),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BIG_DECIMAL),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BOOLEAN),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_CLOB),
@@ -234,18 +216,6 @@ public class ObjectEntryEntityModelTest {
 		).build();
 	}
 
-	private ObjectFieldSetting _createObjectFieldSetting(
-		String name, String value) {
-
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
-
-		objectFieldSetting.setName(name);
-		objectFieldSetting.setValue(value);
-
-		return objectFieldSetting;
-	}
-
 	private Map<String, EntityField> _getExpectedEntityFieldsMap(
 		List<ObjectField> customObjectFields,
 		ObjectRelationship objectRelationship,
@@ -356,14 +326,6 @@ public class ObjectEntryEntityModelTest {
 	}
 
 	private EntityField _toExpectedEntityField(ObjectField objectField) {
-		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-				objectField.getBusinessType())) {
-
-			return new StringEntityField(
-				objectField.getName(), locale -> objectField.getName());
-		}
-
 		return new EntityField(
 			objectField.getName(),
 			_objectFieldDBTypeEntityFieldTypeMap.get(objectField.getDBType()),
@@ -394,9 +356,6 @@ public class ObjectEntryEntityModelTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
-
-	@Inject
-	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

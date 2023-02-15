@@ -29,13 +29,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -109,19 +108,11 @@ public class FragmentEntryLinkModelListener
 		_getCollectionSelectorFragmentConfigurationFields(
 			FragmentEntryLink fragmentEntryLink) {
 
-		List<FragmentConfigurationField> fragmentConfigurationFields =
+		return ListUtil.filter(
 			_fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfiguration());
-
-		Stream<FragmentConfigurationField> stream =
-			fragmentConfigurationFields.stream();
-
-		return stream.filter(
+				fragmentEntryLink.getConfiguration()),
 			fragmentConfigurationField -> Objects.equals(
-				fragmentConfigurationField.getType(), "collectionSelector")
-		).collect(
-			Collectors.toList()
-		);
+				fragmentConfigurationField.getType(), "collectionSelector"));
 	}
 
 	private long _getFragmentEntryLinkClassNameId() {

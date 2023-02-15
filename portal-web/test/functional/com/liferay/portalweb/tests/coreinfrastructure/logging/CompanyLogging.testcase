@@ -31,17 +31,10 @@ definition {
 		property test.name.skip.portal.instance = "CompanyLogging#AssertCompanyLogsIsolated";
 
 		for (var portalInstanceName : list "www.able.com,www.baker.com") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = ${portalInstanceName},
-				virtualHost = ${portalInstanceName},
-				webId = ${portalInstanceName});
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = ${portalInstanceName},
+				portalInstanceId = ${portalInstanceName},
+				virtualHost = ${portalInstanceName});
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "o/company-log");
 
@@ -94,17 +87,10 @@ definition {
 
 		task ("Given two new virtual instances are created") {
 			for (var portalInstanceName : list "www.able.com,www.baker.com") {
-				Navigator.openURL();
-
-				ApplicationsMenu.gotoPortlet(
-					category = "System",
-					panel = "Control Panel",
-					portlet = "Virtual Instances");
-
-				PortalInstances.addCP(
-					mailDomain = ${portalInstanceName},
-					virtualHost = ${portalInstanceName},
-					webId = ${portalInstanceName});
+				HeadlessPortalInstanceAPI.addPortalInstance(
+					domain = ${portalInstanceName},
+					portalInstanceId = ${portalInstanceName},
+					virtualHost = ${portalInstanceName});
 			}
 		}
 
@@ -142,17 +128,10 @@ definition {
 		property test.name.skip.portal.instance = "CompanyLogging#GetCompanyAdminLogs";
 
 		task ("Given a new instance is created") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("And given a company admin user is added for that virtual instance") {
@@ -211,15 +190,10 @@ definition {
 		property test.name.skip.portal.instance = "CompanyLogging#GetCompanyAdminLogsFromDifferentCompany";
 
 		task ("Given a new instance is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("And given a company admin user is added for that virtual instance") {

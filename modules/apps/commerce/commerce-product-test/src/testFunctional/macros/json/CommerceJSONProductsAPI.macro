@@ -337,6 +337,40 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
+	macro _addCommerceProductImageLinkedToOptionValue {
+		Variables.assertDefined(parameterList = "${productERC},${optionName},${optionValue}");
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(imageTitle))) {
+			var imageTitle = "Simple Image Title API";
+		}
+
+		if (!(isSet(src))) {
+			var src = "${baseURL}/documents/d/guest/tree-png";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC}/images \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"options": {
+						"${optionName}": "${optionValue}"
+					},
+					"src": "${src}",
+					"title": {
+						"en_US": "${imageTitle}"
+					}
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _addDiagramPin {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 

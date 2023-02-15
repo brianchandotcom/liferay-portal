@@ -70,8 +70,6 @@ definition {
 		}
 
 		task ("When I make a DELETE request by assetLibraryId and UUID as the erc") {
-			var documentUuid = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${response});
-
 			DocumentAPI.deleteDocumentInAssetLibrary(
 				assetLibraryId = ${assetLibraryId},
 				responseToParse = ${response});

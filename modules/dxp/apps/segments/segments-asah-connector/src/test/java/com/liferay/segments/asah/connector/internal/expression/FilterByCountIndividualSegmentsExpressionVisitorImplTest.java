@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.expression;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionLexer;
 import com.liferay.segments.asah.connector.internal.expression.parser.IndividualSegmentsExpressionParser;
@@ -62,6 +63,42 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImplTest {
 
 		Assert.assertEquals("eq", day.getOperator());
 		Assert.assertArrayEquals(new String[] {"2023-02-06"}, day.getValues());
+
+		FilterByCountIndividualSegmentsExpressionVisitorImpl.FilterByCount.Event
+			event = filterByCount.getEvent();
+
+		Assert.assertEquals("pageViewed", event.getEvent());
+		Assert.assertEquals("545188693724480037", event.getAssetId());
+	}
+
+	@Test
+	public void testAcceptWithDayBetween() {
+		IndividualSegmentsExpressionParser individualSegmentsExpressionParser =
+			new IndividualSegmentsExpressionParser(
+				new CommonTokenStream(
+					new IndividualSegmentsExpressionLexer(
+						new ANTLRInputStream(
+							StringBundler.concat(
+								"activityKey eq ",
+								"'Page#pageViewed#545188693724480037' and ",
+								"between(day,'2023-02-06',",
+								"'2023-02-08')")))));
+
+		IndividualSegmentsExpressionParser.ExpressionContext expressionContext =
+			individualSegmentsExpressionParser.expression();
+
+		FilterByCountIndividualSegmentsExpressionVisitorImpl.FilterByCount
+			filterByCount =
+				(FilterByCountIndividualSegmentsExpressionVisitorImpl.
+					FilterByCount)expressionContext.accept(
+						new FilterByCountIndividualSegmentsExpressionVisitorImpl());
+
+		FilterByCountIndividualSegmentsExpressionVisitorImpl.FilterByCount.Day
+			day = filterByCount.getDay();
+
+		Assert.assertEquals("between", day.getOperator());
+		Assert.assertArrayEquals(
+			new String[] {"2023-02-06", "2023-02-08"}, day.getValues());
 
 		FilterByCountIndividualSegmentsExpressionVisitorImpl.FilterByCount.Event
 			event = filterByCount.getEvent();

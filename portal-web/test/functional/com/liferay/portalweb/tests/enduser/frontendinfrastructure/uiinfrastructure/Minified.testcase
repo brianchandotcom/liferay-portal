@@ -49,9 +49,27 @@ definition {
 	@description = "Check for errors in the browser console on the jQuery page"
 	@priority = 3
 	test VerifyErroWhenJQueryEnabled {
+		task ("Given Navigate through the menus and select System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		}
 
-		// TODO LPS-155271 VerifyErroWhenJQueryEnabled pending implementation JQuery enabled
+		task ("When Activate JQuery and update/submit") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "JQuery",
+				configurationScope = "System Scope");
 
+			FormFields.enableCheckbox(fieldName = "Enable JQuery");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then No errors in js console or liferay console") {
+			AssertTextNotPresent(value1 = "Client Extension");
+		}
 	}
 
 }

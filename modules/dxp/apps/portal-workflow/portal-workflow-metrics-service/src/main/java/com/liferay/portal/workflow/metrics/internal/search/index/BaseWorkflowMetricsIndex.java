@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +43,19 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 			return false;
 		}
 
-		_createIndex(getIndexName(companyId));
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+			getIndexName(companyId));
+
+		createIndexRequest.setMappings(
+			_readJSONResource(getIndexType() + "-mappings.json"));
+		createIndexRequest.setSettings(_readJSONResource("settings.json"));
+
+		try {
+			searchEngineAdapter.execute(createIndexRequest);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 
 		return true;
 	}
@@ -69,45 +80,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	private String _createIndex(String indexName) {
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(
-				new IndicesExistsIndexRequest(indexName));
-
-		if (indicesExistsIndexResponse.isExists()) {
-			return indexName;
-		}
-
-		try {
-			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-				indexName);
-
-			createIndexRequest.setSource(
-				JSONUtil.put(
-					"mappings",
-					JSONUtil.put(
-						"_doc",
-						() -> {
-							JSONObject jsonObject = _readJSONObject(
-								"mappings.json");
-
-							return jsonObject.get(getIndexType());
-						})
-				).put(
-					"settings", _readJSONObject("settings.json")
-				).toString());
-
-			searchEngineAdapter.execute(createIndexRequest);
-
-			return indexName;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return null;
-	}
-
 	private boolean _hasIndex(String indexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(indexName);
@@ -118,9 +90,18 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		return indicesExistsIndexResponse.isExists();
 	}
 
-	private JSONObject _readJSONObject(String fileName) throws JSONException {
-		return JSONFactoryUtil.createJSONObject(
-			StringUtil.read(getClass(), "/META-INF/search/" + fileName));
+	private String _readJSONResource(String fileName) {
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(getClass(), "/META-INF/search/" + fileName));
+
+			return jsonObject.toString();
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

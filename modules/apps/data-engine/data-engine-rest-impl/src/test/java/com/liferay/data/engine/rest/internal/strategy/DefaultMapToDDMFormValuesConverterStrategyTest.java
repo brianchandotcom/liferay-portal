@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -132,6 +133,54 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
+	@Test
+	public void testCreateValueWithArray3() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, null,
+			HashMapBuilder.put(
+				"en_US",
+				new Object[] {"value1", "value-2", "value_3", "value/4"}
+			).put(
+				"pt_BR",
+				new Object[] {"value1", "value-2", "value_3", "value/4"}
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testCreateValueWithArray4() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, null,
+			HashMapBuilder.put(
+				"pt_BR",
+				new Object[] {"value1", "value-2", "value_3", "value/4"}
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.BRAZIL));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateValueWithIllegalArgument() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
@@ -142,6 +191,96 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 			HashMapBuilder.put(
 				"en_US", "Value 1"
 			).build());
+	}
+
+	@Test
+	public void testCreateValueWithList1() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, null,
+			HashMapBuilder.put(
+				"en_US", Arrays.asList(1, 2)
+			).put(
+				"pt_BR", Arrays.asList(3, 4)
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[1,2]", localizedValue.getString(LocaleUtil.ENGLISH));
+		Assert.assertEquals(
+			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testCreateValueWithList2() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, LocaleUtil.BRAZIL,
+			HashMapBuilder.put(
+				"pt_BR", Arrays.asList(3, 4)
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testCreateValueWithList3() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, null,
+			HashMapBuilder.put(
+				"en_US",
+				Arrays.asList("value1", "value-2", "value_3", "value/4")
+			).put(
+				"pt_BR",
+				Arrays.asList("value1", "value-2", "value_3", "value/4")
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testCreateValueWithList4() {
+		DDMFormField ddmFormField = _createDDMFormField(
+			"string", true, "field1", "text");
+
+		Value value = _defaultMapToDDMFormValuesConverterStrategy.createValue(
+			ddmFormField, null,
+			HashMapBuilder.put(
+				"pt_BR",
+				Arrays.asList("value1", "value-2", "value_3", "value/4")
+			).build());
+
+		Assert.assertTrue(value instanceof LocalizedValue);
+
+		LocalizedValue localizedValue = (LocalizedValue)value;
+
+		Assert.assertEquals(
+			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test

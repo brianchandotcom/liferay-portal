@@ -30,3 +30,10 @@ div.admonition.hilighting-alert {
 		transform: translateY(-2px);
 	}
 }
+
+dt:target,
+mark.highlighted {
+	background-color: $primary-l3;
+	border-radius: 0.25rem;
+	padding: 0.25rem;
+}

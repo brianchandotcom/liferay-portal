@@ -1,0 +1,148 @@
+code[class*='language-'],
+pre[class*='language-'] {
+	background: none;
+	border-radius: $border-radius;
+	color: $white;
+	font-family: 'Roboto Mono', SFMono-Regular, monospace;
+	font-size: $code-font-size;
+	font-weight: $font-weight-normal;
+	line-height: $code-line-height;
+	text-align: left;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	white-space: pre;
+	word-break: normal;
+	word-spacing: normal;
+	word-wrap: normal;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+// Code blocks
+pre[class*='language-'] {
+	border-radius: 0.5rem;
+	margin: 0.5em 0;
+	overflow: auto;
+	padding: 1em;
+}
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+	background: $color-neutral-9;
+}
+
+// Inline Code
+:not(pre) > code[class*='language-'] {
+	background-color: $color-neutral-2;
+	color: $color-neutral-10;
+	font-size: $pre-font-size;
+	line-height: 1rem;
+	padding: 0.125rem 0.5rem;
+	white-space: normal;
+}
+
+:not(pre) > code[class*='language-'] .token {
+	color: $color-neutral-10;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: $info-l1;
+}
+
+.token.punctuation {
+	color: $secondary;
+}
+
+.token.namespace {
+	opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: $danger-l1;
+}
+
+.token.boolean,
+.token.number {
+	color: $chart-3;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: $white;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: $secondary-l1;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: $success-l1;
+}
+
+.token.keyword {
+	color: $primary-l3;
+}
+
+.token.regex,
+.token.important {
+	color: $chart-4;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button.copy-to-clipboard-button {
+	background-color: transparent;
+	background-image: clay-icon(copy, $white);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: 1.5rem;
+	height: 1.5rem;
+	width: 1.5rem;
+
+	&[data-copy-state='copy-error'] {
+		background-image: clay-icon(times-circle, $danger);
+	}
+
+	&[data-copy-state='copy-success'] {
+		background-image: clay-icon(check, $success);
+	}
+
+	span {
+		display: none;
+	}
+}

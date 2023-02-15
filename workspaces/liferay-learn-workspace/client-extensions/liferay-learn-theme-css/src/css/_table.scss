@@ -1,0 +1,14 @@
+$table-accent-bg: $info_l2;
+
+@import 'clay/components/_tables';
+
+table {
+	th {
+		color: $color-neutral-10;
+		font-size: 0.875rem;
+	}
+
+	@extend .table;
+	@extend .table-autofit;
+	@extend .table-striped;
+}

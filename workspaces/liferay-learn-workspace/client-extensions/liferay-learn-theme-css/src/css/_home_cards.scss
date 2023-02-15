@@ -1,0 +1,40 @@
+@mixin home-cards($max-width-sm, $card-width, $card-y-padding, $icon-size) {
+	@include media-breakpoint-up(sm) {
+		max-width: $max-width-sm;
+	}
+
+	@include media-breakpoint-up(xl) {
+		max-width: 948px;
+	}
+
+	.card-container {
+		min-width: $card-width;
+
+		.home-card {
+			@include card;
+
+			background-color: $white;
+			padding: $card-y-padding $spacing-default;
+			width: $card-width;
+
+			.icon {
+				height: $icon-size;
+				width: $icon-size;
+			}
+
+			.title {
+				color: $color-neutral-10;
+				letter-spacing: unset;
+				text-transform: none;
+			}
+		}
+	}
+}
+
+.more-resources {
+	@include home-cards(416px, 184px, 1.8125rem, 3rem);
+}
+
+.product-cards {
+	@include home-cards(620px, 254px, 2.375rem, 2rem);
+}

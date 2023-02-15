@@ -4,7 +4,7 @@
 
 		@include media-breakpoint-up(md) {
 			margin-bottom: 5rem;
-			padding: $spacing-default 8.33333%;
+			padding: 0 8.33333% $spacing-default;
 		}
 	}
 
@@ -21,14 +21,13 @@
 	}
 
 	.doc-nav,
-	.doc-nav-footer,
-	.doc-nav-wrapper-inner {
+	.doc-nav-wrapper {
 		background-color: $background-color;
 	}
 
 	.doc-nav {
 		font-weight: $font-weight-semi-bold;
-		height: calc(100% - #{$footer-height + $info-bar-height});
+		height: calc(100% - #{$footer-height});
 		overflow: auto;
 		padding: $spacing-md 0;
 
@@ -38,7 +37,7 @@
 
 		a {
 			border-left: 3px solid transparent;
-			color: $nav-color;
+			color: $color-neutral-6;
 			display: block;
 			padding: $spacing-xs $spacing-default $spacing-xs $spacing-md;
 
@@ -55,11 +54,13 @@
 		.back-link {
 			align-items: center;
 			display: flex;
+			font-size: 1.125rem;
+			font-weight: $font-weight-semi-bold;
 			padding-left: $spacing-md;
 			width: 100%;
 
 			svg {
-				fill: $nav-color;
+				fill: $color-neutral-6;
 				height: $spacing-default;
 				padding-right: $spacing-sm;
 				width: $spacing-default;
@@ -75,15 +76,17 @@
 				> a {
 					background-image: none;
 					border-left-color: $primary;
+					color: $color-neutral-10;
 				}
 			}
 
 			> a {
-				background-image: clay-icon(angle-right, $black);
+				background-image: clay-icon(angle-right, $color-neutral-5);
 				background-position: right 0.8rem top $spacing-md;
 				background-repeat: no-repeat;
 				background-size: 0.65rem;
-				color: $black;
+				color: $color-neutral-6;
+				font-size: 1.125rem;
 			}
 		}
 
@@ -143,48 +146,6 @@
 	}
 
 	.doc-nav-wrapper-inner {
-		.doc-nav-footer {
-			align-items: center;
-			border-top: 1px solid $hr-color;
-			bottom: 0;
-			height: $footer-height;
-			padding: 0 $spacing-sm;
-			position: absolute;
-			width: 100%;
-
-			.dropdown {
-				width: 100%;
-
-				button {
-					color: $nav-color;
-					font-size: $h5-font-size;
-					padding: 0.25rem;
-					width: 100%;
-
-					svg {
-						margin-right: 4px;
-					}
-				}
-
-				.dropdown-menu {
-					width: calc(100% - 1.5rem);
-
-					li {
-						padding: 0;
-					}
-
-					.dropdown-item {
-						display: block;
-						padding: 0.375rem 0.75rem;
-
-						&:hover {
-							text-decoration: none;
-						}
-					}
-				}
-			}
-		}
-
 		@include media-breakpoint-up(md) {
 			height: calc(100vh - #{$header-height});
 			max-width: 16.66667%;
@@ -196,16 +157,10 @@
 
 	.info-bar {
 		align-items: center;
-		border-bottom: 1px solid $hr-color;
+		border-bottom: 1px solid $color-neutral-2;
 		display: flex;
 		height: $info-bar-height;
 		z-index: 1;
-
-		label {
-			margin-left: $spacing-sm;
-			margin-right: $spacing-sm;
-			width: 100%;
-		}
 	}
 
 	.general-info {
@@ -229,23 +184,23 @@
 
 	.mobile-doc-nav-toggler {
 		align-items: center;
-		border-bottom: 1px solid $border-color;
 		display: flex;
 		font-weight: $font-weight-semi-bold;
 		justify-content: space-between;
 		padding: $spacing-xs 0.25rem $spacing-xs $spacing-md;
 
 		button {
-			color: $primary;
+			color: $color-action-neutral-default;
 		}
 	}
 
 	.nav-link {
 		color: $default-color;
+		font-size: 0.875rem;
 
 		&.active {
 			color: $primary;
-			font-weight: $font-weight-semi-bold;
+			font-weight: $font-weight-bold;
 		}
 	}
 

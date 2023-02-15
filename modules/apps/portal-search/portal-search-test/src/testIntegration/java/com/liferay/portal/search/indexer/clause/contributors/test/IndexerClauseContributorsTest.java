@@ -34,7 +34,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -225,6 +224,9 @@ public class IndexerClauseContributorsTest {
 			"com.liferay.blogs.internal.search.spi.model.query.contributor." +
 				"BlogsEntryKeywordQueryContributor";
 		String titleMultilangContributorId2 =
+			"com.liferay.journal.internal.search.spi.model.query.contributor." +
+				"JournalArticleKeywordQueryContributor";
+		String titleMultilangContributorId3 =
 			"com.liferay.message.boards.internal.search.spi.model.query." +
 				"contributor.MBMessageKeywordQueryContributor";
 
@@ -232,21 +234,21 @@ public class IndexerClauseContributorsTest {
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
 				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2),
+				titleMultilangContributorId2, titleMultilangContributorId3),
 			consumer);
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
 				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2),
+				titleMultilangContributorId2, titleMultilangContributorId3),
 			withExcludes(titleContributorId), consumer);
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
 				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2),
+				titleMultilangContributorId2, titleMultilangContributorId3),
 			withExcludes(
 				titleMultilangContributorId1, titleMultilangContributorId2),
 			consumer);
@@ -255,16 +257,56 @@ public class IndexerClauseContributorsTest {
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
 				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2),
+				titleMultilangContributorId2, titleMultilangContributorId3),
 			withExcludes(
 				titleContributorId, titleMultilangContributorId1,
 				titleMultilangContributorId2),
+			consumer);
+
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Gamma Message]",
+			withIncludes(
+				titleContributorId, titleMultilangContributorId1,
+				titleMultilangContributorId2, titleMultilangContributorId3),
+			withExcludes(
+				titleMultilangContributorId1, titleMultilangContributorId3),
+			consumer);
+
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Gamma Message]",
+			withIncludes(
+				titleContributorId, titleMultilangContributorId1,
+				titleMultilangContributorId2, titleMultilangContributorId3),
+			withExcludes(
+				titleContributorId, titleMultilangContributorId1,
+				titleMultilangContributorId3),
+			consumer);
+
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Gamma Message]",
+			withIncludes(
+				titleContributorId, titleMultilangContributorId1,
+				titleMultilangContributorId2, titleMultilangContributorId3),
+			withExcludes(
+				titleMultilangContributorId2, titleMultilangContributorId3),
+			consumer);
+
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Gamma Message]",
+			withIncludes(
+				titleContributorId, titleMultilangContributorId1,
+				titleMultilangContributorId2, titleMultilangContributorId3),
+			withExcludes(
+				titleContributorId, titleMultilangContributorId2,
+				titleMultilangContributorId3),
 			consumer);
 	}
 
 	@Test
 	public void testJournalArticleForcesTitleMultilang() throws Exception {
-		Assert.assertTrue(journalArticleIndexer instanceof BaseIndexer);
+		Assert.assertEquals(
+			"class com.liferay.portal.search.internal.indexer.DefaultIndexer",
+			String.valueOf(journalArticleIndexer.getClass()));
 
 		addJournalArticle("Gamma Article");
 		addJournalArticle("Omega Article");
@@ -276,14 +318,22 @@ public class IndexerClauseContributorsTest {
 				"gamma"
 			);
 
-		String id =
+		String titleContributorId =
 			"com.liferay.portal.search.internal.spi.model.query.contributor." +
 				"AlwaysPresentFieldsKeywordQueryContributor";
-
-		assertSearch("[Gamma Article]", withIncludes(id), consumer);
+		String titleMultilangContributorId =
+			"com.liferay.journal.internal.search.spi.model.query.contributor." +
+				"JournalArticleKeywordQueryContributor";
 
 		assertSearch(
-			"[Gamma Article]", withIncludes(id), withExcludes(id), consumer);
+			"[Gamma Article]",
+			withIncludes(titleContributorId, titleMultilangContributorId),
+			consumer);
+
+		assertSearch(
+			"[Gamma Article]",
+			withIncludes(titleContributorId, titleMultilangContributorId),
+			withExcludes(titleContributorId), consumer);
 	}
 
 	@Rule

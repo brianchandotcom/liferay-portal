@@ -27,24 +27,24 @@ definition {
 		return ${curl};
 	}
 
-	macro getIdOfChildMessageBoardSection {
+	macro createChildMessageBoardSection {
 		Variables.assertDefined(parameterList = "${title},${parentMessageBoardSectionId}");
 
 		var curl = MessageBoardSectionAPI._curlMessageBoardSection(title = ${title});
 
-		var mbSectionId = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl});
 
-		return ${mbSectionId};
+		return ${response};
 	}
 
-	macro getIdOfCreatedMessageBoardSection {
+	macro createMessageBoardSection {
 		Variables.assertDefined(parameterList = ${title});
 
 		var curl = MessageBoardSectionAPI._curlMessageBoardSection(title = ${title});
 
-		var mbSectionId = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl});
 
-		return ${mbSectionId};
+		return ${response};
 	}
 
 }

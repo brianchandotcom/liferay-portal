@@ -33,38 +33,56 @@ definition {
 		return ${curl};
 	}
 
-	macro getIdOfCreatedChildMbMessageByMbMessageId {
+	macro createChildMbMessageByMbMessageId {
 		Variables.assertDefined(parameterList = "${headline},${parentMessageBoardMessageId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
 			headline = ${headline},
 			parentMessageBoardMessageId = ${parentMessageBoardMessageId});
 
-		var mbMessageId = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl});
 
-		return ${mbMessageId};
+		return ${response};
 	}
 
-	macro getIdOfCreatedMbMessageByMbThreadId {
+	macro createMbMessageByMbThreadId {
 		Variables.assertDefined(parameterList = "${headline},${messageBoardThreadId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
 			headline = ${headline},
 			messageBoardThreadId = ${messageBoardThreadId});
 
-		var mbMessageId = JSONCurlUtil.post(${curl}, "$.id");
+		var response = JSONCurlUtil.post(${curl});
 
-		return ${mbMessageId};
+		return ${response};
 	}
 
-	macro getMbMessageErcByMbMessageId {
+	macro getIdOfCreatedMbMessageByMbThreadId {
+		var response = MessageBoardMessageAPI.createMbMessageByMbThreadId(
+			headline = ${headline},
+			messageBoardThreadId = ${messageBoardThreadId});
+
+		var messageboardMessageId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+
+		return ${messageboardMessageId};
+	}
+
+	macro getMbMessageByMbMessageId {
 		Variables.assertDefined(parameterList = ${messageBoardMessageId});
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(messageBoardMessageId = ${messageBoardMessageId});
 
-		var mbMessageErc = JSONCurlUtil.get(${curl}, "$.externalReferenceCode");
+		var response = JSONCurlUtil.get(${curl});
 
-		return ${mbMessageErc};
+		return ${response};
+	}
+
+	macro getMbMessageErcByMbMessageId {
+		var response = MessageBoardMessageAPI.getMbMessageByMbMessageId(messageBoardMessageId = ${messageBoardMessageId});
+
+		var messageBoardMessageErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
+
+		return ${messageBoardMessageErc};
 	}
 
 }

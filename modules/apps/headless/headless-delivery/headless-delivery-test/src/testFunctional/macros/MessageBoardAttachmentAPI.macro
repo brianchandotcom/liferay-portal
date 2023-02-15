@@ -38,26 +38,18 @@ definition {
 		return ${curl};
 	}
 
-	macro _getErcOfMessageBoardAttchment {
-		Variables.assertDefined(parameterList = ${messageBoardAttachmentId});
-
-		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(messageBoardAttachmentId = ${messageBoardAttachmentId});
-
-		var mbAttachmentErc = JSONCurlUtil.get(${curl}, "$.externalReferenceCode");
-
-		return ${mbAttachmentErc};
-	}
-
 	macro assertCorrectErcInResponse {
 		Variables.assertDefined(parameterList = ${response});
 
-		var mbAttachmentId = JSONUtil.getWithJSONPath(${response}, "$.id");
+		var messageBoardAttachmentErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
+		var messageBoardAttachmentId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
 
-		var expectedErc = MessageBoardAttachmentAPI._getErcOfMessageBoardAttchment(messageBoardAttachmentId = ${mbAttachmentId});
-		var mbAttachmentErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+		var responseFromGet = MessageBoardAttachmentAPI.getMessageBoardAttachment(messageBoardAttachmentId = ${messageBoardAttachmentId});
+
+		var expectedErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${responseFromGet});
 
 		TestUtils.assertEquals(
-			actual = ${mbAttachmentErc},
+			actual = ${messageBoardAttachmentErc},
 			expected = ${expectedErc});
 	}
 
@@ -93,6 +85,16 @@ definition {
 			messageBoardMessageErc = ${messageBoardMessageErc});
 
 		var response = JSONCurlUtil.delete(${curl});
+
+		return ${response};
+	}
+
+	macro getMessageBoardAttachment {
+		Variables.assertDefined(parameterList = ${messageBoardAttachmentId});
+
+		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(messageBoardAttachmentId = ${messageBoardAttachmentId});
+
+		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
 	}

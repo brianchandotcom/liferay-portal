@@ -64,9 +64,9 @@ definition {
 
 		var messageBoardThreadId = JSONCurlUtil.post(${curl}, "$.['id']");
 
-		static var staticMbThreadId = ${messageBoardThreadId};
+		static var staticMessageBoardThreadId = ${messageBoardThreadId};
 
-		return ${staticMbThreadId};
+		return ${staticMessageBoardThreadId};
 	}
 
 }

@@ -408,7 +408,9 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 	@Inject
 	protected static FacetedSearcherManager facetedSearcherManager;
 
-	@Inject(filter = "component.name=*.JournalArticleIndexer")
+	@Inject(
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
 	protected static Indexer<JournalArticle> indexer;
 
 	@Inject

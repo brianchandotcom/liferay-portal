@@ -285,7 +285,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private static DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.journal.internal.search.JournalArticleIndexer"
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
 	)
 	private static Indexer<JournalArticle> _indexer;
 

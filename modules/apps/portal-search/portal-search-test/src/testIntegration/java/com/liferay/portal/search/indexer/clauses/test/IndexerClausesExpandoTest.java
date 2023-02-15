@@ -308,7 +308,9 @@ public class IndexerClausesExpandoTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.JournalArticleIndexer")
+	@Inject(
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
 	private Indexer<JournalArticle> _journalArticleIndexer;
 
 	@Inject

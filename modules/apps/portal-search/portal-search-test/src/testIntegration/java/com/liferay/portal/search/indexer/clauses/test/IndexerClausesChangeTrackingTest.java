@@ -339,7 +339,9 @@ public class IndexerClausesChangeTrackingTest {
 	@Inject
 	protected CTCollectionLocalService ctCollectionLocalService;
 
-	@Inject(filter = "component.name=*.JournalArticleIndexer")
+	@Inject(
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
 	protected Indexer<JournalArticle> journalArticleIndexer;
 
 	@Inject

@@ -71,7 +71,7 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.journal.internal.search.JournalArticleIndexer)"
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private Indexer<JournalArticle> _journalArticleIndexer;
 

@@ -63,7 +63,7 @@ functionCallExpression
    ;
 
 functionParameters
-   : VARIABLE_IDENTIFIER COMMA literal
+   : VARIABLE_IDENTIFIER (COMMA literal)*
    ;
 
 literal

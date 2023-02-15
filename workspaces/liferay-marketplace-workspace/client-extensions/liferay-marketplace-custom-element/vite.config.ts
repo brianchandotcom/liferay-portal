@@ -8,7 +8,8 @@ export default defineConfig({
 		outDir: 'build/static/',
 		rollupOptions: {
 			output: {
-				assetFileNames: '[name]-[hash][extname]',
+				assetFileNames:
+					'marketplace-custom-element-assets/[name][extname]',
 				chunkFileNames: '[name]-[hash].js',
 				entryFileNames: '[name]-[hash].js',
 			},

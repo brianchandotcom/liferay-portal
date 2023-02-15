@@ -130,7 +130,11 @@ const DropdownMenu = ({
 
 	return (
 		<>
-			<ClayDropDown.Search onChange={onSearch} value={query} />
+			<ClayDropDown.Search
+				aria-label={Liferay.Language.get('search')}
+				onChange={onSearch}
+				value={query}
+			/>
 
 			<ClayDropDown.ItemList items={headlessResources}>
 				{(item: HeadlessResource) => (

@@ -24,10 +24,6 @@ export function DashboardPage() {
 	return (
 		<div className="dashboard-page-container">
 			<div>
-				<div className="dashboard-page-header-container">
-					<DashboardToolbar />
-				</div>
-
 				<div className="dashboard-page-body-container">
 					<DashboardNavigation
 						onSelectAppChange={setSelectedApp}

@@ -460,9 +460,7 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var response = JSONCurlUtil.put(${curl});
-
-		return ${response};
+		return ${curl};
 	}
 
 	macro _updateEmployee {
@@ -651,6 +649,16 @@ definition {
 		TestUtils.assertEquals(
 			actual = ${actual},
 			expected = ${expectedValue});
+	}
+
+	macro breakRelationshipBetweenEntries {
+		var curl = ObjectDefinitionAPI._relateObjectEntries(
+			en_US_plural_label = ${en_US_plural_label},
+			objectEntry1 = ${objectEntry1},
+			objectEntry2 = ${objectEntry2},
+			relationshipName = ${relationshipName});
+
+		JSONCurlUtil.delete(${curl});
 	}
 
 	macro createAndPublishObjectDefinition {
@@ -859,11 +867,13 @@ definition {
 	}
 
 	macro relateObjectEntries {
-		var response = ObjectDefinitionAPI._relateObjectEntries(
+		var curl = ObjectDefinitionAPI._relateObjectEntries(
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
 			objectEntry2 = ${objectEntry2},
 			relationshipName = ${relationshipName});
+
+		var response = JSONCurlUtil.put(${curl});
 
 		return ${response};
 	}

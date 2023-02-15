@@ -16,12 +16,16 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +40,13 @@ import org.osgi.framework.Constants;
  * @author Gregory Amerson
  */
 public class ArtifactURLUtil {
+
+	public static String getClientExtensionSymbolicName(String path) {
+		int x = path.lastIndexOf('/');
+		int y = path.lastIndexOf(CharPool.PERIOD);
+
+		return path.substring(x + 1, y);
+	}
 
 	public static String getSymbolicName(String path) {
 		int x = path.lastIndexOf('/');
@@ -55,17 +66,21 @@ public class ArtifactURLUtil {
 	public static URL transform(URL artifact) throws Exception {
 		String path = artifact.getPath();
 
-		String symbolicName = getSymbolicName(path);
-
-		String contextName = null;
-
 		String fileExtension = path.substring(
 			path.lastIndexOf(CharPool.PERIOD) + 1);
+
+		String contextName = null;
 
 		if (fileExtension.equals("war")) {
 			try (ZipFile zipFile = new ZipFile(new File(artifact.toURI()))) {
 				contextName = _readServletContextName(zipFile);
 			}
+		}
+
+		String symbolicName = getSymbolicName(path);
+
+		if (fileExtension.equals("zip") && _isClientExtensionZip(path)) {
+			symbolicName = getClientExtensionSymbolicName(path);
 		}
 
 		if (contextName == null) {
@@ -78,6 +93,29 @@ public class ArtifactURLUtil {
 				artifact.getPath(), "?", Constants.BUNDLE_SYMBOLICNAME, "=",
 				symbolicName, "&Web-ContextPath=/", contextName,
 				"&fileExtension=", fileExtension, "&protocol=file"));
+	}
+
+	private static boolean _isClientExtensionZip(String path) {
+		try (ZipFile zipFile = new ZipFile(path)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith(".client-extension-config.json") &&
+					(name.indexOf("/") == -1)) {
+
+					return true;
+				}
+			}
+		}
+		catch (IOException ioException) {
+			_log.error("Path " + path + " is not a valid zip", ioException);
+		}
+
+		return false;
 	}
 
 	private static String _readServletContextName(ZipFile zipFile)
@@ -98,6 +136,9 @@ public class ArtifactURLUtil {
 
 		return properties.getProperty("servlet-context-name");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ArtifactURLUtil.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(.*?)(-[0-9\\.]+)");

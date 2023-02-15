@@ -72,7 +72,11 @@ public class BatchEngineAutoDeployListener
 		throws AutoDeployException {
 
 		try (ZipFile zipFile = new ZipFile(autoDeploymentContext.getFile())) {
-			_deploy(zipFile);
+			if (_log.isInfoEnabled()) {
+				_log.info("Deploying batch engine file " + zipFile.getName());
+			}
+
+			processBatchEngineUnits(_getBatchEngineUnits(zipFile));
 		}
 		catch (Exception exception) {
 			throw new AutoDeployException(exception);
@@ -153,14 +157,6 @@ public class BatchEngineAutoDeployListener
 				}
 			}
 		}
-	}
-
-	private void _deploy(ZipFile zipFile) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info("Deploying batch engine file " + zipFile.getName());
-		}
-
-		processBatchEngineUnits(_getBatchEngineUnits(zipFile));
 	}
 
 	private BatchEngineUnitConfiguration _getBatchEngineUnitConfiguration(

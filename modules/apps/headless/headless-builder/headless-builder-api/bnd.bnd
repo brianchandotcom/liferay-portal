@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Headless Builder API
+Bundle-SymbolicName: com.liferay.headless.builder.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.builder.constants,\
+	com.liferay.headless.builder.dto,\
+	com.liferay.headless.builder.exception,\
+	com.liferay.headless.builder.model,\
+	com.liferay.headless.builder.operation,\
+	com.liferay.headless.builder.operation.handler,\
+	com.liferay.headless.builder.operation.provider,\
+	com.liferay.headless.builder.operation.registrator,\
+	com.liferay.headless.builder.operation.registry,\
+	com.liferay.headless.builder.operation.response,\
+	com.liferay.headless.builder.provider,\
+	com.liferay.headless.builder.resource,\
+	com.liferay.headless.builder.util

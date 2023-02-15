@@ -1,0 +1,111 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.builder.util;
+
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.operation.PathConfiguration;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author Carlos Correa
+ */
+public class URLUtil {
+
+	public static PathConfiguration getPathConfiguration(
+		String path, String version) {
+
+		if (Validator.isBlank(version)) {
+			return new PathConfiguration(
+				Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_PATH + path);
+		}
+
+		return new PathConfiguration(
+			StringBundler.concat(
+				Portal.PATH_MODULE, HeadlessBuilderConstants.BASE_PATH,
+				StringPool.SLASH, version, path));
+	}
+
+	public static List<String> getPathParameterNames(
+		String path, Pattern pattern) {
+
+		List<String> parameterNames = new ArrayList<>();
+
+		Matcher matcher = pattern.matcher(path);
+
+		while (matcher.find()) {
+			for (int i = 1; i <= matcher.groupCount(); i++) {
+				String value = matcher.group(i);
+
+				parameterNames.add(value.substring(1, value.length() - 1));
+			}
+		}
+
+		return parameterNames;
+	}
+
+	public static Map<String, String> getPathParams(
+		String path, PathConfiguration pathConfiguration) {
+
+		List<String> pathParamNames = pathConfiguration.getPathParameterNames();
+
+		List<String> pathParamValues = _getPathParamValues(
+			path, pathConfiguration.getPattern());
+
+		if (pathParamNames.size() != pathParamValues.size()) {
+			throw new IllegalStateException();
+		}
+
+		Map<String, String> pathParams = new HashMap<>();
+
+		for (int i = 0; i < pathParamNames.size(); i++) {
+			pathParams.put(pathParamNames.get(i), pathParamValues.get(i));
+		}
+
+		return pathParams;
+	}
+
+	public static Pattern getPattern(String path) {
+		String pathRegex = path.replaceAll("\\{.+\\}", "(.+)");
+
+		return Pattern.compile(pathRegex);
+	}
+
+	private static List<String> _getPathParamValues(
+		String path, Pattern pathPattern) {
+
+		List<String> pathParamValues = new ArrayList<>();
+
+		Matcher matcher = pathPattern.matcher(path);
+
+		while (matcher.find()) {
+			for (int i = 1; i <= matcher.groupCount(); i++) {
+				pathParamValues.add(matcher.group(i));
+			}
+		}
+
+		return pathParamValues;
+	}
+
+}

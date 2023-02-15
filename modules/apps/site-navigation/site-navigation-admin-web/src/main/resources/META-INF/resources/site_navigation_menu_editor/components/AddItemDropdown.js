@@ -92,6 +92,10 @@ export function AddItemDropDown({trigger}) {
 	const [active, setActive] = useState(false);
 	const {addSiteNavigationMenuItemOptions, portletNamespace} = useConstants();
 
+	const onItemAdd = () => {
+		window.sessionStorage.setItem(`${portletNamespace}itemAdded`, true);
+	};
+
 	return (
 		<>
 			<ClayDropDown
@@ -135,6 +139,8 @@ export function AddItemDropDown({trigger}) {
 												),
 												method: 'POST',
 											}).then(() => {
+												onItemAdd();
+
 												window.location.reload();
 											});
 										},
@@ -163,7 +169,11 @@ export function AddItemDropDown({trigger}) {
 
 									Liferay.once(
 										'reloadSiteNavigationMenuEditor',
-										() => window.location.reload()
+										() => {
+											onItemAdd();
+
+											window.location.reload();
+										}
 									);
 								}
 							}}

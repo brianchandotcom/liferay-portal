@@ -1,0 +1,8 @@
+@default = "assertJavaScriptErrors"
+definition {
+
+	function assertJavaScriptErrors {
+		selenium.assertJavaScriptErrors();
+	}
+
+}

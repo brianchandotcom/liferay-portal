@@ -66,8 +66,7 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 		return addCommerceMLRecommendation(
 			frequentPatternCommerceMLRecommendation,
 			_commerceMLIndexer.getIndexName(
-				frequentPatternCommerceMLRecommendation.getCompanyId()),
-			_commerceMLIndexer.getDocumentType());
+				frequentPatternCommerceMLRecommendation.getCompanyId()));
 	}
 
 	@Override

@@ -50,8 +50,7 @@ public class ProductContentCommerceMLRecommendationManagerImpl
 		return addCommerceMLRecommendation(
 			productContentCommerceMLRecommendation,
 			_commerceMLIndexer.getIndexName(
-				productContentCommerceMLRecommendation.getCompanyId()),
-			_commerceMLIndexer.getDocumentType());
+				productContentCommerceMLRecommendation.getCompanyId()));
 	}
 
 	@Override

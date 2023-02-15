@@ -55,16 +55,13 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseCommerceMLRecommendationServiceImpl
 	<T extends CommerceMLRecommendation> {
 
-	protected T addCommerceMLRecommendation(
-			T model, String indexName, String documentType)
+	protected T addCommerceMLRecommendation(T model, String indexName)
 		throws PortalException {
 
 		Document document = toDocument(model);
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			indexName, document);
-
-		indexDocumentRequest.setType(documentType);
 
 		IndexDocumentResponse indexDocumentResponse =
 			searchEngineAdapter.execute(indexDocumentRequest);

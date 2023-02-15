@@ -56,8 +56,7 @@ public class UserCommerceMLRecommendationManagerImpl
 		return addCommerceMLRecommendation(
 			userCommerceMLRecommendation,
 			_commerceMLIndexer.getIndexName(
-				userCommerceMLRecommendation.getCompanyId()),
-			_commerceMLIndexer.getDocumentType());
+				userCommerceMLRecommendation.getCompanyId()));
 	}
 
 	@Override

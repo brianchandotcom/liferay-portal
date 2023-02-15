@@ -146,7 +146,7 @@ export class SearchBuilder {
 		defaultFilter,
 		filterSchema,
 	}: FilterVariables) {
-		const _filter = [defaultFilter];
+		const _filter = defaultFilter ? [defaultFilter] : [];
 
 		for (const key in appliedFilter) {
 			let searchCondition = '';

@@ -25,11 +25,17 @@ import {PickList, TestrayTask, testrayTaskImpl} from '../../services/rest';
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {getPercentLabel} from '../../util/graph.util';
+import {SearchBuilder} from '../../util/search';
+import {TaskStatuses} from '../../util/statuses';
 import TestflowModal from './TestflowModal';
 import useTestflowActions from './useTestflowActions';
 
 const TestFlow = () => {
 	const {actions, modal} = useTestflowActions();
+
+	const searchBuilder = new SearchBuilder({useURIEncode: false});
+
+	const taskFilter = searchBuilder.ne('dueStatus', TaskStatuses.OPEN).build();
 
 	useHeader({icon: 'merge'});
 
@@ -157,7 +163,8 @@ const TestFlow = () => {
 											groupSize={3}
 										/>
 									);
-								} catch {
+								}
+								catch {
 									return '';
 								}
 							},
@@ -170,6 +177,9 @@ const TestFlow = () => {
 				transformData={(response) =>
 					testrayTaskImpl.transformDataFromList(response)
 				}
+				variables={{
+					filter: taskFilter,
+				}}
 			/>
 
 			<TestflowModal modal={modal} />

@@ -18,13 +18,14 @@ import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProductVersion,
+	TestrayProject,
 	TestrayRoutine,
 	TestrayRun,
 	TestrayTeam,
 	UserAccount,
 } from '../services/rest';
 import {SearchBuilder} from '../util/search';
-import {CaseResultStatuses} from '../util/statuses';
+import {CaseResultStatuses, TaskStatuses} from '../util/statuses';
 
 export type Filters = {
 	[key: string]: RendererFields[];
@@ -60,7 +61,7 @@ const transformData = <T = any>(response: any): T[] => {
 
 const dataToOptions = <T = any>(
 	entries: T[],
-	transformAction?: (entry: T) => {label: string; value: number}
+	transformAction?: (entry: T) => {label: string; value: number | string}
 ) =>
 	entries.map((entry: any) =>
 		transformAction
@@ -71,14 +72,14 @@ const dataToOptions = <T = any>(
 const baseFilters: Filter = {
 	assignee: {
 		label: i18n.translate('assignee'),
-		name: 'assignee',
+		name: 'assignedUsers',
 		resource: '/user-accounts',
 		transformData(item) {
 			return dataToOptions(
 				transformData<UserAccount>(item),
 				(userAccount) => ({
 					label: `${userAccount.givenName} ${userAccount.additionalName}`,
-					value: userAccount.id,
+					value: userAccount.givenName,
 				})
 			);
 		},
@@ -149,6 +150,15 @@ const baseFilters: Filter = {
 			)}`,
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProductVersion>(item));
+		},
+		type: 'select',
+	},
+	project: {
+		label: i18n.translate('project'),
+		name: 'projectId',
+		resource: '/projects?fields=id,name',
+		transformData(item) {
+			return dataToOptions(transformData<TestrayProject>(item));
 		},
 		type: 'select',
 	},
@@ -561,27 +571,47 @@ const filterSchema = {
 			{
 				label: i18n.sub('task-x', 'name'),
 				name: 'name',
+				operator: 'contains',
 				type: 'text',
 			},
-			{
+			overrides(baseFilters.project, {
 				label: i18n.translate('project-name'),
-				name: 'project',
+				name: 'buildToTasks/r_projectToBuilds_c_projectId',
 				type: 'multiselect',
-			},
+			}),
 			overrides(baseFilters.routine, {
 				label: i18n.translate('routine-name'),
+				name: 'buildToTasks/r_routineToBuilds_c_routineId',
+				resource: '/routines?fields=id,name&sort=name:asc&pageSize=100',
 				type: 'multiselect',
 			}),
 			{
 				label: i18n.translate('build-name'),
-				name: 'buildName',
+				name: 'buildToTasks/name',
+				operator: 'contains',
+				removeQuoteMark: false,
 				type: 'text',
 			},
-			overrides(baseFilters.status, {
-				options: ['Abandoned', 'Complete', 'In Analisis'],
-				type: 'checkbox',
+			overrides(baseFilters.dueStatus, {
+				options: [
+					{
+						label: 'Abandoned',
+						value: TaskStatuses.ABANDONED,
+					},
+					{
+						label: 'Complete',
+						value: TaskStatuses.COMPLETE,
+					},
+					{
+						label: 'In Analysis',
+						value: TaskStatuses.IN_ANALYSIS,
+					},
+				],
 			}),
-			baseFilters.assignee,
+			overrides(baseFilters.assignee, {
+				operator: 'contains',
+				type: 'select',
+			}),
 		] as RendererFields[],
 	},
 } as const;

@@ -47,8 +47,8 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 				_configurationFieldOptionsProvider.getOptions()) {
 
 			if (Objects.equals(
-					curOption.getValue(),
-					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT)) {
+					Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
+					curOption.getValue())) {
 
 				option = curOption;
 
@@ -66,7 +66,7 @@ public class EntityFieldConfigurationFieldOptionsProviderTest {
 		for (ConfigurationFieldOptionsProvider.Option curOption :
 				_configurationFieldOptionsProvider.getOptions()) {
 
-			if (!Objects.equals(curOption.getValue(), Context.BROWSER)) {
+			if (!Objects.equals(Context.BROWSER, curOption.getValue())) {
 				continue;
 			}
 

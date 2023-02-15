@@ -68,8 +68,8 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 					_configurationFieldOptionsProvider.getOptions()) {
 
 				if (Objects.equals(
-						curOption.getLabel(LocaleUtil.getDefault()),
-						assetVocabulary.getTitle(LocaleUtil.getDefault()))) {
+						assetVocabulary.getTitle(LocaleUtil.getDefault()),
+						curOption.getLabel(LocaleUtil.getDefault()))) {
 
 					option = curOption;
 

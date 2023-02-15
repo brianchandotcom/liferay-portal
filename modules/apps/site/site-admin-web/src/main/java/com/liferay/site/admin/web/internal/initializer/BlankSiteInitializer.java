@@ -20,28 +20,21 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.provider.LayoutUtilityPageEntryDefaultPageElementDefinitionProvider;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.admin.web.internal.portlet.action.AddGroupMVCActionCommand;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -98,66 +91,9 @@ public class BlankSiteInitializer implements SiteInitializer {
 					"LFR-" + errorCode + "-ERROR", groupId, 0, 0, true, name,
 					type, 0);
 
-			JSONObject errorCodeI18nJSONObject =
-				_jsonFactory.createJSONObject();
-			JSONObject instructionsI18nJSONObject =
-				_jsonFactory.createJSONObject();
-			JSONObject layoutUtilityPageEntryDescriptionI18nJSONObject =
-				_jsonFactory.createJSONObject();
-			JSONObject layoutUtilityPageEntryInstructionsI18nJSONObject =
-				_jsonFactory.createJSONObject();
-			JSONObject layoutUtilityPageEntryTitleI18nJSONObject =
-				_jsonFactory.createJSONObject();
-
-			Set<Locale> locales = new HashSet<>(
-				_language.getAvailableLocales());
-
-			for (Locale locale : locales) {
-				errorCodeI18nJSONObject.put(
-					LocaleUtil.toLanguageId(locale),
-					_language.format(locale, "error-code-x", errorCode));
-				instructionsI18nJSONObject.put(
-					LocaleUtil.toLanguageId(locale),
-					_language.get(locale, "instructions"));
-				layoutUtilityPageEntryDescriptionI18nJSONObject.put(
-					LocaleUtil.toLanguageId(locale),
-					_language.get(
-						locale,
-						"layout-utility-page-entry-description[" + type + "]"));
-				layoutUtilityPageEntryInstructionsI18nJSONObject.put(
-					LocaleUtil.toLanguageId(locale),
-					_language.get(
-						locale,
-						"layout-utility-page-entry-instructions[" + type +
-							"]"));
-				layoutUtilityPageEntryTitleI18nJSONObject.put(
-					LocaleUtil.toLanguageId(locale),
-					_language.get(
-						locale,
-						"layout-utility-page-entry-title[" + type + "]"));
-			}
-
-			String pageElementJSON = StringUtil.replace(
-				StringUtil.read(
-					AddGroupMVCActionCommand.class,
-					"default-layout-page-template-entry-page-element.json"),
-				"\"[$", "$]\"",
-				HashMapBuilder.put(
-					"ERROR_CODE_I18N_JSON_VALUE",
-					errorCodeI18nJSONObject.toString()
-				).put(
-					"INSTRUCTIONS_I18N_JSON_VALUE",
-					instructionsI18nJSONObject.toString()
-				).put(
-					"LAYOUT_UTILITY_PAGE_ENTRY_DESCRIPTION_I18N_JSON_VALUE",
-					layoutUtilityPageEntryDescriptionI18nJSONObject.toString()
-				).put(
-					"LAYOUT_UTILITY_PAGE_ENTRY_INSTRUCTIONS_I18N_JSON_VALUE",
-					layoutUtilityPageEntryInstructionsI18nJSONObject.toString()
-				).put(
-					"LAYOUT_UTILITY_PAGE_ENTRY_TITLE_I18N_JSON_VALUE",
-					layoutUtilityPageEntryTitleI18nJSONObject.toString()
-				).build());
+			String pageElementJSON =
+				_layoutUtilityPageEntryDefaultPageElementDefinitionProvider.
+					getDefaultPageElementJSON(type);
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutUtilityPageEntry.getPlid());
@@ -220,9 +156,6 @@ public class BlankSiteInitializer implements SiteInitializer {
 		BlankSiteInitializer.class);
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private Language _language;
 
 	@Reference
@@ -234,6 +167,10 @@ public class BlankSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private LayoutsImporter _layoutsImporter;
+
+	@Reference
+	private LayoutUtilityPageEntryDefaultPageElementDefinitionProvider
+		_layoutUtilityPageEntryDefaultPageElementDefinitionProvider;
 
 	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;

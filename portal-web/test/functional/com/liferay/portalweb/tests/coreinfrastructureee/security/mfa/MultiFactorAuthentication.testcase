@@ -1223,6 +1223,8 @@ definition {
 				key_contentBody = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.",
 				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 				value1 = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.");
+
+			Notifications.markAsReadViaManagementBar(selectAll = "true");
 		}
 
 		task ("Enable MFA") {
@@ -1242,6 +1244,8 @@ definition {
 				key_contentBody = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.",
 				locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 				value1 = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.");
+
+			Notifications.markAsReadViaManagementBar(selectAll = "true");
 		}
 
 		task ("Go to able.com and disable OTP") {

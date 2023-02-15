@@ -1487,16 +1487,6 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 	}
 
-	macro viewSelectSiteViaPersonalMenuMySites {
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Select Site");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		LexiconCard.viewCardPresent(card = ${siteName});
-	}
-
 	macro viewSiteAdminPermissionsCP {
 		var key_siteName = ${siteName};
 

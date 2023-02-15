@@ -182,7 +182,13 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Sites");
 
-		Site.viewSelectSiteViaPersonalMenuMySites(siteName = ${siteName});
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Select Site");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconCard.viewCardPresent(card = ${siteName});
 	}
 
 	@priority = 4

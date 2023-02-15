@@ -86,7 +86,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 				JSONUtil.put(
 					"mappings",
 					JSONUtil.put(
-						getIndexType(),
+						"_doc",
 						() -> {
 							JSONObject jsonObject = _readJSONObject(
 								"mappings.json");

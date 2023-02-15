@@ -61,7 +61,7 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImplTest {
 			day = filterByCount.getDay();
 
 		Assert.assertEquals("eq", day.getOperator());
-		Assert.assertEquals("2023-02-06", day.getValue());
+		Assert.assertArrayEquals(new String[] {"2023-02-06"}, day.getValues());
 
 		FilterByCountIndividualSegmentsExpressionVisitorImpl.FilterByCount.Event
 			event = filterByCount.getEvent();

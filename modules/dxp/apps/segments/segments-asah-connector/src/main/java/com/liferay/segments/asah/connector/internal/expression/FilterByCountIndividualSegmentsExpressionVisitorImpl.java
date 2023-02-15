@@ -114,6 +114,63 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 	}
 
 	@Override
+	public FilterByCount.Day visitFunctionCallExpression(
+		@NotNull
+			IndividualSegmentsExpressionParser.FunctionCallExpressionContext
+				functionCallExpressionContext) {
+
+		ParseTree parseTree1 = functionCallExpressionContext.getChild(0);
+
+		Object functionName = parseTree1.accept(this);
+
+		if (Objects.equals(Function.BETWEEN.getValue(), functionName)) {
+			ParseTree parseTree2 = functionCallExpressionContext.getChild(2);
+
+			String[] parameters = (String[])parseTree2.accept(this);
+
+			if (parameters.length != 3) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported function BETWEEN ",
+						String.valueOf(parameters.length), " params"));
+			}
+
+			if (!Objects.equals("day", parameters[0])) {
+				throw new UnsupportedOperationException(
+					"Unsupported function BETWEEN with first param " +
+						parameters[0]);
+			}
+
+			return new FilterByCount.Day(
+				Function.BETWEEN.getValue(), parameters[1], parameters[2]);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported function " + functionName);
+	}
+
+	@Override
+	public String[] visitFunctionParameters(
+		@NotNull IndividualSegmentsExpressionParser.FunctionParametersContext
+			functionParametersContext) {
+
+		String[] parameters =
+			new String[(functionParametersContext.getChildCount() / 2) + 1];
+
+		int j = 0;
+
+		for (int i = 0; i < functionParametersContext.getChildCount();
+			 i = i + 2) {
+
+			ParseTree parseTree = functionParametersContext.getChild(i);
+
+			parameters[j++] = String.valueOf(parseTree.accept(this));
+		}
+
+		return parameters;
+	}
+
+	@Override
 	public FilterByCount.Day visitGreaterThanExpression(
 		@NotNull IndividualSegmentsExpressionParser.GreaterThanExpressionContext
 			greaterThanExpressionContext) {
@@ -215,29 +272,42 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 		public static class Day {
 
-			public Day(String operator, String value) {
+			public Day(String operator, String... values) {
 				_operator = operator;
-				_value = value;
+				_values = values;
 			}
 
 			public String getOperator() {
 				return _operator;
 			}
 
-			public String getValue() {
-				return _value;
+			public String[] getValues() {
+				return _values;
 			}
 
 			public JSONObject toJSONObject() {
+				if (_values.length == 1) {
+					return JSONUtil.put(
+						"operatorName", _operator
+					).put(
+						"value", _values[0]
+					);
+				}
+
 				return JSONUtil.put(
 					"operatorName", _operator
 				).put(
-					"value", _value
+					"value",
+					JSONUtil.put(
+						"end", _values[1]
+					).put(
+						"start", _values[0]
+					)
 				);
 			}
 
 			private final String _operator;
-			private final String _value;
+			private final String[] _values;
 
 		}
 
@@ -271,6 +341,27 @@ public class FilterByCountIndividualSegmentsExpressionVisitorImpl
 
 		private final Day _day;
 		private Event _event;
+
+	}
+
+	public enum Function {
+
+		BETWEEN("between");
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Function(String value) {
+			_value = value;
+		}
+
+		private final String _value;
 
 	}
 

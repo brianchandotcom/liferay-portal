@@ -82,7 +82,7 @@ definition {
 				emailAddress = "test",
 				password = "test");
 
-			AssertElementPresent(locator1 = "RaylifeAP#EMAIL_INVALID_MESSAGE");
+			RaylifeAP.assertFieldRequiredMessage(field = "Please enter a valid email address.");
 
 			User.firstLoginPG();
 		}
@@ -106,7 +106,7 @@ definition {
 				emailAddress = "",
 				password = "test");
 
-			RaylifeAP.assertFieldRequiredMessage(field = "Please enter a valid email address.");
+			RaylifeAP.assertFieldRequiredMessage(field = "The Login field is required.");
 
 			User.firstLoginPG();
 		}

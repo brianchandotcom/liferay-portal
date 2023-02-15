@@ -1,0 +1,208 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"marginBottom": "4",
+			"marginTop": "5",
+			"paddingBottom": "5",
+			"paddingTop": "5"
+		},
+		"indexed": true,
+		"layout": {
+			"align": "Center",
+			"borderWidth": 0,
+			"contentDisplay": "FlexColumn",
+			"marginBottom": 2,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 4,
+			"opacity": 100,
+			"paddingBottom": 4,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 4,
+			"widthType": "Fluid"
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-heading"
+				},
+				"fragmentConfig": {
+					"headingLevel": "h1"
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"fragmentLink": {
+							},
+							"text": {
+								"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_TITLE_I18N_JSON_VALUE$]"
+							}
+						}
+					}
+				],
+				"fragmentStyle": {
+					"fontFamily": "fontFamilySansSerif",
+					"fontSize": "fontSizeLg",
+					"fontWeight": "fontWeightBolder",
+					"marginBottom": "3",
+					"textAlign": "center"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-paragraph"
+				},
+				"fragmentConfig": {
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"fragmentLink": {
+							},
+							"text": {
+								"value_i18n": "[$ERROR_CODE_I18N_JSON_VALUE$]"
+							}
+						}
+					}
+				],
+				"fragmentStyle": {
+					"fontFamily": "fontFamilySansSerif",
+					"fontWeight": "fontWeightBold",
+					"marginBottom": "2",
+					"maxWidth": "200px",
+					"textAlign": "center",
+					"width": "520px"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-paragraph"
+				},
+				"fragmentConfig": {
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"fragmentLink": {
+							},
+							"text": {
+								"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_DESCRIPTION_I18N_JSON_VALUE$]"
+							}
+						}
+					}
+				],
+				"fragmentStyle": {
+					"fontFamily": "fontFamilySansSerif",
+					"marginBottom": "5",
+					"textAlign": "center",
+					"width": "520px"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"borderColor": "gray400Color",
+					"borderRadius": "5px",
+					"borderWidth": "1px",
+					"paddingBottom": "4",
+					"paddingLeft": "3",
+					"paddingRight": "3",
+					"paddingTop": "4",
+					"width": "800px"
+				},
+				"indexed": true,
+				"layout": {
+					"align": "Start",
+					"borderColor": "gray400Color",
+					"borderWidth": 0,
+					"contentDisplay": "FlexColumn",
+					"marginBottom": 0,
+					"marginLeft": 0,
+					"marginRight": 0,
+					"marginTop": 0,
+					"opacity": 100,
+					"paddingBottom": 2,
+					"paddingLeft": 1,
+					"paddingRight": 1,
+					"paddingTop": 2,
+					"widthType": "Fluid"
+				}
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									},
+									"text": {
+										"value_i18n": "[$INSTRUCTIONS_I18N_JSON_VALUE$]"
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"fontFamily": "fontFamilySansSerif",
+							"fontWeight": "fontWeightBold",
+							"marginBottom": "2"
+						},
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									},
+									"text": {
+										"value_i18n": "[$LAYOUT_UTILITY_PAGE_ENTRY_INSTRUCTIONS_I18N_JSON_VALUE$]"
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"fontFamily": "fontFamilySansSerif"
+						},
+						"indexed": true
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

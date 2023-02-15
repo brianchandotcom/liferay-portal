@@ -1,0 +1,43 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-10627 and COMMERCE-10455 that assert if it is possible to add and remove rules for the Product Publisher filter"
+	@priority = 4
+	test CanAddAndRemoveProductPublisherTagFilterRules {
+		property portal.acceptance = "false";
+
+		task ("Given the admin navigates to the pending order details page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+		}
+
+		task ("When the admin deploy the Product Publisher widget") {
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Publisher");
+		}
+
+		task ("Then the admin is able to add and remove new rules to the filter") {
+			CommerceWidget.updateProductPublisherConfiguration(
+				addFilter = "true",
+				addFilterResultsList = "Brake Rotors,Premium Brake Pads,Brake Pads,Premium Brake Fluid,Brake Fluid",
+				deleteFilter = "true",
+				deleteFilterResultsList = "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount",
+				portletName = "Product Publisher",
+				tag = "featured");
+		}
+	}
+
+}

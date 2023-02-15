@@ -85,7 +85,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlags.add(liferaySiteInitializerFeatureFlag);
 			}
 			else if (fileName.endsWith(".java")) {
-
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
 				featureFlags.addAll(_getFeatureFlags(fileContent));

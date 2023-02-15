@@ -113,8 +113,7 @@ class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 			await liferayDispatchTriggerImpl.run(
 				response.liferayDispatchTrigger.id
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}

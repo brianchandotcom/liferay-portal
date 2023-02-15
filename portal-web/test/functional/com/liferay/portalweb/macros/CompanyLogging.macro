@@ -8,6 +8,10 @@ definition {
 		if (!(contains(${logContent}, "for group ${groupId}"))) {
 			fail("The ${portalInstanceName} company log file content does not contain the group ID.");
 		}
+
+		AssertTextPresent(
+			locator1 = "CompanyLogging#COMPANY_LOG_CONTENT",
+			value1 = "for group ${groupId}");
 	}
 
 	macro assertCompanyLogIsolated {
@@ -44,8 +48,12 @@ definition {
 		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = ${portalInstanceName});
 
 		Click(
-			key_virtualHost = ${portalInstanceName},
+			key_logName = ${logName},
 			locator1 = "CompanyLogging#COMPANY_LOG_NAME");
+
+		Click(
+			ariaLabel = "Download",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		DownloadTempFile();
 

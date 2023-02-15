@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.headless.builder.operation.Operation;
-import com.liferay.headless.builder.operation.registrator.OperationRegistrator;
+import com.liferay.headless.builder.operation.OperationRegistry;
 import com.liferay.headless.builder.provider.OpenAPIYAMLOperationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -163,13 +163,13 @@ public class HeadlessBuilderDeployerTest {
 			companyId, openAPIYAML);
 
 		for (Operation operation : _operations) {
-			_operationRegistrator.register(operation);
+			_operationRegistry.register(operation);
 		}
 	}
 
 	private void _unregisterOperations() throws Exception {
 		for (Operation operation : _operations) {
-			_operationRegistrator.unregister(operation);
+			_operationRegistry.unregister(operation);
 		}
 	}
 
@@ -179,7 +179,7 @@ public class HeadlessBuilderDeployerTest {
 	private OpenAPIYAMLOperationsProvider _openAPIYAMLOperationsProvider;
 
 	@Inject
-	private OperationRegistrator _operationRegistrator;
+	private OperationRegistry _operationRegistry;
 
 	private List<Operation> _operations;
 	private Company _testCompany;

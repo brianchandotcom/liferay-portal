@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.builder.operation.registrator;
+package com.liferay.headless.builder.operation;
 
-import com.liferay.headless.builder.operation.Operation;
+import java.util.List;
 
 /**
  * @author Carlos Correa
  */
-public interface OperationRegistrator {
+public interface OperationRegistry {
+
+	public List<Operation> getOperations();
 
 	public void register(Operation operation) throws Exception;
 

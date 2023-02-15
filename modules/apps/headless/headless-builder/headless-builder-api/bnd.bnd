@@ -7,8 +7,6 @@ Export-Package:\
 	com.liferay.headless.builder.model,\
 	com.liferay.headless.builder.operation,\
 	com.liferay.headless.builder.operation.handler,\
-	com.liferay.headless.builder.operation.provider,\
-	com.liferay.headless.builder.operation.registrator,\
 	com.liferay.headless.builder.operation.registry,\
 	com.liferay.headless.builder.operation.response,\
 	com.liferay.headless.builder.provider,\

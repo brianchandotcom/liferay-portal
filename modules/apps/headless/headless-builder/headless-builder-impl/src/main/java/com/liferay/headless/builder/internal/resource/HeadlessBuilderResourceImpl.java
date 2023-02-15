@@ -19,8 +19,9 @@ import com.liferay.headless.builder.operation.MediaType;
 import com.liferay.headless.builder.operation.Method;
 import com.liferay.headless.builder.operation.Operation;
 import com.liferay.headless.builder.operation.OperationContext;
+import com.liferay.headless.builder.operation.OperationRegistry;
+import com.liferay.headless.builder.operation.PathConfiguration;
 import com.liferay.headless.builder.operation.handler.OperationHandler;
-import com.liferay.headless.builder.operation.provider.OperationProvider;
 import com.liferay.headless.builder.operation.registry.OperationHandlerRegistry;
 import com.liferay.headless.builder.operation.response.NotFoundOperationResponse;
 import com.liferay.headless.builder.operation.response.OperationResponse;
@@ -42,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -77,7 +80,7 @@ public class HeadlessBuilderResourceImpl
 			throw new NotFoundException();
 		}
 
-		Operation operation = _operationProvider.getOperation(
+		Operation operation = _getOperation(
 			_portal.getCompanyId(contextHttpServletRequest),
 			Method.valueOf(contextHttpServletRequest.getMethod()),
 			contextHttpServletRequest.getRequestURI());
@@ -111,6 +114,35 @@ public class HeadlessBuilderResourceImpl
 		dtoConverterContext.setAttribute("response", response);
 
 		return dtoConverterContext;
+	}
+
+	private Operation _getOperation(
+		long companyId, Method method, String path) {
+
+		for (Operation operation : _operationRegistry.getOperations()) {
+			if (companyId != operation.getCompanyId()) {
+				continue;
+			}
+
+			Method operationMethod = operation.getMethod();
+
+			if (!Objects.equals(operationMethod, method)) {
+				continue;
+			}
+
+			PathConfiguration pathConfiguration =
+				operation.getPathConfiguration();
+
+			Pattern pattern = pathConfiguration.getPattern();
+
+			Matcher matcher = pattern.matcher(path);
+
+			if (matcher.matches()) {
+				return operation;
+			}
+		}
+
+		return null;
 	}
 
 	private OperationContext _getOperationContext(
@@ -218,7 +250,7 @@ public class HeadlessBuilderResourceImpl
 	private OperationHandlerRegistry _operationHandlerRegistry;
 
 	@Reference
-	private OperationProvider _operationProvider;
+	private OperationRegistry _operationRegistry;
 
 	@Reference
 	private Portal _portal;

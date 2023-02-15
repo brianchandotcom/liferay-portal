@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.operation.registrator;
+package com.liferay.headless.builder.internal.operation;
 
 import com.liferay.headless.builder.operation.Operation;
+import com.liferay.headless.builder.operation.OperationRegistry;
 import com.liferay.headless.builder.operation.PathConfiguration;
-import com.liferay.headless.builder.operation.provider.OperationProvider;
-import com.liferay.headless.builder.operation.registrator.OperationRegistrator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -32,13 +32,17 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
  */
-@Component(immediate = true, service = OperationRegistrator.class)
-public class OperationRegistratorImpl implements OperationRegistrator {
+@Component(immediate = true, service = OperationRegistry.class)
+public class OperationRegistryImpl implements OperationRegistry {
+
+	@Override
+	public List<Operation> getOperations() {
+		return _serviceTrackerList.toList();
+	}
 
 	@Override
 	public void register(Operation operation) throws Exception {
@@ -98,10 +102,6 @@ public class OperationRegistratorImpl implements OperationRegistrator {
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private OperationProvider _operationProvider;
-
 	private final Map<String, ServiceRegistration<Operation>>
 		_serviceRegistrations = new HashMap<>();
 	private ServiceTrackerList<Operation> _serviceTrackerList;

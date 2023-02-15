@@ -349,6 +349,13 @@ public class DefaultSearchResultPermissionFilter
 	private class SlidingWindowSearcher {
 
 		public Hits search(int start, int end, SearchContext searchContext) {
+			if (_permissionFilteredSearchResultAccurateCountThreshold > 0) {
+				searchContext.setAttribute(
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_ACCURATE_COUNT_THRESHOLD,
+					Boolean.TRUE);
+			}
+
 			int amplifiedCount =
 				_permissionFilteredSearchResultAccurateCountThreshold;
 			double amplificationFactor = 1.0;
@@ -357,10 +364,6 @@ public class DefaultSearchResultPermissionFilter
 			int hitsSize = 0;
 			int offset = 0;
 			long startTime = 0;
-
-			searchContext.setAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_PERMISSIONED_SEARCHER,
-				Boolean.TRUE);
 
 			while (true) {
 				int count = end - filteredDocsCount;

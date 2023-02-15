@@ -9,7 +9,7 @@ class WebComponent extends HTMLElement {
 		ReactDOM.render(
 			<React.StrictMode>
 				<AppContextProvider>
-					<App />
+					<App route={this.getAttribute('route') || '/'} />
 				</AppContextProvider>
 			</React.StrictMode>,
 			this

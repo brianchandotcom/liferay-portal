@@ -2,8 +2,6 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 
-import {useNavigate} from 'react-router-dom';
-
 import mainAccountLogo from '../../assets/icons/mainAppLogo.svg';
 import emptyImage from '../../assets/icons/emptyImage.svg';
 import chevronRight from '../../assets/icons/chevron-right.svg';
@@ -28,8 +26,6 @@ export function NewAppToolBar({
 	accountImage,
 	enableDropdown,
 }: NewAppToolBarProps) {
-	const navigate = useNavigate();
-
 	type Item = {
 		disabled?: boolean;
 		label?: string;
@@ -110,15 +106,16 @@ export function NewAppToolBar({
 
 			<ClayManagementToolbar.ItemList>
 				<ClayButton.Group className="new-app-tool-bar-button-container">
-					<ClayButton
-						className="new-app-tool-bar-button-exit"
-						displayType={null}
-						onClick={() => navigate('/')}
-					>
-						<span className="new-app-tool-bar-button-text">
-							Exit
-						</span>
-					</ClayButton>
+					<a href="/dashboard">
+						<ClayButton
+							className="new-app-tool-bar-button-exit"
+							displayType={null}
+						>
+							<span className="new-app-tool-bar-button-text">
+								Exit
+							</span>
+						</ClayButton>
+					</a>
 
 					<button className="new-app-tool-bar-button-save-draft">
 						Save as draft

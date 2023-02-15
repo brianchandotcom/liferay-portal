@@ -6,8 +6,11 @@ import './App.scss';
 
 import AppRoutes from './Routes';
 
-function App() {
-	return <AppRoutes />;
+interface AppProps {
+	route: string;
+}
+function App({route}: AppProps) {
+	return <AppRoutes route={route} />;
 }
 
 export default App;

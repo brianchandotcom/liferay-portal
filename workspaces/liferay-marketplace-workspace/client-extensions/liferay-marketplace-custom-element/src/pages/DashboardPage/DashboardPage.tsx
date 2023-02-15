@@ -1,4 +1,3 @@
-import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 
 import {
@@ -17,7 +16,6 @@ import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import './DashboardPage.scss';
 
 export function DashboardPage() {
-	const navigate = useNavigate();
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
@@ -56,12 +54,11 @@ export function DashboardPage() {
 									description="Manage and publish apps on the Marketplace"
 								/>
 
-								<button
-									className="dashboard-page-body-header-button"
-									onClick={() => navigate('/create-new-app')}
-								>
-									+ New App
-								</button>
+								<a href="/create-new-app">
+									<button className="dashboard-page-body-header-button">
+										+ New App
+									</button>
+								</a>
 							</div>
 
 							<DashboardTable apps={appList} />

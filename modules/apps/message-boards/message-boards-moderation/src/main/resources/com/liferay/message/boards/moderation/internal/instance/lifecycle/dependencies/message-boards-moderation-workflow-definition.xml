@@ -74,7 +74,7 @@
 		<actions>
 			<action>
 				<name>approve</name>
-				<status>0</status>
+				<status-code>0</status-code>
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
@@ -104,13 +104,13 @@
 		<actions>
 			<action>
 				<name>deny</name>
-				<status>4</status>
+				<status-code>4</status-code>
 				<priority>1</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<action>
 				<name>pending</name>
-				<status>1</status>
+				<status-code>1</status-code>
 				<priority>2</priority>
 				<execution-type>onAssignment</execution-type>
 			</action>

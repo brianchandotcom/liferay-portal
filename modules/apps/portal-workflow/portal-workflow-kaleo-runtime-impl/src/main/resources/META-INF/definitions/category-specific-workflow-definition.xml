@@ -120,7 +120,7 @@
 		<actions>
 			<action>
 				<name>approve</name>
-				<status>0</status>
+				<status-code>0</status-code>
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>

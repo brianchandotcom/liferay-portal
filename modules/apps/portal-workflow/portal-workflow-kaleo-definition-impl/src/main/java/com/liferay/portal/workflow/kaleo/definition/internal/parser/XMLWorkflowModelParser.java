@@ -214,12 +214,12 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 						name, description, executionType, script,
 						scriptLanguage, scriptRequiredContexts, priority));
 			}
-			else if (actionElement.element("status") != null) {
+			else if (actionElement.element("status-code") != null) {
 				actions.add(
 					new UpdateStatusAction(
 						name, description, executionType,
 						GetterUtil.getInteger(
-							actionElement.elementText("status")),
+							actionElement.elementText("status-code")),
 						priority));
 			}
 		}

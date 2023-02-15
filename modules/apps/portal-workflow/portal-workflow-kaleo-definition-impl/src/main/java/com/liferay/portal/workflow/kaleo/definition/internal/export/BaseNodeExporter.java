@@ -291,7 +291,7 @@ public abstract class BaseNodeExporter implements NodeExporter {
 			UpdateStatusAction updateStatusAction = (UpdateStatusAction)action;
 
 			addTextElement(
-				actionElement, "status-code",
+				actionElement, "status",
 				String.valueOf(updateStatusAction.getStatus()));
 		}
 

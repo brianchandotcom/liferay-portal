@@ -42,7 +42,7 @@
 				<value>META-INF/counter-hbm.xml</value>
 			</array>
 		</property>
-		<property name="dataSource" ref="counterDataSource" />
+		<property name="dataSource" ref="liferayDataSource" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="javax.persistence.validation.mode">none</prop>

@@ -147,8 +147,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(exception);
 		}
 
-		closeDataSource("counterDataSource");
-
 		closeDataSource("liferayDataSource");
 
 		super.contextDestroyed(servletContextEvent);

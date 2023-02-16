@@ -12,7 +12,7 @@
 	<bean class="com.liferay.portal.spring.transaction.CounterTransactionExecutor" id="counterTransactionExecutor">
 		<constructor-arg>
 			<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
-				<constructor-arg ref="counterDataSource" />
+				<constructor-arg ref="liferayDataSource" />
 				<constructor-arg ref="counterHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>

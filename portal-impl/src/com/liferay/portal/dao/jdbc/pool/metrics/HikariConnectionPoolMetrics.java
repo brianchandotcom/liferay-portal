@@ -85,16 +85,6 @@ public class HikariConnectionPoolMetrics implements ConnectionPoolMetrics {
 	private String _getConnectionPoolName() {
 		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
 			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
-				"counterDataSource");
-
-		if (_dataSource.equals(
-				lazyConnectionDataSourceProxy.getTargetDataSource())) {
-
-			return "counterDataSource";
-		}
-
-		lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
 				"liferayDataSource");
 
 		Object targetDataSource =

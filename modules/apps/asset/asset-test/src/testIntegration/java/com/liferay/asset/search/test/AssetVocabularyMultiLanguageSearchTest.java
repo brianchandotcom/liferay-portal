@@ -45,7 +45,6 @@ import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -97,18 +96,16 @@ public class AssetVocabularyMultiLanguageSearchTest {
 
 		_addAssetVocabularyMultiLanguage();
 
-		Map<String, String> descriptionMap = HashMapBuilder.put(
-			"description", _ENGLISH_DESCRIPTION
-		).put(
-			"description_en_US", _ENGLISH_DESCRIPTION
-		).put(
-			"description_ja_JP", _JAPANESE_DESCRIPTION
-		).build();
-
-		String keyword = "description";
-
 		assertFieldValues(
-			"description", LocaleUtil.US, descriptionMap, keyword);
+			"description", LocaleUtil.US,
+			HashMapBuilder.put(
+				"description", _ENGLISH_DESCRIPTION
+			).put(
+				"description_en_US", _ENGLISH_DESCRIPTION
+			).put(
+				"description_ja_JP", _JAPANESE_DESCRIPTION
+			).build(),
+			"description");
 	}
 
 	@Test
@@ -127,15 +124,9 @@ public class AssetVocabularyMultiLanguageSearchTest {
 			"title_sortable", _ENGLISH_TITLE
 		).build();
 
-		String word1 = "title";
-		String word2 = "tit";
+		assertFieldValues("title", LocaleUtil.US, titleMap, "title");
 
-		Stream.of(
-			word1, word2
-		).forEach(
-			keywords -> assertFieldValues(
-				"title", LocaleUtil.US, titleMap, keywords)
-		);
+		assertFieldValues("title", LocaleUtil.US, titleMap, "tit");
 	}
 
 	@Test
@@ -152,17 +143,15 @@ public class AssetVocabularyMultiLanguageSearchTest {
 			"description_ja_JP", _JAPANESE_DESCRIPTION
 		).build();
 
-		String word1 = "新規";
-		String word2 = "作成";
-		String prefix1 = "新";
-		String prefix2 = "作";
+		assertFieldValues(
+			"description", LocaleUtil.JAPAN, descriptionMap, "新規");
 
-		Stream.of(
-			word1, word2, prefix1, prefix2
-		).forEach(
-			keywords -> assertFieldValues(
-				"description", LocaleUtil.JAPAN, descriptionMap, keywords)
-		);
+		assertFieldValues(
+			"description", LocaleUtil.JAPAN, descriptionMap, "作成");
+
+		assertFieldValues("description", LocaleUtil.JAPAN, descriptionMap, "新");
+
+		assertFieldValues("description", LocaleUtil.JAPAN, descriptionMap, "作");
 	}
 
 	@Test
@@ -181,17 +170,10 @@ public class AssetVocabularyMultiLanguageSearchTest {
 			"title_sortable", _JAPANESE_TITLE
 		).build();
 
-		String word1 = "新規";
-		String word2 = "作成";
-		String prefix1 = "新";
-		String prefix2 = "作";
-
-		Stream.of(
-			word1, word2, prefix1, prefix2
-		).forEach(
-			keywords -> assertFieldValues(
-				"title", LocaleUtil.JAPAN, titleMap, keywords)
-		);
+		assertFieldValues("title", LocaleUtil.JAPAN, titleMap, "新規");
+		assertFieldValues("title", LocaleUtil.JAPAN, titleMap, "作成");
+		assertFieldValues("title", LocaleUtil.JAPAN, titleMap, "新");
+		assertFieldValues("title", LocaleUtil.JAPAN, titleMap, "作");
 	}
 
 	@Rule

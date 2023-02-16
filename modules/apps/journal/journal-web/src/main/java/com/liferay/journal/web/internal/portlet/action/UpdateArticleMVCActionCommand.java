@@ -27,12 +27,14 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -56,6 +59,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -72,6 +76,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -446,6 +451,11 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> currentFriendlyURLMap) {
 
 		List<String> friendlyURLChangedMessages = new ArrayList<>();
+		List<Locale> friendlyURLDuplicatedLocales = new ArrayList<>();
+		Map<String, List<Long>> friendlyURLGroupIdsMap = new HashMap<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -476,23 +486,118 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 							"<strong>" + currentFriendlyURL + "</strong>"
 						}));
 			}
+
+			List<Long> groupIds = friendlyURLGroupIdsMap.computeIfAbsent(
+				currentFriendlyURL,
+				key ->
+					_journalArticleLocalService.
+						getJournalArticleGroupIdsByUrlTitle(
+							themeDisplay.getCompanyId(), key));
+
+			if (!groupIds.isEmpty() &&
+				((groupIds.size() > 1) ||
+				 !Objects.equals(
+					 groupIds.get(0), themeDisplay.getScopeGroupId()))) {
+
+				friendlyURLDuplicatedLocales.add(locale);
+			}
 		}
 
-		if (friendlyURLChangedMessages.isEmpty()) {
+		if (friendlyURLChangedMessages.isEmpty() &&
+			friendlyURLDuplicatedLocales.isEmpty()) {
+
 			return Collections.emptyMap();
 		}
 
-		friendlyURLChangedMessages.add(
-			0,
-			_language.get(
-				httpServletRequest,
-				"the-following-friendly-urls-were-changed-to-ensure-" +
-					"uniqueness"));
-
 		return HashMapBuilder.put(
 			"friendlyURLChanged",
-			StringUtil.merge(friendlyURLChangedMessages, "<br />")
+			() -> {
+				if (friendlyURLChangedMessages.isEmpty()) {
+					return null;
+				}
+
+				friendlyURLChangedMessages.add(
+					0,
+					_language.get(
+						httpServletRequest,
+						"the-following-friendly-urls-were-changed-to-ensure-" +
+							"uniqueness"));
+
+				return StringUtil.merge(friendlyURLChangedMessages, "<br />");
+			}
+		).put(
+			"friendlyURLDuplicated",
+			() -> {
+				if (friendlyURLDuplicatedLocales.isEmpty()) {
+					return null;
+				}
+
+				if (friendlyURLDuplicatedLocales.size() > 3) {
+					return _language.format(
+						themeDisplay.getLocale(),
+						StringBundler.concat(
+							"the-content-has-been-published-but-might-cause-",
+							"errors.-the-url-used-in-x-and-x-more-",
+							"translations-already-exists-in-other-sites-or-",
+							"asset-libraries"),
+						new String[] {
+							_getLocaleDisplayNames(
+								themeDisplay.getLocale(),
+								friendlyURLDuplicatedLocales.get(0),
+								friendlyURLDuplicatedLocales.get(1),
+								friendlyURLDuplicatedLocales.get(2)),
+							String.valueOf(
+								friendlyURLDuplicatedLocales.size() - 3)
+						},
+						false);
+				}
+
+				if (friendlyURLDuplicatedLocales.size() == 1) {
+					return _language.format(
+						themeDisplay.getLocale(),
+						"the-content-has-been-published-but-might-cause-" +
+							"errors.-the-url-used-in-x-already-exists-in-" +
+								"other-sites-or-asset-libraries",
+						new String[] {
+							_getLocaleDisplayNames(
+								themeDisplay.getLocale(),
+								friendlyURLDuplicatedLocales.get(0))
+						},
+						false);
+				}
+
+				int lastElementIndex = friendlyURLDuplicatedLocales.size() - 1;
+
+				List<Locale> locales = ListUtil.subList(
+					friendlyURLDuplicatedLocales, 0, lastElementIndex);
+
+				return _language.format(
+					themeDisplay.getLocale(),
+					"the-content-has-been-published-but-might-cause-errors.-" +
+						"the-url-used-in-x-and-x-already-exists-in-other-" +
+							"sites-or-asset-libraries",
+					new String[] {
+						_getLocaleDisplayNames(
+							themeDisplay.getLocale(),
+							locales.toArray(new Locale[0])),
+						_getLocaleDisplayNames(
+							themeDisplay.getLocale(),
+							friendlyURLDuplicatedLocales.get(lastElementIndex))
+					},
+					false);
+			}
 		).build();
+	}
+
+	private String _getLocaleDisplayNames(Locale locale, Locale... locales) {
+		List<String> displayLocaleNames = new ArrayList<>();
+
+		for (Locale currentLocale : locales) {
+			displayLocaleNames.add(
+				LocaleUtil.getLocaleDisplayName(currentLocale, locale));
+		}
+
+		return StringUtil.merge(displayLocaleNames, StringPool.COMMA_AND_SPACE);
 	}
 
 	private String _getSaveAndContinueRedirect(
@@ -654,6 +759,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

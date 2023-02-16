@@ -27,12 +27,39 @@ definition {
 	}
 
 	@description = "This test checks that articles can be sorted by alphabetical order."
-	@ignore = "Test Stub"
 	@priority = 3
 	test AssetsCanBeSortedByAlphabeticalOrder {
+		property custom.properties = "feature.flag.LPS-166643=true";
 
-		// TODO LPS-166644
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
 
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article A",
+			kbArticleTitle = "KB Article A");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "KB Article B",
+			kbArticleTitle = "KB Article B");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Title");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+
+		KBArticle.viewCP(
+			indexNumber = 1,
+			kbArticleContent = "KB Article B",
+			kbArticleTitle = "KB Article B");
 	}
 
 	@description = "This test checks that articles can be sorted by the modified date."

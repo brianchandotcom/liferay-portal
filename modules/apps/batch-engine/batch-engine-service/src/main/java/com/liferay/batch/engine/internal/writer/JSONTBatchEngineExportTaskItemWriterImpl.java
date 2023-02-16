@@ -47,9 +47,8 @@ public class JSONTBatchEngineExportTaskItemWriterImpl
 
 		_unsyncPrintWriter.write(
 			"{\"actions\":\n{\"createBatch\": {\"href\": \"");
-		_unsyncPrintWriter.write(
-			"/o/headless-batch-engine/v1.0/import-task/");
-		_unsyncPrintWriter.write(batchEngineImportConfiguration.getClassName());
+		_unsyncPrintWriter.write("/o/headless-batch-engine/v1.0/import-task/");
+		_unsyncPrintWriter.write(batchEngineUnitConfiguration.getClassName());
 		_unsyncPrintWriter.write(
 			"\", \"method\": \"POST\"}},\n\"configuration\":\n");
 		_unsyncPrintWriter.write(

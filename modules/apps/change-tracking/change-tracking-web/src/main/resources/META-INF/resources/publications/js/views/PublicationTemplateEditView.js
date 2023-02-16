@@ -217,7 +217,7 @@ export default function PublicationTemplateEditView({
 							type="button"
 							value="asdf"
 						>
-							Invite Users
+							{Liferay.Language.get('add-users')}
 						</ClayButton>
 					}
 					{...collaboratorsProps}

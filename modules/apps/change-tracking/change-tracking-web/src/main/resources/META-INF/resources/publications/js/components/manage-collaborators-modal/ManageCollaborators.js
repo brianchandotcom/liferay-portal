@@ -717,7 +717,7 @@ const ManageCollaborators = ({
 				displayType="primary"
 				type="submit"
 			>
-				{!Object.keys(updatedRoles).length
+				{!Object.keys(updatedRoles).length && !isPublicationTemplate
 					? Liferay.Language.get('send')
 					: Liferay.Language.get('save')}
 			</ClayButton>

@@ -8,7 +8,7 @@
 			[#assign options=(input.attributes.options)![]]
 
 			[#list options as option]
-				[#if option?index == configuration.numberOfOptions]
+				[#if option?index == configuration.numberOfOptions && !configuration.showAllOptions]
 					[#break]
 				[/#if]
 
@@ -21,7 +21,7 @@
 				</div>
 			[/#list]
 
-			[#if configuration.numberOfOptions < options?size]
+			[#if configuration.numberOfOptions < options?size && !configuration.showAllOptions ]
 				<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" type="button">
 					${languageUtil.get(locale, "show-all")}
 				</button>

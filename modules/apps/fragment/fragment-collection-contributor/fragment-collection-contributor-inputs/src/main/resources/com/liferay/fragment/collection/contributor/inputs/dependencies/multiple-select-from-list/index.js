@@ -1,6 +1,7 @@
 const options = input.attributes.options || [];
 const numberOfOptions = configuration.numberOfOptions;
 
+const button = fragmentElement.querySelector('.multiselect-list-button');
 const fieldSet = fragmentElement.querySelector('.multiselect-list-fieldset');
 
 const allInputs = Array.from(
@@ -11,6 +12,8 @@ if (layoutMode === 'edit') {
 	allInputs.forEach((input) => {
 		input.setAttribute('disabled', true);
 	});
+
+	button.setAttribute('disabled', true);
 }
 
 fieldSet.addEventListener('change', () => {
@@ -25,8 +28,6 @@ fieldSet.addEventListener('change', () => {
 });
 
 if (numberOfOptions < options.length) {
-	const button = fragmentElement.querySelector('.multiselect-list-button');
-
 	const missionOptions = options.slice(numberOfOptions);
 
 	const template = fragmentElement.querySelector(

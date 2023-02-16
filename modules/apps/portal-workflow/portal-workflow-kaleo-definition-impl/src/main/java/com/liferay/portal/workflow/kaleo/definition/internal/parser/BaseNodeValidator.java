@@ -80,12 +80,10 @@ public abstract class BaseNodeValidator<T extends Node>
 		throws KaleoDefinitionValidationException {
 
 		for (Notification notification : node.getNotifications()) {
-			if (Validator.isNotNull(notification.getTemplate())) {
-				continue;
+			if (Validator.isNull(notification.getTemplate())) {
+				throw new KaleoDefinitionValidationException.
+					EmptyNotificationTemplate(node.getDefaultLabel());
 			}
-
-			throw new KaleoDefinitionValidationException.
-				EmptyNotificationTemplate(node.getDefaultLabel());
 		}
 	}
 

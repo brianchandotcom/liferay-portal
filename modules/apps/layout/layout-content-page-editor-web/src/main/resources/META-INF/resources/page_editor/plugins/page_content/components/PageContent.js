@@ -214,6 +214,7 @@ export default function PageContent({
 				className={classNames('d-flex', {
 					'align-items-center': !subtype,
 				})}
+				data-title={title}
 			>
 				<ClayIcon
 					className={classNames('mr-3 flex-shrink-0', {

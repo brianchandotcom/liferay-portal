@@ -11285,6 +11285,7 @@ company.default.web.id=www.able.com</echo>
 		</if>
 
 		<get-testcase-property property.name="liferay.online.properties" />
+		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
 
 		<if>
 			<isset property="liferay.online.properties" />

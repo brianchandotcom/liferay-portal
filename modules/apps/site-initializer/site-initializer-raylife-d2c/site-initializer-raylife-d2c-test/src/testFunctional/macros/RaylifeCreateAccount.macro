@@ -1,9 +1,13 @@
 definition {
 
 	macro createAccount {
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "CREATE NEW ACCOUNT");
+			
 		Type(
 			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
-			value1 = "test@liferay.com");
+			value1 = "test2@liferay.com");
 
 		Type(
 			label = "password",
@@ -14,6 +18,11 @@ definition {
 			label = "rePassword",
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
 			value1 = "test@123");
+
+		Type(
+			locator1 = "TextInput#INPUT_ID",
+			inputFieldId = "input-captcha",
+			value1 = "a");
 
 		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
 	}

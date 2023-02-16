@@ -57,7 +57,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -212,13 +211,13 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			_getDDMFormFieldValueAccessor(ddmFormField.getType());
 
-		Set<Locale> locales = value.getAvailableLocales();
+		for (Locale locale : value.getAvailableLocales()) {
+			if (!ddmFormFieldValueAccessor.isEmpty(ddmFormFieldValue, locale)) {
+				return false;
+			}
+		}
 
-		Stream<Locale> stream = locales.stream();
-
-		return stream.allMatch(
-			locale -> ddmFormFieldValueAccessor.isEmpty(
-				ddmFormFieldValue, locale));
+		return true;
 	}
 
 	protected void validateDDMFormFieldValidationExpression(

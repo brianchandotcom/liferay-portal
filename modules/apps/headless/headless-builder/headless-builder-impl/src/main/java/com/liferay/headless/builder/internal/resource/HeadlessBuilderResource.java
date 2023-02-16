@@ -152,9 +152,6 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 
 				builder.withPrimaryKeyInfoFieldValue(infoFieldValue);
 			}
-			else {
-				builder.withInfoFieldValue(infoFieldValue);
-			}
 		}
 
 		return builder.withMediaType(

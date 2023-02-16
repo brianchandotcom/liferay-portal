@@ -14,11 +14,7 @@
 
 package com.liferay.headless.builder.internal.operation;
 
-import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Carlos Correa
@@ -35,14 +31,6 @@ public interface OperationContext {
 			return new OperationContextImpl(this);
 		}
 
-		public Builder withInfoFieldValue(InfoFieldValue<?> infoFieldValue) {
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			_infoFieldValues.put(infoField.getName(), infoFieldValue);
-
-			return this;
-		}
-
 		public Builder withMediaType(String mediaType) {
 			_mediaType = mediaType;
 
@@ -57,8 +45,6 @@ public interface OperationContext {
 			return this;
 		}
 
-		private Map<String, InfoFieldValue<?>> _infoFieldValues =
-			new HashMap<>();
 		private String _mediaType;
 		private InfoFieldValue<?> _primaryKeyInfoFieldValue;
 

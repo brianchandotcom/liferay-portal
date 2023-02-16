@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.workspace.LiferayWorkspaceYarnPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.docker.DockerPruneImage;
 import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -173,6 +174,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String PROVIDED_MODULES_CONFIGURATION_NAME =
 		"providedModules";
+
+	public static final String PRUNE_DOCKER_IMAGE_TASK_NAME =
+		"pruneDockerImage";
 
 	public static final String PULL_DOCKER_IMAGE_TASK_NAME = "pullDockerImage";
 
@@ -422,7 +426,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, CLEAN_DOCKER_IMAGE_TASK_NAME, DockerRemoveImage.class);
 
 		dockerRemoveImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
-
 		dockerRemoveImage.setDescription("Removes the Docker image.");
 		dockerRemoveImage.setGroup(DOCKER_GROUP);
 
@@ -446,6 +449,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
+		DockerPruneImage dockerPruneImage = GradleUtil.addTask(
+			project, PRUNE_DOCKER_IMAGE_TASK_NAME, DockerPruneImage.class);
+
+		dockerPruneImage.setDescription("Prunes the Docker image.");
+		dockerPruneImage.setGroup(DOCKER_GROUP);
+
+		Property<Boolean> force = dockerPruneImage.getForce();
+
+		force.set(true);
+
+		dockerBuildImage.finalizedBy(PRUNE_DOCKER_IMAGE_TASK_NAME);
+
 		Project rootProject = project.getRootProject();
 
 		rootProject.afterEvaluate(
@@ -460,9 +475,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					setProperty.add(dockerImageId);
 
-					Property<String> property = dockerRemoveImage.getImageId();
+					Property<String> removeImageProperty =
+						dockerRemoveImage.getImageId();
 
-					property.set(dockerImageId);
+					removeImageProperty.set(dockerImageId);
+
+					Property<String> pruneImageProperty =
+						dockerPruneImage.getImageId();
+
+					pruneImageProperty.set(dockerImageId);
 				}
 
 			});

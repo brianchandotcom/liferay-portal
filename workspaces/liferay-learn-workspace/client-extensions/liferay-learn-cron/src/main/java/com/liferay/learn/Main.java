@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.learn.dxp.importer;
+package com.liferay.learn;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;

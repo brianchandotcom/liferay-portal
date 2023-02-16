@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -46,8 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -194,24 +193,17 @@ public class DDMFormInstanceRecordUADDisplay
 			return ddmFormInstanceRecords;
 		}
 
-		Stream<DDMFormInstanceRecord> ddmFormInstanceRecordsStream =
-			ddmFormInstanceRecords.stream();
-
-		return ddmFormInstanceRecordsStream.filter(
+		return ListUtil.filter(
+			ddmFormInstanceRecords,
 			ddmFormInstanceRecord -> {
-				String formattedName = getName(
-					ddmFormInstanceRecord,
-					LocaleThreadLocal.getThemeDisplayLocale());
-
 				String lowerCaseFormattedName = StringUtil.toLowerCase(
-					formattedName);
+					getName(
+						ddmFormInstanceRecord,
+						LocaleThreadLocal.getThemeDisplayLocale()));
 
 				return lowerCaseFormattedName.contains(
 					StringUtil.toLowerCase(keywords));
-			}
-		).collect(
-			Collectors.toList()
-		);
+			});
 	}
 
 	private List<DDMFormInstanceRecord> _getDDMFormInstanceRecords(

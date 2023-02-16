@@ -79,8 +79,12 @@ export default function PublicationTemplateEditView({
 				if (response.status === 200) {
 					const successMessage =
 						ctCollectionTemplateId > 0
-							? Liferay.Language.get('successfully-edited-the-template')
-							: Liferay.Language.get('successfully-added-the-template');
+							? Liferay.Language.get(
+									'successfully-edited-the-template'
+							  )
+							: Liferay.Language.get(
+									'successfully-added-the-template'
+							  );
 
 					showNotification(
 						successMessage,
@@ -145,7 +149,9 @@ export default function PublicationTemplateEditView({
 				required={false}
 			/>
 
-			<CollapsablePanel title={Liferay.Language.get('publication-information')}>
+			<CollapsablePanel
+				title={Liferay.Language.get('publication-information')}
+			>
 				<ClayAlert
 					className="alert-autofit-stacked alert-indicator-start"
 					displayType="info"

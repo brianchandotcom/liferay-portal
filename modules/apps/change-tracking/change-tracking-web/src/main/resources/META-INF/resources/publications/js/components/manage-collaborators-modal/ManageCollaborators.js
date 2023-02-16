@@ -390,7 +390,9 @@ const ManageCollaborators = ({
 			});
 
 			showNotification(
-				Liferay.Language.get('selected-users-have-been-associated-with-the-template'),
+				Liferay.Language.get(
+					'selected-users-have-been-associated-with-the-template'
+				),
 				false,
 				false
 			);

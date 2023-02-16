@@ -43,13 +43,17 @@ const HTMLEditorModal = ({
 
 	return (
 		visible && (
-			<ClayModal observer={observer} size="full-screen">
-				<ClayModal.Header className="cadmin">
+			<ClayModal
+				containerProps={{className: 'cadmin'}}
+				observer={observer}
+				size="full-screen"
+			>
+				<ClayModal.Header>
 					{Liferay.Language.get('edit-content')}
 				</ClayModal.Header>
 
 				<ClayModal.Body className="pb-0">
-					<div className="cadmin d-flex justify-content-end pr-2 w-100">
+					<div className="d-flex justify-content-end pr-2 w-100">
 						<ClayButton.Group>
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(
@@ -133,7 +137,6 @@ const HTMLEditorModal = ({
 				</ClayModal.Body>
 
 				<ClayModal.Footer
-					className="cadmin"
 					last={
 						<ClayButton.Group spaced>
 							<ClayButton

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.object.model.ObjectField",
-	service = {DTOConverter.class, ObjectFieldDTOConverter.class}
+	service = DTOConverter.class
 )
 public class ObjectFieldDTOConverter
 	implements DTOConverter<com.liferay.object.model.ObjectField, ObjectField> {

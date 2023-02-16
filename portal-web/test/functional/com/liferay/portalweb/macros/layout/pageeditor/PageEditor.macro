@@ -1950,6 +1950,10 @@ definition {
 							checkboxName = ${itemType},
 							locator1 = "Checkbox#ANY_CHECKBOX");
 					}
+
+					Click(
+						key_fieldLabel = "Item Type",
+						locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 				}
 
 				if (isSet(tagNameList)) {
@@ -1986,7 +1990,12 @@ definition {
 						value1 = ${option});
 				}
 
-				Button.clickApply();
+				if (contains(${selectedName}, "Items")) {
+					Button.clickSave();
+				}
+				else {
+					Button.clickApply();
+				}
 			}
 		}
 		else if (!(isSet(deviceType)) || (${deviceType} == "Desktop")) {

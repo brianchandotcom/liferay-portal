@@ -1305,9 +1305,17 @@ definition {
 				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_HIGHLIGHT");
 		}
 		else {
-			AssertTextEquals(
-				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
-				value1 = ${kbArticleTitle});
+			if (isSet(indexNumber)) {
+				AssertTextEquals(
+					indexNumber = ${indexNumber},
+					locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE_SPECIFIC",
+					value1 = ${kbArticleTitle});
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
+					value1 = ${kbArticleTitle});
+			}
 
 			if (isSet(kbStatus)) {
 				AssertTextEquals(

@@ -124,7 +124,7 @@ public class Main {
 
 		Main main = new Main(
 			System.getenv("LIFERAY_DATA_DEFINITION_KEY"),
-			System.getenv("LIFERAY_GROUP_FRIENDLY_URL_PATH"),
+			System.getenv("LIFERAY_SITE_FRIENDLY_URL_PATH"),
 			System.getenv("LIFERAY_LEARN_RESOURCES_DOMAIN"),
 			System.getenv("LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv("LIFERAY_OAUTH_CLIENT_SECRET"),
@@ -136,7 +136,7 @@ public class Main {
 	}
 
 	public Main(
-			String liferayDataDefinitionKey, String liferayGroupFriendlyUrlPath,
+			String liferayDataDefinitionKey, String liferaySiteFriendlyUrlPath,
 			String liferayLearnResourcesDomain, String liferayOAuthClientId,
 			String liferayOAuthClientSecret, URL liferayURL,
 			String markdownImportDirName, boolean offline)
@@ -159,7 +159,7 @@ public class Main {
 
 		if (_offline) {
 			_liferayContentStructureId = 0;
-			_liferayGroupId = 0;
+			_liferaySiteId = 0;
 
 			return;
 		}
@@ -167,9 +167,9 @@ public class Main {
 		_initResourceBuilders(_getOAuthAuthorization());
 
 		Site site = _siteResource.getSiteByFriendlyUrlPath(
-			liferayGroupFriendlyUrlPath);
+			liferaySiteFriendlyUrlPath);
 
-		_liferayGroupId = site.getId();
+		_liferaySiteId = site.getId();
 
 		System.out.println("Importing into " + site.getName() + " site.");
 
@@ -188,11 +188,12 @@ public class Main {
 		int updatedArticleCount = 0;
 
 		List<StructuredContent> siteStructuredContents =
-			_getSiteStructuredContents(_liferayGroupId);
+			_getSiteStructuredContents(_liferaySiteId);
 
 		System.out.println(
 			siteStructuredContents.size() +
-				" existing articles were found in group " + _liferayGroupId);
+				" existing articles were found in site with id " +
+					_liferaySiteId);
 
 		Map<String, StructuredContent>
 			structuredContentsExternalReferenceCodeMap = new HashMap<>();
@@ -556,14 +557,14 @@ public class Main {
 		if (parentDocumentFolderId == 0) {
 			Page<DocumentFolder> page =
 				_documentFolderResource.getSiteDocumentFoldersPage(
-					_liferayGroupId, null, null, null,
+					_liferaySiteId, null, null, null,
 					"name eq '" + dirName + "'", null, null);
 
 			documentFolder = page.fetchFirstItem();
 
 			if (documentFolder == null) {
 				documentFolder = _documentFolderResource.postSiteDocumentFolder(
-					_liferayGroupId,
+					_liferaySiteId,
 					new DocumentFolder() {
 						{
 							description = "";
@@ -715,7 +716,7 @@ public class Main {
 		return dirNames[0];
 	}
 
-	private List<StructuredContent> _getSiteStructuredContents(long groupId)
+	private List<StructuredContent> _getSiteStructuredContents(long siteId)
 		throws Exception {
 
 		if (_offline) {
@@ -729,7 +730,7 @@ public class Main {
 		while (!fetchedAllItems) {
 			Page<StructuredContent> structuredContentsPage =
 				_structuredContentResource.getSiteStructuredContentsPage(
-					groupId, true, null, null, null, Pagination.of(page, 100),
+					siteId, true, null, null, null, Pagination.of(page, 100),
 					null);
 
 			structuredContents.addAll(structuredContentsPage.getItems());
@@ -775,7 +776,7 @@ public class Main {
 			Page<StructuredContentFolder> page =
 				_structuredContentFolderResource.
 					getSiteStructuredContentFoldersPage(
-						_liferayGroupId, null, null, null,
+						_liferaySiteId, null, null, null,
 						"name eq '" + dirName + "'", null, null);
 
 			structuredContentFolder = page.fetchFirstItem();
@@ -784,7 +785,7 @@ public class Main {
 				structuredContentFolder =
 					_structuredContentFolderResource.
 						postSiteStructuredContentFolder(
-							_liferayGroupId,
+							_liferaySiteId,
 							new StructuredContentFolder() {
 								{
 									description = "";
@@ -1897,10 +1898,10 @@ public class Main {
 	private final Map<String, String> _imageURLs = new HashMap<>();
 	private final Set<File> _landingPageFiles = new HashSet<>();
 	private final long _liferayContentStructureId;
-	private final long _liferayGroupId;
 	private final String _liferayLearnResourcesDomain;
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
+	private final long _liferaySiteId;
 	private final URL _liferayURL;
 	private File _markdownFile;
 	private final String _markdownImportDirName;

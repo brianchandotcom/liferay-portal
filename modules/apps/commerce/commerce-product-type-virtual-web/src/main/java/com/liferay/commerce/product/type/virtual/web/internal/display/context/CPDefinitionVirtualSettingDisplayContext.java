@@ -27,27 +27,22 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-
-import javax.portlet.PortletMode;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -246,36 +241,22 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return super.getScreenNavigationCategoryKey();
 	}
 
-	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {
-		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				httpServletRequest, JournalArticle.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName", "selectJournalArticle"
-		).setParameter(
-			"groupId", getScopeGroupId()
-		).setParameter(
-			"selectedGroupIds", StringUtil.merge(_getSelectedGroupIds())
-		).setParameter(
-			"showNonindexable", Boolean.TRUE
-		).setParameter(
-			"showScheduled", Boolean.TRUE
-		).setParameter(
-			"typeSelection", JournalArticle.class.getName()
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-	}
+	public String getTermsOfUseJournalArticleBrowserURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
 
-	private long[] _getSelectedGroupIds() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
 
-		return new long[] {getScopeGroupId(), themeDisplay.getCompanyGroupId()};
+		itemSelectorCriterion.setItemType(JournalArticle.class.getName());
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new JournalArticleItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, "selectedItem",
+				itemSelectorCriterion));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

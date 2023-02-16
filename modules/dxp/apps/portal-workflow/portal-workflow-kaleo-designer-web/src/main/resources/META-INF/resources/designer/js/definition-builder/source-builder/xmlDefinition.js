@@ -383,10 +383,6 @@ XMLDefinition.prototype = {
 					key: 'transitions',
 					locator: 'transitions',
 				},
-				{
-					key: 'status',
-					locator: 'status',
-				},
 				instance.getSchemaActions(),
 				instance.getSchemaAssignments(),
 				instance.getSchemaNotifications(),

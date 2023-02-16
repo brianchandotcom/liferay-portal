@@ -411,12 +411,12 @@ public class IndexerHelper {
 					user.getFullName()));
 		}
 
-		Map<Long, List<Long>> assigneeClassPKGroupIdsMap = new HashMap<>();
+		Map<Long, List<Long>> assigneeClassPKGroupIds = new HashMap<>();
 
 		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
 				kaleoTaskAssignmentInstances) {
 
-			List<Long> groupIds = assigneeClassPKGroupIdsMap.computeIfAbsent(
+			List<Long> groupIds = assigneeClassPKGroupIds.computeIfAbsent(
 				kaleoTaskAssignmentInstance.getAssigneeClassPK(),
 				key -> new ArrayList<>());
 
@@ -424,7 +424,7 @@ public class IndexerHelper {
 		}
 
 		return TransformUtil.transform(
-			assigneeClassPKGroupIdsMap.entrySet(),
+			assigneeClassPKGroupIds.entrySet(),
 			entry -> new RoleAssignment(entry.getKey(), entry.getValue()));
 	}
 

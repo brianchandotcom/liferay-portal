@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
@@ -26,7 +25,6 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -86,17 +84,15 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 			task.getOutgoingTransitions();
 
 		if (outgoingTransitions.size() > 1) {
-			List<Transition> defaultTransitions = TransformUtil.transform(
-				outgoingTransitions.values(),
-				transition -> {
-					if (!transition.isDefault()) {
-						return null;
-					}
+			int defaultTransitionCount = 0;
 
-					return transition;
-				});
+			for (Transition transition : outgoingTransitions.values()) {
+				if (transition.isDefault()) {
+					defaultTransitionCount += 1;
+				}
+			}
 
-			if (defaultTransitions.size() > 1) {
+			if (defaultTransitionCount > 1) {
 				throw new KaleoDefinitionValidationException.
 					MustNotSetMoreThanOneDefaultTransition(
 						task.getDefaultLabel());

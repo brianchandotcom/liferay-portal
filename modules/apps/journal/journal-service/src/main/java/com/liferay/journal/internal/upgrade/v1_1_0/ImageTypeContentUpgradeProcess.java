@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -48,7 +50,6 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_copyJournalArticleImagesToJournalRepository();
-		_dropJournalArticleImageTable();
 	}
 
 	private void _copyJournalArticleImagesToJournalRepository()
@@ -134,12 +135,12 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _dropJournalArticleImageTable() throws Exception {
-		dropTable("JournalArticleImage");
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Deleted table JournalArticleImage");
-		}
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"JournalArticleImage")
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

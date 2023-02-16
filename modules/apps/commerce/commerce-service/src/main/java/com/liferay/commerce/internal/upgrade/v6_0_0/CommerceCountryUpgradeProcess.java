@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.sql.ResultSet;
@@ -103,9 +105,15 @@ public class CommerceCountryUpgradeProcess extends UpgradeProcess {
 					}
 				}
 			}
-
-			dropTable("CommerceCountry");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"CommerceCountry")
+		};
 	}
 
 	private Country _addCountry(

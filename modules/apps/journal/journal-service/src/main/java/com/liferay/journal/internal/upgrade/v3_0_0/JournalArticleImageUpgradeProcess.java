@@ -14,10 +14,10 @@
 
 package com.liferay.journal.internal.upgrade.v3_0_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.ResultSet;
@@ -51,16 +51,15 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 				_imageLocalService.deleteImage(articleImageId);
 			}
 		}
-
-		dropTable("JournalArticleImage");
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Deleted table JournalArticleImage");
-		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleImageUpgradeProcess.class);
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"JournalArticleImage")
+		};
+	}
 
 	private final ImageLocalService _imageLocalService;
 

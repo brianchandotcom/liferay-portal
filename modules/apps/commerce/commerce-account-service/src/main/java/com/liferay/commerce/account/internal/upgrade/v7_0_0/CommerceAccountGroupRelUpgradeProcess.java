@@ -17,6 +17,8 @@ package com.liferay.commerce.account.internal.upgrade.v7_0_0;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -66,9 +68,15 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 				_accountGroupRelLocalService.addAccountGroupRel(
 					accountGroupRel);
 			}
-
-			dropTable("CommerceAccountGroupRel");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"CommerceAccountGroupRel")
+		};
 	}
 
 	private final AccountGroupRelLocalService _accountGroupRelLocalService;

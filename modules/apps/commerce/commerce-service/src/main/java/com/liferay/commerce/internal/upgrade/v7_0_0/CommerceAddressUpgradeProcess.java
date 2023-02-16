@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -94,9 +96,15 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				_setDefaultShipping(
 					address, resultSet.getBoolean("defaultShipping"));
 			}
-
-			dropTable("CommerceAddress");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"CommerceAddress")
+		};
 	}
 
 	private long _getListTypeId(int commerceAddressType) {

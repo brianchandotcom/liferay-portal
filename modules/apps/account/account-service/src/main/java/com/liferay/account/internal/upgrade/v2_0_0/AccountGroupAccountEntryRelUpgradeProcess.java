@@ -15,6 +15,8 @@
 package com.liferay.account.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -29,8 +31,14 @@ public class AccountGroupAccountEntryRelUpgradeProcess extends UpgradeProcess {
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false);
+	}
 
-		dropTable("AccountGroupAccountEntryRel");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"AccountGroupAccountEntryRel")
+		};
 	}
 
 }

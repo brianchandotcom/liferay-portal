@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -36,6 +38,8 @@ import java.sql.ResultSet;
 
 import java.util.Locale;
 import java.util.Map;
+
+import static com.liferay.portal.kernel.upgrade.UpgradeProcessFactory.dropTables;
 
 /**
  * @author Eduardo García
@@ -60,6 +64,20 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 		_deleteContentTargetingData();
 	}
 
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			dropTables("CT_AU_AnonymousUser", "CT_Analytics_AnalyticsEvent",
+				"CT_Analytics_AnalyticsReferrer","CT_AnonymousUserUserSegment",
+				"CT_CCR_CampaignContent","CT_CTA_CTAction","CT_CTA_CTActionTotal",
+				"CT_Campaign","CT_Campaigns_UserSegments","CT_ChannelInstance",
+				"CT_ReportInstance","CT_RuleInstance","CT_ScorePoints_ScorePoint",
+				"CT_Tactic","CT_Tactics_UserSegments","CT_TrackingActionInstance",
+				"CT_USCR_UserSegmentContent","CT_UserSegment","CT_Visited_ContentVisited",
+				"CT_Visited_PageVisited")
+		};
+	}
+
 	private void _deleteContentTargetingData() throws Exception {
 		runSQL(
 			"delete from ClassName_ where value like '" + _CT_PACKAGE_NAME +
@@ -78,27 +96,6 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 				_CT_PACKAGE_NAME + "%'");
 
 		runSQL("delete from ServiceComponent where buildNamespace like 'CT%'");
-
-		dropTable("CT_AU_AnonymousUser");
-		dropTable("CT_Analytics_AnalyticsEvent");
-		dropTable("CT_Analytics_AnalyticsReferrer");
-		dropTable("CT_AnonymousUserUserSegment");
-		dropTable("CT_CCR_CampaignContent");
-		dropTable("CT_CTA_CTAction");
-		dropTable("CT_CTA_CTActionTotal");
-		dropTable("CT_Campaign");
-		dropTable("CT_Campaigns_UserSegments");
-		dropTable("CT_ChannelInstance");
-		dropTable("CT_ReportInstance");
-		dropTable("CT_RuleInstance");
-		dropTable("CT_ScorePoints_ScorePoint");
-		dropTable("CT_Tactic");
-		dropTable("CT_Tactics_UserSegments");
-		dropTable("CT_TrackingActionInstance");
-		dropTable("CT_USCR_UserSegmentContent");
-		dropTable("CT_UserSegment");
-		dropTable("CT_Visited_ContentVisited");
-		dropTable("CT_Visited_PageVisited");
 	}
 
 	private String _getCriteria(long userSegmentId) throws Exception {

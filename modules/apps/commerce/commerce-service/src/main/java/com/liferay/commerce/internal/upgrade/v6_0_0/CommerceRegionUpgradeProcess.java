@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -74,9 +76,15 @@ public class CommerceRegionUpgradeProcess extends UpgradeProcess {
 					}
 				}
 			}
-
-			dropTable("CommerceRegion");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"CommerceRegion")
+		};
 	}
 
 	private Region _addRegion(

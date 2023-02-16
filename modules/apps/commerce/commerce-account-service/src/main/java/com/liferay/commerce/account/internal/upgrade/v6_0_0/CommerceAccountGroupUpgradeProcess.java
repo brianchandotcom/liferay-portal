@@ -19,6 +19,8 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -82,9 +84,15 @@ public class CommerceAccountGroupUpgradeProcess extends UpgradeProcess {
 					resultSet.getLong("userId"), AccountGroup.class.getName(),
 					accountGroupId, false, false, false);
 			}
-
-			dropTable("CommerceAccountGroup");
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropTables(
+				"CommerceAccountGroup")
+		};
 	}
 
 	private final AccountGroupLocalService _accountGroupLocalService;

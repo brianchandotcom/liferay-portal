@@ -15,9 +15,12 @@
 package com.liferay.batch.engine.internal.auto.deploy;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.internal.unit.BatchEngineUnitConfigurationHelper;
+import com.liferay.batch.engine.internal.unit.BatchEngineUnitProcessorImpl;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
@@ -95,7 +98,24 @@ public class BatchEngineAutoDeployListenerTest {
 		MockitoAnnotations.openMocks(this);
 
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener, "_batchEngineImportTaskExecutor",
+			_batchEngineAutoDeployListener, "_batchEngineUnitProcessor",
+			_batchEngineUnitProcessor);
+
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineAutoDeployListener,
+			"_batchEngineUnitConfigurationHelper",
+			_batchEngineUnitConfigurationHelper);
+
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineUnitConfigurationHelper, "_companyLocalService",
+			_companyLocalService);
+
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineUnitConfigurationHelper, "_userLocalService",
+			_userLocalService);
+
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineUnitProcessor, "_batchEngineImportTaskExecutor",
 			new BatchEngineImportTaskExecutor() {
 
 				@Override
@@ -107,20 +127,21 @@ public class BatchEngineAutoDeployListenerTest {
 
 			});
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener,
-			"_batchEngineImportTaskLocalService",
+			_batchEngineUnitProcessor, "_batchEngineImportTaskLocalService",
 			_batchEngineImportTaskLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener, "_companyLocalService",
+			_batchEngineUnitProcessor, "_batchEngineUnitConfigurationHelper",
+			_batchEngineUnitConfigurationHelper);
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineUnitProcessor, "_companyLocalService",
 			_companyLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener, "_file", FileImpl.getInstance());
+			_batchEngineUnitProcessor, "_file", FileImpl.getInstance());
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener, "_portalExecutorManager",
+			_batchEngineUnitProcessor, "_portalExecutorManager",
 			_portalExecutorManager);
 		ReflectionTestUtil.setFieldValue(
-			_batchEngineAutoDeployListener, "_userLocalService",
-			_userLocalService);
+			_batchEngineUnitProcessor, "_userLocalService", _userLocalService);
 
 		Mockito.when(
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -545,6 +566,11 @@ public class BatchEngineAutoDeployListenerTest {
 
 	private final List<BatchEngineImportTask> _batchEngineImportTasks =
 		new ArrayList<>();
+	private final BatchEngineUnitConfigurationHelper
+		_batchEngineUnitConfigurationHelper =
+			new BatchEngineUnitConfigurationHelper();
+	private final BatchEngineUnitProcessor _batchEngineUnitProcessor =
+		new BatchEngineUnitProcessorImpl();
 
 	@Mock
 	private CompanyLocalService _companyLocalService;

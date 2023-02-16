@@ -79,8 +79,8 @@ export default function PublicationTemplateEditView({
 				if (response.status === 200) {
 					const successMessage =
 						ctCollectionTemplateId > 0
-							? 'Successfully edited template'
-							: 'Successfully added template';
+							? Liferay.Language.get('successfully-edited-the-template')
+							: Liferay.Language.get('successfully-added-the-template');
 
 					showNotification(
 						successMessage,
@@ -118,7 +118,7 @@ export default function PublicationTemplateEditView({
 				)}
 				componentType="input"
 				fieldValue={nameField}
-				label="Name"
+				label={Liferay.Language.get('name')}
 				onChange={(event) => {
 					setNameField(event.target.value);
 				}}
@@ -135,7 +135,7 @@ export default function PublicationTemplateEditView({
 				)}
 				componentType="textarea"
 				fieldValue={descriptionField}
-				label="Description"
+				label={Liferay.Language.get('description')}
 				onChange={(event) => {
 					setDescriptionField(event.target.value);
 				}}
@@ -145,7 +145,7 @@ export default function PublicationTemplateEditView({
 				required={false}
 			/>
 
-			<CollapsablePanel title="Publication Information">
+			<CollapsablePanel title={Liferay.Language.get('publication-information')}>
 				<ClayAlert
 					className="alert-autofit-stacked alert-indicator-start"
 					displayType="info"
@@ -166,7 +166,7 @@ export default function PublicationTemplateEditView({
 					)}
 					componentType="input"
 					fieldValue={publicationNameField}
-					label="Publication Name"
+					label={Liferay.Language.get('publication-name')}
 					onChange={(event) => {
 						setPublicationNameField(event.target.value);
 					}}
@@ -182,7 +182,7 @@ export default function PublicationTemplateEditView({
 					)}
 					componentType="textarea"
 					fieldValue={publicationDescriptionField}
-					label="Publication Description"
+					label={Liferay.Language.get('publication-description')}
 					onChange={(event) => {
 						setPublicationDescriptionField(event.target.value);
 					}}
@@ -197,7 +197,7 @@ export default function PublicationTemplateEditView({
 				helpTooltip={Liferay.Language.get(
 					'publication-collaborators-help'
 				)}
-				title="Publication Collaborators"
+				title={Liferay.Language.get('publication-collaborators')}
 			>
 				<ManageCollaborators
 					getTemplateCollaboratorsURL={
@@ -215,7 +215,6 @@ export default function PublicationTemplateEditView({
 							onClick={() => setShowModal(true)}
 							small
 							type="button"
-							value="asdf"
 						>
 							{Liferay.Language.get('add-users')}
 						</ClayButton>

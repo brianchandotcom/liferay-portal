@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
@@ -186,7 +187,8 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 			_ldapServerConfigurationProvider.getConfigurationsProperties(
 				companyId);
 
-		String[] orderedLdapServerIds = orderedLdapServerIdsString.split(",");
+		String[] orderedLdapServerIds = StringUtil.split(
+			orderedLdapServerIdsString, ",");
 
 		for (int i = 0; i < orderedLdapServerIds.length; i++) {
 			long ldapServerId = GetterUtil.getLong(orderedLdapServerIds[i]);

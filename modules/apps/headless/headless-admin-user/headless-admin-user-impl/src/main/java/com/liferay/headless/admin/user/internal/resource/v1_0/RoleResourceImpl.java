@@ -234,6 +234,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					role.getDescriptionMap());
+				externalReferenceCode = role.getName();
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());

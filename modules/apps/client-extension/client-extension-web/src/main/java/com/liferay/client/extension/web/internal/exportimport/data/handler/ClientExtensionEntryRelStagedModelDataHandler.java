@@ -163,6 +163,8 @@ public class ClientExtensionEntryRelStagedModelDataHandler
 					portletDataContext, importedClientExtensionEntryRel);
 		}
 		else {
+			importedClientExtensionEntryRel.setExternalReferenceCode(
+				existingClientExtensionEntryRel.getExternalReferenceCode());
 			importedClientExtensionEntryRel.setMvccVersion(
 				existingClientExtensionEntryRel.getMvccVersion());
 			importedClientExtensionEntryRel.setClientExtensionEntryRelId(

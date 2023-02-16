@@ -16,6 +16,8 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
+import com.liferay.portal.search.engine.adapter.search.ClearScrollRequest;
+import com.liferay.portal.search.engine.adapter.search.ClearScrollResponse;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
@@ -38,6 +40,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = "search.engine.impl=Solr", service = SearchRequestExecutor.class
 )
 public class SolrSearchRequestExecutor implements SearchRequestExecutor {
+
+	@Override
+	public ClearScrollResponse executeSearchRequest(
+		ClearScrollRequest clearScrollRequest) {
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public ClosePointInTimeResponse executeSearchRequest(

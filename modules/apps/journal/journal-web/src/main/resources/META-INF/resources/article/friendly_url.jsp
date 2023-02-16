@@ -20,7 +20,17 @@
 JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+
+String friendlyURLDuplicatedWarningMessage = journalEditArticleDisplayContext.getFriendlyURLDuplicatedWarningMessage();
 %>
+
+<c:if test="<%= Validator.isNotNull(friendlyURLDuplicatedWarningMessage) %>">
+	<clay:alert
+		dismissible="<%= true %>"
+		displayType="warning"
+		message="<%= friendlyURLDuplicatedWarningMessage %>"
+	/>
+</c:if>
 
 <p class="text-secondary"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
 

@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -89,10 +91,14 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 		);
 
 		languageUtil.setLanguage(language);
+
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test
-	public void testCreateValueWithArray1() {
+	public void testCreateValueWithArray1() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -112,10 +118,15 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 			"[1,2]", localizedValue.getString(LocaleUtil.ENGLISH));
 		Assert.assertEquals(
 			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithArray2() {
+	public void testCreateValueWithArray2() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -131,10 +142,13 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 
 		Assert.assertEquals(
 			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithArray3() {
+	public void testCreateValueWithArray3() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -158,10 +172,15 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 		Assert.assertEquals(
 			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
 			localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithArray4() {
+	public void testCreateValueWithArray4() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -179,6 +198,9 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 		Assert.assertEquals(
 			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
 			localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -194,7 +216,7 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 	}
 
 	@Test
-	public void testCreateValueWithList1() {
+	public void testCreateValueWithList1() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -214,10 +236,15 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 			"[1,2]", localizedValue.getString(LocaleUtil.ENGLISH));
 		Assert.assertEquals(
 			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithList2() {
+	public void testCreateValueWithList2() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -233,10 +260,13 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 
 		Assert.assertEquals(
 			"[3,4]", localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithList3() {
+	public void testCreateValueWithList3() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -260,10 +290,15 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 		Assert.assertEquals(
 			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
 			localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.ENGLISH));
+		JSONFactoryUtil.createJSONArray(
+			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 
 	@Test
-	public void testCreateValueWithList4() {
+	public void testCreateValueWithList4() throws Exception {
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, "field1", "text");
 
@@ -280,6 +315,9 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest {
 
 		Assert.assertEquals(
 			"[\"value1\",\"value-2\",\"value_3\",\"value/4\"]",
+			localizedValue.getString(LocaleUtil.BRAZIL));
+
+		JSONFactoryUtil.createJSONArray(
 			localizedValue.getString(LocaleUtil.BRAZIL));
 	}
 

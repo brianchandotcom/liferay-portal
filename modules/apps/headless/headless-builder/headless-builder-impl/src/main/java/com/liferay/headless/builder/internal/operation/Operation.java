@@ -189,13 +189,9 @@ public interface Operation {
 
 	public class Response {
 
-		public Response(
-			String entityName, Map<String, InfoField> infoFields,
-			String schemaName) {
-
+		public Response(String entityName, Map<String, InfoField> infoFields) {
 			_entityName = entityName;
 			_infoFields = infoFields;
-			_schemaName = schemaName;
 		}
 
 		public String getEntityName() {
@@ -206,13 +202,8 @@ public interface Operation {
 			return _infoFields;
 		}
 
-		public String getSchemaName() {
-			return _schemaName;
-		}
-
 		private final String _entityName;
 		private final Map<String, InfoField> _infoFields;
-		private final String _schemaName;
 
 	}
 

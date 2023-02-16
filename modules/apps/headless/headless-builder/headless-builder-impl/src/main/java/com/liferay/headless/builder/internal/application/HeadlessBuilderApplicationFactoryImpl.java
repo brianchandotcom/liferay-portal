@@ -282,8 +282,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 
 					builder.withResponse(
 						new Operation.Response(
-							schemaDefinition.getEntityName(), infoFields,
-							schemaName),
+							schemaDefinition.getEntityName(), infoFields),
 						entry2.getKey(), httpCode);
 				}
 			}

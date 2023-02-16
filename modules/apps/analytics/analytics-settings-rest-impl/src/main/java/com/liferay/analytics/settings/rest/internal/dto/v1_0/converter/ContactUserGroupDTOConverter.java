@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.UserGroup",
-	service = {ContactUserGroupDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class ContactUserGroupDTOConverter
 	implements DTOConverter<UserGroup, ContactUserGroup> {

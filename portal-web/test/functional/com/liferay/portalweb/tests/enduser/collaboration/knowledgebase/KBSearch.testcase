@@ -72,12 +72,27 @@ definition {
 	}
 
 	@description = "This test checks that an article can be searched for in the admin search bar."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanSearchForArticleInAdmin {
+		property custom.properties = "feature.flag.LPS-166643=true";
 
-		// TODO LPS-166644
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Orange Color Text",
+			kbArticleTitle = "Orange");
 
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Blue Color Text",
+			kbArticleTitle = "Blue");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "Orange");
+
+		KBArticle.viewSearchResultNotPresent(kbArticleTitle = "Blue");
+
+		KBArticle.viewSearchResults(kbArticleTitle = "Orange");
 	}
 
 	@description = "This test checks that matched text from search results in the KB admin screen is highlighted in the search results."

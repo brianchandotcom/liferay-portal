@@ -225,6 +225,8 @@ public class Main {
 			existingStructuredContentIds.add(structuredContent.getId());
 		}
 
+		List<StructuredContent> structuredContents = new ArrayList<>();
+
 		for (String fileName : _fileNames) {
 			if (!fileName.contains("/en/") || !fileName.endsWith(".md")) {
 				continue;
@@ -252,9 +254,36 @@ public class Main {
 			}
 
 			try {
-				StructuredContent structuredContent = _toStructuredContent(
-					fileName);
+				structuredContents.add(_toStructuredContent(fileName));
+			}
+			catch (InvalidUUIDException invalidUUIDException) {
+				_errorMessages.add(invalidUUIDException.getMessage());
 
+				_reportImportResult(
+					addedStructuredContentCount, updatedStructuredContentCount,
+					existingStructuredContentIds.size());
+				System.exit(1);
+			}
+			catch (Exception exception) {
+				String errorMessage =
+					fileName + " could not be imported correctly: " +
+						exception.getMessage();
+
+				System.out.println(errorMessage);
+				_errorMessages.add(errorMessage);
+			}
+		}
+
+		for (StructuredContent structuredContent : structuredContents) {
+			long delta = System.currentTimeMillis() - start;
+
+			if (delta > (_oauthExpirationMillis - 100000)) {
+				_initResourceBuilders(_getOAuthAuthorization());
+
+				start = System.currentTimeMillis();
+			}
+
+			try {
 				String externalReferenceCode =
 					structuredContent.getExternalReferenceCode();
 				String friendlyUrlPath = structuredContent.getFriendlyUrlPath();
@@ -330,8 +359,9 @@ public class Main {
 			}
 			catch (Exception exception) {
 				String errorMessage =
-					fileName + " could not be imported correctly: " +
-						exception.getMessage();
+					structuredContent.getTitle() +
+						" could not be imported correctly: " +
+							exception.getMessage();
 
 				System.out.println(errorMessage);
 				_errorMessages.add(errorMessage);
@@ -363,37 +393,9 @@ public class Main {
 			}
 		}
 
-		if (!_warningMessages.isEmpty()) {
-			System.out.println(
-				_warningMessages.size() +
-					" structured contents had import warnings.");
-
-			for (String warningMessage : _warningMessages) {
-				System.out.println(warningMessage);
-			}
-		}
-
-		System.out.println(
-			addedStructuredContentCount +
-				" new structured contents were added.");
-		System.out.println(
-			updatedStructuredContentCount +
-				" existing structured contents were updated.");
-		System.out.println(
-			existingStructuredContentIds.size() +
-				" existing structured contents were deleted.");
-
-		if (!_errorMessages.isEmpty()) {
-			System.out.println(
-				_errorMessages.size() +
-					" structured contents had import errors.");
-
-			for (String errorMessage : _errorMessages) {
-				System.out.println(errorMessage);
-			}
-
-			System.exit(1);
-		}
+		_reportImportResult(
+			addedStructuredContentCount, updatedStructuredContentCount,
+			existingStructuredContentIds.size());
 	}
 
 	private void _addFileNames(String fileName) {
@@ -1396,6 +1398,43 @@ public class Main {
 		return line;
 	}
 
+	private void _reportImportResult(
+		int addedStructuredContentCount, int updatedStructuredContentCount,
+		int deletedStructuredContentCount) {
+
+		if (!_warningMessages.isEmpty()) {
+			System.out.println(
+				_warningMessages.size() +
+					" structured contents had import warnings.");
+
+			for (String warningMessage : _warningMessages) {
+				System.out.println(warningMessage);
+			}
+		}
+
+		System.out.println(
+			addedStructuredContentCount +
+				" new structured contents were added.");
+		System.out.println(
+			updatedStructuredContentCount +
+				" existing structured contents were updated.");
+		System.out.println(
+			deletedStructuredContentCount +
+				" existing structured contents were deleted.");
+
+		if (!_errorMessages.isEmpty()) {
+			System.out.println(
+				_errorMessages.size() +
+					" structured contents had import errors.");
+
+			for (String errorMessage : _errorMessages) {
+				System.out.println(errorMessage);
+			}
+
+			System.exit(1);
+		}
+	}
+
 	private BasedSequence _toBasedSequence(String string) {
 		return CharSubSequence.of(string.toCharArray(), 0, string.length());
 	}
@@ -1529,6 +1568,14 @@ public class Main {
 			throw new Exception("Nonexistent UUID for file " + fileName);
 		}
 
+		if (_uuids.contains(uuid)) {
+			throw new InvalidUUIDException(
+				StringBundler.concat(
+					"Duplicate UUID ", uuid, " found in file ", fileName));
+		}
+
+		_uuids.add(uuid);
+
 		StructuredContent structuredContent = new StructuredContent();
 
 		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
@@ -1578,6 +1625,11 @@ public class Main {
 				FileUtils.readFileToString(
 					japaneseFile, StandardCharsets.UTF_8),
 				japaneseFile);
+
+			if (Validator.isNotNull(_getUuid(japaneseText))) {
+				throw new InvalidUUIDException(
+					"UUID found in translated file " + japaneseFile.getPath());
+			}
 
 			structuredContent.setContentFields(
 				new ContentField[] {
@@ -1949,8 +2001,17 @@ public class Main {
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
+	private final Set<String> _uuids = new HashSet<>();
 	private final List<String> _warningMessages = new ArrayList<>();
 	private final Yaml _yaml;
+
+	private static class InvalidUUIDException extends Exception {
+
+		public InvalidUUIDException(String message) {
+			super(message);
+		}
+
+	}
 
 	private class GridCard {
 

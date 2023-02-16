@@ -55,12 +55,22 @@ export default function ({namespace}) {
 					});
 				}
 				else {
+					addButton.disabled = false;
+
+					if (form.querySelector('.alert')) {
+						return;
+					}
+
+					const alertWrapper = document.createElement('div');
+
+					form.prepend(alertWrapper);
+
 					openToast({
+						autoClose: false,
+						container: alertWrapper,
 						message: response.errorMessage,
 						type: 'danger',
 					});
-
-					addButton.disabled = false;
 				}
 			});
 	});

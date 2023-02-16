@@ -24,6 +24,7 @@ import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKey
 import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -267,7 +267,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				else if (exception instanceof FileSizeException) {
 					if (maxFileSize == 0) {
 						maxFileSize =
-							_uploadServletRequestConfigurationHelper.
+							_uploadServletRequestConfigurationProvider.
 								getMaxSize();
 					}
 
@@ -297,7 +297,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					errorMessage = themeDisplay.translate(
 						"request-is-larger-than-x-and-could-not-be-processed",
 						_language.formatStorageSize(
-							_uploadServletRequestConfigurationHelper.
+							_uploadServletRequestConfigurationProvider.
 								getMaxSize(),
 							themeDisplay.getLocale()));
 				}
@@ -421,8 +421,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	private Portal _portal;
 
 	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 

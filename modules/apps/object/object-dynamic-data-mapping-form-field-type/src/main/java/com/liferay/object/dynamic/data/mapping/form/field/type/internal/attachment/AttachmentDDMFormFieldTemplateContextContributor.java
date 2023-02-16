@@ -26,6 +26,7 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -82,7 +82,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"maximumFileSize", maximumFileSize
 		).put(
 			"overallMaximumUploadRequestSize",
-			_uploadServletRequestConfigurationHelper.getMaxSize()
+			_uploadServletRequestConfigurationProvider.getMaxSize()
 		).put(
 			"tip",
 			_language.format(
@@ -277,7 +277,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 }

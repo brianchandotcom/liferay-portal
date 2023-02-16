@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upload;
 
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -22,22 +23,22 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class UploadServletRequestConfigurationHelperUtil {
 
 	public static long getMaxSize() {
-		return _uploadServletRequestConfigurationHelper.getMaxSize();
+		return _uploadServletRequestConfigurationProvider.getMaxSize();
 	}
 
 	public static long getMaxTries() {
-		return _uploadServletRequestConfigurationHelper.getMaxTries();
+		return _uploadServletRequestConfigurationProvider.getMaxTries();
 	}
 
 	public static String getTempDir() {
-		return _uploadServletRequestConfigurationHelper.getTempDir();
+		return _uploadServletRequestConfigurationProvider.getTempDir();
 	}
 
-	private static volatile UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper =
+	private static volatile UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider =
 			ServiceProxyFactory.newServiceTrackedInstance(
-				UploadServletRequestConfigurationHelper.class,
+				UploadServletRequestConfigurationProvider.class,
 				UploadServletRequestConfigurationHelperUtil.class,
-				"_uploadServletRequestConfigurationHelper", false);
+				"_uploadServletRequestConfigurationProvider", false);
 
 }

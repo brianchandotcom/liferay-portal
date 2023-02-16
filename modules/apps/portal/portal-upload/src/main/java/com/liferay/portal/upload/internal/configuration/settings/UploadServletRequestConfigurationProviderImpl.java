@@ -15,7 +15,7 @@
 package com.liferay.portal.upload.internal.configuration.settings;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration",
-	service = UploadServletRequestConfigurationHelper.class
+	service = UploadServletRequestConfigurationProvider.class
 )
-public class UploadServletRequestConfigurationHelperImpl
-	implements UploadServletRequestConfigurationHelper {
+public class UploadServletRequestConfigurationProviderImpl
+	implements UploadServletRequestConfigurationProvider {
 
 	@Override
 	public long getMaxSize() {

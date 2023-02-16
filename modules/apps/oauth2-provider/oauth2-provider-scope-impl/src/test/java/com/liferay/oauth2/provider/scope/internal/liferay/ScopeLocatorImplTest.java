@@ -358,13 +358,13 @@ public class ScopeLocatorImplTest {
 	private Set<String> _getScopes(
 		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes) {
 
-		Set<String> set = new HashSet<>();
+		Set<String> scopes = new HashSet<>();
 
 		for (LiferayOAuth2Scope liferayOAuth2Scope : liferayOAuth2Scopes) {
-			set.add(liferayOAuth2Scope.getScope());
+			scopes.add(liferayOAuth2Scope.getScope());
 		}
 
-		return set;
+		return scopes;
 	}
 
 	private void _set(Object object, String fieldName, Object value) {

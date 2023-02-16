@@ -1,0 +1,20 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "var(--gray-600)",
+					"label": "icon-color",
+					"name": "iconColor",
+					"type": "colorPicker"
+				},
+				{
+					"defaultValue": true,
+					"label": "mini-cart-display-total-items-count",
+					"name": "displayTotalItemsQuantity",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

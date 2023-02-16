@@ -1,0 +1,7 @@
+<div class="mini-cart-fragment" [#if configuration.iconColor?has_content]style="--mini-cart-icon-color: ${configuration.iconColor};"[/#if]>
+	[@liferay_commerce_ui["mini-cart"]
+		displayTotalItemsQuantity=configuration.displayTotalItemsQuantity
+		spritemap="${themeDisplay.getPathThemeImages()}/clay/icons.svg"
+		toggleable=true
+	/]
+</div>

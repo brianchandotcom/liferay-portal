@@ -1,5 +1,19 @@
 # Poshi Runner Change Log
 
+## 1.0.404
+
+### Gradle
+
+* [POSHI-474](https://issues.liferay.com/browse/POSHI-474) - Add logic to get latest chromedriver version 
+
+### Standalone
+
+* [POSHI-403](https://issues.liferay.com/browse/POSHI-403) - Poshi standalone and it's gradle version
+
+### Utils
+
+* [POSHI-472](https://issues.liferay.com/browse/POSHI-472) - Use a static port for browsermob proxy server
+
 ## 1.0.403
 
 ### Gradle

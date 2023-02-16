@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.HttpHeaders;
@@ -70,7 +69,9 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 	@Produces({"application/json", "application/xml"})
 	public Response get() throws Exception {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-171047"))) {
-			throw new NotFoundException();
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
 		}
 
 		Operation operation = _getOperation(

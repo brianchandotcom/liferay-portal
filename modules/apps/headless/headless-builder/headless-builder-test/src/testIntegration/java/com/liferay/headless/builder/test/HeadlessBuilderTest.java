@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -41,13 +40,19 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
 
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
-import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -69,23 +74,10 @@ public class HeadlessBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-171047", "true"
-			).build());
-
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
-	}
-
-	@After
-	public void tearDown() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-171047", "false"
-			).build());
 	}
 
 	@Test
@@ -150,17 +142,58 @@ public class HeadlessBuilderTest {
 	}
 
 	@Test
-	public void testMissingHeadlessBuilderApplication() throws Exception {
-		JSONObject jsonObject = _invoke(
-			"headless-builder/v1.0/test/1234", Http.Method.GET);
+	public void testHeadlessBuilderApplicationWithoutFeatureFlag()
+		throws Exception {
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "NOT_FOUND"
-			).put(
-				"title", "Operation not found"
-			).toString(),
-			jsonObject.toString(), true);
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			"headless-builder/v1.0/blogs/" + _blogsEntry.getEntryId(),
+			Http.Method.GET);
+
+		httpURLConnection.connect();
+
+		Assert.assertEquals(404, httpURLConnection.getResponseCode());
+	}
+
+	@Test
+	public void testMissingHeadlessBuilderApplication() throws Exception {
+		_withFeatureFlagEnabled(
+			() -> {
+				JSONObject jsonObject = _invoke(
+					"headless-builder/v1.0/test/1234", Http.Method.GET);
+
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						"status", "NOT_FOUND"
+					).put(
+						"title", "Operation not found"
+					).toString(),
+					jsonObject.toString(), true);
+			});
+	}
+
+	private HttpURLConnection _createHttpURLConnection(
+			String endpoint, Http.Method method)
+		throws Exception {
+
+		URL url = new URL("http://localhost:8080/o/" + endpoint);
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
+
+		httpURLConnection.setRequestProperty(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		String encodedUserNameAndPassword = Base64.encode(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
+		httpURLConnection.setRequestProperty(
+			"Authorization", "Basic " + encodedUserNameAndPassword);
+
+		httpURLConnection.setRequestMethod(method.toString());
+
+		return httpURLConnection;
 	}
 
 	private String _formatDate(Date date) {
@@ -173,18 +206,19 @@ public class HeadlessBuilderTest {
 	private JSONObject _invoke(String endpoint, Http.Method method)
 		throws Exception {
 
-		Http.Options options = new Http.Options();
+		HttpURLConnection httpURLConnection = _createHttpURLConnection(
+			endpoint, method);
 
-		options.addHeader(HttpHeaders.ACCEPT, "*/*");
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-		options.setLocation("http://localhost:8080/o/" + endpoint);
-		options.setMethod(method);
+		httpURLConnection.connect();
 
-		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
+		try {
+			return JSONFactoryUtil.createJSONObject(
+				StringUtil.read(httpURLConnection.getInputStream()));
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			return JSONFactoryUtil.createJSONObject(
+				StringUtil.read(httpURLConnection.getErrorStream()));
+		}
 	}
 
 	private OpenAPIYAML _readOpenAPIYAML(String yamlFile) throws Exception {
@@ -195,25 +229,50 @@ public class HeadlessBuilderTest {
 		}
 	}
 
-	private void _withHeadlessBuilderApplication(
-			long companyId, String openApiYamlFile,
+	private void _withFeatureFlagEnabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		HeadlessBuilderApplication headlessBuilderApplication =
-			_headlessBuilderApplicationFactory.getHeadlessBuilderApplication(
-				companyId,
-				_readOpenAPIYAML(StringPool.SLASH + openApiYamlFile));
-
-		HeadlessBuilderApplication.Handle handle =
-			headlessBuilderApplication.deploy();
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-171047", "true"
+			).build());
 
 		try {
 			unsafeRunnable.run();
 		}
 		finally {
-			handle.undeploy();
+			PropsUtil.addProperties(
+				UnicodePropertiesBuilder.setProperty(
+					"feature.flag.LPS-171047", "false"
+				).build());
 		}
+	}
+
+	private void _withHeadlessBuilderApplication(
+			long companyId, String openApiYamlFile,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		_withFeatureFlagEnabled(
+			() -> {
+				HeadlessBuilderApplication headlessBuilderApplication =
+					_headlessBuilderApplicationFactory.
+						getHeadlessBuilderApplication(
+							companyId,
+							_readOpenAPIYAML(
+								StringPool.SLASH + openApiYamlFile));
+
+				HeadlessBuilderApplication.Handle handle =
+					headlessBuilderApplication.deploy();
+
+				try {
+					unsafeRunnable.run();
+				}
+				finally {
+					handle.undeploy();
+				}
+			});
 	}
 
 	private BlogsEntry _blogsEntry;

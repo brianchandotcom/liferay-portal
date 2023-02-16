@@ -451,14 +451,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			}
 		}
 
-		if (!_hasCommerceOrderPermission(
-				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
-				commerceOrder, httpServletRequest)) {
-
-			return false;
-		}
-
-		return true;
+		return _hasCommerceOrderPermission(
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+			commerceOrder, httpServletRequest);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,8 +33,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,15 +114,8 @@ public class AssetTagsSearchTest {
 			AssetTagLocalServiceUtil.searchTags(
 				new long[] {_group.getGroupId()}, "tag", 0, 20, null);
 
-		List<AssetTag> assetTags = searchResult.getBaseModels();
-
-		Stream<AssetTag> assetTagsStream = assetTags.stream();
-
-		Stream<String> assetTagsNamesStream = assetTagsStream.map(
-			assetTag -> assetTag.getName());
-
-		List<String> assetTagsNames = assetTagsNamesStream.collect(
-			Collectors.toList());
+		List<String> assetTagsNames = TransformUtil.transform(
+			searchResult.getBaseModels(), assetTag -> assetTag.getName());
 
 		Assert.assertTrue(assetTagsNames.containsAll(searchAssetTags));
 	}

@@ -3,8 +3,17 @@
 		{
 			"fields": [
 				{
+					"defaultValue": false,
+					"label": "show-all-options",
+					"name": "showAllOptions",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
 					"dataType": "int",
-					"defaultValue": "10",
+					"defaultValue": "5",
 					"label": "number-of-options",
 					"name": "numberOfOptions",
 					"type": "text",

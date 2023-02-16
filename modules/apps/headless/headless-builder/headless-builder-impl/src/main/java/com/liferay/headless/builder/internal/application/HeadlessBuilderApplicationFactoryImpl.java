@@ -20,6 +20,7 @@ import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.headless.builder.internal.operation.OperationRegistry;
 import com.liferay.headless.builder.internal.operation.handler.OperationHandler;
+import com.liferay.headless.builder.internal.util.HeadlessBuilderUtil;
 import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
@@ -29,7 +30,6 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -158,14 +158,8 @@ public class HeadlessBuilderApplicationFactoryImpl
 		throws Exception {
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, entityName);
-
-		if (infoItemFormProvider == null) {
-			throw new InvalidObjectException(
-				"InfoItemFormProvider not found for the entity name " +
-					entityName);
-		}
+			HeadlessBuilderUtil.getInfoItemService(
+				entityName, InfoItemFormProvider.class);
 
 		Map<String, InfoField> infoFields = new HashMap<>();
 
@@ -350,9 +344,6 @@ public class HeadlessBuilderApplicationFactoryImpl
 			throw new InvalidObjectException("There is no operation defined");
 		}
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private ServiceTrackerMap<String, OperationHandler>
 		_operationHandlerServiceTrackerMap;

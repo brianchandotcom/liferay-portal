@@ -67,6 +67,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("enableComments", isEnableComments());
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
+		attributes.put("modifiable", isModifiable());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
 		attributes.put("panelCategoryKey", getPanelCategoryKey());
@@ -211,6 +212,12 @@ public class ObjectDefinitionWrapper
 
 		if (enableObjectEntryHistory != null) {
 			setEnableObjectEntryHistory(enableObjectEntryHistory);
+		}
+
+		Boolean modifiable = (Boolean)attributes.get("modifiable");
+
+		if (modifiable != null) {
+			setModifiable(modifiable);
 		}
 
 		String name = (String)attributes.get("name");
@@ -506,6 +513,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public Map<java.util.Locale, String> getLabelMap() {
 		return model.getLabelMap();
+	}
+
+	/**
+	 * Returns the modifiable of this object definition.
+	 *
+	 * @return the modifiable of this object definition
+	 */
+	@Override
+	public boolean getModifiable() {
+		return model.getModifiable();
 	}
 
 	/**
@@ -875,6 +892,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is modifiable.
+	 *
+	 * @return <code>true</code> if this object definition is modifiable; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isModifiable() {
+		return model.isModifiable();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is portlet.
 	 *
 	 * @return <code>true</code> if this object definition is portlet; <code>false</code> otherwise
@@ -1099,6 +1126,16 @@ public class ObjectDefinitionWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setLabelMap(labelMap, defaultLocale);
+	}
+
+	/**
+	 * Sets whether this object definition is modifiable.
+	 *
+	 * @param modifiable the modifiable of this object definition
+	 */
+	@Override
+	public void setModifiable(boolean modifiable) {
+		model.setModifiable(modifiable);
 	}
 
 	/**

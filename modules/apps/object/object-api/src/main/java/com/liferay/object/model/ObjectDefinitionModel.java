@@ -501,6 +501,27 @@ public interface ObjectDefinitionModel
 	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory);
 
 	/**
+	 * Returns the modifiable of this object definition.
+	 *
+	 * @return the modifiable of this object definition
+	 */
+	public boolean getModifiable();
+
+	/**
+	 * Returns <code>true</code> if this object definition is modifiable.
+	 *
+	 * @return <code>true</code> if this object definition is modifiable; <code>false</code> otherwise
+	 */
+	public boolean isModifiable();
+
+	/**
+	 * Sets whether this object definition is modifiable.
+	 *
+	 * @param modifiable the modifiable of this object definition
+	 */
+	public void setModifiable(boolean modifiable);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition

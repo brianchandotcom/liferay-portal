@@ -79,8 +79,6 @@ public class SegmentsExperienceTableReferenceDefinition
 				).and(
 					SegmentsExperienceTable.INSTANCE.classPK.eq(
 						LayoutTable.INSTANCE.plid)
-				).and(
-					LayoutTable.INSTANCE.classPK.eq(0L)
 				)
 			).innerJoinON(
 				ClassNameTable.INSTANCE,

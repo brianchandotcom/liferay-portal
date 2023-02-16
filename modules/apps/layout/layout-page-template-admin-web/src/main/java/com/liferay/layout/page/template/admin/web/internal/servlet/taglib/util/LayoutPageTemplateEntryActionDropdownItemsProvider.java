@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
@@ -50,6 +51,8 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -88,6 +91,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
+		_layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -102,6 +107,11 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						() -> hasUpdatePermission,
 						_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
+					).add(
+						() -> LayoutPageTemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPageTemplateEntry, ActionKeys.VIEW),
+						_getViewLayoutPageTemplateEntryActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -568,6 +578,49 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		).buildString();
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getViewLayoutPageTemplateEntryActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			Layout previewLayout = _draftLayout;
+
+			if (_isLiveGroup()) {
+				previewLayout = _layout;
+			}
+
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				previewLayout, _themeDisplay);
+
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "p_l_mode", Constants.PREVIEW);
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_p_auth",
+				AuthTokenUtil.getToken(_httpServletRequest));
+
+			dropdownItem.setHref(layoutFullURL);
+
+			dropdownItem.setIcon("shortcut");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "preview"));
+			dropdownItem.setTarget("_blank");
+		};
+	}
+
+	private boolean _isLiveGroup() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLiveGroup(group)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isShowDiscardDraftAction() {
 		if (_draftLayout == null) {
 			return false;
@@ -583,6 +636,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private final Layout _layout;
 	private final LayoutPageTemplateAdminWebConfiguration
 		_layoutPageTemplateAdminWebConfiguration;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;

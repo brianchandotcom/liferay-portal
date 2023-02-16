@@ -510,7 +510,7 @@ public class Main {
 		throws Exception {
 
 		int page = 1;
-		List<Document> documentFolderDocuments = new ArrayList<>();
+		Map<String, Document> documents = new HashMap<>();
 
 		while (true) {
 			Page<Document> documentsPage =
@@ -518,19 +518,15 @@ public class Main {
 					documentFolderId, false, null, null, null,
 					Pagination.of(page, 100), null);
 
-			documentFolderDocuments.addAll(documentsPage.getItems());
+			for (Document document : documentsPage.getItems()) {
+				documents.put(document.getTitle(), document);
+			}
 
 			if (documentsPage.getLastPage() == page) {
 				break;
 			}
 
 			page++;
-		}
-
-		Map<String, Document> documents = new HashMap<>();
-
-		for (Document document : documentFolderDocuments) {
-			documents.put(document.getTitle(), document);
 		}
 
 		return documents;

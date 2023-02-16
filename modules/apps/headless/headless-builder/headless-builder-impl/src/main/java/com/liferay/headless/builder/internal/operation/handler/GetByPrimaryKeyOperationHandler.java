@@ -72,7 +72,7 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 			return Response.status(
 				Response.Status.OK
 			).entity(
-				HeadlessBuilderUtil.toDTO(
+				HeadlessBuilderUtil.getEntity(
 					infoItemFieldValuesProvider.getInfoItemFieldValues(object),
 					primaryKey, response)
 			).build();

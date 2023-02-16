@@ -14,7 +14,6 @@
 
 package com.liferay.headless.builder.internal.util;
 
-import com.liferay.headless.builder.internal.dto.HeadlessBuilderDTO;
 import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
@@ -23,6 +22,7 @@ import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +33,23 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class HeadlessBuilderUtil {
+
+	public static Map<String, Object> getEntity(
+		InfoItemFieldValues infoItemFieldValues, long primaryKey,
+		Operation.Response response) {
+
+		Map<String, Object> entity = new HashMap<>();
+
+		Map<String, InfoField> infoFields = response.getInfoFields();
+
+		for (Map.Entry<String, InfoField> entry : infoFields.entrySet()) {
+			entity.put(
+				entry.getKey(),
+				_getValue(infoItemFieldValues, entry.getValue(), primaryKey));
+		}
+
+		return entity;
+	}
 
 	public static <T> T getInfoItemService(
 			String className, Class<T> serviceClass)
@@ -49,25 +66,6 @@ public class HeadlessBuilderUtil {
 		}
 
 		return infoItemService;
-	}
-
-	public static HeadlessBuilderDTO toDTO(
-		InfoItemFieldValues infoItemFieldValues, long primaryKey,
-		Operation.Response response) {
-
-		HeadlessBuilderDTO headlessBuilderDTO = new HeadlessBuilderDTO();
-
-		Map<String, InfoField> infoFields = response.getInfoFields();
-
-		for (Map.Entry<String, InfoField> entry : infoFields.entrySet()) {
-			headlessBuilderDTO.put(
-				entry.getKey(),
-				_getValue(infoItemFieldValues, entry.getValue(), primaryKey));
-		}
-
-		headlessBuilderDTO.setName(response.getSchemaName());
-
-		return headlessBuilderDTO;
 	}
 
 	@Reference(unbind = "-")

@@ -52,7 +52,7 @@ definition {
 			Type(
 				key_text = "User Notification Timeout",
 				locator1 = "TextInput#ANY",
-				value1 = "1000");
+				value1 = 1000);
 
 			SystemSettings.saveConfiguration();
 
@@ -69,7 +69,7 @@ definition {
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
-				script = "${script}");
+				script = ${script});
 		}
 
 		task ("And When: pause for 1 second") {
@@ -85,10 +85,9 @@ definition {
 				value1 = "Timeout notification warning triggered");
 
 			WaitForElementNotPresent(
-				key_warningMessage = "${warningMessage}",
+				key_warningMessage = ${warningMessage},
 				locator1 = "Message#WARNING_SPECIFIC");
 		}
 	}
-
 
 }

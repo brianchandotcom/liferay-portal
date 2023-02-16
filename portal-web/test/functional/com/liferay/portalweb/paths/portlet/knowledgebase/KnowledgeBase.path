@@ -113,6 +113,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_VIEW_ARTICLE_TITLE_SPECIFIC</td>
+	<td>xpath=(//h2/a[contains(.,'${key_kbArticleTitle}')])[${indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK</td>
 	<td>//dd[contains(.,'${key_kbArticleTitle}')]//a[contains(.,'Child Article')]</td>
 	<td></td>

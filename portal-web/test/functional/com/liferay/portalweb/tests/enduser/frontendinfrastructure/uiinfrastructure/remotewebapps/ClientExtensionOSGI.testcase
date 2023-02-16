@@ -80,6 +80,21 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
+	@priority = 3
+	test OsgiClientExtensionWorkspaceLabelIsPresent {
+		property custom.element.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtensionOSGI#OsgiClientExtensionWorkspaceLabelIsPresent";
+
+		task ("Then Modified Date column is present") {
+			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
+		}
+
+		task ("And Then showing Label 'Workspace' is present") {
+			ClientExtensionGeneral.viewTableEntryType(entryType = "Workspace");
+		}
+	}
+
 	@description = "LPS-169552 Select view action from Remote app and assert that field information is displayed correctly and not editable"
 	@priority = 3
 	test ViewActionCanDisplayFieldsAsNotEditable {
@@ -114,21 +129,5 @@ definition {
 			ClientExtensionGeneral.assertFieldDisable(entryFieldList = "Name,Source Code URL,Type,Friendly URL Mapping,HTML Element Name,Portlet Category,Name,description,CSS URLs,_URLs,properties");
 		}
 	}
-
-	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
-	@priority = 3
-	test OsgiClientExtensionWorkspaceLabelIsPresent {
-		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtensionOSGI#OsgiClientExtensionWorkspaceLabelIsPresent";
-
-		task ("Then Modified Date column is present") {
-			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
-		}
-
-		task ("And Then showing Label 'Workspace' is present") {
-			ClientExtensionGeneral.viewTableEntryType(entryType = "Workspace");
-		}
-	}
-
 
 }

@@ -86,6 +86,17 @@ definition {
 				kbTemplateTitle = ${kbTemplateTitle},
 				menuItem = "Edit");
 		}
+		else if (isSet(editActionToolbar)) {
+			Click(
+				key_rowEntry = ${kbTemplateTitle},
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "View");
+
+			Click(
+				key_text = "pencil",
+				locator1 = "Icon#ANY");
+		}
 		else {
 			Click(
 				key_rowEntry = ${kbTemplateTitle},
@@ -99,7 +110,7 @@ definition {
 		}
 
 		if (isSet(kbTemplateContentEdit)) {
-			CKEditor.addContent(content = ${kbTemplateContentEdit});
+			CKEditor.addContent(kbArticleContentEdit = ${kbTemplateContentEdit});
 		}
 
 		PortletEntry.publish();

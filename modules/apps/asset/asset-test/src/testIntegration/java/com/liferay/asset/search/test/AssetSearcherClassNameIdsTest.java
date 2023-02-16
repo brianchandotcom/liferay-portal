@@ -23,6 +23,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -41,8 +42,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -156,11 +157,8 @@ public class AssetSearcherClassNameIdsTest {
 	}
 
 	protected long[] getClassNameIds(String... classNames) {
-		return Stream.of(
-			classNames
-		).mapToLong(
-			PortalUtil::getClassNameId
-		).toArray();
+		return TransformUtil.transformToLongArray(
+			Arrays.asList(classNames), PortalUtil::getClassNameId);
 	}
 
 	protected SearchContext getSearchContext() {

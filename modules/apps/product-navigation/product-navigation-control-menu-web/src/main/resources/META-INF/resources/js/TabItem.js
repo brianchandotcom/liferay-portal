@@ -42,7 +42,6 @@ const TabItem = ({item}) => {
 	const {plid, setWidgets, widgets} = useContext(AddPanelContext);
 
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
-	const title = `${Liferay.Language.get('add')} ${item.label}`;
 
 	const {sourceRef} = useDragSymbol({
 		data: item.data,
@@ -62,7 +61,10 @@ const TabItem = ({item}) => {
 			})}
 			ref={item.disabled ? null : sourceRef}
 		>
-			<div className="sidebar-body__add-panel__tab-item-body">
+			<div
+				className="sidebar-body__add-panel__tab-item-body"
+				title={item.label}
+			>
 				<div className="icon">
 					<ClayIcon symbol={item.icon} />
 				</div>
@@ -80,15 +82,15 @@ const TabItem = ({item}) => {
 
 			{!item.disabled && (
 				<ClayButton
+					aria-label={`${Liferay.Language.get('add-content')}`}
 					className="btn-monospaced sidebar-body__add-panel__tab-item-add"
+					data-tooltip-align="top-left"
 					displayType="unstyled"
 					onClick={() => addItem({item, plid, setWidgets, widgets})}
 					size="sm"
-					title={title}
+					title={`${Liferay.Language.get('add-content')}`}
 				>
 					<ClayIcon symbol="plus" />
-
-					<span className="sr-only">{title}</span>
 				</ClayButton>
 			)}
 		</li>

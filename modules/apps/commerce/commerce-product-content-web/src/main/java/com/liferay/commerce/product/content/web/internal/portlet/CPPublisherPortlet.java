@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
-	service = {CPPublisherPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class CPPublisherPortlet extends MVCPortlet {
 

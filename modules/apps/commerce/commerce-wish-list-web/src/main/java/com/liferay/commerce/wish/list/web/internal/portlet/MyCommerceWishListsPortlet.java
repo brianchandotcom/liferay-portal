@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.supported-public-render-parameter=commerceWishListId",
 		"javax.portlet.version=3.0"
 	},
-	service = {MyCommerceWishListsPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class MyCommerceWishListsPortlet extends MVCPortlet {
 

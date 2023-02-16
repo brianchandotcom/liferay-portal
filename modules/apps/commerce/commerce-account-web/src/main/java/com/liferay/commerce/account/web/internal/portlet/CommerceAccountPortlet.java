@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + CommerceAccountPortletKeys.COMMERCE_ACCOUNT,
 		"javax.portlet.version=3.0"
 	},
-	service = {CommerceAccountPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class CommerceAccountPortlet extends MVCPortlet {
 }

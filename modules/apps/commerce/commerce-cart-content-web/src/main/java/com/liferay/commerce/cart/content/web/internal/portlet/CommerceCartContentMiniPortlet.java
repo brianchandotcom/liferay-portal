@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.version=3.0"
 	},
-	service = {CommerceCartContentMiniPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class CommerceCartContentMiniPortlet extends MVCPortlet {
 

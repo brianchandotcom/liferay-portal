@@ -42,6 +42,7 @@ create table ObjectDefinition (
 	enableCategorization BOOLEAN,
 	enableComments BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,
+	modifiable BOOLEAN,
 	name VARCHAR(75) null,
 	panelAppOrder VARCHAR(75) null,
 	panelCategoryKey VARCHAR(75) null,

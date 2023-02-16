@@ -15,13 +15,13 @@
 package com.liferay.portal.upload;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,7 +83,7 @@ public class UploadServletRequestImpl
 				httpServletRequest);
 
 			long uploadServletRequestImplMaxSize =
-				UploadServletRequestConfigurationHelperUtil.getMaxSize();
+				UploadServletRequestConfigurationProviderUtil.getMaxSize();
 
 			if (maxRequestSize <= 0) {
 				maxRequestSize = uploadServletRequestImplMaxSize;
@@ -95,7 +95,7 @@ public class UploadServletRequestImpl
 
 			location = GetterUtil.getString(
 				location,
-				UploadServletRequestConfigurationHelperUtil.getTempDir());
+				UploadServletRequestConfigurationProviderUtil.getTempDir());
 
 			List<FileItem> fileItemsList = _servletFileUpload.parseRequest(
 				liferayServletRequest, maxRequestSize, maxFileSize, location,

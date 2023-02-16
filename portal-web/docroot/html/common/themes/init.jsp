@@ -16,13 +16,13 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.cookies.constants.CookiesConstants" %><%@
+<%@ page import="com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.kernel.cookies.constants.CookiesConstants" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.portlet.PortletDependency" %><%@
 page import="com.liferay.portal.kernel.portlet.render.PortletRenderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserMetadata" %><%@
-page import="com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil" %><%@
 page import="com.liferay.portal.util.LayoutTypeAccessPolicyTracker" %><%@
 page import="com.liferay.portlet.PortletTreeSet" %><%@
 page import="com.liferay.portlet.internal.RenderStateUtil" %><%@

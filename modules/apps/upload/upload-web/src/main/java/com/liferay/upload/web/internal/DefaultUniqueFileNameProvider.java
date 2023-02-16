@@ -43,7 +43,7 @@ public class DefaultUniqueFileNameProvider implements UniqueFileNameProvider {
 
 		while (predicate.test(uniqueFileName)) {
 			if (tries >=
-				_uploadServletRequestConfigurationProvider.getMaxTries()) {
+					_uploadServletRequestConfigurationProvider.getMaxTries()) {
 
 				throw new PortalException(
 					"Unable to get a unique file name for " + baseFileName);

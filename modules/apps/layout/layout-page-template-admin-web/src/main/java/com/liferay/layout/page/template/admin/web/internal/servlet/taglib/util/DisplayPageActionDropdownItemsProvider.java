@@ -31,6 +31,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -351,7 +351,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			).extensions(
 				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions()
 			).maxFileSize(
-				UploadServletRequestConfigurationHelperUtil.getMaxSize()
+				UploadServletRequestConfigurationProviderUtil.getMaxSize()
 			).portletId(
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
 			).repositoryName(

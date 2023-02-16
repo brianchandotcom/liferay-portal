@@ -184,6 +184,7 @@ public abstract class BaseRoleResourceTestCase {
 		Role role = randomRole();
 
 		role.setDescription(regex);
+		role.setExternalReferenceCode(regex);
 		role.setName(regex);
 		role.setRoleType(regex);
 
@@ -194,6 +195,7 @@ public abstract class BaseRoleResourceTestCase {
 		role = RoleSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, role.getDescription());
+		Assert.assertEquals(regex, role.getExternalReferenceCode());
 		Assert.assertEquals(regex, role.getName());
 		Assert.assertEquals(regex, role.getRoleType());
 	}
@@ -662,6 +664,16 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (role.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (role.getName() == null) {
 					valid = false;
@@ -861,6 +873,19 @@ public abstract class BaseRoleResourceTestCase {
 				if (!equals(
 						(Map)role1.getDescription_i18n(),
 						(Map)role2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						role1.getExternalReferenceCode(),
+						role2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1095,6 +1120,14 @@ public abstract class BaseRoleResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(role.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1168,6 +1201,8 @@ public abstract class BaseRoleResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

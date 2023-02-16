@@ -827,6 +827,91 @@ definition {
 		}
 	}
 
+	@description = "LPS-175185 - Verify if actions works with oldValue function when trigger is On After Add (Add an Object Entry) using Picklist field"
+	@priority = 5
+	test CanCreateActionUsingOldValueWithOnAfterAddTrigger {
+		task ("Given: A picklist with two items is created (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "open",
+				itemName = "Open",
+				picklistName = "Status");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "closed",
+				itemName = "Closed",
+				picklistName = "Status");
+		}
+
+		task ("And given: An object with two fields is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175185",
+				objectName = "CustomObject175185",
+				pluralLabelName = "Custom Objects 175185");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Text Field",
+				fieldName = "customTextField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject175185");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Custom Picklist Field",
+				fieldName = "customPicklistField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175185",
+				picklistName = "Status");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175185");
+		}
+
+		task ("When: An action is created and The oldValue function is used on the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175185");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				fieldName = "Custom Text Field",
+				inputExpression = '''isEmpty(oldValue("customPicklistField"))''',
+				inputMethod = "true",
+				inputValue = "Object entry added",
+				objectLabel = "Custom Object 175185",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("Then: The object entry is added when the condition is met") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175185");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175185");
+
+			ObjectPortlet.viewEntry(entry = "Object entry added");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175185");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Custom Action",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-156312 - Assert an Action can be created with Expression Builder."
 	@priority = 4
 	test CanCreateActionWithExpressionBuilder {

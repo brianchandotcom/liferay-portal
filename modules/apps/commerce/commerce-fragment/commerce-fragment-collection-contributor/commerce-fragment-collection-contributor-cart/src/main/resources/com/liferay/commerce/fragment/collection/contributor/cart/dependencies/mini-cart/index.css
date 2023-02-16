@@ -1,0 +1,18 @@
+.mini-cart-fragment {
+	position: relative;
+}
+
+.mini-cart-fragment	.mini-cart:not(.is-open) .mini-cart-overlay,
+.mini-cart-fragment	.mini-cart:not(.is-open) .mini-cart-wrapper {
+	display: none;
+}
+
+.mini-cart-fragment	.mini-cart.is-open .mini-cart-overlay,
+.mini-cart-fragment	.mini-cart.is-open .mini-cart-wrapper {
+	position: fixed;
+}
+
+body.has-edit-mode-menu .mini-cart-fragment	.mini-cart.is-open .mini-cart-overlay,
+body.has-edit-mode-menu .mini-cart-fragment	.mini-cart.is-open .mini-cart-wrapper {
+	display: none;
+}

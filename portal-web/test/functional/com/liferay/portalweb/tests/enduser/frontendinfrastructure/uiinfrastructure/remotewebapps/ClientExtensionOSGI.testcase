@@ -115,4 +115,20 @@ definition {
 		}
 	}
 
+	@description = "Verify that the Workspace label is present when a client extension is created through osgi"
+	@priority = 3
+	test OsgiClientExtensionWorkspaceLabelIsPresent {
+		property custom.element.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtensionOSGI#OsgiClientExtensionWorkspaceLabelIsPresent";
+
+		task ("Then Modified Date column is present") {
+			FDSCustomView.assertColumnPresent(key_field = "Modified Date");
+		}
+
+		task ("And Then showing Label 'Workspace' is present") {
+			ClientExtensionGeneral.viewTableEntryType(entryType = "Workspace");
+		}
+	}
+
+
 }

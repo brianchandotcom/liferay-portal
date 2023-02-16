@@ -571,28 +571,24 @@ definition {
 				pageName = "Page1 Name",
 				siteTemplateName = "Template Site");
 
-			Navigator.openURL();
-
 			SiteTemplates.addSitePageViaSiteTemplateCP(
 				pageName = "Page2 Name",
 				siteTemplateName = "Template Site");
 		}
 
 		task ("And: Copies the URL of the second site template page as external URL") {
-			SiteTemplatesNavigator.gotoSiteTemplatesPage(
-				pageName = "Page2 Name",
-				siteName = ${siteName},
-				siteTemplateName = "Template Site");
+			ProductMenu.gotoHomePage();
+
+			Navigator._gotoPage(pageName = "Page2 Name");
 
 			var page2URL = Navigator.getCurrentURL();
 
 			var entryExternalURL = StringUtil.replace(${page2URL}, "http://", "");
+			var webContentAdminURL = StringUtil.replace(${page2URL}, "page2-name", "");
 		}
 
 		task ("And: Create WC on the Site template and use the copied URL as external URL") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
+			Navigator.openSpecificURL(url = "${webContentAdminURL}~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -604,8 +600,6 @@ definition {
 				fieldLabel = "Content");
 
 			PortletEntry.publish();
-
-			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 		}
 
 		task ("When: User add a new Site based on the Site Template") {

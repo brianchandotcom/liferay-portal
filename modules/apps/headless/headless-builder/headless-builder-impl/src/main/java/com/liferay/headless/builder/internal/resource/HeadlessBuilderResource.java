@@ -139,24 +139,22 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 	private OperationContext _getOperationContext(
 		String mediaType, Operation operation) {
 
-		OperationContext.Builder builder = new OperationContext.Builder();
+		InfoFieldValue<?> primaryKeyInfoFieldValue =
+			_getPrimaryKeyInfoFieldValue(operation);
 
-		for (InfoFieldValue<?> infoFieldValue :
-				_getParameterInfoFieldValues(
-					operation, contextHttpServletRequest)) {
+		return new OperationContext() {
 
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			if (infoField.getInfoFieldType() instanceof
-					PrimaryKeyInfoFieldType) {
-
-				builder.withPrimaryKeyInfoFieldValue(infoFieldValue);
+			@Override
+			public String getMediaType() {
+				return mediaType;
 			}
-		}
 
-		return builder.withMediaType(
-			mediaType
-		).build();
+			@Override
+			public InfoFieldValue<?> getPrimaryKeyInfoFieldValue() {
+				return primaryKeyInfoFieldValue;
+			}
+
+		};
 	}
 
 	private List<InfoFieldValue<?>> _getParameterInfoFieldValues(
@@ -192,6 +190,25 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 		}
 
 		return infoFieldValues;
+	}
+
+	private InfoFieldValue<?> _getPrimaryKeyInfoFieldValue(
+		Operation operation) {
+
+		for (InfoFieldValue<?> infoFieldValue :
+				_getParameterInfoFieldValues(
+					operation, contextHttpServletRequest)) {
+
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (infoField.getInfoFieldType() instanceof
+					PrimaryKeyInfoFieldType) {
+
+				return infoFieldValue;
+			}
+		}
+
+		return null;
 	}
 
 	private ServiceTrackerMap<String, OperationHandler>

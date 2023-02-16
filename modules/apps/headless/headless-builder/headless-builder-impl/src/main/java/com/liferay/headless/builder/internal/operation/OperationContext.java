@@ -25,49 +25,4 @@ public interface OperationContext {
 
 	public InfoFieldValue<?> getPrimaryKeyInfoFieldValue();
 
-	public static class Builder {
-
-		public OperationContext build() {
-			return new OperationContextImpl(this);
-		}
-
-		public Builder withMediaType(String mediaType) {
-			_mediaType = mediaType;
-
-			return this;
-		}
-
-		public Builder withPrimaryKeyInfoFieldValue(
-			InfoFieldValue<?> infoFieldValue) {
-
-			_primaryKeyInfoFieldValue = infoFieldValue;
-
-			return this;
-		}
-
-		private String _mediaType;
-		private InfoFieldValue<?> _primaryKeyInfoFieldValue;
-
-	}
-
-	public class OperationContextImpl implements OperationContext {
-
-		public OperationContextImpl(Builder builder) {
-			_builder = builder;
-		}
-
-		@Override
-		public String getMediaType() {
-			return _builder._mediaType;
-		}
-
-		@Override
-		public InfoFieldValue<?> getPrimaryKeyInfoFieldValue() {
-			return _builder._primaryKeyInfoFieldValue;
-		}
-
-		private final Builder _builder;
-
-	}
-
 }

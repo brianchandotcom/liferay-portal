@@ -1689,6 +1689,18 @@ definition {
 			value1 = ${kbArticleContent});
 	}
 
+	macro viewSearchResultNotPresent {
+		AssertElementNotPresent(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE");
+	}
+
+	macro viewSearchResults {
+		AssertVisible(
+			key_kbArticleTitle = ${kbArticleTitle},
+			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE");
+	}
+
 	macro viewSourceURLCP {
 		if (isSet(kbChildArticleTitle)) {
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");

@@ -387,89 +387,84 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		if (commerceAccount != null) {
-			AccountEntry accountEntry =
-				_accountEntryLocalService.fetchAccountEntry(
-					commerceAccount.getCommerceAccountId());
+		if (commerceAccount == null) {
+			return true;
+		}
 
-			if (accountEntry != null) {
-				if (Validator.isNull(
-						commerceOrder.getCommercePaymentMethodKey())) {
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			commerceAccount.getCommerceAccountId());
 
-					CommerceChannelAccountEntryRel
-						commerceChannelAccountEntryRel =
-							_commerceChannelAccountEntryRelService.
-								fetchCommerceChannelAccountEntryRel(
-									accountEntry.getAccountEntryId(),
-									commerceContext.getCommerceChannelId(),
-									CommerceChannelAccountEntryRelConstants.
-										TYPE_PAYMENT);
+		if (accountEntry != null) {
+			if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
+				CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+					_commerceChannelAccountEntryRelService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntry.getAccountEntryId(),
+							commerceContext.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_PAYMENT);
 
-					CommercePaymentMethod commercePaymentMethod =
-						commercePaymentMethods.get(0);
+				CommercePaymentMethod commercePaymentMethod =
+					commercePaymentMethods.get(0);
 
-					if (commerceChannelAccountEntryRel != null) {
-						CommercePaymentMethodGroupRel
-							commercePaymentMethodGroupRel =
-								_commercePaymentMethodGroupRelLocalService.
-									fetchCommercePaymentMethodGroupRel(
-										commerceChannelAccountEntryRel.
-											getClassPK());
+				if (commerceChannelAccountEntryRel != null) {
+					CommercePaymentMethodGroupRel
+						commercePaymentMethodGroupRel =
+							_commercePaymentMethodGroupRelLocalService.
+								fetchCommercePaymentMethodGroupRel(
+									commerceChannelAccountEntryRel.
+										getClassPK());
 
-						if ((commercePaymentMethodGroupRel != null) &&
-							commercePaymentMethodGroupRel.isActive()) {
+					if ((commercePaymentMethodGroupRel != null) &&
+						commercePaymentMethodGroupRel.isActive()) {
 
-							for (CommercePaymentMethod
-									curCommercePaymentMethod :
-										commercePaymentMethods) {
+						for (CommercePaymentMethod curCommercePaymentMethod :
+								commercePaymentMethods) {
 
-								String key = curCommercePaymentMethod.getKey();
+							String key = curCommercePaymentMethod.getKey();
 
-								if (key.equals(
-										commercePaymentMethodGroupRel.
-											getEngineKey())) {
+							if (key.equals(
+									commercePaymentMethodGroupRel.
+										getEngineKey())) {
 
-									commercePaymentMethod =
-										curCommercePaymentMethod;
+								commercePaymentMethod =
+									curCommercePaymentMethod;
 
-									break;
-								}
+								break;
 							}
 						}
 					}
-
-					_updateCommerceOrder(
-						commerceOrder, commercePaymentMethod.getKey(),
-						httpServletRequest);
 				}
 
-				if (!_hasCommerceOrderPermission(
-						CommerceOrderActionKeys.
-							MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
-						commerceOrder, httpServletRequest)) {
-
-					return false;
-				}
+				_updateCommerceOrder(
+					commerceOrder, commercePaymentMethod.getKey(),
+					httpServletRequest);
 			}
-			else {
-				if (Validator.isNull(
-						commerceOrder.getCommercePaymentMethodKey())) {
 
-					CommercePaymentMethod commercePaymentMethod =
-						commercePaymentMethods.get(0);
+			if (!_hasCommerceOrderPermission(
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					commerceOrder, httpServletRequest)) {
 
-					_updateCommerceOrder(
-						commerceOrder, commercePaymentMethod.getKey(),
-						httpServletRequest);
-				}
+				return false;
+			}
+		}
+		else {
+			if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
+				CommercePaymentMethod commercePaymentMethod =
+					commercePaymentMethods.get(0);
 
-				if (!_hasCommerceOrderPermission(
-						CommerceOrderActionKeys.
-							MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
-						commerceOrder, httpServletRequest)) {
+				_updateCommerceOrder(
+					commerceOrder, commercePaymentMethod.getKey(),
+					httpServletRequest);
+			}
 
-					return false;
-				}
+			if (!_hasCommerceOrderPermission(
+					CommerceOrderActionKeys.
+						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+					commerceOrder, httpServletRequest)) {
+
+				return false;
 			}
 		}
 

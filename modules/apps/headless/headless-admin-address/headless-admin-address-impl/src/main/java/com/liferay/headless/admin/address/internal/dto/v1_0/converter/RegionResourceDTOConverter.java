@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.Region",
-	service = {DTOConverter.class, RegionResourceDTOConverter.class}
+	service = DTOConverter.class
 )
 public class RegionResourceDTOConverter
 	implements DTOConverter<com.liferay.portal.kernel.model.Region, Region> {

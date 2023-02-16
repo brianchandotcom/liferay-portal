@@ -16,6 +16,7 @@ package com.liferay.headless.admin.address.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.address.dto.v1_0.Country;
 import com.liferay.headless.admin.address.dto.v1_0.Region;
+import com.liferay.headless.admin.address.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -95,8 +96,9 @@ public class CountryResourceDTOConverter
 	@Reference
 	private CountryService _countryService;
 
-	@Reference
-	private RegionResourceDTOConverter _regionResourceDTOConverter;
+	@Reference(target = DTOConverterConstants.REGION_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<com.liferay.portal.kernel.model.Region, Region>
+		_regionResourceDTOConverter;
 
 	@Reference
 	private RegionService _regionService;

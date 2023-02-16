@@ -136,13 +136,14 @@ const DropdownMenu = ({
 				value={query}
 			/>
 
-			<ClayDropDown.ItemList items={headlessResources}>
+			<ClayDropDown.ItemList items={headlessResources} role="listbox">
 				{(item: HeadlessResource) => (
 					<ClayDropDown.Item
 						key={item.entityClassName}
 						onClick={() => {
 							setSelectedHeadlessResource(item);
 						}}
+						roleItem="option"
 					>
 						<HeadlessResourceItem
 							headlessResource={item}

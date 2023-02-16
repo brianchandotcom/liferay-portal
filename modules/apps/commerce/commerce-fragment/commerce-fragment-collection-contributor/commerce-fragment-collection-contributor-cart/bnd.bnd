@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Fragment Collection Contributor Cart
+Bundle-SymbolicName: com.liferay.commerce.fragment.collection.contributor.cart
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-fragment-collection-contributor-cart
+-dsannotations-options: inherit

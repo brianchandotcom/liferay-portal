@@ -14,7 +14,8 @@
 
 package com.liferay.object.rest.internal.jaxrs.param.converter.provider;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -23,10 +24,10 @@ import com.liferay.portal.vulcan.util.GroupUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
@@ -47,22 +48,25 @@ public class ScopeKeyParamConverterProvider
 
 	@Override
 	public String fromString(String parameter) {
-		MultivaluedMap<String, String> multivaluedMap =
-			_uriInfo.getPathParameters();
-
-		String scopeKey = getGroupId(
-			_company.getCompanyId(), multivaluedMap.getFirst("scopeKey"));
-
-		if (scopeKey != null) {
-			return scopeKey;
+		if (parameter == null) {
+			return null;
 		}
 
-		StringBundler sb = new StringBundler(2);
+		if (StringUtil.equals(
+				_objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
 
-		sb.append("Unable to get a valid scopeKey with name ");
-		sb.append(parameter);
+			String groupId = _getGroupId(_company.getCompanyId(), parameter);
 
-		throw new NotFoundException(sb.toString());
+			if (groupId != null) {
+				return groupId;
+			}
+
+			throw new NotFoundException(
+				"Unable to get a valid site with ID " + parameter);
+		}
+
+		throw new InternalServerErrorException("Unexpected scopeKey parameter");
 	}
 
 	@Override
@@ -76,11 +80,12 @@ public class ScopeKeyParamConverterProvider
 		return null;
 	}
 
-	public String getGroupId(long companyId, String scopeKey) {
-		if (scopeKey == null) {
-			return null;
-		}
+	@Override
+	public String toString(String parameter) {
+		return String.valueOf(parameter);
+	}
 
+	private String _getGroupId(long companyId, String scopeKey) {
 		Long groupId = GroupUtil.getGroupId(
 			companyId, scopeKey, _groupLocalService);
 
@@ -89,11 +94,6 @@ public class ScopeKeyParamConverterProvider
 		}
 
 		return String.valueOf(groupId);
-	}
-
-	@Override
-	public String toString(String parameter) {
-		return String.valueOf(parameter);
 	}
 
 	private boolean _hasScopeKeyAnnotation(Annotation[] annotations) {
@@ -114,6 +114,9 @@ public class ScopeKeyParamConverterProvider
 	private Company _company;
 
 	private final GroupLocalService _groupLocalService;
+
+	@Context
+	private ObjectDefinition _objectDefinition;
 
 	@Context
 	private UriInfo _uriInfo;

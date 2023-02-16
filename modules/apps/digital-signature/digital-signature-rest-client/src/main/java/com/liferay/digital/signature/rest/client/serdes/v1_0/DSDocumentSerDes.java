@@ -53,6 +53,20 @@ public class DSDocumentSerDes {
 
 		sb.append("{");
 
+		if (dsDocument.getAssignTabsToDSRecipientId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignTabsToDSRecipientId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsDocument.getAssignTabsToDSRecipientId()));
+
+			sb.append("\"");
+		}
+
 		if (dsDocument.getData() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,6 +137,16 @@ public class DSDocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (dsDocument.getTransformPdfFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"transformPdfFields\": ");
+
+			sb.append(dsDocument.getTransformPdfFields());
+		}
+
 		if (dsDocument.getUri() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +178,15 @@ public class DSDocumentSerDes {
 		}
 
 		Map<String, String> map = new TreeMap<>();
+
+		if (dsDocument.getAssignTabsToDSRecipientId() == null) {
+			map.put("assignTabsToDSRecipientId", null);
+		}
+		else {
+			map.put(
+				"assignTabsToDSRecipientId",
+				String.valueOf(dsDocument.getAssignTabsToDSRecipientId()));
+		}
 
 		if (dsDocument.getData() == null) {
 			map.put("data", null);
@@ -193,6 +226,15 @@ public class DSDocumentSerDes {
 			map.put("name", String.valueOf(dsDocument.getName()));
 		}
 
+		if (dsDocument.getTransformPdfFields() == null) {
+			map.put("transformPdfFields", null);
+		}
+		else {
+			map.put(
+				"transformPdfFields",
+				String.valueOf(dsDocument.getTransformPdfFields()));
+		}
+
 		if (dsDocument.getUri() == null) {
 			map.put("uri", null);
 		}
@@ -221,7 +263,15 @@ public class DSDocumentSerDes {
 			DSDocument dsDocument, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "data")) {
+			if (Objects.equals(
+					jsonParserFieldName, "assignTabsToDSRecipientId")) {
+
+				if (jsonParserFieldValue != null) {
+					dsDocument.setAssignTabsToDSRecipientId(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "data")) {
 				if (jsonParserFieldValue != null) {
 					dsDocument.setData((String)jsonParserFieldValue);
 				}
@@ -248,6 +298,14 @@ public class DSDocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dsDocument.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "transformPdfFields")) {
+
+				if (jsonParserFieldValue != null) {
+					dsDocument.setTransformPdfFields(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uri")) {

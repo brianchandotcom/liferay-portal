@@ -57,6 +57,36 @@ public class DSDocument implements Serializable {
 	}
 
 	@Schema
+	public String getAssignTabsToDSRecipientId() {
+		return assignTabsToDSRecipientId;
+	}
+
+	public void setAssignTabsToDSRecipientId(String assignTabsToDSRecipientId) {
+		this.assignTabsToDSRecipientId = assignTabsToDSRecipientId;
+	}
+
+	@JsonIgnore
+	public void setAssignTabsToDSRecipientId(
+		UnsafeSupplier<String, Exception>
+			assignTabsToDSRecipientIdUnsafeSupplier) {
+
+		try {
+			assignTabsToDSRecipientId =
+				assignTabsToDSRecipientIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String assignTabsToDSRecipientId;
+
+	@Schema
 	public String getData() {
 		return data;
 	}
@@ -195,6 +225,34 @@ public class DSDocument implements Serializable {
 	protected String name;
 
 	@Schema
+	public Boolean getTransformPdfFields() {
+		return transformPdfFields;
+	}
+
+	public void setTransformPdfFields(Boolean transformPdfFields) {
+		this.transformPdfFields = transformPdfFields;
+	}
+
+	@JsonIgnore
+	public void setTransformPdfFields(
+		UnsafeSupplier<Boolean, Exception> transformPdfFieldsUnsafeSupplier) {
+
+		try {
+			transformPdfFields = transformPdfFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean transformPdfFields;
+
+	@Schema
 	public String getUri() {
 		return uri;
 	}
@@ -246,6 +304,20 @@ public class DSDocument implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (assignTabsToDSRecipientId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignTabsToDSRecipientId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assignTabsToDSRecipientId));
+
+			sb.append("\"");
+		}
 
 		if (data != null) {
 			if (sb.length() > 1) {
@@ -315,6 +387,16 @@ public class DSDocument implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (transformPdfFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"transformPdfFields\": ");
+
+			sb.append(transformPdfFields);
 		}
 
 		if (uri != null) {

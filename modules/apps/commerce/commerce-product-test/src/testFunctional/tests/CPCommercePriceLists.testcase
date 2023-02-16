@@ -1662,7 +1662,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9767. Verify that a Tier Price entry cannot be saved with 0 quantity and an alert is shown"
-	@priority = "3"
+	@priority = 3
 	test CannotCreateTierPriceWithZeroQuantity {
 		property portal.acceptance = "false";
 
@@ -1692,7 +1692,7 @@ definition {
 			Type(
 				key_text = "Quantity",
 				locator1 = "TextInput#ANY",
-				value1 = "0");
+				value1 = 0);
 
 			Click(locator1 = "Button#SUBMIT");
 		}

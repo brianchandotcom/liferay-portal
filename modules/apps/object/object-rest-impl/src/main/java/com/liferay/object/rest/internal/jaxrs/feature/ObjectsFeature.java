@@ -15,11 +15,14 @@
 package com.liferay.object.rest.internal.jaxrs.feature;
 
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
+import com.liferay.object.rest.internal.jaxrs.param.converter.provider.ScopeKeyParamConverterProvider;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -38,7 +41,13 @@ public class ObjectsFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(ObjectDefinitionIdContainerRequestFilter.class);
 
+		featureContext.register(
+			new ScopeKeyParamConverterProvider(_groupLocalService));
+
 		return true;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

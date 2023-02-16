@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider;
+package com.liferay.object.rest.internal.jaxrs.param.converter.provider;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.lang.annotation.Annotation;
@@ -31,7 +32,6 @@ import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 
 /**
@@ -99,7 +99,7 @@ public class ScopeKeyParamConverterProvider
 	private boolean _hasScopeKeyAnnotation(Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
 			if ((annotation.annotationType() == PathParam.class) &&
-				StringUtils.equalsAny(
+				StringUtil.equals(
 					AnnotationUtils.getAnnotationValue(annotation),
 					"scopeKey")) {
 

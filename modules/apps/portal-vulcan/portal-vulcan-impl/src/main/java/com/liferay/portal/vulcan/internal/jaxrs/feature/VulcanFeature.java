@@ -68,7 +68,6 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyWrit
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
-import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.ScopeKeyParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.SiteParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.EntityExtensionWriterInterceptor;
@@ -175,8 +174,6 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new SiteParamConverterProvider(
 				_depotEntryLocalService, _groupLocalService));
-		featureContext.register(
-			new ScopeKeyParamConverterProvider(_groupLocalService));
 		featureContext.register(
 			new SortContextProvider(_language, _portal, _sortParserProvider));
 		featureContext.register(new UserContextProvider(_portal));

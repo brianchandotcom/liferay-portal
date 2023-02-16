@@ -107,17 +107,7 @@ public class DSEnvelope {
 		).put(
 			"documents",
 			JSONUtil.toJSONArray(
-				getDSDocuments(),
-				dsDocument -> JSONUtil.put(
-					"documentBase64", dsDocument.getData()
-				).put(
-					"documentId", dsDocument.getDSDocumentId()
-				).put(
-					"fileExtension", dsDocument.getFileExtension()
-				).put(
-					"name", dsDocument.getName()
-				),
-				_log)
+				getDSDocuments(), dsDocument -> dsDocument.toJSONObject(), _log)
 		).put(
 			"emailBlurb", getEmailBlurb()
 		).put(

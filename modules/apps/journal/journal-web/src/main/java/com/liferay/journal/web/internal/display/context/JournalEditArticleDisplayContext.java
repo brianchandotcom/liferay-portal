@@ -44,7 +44,6 @@ import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConf
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.util.RecentGroupManagerUtil;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -63,9 +62,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -103,7 +100,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -154,32 +150,25 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"previewURL",
 			() -> {
-				LiferayPortletURL getPagePreviewURL =
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						ContentPageEditorPortletKeys.
-							CONTENT_PAGE_EDITOR_PORTLET,
-						_themeDisplay.getLayout(),
-						PortletRequest.RESOURCE_PHASE);
+				String getPagePreviewURL =
+					_themeDisplay.getPathMain() + "/portal/get_page_preview";
 
-				getPagePreviewURL.setResourceID(
-					"/layout_content_page_editor/get_page_preview");
-
-				getPagePreviewURL.setParameter(
-					"className", JournalArticle.class.getName());
+				getPagePreviewURL = HttpComponentsUtil.addParameter(
+					getPagePreviewURL, "className",
+					JournalArticle.class.getName());
 
 				if (_article != null) {
-					getPagePreviewURL.setParameter(
-						"classPK",
+					getPagePreviewURL = HttpComponentsUtil.addParameter(
+						getPagePreviewURL, "classPK",
 						String.valueOf(_article.getResourcePrimKey()));
 
-					getPagePreviewURL.setParameter(
-						"version", String.valueOf(_article.getVersion()));
+					getPagePreviewURL = HttpComponentsUtil.addParameter(
+						getPagePreviewURL, "version",
+						String.valueOf(_article.getVersion()));
 				}
 
 				return HttpComponentsUtil.addParameter(
-					getPagePreviewURL.toString(), "p_l_mode",
-					Constants.PREVIEW);
+					getPagePreviewURL, "p_l_mode", Constants.PREVIEW);
 			}
 		).put(
 			"saveAsDraftURL",

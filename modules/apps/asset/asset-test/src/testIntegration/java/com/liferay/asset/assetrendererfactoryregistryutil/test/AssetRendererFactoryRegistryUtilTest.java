@@ -18,13 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -47,19 +47,14 @@ public class AssetRendererFactoryRegistryUtilTest {
 	public void testGetAssetRendererFactories() {
 		String className = TestAssetRendererFactory.class.getName();
 
-		List<AssetRendererFactory<?>> assetRendererFactories =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
-
-		Stream<AssetRendererFactory<?>> assetRendererFactoriesStream =
-			assetRendererFactories.stream();
+		List<String> targetClassNames = ListUtil.filter(
+			TransformUtil.transform(
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1),
+				AssetRendererFactory::getClassName),
+			className::equals);
 
 		Assert.assertEquals(
-			1,
-			assetRendererFactoriesStream.map(
-				AssetRendererFactory::getClassName
-			).filter(
-				className::equals
-			).count());
+			targetClassNames.toString(), 1, targetClassNames.size());
 	}
 
 	@Test

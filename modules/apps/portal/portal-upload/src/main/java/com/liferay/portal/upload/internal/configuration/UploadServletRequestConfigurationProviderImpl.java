@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upload.internal.configuration.settings;
+package com.liferay.portal.upload.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.UploadServletRequestConfigurationProvider;

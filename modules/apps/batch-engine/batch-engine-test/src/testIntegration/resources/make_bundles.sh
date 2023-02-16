@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPENDENCIES=$(pwd)/com/liferay/batch/engine/internal/test/dependencies/
+DEPENDENCIES=$(pwd)/com/liferay/batch/engine/internal/test/dependencies
 
 mkdir -p "${DEPENDENCIES}"
 

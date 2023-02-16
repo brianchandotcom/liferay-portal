@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.UserNotificationEvent",
-	service = {DTOConverter.class, UserNotificationDTOConverter.class}
+	service = DTOConverter.class
 )
 public class UserNotificationDTOConverter
 	implements DTOConverter<UserNotificationEvent, UserNotification> {

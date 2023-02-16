@@ -15,7 +15,6 @@
 package com.liferay.headless.user.notification.internal.resource.v1_0;
 
 import com.liferay.headless.user.notification.dto.v1_0.UserNotification;
-import com.liferay.headless.user.notification.internal.dto.v1_0.UserNotificationDTOConverter;
 import com.liferay.headless.user.notification.internal.odata.entity.v1_0.UserNotificationEntityModel;
 import com.liferay.headless.user.notification.resource.v1_0.UserNotificationResource;
 import com.liferay.portal.kernel.model.User;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -181,8 +181,11 @@ public class UserNotificationResourceImpl
 	)
 	private ModelResourcePermission<User> _userModelResourcePermission;
 
-	@Reference
-	private UserNotificationDTOConverter _userNotificationDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.user.notification.internal.dto.v1_0.UserNotificationDTOConverter)"
+	)
+	private DTOConverter<UserNotificationEvent, UserNotification>
+		_userNotificationDTOConverter;
 
 	@Reference
 	private UserNotificationEventService _userNotificationEventService;

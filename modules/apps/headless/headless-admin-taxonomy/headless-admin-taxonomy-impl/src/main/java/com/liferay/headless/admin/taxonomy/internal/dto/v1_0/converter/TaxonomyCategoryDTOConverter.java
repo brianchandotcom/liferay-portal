@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"dto.class.name=com.liferay.asset.kernel.model.AssetCategory",
 		"version=v1.0"
 	},
-	service = {DTOConverter.class, TaxonomyCategoryDTOConverter.class}
+	service = DTOConverter.class
 )
 public class TaxonomyCategoryDTOConverter
 	implements DTOConverter<AssetCategory, TaxonomyCategory> {

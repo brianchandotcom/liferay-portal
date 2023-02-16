@@ -40,9 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -71,21 +68,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			long dataDefinitionId = ParamUtil.getLong(
 				actionRequest, "dataDefinitionId");
 
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
-
-			Map<Long, String> journalArticleContents = new HashMap<>();
-
-			for (JournalArticle journalArticle :
-					_journalArticleLocalService.getArticlesByStructureId(
-						ddmStructure.getGroupId(),
-						ddmStructure.getStructureKey(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-				journalArticleContents.put(
-					journalArticle.getId(), journalArticle.getContent());
-			}
-
 			DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 				_dataDefinitionResourceFactory.create();
 
@@ -106,18 +88,21 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			dataDefinitionResource.putDataDefinition(
 				dataDefinitionId, dataDefinition);
 
-			ddmStructure = _ddmStructureLocalService.getDDMStructure(
-				dataDefinitionId);
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
 
-			for (Map.Entry<Long, String> entry :
-					journalArticleContents.entrySet()) {
+			for (JournalArticle journalArticle :
+					_journalArticleLocalService.getArticlesByStructureId(
+						ddmStructure.getGroupId(),
+						ddmStructure.getStructureKey(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null)) {
 
 				_ddmFieldLocalService.updateDDMFormValues(
-					dataDefinitionId, entry.getKey(),
+					dataDefinitionId, journalArticle.getId(),
 					_fieldsToDDMFormValuesConverter.convert(
 						ddmStructure,
 						_journalConverter.getDDMFields(
-							ddmStructure, entry.getValue())));
+							ddmStructure, journalArticle.getContent())));
 			}
 
 			SessionMessages.add(

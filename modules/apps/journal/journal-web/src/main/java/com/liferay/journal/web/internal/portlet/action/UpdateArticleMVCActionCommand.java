@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,6 +71,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -418,12 +420,15 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		String friendlyURLChangedMessage = _getFriendlyURLChangedMessage(
-			actionRequest, friendlyURLMap, article.getFriendlyURLMap());
+		Map<String, String> friendlyURLWarningMessages =
+			_getFriendlyURLWarningMessagesMap(
+				actionRequest, friendlyURLMap, article.getFriendlyURLMap());
 
-		if (Validator.isNotNull(friendlyURLChangedMessage)) {
+		for (Map.Entry<String, String> entry :
+				friendlyURLWarningMessages.entrySet()) {
+
 			MultiSessionMessages.add(
-				actionRequest, "friendlyURLChanged", friendlyURLChangedMessage);
+				actionRequest, entry.getKey(), entry.getValue());
 		}
 
 		_sendEditArticleRedirect(actionRequest, article, oldUrlTitle);
@@ -436,11 +441,11 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private String _getFriendlyURLChangedMessage(
+	private Map<String, String> _getFriendlyURLWarningMessagesMap(
 		ActionRequest actionRequest, Map<Locale, String> originalFriendlyURLMap,
 		Map<Locale, String> currentFriendlyURLMap) {
 
-		List<String> messages = new ArrayList<>();
+		List<String> friendlyURLChangedMessages = new ArrayList<>();
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -461,7 +466,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(originalFriendlyURL) &&
 				!currentFriendlyURL.equals(normalizedOriginalFriendlyURL)) {
 
-				messages.add(
+				friendlyURLChangedMessages.add(
 					_language.format(
 						httpServletRequest, "for-locale-x-x-was-changed-to-x",
 						new Object[] {
@@ -473,16 +478,21 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		if (!messages.isEmpty()) {
-			messages.add(
-				0,
-				_language.get(
-					httpServletRequest,
-					"the-following-friendly-urls-were-changed-to-ensure-" +
-						"uniqueness"));
+		if (friendlyURLChangedMessages.isEmpty()) {
+			return Collections.emptyMap();
 		}
 
-		return StringUtil.merge(messages, "<br />");
+		friendlyURLChangedMessages.add(
+			0,
+			_language.get(
+				httpServletRequest,
+				"the-following-friendly-urls-were-changed-to-ensure-" +
+					"uniqueness"));
+
+		return HashMapBuilder.put(
+			"friendlyURLChanged",
+			StringUtil.merge(friendlyURLChangedMessages, "<br />")
+		).build();
 	}
 
 	private String _getSaveAndContinueRedirect(

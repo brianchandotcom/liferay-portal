@@ -90,7 +90,7 @@ public class ParallelExecutor<T> {
 		}
 
 		if (timeoutSeconds == null) {
-			timeoutSeconds = 90L;
+			timeoutSeconds = 60L * 5L;
 		}
 
 		try {

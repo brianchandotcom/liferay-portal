@@ -573,6 +573,11 @@ components:
                         type: string
                     readOnly: true
                     type: object
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The portable ID of this role.
+                    type: string
                 id:
                     description:
                         The role's ID.

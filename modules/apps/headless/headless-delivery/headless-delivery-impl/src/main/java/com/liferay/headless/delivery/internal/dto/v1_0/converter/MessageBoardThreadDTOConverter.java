@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.message.boards.model.MBThread",
-	service = {DTOConverter.class, MessageBoardThreadDTOConverter.class}
+	service = DTOConverter.class
 )
 public class MessageBoardThreadDTOConverter
 	implements DTOConverter<MBThread, MessageBoardThread> {

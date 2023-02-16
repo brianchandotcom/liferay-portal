@@ -95,6 +95,10 @@ public class LinkTag extends BaseContainerTag {
 		return _icon;
 	}
 
+	public String getIconAfter() {
+		return _iconAfter;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -151,6 +155,10 @@ public class LinkTag extends BaseContainerTag {
 		_icon = icon;
 	}
 
+	public void setIconAfter(String iconAfter) {
+		_iconAfter = iconAfter;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -187,6 +195,7 @@ public class LinkTag extends BaseContainerTag {
 		_fontSize = null;
 		_href = null;
 		_icon = null;
+		_iconAfter = null;
 		_label = null;
 		_monospaced = false;
 		_outline = false;
@@ -213,6 +222,7 @@ public class LinkTag extends BaseContainerTag {
 		props.put("displayType", _displayType);
 		props.put("fontSize", _fontSize);
 		props.put("icon", _icon);
+		props.put("iconAfter", _iconAfter);
 		props.put("weight", _weight);
 
 		if (Validator.isNotNull(_label)) {
@@ -284,7 +294,9 @@ public class LinkTag extends BaseContainerTag {
 	protected int processStartTag() throws Exception {
 		super.processStartTag();
 
-		if (Validator.isNotNull(_icon) || Validator.isNotNull(_label)) {
+		if (Validator.isNotNull(_icon) || Validator.isNotNull(_iconAfter) ||
+			Validator.isNotNull(_label)) {
+
 			JspWriter jspWriter = pageContext.getOut();
 
 			if (Validator.isNotNull(_icon)) {
@@ -307,6 +319,18 @@ public class LinkTag extends BaseContainerTag {
 				jspWriter.write(HtmlUtil.escape(label));
 			}
 
+			if (Validator.isNotNull(_iconAfter)) {
+				IconTag iconAfterTag = new IconTag();
+
+				if (Validator.isNotNull(_label)) {
+					iconAfterTag.setCssClass("inline-item inline-item-after");
+				}
+
+				iconAfterTag.setSymbol(_iconAfter);
+
+				iconAfterTag.doTag(pageContext);
+			}
+
 			return SKIP_BODY;
 		}
 
@@ -323,6 +347,7 @@ public class LinkTag extends BaseContainerTag {
 	private String _fontSize;
 	private String _href;
 	private String _icon;
+	private String _iconAfter;
 	private String _label;
 	private boolean _monospaced;
 	private boolean _outline;

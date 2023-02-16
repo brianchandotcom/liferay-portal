@@ -105,7 +105,7 @@ public interface ObjectDefinitionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
-			Map<Locale, String> labelMap, String name,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope,
 			String titleObjectFieldName, int version,

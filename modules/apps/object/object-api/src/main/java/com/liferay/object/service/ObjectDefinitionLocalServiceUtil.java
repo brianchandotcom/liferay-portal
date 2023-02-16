@@ -94,15 +94,16 @@ public class ObjectDefinitionLocalServiceUtil {
 
 	public static ObjectDefinition addSystemObjectDefinition(
 			long userId, String className, String dbTableName,
-			Map<java.util.Locale, String> labelMap, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<java.util.Locale, String> labelMap, boolean modifiable,
+			String name, String pkObjectFieldDBColumnName,
+			String pkObjectFieldName,
 			Map<java.util.Locale, String> pluralLabelMap, String scope,
 			String titleObjectFieldName, int version,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
-			userId, className, dbTableName, labelMap, name,
+			userId, className, dbTableName, labelMap, modifiable, name,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
 			titleObjectFieldName, version, objectFields);
 	}

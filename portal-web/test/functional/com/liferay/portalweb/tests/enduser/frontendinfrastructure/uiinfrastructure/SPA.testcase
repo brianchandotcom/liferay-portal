@@ -35,4 +35,60 @@ definition {
 		AssertVisible.assertVisibleNoSPAWait(locator1 = "//html[contains(@class,'lfr-spa-loading')]");
 	}
 
+	@description = "LRQA-29748: Set the user notification timeout to 1 second"
+	@priority = 4
+	test SPANotificationSetTimeout {
+		property osgi.module.configurations = "userNotificationTimeout=1000";
+		property test.name.skip.portal.instance = "SPAInfrastructure#SetTimeout";
+
+		task ("Given: set the user notification timeout to 1 second") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Frontend SPA Infrastructure",
+				configurationScope = "System Scope");
+
+			Type(
+				key_text = "User Notification Timeout",
+				locator1 = "TextInput#ANY",
+				value1 = "1000");
+
+			SystemSettings.saveConfiguration();
+
+			Refresh();
+		}
+
+		task ("When: Activate the slow script/portlet to cause a SPA timeout") {
+			ServerAdministration.openServerAdmin();
+
+			var script = '''
+				sleep(1000);
+				out.println('Timeout notification warning triggered');
+			''';
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+		}
+
+		task ("And When: pause for 1 second") {
+
+			// We need this pause to wait for notification timeout. See LRQA-29748
+
+			Pause(locator1 = 1000);
+		}
+
+		task ("Then: notification timeout pop up immediately appears") {
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = "Timeout notification warning triggered");
+
+			WaitForElementNotPresent(
+				key_warningMessage = "${warningMessage}",
+				locator1 = "Message#WARNING_SPECIFIC");
+		}
+	}
+
+
 }

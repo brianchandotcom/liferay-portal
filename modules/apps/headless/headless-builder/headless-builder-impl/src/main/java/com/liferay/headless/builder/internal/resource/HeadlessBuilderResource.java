@@ -90,11 +90,11 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 			_operationHandlerServiceTrackerMap.getService(
 				operation.getOperationType());
 
-		String mediaType = contextHttpServletRequest.getHeader(
-			HttpHeaders.ACCEPT);
-
 		return operationHandler.handle(
-			operation, _getOperationContext(mediaType, operation));
+			operation,
+			_getOperationContext(
+				contextHttpServletRequest.getHeader(HttpHeaders.ACCEPT),
+				operation));
 	}
 
 	@Activate

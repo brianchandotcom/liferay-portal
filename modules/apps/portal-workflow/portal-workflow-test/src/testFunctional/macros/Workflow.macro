@@ -875,20 +875,11 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Navigator.gotoNavItem(navItem = "Schemes");
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Pagination.changePagination(itemsPerPage = 40);
 
 		Workflow._tearDownWorkflow();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "User");
-
-		Select(
-			key_workflowResourceValue = "User",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
-			value1 = "No Workflow");
-
-		Button.clickSave();
 	}
 
 	macro tearDownSiteWorkflow {

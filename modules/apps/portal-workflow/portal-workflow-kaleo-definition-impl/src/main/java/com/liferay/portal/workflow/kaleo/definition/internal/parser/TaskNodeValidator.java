@@ -89,13 +89,13 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 			for (Transition transition : outgoingTransitions.values()) {
 				if (transition.isDefault()) {
 					defaultTransitionCount += 1;
-				}
-			}
 
-			if (defaultTransitionCount > 1) {
-				throw new KaleoDefinitionValidationException.
-					MustNotSetMoreThanOneDefaultTransition(
-						task.getDefaultLabel());
+					if (defaultTransitionCount > 1) {
+						throw new KaleoDefinitionValidationException.
+							MustNotSetMoreThanOneDefaultTransition(
+								task.getDefaultLabel());
+					}
+				}
 			}
 		}
 	}

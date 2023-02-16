@@ -113,17 +113,14 @@ const DropdownMenu = ({
 	const onSearch = (query: string) => {
 		setQuery(query);
 
+		const regexp = new RegExp(query, 'i');
+
 		setHeadlessResources(
 			query
 				? initialHeadlessResources.filter(
 						({bundleLabel, name}: HeadlessResource) => {
-							const lowerCaseQuery = query.toLowerCase();
-
 							return (
-								bundleLabel
-									.toLowerCase()
-									.match(lowerCaseQuery) ||
-								name.toLowerCase().match(lowerCaseQuery)
+								bundleLabel.match(regexp) || name.match(regexp)
 							);
 						}
 				  ) || []

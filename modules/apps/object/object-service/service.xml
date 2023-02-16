@@ -839,6 +839,7 @@
 		<exception>ObjectDefinitionEnableComments</exception>
 		<exception>ObjectDefinitionEnableObjectEntryHistory</exception>
 		<exception>ObjectDefinitionLabel</exception>
+		<exception>ObjectDefinitionModifiable</exception>
 		<exception>ObjectDefinitionName</exception>
 		<exception>ObjectDefinitionPluralLabel</exception>
 		<exception>ObjectDefinitionScope</exception>

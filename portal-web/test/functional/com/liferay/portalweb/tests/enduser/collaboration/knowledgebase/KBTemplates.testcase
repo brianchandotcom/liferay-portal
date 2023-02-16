@@ -337,12 +337,23 @@ definition {
 	}
 
 	@description = "This test checks that the checkbox, Filter & Order button, Order By button, and the search bar options appear in KB templates management toolbar."
-	@ignore = "Test Stub"
 	@priority = 5
 	test CorrectActionsAppearInToolbar {
+		property custom.properties = "feature.flag.LPS-166643=true";
 
-		// TODO LPS-166644
+		KBAdmin.openKBTemplates(siteURLKey = "guest");
 
+		KBTemplate.viewNoTemplates(
+			disabledActionToolbar = "true",
+			noFeatureFlag = "true");
+
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBTemplates(siteURLKey = "guest");
+
+		KBTemplate.viewActiveActionsManagementToolbar();
 	}
 
 	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."

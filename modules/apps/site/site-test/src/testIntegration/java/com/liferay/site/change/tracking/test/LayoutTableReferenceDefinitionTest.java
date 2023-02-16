@@ -16,9 +16,9 @@ package com.liferay.site.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -27,10 +27,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Cheryl Tang
+ * @author David Truong
  */
 @RunWith(Arquillian.class)
-public class GroupTableReferenceDefinitionTest
+public class LayoutTableReferenceDefinitionTest
 	extends BaseTableReferenceDefinitionTestCase {
 
 	@ClassRule
@@ -42,7 +42,7 @@ public class GroupTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return GroupTestUtil.addGroup();
+		return LayoutTestUtil.addTypeContentLayout(group);
 	}
 
 }

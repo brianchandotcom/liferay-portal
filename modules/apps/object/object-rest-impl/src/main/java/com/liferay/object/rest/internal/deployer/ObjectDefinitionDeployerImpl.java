@@ -350,6 +350,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			).put(
 				"liferay.jackson", false
 			).put(
+				"liferay.objects", true
+			).put(
 				"osgi.jaxrs.application.base",
 				objectDefinition.getRESTContextPath()
 			).put(

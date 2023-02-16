@@ -1,0 +1,26 @@
+definition {
+
+	macro assertEndpointsInResponse {
+		Variables.assertDefined(parameterList = "${responseToParse},${attributesList}");
+
+		for (var attribute : list ${attributesList}) {
+			TestUtils.assertPartialEquals(
+				actual = ${responseToParse},
+				expected = ${attribute});
+		}
+	}
+
+	macro getOpenApiProfile {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/openapi/openapi.json \
+				-u test@liferay.com:test
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+}

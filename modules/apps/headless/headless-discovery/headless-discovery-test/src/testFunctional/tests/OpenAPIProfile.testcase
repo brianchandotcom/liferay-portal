@@ -41,4 +41,47 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test CanRetrieveHeadlessAdminWorkflowGetOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to /o/openapi/openapi.json endpoint") {
+			APIExplorer.navigateToOpenAPI(
+				api = "openapi",
+				version = "");
+		}
+
+		task ("When executing HeadlessAdminWorkflow.v1.0.getOpenAPI") {
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "HeadlessAdminWorkflow\.v1\.0\.getOpenAPI",
+				parameter = "type",
+				service = "default",
+				value = "json");
+		}
+
+		task ("Then the shown response code is 200") {
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "HeadlessAdminWorkflow\.v1\.0\.getOpenAPI",
+				value1 = 200);
+		}
+	}
+
+	@priority = 4
+	test CanReturnDetailsOfAPIsInTheSystem {
+		property portal.acceptance = "true";
+
+		task ("When with get request to retrieve /o/openapi/openapi.json") {
+			var response = OpenAPIProfile.getOpenApiProfile();
+		}
+
+		task ("Then I can see details of all the APIs in the system") {
+			var attributesList = "application/json,application/xml,#/components/schemas/";
+
+			OpenAPIProfile.assertEndpointsInResponse(
+				attributesList = ${attributesList},
+				responseToParse = ${response});
+		}
+	}
+
 }

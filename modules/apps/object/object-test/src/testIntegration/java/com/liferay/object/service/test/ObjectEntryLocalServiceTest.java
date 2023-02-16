@@ -2645,26 +2645,20 @@ public class ObjectEntryLocalServiceTest {
 		ObjectState objectStateListTypeEntryKey2 = objectStates.get(1);
 		ObjectState objectStateListTypeEntryKey3 = objectStates.get(2);
 
-		try {
-			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		long objectEntryId = objectEntry.getObjectEntryId();
+
+		_assertFailure(
+			StringBundler.concat(
+				"Object state ID ",
+				objectStateListTypeEntryKey1.getObjectStateId(),
+				" cannot be transitioned to object state ID ",
+				objectStateListTypeEntryKey3.getObjectStateId()),
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId,
 				HashMapBuilder.<String, Serializable>put(
 					"state", "listTypeEntryKey3"
 				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.InvalidObjectStateTransition
-					objectEntryValuesException) {
-
-			Assert.assertEquals(
-				objectStateListTypeEntryKey1,
-				objectEntryValuesException.getSourceObjectState());
-			Assert.assertEquals(
-				objectStateListTypeEntryKey3,
-				objectEntryValuesException.getTargetObjectState());
-		}
+				ServiceContextTestUtil.getServiceContext()));
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -2673,26 +2667,18 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		try {
-			_objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+		_assertFailure(
+			StringBundler.concat(
+				"Object state ID ",
+				objectStateListTypeEntryKey2.getObjectStateId(),
+				" cannot be transitioned to object state ID ",
+				objectStateListTypeEntryKey3.getObjectStateId()),
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId,
 				HashMapBuilder.<String, Serializable>put(
 					"state", "listTypeEntryKey3"
 				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException.InvalidObjectStateTransition
-					objectEntryValuesException) {
-
-			Assert.assertEquals(
-				objectStateListTypeEntryKey2,
-				objectEntryValuesException.getSourceObjectState());
-			Assert.assertEquals(
-				objectStateListTypeEntryKey3,
-				objectEntryValuesException.getTargetObjectState());
-		}
+				ServiceContextTestUtil.getServiceContext()));
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());

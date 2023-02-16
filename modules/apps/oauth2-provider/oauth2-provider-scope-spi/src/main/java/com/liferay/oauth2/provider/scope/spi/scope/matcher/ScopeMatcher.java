@@ -62,11 +62,11 @@ public interface ScopeMatcher {
 		return TransformUtil.transform(
 			names,
 			name -> {
-				if (match(name)) {
-					return name;
+				if (!match(name)) {
+					return null;
 				}
 
-				return null;
+				return name;
 			});
 	}
 

@@ -292,7 +292,7 @@ public class TaskNodeExecutorTest {
 			});
 	}
 
-	private KaleoTask _getKaleoTask(String taskName) throws Exception {
+	private KaleoTask _getKaleoTask(String taskName) {
 		for (KaleoNode kaleoNode :
 				_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
 					_kaleoDefinitionVersion.getKaleoDefinitionVersionId())) {

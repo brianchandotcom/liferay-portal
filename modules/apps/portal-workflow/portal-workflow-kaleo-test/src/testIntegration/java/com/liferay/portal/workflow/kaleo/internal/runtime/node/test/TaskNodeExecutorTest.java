@@ -297,7 +297,7 @@ public class TaskNodeExecutorTest {
 				_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
 					_kaleoDefinitionVersion.getKaleoDefinitionVersionId())) {
 
-			if (!Objects.equals(kaleoNode.getName(), taskName)) {
+			if (!Objects.equals(taskName, kaleoNode.getName())) {
 				continue;
 			}
 

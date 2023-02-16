@@ -36,16 +36,21 @@ public class LiferayPDFBoxUtil {
 	public static void generateImagesPB(
 			PDDocument pdDocument, File thumbnailFile, File[] previewFiles,
 			String extension, String thumbnailExtension, int dpi, int height,
-			int width, boolean generatePreview, boolean generateThumbnail)
+			int width, boolean generatePreview, boolean generateThumbnail,
+			int maxNumberOfPages)
 		throws Exception {
 
 		PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
 
 		PDPageTree pdPageTree = pdDocument.getPages();
 
-		int count = pdPageTree.getCount();
+		if ((maxNumberOfPages == 0) ||
+			(maxNumberOfPages > pdPageTree.getCount())) {
 
-		for (int i = 0; i < count; i++) {
+			maxNumberOfPages = pdPageTree.getCount();
+		}
+
+		for (int i = 0; i < maxNumberOfPages; i++) {
 			RenderedImage renderedImage = _toRenderedImage(
 				pdfRenderer, i, dpi, height, width);
 

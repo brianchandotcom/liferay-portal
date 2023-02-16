@@ -14,10 +14,17 @@
 
 package com.liferay.digital.signature.model;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class DSDocument {
+
+	public String getAssignTabsToRecipientId() {
+		return assignTabsToRecipientId;
+	}
 
 	public String getData() {
 		return data;
@@ -35,8 +42,16 @@ public class DSDocument {
 		return name;
 	}
 
+	public Boolean getTransformPdfFields() {
+		return transformPdfFields;
+	}
+
 	public String getURI() {
 		return uri;
+	}
+
+	public void setAssignTabsToRecipientId(String assignTabsToRecipientId) {
+		this.assignTabsToRecipientId = assignTabsToRecipientId;
 	}
 
 	public void setData(String data) {
@@ -55,14 +70,36 @@ public class DSDocument {
 		this.name = name;
 	}
 
+	public void setTransformPdfFields(Boolean transformPdfFields) {
+		this.transformPdfFields = transformPdfFields;
+	}
+
 	public void setURI(String uri) {
 		this.uri = uri;
 	}
 
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"assignTabsToRecipientId", getAssignTabsToRecipientId()
+		).put(
+			"documentBase64", getData()
+		).put(
+			"documentId", getDSDocumentId()
+		).put(
+			"fileExtension", getFileExtension()
+		).put(
+			"name", getName()
+		).put(
+			"transformPdfFields", getTransformPdfFields()
+		);
+	}
+
+	protected String assignTabsToRecipientId;
 	protected String data;
 	protected String dsDocumentId;
 	protected String fileExtension;
 	protected String name;
+	protected Boolean transformPdfFields;
 	protected String uri;
 
 }

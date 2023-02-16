@@ -184,15 +184,15 @@ public class Main {
 	public void uploadToLiferay() throws Exception {
 		long start = System.currentTimeMillis();
 
-		int addedArticleCount = 0;
-		int updatedArticleCount = 0;
+		int addedStructuredContentCount = 0;
+		int updatedStructuredContentCount = 0;
 
 		List<StructuredContent> siteStructuredContents =
 			_getSiteStructuredContents(_liferaySiteId);
 
 		System.out.println(
 			siteStructuredContents.size() +
-				" existing articles were found in site with id " +
+				" existing structured contents were found in site with id " +
 					_liferaySiteId);
 
 		Map<String, StructuredContent>
@@ -269,7 +269,7 @@ public class Main {
 							externalReferenceCode);
 
 					System.out.println(
-						"Updating existing article for " +
+						"Updating existing structured content for " +
 							structuredContent.getFriendlyUrlPath());
 
 					importedStructuredContent =
@@ -279,7 +279,7 @@ public class Main {
 					importedStructuredContentIds.add(
 						siteStructuredContent.getId());
 
-					updatedArticleCount++;
+					updatedStructuredContentCount++;
 				}
 				else {
 					if (structuredContentsFriendyUrlPathMap.containsKey(
@@ -290,9 +290,11 @@ public class Main {
 								friendlyUrlPath);
 
 						System.out.println(
-							"Found existing article by Friendly URL Path for " +
-								structuredContent.getFriendlyUrlPath() +
-									" - deleting.");
+							StringBundler.concat(
+								"Found existing structured content by ",
+								"friendly URL path for ",
+								structuredContent.getFriendlyUrlPath(),
+								" - deleting."));
 
 						_structuredContentResource.deleteStructuredContent(
 							siteStructuredContent.getId());
@@ -302,7 +304,7 @@ public class Main {
 					}
 
 					System.out.println(
-						"Posting new article for " +
+						"Posting new structured content for " +
 							structuredContent.getFriendlyUrlPath());
 					importedStructuredContent =
 						_structuredContentResource.
@@ -311,7 +313,7 @@ public class Main {
 									getStructuredContentFolderId(),
 								structuredContent);
 
-					addedArticleCount++;
+					addedStructuredContentCount++;
 				}
 
 				if (!Objects.equals(
@@ -363,23 +365,28 @@ public class Main {
 
 		if (!_warningMessages.isEmpty()) {
 			System.out.println(
-				_warningMessages.size() + " articles had import warnings.");
+				_warningMessages.size() +
+					" structured contents had import warnings.");
 
 			for (String warningMessage : _warningMessages) {
 				System.out.println(warningMessage);
 			}
 		}
 
-		System.out.println(addedArticleCount + " new articles were added.");
 		System.out.println(
-			updatedArticleCount + " existing articles were updated.");
+			addedStructuredContentCount +
+				" new structured contents were added.");
+		System.out.println(
+			updatedStructuredContentCount +
+				" existing structured contents were updated.");
 		System.out.println(
 			existingStructuredContentIds.size() +
-				" existing articles were deleted.");
+				" existing structured contents were deleted.");
 
 		if (!_errorMessages.isEmpty()) {
 			System.out.println(
-				_errorMessages.size() + " articles had import errors.");
+				_errorMessages.size() +
+					" structured contents had import errors.");
 
 			for (String errorMessage : _errorMessages) {
 				System.out.println(errorMessage);
@@ -1525,7 +1532,7 @@ public class Main {
 		String uuid = _getUuid(englishText);
 
 		if (Validator.isNull(uuid)) {
-			throw new Exception("Nonexistent UUID for article " + fileName);
+			throw new Exception("Nonexistent UUID for file " + fileName);
 		}
 
 		StructuredContent structuredContent = new StructuredContent();

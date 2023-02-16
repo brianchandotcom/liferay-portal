@@ -1,5 +1,31 @@
 # Poshi Runner Change Log
 
+## 1.0.405
+
+### Gradle
+
+* [POSHI-474](https://issues.liferay.com/browse/POSHI-474) - Add logic to get latest chromedriver version 
+
+### Runner
+
+* [POSHI-476](https://issues.liferay.com/browse/POSHI-476) - Replace BaseTable usages with DefaultTable
+
+### Script
+
+* [POSHI-481](https://issues.liferay.com/browse/POSHI-481) - Fix bug with nonquoted while poshi elements
+
+### Standalone
+
+* [POSHI-403](https://issues.liferay.com/browse/POSHI-403) - Poshi standalone and it's gradle version
+
+### Utils
+
+* [POSHI-472](https://issues.liferay.com/browse/POSHI-472) - Use a static port for browsermob proxy server
+
+### Validation
+
+* [POSHI-473](https://issues.liferay.com/browse/POSHI-473) - Add validation for double quotes for multiline literal string
+
 ## 1.0.403
 
 ### Gradle

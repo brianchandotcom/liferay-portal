@@ -20,6 +20,7 @@ import com.liferay.headless.discovery.internal.configuration.HeadlessDiscoveryCo
 import com.liferay.headless.discovery.internal.dto.Hint;
 import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,7 +38,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -231,19 +231,14 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 		Resource resource = new Resource();
 
-		Stream<ResourceMethodInfoDTO> stream = resourceMethodInfoDTOS.stream();
-
-		String[] verbs = stream.map(
-			dto -> dto.method
-		).toArray(
-			String[]::new
-		);
-
 		ResourceMethodInfoDTO resourceMethodInfoDTO =
 			resourceMethodInfoDTOS.get(0);
 
 		resource.setHint(
-			new Hint(verbs, resourceMethodInfoDTO.producingMimeType));
+			new Hint(
+				TransformUtil.transformToArray(
+					resourceMethodInfoDTOS, dto -> dto.method, String.class),
+				resourceMethodInfoDTO.producingMimeType));
 
 		String resourcePath = resourceMethodInfoDTO.path;
 

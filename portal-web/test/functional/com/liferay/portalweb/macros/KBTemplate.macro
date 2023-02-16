@@ -189,6 +189,32 @@ definition {
 		}
 	}
 
+	macro viewActionsDetailsToolbar {
+		Click(
+			key_rowEntry = ${kbTemplateTitle},
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "View");
+
+		AssertVisible(
+			key_text = "pencil",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		if (isSet(moreActions)) {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.viewVisible(menuItem = "Edit");
+
+			MenuItem.viewVisible(menuItem = "Print");
+
+			MenuItem.viewVisible(menuItem = "Permissions");
+
+			MenuItem.viewVisible(menuItem = "Delete");
+		}
+	}
+
 	macro viewActiveActionsManagementToolbar {
 		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
 

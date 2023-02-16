@@ -28,10 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Stream;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -54,28 +50,25 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 			return InfoFieldSet.builder(
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					List<DDMTemplate> ddmTemplates =
-						ddmStructure.getTemplates();
+					for (DDMTemplate ddmTemplate :
+							ddmStructure.getTemplates()) {
 
-					Stream<DDMTemplate> stream = ddmTemplates.stream();
-
-					Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-					stream.map(
-						ddmTemplate -> InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).namespace(
-							StringPool.BLANK
-						).name(
-							_getTemplateFieldName(ddmTemplate)
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.localize(
-								getClass(), ddmTemplate.getName(locale))
-						).build()
-					).forEach(
-						unsafeConsumer::accept
-					);
+						unsafeConsumer.accept(
+							InfoField.builder(
+							).infoFieldType(
+								TextInfoFieldType.INSTANCE
+							).namespace(
+								StringPool.BLANK
+							).name(
+								_getTemplateFieldName(ddmTemplate)
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.localize(
+									getClass(),
+									ddmTemplate.getName(
+										LocaleThreadLocal.
+											getThemeDisplayLocale()))
+							).build());
+					}
 				}
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "templates")

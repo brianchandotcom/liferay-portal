@@ -244,6 +244,7 @@ definition {
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarAutoInstall";
 
 		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay started at [\d\.]+:9201");
 
@@ -479,6 +480,7 @@ definition {
 		property elasticsearch.multiple.connections = "true";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7#MultipleConnectionsSmokeTest";
 
 		SearchAdministration.openSearchAdmin();
 
@@ -582,6 +584,7 @@ definition {
 		property osgi.module.configurations = "clusterName=\"LiferayElasticsearchCluster1\"";
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7#OSGiConfigSmokeTest";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 

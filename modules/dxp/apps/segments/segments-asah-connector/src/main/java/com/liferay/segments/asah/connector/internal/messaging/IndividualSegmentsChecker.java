@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
@@ -150,25 +152,31 @@ public class IndividualSegmentsChecker {
 				_portal.getSiteDefaultLocale(serviceContext.getScopeGroupId()),
 				individualSegment.getName());
 
-			IndividualSegmentsExpressionParser
-				individualSegmentsExpressionParser =
-					new IndividualSegmentsExpressionParser(
-						new CommonTokenStream(
-							new IndividualSegmentsExpressionLexer(
-								new ANTLRInputStream(
-									individualSegment.getFilter()))));
+			Criteria criteria = null;
 
-			IndividualSegmentsExpressionParser.ExpressionContext
-				expressionContext =
-					individualSegmentsExpressionParser.expression();
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-171722"))) {
 
-			Criteria criteria = expressionContext.accept(
-				new IndividualSegmentsExpressionVisitorImpl());
+				IndividualSegmentsExpressionParser
+					individualSegmentsExpressionParser =
+						new IndividualSegmentsExpressionParser(
+							new CommonTokenStream(
+								new IndividualSegmentsExpressionLexer(
+									new ANTLRInputStream(
+										individualSegment.getFilter()))));
+
+				IndividualSegmentsExpressionParser.ExpressionContext
+					expressionContext =
+						individualSegmentsExpressionParser.expression();
+
+				criteria = expressionContext.accept(
+					new IndividualSegmentsExpressionVisitorImpl());
+			}
 
 			if (segmentsEntry == null) {
 				_segmentsEntryLocalService.addSegmentsEntry(
 					individualSegment.getId(), nameMap, Collections.emptyMap(),
-					true, CriteriaSerializer.serialize(criteria),
+					true, _serialize(criteria),
 					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 					User.class.getName(), serviceContext);
 
@@ -177,8 +185,7 @@ public class IndividualSegmentsChecker {
 
 			_segmentsEntryLocalService.updateSegmentsEntry(
 				segmentsEntry.getSegmentsEntryId(), individualSegment.getId(),
-				nameMap, null, true, CriteriaSerializer.serialize(criteria),
-				serviceContext);
+				nameMap, null, true, _serialize(criteria), serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -383,6 +390,14 @@ public class IndividualSegmentsChecker {
 		}
 
 		return null;
+	}
+
+	private String _serialize(Criteria criteria) {
+		if (criteria == null) {
+			return null;
+		}
+
+		return CriteriaSerializer.serialize(criteria);
 	}
 
 	private static final int _DELTA = 100;

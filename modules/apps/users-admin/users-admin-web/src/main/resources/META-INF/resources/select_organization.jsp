@@ -115,19 +115,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 					}
 					%>
 
-					<aui:button
+					<clay:button
+						aria-label='<%= LanguageUtil.format(request, "choose-x", organization.getName()) %>'
 						cssClass="selector-button"
-						data='<%=
-							HashMapBuilder.<String, Object>put(
-								"entityid", organization.getOrganizationId()
-							).put(
-								"entityname", organization.getName()
-							).put(
-								"type", LanguageUtil.get(request, organization.getType())
-							).build()
-						%>'
+						data-entityid="<%= organization.getOrganizationId() %>"
+						data-entityname="<%= organization.getName() %>"
+						data-type="<%= LanguageUtil.get(request, organization.getType()) %>"
 						disabled="<%= disabled %>"
-						value="choose"
+						displayType="secondary"
+						label='<%= LanguageUtil.get(request, "choose") %>'
 					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>

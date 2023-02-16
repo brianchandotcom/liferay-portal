@@ -161,6 +161,10 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		putObjectDefinition.setPortlet(objectDefinition.getPortlet());
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+			objectDefinitionJSONObject.remove("modifiable");
+		}
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			putObjectDefinition.setStorageType(StringPool.BLANK);
 		}

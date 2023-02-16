@@ -40,6 +40,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -223,6 +224,12 @@ public class ObjectDefinitionResourceImpl
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
+			throw new ObjectDefinitionModifiableException();
+		}
+
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 
@@ -295,6 +302,12 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		// TODO Move logic to service
+
+		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+
+			throw new ObjectDefinitionModifiableException();
+		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
@@ -657,7 +670,11 @@ public class ObjectDefinitionResourceImpl
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());
-				modifiable = objectDefinition.getModifiable();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
+					modifiable = objectDefinition.getModifiable();
+				}
+
 				name = objectDefinition.getShortName();
 				objectActions = transformToArray(
 					_objectActionLocalService.getObjectActions(

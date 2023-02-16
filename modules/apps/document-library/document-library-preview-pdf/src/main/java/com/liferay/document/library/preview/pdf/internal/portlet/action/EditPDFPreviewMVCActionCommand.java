@@ -69,7 +69,7 @@ public class EditPDFPreviewMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_pdfPreviewManagedServiceFactory.updatePDFPreview(
-				ParamUtil.getLong(actionRequest, "maxNumberOfPages"), scope,
+				ParamUtil.getInteger(actionRequest, "maxNumberOfPages"), scope,
 				scopePK);
 		}
 		catch (ConfigurationModelListenerException | PDFPreviewException

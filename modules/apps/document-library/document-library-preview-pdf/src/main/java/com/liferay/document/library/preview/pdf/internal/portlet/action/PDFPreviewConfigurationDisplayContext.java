@@ -54,7 +54,7 @@ public class PDFPreviewConfigurationDisplayContext {
 		).buildString();
 	}
 
-	public long getMaxNumberOfPages() throws PortalException {
+	public int getMaxNumberOfPages() throws PortalException {
 		return _pdfPreviewManagedServiceFactory.getMaxNumberOfPages(
 			_scope, _scopePK);
 	}

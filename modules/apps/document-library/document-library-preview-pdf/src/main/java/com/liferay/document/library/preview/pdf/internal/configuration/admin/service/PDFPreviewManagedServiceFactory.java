@@ -61,15 +61,15 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		_unmapPid(pid);
 	}
 
-	public long getMaxNumberOfPages(String scope, long scopePK)
+	public int getMaxNumberOfPages(String scope, long scopePK)
 		throws PortalException {
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(scopePK);
+			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(scopePK);
 
-			long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((companyMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||
@@ -83,14 +83,14 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			long groupMaxNumberOfPages = _getGroupMaxNumberOfPages(scopePK);
+			int groupMaxNumberOfPages = _getGroupMaxNumberOfPages(scopePK);
 
 			Group group = _groupLocalService.getGroup(scopePK);
 
-			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
+			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
-			long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+			int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 			if ((groupMaxNumberOfPages != 0) &&
 				((systemMaxNumberOfPages == 0) ||
@@ -147,10 +147,10 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	public void updatePDFPreview(
-			long maxNumberOfPages, String scope, long scopePK)
+			int maxNumberOfPages, String scope, long scopePK)
 		throws Exception {
 
-		long systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
+		int systemMaxNumberOfPages = _getSystemMaxNumberOfPages();
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
@@ -174,7 +174,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 
 			Group group = _groupLocalService.getGroup(scopePK);
 
-			long companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
+			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
 			if ((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
@@ -202,7 +202,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			PDFPreviewConfiguration.class, properties);
 	}
 
-	private long _getCompanyMaxNumberOfPages(long companyId) {
+	private int _getCompanyMaxNumberOfPages(long companyId) {
 		PDFPreviewConfiguration pdfPreviewConfiguration =
 			_getCompanyPDFPreviewConfiguration(companyId);
 
@@ -217,7 +217,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			() -> _systemPDFPreviewConfiguration);
 	}
 
-	private long _getGroupMaxNumberOfPages(long groupId) {
+	private int _getGroupMaxNumberOfPages(long groupId) {
 		PDFPreviewConfiguration pdfPreviewConfiguration =
 			_getGroupPDFPreviewConfiguration(groupId);
 
@@ -270,7 +270,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		return configurations[0];
 	}
 
-	private long _getSystemMaxNumberOfPages() {
+	private int _getSystemMaxNumberOfPages() {
 		return _systemPDFPreviewConfiguration.maxNumberOfPages();
 	}
 
@@ -299,7 +299,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private void _updateCompanyPDFPreviewConfiguration(
-			long companyId, long maxNumberOfPages)
+			long companyId, int maxNumberOfPages)
 		throws Exception {
 
 		_updateScopedConfiguration(
@@ -318,7 +318,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private void _updateGroupPDFPreviewConfiguration(
-			long groupId, long maxNumberOfPages)
+			long groupId, int maxNumberOfPages)
 		throws Exception {
 
 		_updateScopedConfiguration(
@@ -327,7 +327,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private void _updateScopedConfiguration(
-			long maxNumberOfPages, ExtendedObjectClassDefinition.Scope scope,
+			int maxNumberOfPages, ExtendedObjectClassDefinition.Scope scope,
 			long scopePK)
 		throws Exception {
 
@@ -352,7 +352,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		configuration.update(properties);
 	}
 
-	private void _updateSystemPDFPreviewConfiguration(long maxNumberOfPages)
+	private void _updateSystemPDFPreviewConfiguration(int maxNumberOfPages)
 		throws Exception {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(

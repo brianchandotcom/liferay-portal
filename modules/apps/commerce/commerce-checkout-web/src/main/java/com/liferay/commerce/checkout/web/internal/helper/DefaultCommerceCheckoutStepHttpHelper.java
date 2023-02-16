@@ -440,14 +440,6 @@ public class DefaultCommerceCheckoutStepHttpHelper
 					commerceOrder, commercePaymentMethod.getKey(),
 					httpServletRequest);
 			}
-
-			if (!_hasCommerceOrderPermission(
-					CommerceOrderActionKeys.
-						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
-					commerceOrder, httpServletRequest)) {
-
-				return false;
-			}
 		}
 		else {
 			if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
@@ -458,14 +450,13 @@ public class DefaultCommerceCheckoutStepHttpHelper
 					commerceOrder, commercePaymentMethod.getKey(),
 					httpServletRequest);
 			}
+		}
 
-			if (!_hasCommerceOrderPermission(
-					CommerceOrderActionKeys.
-						MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
-					commerceOrder, httpServletRequest)) {
+		if (!_hasCommerceOrderPermission(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+				commerceOrder, httpServletRequest)) {
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;

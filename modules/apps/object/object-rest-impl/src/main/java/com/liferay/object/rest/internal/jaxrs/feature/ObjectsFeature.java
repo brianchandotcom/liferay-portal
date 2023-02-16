@@ -14,6 +14,8 @@
 
 package com.liferay.object.rest.internal.jaxrs.feature;
 
+import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
+
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 
@@ -34,6 +36,8 @@ public class ObjectsFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext featureContext) {
+		featureContext.register(ObjectDefinitionIdContainerRequestFilter.class);
+
 		return true;
 	}
 

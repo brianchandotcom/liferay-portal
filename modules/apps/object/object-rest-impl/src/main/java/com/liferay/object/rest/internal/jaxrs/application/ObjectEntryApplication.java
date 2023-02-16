@@ -14,7 +14,6 @@
 
 package com.liferay.object.rest.internal.jaxrs.application;
 
-import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 
@@ -39,7 +38,6 @@ public class ObjectEntryApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> objects = new HashSet<>();
 
-		objects.add(new ObjectDefinitionIdContainerRequestFilter());
 		objects.add(
 			new OpenAPIResourceImpl(_objectEntryOpenAPIResourceProvider));
 

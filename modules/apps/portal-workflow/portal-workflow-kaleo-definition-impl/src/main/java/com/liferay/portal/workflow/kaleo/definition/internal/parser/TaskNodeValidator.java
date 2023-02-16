@@ -63,9 +63,7 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 				task.getDefaultLabel());
 		}
 
-		Set<TaskForm> taskForms = task.getTaskForms();
-
-		for (TaskForm taskForm : taskForms) {
+		for (TaskForm taskForm : task.getTaskForms()) {
 			String formDefinition = taskForm.getFormDefinition();
 
 			TaskFormReference taskFormReference =

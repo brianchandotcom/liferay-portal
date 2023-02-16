@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Set;
 
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -64,8 +64,13 @@ public class DispatchTriggerResourceTest
 	@Override
 	@Test
 	public void testPostDispatchTriggerRun() throws Exception {
-		dispatchTriggerResource.postDispatchTriggerRun(
-			_addDispatchTrigger(randomDispatchTrigger()).getId());
+		DispatchTrigger randomDispatchTrigger = randomDispatchTrigger();
+
+		Long dispatchId = randomDispatchTrigger.getId();
+
+		_addDispatchTrigger(randomDispatchTrigger);
+
+		dispatchTriggerResource.postDispatchTriggerRun(dispatchId);
 	}
 
 	@Override

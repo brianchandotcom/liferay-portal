@@ -40,7 +40,7 @@ definition {
 				headline = "This is the child mb message",
 				parentMessageBoardMessageId = ${messageBoardMessageId});
 
-			var childMessageBoardMessageId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var childMessageBoardMessageId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("When with postMessageBoardMessageMessageBoardAttachmentsPage and messageBoardMessageId to create an attachment for child message board message") {
@@ -64,7 +64,7 @@ definition {
 		task ("Given with postSiteMessageBoardSection and siteId to create a message board section") {
 			var response = MessageBoardSectionAPI.createMessageBoardSection(title = "mb section");
 
-			var messageBoardSectionId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var messageBoardSectionId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardThread and messageBoardSectionId to create a message board thread") {
@@ -72,7 +72,7 @@ definition {
 				headline = "This is the mb thread in section",
 				messageBoardSectionId = ${messageBoardSectionId});
 
-			var messageBoardThreadId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var messageBoardThreadId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardThreadMessageBoardMessage and messageBoardThreadId to create a message board message") {
@@ -148,7 +148,7 @@ definition {
 				headline = "This is the child mb message",
 				parentMessageBoardMessageId = ${messageBoardMessageId});
 
-			var childMessageBoardMessageId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var childMessageBoardMessageId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardMessageMessageBoardAttachmentsPage and messageBoardMessageId to create an attachment for child message board message") {
@@ -161,7 +161,7 @@ definition {
 
 		task ("When with DELETE request, siteId, child message board message's and child message board attachment's external reference codes to delete the message board attachment") {
 			var messageBoardMessageErc = MessageBoardMessageAPI.getMbMessageErcByMbMessageId(messageBoardMessageId = ${childMessageBoardMessageId});
-			var messageBoardAttachmentErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
+			var messageBoardAttachmentErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 
 			MessageBoardAttachmentAPI.deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
 				messageBoardAttachmentErc = ${messageBoardAttachmentErc},
@@ -187,7 +187,7 @@ definition {
 		task ("Given with postSiteMessageBoardSection and siteId to create a message board section") {
 			var response = MessageBoardSectionAPI.createMessageBoardSection(title = "mb section");
 
-			var messageBoardSectionId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var messageBoardSectionId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardSection and parentMessageBoardSectionId to create a child message board section") {
@@ -195,7 +195,7 @@ definition {
 				parentMessageBoardSectionId = ${messageBoardSectionId},
 				title = "child mb section");
 
-			var childMessageBoardSectionId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var childMessageBoardSectionId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardThread and messageBoardSectionId to create a message board thread") {
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("When with DELETE request, siteId, message board message's and message board attachment's external reference codes to delete the message board attachment") {
-			var messageBoardAttachmentErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
+			var messageBoardAttachmentErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 			var messageBoardMessageErc = MessageBoardMessageAPI.getMbMessageErcByMbMessageId(messageBoardMessageId = ${messageBoardMessageId});
 
 			var response = MessageBoardAttachmentAPI.deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
@@ -242,7 +242,7 @@ definition {
 		task ("Given with postSiteMessageBoardSection and siteId to create a message board section") {
 			var response = MessageBoardSectionAPI.createMessageBoardSection(title = "mb section");
 
-			var messageBoardSectionId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var messageBoardSectionId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardSection and parentMessageBoardSectionId to create a child message board section") {
@@ -250,7 +250,7 @@ definition {
 				parentMessageBoardSectionId = ${messageBoardSectionId},
 				title = "child mb section");
 
-			var childMessageBoardSectionId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var childMessageBoardSectionId = JSONUtil.getWithJSONPath(${response}, "$.id");
 		}
 
 		task ("And Given with postMessageBoardSectionMessageBoardThread and messageBoardSectionId to create a message board thread") {
@@ -258,7 +258,7 @@ definition {
 				headline = "This is the mb thread in child section",
 				messageBoardSectionId = ${childMessageBoardSectionId});
 
-			var messageBoardThreadId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var messageBoardThreadId = JSONUtil.getWithJSONPath(${response}, "$.id");
 			var messageBoardMessageId = JSONUtil.getWithJSONPath(${response}, "$.messageBoardRootMessageId");
 		}
 
@@ -272,7 +272,7 @@ definition {
 
 		task ("When with GET request, siteId, message board message's and message board attachment's external reference codes to retrieve the message board attachment") {
 			var messageBoardMessageErc = MessageBoardMessageAPI.getMbMessageErcByMbMessageId(messageBoardMessageId = ${messageBoardMessageId});
-			var messageBoardbAttachmentErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${responseToParse});
+			var messageBoardbAttachmentErc = JSONUtil.getWithJSONPath(${responseToParse}, "$.externalReferenceCode");
 
 			var response = MessageBoardAttachmentAPI.getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(
 				messageBoardAttachmentErc = ${messageBoardbAttachmentErc},
@@ -280,8 +280,8 @@ definition {
 		}
 
 		task ("Then I can see the correct details of message board message attachment") {
-			var expectId = JSONResponseUtil.getRootIdFromResponse(response = ${responseToParse});
-			var messageBoardAttachmentId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+			var expectId = JSONUtil.getWithJSONPath(${responseToParse}, "$.id");
+			var messageBoardAttachmentId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
 			TestUtils.assertEquals(
 				actual = ${messageBoardAttachmentId},

@@ -41,12 +41,12 @@ definition {
 	macro assertCorrectErcInResponse {
 		Variables.assertDefined(parameterList = ${response});
 
-		var messageBoardAttachmentErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
-		var messageBoardAttachmentId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+		var messageBoardAttachmentErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
+		var messageBoardAttachmentId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
 		var responseFromGet = MessageBoardAttachmentAPI.getMessageBoardAttachment(messageBoardAttachmentId = ${messageBoardAttachmentId});
 
-		var expectedErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${responseFromGet});
+		var expectedErc = JSONUtil.getWithJSONPath(${responseFromGet}, "$.externalReferenceCode");
 
 		TestUtils.assertEquals(
 			actual = ${messageBoardAttachmentErc},

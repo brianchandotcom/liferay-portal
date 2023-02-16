@@ -62,7 +62,7 @@ definition {
 			headline = ${headline},
 			messageBoardThreadId = ${messageBoardThreadId});
 
-		var messageboardMessageId = JSONResponseUtil.getRootIdFromResponse(response = ${response});
+		var messageboardMessageId = JSONUtil.getWithJSONPath(${response}, "$.id");
 
 		return ${messageboardMessageId};
 	}
@@ -80,7 +80,7 @@ definition {
 	macro getMbMessageErcByMbMessageId {
 		var response = MessageBoardMessageAPI.getMbMessageByMbMessageId(messageBoardMessageId = ${messageBoardMessageId});
 
-		var messageBoardMessageErc = JSONResponseUtil.getRootExternalReferenceCodeFromResponse(response = ${response});
+		var messageBoardMessageErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");
 
 		return ${messageBoardMessageErc};
 	}

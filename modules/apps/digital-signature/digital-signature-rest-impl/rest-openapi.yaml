@@ -2,6 +2,8 @@ components:
     schemas:
         DSDocument:
             properties:
+                assignTabsToDSRecipientId:
+                    type: string
                 data:
                     type: string
                 fileEntryExternalReferenceCode:
@@ -12,6 +14,8 @@ components:
                     type: string
                 name:
                     type: string
+                transformPdfFields:
+                    type: boolean
                 uri:
                     type: string
         DSEnvelope:

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.asset.kernel.model.AssetTag",
-	service = {DTOConverter.class, KeywordDTOConverter.class}
+	service = DTOConverter.class
 )
 public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 

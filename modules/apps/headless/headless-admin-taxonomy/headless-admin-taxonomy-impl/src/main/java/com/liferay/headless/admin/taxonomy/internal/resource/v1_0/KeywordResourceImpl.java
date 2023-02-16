@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
-import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.KeywordDTOConverter;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringPool;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -331,7 +331,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		return new Date(timestamp.getTime());
 	}
 
-	private Keyword _toKeyword(AssetTag assetTag) {
+	private Keyword _toKeyword(AssetTag assetTag) throws Exception {
 		return _keywordDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
@@ -388,7 +388,9 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference
-	private KeywordDTOConverter _keywordDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter.KeywordDTOConverter)"
+	)
+	private DTOConverter<AssetTag, Keyword> _keywordDTOConverter;
 
 }

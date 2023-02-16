@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.portlet.action;
+package com.liferay.layout.internal.struts;
 
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -31,14 +30,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,9 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -68,25 +63,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/get_page_preview"
-	},
-	service = MVCResourceCommand.class
+	property = "path=/layout/get_page_preview", service = StrutsAction.class
 )
-public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetPagePreviewStrutsAction implements StrutsAction {
 
 	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	public String execute(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		ThemeDisplay currentThemeDisplay =
-			(ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
 
-		long selPlid = ParamUtil.getLong(resourceRequest, "selPlid");
+		long selPlid = ParamUtil.getLong(httpServletRequest, "selPlid");
 
 		if (selPlid > 0) {
 			Layout layout = _layoutLocalService.fetchLayout(selPlid);
@@ -106,32 +99,32 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 				PermissionCheckerFactoryUtil.create(themeDisplay.getRealUser()),
 				themeDisplay.getLayout())) {
 
-			resourceResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-			return;
+			return null;
 		}
 
 		long[] currentSegmentsExperienceIds = GetterUtil.getLongValues(
-			resourceRequest.getAttribute(
+			httpServletRequest.getAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
-			resourceRequest.getAttribute(WebKeys.PORTLET_DECORATE));
+			httpServletRequest.getAttribute(WebKeys.PORTLET_DECORATE));
 
 		try {
 			long segmentsExperienceId = ParamUtil.getLong(
-				resourceRequest, "segmentsExperienceId",
+				httpServletRequest, "segmentsExperienceId",
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(selPlid));
 
-			resourceRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 				new long[] {segmentsExperienceId});
 
-			resourceRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 
 			String languageId = ParamUtil.getString(
-				resourceRequest, "languageId",
+				httpServletRequest, "languageId",
 				LocaleUtil.toLanguageId(themeDisplay.getLocale()));
 
 			themeDisplay.setLocale(LocaleUtil.fromLanguageId(languageId));
@@ -148,8 +141,8 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			layout.setClassNameId(0);
 
 			String className = ParamUtil.getString(
-				resourceRequest, "className");
-			long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+				httpServletRequest, "className");
+			long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
 			if (layout.isTypeAssetDisplay() &&
 				(Validator.isNull(className) || (classPK <= 0))) {
@@ -157,18 +150,12 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 				layout.setType(LayoutConstants.TYPE_CONTENT);
 			}
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(resourceRequest);
-
 			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);
 
 			if (Validator.isNotNull(className) && (classPK > 0)) {
 				_includeInfoItemObjects(className, classPK, httpServletRequest);
 			}
-
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(resourceResponse);
 
 			layout.includeLayoutContent(
 				httpServletRequest, httpServletResponse);
@@ -192,14 +179,16 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 			ServletResponseUtil.write(httpServletResponse, document.toString());
 		}
 		finally {
-			resourceRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 				currentSegmentsExperienceIds);
-			resourceRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DECORATE, currentPortletDecorate);
-			resourceRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, currentThemeDisplay);
 		}
+
+		return null;
 	}
 
 	private void _includeInfoItemObjects(

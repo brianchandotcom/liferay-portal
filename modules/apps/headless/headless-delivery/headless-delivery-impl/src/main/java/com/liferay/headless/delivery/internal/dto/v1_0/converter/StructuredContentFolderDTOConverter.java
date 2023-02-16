@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.journal.model.JournalFolder",
-	service = {DTOConverter.class, StructuredContentFolderDTOConverter.class}
+	service = DTOConverter.class
 )
 public class StructuredContentFolderDTOConverter
 	implements DTOConverter<DLFolder, StructuredContentFolder> {

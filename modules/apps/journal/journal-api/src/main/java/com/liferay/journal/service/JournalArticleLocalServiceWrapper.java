@@ -2113,6 +2113,14 @@ public class JournalArticleLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<Long> getJournalArticleGroupIdsByUrlTitle(
+		long companyId, String urlTitle) {
+
+		return _journalArticleLocalService.getJournalArticleGroupIdsByUrlTitle(
+			companyId, urlTitle);
+	}
+
 	/**
 	 * Returns a range of all the journal articles.
 	 *

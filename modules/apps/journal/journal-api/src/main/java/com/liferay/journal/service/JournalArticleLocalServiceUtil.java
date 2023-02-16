@@ -1976,6 +1976,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getJournalArticleByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<Long> getJournalArticleGroupIdsByUrlTitle(
+		long companyId, String urlTitle) {
+
+		return getService().getJournalArticleGroupIdsByUrlTitle(
+			companyId, urlTitle);
+	}
+
 	/**
 	 * Returns a range of all the journal articles.
 	 *

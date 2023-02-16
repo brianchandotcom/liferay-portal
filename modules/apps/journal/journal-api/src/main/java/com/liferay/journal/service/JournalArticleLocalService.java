@@ -1648,6 +1648,10 @@ public interface JournalArticleLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getJournalArticleGroupIdsByUrlTitle(
+		long companyId, String urlTitle);
+
 	/**
 	 * Returns a range of all the journal articles.
 	 *

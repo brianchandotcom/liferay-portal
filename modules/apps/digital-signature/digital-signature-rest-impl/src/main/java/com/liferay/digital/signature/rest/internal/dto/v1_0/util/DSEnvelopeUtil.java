@@ -79,6 +79,7 @@ public class DSEnvelopeUtil {
 				fileExtension = dsDocument.getFileExtension();
 				id = dsDocument.getDSDocumentId();
 				name = dsDocument.getName();
+				transformPdfFields = dsDocument.getTransformPdfFields();
 				uri = dsDocument.getURI();
 			}
 		};
@@ -93,6 +94,7 @@ public class DSEnvelopeUtil {
 				dsDocumentId = dsDocument.getId();
 				fileExtension = dsDocument.getFileExtension();
 				name = dsDocument.getName();
+				transformPdfFields = dsDocument.getTransformPdfFields();
 				uri = dsDocument.getUri();
 			}
 		};

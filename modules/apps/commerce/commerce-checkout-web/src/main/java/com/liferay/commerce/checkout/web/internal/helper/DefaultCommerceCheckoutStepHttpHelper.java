@@ -391,11 +391,12 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return true;
 		}
 
-		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
-			commerceAccount.getCommerceAccountId());
+		if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(
+					commerceAccount.getCommerceAccountId());
 
-		if (accountEntry != null) {
-			if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
+			if (accountEntry != null) {
 				CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 					_commerceChannelAccountEntryRelService.
 						fetchCommerceChannelAccountEntryRel(
@@ -440,9 +441,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 					commerceOrder, commercePaymentMethod.getKey(),
 					httpServletRequest);
 			}
-		}
-		else {
-			if (Validator.isNull(commerceOrder.getCommercePaymentMethodKey())) {
+			else {
 				CommercePaymentMethod commercePaymentMethod =
 					commercePaymentMethods.get(0);
 

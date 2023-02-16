@@ -391,10 +391,8 @@ public class IndexerHelper {
 	public List<Assignment> toAssignments(
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
 
-		List<Assignment> assignments = new ArrayList<>();
-
 		if (ListUtil.isEmpty(kaleoTaskAssignmentInstances)) {
-			return assignments;
+			return Collections.emptyList();
 		}
 
 		KaleoTaskAssignmentInstance firstKaleoTaskAssignmentInstance =
@@ -407,34 +405,27 @@ public class IndexerHelper {
 			User user = _userLocalService.fetchUser(
 				firstKaleoTaskAssignmentInstance.getAssigneeClassPK());
 
-			assignments.add(
+			return Collections.singletonList(
 				new UserAssignment(
 					firstKaleoTaskAssignmentInstance.getAssigneeClassPK(),
 					user.getFullName()));
 		}
-		else {
-			Map<Long, List<Long>> assigneeClassPKGroupIdsMap = new HashMap<>();
 
-			for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
-					kaleoTaskAssignmentInstances) {
+		Map<Long, List<Long>> assigneeClassPKGroupIdsMap = new HashMap<>();
 
-				List<Long> groupIds =
-					assigneeClassPKGroupIdsMap.computeIfAbsent(
-						kaleoTaskAssignmentInstance.getAssigneeClassPK(),
-						key -> new ArrayList<>());
+		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
+				kaleoTaskAssignmentInstances) {
 
-				groupIds.add(kaleoTaskAssignmentInstance.getGroupId());
-			}
+			List<Long> groupIds = assigneeClassPKGroupIdsMap.computeIfAbsent(
+				kaleoTaskAssignmentInstance.getAssigneeClassPK(),
+				key -> new ArrayList<>());
 
-			for (Map.Entry<Long, List<Long>> entry :
-					assigneeClassPKGroupIdsMap.entrySet()) {
-
-				assignments.add(
-					new RoleAssignment(entry.getKey(), entry.getValue()));
-			}
+			groupIds.add(kaleoTaskAssignmentInstance.getGroupId());
 		}
 
-		return assignments;
+		return TransformUtil.transform(
+			assigneeClassPKGroupIdsMap.entrySet(),
+			entry -> new RoleAssignment(entry.getKey(), entry.getValue()));
 	}
 
 	private AssetRenderer<?> _getAssetRenderer(String className, long classPK) {

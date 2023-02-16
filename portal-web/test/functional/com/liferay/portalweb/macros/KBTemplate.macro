@@ -189,6 +189,24 @@ definition {
 		}
 	}
 
+	macro viewActiveActionsManagementToolbar {
+		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER_DISABLED");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON_DISABLED");
+
+		AssertElementNotPresent(locator1 = "TextInput#SEARCH_DISABLED");
+
+		AssertVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+		AssertVisible(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertVisible(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+
+		AssertVisible(locator1 = "TextInput#SEARCH");
+	}
+
 	macro viewCPViaAddTemplate {
 		LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 

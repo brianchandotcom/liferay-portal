@@ -409,7 +409,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_ghostscript.isEnabled()) {
-			_generateImagesGS(fileVersion, file);
+			_generateImagesGS(fileVersion, file, maxNumberOfPages);
 		}
 		else {
 			_generateImagesPB(fileVersion, file, maxNumberOfPages);
@@ -485,20 +485,21 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_ghostscript.isEnabled()) {
-			_generateImagesGS(fileVersion, inputStream);
+			_generateImagesGS(fileVersion, inputStream, maxNumberOfPages);
 		}
 		else {
 			_generateImagesPB(fileVersion, inputStream, maxNumberOfPages);
 		}
 	}
 
-	private void _generateImagesGS(FileVersion fileVersion, File file)
+	private void _generateImagesGS(
+			FileVersion fileVersion, File file, int maxNumberOfPages)
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
 			long start = System.currentTimeMillis();
 
-			_generateImagesGS(fileVersion, file, false);
+			_generateImagesGS(fileVersion, file, maxNumberOfPages, false);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -513,7 +514,7 @@ public class PDFProcessorImpl
 		if (_isGenerateThumbnail(fileVersion)) {
 			long start = System.currentTimeMillis();
 
-			_generateImagesGS(fileVersion, file, true);
+			_generateImagesGS(fileVersion, file, maxNumberOfPages, true);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -526,7 +527,8 @@ public class PDFProcessorImpl
 	}
 
 	private void _generateImagesGS(
-			FileVersion fileVersion, File file, boolean thumbnail)
+			FileVersion fileVersion, File file, int maxNumberOfPages,
+			boolean thumbnail)
 		throws Exception {
 
 		if (!_ghostscriptInitialized) {
@@ -553,6 +555,11 @@ public class PDFProcessorImpl
 		else {
 			arguments.add(
 				"-sOutputFile=" + getPreviewTempFilePath(tempFileId, -1));
+
+			if (maxNumberOfPages != 0) {
+				arguments.add("-dFirstPage=1");
+				arguments.add("-dLastPage=" + maxNumberOfPages);
+			}
 		}
 
 		arguments.add("-dTextAlphaBits=4");
@@ -651,7 +658,8 @@ public class PDFProcessorImpl
 	}
 
 	private void _generateImagesGS(
-			FileVersion fileVersion, InputStream inputStream)
+			FileVersion fileVersion, InputStream inputStream,
+			int maxNumberOfPages)
 		throws Exception {
 
 		File file = null;
@@ -659,7 +667,7 @@ public class PDFProcessorImpl
 		try {
 			file = FileUtil.createTempFile(inputStream);
 
-			_generateImagesGS(fileVersion, file);
+			_generateImagesGS(fileVersion, file, maxNumberOfPages);
 		}
 		finally {
 			FileUtil.delete(file);

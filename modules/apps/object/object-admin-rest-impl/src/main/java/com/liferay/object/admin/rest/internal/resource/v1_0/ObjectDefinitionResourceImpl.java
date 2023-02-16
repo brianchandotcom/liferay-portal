@@ -26,7 +26,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
-import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectValidationRuleDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
@@ -959,8 +958,12 @@ public class ObjectDefinitionResourceImpl
 	@Reference
 	private ObjectLayoutResource.Factory _objectLayoutResourceFactory;
 
-	@Reference
-	private ObjectRelationshipDTOConverter _objectRelationshipDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter)"
+	)
+	private DTOConverter
+		<com.liferay.object.model.ObjectRelationship, ObjectRelationship>
+			_objectRelationshipDTOConverter;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

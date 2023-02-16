@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -100,9 +99,10 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 		if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
 			TypeFactory typeFactory = TypeFactory.defaultInstance();
 
-			ObjectReader objectReader = _objectMapper.readerFor(
-				typeFactory.constructCollectionType(
-					ArrayList.class, AnalyticsChannel.class));
+			ObjectReader objectReader =
+				ObjectMapperHolder._objectMapper.readerFor(
+					typeFactory.constructCollectionType(
+						ArrayList.class, AnalyticsChannel.class));
 
 			List<AnalyticsChannel> analyticsChannels = objectReader.readValue(
 				content);
@@ -175,7 +175,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				return _objectMapper.readValue(
+				return ObjectMapperHolder._objectMapper.readValue(
 					content, AnalyticsDataSource.class);
 			}
 
@@ -247,16 +247,18 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 				List<AnalyticsChannel> analyticsChannels =
 					Collections.emptyList();
 
-				JsonNode jsonNode = _objectMapper.readTree(content);
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
 
 				JsonNode embeddedJsonNode = jsonNode.get("_embedded");
 
 				if (embeddedJsonNode != null) {
 					TypeFactory typeFactory = TypeFactory.defaultInstance();
 
-					ObjectReader objectReader = _objectMapper.readerFor(
-						typeFactory.constructCollectionType(
-							ArrayList.class, AnalyticsChannel.class));
+					ObjectReader objectReader =
+						ObjectMapperHolder._objectMapper.readerFor(
+							typeFactory.constructCollectionType(
+								ArrayList.class, AnalyticsChannel.class));
 
 					analyticsChannels = objectReader.readValue(
 						embeddedJsonNode.get("channels"));
@@ -338,10 +340,12 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				JsonNode jsonNode = _objectMapper.readTree(content);
+				JsonNode jsonNode = ObjectMapperHolder._objectMapper.readTree(
+					content);
 
-				ObjectReader objectReader = _objectMapper.readerFor(
-					AnalyticsChannel.class);
+				ObjectReader objectReader =
+					ObjectMapperHolder._objectMapper.readerFor(
+						AnalyticsChannel.class);
 
 				return objectReader.readValue(jsonNode.get("channel"));
 			}
@@ -399,7 +403,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				return _objectMapper.readValue(
+				return ObjectMapperHolder._objectMapper.readValue(
 					content, AnalyticsDataSource.class);
 			}
 
@@ -494,13 +498,6 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsCloudClientImpl.class);
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-		}
-	};
-
 	private long _commerceChannelClassNameId;
 
 	@Reference
@@ -524,7 +521,16 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private SettingsFactory _settingsFactory;
+	private static class ObjectMapperHolder {
+
+		private static final ObjectMapper _objectMapper = new ObjectMapper() {
+			{
+				configure(
+					DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+			}
+		};
+
+	}
 
 }

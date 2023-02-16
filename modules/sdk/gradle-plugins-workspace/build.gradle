@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import de.undercouch.gradle.tasks.download.Download
@@ -11,6 +12,7 @@ task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task copyHotFixZip(type: Copy)
 task copyRepo(type: Copy)
+task copyWorkspacesSamples
 task downloadBundle(type: Download)
 task downloadHotFixZip(type: Download)
 task downloadPluginsSdk(type: Download)
@@ -86,6 +88,30 @@ copyGradleTestDependencies {
 copyRepo {
 	from "src/gradleTest/repo"
 	into new File(buildDir, "gradleTest/repo")
+}
+
+copyWorkspacesSamples {
+	doLast {
+		copy {
+			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-minimal-workspace/client-extensions/sample-custom-element-1")
+			into "src/gradleTest/clientExtensionSamples/sample-custom-element-1"
+		}
+
+		copy {
+			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-minimal-workspace/client-extensions/sample-iframe-1")
+			into "src/gradleTest/clientExtensionSamples/sample-iframe-1"
+		}
+
+		copy {
+			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-minimal-workspace/client-extensions/sample-theme-css")
+			into "src/gradleTest/clientExtensionSamples/sample-theme-css"
+		}
+
+		copy {
+			from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/sample-minimal-workspace/client-extensions/sample-theme-favicon")
+			into "src/gradleTest/clientExtensionSamples/sample-theme-favicon"
+		}
+	}
 }
 
 dependencies {
@@ -166,6 +192,7 @@ gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn copyHotFixZip
 	dependsOn copyRepo
+	dependsOn copyWorkspacesSamples
 	dependsOn jar
 
 	deprecationMessagesAreFailures = false

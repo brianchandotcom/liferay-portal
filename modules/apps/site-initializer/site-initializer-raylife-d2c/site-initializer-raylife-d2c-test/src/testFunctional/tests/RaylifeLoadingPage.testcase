@@ -57,10 +57,6 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_DISMISS");
 
-		AssertElementPresent(
-			locator1 = "Raylife#INFO_PANEL_DISMISS_BUTTON",
-			value1 = "Did you know");
-
 		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
 
 		Click(

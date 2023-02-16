@@ -41,12 +41,13 @@ public class OperationRegistry {
 	}
 
 	public void register(Operation operation) {
-		PathConfiguration pathConfiguration = operation.getPathConfiguration();
+		Operation.PathConfiguration pathConfiguration =
+			operation.getPathConfiguration();
 
 		Pattern pattern = pathConfiguration.getPattern();
 
 		for (Operation existingOperation : _serviceTrackerList) {
-			PathConfiguration existingPathConfiguration =
+			Operation.PathConfiguration existingPathConfiguration =
 				existingOperation.getPathConfiguration();
 
 			Pattern existingPattern = existingPathConfiguration.getPattern();

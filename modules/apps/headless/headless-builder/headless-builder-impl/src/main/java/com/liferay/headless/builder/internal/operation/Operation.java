@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author Carlos Correa
@@ -173,6 +174,45 @@ public interface Operation {
 		}
 
 		private final Builder _builder;
+
+	}
+
+	public interface PathConfiguration {
+
+		public String getPath();
+
+		public List<String> getPathParameterNames();
+
+		public Pattern getPattern();
+
+	}
+
+	public class Response {
+
+		public Response(
+			String entityName, Map<String, InfoField> infoFields,
+			String schemaName) {
+
+			_entityName = entityName;
+			_infoFields = infoFields;
+			_schemaName = schemaName;
+		}
+
+		public String getEntityName() {
+			return _entityName;
+		}
+
+		public Map<String, InfoField> getInfoFields() {
+			return _infoFields;
+		}
+
+		public String getSchemaName() {
+			return _schemaName;
+		}
+
+		private final String _entityName;
+		private final Map<String, InfoField> _infoFields;
+		private final String _schemaName;
 
 	}
 

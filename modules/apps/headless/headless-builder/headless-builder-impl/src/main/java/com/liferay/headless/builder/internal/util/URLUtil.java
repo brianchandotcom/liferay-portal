@@ -15,7 +15,7 @@
 package com.liferay.headless.builder.internal.util;
 
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
-import com.liferay.headless.builder.internal.operation.PathConfiguration;
+import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  */
 public class URLUtil {
 
-	public static PathConfiguration getPathConfiguration(
+	public static Operation.PathConfiguration getPathConfiguration(
 		String path, String version) {
 
 		final String absolutePath;
@@ -48,7 +48,7 @@ public class URLUtil {
 				StringPool.SLASH, version, path);
 		}
 
-		return new PathConfiguration() {
+		return new Operation.PathConfiguration() {
 
 			@Override
 			public String getPath() {
@@ -88,7 +88,7 @@ public class URLUtil {
 	}
 
 	public static Map<String, String> getPathParams(
-		String path, PathConfiguration pathConfiguration) {
+		String path, Operation.PathConfiguration pathConfiguration) {
 
 		List<String> pathParamNames = pathConfiguration.getPathParameterNames();
 

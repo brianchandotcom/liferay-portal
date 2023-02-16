@@ -15,7 +15,7 @@
 package com.liferay.headless.builder.internal.util;
 
 import com.liferay.headless.builder.internal.dto.HeadlessBuilderDTO;
-import com.liferay.headless.builder.internal.operation.Response;
+import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -53,7 +53,7 @@ public class HeadlessBuilderUtil {
 
 	public static HeadlessBuilderDTO toDTO(
 		InfoItemFieldValues infoItemFieldValues, long primaryKey,
-		Response response) {
+		Operation.Response response) {
 
 		HeadlessBuilderDTO headlessBuilderDTO = new HeadlessBuilderDTO();
 

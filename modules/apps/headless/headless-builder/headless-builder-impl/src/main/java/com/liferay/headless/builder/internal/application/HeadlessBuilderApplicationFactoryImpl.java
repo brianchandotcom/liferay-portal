@@ -19,7 +19,6 @@ import com.liferay.headless.builder.application.HeadlessBuilderApplicationFactor
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.headless.builder.internal.operation.OperationRegistry;
-import com.liferay.headless.builder.internal.operation.PathConfiguration;
 import com.liferay.headless.builder.internal.operation.handler.OperationHandler;
 import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.info.field.InfoField;
@@ -215,7 +214,7 @@ public class HeadlessBuilderApplicationFactoryImpl
 	}
 
 	private List<Operation> _getOperations(
-			long companyId, PathConfiguration pathConfiguration,
+			long companyId, Operation.PathConfiguration pathConfiguration,
 			PathItem pathItem, Map<String, Schema> schemas)
 		throws Exception {
 
@@ -288,10 +287,9 @@ public class HeadlessBuilderApplicationFactoryImpl
 					}
 
 					builder.withResponse(
-						new com.liferay.headless.builder.internal.operation.
-							Response(
-								schemaDefinition.getEntityName(), infoFields,
-								schemaName),
+						new Operation.Response(
+							schemaDefinition.getEntityName(), infoFields,
+							schemaName),
 						entry2.getKey(), httpCode);
 				}
 			}

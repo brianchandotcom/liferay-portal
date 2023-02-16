@@ -18,7 +18,6 @@ import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.headless.builder.internal.operation.OperationContext;
 import com.liferay.headless.builder.internal.operation.OperationRegistry;
-import com.liferay.headless.builder.internal.operation.PathConfiguration;
 import com.liferay.headless.builder.internal.operation.handler.OperationHandler;
 import com.liferay.headless.builder.internal.util.URLUtil;
 import com.liferay.info.field.InfoField;
@@ -121,7 +120,7 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 				continue;
 			}
 
-			PathConfiguration pathConfiguration =
+			Operation.PathConfiguration pathConfiguration =
 				operation.getPathConfiguration();
 
 			Pattern pattern = pathConfiguration.getPattern();

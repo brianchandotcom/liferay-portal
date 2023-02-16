@@ -14,14 +14,15 @@
 
 package com.liferay.headless.builder.internal.util;
 
-import com.liferay.headless.builder.internal.operation.HeadlessBuilderEntry;
+import com.liferay.headless.builder.internal.dto.HeadlessBuilderDTO;
+import com.liferay.headless.builder.internal.operation.Response;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.PrimaryKeyInfoFieldType;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,25 +51,23 @@ public class HeadlessBuilderUtil {
 		return infoItemService;
 	}
 
-	public static HeadlessBuilderEntry toHeadlessBuilderEntry(
-		Collection<InfoFieldValue<Object>> infoFieldValues, long primaryKey,
-		String schemaName) {
+	public static HeadlessBuilderDTO toDTO(
+		InfoItemFieldValues infoItemFieldValues, long primaryKey,
+		Response response) {
 
-		HeadlessBuilderEntry headlessBuilderEntry = new HeadlessBuilderEntry();
+		HeadlessBuilderDTO headlessBuilderDTO = new HeadlessBuilderDTO();
 
-		Map<String, Object> content = new HashMap<>();
+		Map<String, InfoField> infoFields = response.getInfoFields();
 
-		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			content.put(infoField.getName(), infoFieldValue.getValue());
+		for (Map.Entry<String, InfoField> entry : infoFields.entrySet()) {
+			headlessBuilderDTO.put(
+				entry.getKey(),
+				_getValue(infoItemFieldValues, entry.getValue(), primaryKey));
 		}
 
-		headlessBuilderEntry.setContent(content);
-		headlessBuilderEntry.setName(schemaName);
-		headlessBuilderEntry.setPrimaryKey(primaryKey);
+		headlessBuilderDTO.setName(response.getSchemaName());
 
-		return headlessBuilderEntry;
+		return headlessBuilderDTO;
 	}
 
 	@Reference(unbind = "-")
@@ -76,6 +75,20 @@ public class HeadlessBuilderUtil {
 		InfoItemServiceRegistry infoItemServiceRegistry) {
 
 		_infoItemServiceRegistry = infoItemServiceRegistry;
+	}
+
+	private static Object _getValue(
+		InfoItemFieldValues infoItemFieldValues, InfoField infoField,
+		long primaryKey) {
+
+		if (infoField.getInfoFieldType() instanceof PrimaryKeyInfoFieldType) {
+			return primaryKey;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(infoField.getName());
+
+		return infoFieldValue.getValue();
 	}
 
 	private static InfoItemServiceRegistry _infoItemServiceRegistry;

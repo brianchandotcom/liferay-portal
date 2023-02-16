@@ -15,23 +15,18 @@
 package com.liferay.headless.builder.internal.operation.handler;
 
 import com.liferay.headless.builder.internal.constants.HeadlessBuilderConstants;
-import com.liferay.headless.builder.internal.dto.converter.HeadlessBuilderElementDTOConverter;
 import com.liferay.headless.builder.internal.operation.Operation;
 import com.liferay.headless.builder.internal.operation.OperationContext;
 import com.liferay.headless.builder.internal.operation.Response;
 import com.liferay.headless.builder.internal.util.HeadlessBuilderUtil;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
@@ -73,17 +68,12 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 					response.getEntityName(),
 					InfoItemFieldValuesProvider.class);
 
-			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
-
 			return javax.ws.rs.core.Response.status(
 				javax.ws.rs.core.Response.Status.OK
 			).entity(
-				_dtoConverter.toDTO(
-					_getDTOConverterContext(response),
-					HeadlessBuilderUtil.toHeadlessBuilderEntry(
-						infoItemFieldValues.getInfoFieldValues(), primaryKey,
-						response.getSchemaName()))
+				HeadlessBuilderUtil.toDTO(
+					infoItemFieldValuesProvider.getInfoItemFieldValues(object),
+					primaryKey, response)
 			).build();
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
@@ -102,17 +92,5 @@ public class GetByPrimaryKeyOperationHandler implements OperationHandler {
 			).build();
 		}
 	}
-
-	private DTOConverterContext _getDTOConverterContext(Response response) {
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(null, null, null, null, null);
-
-		dtoConverterContext.setAttribute("response", response);
-
-		return dtoConverterContext;
-	}
-
-	@Reference
-	private HeadlessBuilderElementDTOConverter _dtoConverter;
 
 }

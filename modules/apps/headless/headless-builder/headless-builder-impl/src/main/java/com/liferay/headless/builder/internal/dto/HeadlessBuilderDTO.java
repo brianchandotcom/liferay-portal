@@ -12,39 +12,31 @@
  * details.
  */
 
-package com.liferay.headless.builder.internal.operation;
+package com.liferay.headless.builder.internal.dto;
+
+import com.liferay.portal.vulcan.message.RootElementProvider;
+
+import java.util.HashMap;
 
 /**
  * @author Carlos Correa
  */
-public class HeadlessBuilderEntry {
-
-	public Object getContent() {
-		return _content;
-	}
+public class HeadlessBuilderDTO
+	extends HashMap<String, Object> implements RootElementProvider {
 
 	public String getName() {
 		return _name;
 	}
 
-	public long getPrimaryKey() {
-		return _primaryKey;
-	}
-
-	public void setContent(Object content) {
-		_content = content;
+	@Override
+	public String getRootElement() {
+		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
 	}
 
-	public void setPrimaryKey(long primaryKey) {
-		_primaryKey = primaryKey;
-	}
-
-	private Object _content;
 	private String _name;
-	private long _primaryKey;
 
 }

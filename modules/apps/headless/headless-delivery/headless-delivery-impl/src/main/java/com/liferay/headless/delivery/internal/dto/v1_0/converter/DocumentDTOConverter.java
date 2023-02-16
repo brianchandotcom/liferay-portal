@@ -92,7 +92,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = {DocumentDTOConverter.class, DTOConverter.class}
+	service = DTOConverter.class
 )
 public class DocumentDTOConverter
 	implements DTOConverter<DLFileEntry, Document> {

@@ -776,16 +776,76 @@ definition {
 				key_productSku = "MIN",
 				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
 		}
+	}
 
-		task ("And the search bar color is changed to red") {
+	@description = "This is a test for COMMERCE-10474. Buyer user can press enter on quick add to cart search bar and the text doesn't disappear"
+	@priority = 4
+	test CanPressEnterOnQuickAddToCartSearchBar {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And types some characters on the quick add-to-cart search bar") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "abc123");
+		}
+
+		task ("And the buyer presses enter keyboard button") {
 			KeyPress(
 				locator1 = "Publications#KEYWORD_TEXTFIELD",
 				value1 = "\ENTER");
+		}
 
-			/*There's the bug COMMERCE-10474 when pressing the enter keyboard button on the searchbar
-			but I'm using it in this test anyway because in this particular case the bug doesn't affect it*/
+		task ("Then no alert error is thrown") {
+			AssertElementNotPresent(locator1 = "TextInput#ALERT");
+		}
 
-			AssertElementPresent(locator1 = "TextInput#ALERT");
+		task ("And the search bar is not cleared") {
+			AssertElementPresent(
+				key_entryValue = "abc123",
+				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 		}
 	}
 
@@ -1330,6 +1390,71 @@ definition {
 					locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
 					tagName = ${productSku});
 			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10474. Buyer user can type comma on quick add to cart search bar and the text doesn't disappear"
+	@priority = 4
+	test CanTypeCommaOnQuickAddToCartSearchBar {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+			Button.click(button = "Yes");
+
+			// To be removed when COMMERCE-10472 is fixed
+
+		}
+
+		task ("And types some characters along with a comma on the quick add-to-cart search bar") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = ",abc123,");
+		}
+
+		task ("Then no alert error is thrown") {
+			AssertElementNotPresent(locator1 = "TextInput#ALERT");
+		}
+
+		task ("And the search bar is not cleared") {
+			AssertElementPresent(
+				key_entryValue = ",abc123,",
+				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 		}
 	}
 

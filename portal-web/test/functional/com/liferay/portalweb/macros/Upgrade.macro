@@ -980,6 +980,24 @@ definition {
 		BlogsEntry.viewStatus(entryStatus = "Approved");
 	}
 
+	macro changeDisplayStyle {
+		task ("Change document view type but account for flakiness seen in test execution history") {
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+
+			if (IsElementNotPresent(key_menuItem = StringUtil.upperCaseFirstLetter(${displayStyle}), locator1 = "MenuItem#ANY_MENU_ITEM")) {
+				Refresh();
+
+				WaitForPageLoad();
+
+				Click.mouseOverClick(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
+			}
+
+			MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter(${displayStyle}));
+		}
+	}
+
 	macro configurePageEditor {
 		task ("View fragment persists and could add another fragment in page editor") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
@@ -6430,21 +6448,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		task ("Change document view type but account for flakiness seen in test execution history") {
-			WaitForPageLoad();
-
-			Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
-
-			if (IsElementNotPresent(key_menuItem = "List", locator1 = "MenuItem#ANY_MENU_ITEM")) {
-				Refresh();
-
-				WaitForPageLoad();
-
-				Click.mouseOverClick(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
-			}
-
-			MenuItem.click(menuItem = "List");
-		}
+		Upgrade.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
@@ -6512,7 +6516,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		Upgrade.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 

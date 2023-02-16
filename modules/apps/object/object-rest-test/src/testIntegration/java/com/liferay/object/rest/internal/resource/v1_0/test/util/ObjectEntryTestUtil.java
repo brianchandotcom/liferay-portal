@@ -14,12 +14,14 @@
 
 package com.liferay.object.rest.internal.resource.v1_0.test.util;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -33,8 +35,17 @@ public class ObjectEntryTestUtil {
 			String objectFieldValue)
 		throws Exception {
 
+		long groupId = 0;
+
+		if (StringUtil.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			groupId = TestPropsValues.getGroupId();
+		}
+
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), groupId,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue

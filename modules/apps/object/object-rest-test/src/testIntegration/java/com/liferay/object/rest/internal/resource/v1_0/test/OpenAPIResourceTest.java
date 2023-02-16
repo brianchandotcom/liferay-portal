@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
@@ -75,7 +76,7 @@ public class OpenAPIResourceTest {
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
-			_user.getUserId());
+			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null, "/openapi", Http.Method.GET);

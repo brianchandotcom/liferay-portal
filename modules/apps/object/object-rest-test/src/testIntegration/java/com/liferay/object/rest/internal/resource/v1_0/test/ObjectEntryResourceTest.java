@@ -15,6 +15,7 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -119,17 +122,34 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		_siteScopedObjectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", true, true, null,
+						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
+						false)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
+			_OBJECT_FIELD_VALUE_1);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			_objectRelationship);
+		if (_objectRelationship != null) {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				_objectRelationship);
+		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_siteScopedObjectDefinition1);
 	}
 
 	@Test
@@ -258,6 +278,37 @@ public class ObjectEntryResourceTest {
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-161364", "false"
 			).build());
+	}
+
+	@Test
+	public void testGetScopeScopeKeyObjectEntriesPage() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
+
+			JSONObject jsonObject = HTTPTestUtil.invoke(
+				null,
+				_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
+					RandomTestUtil.randomLong(),
+				Http.Method.GET);
+
+			Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+		}
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null,
+			_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
+				TestPropsValues.getGroupId(),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			itemJSONObject.getLong("id"),
+			_siteScopedObjectEntry1.getObjectEntryId());
 	}
 
 	@Test
@@ -685,6 +736,10 @@ public class ObjectEntryResourceTest {
 			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
 	}
 
+	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
+		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+			"WebApplicationExceptionMapper";
+
 	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
 		RandomTestUtil.randomString();
 
@@ -719,6 +774,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private ObjectDefinition _siteScopedObjectDefinition1;
+	private ObjectEntry _siteScopedObjectEntry1;
 
 	private enum FilterOperator {
 

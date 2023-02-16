@@ -36,6 +36,7 @@ import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportCon
 import com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsConstants;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -181,15 +182,16 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 			return;
 		}
 
+		List<Dictionary<String, Object>> dictionaries =
+			_ldapServerConfigurationProvider.getConfigurationsProperties(
+				companyId);
+
 		String[] orderedLdapServerIds = orderedLdapServerIdsString.split(",");
 
 		for (int i = 0; i < orderedLdapServerIds.length; i++) {
 			long ldapServerId = GetterUtil.getLong(orderedLdapServerIds[i]);
 
-			for (Dictionary<String, Object> dictionary :
-					_ldapServerConfigurationProvider.
-						getConfigurationsProperties(companyId)) {
-
+			for (Dictionary<String, Object> dictionary : dictionaries) {
 				long dictionaryLDAPServerId = GetterUtil.getLong(
 					dictionary.get(LDAPConstants.LDAP_SERVER_ID));
 

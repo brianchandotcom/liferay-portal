@@ -29,3 +29,19 @@ String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get
 		});
 	</aui:script>
 </c:if>
+
+<%
+String friendlyURLDuplicatedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLDuplicated"));
+%>
+
+<c:if test="<%= Validator.isNotNull(friendlyURLDuplicatedMessage) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message: '<%= friendlyURLDuplicatedMessage %>',
+			toastProps: {
+				autoClose: 20000,
+			},
+			type: 'warning',
+		});
+	</aui:script>
+</c:if>

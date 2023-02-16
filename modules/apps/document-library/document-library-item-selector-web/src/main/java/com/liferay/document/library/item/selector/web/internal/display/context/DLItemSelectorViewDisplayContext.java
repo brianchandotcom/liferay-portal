@@ -22,11 +22,13 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.item.selector.web.internal.criterion.DLItemSelectorCriterionCreationMenuRestrictionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -91,6 +93,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	public DLItemSelectorViewDisplayContext(
 		AssetVocabularyService assetVocabularyService,
 		ClassNameLocalService classNameLocalService,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		DLItemSelectorView<T> dlItemSelectorView,
 		ModelResourcePermission<Folder> folderModelResourcePermission,
 		HttpServletRequest httpServletRequest, T itemSelectorCriterion,
@@ -102,6 +105,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_dlItemSelectorView = dlItemSelectorView;
 		_folderModelResourcePermission = folderModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
@@ -373,8 +377,39 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			(InfoItemItemSelectorCriterion)_itemSelectorCriterion;
 
-		return GetterUtil.getLong(
-			infoItemItemSelectorCriterion.getItemSubtype());
+		long fileEntryTypeId = GetterUtil.getLong(
+			infoItemItemSelectorCriterion.getItemSubtype(), -1);
+
+		DLFileEntryType dlFileEntryType = null;
+
+		if (fileEntryTypeId >= 0) {
+			dlFileEntryType = _dlFileEntryTypeLocalService.fetchFileEntryType(
+				fileEntryTypeId);
+		}
+
+		if (dlFileEntryType == null) {
+			fileEntryTypeId = _getFileEntryTypeId(
+				infoItemItemSelectorCriterion.getItemSubtype());
+		}
+
+		return fileEntryTypeId;
+	}
+
+	private long _getFileEntryTypeId(String itemSubtype) {
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchFileEntryType(
+				_themeDisplay.getScopeGroupId(), itemSubtype);
+
+		if (dlFileEntryType == null) {
+			dlFileEntryType = _dlFileEntryTypeLocalService.fetchFileEntryType(
+				_themeDisplay.getCompanyGroupId(), itemSubtype);
+		}
+
+		if (dlFileEntryType != null) {
+			return dlFileEntryType.getFileEntryTypeId();
+		}
+
+		return 0;
 	}
 
 	private long _getFolderId(HttpServletRequest httpServletRequest)
@@ -602,6 +637,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	private final AssetVocabularyService _assetVocabularyService;
 	private final ClassNameLocalService _classNameLocalService;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private Boolean _filterByFileEntryType;
 	private Long _folderId;

@@ -511,9 +511,8 @@ public class Main {
 
 		int page = 1;
 		List<Document> documentFolderDocuments = new ArrayList<>();
-		boolean fetchedAllItems = false;
 
-		while (!fetchedAllItems) {
+		while (true) {
 			Page<Document> documentsPage =
 				_documentResource.getDocumentFolderDocumentsPage(
 					documentFolderId, false, null, null, null,
@@ -522,7 +521,7 @@ public class Main {
 			documentFolderDocuments.addAll(documentsPage.getItems());
 
 			if (documentsPage.getLastPage() == page) {
-				fetchedAllItems = true;
+				break;
 			}
 
 			page++;
@@ -732,9 +731,8 @@ public class Main {
 
 		int page = 1;
 		List<StructuredContent> structuredContents = new ArrayList<>();
-		boolean fetchedAllItems = false;
 
-		while (!fetchedAllItems) {
+		while (true) {
 			Page<StructuredContent> structuredContentsPage =
 				_structuredContentResource.getSiteStructuredContentsPage(
 					siteId, true, null, null, null, Pagination.of(page, 100),
@@ -743,7 +741,7 @@ public class Main {
 			structuredContents.addAll(structuredContentsPage.getItems());
 
 			if (structuredContentsPage.getLastPage() == page) {
-				fetchedAllItems = true;
+				break;
 			}
 
 			page++;

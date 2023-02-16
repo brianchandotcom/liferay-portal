@@ -113,6 +113,12 @@ function appendXMLActions(
 				);
 			}
 
+			if (isValidValue(status, index)) {
+				buffer.push(
+					createTagWithEscapedContent('status', status[index])
+				);
+			}
+
 			if (isValidValue(priority, index)) {
 				buffer.push(
 					createTagWithEscapedContent('priority', priority[index])
@@ -125,12 +131,6 @@ function appendXMLActions(
 						'executionType',
 						executionType[index]
 					)
-				);
-			}
-
-			if (isValidValue(status, index)) {
-				buffer.push(
-					createTagWithEscapedContent('status', status[index])
 				);
 			}
 

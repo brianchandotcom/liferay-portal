@@ -112,7 +112,7 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 				<clay:dropdown-menu
 					additionalProps='<%=
 						HashMapBuilder.<String, Object>put(
-							"currentURL", currentURL
+							"currentURL", configurationRenderURL.toString()
 						).build()
 					%>'
 					aria-label="<%= title %>"

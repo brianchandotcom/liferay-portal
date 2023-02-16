@@ -57,7 +57,7 @@ DeserializeUtil.prototype = {
 					});
 
 					node.actions = node.actions.filter((item) => {
-						if (item.script || item.script === '') {
+						if (!item.template) {
 							return item;
 						}
 					});

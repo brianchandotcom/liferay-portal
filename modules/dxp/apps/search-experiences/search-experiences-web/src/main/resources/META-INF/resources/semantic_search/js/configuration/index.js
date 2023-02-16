@@ -442,7 +442,26 @@ export default function ({
 							<ClayForm.FeedbackGroup>
 								<ClayForm.Text>
 									{Liferay.Language.get(
-										'text-embedding-provider-hugging-face-help'
+										'text-embedding-provider-hugging-face-inference-api-help'
+									)}
+
+									<LearnMessageWithoutContext
+										className="ml-1"
+										learnMessages={learnMessages}
+										resourceKey="semantic-search"
+									/>
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
+						)}
+
+						{formik.values
+							.textEmbeddingProviderConfigurationJSONs?.[index]
+							?.providerName ===
+							TEXT_EMBEDDING_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_ENDPOINT && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'text-embedding-provider-hugging-face-inference-endpoint-help'
 									)}
 
 									<LearnMessageWithoutContext

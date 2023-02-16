@@ -24,6 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.Set;
 
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -63,7 +64,8 @@ public class DispatchTriggerResourceTest
 	@Override
 	@Test
 	public void testPostDispatchTriggerRun() throws Exception {
-		_addDispatchTrigger(randomDispatchTrigger());
+		dispatchTriggerResource.postDispatchTriggerRun(
+			_addDispatchTrigger(randomDispatchTrigger()).getId());
 	}
 
 	@Override
@@ -76,7 +78,8 @@ public class DispatchTriggerResourceTest
 					RandomTestUtil.randomString());
 				dispatchTaskClusterMode = RandomTestUtil.randomInt();
 				dispatchTaskExecutorType = _getRandomDispatchExecutorType();
-				dispatchTaskSettings = null;
+				dispatchTaskSettings = LocalizedMapUtil.getI18nMap(
+					RandomTestUtil.randomLocaleStringMap());
 				endDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

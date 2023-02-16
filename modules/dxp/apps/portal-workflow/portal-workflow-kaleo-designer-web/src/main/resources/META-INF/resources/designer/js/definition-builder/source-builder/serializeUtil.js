@@ -80,7 +80,7 @@ function appendXMLActions(
 			priority,
 			script,
 			scriptLanguage,
-			updateStatus
+			status,
 		} = actions;
 
 		const xmlAction = XMLUtil.createObj(actionNodeName || 'action');
@@ -104,7 +104,7 @@ function appendXMLActions(
 				buffer.push(XMLUtil.create('script', cdata(script[index])));
 			}
 
-			if(!updateStatus) {
+			if (!status) {
 				buffer.push(
 					createTagWithEscapedContent(
 						'scriptLanguage',
@@ -128,12 +128,9 @@ function appendXMLActions(
 				);
 			}
 
-			if (isValidValue(updateStatus, index)) {
+			if (isValidValue(status, index)) {
 				buffer.push(
-					createTagWithEscapedContent(
-						'status',
-						updateStatus[index]
-					)
+					createTagWithEscapedContent('status', status[index])
 				);
 			}
 

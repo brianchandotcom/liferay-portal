@@ -37,10 +37,10 @@ const BaseActionsInfo = ({
 	setScript,
 	setScriptLanguage,
 	setSelectedActionType,
-	setUpdateStatus,
+	setStatus,
+	status,
 	statuses,
 	updateActionInfo,
-	updateStatus
 }) => {
 	useEffect(() => {
 		if (executionTypeOptions) {
@@ -76,6 +76,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
+							status,
 						})
 					}
 					onChange={({target}) => {
@@ -101,6 +102,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
+							status,
 						})
 					}
 					onChange={({target}) => {
@@ -121,7 +123,7 @@ const BaseActionsInfo = ({
 				<ClaySelect
 					aria-label="Select"
 					className={!selectedActionType ? 'select-placeholder' : ''}
-					defaultValue={scriptLanguage}
+					defaultValue={status ? 'update-status' : scriptLanguage}
 					id="type"
 					onChange={({target}) => {
 						setScriptLanguage(target.value);
@@ -140,7 +142,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
-							updateStatus
+							status,
 						})
 					}
 				>
@@ -196,38 +198,36 @@ const BaseActionsInfo = ({
 
 			{selectedActionType?.type === 'status' && (
 				<ClayForm.Group>
-					<label htmlFor="update-status">
-						Status
-					</label>
+					<label htmlFor="update-status">Status</label>
 
 					<ClaySelect
-					aria-label="Select"
-					defaultValue={updateStatus}
-					id="update-status"
-					onChange={({target}) => {
-						setUpdateStatus(target.value);
-					}}
-					onClickCapture={() =>
-						updateActionInfo({
-							description,
-							executionType,
-							name,
-							priority,
-							scriptLanguage,
-							updateStatus,
-						})
-					}
-				>
-					{statuses &&
-						statuses.map((item) => (
-							<ClaySelect.Option
-								key={item.value}
-								label={item.label}
-								value={item.value}
-							/>
-						))}
-				</ClaySelect>
-			</ClayForm.Group>
+						aria-label="Select"
+						defaultValue={status}
+						id="update-status"
+						onChange={({target}) => {
+							setStatus(target.value);
+						}}
+						onClickCapture={() =>
+							updateActionInfo({
+								description,
+								executionType,
+								name,
+								priority,
+								scriptLanguage,
+								status,
+							})
+						}
+					>
+						{statuses &&
+							statuses.map((item) => (
+								<ClaySelect.Option
+									key={item.value}
+									label={item.label}
+									value={item.value}
+								/>
+							))}
+					</ClaySelect>
+				</ClayForm.Group>
 			)}
 
 			{typeof executionTypeInput !== 'undefined' && (
@@ -251,6 +251,7 @@ const BaseActionsInfo = ({
 								priority,
 								script,
 								scriptLanguage,
+								status,
 							})
 						}
 					>
@@ -297,6 +298,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
+							status,
 						});
 					}}
 					onChange={({target}) => {

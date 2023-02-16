@@ -26,14 +26,17 @@ const ActionsInfo = ({
 	sectionsLength,
 	setSections,
 }) => {
-	const {functionActionExecutors, selectedItem, setSelectedItem, statuses} = useContext(
-		DiagramBuilderContext
-	);
+	const {
+		functionActionExecutors,
+		selectedItem,
+		setSelectedItem,
+		statuses,
+	} = useContext(DiagramBuilderContext);
 	const {actions} = selectedItem.data;
 
 	const [script, setScript] = useState(actions?.script?.[index] || '');
 
-	const [updateStatus, setUpdateStatus] = useState(actions?.updateStatus?.[index] || '');
+	const [status, setStatus] = useState(actions?.status?.[index] || '');
 
 	const [description, setDescription] = useState(
 		actions?.description?.[index] || ''
@@ -82,8 +85,21 @@ const ActionsInfo = ({
 		actions?.scriptLanguage?.[index] || 'select-a-script-type'
 	);
 
+	let defaultActionType;
+
+	if (status) {
+		defaultActionType = actionTypeOptions.find(
+			(item) => item.value === 'update-status'
+		);
+	}
+	else {
+		defaultActionType = actionTypeOptions.find(
+			(item) => item.value === scriptLanguage
+		);
+	}
+
 	const [selectedActionType, setSelectedActionType] = useState(
-		actionTypeOptions.find((item) => item.value === scriptLanguage)
+		defaultActionType
 	);
 
 	if (
@@ -120,8 +136,9 @@ const ActionsInfo = ({
 			item.name &&
 			(item.script ||
 				(selectedActionType?.type === 'functionActionExecutor' &&
-					item.script === '')) &&
-			item.executionType || item.updateStatus
+					item.script === '') ||
+				item.status) &&
+			item.executionType
 		) {
 			setSections((prev) => {
 				const updatedSection = [...prev];
@@ -154,7 +171,7 @@ const ActionsInfo = ({
 						({scriptLanguage}) => scriptLanguage
 					),
 					sectionsData: values.map((values) => values),
-					updateStatus: values.map((updateStatus) => updateStatus.updateStatus)
+					status: values.map((status) => status.status),
 				},
 			},
 		}));
@@ -185,10 +202,10 @@ const ActionsInfo = ({
 				setScript={setScript}
 				setScriptLanguage={setScriptLanguage}
 				setSelectedActionType={setSelectedActionType}
-				setUpdateStatus={setUpdateStatus}
+				setStatus={setStatus}
+				status={status}
 				statuses={statuses}
 				updateActionInfo={updateActionInfo}
-				updateStatus={updateStatus}
 			/>
 
 			<div className="section-buttons-area">

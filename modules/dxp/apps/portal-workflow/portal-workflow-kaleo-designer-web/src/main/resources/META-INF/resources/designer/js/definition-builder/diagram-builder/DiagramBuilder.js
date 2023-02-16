@@ -391,7 +391,7 @@ export default function DiagramBuilder() {
 		setElementRectangle,
 		setSelectedItem,
 		setSelectedItemNewId,
-		statuses
+		statuses,
 	};
 
 	return (

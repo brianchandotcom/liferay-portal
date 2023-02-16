@@ -25,7 +25,7 @@ export function parseActions(node) {
 			item,
 			'script-language'
 		);
-		actions.updateStatus = parseProperty(actions, item, 'status');
+		actions.status = parseProperty(actions, item, 'status');
 	});
 
 	return actions;

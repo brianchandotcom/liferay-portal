@@ -89,11 +89,11 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 			List<Transition> defaultTransitions = TransformUtil.transform(
 				outgoingTransitions.values(),
 				transition -> {
-					if (transition.isDefault()) {
-						return transition;
+					if (!transition.isDefault()) {
+						return null;
 					}
 
-					return null;
+					return transition;
 				});
 
 			if (defaultTransitions.size() > 1) {

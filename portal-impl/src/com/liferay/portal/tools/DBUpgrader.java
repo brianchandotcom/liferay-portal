@@ -144,16 +144,9 @@ public class DBUpgrader {
 			InitUtil.initWithSpring(
 				ListUtil.fromArray(
 					PropsUtil.getArray(PropsKeys.SPRING_CONFIGS)),
-				true, false,
-				() -> {
-					if (PropsValues.UPGRADE_REPORT_ENABLED) {
-						startUpgradeReportLogAppender();
-					}
-				});
+				true, false, () -> StartupHelperUtil.setUpgrading(true));
 
 			StartupHelperUtil.printPatchLevel();
-
-			StartupHelperUtil.setUpgrading(true);
 
 			upgradePortal();
 
@@ -176,9 +169,7 @@ public class DBUpgrader {
 			result = "Failed";
 		}
 		finally {
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				stopUpgradeReportLogAppender();
-			}
+			StartupHelperUtil.setUpgrading(false);
 
 			System.out.println(
 				StringBundler.concat(

@@ -393,10 +393,6 @@ public class MainServlet extends HttpServlet {
 		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
 			DBUpgrader.upgradeModules();
 
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				DBUpgrader.stopUpgradeReportLogAppender();
-			}
-
 			StartupHelperUtil.setUpgrading(false);
 		}
 

@@ -68,7 +68,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -410,7 +409,7 @@ public class FIDO2BrowserSetupMFAChecker
 		return _relyingParty.startAssertion(
 			StartAssertionOptions.builder(
 			).username(
-				Optional.of(user.getScreenName())
+				user.getScreenName()
 			).build());
 	}
 

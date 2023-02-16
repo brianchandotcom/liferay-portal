@@ -39,7 +39,9 @@ definition {
 		}
 
 		task ("Then displays list of headless resources") {
-			Click(locator1 = "CreateObject#OBJECT_LABEL");
+			Click(
+				key_label = "Provider",
+				locator1 = "FrontendDataSet#OPEN_DROPDOWN_MENU");
 
 			AssertElementPresent(
 				key_item = "Liferay Headless Delivery",

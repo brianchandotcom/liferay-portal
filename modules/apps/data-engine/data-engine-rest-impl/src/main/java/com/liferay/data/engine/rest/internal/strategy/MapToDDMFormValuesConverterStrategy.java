@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,7 +53,15 @@ public interface MapToDDMFormValuesConverterStrategy {
 
 		if (locale == null) {
 			for (Map.Entry<String, ?> entry : localizedValues.entrySet()) {
-				if (entry.getValue() instanceof Map) {
+				if (entry.getValue() instanceof Collection) {
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+						(Collection<?>)entry.getValue());
+
+					localizedValue.addString(
+						LocaleUtil.fromLanguageId(entry.getKey()),
+						jsonArray.toString());
+				}
+				else if (entry.getValue() instanceof Map) {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 						(Map)entry.getValue());
 
@@ -83,7 +92,13 @@ public interface MapToDDMFormValuesConverterStrategy {
 				return localizedValue;
 			}
 
-			if (localizedValues.get(languageId) instanceof Object[]) {
+			if (localizedValues.get(languageId) instanceof Collection) {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+					(Collection<?>)localizedValues.get(languageId));
+
+				localizedValue.addString(locale, jsonArray.toString());
+			}
+			else if (localizedValues.get(languageId) instanceof Object[]) {
 				JSONArray jsonArray = JSONUtil.putAll(
 					(Object[])localizedValues.get(languageId));
 

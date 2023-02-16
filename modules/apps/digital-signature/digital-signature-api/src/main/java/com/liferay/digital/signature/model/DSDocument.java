@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class DSDocument {
 
-	public String getAssignTabsToRecipientId() {
-		return assignTabsToRecipientId;
+	public String getAssignTabsToDSRecipientId() {
+		return assignTabsToDSRecipientId;
 	}
 
 	public String getData() {
@@ -50,8 +50,8 @@ public class DSDocument {
 		return uri;
 	}
 
-	public void setAssignTabsToRecipientId(String assignTabsToRecipientId) {
-		this.assignTabsToRecipientId = assignTabsToRecipientId;
+	public void setAssignTabsToDSRecipientId(String assignTabsToDSRecipientId) {
+		this.assignTabsToDSRecipientId = assignTabsToDSRecipientId;
 	}
 
 	public void setData(String data) {
@@ -80,7 +80,7 @@ public class DSDocument {
 
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
-			"assignTabsToRecipientId", getAssignTabsToRecipientId()
+			"assignTabsToRecipientId", getAssignTabsToDSRecipientId()
 		).put(
 			"documentBase64", getData()
 		).put(
@@ -94,7 +94,7 @@ public class DSDocument {
 		);
 	}
 
-	protected String assignTabsToRecipientId;
+	protected String assignTabsToDSRecipientId;
 	protected String data;
 	protected String dsDocumentId;
 	protected String fileExtension;

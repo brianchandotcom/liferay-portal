@@ -76,7 +76,7 @@ public class DSEnvelopeUtil {
 		return new DSDocument() {
 			{
 				assignTabsToDSRecipientId =
-					dsDocument.getAssignTabsToRecipientId();
+					dsDocument.getAssignTabsToDSRecipientId();
 				data = dsDocument.getData();
 				fileExtension = dsDocument.getFileExtension();
 				id = dsDocument.getDSDocumentId();
@@ -92,7 +92,7 @@ public class DSEnvelopeUtil {
 
 		return new com.liferay.digital.signature.model.DSDocument() {
 			{
-				assignTabsToRecipientId =
+				assignTabsToDSRecipientId =
 					dsDocument.getAssignTabsToDSRecipientId();
 				data = dsDocument.getData();
 				dsDocumentId = dsDocument.getId();

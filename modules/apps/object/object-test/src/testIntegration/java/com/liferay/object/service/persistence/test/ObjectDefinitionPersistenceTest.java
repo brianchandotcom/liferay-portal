@@ -169,6 +169,8 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setModifiable(RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setPanelAppOrder(RandomTestUtil.randomString());
@@ -258,6 +260,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryHistory(),
 			newObjectDefinition.isEnableObjectEntryHistory());
+		Assert.assertEquals(
+			existingObjectDefinition.isModifiable(),
+			newObjectDefinition.isModifiable());
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
 		Assert.assertEquals(
@@ -436,11 +441,12 @@ public class ObjectDefinitionPersistenceTest {
 			true, "descriptionObjectFieldId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "dbTableName", true,
 			"label", true, "className", true, "enableCategorization", true,
-			"enableComments", true, "enableObjectEntryHistory", true, "name",
-			true, "panelAppOrder", true, "panelCategoryKey", true,
-			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
-			true, "system", true, "version", true, "status", true);
+			"enableComments", true, "enableObjectEntryHistory", true,
+			"modifiable", true, "name", true, "panelAppOrder", true,
+			"panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
+			"scope", true, "storageType", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -793,6 +799,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setModifiable(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
 

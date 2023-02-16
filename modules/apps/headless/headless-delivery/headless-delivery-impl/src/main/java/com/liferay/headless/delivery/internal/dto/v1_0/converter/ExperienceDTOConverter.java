@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.segments.model.SegmentsExperience",
-	service = {DTOConverter.class, ExperienceDTOConverter.class}
+	service = DTOConverter.class
 )
 public class ExperienceDTOConverter
 	implements DTOConverter<SegmentsExperience, Experience> {

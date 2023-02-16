@@ -4,7 +4,9 @@
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 		"fieldNameMappingMap": {
 		},
-		"parameters": null,
+		"parameters": {
+			"createStrategy": "UPSERT"
+		},
 		"version": "v1.0"
 	},
 	"facets": [

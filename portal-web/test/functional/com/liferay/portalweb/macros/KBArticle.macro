@@ -1101,6 +1101,30 @@ definition {
 		}
 	}
 
+	macro viewActiveActionsManagementToolbar {
+		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER_DISABLED");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON_DISABLED");
+
+		AssertElementNotPresent(locator1 = "TextInput#SEARCH_DISABLED");
+
+		AssertVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+		AssertVisible(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertVisible(locator1 = "ManagementBar#ORDER_ICON_GENERIC_BUTTON");
+
+		AssertVisible(locator1 = "TextInput#SEARCH");
+
+		ManagementBar.clickInfo();
+
+		AssertVisible(
+			key_title = ${title},
+			locator1 = "Header#H4_TITLE");
+	}
+
 	macro viewArticleHistoryCP {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
@@ -1435,6 +1459,10 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No articles were found.");
+
+			if (isSet(disabledActionToolbar)) {
+				AssertElementPresent(locator1 = "TextInput#SEARCH_DISABLED");
+			}
 		}
 
 		AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_TABLE_KB_GENERIC");

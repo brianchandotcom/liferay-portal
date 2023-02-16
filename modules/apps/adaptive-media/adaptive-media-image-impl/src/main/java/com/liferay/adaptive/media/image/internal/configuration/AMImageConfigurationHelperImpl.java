@@ -553,7 +553,9 @@ public class AMImageConfigurationHelperImpl
 			modifiableSettings.store();
 
 			_portalCache.put(
-				companyId, new ArrayList<>(amImageConfigurationEntries));
+				companyId,
+				(ArrayList<AMImageConfigurationEntry>)
+					amImageConfigurationEntries);
 		}
 		catch (SettingsException | ValidatorException exception) {
 			throw new AMRuntimeException.InvalidConfiguration(exception);

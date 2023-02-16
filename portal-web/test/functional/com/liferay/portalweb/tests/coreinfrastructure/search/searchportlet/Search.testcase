@@ -2036,6 +2036,36 @@ definition {
 	}
 
 	@priority = 3
+	test FolderFacetEntryPresentAfterSelectingCategoryFacetEntry {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "fuji",
+			vocabularyName = "Vocabulary");
+
+		JSONFolder.addFolder(
+			dmFolderName = "fruit",
+			groupName = "Guest");
+
+		JSONDocument.addFile(
+			assetCategoryIds = ${categoryId},
+			dmDocumentTitle = "apple",
+			folderName = "fruit",
+			groupName = "Guest");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "fuji");
+
+		AssertElementPresent(
+			checkboxName = "fruit",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
+	@priority = 3
 	test IsLocalizedInSearchAdmin {
 		property test.name.skip.portal.instance = "Search#IsLocalizedInSearchAdmin";
 

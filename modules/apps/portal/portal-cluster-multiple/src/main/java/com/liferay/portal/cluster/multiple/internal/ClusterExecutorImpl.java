@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.HashUtil;
@@ -54,7 +56,6 @@ import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -64,7 +65,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -76,9 +76,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tina Tian
@@ -90,18 +87,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = {ClusterExecutor.class, ClusterExecutorImpl.class}
 )
 public class ClusterExecutorImpl implements ClusterExecutor {
-
-	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void addClusterEventListener(
-		ClusterEventListener clusterEventListener) {
-
-		_clusterEventListeners.addIfAbsent(clusterEventListener);
-	}
 
 	@Override
 	public FutureClusterResponses execute(ClusterRequest clusterRequest) {
@@ -176,7 +161,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	@Override
 	public List<ClusterEventListener> getClusterEventListeners() {
-		return Collections.unmodifiableList(_clusterEventListeners);
+		return _serviceTrackerList.toList();
 	}
 
 	@Override
@@ -207,13 +192,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return _enabled;
 	}
 
-	@Override
-	public void removeClusterEventListener(
-		ClusterEventListener clusterEventListener) {
-
-		_clusterEventListeners.remove(clusterEventListener);
-	}
-
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		_enabled = true;
@@ -222,12 +200,15 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ClusterEventListener.class);
+
 		initialize(
 			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL),
 			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL),
 			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL));
-
-		BundleContext bundleContext = componentContext.getBundleContext();
 
 		_serviceRegistration = bundleContext.registerService(
 			PortalInetSocketAddressEventListener.class,
@@ -249,7 +230,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		_executorService = null;
 
-		_clusterEventListeners.clear();
+		_serviceTrackerList.close();
+
 		_clusterNodeStatuses.clear();
 		_futureClusterResponses.clear();
 		_localClusterNodeStatus = null;
@@ -304,7 +286,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected void fireClusterEvent(ClusterEvent clusterEvent) {
-		for (ClusterEventListener listener : _clusterEventListeners) {
+		for (ClusterEventListener listener : _serviceTrackerList) {
 			listener.processClusterEvent(clusterEvent);
 		}
 	}
@@ -479,12 +461,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_clusterChannel.sendMulticastMessage(clusterRequest);
 	}
 
-	protected void setClusterEventListeners(
-		List<ClusterEventListener> clusterEventListeners) {
-
-		_clusterEventListeners.addAllAbsent(clusterEventListeners);
-	}
-
 	protected volatile ClusterExecutorConfiguration
 		clusterExecutorConfiguration;
 
@@ -598,8 +574,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	@Reference
 	private ClusterChannelFactory _clusterChannelFactory;
 
-	private final CopyOnWriteArrayList<ClusterEventListener>
-		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<Address, CompletableFuture<String>>
 		_clusterNodeIdCompletableFutures = new ConcurrentHashMap<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
@@ -619,6 +593,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	private ServiceRegistration<PortalInetSocketAddressEventListener>
 		_serviceRegistration;
+	private ServiceTrackerList<ClusterEventListener> _serviceTrackerList;
 
 	private static class ClusterNodeStatus implements Serializable {
 

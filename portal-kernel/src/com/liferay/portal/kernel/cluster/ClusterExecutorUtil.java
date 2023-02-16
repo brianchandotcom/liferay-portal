@@ -24,12 +24,6 @@ import java.util.List;
  */
 public class ClusterExecutorUtil {
 
-	public static void addClusterEventListener(
-		ClusterEventListener clusterEventListener) {
-
-		_clusterExecutor.addClusterEventListener(clusterEventListener);
-	}
-
 	public static FutureClusterResponses execute(
 		ClusterRequest clusterRequest) {
 
@@ -50,12 +44,6 @@ public class ClusterExecutorUtil {
 
 	public static boolean isEnabled() {
 		return _clusterExecutor.isEnabled();
-	}
-
-	public static void removeClusterEventListener(
-		ClusterEventListener clusterEventListener) {
-
-		_clusterExecutor.removeClusterEventListener(clusterEventListener);
 	}
 
 	private static volatile ClusterExecutor _clusterExecutor =

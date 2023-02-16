@@ -24,9 +24,6 @@ import java.util.List;
  */
 public interface ClusterExecutor {
 
-	public void addClusterEventListener(
-		ClusterEventListener clusterEventListener);
-
 	public FutureClusterResponses execute(ClusterRequest clusterRequest);
 
 	public InetAddress getBindInetAddress();
@@ -42,8 +39,5 @@ public interface ClusterExecutor {
 	public boolean isClusterNodeAlive(String clusterNodeId);
 
 	public boolean isEnabled();
-
-	public void removeClusterEventListener(
-		ClusterEventListener clusterEventListener);
 
 }

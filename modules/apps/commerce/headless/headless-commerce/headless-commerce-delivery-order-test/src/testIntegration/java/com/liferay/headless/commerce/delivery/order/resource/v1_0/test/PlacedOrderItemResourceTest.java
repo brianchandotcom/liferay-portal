@@ -22,37 +22,50 @@ import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
+import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.commerce.product.type.virtual.order.util.CommerceVirtualOrderItemChecker;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -61,6 +74,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Andrea Sbarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class PlacedOrderItemResourceTest
 	extends BasePlacedOrderItemResourceTestCase {
@@ -94,6 +108,10 @@ public class PlacedOrderItemResourceTest
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 
+		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_user.getUserId(), _commerceCurrency.getCode());
+
 		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			testGroup.getGroupId(), _user.getUserId(),
 			_accountEntry.getAccountEntryId(),
@@ -103,14 +121,64 @@ public class PlacedOrderItemResourceTest
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
 
 		_commerceOrderLocalService.updateCommerceOrder(_commerceOrder);
+	}
 
-		_commercePriceList =
-			_commercePriceListLocalService.addCommercePriceList(
-				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCommerceCurrencyId(),
-				true, CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
-				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(), 1,
-				1, 2022, 12, 0, 0, 0, 0, 0, 0, true, _serviceContext);
+	@Test
+	public void testGetPlacedOrderItemWithFileEntry() throws Exception {
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, _user.getUserId(), testGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				PlacedOrderItemResourceTest.class, "dependencies/image.jpg"),
+			null, null, _serviceContext);
+
+		PlacedOrderItem placedOrderItem = _placedOrderItem(
+			fileEntry.getFileEntryId(), null);
+
+		PlacedOrderItem postPlacedOrderItem = _addCommerceOrderItem(
+			placedOrderItem);
+
+		PlacedOrderItem getPlacedOrderItem =
+			placedOrderItemResource.getPlacedOrderItem(
+				postPlacedOrderItem.getId());
+
+		CommerceVirtualOrderItem commerceVirtualOrderItem =
+			_commerceVirtualOrderItemLocalService.
+				fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+					getPlacedOrderItem.getId());
+
+		String[] virtualItemURLs = {
+			StringBundler.concat(
+				_portal.getPathModule(), StringPool.SLASH,
+				CommerceMediaConstants.SERVLET_PATH,
+				CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_ORDER_ITEM,
+				commerceVirtualOrderItem.getCommerceVirtualOrderItemId(),
+				CommerceMediaConstants.URL_SEPARATOR_FILE,
+				fileEntry.getFileEntryId())
+		};
+
+		Assert.assertArrayEquals(
+			virtualItemURLs, getPlacedOrderItem.getVirtualItemURLs());
+	}
+
+	@Test
+	public void testGetPlacedOrderItemWithURL() throws Exception {
+		String url = "https://www.example.com/myfiles/download";
+
+		PlacedOrderItem placedOrderItem = _placedOrderItem(0, url);
+
+		PlacedOrderItem postPlacedOrderItem = _addCommerceOrderItem(
+			placedOrderItem);
+
+		PlacedOrderItem getPlacedOrderItem =
+			placedOrderItemResource.getPlacedOrderItem(
+				postPlacedOrderItem.getId());
+
+		String[] virtualItemURLs = {url};
+
+		Assert.assertArrayEquals(
+			virtualItemURLs, getPlacedOrderItem.getVirtualItemURLs());
 	}
 
 	@Ignore
@@ -125,33 +193,14 @@ public class PlacedOrderItemResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"productId", "quantity", "sku", "skuId", "subscription"
+			"productId", "quantity", "sku", "skuId", "subscription",
+			"virtualItemURLs"
 		};
 	}
 
 	@Override
 	protected PlacedOrderItem randomPlacedOrderItem() throws Exception {
-		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			testGroup.getGroupId(), BigDecimal.TEN);
-
-		_commerceCPInstances.add(cpInstance);
-
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-		_commerceCPDefinitions.add(cpDefinition);
-
-		return new PlacedOrderItem() {
-			{
-				id = RandomTestUtil.randomLong();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				productId = cpDefinition.getCProductId();
-				quantity = RandomTestUtil.randomInt(1, 100);
-				sku = cpInstance.getSku();
-				skuId = cpInstance.getCPInstanceId();
-				subscription = false;
-				valid = true;
-			}
-		};
+		return _placedOrderItem(0, RandomTestUtil.randomString());
 	}
 
 	@Override
@@ -202,7 +251,8 @@ public class PlacedOrderItemResourceTest
 					commerceAccount, _commerceOrder),
 				_serviceContext);
 
-		_commerceOrderItems.add(commerceOrderItem);
+		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
+			_commerceOrder.getCommerceOrderId());
 
 		return new PlacedOrderItem() {
 			{
@@ -212,13 +262,59 @@ public class PlacedOrderItemResourceTest
 				quantity = commerceOrderItem.getQuantity();
 				sku = commerceOrderItem.getSku();
 				skuId = commerceOrderItem.getCPInstanceId();
+				subscription = commerceOrderItem.isSubscription();
+				valid = true;
+
+				setVirtualItemURLs(
+					() -> {
+						CommerceVirtualOrderItem commerceVirtualOrderItem =
+							_commerceVirtualOrderItemLocalService.
+								fetchCommerceVirtualOrderItemByCommerceOrderItemId(
+									commerceOrderItem.getCommerceOrderItemId());
+
+						if (commerceVirtualOrderItem == null) {
+							return null;
+						}
+
+						return new String[] {commerceVirtualOrderItem.getUrl()};
+					});
+			}
+		};
+	}
+
+	private PlacedOrderItem _placedOrderItem(long fileEntryId, String url)
+		throws Exception {
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
+			true);
+
+		_cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(
+			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId(),
+			fileEntryId, url, CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
+			RandomTestUtil.randomInt(), true, 0, "sampleUrl", false, null, 0,
+			_serviceContext);
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
+
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		return new PlacedOrderItem() {
+			{
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				productId = cpDefinition.getCProductId();
+				quantity = RandomTestUtil.randomInt(1, 100);
+				sku = cpInstance.getSku();
+				skuId = cpInstance.getCPInstanceId();
 				subscription = false;
 				valid = true;
 			}
 		};
 	}
 
-	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -227,46 +323,46 @@ public class PlacedOrderItemResourceTest
 	@Inject
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
-	@DeleteAfterTestRun
+	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@DeleteAfterTestRun
-	private final List<CPDefinition> _commerceCPDefinitions = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private final List<CPInstance> _commerceCPInstances = new ArrayList<>();
-
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	@DeleteAfterTestRun
 	private CommerceOrder _commerceOrder;
 
 	@Inject
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
-	@DeleteAfterTestRun
-	private final List<CommerceOrderItem> _commerceOrderItems =
-		new ArrayList<>();
-
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
-
-	@DeleteAfterTestRun
-	private CommercePriceList _commercePriceList;
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
-	private ServiceContext _serviceContext;
+	@Inject
+	private CommerceVirtualOrderItemChecker _commerceVirtualOrderItemChecker;
 
-	@DeleteAfterTestRun
+	@Inject
+	private CommerceVirtualOrderItemLocalService
+		_commerceVirtualOrderItemLocalService;
+
+	@Inject
+	private CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 	private User _user;
 
 }

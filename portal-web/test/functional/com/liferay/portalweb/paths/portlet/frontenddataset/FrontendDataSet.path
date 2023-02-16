@@ -236,6 +236,12 @@
 	<td>xpath=(//div[contains(@class, "dnd-tr")])[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPEN_DROPDOWN_MENU</td>
+	<td>//label[contains(.,'${key_label}')]//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.message.boards.model.MBMessage",
-	service = {DTOConverter.class, MessageBoardMessageDTOConverter.class}
+	service = DTOConverter.class
 )
 public class MessageBoardMessageDTOConverter
 	implements DTOConverter<MBMessage, MessageBoardMessage> {

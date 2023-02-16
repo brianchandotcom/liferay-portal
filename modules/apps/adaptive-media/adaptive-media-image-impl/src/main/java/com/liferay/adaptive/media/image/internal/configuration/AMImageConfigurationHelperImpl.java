@@ -543,12 +543,12 @@ public class AMImageConfigurationHelperImpl
 			ModifiableSettings modifiableSettings =
 				settings.getModifiableSettings();
 
-			List<String> imageVariants = TransformUtil.transform(
-				amImageConfigurationEntries,
-				_amImageConfigurationEntryParser::getConfigurationString);
-
 			modifiableSettings.setValues(
-				"imageVariants", imageVariants.toArray(new String[0]));
+				"imageVariants",
+				TransformUtil.transformToArray(
+					amImageConfigurationEntries,
+					_amImageConfigurationEntryParser::getConfigurationString,
+					String.class));
 
 			modifiableSettings.store();
 

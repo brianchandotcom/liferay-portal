@@ -83,19 +83,23 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 		Map<String, Transition> outgoingTransitions =
 			task.getOutgoingTransitions();
 
-		if (outgoingTransitions.size() > 1) {
-			int defaultTransitionCount = 0;
+		if (outgoingTransitions.size() <= 1) {
+			return;
+		}
 
-			for (Transition transition : outgoingTransitions.values()) {
-				if (transition.isDefault()) {
-					defaultTransitionCount += 1;
+		int defaultTransitionCount = 0;
 
-					if (defaultTransitionCount > 1) {
-						throw new KaleoDefinitionValidationException.
-							MustNotSetMoreThanOneDefaultTransition(
-								task.getDefaultLabel());
-					}
-				}
+		for (Transition transition : outgoingTransitions.values()) {
+			if (!transition.isDefault()) {
+				continue;
+			}
+
+			defaultTransitionCount += 1;
+
+			if (defaultTransitionCount > 1) {
+				throw new KaleoDefinitionValidationException.
+					MustNotSetMoreThanOneDefaultTransition(
+						task.getDefaultLabel());
 			}
 		}
 	}

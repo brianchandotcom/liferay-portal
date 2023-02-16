@@ -457,7 +457,7 @@ public class UpgradeReport {
 	private File _getReportFile() {
 		File reportsDir = null;
 
-		if (DBUpgrader.isUpgradeTool()) {
+		if (DBUpgrader.isUpgradeClient()) {
 			reportsDir = new File(".", "reports");
 		}
 		else {

@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class UpgradeReportLogAppenderUpgradeToolTest
+public class UpgradeReportLogAppenderUpgradeClientTest
 	extends BaseUpgradeReportLogAppenderTestCase {
 
 	@BeforeClass

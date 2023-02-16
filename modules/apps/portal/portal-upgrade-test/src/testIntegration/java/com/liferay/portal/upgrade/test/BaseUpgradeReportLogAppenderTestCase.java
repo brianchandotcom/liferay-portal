@@ -68,7 +68,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable2)");
 
 		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeTool", _originalUpgradeTool);
+			DBUpgrader.class, "_upgradeClient", _originalUpgradeClient);
 	}
 
 	@After
@@ -320,7 +320,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 				latestSchemaVersion.toString(), StringPool.NEW_LINE));
 	}
 
-	protected static void setUpClass(boolean upgradeTool) throws Exception {
+	protected static void setUpClass(boolean upgradeClient) throws Exception {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
@@ -328,11 +328,11 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_db.runSQL(
 			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
 
-		_originalUpgradeTool = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_upgradeTool");
+		_originalUpgradeClient = ReflectionTestUtil.getFieldValue(
+			DBUpgrader.class, "_upgradeClient");
 
 		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeTool", upgradeTool);
+			DBUpgrader.class, "_upgradeClient", upgradeClient);
 	}
 
 	protected abstract String getFilePath();
@@ -359,7 +359,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	private static DB _db;
-	private static boolean _originalUpgradeTool;
+	private static boolean _originalUpgradeClient;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 

@@ -32,7 +32,6 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
@@ -98,6 +97,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -1298,8 +1298,11 @@ public class DefaultObjectEntryManagerImpl
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Reference
-	private ObjectEntryDTOConverter _objectEntryDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter)"
+	)
+	private DTOConverter<com.liferay.object.model.ObjectEntry, ObjectEntry>
+		_objectEntryDTOConverter;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

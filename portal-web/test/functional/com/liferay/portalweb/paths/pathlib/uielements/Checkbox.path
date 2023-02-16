@@ -296,6 +296,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LEXICON_SELECT_ALL_CONTAINER_DISABLED</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')]/label/input[@disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LEXICON_SELECT_ALL_CONTAINER_SPECIFIC</td>
 	<td>//div[contains(@class,'portlet-boundary')][${key_position}]//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')]</td>
 	<td></td>

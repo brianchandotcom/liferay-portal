@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_AND_ORDER_DISABLED</td>
+	<td>//nav[contains(@class,'management-bar')]//button[@disabled]//*[*[normalize-space(text())='Filter and Order']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER_ACTIVE_ITEM</td>
 	<td>//div[contains(@class,'dropdown-menu')]//a[contains(text(),'${key_menuItem}')]</td>
 	<td></td>
@@ -53,6 +58,16 @@
 <tr>
 	<td>ORDER_ICON_GENERIC</td>
 	<td>//nav[contains(@class,'management-bar')]//a[*[name()='svg'][contains(@class,'icon-order')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ICON_GENERIC_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_ICON_GENERIC_BUTTON_DISABLED</td>
+	<td>//button[@disabled]//*[contains(@class, 'lexicon-icon lexicon-icon-order')]</td>
 	<td></td>
 </tr>
 <tr>

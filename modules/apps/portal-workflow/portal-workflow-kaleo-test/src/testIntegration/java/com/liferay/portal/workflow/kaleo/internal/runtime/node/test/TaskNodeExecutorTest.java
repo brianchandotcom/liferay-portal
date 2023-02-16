@@ -67,7 +67,6 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -179,6 +178,8 @@ public class TaskNodeExecutorTest {
 	public void testExecuteTimerNotifications() throws Exception {
 		KaleoTask kaleoTask = _getKaleoTask("Timer Notification");
 
+		Assert.assertNotNull(kaleoTask);
+
 		KaleoInstanceToken kaleoInstanceToken = _addKaleoInstanceToken(
 			kaleoTask);
 
@@ -205,6 +206,8 @@ public class TaskNodeExecutorTest {
 	@Test
 	public void testExecuteTimerReassignments() throws Exception {
 		KaleoTask kaleoTask = _getKaleoTask("Timer Reassignment");
+
+		Assert.assertNotNull(kaleoTask);
 
 		KaleoInstanceToken kaleoInstanceToken = _addKaleoInstanceToken(
 			kaleoTask);
@@ -316,7 +319,7 @@ public class TaskNodeExecutorTest {
 			}
 		}
 
-		throw new NoSuchElementException("No kaleoNodeKaleoTask present");
+		return null;
 	}
 
 	private long _getKaleoTimerId(KaleoTask kaleoTask) {
